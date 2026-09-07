@@ -11,6 +11,8 @@ export type Autocomplete010Props = Omit<
   placeholder?: string
   defaultOptions?: string[]
   defaultQuery?: string
+  /** Показать список сразу, без фокуса: витрина и скриншоты. */
+  defaultOpen?: boolean
   /** Строка создания. {value} — набранный текст. */
   createLabel?: string
   /** Строка под списком. {count} — сколько меток заведено. */
@@ -59,7 +61,9 @@ color:inherit;font:inherit;font-size:0.875rem;
 [data-vibeui-block="autocomplete-010"] input:focus-visible{
 outline:2px solid var(--vibeui-autocomplete-010-accent);outline-offset:1px;border-color:transparent;
 }
+[data-vibeui-block="autocomplete-010"] [data-part="anchor"]{position:relative}
 [data-vibeui-block="autocomplete-010"] [data-part="list"]{
+position:absolute;left:0;right:0;top:calc(100% + 0.25rem);z-index:30;box-shadow:0 12px 28px -14px oklch(0 0 0 / 40%);
 margin:0;padding:0.25rem;list-style:none;max-height:10rem;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--vibeui-autocomplete-010-border) transparent;
 border:1px solid var(--vibeui-autocomplete-010-border);
 border-radius:var(--vibeui-autocomplete-010-radius);
@@ -138,10 +142,11 @@ export function Autocomplete010({
   label = "Метка",
   placeholder = "Найти или создать",
   defaultOptions = DEFAULT_OPTIONS,
-  defaultQuery = "рефакт",
+  defaultQuery = "",
   createLabel = "Создать «{value}»",
   hintText = "Меток: {count}. Enter выбирает строку под курсором",
   onChange,
+  defaultOpen = false,
   background = "",
   accent,
   className,
@@ -149,6 +154,7 @@ export function Autocomplete010({
   ...props
 }: Autocomplete010Props) {
   const id = useId()
+  const [open, setOpen] = useState(defaultOpen)
   const [options, setOptions] = useState(defaultOptions)
   const [query, setQuery] = useState(defaultQuery)
   const [active, setActive] = useState(0)
@@ -214,64 +220,70 @@ export function Autocomplete010({
         style={palette}
       >
         <label htmlFor={id}>{label}</label>
-        <input
-          id={id}
-          type="text"
-          role="combobox"
-          autoComplete="off"
-          placeholder={placeholder}
-          value={query}
-          aria-expanded={rows > 0}
-          aria-controls={`${id}-list`}
-          aria-autocomplete="list"
-          onChange={(event) => {
-            setQuery(event.target.value)
-            setActive(0)
-          }}
-          onKeyDown={onKeyDown}
-        />
-        <ul
-          id={`${id}-list`}
-          role="listbox"
-          aria-label={label}
-          data-part="list"
-        >
-          {matches.map((option, index) => (
-            <li
-              key={option}
-              role="option"
-              data-part="option"
-              data-active={index === active}
-              aria-selected={index === active}
-              onMouseEnter={() => setActive(index)}
-              onMouseDown={(event) => {
-                event.preventDefault()
-                setQuery(option)
-              }}
+        <div data-part="anchor">
+          <input
+            id={id}
+            type="text"
+            role="combobox"
+            autoComplete="off"
+            placeholder={placeholder}
+            value={query}
+            aria-expanded={open && rows > 0}
+            aria-controls={`${id}-list`}
+            aria-autocomplete="list"
+            onFocus={() => setOpen(true)}
+            onBlur={() => setOpen(false)}
+            onChange={(event) => {
+              setQuery(event.target.value)
+              setActive(0)
+            }}
+            onKeyDown={onKeyDown}
+          />
+          {open ? (
+            <ul
+              id={`${id}-list`}
+              role="listbox"
+              aria-label={label}
+              data-part="list"
             >
-              <span data-part="label">{highlight(option, trimmed)}</span>
-            </li>
-          ))}
-          {canCreate ? (
-            <li
-              role="option"
-              data-part="option"
-              data-create="true"
-              data-active={active === matches.length}
-              aria-selected={active === matches.length}
-              onMouseEnter={() => setActive(matches.length)}
-              onMouseDown={(event) => {
-                event.preventDefault()
-                create()
-              }}
-            >
-              <span data-part="plus" aria-hidden="true" />
-              <span data-part="create">
-                {createLabel.replace("{value}", trimmed)}
-              </span>
-            </li>
+              {matches.map((option, index) => (
+                <li
+                  key={option}
+                  role="option"
+                  data-part="option"
+                  data-active={index === active}
+                  aria-selected={index === active}
+                  onMouseEnter={() => setActive(index)}
+                  onMouseDown={(event) => {
+                    event.preventDefault()
+                    setQuery(option)
+                  }}
+                >
+                  <span data-part="label">{highlight(option, trimmed)}</span>
+                </li>
+              ))}
+              {canCreate ? (
+                <li
+                  role="option"
+                  data-part="option"
+                  data-create="true"
+                  data-active={active === matches.length}
+                  aria-selected={active === matches.length}
+                  onMouseEnter={() => setActive(matches.length)}
+                  onMouseDown={(event) => {
+                    event.preventDefault()
+                    create()
+                  }}
+                >
+                  <span data-part="plus" aria-hidden="true" />
+                  <span data-part="create">
+                    {createLabel.replace("{value}", trimmed)}
+                  </span>
+                </li>
+              ) : null}
+            </ul>
           ) : null}
-        </ul>
+        </div>
         <span data-part="hint">
           {hintText.replace("{count}", String(options.length))}
         </span>

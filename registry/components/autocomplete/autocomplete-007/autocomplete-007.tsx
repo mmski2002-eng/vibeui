@@ -12,6 +12,8 @@ export type Autocomplete007Props = Omit<
   suggestions?: string[]
   defaultRecent?: string[]
   clearLabel?: string
+  /** Показать список сразу, без фокуса: витрина и скриншоты. */
+  defaultOpen?: boolean
   /** Подписи панели: ключи recent, suggestions, notFound, history. */
   panelText?: Record<string, string>
   onSelect?: (value: string) => void
@@ -58,7 +60,9 @@ color:inherit;font:inherit;font-size:0.875rem;
 [data-vibeui-block="autocomplete-007"] input:focus-visible{
 outline:2px solid var(--vibeui-autocomplete-007-accent);outline-offset:1px;border-color:transparent;
 }
+[data-vibeui-block="autocomplete-007"] [data-part="anchor"]{position:relative}
 [data-vibeui-block="autocomplete-007"] [data-part="panel"]{
+position:absolute;left:0;right:0;top:calc(100% + 0.25rem);z-index:30;box-shadow:0 12px 28px -14px oklch(0 0 0 / 40%);
 border:1px solid var(--vibeui-autocomplete-007-border);
 border-radius:var(--vibeui-autocomplete-007-radius);
 background:var(--vibeui-autocomplete-007-panel);overflow:hidden;
@@ -147,6 +151,7 @@ export function Autocomplete007({
   clearLabel = "Очистить",
   panelText = PANEL_TEXT,
   onSelect,
+  defaultOpen = false,
   background = "",
   accent,
   className,
@@ -154,6 +159,7 @@ export function Autocomplete007({
   ...props
 }: Autocomplete007Props) {
   const id = useId()
+  const [open, setOpen] = useState(defaultOpen)
   const [query, setQuery] = useState("")
   const [recent, setRecent] = useState(defaultRecent)
 
@@ -199,63 +205,69 @@ export function Autocomplete007({
         style={palette}
       >
         <label htmlFor={id}>{label}</label>
-        <input
-          id={id}
-          type="search"
-          role="combobox"
-          autoComplete="off"
-          placeholder={placeholder}
-          value={query}
-          aria-expanded={rows.length > 0}
-          aria-controls={`${id}-list`}
-          aria-autocomplete="list"
-          onChange={(event) => setQuery(event.target.value)}
-        />
-        <div data-part="panel">
-          <p data-part="head">
-            {head}
-            {showRecent ? (
-              <button
-                type="button"
-                data-part="clear"
-                onClick={() => setRecent([])}
-              >
-                {clearLabel}
-              </button>
-            ) : null}
-          </p>
-          {rows.length ? (
-            <ul
-              id={`${id}-list`}
-              role="listbox"
-              aria-label={head}
-              data-part="list"
-            >
-              {rows.map((row) => (
-                <li
-                  key={row}
-                  role="option"
-                  aria-selected="false"
-                  data-part="option"
-                  onMouseDown={(event) => {
-                    event.preventDefault()
-                    pick(row)
-                  }}
+        <div data-part="anchor">
+          <input
+            id={id}
+            type="search"
+            role="combobox"
+            autoComplete="off"
+            placeholder={placeholder}
+            value={query}
+            aria-expanded={open}
+            aria-controls={`${id}-list`}
+            aria-autocomplete="list"
+            onFocus={() => setOpen(true)}
+            onBlur={() => setOpen(false)}
+            onChange={(event) => setQuery(event.target.value)}
+          />
+          {open ? (
+            <div data-part="panel">
+              <p data-part="head">
+                {head}
+                {showRecent ? (
+                  <button
+                    type="button"
+                    data-part="clear"
+                    onClick={() => setRecent([])}
+                  >
+                    {clearLabel}
+                  </button>
+                ) : null}
+              </p>
+              {rows.length ? (
+                <ul
+                  id={`${id}-list`}
+                  role="listbox"
+                  aria-label={head}
+                  data-part="list"
                 >
-                  {showRecent ? (
-                    <span data-part="clock" aria-hidden="true" />
-                  ) : null}
-                  {row}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p data-part="empty">
-              {query.trim()
-                ? (panelText.notFound ?? PANEL_TEXT.notFound)
-                : (panelText.history ?? PANEL_TEXT.history)}
-            </p>
-          )}
+                  {rows.map((row) => (
+                    <li
+                      key={row}
+                      role="option"
+                      aria-selected="false"
+                      data-part="option"
+                      onMouseDown={(event) => {
+                        event.preventDefault()
+                        pick(row)
+                      }}
+                    >
+                      {showRecent ? (
+                        <span data-part="clock" aria-hidden="true" />
+                      ) : null}
+                      {row}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p data-part="empty">
+                  {query.trim()
+                    ? (panelText.notFound ?? PANEL_TEXT.notFound)
+                    : (panelText.history ?? PANEL_TEXT.history)}
+                </p>
+              )}
+            </div>
+          ) : null}
         </div>
       </div>
     </>

@@ -110,17 +110,13 @@ color:var(--vibeui-avatar-015-danger);
 [data-vibeui-block="avatar-015"] [data-part="face"]{overflow:hidden}
 [data-vibeui-block="avatar-015"] [data-part="face"] img{width:100%;height:100%;border-radius:inherit;object-fit:cover;display:block}
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-015"]{color-scheme:dark}
-/* Развёрнутый режим: меню стоит в потоке под кнопкой, а не в верхнем слое. */
-[data-vibeui-block="avatar-015"]:has([data-open="true"]){align-items:flex-start}
-[data-vibeui-block="avatar-015"] [data-part="slot"]:has([data-open="true"]){display:flex;flex-direction:column;align-items:flex-start}
-/* Кнопка привязана к углу гнезда, а гнездо в этом режиме выше портрета:
-   без пересчёта она уезжала на меню, оставляя вырез в портрете пустым. */
-[data-vibeui-block="avatar-015"] [data-part="slot"]:has([data-open="true"]) [data-part="edit"]{
-top:calc(var(--vibeui-avatar-015-size) - var(--vibeui-avatar-015-edit));bottom:auto;
-left:calc(var(--vibeui-avatar-015-size) - var(--vibeui-avatar-015-edit));right:auto;
-}
+/* Развёрнутый режим: меню лежит поверх страницы под кнопкой, как и popover,
+   но без верхнего слоя — карточка при этом не меняет размер. */
 [data-vibeui-block="avatar-015"] [data-part="menu"][data-open="true"]{
-position:static;opacity:1;transform:none;margin-top:0.375rem;
+position:absolute;z-index:2;
+top:calc(var(--vibeui-avatar-015-size) + 0.375rem);
+left:calc(var(--vibeui-avatar-015-size) - var(--vibeui-avatar-015-edit));
+opacity:1;transform:none;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-015"] *{animation:none!important;transition:none!important}}
 `

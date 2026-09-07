@@ -85,7 +85,9 @@ color:inherit;font:inherit;font-size:0.875rem;
 [data-vibeui-block="autocomplete-009"] input:focus-visible{
 outline:2px solid var(--vibeui-autocomplete-009-accent);outline-offset:1px;border-color:transparent;
 }
+[data-vibeui-block="autocomplete-009"] [data-part="anchor"]{position:relative}
 [data-vibeui-block="autocomplete-009"] [data-part="panel"]{
+position:absolute;left:0;right:0;top:calc(100% + 0.25rem);z-index:30;box-shadow:0 12px 28px -14px oklch(0 0 0 / 40%);
 display:flex;flex-direction:column;gap:0.25rem;padding:0.375rem;
 border:1px solid var(--vibeui-autocomplete-009-border);
 border-radius:var(--vibeui-autocomplete-009-radius);
@@ -226,79 +228,84 @@ export function Autocomplete009({
         style={palette}
       >
         <label htmlFor={`${id}-phone`}>{label}</label>
-        <div data-part="row">
-          <button
-            type="button"
-            data-part="country"
-            aria-expanded={open}
-            aria-controls={`${id}-panel`}
-            aria-label={(countryText.country ?? COUNTRY_TEXT.country)
-              .replace("{name}", current.name)
-              .replace("{dial}", current.dial)}
-            onClick={() => setOpen(!open)}
-          >
-            <span data-part="flag" aria-hidden="true">
-              {current.flag}
-            </span>
-            {current.dial}
-            <span data-part="caret" aria-hidden="true" />
-          </button>
-          <input
-            id={`${id}-phone`}
-            type="tel"
-            inputMode="tel"
-            autoComplete="tel-national"
-            placeholder={placeholder}
-          />
-        </div>
-        {open ? (
-          <div data-part="panel" id={`${id}-panel`}>
+        <div data-part="anchor">
+          <div data-part="row">
+            <button
+              type="button"
+              data-part="country"
+              aria-expanded={open}
+              aria-controls={`${id}-panel`}
+              aria-label={(countryText.country ?? COUNTRY_TEXT.country)
+                .replace("{name}", current.name)
+                .replace("{dial}", current.dial)}
+              onClick={() => setOpen(!open)}
+            >
+              <span data-part="flag" aria-hidden="true">
+                {current.flag}
+              </span>
+              {current.dial}
+              <span data-part="caret" aria-hidden="true" />
+            </button>
             <input
-              type="search"
-              autoComplete="off"
-              placeholder={
-                countryText.searchPlaceholder ?? COUNTRY_TEXT.searchPlaceholder
-              }
-              aria-label={countryText.searchLabel ?? COUNTRY_TEXT.searchLabel}
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
+              id={`${id}-phone`}
+              type="tel"
+              inputMode="tel"
+              autoComplete="tel-national"
+              placeholder={placeholder}
             />
-            {matches.length ? (
-              <ul
-                data-part="list"
-                role="listbox"
-                aria-label={countryText.listLabel ?? COUNTRY_TEXT.listLabel}
-              >
-                {matches.map((country) => (
-                  <li
-                    key={country.code}
-                    role="option"
-                    tabIndex={-1}
-                    data-part="option"
-                    aria-selected={country.code === code}
-                    onMouseDown={(event) => {
-                      event.preventDefault()
-                      setCode(country.code)
-                      setOpen(false)
-                      setQuery("")
-                      onSelect?.(country.code)
-                    }}
-                  >
-                    <span data-part="flag" aria-hidden="true">
-                      {country.flag}
-                    </span>
-                    <span data-part="label">
-                      {highlight(country.name, query.trim())}
-                    </span>
-                    <span data-part="dial">{country.dial}</span>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p data-part="empty">{countryText.empty ?? COUNTRY_TEXT.empty}</p>
-            )}
           </div>
-        ) : null}
+          {open ? (
+            <div data-part="panel" id={`${id}-panel`}>
+              <input
+                type="search"
+                autoComplete="off"
+                placeholder={
+                  countryText.searchPlaceholder ??
+                  COUNTRY_TEXT.searchPlaceholder
+                }
+                aria-label={countryText.searchLabel ?? COUNTRY_TEXT.searchLabel}
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+              />
+              {matches.length ? (
+                <ul
+                  data-part="list"
+                  role="listbox"
+                  aria-label={countryText.listLabel ?? COUNTRY_TEXT.listLabel}
+                >
+                  {matches.map((country) => (
+                    <li
+                      key={country.code}
+                      role="option"
+                      tabIndex={-1}
+                      data-part="option"
+                      aria-selected={country.code === code}
+                      onMouseDown={(event) => {
+                        event.preventDefault()
+                        setCode(country.code)
+                        setOpen(false)
+                        setQuery("")
+                        onSelect?.(country.code)
+                      }}
+                    >
+                      <span data-part="flag" aria-hidden="true">
+                        {country.flag}
+                      </span>
+                      <span data-part="label">
+                        {highlight(country.name, query.trim())}
+                      </span>
+                      <span data-part="dial">{country.dial}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p data-part="empty">
+                  {countryText.empty ?? COUNTRY_TEXT.empty}
+                </p>
+              )}
+            </div>
+          ) : null}
+        </div>
       </div>
     </>
   )

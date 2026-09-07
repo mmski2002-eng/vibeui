@@ -2936,6 +2936,160 @@
           }
         }
       }
+    },
+    {
+      "name": "carousel-019",
+      "type": "registry:component",
+      "title": "Куб с гранями",
+      "description": "Карусель на гранях куба: каждый шаг доворачивает объём на четверть, и следующая грань въезжает в кадр с перелётом.",
+      "categories": ["carousel"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "carousel-019/carousel-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/carousel-019.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-carousel-019-*. Клиентский компонент: useState хранит число поворотов, а не индекс, поэтому куб продолжает крутиться в одну сторону и не отматывает три четверти назад на переходе с последней грани на первую. Четыре грани расставлены поворотом и выносом на половину ребра, сам куб отодвинут назад на ту же половину — центр вращения остаётся в середине кадра. Ребро задаётся пропом size в rem, глубина граней считается от него же через calc. Кадр объявлен aria-roledescription, невидимые грани помечены aria-hidden, строка состояния — живая область.",
+      "meta": {
+        "tags": ["carousel", "cube", "3d", "rotate", "spring"],
+        "preview": {
+          "width": "auto"
+        },
+        "ai": {
+          "export": "Carousel019",
+          "usage": "<Carousel019 faces={[\"Каталог\", \"Превью\", \"Промпт\", \"Установка\"]} size={11} />",
+          "summary": "Карусель, у которой слайды лежат на гранях куба: клик по кубу или стрелка доворачивает его на 90° с пружинным перелётом. Ровно четыре грани, счётчик поворотов не сбрасывается по кругу. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-carousel-019-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "пружинную кривую linear(…) вместе со строкой cubic-bezier перед ней: первая нужна старым браузерам, вторая даёт перелёт",
+            "связку perspective на сцене и transform-style: preserve-3d на кубе — без них грани схлопываются в стопку",
+            "вынос граней на половину ребра вместе со сдвигом куба назад на ту же половину: иначе объём вращается вокруг чужой оси",
+            "счётчик поворотов вместо индекса: он и делает переход с четвёртой грани на первую доворотом вперёд, а не отмоткой назад",
+            "aria-hidden на невидимых гранях и живую строку состояния",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "отмену перехода в prefers-reduced-motion"
+          ],
+          "adapt": [
+            "faces — ровно четыре подписи граней по обходу куба",
+            "label — название карусели",
+            "hint — подпись под кубом; пусто — подписи нет",
+            "size — ребро куба в rem; от него же считается глубина граней",
+            "accent — обводка фокуса, цвет первой грани и кнопок при наведении",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи для скринридера: roleText, prevLabel, nextLabel и шаблон statusText"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Граней ровно четыре: лишние элементы массива отбрасываются, а на трёх в кубе появится дыра. Нужен другой шаг — меняйте расстановку граней и угол поворота вместе.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Название",
+            "type": "text",
+            "default": "Как это работает",
+            "maxLength": 24
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Нажмите на куб или на стрелки",
+            "maxLength": 48
+          },
+          {
+            "prop": "size",
+            "label": "Ребро",
+            "type": "number",
+            "min": 7,
+            "max": 16,
+            "default": 11
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Cube Carousel",
+            "description": "A carousel on the faces of a cube: every step turns the volume a quarter and the next face rolls into the frame with an overshoot.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-carousel-019-* variables. A client component: useState keeps the number of turns rather than an index, so the cube keeps spinning one way instead of unwinding three quarters back when the last face gives way to the first. Four faces are placed by a rotation and a push out to half the edge, and the cube itself is pulled back by the same half — the centre of rotation stays in the middle of the frame. The edge comes from the size prop in rem and the face depth is derived from it with calc. The frame is declared aria-roledescription, the faces out of view are aria-hidden and the status line is a live region.",
+            "ai": {
+              "summary": "A carousel whose slides sit on the faces of a cube: a click on the cube or an arrow turns it 90° with a spring overshoot. Exactly four faces, and the turn counter never resets around the loop. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-carousel-019-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the spring linear(…) curve together with the cubic-bezier line before it: the first is there for older browsers, the second gives the overshoot",
+                "the pair of perspective on the scene and transform-style: preserve-3d on the cube — without them the faces collapse into a stack",
+                "pushing the faces out to half the edge together with pulling the cube back by the same half: otherwise the volume spins around the wrong axis",
+                "the turn counter instead of an index: it is what makes the step from the fourth face to the first a turn forward rather than a rewind",
+                "aria-hidden on the faces out of view and the live status line",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "cancelling the transition under prefers-reduced-motion"
+              ],
+              "adapt": [
+                "faces — exactly four labels in the order the cube walks them",
+                "label — the name of the carousel",
+                "hint — the caption under the cube; empty means no caption",
+                "size — the cube edge in rem; the face depth follows from it",
+                "accent — the focus ring, the colour of the first face and of the buttons on hover",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the screen-reader wording: roleText, prevLabel, nextLabel and the statusText template"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "There are exactly four faces: extra array items are dropped and three would leave a hole in the cube. If you need another step, change the face placement and the rotation angle together.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Carousel019 faces={[\"Catalog\", \"Preview\", \"Prompt\", \"Install\"]} size={11} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Name",
+                "default": "How it works"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "Click the cube or the arrows"
+              },
+              "size": {
+                "label": "Edge"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "faces": ["Catalog", "Preview", "Prompt", "Install"],
+                "label": "How it works",
+                "hint": "Click the cube or the arrows",
+                "roleText": "carousel",
+                "prevLabel": "Previous face",
+                "nextLabel": "Next face",
+                "statusText": "{index} of {total}: {label}"
+              }
+            }
+          }
+        },
+        "cardControls": ["label", "hint", "size", "accent"]
+      }
     }
   ]
 }

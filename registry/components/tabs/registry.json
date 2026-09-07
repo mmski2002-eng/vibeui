@@ -1980,6 +1980,161 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "tabs-015",
+      "type": "registry:component",
+      "title": "Вкладки с пилюлей",
+      "description": "Вкладки, под которыми скользит одна пилюля: она измеряет активную кнопку и переезжает к ней с лёгким перелётом.",
+      "categories": ["tabs"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tabs-015/tabs-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tabs-015.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-tabs-015-*. Клиентский: useState держит выбор, useEffect с ResizeObserver замеряет активную кнопку. Разметка следует паттерну tabs из WAI-ARIA: role=\"tablist\" с aria-label, role=\"tab\" с aria-selected и aria-controls, role=\"tabpanel\" с aria-labelledby; в Tab-порядке живёт только активная вкладка, остальные переключаются стрелками, Home и End. Пилюля — единственный ::before у дорожки: её ширину и сдвиг задают переменные --vibeui-tabs-015-w и --vibeui-tabs-015-x, которые компонент пишет из offsetWidth и offsetLeft активной кнопки. До первого замера пилюля прозрачна, дорожка помечена data-ready. Тема берётся из color-scheme через light-dark(), класс .dark и data-theme=\"dark\" объявляют color-scheme:dark.",
+      "meta": {
+        "tags": ["tabs", "pill", "indicator", "spring", "keyboard"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Tabs015",
+          "usage": "<Tabs015 label=\"Этапы работы\" defaultId=\"build\" />",
+          "summary": "Вкладки, под которыми едет одна общая пилюля: она берёт ширину из offsetWidth активной кнопки, поэтому садится ровно по тексту при любой длине перевода. Ход — пружина с лёгким перелётом, переезд повторяется после изменения ширины списка. Клавиатура полная: стрелки по кругу, Home и End к краям. Один клиентский компонент, ноль зависимостей, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-tabs-015-* и не подменять её токенами вашей темы (bg-muted, text-muted-foreground и подобными)",
+            "замер по offsetLeft и offsetWidth активной кнопки: пилюля, у которой ширина зашита числом, разъезжается с текстом на другом языке",
+            "пружинную кривую перехода с двумя объявлениями transition: строка linear(…) даёт перелёт, cubic-bezier перед ней остаётся запасной для старых браузеров",
+            "разметку tabs из WAI-ARIA: role=\"tablist\", role=\"tab\" с aria-selected и aria-controls, role=\"tabpanel\" с aria-labelledby",
+            "roving tabindex и обработку стрелок, Home и End вместе с переносом фокуса",
+            "ResizeObserver на дорожке: без него пилюля остаётся на старом месте после изменения ширины колонки",
+            "правило prefers-reduced-motion: переезд пилюли — это движение через весь блок",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "массив items: id, подпись и содержимое панели — content это ReactNode",
+            "defaultId — какая вкладка открыта изначально",
+            "имя списка через label: его слышит скринридер, на экране его нет",
+            "accent — цвет пилюли и кольца фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Компонент клиентский: \"use client\" нужен ради состояния, замера и клавиатуры.",
+            "Идентификаторы панелей строятся из id вкладки. Два экземпляра с одинаковыми id на странице дадут повторяющиеся id в разметке — задайте разные.",
+            "Подписи на акценте читаются тёмным текстом: цвет --vibeui-tabs-015-on-accent рассчитан на светлый акцент. Задавая тёмный accent, проверьте контраст.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultId",
+            "label": "Открыта вкладка",
+            "type": "select",
+            "default": "plan",
+            "options": ["plan", "build", "ship"]
+          },
+          {
+            "prop": "label",
+            "label": "Имя списка",
+            "type": "text",
+            "default": "Этапы работы",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["defaultId", "label", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Gliding Pill Tabs",
+            "description": "Tabs with a single pill underneath: it measures the active button and glides across with a light overshoot.",
+            "docs": "One file, zero dependencies, the --vibeui-tabs-015-* palette. Client component: useState holds the selection, a useEffect with a ResizeObserver measures the active button. The markup follows the WAI-ARIA tabs pattern: role=\"tablist\" with an aria-label, role=\"tab\" with aria-selected and aria-controls, role=\"tabpanel\" with aria-labelledby; only the active tab lives in the Tab order, the rest are reached with the arrows, Home and End. The pill is the track's single ::before: its width and offset come from the --vibeui-tabs-015-w and --vibeui-tabs-015-x variables that the component writes from the active button's offsetWidth and offsetLeft. Until the first measurement the pill is transparent and the track is marked data-ready. The theme comes from color-scheme through light-dark(), while the .dark class and data-theme=\"dark\" declare color-scheme:dark.",
+            "ai": {
+              "summary": "Tabs with one shared pill gliding underneath: it takes its width from the active button's offsetWidth, so it sits exactly on the label however long the translation is. The motion is a spring with a light overshoot, and the trip repeats after the list changes width. Full keyboard: arrows in a loop, Home and End to the ends. One client component, zero dependencies, its own palette.",
+              "preserve": [
+                "the local --vibeui-tabs-015-* palette — do not swap it for your theme tokens (bg-muted, text-muted-foreground and the like)",
+                "the measurement from the active button's offsetLeft and offsetWidth: a pill with a hard-coded width drifts off the label in another language",
+                "the spring easing with its two transition declarations: the linear(…) string carries the overshoot, the cubic-bezier before it stays as the fallback for older browsers",
+                "the WAI-ARIA tabs markup: role=\"tablist\", role=\"tab\" with aria-selected and aria-controls, role=\"tabpanel\" with aria-labelledby",
+                "the roving tabindex and the arrow, Home and End handling together with moving focus",
+                "the ResizeObserver on the track: without it the pill stays behind after the column changes width",
+                "the prefers-reduced-motion rule: the pill travels across the whole block",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the items array: id, label and panel content — content is a ReactNode",
+                "defaultId — which tab starts open",
+                "the list name through label: a screen reader announces it, the screen does not show it",
+                "accent — the colour of the pill and of the focus ring",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The component is a client one: \"use client\" is there for the state, the measurement and the keyboard handling.",
+                "Panel ids are built from the tab id. Two instances sharing ids produce duplicate ids in the document — give them different ones.",
+                "Labels on the accent are drawn in dark text: --vibeui-tabs-015-on-accent assumes a light accent. Check the contrast when you pass a dark accent.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tabs015 label=\"Delivery stages\" defaultId=\"build\" />"
+            },
+            "controls": {
+              "defaultId": {
+                "label": "Open tab"
+              },
+              "label": {
+                "label": "List name",
+                "default": "Delivery stages"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Delivery stages",
+                "items": [
+                  {
+                    "id": "plan",
+                    "label": "Plan",
+                    "content": "Dates, owners and the scope of work for the coming iteration."
+                  },
+                  {
+                    "id": "build",
+                    "label": "Build",
+                    "content": "Build status, tests and the latest changes on the branch."
+                  },
+                  {
+                    "id": "ship",
+                    "label": "Ship",
+                    "content": "The release checklist: notes, migrations and the way back."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

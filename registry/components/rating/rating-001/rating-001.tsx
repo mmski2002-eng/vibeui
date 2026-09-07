@@ -54,9 +54,12 @@ display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:0.125rem;
 }
 [data-vibeui-block="rating-001"] input{position:absolute;opacity:0;pointer-events:none}
 [data-vibeui-block="rating-001"] [data-part="star"]{
-cursor:pointer;font-size:1.5rem;line-height:1;color:var(--vibeui-rating-001-empty);
+cursor:pointer;display:inline-block;font-size:1.5rem;line-height:1;color:var(--vibeui-rating-001-empty);
 padding:0 0.0625rem;border-radius:0.25rem;
+transition:transform .25s cubic-bezier(.34,1.56,.64,1),color .15s ease;
 }
+/* Хлопок при выборе: нажатая звезда раздувается и пружиной садится обратно. */
+[data-vibeui-block="rating-001"] label:active [data-part="star"]{transform:scale(1.3)}
 /* Отмеченная звезда и все левее неё: соседи по ~ идут в обратном порядке. */
 [data-vibeui-block="rating-001"] label:has(input:checked) [data-part="star"],
 [data-vibeui-block="rating-001"] label:has(input:checked) ~ label [data-part="star"]{color:var(--vibeui-rating-001-accent)}

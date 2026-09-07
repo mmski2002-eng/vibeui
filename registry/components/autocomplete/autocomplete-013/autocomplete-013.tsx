@@ -14,6 +14,8 @@ export type Autocomplete013Props = Omit<
   defaultQuery?: string
   /** Начальное состояние.  открывает карточку на отказе. */
   defaultState?: "idle" | "failed"
+  /** Показать список сразу, без фокуса: витрина и скриншоты. */
+  defaultOpen?: boolean
   retryLabel?: string
   /** Подписи состояний: компонент несёт русские, проект подставляет свои. */
   statusText?: Record<string, string>
@@ -64,7 +66,9 @@ font:inherit;font-size:0.875rem;
 [data-vibeui-block="autocomplete-013"] input:focus-visible{
 outline:2px solid var(--vibeui-autocomplete-013-accent);outline-offset:1px;
 }
+[data-vibeui-block="autocomplete-013"] [data-part="anchor"]{position:relative}
 [data-vibeui-block="autocomplete-013"] [data-part="list"]{
+position:absolute;left:0;right:0;top:calc(100% + 0.25rem);z-index:30;box-shadow:0 12px 28px -14px oklch(0 0 0 / 40%);
 margin:0;padding:0.25rem;list-style:none;
 max-height:9rem;overflow-y:auto;
 scrollbar-width:thin;scrollbar-color:var(--vibeui-autocomplete-013-border) transparent;
@@ -191,11 +195,12 @@ export function Autocomplete013({
   label = "Город доставки",
   placeholder = "Начните вводить",
   search,
-  defaultQuery = "ка",
+  defaultQuery = "",
   defaultState = "idle",
   retryLabel = "Повторить",
   statusText = STATUS_TEXT,
   onSelect,
+  defaultOpen = false,
   background = "",
   accent,
   className,
@@ -203,6 +208,7 @@ export function Autocomplete013({
   ...props
 }: Autocomplete013Props) {
   const id = useId()
+  const [open, setOpen] = useState(defaultOpen)
   const inputRef = useRef<HTMLInputElement>(null)
   // При defaultState="failed" первая попытка считается уже израсходованной:
   // карточка открывается после неудачи, и повтор обязан пройти.
@@ -268,26 +274,50 @@ export function Autocomplete013({
         style={palette}
       >
         <label htmlFor={id}>{label}</label>
-        <input
-          ref={inputRef}
-          id={id}
-          type="text"
-          autoComplete="off"
-          placeholder={placeholder}
-          value={query}
-          onChange={(event) => {
-            const value = event.target.value
-            setQuery(value)
+        <div data-part="anchor">
+          <input
+            ref={inputRef}
+            id={id}
+            type="text"
+            autoComplete="off"
+            placeholder={placeholder}
+            value={query}
+            onFocus={() => setOpen(true)}
+            onBlur={() => setOpen(false)}
+            onChange={(event) => {
+              const value = event.target.value
+              setQuery(value)
 
-            if (value.trim()) {
-              run(value)
-              return
-            }
+              if (value.trim()) {
+                run(value)
+                return
+              }
 
-            setItems([])
-            setState("idle")
-          }}
-        />
+              setItems([])
+              setState("idle")
+            }}
+          />
+          {open && items.length > 0 ? (
+            <ul data-part="list" role="listbox" aria-label={label}>
+              {items.map((item) => (
+                <li
+                  key={item}
+                  role="option"
+                  aria-selected="false"
+                  data-part="option"
+                  onMouseDown={(event) => {
+                    event.preventDefault()
+                    setQuery(item)
+                    setItems([])
+                    onSelect?.(item)
+                  }}
+                >
+                  {highlight(item, query.trim())}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
 
         {state === "failed" ? (
           // Отказ читается вслух сразу: role="alert" не ждёт следующего фокуса.
@@ -305,27 +335,6 @@ export function Autocomplete013({
               {retryLabel}
             </button>
           </div>
-        ) : null}
-
-        {items.length > 0 ? (
-          <ul data-part="list" role="listbox" aria-label={label}>
-            {items.map((item) => (
-              <li
-                key={item}
-                role="option"
-                aria-selected="false"
-                data-part="option"
-                onMouseDown={(event) => {
-                  event.preventDefault()
-                  setQuery(item)
-                  setItems([])
-                  onSelect?.(item)
-                }}
-              >
-                {highlight(item, query.trim())}
-              </li>
-            ))}
-          </ul>
         ) : null}
 
         {state === "failed" || items.length > 0 ? null : (

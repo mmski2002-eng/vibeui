@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+import type { CSSProperties, ReactNode } from "react"
 
 type Podcast003Episode = {
   number: string
@@ -49,7 +49,9 @@ font-family:var(--vibeui-podcast-003-font);
 [data-vibeui-block="podcast-003"] [data-part="title"]{margin:0 0 0.75rem;font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700}
 [data-vibeui-block="podcast-003"] [data-part="summary"]{margin:0 0 1.5rem;color:var(--vibeui-podcast-003-muted);font-size:1.0625rem;line-height:1.6}
 [data-vibeui-block="podcast-003"] [data-part="platforms"]{display:flex;flex-wrap:wrap;gap:0.5rem}
+[data-vibeui-block="podcast-003"] [data-part="platform"] svg{width:1rem;height:1rem;flex:none}
 [data-vibeui-block="podcast-003"] [data-part="platform"]{
+display:inline-flex;align-items:center;gap:0.375rem;
 padding:0.5rem 1rem;border-radius:999px;font-size:0.875rem;font-weight:640;text-decoration:none;
 transition:opacity .16s ease,border-color .16s ease}
 [data-vibeui-block="podcast-003"] [data-part="platform"]:first-child{background:var(--vibeui-podcast-003-accent);color:var(--vibeui-podcast-003-on-accent)}
@@ -72,6 +74,83 @@ background:var(--vibeui-podcast-003-card);color:inherit;text-decoration:none;tra
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="podcast-003"] *{animation:none!important;transition:none!important}}
 `
+
+// Значок площадки подбирается по названию: список приходит строками, а
+// одинаковые текстовые ссылки читаются как обычное меню, а не как кнопки
+// «слушать здесь». У Apple и Spotify свои знаки; точный логотип Яндекс
+// Музыки и Звука — товарный знак, поэтому там буквенная монограмма.
+const PLATFORM_ICONS: Record<string, ReactNode> = {
+  apple: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M16.37 12.77c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.89-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.03 2.28-1.27 3.14-2.52.99-1.45 1.4-2.85 1.42-2.92-.03-.01-2.72-1.04-2.74-4.14zM13.8 5.13c.72-.87 1.2-2.08 1.07-3.29-1.03.04-2.29.69-3.03 1.56-.67.77-1.25 2-1.09 3.18 1.15.09 2.33-.59 3.05-1.45z"
+      />
+    </svg>
+  ),
+  spotify: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.3 14.5a.8.8 0 0 1-1.1.3c-3-1.8-6.7-2.2-11.1-1.2a.8.8 0 1 1-.3-1.5c4.8-1.1 8.9-.6 12.2 1.4.4.2.5.7.3 1zm1.2-2.8a1 1 0 0 1-1.3.3c-3.4-2.1-8.6-2.7-12.6-1.5a1 1 0 1 1-.6-1.9c4.6-1.4 10.3-.7 14.2 1.7.4.3.6.9.3 1.4zm.1-2.9C13.5 8.4 7 8.2 3.1 9.4a1.2 1.2 0 0 1-.7-2.3C6.9 5.7 14.1 6 18.7 8.7a1.2 1.2 0 0 1-1.2 2.1z"
+      />
+    </svg>
+  ),
+  яндекс: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <text
+        x="12"
+        y="16.5"
+        textAnchor="middle"
+        fontSize="11"
+        fontWeight="700"
+        fontFamily="inherit"
+        fill="currentColor"
+      >
+        Я
+      </text>
+    </svg>
+  ),
+  звук: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <text
+        x="12"
+        y="16.5"
+        textAnchor="middle"
+        fontSize="11"
+        fontWeight="700"
+        fontFamily="inherit"
+        fill="currentColor"
+      >
+        З
+      </text>
+    </svg>
+  ),
+  вк: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <text
+        x="12"
+        y="16.5"
+        textAnchor="middle"
+        fontSize="11"
+        fontWeight="700"
+        fontFamily="inherit"
+        fill="currentColor"
+      >
+        VK
+      </text>
+    </svg>
+  ),
+}
+
+function platformIcon(name: string): ReactNode {
+  const key = name.toLowerCase()
+  const known = Object.keys(PLATFORM_ICONS).find((platform) =>
+    key.includes(platform),
+  )
+
+  return known ? PLATFORM_ICONS[known] : null
+}
 
 const DEFAULT_EPISODES: Podcast003Episode[] = [
   { number: "12", title: "Как ИИ меняет фронтенд", duration: "48 мин" },
@@ -145,6 +224,7 @@ export function Podcast003({
             <div data-part="platforms" aria-label={subscribeLabel}>
               {platforms.map((platform) => (
                 <a key={platform} href="#" data-part="platform">
+                  {platformIcon(platform)}
                   {platform}
                 </a>
               ))}

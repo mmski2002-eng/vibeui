@@ -13,6 +13,8 @@ export type Autocomplete005Props = Omit<
   search?: (query: string) => Promise<string[]>
   defaultQuery?: string
   delay?: number
+  /** Показать список сразу, без фокуса: витрина и скриншоты. */
+  defaultOpen?: boolean
   /** Строка состояния: ключи loading, empty, idle. */
   statusText?: Record<string, string>
   onSelect?: (value: string) => void
@@ -69,7 +71,9 @@ border-top-color:var(--vibeui-autocomplete-005-accent);
 border-radius:9999px;animation:vibeui-autocomplete-005-spin .7s linear infinite;
 }
 @keyframes vibeui-autocomplete-005-spin{to{transform:rotate(360deg)}}
+[data-vibeui-block="autocomplete-005"] [data-part="anchor"]{position:relative}
 [data-vibeui-block="autocomplete-005"] [data-part="list"]{
+position:absolute;left:0;right:0;top:calc(100% + 0.25rem);z-index:30;box-shadow:0 12px 28px -14px oklch(0 0 0 / 40%);
 margin:0;padding:0.25rem;list-style:none;max-height:10rem;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--vibeui-autocomplete-005-border) transparent;
 border:1px solid var(--vibeui-autocomplete-005-border);
 border-radius:var(--vibeui-autocomplete-005-radius);
@@ -168,6 +172,7 @@ export function Autocomplete005({
   delay = 320,
   statusText = STATUS_TEXT,
   onSelect,
+  defaultOpen = false,
   background = "",
   accent,
   className,
@@ -175,6 +180,7 @@ export function Autocomplete005({
   ...props
 }: Autocomplete005Props) {
   const id = useId()
+  const [open, setOpen] = useState(defaultOpen)
   const [query, setQuery] = useState(defaultQuery)
   const [items, setItems] = useState<string[]>([])
   const [loading, setLoading] = useState(Boolean(defaultQuery))
@@ -224,52 +230,56 @@ export function Autocomplete005({
         style={palette}
       >
         <label htmlFor={id}>{label}</label>
-        <div data-part="field">
-          <input
-            id={id}
-            type="text"
-            role="combobox"
-            autoComplete="off"
-            placeholder={placeholder}
-            value={query}
-            aria-expanded={items.length > 0}
-            aria-controls={`${id}-list`}
-            aria-autocomplete="list"
-            aria-busy={loading}
-            onChange={(event) => {
-              const next = event.target.value
-              setQuery(next)
-              setLoading(Boolean(next.trim()))
-              if (!next.trim()) setItems([])
-            }}
-          />
-          {loading ? <span data-part="spinner" aria-hidden="true" /> : null}
+        <div data-part="anchor">
+          <div data-part="field">
+            <input
+              id={id}
+              type="text"
+              role="combobox"
+              autoComplete="off"
+              placeholder={placeholder}
+              value={query}
+              aria-expanded={open && items.length > 0}
+              aria-controls={`${id}-list`}
+              aria-autocomplete="list"
+              aria-busy={loading}
+              onFocus={() => setOpen(true)}
+              onBlur={() => setOpen(false)}
+              onChange={(event) => {
+                const next = event.target.value
+                setQuery(next)
+                setLoading(Boolean(next.trim()))
+                if (!next.trim()) setItems([])
+              }}
+            />
+            {loading ? <span data-part="spinner" aria-hidden="true" /> : null}
+          </div>
+          {open && items.length ? (
+            <ul
+              id={`${id}-list`}
+              role="listbox"
+              aria-label={label}
+              data-part="list"
+            >
+              {items.map((item) => (
+                <li
+                  key={item}
+                  role="option"
+                  aria-selected="false"
+                  data-part="option"
+                  onMouseDown={(event) => {
+                    event.preventDefault()
+                    setQuery(item)
+                    setItems([])
+                    onSelect?.(item)
+                  }}
+                >
+                  {highlight(item, query.trim())}
+                </li>
+              ))}
+            </ul>
+          ) : null}
         </div>
-        {items.length ? (
-          <ul
-            id={`${id}-list`}
-            role="listbox"
-            aria-label={label}
-            data-part="list"
-          >
-            {items.map((item) => (
-              <li
-                key={item}
-                role="option"
-                aria-selected="false"
-                data-part="option"
-                onMouseDown={(event) => {
-                  event.preventDefault()
-                  setQuery(item)
-                  setItems([])
-                  onSelect?.(item)
-                }}
-              >
-                {highlight(item, query.trim())}
-              </li>
-            ))}
-          </ul>
-        ) : null}
         <span data-part="status" role="status">
           {loading
             ? (statusText.loading ?? STATUS_TEXT.loading)

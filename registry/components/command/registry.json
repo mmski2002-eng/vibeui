@@ -2543,6 +2543,188 @@
           "width": "full"
         }
       }
+    },
+    {
+      "name": "command-015",
+      "type": "registry:component",
+      "title": "Распускающаяся палитра",
+      "description": "Палитра команд, которая распускается прямо под кнопкой и раздвигает поток: панель выезжает пружиной, строки появляются со стаггером, ввод фильтрует список.",
+      "categories": ["command"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "command-015/command-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/command-015.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-command-015-*. Клиентский: \"use client\" ради поиска, стрелок и раскрытия. Высота панели анимируется через grid-template-rows: 0fr → 1fr с пружинной кривой linear() — это единственный способ развернуть содержимое неизвестной высоты без замера в JS; поверх идут scale и прозрачность. Свёрнутая панель убрана через visibility, иначе поле ввода и строки остаются в порядке обхода табом. Стаггер строк держится на --vibeui-command-015-index в transition-delay. Стрелки ходят по отфильтрованному списку, Enter запускает подсвеченную строку, Escape и клик мимо закрывают и возвращают фокус на кнопку. Тема — light-dark() плюс правило :where(.dark,[data-theme=\"dark\"]) … {color-scheme:dark}.",
+      "meta": {
+        "tags": ["command", "palette", "search", "spring", "stagger"],
+        "ai": {
+          "export": "Command015",
+          "usage": "<Command015\n  triggerLabel=\"Открыть действия\"\n  commands={[{ label: \"Поделиться видом\", hint: \"S\" }]}\n/>",
+          "summary": "Палитра команд без модалки: кнопка, из которой пружиной распускается панель с поиском и списком, строки въезжают со стаггером. Фильтрация по вводу, стрелки и Enter по списку, Escape и клик мимо закрывают. Ноль зависимостей, один файл, собственная палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-command-015-* — не подменять её токенами вашей темы",
+            "раскрытие через grid-template-rows: 0fr → 1fr — только так анимируется высота неизвестного содержимого без замера в JS",
+            "пружинную кривую linear() и стаггер 55 мс на строку: без них панель просто подставляется",
+            "visibility у свёрнутой панели — иначе поле ввода и строки остаются в порядке обхода табом",
+            "aria-expanded на кнопке и связку combobox/listbox с aria-activedescendant",
+            "Escape и клик мимо с возвратом фокуса на кнопку",
+            "light-dark() в палитре: компонент обязан слушаться color-scheme окружения, а не нести свою тёмную тему"
+          ],
+          "adapt": [
+            "массив commands: подписи и правые подсказки hint",
+            "подписи triggerLabel и placeholder",
+            "emptyText — ответ на пустой поиск",
+            "defaultOpen — раскрыть панель сразу, как на витрине",
+            "accent — цвет иконок, фокусного кольца и рамки раскрытой кнопки",
+            "background — подложка компонента; пусто оставляет фон страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, в проекте должен быть объявлен color-scheme: light dark на html — иначе light-dark() всегда возвращает светлую ветку.",
+            "Панель раздвигает поток, а не всплывает над ним: место под кнопкой должно быть. Если его нет, берите палитру на нативном <dialog>.",
+            "Компонент не вешает глобальный Ctrl+K: подсказка нарисована на кнопке, обработчик ваш.",
+            "Поиск ищет подстроку в подписи: нечёткий поиск и синонимы — в вашем фильтре.",
+            "Не выносите CSS-переменные в globals.css: компонент должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "triggerLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Открыть действия",
+            "maxLength": 24
+          },
+          {
+            "prop": "placeholder",
+            "label": "Плейсхолдер",
+            "type": "text",
+            "default": "Найти команду…",
+            "maxLength": 28
+          },
+          {
+            "prop": "emptyText",
+            "label": "Пустой ответ",
+            "type": "text",
+            "default": "Ничего не нашлось. Проверьте формулировку.",
+            "maxLength": 48
+          },
+          {
+            "prop": "defaultOpen",
+            "label": "Раскрыто",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Command Palette Bloom",
+            "description": "A command palette that blooms right under its trigger and pushes the flow apart: the panel springs open, the rows arrive with a stagger, and typing filters the list.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-command-015-* variables. Client-side: \"use client\" for search, arrow keys and the open state. The panel height is animated through grid-template-rows: 0fr → 1fr with a linear() spring curve — the only way to unfold content of unknown height without measuring it in JS; scale and opacity ride on top. The collapsed panel is removed with visibility, otherwise the input and the rows stay in the tab order. The row stagger rests on --vibeui-command-015-index inside transition-delay. Arrows walk the filtered list, Enter runs the highlighted row, and Escape or an outside click closes the panel and returns focus to the trigger. The theme comes from light-dark() plus the :where(.dark,[data-theme=\"dark\"]) … {color-scheme:dark} rule.",
+            "ai": {
+              "summary": "A command palette without a modal: a trigger that springs open into a panel with a search field and a list, the rows sliding in with a stagger. Typing filters, arrows and Enter walk the list, Escape and an outside click close it. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-command-015-* palette — do not swap it for your theme tokens",
+                "the grid-template-rows: 0fr → 1fr reveal — it is the only way to animate the height of unknown content without measuring it in JS",
+                "the linear() spring curve and the 55 ms per-row stagger: without them the panel is merely substituted",
+                "visibility on the collapsed panel — otherwise the input and the rows stay in the tab order",
+                "aria-expanded on the trigger and the combobox/listbox pairing with aria-activedescendant",
+                "Escape and the outside click with focus returned to the trigger",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the commands array: the labels and the right-hand hint captions",
+                "the triggerLabel and placeholder copy",
+                "emptyText — the answer to an empty search",
+                "defaultOpen — open the panel straight away, as on the showcase",
+                "accent — the colour of the icons, the focus ring and the open trigger's border",
+                "background — the component surface; empty keeps the page background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The panel pushes the flow apart instead of floating above it, so there has to be room under the trigger. If there is none, use a palette built on a native <dialog>.",
+                "The component does not bind a global Ctrl+K: the hint is drawn on the trigger, the handler is yours.",
+                "Search is a substring match on the label: fuzzy search and synonyms belong in your own filter.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Command015\n  triggerLabel=\"Open actions\"\n  commands={[{ label: \"Share current view\", hint: \"S\" }]}\n/>"
+            },
+            "controls": {
+              "triggerLabel": {
+                "label": "Trigger",
+                "default": "Open actions"
+              },
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Find a command…"
+              },
+              "emptyText": {
+                "label": "Empty answer",
+                "default": "Nothing found. Try rewording."
+              },
+              "defaultOpen": {
+                "label": "Open"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "triggerLabel": "Open actions",
+                "placeholder": "Find a command…",
+                "emptyText": "Nothing found. Try rewording.",
+                "commands": [
+                  {
+                    "label": "Share current view",
+                    "hint": "S"
+                  },
+                  {
+                    "label": "Duplicate canvas",
+                    "hint": "D"
+                  },
+                  {
+                    "label": "Copy deep link",
+                    "hint": "L"
+                  }
+                ],
+                "defaultOpen": true
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "triggerLabel",
+          "placeholder",
+          "defaultOpen",
+          "accent"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "defaultOpen": true
+          }
+        }
+      }
     }
   ]
 }

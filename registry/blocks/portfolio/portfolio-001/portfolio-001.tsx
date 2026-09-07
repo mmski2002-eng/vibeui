@@ -135,7 +135,12 @@ export function Portfolio001({
           <h2 data-part="title">{title}</h2>
           <div data-part="grid">
             {works.map((work) => (
-              <a key={work.title} href="#" data-part="tile" data-span={work.span}>
+              <a
+                key={work.title}
+                href="#"
+                data-part="tile"
+                data-span={work.span}
+              >
                 <span data-part="cat">{work.category}</span>
                 <span data-part="work-title">{work.title}</span>
               </a>

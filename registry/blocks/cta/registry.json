@@ -2141,7 +2141,8 @@
             "двухколоночную раскладку от собственной ширины блока: в узкой колонке QR уходит под текст",
             "блок <style> внутри компонента — в нём палитра, узор и раскладка",
             "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
-            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "значки платформ в бейджах (Apple для iOS, робот для Android) — подбираются по названию магазина, без внешних иконок"
           ],
           "adapt": [
             "eyebrow, title и description — надзаголовок, заголовок и объяснение",
@@ -2204,7 +2205,8 @@
                 "the two-column layout driven by the block's own width: in a narrow column the QR drops under the text",
                 "the <style> block inside the component — it holds the palette, the pattern and the layout",
                 "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
-                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the platform marks in the badges (Apple for iOS, the robot for Android) — matched by the store name, no external icon set"
               ],
               "adapt": [
                 "eyebrow, title and description — the eyebrow, the heading and the explanation",
@@ -2246,7 +2248,11 @@
                 "description": "Save the blocks you like on the go, then hand the shortlist to your AI agent at your desk. Point your camera — the install takes a minute.",
                 "qrCaption": "Point your camera",
                 "badges": [
-                  { "caption": "Get it for", "store": "iOS", "href": "#ios" },
+                  {
+                    "caption": "Get it for",
+                    "store": "iOS",
+                    "href": "#ios"
+                  },
                   {
                     "caption": "Get it for",
                     "store": "Android",

@@ -1,0 +1,162 @@
+import Link from "next/link"
+import { ArrowUpRight } from "lucide-react"
+
+import { ShowcasePreview } from "@/components/pages/landing/showcase-preview"
+import { localePath, type Locale } from "@/lib/i18n"
+import { localizeItem } from "@/lib/localize"
+import { getCatalogItem, getItemKind, itemBasePath } from "@/registry/index"
+
+const PICKS = [
+  {
+    slug: "hero-018",
+    width: 1280,
+    ru: "Светлый первый экран",
+    en: "A lighter first impression",
+    note: "Лендинг · крупная типографика",
+    noteEn: "Landing page · bold typography",
+    wide: true,
+  },
+  {
+    slug: "hero-001",
+    width: 1280,
+    ru: "Первый экран с сиянием",
+    en: "A hero with a glow",
+    note: "Лендинг · мягкое свечение",
+    noteEn: "Landing page · ambient glow",
+    wide: true,
+  },
+  {
+    slug: "stack-001",
+    width: 480,
+    ru: "Фотографии веером",
+    en: "Photos in motion",
+    note: "Галерея · анимация",
+    noteEn: "Gallery · animation",
+  },
+  {
+    slug: "pricing-001",
+    width: 1100,
+    ru: "Тарифы с акцентом",
+    en: "Pricing that stands out",
+    note: "Готовая секция · три плана",
+    noteEn: "Page section · three plans",
+  },
+  {
+    slug: "auth-001",
+    width: 370,
+    ru: "Вход в личный кабинет",
+    en: "A welcoming sign-in",
+    note: "Форма · вход и регистрация",
+    noteEn: "Form · account access",
+  },
+  {
+    slug: "chart-001",
+    width: 440,
+    ru: "Метрики на виду",
+    en: "Metrics at a glance",
+    note: "График · личный кабинет",
+    noteEn: "Chart · dashboard",
+  },
+  {
+    slug: "button-003",
+    width: 340,
+    ru: "Кнопка, которую замечают",
+    en: "A button worth clicking",
+    note: "Компонент · градиент",
+    noteEn: "Component · gradient",
+  },
+  {
+    slug: "activity-001",
+    width: 340,
+    ru: "События в движении",
+    en: "A timeline in motion",
+    note: "Лента событий · анимация",
+    noteEn: "Timeline · animation",
+  },
+]
+
+export function DesignShowcase({ locale }: { locale: Locale }) {
+  const en = locale === "en"
+  return (
+    <section
+      id="designs"
+      aria-labelledby="designs-title"
+      className="mx-auto w-full max-w-[1320px] scroll-mt-24 px-4 pt-4 pb-8 lg:px-6"
+    >
+      <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="text-shell-accent mb-2 text-xs font-medium tracking-[0.16em] uppercase">
+            {en ? "Selected for inspiration" : "Выбрали для вдохновения"}
+          </p>
+          <h2
+            id="designs-title"
+            className="text-shell-fg text-2xl font-semibold tracking-tight sm:text-3xl"
+          >
+            {en ? "What will your site look like?" : "Каким будет твой сайт?"}
+          </h2>
+        </div>
+        <p className="text-shell-muted max-w-sm text-sm">
+          {en
+            ? "Pick a design to open its preview and take it to your AI."
+            : "Нажми на понравившийся дизайн — посмотри вживую и забери для ИИ."}
+        </p>
+      </div>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
+        {PICKS.map((pick) => {
+          const source = getCatalogItem(pick.slug)
+          const kind = getItemKind(pick.slug)
+          if (!source || !kind || !source.categories?.[0]) return null
+          const item = localizeItem(source, locale)
+          return (
+            <article
+              key={pick.slug}
+              className={`group border-shell-border bg-shell-panel hover:border-shell-accent/60 relative min-w-0 overflow-hidden rounded-2xl border transition-colors ${pick.wide ? "lg:col-span-3" : "lg:col-span-2"}`}
+            >
+              <div
+                data-preview-theme={
+                  pick.slug === "hero-018" || pick.slug === "auth-001"
+                    ? "light"
+                    : "dark"
+                }
+                className={`bg-preview-surface pointer-events-none overflow-hidden ${pick.wide ? "h-[250px] sm:h-[280px] lg:h-[340px]" : "h-[300px] p-5"}`}
+              >
+                <ShowcasePreview
+                  slug={pick.slug}
+                  kind={kind}
+                  category={source.categories[0]}
+                  width={pick.width}
+                  props={{
+                    ...item.meta?.preview?.props,
+                    ...(pick.slug === "stack-001" ? { open: true } : {}),
+                  }}
+                />
+              </div>
+              <div className="border-shell-border flex items-center justify-between gap-4 border-t px-5 py-4">
+                <div className="min-w-0">
+                  <p className="text-shell-muted mb-1 text-xs">
+                    {en ? pick.noteEn : pick.note}
+                  </p>
+                  <h3 className="text-shell-fg text-sm font-medium sm:text-base">
+                    <Link
+                      href={localePath(
+                        locale,
+                        `${itemBasePath(kind)}/${pick.slug}`,
+                      )}
+                      prefetch={false}
+                      className="focus-visible:after:ring-shell-ring after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-inset"
+                    >
+                      {en ? pick.en : pick.ru}
+                    </Link>
+                  </h3>
+                </div>
+                <span className="border-shell-border text-shell-muted group-hover:bg-shell-accent group-hover:text-shell-accent-fg flex size-9 shrink-0 items-center justify-center rounded-full border transition-colors">
+                  <ArrowUpRight className="size-4" aria-hidden="true" />
+                </span>
+              </div>
+            </article>
+          )
+        })}
+      </div>
+    </section>
+  )
+}

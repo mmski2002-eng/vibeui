@@ -56,7 +56,7 @@ container-type:inline-size;
 box-sizing:border-box;width:100%;
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
-min-width:min(100%,15rem);max-width:19rem;padding:0.875rem;
+min-width:min(100%,15rem);max-width:19rem;margin-inline:auto;padding:0.875rem;
 background:var(--vibeui-dashboard-005-bg);
 border:1px solid var(--vibeui-dashboard-005-border);border-radius:1rem;
 font-family:var(--vibeui-dashboard-005-sans);color:var(--vibeui-dashboard-005-fg);

@@ -1,8 +1,9 @@
 import type { CSSProperties } from "react"
 
-type Comparison003Pair = {
-  label: string
+type Comparison003Row = {
+  /** Что человек делает или получает сейчас. */
   before: string
+  /** Что становится после. */
   after: string
 }
 
@@ -11,7 +12,8 @@ export type Comparison003Props = {
   title?: string
   beforeLabel?: string
   afterLabel?: string
-  pairs?: Comparison003Pair[]
+  rows?: Comparison003Row[]
+  note?: string
   /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
   background?: string
   accent?: string
@@ -19,10 +21,13 @@ export type Comparison003Props = {
   style?: CSSProperties
 }
 
-// Сравнение «до и после»: строки метрик с двумя значениями и стрелкой между
-// ними. Колонка «после» — брендовым акцентом, «до» приглушена. Формат
-// результата миграции или улучшения: показывает не набор галочек, а
-// изменение чисел от было к стало.
+// «Было — стало»: две колонки, между ними полоса перехода. Формат для услуги
+// и продукта, где сравнивать надо не функции с конкурентом, а жизнь клиента
+// до и после. Левая колонка приглушена и перечёркнутая по смыслу — это
+// прошлое; правая набрана акцентом.
+//
+// Строки идут парами и на узком экране складываются в столбик, не теряя
+// связки: каждая пара остаётся одной карточкой со стрелкой между половинами.
 const STYLES = `
 :where([data-vibeui-block="comparison-003"]){
 --vibeui-comparison-003-bg:transparent;
@@ -31,6 +36,7 @@ const STYLES = `
 --vibeui-comparison-003-border:light-dark(oklch(0.9 0 0),oklch(0.3 0 0));
 --vibeui-comparison-003-card:light-dark(oklch(0.98 0 0),oklch(0.2 0 0));
 --vibeui-comparison-003-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
+--vibeui-comparison-003-accent-soft:light-dark(oklch(0.55 0.2144 39.8 / 10%),oklch(0.6803 0.2144 39.8 / 16%));
 --vibeui-comparison-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -38,32 +44,71 @@ container-type:inline-size;
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="comparison-003"]{color-scheme:dark}
 [data-vibeui-block="comparison-003"]{
-min-width:min(100%,16rem);
-display:block;background:var(--vibeui-comparison-003-bg);color:var(--vibeui-comparison-003-ink);
+min-width:min(100%,16rem);display:block;
+background:var(--vibeui-comparison-003-bg);color:var(--vibeui-comparison-003-ink);
 font-family:var(--vibeui-comparison-003-font);
 }
-[data-vibeui-block="comparison-003"] [data-part="shell"]{max-width:48rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="comparison-003"] [data-part="eyebrow"]{margin:0 0 0.5rem;color:var(--vibeui-comparison-003-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;text-align:center}
-[data-vibeui-block="comparison-003"] [data-part="title"]{margin:0 0 2.25rem;font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;text-align:center}
-[data-vibeui-block="comparison-003"] [data-part="list"]{list-style:none;margin:0;padding:0;display:grid;gap:0.75rem}
+[data-vibeui-block="comparison-003"] [data-part="shell"]{max-width:60rem;margin:0 auto;padding:3rem 1.25rem}
+[data-vibeui-block="comparison-003"] [data-part="eyebrow"]{margin:0 0 0.5rem;color:var(--vibeui-comparison-003-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
+[data-vibeui-block="comparison-003"] [data-part="title"]{margin:0 0 2rem;font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;max-width:24ch}
+[data-vibeui-block="comparison-003"] [data-part="heads"]{display:none}
+[data-vibeui-block="comparison-003"] [data-part="rows"]{list-style:none;margin:0;padding:0;display:grid;gap:0.75rem}
 [data-vibeui-block="comparison-003"] [data-part="row"]{
-padding:1.125rem;border:1px solid var(--vibeui-comparison-003-border);border-radius:1rem;
+display:grid;gap:0.75rem;align-items:stretch;
+grid-template-columns:minmax(0,1fr);
+padding:1rem;border:1px solid var(--vibeui-comparison-003-border);border-radius:1rem;
 background:var(--vibeui-comparison-003-card);
 }
-[data-vibeui-block="comparison-003"] [data-part="label"]{margin:0 0 0.625rem;font-size:0.8125rem;font-weight:600;color:var(--vibeui-comparison-003-muted);letter-spacing:0.02em;text-transform:uppercase}
-[data-vibeui-block="comparison-003"] [data-part="pair"]{display:grid;grid-template-columns:1fr auto 1fr;gap:0.75rem;align-items:center}
-[data-vibeui-block="comparison-003"] [data-part="before"]{font-size:1.0625rem;font-weight:600;color:var(--vibeui-comparison-003-muted);text-decoration:line-through;text-decoration-color:color-mix(in oklab,var(--vibeui-comparison-003-muted) 50%,transparent)}
-[data-vibeui-block="comparison-003"] [data-part="arrow"]{color:var(--vibeui-comparison-003-accent);font-size:1.125rem;line-height:1}
-[data-vibeui-block="comparison-003"] [data-part="after"]{font-size:1.25rem;font-weight:750;color:var(--vibeui-comparison-003-accent);text-align:right}
-@container (min-width: 40rem){[data-vibeui-block="comparison-003"] [data-part="shell"]{padding:4rem 2rem}}
+[data-vibeui-block="comparison-003"] [data-part="cell"]{min-inline-size:0;display:flex;gap:0.625rem;align-items:flex-start;font-size:0.9375rem;line-height:1.5}
+[data-vibeui-block="comparison-003"] [data-part="cell"][data-side="before"]{color:var(--vibeui-comparison-003-muted)}
+[data-vibeui-block="comparison-003"] [data-part="mark"]{
+flex:none;display:grid;place-items:center;width:1.25rem;height:1.25rem;margin-top:0.125rem;
+border-radius:999px;font-size:0.75rem;font-weight:700;line-height:1;
+}
+[data-vibeui-block="comparison-003"] [data-part="cell"][data-side="before"] [data-part="mark"]{
+border:1px solid var(--vibeui-comparison-003-border);color:var(--vibeui-comparison-003-muted);
+}
+[data-vibeui-block="comparison-003"] [data-part="cell"][data-side="after"] [data-part="mark"]{
+background:var(--vibeui-comparison-003-accent-soft);color:var(--vibeui-comparison-003-accent);
+}
+[data-vibeui-block="comparison-003"] [data-part="label"]{
+display:block;margin-bottom:0.125rem;font-size:0.6875rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+color:var(--vibeui-comparison-003-muted);
+}
+[data-vibeui-block="comparison-003"] [data-part="note"]{margin:1.5rem 0 0;color:var(--vibeui-comparison-003-muted);font-size:0.875rem;line-height:1.5}
+@container (min-width: 44rem){
+[data-vibeui-block="comparison-003"] [data-part="shell"]{padding:4rem 2rem}
+/* На широком экране подписи колонок выносятся в шапку таблицы, а из
+   строк уходят: повторять «Было / Стало» в каждой паре незачем. */
+[data-vibeui-block="comparison-003"] [data-part="heads"]{
+display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem;
+margin:0 0 0.75rem;padding:0 1rem;
+}
+[data-vibeui-block="comparison-003"] [data-part="head"]{margin:0;font-size:0.6875rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--vibeui-comparison-003-muted)}
+[data-vibeui-block="comparison-003"] [data-part="head"][data-side="after"]{color:var(--vibeui-comparison-003-accent)}
+[data-vibeui-block="comparison-003"] [data-part="row"]{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem;padding:1rem}
+[data-vibeui-block="comparison-003"] [data-part="label"]{display:none}
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="comparison-003"] *{animation:none!important;transition:none!important}}
 `
 
-const DEFAULT_PAIRS: Comparison003Pair[] = [
-  { label: "Время на сборку страницы", before: "1 неделя", after: "1 вечер" },
-  { label: "Зависимости на компонент", before: "12+", after: "0" },
-  { label: "Правок после установки", before: "Десятки", after: "Ноль" },
-  { label: "Размер бандла блока", before: "40 МБ", after: "1 файл" },
+const DEFAULT_ROWS: Comparison003Row[] = [
+  {
+    before: "Ищете подходящий компонент по десятку вкладок",
+    after: "Открываете сценарий и берёте готовую секцию",
+  },
+  {
+    before: "Объясняете агенту дизайн словами",
+    after: "Даёте ссылку — агент ставит тот же файл",
+  },
+  {
+    before: "Правите вёрстку после каждой генерации",
+    after: "Меняете только тексты и картинки",
+  },
+  {
+    before: "Тянете в проект чужую тему и пакеты",
+    after: "Один файл, своя палитра, ноль зависимостей",
+  },
 ]
 
 /**
@@ -88,13 +133,14 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
-/** Сравнение «до и после»: строки метрик с было → стало и стрелкой. */
+/** Сравнение «было — стало»: пары строк, прошлое приглушено, будущее в акценте. */
 export function Comparison003({
-  eyebrow = "До и после",
-  title = "Что меняется с VibeUI",
+  eyebrow = "Что меняется",
+  title = "Было и стало",
   beforeLabel = "Было",
   afterLabel = "Стало",
-  pairs = DEFAULT_PAIRS,
+  rows = DEFAULT_ROWS,
+  note = "",
   background = "",
   accent,
   className,
@@ -124,24 +170,42 @@ export function Comparison003({
         <div data-part="shell">
           <p data-part="eyebrow">{eyebrow}</p>
           <h2 data-part="title">{title}</h2>
-          <ul data-part="list">
-            {pairs.map((pair) => (
-              <li key={pair.label} data-part="row">
-                <p data-part="label">{pair.label}</p>
-                <div data-part="pair">
-                  <span data-part="before" aria-label={`${beforeLabel}: ${pair.before}`}>
-                    {pair.before}
+
+          <div data-part="heads" aria-hidden="true">
+            <p data-part="head" data-side="before">
+              {beforeLabel}
+            </p>
+            <p data-part="head" data-side="after">
+              {afterLabel}
+            </p>
+          </div>
+
+          <ul data-part="rows">
+            {rows.map((row) => (
+              <li key={row.before} data-part="row">
+                <div data-part="cell" data-side="before">
+                  <span data-part="mark" aria-hidden="true">
+                    —
                   </span>
-                  <span data-part="arrow" aria-hidden="true">
+                  <span>
+                    <span data-part="label">{beforeLabel}</span>
+                    {row.before}
+                  </span>
+                </div>
+                <div data-part="cell" data-side="after">
+                  <span data-part="mark" aria-hidden="true">
                     →
                   </span>
-                  <span data-part="after" aria-label={`${afterLabel}: ${pair.after}`}>
-                    {pair.after}
+                  <span>
+                    <span data-part="label">{afterLabel}</span>
+                    {row.after}
                   </span>
                 </div>
               </li>
             ))}
           </ul>
+
+          {note ? <p data-part="note">{note}</p> : null}
         </div>
       </section>
     </>

@@ -227,9 +227,18 @@
                 "title": "Anna Cole",
                 "status": "online",
                 "messages": [
-                  { "text": "Hey! Free for a call at 3pm?", "author": "them" },
-                  { "text": "Yep, I'll be on time", "author": "me" },
-                  { "text": "Great, sending the link over", "author": "them" }
+                  {
+                    "text": "Hey! Free for a call at 3pm?",
+                    "author": "them"
+                  },
+                  {
+                    "text": "Yep, I'll be on time",
+                    "author": "me"
+                  },
+                  {
+                    "text": "Great, sending the link over",
+                    "author": "them"
+                  }
                 ]
               }
             }
@@ -244,163 +253,18 @@
                 "text": "Привет! Готов созвониться в 15:00?",
                 "author": "them"
               },
-              { "text": "Да, буду вовремя", "author": "me" },
-              { "text": "Отлично, скину ссылку на встречу", "author": "them" }
+              {
+                "text": "Да, буду вовремя",
+                "author": "me"
+              },
+              {
+                "text": "Отлично, скину ссылку на встречу",
+                "author": "them"
+              }
             ]
           }
         },
         "cardControls": ["typing", "accent"]
-      }
-    },
-    {
-      "name": "chat-003",
-      "type": "registry:component",
-      "title": "Тред",
-      "description": "Тред обсуждения с вложенными ответами и пилюлями реакций: реакции всплывают по очереди с перелётом, ответы въезжают снизу по вертикальной линии треда.",
-      "categories": ["chat"],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "chat-003/chat-003.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/chat-003.tsx"
-        }
-      ],
-      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-chat-003-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Пилюли реакций всплывают с перелётом (pop-scale, cubic-bezier с overshoot), вложенные ответы въезжают снизу по очереди вдоль вертикальной линии треда; всё гаснет при prefers-reduced-motion.",
-      "meta": {
-        "tags": [
-          "chat",
-          "thread",
-          "replies",
-          "reactions",
-          "comments",
-          "animated"
-        ],
-        "ai": {
-          "export": "Chat003",
-          "usage": "<Chat003 author=\"Марина Волкова\" message=\"Обновила макет\" replies={[{ author: \"Игорь\", text: \"Класс!\" }]} />",
-          "summary": "Тред обсуждения: корневое сообщение с аватаром, текстом и пилюлями реакций, под ним — вложенные ответы вдоль вертикальной линии. Реакции всплывают по очереди с перелётом, ответы въезжают снизу. Ноль зависимостей, один файл, клиентского JS нет.",
-          "preserve": [
-            "локальную палитру --vibeui-chat-003-* — не подменяйте её токенами вашей темы",
-            "вертикальную линию треда слева от вложенных ответов",
-            "всплытие пилюль реакций по очереди с лёгким перелётом (overshoot)",
-            "въезд ответов снизу по очереди вдоль линии треда",
-            "пилюли реакций: эмодзи плюс счётчик",
-            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта"
-          ],
-          "adapt": [
-            "текст корневого сообщения message, автора author и относительное время meta",
-            "список replies: автор, текст и время каждого ответа",
-            "список reactions: эмодзи и счётчик",
-            "showReactions и threadLine — скрыть пилюли реакций или линию треда",
-            "акцентный цвет через проп accent под свой бренд"
-          ],
-          "notes": [
-            "инициалы аватаров берутся из первой буквы author — задавайте настоящее имя, а не логин",
-            "стаггер реакций и ответов рассчитан на 3–4 пилюли и 2–4 ответа"
-          ]
-        },
-        "controls": [
-          {
-            "prop": "showReactions",
-            "label": "Реакции",
-            "type": "boolean",
-            "default": true
-          },
-          {
-            "prop": "threadLine",
-            "label": "Линия треда",
-            "type": "boolean",
-            "default": true
-          },
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "i18n": {
-          "en": {
-            "title": "Thread",
-            "description": "A threaded message view with replies and reactions: reaction pills pop in one by one with a slight overshoot, and replies slide up one by one along the thread's vertical line.",
-            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-chat-003-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Reaction pills pop in with overshoot (cubic-bezier), nested replies rise in one by one along the thread's vertical line; everything stops under prefers-reduced-motion.",
-            "ai": {
-              "summary": "A discussion thread: a root message with an avatar, text and reaction pills, with nested replies below along a vertical thread line. Reactions pop in one by one with overshoot, replies rise in from the bottom. Zero dependencies, one file, no client JS.",
-              "preserve": [
-                "the local --vibeui-chat-003-* palette — do not swap it for your theme tokens",
-                "the vertical thread line to the left of nested replies",
-                "the one-by-one pop-in of reaction pills with a slight overshoot",
-                "the bottom-up, one-by-one rise of replies along the thread line",
-                "the reaction pills: emoji plus a count",
-                "the .dark class rule: without it the component stays light on a dark page in another project"
-              ],
-              "adapt": [
-                "the root message text, author and relative time (message, author, meta)",
-                "the replies list: author, text and time for each reply",
-                "the reactions list: emoji and count",
-                "showReactions and threadLine — hide the reaction pills or the thread line",
-                "the accent color via the accent prop to match your brand"
-              ],
-              "notes": [
-                "avatar initials come from the first letter of author — use a real name, not a login",
-                "the reaction and reply stagger is tuned for 3–4 pills and 2–4 replies"
-              ],
-              "usage": "<Chat003 author=\"Marina Wolf\" message=\"Updated the card layout\" replies={[{ author: \"Igor\", text: \"Nice!\" }]} />"
-            },
-            "controls": {
-              "showReactions": {
-                "label": "Reactions"
-              },
-              "threadLine": {
-                "label": "Thread line"
-              },
-              "accent": {
-                "label": "Accent"
-              }
-            },
-            "preview": {
-              "props": {
-                "author": "Marina Wolf",
-                "meta": "2h ago",
-                "message": "Updated the card layout — added shadows and fixed the spacing. Take a look, please.",
-                "replies": [
-                  {
-                    "author": "Igor Petrov",
-                    "text": "Looks great, though the bottom shadow feels heavy",
-                    "meta": "1h"
-                  },
-                  {
-                    "author": "Marina Wolf",
-                    "text": "Ok, I'll soften it",
-                    "meta": "45m"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "preview": {
-          "props": {
-            "author": "Марина Волкова",
-            "meta": "2 ч назад",
-            "message": "Обновила макет карточки — добавила тени и поправила отступы. Гляньте, пожалуйста.",
-            "replies": [
-              {
-                "author": "Игорь Петров",
-                "text": "Выглядит отлично, только тень снизу тяжеловата",
-                "meta": "1 ч"
-              },
-              {
-                "author": "Марина Волкова",
-                "text": "Ок, сделаю мягче",
-                "meta": "45 мин"
-              }
-            ]
-          }
-        },
-        "cardControls": ["showReactions", "threadLine", "accent"]
       }
     }
   ]

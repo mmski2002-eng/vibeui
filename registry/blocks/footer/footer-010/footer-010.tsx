@@ -23,7 +23,7 @@ export type Footer010Props = {
 }
 
 // Подвал с огромным полупрозрачным wordmark внизу: колонки ссылок сверху,
-// под ними имя бренда во всю ширину блока, срезанное нижним краем. Приём
+// под ними имя бренда во всю ширину блока, целиком, до нижней кромки. Приём
 // работает как подпись под письмом — последнее, что видит посетитель,
 // это имя. Wordmark набран через цвет-с-прозрачностью от чернил, а не
 // отдельным серым: так он остаётся читаемым на любой подложке и в обеих
@@ -79,7 +79,7 @@ color:var(--vibeui-footer-010-muted);font-size:0.8125rem;
 }
 [data-vibeui-block="footer-010"] [data-part="copyright"]{margin:0}
 [data-vibeui-block="footer-010"] [data-part="wordmark"]{
-display:block;margin:0.5rem 0 -0.28em;
+display:block;margin:0.5rem 0 0;padding-bottom:0.06em;
 font-size:clamp(4rem,19.5cqi,15rem);font-weight:800;line-height:0.9;
 letter-spacing:-0.04em;text-transform:uppercase;text-align:center;white-space:nowrap;
 color:color-mix(in oklab,var(--vibeui-footer-010-ink) 9%,transparent);
@@ -155,7 +155,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
-/** Подвал с гигантским полупрозрачным wordmark, срезанным нижним краем. */
+/** Подвал с гигантским полупрозрачным wordmark во всю ширину внизу. */
 export function Footer010({
   brand = "Формат",
   tagline = "Секции для сайтов, которые собирают своими руками: скопировал файл в проект — и вёрстка готова.",

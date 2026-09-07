@@ -3245,6 +3245,162 @@
           "width": "auto"
         }
       }
+    },
+    {
+      "name": "dropdown-022",
+      "type": "registry:component",
+      "title": "Орбитальное меню",
+      "description": "Меню действий, которое не падает списком вниз, а разлетается по дуге вокруг круглой кнопки: пружина с перелётом и стаггер по одному действию.",
+      "categories": ["dropdown-menu"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dropdown-022/dropdown-022.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dropdown-022.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-dropdown-022-*. Клиентский: \"use client\" ради состояния раскрытия, Escape и клика мимо. Позиции действий считаются в JS по дуге от 168° до 12° и уходят в переменные --vibeui-dropdown-022-x/-y, а разлёт идёт трансформом с пружинной кривой linear() и стаггером 40 мс на действие. Размер площадки считается из radius, поэтому при большом радиусе действия не обрезаются. Закрытые действия убраны через visibility, чтобы не оставаться в порядке обхода табом. Тема — light-dark() плюс правило :where(.dark,[data-theme=\"dark\"]) … {color-scheme:dark} для проектов, которые ставят класс.",
+      "meta": {
+        "tags": ["dropdown", "menu", "radial", "spring", "actions"],
+        "ai": {
+          "export": "Dropdown022",
+          "usage": "<Dropdown022\n  label=\"Действия\"\n  actions={[\"Поделиться\", \"Дублировать\", \"Ссылка\"]}\n/>",
+          "summary": "Орбитальное меню действий: круглая кнопка в центре, четыре-пять действий разлетаются по дуге над ней пружиной со стаггером. Раскрытие по клику, aria-expanded на кнопке, Escape и клик мимо закрывают и возвращают фокус. Ноль зависимостей, один файл, собственная палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-dropdown-022-* — не подменять её токенами вашей темы",
+            "пружинную кривую linear() с перелётом и стаггер 40 мс: без них разлёт выглядит механическим",
+            "раскрытие по клику, а не по :hover — hover-меню недоступно с клавиатуры и не работает на тач-экранах",
+            "aria-expanded, aria-haspopup и пару role=\"menu\" / role=\"menuitem\": иначе меню не объявляется",
+            "закрытие по Escape и клику мимо с возвратом фокуса на центральную кнопку",
+            "visibility:hidden у свёрнутых действий — иначе они остаются в порядке обхода табом",
+            "light-dark() в палитре: компонент обязан слушаться color-scheme окружения, а не нести свою тёмную тему"
+          ],
+          "adapt": [
+            "массив actions и его порядок — иконки берутся по порядку",
+            "подпись label: она же уходит в aria-label кнопки и в строку под ней",
+            "defaultOpen — раскрыть меню сразу, как на витрине",
+            "radius — радиус разлёта в rem, площадка пересчитывается сама",
+            "accent — цвет центральной кнопки и фокусного кольца",
+            "background — подложка компонента; пусто оставляет фон страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, в проекте должен быть объявлен color-scheme: light dark на html — иначе light-dark() всегда возвращает светлую ветку.",
+            "Дуга рассчитана на четыре-пять действий. Дальше кружки начинают наезжать друг на друга: под длинный список берите обычное выпадающее меню.",
+            "Стрелки по действиям не ходят: меню закрывается Escape, а между действиями идёт таб. Полную клавиатурную навигацию с roving tabindex добавляйте под свою модель.",
+            "Действия ничего не делают по клику, кроме закрытия меню: обработчики вешайте сами.",
+            "Не выносите CSS-переменные в globals.css: компонент должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Действия",
+            "maxLength": 24
+          },
+          {
+            "prop": "defaultOpen",
+            "label": "Раскрыто",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "radius",
+            "label": "Радиус",
+            "type": "number",
+            "default": 3.75,
+            "min": 2.5,
+            "max": 5
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Orbital Action Menu",
+            "description": "An action menu that does not drop as a list but scatters along an arc around a round button: an overshooting spring and a stagger of one action at a time.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-dropdown-022-* variables. Client-side: \"use client\" for the open state, Escape and outside clicks. Action positions are computed in JS along an arc from 168° to 12° and handed to the --vibeui-dropdown-022-x/-y variables, while the flight itself runs on transform with a linear() spring curve and a 40 ms stagger per action. The stage size is derived from radius, so a larger radius does not clip the actions. Collapsed actions are removed with visibility so they stay out of the tab order. The theme comes from light-dark() plus the :where(.dark,[data-theme=\"dark\"]) … {color-scheme:dark} rule for projects that set a class.",
+            "ai": {
+              "summary": "An orbital action menu: a round button in the centre and four or five actions flying out along an arc above it with a spring and a stagger. It opens on click, the button carries aria-expanded, and Escape or an outside click closes it and returns focus. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-dropdown-022-* palette — do not swap it for your theme tokens",
+                "the overshooting linear() spring and the 40 ms stagger: without them the flight looks mechanical",
+                "opening on click rather than on :hover — a hover menu is unreachable from the keyboard and dead on touch screens",
+                "aria-expanded, aria-haspopup and the role=\"menu\" / role=\"menuitem\" pair: without them the menu is not announced",
+                "closing on Escape and on an outside click with focus returned to the centre button",
+                "visibility:hidden on the collapsed actions — otherwise they stay in the tab order",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the actions array and its order — icons are taken in the same order",
+                "the label copy: it also becomes the button's aria-label and the caption underneath",
+                "defaultOpen — open the menu straight away, as on the showcase",
+                "radius — the flight radius in rem; the stage is recomputed for you",
+                "accent — the colour of the centre button and the focus ring",
+                "background — the component surface; empty keeps the page background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The arc is sized for four or five actions. Beyond that the circles start overlapping: use an ordinary dropdown for a long list.",
+                "Arrow keys do not walk the actions: Escape closes the menu and Tab moves between actions. Add full keyboard navigation with a roving tabindex to fit your model.",
+                "The actions do nothing on click but close the menu: wire the handlers yourself.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Dropdown022\n  label=\"Actions\"\n  actions={[\"Share\", \"Duplicate\", \"Copy link\"]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Actions"
+              },
+              "defaultOpen": {
+                "label": "Open"
+              },
+              "radius": {
+                "label": "Radius"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Actions",
+                "actions": [
+                  "Share",
+                  "Duplicate",
+                  "Copy link",
+                  "Add to favourites"
+                ],
+                "defaultOpen": true
+              }
+            }
+          }
+        },
+        "cardControls": ["label", "defaultOpen", "radius", "accent"],
+        "preview": {
+          "width": "auto",
+          "props": {
+            "defaultOpen": true
+          }
+        }
+      }
     }
   ]
 }

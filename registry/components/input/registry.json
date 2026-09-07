@@ -4754,6 +4754,158 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "input-033",
+      "type": "registry:component",
+      "title": "Раскрывающийся поиск",
+      "description": "Поиск, свёрнутый до лупы: под курсором и фокусом поле разъезжается пружиной, а с набранным текстом остаётся раскрытым.",
+      "categories": ["input"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "input-033/input-033.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/input-033.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-input-033-*. Серверный компонент: раскрытие держат состояния CSS, а не React. Поле — подпись с лупой и input type=\"search\" внутри, поэтому щелчок по любому месту ставит курсор в поле. Свёрнутая ширина 3.25rem задана в rem и равна кружку с иконкой; раскрытие до 100% включают три условия: :hover, :focus-within и :has(input:not(:placeholder-shown)) — последнее держит поле открытым после ухода фокуса, если текст набран. Проп expanded ставит data-expanded=\"true\" и раскрывает поле сразу. Переход только по width, пружина linear(…) на 0.4s, overflow:hidden прячет текст в свёрнутом виде. Тема берётся из color-scheme через light-dark(), класс .dark и data-theme=\"dark\" объявляют color-scheme:dark.",
+      "meta": {
+        "tags": ["input", "search", "expand", "focus-within", "spring"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Input033",
+          "usage": "<Input033 placeholder=\"Поиск по каталогу\" expanded={false} />",
+          "summary": "Поиск, который занимает место только когда им заняты: свёрнутый — кружок с лупой, под курсором или фокусом разъезжается в полное поле с пружиной на ширине, а с набранным текстом остаётся раскрытым и после потери фокуса. Всё держится на :hover, :focus-within и :placeholder-shown, поэтому компонент серверный и работает без JavaScript. Один файл, ноль зависимостей, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-input-033-* и не подменять её токенами вашей темы",
+            "три условия раскрытия вместе: :hover, :focus-within и :has(input:not(:placeholder-shown)) — без последнего поле схлопнется поверх набранного запроса",
+            "переход только по width: анимация padding или font-size на том же кадре даёт дрожание текста",
+            "пружинную кривую с двумя объявлениями transition: строка linear(…) даёт перелёт, cubic-bezier перед ней остаётся запасной для старых браузеров",
+            "overflow:hidden на подписи: без него текст и placeholder вылезают за пределы свёрнутого кружка",
+            "input внутри подписи и aria-label на нём: видимой подписи у свёрнутого поля нет, и без имени поле безымянное",
+            "кольцо фокуса на :focus-within, а не на самом input: обводка обязана обходить всё поле, включая иконку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "placeholder — подсказка внутри поля",
+            "hint — строка под полем; пустая строка убирает её",
+            "expanded — раскрыть поле сразу, не дожидаясь курсора или фокуса",
+            "имя поля для скринридера через label",
+            "имя поля формы через name",
+            "accent — граница и кольцо фокуса раскрытого поля",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Раскрытие держится на :placeholder-shown, поэтому placeholder обязан быть непустым: с пустым поле считает себя заполненным всегда.",
+            "На сенсорном экране наведения нет — там поле раскрывает касание, то есть фокус.",
+            "Свёрнутое поле — цель размером с палец только вместе с подписью: не уменьшайте отступы ниже 0.6875rem.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "placeholder",
+            "label": "Подсказка в поле",
+            "type": "text",
+            "default": "Поиск по каталогу",
+            "maxLength": 32
+          },
+          {
+            "prop": "hint",
+            "label": "Подпись снизу",
+            "type": "text",
+            "default": "Наведите курсор или поставьте фокус — поле развернётся.",
+            "maxLength": 64
+          },
+          {
+            "prop": "expanded",
+            "label": "Раскрыто",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["placeholder", "expanded", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Expanding Search",
+            "description": "A search collapsed to its magnifier: hover or focus springs the field open, and typed text keeps it open.",
+            "docs": "One file, zero dependencies, the --vibeui-input-033-* palette. A server component: CSS states hold the expansion, not React. The field is a label wrapping the magnifier and an input type=\"search\", so a click anywhere puts the caret in the field. The collapsed width of 3.25rem is set in rem and matches the icon circle; three conditions expand it to 100%: :hover, :focus-within and :has(input:not(:placeholder-shown)) — the last one keeps the field open after focus leaves if text has been typed. The expanded prop sets data-expanded=\"true\" and opens the field straight away. Only width transitions, on a 0.4s linear(…) spring, and overflow:hidden clips the text while collapsed. The theme comes from color-scheme through light-dark(), while the .dark class and data-theme=\"dark\" declare color-scheme:dark.",
+            "ai": {
+              "summary": "A search that takes room only while it is in use: collapsed it is a circle with a magnifier, hover or focus springs it open into a full field, and typed text keeps it open after focus leaves. It all rests on :hover, :focus-within and :placeholder-shown, so the component is a server one and works without JavaScript. One file, zero dependencies, its own palette.",
+              "preserve": [
+                "the local --vibeui-input-033-* palette — do not swap it for your theme tokens",
+                "all three expansion conditions together: :hover, :focus-within and :has(input:not(:placeholder-shown)) — without the last one the field collapses over a typed query",
+                "the transition on width alone: animating padding or font-size in the same frame makes the text shiver",
+                "the spring easing with its two transition declarations: the linear(…) string carries the overshoot, the cubic-bezier before it stays as the fallback for older browsers",
+                "overflow:hidden on the label: without it the text and the placeholder spill out of the collapsed circle",
+                "the input inside the label and its aria-label: a collapsed field shows no caption, and without a name the field is nameless",
+                "the focus ring on :focus-within rather than on the input itself: the outline has to wrap the whole field, icon included",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "placeholder — the hint inside the field",
+                "hint — the line under the field; an empty string removes it",
+                "expanded — open the field straight away instead of waiting for the cursor or focus",
+                "the field name for screen readers through label",
+                "the form field name through name",
+                "accent — the border and the focus ring of the open field",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The expansion rests on :placeholder-shown, so the placeholder has to be non-empty: with an empty one the field always counts itself as filled.",
+                "There is no hover on a touch screen — a tap opens the field there, which means focus.",
+                "The collapsed field is a finger-sized target only together with its padding: do not shrink it below 0.6875rem.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Input033 placeholder=\"Search the catalogue\" expanded={false} />"
+            },
+            "controls": {
+              "placeholder": {
+                "label": "Field hint",
+                "default": "Search the catalogue"
+              },
+              "hint": {
+                "label": "Caption below",
+                "default": "Hover or focus the field — it expands."
+              },
+              "expanded": {
+                "label": "Open"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Search",
+                "placeholder": "Search the catalogue",
+                "hint": "Hover or focus the field — it expands."
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

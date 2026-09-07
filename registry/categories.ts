@@ -110,12 +110,6 @@ export const CATEGORIES = [
     group: "data",
   },
   {
-    slug: "solutions",
-    label: "Решения",
-    en: "Solutions",
-    group: "application",
-  },
-  {
     slug: "blog",
     label: "Блог",
     en: "Blog",
@@ -216,6 +210,12 @@ export const CATEGORIES = [
     label: "Пресс-кит",
     en: "Press Kit",
     group: "marketing",
+  },
+  {
+    slug: "data-grid",
+    label: "Таблица данных",
+    en: "Data Grid",
+    group: "data",
   },
   // Категории компонентов: одна категория — один тип. Сборных корзин
   // («Inputs», «Display») здесь нет: тип, спрятанный внутри такой корзины,
@@ -357,12 +357,6 @@ export const CATEGORIES = [
     label: "Поле суммы",
     en: "Currency Input",
     group: "application",
-  },
-  {
-    slug: "data-grid",
-    label: "Таблица данных",
-    en: "Data Grid",
-    group: "data",
   },
   {
     slug: "date-selector",
@@ -868,6 +862,18 @@ export const CATEGORIES = [
     slug: "not-found",
     label: "Страница не найдена",
     en: "Not Found",
+    group: "application",
+  },
+  {
+    slug: "stacks",
+    label: "Стопки карточек",
+    en: "Card stacks",
+    group: "marketing",
+  },
+  {
+    slug: "cursor",
+    label: "Курсоры",
+    en: "Cursors",
     group: "application",
   },
 ] as const satisfies readonly {

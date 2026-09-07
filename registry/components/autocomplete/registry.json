@@ -379,7 +379,8 @@
             "defaultOpen нужен витрине и скриншотам: в форме список открывается по фокусу.",
             "Список в потоке двигает содержимое под собой. Нужен слой поверх — заверните в popover, но тогда позиционирование ваше.",
             "Фильтр ищет подстроку в любом месте. Для длинных списков замените на поиск с начала слова, иначе выдача шумит.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "Список ложится поверх страницы и не меняет размер карточки"
           ]
         },
         "controls": [
@@ -445,7 +446,8 @@
                 "defaultOpen exists for the showcase and screenshots: in a form the list opens on focus.",
                 "An in-flow list pushes the content below it. If you need an overlay, wrap it in a popover — the positioning is then yours.",
                 "The filter matches a substring anywhere. For long lists switch to prefix matching, otherwise the results get noisy.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "The list overlays the page and does not resize the card"
               ],
               "usage": "<Autocomplete002\n  label=\"City\"\n  options={[\"London\", \"Berlin\"]}\n  onSelect={(value) => console.log(value)}\n/>"
             },
@@ -536,7 +538,8 @@
             "При достижении max поле блокируется, а не молча игнорирует ввод: иначе непонятно, почему ничего не добавляется.",
             "Значения — строки. Для объектов замените ключ и рендер фишки, оставив поведение клавиатуры.",
             "Компонент не отправляет форму: чтобы значения ушли на сервер, добавьте скрытые input в вызывающем коде.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen нужен витрине и скриншотам: в проекте список закрыт и открывается по фокусу, ложится поверх страницы и не меняет размер карточки"
           ]
         },
         "controls": [
@@ -603,7 +606,8 @@
                 "At the limit the field is disabled rather than silently ignoring input: otherwise nothing explains why typing does nothing.",
                 "Values are strings. For objects swap the key and the chip rendering, keeping the keyboard behaviour.",
                 "The component submits nothing: add hidden inputs in the caller to send values to a server.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen is for the showcase and screenshots: in a project the list starts closed, opens on focus, overlays the page and does not resize the card"
               ],
               "usage": "<Autocomplete003\n  label=\"Stack\"\n  options={[\"React\", \"Vue\"]}\n  max={6}\n  onChange={(tags) => console.log(tags)}\n/>"
             },
@@ -632,7 +636,8 @@
                 "label": "Technologies",
                 "placeholder": "Add a technology",
                 "removeLabel": "Remove {chip}",
-                "hintText": "{count} of {max} · Backspace removes the last"
+                "hintText": "{count} of {max} · Backspace removes the last",
+                "defaultOpen": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-003-* variables. Client-side: \"use client\". The chips and the field lie in one flex container with flex-wrap, so the field grows with the number of chips instead of hiding them in a scroll. The focus ring is drawn on the container through :focus-within. Every cross has its own aria-label with the chip name. Once max is reached the field is disabled."
@@ -642,7 +647,8 @@
         "preview": {
           "props": {
             "options": ["Next.js", "Tailwind", "Node.js"],
-            "defaultValue": ["React", "TypeScript"]
+            "defaultValue": ["React", "TypeScript"],
+            "defaultOpen": true
           },
           "width": "full"
         }
@@ -862,7 +868,8 @@
         "tags": ["autocomplete", "async", "debounce", "loading"],
         "preview": {
           "props": {
-            "defaultQuery": "ка"
+            "defaultQuery": "ка",
+            "defaultOpen": true
           },
           "width": "full"
         },
@@ -894,7 +901,8 @@
             "Дефолтный search — локальный список с задержкой: он для витрины, в проекте передавайте свой.",
             "Ошибку сети компонент не показывает: заворачивайте свой search в try/catch и решайте, что выводить.",
             "Отмена запроса здесь логическая. Для реального прерывания передайте AbortController внутрь своего search.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen нужен витрине и скриншотам: в проекте список закрыт и открывается по фокусу, ложится поверх страницы и не меняет размер карточки"
           ]
         },
         "controls": [
@@ -962,7 +970,8 @@
                 "The default search is a delayed local list for the showcase; pass your own in a project.",
                 "Network errors are not rendered: wrap your search in try/catch and decide what to show.",
                 "Cancellation here is logical only. For a real abort pass an AbortController inside your search.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen is for the showcase and screenshots: in a project the list starts closed, opens on focus, overlays the page and does not resize the card"
               ],
               "usage": "<Autocomplete005\n  label=\"Delivery city\"\n  search={(query) => fetch(`/api/cities?q=${query}`).then((r) => r.json())}\n/>"
             },
@@ -995,7 +1004,8 @@
                   "loading": "Searching…",
                   "empty": "Nothing found — check the spelling",
                   "idle": "Suggestions come from the server"
-                }
+                },
+                "defaultOpen": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-005-* variables. Client-side: \"use client\". The request is deferred by delay milliseconds, the timer is cleared in the effect cleanup, and an alive flag discards the answer of a cancelled request. The waiting state is declared through aria-busy on the field and role=\"status\" on the line below. The spinner is a border with keyframes, stopped under prefers-reduced-motion."
@@ -1056,7 +1066,8 @@
             "Валюта и формат цены — строка: форматируйте её на своей стороне, компонент ничего не считает.",
             "Остаток 0 показан текстом «нет в наличии», а не пустым местом: пустое поле читается как отсутствие данных.",
             "Для больших каталогов замените локальный фильтр запросом к серверу — образец в autocomplete-005.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen нужен витрине и скриншотам: в проекте список закрыт и открывается по фокусу, ложится поверх страницы и не меняет размер карточки"
           ]
         },
         "controls": [
@@ -1123,7 +1134,8 @@
                 "Price is a string: format it on your side, the component computes nothing.",
                 "Zero stock reads as \"out of stock\" rather than blank: an empty cell reads as missing data.",
                 "For large catalogues replace the local filter with a server query — see autocomplete-005.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen is for the showcase and screenshots: in a project the list starts closed, opens on focus, overlays the page and does not resize the card"
               ],
               "usage": "<Autocomplete006\n  items={[{ title: \"HDMI cable\", meta: \"SKU 52-104\", price: \"$29\", stock: 0 }]}\n  onSelect={(title) => console.log(title)}\n/>"
             },
@@ -1175,7 +1187,8 @@
                     "price": "£28.50",
                     "stock": 0
                   }
-                ]
+                ],
+                "defaultOpen": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-006-* variables. Client-side: \"use client\". A list row is a grid of two columns and two rows: the title and the SKU on the left, the price and the stock on the right. Zero stock is coloured by a separate variable, --vibeui-autocomplete-006-warn. The search matches both the name and the SKU."
@@ -1210,7 +1223,8 @@
                 "price": "990 ₽",
                 "stock": 118
               }
-            ]
+            ],
+            "defaultOpen": true
           },
           "width": "full"
         }
@@ -1261,7 +1275,8 @@
             "История живёт в состоянии компонента и исчезает при перезагрузке. Нужна настоящая — храните её сами и передавайте через defaultRecent.",
             "Запросы человека — персональные данные: очистка обязана стирать их и в вашем хранилище, а не только на экране.",
             "Подсказки здесь локальные; для серверных возьмите приём из autocomplete-005.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen нужен витрине и скриншотам: в проекте список закрыт и открывается по фокусу, ложится поверх страницы и не меняет размер карточки"
           ]
         },
         "controls": [
@@ -1327,7 +1342,8 @@
                 "History lives in component state and dies on reload. For real history store it yourself and pass defaultRecent.",
                 "Search queries are personal data: clearing must wipe your storage too, not just the screen.",
                 "Suggestions here are local; for server-side ones use the approach from autocomplete-005.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen is for the showcase and screenshots: in a project the list starts closed, opens on focus, overlays the page and does not resize the card"
               ],
               "usage": "<Autocomplete007\n  suggestions={[\"camera\"]}\n  defaultRecent={[\"headphones\"]}\n  onSelect={(value) => console.log(value)}\n/>"
             },
@@ -1370,7 +1386,8 @@
                   "suggestions": "Suggestions",
                   "notFound": "Nothing found — try something shorter",
                   "history": "History is empty: your searches will show up here"
-                }
+                },
+                "defaultOpen": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-007-* variables. Client-side: \"use client\". The panel under the field shows one of two lists: recent searches while the query is empty, suggestions once it is not. The panel heading changes together with the list, and so does the list's aria-label. A pick is lifted to the top of the recents and the history is trimmed to five. The clock beside a row is drawn with a circle and a pseudo-element."
@@ -1385,7 +1402,8 @@
         ],
         "preview": {
           "props": {
-            "defaultRecent": ["беспроводные наушники", "монитор 27"]
+            "defaultRecent": ["беспроводные наушники", "монитор 27"],
+            "defaultOpen": true
           },
           "width": "full"
         }
@@ -1547,7 +1565,10 @@
           "background"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "defaultValue": "anna.petrova@ya"
+          }
         }
       }
     },
@@ -1624,7 +1645,8 @@
             "Номер не форматируется и не проверяется: маска и валидация — задача формы.",
             "Один код может принадлежать нескольким странам (+7 — Россия и Казахстан), поэтому в списке видно название.",
             "Эмодзи-флаги рисует система: на некоторых Windows-сборках вместо флага будут две буквы кода, это ожидаемо.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "Список ложится поверх страницы и не меняет размер карточки"
           ]
         },
         "controls": [
@@ -1692,7 +1714,8 @@
                 "The number is neither formatted nor validated: masking and validation belong to the form.",
                 "One code can belong to several countries (+7 is Russia and Kazakhstan), which is why the name is shown.",
                 "Emoji flags are drawn by the OS: some Windows builds show the two-letter code instead, which is expected.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "The list overlays the page and does not resize the card"
               ],
               "usage": "<Autocomplete009\n  countries={[{ name: \"Germany\", code: \"DE\", dial: \"+49\", flag: \"🇩🇪\" }]}\n  defaultCode=\"DE\"\n/>"
             },
@@ -1808,7 +1831,8 @@
             "Компонент заводит метку только в своём состоянии: сохранение на сервере — на стороне onChange.",
             "Перед созданием стоит подрезать пробелы и решить вопрос регистра, иначе «Баг» и «баг» станут двумя метками.",
             "Право на создание есть не у всех: если роль не позволяет, не рендерите строку создания вовсе.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen нужен витрине и скриншотам: в проекте список закрыт и открывается по фокусу, ложится поверх страницы и не меняет размер карточки"
           ]
         },
         "controls": [
@@ -1875,7 +1899,8 @@
                 "The component only adds to its own state: persistence belongs in onChange.",
                 "Trim whitespace and settle the casing question before creating, or \"Bug\" and \"bug\" become two labels.",
                 "Not everyone may create: if the role forbids it, do not render the create row at all.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen is for the showcase and screenshots: in a project the list starts closed, opens on focus, overlays the page and does not resize the card"
               ],
               "usage": "<Autocomplete010\n  defaultOptions={[\"Urgent\", \"Bug\"]}\n  onChange={(options) => console.log(options)}\n/>"
             },
@@ -1907,7 +1932,8 @@
                 "defaultQuery": "refact",
                 "defaultOptions": ["Urgent", "Bug"],
                 "createLabel": "Create “{value}”",
-                "hintText": "Labels: {count}. Enter picks the highlighted row"
+                "hintText": "Labels: {count}. Enter picks the highlighted row",
+                "defaultOpen": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-010-* variables. Client-side: \"use client\". The create row is part of the list, so the index of the active row is counted as matches.length + 1 and the arrows reach it. An exact match with an existing label removes the create offer. The plus is drawn as a square with two pseudo-elements."
@@ -1923,7 +1949,8 @@
         "preview": {
           "props": {
             "defaultQuery": "инфра",
-            "defaultOptions": ["Инфраструктура", "Интерфейс"]
+            "defaultOptions": ["Инфраструктура", "Интерфейс"],
+            "defaultOpen": true
           },
           "width": "full"
         }
@@ -1975,7 +2002,8 @@
             "Список не позиционируется у курсора: он идёт под полем. Выпадание у каретки требует замера, а это уже другой компонент.",
             "Упоминание — просто текст: разбор «@логина» и отправку уведомления делает ваш бэкенд.",
             "Оттенок аватара считается из имени и стабилен, но не гарантирует уникальность: двум людям может достаться близкий цвет.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen нужен витрине и скриншотам: в проекте список закрыт и открывается по фокусу, ложится поверх страницы и не меняет размер карточки"
           ]
         },
         "controls": [
@@ -2041,7 +2069,8 @@
                 "The list is not anchored to the caret: it sits under the field. Popping up at the caret needs measurement, which is a different component.",
                 "A mention is plain text: parsing @handles and sending notifications is your backend's job.",
                 "The avatar hue is derived from the name and stable, but not unique: two people can land on close colours.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen is for the showcase and screenshots: in a project the list starts closed, opens on focus, overlays the page and does not resize the card"
               ],
               "usage": "<Autocomplete011\n  people={[{ name: \"Anna Petrova\", handle: \"anna\", role: \"design\" }]}\n  onChange={(text) => console.log(text)}\n/>"
             },
@@ -2089,7 +2118,8 @@
                     "handle": "masha",
                     "role": "product"
                   }
-                ]
+                ],
+                "defaultOpen": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-011-* variables. Client-side: \"use client\". The mention token is computed from the last @ up to the caret and ends at a space, so the list goes out by itself. The caret position is tracked on onChange, onKeyUp and onClick. The avatar is initials on a hue computed from the name: the sum of the character codes modulo 360 is handed to a local hue variable."
@@ -2121,7 +2151,8 @@
                 "handle": "maria",
                 "role": "аналитика"
               }
-            ]
+            ],
+            "defaultOpen": true
           },
           "width": "full"
         }
@@ -2327,7 +2358,8 @@
           "notes": [
             "Демонстрационный источник роняет первый запрос и отвечает на повтор: так витрина показывает оба состояния без сервера. В проекте передайте свой search.",
             "Компонент не повторяет запрос сам: автоповтор при сбое сети легко превращается в шторм запросов, и решение об этом принимает проект.",
-            "Отказ и статус занимают одну строку по очереди — высота карточки не прыгает при переходе между ними."
+            "Отказ и статус занимают одну строку по очереди — высота карточки не прыгает при переходе между ними.",
+            "defaultOpen нужен витрине и скриншотам: в проекте список закрыт и открывается по фокусу, ложится поверх страницы и не меняет размер карточки"
           ]
         },
         "controls": [
@@ -2388,7 +2420,8 @@
               "notes": [
                 "The demo source fails the first request and answers the retry, so the showcase shows both states without a server. Pass your own search in a project.",
                 "The component never retries on its own: an automatic retry on a network failure easily turns into a request storm, and that decision belongs to the project.",
-                "The failure and the status share one line in turn, so the card does not jump in height between them."
+                "The failure and the status share one line in turn, so the card does not jump in height between them.",
+                "defaultOpen is for the showcase and screenshots: in a project the list starts closed, opens on focus, overlays the page and does not resize the card"
               ],
               "usage": "<Autocomplete013 label=\"Delivery city\" search={fetchCities} />"
             },
@@ -2422,7 +2455,8 @@
                   "empty": "Nothing found",
                   "failed": "Suggestions failed to load"
                 },
-                "retryLabel": "Retry"
+                "retryLabel": "Retry",
+                "defaultOpen": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-013-* variables. The request goes into the search prop and returns a promise; a rejection is caught by catch and moves the component into the failed state. A response to a stale request is dropped by a counter: without it a slow answer overwrites the fresh list. The failure is marked role=\"alert\", so a screen reader reads it at once rather than on the next focus. The retry button returns focus to the field: after a successful attempt typing continues there. The initial state is set by the defaultState prop — the showcase has to show a failure without making a request. The theme comes from color-scheme through light-dark(), and the component switches on a class-based dark theme for itself."
@@ -2437,7 +2471,9 @@
         ],
         "preview": {
           "props": {
-            "defaultState": "failed"
+            "defaultState": "failed",
+            "defaultQuery": "ка",
+            "defaultOpen": true
           },
           "width": "full"
         }
@@ -2606,7 +2642,10 @@
           "background"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "defaultQuery": "от"
+          }
         }
       }
     }

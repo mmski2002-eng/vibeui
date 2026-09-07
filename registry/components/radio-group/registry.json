@@ -3052,6 +3052,167 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "radio-020",
+      "type": "registry:component",
+      "title": "Выбор цвета",
+      "description": "Ряд цветовых свотчей на радиокнопках: выбранный пружинно раздувается с кольцом в своём цвете, а соседи расступаются.",
+      "categories": ["radio-group"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "radio-020/radio-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/radio-020.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-radio-020-*. Серверный компонент: выбор держат радиокнопки внутри подписей, состояния в React нет. Группа — fieldset с legend, каждый свотч — label с невидимым input type=\"radio\", кружком и скрытым названием цвета для скринридера. Цвет кружка приходит из переменной --vibeui-radio-020-dot в атрибуте style подписи, диаметр — из --vibeui-radio-020-size, которую ставит проп size. Вид выбранного собирают селекторы :has(input:checked): кольцо box-shadow на подписи (её отступ и есть зазор), transform:scale(1.18) у кружка и галочка от scale(0.4). Соседи отходят на 0.1875rem, причём предыдущий достаётся селектором :has(+ …). Галочка красится в чёрный или белый через oklch(from …): светлота свотча заранее неизвестна. Тема берётся из color-scheme через light-dark(), класс .dark и data-theme=\"dark\" объявляют color-scheme:dark.",
+      "meta": {
+        "tags": ["radio", "swatch", "color", "has-selector", "spring"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Radio020",
+          "usage": "<Radio020 label=\"Цвет акцента\" defaultValue=\"amber\" />",
+          "summary": "Ряд цветовых свотчей на радиокнопках: выбранный пружинно раздувается, обводится кольцом в собственном цвете и получает галочку, а соседи расступаются, освобождая ему место. Галочка сама выбирает чёрный или белый по светлоте свотча. Выбор держат радиокнопки, сценариев нет вовсе. Один файл, ноль зависимостей, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-radio-020-* и не подменять её токенами вашей темы",
+            "настоящие радиокнопки внутри подписей: они держат выбор, попадают в форму и переключаются стрелками",
+            "скрытое название цвета в каждой подписи: кружок без текста для скринридера безымянный, а цвет — не имя",
+            "кольцо на подписи, а не на кружке: её отступ и есть зазор между кружком и кольцом, поэтому фон под компонентом остаётся любым",
+            "пружинную кривую с двумя объявлениями transition: строка linear(…) даёт перелёт, cubic-bezier перед ней остаётся запасной для старых браузеров",
+            "расступающихся соседей на :has(+ …): без разворота на предыдущий свотч ряд поедет в одну сторону",
+            "расчёт цвета галочки через oklch(from …): светлоту свотча задаёт пользователь, и зашитый белый пропадёт на белом",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "названия цветов через optionText — они и есть подписи для скринридера",
+            "defaultValue — какой свотч выбран изначально",
+            "size — диаметр свотча в пикселях",
+            "имя набора через label — оно же видимая надпись над рядом",
+            "имя группы радиокнопок через name: двум экземплярам на странице нужны разные имена",
+            "accent — цвет кольца фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Палитра свотчей зашита в файл шестью значениями: заменяя их, держите ряд коротким — с десятком кружков выбор превращается в поиск.",
+            "Цвет — не имя: без текста в подписи выбор невозможно ни озвучить, ни объяснить человеку, который цвета не различает.",
+            "Кружок в 24 пикселя меньше пальца: уменьшая size, оставляйте отступы подписи, они и есть цель для касания.",
+            "Расчёт цвета галочки использует относительный синтаксис oklch(from …): в старых браузерах галочка просто наследует цвет текста.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultValue",
+            "label": "Выбран цвет",
+            "type": "select",
+            "default": "amber",
+            "options": ["amber", "graphite", "paper", "stone", "sand", "slate"]
+          },
+          {
+            "prop": "size",
+            "label": "Диаметр",
+            "type": "number",
+            "default": 34,
+            "min": 24,
+            "max": 48
+          },
+          {
+            "prop": "label",
+            "label": "Имя набора",
+            "type": "text",
+            "default": "Цвет акцента",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["defaultValue", "size", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Swatch Picker",
+            "description": "A row of colour swatches on radios: the selected one springs up with a ring in its own colour while its neighbours step aside.",
+            "docs": "One file, zero dependencies, the --vibeui-radio-020-* palette. A server component: radios inside the labels hold the selection and there is no React state. The group is a fieldset with a legend, and every swatch is a label carrying an invisible input type=\"radio\", a dot and a hidden colour name for screen readers. The dot colour arrives through the --vibeui-radio-020-dot variable in the label's style attribute, the diameter through --vibeui-radio-020-size which the size prop sets. The selected look is assembled by :has(input:checked) selectors: a box-shadow ring on the label (its padding is the gap), transform:scale(1.18) on the dot and a checkmark growing from scale(0.4). The neighbours move 0.1875rem aside, the previous one reached by a :has(+ …) selector. The checkmark turns black or white through oklch(from …) because the swatch lightness is unknown in advance. The theme comes from color-scheme through light-dark(), while the .dark class and data-theme=\"dark\" declare color-scheme:dark.",
+            "ai": {
+              "summary": "A row of colour swatches on radios: the selected one springs up, takes a ring in its own colour and a checkmark, while its neighbours step aside to make room. The checkmark picks black or white by the swatch lightness. Radios hold the selection and there is no scripting at all. One file, zero dependencies, its own palette.",
+              "preserve": [
+                "the local --vibeui-radio-020-* palette — do not swap it for your theme tokens",
+                "the real radios inside the labels: they hold the selection, reach the form and answer the arrow keys",
+                "the hidden colour name in every label: a dot with no text is nameless to a screen reader, and a colour is not a name",
+                "the ring on the label rather than on the dot: the label's padding is the gap between them, which keeps the page background free to be anything",
+                "the spring easing with its two transition declarations: the linear(…) string carries the overshoot, the cubic-bezier before it stays as the fallback for older browsers",
+                "the neighbours stepping aside through :has(+ …): without reaching the previous swatch the row drifts to one side",
+                "the checkmark colour computed with oklch(from …): the user sets the swatch lightness, and a hard-coded white disappears on white",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the colour names through optionText — they are the captions a screen reader reads",
+                "defaultValue — which swatch starts selected",
+                "size — the swatch diameter in pixels",
+                "the set name through label — it is also the visible caption above the row",
+                "the radio group name through name: two instances on a page need different ones",
+                "accent — the colour of the focus ring",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The swatch palette is baked into the file as six values: replacing them, keep the row short — with a dozen dots choosing turns into searching.",
+                "A colour is not a name: without text in the label the choice can be neither announced nor explained to someone who does not tell colours apart.",
+                "A 24-pixel dot is smaller than a finger: when you shrink size, keep the label padding — it is the tap target.",
+                "The checkmark colour uses the relative oklch(from …) syntax: in older browsers the checkmark simply inherits the text colour.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Radio020 label=\"Accent colour\" defaultValue=\"amber\" />"
+            },
+            "controls": {
+              "defaultValue": {
+                "label": "Selected colour"
+              },
+              "size": {
+                "label": "Diameter"
+              },
+              "label": {
+                "label": "Set name",
+                "default": "Accent colour"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Accent colour",
+                "optionText": {
+                  "amber": "Amber",
+                  "graphite": "Graphite",
+                  "paper": "Paper white",
+                  "stone": "Stone",
+                  "sand": "Sand",
+                  "slate": "Slate"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

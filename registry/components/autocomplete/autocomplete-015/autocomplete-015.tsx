@@ -211,7 +211,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 export function Autocomplete015({
   placeholder = "Поиск по документам и командам",
   entries = DEFAULT_ENTRIES,
-  defaultQuery = "от",
+  defaultQuery = "",
   emptyLabel = "Ничего не нашлось",
   hintText = "↑ ↓ ведут по списку, Enter открывает",
   onSelect,

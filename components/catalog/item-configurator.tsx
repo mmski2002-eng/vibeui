@@ -179,7 +179,7 @@ export function ConfigurablePreview({
         const link = (event.target as HTMLElement).closest("a")
         const href = link?.getAttribute("href")
 
-        if (link && (href === "#" || href === "" || href === null)) {
+        if (link && (href == null || href === "" || href.startsWith("#"))) {
           event.preventDefault()
         }
       }}

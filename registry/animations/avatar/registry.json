@@ -2,142 +2,6 @@
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "items": [
     {
-      "name": "avatar-anim-001",
-      "type": "registry:component",
-      "title": "Сетка аватаров",
-      "description": "Сетка круглых аватаров с инициалами на цветном фоне: акцентные цвета идут по кругу из шести оттенков, а кружки досыпаются по очереди с лёгким увеличением при появлении карточки.",
-      "categories": ["avatar"],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "avatar-anim-001/avatar-anim-001.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/avatar-anim-001.tsx"
-        }
-      ],
-      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-avatar-anim-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Радужное свечение под карточкой дышит по ширине, каждый кружок сетки появляется со своей задержкой через CSS-переменную --i на инлайн-стиле — так сетка «досыпается» по очереди, а не вся сразу.",
-      "meta": {
-        "tags": ["avatar", "grid", "team", "people", "animated", "stagger"],
-        "ai": {
-          "export": "AvatarAnim001",
-          "usage": "<AvatarAnim001 title=\"Команда\" badge=\"24\" people={[{ initials: \"АК\", name: \"Анна Ковалёва\" }]} />",
-          "summary": "Сетка круглых аватаров с инициалами: акцентные цвета идут по кругу из шести оттенков, под карточкой дышит радужное свечение, кружки досыпаются по очереди при появлении. Ноль зависимостей, один файл, клиентского JS нет.",
-          "preserve": [
-            "локальную палитру --vibeui-avatar-anim-001-* — не подменяйте её токенами вашей темы",
-            "радужное свечение под карточкой и его дыхание — опознавательный знак семейства",
-            "круговой цикл из шести акцентных цветов фона по nth-child — не заменяйте одним цветом",
-            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
-            "стаггер-появление кружков через --i на инлайн-стиле и его отключение при prefers-reduced-motion",
-            "круглую форму аватаров с обводкой цвета карточки — это разделяет соседние кружки при overlap-раскладке"
-          ],
-          "adapt": [
-            "список people: инициалы и полное имя (уходит в aria-label)",
-            "заголовок группы и пилюлю badge с общим числом",
-            "режим dense — плотная раскладка с более мелкими аватарами",
-            "режимы gradient и isometric под контекст: свечение и наклон карточки"
-          ],
-          "notes": [
-            "gradient={false} убирает свечение, isometric наклоняет карточку, dense уплотняет сетку",
-            "цвета фона циклом по шести значениям заданы в CSS через nth-child, а не пропом на каждый элемент"
-          ]
-        },
-        "controls": [
-          {
-            "prop": "gradient",
-            "label": "Свечение",
-            "type": "boolean",
-            "default": true
-          },
-          {
-            "prop": "isometric",
-            "label": "Изометрия",
-            "type": "boolean",
-            "default": false
-          },
-          {
-            "prop": "dense",
-            "label": "Плотная сетка",
-            "type": "boolean",
-            "default": false
-          }
-        ],
-        "i18n": {
-          "en": {
-            "title": "Avatar grid",
-            "description": "A grid of user avatars with subtle staggered reveals. Accent colors cycle through six hues and each circle pops in with a short delay when the card mounts.",
-            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-avatar-anim-001-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. The rainbow glow under the card breathes in width, and each avatar in the grid reveals with its own delay via the --i inline custom property — so the grid fills in one by one instead of all at once.",
-            "ai": {
-              "summary": "A grid of circular initials avatars: accent colors cycle through six hues, a rainbow glow breathes under the card, and circles pop in one by one on mount. Zero dependencies, one file, no client JS.",
-              "preserve": [
-                "the local --vibeui-avatar-anim-001-* palette — do not swap it for your theme tokens",
-                "the rainbow glow under the card and its breathing — the family's signature",
-                "the six-color cycle for avatar backgrounds via nth-child — do not collapse it to one color",
-                "the .dark class rule: without it the component stays light on a dark page in another project",
-                "the staggered reveal via the --i inline variable and its removal under prefers-reduced-motion",
-                "the circular avatar shape with a card-colored border — it separates neighboring circles"
-              ],
-              "adapt": [
-                "the people list: initials and full name (used for aria-label)",
-                "the group title and the badge pill with the total count",
-                "the dense mode — a tighter grid with smaller avatars",
-                "the gradient and isometric modes for the context: glow and card tilt"
-              ],
-              "notes": [
-                "gradient={false} removes the glow, isometric tilts the card, dense packs the grid tighter",
-                "background colors cycle through six values in CSS via nth-child, not a prop per item"
-              ],
-              "usage": "<AvatarAnim001 title=\"Team\" badge=\"24\" people={[{ initials: \"AK\", name: \"Anna Kovaleva\" }]} />"
-            },
-            "controls": {
-              "gradient": {
-                "label": "Glow"
-              },
-              "isometric": {
-                "label": "Isometric"
-              },
-              "dense": {
-                "label": "Dense grid"
-              }
-            },
-            "preview": {
-              "props": {
-                "title": "Team",
-                "badge": "24",
-                "people": [
-                  { "initials": "AK", "name": "Anna Kovaleva" },
-                  { "initials": "MP", "name": "Max Petrov" },
-                  { "initials": "ES", "name": "Elena Smirnova" },
-                  { "initials": "DV", "name": "Dmitry Volkov" },
-                  { "initials": "NT", "name": "Natalia Titova" },
-                  { "initials": "IL", "name": "Igor Lebedev" },
-                  { "initials": "OR", "name": "Olga Romanova" },
-                  { "initials": "SZ", "name": "Sergey Zhukov" }
-                ]
-              }
-            }
-          }
-        },
-        "preview": {
-          "props": {
-            "title": "Команда",
-            "badge": "24",
-            "people": [
-              { "initials": "АК", "name": "Анна Ковалёва" },
-              { "initials": "МП", "name": "Максим Петров" },
-              { "initials": "ЕС", "name": "Елена Смирнова" },
-              { "initials": "ДВ", "name": "Дмитрий Волков" },
-              { "initials": "НТ", "name": "Наталья Титова" },
-              { "initials": "ИЛ", "name": "Игорь Лебедев" },
-              { "initials": "ОР", "name": "Ольга Романова" },
-              { "initials": "СЖ", "name": "Сергей Жуков" }
-            ]
-          }
-        },
-        "cardControls": ["gradient", "isometric", "dense"]
-      }
-    },
-    {
       "name": "avatar-anim-002",
       "type": "registry:component",
       "title": "Стопка аватаров",
@@ -238,10 +102,22 @@
             "preview": {
               "props": {
                 "people": [
-                  { "initials": "AK", "name": "Anna Kovaleva" },
-                  { "initials": "MP", "name": "Max Petrov" },
-                  { "initials": "ES", "name": "Elena Smirnova" },
-                  { "initials": "DV", "name": "Dmitry Volkov" }
+                  {
+                    "initials": "AK",
+                    "name": "Anna Kovaleva"
+                  },
+                  {
+                    "initials": "MP",
+                    "name": "Max Petrov"
+                  },
+                  {
+                    "initials": "ES",
+                    "name": "Elena Smirnova"
+                  },
+                  {
+                    "initials": "DV",
+                    "name": "Dmitry Volkov"
+                  }
                 ],
                 "moreCount": 8,
                 "caption": "12 people in this discussion"
@@ -252,10 +128,22 @@
         "preview": {
           "props": {
             "people": [
-              { "initials": "АК", "name": "Анна Ковалёва" },
-              { "initials": "МП", "name": "Максим Петров" },
-              { "initials": "ЕС", "name": "Елена Смирнова" },
-              { "initials": "ДВ", "name": "Дмитрий Волков" }
+              {
+                "initials": "АК",
+                "name": "Анна Ковалёва"
+              },
+              {
+                "initials": "МП",
+                "name": "Максим Петров"
+              },
+              {
+                "initials": "ЕС",
+                "name": "Елена Смирнова"
+              },
+              {
+                "initials": "ДВ",
+                "name": "Дмитрий Волков"
+              }
             ],
             "moreCount": 8,
             "caption": "12 участников обсуждения"
@@ -378,9 +266,18 @@
                 "role": "Product designer",
                 "initials": "AK",
                 "stats": [
-                  { "label": "Projects", "value": "24" },
-                  { "label": "Followers", "value": "1.2K" },
-                  { "label": "Rating", "value": "4.9" }
+                  {
+                    "label": "Projects",
+                    "value": "24"
+                  },
+                  {
+                    "label": "Followers",
+                    "value": "1.2K"
+                  },
+                  {
+                    "label": "Rating",
+                    "value": "4.9"
+                  }
                 ]
               }
             }
@@ -392,9 +289,18 @@
             "role": "Продуктовый дизайнер",
             "initials": "АК",
             "stats": [
-              { "label": "Проекты", "value": "24" },
-              { "label": "Подписчики", "value": "1.2K" },
-              { "label": "Рейтинг", "value": "4.9" }
+              {
+                "label": "Проекты",
+                "value": "24"
+              },
+              {
+                "label": "Подписчики",
+                "value": "1.2K"
+              },
+              {
+                "label": "Рейтинг",
+                "value": "4.9"
+              }
             ]
           }
         },

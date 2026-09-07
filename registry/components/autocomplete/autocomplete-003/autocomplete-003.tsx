@@ -12,6 +12,8 @@ export type Autocomplete003Props = Omit<
   options?: string[]
   defaultValue?: string[]
   max?: number
+  /** Показать список сразу, без фокуса: витрина и скриншоты. */
+  defaultOpen?: boolean
   /** Подпись кнопки снятия фишки. {chip} — сама фишка. */
   removeLabel?: string
   /** Строка под полем. {count} — набрано, {max} — предел. */
@@ -80,7 +82,9 @@ border:0;background:transparent;color:inherit;font:inherit;font-size:0.875rem;
 }
 [data-vibeui-block="autocomplete-003"] input:focus{outline:none}
 [data-vibeui-block="autocomplete-003"] input::placeholder{color:var(--vibeui-autocomplete-003-muted)}
+[data-vibeui-block="autocomplete-003"] [data-part="anchor"]{position:relative}
 [data-vibeui-block="autocomplete-003"] [data-part="list"]{
+position:absolute;left:0;right:0;top:calc(100% + 0.25rem);z-index:30;box-shadow:0 12px 28px -14px oklch(0 0 0 / 40%);
 margin:0;padding:0.25rem;list-style:none;max-height:9rem;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--vibeui-autocomplete-003-border) transparent;
 border:1px solid var(--vibeui-autocomplete-003-border);
 border-radius:var(--vibeui-autocomplete-003-radius);
@@ -142,6 +146,7 @@ export function Autocomplete003({
   removeLabel = "Убрать {chip}",
   hintText = "{count} из {max} · Backspace снимает последнюю",
   onChange,
+  defaultOpen = false,
   background = "",
   accent,
   className,
@@ -149,6 +154,7 @@ export function Autocomplete003({
   ...props
 }: Autocomplete003Props) {
   const id = useId()
+  const [open, setOpen] = useState(defaultOpen)
   const [chips, setChips] = useState<string[]>(defaultValue)
   const [query, setQuery] = useState("")
   const [active, setActive] = useState(0)
@@ -211,63 +217,67 @@ export function Autocomplete003({
         style={palette}
       >
         <label htmlFor={id}>{label}</label>
-        <div data-part="box">
-          {chips.map((chip) => (
-            <span key={chip} data-part="chip">
-              {chip}
-              <button
-                type="button"
-                data-part="remove"
-                aria-label={removeLabel.replace("{chip}", chip)}
-                onClick={() => update(chips.filter((item) => item !== chip))}
-              >
-                ×
-              </button>
-            </span>
-          ))}
-          <input
-            id={id}
-            type="text"
-            role="combobox"
-            autoComplete="off"
-            placeholder={chips.length >= max ? "" : placeholder}
-            value={query}
-            disabled={chips.length >= max}
-            aria-expanded={matches.length > 0}
-            aria-controls={`${id}-list`}
-            aria-autocomplete="list"
-            onChange={(event) => {
-              setQuery(event.target.value)
-              setActive(0)
-            }}
-            onKeyDown={onKeyDown}
-          />
-        </div>
-        {matches.length ? (
-          <ul
-            id={`${id}-list`}
-            role="listbox"
-            aria-label={label}
-            data-part="list"
-          >
-            {matches.map((option, index) => (
-              <li
-                key={option}
-                role="option"
-                data-part="option"
-                data-active={index === active}
-                aria-selected={index === active}
-                onMouseEnter={() => setActive(index)}
-                onMouseDown={(event) => {
-                  event.preventDefault()
-                  add(option)
-                }}
-              >
-                {option}
-              </li>
+        <div data-part="anchor">
+          <div data-part="box">
+            {chips.map((chip) => (
+              <span key={chip} data-part="chip">
+                {chip}
+                <button
+                  type="button"
+                  data-part="remove"
+                  aria-label={removeLabel.replace("{chip}", chip)}
+                  onClick={() => update(chips.filter((item) => item !== chip))}
+                >
+                  ×
+                </button>
+              </span>
             ))}
-          </ul>
-        ) : null}
+            <input
+              id={id}
+              type="text"
+              role="combobox"
+              autoComplete="off"
+              placeholder={chips.length >= max ? "" : placeholder}
+              value={query}
+              disabled={chips.length >= max}
+              aria-expanded={open && matches.length > 0}
+              aria-controls={`${id}-list`}
+              aria-autocomplete="list"
+              onFocus={() => setOpen(true)}
+              onBlur={() => setOpen(false)}
+              onChange={(event) => {
+                setQuery(event.target.value)
+                setActive(0)
+              }}
+              onKeyDown={onKeyDown}
+            />
+          </div>
+          {open && matches.length ? (
+            <ul
+              id={`${id}-list`}
+              role="listbox"
+              aria-label={label}
+              data-part="list"
+            >
+              {matches.map((option, index) => (
+                <li
+                  key={option}
+                  role="option"
+                  data-part="option"
+                  data-active={index === active}
+                  aria-selected={index === active}
+                  onMouseEnter={() => setActive(index)}
+                  onMouseDown={(event) => {
+                    event.preventDefault()
+                    add(option)
+                  }}
+                >
+                  {option}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
         <span data-part="hint">
           {hintText
             .replace("{count}", String(chips.length))

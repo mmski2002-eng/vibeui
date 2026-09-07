@@ -28,6 +28,7 @@ type Dictionary = {
     items: (count: number) => string
     lab: string
     animations: string
+    scenarios: string
   }
   home: {
     title: string
@@ -46,10 +47,31 @@ type Dictionary = {
     searchEmpty: string
     compactView: string
     comfortableView: string
+    viewMode: string
+    overview: string
+    largePreview: string
     all: string
     /** «61 компонент» / «61 блок» — с русским склонением. */
     count: (count: number) => string
     inCategory: string
+  }
+  search: {
+    title: string
+    metaTitle: string
+    placeholder: string
+    hint: string
+    /** Заголовок выдачи: «Найдено 12 результатов». */
+    found: (count: number) => string
+    /** Выдача обрезана: «Найдено 397, показаны первые 48». */
+    shown: (shown: number, total: number) => string
+    nothing: string
+    /** Точных совпадений нет — показано близкое. */
+    near: string
+    /** Совет, когда в запросе одни оценки: «красивое», «удобное». */
+    tooVague: string
+    sections: string
+    showAll: string
+    inSection: Record<"block" | "component" | "animation" | "template", string>
   }
   card: {
     copy: string
@@ -84,6 +106,25 @@ type Dictionary = {
     light: string
     dark: string
   }
+  scenarios: {
+    title: string
+    metaTitle: string
+    description: string
+    /** «10 секций» — с русским склонением. */
+    stepCount: (count: number) => string
+    step: string
+    optional: string
+    chosen: string
+    choose: string
+    /** «ещё 15 в категории» */
+    more: (count: number) => string
+    parts: string
+    partsNote: string
+    copy: string
+    copied: string
+    copyNote: string
+    openCategory: string
+  }
   item: {
     preview: string
     use: string
@@ -109,6 +150,7 @@ const RU: Dictionary = {
   topbar: {
     components: "Компоненты",
     blocks: "Блоки",
+    scenarios: "Сценарии",
     items: (count) => {
       const tail = count % 100
       const last = count % 10
@@ -164,6 +206,9 @@ const RU: Dictionary = {
     searchEmpty: "Ничего не найдено",
     compactView: "Компактный вид",
     comfortableView: "Обычный вид",
+    viewMode: "Режим витрины",
+    overview: "Обзор вариантов",
+    largePreview: "Крупное превью",
     all: "Все категории",
     count: (count) => {
       const tail = count % 100
@@ -184,6 +229,42 @@ const RU: Dictionary = {
       return `${count} компонентов`
     },
     inCategory: "в категории",
+  },
+  search: {
+    title: "Поиск",
+    metaTitle: "Поиск по каталогу",
+    placeholder: "Поиск по всему каталогу…",
+    hint: "Ищите как говорите: «тарифы», «форма заявки», «красивая кнопка»",
+    found: (count) => {
+      const tail = count % 100
+      const last = count % 10
+
+      if (tail > 10 && tail < 20) {
+        return `Найдено ${count} результатов`
+      }
+
+      if (last === 1) {
+        return `Найден ${count} результат`
+      }
+
+      if (last > 1 && last < 5) {
+        return `Найдено ${count} результата`
+      }
+
+      return `Найдено ${count} результатов`
+    },
+    shown: (shown, total) => `Найдено ${total}, показаны первые ${shown}`,
+    nothing: "Ничего не нашлось даже среди близкого",
+    near: "Точных совпадений нет. Похожее:",
+    tooVague: "В запросе только оценки — добавьте, что именно нужно найти",
+    sections: "Подходящие разделы",
+    showAll: "Показать все результаты",
+    inSection: {
+      block: "Блоки",
+      component: "Компоненты",
+      animation: "Анимации",
+      template: "Шаблоны",
+    },
   },
   card: {
     copy: "Копировать для ИИ",
@@ -218,6 +299,43 @@ const RU: Dictionary = {
     light: "Светлая",
     dark: "Тёмная",
   },
+  scenarios: {
+    title: "Сценарии",
+    metaTitle: "Сценарии — с чего начать",
+    description:
+      "Вход со стороны задачи, а не устройства библиотеки. Сценарий раскладывает «сделать лендинг услуги» или «собрать магазин» на секции в понятном порядке и объясняет, зачем на странице каждая.",
+    stepCount: (count) => {
+      const tail = count % 100
+      const last = count % 10
+
+      if (tail > 10 && tail < 20) {
+        return `${count} секций`
+      }
+
+      if (last === 1) {
+        return `${count} секция`
+      }
+
+      if (last > 1 && last < 5) {
+        return `${count} секции`
+      }
+
+      return `${count} секций`
+    },
+    step: "Шаг",
+    optional: "необязательно",
+    chosen: "Выбрано",
+    choose: "Выбрать",
+    more: (count) => `ещё ${count} в категории`,
+    parts: "Понадобятся компоненты",
+    partsNote:
+      "Мелкие части страницы: их ставят по одному, когда доходит до вёрстки формы или таблицы.",
+    copy: "Копировать сценарий для ИИ",
+    copied: "Скопировано",
+    copyNote:
+      "Промпт со всеми выбранными блоками, порядком секций и командами установки. Вставьте его агенту — он поставит блоки из реестра и соберёт страницу.",
+    openCategory: "Открыть категорию",
+  },
   item: {
     preview: "Превью",
     use: "Использовать с ИИ",
@@ -251,6 +369,7 @@ const EN: Dictionary = {
   topbar: {
     components: "Components",
     blocks: "Blocks",
+    scenarios: "Scenarios",
     items: (count) => `${count} items`,
     lab: "Test page",
     animations: "Animations",
@@ -289,9 +408,31 @@ const EN: Dictionary = {
     searchEmpty: "Nothing found",
     compactView: "Compact view",
     comfortableView: "Comfortable view",
+    viewMode: "Catalog view",
+    overview: "Browse variants",
+    largePreview: "Large preview",
     all: "All categories",
     count: (count) => `${count} component${count === 1 ? "" : "s"}`,
     inCategory: "in",
+  },
+  search: {
+    title: "Search",
+    metaTitle: "Catalog search",
+    placeholder: "Search the whole catalog…",
+    hint: "Search the way you speak: “pricing”, “contact form”, “nice button”",
+    found: (count) => `${count} result${count === 1 ? "" : "s"}`,
+    shown: (shown, total) => `${total} results, showing the first ${shown}`,
+    nothing: "Nothing matched, not even loosely",
+    near: "No exact matches. Close ones:",
+    tooVague: "The query is all adjectives — add what you are looking for",
+    sections: "Matching sections",
+    showAll: "Show all results",
+    inSection: {
+      block: "Blocks",
+      component: "Components",
+      animation: "Animations",
+      template: "Templates",
+    },
   },
   card: {
     copy: "Copy for AI",
@@ -326,6 +467,26 @@ const EN: Dictionary = {
     hostTheme: "Host theme",
     light: "Light",
     dark: "Dark",
+  },
+  scenarios: {
+    title: "Scenarios",
+    metaTitle: "Scenarios — where to start",
+    description:
+      "An entry point from the task, not from how the library is built. A scenario breaks “make a service landing” or “build a store” into sections in a sensible order and says what each one is for.",
+    stepCount: (count) => `${count} section${count === 1 ? "" : "s"}`,
+    step: "Step",
+    optional: "optional",
+    chosen: "Chosen",
+    choose: "Choose",
+    more: (count) => `${count} more in the category`,
+    parts: "Components you will need",
+    partsNote:
+      "The small parts of a page: you install them one by one when you get to a form or a table.",
+    copy: "Copy the scenario for AI",
+    copied: "Copied",
+    copyNote:
+      "A prompt with every chosen block, the order of the sections and the install commands. Paste it to your agent — it installs the blocks from the registry and assembles the page.",
+    openCategory: "Open the category",
   },
   item: {
     preview: "Preview",

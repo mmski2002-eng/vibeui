@@ -31,7 +31,8 @@
             "кнопку во всю ширину — на этом экране действие одно",
             "разделитель сеткой, а не фоном под словом «или»",
             "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
-            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "фирменные значки провайдеров (Google в своих цветах, GitHub и Apple в цвете текста) — подбираются по тексту кнопки, без внешних иконок"
           ],
           "adapt": [
             "title, lead, submit, подписи полей, keepLabel, orLabel и emailPlaceholder",
@@ -89,7 +90,8 @@
                 "the full-width button — this screen has one action",
                 "the divider as a grid rather than a background behind the word",
                 "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
-                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the brand marks of the providers (Google in its own colors, GitHub and Apple in the text color) — matched by the button label, no external icon set"
               ],
               "adapt": [
                 "title, lead, submit, the field labels, keepLabel, orLabel and emailPlaceholder",
@@ -292,7 +294,7 @@
                 "ruleLabels": [
                   "10 characters or more",
                   "letters and digits",
-                  "a symbol or 16+"
+                  "a special character or 16+ characters"
                 ]
               }
             },
@@ -1094,7 +1096,8 @@
             "aria-describedby, связывающий метку с кнопкой провайдера",
             "не больше трёх провайдеров: длинный список кнопок вытесняет саму форму",
             "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
-            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "фирменные значки провайдеров (Google в своих цветах, GitHub и Apple в цвете текста) — подбираются по тексту кнопки, без внешних иконок"
           ],
           "adapt": [
             "title, lead и текст divider",
@@ -1152,7 +1155,8 @@
                 "the aria-describedby tying the marker to its provider button",
                 "no more than three providers: a long button stack crowds out the form",
                 "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
-                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the brand marks of the providers (Google in its own colors, GitHub and Apple in the text color) — matched by the button label, no external icon set"
               ],
               "adapt": [
                 "title, lead and the divider text",
@@ -5083,7 +5087,8 @@
             "три горизонтали кадра — шапку, карточку и правовую строку: без них карточка снова повисает в пустоте",
             "поля в две колонки на широкой ширине: растянутая на всю карточку строка ввода выглядит пустой",
             "autoComplete в полях формы и настоящий input type=checkbox вместо роли",
-            "видимые фокус-стили: на светлом фоне тонкая обводка теряется быстрее, чем на тёмном"
+            "видимые фокус-стили: на светлом фоне тонкая обводка теряется быстрее, чем на тёмном",
+            "фирменные значки провайдеров (Google в своих цветах, GitHub и Apple в цвете текста) — подбираются по тексту кнопки, без внешних иконок"
           ],
           "adapt": [
             "title и lead карточки",
@@ -5141,7 +5146,8 @@
                 "the three horizontals of the frame — the bar, the card and the legal row: without them the card hangs in emptiness again",
                 "the two-column fields at wide widths: an input stretched across the whole card reads as empty",
                 "autoComplete on the form fields and a real input type=checkbox instead of a role",
-                "the visible focus styles: on a light background a thin outline is lost faster than on a dark one"
+                "the visible focus styles: on a light background a thin outline is lost faster than on a dark one",
+                "the brand marks of the providers (Google in its own colors, GitHub and Apple in the text color) — matched by the button label, no external icon set"
               ],
               "adapt": [
                 "the card title and lead",

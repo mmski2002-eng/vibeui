@@ -1882,68 +1882,145 @@
                   {
                     "title": "Product",
                     "links": [
-                      { "label": "Features", "href": "#features" },
-                      { "label": "Pricing", "href": "#pricing" },
-                      { "label": "Integrations", "href": "#integrations" },
-                      { "label": "What's new", "href": "#changelog" }
+                      {
+                        "label": "Features",
+                        "href": "#features"
+                      },
+                      {
+                        "label": "Pricing",
+                        "href": "#pricing"
+                      },
+                      {
+                        "label": "Integrations",
+                        "href": "#integrations"
+                      },
+                      {
+                        "label": "What's new",
+                        "href": "#changelog"
+                      }
                     ]
                   },
                   {
                     "title": "Use cases",
                     "links": [
-                      { "label": "Landing pages", "href": "#landing" },
-                      { "label": "Online stores", "href": "#store" },
-                      { "label": "Portfolios", "href": "#portfolio" },
-                      { "label": "Blogs", "href": "#blog-sites" }
+                      {
+                        "label": "Landing pages",
+                        "href": "#landing"
+                      },
+                      {
+                        "label": "Online stores",
+                        "href": "#store"
+                      },
+                      {
+                        "label": "Portfolios",
+                        "href": "#portfolio"
+                      },
+                      {
+                        "label": "Blogs",
+                        "href": "#blog-sites"
+                      }
                     ]
                   },
                   {
                     "title": "Resources",
                     "links": [
-                      { "label": "Documentation", "href": "#docs" },
-                      { "label": "Examples", "href": "#examples" },
-                      { "label": "Blog", "href": "#blog" },
-                      { "label": "Webinars", "href": "#webinars" }
+                      {
+                        "label": "Documentation",
+                        "href": "#docs"
+                      },
+                      {
+                        "label": "Examples",
+                        "href": "#examples"
+                      },
+                      {
+                        "label": "Blog",
+                        "href": "#blog"
+                      },
+                      {
+                        "label": "Webinars",
+                        "href": "#webinars"
+                      }
                     ]
                   },
                   {
                     "title": "Company",
                     "links": [
-                      { "label": "About us", "href": "#about" },
-                      { "label": "Careers", "href": "#jobs" },
-                      { "label": "Partners", "href": "#partners" },
-                      { "label": "Press kit", "href": "#press" }
+                      {
+                        "label": "About us",
+                        "href": "#about"
+                      },
+                      {
+                        "label": "Careers",
+                        "href": "#jobs"
+                      },
+                      {
+                        "label": "Partners",
+                        "href": "#partners"
+                      },
+                      {
+                        "label": "Press kit",
+                        "href": "#press"
+                      }
                     ]
                   },
                   {
                     "title": "Support",
                     "links": [
-                      { "label": "Help center", "href": "#help" },
-                      { "label": "Community", "href": "#community" },
-                      { "label": "Service status", "href": "#status" },
-                      { "label": "Contact", "href": "#contacts" }
+                      {
+                        "label": "Help center",
+                        "href": "#help"
+                      },
+                      {
+                        "label": "Community",
+                        "href": "#community"
+                      },
+                      {
+                        "label": "Service status",
+                        "href": "#status"
+                      },
+                      {
+                        "label": "Contact",
+                        "href": "#contacts"
+                      }
                     ]
                   }
                 ],
                 "social": [
-                  { "label": "Telegram", "href": "#telegram" },
-                  { "label": "YouTube", "href": "#youtube" },
-                  { "label": "GitHub", "href": "#github" },
-                  { "label": "X", "href": "#x" }
+                  {
+                    "label": "Telegram",
+                    "href": "#telegram"
+                  },
+                  {
+                    "label": "YouTube",
+                    "href": "#youtube"
+                  },
+                  {
+                    "label": "GitHub",
+                    "href": "#github"
+                  },
+                  {
+                    "label": "X",
+                    "href": "#x"
+                  }
                 ],
                 "copyright": "© 2026 Atlas Ltd. All rights reserved."
               }
             }
           }
         },
-        "cardControls": ["subscribeTitle", "buttonLabel", "accent", "background"]
+        "cardControls": [
+          "subscribeTitle",
+          "buttonLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
       "name": "footer-010",
       "type": "registry:block",
       "title": "Подвал с большим логотипом",
-      "description": "Подвал с гигантским полупрозрачным wordmark: колонки ссылок сверху, под ними имя бренда во всю ширину, срезанное нижним краем. Самодостаточен: один файл, без зависимостей.",
+      "description": "Подвал с гигантским полупрозрачным wordmark: колонки ссылок сверху, под ними имя бренда во всю ширину. Самодостаточен: один файл, без зависимостей.",
       "categories": ["footer"],
       "dependencies": [],
       "registryDependencies": [],
@@ -1954,7 +2031,7 @@
           "target": "@components/vibeui/footer-010.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-010-*. Серверный компонент. Wordmark набран цветом color-mix от чернил с прозрачностью, а не отдельным серым: так он остаётся различимым на любой подложке и в обеих темах без второй пары значений. Размер задан в cqi и масштабируется от собственной ширины блока, отрицательный нижний отступ вместе с overflow:hidden на корне срезает надпись нижним краем — это и есть приём. Wordmark скрыт от скринридера: имя бренда уже есть в копирайте.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-010-*. Серверный компонент. Wordmark набран цветом color-mix от чернил с прозрачностью, а не отдельным серым: так он остаётся различимым на любой подложке и в обеих темах без второй пары значений. Размер задан в cqi и масштабируется от собственной ширины блока; надпись видна целиком и упирается в нижнюю кромку. Wordmark скрыт от скринридера: имя бренда уже есть в копирайте.",
       "meta": {
         "tags": ["footer", "wordmark", "brand", "typography"],
         "preview": {
@@ -1963,11 +2040,11 @@
         "ai": {
           "export": "Footer010",
           "usage": "<Footer010\n  brand=\"Формат\"\n  tagline=\"Секции для сайтов, которые собирают своими руками.\"\n  columns={[{ title: \"Продукт\", links: [{ label: \"Тарифы\", href: \"/pricing\" }] }]}\n/>",
-          "summary": "Подвал с гигантским полупрозрачным wordmark внизу: слоган и колонки ссылок сверху, строка копирайта, под ней имя бренда во всю ширину блока, срезанное нижним краем. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "summary": "Подвал с гигантским полупрозрачным wordmark внизу: слоган и колонки ссылок сверху, строка копирайта, под ней имя бренда во всю ширину блока. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-footer-010-* и не подменять её токенами вашей темы",
             "цвет wordmark через color-mix от чернил с прозрачностью — он различим на любой подложке и в обеих темах без второй пары значений",
-            "отрицательный нижний отступ wordmark и overflow:hidden на корне: срез нижним краем и есть приём, без него это просто большая надпись",
+            "wordmark во всю ширину блока под строкой копирайта, целиком видимый: он и есть приём, без него это просто подвал с колонками",
             "aria-hidden, user-select:none и pointer-events:none на wordmark — это украшение, а не контент",
             "размер wordmark в cqi — он масштабируется от собственной ширины блока и не вылезает за край",
             "каждую колонку отдельным <nav> с подписью — иначе скринридер читает все ссылки одной кашей",
@@ -2014,14 +2091,14 @@
         "i18n": {
           "en": {
             "title": "Big Wordmark Footer",
-            "description": "A footer with a giant translucent wordmark: link columns on top, the brand name across the full width below them, cropped by the bottom edge. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-footer-010-* variables. A server component. The wordmark is set in a color-mix of the ink with transparency rather than a separate grey: it stays discernible on any ground and in both themes without a second pair of values. Its size is set in cqi and scales with the block's own width; a negative bottom margin together with overflow:hidden on the root crops the lettering with the bottom edge — that crop is the whole trick. The wordmark is hidden from screen readers: the brand name is already in the copyright.",
+            "description": "A footer with a giant translucent wordmark: link columns on top, the brand name across the full width below them. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-footer-010-* variables. A server component. The wordmark is set in a color-mix of the ink with transparency rather than a separate grey: it stays discernible on any ground and in both themes without a second pair of values. Its size is set in cqi and scales with the block's own width; the wordmark is fully visible and sits on the bottom edge. The wordmark is hidden from screen readers: the brand name is already in the copyright.",
             "ai": {
-              "summary": "A footer with a giant translucent wordmark at the bottom: the tagline and link columns on top, the copyright row, and below it the brand name across the full width of the block, cropped by the bottom edge. Zero dependencies, one file, its own palette, no client JS.",
+              "summary": "A footer with a giant translucent wordmark at the bottom: the tagline and link columns on top, the copyright row, and below it the brand name across the full width of the block. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
                 "the local --vibeui-footer-010-* palette — do not swap it for your theme tokens",
                 "the wordmark colour as a color-mix of the ink with transparency — discernible on any ground and in both themes without a second pair of values",
-                "the wordmark's negative bottom margin and overflow:hidden on the root: the bottom-edge crop is the whole trick, without it this is just big text",
+                "the full-width wordmark under the copyright row, fully visible: it is the whole trick, without it this is just a footer with columns",
                 "aria-hidden, user-select:none and pointer-events:none on the wordmark — it is decoration, not content",
                 "the wordmark size in cqi — it scales with the block's own width and never overflows",
                 "each column as its own <nav> with a label — otherwise a screen reader reads all the links as one mush",
@@ -2065,33 +2142,69 @@
                   {
                     "title": "Product",
                     "links": [
-                      { "label": "Features", "href": "#features" },
-                      { "label": "Pricing", "href": "#pricing" },
-                      { "label": "What's new", "href": "#changelog" }
+                      {
+                        "label": "Features",
+                        "href": "#features"
+                      },
+                      {
+                        "label": "Pricing",
+                        "href": "#pricing"
+                      },
+                      {
+                        "label": "What's new",
+                        "href": "#changelog"
+                      }
                     ]
                   },
                   {
                     "title": "Resources",
                     "links": [
-                      { "label": "Documentation", "href": "#docs" },
-                      { "label": "Examples", "href": "#examples" },
-                      { "label": "Blog", "href": "#blog" }
+                      {
+                        "label": "Documentation",
+                        "href": "#docs"
+                      },
+                      {
+                        "label": "Examples",
+                        "href": "#examples"
+                      },
+                      {
+                        "label": "Blog",
+                        "href": "#blog"
+                      }
                     ]
                   },
                   {
                     "title": "Company",
                     "links": [
-                      { "label": "About us", "href": "#about" },
-                      { "label": "Careers", "href": "#jobs" },
-                      { "label": "Contact", "href": "#contacts" }
+                      {
+                        "label": "About us",
+                        "href": "#about"
+                      },
+                      {
+                        "label": "Careers",
+                        "href": "#jobs"
+                      },
+                      {
+                        "label": "Contact",
+                        "href": "#contacts"
+                      }
                     ]
                   },
                   {
                     "title": "Legal",
                     "links": [
-                      { "label": "Terms", "href": "#terms" },
-                      { "label": "Privacy", "href": "#privacy" },
-                      { "label": "Cookies", "href": "#cookies" }
+                      {
+                        "label": "Terms",
+                        "href": "#terms"
+                      },
+                      {
+                        "label": "Privacy",
+                        "href": "#privacy"
+                      },
+                      {
+                        "label": "Cookies",
+                        "href": "#cookies"
+                      }
                     ]
                   }
                 ],
@@ -2247,28 +2360,64 @@
                   {
                     "title": "Product",
                     "links": [
-                      { "label": "Features", "href": "#features" },
-                      { "label": "Pricing", "href": "#pricing" },
-                      { "label": "Integrations", "href": "#integrations" },
-                      { "label": "What's new", "href": "#changelog" }
+                      {
+                        "label": "Features",
+                        "href": "#features"
+                      },
+                      {
+                        "label": "Pricing",
+                        "href": "#pricing"
+                      },
+                      {
+                        "label": "Integrations",
+                        "href": "#integrations"
+                      },
+                      {
+                        "label": "What's new",
+                        "href": "#changelog"
+                      }
                     ]
                   },
                   {
                     "title": "Resources",
                     "links": [
-                      { "label": "Documentation", "href": "#docs" },
-                      { "label": "Examples", "href": "#examples" },
-                      { "label": "Blog", "href": "#blog" },
-                      { "label": "Webinars", "href": "#webinars" }
+                      {
+                        "label": "Documentation",
+                        "href": "#docs"
+                      },
+                      {
+                        "label": "Examples",
+                        "href": "#examples"
+                      },
+                      {
+                        "label": "Blog",
+                        "href": "#blog"
+                      },
+                      {
+                        "label": "Webinars",
+                        "href": "#webinars"
+                      }
                     ]
                   },
                   {
                     "title": "Company",
                     "links": [
-                      { "label": "About us", "href": "#about" },
-                      { "label": "Careers", "href": "#jobs" },
-                      { "label": "Partners", "href": "#partners" },
-                      { "label": "Contact", "href": "#contacts" }
+                      {
+                        "label": "About us",
+                        "href": "#about"
+                      },
+                      {
+                        "label": "Careers",
+                        "href": "#jobs"
+                      },
+                      {
+                        "label": "Partners",
+                        "href": "#partners"
+                      },
+                      {
+                        "label": "Contact",
+                        "href": "#contacts"
+                      }
                     ]
                   }
                 ],
@@ -2420,37 +2569,85 @@
                   {
                     "title": "Product",
                     "links": [
-                      { "label": "Features", "href": "#features" },
-                      { "label": "Pricing", "href": "#pricing" },
-                      { "label": "Integrations", "href": "#integrations" },
-                      { "label": "What's new", "href": "#changelog" }
+                      {
+                        "label": "Features",
+                        "href": "#features"
+                      },
+                      {
+                        "label": "Pricing",
+                        "href": "#pricing"
+                      },
+                      {
+                        "label": "Integrations",
+                        "href": "#integrations"
+                      },
+                      {
+                        "label": "What's new",
+                        "href": "#changelog"
+                      }
                     ]
                   },
                   {
                     "title": "Developers",
                     "links": [
-                      { "label": "Documentation", "href": "#docs" },
-                      { "label": "API", "href": "#api" },
-                      { "label": "Examples", "href": "#examples" },
-                      { "label": "Release notes", "href": "#release-notes" }
+                      {
+                        "label": "Documentation",
+                        "href": "#docs"
+                      },
+                      {
+                        "label": "API",
+                        "href": "#api"
+                      },
+                      {
+                        "label": "Examples",
+                        "href": "#examples"
+                      },
+                      {
+                        "label": "Release notes",
+                        "href": "#release-notes"
+                      }
                     ]
                   },
                   {
                     "title": "Company",
                     "links": [
-                      { "label": "About us", "href": "#about" },
-                      { "label": "Blog", "href": "#blog" },
-                      { "label": "Careers", "href": "#jobs" },
-                      { "label": "Contact", "href": "#contacts" }
+                      {
+                        "label": "About us",
+                        "href": "#about"
+                      },
+                      {
+                        "label": "Blog",
+                        "href": "#blog"
+                      },
+                      {
+                        "label": "Careers",
+                        "href": "#jobs"
+                      },
+                      {
+                        "label": "Contact",
+                        "href": "#contacts"
+                      }
                     ]
                   },
                   {
                     "title": "Support",
                     "links": [
-                      { "label": "Help center", "href": "#help" },
-                      { "label": "Community", "href": "#community" },
-                      { "label": "Report an issue", "href": "#report" },
-                      { "label": "Terms of service", "href": "#terms" }
+                      {
+                        "label": "Help center",
+                        "href": "#help"
+                      },
+                      {
+                        "label": "Community",
+                        "href": "#community"
+                      },
+                      {
+                        "label": "Report an issue",
+                        "href": "#report"
+                      },
+                      {
+                        "label": "Terms of service",
+                        "href": "#terms"
+                      }
                     ]
                   }
                 ],
@@ -2593,16 +2790,40 @@
               "props": {
                 "brand": "Dot",
                 "links": [
-                  { "label": "Features", "href": "#features" },
-                  { "label": "Pricing", "href": "#pricing" },
-                  { "label": "Documentation", "href": "#docs" },
-                  { "label": "Blog", "href": "#blog" },
-                  { "label": "Contact", "href": "#contacts" }
+                  {
+                    "label": "Features",
+                    "href": "#features"
+                  },
+                  {
+                    "label": "Pricing",
+                    "href": "#pricing"
+                  },
+                  {
+                    "label": "Documentation",
+                    "href": "#docs"
+                  },
+                  {
+                    "label": "Blog",
+                    "href": "#blog"
+                  },
+                  {
+                    "label": "Contact",
+                    "href": "#contacts"
+                  }
                 ],
                 "social": [
-                  { "label": "Telegram", "href": "#telegram" },
-                  { "label": "YouTube", "href": "#youtube" },
-                  { "label": "GitHub", "href": "#github" }
+                  {
+                    "label": "Telegram",
+                    "href": "#telegram"
+                  },
+                  {
+                    "label": "YouTube",
+                    "href": "#youtube"
+                  },
+                  {
+                    "label": "GitHub",
+                    "href": "#github"
+                  }
                 ],
                 "copyright": "© 2026 Dot Ltd. All rights reserved."
               }
@@ -2769,28 +2990,64 @@
                   {
                     "title": "Product",
                     "links": [
-                      { "label": "Features", "href": "#features" },
-                      { "label": "Pricing", "href": "#pricing" },
-                      { "label": "Integrations", "href": "#integrations" },
-                      { "label": "What's new", "href": "#changelog" }
+                      {
+                        "label": "Features",
+                        "href": "#features"
+                      },
+                      {
+                        "label": "Pricing",
+                        "href": "#pricing"
+                      },
+                      {
+                        "label": "Integrations",
+                        "href": "#integrations"
+                      },
+                      {
+                        "label": "What's new",
+                        "href": "#changelog"
+                      }
                     ]
                   },
                   {
                     "title": "Resources",
                     "links": [
-                      { "label": "Documentation", "href": "#docs" },
-                      { "label": "Examples", "href": "#examples" },
-                      { "label": "Webinars", "href": "#webinars" },
-                      { "label": "Help center", "href": "#help" }
+                      {
+                        "label": "Documentation",
+                        "href": "#docs"
+                      },
+                      {
+                        "label": "Examples",
+                        "href": "#examples"
+                      },
+                      {
+                        "label": "Webinars",
+                        "href": "#webinars"
+                      },
+                      {
+                        "label": "Help center",
+                        "href": "#help"
+                      }
                     ]
                   },
                   {
                     "title": "Company",
                     "links": [
-                      { "label": "About us", "href": "#about" },
-                      { "label": "Careers", "href": "#jobs" },
-                      { "label": "Partners", "href": "#partners" },
-                      { "label": "Contact", "href": "#contacts" }
+                      {
+                        "label": "About us",
+                        "href": "#about"
+                      },
+                      {
+                        "label": "Careers",
+                        "href": "#jobs"
+                      },
+                      {
+                        "label": "Partners",
+                        "href": "#partners"
+                      },
+                      {
+                        "label": "Contact",
+                        "href": "#contacts"
+                      }
                     ]
                   }
                 ],
@@ -2943,37 +3200,85 @@
                   {
                     "title": "Product",
                     "links": [
-                      { "label": "Features", "href": "#features" },
-                      { "label": "Pricing", "href": "#pricing" },
-                      { "label": "Integrations", "href": "#integrations" },
-                      { "label": "What's new", "href": "#changelog" }
+                      {
+                        "label": "Features",
+                        "href": "#features"
+                      },
+                      {
+                        "label": "Pricing",
+                        "href": "#pricing"
+                      },
+                      {
+                        "label": "Integrations",
+                        "href": "#integrations"
+                      },
+                      {
+                        "label": "What's new",
+                        "href": "#changelog"
+                      }
                     ]
                   },
                   {
                     "title": "Resources",
                     "links": [
-                      { "label": "Documentation", "href": "#docs" },
-                      { "label": "Examples", "href": "#examples" },
-                      { "label": "Blog", "href": "#blog" },
-                      { "label": "Webinars", "href": "#webinars" }
+                      {
+                        "label": "Documentation",
+                        "href": "#docs"
+                      },
+                      {
+                        "label": "Examples",
+                        "href": "#examples"
+                      },
+                      {
+                        "label": "Blog",
+                        "href": "#blog"
+                      },
+                      {
+                        "label": "Webinars",
+                        "href": "#webinars"
+                      }
                     ]
                   },
                   {
                     "title": "Company",
                     "links": [
-                      { "label": "About us", "href": "#about" },
-                      { "label": "Careers", "href": "#jobs" },
-                      { "label": "Partners", "href": "#partners" },
-                      { "label": "Contact", "href": "#contacts" }
+                      {
+                        "label": "About us",
+                        "href": "#about"
+                      },
+                      {
+                        "label": "Careers",
+                        "href": "#jobs"
+                      },
+                      {
+                        "label": "Partners",
+                        "href": "#partners"
+                      },
+                      {
+                        "label": "Contact",
+                        "href": "#contacts"
+                      }
                     ]
                   },
                   {
                     "title": "Legal",
                     "links": [
-                      { "label": "Terms", "href": "#terms" },
-                      { "label": "Privacy", "href": "#privacy" },
-                      { "label": "Cookies", "href": "#cookies" },
-                      { "label": "Public offer", "href": "#offer" }
+                      {
+                        "label": "Terms",
+                        "href": "#terms"
+                      },
+                      {
+                        "label": "Privacy",
+                        "href": "#privacy"
+                      },
+                      {
+                        "label": "Cookies",
+                        "href": "#cookies"
+                      },
+                      {
+                        "label": "Public offer",
+                        "href": "#offer"
+                      }
                     ]
                   }
                 ],

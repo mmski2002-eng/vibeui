@@ -33,8 +33,6 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/block/commerce")).PREVIEWS
     case "block/auth":
       return (await import("@/registry/previews-lazy/block/auth")).PREVIEWS
-    case "block/solutions":
-      return (await import("@/registry/previews-lazy/block/solutions")).PREVIEWS
     case "block/blog":
       return (await import("@/registry/previews-lazy/block/blog")).PREVIEWS
     case "block/contact":
@@ -69,6 +67,8 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/block/podcast")).PREVIEWS
     case "block/press":
       return (await import("@/registry/previews-lazy/block/press")).PREVIEWS
+    case "block/data-grid":
+      return (await import("@/registry/previews-lazy/block/data-grid")).PREVIEWS
     case "block/logos":
       return (await import("@/registry/previews-lazy/block/logos")).PREVIEWS
     case "block/newsletter":
@@ -121,8 +121,6 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/component/context-menu")).PREVIEWS
     case "component/currency-input":
       return (await import("@/registry/previews-lazy/component/currency-input")).PREVIEWS
-    case "component/data-grid":
-      return (await import("@/registry/previews-lazy/component/data-grid")).PREVIEWS
     case "component/date-selector":
       return (await import("@/registry/previews-lazy/component/date-selector")).PREVIEWS
     case "component/dialog":
@@ -225,76 +223,22 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/component/tooltip")).PREVIEWS
     case "component/tree":
       return (await import("@/registry/previews-lazy/component/tree")).PREVIEWS
-    case "animation/hero":
-      return (await import("@/registry/previews-lazy/animation/hero")).PREVIEWS
-    case "animation/navbar":
-      return (await import("@/registry/previews-lazy/animation/navbar")).PREVIEWS
-    case "animation/features":
-      return (await import("@/registry/previews-lazy/animation/features")).PREVIEWS
-    case "animation/pricing":
-      return (await import("@/registry/previews-lazy/animation/pricing")).PREVIEWS
-    case "animation/testimonials":
-      return (await import("@/registry/previews-lazy/animation/testimonials")).PREVIEWS
-    case "animation/faq":
-      return (await import("@/registry/previews-lazy/animation/faq")).PREVIEWS
     case "animation/cta":
       return (await import("@/registry/previews-lazy/animation/cta")).PREVIEWS
-    case "animation/footer":
-      return (await import("@/registry/previews-lazy/animation/footer")).PREVIEWS
-    case "animation/ai":
-      return (await import("@/registry/previews-lazy/animation/ai")).PREVIEWS
     case "animation/dashboard":
       return (await import("@/registry/previews-lazy/animation/dashboard")).PREVIEWS
     case "animation/auth":
       return (await import("@/registry/previews-lazy/animation/auth")).PREVIEWS
-    case "animation/blog":
-      return (await import("@/registry/previews-lazy/animation/blog")).PREVIEWS
-    case "animation/contact":
-      return (await import("@/registry/previews-lazy/animation/contact")).PREVIEWS
     case "animation/avatar":
       return (await import("@/registry/previews-lazy/animation/avatar")).PREVIEWS
-    case "animation/calendar":
-      return (await import("@/registry/previews-lazy/animation/calendar")).PREVIEWS
-    case "animation/chart":
-      return (await import("@/registry/previews-lazy/animation/chart")).PREVIEWS
+    case "animation/button":
+      return (await import("@/registry/previews-lazy/animation/button")).PREVIEWS
     case "animation/code-block":
       return (await import("@/registry/previews-lazy/animation/code-block")).PREVIEWS
-    case "animation/empty":
-      return (await import("@/registry/previews-lazy/animation/empty")).PREVIEWS
-    case "animation/kanban":
-      return (await import("@/registry/previews-lazy/animation/kanban")).PREVIEWS
-    case "animation/kbd":
-      return (await import("@/registry/previews-lazy/animation/kbd")).PREVIEWS
-    case "animation/table":
-      return (await import("@/registry/previews-lazy/animation/table")).PREVIEWS
-    case "animation/timeline":
-      return (await import("@/registry/previews-lazy/animation/timeline")).PREVIEWS
-    case "animation/activity":
-      return (await import("@/registry/previews-lazy/animation/activity")).PREVIEWS
-    case "animation/api":
-      return (await import("@/registry/previews-lazy/animation/api")).PREVIEWS
-    case "animation/branding":
-      return (await import("@/registry/previews-lazy/animation/branding")).PREVIEWS
-    case "animation/browser":
-      return (await import("@/registry/previews-lazy/animation/browser")).PREVIEWS
     case "animation/chat":
       return (await import("@/registry/previews-lazy/animation/chat")).PREVIEWS
-    case "animation/connections":
-      return (await import("@/registry/previews-lazy/animation/connections")).PREVIEWS
     case "animation/devices":
       return (await import("@/registry/previews-lazy/animation/devices")).PREVIEWS
-    case "animation/email":
-      return (await import("@/registry/previews-lazy/animation/email")).PREVIEWS
-    case "animation/files":
-      return (await import("@/registry/previews-lazy/animation/files")).PREVIEWS
-    case "animation/geo":
-      return (await import("@/registry/previews-lazy/animation/geo")).PREVIEWS
-    case "animation/git":
-      return (await import("@/registry/previews-lazy/animation/git")).PREVIEWS
-    case "animation/images":
-      return (await import("@/registry/previews-lazy/animation/images")).PREVIEWS
-    case "animation/integrations":
-      return (await import("@/registry/previews-lazy/animation/integrations")).PREVIEWS
     case "animation/media":
       return (await import("@/registry/previews-lazy/animation/media")).PREVIEWS
     case "animation/metrics":
@@ -303,36 +247,16 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/animation/notifications")).PREVIEWS
     case "animation/payments":
       return (await import("@/registry/previews-lazy/animation/payments")).PREVIEWS
-    case "animation/search":
-      return (await import("@/registry/previews-lazy/animation/search")).PREVIEWS
     case "animation/security":
       return (await import("@/registry/previews-lazy/animation/security")).PREVIEWS
     case "animation/status":
       return (await import("@/registry/previews-lazy/animation/status")).PREVIEWS
     case "animation/checklist":
       return (await import("@/registry/previews-lazy/animation/checklist")).PREVIEWS
-    case "animation/bento":
-      return (await import("@/registry/previews-lazy/animation/bento")).PREVIEWS
-    case "animation/blog-post":
-      return (await import("@/registry/previews-lazy/animation/blog-post")).PREVIEWS
-    case "animation/comments":
-      return (await import("@/registry/previews-lazy/animation/comments")).PREVIEWS
-    case "animation/error":
-      return (await import("@/registry/previews-lazy/animation/error")).PREVIEWS
-    case "animation/logos":
-      return (await import("@/registry/previews-lazy/animation/logos")).PREVIEWS
-    case "animation/newsletter":
-      return (await import("@/registry/previews-lazy/animation/newsletter")).PREVIEWS
-    case "animation/process":
-      return (await import("@/registry/previews-lazy/animation/process")).PREVIEWS
-    case "animation/stats":
-      return (await import("@/registry/previews-lazy/animation/stats")).PREVIEWS
-    case "animation/team":
-      return (await import("@/registry/previews-lazy/animation/team")).PREVIEWS
-    case "animation/maintenance":
-      return (await import("@/registry/previews-lazy/animation/maintenance")).PREVIEWS
-    case "animation/not-found":
-      return (await import("@/registry/previews-lazy/animation/not-found")).PREVIEWS
+    case "animation/stacks":
+      return (await import("@/registry/previews-lazy/animation/stacks")).PREVIEWS
+    case "animation/cursor":
+      return (await import("@/registry/previews-lazy/animation/cursor")).PREVIEWS
     default:
       return null
   }

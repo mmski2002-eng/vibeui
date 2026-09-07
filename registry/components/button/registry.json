@@ -10377,6 +10377,824 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "button-071",
+      "type": "registry:component",
+      "title": "Магнитная кнопка",
+      "description": "Кнопка тянется к курсору внутри своей зоны и возвращается на место по пружине: попасть в неё проще, а движение сообщает, что она живая.",
+      "categories": ["button"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-071/button-071.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-071.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-071-*. Корень — зона притяжения с пунктирной рамкой; pointermove по ней считает смещение курсора от центра кнопки и пишет translate прямо в DOM, минуя рендер React. Слежение идёт переходом .15s ease-out, возврат после pointerleave — пружиной .55s с лёгким перелётом. Магнит работает только для мыши и выключается при prefers-reduced-motion. Тема берётся из окружения через light-dark() плюс правило для класса .dark.",
+      "meta": {
+        "tags": ["button", "magnetic", "pointer", "hover", "spring"],
+        "ai": {
+          "export": "Button071",
+          "usage": "<Button071 label=\"Оставить заявку\" pull={0.35} />",
+          "summary": "Кнопка внутри зоны притяжения: пока курсор идёт к цели, кнопка выходит навстречу на долю пройденного расстояния, а после ухода курсора отскакивает на место по пружине. Смещение пишется прямо в DOM, поэтому pointermove не вызывает рендер. Ноль зависимостей, один файл.",
+          "preserve": [
+            "зону притяжения вокруг кнопки: магнит считается от границ обёртки, а не от самой кнопки — без зоны эффект начинается слишком поздно",
+            "запись смещения прямо в DOM через ref: состояние React на каждом pointermove съедает кадры",
+            "две разные кривые: слежение .15s ease-out, возврат .55s пружиной с перелётом — одинаковые ощущаются как залипание",
+            "отказ от магнита при pointerType не mouse и при prefers-reduced-motion",
+            "блок <style> внутри компонента",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "подпись кнопки и пояснение под ней (label, hint)",
+            "силу магнита — проп pull: 0 выключает притяжение, 0.5 делает его почти липким",
+            "акцент и подложку — пропы accent и background",
+            "обработчик нажатия: нативные пропсы div попадают на зону, кнопке достаточно onClick через className-обёртку",
+            "иконку внутри кнопки — она inline SVG"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Пунктирная рамка — не украшение, а видимая граница зоны притяжения: без неё поведение выглядит случайным.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Наведите ближе",
+            "maxLength": 40
+          },
+          {
+            "prop": "pull",
+            "label": "Сила магнита",
+            "type": "number",
+            "min": 0,
+            "max": 0.6,
+            "default": 0.35
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Magnetic Button",
+            "description": "The button leans toward the cursor inside its zone and springs back when the pointer leaves: easier to hit, and the motion says it is alive.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-071-* variables. The root is the magnetic zone with a dashed outline; pointermove on it measures the cursor offset from the button centre and writes translate straight to the DOM, bypassing a React render. Tracking uses a .15s ease-out transition, the return after pointerleave a .55s spring with a slight overshoot. The magnet runs for mouse input only and switches off under prefers-reduced-motion. The theme comes from the surroundings via light-dark() plus a rule for the .dark class.",
+            "ai": {
+              "summary": "A button inside a magnetic zone: while the cursor travels toward it the button moves out to meet it by a fraction of the offset, then springs back once the pointer leaves. The offset is written straight to the DOM, so pointermove never triggers a render. Zero dependencies, one file.",
+              "preserve": [
+                "the magnetic zone around the button: the pull is measured from the wrapper bounds, not from the button itself — without the zone the effect starts far too late",
+                "writing the offset straight to the DOM through a ref: React state on every pointermove eats frames",
+                "the two different curves: .15s ease-out while tracking, a .55s overshooting spring on the way back — the same curve for both feels sticky",
+                "dropping the magnet when pointerType is not mouse and under prefers-reduced-motion",
+                "the <style> block inside the component",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the button caption and the note under it (label, hint)",
+                "the magnet strength through the pull prop: 0 turns the attraction off, 0.5 makes it almost sticky",
+                "the accent and the backdrop through the accent and background props",
+                "the click handler: the native div props land on the zone, the button itself takes onClick through the wrapper",
+                "the icon inside the button — it is an inline SVG"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The dashed outline is not decoration but the visible edge of the magnetic zone: without it the behaviour looks random.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button071 label=\"Get in touch\" pull={0.35} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Move closer"
+              },
+              "pull": {
+                "label": "Magnet strength"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Backdrop"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Move closer",
+                "hint": "The button will come out to meet the cursor"
+              }
+            }
+          }
+        },
+        "cardControls": ["label", "pull", "accent"],
+        "preview": {
+          "width": "auto"
+        }
+      }
+    },
+    {
+      "name": "button-072",
+      "type": "registry:component",
+      "title": "Кнопка с уведомлением",
+      "description": "Кнопка со своим подтверждением: всплывашка выезжает снизу с перелётом, проскакивает точку покоя и уходит сама через пару секунд.",
+      "categories": ["button"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-072/button-072.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-072.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-072-*. Всплывашка живёт внутри корня и позиционирована абсолютно, поэтому ни портала, ни провайдера, ни очереди тостов не нужно. Появление — переход translate и scale .55s пружиной с перелётом, уход — .28s ease-in без перелёта. Разметка всплывашки не размонтируется (переход считается от предыдущего состояния), закрытая помечена aria-hidden, а её крестик выключен, чтобы не оставаться в обходе Tab. Таймер сбрасывается при повторном нажатии и очищается при размонтировании.",
+      "meta": {
+        "tags": ["button", "toast", "notification", "overshoot", "spring"],
+        "ai": {
+          "export": "Button072",
+          "usage": "<Button072 label=\"Сохранить\" message=\"Изменения сохранены\" duration={2200} />",
+          "summary": "Кнопка, которая сама показывает подтверждение: всплывашка выезжает снизу с пружинным перелётом, держится заданное время и уходит — быстро и без перелёта. Всплывашка абсолютно позиционирована внутри компонента, поэтому портал и глобальный тостер не нужны. Ноль зависимостей, один файл.",
+          "preserve": [
+            "перелёт на появлении и его отсутствие на уходе: уходящее сообщение не должно второй раз ловить взгляд",
+            "всплывашку внутри корня: она не размонтируется, иначе переход считать не от чего",
+            "aria-hidden на закрытой всплывашке и выключенный крестик — иначе он остаётся в обходе Tab",
+            "role=\"status\" на всплывашке: подтверждение объявляется, а не только рисуется",
+            "сброс таймера при повторном нажатии и его очистку при размонтировании",
+            "блок <style> внутри компонента",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "подпись кнопки и текст подтверждения (label, message, closeLabel)",
+            "время жизни всплывашки — проп duration в миллисекундах",
+            "акцент и подложку — пропы accent и background",
+            "обработчик самого действия: нативные пропсы div попадают на корень",
+            "точку, откуда выезжает всплывашка: она прижата к низу корня"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Это не замена глобальному тостеру: компонент показывает подтверждение своего действия и не умеет очередь из нескольких сообщений.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Сохранить",
+            "maxLength": 40
+          },
+          {
+            "prop": "message",
+            "label": "Текст уведомления",
+            "type": "text",
+            "default": "Изменения сохранены",
+            "maxLength": 48
+          },
+          {
+            "prop": "duration",
+            "label": "Время показа, мс",
+            "type": "number",
+            "min": 800,
+            "max": 6000,
+            "default": 2200
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Toast Overshoot Button",
+            "description": "A button that carries its own confirmation: the toast slides up past its rest position, settles, and leaves on its own a couple of seconds later.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-072-* variables. The toast lives inside the root and is absolutely positioned, so no portal, provider or toast queue is required. It enters with a .55s overshooting spring on translate and scale, and leaves with a .28s ease-in and no overshoot. The toast markup is never unmounted (a transition needs a previous state), the closed toast is marked aria-hidden and its close button is disabled so it stays out of the Tab order. The timer resets on a repeat click and is cleared on unmount.",
+            "ai": {
+              "summary": "A button that shows its own confirmation: the toast slides up with a spring overshoot, holds for the given time and then leaves quickly and flatly. The toast is absolutely positioned inside the component, so a portal and a global toaster are unnecessary. Zero dependencies, one file.",
+              "preserve": [
+                "the overshoot on entry and its absence on exit: a leaving message must not catch the eye a second time",
+                "the toast inside the root: it is never unmounted, otherwise there is no previous state to transition from",
+                "aria-hidden on the closed toast and the disabled close button — otherwise it stays in the Tab order",
+                "role=\"status\" on the toast: the confirmation is announced, not merely drawn",
+                "resetting the timer on a repeat click and clearing it on unmount",
+                "the <style> block inside the component",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the button caption and the confirmation text (label, message, closeLabel)",
+                "how long the toast stays through the duration prop, in milliseconds",
+                "the accent and the backdrop through the accent and background props",
+                "the handler of the action itself: the native div props land on the root",
+                "the spot the toast slides from: it is pinned to the bottom of the root"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "This is not a replacement for a global toaster: the component confirms its own action and knows nothing about a queue of messages.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button072 label=\"Save\" message=\"Changes saved\" duration={2200} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Save"
+              },
+              "message": {
+                "label": "Toast text",
+                "default": "Changes saved"
+              },
+              "duration": {
+                "label": "Visible for, ms"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Backdrop"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Save",
+                "message": "Changes saved",
+                "closeLabel": "Dismiss notification"
+              }
+            }
+          }
+        },
+        "cardControls": ["label", "message", "duration"],
+        "preview": {
+          "width": "auto"
+        }
+      }
+    },
+    {
+      "name": "button-073",
+      "type": "registry:component",
+      "title": "Кнопка с удержанием",
+      "description": "Подтверждение без диалога: заливка ползёт по кнопке, пока её держат, и отскакивает назад, если отпустить раньше срока.",
+      "categories": ["button"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-073/button-073.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-073.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-073-*. Заливка — отдельный слой со scale по оси X и transform-origin слева: анимировать width значило бы перекладывать раскладку каждый кадр. Длительность приходит переменной --vibeui-button-073-hold из пропа duration, поэтому CSS-переход и таймер JS не расходятся. Состояний три: idle, holding, done; done держится 1400 мс и сам возвращается в idle. Указатель и клавиатура работают одинаково: pointerdown и keydown начинают, pointerup, pointerleave, pointercancel и keyup отменяют. Тема берётся из окружения через light-dark() плюс правило для класса .dark.",
+      "meta": {
+        "tags": ["button", "hold", "confirm", "progress", "destructive"],
+        "ai": {
+          "export": "Button073",
+          "usage": "<Button073 label=\"Удерживайте для удаления\" duration={800} />",
+          "summary": "Кнопка, которую нужно удержать: заливка ползёт слева направо ровно столько миллисекунд, сколько задано, и только дойдя до конца вызывает onConfirm. Раннее отпускание откатывает заливку по пружине и ничего не делает. Удержание работает и с клавиатуры. Ноль зависимостей, один файл.",
+          "preserve": [
+            "линейный ход заливки во время удержания: она обязана честно показывать оставшееся время, а не подгонять его кривой",
+            "пружинный откат при раннем отпускании — это и есть сигнал «ничего не произошло»",
+            "связь CSS и таймера через переменную --vibeui-button-073-hold: две независимые длительности неизбежно разойдутся",
+            "клавиатурное удержание: keydown с проверкой repeat начинает, keyup отменяет — без него кнопка доступна только мышью",
+            "aria-describedby на пояснении: без него смысл удержания не объявляется",
+            "блок <style> внутри компонента",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "подписи и пояснение (label, doneLabel, hint)",
+            "время удержания — проп duration в миллисекундах: 800 для обычного подтверждения, 1500 для по-настоящему опасного",
+            "акцент и подложку — пропы accent и background",
+            "обработчик onConfirm — он вызывается ровно один раз за удержание",
+            "иконку успеха — она inline SVG внутри подписи"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Заливка полупрозрачная не для красоты: сплошной акцент под подписью убил бы её контраст на середине хода.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Удерживайте для удаления",
+            "maxLength": 48
+          },
+          {
+            "prop": "doneLabel",
+            "label": "Подпись после подтверждения",
+            "type": "text",
+            "default": "Готово",
+            "maxLength": 32
+          },
+          {
+            "prop": "duration",
+            "label": "Время удержания, мс",
+            "type": "number",
+            "min": 400,
+            "max": 3000,
+            "default": 800
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hold to Confirm",
+            "description": "Confirmation without a dialog: a fill creeps across the button while it is held and springs back if you let go too early.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-073-* variables. The fill is a separate layer scaled on the X axis with a left transform-origin: animating width would relayout every frame. The duration arrives as the --vibeui-button-073-hold variable from the duration prop, so the CSS transition and the JS timer cannot drift apart. There are three states — idle, holding, done; done holds for 1400 ms and returns to idle on its own. Pointer and keyboard behave alike: pointerdown and keydown start it, pointerup, pointerleave, pointercancel and keyup cancel it. The theme comes from the surroundings via light-dark() plus a rule for the .dark class.",
+            "ai": {
+              "summary": "A button that has to be held: the fill creeps left to right for exactly the given number of milliseconds and only fires onConfirm once it reaches the end. An early release rolls the fill back on a spring and does nothing. The hold works from the keyboard too. Zero dependencies, one file.",
+              "preserve": [
+                "the linear progress of the fill while holding: it must report the remaining time honestly rather than sweeten it with a curve",
+                "the springy rollback on an early release — that is the signal that nothing happened",
+                "the link between CSS and the timer through the --vibeui-button-073-hold variable: two independent durations will drift apart",
+                "the keyboard hold: keydown guarded by repeat starts it, keyup cancels it — without that the button is mouse-only",
+                "aria-describedby on the note: without it the point of holding is never announced",
+                "the <style> block inside the component",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the captions and the note (label, doneLabel, hint)",
+                "the hold time through the duration prop, in milliseconds: 800 for a routine confirmation, 1500 for a genuinely dangerous one",
+                "the accent and the backdrop through the accent and background props",
+                "the onConfirm handler — it fires exactly once per completed hold",
+                "the success icon — it is an inline SVG inside the caption"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The fill is translucent for a reason: a solid accent under the caption would destroy its contrast halfway through the sweep.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button073 label=\"Hold to delete\" duration={800} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Hold to delete"
+              },
+              "doneLabel": {
+                "label": "Confirmed label",
+                "default": "Done"
+              },
+              "duration": {
+                "label": "Hold time, ms"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Backdrop"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Hold to delete",
+                "doneLabel": "Done",
+                "hint": "Let go early and nothing happens"
+              }
+            }
+          }
+        },
+        "cardControls": ["label", "doneLabel", "duration"],
+        "preview": {
+          "width": "auto"
+        }
+      }
+    },
+    {
+      "name": "button-074",
+      "type": "registry:component",
+      "title": "Кнопка копирования",
+      "description": "Копирует строку в буфер обмена и подтверждает это морфом иконки: листы перетекают в галочку с пружиной и через полторы секунды возвращаются.",
+      "categories": ["button"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-074/button-074.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-074.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-074-*. В буфер уходит проп value, он же показан рядом моноширинным текстом и обрезается многоточием на узкой ширине. Обе иконки лежат в одном квадрате друг на друге и меняются прозрачностью и масштабом: подмена одной другой сдвигала бы подпись на кадр. Масштаб доезжает пружиной с лёгким перелётом. navigator.clipboard.writeText падает без защищённого соединения, поэтому отказ показан отдельным состоянием, а не выдан за успех. Скрытая область role=\"status\" объявляет результат: смена подписи внутри кнопки сама по себе не читается.",
+      "meta": {
+        "tags": ["button", "copy", "clipboard", "feedback", "spring"],
+        "ai": {
+          "export": "Button074",
+          "usage": "<Button074 value=\"npm i vibeui\" label=\"Копировать\" />",
+          "summary": "Кнопка копирования, которая отвечает за результат: значение уходит в буфер обмена, иконка листов перетекает в галочку с пружинным доскоком, подпись меняется вместе с ней, и через полторы секунды всё возвращается. Отказ буфера показан честно, а не выдан за успех. Ноль зависимостей, один файл.",
+          "preserve": [
+            "две иконки в одном квадрате, меняющиеся прозрачностью и масштабом: подмена узла сдвинула бы подпись на кадр",
+            "пружину на масштабе галочки — без перелёта подтверждение читается как простое переключение",
+            "отдельное состояние отказа: writeText падает без защищённого соединения, и делать вид, что скопировано, значит терять текст",
+            "скрытую область role=\"status\": смена подписи внутри кнопки не объявляется сама по себе",
+            "возврат в исходное состояние через полторы секунды — второй раз копировать можно, не дожидаясь ничего",
+            "блок <style> внутри компонента",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "строку для буфера — проп value: он же показан рядом моноширинным текстом",
+            "подписи всех трёх состояний (label, copiedLabel, errorLabel)",
+            "акцент и подложку — пропы accent и background",
+            "иконки: обе inline SVG в одном квадрате 1rem",
+            "показ значения рядом: если строка длинная, её можно скрыть, оставив одну кнопку"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Буфер обмена доступен только по защищённому соединению и только в ответ на жест пользователя: на http компонент честно покажет отказ.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "value",
+            "label": "Что копировать",
+            "type": "text",
+            "default": "npx shadcn@latest add button-074",
+            "maxLength": 64
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Копировать",
+            "maxLength": 32
+          },
+          {
+            "prop": "copiedLabel",
+            "label": "Подпись после копирования",
+            "type": "text",
+            "default": "Скопировано",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Copy Button",
+            "description": "Copies a string to the clipboard and confirms it with an icon morph: the sheets spring into a check and revert a second and a half later.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-074-* variables. The value prop is what goes to the clipboard, and it is also shown next to the button in a monospace face, truncated with an ellipsis on narrow widths. Both icons sit stacked in one square and swap through opacity and scale: replacing one node with the other would shift the caption for a frame. The scale settles on a spring with a slight overshoot. navigator.clipboard.writeText fails without a secure context, so a refusal gets its own state instead of being passed off as success. A hidden role=\"status\" region announces the outcome: a caption change inside a button is not read on its own.",
+            "ai": {
+              "summary": "A copy button that owns the outcome: the value goes to the clipboard, the sheet icon springs into a check, the caption changes with it, and a second and a half later everything reverts. A clipboard refusal is reported honestly rather than dressed up as success. Zero dependencies, one file.",
+              "preserve": [
+                "the two icons in one square swapping through opacity and scale: replacing the node would shift the caption for a frame",
+                "the spring on the check's scale — without the overshoot the confirmation reads as a plain toggle",
+                "the separate failure state: writeText fails without a secure context, and pretending it copied means losing text",
+                "the hidden role=\"status\" region: a caption change inside a button is not announced on its own",
+                "the return to the idle state after a second and a half — copying again needs no waiting",
+                "the <style> block inside the component",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the string for the clipboard through the value prop: it is also shown next to the button in monospace",
+                "the captions of all three states (label, copiedLabel, errorLabel)",
+                "the accent and the backdrop through the accent and background props",
+                "the icons: both are inline SVGs inside one 1rem square",
+                "showing the value alongside: for a long string you can drop it and keep only the button"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The clipboard is available only over a secure connection and only in response to a user gesture: over http the component will honestly show the failure.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button074 value=\"npm i vibeui\" label=\"Copy\" />"
+            },
+            "controls": {
+              "value": {
+                "label": "Value to copy",
+                "default": "npm i vibeui"
+              },
+              "label": {
+                "label": "Label",
+                "default": "Copy"
+              },
+              "copiedLabel": {
+                "label": "Copied label",
+                "default": "Copied"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Backdrop"
+              }
+            },
+            "preview": {
+              "props": {
+                "value": "npx shadcn@latest add button-074",
+                "label": "Copy",
+                "copiedLabel": "Copied",
+                "errorLabel": "Failed"
+              }
+            }
+          }
+        },
+        "cardControls": ["value", "label", "copiedLabel"],
+        "preview": {
+          "width": "auto"
+        }
+      }
+    },
+    {
+      "name": "button-075",
+      "type": "registry:component",
+      "title": "Плавающая кнопка действий",
+      "description": "Одна кнопка вместо панели: по нажатию из-под плюса столбиком выезжают действия — со сдвигом в несколько кадров между ними и пружиной на каждом.",
+      "categories": ["button"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-075/button-075.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-075.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-075-*. Кнопки действий лежат ровно под главной и разъезжаются переходом translate и scale .5s пружиной; стаггер задан transition-delay по data-index и работает только на раскрытии. Открытое состояние объявлено через aria-expanded, закрытые действия выключены атрибутом disabled, чтобы не оставаться в обходе Tab. Escape и pointerdown мимо корня закрывают столбик и возвращают фокус главной кнопке; оба слушателя живут на документе только пока столбик открыт. Проп direction переключает раскладку между столбиком вверх-влево и строкой влево. Больше четырёх действий компонент не рисует.",
+      "meta": {
+        "tags": ["button", "fab", "speed-dial", "menu", "stagger"],
+        "ai": {
+          "export": "Button075",
+          "usage": "<Button075 label=\"Действия\" direction=\"up\" />",
+          "summary": "Плавающая кнопка, раскрывающая столбик из трёх-четырёх действий: каждая кнопка выезжает по пружине со сдвигом в несколько кадров от соседней, а плюс доворачивается в крестик. Веер закрывается по Escape и по нажатию мимо, фокус возвращается главной кнопке. Ноль зависимостей, один файл.",
+          "preserve": [
+            "стаггер только на раскрытии: складываться кнопки должны разом, иначе закрытие тянется дольше решения уйти",
+            "исходную позицию действий ровно под главной кнопкой — столбик обязан выглядеть выехавшим из неё, а не появившимся рядом",
+            "aria-expanded на главной кнопке и disabled на закрытых действиях: сдвинутая прозрачная кнопка иначе остаётся в обходе Tab",
+            "закрытие по Escape и по нажатию мимо с возвратом фокуса главной кнопке",
+            "поворот плюса в крестик на той же пружине: это единственный указатель состояния, когда столбик ещё едет",
+            "блок <style> внутри компонента",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "состав веера — проп actions: label, иконка и обработчик onSelect у каждого действия",
+            "раскладку — проп direction: up разводит действия дугой вверх-влево, row выстраивает их строкой",
+            "подпись главной кнопки (label) — у плюса нет видимого текста",
+            "акцент и подложку — пропы accent и background",
+            "иконки действий: любые inline SVG, компонент их только вставляет",
+            "подписи действий через actionLabels, если иконки те же, а язык другой"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Больше четырёх действий не рисуется: пятое уезжает за край кадра, а столбик перестаёт читаться с одного взгляда.",
+            "Пунктирная рамка корня показывает область, в которой кнопка плавает; в бою её обычно снимают и позиционируют корень сами.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом.",
+            "нажатие на действие список не закрывает — закрывают плюс, Escape и клик мимо"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись главной кнопки",
+            "type": "text",
+            "default": "Действия",
+            "maxLength": 32
+          },
+          {
+            "prop": "direction",
+            "label": "Раскладка",
+            "type": "select",
+            "options": ["up", "row"],
+            "default": "up"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Speed-Dial FAB",
+            "description": "One button instead of a toolbar: tapping the plus fans the actions out, a few frames apart from each other and each on a spring.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-075-* variables. The action buttons sit exactly under the main one and travel out through a .5s spring on translate and scale; the stagger is transition-delay keyed on data-index and applies to opening only. The open state is announced through aria-expanded, and closed actions are disabled so they stay out of the Tab order. Escape and a pointerdown outside the root close the up and hand focus back to the main button; both listeners live on the document only while the up is open. The direction prop switches the layout between an up-and-left up and a leftward row. The component never draws more than four actions.",
+            "ai": {
+              "summary": "A floating button that unfolds a up of three or four actions: each one travels out on a spring a few frames behind its neighbour while the plus rotates into a cross. The up closes on Escape and on an outside click, returning focus to the main button. Zero dependencies, one file.",
+              "preserve": [
+                "the stagger on opening only: the buttons must fold back at once, otherwise closing outlasts the decision to leave",
+                "the resting position of the actions right under the main button — the up has to look like it came out of it, not appeared beside it",
+                "aria-expanded on the main button and disabled on closed actions: a shifted transparent button otherwise stays in the Tab order",
+                "closing on Escape and on an outside click with focus handed back to the main button",
+                "the plus rotating into a cross on the same spring: it is the only state cue while the up is still travelling",
+                "the <style> block inside the component",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the contents of the up through the actions prop: a label, an icon and an onSelect handler per action",
+                "the layout through the direction prop: up spreads the actions along an up-and-left arc, row lines them up sideways",
+                "the caption of the main button (label) — the plus carries no visible text",
+                "the accent and the backdrop through the accent and background props",
+                "the action icons: any inline SVG, the component merely places them",
+                "the action labels via actionLabels when the icons stay and the language changes"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "More than four actions are never drawn: the fifth leaves the frame and the up stops reading at a glance.",
+                "The dashed outline of the root shows the area the button floats in; in production it is usually removed and the root positioned by the app.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "pressing an action does not close the list — the plus, Escape and an outside click do"
+              ],
+              "usage": "<Button075 label=\"Actions\" direction=\"up\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Main button label",
+                "default": "Actions"
+              },
+              "direction": {
+                "label": "Layout"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Backdrop"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Actions",
+                "actionLabels": ["Share", "Edit", "Favorite"]
+              }
+            }
+          }
+        },
+        "cardControls": ["label", "direction", "accent"],
+        "preview": {
+          "width": "auto"
+        }
+      }
+    },
+    {
+      "name": "button-076",
+      "type": "registry:component",
+      "title": "Кнопка-желе",
+      "description": "Кнопка, которая ведёт себя как мягкое тело: при удержании сплющивается, а после отпускания качается по осям, пока не успокоится.",
+      "categories": ["button"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-076/button-076.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-076.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-076-*. Клиентский компонент: useState хранит только фазу качания. Само качание — keyframes с неравномерным масштабом по осям на пружинной кривой linear(); удержание даёт мгновенное сжатие через :active, а нажатие запускает кадры. Перезапуск сделан чередованием двух одинаковых наборов кадров: смена имени анимации начинает её заново, при этом кнопка не перемонтируется и не теряет фокус.",
+      "meta": {
+        "tags": ["button", "jelly", "squash", "spring", "animation"],
+        "preview": {
+          "width": "auto"
+        },
+        "ai": {
+          "export": "Button076",
+          "usage": "<Button076 label=\"Нажми меня\" onPress={submit} />",
+          "summary": "Кнопка-желе: нажатие сплющивает её и отпускает пружинить по осям — одна ось растёт ровно тогда, когда другая сжимается. Анимация перезапускается на каждом клике без перемонтирования и потери фокуса. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-button-076-* и не подменять её токенами вашей темы (bg-primary, text-primary-foreground и подобными)",
+            "пружинную кривую linear(…) вместе со строкой cubic-bezier перед ней: первая нужна старым браузерам, вторая даёт перелёт",
+            "сохранение объёма в кадрах: одна ось обязана расти ровно на столько, на сколько сжимается другая — иначе желе выглядит как простое увеличение",
+            "два одинаковых набора кадров и их чередование: одно и то же имя анимации браузер не начинает заново",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "отмену анимации в prefers-reduced-motion — качание не должно оставаться единственным ответом на нажатие"
+          ],
+          "adapt": [
+            "label — подпись кнопки",
+            "onPress — действие по нажатию; качание срабатывает независимо от него",
+            "accent — заливка кнопки, цвет подписи считается контрастным к ней",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "скругление и внутренние отступы через переменную --vibeui-button-076-radius и правило [data-part=\"action\"]"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Кнопка не отправляет форму: у неё type=\"button\". Нужна отправка — поменяйте тип и уберите собственный обработчик.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Нажми меня",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Jelly Button",
+            "description": "A button that behaves like a soft body: it squashes while held and wobbles along both axes after release until it settles.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-076-* variables. A client component: useState holds nothing but the wobble phase. The wobble itself is a keyframe animation with non-uniform per-axis scaling on a spring linear() curve; holding gives an instant squash through :active and the click starts the frames. The restart is done by alternating two identical keyframe sets: changing the animation name starts it over while the button is neither remounted nor loses focus.",
+            "ai": {
+              "summary": "A jelly button: a press squashes it and lets it spring back along both axes — one axis grows exactly as much as the other shrinks. The animation restarts on every click without a remount or a lost focus. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-button-076-* palette — do not swap it for your theme tokens (bg-primary, text-primary-foreground and the like)",
+                "the spring linear(…) curve together with the cubic-bezier line before it: the first is there for older browsers, the second gives the overshoot",
+                "the conservation of volume in the keyframes: one axis has to grow exactly as much as the other shrinks — otherwise the jelly reads as plain scaling",
+                "the two identical keyframe sets and the way they alternate: a browser will not restart an animation that keeps the same name",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "cancelling the animation under prefers-reduced-motion — the wobble must not be the only answer to a press"
+              ],
+              "adapt": [
+                "label — the button caption",
+                "onPress — the action on press; the wobble fires regardless of it",
+                "accent — the button fill, with the caption colour kept contrasting against it",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the radius and the padding through the --vibeui-button-076-radius variable and the [data-part=\"action\"] rule"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The button does not submit a form: its type is \"button\". If you need a submit, change the type and drop the handler of your own.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button076 label=\"Press me\" onPress={submit} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Press me"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Press me"
+              }
+            }
+          }
+        },
+        "cardControls": ["label", "accent"]
+      }
     }
   ]
 }

@@ -3521,6 +3521,160 @@
         },
         "cardControls": ["title", "dateDay", "time", "location", "accent"]
       }
+    },
+    {
+      "name": "card-023",
+      "type": "registry:component",
+      "title": "Карточка с оборотом",
+      "description": "Карточка с лицевой и оборотной стороной: клик или Enter переворачивает её в объёме, пружина доворачивает чуть дальше и возвращает.",
+      "categories": ["card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-023/card-023.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-023.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-023-*. Клиентский компонент: useState держит только признак переворота. Сцена задаёт perspective, внутренний слой — transform-style: preserve-3d и пружинный переход transform, обе грани лежат друг на друге и скрыты со спины через backface-visibility, оборотная заранее развёрнута на 180°. Роль переключателя несёт <button> с aria-pressed, скрытая грань помечается aria-hidden. Высота считается от собственной ширины через aspect-ratio у [data-part=\"deck\"].",
+      "meta": {
+        "tags": ["card", "flip", "3d", "reveal", "spring"],
+        "preview": {
+          "width": "auto"
+        },
+        "ai": {
+          "export": "Card023",
+          "usage": "<Card023 title=\"Команда\" backTitle=\"1 490 ₽ в месяц\" />",
+          "summary": "Карточка с двумя сторонами в одном объёме: лицевая и оборотная всегда в разметке, переворот — это один rotateY с пружиной, а не подмена содержимого. Работает с клавиатуры, скрытая сторона не читается скринридером. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-card-023-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "пружинную кривую linear(…) вместе со строкой cubic-bezier перед ней: первая нужна старым браузерам, вторая даёт перелёт",
+            "связку perspective на сцене, transform-style: preserve-3d на колоде и backface-visibility: hidden на гранях — без любого из трёх переворот распадается в плоскую развёртку",
+            "предповорот оборотной грани на 180°: без него она едет задом наперёд",
+            "<button> с aria-pressed вместо div с обработчиком — переворот обязан работать с клавиатуры",
+            "aria-hidden на скрытой грани: иначе скринридер читает обе стороны подряд",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "отмену перехода в prefers-reduced-motion"
+          ],
+          "adapt": [
+            "eyebrow, title и text — содержимое лицевой стороны",
+            "backTitle и backText — содержимое оборота",
+            "hint — подпись под карточкой; пусто — подписи нет",
+            "toggleLabel — название действия для скринридера",
+            "accent — заливка оборота и цвет надзаголовка",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "пропорцию карточки через aspect-ratio у [data-part=\"deck\"]"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Не кладите на грани интерактивные элементы: они окажутся внутри кнопки-переключателя. Нужна ссылка на обороте — вынесите её из сцены и покажите рядом.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Команда",
+            "maxLength": 40
+          },
+          {
+            "prop": "text",
+            "label": "Текст лицевой",
+            "type": "text",
+            "default": "Общий каталог, роли и история изменений.",
+            "maxLength": 90
+          },
+          {
+            "prop": "backTitle",
+            "label": "Заголовок оборота",
+            "type": "text",
+            "default": "1 490 ₽ в месяц",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Flip Card",
+            "description": "A card with a front and a back: a click or Enter turns it over in 3D, and the spring carries it a touch past the stop before it settles.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-card-023-* variables. A client component: useState holds nothing but the flipped flag. The scene sets the perspective, the inner layer carries transform-style: preserve-3d and a spring transform transition, both faces lie on top of each other and are hidden from behind through backface-visibility, and the back one is pre-rotated by 180°. The toggle role belongs to a <button> with aria-pressed, and the hidden face is marked aria-hidden. The height is measured against the card's own width through aspect-ratio on [data-part=\"deck\"].",
+            "ai": {
+              "summary": "A card with two sides in one volume: front and back both stay in the markup, and the flip is a single spring rotateY rather than a content swap. It works from the keyboard and the hidden side is not read out. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-card-023-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the spring linear(…) curve together with the cubic-bezier line before it: the first is there for older browsers, the second gives the overshoot",
+                "the trio of perspective on the scene, transform-style: preserve-3d on the deck and backface-visibility: hidden on the faces — drop any one of them and the flip falls apart into a flat unfolding",
+                "the 180° pre-rotation of the back face: without it the back arrives mirrored",
+                "the <button> with aria-pressed instead of a div with a handler — the flip has to work from the keyboard",
+                "aria-hidden on the hidden face: otherwise a screen reader reads both sides in a row",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "cancelling the transition under prefers-reduced-motion"
+              ],
+              "adapt": [
+                "eyebrow, title and text — the content of the front side",
+                "backTitle and backText — the content of the back",
+                "hint — the caption under the card; empty means no caption",
+                "toggleLabel — the name of the action for a screen reader",
+                "accent — the fill of the back and the colour of the eyebrow",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the card ratio through aspect-ratio on [data-part=\"deck\"]"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Do not put interactive elements on the faces: they would sit inside the toggle button. If the back needs a link, lift it out of the scene and show it alongside.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card023 title=\"Team\" backTitle=\"$19 a month\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Team"
+              },
+              "text": {
+                "label": "Front text",
+                "default": "One catalog, roles and a history of changes."
+              },
+              "backTitle": {
+                "label": "Back title",
+                "default": "$19 a month"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Plan",
+                "title": "Team",
+                "text": "One catalog, roles and a history of changes.",
+                "backTitle": "$19 a month",
+                "backText": "Up to ten seats, cancel any time.",
+                "hint": "Click the card to see the back",
+                "toggleLabel": "Flip the card"
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "backTitle", "accent"]
+      }
     }
   ]
 }

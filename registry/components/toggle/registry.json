@@ -2295,6 +2295,155 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "toggle-015",
+      "type": "registry:component",
+      "title": "Кнопка-закладка",
+      "description": "Сохранение в закладки, где подтверждением работает сама иконка: ленточка заливается акцентом и падает на место пружиной, а подпись меняется на «Сохранено».",
+      "categories": ["toggle"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toggle-015/toggle-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toggle-015.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-toggle-015-*. Клиентский: \"use client\" ради состояния нажатия. Состояние объявлено через aria-pressed на <button>, а не спрятанным checkbox: закладка — действие над объектом, а не поле формы, и уезжать вместе с формой ей незачем. Заливка иконки идёт переходом fill и stroke, а падение — одноразовыми ключевыми кадрами с пружинной кривой linear(): старт выше и мельче, промах вниз и крупнее, возврат на место. Селектор анимации цепляется за [aria-pressed=\"true\"], так что доступность и вид описаны одним и тем же атрибутом. Тема — light-dark() плюс правило :where(.dark,[data-theme=\"dark\"]) … {color-scheme:dark}.",
+      "meta": {
+        "tags": ["toggle", "bookmark", "save", "spring", "pressed"],
+        "ai": {
+          "export": "Toggle015",
+          "usage": "<Toggle015\n  defaultPressed\n  onPressedChange={(pressed) => save(pressed)}\n/>",
+          "summary": "Кнопка-закладка: по нажатию ленточка заливается акцентом и на пружине падает на место, подпись переключается с «Сохранить» на «Сохранено». Состояние объявлено через aria-pressed, обратный вызов отдаёт его наружу. Ноль зависимостей, один файл, собственная палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-toggle-015-* — не подменять её токенами вашей темы",
+            "aria-pressed на кнопке: он же селектор анимации, поэтому вид и доступность не разъезжаются",
+            "пружинную кривую linear() и порядок кадров: выше и мельче, промах вниз и крупнее, возврат на место",
+            "заливку ленточки акцентом одновременно с падением: нажатие должно читаться как результат, а не как заготовка",
+            "смену подписи: анимацию не увидит тот, у кого включён prefers-reduced-motion",
+            "<button> вместо спрятанного checkbox — закладка это действие над объектом, а не поле формы",
+            "light-dark() в палитре: компонент обязан слушаться color-scheme окружения, а не нести свою тёмную тему"
+          ],
+          "adapt": [
+            "тексты label и pressedLabel под свой словарь",
+            "defaultPressed — стартовое состояние закладки",
+            "onPressedChange — сюда вешают сохранение на сервер",
+            "accent — цвет заливки ленточки и подписи в нажатом состоянии",
+            "background — подложка кнопки; пусто оставляет фон страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, в проекте должен быть объявлен color-scheme: light dark на html — иначе light-dark() всегда возвращает светлую ветку.",
+            "Состояние живёт внутри кнопки. Для управляемого варианта поднимите его наверх и перерисовывайте компонент по key или замените useState своим пропом.",
+            "Падение проигрывается и при монтировании с defaultPressed: это одноразовые ключевые кадры, а не переход между состояниями.",
+            "Кнопка ничего не сохраняет сама: запрос вешайте на onPressedChange и откатывайте состояние при ошибке.",
+            "Не выносите CSS-переменные в globals.css: компонент должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Сохранить",
+            "maxLength": 20
+          },
+          {
+            "prop": "pressedLabel",
+            "label": "Подпись нажатой",
+            "type": "text",
+            "default": "Сохранено",
+            "maxLength": 20
+          },
+          {
+            "prop": "defaultPressed",
+            "label": "Сохранено",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Bookmark Toggle",
+            "description": "A save-to-bookmarks button where the icon is the confirmation: the ribbon fills with the accent, drops into place on a spring, and the caption switches to Saved.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-toggle-015-* variables. Client-side: \"use client\" for the pressed state. The state is declared with aria-pressed on a <button> rather than a hidden checkbox: a bookmark is an action on an object, not a form field, and has no business travelling with a form. The icon fill is a transition on fill and stroke, while the drop is a one-shot keyframe animation on a linear() spring curve: it starts higher and smaller, overshoots down and larger, then settles. The animation selector hangs off [aria-pressed=\"true\"], so accessibility and appearance are described by the same attribute. The theme comes from light-dark() plus the :where(.dark,[data-theme=\"dark\"]) … {color-scheme:dark} rule.",
+            "ai": {
+              "summary": "A bookmark button: on press the ribbon fills with the accent and drops into place on a spring while the caption switches from Save to Saved. The state is declared with aria-pressed and a callback hands it back out. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-toggle-015-* palette — do not swap it for your theme tokens",
+                "aria-pressed on the button: it is also the animation selector, so appearance and accessibility cannot drift apart",
+                "the linear() spring curve and the order of the keyframes: higher and smaller, overshoot down and larger, settle",
+                "filling the ribbon at the same moment it drops: the press has to read as a result, not as a run-up",
+                "the caption change: whoever has prefers-reduced-motion on will never see the animation",
+                "the <button> instead of a hidden checkbox — a bookmark is an action on an object, not a form field",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the label and pressedLabel copy to fit your wording",
+                "defaultPressed — the starting state of the bookmark",
+                "onPressedChange — this is where the save request goes",
+                "accent — the colour of the filled ribbon and of the caption when pressed",
+                "background — the button surface; empty keeps the page background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The state lives inside the button. For a controlled variant, lift it up and remount the component by key, or replace useState with your own prop.",
+                "The drop also plays on mount when defaultPressed is set: these are one-shot keyframes, not a transition between states.",
+                "The button saves nothing by itself: hang the request on onPressedChange and roll the state back on failure.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toggle015\n  defaultPressed\n  onPressedChange={(pressed) => save(pressed)}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Save"
+              },
+              "pressedLabel": {
+                "label": "Pressed caption",
+                "default": "Saved"
+              },
+              "defaultPressed": {
+                "label": "Saved"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Save",
+                "pressedLabel": "Saved",
+                "defaultPressed": true
+              }
+            }
+          }
+        },
+        "cardControls": ["label", "pressedLabel", "defaultPressed", "accent"],
+        "preview": {
+          "width": "auto",
+          "props": {
+            "defaultPressed": true
+          }
+        }
+      }
     }
   ]
 }

@@ -108,7 +108,7 @@ export function Autocomplete012({
   label = "Адрес",
   placeholder = "Начните вводить",
   options = DEFAULT_OPTIONS,
-  defaultValue = "d",
+  defaultValue = "",
   matchHint = "Совпадение {match} — оно подставится с выделенным хвостом",
   idleHint = "Поле дописывает совпадение и выделяет дописанное",
   onChange,

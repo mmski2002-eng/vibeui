@@ -58,9 +58,10 @@ color:inherit;font:inherit;font-size:0.875rem;
 [data-vibeui-block="autocomplete-002"] input:focus-visible{
 outline:2px solid var(--vibeui-autocomplete-002-accent);outline-offset:1px;border-color:transparent;
 }
-/* Список в потоке, а не поверх: в карточке каталога и в узкой колонке
-   всплывающий слой нечем позиционировать без замера. */
+/* Список поверх страницы: якорь — обёртка поля, карточка не меняет размер. */
+[data-vibeui-block="autocomplete-002"] [data-part="anchor"]{position:relative}
 [data-vibeui-block="autocomplete-002"] [data-part="list"]{
+position:absolute;left:0;right:0;top:calc(100% + 0.25rem);z-index:30;box-shadow:0 12px 28px -14px oklch(0 0 0 / 40%);
 margin:0;padding:0.25rem;list-style:none;
 max-height:11rem;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--vibeui-autocomplete-002-border) transparent;
 border:1px solid var(--vibeui-autocomplete-002-border);
@@ -211,60 +212,62 @@ export function Autocomplete002({
         style={palette}
       >
         <label htmlFor={id}>{label}</label>
-        <input
-          id={id}
-          type="text"
-          role="combobox"
-          autoComplete="off"
-          placeholder={placeholder}
-          value={query}
-          aria-expanded={open}
-          aria-controls={`${id}-list`}
-          aria-autocomplete="list"
-          aria-activedescendant={
-            open && matches[active] ? `${id}-option-${active}` : undefined
-          }
-          onChange={(event) => {
-            setQuery(event.target.value)
-            setActive(0)
-            setOpen(true)
-          }}
-          onFocus={() => setOpen(true)}
-          onBlur={() => setOpen(false)}
-          onKeyDown={onKeyDown}
-        />
-        {open ? (
-          <ul
-            ref={listRef}
-            id={`${id}-list`}
-            role="listbox"
-            aria-label={label}
-            data-part="list"
-          >
-            {matches.map((option, index) => (
-              <li
-                key={option}
-                id={`${id}-option-${index}`}
-                role="option"
-                data-part="option"
-                data-active={index === active}
-                aria-selected={index === active}
-                onMouseEnter={() => setActive(index)}
-                onMouseDown={(event) => {
-                  event.preventDefault()
-                  commit(option)
-                }}
-              >
-                {highlight(option, query.trim())}
-              </li>
-            ))}
-            {matches.length === 0 ? (
-              <li data-part="empty" role="presentation">
-                {emptyLabel}
-              </li>
-            ) : null}
-          </ul>
-        ) : null}
+        <div data-part="anchor">
+          <input
+            id={id}
+            type="text"
+            role="combobox"
+            autoComplete="off"
+            placeholder={placeholder}
+            value={query}
+            aria-expanded={open}
+            aria-controls={`${id}-list`}
+            aria-autocomplete="list"
+            aria-activedescendant={
+              open && matches[active] ? `${id}-option-${active}` : undefined
+            }
+            onChange={(event) => {
+              setQuery(event.target.value)
+              setActive(0)
+              setOpen(true)
+            }}
+            onFocus={() => setOpen(true)}
+            onBlur={() => setOpen(false)}
+            onKeyDown={onKeyDown}
+          />
+          {open ? (
+            <ul
+              ref={listRef}
+              id={`${id}-list`}
+              role="listbox"
+              aria-label={label}
+              data-part="list"
+            >
+              {matches.map((option, index) => (
+                <li
+                  key={option}
+                  id={`${id}-option-${index}`}
+                  role="option"
+                  data-part="option"
+                  data-active={index === active}
+                  aria-selected={index === active}
+                  onMouseEnter={() => setActive(index)}
+                  onMouseDown={(event) => {
+                    event.preventDefault()
+                    commit(option)
+                  }}
+                >
+                  {highlight(option, query.trim())}
+                </li>
+              ))}
+              {matches.length === 0 ? (
+                <li data-part="empty" role="presentation">
+                  {emptyLabel}
+                </li>
+              ) : null}
+            </ul>
+          ) : null}
+        </div>
       </div>
     </>
   )

@@ -63,7 +63,7 @@ container-type:inline-size;
 width:100%;
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
-min-width:min(100%,16rem);max-width:23rem;box-sizing:border-box;padding:1.25rem;
+min-width:min(100%,16rem);max-width:23rem;margin-inline:auto;box-sizing:border-box;padding:1.25rem;
 background:var(--vibeui-auth-002-bg);
 border:1px solid var(--vibeui-auth-002-border);border-radius:1rem;
 font-family:var(--vibeui-auth-002-sans);color:var(--vibeui-auth-002-fg);
@@ -141,7 +141,11 @@ margin:0.75rem 0 0;text-align:center;font-size:0.8125rem;color:var(--vibeui-auth
 
 const VERDICTS = ["слишком простой", "простой", "сойдёт", "надёжный"]
 
-const RULE_LABELS = ["от 10 символов", "буквы и цифры", "знак или 16+"]
+const RULE_LABELS = [
+  "от 10 символов",
+  "буквы и цифры",
+  "спецсимвол или от 16 символов",
+]
 
 function score(value: string) {
   let points = 0

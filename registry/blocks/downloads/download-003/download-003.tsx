@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+import type { CSSProperties, ReactNode } from "react"
 
 type Download003Platform = {
   name: string
@@ -58,6 +58,7 @@ transition:border-color .16s ease,transform .16s ease;
 }
 [data-vibeui-block="download-003"] [data-part="card"]:hover{transform:translateY(-2px)}
 [data-vibeui-block="download-003"] [data-part="card"][data-primary="true"]{border-color:var(--vibeui-download-003-accent);box-shadow:0 0 0 1px var(--vibeui-download-003-accent)}
+[data-vibeui-block="download-003"] [data-part="glyph"] svg{width:1.25rem;height:1.25rem}
 [data-vibeui-block="download-003"] [data-part="glyph"]{
 width:2.75rem;height:2.75rem;border-radius:0.75rem;flex:none;
 display:grid;place-items:center;font-size:1.25rem;font-weight:800;
@@ -84,8 +85,53 @@ font-size:0.9375rem;font-weight:650;transition:border-color .16s ease,background
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="download-003"] *{animation:none!important;transition:none!important}}
 `
 
+// Значки платформ подбираются по названию; для неизвестной остаётся первая
+// буква. Linux — терминал, а не Tux: пингвин в 20px нечитаем.
+const PLATFORM_ICONS: Record<string, ReactNode> = {
+  mac: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M16.37 12.77c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.89-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.03 2.28-1.27 3.14-2.52.99-1.45 1.4-2.85 1.42-2.92-.03-.01-2.72-1.04-2.74-4.14zM13.8 5.13c.72-.87 1.2-2.08 1.07-3.29-1.03.04-2.29.69-3.03 1.56-.67.77-1.25 2-1.09 3.18 1.15.09 2.33-.59 3.05-1.45z"
+      />
+    </svg>
+  ),
+  windows: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M0 3.45 9.75 2.1v9.45H0zm10.95-1.5L24 0v11.4H10.95zM0 12.6h9.75v9.45L0 20.7zm10.95 0H24V24l-13.05-1.8z"
+      />
+    </svg>
+  ),
+  linux: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="m5 7 6 5-6 5M13 17h6" />
+    </svg>
+  ),
+}
+
+function platformIcon(name: string): ReactNode {
+  const key = name.toLowerCase()
+  const known = Object.keys(PLATFORM_ICONS).find((os) => key.includes(os))
+  return known ? PLATFORM_ICONS[known] : null
+}
+
 const DEFAULT_PLATFORMS: Download003Platform[] = [
-  { name: "macOS", detail: "Apple Silicon · .dmg · 48 МБ", href: "#", primary: true },
+  {
+    name: "macOS",
+    detail: "Apple Silicon · .dmg · 48 МБ",
+    href: "#",
+    primary: true,
+  },
   { name: "Windows", detail: "64-bit · .exe · 52 МБ", href: "#" },
   { name: "Linux", detail: "AppImage · 55 МБ", href: "#" },
 ]
@@ -157,7 +203,7 @@ export function Download003({
                 data-primary={platform.primary ? "true" : undefined}
               >
                 <span data-part="glyph" aria-hidden="true">
-                  {platform.name.charAt(0)}
+                  {platformIcon(platform.name) ?? platform.name.charAt(0)}
                 </span>
                 <div>
                   <p data-part="name">{platform.name}</p>
@@ -170,8 +216,7 @@ export function Download003({
             ))}
           </div>
           <p data-part="other">
-            {otherNote}{" "}
-            <a href="#">Все сборки и архив версий</a>
+            {otherNote} <a href="#">Все сборки и архив версий</a>
           </p>
         </div>
       </section>

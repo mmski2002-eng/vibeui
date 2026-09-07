@@ -22,7 +22,7 @@ export function CatalogShell({
   locale: Locale
 }) {
   return (
-    <div className="catalog-shell bg-shell text-shell-fg flex min-h-screen flex-col">
+    <div className="catalog-shell bg-shell text-shell-fg flex min-h-screen flex-col [--catalog-header-height:6rem] lg:[--catalog-header-height:3.5rem]">
       <CatalogTopbar itemCount={getCatalogItems().length} locale={locale} />
       {children}
     </div>

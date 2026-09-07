@@ -1,6 +1,5 @@
 import type { LabCheck } from "@/components/lab/check-types"
 
-import { Sidebar001 } from "@/registry/components/sidebar/sidebar-001/sidebar-001"
 import { Sidebar002 } from "@/registry/components/sidebar/sidebar-002/sidebar-002"
 import { Sidebar003 } from "@/registry/components/sidebar/sidebar-003/sidebar-003"
 import { Sidebar004 } from "@/registry/components/sidebar/sidebar-004/sidebar-004"
@@ -17,12 +16,6 @@ import { Sidebar012 } from "@/registry/components/sidebar/sidebar-012/sidebar-01
 export const SEED = 68432
 
 export const CHECKS: LabCheck[] = [
-  {
-    name: "sidebar-001",
-    title: "Боковое меню приложения",
-    notes: ["Активный пункт: Страницы", "Акцент: #326f13"],
-    node: <Sidebar001 activeLabel="Страницы" accent="#326f13" />,
-  },
   {
     name: "sidebar-002",
     title: "Сворачиваемое боковое меню",

@@ -19,7 +19,9 @@
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-download-001-*. Серверный компонент. Бейджи собраны своей вёрсткой (мелкая приписка сверху, название магазина крупно) без логотипов Apple или Google — только нейтральные тёмные плашки-ссылки, приподнимающиеся на наведении.",
       "meta": {
         "tags": ["downloads", "app", "store", "mobile", "marketing"],
-        "preview": { "width": "full" },
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Download001",
           "usage": "<Download001\n  title=\"Скачайте приложение\"\n  stores={[{ kicker: \"Загрузите в\", name: \"App Store\", href: \"#\" }]}\n/>",
@@ -28,7 +30,8 @@
             "локальную палитру --vibeui-download-001-* и не подменять её токенами вашей темы",
             "бейджи без логотипов Apple и Google — своя нейтральная вёрстка вместо брендовых ассетов",
             "структуру бейджа: мелкая приписка сверху, название магазина крупно",
-            "light-dark() в палитре: компонент следует color-scheme окружения"
+            "light-dark() в палитре: компонент следует color-scheme окружения",
+            "фирменные значки App Store и Google Play в бейджах — подбираются по названию магазина, без внешних иконок"
           ],
           "adapt": [
             "eyebrow, title и summary — надзаголовок, заголовок и подводку",
@@ -43,10 +46,32 @@
           ]
         },
         "controls": [
-          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Скачайте приложение", "maxLength": 40 },
-          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Приложение", "maxLength": 24 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Скачайте приложение",
+            "maxLength": 40
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Приложение",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
         "cardControls": ["title", "eyebrow", "accent", "background"],
         "i18n": {
@@ -58,7 +83,8 @@
                 "the local --vibeui-download-001-* palette — do not swap it for your theme tokens",
                 "badges without Apple and Google logos — a neutral custom layout instead of brand assets",
                 "the badge structure: a small kicker on top, the store name large",
-                "light-dark() in the palette: the component follows the surrounding color-scheme"
+                "light-dark() in the palette: the component follows the surrounding color-scheme",
+                "the App Store and Google Play marks inside the badges — matched by the store name, no external icon set"
               ],
               "adapt": [
                 "eyebrow, title and summary — the eyebrow, heading and lead-in",
@@ -74,10 +100,20 @@
               "usage": "<Download001\n  title=\"Get the app\"\n  stores={[{ kicker: \"Download on the\", name: \"App Store\", href: \"#\" }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Title", "default": "Get the app" },
-              "eyebrow": { "label": "Eyebrow", "default": "Mobile app" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Title",
+                "default": "Get the app"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Mobile app"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "Store Badges",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-download-001-* variables. A server component. Badges use a custom layout (small kicker on top, store name large) without Apple or Google logos — just neutral dark link plates that lift on hover."
@@ -103,7 +139,9 @@
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-download-002-*. Серверный компонент. QR — декоративный узор из двух repeating-linear-gradient с background-blend-mode:multiply на белом поле, а не считываемый код: у него role=\"img\" с aria-label, настоящий QR подставит приложение.",
       "meta": {
         "tags": ["downloads", "qr", "app", "store", "marketing"],
-        "preview": { "width": "full" },
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Download002",
           "usage": "<Download002\n  title=\"Наведите камеру\"\n  stores={[{ kicker: \"Загрузите в\", name: \"App Store\", href: \"#\" }]}\n/>",
@@ -112,7 +150,8 @@
             "локальную палитру --vibeui-download-002-* и не подменять её токенами вашей темы",
             "QR как декоративный узор с role=\"img\" и aria-label — это заглушка, а не считываемый код",
             "перелом в две колонки по container query: на узком экране всё в столбец",
-            "light-dark() в палитре: компонент следует color-scheme окружения"
+            "light-dark() в палитре: компонент следует color-scheme окружения",
+            "фирменные значки App Store и Google Play в бейджах — подбираются по названию магазина, без внешних иконок"
           ],
           "adapt": [
             "eyebrow, title, summary и qrCaption — тексты секции и подпись под кодом",
@@ -127,10 +166,32 @@
           ]
         },
         "controls": [
-          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Наведите камеру", "maxLength": 40 },
-          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Приложение", "maxLength": 24 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Наведите камеру",
+            "maxLength": 40
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Приложение",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
         "cardControls": ["title", "eyebrow", "accent", "background"],
         "i18n": {
@@ -142,7 +203,8 @@
                 "the local --vibeui-download-002-* palette — do not swap it for your theme tokens",
                 "the QR as a decorative pattern with role=\"img\" and aria-label — it's a placeholder, not a readable code",
                 "the two-column break via container query: everything stacks when narrow",
-                "light-dark() in the palette: the component follows the surrounding color-scheme"
+                "light-dark() in the palette: the component follows the surrounding color-scheme",
+                "the App Store and Google Play marks inside the badges — matched by the store name, no external icon set"
               ],
               "adapt": [
                 "eyebrow, title, summary and qrCaption — the section texts and the caption under the code",
@@ -158,10 +220,20 @@
               "usage": "<Download002\n  title=\"Point your camera\"\n  stores={[{ kicker: \"Download on the\", name: \"App Store\", href: \"#\" }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Title", "default": "Point your camera" },
-              "eyebrow": { "label": "Eyebrow", "default": "Mobile app" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Title",
+                "default": "Point your camera"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Mobile app"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "QR & Badges",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-download-002-* variables. A server component. The QR is a decorative pattern of two repeating-linear-gradients with background-blend-mode:multiply on a white field, not a readable code: it has role=\"img\" with an aria-label, and a real QR is wired by the app."
@@ -187,7 +259,9 @@
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-download-003-*. Серверный компонент. Карточки платформ с глифом из первой буквы (без брендовых логотипов), типом файла и весом. Платформа с флагом primary выделена брендовой рамкой и заливкой кнопки. Число колонок считает container query.",
       "meta": {
         "tags": ["downloads", "desktop", "platforms", "app", "marketing"],
-        "preview": { "width": "full" },
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Download003",
           "usage": "<Download003\n  platforms={[{ name: \"macOS\", detail: \".dmg · 48 МБ\", href: \"#\", primary: true }]}\n/>",
@@ -196,7 +270,8 @@
             "локальную палитру --vibeui-download-003-* и не подменять её токенами вашей темы",
             "выделение своей платформы через data-primary — рамка и заливка кнопки",
             "глиф из первой буквы вместо брендового логотипа платформы",
-            "light-dark() в палитре: компонент следует color-scheme окружения"
+            "light-dark() в палитре: компонент следует color-scheme окружения",
+            "значки платформ в карточках (Apple, Windows, терминал для Linux) — подбираются по названию, для неизвестной остаётся буква"
           ],
           "adapt": [
             "eyebrow, title и version — надзаголовок, заголовок и строку версии",
@@ -211,10 +286,32 @@
           ]
         },
         "controls": [
-          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Скачайте для своей системы", "maxLength": 40 },
-          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Десктоп", "maxLength": 24 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Скачайте для своей системы",
+            "maxLength": 40
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Десктоп",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
         "cardControls": ["title", "eyebrow", "accent", "background"],
         "i18n": {
@@ -226,7 +323,8 @@
                 "the local --vibeui-download-003-* palette — do not swap it for your theme tokens",
                 "highlighting the user's platform via data-primary — border and button fill",
                 "the first-letter glyph instead of a platform brand logo",
-                "light-dark() in the palette: the component follows the surrounding color-scheme"
+                "light-dark() in the palette: the component follows the surrounding color-scheme",
+                "the platform marks in the cards (Apple, Windows, a terminal for Linux) — matched by name, an unknown platform keeps its letter"
               ],
               "adapt": [
                 "eyebrow, title and version — the eyebrow, heading and version line",
@@ -242,13 +340,444 @@
               "usage": "<Download003\n  platforms={[{ name: \"macOS\", detail: \".dmg · 48 MB\", href: \"#\", primary: true }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Title", "default": "Download for your system" },
-              "eyebrow": { "label": "Eyebrow", "default": "Desktop" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Title",
+                "default": "Download for your system"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Desktop"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "Platform Builds",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-download-003-* variables. A server component. Platform cards with a first-letter glyph (no brand logos), file type and size. The platform with the primary flag is highlighted with a brand border and button fill. Column count is driven by a container query."
+          }
+        }
+      }
+    },
+    {
+      "name": "download-004",
+      "type": "registry:block",
+      "title": "Экран приложения и магазины",
+      "description": "Секция загрузки с рамкой телефона: скриншот приложения слева, факты и бейджи магазинов справа. Самодостаточен: один файл, без зависимостей.",
+      "categories": ["downloads"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "download-004/download-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/download-004.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-download-004-*. Серверный компонент. Рамка телефона нарисована рамкой, радиусами и тенью, без картинки устройства: оно декорация, и тащить ради него изображение незачем. Скриншот необязателен — без него внутри рамки живёт градиентная заглушка, а сама рамка помечается aria-hidden, чтобы скринридер не читал пустое устройство.",
+      "meta": {
+        "tags": ["downloads", "app", "mobile", "stores", "device", "marketing"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Download004",
+          "usage": "<Download004\n  screenshot=\"/app.png\"\n  facts={[{ value: \"4,8\", label: \"оценка\" }]}\n/>",
+          "summary": "Секция загрузки приложения: слева рамка телефона со скриншотом, справа заголовок, факты (оценка, установки, размер) и бейджи магазинов. Рамка устройства нарисована на CSS, скриншот необязателен. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-download-004-* и не подменять её токенами вашей темы",
+            "рамку устройства на CSS: блок не тянет картинку телефона и не зависит от неё",
+            "заглушку экрана и aria-hidden на пустой рамке — скринридеру нечего читать в декорации",
+            "видимый фокус на бейджах магазинов",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow, title и lead — надзаголовок, заголовок и вводный абзац",
+            "массив stores — приписка и название каждого магазина",
+            "массив facts — пары «значение — подпись»",
+            "screenshot и screenAlt — картинка экрана и её описание",
+            "акцент через проп accent и подложку через background"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Скриншот берите вертикальный: рамка рассчитана на пропорцию 9/19.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Всё под рукой — прямо в телефоне",
+            "maxLength": 60
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Приложение",
+            "maxLength": 24
+          },
+          {
+            "prop": "lead",
+            "label": "Вводный абзац",
+            "type": "text",
+            "default": "Заказы, уведомления и оплата в одном приложении. Работает офлайн и синхронизируется, как только появится сеть.",
+            "maxLength": 180
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["title", "eyebrow", "lead", "accent"],
+        "i18n": {
+          "en": {
+            "title": "App screen and stores",
+            "description": "A download section with a phone frame: the app screenshot on the left, facts and store badges on the right. Self-contained — one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-download-004-* variables. A server component. The phone frame is drawn with a border, radii and a shadow rather than a device image: the device is decoration and does not deserve an asset. The screenshot is optional — without it a gradient placeholder lives inside the frame and the frame is marked aria-hidden so a screen reader does not announce an empty device.",
+            "ai": {
+              "summary": "An app download section: a phone frame with a screenshot on the left, the heading, facts (rating, installs, size) and store badges on the right. The device frame is pure CSS and the screenshot is optional. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-download-004-* palette — do not swap it for your theme tokens",
+                "the CSS device frame: the block pulls no phone image and does not depend on one",
+                "the screen placeholder and aria-hidden on an empty frame — there is nothing to announce in decoration",
+                "the visible focus ring on the store badges",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow, title and lead — the eyebrow, the heading and the intro paragraph",
+                "the stores array — the caption and name of each store",
+                "the facts array — value/label pairs",
+                "screenshot and screenAlt — the screen image and its description",
+                "the accent via the accent prop and the backdrop via background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "Use a portrait screenshot: the frame is built for a 9/19 ratio.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Download004\n  screenshot=\"/app.png\"\n  facts={[{ value: \"4.8\", label: \"rating\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Everything at hand, right in your phone"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "The app"
+              },
+              "lead": {
+                "label": "Intro",
+                "default": "Orders, alerts and payments in one app. Works offline and syncs the moment you are back online."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "download-005",
+      "type": "registry:block",
+      "title": "Полоса релиза",
+      "description": "Компактная карточка обновления: версия, дата, что нового и кнопка загрузки. Самодостаточен: один файл, без зависимостей.",
+      "categories": ["downloads"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "download-005/download-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/download-005.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-download-005-*. Серверный компонент. Это одна карточка, а не секция во весь экран: её ставят между разделами страницы продукта, и высокий блок разорвал бы ритм. Номер версии набран моноширинным и подсвечен акцентом, изменения идут списком с маркерами на псевдоэлементах.",
+      "meta": {
+        "tags": ["downloads", "release", "version", "changelog", "update"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Download005",
+          "usage": "<Download005\n  version=\"2.4.0\"\n  date=\"12 марта\"\n  changes={[\"Офлайн-режим\", \"Быстрый поиск\"]}\n/>",
+          "summary": "Компактная полоса релиза: номер версии, дата, три-четыре пункта «что нового» и кнопка загрузки с приметкой о платформе и размере. Формат для страницы продукта, где секция загрузки уже была выше. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-download-005-* и не подменять её токенами вашей темы",
+            "компактность: это карточка между разделами, а не секция во весь экран",
+            "моноширинный номер версии — он читается как версия, а не как заголовок",
+            "видимый фокус на главной кнопке",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "version и date — номер версии и дата выпуска",
+            "массив changes — пункты «что нового»",
+            "primaryLabel, primaryNote и primaryHref — главная кнопка и приписка под ней",
+            "secondaryLabel и notesLabel — ссылки на другие платформы и полный список изменений",
+            "акцент через проп accent и подложку через background"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Пунктов должно быть три-четыре: полный список изменений живёт по ссылке, а не в полосе.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "version",
+            "label": "Версия",
+            "type": "text",
+            "default": "2.4.0",
+            "maxLength": 16
+          },
+          {
+            "prop": "date",
+            "label": "Дата",
+            "type": "text",
+            "default": "12 марта",
+            "maxLength": 24
+          },
+          {
+            "prop": "primaryLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Скачать обновление",
+            "maxLength": 32
+          },
+          {
+            "prop": "primaryNote",
+            "label": "Приписка",
+            "type": "text",
+            "default": "macOS 12 и новее · 38 МБ",
+            "maxLength": 48
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["version", "date", "primaryLabel", "primaryNote"],
+        "i18n": {
+          "en": {
+            "title": "Release strip",
+            "description": "A compact update card: version, date, what's new and the download button. Self-contained — one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-download-005-* variables. A server component. It is a single card rather than a full-height section: it goes between the sections of a product page, and a tall block would break the rhythm. The version number is monospaced and tinted with the accent, and the changes are a list with pseudo-element bullets.",
+            "ai": {
+              "summary": "A compact release strip: version number, date, three or four what's-new points and a download button with a note about the platform and size. A format for a product page where the download section already appeared above. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-download-005-* palette — do not swap it for your theme tokens",
+                "the compactness: this is a card between sections, not a full-height section",
+                "the monospaced version number — it reads as a version, not a heading",
+                "the visible focus ring on the primary button",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "version and date — the release number and date",
+                "the changes array — the what's-new points",
+                "primaryLabel, primaryNote and primaryHref — the main button and its note",
+                "secondaryLabel and notesLabel — links to other platforms and to the full changelog",
+                "the accent via the accent prop and the backdrop via background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "Keep three or four points: the full changelog lives behind the link, not in the strip.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Download005\n  version=\"2.4.0\"\n  date=\"March 12\"\n  changes={[\"Offline mode\", \"Faster search\"]}\n/>"
+            },
+            "controls": {
+              "version": {
+                "label": "Version",
+                "default": "2.4.0"
+              },
+              "date": {
+                "label": "Date",
+                "default": "March 12"
+              },
+              "primaryLabel": {
+                "label": "Button",
+                "default": "Download the update"
+              },
+              "primaryNote": {
+                "label": "Note",
+                "default": "macOS 12 and newer · 38 MB"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "download-006",
+      "type": "registry:block",
+      "title": "Кнопка под платформу",
+      "description": "Одна крупная кнопка для нужной платформы, мелкие ссылки на остальные сборки и контрольная сумма. Самодостаточен: один файл, без зависимостей.",
+      "categories": ["downloads"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "download-006/download-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/download-006.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-download-006-*. Серверный компонент. Платформа приходит пропом, а не определяется по navigator: блок остаётся серверным и не мигает подменой подписи после гидратации. Проекту, которому нужен автовыбор, достаточно подставить значение самому. Контрольная сумма набрана моноширинным и переносится по любому символу, поэтому не растягивает секцию на узком экране.",
+      "meta": {
+        "tags": ["downloads", "desktop", "platform", "install", "checksum"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Download006",
+          "usage": "<Download006\n  platform=\"Windows\"\n  buildNote=\"версия 2.4.0 · 80 МБ\"\n  checksum=\"9f2c…c1d8\"\n/>",
+          "summary": "Секция загрузки с одной крупной кнопкой под нужную платформу: девять из десяти человек скачивают сборку для своей системы, и она уже в кнопке. Остальные сборки — мелкими ссылками ниже, под ними контрольная сумма. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-download-006-* и не подменять её токенами вашей темы",
+            "платформу пропом, а не определением по navigator: иначе серверный блок мигает подменой подписи",
+            "иерархию: одна крупная кнопка и мелкие ссылки, а не сетка равных карточек",
+            "перенос контрольной суммы по любому символу — иначе она растягивает секцию",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow, title и lead — надзаголовок, заголовок и вводный абзац",
+            "platform, buildNote, primaryLabel и primaryHref — главная кнопка",
+            "массив alternatives — остальные сборки",
+            "checksumLabel и checksum — тип и значение контрольной суммы; пустая строка убирает блок",
+            "акцент через проп accent и подложку через background"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Подпись кнопки склеивается из primaryLabel и platform: «Скачать для» + «macOS».",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Поставьте приложение на компьютер",
+            "maxLength": 60
+          },
+          {
+            "prop": "platform",
+            "label": "Платформа",
+            "type": "text",
+            "default": "macOS (Apple Silicon)",
+            "maxLength": 32
+          },
+          {
+            "prop": "buildNote",
+            "label": "Приписка",
+            "type": "text",
+            "default": "версия 2.4.0 · 74 МБ",
+            "maxLength": 40
+          },
+          {
+            "prop": "primaryLabel",
+            "label": "Начало подписи",
+            "type": "text",
+            "default": "Скачать для",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["title", "platform", "buildNote", "primaryLabel"],
+        "i18n": {
+          "en": {
+            "title": "Platform-aware button",
+            "description": "One large button for the right platform, small links to the other builds and a checksum. Self-contained — one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-download-006-* variables. A server component. The platform arrives as a prop rather than being sniffed from navigator: the block stays server-rendered and never flashes a swapped label after hydration. A project that wants auto-detection just passes the value itself. The checksum is monospaced and wraps at any character, so it never stretches the section on a narrow screen.",
+            "ai": {
+              "summary": "A download section with a single large button for the right platform: nine out of ten people take the build for their own system, and it is already in the button. The other builds are small links below, with the checksum underneath. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-download-006-* palette — do not swap it for your theme tokens",
+                "the platform as a prop rather than navigator sniffing: otherwise a server block flashes a swapped label",
+                "the hierarchy: one large button and small links, not a grid of equal cards",
+                "the checksum wrapping at any character — otherwise it stretches the section",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow, title and lead — the eyebrow, the heading and the intro paragraph",
+                "platform, buildNote, primaryLabel and primaryHref — the main button",
+                "the alternatives array — the other builds",
+                "checksumLabel and checksum — the checksum type and value; an empty string removes the box",
+                "the accent via the accent prop and the backdrop via background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "The button label is glued from primaryLabel and platform: “Download for” + “macOS”.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Download006\n  platform=\"Windows\"\n  buildNote=\"version 2.4.0 · 80 MB\"\n  checksum=\"9f2c…c1d8\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Install the app on your computer"
+              },
+              "platform": {
+                "label": "Platform",
+                "default": "macOS (Apple Silicon)"
+              },
+              "buildNote": {
+                "label": "Note",
+                "default": "version 2.4.0 · 74 MB"
+              },
+              "primaryLabel": {
+                "label": "Label prefix",
+                "default": "Download for"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            }
           }
         }
       }

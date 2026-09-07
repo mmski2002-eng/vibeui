@@ -28,6 +28,9 @@ export function CatalogCard({
   // Английское имя показывается рядом с русским: по нему компонент ищут в
   // чужих библиотеках и по нему же его называет агент.
   const englishTitle = locale === "ru" ? item.meta?.i18n?.en?.title : undefined
+  // Три тега: больше не помещается в строку под мелким кадром, а меньше не
+  // даёт отличить вариант от соседнего.
+  const tags = (localized.meta?.tags ?? []).slice(0, 3)
 
   return (
     // Кадр превью не ведёт на страницу item'а: внутри живой компонент, и
@@ -56,6 +59,22 @@ export function CatalogCard({
       >
         <CatalogThumbnail slug={localized.name} locale={locale} />
       </CardInteractive>
+
+      {/* Признаки варианта. В крупном режиме скрыты: там всё видно на самом
+          превью. В обзоре это единственное, чем один из семидесяти вариантов
+          отличается от соседа на глаз. */}
+      {tags.length > 0 ? (
+        <ul data-part="facts" className="flex-wrap gap-1 px-2 pb-2">
+          {tags.map((tag) => (
+            <li
+              key={tag}
+              className="border-shell-border text-shell-muted rounded border px-1.5 py-0.5 text-[0.6875rem]"
+            >
+              {tag}
+            </li>
+          ))}
+        </ul>
+      ) : null}
     </article>
   )
 }

@@ -18,6 +18,8 @@ export type Autocomplete006Props = Omit<
   placeholder?: string
   items?: Autocomplete006Item[]
   defaultQuery?: string
+  /** Показать список сразу, без фокуса: витрина и скриншоты. */
+  defaultOpen?: boolean
   /** Остаток на складе. {count} — число штук. */
   stockText?: string
   /** Подпись нулевого остатка. */
@@ -71,7 +73,9 @@ color:inherit;font:inherit;font-size:0.875rem;
 [data-vibeui-block="autocomplete-006"] input:focus-visible{
 outline:2px solid var(--vibeui-autocomplete-006-accent);outline-offset:1px;border-color:transparent;
 }
+[data-vibeui-block="autocomplete-006"] [data-part="anchor"]{position:relative}
 [data-vibeui-block="autocomplete-006"] [data-part="list"]{
+position:absolute;left:0;right:0;top:calc(100% + 0.25rem);z-index:30;box-shadow:0 12px 28px -14px oklch(0 0 0 / 40%);
 margin:0;padding:0.25rem;list-style:none;max-height:14rem;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--vibeui-autocomplete-006-border) transparent;
 border:1px solid var(--vibeui-autocomplete-006-border);
 border-radius:var(--vibeui-autocomplete-006-radius);
@@ -172,11 +176,12 @@ export function Autocomplete006({
   label = "Товар",
   placeholder = "Название или артикул",
   items = DEFAULT_ITEMS,
-  defaultQuery = "кабель",
+  defaultQuery = "",
   stockText = "{count} шт",
   outOfStockLabel = "нет в наличии",
   emptyLabel = "По запросу ничего не нашлось",
   onSelect,
+  defaultOpen = false,
   background = "",
   accent,
   className,
@@ -184,6 +189,7 @@ export function Autocomplete006({
   ...props
 }: Autocomplete006Props) {
   const id = useId()
+  const [open, setOpen] = useState(defaultOpen)
   const [query, setQuery] = useState(defaultQuery)
 
   const matches = useMemo(() => {
@@ -218,54 +224,60 @@ export function Autocomplete006({
         style={palette}
       >
         <label htmlFor={id}>{label}</label>
-        <input
-          id={id}
-          type="search"
-          role="combobox"
-          autoComplete="off"
-          placeholder={placeholder}
-          value={query}
-          aria-expanded={matches.length > 0}
-          aria-controls={`${id}-list`}
-          aria-autocomplete="list"
-          onChange={(event) => setQuery(event.target.value)}
-        />
-        <ul
-          id={`${id}-list`}
-          role="listbox"
-          aria-label={label}
-          data-part="list"
-        >
-          {matches.map((item) => (
-            <li
-              key={item.meta}
-              role="option"
-              aria-selected="false"
-              data-part="option"
-              onMouseDown={(event) => {
-                event.preventDefault()
-                setQuery(item.title)
-                onSelect?.(item.title)
-              }}
+        <div data-part="anchor">
+          <input
+            id={id}
+            type="search"
+            role="combobox"
+            autoComplete="off"
+            placeholder={placeholder}
+            value={query}
+            aria-expanded={open}
+            aria-controls={`${id}-list`}
+            aria-autocomplete="list"
+            onFocus={() => setOpen(true)}
+            onBlur={() => setOpen(false)}
+            onChange={(event) => setQuery(event.target.value)}
+          />
+          {open ? (
+            <ul
+              id={`${id}-list`}
+              role="listbox"
+              aria-label={label}
+              data-part="list"
             >
-              <span data-part="title">
-                {highlight(item.title, query.trim())}
-              </span>
-              <span data-part="price">{item.price}</span>
-              <span data-part="meta">{item.meta}</span>
-              <span data-part="stock" data-empty={item.stock === 0}>
-                {item.stock === 0
-                  ? outOfStockLabel
-                  : stockText.replace("{count}", String(item.stock))}
-              </span>
-            </li>
-          ))}
-          {matches.length === 0 ? (
-            <li data-part="empty" role="presentation">
-              {emptyLabel}
-            </li>
+              {matches.map((item) => (
+                <li
+                  key={item.meta}
+                  role="option"
+                  aria-selected="false"
+                  data-part="option"
+                  onMouseDown={(event) => {
+                    event.preventDefault()
+                    setQuery(item.title)
+                    onSelect?.(item.title)
+                  }}
+                >
+                  <span data-part="title">
+                    {highlight(item.title, query.trim())}
+                  </span>
+                  <span data-part="price">{item.price}</span>
+                  <span data-part="meta">{item.meta}</span>
+                  <span data-part="stock" data-empty={item.stock === 0}>
+                    {item.stock === 0
+                      ? outOfStockLabel
+                      : stockText.replace("{count}", String(item.stock))}
+                  </span>
+                </li>
+              ))}
+              {matches.length === 0 ? (
+                <li data-part="empty" role="presentation">
+                  {emptyLabel}
+                </li>
+              ) : null}
+            </ul>
           ) : null}
-        </ul>
+        </div>
       </div>
     </>
   )

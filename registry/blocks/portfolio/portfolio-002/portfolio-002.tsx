@@ -149,7 +149,11 @@ export function Portfolio002({
         <div data-part="shell">
           <p data-part="eyebrow">{eyebrow}</p>
           <h2 data-part="title">{title}</h2>
-          <div data-part="filters" role="group" aria-label="Фильтр по направлению">
+          <div
+            data-part="filters"
+            role="group"
+            aria-label="Фильтр по направлению"
+          >
             <button
               type="button"
               data-part="chip"

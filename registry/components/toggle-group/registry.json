@@ -2654,6 +2654,304 @@
           "width": "auto"
         }
       }
+    },
+    {
+      "name": "togglegroup-018",
+      "type": "registry:component",
+      "title": "Фишки выбора",
+      "description": "Фишки-фильтры с множественным выбором: отмеченная пружинно садится на акцент, а из её края вырастает галочка.",
+      "categories": ["toggle-group"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "togglegroup-018/togglegroup-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/togglegroup-018.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-018-*. Серверный компонент: состояние держат обычные checkbox'ы внутри подписей, поэтому фишки работают в форме и без сценариев. Группа — fieldset с legend, каждая фишка — label с невидимым input type=\"checkbox\", галочкой и подписью. Вид отмеченной фишки собирают селекторы :has(input:checked): акцентная заливка, тёмный текст и transform:scale(1.06) с пружинной кривой linear(…). Галочка вырастает из нулевой ширины, поэтому фишка раздаётся вместе с ней. Кольцо фокуса ставит :has(input:focus-visible). Тема берётся из color-scheme через light-dark(), класс .dark и data-theme=\"dark\" объявляют color-scheme:dark.",
+      "meta": {
+        "tags": ["togglegroup", "chips", "filter", "checkbox", "spring"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Togglegroup018",
+          "usage": "<Togglegroup018 label=\"Тип движения\" defaultValue=\"glide\" />",
+          "summary": "Ряд фишек-фильтров с множественным выбором: отмеченная наливается акцентом, пружинно садится на новый размер, и из её левого края вырастает галочка. Состояние держат настоящие checkbox'ы, поэтому компонент серверный, работает в форме и без JavaScript. Один файл, ноль зависимостей, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-togglegroup-018-* и не подменять её токенами вашей темы",
+            "настоящие checkbox'ы внутри подписей: они держат состояние, попадают в форму и ловят клавиатуру, а div с onClick не умеет ничего из этого",
+            "вид отмеченной фишки через :has(input:checked), а не через класс: класс расходится с состоянием поля молча",
+            "пружинную кривую с двумя объявлениями transition: строка linear(…) даёт перелёт, cubic-bezier перед ней остаётся запасной для старых браузеров",
+            "рост галочки от нулевой ширины: он раздаёт фишку плавно, а появление готовой галочки дёргает раскладку",
+            "кольцо фокуса через :has(input:focus-visible): input невидим, и системное кольцо показать некому",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "имя группы через label — оно же видимая надпись над фишками",
+            "подписи фишек через optionText",
+            "defaultValue — фишка, отмеченная изначально; остальные включаются щелчком",
+            "showCheck — оставить или убрать галочку у отмеченной фишки",
+            "имя поля формы через name",
+            "accent — заливка отмеченной фишки и кольцо фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Выбор множественный: если вариант должен быть ровно один, нужны радиокнопки, а не фишки.",
+            "Все фишки уходят в форму под одним именем name — сервер получит массив отмеченных значений.",
+            "Подписи на акценте читаются тёмным текстом: цвет --vibeui-togglegroup-018-on-accent рассчитан на светлый акцент. Задавая тёмный accent, проверьте контраст.",
+            "Набор вариантов зашит в файл: добавляя пятый, проверьте, как ряд переносится на узкой колонке.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultValue",
+            "label": "Отмечена фишка",
+            "type": "select",
+            "default": "glide",
+            "options": ["spring", "glide", "bounce", "decay"]
+          },
+          {
+            "prop": "label",
+            "label": "Имя группы",
+            "type": "text",
+            "default": "Тип движения",
+            "maxLength": 28
+          },
+          {
+            "prop": "showCheck",
+            "label": "Галочка",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["defaultValue", "label", "showCheck", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Choice Chips",
+            "description": "Multi-select filter chips: the selected one springs onto the accent fill and a checkmark grows out of its edge.",
+            "docs": "One file, zero dependencies, the --vibeui-togglegroup-018-* palette. A server component: plain checkboxes inside the labels hold the state, so the chips work in a form and without any scripting. The group is a fieldset with a legend, and every chip is a label carrying an invisible input type=\"checkbox\", a checkmark and the text. The selected look is assembled by :has(input:checked) selectors: the accent fill, dark text and transform:scale(1.06) on the linear(…) spring curve. The checkmark grows from zero width, so the chip widens along with it. The focus ring comes from :has(input:focus-visible). The theme comes from color-scheme through light-dark(), while the .dark class and data-theme=\"dark\" declare color-scheme:dark.",
+            "ai": {
+              "summary": "A row of multi-select filter chips: the selected one fills with the accent, springs onto its new size and grows a checkmark out of its left edge. Real checkboxes hold the state, so the component stays a server one, works in a form and needs no JavaScript. One file, zero dependencies, its own palette.",
+              "preserve": [
+                "the local --vibeui-togglegroup-018-* palette — do not swap it for your theme tokens",
+                "the real checkboxes inside the labels: they hold the state, reach the form and answer the keyboard, none of which a div with onClick does",
+                "the selected look through :has(input:checked) rather than a class: a class drifts away from the field's state silently",
+                "the spring easing with its two transition declarations: the linear(…) string carries the overshoot, the cubic-bezier before it stays as the fallback for older browsers",
+                "the checkmark growing from zero width: it widens the chip smoothly, while a ready-made checkmark jolts the layout",
+                "the focus ring through :has(input:focus-visible): the input is invisible and has nothing to show a system ring on",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the group name through label — it is also the visible caption above the chips",
+                "the chip captions through optionText",
+                "defaultValue — the chip selected from the start; the rest are switched on by clicking",
+                "showCheck — keep or drop the checkmark on the selected chip",
+                "the form field name through name",
+                "accent — the fill of a selected chip and the focus ring",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The selection is multiple: if exactly one option must win, use radios rather than chips.",
+                "Every chip goes into the form under the same name — the server receives an array of the selected values.",
+                "Captions on the accent are drawn in dark text: --vibeui-togglegroup-018-on-accent assumes a light accent. Check the contrast when you pass a dark accent.",
+                "The option set is baked into the file: adding a fifth one, check how the row wraps in a narrow column.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Togglegroup018 label=\"Motion type\" defaultValue=\"glide\" />"
+            },
+            "controls": {
+              "defaultValue": {
+                "label": "Selected chip"
+              },
+              "label": {
+                "label": "Group name",
+                "default": "Motion type"
+              },
+              "showCheck": {
+                "label": "Checkmark"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Motion type",
+                "optionText": {
+                  "spring": "Spring",
+                  "glide": "Glide",
+                  "bounce": "Bounce",
+                  "decay": "Decay"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "togglegroup-019",
+      "type": "registry:component",
+      "title": "Рельс с пилюлей",
+      "description": "Сегментированный переключатель периода: пилюля шириной ровно в треть дорожки едет к наведённой или выбранной ячейке.",
+      "categories": ["toggle-group"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "togglegroup-019/togglegroup-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/togglegroup-019.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-019-*. Серверный компонент: выбор держат радиокнопки внутри подписей, номер ячейки CSS считает сам. Группа — fieldset с legend, дорожка — три равные ячейки flex:1 1 0, пилюля — единственный ::before дорожки шириной calc((100% - 0.5rem) / 3), то есть ровно в одну ячейку, а не в ширину подписи. Сдвиг задаёт translateX(calc(var(--vibeui-togglegroup-019-i) * 100%)); переменную поднимают правила :has() — сначала по отмеченной радиокнопке, затем по наведённой ячейке, поэтому под курсором пилюля уезжает к ней и возвращается, когда курсор ушёл. Ход — пружина linear(…) на 0.45s. Тема берётся из color-scheme через light-dark(), класс .dark и data-theme=\"dark\" объявляют color-scheme:dark.",
+      "meta": {
+        "tags": ["togglegroup", "segmented", "radio", "has-selector", "spring"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Togglegroup019",
+          "usage": "<Togglegroup019 label=\"Период\" defaultValue=\"week\" />",
+          "summary": "Сегментированный рельс на три отрезка: одна пилюля шириной ровно в треть дорожки едет к наведённой ячейке, а без курсора возвращается к выбранной. Ширину пилюле даёт ячейка, а не подпись, поэтому она не дёргается на длинных словах и переводах. Выбор держат радиокнопки, сценариев нет вовсе. Один файл, ноль зависимостей, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-togglegroup-019-* и не подменять её токенами вашей темы",
+            "ширину пилюли ровно в одну ячейку — calc((100% - 0.5rem) / 3) — и шаг translateX в 100% её ширины: пилюля по размеру текста снова начнёт мельтешить на переводах",
+            "три ячейки flex:1 1 0: они обязаны быть равными, иначе шаг пилюли перестанет совпадать с ячейкой",
+            "правила :has() и порядок между ними: наведение перебивает выбор, потому что идёт ниже и равно по весу",
+            "пружинную кривую с двумя объявлениями transition: строка linear(…) даёт перелёт, cubic-bezier перед ней остаётся запасной для старых браузеров",
+            "настоящие радиокнопки внутри подписей: они держат выбор, попадают в форму и переключаются стрелками",
+            "кольцо фокуса через :has(input:focus-visible): input невидим, и системное кольцо показать некому",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "имя рельса через label — оно же видимая надпись над дорожкой",
+            "подписи отрезков через optionText",
+            "defaultValue — какой отрезок выбран изначально",
+            "имя группы радиокнопок через name: двум экземплярам на странице нужны разные имена",
+            "accent — заливка пилюли и цвет активной подписи",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Отрезков ровно три: ширина пилюли и правила :has() рассчитаны на это число. Четвёртая ячейка потребует править и делитель, и набор селекторов.",
+            "На сенсорном экране наведение залипает после касания — это поведение браузера, а не компонента; выбор при этом остаётся у отмеченной радиокнопки.",
+            "Компонент серверный: состояния в React нет, значение читается из формы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultValue",
+            "label": "Отрезок",
+            "type": "select",
+            "default": "week",
+            "options": ["day", "week", "month"]
+          },
+          {
+            "prop": "label",
+            "label": "Имя рельса",
+            "type": "text",
+            "default": "Период",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["defaultValue", "label", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Snap Rail",
+            "description": "A segmented period switch: a pill exactly one third of the track wide glides to the hovered or selected cell.",
+            "docs": "One file, zero dependencies, the --vibeui-togglegroup-019-* palette. A server component: radios inside the labels hold the selection and CSS works out the cell index on its own. The group is a fieldset with a legend, the track holds three equal flex:1 1 0 cells, and the pill is the track's single ::before at calc((100% - 0.5rem) / 3) — exactly one cell wide rather than as wide as the label. The offset comes from translateX(calc(var(--vibeui-togglegroup-019-i) * 100%)); :has() rules raise the variable, first from the checked radio and then from the hovered cell, so the pill leaves for the cursor and comes back once it is gone. The motion is a 0.45s linear(…) spring. The theme comes from color-scheme through light-dark(), while the .dark class and data-theme=\"dark\" declare color-scheme:dark.",
+            "ai": {
+              "summary": "A three-segment snap rail: a single pill exactly one third of the track wide glides to the hovered cell and returns to the selected one when the cursor leaves. The cell gives the pill its width, not the label, so it never jitters on long words or translations. Radios hold the selection and there is no scripting at all. One file, zero dependencies, its own palette.",
+              "preserve": [
+                "the local --vibeui-togglegroup-019-* palette — do not swap it for your theme tokens",
+                "the pill width of exactly one cell — calc((100% - 0.5rem) / 3) — and the translateX step of 100% of that width: a pill sized to the text starts jittering on translations again",
+                "the three flex:1 1 0 cells: they have to stay equal, otherwise the pill's step stops matching a cell",
+                "the :has() rules and the order between them: hovering beats the selection because it comes lower at an equal weight",
+                "the spring easing with its two transition declarations: the linear(…) string carries the overshoot, the cubic-bezier before it stays as the fallback for older browsers",
+                "the real radios inside the labels: they hold the selection, reach the form and answer the arrow keys",
+                "the focus ring through :has(input:focus-visible): the input is invisible and has nothing to show a system ring on",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the rail name through label — it is also the visible caption above the track",
+                "the segment captions through optionText",
+                "defaultValue — which segment starts selected",
+                "the radio group name through name: two instances on a page need different ones",
+                "accent — the pill fill and the colour of the active caption",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "There are exactly three segments: the pill width and the :has() rules are built around that number. A fourth cell means editing both the divisor and the set of selectors.",
+                "On a touch screen hover sticks after a tap — that is browser behaviour rather than the component's; the selection still belongs to the checked radio.",
+                "The component is a server one: there is no React state, the value is read from the form.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Togglegroup019 label=\"Period\" defaultValue=\"week\" />"
+            },
+            "controls": {
+              "defaultValue": {
+                "label": "Segment"
+              },
+              "label": {
+                "label": "Rail name",
+                "default": "Period"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Period",
+                "optionText": {
+                  "day": "Day",
+                  "week": "Week",
+                  "month": "Month"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

@@ -34,11 +34,12 @@ display:block;box-sizing:border-box;width:100%;max-width:20rem;margin:0;
 color:var(--vibeui-security-003-fg);font-family:var(--vibeui-security-003-font);
 }
 [data-vibeui-block="security-003"] *{box-sizing:border-box}
+/* Сцена без рамки и подложки: раньше здесь были скруглённый контур и
+   градиент, и знак читался как экран устройства, а не как самостоятельный
+   значок. Осталось только центрирование и место под свечение. */
 [data-vibeui-block="security-003"] [data-part="stage"]{
-position:relative;isolation:isolate;overflow:hidden;min-height:13rem;
+position:relative;isolation:isolate;min-height:13rem;
 display:flex;align-items:center;justify-content:center;
-border-radius:1.5rem;border:1px solid var(--vibeui-security-003-border);
-background:linear-gradient(to bottom,var(--vibeui-security-003-bg-top),var(--vibeui-security-003-bg-bottom));
 }
 /* Кольцо-свечение: дышит по масштабу и прозрачности независимо от входа щита. */
 [data-vibeui-block="security-003"] [data-part="ring"]{

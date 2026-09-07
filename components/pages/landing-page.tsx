@@ -2,7 +2,7 @@ import Link from "next/link"
 import { ArrowRight, Check, X } from "lucide-react"
 
 import { CatalogShell } from "@/components/catalog/catalog-shell"
-import { DesktopFrame } from "@/components/device-frames"
+import { DesignShowcase } from "@/components/pages/landing/design-showcase"
 import {
   CategoryExplorer,
   type ExplorerTab,
@@ -14,7 +14,6 @@ import {
   getItemsByKind,
   getUsedCategories,
 } from "@/registry/index"
-import { Activity001 } from "@/registry/animations/activity/activity-001/activity-001"
 
 const KIND_ORDER: ItemKind[] = ["component", "block", "animation"]
 const GROUP_OF = new Map<string, string>(
@@ -152,7 +151,7 @@ export function LandingPage({ locale }: { locale: Locale }) {
     <CatalogShell locale={locale}>
       <main className="w-full flex-1">
         {/* Hero */}
-        <section className="mx-auto w-full max-w-[1440px] px-4 pt-16 pb-10 text-center lg:px-6 lg:pt-24">
+        <section className="mx-auto w-full max-w-[1440px] px-4 pt-12 pb-12 text-center lg:px-6 lg:pt-16">
           <Link
             href={localePath(locale, catalogBasePath("animation"))}
             className="border-shell-border bg-shell-panel text-shell-muted hover:text-shell-fg hover:border-shell-border-strong mx-auto inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium transition-colors"
@@ -170,16 +169,13 @@ export function LandingPage({ locale }: { locale: Locale }) {
           </h1>
           <p className="text-shell-muted mx-auto mt-6 max-w-2xl text-base leading-relaxed text-pretty sm:text-lg">
             {en
-              ? "A UI library for vibe coding: open a component, hit “Copy for AI,” and your agent installs it from the registry exactly as previewed — instead of re-inventing a lookalike. Zero dependencies, its own palette, agent instructions included."
-              : "Библиотека UI для вайбкодинга: открой компонент, нажми «Копировать для ИИ» — агент поставит его из реестра ровно как в превью, а не пересоздаст похожий. Ноль зависимостей, своя палитра, инструкция для агента в комплекте."}
+              ? "Page sections, components and animations for your site. Choose a look you love, copy it for AI and add it to your project."
+              : "Готовые секции, компоненты и анимации для твоего сайта. Выбери то, что нравится, скопируй для ИИ и добавь в свой проект."}
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Link
-              href={localePath(locale, "/components")}
-              className={BTN_PRIMARY}
-            >
-              {en ? "Browse components" : "Смотреть компоненты"}
+            <Link href="#designs" className={BTN_PRIMARY}>
+              {en ? "Explore designs" : "Выбрать дизайн"}
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
             <Link href={localePath(locale, "/blocks")} className={BTN_GHOST}>
@@ -188,17 +184,7 @@ export function LandingPage({ locale }: { locale: Locale }) {
           </div>
         </section>
 
-        {/* Живое превью в «браузерной» рамке */}
-        <section className="mx-auto w-full max-w-[1100px] px-4 lg:px-6">
-          <DesktopFrame>
-            <div
-              data-preview-theme="auto"
-              className="bg-preview-surface flex items-center justify-center px-4 py-16"
-            >
-              <Activity001 />
-            </div>
-          </DesktopFrame>
-        </section>
+        <DesignShowcase locale={locale} />
 
         {/* Статы */}
         <section className="mx-auto w-full max-w-[1440px] px-4 pt-16 text-center lg:px-6">

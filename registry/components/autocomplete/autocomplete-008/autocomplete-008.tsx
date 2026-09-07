@@ -139,7 +139,7 @@ export function Autocomplete008({
   label = "Почта",
   placeholder = "имя@почта",
   domains = DEFAULT_DOMAINS,
-  defaultValue = "anna.petrova@ya",
+  defaultValue = "",
   acceptHint = "допишет домен {domain}",
   idleHint = "После @ поле допишет домен",
   onChange,

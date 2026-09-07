@@ -52,13 +52,13 @@ padding:0.875rem 1rem;text-align:center;font-weight:700;font-size:0.875rem;
 border-bottom:1px solid var(--vibeui-comparison-001-border);
 }
 [data-vibeui-block="comparison-001"] [data-part="th"]:first-child{text-align:left}
-[data-vibeui-block="comparison-001"] [data-part="th-us"]{
+[data-vibeui-block="comparison-001"] [data-part="th"][data-us="true"]{
 background:var(--vibeui-comparison-001-accent);color:var(--vibeui-comparison-001-on-accent);
 border-top-left-radius:0.625rem;border-top-right-radius:0.625rem;
 }
 [data-vibeui-block="comparison-001"] [data-part="td"]{padding:0.75rem 1rem;text-align:center;border-bottom:1px solid var(--vibeui-comparison-001-border)}
 [data-vibeui-block="comparison-001"] [data-part="td"]:first-child{text-align:left;font-weight:500}
-[data-vibeui-block="comparison-001"] [data-part="td-us"]{background:color-mix(in oklab,var(--vibeui-comparison-001-accent) 8%,transparent)}
+[data-vibeui-block="comparison-001"] [data-part="td"][data-us="true"]{background:color-mix(in oklab,var(--vibeui-comparison-001-accent) 8%,transparent)}
 [data-vibeui-block="comparison-001"] [data-part="yes"]{
 display:inline-block;width:1.25rem;height:1.25rem;position:relative;
 }
@@ -144,7 +144,7 @@ export function Comparison001({
                 <th data-part="th" scope="col">
                   Возможность
                 </th>
-                <th data-part="th th-us" scope="col">
+                <th data-part="th" data-us="true" scope="col">
                   {usLabel}
                 </th>
                 <th data-part="th" scope="col">
@@ -156,7 +156,7 @@ export function Comparison001({
               {rows.map((row) => (
                 <tr key={row.feature}>
                   <td data-part="td">{row.feature}</td>
-                  <td data-part="td td-us">
+                  <td data-part="td" data-us="true">
                     {row.us ? (
                       <span data-part="yes" aria-label="Есть" />
                     ) : (

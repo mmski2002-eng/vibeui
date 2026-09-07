@@ -2407,6 +2407,158 @@
         },
         "cardControls": ["current", "editLabel", "accent", "background"]
       }
+    },
+    {
+      "name": "stepper-016",
+      "type": "registry:component",
+      "title": "Прогресс по шагам",
+      "description": "Полоса шагов, где заливка трека доезжает до следующего узла пружиной, а сам узел в этот момент хлопает. Кнопки «Назад» и «Далее» ведут по цепочке.",
+      "categories": ["stepper"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stepper-016/stepper-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stepper-016.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-stepper-016-*. Клиентский: \"use client\" ради состояния текущего шага. Заливка тянется одним элементом через scaleX(var(--vibeui-stepper-016-progress)) с пружинной кривой linear() — transform не пересчитывает раскладку, поэтому пружина идёт ровно и на длинном списке. Трек начинается в центре первого узла и кончается в центре последнего: отступ --vibeui-stepper-016-inset считается от числа шагов, а не от ширины узла, потому что узлы делят строку поровну. Пройденные шаги показывают галочку вместо номера, текущий получает scale и aria-current=\"step\". Тема — light-dark() плюс правило :where(.dark,[data-theme=\"dark\"]) … {color-scheme:dark}.",
+      "meta": {
+        "tags": ["stepper", "progress", "steps", "spring", "checkout"],
+        "ai": {
+          "export": "Stepper016",
+          "usage": "<Stepper016\n  steps={[\"Корзина\", \"Доставка\", \"Оплата\", \"Готово\"]}\n  defaultStep={2}\n/>",
+          "summary": "Прогресс по шагам: нумерованные узлы на треке, заливка доезжает до текущего узла пружиной с перелётом, узел в этот момент хлопает, пройденные меняют номер на галочку. Кнопки «Назад» и «Далее» гаснут на краях цепочки. Ноль зависимостей, один файл, собственная палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-stepper-016-* — не подменять её токенами вашей темы",
+            "заливку через scaleX, а не через ширину: transform не вызывает пересчёт раскладки",
+            "пружинную кривую linear() у заливки и у хлопка узла — без перелёта переход читается как перерисовка",
+            "хлопок только у текущего узла: если увеличивать все пройденные, взгляд теряет точку, до которой дошли",
+            "aria-current=\"step\" на текущем шаге и семантический <ol> вокруг узлов",
+            "отступ трека от числа шагов: узлы делят строку поровну, и половина ширины узла тут не подходит",
+            "light-dark() в палитре: компонент обязан слушаться color-scheme окружения, а не нести свою тёмную тему"
+          ],
+          "adapt": [
+            "массив steps: названия шагов и их количество",
+            "defaultStep — шаг, с которого компонент стартует",
+            "подписи backLabel и nextLabel",
+            "accent — цвет заливки, активных узлов и кнопки «Далее»",
+            "background — подложка компонента; пусто оставляет фон страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, в проекте должен быть объявлен color-scheme: light dark на html — иначе light-dark() всегда возвращает светлую ветку.",
+            "Шаг живёт внутри компонента и наружу не отдаётся: если состояние нужно форме, поднимите его и передайте свои кнопки.",
+            "Подписи под узлами короткие не случайно: на четырёх шагах в узкой колонке на каждую приходится около семидесяти пикселей.",
+            "Цепочка не зациклена: на последнем шаге «Далее» гаснет, а не возвращает к началу.",
+            "Не выносите CSS-переменные в globals.css: компонент должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultStep",
+            "label": "Шаг",
+            "type": "number",
+            "default": 2,
+            "min": 1,
+            "max": 4
+          },
+          {
+            "prop": "backLabel",
+            "label": "Кнопка назад",
+            "type": "text",
+            "default": "Назад",
+            "maxLength": 16
+          },
+          {
+            "prop": "nextLabel",
+            "label": "Кнопка вперёд",
+            "type": "text",
+            "default": "Далее",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Step Progress",
+            "description": "A step bar where the track fill springs across to the next node while the node itself pops. Back and Next buttons walk the chain.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-stepper-016-* variables. Client-side: \"use client\" for the current-step state. The fill is a single element stretched with scaleX(var(--vibeui-stepper-016-progress)) on a linear() spring curve — transform does not trigger layout, so the spring stays smooth even on a long list. The track starts at the centre of the first node and ends at the centre of the last: the --vibeui-stepper-016-inset offset is derived from the number of steps rather than from the node width, because the nodes split the row evenly. Completed steps show a check instead of a number, and the current one gets a scale and aria-current=\"step\". The theme comes from light-dark() plus the :where(.dark,[data-theme=\"dark\"]) … {color-scheme:dark} rule.",
+            "ai": {
+              "summary": "A step progress bar: numbered nodes on a track, the fill springing across to the current node with an overshoot while that node pops and completed ones swap their number for a check. Back and Next dim at the ends of the chain. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-stepper-016-* palette — do not swap it for your theme tokens",
+                "the fill on scaleX rather than on width: transform does not trigger layout",
+                "the linear() spring on both the fill and the node pop — without the overshoot the change reads as a repaint",
+                "the pop on the current node only: scaling every completed node loses the point you have reached",
+                "aria-current=\"step\" on the current step and the semantic <ol> around the nodes",
+                "the track inset derived from the number of steps: the nodes split the row evenly, so half a node width is the wrong figure here",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the steps array: the step names and how many there are",
+                "defaultStep — the step the component starts on",
+                "the backLabel and nextLabel copy",
+                "accent — the colour of the fill, the active nodes and the Next button",
+                "background — the component surface; empty keeps the page background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The step lives inside the component and is not handed out: if a form needs the state, lift it and pass your own buttons.",
+                "The captions under the nodes are short on purpose: across four steps in a narrow column each one gets about seventy pixels.",
+                "The chain does not loop: on the last step Next dims rather than wrapping back to the start.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Stepper016\n  steps={[\"Cart\", \"Delivery\", \"Payment\", \"Done\"]}\n  defaultStep={2}\n/>"
+            },
+            "controls": {
+              "defaultStep": {
+                "label": "Step"
+              },
+              "backLabel": {
+                "label": "Back button",
+                "default": "Back"
+              },
+              "nextLabel": {
+                "label": "Next button",
+                "default": "Next"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "steps": ["Cart", "Delivery", "Payment", "Done"],
+                "backLabel": "Back",
+                "nextLabel": "Next",
+                "defaultStep": 2
+              }
+            }
+          }
+        },
+        "cardControls": ["defaultStep", "backLabel", "nextLabel", "accent"],
+        "preview": {
+          "width": "full",
+          "props": {
+            "defaultStep": 2
+          }
+        }
+      }
     }
   ]
 }

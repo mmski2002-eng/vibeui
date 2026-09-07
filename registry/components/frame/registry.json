@@ -2953,6 +2953,146 @@
         },
         "cardControls": ["tone", "caption", "stubText"]
       }
+    },
+    {
+      "name": "frame-021",
+      "type": "registry:component",
+      "title": "Поле в перспективе",
+      "description": "Декоративное поле-сетка, которое на наведении ложится в перспективу и подъезжает к зрителю, а точка в центре разгорается акцентом.",
+      "categories": ["frame"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-021/frame-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-021.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-frame-021-*. Клиентского кода нет: вся механика — один transform с perspective, rotateX, rotateZ и масштабом на пружинной кривой linear(). Сетка нарисована двумя repeating-linear-gradient, поэтому в разметке нет ни одной лишней ноды, а шаг задаётся переменной --vibeui-frame-021-cell. Фокальная точка — радиальная заливка в ::after, её прозрачность меняется тем же переходом. Высота считается от собственной ширины через aspect-ratio.",
+      "meta": {
+        "tags": ["frame", "grid", "perspective", "hover", "decorative"],
+        "preview": {
+          "width": "auto"
+        },
+        "ai": {
+          "export": "Frame021",
+          "usage": "<Frame021 label=\"Поле\" tilt={37} />",
+          "summary": "Декоративное поле-сетка на двух градиентах: на наведении оно наклоняется в перспективе, подъезжает к зрителю с перелётом и разгорается акцентом в центре. Ни строчки клиентского кода. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-021-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "пружинную кривую linear(…) вместе со строкой cubic-bezier перед ней: первая нужна старым браузерам, вторая даёт перелёт",
+            "сетку на двух repeating-linear-gradient: сотня отдельных элементов даёт тот же рисунок и мёртвую прокрутку",
+            "перспективу внутри transform вместе с transform-origin ниже центра — иначе поле кренится, а не ложится",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "отмену переходов в prefers-reduced-motion, включая переход у ::after"
+          ],
+          "adapt": [
+            "label — подпись в центре поля",
+            "tilt — наклон поля к зрителю в градусах",
+            "cell — шаг сетки в пикселях",
+            "accent — цвет фокальной точки в центре",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Поле декоративное и не получает фокус: эффект живёт на наведении и касании. Если рядом должна быть ссылка или кнопка — кладите её снаружи, а не внутрь наклоняемого слоя.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Поле",
+            "maxLength": 20
+          },
+          {
+            "prop": "tilt",
+            "label": "Наклон",
+            "type": "number",
+            "min": 0,
+            "max": 48,
+            "default": 37
+          },
+          {
+            "prop": "cell",
+            "label": "Шаг сетки",
+            "type": "number",
+            "min": 10,
+            "max": 32,
+            "default": 18
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Warp Field",
+            "description": "A decorative grid field that tips into perspective on hover and rides toward the viewer while a point at its centre lights up in the accent.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-frame-021-* variables. There is no client code: the whole mechanism is a single transform with perspective, rotateX, rotateZ and a scale on a spring linear() curve. The grid is drawn with two repeating-linear-gradient layers, so the markup carries not one extra node and the step comes from --vibeui-frame-021-cell. The focal point is a radial fill in ::after whose opacity rides the same transition. The height is measured against the field's own width through aspect-ratio.",
+            "ai": {
+              "summary": "A decorative grid field on two gradients: on hover it tips into perspective, rides toward the viewer with an overshoot and lights up in the accent at its centre. Not a line of client code. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-frame-021-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the spring linear(…) curve together with the cubic-bezier line before it: the first is there for older browsers, the second gives the overshoot",
+                "the grid on two repeating-linear-gradient layers: a hundred separate elements draw the same picture and kill the scrolling",
+                "the perspective inside the transform together with a transform-origin below the centre — otherwise the field lists instead of lying down",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "cancelling the transitions under prefers-reduced-motion, the one on ::after included"
+              ],
+              "adapt": [
+                "label — the caption at the centre of the field",
+                "tilt — how far the field tips toward the viewer, in degrees",
+                "cell — the grid step in pixels",
+                "accent — the colour of the focal point at the centre",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The field is decorative and takes no focus: the effect lives on hover and touch. If a link or a button belongs nearby, put it outside rather than inside the tipping layer.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame021 label=\"Field\" tilt={37} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Field"
+              },
+              "tilt": {
+                "label": "Tilt"
+              },
+              "cell": {
+                "label": "Grid step"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Field"
+              }
+            }
+          }
+        },
+        "cardControls": ["label", "tilt", "cell", "accent"]
+      }
     }
   ]
 }

@@ -1347,6 +1347,154 @@
           "width": "full"
         }
       }
+    },
+    {
+      "name": "number-009",
+      "type": "registry:component",
+      "title": "Пружинный счётчик",
+      "description": "Счётчик с кнопками −/+, у которого цифра подпрыгивает по направлению шага и оседает с перелётом: изменение видно боковым зрением.",
+      "categories": ["number-field"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "number-009/number-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/number-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-number-009-*. Клиентский компонент: useState держит значение и счётчик нажатий. Прыжок цифры — не переход, а keyframes с пружинной кривой linear(); нажатие меняет key у цифры, React монтирует её заново, и анимация начинается с нуля даже посреди предыдущей. Направление прыжка задаёт переменная --vibeui-number-009-lift, поэтому «минус» роняет цифру вниз, а «плюс» подбрасывает вверх. Значение лежит в <output> с aria-live, на краях диапазона кнопки выключаются.",
+      "meta": {
+        "tags": ["number", "counter", "spring", "stepper", "animation"],
+        "preview": {
+          "width": "auto"
+        },
+        "ai": {
+          "export": "Number009",
+          "usage": "<Number009 label=\"Гостей\" defaultValue={12} step={1} />",
+          "summary": "Крупный счётчик с кнопками −/+: на каждом шаге цифра подпрыгивает, раздувается и оседает с перелётом. Перезапуск анимации держится на key, поэтому быстрые нажатия не смазываются в одно движение. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-number-009-* и не подменять её токенами вашей темы (bg-primary, text-muted-foreground и подобными)",
+            "пружинную кривую linear(…) вместе со строкой cubic-bezier перед ней: первая нужна старым браузерам, вторая даёт перелёт",
+            "перезапуск анимации через key у цифры — без него быстрые нажатия смазывают прыжок в одно движение",
+            "переменную --vibeui-number-009-lift: направление прыжка обязано совпадать с направлением шага",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "<output> с aria-live: без него скринридер не узнает, что число изменилось",
+            "выключение кнопок на краях диапазона и отмену анимации в prefers-reduced-motion"
+          ],
+          "adapt": [
+            "label — подпись над числом",
+            "defaultValue — стартовое значение счётчика",
+            "step — на сколько меняется число за одно нажатие",
+            "min и max — границы диапазона, на них кнопки выключаются",
+            "accent — цвет числа и обводки кнопок при наведении",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи кнопок для скринридера: decrementLabel и incrementLabel"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Значение живёт внутри компонента. Нужен внешний контроль — поднимите состояние наверх и передайте своё value с обработчиком.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Гостей",
+            "maxLength": 24
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Значение",
+            "type": "number",
+            "min": 0,
+            "max": 99,
+            "default": 12
+          },
+          {
+            "prop": "step",
+            "label": "Шаг",
+            "type": "number",
+            "min": 1,
+            "max": 25,
+            "default": 1
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Spring Counter",
+            "description": "A counter with − and + buttons whose digit hops in the direction of the step and settles with an overshoot, so the change is visible out of the corner of your eye.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-number-009-* variables. A client component: useState keeps the value and a press counter. The hop is not a transition but a keyframe animation on a spring linear() curve; a press changes the digit's key, React mounts it anew and the animation starts from zero even in the middle of the previous one. The direction is carried by --vibeui-number-009-lift, so minus drops the digit and plus throws it up. The value lives in an <output> with aria-live, and the buttons switch off at the ends of the range.",
+            "ai": {
+              "summary": "A large counter with − and + buttons: on every step the digit hops, swells and settles with an overshoot. The restart rides on the key, so rapid presses do not smear into one motion. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-number-009-* palette — do not swap it for your theme tokens (bg-primary, text-muted-foreground and the like)",
+                "the spring linear(…) curve together with the cubic-bezier line before it: the first is there for older browsers, the second gives the overshoot",
+                "the restart through the digit's key — without it rapid presses smear the hop into a single motion",
+                "the --vibeui-number-009-lift variable: the hop direction has to match the direction of the step",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the <output> with aria-live: without it a screen reader never learns that the number changed",
+                "switching the buttons off at the ends of the range and cancelling the animation under prefers-reduced-motion"
+              ],
+              "adapt": [
+                "label — the caption above the number",
+                "defaultValue — the starting value of the counter",
+                "step — how much one press changes the number by",
+                "min and max — the range bounds; the buttons switch off there",
+                "accent — the colour of the number and of the button outline on hover",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the screen-reader wording of the buttons: decrementLabel and incrementLabel"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The value lives inside the component. If you need outside control, lift the state up and pass your own value with a handler.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Number009 label=\"Guests\" defaultValue={12} step={1} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Guests"
+              },
+              "defaultValue": {
+                "label": "Value"
+              },
+              "step": {
+                "label": "Step"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Guests",
+                "decrementLabel": "Fewer",
+                "incrementLabel": "More"
+              }
+            }
+          }
+        },
+        "cardControls": ["label", "defaultValue", "step", "accent"]
+      }
     }
   ]
 }

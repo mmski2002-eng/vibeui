@@ -32,11 +32,12 @@ display:block;box-sizing:border-box;width:100%;max-width:20rem;margin:0;
 color:var(--vibeui-security-002-fg);font-family:var(--vibeui-security-002-font);
 }
 [data-vibeui-block="security-002"] *{box-sizing:border-box}
+/* Сцена без рамки и подложки: раньше здесь были скруглённый контур и
+   градиент, и знак читался как экран устройства, а не как самостоятельный
+   значок. Осталось только центрирование и место под свечение. */
 [data-vibeui-block="security-002"] [data-part="stage"]{
-position:relative;isolation:isolate;overflow:hidden;min-height:13rem;
+position:relative;isolation:isolate;min-height:13rem;
 display:flex;align-items:center;justify-content:center;
-border-radius:1.5rem;border:1px solid var(--vibeui-security-002-border);
-background:linear-gradient(to bottom,var(--vibeui-security-002-bg-top),var(--vibeui-security-002-bg-bottom));
 }
 /* Ореол за замком: размытый круг, дышит независимо от цикла защёлкивания. */
 [data-vibeui-block="security-002"] [data-part="glow"]{

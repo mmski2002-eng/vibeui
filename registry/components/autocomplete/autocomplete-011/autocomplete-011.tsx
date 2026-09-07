@@ -19,6 +19,8 @@ export type Autocomplete011Props = Omit<
   defaultValue?: string
   /** Имя списка для скринридера. */
   listLabel?: string
+  /** Показать список сразу, без фокуса: витрина и скриншоты. */
+  defaultOpen?: boolean
   /** Строка под полем. */
   hintText?: string
   onChange?: (value: string) => void
@@ -68,7 +70,9 @@ color:inherit;font:inherit;font-size:0.875rem;line-height:1.5;
 [data-vibeui-block="autocomplete-011"] textarea:focus-visible{
 outline:2px solid var(--vibeui-autocomplete-011-accent);outline-offset:1px;border-color:transparent;
 }
+[data-vibeui-block="autocomplete-011"] [data-part="anchor"]{position:relative}
 [data-vibeui-block="autocomplete-011"] [data-part="list"]{
+position:absolute;left:0;right:0;top:calc(100% + 0.25rem);z-index:30;box-shadow:0 12px 28px -14px oklch(0 0 0 / 40%);
 margin:0;padding:0.25rem;list-style:none;max-height:11rem;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--vibeui-autocomplete-011-border) transparent;
 border:1px solid var(--vibeui-autocomplete-011-border);
 border-radius:var(--vibeui-autocomplete-011-radius);
@@ -177,10 +181,11 @@ export function Autocomplete011({
   label = "Комментарий",
   placeholder = "Напишите и позовите коллегу через @",
   people = DEFAULT_PEOPLE,
-  defaultValue = "Проверьте макет, пожалуйста, @ma",
+  defaultValue = "",
   listLabel = "Коллеги",
   hintText = "Список открывается после @ и закрывается на пробеле",
   onChange,
+  defaultOpen = false,
   background = "",
   accent,
   className,
@@ -188,6 +193,7 @@ export function Autocomplete011({
   ...props
 }: Autocomplete011Props) {
   const id = useId()
+  const [open, setOpen] = useState(defaultOpen)
   const [value, setValue] = useState(defaultValue)
   const [caret, setCaret] = useState(defaultValue.length)
 
@@ -249,45 +255,53 @@ export function Autocomplete011({
         style={palette}
       >
         <label htmlFor={id}>{label}</label>
-        <textarea
-          id={id}
-          placeholder={placeholder}
-          value={value}
-          aria-describedby={`${id}-hint`}
-          onChange={update}
-          onKeyUp={(event) => setCaret(event.currentTarget.selectionStart ?? 0)}
-          onClick={(event) => setCaret(event.currentTarget.selectionStart ?? 0)}
-        />
-        {matches.length ? (
-          <ul role="listbox" aria-label={listLabel} data-part="list">
-            {matches.map((person) => (
-              <li
-                key={person.handle}
-                role="option"
-                aria-selected="false"
-                data-part="option"
-                style={
-                  {
-                    "--vibeui-autocomplete-011-hue": hue(person.name),
-                  } as CSSProperties
-                }
-                onMouseDown={(event) => {
-                  event.preventDefault()
-                  mention(person.handle)
-                }}
-              >
-                <span data-part="avatar" aria-hidden="true">
-                  {initials(person.name)}
-                </span>
-                <span data-part="name">
-                  {highlight(person.name, token?.word ?? "")}
-                </span>
-                <span data-part="role">{person.role}</span>
-                <span data-part="handle">@{person.handle}</span>
-              </li>
-            ))}
-          </ul>
-        ) : null}
+        <div data-part="anchor">
+          <textarea
+            id={id}
+            placeholder={placeholder}
+            value={value}
+            aria-describedby={`${id}-hint`}
+            onFocus={() => setOpen(true)}
+            onBlur={() => setOpen(false)}
+            onChange={update}
+            onKeyUp={(event) =>
+              setCaret(event.currentTarget.selectionStart ?? 0)
+            }
+            onClick={(event) =>
+              setCaret(event.currentTarget.selectionStart ?? 0)
+            }
+          />
+          {open && matches.length ? (
+            <ul role="listbox" aria-label={listLabel} data-part="list">
+              {matches.map((person) => (
+                <li
+                  key={person.handle}
+                  role="option"
+                  aria-selected="false"
+                  data-part="option"
+                  style={
+                    {
+                      "--vibeui-autocomplete-011-hue": hue(person.name),
+                    } as CSSProperties
+                  }
+                  onMouseDown={(event) => {
+                    event.preventDefault()
+                    mention(person.handle)
+                  }}
+                >
+                  <span data-part="avatar" aria-hidden="true">
+                    {initials(person.name)}
+                  </span>
+                  <span data-part="name">
+                    {highlight(person.name, token?.word ?? "")}
+                  </span>
+                  <span data-part="role">{person.role}</span>
+                  <span data-part="handle">@{person.handle}</span>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
         <span data-part="hint" id={`${id}-hint`}>
           {hintText}
         </span>
