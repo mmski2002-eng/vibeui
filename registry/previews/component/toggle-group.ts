@@ -38,4 +38,8 @@ export const PREVIEWS = {
     import("@/registry/components/toggle-group/togglegroup-016/togglegroup-016").then((module) => module.Togglegroup016),
   "togglegroup-017": () =>
     import("@/registry/components/toggle-group/togglegroup-017/togglegroup-017").then((module) => module.Togglegroup017),
+  "togglegroup-018": () =>
+    import("@/registry/components/toggle-group/togglegroup-018/togglegroup-018").then((module) => module.Togglegroup018),
+  "togglegroup-019": () =>
+    import("@/registry/components/toggle-group/togglegroup-019/togglegroup-019").then((module) => module.Togglegroup019),
 } satisfies PreviewLoaderMap

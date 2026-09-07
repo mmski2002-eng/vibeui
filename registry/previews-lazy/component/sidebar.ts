@@ -6,9 +6,6 @@ import dynamic from "next/dynamic"
 import type { PreviewMap } from "@/registry/preview-types"
 
 export const PREVIEWS = {
-  "sidebar-001": dynamic(() =>
-    import("@/registry/components/sidebar/sidebar-001/sidebar-001").then((module) => module.Sidebar001),
-  ),
   "sidebar-002": dynamic(() =>
     import("@/registry/components/sidebar/sidebar-002/sidebar-002").then((module) => module.Sidebar002),
   ),

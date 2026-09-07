@@ -69,4 +69,7 @@ export const PREVIEWS = {
   "dropdown-021": dynamic(() =>
     import("@/registry/components/dropdown-menu/dropdown-021/dropdown-021").then((module) => module.Dropdown021),
   ),
+  "dropdown-022": dynamic(() =>
+    import("@/registry/components/dropdown-menu/dropdown-022/dropdown-022").then((module) => module.Dropdown022),
+  ),
 } satisfies PreviewMap

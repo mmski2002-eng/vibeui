@@ -40,4 +40,6 @@ export const PREVIEWS = {
     import("@/registry/components/carousel/carousel-017/carousel-017").then((module) => module.Carousel017),
   "carousel-018": () =>
     import("@/registry/components/carousel/carousel-018/carousel-018").then((module) => module.Carousel018),
+  "carousel-019": () =>
+    import("@/registry/components/carousel/carousel-019/carousel-019").then((module) => module.Carousel019),
 } satisfies PreviewLoaderMap

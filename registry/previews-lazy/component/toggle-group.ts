@@ -57,4 +57,10 @@ export const PREVIEWS = {
   "togglegroup-017": dynamic(() =>
     import("@/registry/components/toggle-group/togglegroup-017/togglegroup-017").then((module) => module.Togglegroup017),
   ),
+  "togglegroup-018": dynamic(() =>
+    import("@/registry/components/toggle-group/togglegroup-018/togglegroup-018").then((module) => module.Togglegroup018),
+  ),
+  "togglegroup-019": dynamic(() =>
+    import("@/registry/components/toggle-group/togglegroup-019/togglegroup-019").then((module) => module.Togglegroup019),
+  ),
 } satisfies PreviewMap

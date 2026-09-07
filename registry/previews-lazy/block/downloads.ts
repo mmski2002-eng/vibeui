@@ -15,4 +15,13 @@ export const PREVIEWS = {
   "download-003": dynamic(() =>
     import("@/registry/blocks/downloads/download-003/download-003").then((module) => module.Download003),
   ),
+  "download-004": dynamic(() =>
+    import("@/registry/blocks/downloads/download-004/download-004").then((module) => module.Download004),
+  ),
+  "download-005": dynamic(() =>
+    import("@/registry/blocks/downloads/download-005/download-005").then((module) => module.Download005),
+  ),
+  "download-006": dynamic(() =>
+    import("@/registry/blocks/downloads/download-006/download-006").then((module) => module.Download006),
+  ),
 } satisfies PreviewMap

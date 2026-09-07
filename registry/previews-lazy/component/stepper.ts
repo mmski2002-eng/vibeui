@@ -51,4 +51,7 @@ export const PREVIEWS = {
   "stepper-015": dynamic(() =>
     import("@/registry/components/stepper/stepper-015/stepper-015").then((module) => module.Stepper015),
   ),
+  "stepper-016": dynamic(() =>
+    import("@/registry/components/stepper/stepper-016/stepper-016").then((module) => module.Stepper016),
+  ),
 } satisfies PreviewMap

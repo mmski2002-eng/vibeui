@@ -60,4 +60,7 @@ export const PREVIEWS = {
   "carousel-018": dynamic(() =>
     import("@/registry/components/carousel/carousel-018/carousel-018").then((module) => module.Carousel018),
   ),
+  "carousel-019": dynamic(() =>
+    import("@/registry/components/carousel/carousel-019/carousel-019").then((module) => module.Carousel019),
+  ),
 } satisfies PreviewMap

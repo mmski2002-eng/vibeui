@@ -46,4 +46,6 @@ export const PREVIEWS = {
     import("@/registry/components/dropdown-menu/dropdown-020/dropdown-020").then((module) => module.Dropdown020),
   "dropdown-021": () =>
     import("@/registry/components/dropdown-menu/dropdown-021/dropdown-021").then((module) => module.Dropdown021),
+  "dropdown-022": () =>
+    import("@/registry/components/dropdown-menu/dropdown-022/dropdown-022").then((module) => module.Dropdown022),
 } satisfies PreviewLoaderMap

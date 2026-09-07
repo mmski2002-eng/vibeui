@@ -32,4 +32,6 @@ export const PREVIEWS = {
     import("@/registry/components/toggle/toggle-013/toggle-013").then((module) => module.Toggle013),
   "toggle-014": () =>
     import("@/registry/components/toggle/toggle-014/toggle-014").then((module) => module.Toggle014),
+  "toggle-015": () =>
+    import("@/registry/components/toggle/toggle-015/toggle-015").then((module) => module.Toggle015),
 } satisfies PreviewLoaderMap

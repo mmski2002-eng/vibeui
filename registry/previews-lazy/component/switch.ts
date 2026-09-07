@@ -51,4 +51,7 @@ export const PREVIEWS = {
   "switch-015": dynamic(() =>
     import("@/registry/components/switch/switch-015/switch-015").then((module) => module.Switch015),
   ),
+  "switch-016": dynamic(() =>
+    import("@/registry/components/switch/switch-016/switch-016").then((module) => module.Switch016),
+  ),
 } satisfies PreviewMap

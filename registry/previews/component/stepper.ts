@@ -34,4 +34,6 @@ export const PREVIEWS = {
     import("@/registry/components/stepper/stepper-014/stepper-014").then((module) => module.Stepper014),
   "stepper-015": () =>
     import("@/registry/components/stepper/stepper-015/stepper-015").then((module) => module.Stepper015),
+  "stepper-016": () =>
+    import("@/registry/components/stepper/stepper-016/stepper-016").then((module) => module.Stepper016),
 } satisfies PreviewLoaderMap

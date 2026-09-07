@@ -12,7 +12,4 @@ export const PREVIEWS = {
   "chat-002": dynamic(() =>
     import("@/registry/animations/chat/chat-002/chat-002").then((module) => module.Chat002),
   ),
-  "chat-003": dynamic(() =>
-    import("@/registry/animations/chat/chat-003/chat-003").then((module) => module.Chat003),
-  ),
 } satisfies PreviewMap

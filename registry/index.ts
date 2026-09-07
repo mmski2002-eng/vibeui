@@ -176,8 +176,6 @@ export type CategoryCard = {
   label: string
   count: number
   coverSlug: string | undefined
-  /** По чему ищет поле поиска: подпись, slug и заголовки items внутри. */
-  search: string
 }
 
 export function getCategoryCards(
@@ -203,13 +201,6 @@ export function getCategoryCards(
         label: category.label,
         count: category.count,
         coverSlug: cover?.item.name,
-        search: [
-          category.label,
-          category.slug,
-          ...items.map((entry) => entry.item.title ?? entry.item.name),
-        ]
-          .join(" ")
-          .toLowerCase(),
       }
     })
 }

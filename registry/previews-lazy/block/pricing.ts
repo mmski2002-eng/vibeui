@@ -54,9 +54,6 @@ export const PREVIEWS = {
   "pricing-016": dynamic(() =>
     import("@/registry/blocks/pricing/pricing-016/pricing-016").then((module) => module.Pricing016),
   ),
-  "pricing-017": dynamic(() =>
-    import("@/registry/blocks/pricing/pricing-017/pricing-017").then((module) => module.Pricing017),
-  ),
   "pricing-018": dynamic(() =>
     import("@/registry/blocks/pricing/pricing-018/pricing-018").then((module) => module.Pricing018),
   ),

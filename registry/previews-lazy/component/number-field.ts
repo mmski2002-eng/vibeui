@@ -30,4 +30,7 @@ export const PREVIEWS = {
   "number-008": dynamic(() =>
     import("@/registry/components/number-field/number-008/number-008").then((module) => module.Number008),
   ),
+  "number-009": dynamic(() =>
+    import("@/registry/components/number-field/number-009/number-009").then((module) => module.Number009),
+  ),
 } satisfies PreviewMap

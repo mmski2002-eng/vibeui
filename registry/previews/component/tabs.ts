@@ -30,4 +30,6 @@ export const PREVIEWS = {
     import("@/registry/components/tabs/tabs-011/tabs-011").then((module) => module.Tabs011),
   "tabs-013": () =>
     import("@/registry/components/tabs/tabs-013/tabs-013").then((module) => module.Tabs013),
+  "tabs-015": () =>
+    import("@/registry/components/tabs/tabs-015/tabs-015").then((module) => module.Tabs015),
 } satisfies PreviewLoaderMap

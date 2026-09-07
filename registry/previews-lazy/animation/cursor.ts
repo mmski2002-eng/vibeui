@@ -6,7 +6,7 @@ import dynamic from "next/dynamic"
 import type { PreviewMap } from "@/registry/preview-types"
 
 export const PREVIEWS = {
-  "devices-002": dynamic(() =>
-    import("@/registry/animations/devices/devices-002/devices-002").then((module) => module.Devices002),
+  "cursor-001": dynamic(() =>
+    import("@/registry/animations/cursor/cursor-001/cursor-001").then((module) => module.Cursor001),
   ),
 } satisfies PreviewMap

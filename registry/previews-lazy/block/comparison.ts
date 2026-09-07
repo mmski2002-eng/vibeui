@@ -15,4 +15,10 @@ export const PREVIEWS = {
   "comparison-003": dynamic(() =>
     import("@/registry/blocks/comparison/comparison-003/comparison-003").then((module) => module.Comparison003),
   ),
+  "comparison-004": dynamic(() =>
+    import("@/registry/blocks/comparison/comparison-004/comparison-004").then((module) => module.Comparison004),
+  ),
+  "comparison-005": dynamic(() =>
+    import("@/registry/blocks/comparison/comparison-005/comparison-005").then((module) => module.Comparison005),
+  ),
 } satisfies PreviewMap

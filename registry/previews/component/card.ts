@@ -48,4 +48,6 @@ export const PREVIEWS = {
     import("@/registry/components/card/card-021/card-021").then((module) => module.Card021),
   "card-022": () =>
     import("@/registry/components/card/card-022/card-022").then((module) => module.Card022),
+  "card-023": () =>
+    import("@/registry/components/card/card-023/card-023").then((module) => module.Card023),
 } satisfies PreviewLoaderMap

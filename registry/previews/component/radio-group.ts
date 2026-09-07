@@ -42,4 +42,6 @@ export const PREVIEWS = {
     import("@/registry/components/radio-group/radio-018/radio-018").then((module) => module.Radio018),
   "radio-019": () =>
     import("@/registry/components/radio-group/radio-019/radio-019").then((module) => module.Radio019),
+  "radio-020": () =>
+    import("@/registry/components/radio-group/radio-020/radio-020").then((module) => module.Radio020),
 } satisfies PreviewLoaderMap

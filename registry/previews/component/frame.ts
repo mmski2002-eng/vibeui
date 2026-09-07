@@ -44,4 +44,6 @@ export const PREVIEWS = {
     import("@/registry/components/frame/frame-019/frame-019").then((module) => module.Frame019),
   "frame-020": () =>
     import("@/registry/components/frame/frame-020/frame-020").then((module) => module.Frame020),
+  "frame-021": () =>
+    import("@/registry/components/frame/frame-021/frame-021").then((module) => module.Frame021),
 } satisfies PreviewLoaderMap

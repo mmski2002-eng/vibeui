@@ -4,8 +4,6 @@
 import type { PreviewLoaderMap } from "@/registry/preview-types"
 
 export const PREVIEWS = {
-  "sidebar-001": () =>
-    import("@/registry/components/sidebar/sidebar-001/sidebar-001").then((module) => module.Sidebar001),
   "sidebar-002": () =>
     import("@/registry/components/sidebar/sidebar-002/sidebar-002").then((module) => module.Sidebar002),
   "sidebar-003": () =>

@@ -34,4 +34,6 @@ export const PREVIEWS = {
     import("@/registry/components/switch/switch-014/switch-014").then((module) => module.Switch014),
   "switch-015": () =>
     import("@/registry/components/switch/switch-015/switch-015").then((module) => module.Switch015),
+  "switch-016": () =>
+    import("@/registry/components/switch/switch-016/switch-016").then((module) => module.Switch016),
 } satisfies PreviewLoaderMap

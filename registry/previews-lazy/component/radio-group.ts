@@ -63,4 +63,7 @@ export const PREVIEWS = {
   "radio-019": dynamic(() =>
     import("@/registry/components/radio-group/radio-019/radio-019").then((module) => module.Radio019),
   ),
+  "radio-020": dynamic(() =>
+    import("@/registry/components/radio-group/radio-020/radio-020").then((module) => module.Radio020),
+  ),
 } satisfies PreviewMap

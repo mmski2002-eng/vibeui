@@ -66,4 +66,6 @@ export const PREVIEWS = {
     import("@/registry/components/input/input-031/input-031").then((module) => module.Input031),
   "input-032": () =>
     import("@/registry/components/input/input-032/input-032").then((module) => module.Input032),
+  "input-033": () =>
+    import("@/registry/components/input/input-033/input-033").then((module) => module.Input033),
 } satisfies PreviewLoaderMap

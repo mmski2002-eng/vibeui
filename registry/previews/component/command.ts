@@ -32,4 +32,6 @@ export const PREVIEWS = {
     import("@/registry/components/command/command-013/command-013").then((module) => module.Command013),
   "command-014": () =>
     import("@/registry/components/command/command-014/command-014").then((module) => module.Command014),
+  "command-015": () =>
+    import("@/registry/components/command/command-015/command-015").then((module) => module.Command015),
 } satisfies PreviewLoaderMap

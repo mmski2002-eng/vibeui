@@ -216,4 +216,22 @@ export const PREVIEWS = {
   "button-070": dynamic(() =>
     import("@/registry/components/button/button-070/button-070").then((module) => module.Button070),
   ),
+  "button-071": dynamic(() =>
+    import("@/registry/components/button/button-071/button-071").then((module) => module.Button071),
+  ),
+  "button-072": dynamic(() =>
+    import("@/registry/components/button/button-072/button-072").then((module) => module.Button072),
+  ),
+  "button-073": dynamic(() =>
+    import("@/registry/components/button/button-073/button-073").then((module) => module.Button073),
+  ),
+  "button-074": dynamic(() =>
+    import("@/registry/components/button/button-074/button-074").then((module) => module.Button074),
+  ),
+  "button-075": dynamic(() =>
+    import("@/registry/components/button/button-075/button-075").then((module) => module.Button075),
+  ),
+  "button-076": dynamic(() =>
+    import("@/registry/components/button/button-076/button-076").then((module) => module.Button076),
+  ),
 } satisfies PreviewMap

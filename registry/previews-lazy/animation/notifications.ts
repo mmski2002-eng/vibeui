@@ -12,7 +12,4 @@ export const PREVIEWS = {
   "notifications-002": dynamic(() =>
     import("@/registry/animations/notifications/notifications-002/notifications-002").then((module) => module.Notifications002),
   ),
-  "notifications-003": dynamic(() =>
-    import("@/registry/animations/notifications/notifications-003/notifications-003").then((module) => module.Notifications003),
-  ),
 } satisfies PreviewMap
