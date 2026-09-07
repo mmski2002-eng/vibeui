@@ -1,0 +1,147 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "button-anim-001",
+      "type": "registry:component",
+      "title": "Шнур-выключатель темы",
+      "description": "Шнур с ручкой у края экрана: тянешь вниз и отпускаешь — свет переключается, шнур отпружинивает и качается затухающим маятником.",
+      "categories": ["button"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-anim-001/button-anim-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-anim-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-button-anim-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Шнур — SVG-линия с пунктиром, ручка — отдельный узел с точкой вращения у крепления; наклон считается как арктангенс горизонтального смещения к длине шнура, поэтому ручка всегда висит по натянутой нити. Тянется указателем через pointer-события с захватом, за упорами ход остаётся, но вчетверо мягче. Отпускание переключает тему, если ручку увели ниже сорока пикселей, дальше пятидесяти по диагонали или дёрнули быстрее 180 пикселей в секунду. Возврат — пружина, посчитанная в requestAnimationFrame (жёсткость 440, затухание 11, масса 0.75 по вертикали; 280, 8, 0.85 по горизонтали); щелчок мышью проигрывает ту же пружину и добавляет затухающее качание по ключевым кадрам. Звук щелчка синтезируется двумя осцилляторами WebAudio, без файлов. При prefers-reduced-motion шнур не анимируется: нажатие сразу переключает тему.",
+      "meta": {
+        "tags": [
+          "theme",
+          "switch",
+          "toggle",
+          "pull",
+          "drag",
+          "spring",
+          "dark-mode",
+          "animated"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "target": "self",
+            "sound": false
+          }
+        },
+        "ai": {
+          "export": "ButtonAnim001",
+          "usage": "<ButtonAnim001 target=\"document\" />",
+          "summary": "Шнур-выключатель темы: ручка на пунктирном шнуре, которую тянут указателем. Отпускание ниже порога переключает тему (класс dark на html плюс запись в localStorage), шнур возвращается пружиной и качается. Наклон считается по натянутой нити, ход за упорами мягче вчетверо, щелчок синтезируется WebAudio. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-button-anim-001-* — не подменяйте её токенами вашей темы",
+            "пороги срабатывания: сорок пикселей вниз, пятьдесят по диагонали или рывок быстрее 180 пикселей в секунду — иначе шнур переключает свет от случайного касания",
+            "пружины возврата и точку вращения у крепления: без них ручка возвращается по прямой и перестаёт быть шнуром",
+            "pointer-события с захватом: мышь, палец и перо ведут ручку одинаково, а курсор не теряется за краем блока",
+            "поведение при prefers-reduced-motion: анимации нет, нажатие переключает тему сразу"
+          ],
+          "adapt": [
+            "target — что переключается: класс dark на документе или только сам блок",
+            "sound — щелчок выключателя, его можно выключить",
+            "darkLabel и lightLabel — подписи подсказки и aria-label ручки",
+            "размер сцены и цвета ручки, шнура и крепления"
+          ],
+          "notes": [
+            "Компонент клиентский: ему нужны pointer-события и доступ к классу документа, поэтому директива \"use client\" обязательна.",
+            "target=\"document\" переключает тему всего проекта и пишет её в localStorage под ключом theme; target=\"self\" меняет только сам блок — так он показан на витрине.",
+            "Компонент рассчитан на угол экрана: у него своя сцена 240×280, которую ставят в fixed-обёртку проекта.",
+            "Звук браузер разрешает после первого жеста человека — до этого щелчок молча пропускается."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "target",
+            "label": "Что переключает",
+            "type": "select",
+            "default": "self",
+            "options": ["self", "document"]
+          },
+          {
+            "prop": "sound",
+            "label": "Щелчок",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "darkLabel",
+            "label": "Подпись тёмной",
+            "type": "text",
+            "default": "Тёмная",
+            "maxLength": 16
+          },
+          {
+            "prop": "lightLabel",
+            "label": "Подпись светлой",
+            "type": "text",
+            "default": "Светлая",
+            "maxLength": 16
+          }
+        ],
+        "cardControls": ["target", "sound"],
+        "i18n": {
+          "en": {
+            "title": "Pull cord theme switch",
+            "description": "A cord with a grip at the edge of the screen: pull it down and let go — the light switches, the cord springs back and swings.",
+            "docs": "Self-contained: one file, zero dependencies, palette in local --vibeui-button-anim-001-* variables. Picks up the theme through light-dark() plus a rule for the .dark class. The cord is a dashed SVG line, the grip a separate node with its transform origin at the mount; the tilt is the arctangent of horizontal offset over cord length, so the grip always hangs along the taut line. It is dragged with pointer events and capture; past the limits the travel continues but four times stiffer. Releasing switches the theme if the grip went below forty pixels, farther than fifty diagonally, or was flicked faster than 180 pixels per second. The return is a spring stepped in requestAnimationFrame (stiffness 440, damping 11, mass 0.75 vertically; 280, 8, 0.85 horizontally); a click plays the same spring plus a damped swing on keyframes. The click sound is synthesised by two WebAudio oscillators, with no files. Under prefers-reduced-motion the cord does not animate: a press switches the theme at once.",
+            "ai": {
+              "summary": "A pull cord theme switch: a grip on a dashed cord dragged with the pointer. Releasing past the threshold switches the theme (the dark class on html plus a localStorage entry), the cord springs back and swings. The tilt follows the taut line, travel past the limits is four times stiffer, the click is synthesised with WebAudio. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-button-anim-001-* palette — do not swap it for your theme tokens",
+                "the trigger thresholds: forty pixels down, fifty diagonally or a flick faster than 180 pixels per second — otherwise a stray touch flips the light",
+                "the return springs and the transform origin at the mount: without them the grip returns in a straight line and stops reading as a cord",
+                "pointer events with capture: mouse, finger and pen drive the grip the same way and the pointer is not lost outside the block",
+                "the prefers-reduced-motion behaviour: no animation, a press switches the theme immediately"
+              ],
+              "adapt": [
+                "target — what gets switched: the dark class on the document or the block itself",
+                "sound — the switch click, which can be turned off",
+                "darkLabel and lightLabel — the hint text and the grip's aria-label",
+                "the size of the stage and the colours of the grip, cord and mount"
+              ],
+              "notes": [
+                "The component is client-side: it needs pointer events and access to the document class, so the \"use client\" directive is required.",
+                "target=\"document\" switches the theme of the whole project and stores it in localStorage under the theme key; target=\"self\" changes only the block — that is how it is shown in the catalog.",
+                "The component is meant for a screen corner: it has its own 240×280 stage that a project places in a fixed wrapper.",
+                "Browsers allow sound only after the first human gesture — until then the click is silently skipped."
+              ],
+              "usage": "<ButtonAnim001 target=\"document\" />"
+            },
+            "controls": {
+              "target": {
+                "label": "What it switches"
+              },
+              "sound": {
+                "label": "Click sound"
+              },
+              "darkLabel": {
+                "label": "Dark label",
+                "default": "Dark"
+              },
+              "lightLabel": {
+                "label": "Light label",
+                "default": "Light"
+              }
+            },
+            "preview": {
+              "props": {
+                "darkLabel": "Dark",
+                "lightLabel": "Light"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

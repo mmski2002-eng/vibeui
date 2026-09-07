@@ -1,0 +1,173 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "cursor-001",
+      "type": "registry:component",
+      "title": "ASCII-жидкость за курсором",
+      "description": "Поле ASCII-символов, в котором за курсором расходится облако: под символами считается настоящая жидкость — вливание, адвекция, давление, — а её плотность выбирает символ.",
+      "categories": ["cursor"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cursor-001/cursor-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cursor-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-cursor-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Внутри — симуляция жидкости на WebGL по схеме stable fluids: вливание скорости и краски в точку курсора, адвекция, дивергенция, 14 итераций Якоби для давления, вычитание градиента, адвекция краски. Поля живут в шести текстурах 180×180 и от размера блока не зависят; знакоместо (cellSize) задаёт только крупность «зерна». Скорость пакуется в RGBA-текстуру парой enc/dec, поэтому float-расширения WebGL не нужны и компонент работает на обычном webgl1. Символ выбирается по плотности краски из атласа глифов, нарисованного один раз на 2D-канве. Цвета символов и фона снимаются с пустых узлов-пробников: шейдеру нужны числа, а в CSS-переменных стоит light-dark(). Пока курсор снаружи, поле шевелит себя само (animate) — карточка в каталоге не стоит мёртвой. При prefers-reduced-motion симуляция не считается и мерцание выключено.",
+      "meta": {
+        "tags": [
+          "cursor",
+          "ascii",
+          "fluid",
+          "webgl",
+          "shader",
+          "trail",
+          "pointer",
+          "interactive",
+          "animated"
+        ],
+        "ai": {
+          "export": "Cursor001",
+          "usage": "<Cursor001 cellSize={12} dissipation={0.05} brush={0.55} />",
+          "summary": "Поле ASCII-символов, за курсором в котором расходится облако. Под символами идёт симуляция жидкости на WebGL (stable fluids: splat, адвекция, дивергенция, давление по Якоби, градиент), плотность краски выбирает символ из атласа глифов. Шесть текстур 180×180, webgl1 без float-расширений, один файл, ноль зависимостей. Пока курсор снаружи, поле дрейфует само; при prefers-reduced-motion симуляция останавливается.",
+          "preserve": [
+            "локальную палитру --vibeui-cursor-001-* — не подменяйте её токенами вашей темы (bg-background, text-foreground и подобными)",
+            "порядок шагов симуляции в кадре: splat → адвекция скорости → дивергенция → итерации давления → вычитание градиента → адвекция краски; перестановка ломает жидкость",
+            "упаковку скорости и давления парой enc/dec в диапазон 0…1 — без неё нужны float-текстуры, которых на части устройств нет",
+            "выбор символа по плотности из атласа глифов и сам атлас, который рисуется один раз на 2D-канве",
+            "чтение цветов с узлов-пробников [data-part=\"ink\"] и [data-part=\"paper\"]: шейдеру нужны числа, а в переменных стоит light-dark()",
+            "поведение при prefers-reduced-motion: кадры симуляции не считаются, мерцание выключено",
+            "слушателя pointermove на окне: курсор, влетающий в блок сбоку, должен втащить след с той же скоростью"
+          ],
+          "adapt": [
+            "color и backgroundColor — цвета символов и фона, если не устраивает палитра компонента",
+            "cellSize — крупность знакоместа, то есть «зерно» ASCII",
+            "force, dissipation, brush — сила вливания, длина следа и радиус кисти",
+            "charset — свой набор символов, от разреженного к плотному",
+            "animate и interactive — дрейф в покое и реакцию на курсор",
+            "пропорцию блока (aspect-ratio 16/9), радиус скругления и рамку"
+          ],
+          "notes": [
+            "Компонент клиентский: ему нужны WebGL и события указателя, поэтому директива \"use client\" обязательна.",
+            "Если контекст webgl получить не удалось, компонент просто остаётся пустым полем нужного размера — падения нет.",
+            "На тач-экранах облако рисуется движением пальца по полю; прокрутка страницы сохраняется (touch-action: pan-y)."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "color",
+            "label": "Цвет символов",
+            "type": "color",
+            "default": "#121212"
+          },
+          {
+            "prop": "backgroundColor",
+            "label": "Цвет фона",
+            "type": "color",
+            "default": "#ffffff"
+          },
+          {
+            "prop": "cellSize",
+            "label": "Знакоместо",
+            "type": "number",
+            "default": 12,
+            "min": 7,
+            "max": 24
+          },
+          {
+            "prop": "dissipation",
+            "label": "Затухание следа",
+            "type": "number",
+            "default": 0.05,
+            "min": 0.02,
+            "max": 0.22
+          },
+          {
+            "prop": "brush",
+            "label": "Радиус кисти",
+            "type": "number",
+            "default": 0.55,
+            "min": 0.05,
+            "max": 1
+          },
+          {
+            "prop": "force",
+            "label": "Сила вливания",
+            "type": "number",
+            "default": 1,
+            "min": 0.2,
+            "max": 2
+          },
+          {
+            "prop": "animate",
+            "label": "Дрейф в покое",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "charset",
+            "label": "Набор символов",
+            "type": "select",
+            "default": " .'`^\",:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$",
+            "options": [
+              " .'`^\",:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$",
+              " .:-=+*#%@",
+              " ·∙•●",
+              " ░▒▓█"
+            ]
+          }
+        ],
+        "cardControls": ["color", "cellSize", "charset"],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "ASCII fluid cursor",
+            "description": "A field of ASCII characters where a cloud spreads behind the cursor: a real fluid runs underneath — splat, advection, pressure — and its density picks the character.",
+            "docs": "Self-contained: one file, zero dependencies, palette in local --vibeui-cursor-001-* variables. Picks up the theme through light-dark() plus a rule for the .dark class. Inside runs a WebGL fluid simulation following stable fluids: velocity and dye splats at the cursor, advection, divergence, 14 Jacobi pressure iterations, gradient subtraction, dye advection. The fields live in six 180×180 textures and do not depend on the block size; cellSize only sets how coarse the ASCII grain is. Velocity is packed into an RGBA texture with an enc/dec pair, so no float extensions are needed and plain webgl1 is enough. The character is picked by dye density from a glyph atlas drawn once on a 2D canvas. Ink and paper colours are read from empty probe nodes: the shader needs numbers, while the CSS variables hold light-dark(). While the cursor is outside, the field stirs itself (animate) so the catalog card is never dead. Under prefers-reduced-motion the simulation is not stepped and the flicker is off.",
+            "ai": {
+              "summary": "A field of ASCII characters with a cloud spreading behind the cursor. A WebGL fluid runs underneath (stable fluids: splat, advection, divergence, Jacobi pressure, gradient), and dye density picks the glyph from an atlas. Six 180×180 textures, webgl1 with no float extensions, one file, zero dependencies. The field drifts on its own while the cursor is away and stops under prefers-reduced-motion.",
+              "preserve": [
+                "the local --vibeui-cursor-001-* palette — do not swap it for your theme tokens (bg-background, text-foreground and the like)",
+                "the order of simulation steps per frame: splat → velocity advection → divergence → pressure iterations → gradient subtraction → dye advection; reordering breaks the fluid",
+                "packing velocity and pressure into 0…1 with the enc/dec pair — without it you need float textures, which some devices lack",
+                "picking the character by density from the glyph atlas, and the atlas itself, drawn once on a 2D canvas",
+                "reading colours from the [data-part=\"ink\"] and [data-part=\"paper\"] probe nodes: the shader needs numbers, the variables hold light-dark()",
+                "the prefers-reduced-motion behaviour: no simulation steps, no flicker",
+                "the pointermove listener on the window: a cursor entering from the side must drag the trail in at the same speed"
+              ],
+              "adapt": [
+                "color and backgroundColor — ink and paper, if the component palette does not fit",
+                "cellSize — the size of one character cell, that is the ASCII grain",
+                "force, dissipation, brush — splat strength, trail length and brush radius",
+                "charset — your own ramp of characters, sparse to dense",
+                "animate and interactive — idle drift and cursor reaction",
+                "the block proportion (aspect-ratio 16/9), border radius and border"
+              ],
+              "notes": [
+                "The component is client-side: it needs WebGL and pointer events, so the \"use client\" directive is required.",
+                "If the webgl context cannot be created, the component simply stays an empty field of the right size — nothing throws.",
+                "On touch screens the cloud is drawn by dragging a finger across the field; page scrolling still works (touch-action: pan-y)."
+              ],
+              "usage": "<Cursor001 cellSize={12} dissipation={0.05} brush={0.55} />"
+            },
+            "controls": {
+              "color": { "label": "Ink colour" },
+              "backgroundColor": { "label": "Paper colour" },
+              "cellSize": { "label": "Character cell" },
+              "dissipation": { "label": "Trail decay" },
+              "brush": { "label": "Brush radius" },
+              "force": { "label": "Splat strength" },
+              "animate": { "label": "Idle drift" },
+              "charset": { "label": "Character ramp" }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

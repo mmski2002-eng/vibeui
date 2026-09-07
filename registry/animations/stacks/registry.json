@@ -1,0 +1,1725 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "stack-001",
+      "type": "registry:component",
+      "title": "Веер из пяти",
+      "description": "Пять карточек с фото лежат стопкой и на наведении раскрываются ровной дугой: крайние опускаются, центральная приподнимается и чуть растёт.",
+      "categories": ["stacks"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stack-001/stack-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stack-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-stack-001-*. Тему берёт из окружения через light-dark() плюс строка для класса .dark. Позы карточек считаются из пропов и кладутся в CSS-переменные, а :hover / :focus-visible / data-open переключают transform — JS-состояния нет. Фото кладутся <img> внутрь карточки с object-fit:cover; без фото карточка — брендовая плашка с номером. Кривая — linear() со спружиненным перелётом, при prefers-reduced-motion переход отключён. Параметры дуги — angle, gap, lift — задаются пропами.",
+      "meta": {
+        "tags": ["cards", "stack", "fan", "hover", "photos", "gallery"],
+        "ai": {
+          "export": "Stack001",
+          "usage": "<Stack001 images={[\"/photos/1.jpg\", \"/photos/2.jpg\", \"/photos/3.jpg\"]} />",
+          "summary": "Стопка из пяти фото-карточек, раскрывающаяся дугой на наведении или по open. Ноль зависимостей, один файл, без JS-состояния.",
+          "preserve": [
+            "локальную палитру --vibeui-stack-001-* — не подменять её токенами темы",
+            "раскрытие на CSS через :hover, :focus-visible и data-open — без JS-состояния",
+            "пружинную кривую linear() с лёгким перелётом — она и есть характер движения",
+            "порядок слоёв и transform-origin карточек — от них зависит форма веера",
+            "отключение перехода при prefers-reduced-motion"
+          ],
+          "adapt": [
+            "набор фото через images — свои снимки или обложки, по кругу при нехватке",
+            "акцент через accent — цвет плашек без фото, номера и фокус-кольца",
+            "подпись label для скринридера",
+            "форму дуги через angle, gap и lift",
+            "режим open для тача и витрины"
+          ],
+          "notes": [
+            "images подставляются по кругу: трёх фото хватит на пять карточек",
+            "open={true} держит веер раскрытым там, где нет наведения — тач, витрина"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "open",
+            "label": "Раскрыть",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "angle",
+            "label": "Угол",
+            "type": "number",
+            "default": 30,
+            "min": 0,
+            "max": 90
+          },
+          {
+            "prop": "gap",
+            "label": "Разлёт",
+            "type": "number",
+            "default": 70,
+            "min": 0,
+            "max": 200
+          },
+          {
+            "prop": "lift",
+            "label": "Просадка",
+            "type": "number",
+            "default": 10,
+            "min": 0,
+            "max": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["open", "angle", "gap", "lift"],
+        "preview": {
+          "props": {
+            "images": [
+              "/demo/cards/portrait-01.webp",
+              "/demo/cards/portrait-02.webp",
+              "/demo/cards/portrait-03.webp",
+              "/demo/cards/portrait-04.webp",
+              "/demo/cards/portrait-05.webp"
+            ]
+          }
+        },
+        "i18n": {
+          "en": {
+            "title": "Arc fan (5 cards)",
+            "description": "Five photo cards sit in a stack and fan out into a neat arc on hover: the outer ones drop, the center one lifts and grows slightly.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-stack-001-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Card poses are computed from props into CSS variables, and :hover / :focus-visible / data-open switch the transform — there is no JS state. Photos are <img> elements inside each card with object-fit:cover; without photos a card is a branded plate with a number. The curve is a linear() spring with a slight overshoot, and the transition is removed under prefers-reduced-motion. The arc parameters — angle, gap, lift — are props.",
+            "ai": {
+              "summary": "A stack of five photo cards that fans into an arc on hover or via open. Zero dependencies, one file, no JS state.",
+              "preserve": [
+                "the local --vibeui-stack-001-* palette — do not swap it for your theme tokens",
+                "the CSS-only reveal via :hover, :focus-visible and data-open — no JS state",
+                "the linear() spring curve with its slight overshoot — that is the motion's character",
+                "the card stacking order and transform-origin — they define the fan's shape",
+                "the transition removal under prefers-reduced-motion"
+              ],
+              "adapt": [
+                "the photo set via images — your own shots or covers, cycled when short",
+                "the accent via accent — the color of photo-less plates, numbers and the focus ring",
+                "the label prop for screen readers",
+                "the arc shape via angle, gap and lift",
+                "the open mode for touch and showcase"
+              ],
+              "notes": [
+                "images are cycled: three photos are enough for five cards",
+                "open={true} keeps the fan open where hover does not exist — touch, showcase"
+              ],
+              "usage": "<Stack001 images={[\"/photos/1.jpg\", \"/photos/2.jpg\", \"/photos/3.jpg\"]} />"
+            },
+            "controls": {
+              "open": {
+                "label": "Open"
+              },
+              "angle": {
+                "label": "Angle"
+              },
+              "gap": {
+                "label": "Spread"
+              },
+              "lift": {
+                "label": "Drop"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "A stack of five photos",
+                "images": [
+                  "/demo/cards/portrait-01.webp",
+                  "/demo/cards/portrait-02.webp",
+                  "/demo/cards/portrait-03.webp",
+                  "/demo/cards/portrait-04.webp",
+                  "/demo/cards/portrait-05.webp"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "stack-002",
+      "type": "registry:component",
+      "title": "Веер из семи",
+      "description": "Семь фото-карточек раскрываются широким веером: дуга круче и шире, чем у пяти, крайние карточки заметно опускаются, как в развёрнутой колоде.",
+      "categories": ["stacks"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stack-002/stack-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stack-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-stack-002-*. Тему берёт из окружения через light-dark() плюс строка для класса .dark. Позы карточек считаются из пропов и кладутся в CSS-переменные, а :hover / :focus-visible / data-open переключают transform — JS-состояния нет. Фото кладутся <img> внутрь карточки с object-fit:cover; без фото карточка — брендовая плашка с номером. Кривая — linear() со спружиненным перелётом, при prefers-reduced-motion переход отключён. Семь слоёв, центр — четвёртая карточка; параметры дуги — angle, gap, lift.",
+      "meta": {
+        "tags": ["cards", "stack", "fan", "hover", "photos", "gallery"],
+        "ai": {
+          "export": "Stack002",
+          "usage": "<Stack002 images={[\"/photos/1.jpg\", \"/photos/2.jpg\", \"/photos/3.jpg\"]} />",
+          "summary": "Стопка из семи фото-карточек с широким веером на наведении или по open. Ноль зависимостей, один файл, без JS-состояния.",
+          "preserve": [
+            "локальную палитру --vibeui-stack-002-* — не подменять её токенами темы",
+            "раскрытие на CSS через :hover, :focus-visible и data-open — без JS-состояния",
+            "пружинную кривую linear() с лёгким перелётом — она и есть характер движения",
+            "порядок слоёв и transform-origin карточек — от них зависит форма веера",
+            "отключение перехода при prefers-reduced-motion"
+          ],
+          "adapt": [
+            "набор фото через images — свои снимки или обложки, по кругу при нехватке",
+            "акцент через accent — цвет плашек без фото, номера и фокус-кольца",
+            "подпись label для скринридера",
+            "форму дуги через angle, gap и lift",
+            "режим open для тача и витрины"
+          ],
+          "notes": [
+            "images подставляются по кругу: трёх фото хватит на пять карточек",
+            "open={true} держит веер раскрытым там, где нет наведения — тач, витрина"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "open",
+            "label": "Раскрыть",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "angle",
+            "label": "Угол",
+            "type": "number",
+            "default": 45,
+            "min": 0,
+            "max": 120
+          },
+          {
+            "prop": "gap",
+            "label": "Разлёт",
+            "type": "number",
+            "default": 110,
+            "min": 0,
+            "max": 260
+          },
+          {
+            "prop": "lift",
+            "label": "Просадка",
+            "type": "number",
+            "default": 30,
+            "min": 0,
+            "max": 80
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["open", "angle", "gap", "lift"],
+        "preview": {
+          "props": {
+            "images": [
+              "/demo/cards/portrait-01.webp",
+              "/demo/cards/portrait-02.webp",
+              "/demo/cards/portrait-03.webp",
+              "/demo/cards/portrait-04.webp",
+              "/demo/cards/portrait-05.webp",
+              "/demo/cards/portrait-06.webp",
+              "/demo/cards/portrait-07.webp"
+            ]
+          }
+        },
+        "i18n": {
+          "en": {
+            "title": "Arc fan (7 cards)",
+            "description": "Seven photo cards open into a wide fan: the arc is steeper and broader than the five-card one, and the outer cards drop like a dealt deck.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-stack-002-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Card poses are computed from props into CSS variables, and :hover / :focus-visible / data-open switch the transform — there is no JS state. Photos are <img> elements inside each card with object-fit:cover; without photos a card is a branded plate with a number. The curve is a linear() spring with a slight overshoot, and the transition is removed under prefers-reduced-motion. Seven layers with the fourth card at the center; arc parameters are angle, gap, lift.",
+            "ai": {
+              "summary": "A stack of seven photo cards with a wide fan on hover or via open. Zero dependencies, one file, no JS state.",
+              "preserve": [
+                "the local --vibeui-stack-002-* palette — do not swap it for your theme tokens",
+                "the CSS-only reveal via :hover, :focus-visible and data-open — no JS state",
+                "the linear() spring curve with its slight overshoot — that is the motion's character",
+                "the card stacking order and transform-origin — they define the fan's shape",
+                "the transition removal under prefers-reduced-motion"
+              ],
+              "adapt": [
+                "the photo set via images — your own shots or covers, cycled when short",
+                "the accent via accent — the color of photo-less plates, numbers and the focus ring",
+                "the label prop for screen readers",
+                "the arc shape via angle, gap and lift",
+                "the open mode for touch and showcase"
+              ],
+              "notes": [
+                "images are cycled: three photos are enough for five cards",
+                "open={true} keeps the fan open where hover does not exist — touch, showcase"
+              ],
+              "usage": "<Stack002 images={[\"/photos/1.jpg\", \"/photos/2.jpg\", \"/photos/3.jpg\"]} />"
+            },
+            "controls": {
+              "open": {
+                "label": "Open"
+              },
+              "angle": {
+                "label": "Angle"
+              },
+              "gap": {
+                "label": "Spread"
+              },
+              "lift": {
+                "label": "Drop"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "A stack of seven photos",
+                "images": [
+                  "/demo/cards/portrait-01.webp",
+                  "/demo/cards/portrait-02.webp",
+                  "/demo/cards/portrait-03.webp",
+                  "/demo/cards/portrait-04.webp",
+                  "/demo/cards/portrait-05.webp",
+                  "/demo/cards/portrait-06.webp",
+                  "/demo/cards/portrait-07.webp"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "stack-003",
+      "type": "registry:component",
+      "title": "Широкая дуга",
+      "description": "Пять фото-карточек разъезжаются далеко в стороны по пологой дуге с небольшим поворотом — раскладка на широком столе, а не тесный веер.",
+      "categories": ["stacks"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stack-003/stack-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stack-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-stack-003-*. Тему берёт из окружения через light-dark() плюс строка для класса .dark. Позы карточек считаются из пропов и кладутся в CSS-переменные, а :hover / :focus-visible / data-open переключают transform — JS-состояния нет. Фото кладутся <img> внутрь карточки с object-fit:cover; без фото карточка — брендовая плашка с номером. Кривая — linear() со спружиненным перелётом, при prefers-reduced-motion переход отключён. Отличие от веера — большой gap при малом angle; всё это пропы.",
+      "meta": {
+        "tags": ["cards", "stack", "fan", "hover", "photos", "gallery"],
+        "ai": {
+          "export": "Stack003",
+          "usage": "<Stack003 images={[\"/photos/1.jpg\", \"/photos/2.jpg\", \"/photos/3.jpg\"]} />",
+          "summary": "Стопка из пяти фото-карточек, раскладывающаяся широкой пологой дугой. Ноль зависимостей, один файл, без JS-состояния.",
+          "preserve": [
+            "локальную палитру --vibeui-stack-003-* — не подменять её токенами темы",
+            "раскрытие на CSS через :hover, :focus-visible и data-open — без JS-состояния",
+            "пружинную кривую linear() с лёгким перелётом — она и есть характер движения",
+            "порядок слоёв и transform-origin карточек — от них зависит форма веера",
+            "отключение перехода при prefers-reduced-motion"
+          ],
+          "adapt": [
+            "набор фото через images — свои снимки или обложки, по кругу при нехватке",
+            "акцент через accent — цвет плашек без фото, номера и фокус-кольца",
+            "подпись label для скринридера",
+            "ширину и пологость через gap, angle и lift",
+            "режим open для тача и витрины"
+          ],
+          "notes": [
+            "images подставляются по кругу: трёх фото хватит на пять карточек",
+            "open={true} держит веер раскрытым там, где нет наведения — тач, витрина"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "open",
+            "label": "Раскрыть",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "angle",
+            "label": "Угол",
+            "type": "number",
+            "default": 15,
+            "min": 0,
+            "max": 60
+          },
+          {
+            "prop": "gap",
+            "label": "Разлёт",
+            "type": "number",
+            "default": 140,
+            "min": 0,
+            "max": 320
+          },
+          {
+            "prop": "lift",
+            "label": "Просадка",
+            "type": "number",
+            "default": 20,
+            "min": 0,
+            "max": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["open", "angle", "gap", "lift"],
+        "preview": {
+          "props": {
+            "images": [
+              "/demo/cards/portrait-01.webp",
+              "/demo/cards/portrait-02.webp",
+              "/demo/cards/portrait-03.webp",
+              "/demo/cards/portrait-04.webp",
+              "/demo/cards/portrait-05.webp"
+            ]
+          }
+        },
+        "i18n": {
+          "en": {
+            "title": "Long arc (5 cards)",
+            "description": "Five photo cards slide far apart along a shallow arc with a slight rotation — a wide tabletop spread rather than a tight fan.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-stack-003-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Card poses are computed from props into CSS variables, and :hover / :focus-visible / data-open switch the transform — there is no JS state. Photos are <img> elements inside each card with object-fit:cover; without photos a card is a branded plate with a number. The curve is a linear() spring with a slight overshoot, and the transition is removed under prefers-reduced-motion. It differs from the fan by a large gap with a small angle; all of them are props.",
+            "ai": {
+              "summary": "A stack of five photo cards spreading into a wide, shallow arc. Zero dependencies, one file, no JS state.",
+              "preserve": [
+                "the local --vibeui-stack-003-* palette — do not swap it for your theme tokens",
+                "the CSS-only reveal via :hover, :focus-visible and data-open — no JS state",
+                "the linear() spring curve with its slight overshoot — that is the motion's character",
+                "the card stacking order and transform-origin — they define the fan's shape",
+                "the transition removal under prefers-reduced-motion"
+              ],
+              "adapt": [
+                "the photo set via images — your own shots or covers, cycled when short",
+                "the accent via accent — the color of photo-less plates, numbers and the focus ring",
+                "the label prop for screen readers",
+                "the width and flatness via gap, angle and lift",
+                "the open mode for touch and showcase"
+              ],
+              "notes": [
+                "images are cycled: three photos are enough for five cards",
+                "open={true} keeps the fan open where hover does not exist — touch, showcase"
+              ],
+              "usage": "<Stack003 images={[\"/photos/1.jpg\", \"/photos/2.jpg\", \"/photos/3.jpg\"]} />"
+            },
+            "controls": {
+              "open": {
+                "label": "Open"
+              },
+              "angle": {
+                "label": "Angle"
+              },
+              "gap": {
+                "label": "Spread"
+              },
+              "lift": {
+                "label": "Drop"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "A stack of five photos",
+                "images": [
+                  "/demo/cards/portrait-01.webp",
+                  "/demo/cards/portrait-02.webp",
+                  "/demo/cards/portrait-03.webp",
+                  "/demo/cards/portrait-04.webp",
+                  "/demo/cards/portrait-05.webp"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "stack-004",
+      "type": "registry:component",
+      "title": "Линейный разворот",
+      "description": "Пять фото-карточек разъезжаются из стопки строго по горизонтали, без поворота: ровный ряд, в котором центральная карточка чуть крупнее.",
+      "categories": ["stacks"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stack-004/stack-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stack-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-stack-004-*. Тему берёт из окружения через light-dark() плюс строка для класса .dark. Позы карточек считаются из пропов и кладутся в CSS-переменные, а :hover / :focus-visible / data-open переключают transform — JS-состояния нет. Фото кладутся <img> внутрь карточки с object-fit:cover; без фото карточка — брендовая плашка с номером. Кривая — linear() со спружиненным перелётом, при prefers-reduced-motion переход отключён. Единственный параметр — gap, шаг ряда.",
+      "meta": {
+        "tags": ["cards", "stack", "fan", "hover", "photos", "gallery"],
+        "ai": {
+          "export": "Stack004",
+          "usage": "<Stack004 images={[\"/photos/1.jpg\", \"/photos/2.jpg\", \"/photos/3.jpg\"]} />",
+          "summary": "Стопка из пяти фото-карточек, раскрывающаяся ровным рядом по горизонтали. Ноль зависимостей, один файл, без JS-состояния.",
+          "preserve": [
+            "локальную палитру --vibeui-stack-004-* — не подменять её токенами темы",
+            "раскрытие на CSS через :hover, :focus-visible и data-open — без JS-состояния",
+            "пружинную кривую linear() с лёгким перелётом — она и есть характер движения",
+            "порядок слоёв и transform-origin карточек — от них зависит форма веера",
+            "отключение перехода при prefers-reduced-motion"
+          ],
+          "adapt": [
+            "набор фото через images — свои снимки или обложки, по кругу при нехватке",
+            "акцент через accent — цвет плашек без фото, номера и фокус-кольца",
+            "подпись label для скринридера",
+            "шаг ряда через gap",
+            "режим open для тача и витрины"
+          ],
+          "notes": [
+            "images подставляются по кругу: трёх фото хватит на пять карточек",
+            "open={true} держит веер раскрытым там, где нет наведения — тач, витрина"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "open",
+            "label": "Раскрыть",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "gap",
+            "label": "Шаг",
+            "type": "number",
+            "default": 90,
+            "min": 0,
+            "max": 240
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["open", "gap"],
+        "preview": {
+          "props": {
+            "images": [
+              "/demo/cards/portrait-01.webp",
+              "/demo/cards/portrait-02.webp",
+              "/demo/cards/portrait-03.webp",
+              "/demo/cards/portrait-04.webp",
+              "/demo/cards/portrait-05.webp"
+            ]
+          }
+        },
+        "i18n": {
+          "en": {
+            "title": "Linear spread",
+            "description": "Five photo cards slide out of the stack strictly horizontally with no rotation: an even row where the center card is slightly larger.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-stack-004-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Card poses are computed from props into CSS variables, and :hover / :focus-visible / data-open switch the transform — there is no JS state. Photos are <img> elements inside each card with object-fit:cover; without photos a card is a branded plate with a number. The curve is a linear() spring with a slight overshoot, and the transition is removed under prefers-reduced-motion. The only parameter is gap, the row step.",
+            "ai": {
+              "summary": "A stack of five photo cards that opens into an even horizontal row. Zero dependencies, one file, no JS state.",
+              "preserve": [
+                "the local --vibeui-stack-004-* palette — do not swap it for your theme tokens",
+                "the CSS-only reveal via :hover, :focus-visible and data-open — no JS state",
+                "the linear() spring curve with its slight overshoot — that is the motion's character",
+                "the card stacking order and transform-origin — they define the fan's shape",
+                "the transition removal under prefers-reduced-motion"
+              ],
+              "adapt": [
+                "the photo set via images — your own shots or covers, cycled when short",
+                "the accent via accent — the color of photo-less plates, numbers and the focus ring",
+                "the label prop for screen readers",
+                "the row step via gap",
+                "the open mode for touch and showcase"
+              ],
+              "notes": [
+                "images are cycled: three photos are enough for five cards",
+                "open={true} keeps the fan open where hover does not exist — touch, showcase"
+              ],
+              "usage": "<Stack004 images={[\"/photos/1.jpg\", \"/photos/2.jpg\", \"/photos/3.jpg\"]} />"
+            },
+            "controls": {
+              "open": {
+                "label": "Open"
+              },
+              "gap": {
+                "label": "Step"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "A row of five photos",
+                "images": [
+                  "/demo/cards/portrait-01.webp",
+                  "/demo/cards/portrait-02.webp",
+                  "/demo/cards/portrait-03.webp",
+                  "/demo/cards/portrait-04.webp",
+                  "/demo/cards/portrait-05.webp"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "stack-005",
+      "type": "registry:component",
+      "title": "Угловой веер",
+      "description": "Пять фото-карточек расходятся веером вокруг нижнего левого угла, как карты в руке: одна точка вращения, ровный размах, средняя карточка чуть крупнее.",
+      "categories": ["stacks"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stack-005/stack-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stack-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-stack-005-*. Тему берёт из окружения через light-dark() плюс строка для класса .dark. Позы карточек считаются из пропов и кладутся в CSS-переменные, а :hover / :focus-visible / data-open переключают transform — JS-состояния нет. Фото кладутся <img> внутрь карточки с object-fit:cover; без фото карточка — брендовая плашка с номером. Кривая — linear() со спружиненным перелётом, при prefers-reduced-motion переход отключён. Точка вращения — transform-origin 0% 100%; размах задаётся пропом angle.",
+      "meta": {
+        "tags": ["cards", "stack", "fan", "hover", "photos", "gallery"],
+        "ai": {
+          "export": "Stack005",
+          "usage": "<Stack005 images={[\"/photos/1.jpg\", \"/photos/2.jpg\", \"/photos/3.jpg\"]} />",
+          "summary": "Стопка из пяти фото-карточек, расходящаяся веером из нижнего левого угла. Ноль зависимостей, один файл, без JS-состояния.",
+          "preserve": [
+            "локальную палитру --vibeui-stack-005-* — не подменять её токенами темы",
+            "раскрытие на CSS через :hover, :focus-visible и data-open — без JS-состояния",
+            "пружинную кривую linear() с лёгким перелётом — она и есть характер движения",
+            "порядок слоёв и transform-origin карточек — от них зависит форма веера",
+            "отключение перехода при prefers-reduced-motion"
+          ],
+          "adapt": [
+            "набор фото через images — свои снимки или обложки, по кругу при нехватке",
+            "акцент через accent — цвет плашек без фото, номера и фокус-кольца",
+            "подпись label для скринридера",
+            "размах через angle",
+            "режим open для тача и витрины"
+          ],
+          "notes": [
+            "images подставляются по кругу: трёх фото хватит на пять карточек",
+            "open={true} держит веер раскрытым там, где нет наведения — тач, витрина"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "open",
+            "label": "Раскрыть",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "angle",
+            "label": "Размах",
+            "type": "number",
+            "default": 40,
+            "min": 0,
+            "max": 120
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["open", "angle"],
+        "preview": {
+          "props": {
+            "images": [
+              "/demo/cards/portrait-01.webp",
+              "/demo/cards/portrait-02.webp",
+              "/demo/cards/portrait-03.webp",
+              "/demo/cards/portrait-04.webp",
+              "/demo/cards/portrait-05.webp"
+            ]
+          }
+        },
+        "i18n": {
+          "en": {
+            "title": "Corner fan",
+            "description": "Five photo cards fan out around the bottom-left corner like cards in a hand: one pivot point, an even span, the middle card slightly larger.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-stack-005-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Card poses are computed from props into CSS variables, and :hover / :focus-visible / data-open switch the transform — there is no JS state. Photos are <img> elements inside each card with object-fit:cover; without photos a card is a branded plate with a number. The curve is a linear() spring with a slight overshoot, and the transition is removed under prefers-reduced-motion. The pivot is transform-origin 0% 100%; the span is the angle prop.",
+            "ai": {
+              "summary": "A stack of five photo cards fanning out from the bottom-left corner. Zero dependencies, one file, no JS state.",
+              "preserve": [
+                "the local --vibeui-stack-005-* palette — do not swap it for your theme tokens",
+                "the CSS-only reveal via :hover, :focus-visible and data-open — no JS state",
+                "the linear() spring curve with its slight overshoot — that is the motion's character",
+                "the card stacking order and transform-origin — they define the fan's shape",
+                "the transition removal under prefers-reduced-motion"
+              ],
+              "adapt": [
+                "the photo set via images — your own shots or covers, cycled when short",
+                "the accent via accent — the color of photo-less plates, numbers and the focus ring",
+                "the label prop for screen readers",
+                "the span via angle",
+                "the open mode for touch and showcase"
+              ],
+              "notes": [
+                "images are cycled: three photos are enough for five cards",
+                "open={true} keeps the fan open where hover does not exist — touch, showcase"
+              ],
+              "usage": "<Stack005 images={[\"/photos/1.jpg\", \"/photos/2.jpg\", \"/photos/3.jpg\"]} />"
+            },
+            "controls": {
+              "open": {
+                "label": "Open"
+              },
+              "angle": {
+                "label": "Span"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "A fan of five photos",
+                "images": [
+                  "/demo/cards/portrait-01.webp",
+                  "/demo/cards/portrait-02.webp",
+                  "/demo/cards/portrait-03.webp",
+                  "/demo/cards/portrait-04.webp",
+                  "/demo/cards/portrait-05.webp"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "stack-006",
+      "type": "registry:component",
+      "title": "Марки дугой",
+      "description": "Пять карточек-марок с перфорированным краем разлетаются широкой дугой; без фото каждая марка берёт свой тинт бренда — от полного оранжевого до 20 %.",
+      "categories": ["stacks"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stack-006/stack-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stack-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-stack-006-*. Тему берёт из окружения через light-dark() плюс строка для класса .dark. Позы карточек считаются из пропов и кладутся в CSS-переменные, а :hover / :focus-visible / data-open переключают transform — JS-состояния нет. Фото кладутся <img> внутрь карточки с object-fit:cover; без фото карточка — брендовая плашка с номером. Кривая — linear() со спружиненным перелётом, при prefers-reduced-motion переход отключён. Перфорация — пунктирная рамка; тинты — color-mix акцента с процентом из --vibeui-stack-006-tint. Параметры дуги — angle, gap, lift.",
+      "meta": {
+        "tags": [
+          "cards",
+          "stack",
+          "fan",
+          "hover",
+          "photos",
+          "gallery",
+          "stamps"
+        ],
+        "ai": {
+          "export": "Stack006",
+          "usage": "<Stack006 images={[\"/photos/1.jpg\", \"/photos/2.jpg\", \"/photos/3.jpg\"]} />",
+          "summary": "Стопка из пяти «марок» с перфорацией, разлетающаяся дугой; без фото — тинты бренда. Ноль зависимостей, один файл, без JS-состояния.",
+          "preserve": [
+            "локальную палитру --vibeui-stack-006-* — не подменять её токенами темы",
+            "раскрытие на CSS через :hover, :focus-visible и data-open — без JS-состояния",
+            "пружинную кривую linear() с лёгким перелётом — она и есть характер движения",
+            "порядок слоёв и transform-origin карточек — от них зависит форма веера",
+            "отключение перехода при prefers-reduced-motion",
+            "пунктирную перфорацию по краю марки"
+          ],
+          "adapt": [
+            "набор фото через images — свои снимки или обложки, по кругу при нехватке",
+            "акцент через accent — цвет плашек без фото, номера и фокус-кольца",
+            "подпись label для скринридера",
+            "форму дуги через angle, gap и lift",
+            "тинты без фото через colorful",
+            "режим open для тача и витрины"
+          ],
+          "notes": [
+            "images подставляются по кругу: трёх фото хватит на пять карточек",
+            "open={true} держит веер раскрытым там, где нет наведения — тач, витрина"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "open",
+            "label": "Раскрыть",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "angle",
+            "label": "Наклон",
+            "type": "number",
+            "default": 25,
+            "min": 0,
+            "max": 60
+          },
+          {
+            "prop": "gap",
+            "label": "Разлёт",
+            "type": "number",
+            "default": 180,
+            "min": 0,
+            "max": 320
+          },
+          {
+            "prop": "lift",
+            "label": "Просадка",
+            "type": "number",
+            "default": 40,
+            "min": 0,
+            "max": 80
+          },
+          {
+            "prop": "colorful",
+            "label": "Тинты бренда",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["open", "angle", "gap", "lift"],
+        "preview": {
+          "props": {
+            "images": [
+              "/demo/cards/portrait-01.webp",
+              "/demo/cards/portrait-02.webp",
+              "/demo/cards/portrait-03.webp",
+              "/demo/cards/portrait-04.webp",
+              "/demo/cards/portrait-05.webp"
+            ]
+          }
+        },
+        "i18n": {
+          "en": {
+            "title": "Stamp arc",
+            "description": "Five stamp cards with a perforated edge fly out into a wide arc; without photos each stamp takes its own brand tint, from full orange down to 20%.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-stack-006-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Card poses are computed from props into CSS variables, and :hover / :focus-visible / data-open switch the transform — there is no JS state. Photos are <img> elements inside each card with object-fit:cover; without photos a card is a branded plate with a number. The curve is a linear() spring with a slight overshoot, and the transition is removed under prefers-reduced-motion. The perforation is a dashed border; tints are a color-mix of the accent with the percentage in --vibeui-stack-006-tint. Arc parameters are angle, gap, lift.",
+            "ai": {
+              "summary": "A stack of five perforated stamps flying into an arc; brand tints without photos. Zero dependencies, one file, no JS state.",
+              "preserve": [
+                "the local --vibeui-stack-006-* palette — do not swap it for your theme tokens",
+                "the CSS-only reveal via :hover, :focus-visible and data-open — no JS state",
+                "the linear() spring curve with its slight overshoot — that is the motion's character",
+                "the card stacking order and transform-origin — they define the fan's shape",
+                "the transition removal under prefers-reduced-motion",
+                "the dashed perforation along the stamp edge"
+              ],
+              "adapt": [
+                "the photo set via images — your own shots or covers, cycled when short",
+                "the accent via accent — the color of photo-less plates, numbers and the focus ring",
+                "the label prop for screen readers",
+                "the arc shape via angle, gap and lift",
+                "the photo-less tints via colorful",
+                "the open mode for touch and showcase"
+              ],
+              "notes": [
+                "images are cycled: three photos are enough for five cards",
+                "open={true} keeps the fan open where hover does not exist — touch, showcase"
+              ],
+              "usage": "<Stack006 images={[\"/photos/1.jpg\", \"/photos/2.jpg\", \"/photos/3.jpg\"]} />"
+            },
+            "controls": {
+              "open": {
+                "label": "Open"
+              },
+              "angle": {
+                "label": "Tilt"
+              },
+              "gap": {
+                "label": "Spread"
+              },
+              "lift": {
+                "label": "Drop"
+              },
+              "colorful": {
+                "label": "Brand tints"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Five photo stamps",
+                "images": [
+                  "/demo/cards/portrait-01.webp",
+                  "/demo/cards/portrait-02.webp",
+                  "/demo/cards/portrait-03.webp",
+                  "/demo/cards/portrait-04.webp",
+                  "/demo/cards/portrait-05.webp"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "stack-007",
+      "type": "registry:component",
+      "title": "Каскад со сдвигом",
+      "description": "Пять фото-карточек уходят вверх лесенкой — каждая следующая выше, правее и повёрнута чуть сильнее; в покое стопка лежит с лёгким вертикальным сдвигом.",
+      "categories": ["stacks"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stack-007/stack-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stack-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-stack-007-*. Тему берёт из окружения через light-dark() плюс строка для класса .dark. Позы карточек считаются из пропов и кладутся в CSS-переменные, а :hover / :focus-visible / data-open переключают transform — JS-состояния нет. Фото кладутся <img> внутрь карточки с object-fit:cover; без фото карточка — брендовая плашка с номером. Кривая — linear() со спружиненным перелётом, при prefers-reduced-motion переход отключён. Раскрытие фиксированное, без числовых пропов; сдвиг покоя — --vibeui-stack-007-ty0.",
+      "meta": {
+        "tags": ["cards", "stack", "fan", "hover", "photos", "gallery"],
+        "ai": {
+          "export": "Stack007",
+          "usage": "<Stack007 images={[\"/photos/1.jpg\", \"/photos/2.jpg\", \"/photos/3.jpg\"]} />",
+          "summary": "Стопка из пяти фото-карточек, раскрывающаяся диагональным каскадом. Ноль зависимостей, один файл, без JS-состояния.",
+          "preserve": [
+            "локальную палитру --vibeui-stack-007-* — не подменять её токенами темы",
+            "раскрытие на CSS через :hover, :focus-visible и data-open — без JS-состояния",
+            "пружинную кривую linear() с лёгким перелётом — она и есть характер движения",
+            "порядок слоёв и transform-origin карточек — от них зависит форма веера",
+            "отключение перехода при prefers-reduced-motion"
+          ],
+          "adapt": [
+            "набор фото через images — свои снимки или обложки, по кругу при нехватке",
+            "акцент через accent — цвет плашек без фото, номера и фокус-кольца",
+            "подпись label для скринридера",
+            "режим open для тача и витрины"
+          ],
+          "notes": [
+            "images подставляются по кругу: трёх фото хватит на пять карточек",
+            "open={true} держит веер раскрытым там, где нет наведения — тач, витрина"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "open",
+            "label": "Раскрыть",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["open"],
+        "preview": {
+          "props": {
+            "images": [
+              "/demo/cards/portrait-01.webp",
+              "/demo/cards/portrait-02.webp",
+              "/demo/cards/portrait-03.webp",
+              "/demo/cards/portrait-04.webp",
+              "/demo/cards/portrait-05.webp"
+            ]
+          }
+        },
+        "i18n": {
+          "en": {
+            "title": "Cascade stagger",
+            "description": "Five photo cards climb upward in a staggered cascade — each next one higher, further right and rotated a bit more; at rest the stack sits with a slight vertical offset.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-stack-007-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Card poses are computed from props into CSS variables, and :hover / :focus-visible / data-open switch the transform — there is no JS state. Photos are <img> elements inside each card with object-fit:cover; without photos a card is a branded plate with a number. The curve is a linear() spring with a slight overshoot, and the transition is removed under prefers-reduced-motion. The reveal is fixed with no numeric props; the resting offset is --vibeui-stack-007-ty0.",
+            "ai": {
+              "summary": "A stack of five photo cards opening into a diagonal cascade. Zero dependencies, one file, no JS state.",
+              "preserve": [
+                "the local --vibeui-stack-007-* palette — do not swap it for your theme tokens",
+                "the CSS-only reveal via :hover, :focus-visible and data-open — no JS state",
+                "the linear() spring curve with its slight overshoot — that is the motion's character",
+                "the card stacking order and transform-origin — they define the fan's shape",
+                "the transition removal under prefers-reduced-motion"
+              ],
+              "adapt": [
+                "the photo set via images — your own shots or covers, cycled when short",
+                "the accent via accent — the color of photo-less plates, numbers and the focus ring",
+                "the label prop for screen readers",
+                "the open mode for touch and showcase"
+              ],
+              "notes": [
+                "images are cycled: three photos are enough for five cards",
+                "open={true} keeps the fan open where hover does not exist — touch, showcase"
+              ],
+              "usage": "<Stack007 images={[\"/photos/1.jpg\", \"/photos/2.jpg\", \"/photos/3.jpg\"]} />"
+            },
+            "controls": {
+              "open": {
+                "label": "Open"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "A cascade of five photos",
+                "images": [
+                  "/demo/cards/portrait-01.webp",
+                  "/demo/cards/portrait-02.webp",
+                  "/demo/cards/portrait-03.webp",
+                  "/demo/cards/portrait-04.webp",
+                  "/demo/cards/portrait-05.webp"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "stack-008",
+      "type": "registry:component",
+      "title": "Раздача на стол",
+      "description": "Пять фото-карточек разлетаются в нарочито неровную руку — у каждой свой сдвиг и угол, как у сданных на стол карт, средняя чуть крупнее.",
+      "categories": ["stacks"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stack-008/stack-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stack-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-stack-008-*. Тему берёт из окружения через light-dark() плюс строка для класса .dark. Позы карточек считаются из пропов и кладутся в CSS-переменные, а :hover / :focus-visible / data-open переключают transform — JS-состояния нет. Фото кладутся <img> внутрь карточки с object-fit:cover; без фото карточка — брендовая плашка с номером. Кривая — linear() со спружиненным перелётом, при prefers-reduced-motion переход отключён. Позы заданы таблицей в pose(); числовых пропов нет.",
+      "meta": {
+        "tags": ["cards", "stack", "fan", "hover", "photos", "gallery"],
+        "ai": {
+          "export": "Stack008",
+          "usage": "<Stack008 images={[\"/photos/1.jpg\", \"/photos/2.jpg\", \"/photos/3.jpg\"]} />",
+          "summary": "Стопка из пяти фото-карточек, разлетающаяся неровной рукой как сданные карты. Ноль зависимостей, один файл, без JS-состояния.",
+          "preserve": [
+            "локальную палитру --vibeui-stack-008-* — не подменять её токенами темы",
+            "раскрытие на CSS через :hover, :focus-visible и data-open — без JS-состояния",
+            "пружинную кривую linear() с лёгким перелётом — она и есть характер движения",
+            "порядок слоёв и transform-origin карточек — от них зависит форма веера",
+            "отключение перехода при prefers-reduced-motion"
+          ],
+          "adapt": [
+            "набор фото через images — свои снимки или обложки, по кругу при нехватке",
+            "акцент через accent — цвет плашек без фото, номера и фокус-кольца",
+            "подпись label для скринридера",
+            "режим open для тача и витрины"
+          ],
+          "notes": [
+            "images подставляются по кругу: трёх фото хватит на пять карточек",
+            "open={true} держит веер раскрытым там, где нет наведения — тач, витрина"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "open",
+            "label": "Раскрыть",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["open"],
+        "preview": {
+          "props": {
+            "images": [
+              "/demo/cards/portrait-01.webp",
+              "/demo/cards/portrait-02.webp",
+              "/demo/cards/portrait-03.webp",
+              "/demo/cards/portrait-04.webp",
+              "/demo/cards/portrait-05.webp"
+            ]
+          }
+        },
+        "i18n": {
+          "en": {
+            "title": "Scatter deal",
+            "description": "Five photo cards scatter into a deliberately uneven hand — each with its own offset and angle like cards dealt on a table, the middle one slightly larger.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-stack-008-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Card poses are computed from props into CSS variables, and :hover / :focus-visible / data-open switch the transform — there is no JS state. Photos are <img> elements inside each card with object-fit:cover; without photos a card is a branded plate with a number. The curve is a linear() spring with a slight overshoot, and the transition is removed under prefers-reduced-motion. Poses are a table inside pose(); there are no numeric props.",
+            "ai": {
+              "summary": "A stack of five photo cards scattering into an uneven hand like dealt cards. Zero dependencies, one file, no JS state.",
+              "preserve": [
+                "the local --vibeui-stack-008-* palette — do not swap it for your theme tokens",
+                "the CSS-only reveal via :hover, :focus-visible and data-open — no JS state",
+                "the linear() spring curve with its slight overshoot — that is the motion's character",
+                "the card stacking order and transform-origin — they define the fan's shape",
+                "the transition removal under prefers-reduced-motion"
+              ],
+              "adapt": [
+                "the photo set via images — your own shots or covers, cycled when short",
+                "the accent via accent — the color of photo-less plates, numbers and the focus ring",
+                "the label prop for screen readers",
+                "the open mode for touch and showcase"
+              ],
+              "notes": [
+                "images are cycled: three photos are enough for five cards",
+                "open={true} keeps the fan open where hover does not exist — touch, showcase"
+              ],
+              "usage": "<Stack008 images={[\"/photos/1.jpg\", \"/photos/2.jpg\", \"/photos/3.jpg\"]} />"
+            },
+            "controls": {
+              "open": {
+                "label": "Open"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Five dealt photos",
+                "images": [
+                  "/demo/cards/portrait-01.webp",
+                  "/demo/cards/portrait-02.webp",
+                  "/demo/cards/portrait-03.webp",
+                  "/demo/cards/portrait-04.webp",
+                  "/demo/cards/portrait-05.webp"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "stack-009",
+      "type": "registry:component",
+      "title": "Колесо-веер",
+      "description": "Пять фото-карточек вращаются вокруг точки под стопкой и расходятся радиальным полукругом, приподнимаясь к центру, — веер как спицы колеса.",
+      "categories": ["stacks"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stack-009/stack-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stack-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-stack-009-*. Тему берёт из окружения через light-dark() плюс строка для класса .dark. Позы карточек считаются из пропов и кладутся в CSS-переменные, а :hover / :focus-visible / data-open переключают transform — JS-состояния нет. Фото кладутся <img> внутрь карточки с object-fit:cover; без фото карточка — брендовая плашка с номером. Кривая — linear() со спружиненным перелётом, при prefers-reduced-motion переход отключён. Центр вращения вынесен под карточку: transform-origin 50% 110%.",
+      "meta": {
+        "tags": ["cards", "stack", "fan", "hover", "photos", "gallery"],
+        "ai": {
+          "export": "Stack009",
+          "usage": "<Stack009 images={[\"/photos/1.jpg\", \"/photos/2.jpg\", \"/photos/3.jpg\"]} />",
+          "summary": "Стопка из пяти фото-карточек, расходящаяся радиальным веером вокруг точки под стопкой. Ноль зависимостей, один файл, без JS-состояния.",
+          "preserve": [
+            "локальную палитру --vibeui-stack-009-* — не подменять её токенами темы",
+            "раскрытие на CSS через :hover, :focus-visible и data-open — без JS-состояния",
+            "пружинную кривую linear() с лёгким перелётом — она и есть характер движения",
+            "порядок слоёв и transform-origin карточек — от них зависит форма веера",
+            "отключение перехода при prefers-reduced-motion"
+          ],
+          "adapt": [
+            "набор фото через images — свои снимки или обложки, по кругу при нехватке",
+            "акцент через accent — цвет плашек без фото, номера и фокус-кольца",
+            "подпись label для скринридера",
+            "режим open для тача и витрины"
+          ],
+          "notes": [
+            "images подставляются по кругу: трёх фото хватит на пять карточек",
+            "open={true} держит веер раскрытым там, где нет наведения — тач, витрина"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "open",
+            "label": "Раскрыть",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["open"],
+        "preview": {
+          "props": {
+            "images": [
+              "/demo/cards/portrait-01.webp",
+              "/demo/cards/portrait-02.webp",
+              "/demo/cards/portrait-03.webp",
+              "/demo/cards/portrait-04.webp",
+              "/demo/cards/portrait-05.webp"
+            ]
+          }
+        },
+        "i18n": {
+          "en": {
+            "title": "Wheel fan",
+            "description": "Five photo cards rotate around a point below the stack and spread into a radial semicircle, lifting toward the center — a fan like wheel spokes.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-stack-009-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Card poses are computed from props into CSS variables, and :hover / :focus-visible / data-open switch the transform — there is no JS state. Photos are <img> elements inside each card with object-fit:cover; without photos a card is a branded plate with a number. The curve is a linear() spring with a slight overshoot, and the transition is removed under prefers-reduced-motion. The pivot sits below the card: transform-origin 50% 110%.",
+            "ai": {
+              "summary": "A stack of five photo cards spreading into a radial fan around a point below the stack. Zero dependencies, one file, no JS state.",
+              "preserve": [
+                "the local --vibeui-stack-009-* palette — do not swap it for your theme tokens",
+                "the CSS-only reveal via :hover, :focus-visible and data-open — no JS state",
+                "the linear() spring curve with its slight overshoot — that is the motion's character",
+                "the card stacking order and transform-origin — they define the fan's shape",
+                "the transition removal under prefers-reduced-motion"
+              ],
+              "adapt": [
+                "the photo set via images — your own shots or covers, cycled when short",
+                "the accent via accent — the color of photo-less plates, numbers and the focus ring",
+                "the label prop for screen readers",
+                "the open mode for touch and showcase"
+              ],
+              "notes": [
+                "images are cycled: three photos are enough for five cards",
+                "open={true} keeps the fan open where hover does not exist — touch, showcase"
+              ],
+              "usage": "<Stack009 images={[\"/photos/1.jpg\", \"/photos/2.jpg\", \"/photos/3.jpg\"]} />"
+            },
+            "controls": {
+              "open": {
+                "label": "Open"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "A fan of five photos",
+                "images": [
+                  "/demo/cards/portrait-01.webp",
+                  "/demo/cards/portrait-02.webp",
+                  "/demo/cards/portrait-03.webp",
+                  "/demo/cards/portrait-04.webp",
+                  "/demo/cards/portrait-05.webp"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "stack-010",
+      "type": "registry:component",
+      "title": "Дуговая карусель",
+      "description": "Карусель с фото, где соседние слайды раскладываются дугой на наведении — поворачиваются и опускаются тем сильнее, чем дальше от активного; подпись видна у активного.",
+      "categories": ["stacks"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stack-010/stack-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stack-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-stack-010-*. Клиентский компонент («use client»): состояние — индекс в useState, вся геометрия слайдов на CSS-переменных и transform, переходы отключаются при prefers-reduced-motion. Фото — <img> с object-fit:cover; без фото слайд — брендовая плашка с номером. Коэффициент наведения — переменная --vibeui-stack-010-h (0/1), её выставляют :hover и data-open; transform слайда считает calc() от расстояния до активного.",
+      "meta": {
+        "tags": [
+          "cards",
+          "carousel",
+          "photos",
+          "gallery",
+          "3d",
+          "hover",
+          "arc"
+        ],
+        "ai": {
+          "export": "Stack010",
+          "usage": "<Stack010 slides={[{ src: \"/photos/1.jpg\", title: \"Клавиатура\" }, { src: \"/photos/2.jpg\", title: \"Гарнитура\" }]} initial={0} />",
+          "summary": "Фото-карусель с дуговым раскрытием соседних слайдов на наведении, точки и стрелки в тёмной пилюле. Ноль зависимостей, один файл, состояние — индекс.",
+          "preserve": [
+            "локальную палитру --vibeui-stack-010-* — не подменять её токенами темы",
+            "отключение переходов при prefers-reduced-motion",
+            "дуговое раскрытие на наведении: поворот и просадка растут с расстоянием от активного",
+            "тёмную пилюлю управления с точками и стрелками",
+            "подпись, видимую только у активного слайда"
+          ],
+          "adapt": [
+            "набор фото и подписей через проп со слайдами",
+            "акцент через accent — активная точка, фокус-кольцо, плашки без фото",
+            "стартовый слайд через initial",
+            "режим open, чтобы дуга была раскрыта без наведения",
+            "подписи стрелок prevLabel и nextLabel для перевода"
+          ],
+          "notes": [
+            "слайды без src получают брендовую плашку с номером",
+            "стрелки на краях выключаются — карусель не зациклена"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "open",
+            "label": "Раскрыть",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "initial",
+            "label": "Стартовый слайд",
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 4
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["open", "initial"],
+        "preview": {
+          "props": {
+            "slides": [
+              {
+                "src": "/demo/cards/square-01.webp",
+                "title": "Клавиатура"
+              },
+              {
+                "src": "/demo/cards/square-02.webp",
+                "title": "Гарнитура"
+              },
+              {
+                "src": "/demo/cards/square-03.webp",
+                "title": "Джерси"
+              },
+              {
+                "src": "/demo/cards/square-04.webp",
+                "title": "Трофей"
+              },
+              {
+                "src": "/demo/cards/square-05.webp",
+                "title": "Мышь"
+              }
+            ]
+          }
+        },
+        "i18n": {
+          "en": {
+            "title": "Arc carousel",
+            "description": "A photo carousel whose neighboring slides fan into an arc on hover — rotating and dropping the further they are from the active one; the caption shows on the active slide only.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-stack-010-* variables. A client component (\"use client\"): the state is an index in useState, all slide geometry lives in CSS variables and transform, and transitions are removed under prefers-reduced-motion. Photos are <img> with object-fit:cover; without a photo the slide is a branded plate with a number. The hover factor is the --vibeui-stack-010-h variable (0/1) set by :hover and data-open; the slide transform is a calc() of the distance to the active slide.",
+            "ai": {
+              "summary": "A photo carousel with an arc reveal of neighboring slides on hover, dots and arrows in a dark pill. Zero dependencies, one file, an index as state.",
+              "preserve": [
+                "the local --vibeui-stack-010-* palette — do not swap it for your theme tokens",
+                "the transition removal under prefers-reduced-motion",
+                "the arc reveal on hover: rotation and drop grow with the distance from the active slide",
+                "the dark control pill with dots and arrows",
+                "the caption visible only on the active slide"
+              ],
+              "adapt": [
+                "the photos and captions via the slides prop",
+                "the accent via accent — the active dot, focus ring and photo-less plates",
+                "the starting slide via initial",
+                "the open mode to keep the arc spread without hover",
+                "the prevLabel and nextLabel arrow labels for translation"
+              ],
+              "notes": [
+                "slides without src get a branded plate with a number",
+                "the arrows disable at the edges — the carousel does not loop"
+              ],
+              "usage": "<Stack010 slides={[{ src: \"/photos/1.jpg\", title: \"Клавиатура\" }, { src: \"/photos/2.jpg\", title: \"Гарнитура\" }]} initial={0} />"
+            },
+            "controls": {
+              "open": {
+                "label": "Open"
+              },
+              "initial": {
+                "label": "Start slide"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "slides": [
+                  {
+                    "src": "/demo/cards/square-01.webp",
+                    "title": "Keyboard"
+                  },
+                  {
+                    "src": "/demo/cards/square-02.webp",
+                    "title": "Headset"
+                  },
+                  {
+                    "src": "/demo/cards/square-03.webp",
+                    "title": "Jersey"
+                  },
+                  {
+                    "src": "/demo/cards/square-04.webp",
+                    "title": "Trophy"
+                  },
+                  {
+                    "src": "/demo/cards/square-05.webp",
+                    "title": "Mouse"
+                  }
+                ],
+                "prevLabel": "Previous",
+                "nextLabel": "Next"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "stack-011",
+      "type": "registry:component",
+      "title": "CoverFlow-карусель",
+      "description": "Объёмная CoverFlow-карусель с фото: активная обложка стоит фронтально и ближе к зрителю, соседние развёрнуты к ней под углом и уходят вглубь, гаснут с расстоянием.",
+      "categories": ["stacks"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stack-011/stack-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stack-011.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-stack-011-*. Клиентский компонент («use client»): состояние — индекс в useState, вся геометрия слайдов на CSS-переменных и transform, переходы отключаются при prefers-reduced-motion. Фото — <img> с object-fit:cover; без фото слайд — брендовая плашка с номером. Сцена с perspective и preserve-3d; поворот — rotateY(±38deg), глубина — translateZ, прозрачность падает на 25 % за шаг и исчезает дальше двух.",
+      "meta": {
+        "tags": ["cards", "carousel", "photos", "gallery", "3d", "coverflow"],
+        "ai": {
+          "export": "Stack011",
+          "usage": "<Stack011 slides={[{ src: \"/photos/1.jpg\", title: \"Клавиатура\" }, { src: \"/photos/2.jpg\", title: \"Гарнитура\" }]} initial={0} />",
+          "summary": "CoverFlow-карусель с фото: фронтальная активная обложка и развёрнутые соседи в глубине. Ноль зависимостей, один файл, состояние — индекс.",
+          "preserve": [
+            "локальную палитру --vibeui-stack-011-* — не подменять её токенами темы",
+            "отключение переходов при prefers-reduced-motion",
+            "разворот соседей rotateY к активной обложке и уход в глубину translateZ",
+            "затухание прозрачности с расстоянием и скрытие дальше двух шагов",
+            "подпись под активной обложкой и тёмную пилюлю управления"
+          ],
+          "adapt": [
+            "набор фото и подписей через проп со слайдами",
+            "акцент через accent — активная точка, фокус-кольцо, плашки без фото",
+            "стартовый слайд через initial",
+            "подписи стрелок prevLabel и nextLabel для перевода"
+          ],
+          "notes": [
+            "слайды без src получают брендовую плашку с номером",
+            "фон панели светлый в светлой теме и полупрозрачно-чёрный в тёмной"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "initial",
+            "label": "Стартовый слайд",
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 4
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["initial"],
+        "preview": {
+          "props": {
+            "slides": [
+              {
+                "src": "/demo/cards/portrait-01.webp",
+                "title": "Клавиатура"
+              },
+              {
+                "src": "/demo/cards/portrait-02.webp",
+                "title": "Гарнитура"
+              },
+              {
+                "src": "/demo/cards/portrait-03.webp",
+                "title": "Джерси"
+              },
+              {
+                "src": "/demo/cards/portrait-04.webp",
+                "title": "Трофей"
+              },
+              {
+                "src": "/demo/cards/portrait-05.webp",
+                "title": "Мышь"
+              }
+            ]
+          }
+        },
+        "i18n": {
+          "en": {
+            "title": "CoverFlow carousel",
+            "description": "A 3D CoverFlow photo carousel: the active cover faces the viewer up close, the neighbors turn toward it at an angle and recede into depth, fading with distance.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-stack-011-* variables. A client component (\"use client\"): the state is an index in useState, all slide geometry lives in CSS variables and transform, and transitions are removed under prefers-reduced-motion. Photos are <img> with object-fit:cover; without a photo the slide is a branded plate with a number. A perspective scene with preserve-3d; the turn is rotateY(±38deg), depth is translateZ, opacity drops 25% per step and vanishes beyond two.",
+            "ai": {
+              "summary": "A CoverFlow photo carousel: a front-facing active cover and angled neighbors in depth. Zero dependencies, one file, an index as state.",
+              "preserve": [
+                "the local --vibeui-stack-011-* palette — do not swap it for your theme tokens",
+                "the transition removal under prefers-reduced-motion",
+                "the rotateY turn of the neighbors toward the active cover and the translateZ recession",
+                "the opacity falloff with distance and hiding beyond two steps",
+                "the caption under the active cover and the dark control pill"
+              ],
+              "adapt": [
+                "the photos and captions via the slides prop",
+                "the accent via accent — the active dot, focus ring and photo-less plates",
+                "the starting slide via initial",
+                "the prevLabel and nextLabel arrow labels for translation"
+              ],
+              "notes": [
+                "slides without src get a branded plate with a number",
+                "the panel background is light in the light theme and translucent black in the dark one"
+              ],
+              "usage": "<Stack011 slides={[{ src: \"/photos/1.jpg\", title: \"Клавиатура\" }, { src: \"/photos/2.jpg\", title: \"Гарнитура\" }]} initial={0} />"
+            },
+            "controls": {
+              "initial": {
+                "label": "Start slide"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "slides": [
+                  {
+                    "src": "/demo/cards/portrait-01.webp",
+                    "title": "Keyboard"
+                  },
+                  {
+                    "src": "/demo/cards/portrait-02.webp",
+                    "title": "Headset"
+                  },
+                  {
+                    "src": "/demo/cards/portrait-03.webp",
+                    "title": "Jersey"
+                  },
+                  {
+                    "src": "/demo/cards/portrait-04.webp",
+                    "title": "Trophy"
+                  },
+                  {
+                    "src": "/demo/cards/portrait-05.webp",
+                    "title": "Mouse"
+                  }
+                ],
+                "prevLabel": "Previous",
+                "nextLabel": "Next"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "stack-012",
+      "type": "registry:component",
+      "title": "Стопка Time Machine",
+      "description": "Стопка снимков в перспективе, как версии файла в Time Machine: шкала справа листает их по наведению, показывает дату, а пройденные снимки вылетают на зрителя и гаснут.",
+      "categories": ["stacks"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stack-012/stack-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stack-012.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-stack-012-*. Клиентский компонент («use client»): состояние — индекс в useState, вся геометрия слайдов на CSS-переменных и transform, переходы отключаются при prefers-reduced-motion. Фото — <img> с object-fit:cover; без фото слайд — брендовая плашка с номером. Панель тёмная в любой теме. Шкала — кнопки-деления с двумя промежуточными между снимками; наведение подсвечивает соседние деления и выставляет активный снимок, клик фиксирует его.",
+      "meta": {
+        "tags": [
+          "cards",
+          "carousel",
+          "photos",
+          "gallery",
+          "3d",
+          "timeline",
+          "scrubber"
+        ],
+        "ai": {
+          "export": "Stack012",
+          "usage": "<Stack012 snapshots={[{ src: \"/photos/1.jpg\", title: \"Клавиатура\", date: \"Сегодня\" }, { src: \"/photos/2.jpg\", title: \"Гарнитура\", date: \"Вчера\" }]} />",
+          "summary": "Перспективная стопка фото-снимков со шкалой-скраббером справа: наведение листает, дата всплывает у деления. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-stack-012-* — не подменять её токенами темы",
+            "отключение переходов при prefers-reduced-motion",
+            "уход снимков вглубь translateZ с наклоном rotateX и вылет пройденных на зрителя",
+            "шкалу справа с промежуточными делениями и датой у наведённого",
+            "тёмную панель — компонент читается как плёнка, а не карточка интерфейса"
+          ],
+          "adapt": [
+            "набор фото и подписей через проп со слайдами",
+            "акцент через accent — активная точка, фокус-кольцо, плашки без фото",
+            "снимки, подписи и даты через snapshots",
+            "стартовый снимок через initial",
+            "подпись label для скринридера"
+          ],
+          "notes": [
+            "снимки без src получают брендовую плашку с номером",
+            "с клавиатуры шкала листается табом по основным делениям"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "initial",
+            "label": "Стартовый снимок",
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 4
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["initial"],
+        "preview": {
+          "props": {
+            "snapshots": [
+              {
+                "src": "/demo/cards/wide-01.webp",
+                "title": "Клавиатура",
+                "date": "Сегодня"
+              },
+              {
+                "src": "/demo/cards/wide-02.webp",
+                "title": "Гарнитура",
+                "date": "Вчера"
+              },
+              {
+                "src": "/demo/cards/wide-03.webp",
+                "title": "Джерси",
+                "date": "Неделю назад"
+              },
+              {
+                "src": "/demo/cards/wide-04.webp",
+                "title": "Трофей",
+                "date": "Месяц назад"
+              },
+              {
+                "src": "/demo/cards/wide-05.webp",
+                "title": "Мышь",
+                "date": "Год назад"
+              }
+            ]
+          }
+        },
+        "i18n": {
+          "en": {
+            "title": "Time Machine stack",
+            "description": "A perspective stack of snapshots like file versions in Time Machine: the scale on the right scrubs through them on hover, shows the date, and passed snapshots fly toward the viewer and fade.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-stack-012-* variables. A client component (\"use client\"): the state is an index in useState, all slide geometry lives in CSS variables and transform, and transitions are removed under prefers-reduced-motion. Photos are <img> with object-fit:cover; without a photo the slide is a branded plate with a number. The panel is dark in every theme. The scale is a column of tick buttons with two minor ticks between snapshots; hovering highlights nearby ticks and sets the active snapshot, a click locks it.",
+            "ai": {
+              "summary": "A perspective stack of photo snapshots with a scrubber scale on the right: hover scrubs, the date pops up by the tick. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-stack-012-* palette — do not swap it for your theme tokens",
+                "the transition removal under prefers-reduced-motion",
+                "the translateZ recession of snapshots with a rotateX tilt and the fly-out of passed ones toward the viewer",
+                "the right-hand scale with minor ticks and the date by the hovered one",
+                "the dark panel — the component reads as film, not an interface card"
+              ],
+              "adapt": [
+                "the photos and captions via the slides prop",
+                "the accent via accent — the active dot, focus ring and photo-less plates",
+                "the snapshots, captions and dates via snapshots",
+                "the starting snapshot via initial",
+                "the label prop for screen readers"
+              ],
+              "notes": [
+                "snapshots without src get a branded plate with a number",
+                "from the keyboard the scale is scrubbed by tabbing through the main ticks"
+              ],
+              "usage": "<Stack012 snapshots={[{ src: \"/photos/1.jpg\", title: \"Клавиатура\", date: \"Сегодня\" }, { src: \"/photos/2.jpg\", title: \"Гарнитура\", date: \"Вчера\" }]} />"
+            },
+            "controls": {
+              "initial": {
+                "label": "Start snapshot"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "snapshots": [
+                  {
+                    "src": "/demo/cards/wide-01.webp",
+                    "title": "Keyboard",
+                    "date": "Today"
+                  },
+                  {
+                    "src": "/demo/cards/wide-02.webp",
+                    "title": "Headset",
+                    "date": "Yesterday"
+                  },
+                  {
+                    "src": "/demo/cards/wide-03.webp",
+                    "title": "Jersey",
+                    "date": "A week ago"
+                  },
+                  {
+                    "src": "/demo/cards/wide-04.webp",
+                    "title": "Trophy",
+                    "date": "A month ago"
+                  },
+                  {
+                    "src": "/demo/cards/wide-05.webp",
+                    "title": "Mouse",
+                    "date": "A year ago"
+                  }
+                ],
+                "label": "Snapshot history"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
