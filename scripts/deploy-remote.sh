@@ -24,7 +24,7 @@ if [ -f /etc/vibeui.env ]; then
   set -a
   . /etc/vibeui.env
   set +a
-  (cd "$REL" && node scripts/migrate.mjs)
+  (cd "$REL" && bash scripts/migrate.sh)
 fi
 
 # Подмена симлинка атомарна: полусостояния не бывает.

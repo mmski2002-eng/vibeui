@@ -60,7 +60,7 @@ jobs:
           # только localhost.
           mkdir -p release/scripts
           cp -a drizzle release/drizzle
-          cp scripts/migrate.mjs release/scripts/migrate.mjs
+          cp scripts/migrate.sh release/scripts/migrate.sh
           tar -czf release.tar.gz -C release .
 
       - name: Ключ и known_hosts
