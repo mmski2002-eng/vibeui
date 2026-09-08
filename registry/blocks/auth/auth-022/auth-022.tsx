@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react"
 
 export type Auth022Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   title?: string
   lead?: string
   account?: string
@@ -109,11 +111,16 @@ border:1px solid var(--vibeui-auth-022-border);
 font-size:0.8125rem;font-weight:600;
 }
 [data-vibeui-block="auth-022"] [data-part="face"]{
-flex:none;
+position:relative;flex:none;
 display:inline-flex;align-items:center;justify-content:center;
-width:1.75rem;height:1.75rem;border-radius:9999px;
-background:var(--vibeui-auth-022-accent);color:var(--vibeui-auth-022-on-accent);
-font-size:0.6875rem;font-weight:700;
+width:1.75rem;height:1.75rem;border-radius:9999px;color:var(--vibeui-auth-022-on-accent);
+font-size:0.6875rem;font-weight:700;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="auth-022"] [data-part="face"][data-empty="true"]{background:var(--vibeui-auth-022-accent);}
+[data-vibeui-block="auth-022"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="auth-022"] label{display:block;margin-bottom:0.3125rem;font-size:0.8125rem;font-weight:600}
 [data-vibeui-block="auth-022"] input{
@@ -165,6 +172,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Auth022({
   title = "Сессия истекла",
+  avatarImage = "",
   lead = "Прошло больше двух часов без действий, и мы закрыли доступ. Введите пароль — вернётесь на ту же страницу.",
   account = "anna@vibeui.ru",
   submit = "Продолжить работу",
@@ -225,7 +233,14 @@ export function Auth022({
           </p>
 
           <p data-part="who">
-            <span data-part="face" aria-hidden="true">
+            <span
+              data-part="face"
+              data-empty={avatarImage ? undefined : "true"}
+              aria-hidden="true"
+            >
+              {avatarImage ? (
+                <img src={avatarImage} alt="" loading="lazy" decoding="async" />
+              ) : null}
               {account.slice(0, 2).toUpperCase()}
             </span>
             <span>{account}</span>

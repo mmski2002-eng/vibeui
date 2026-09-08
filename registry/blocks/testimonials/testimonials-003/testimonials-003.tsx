@@ -6,6 +6,8 @@ type Testimonials003Metric = {
 }
 
 export type Testimonials003Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   quote?: string
   name?: string
   role?: string
@@ -68,10 +70,15 @@ text-wrap:balance;
 display:flex;align-items:center;gap:0.875rem;margin-top:2rem;
 }
 [data-vibeui-block="testimonials-003"] [data-part="avatar"]{
-width:3rem;height:3rem;flex:none;border-radius:999px;
-display:grid;place-items:center;
-background:var(--vibeui-testimonials-003-accent);color:var(--vibeui-testimonials-003-on-accent);
-font-size:0.9375rem;font-weight:700;
+position:relative;width:3rem;height:3rem;flex:none;border-radius:999px;
+display:grid;place-items:center;color:var(--vibeui-testimonials-003-on-accent);
+font-size:0.9375rem;font-weight:700;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="testimonials-003"] [data-part="avatar"][data-empty="true"]{background:var(--vibeui-testimonials-003-accent);}
+[data-vibeui-block="testimonials-003"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="testimonials-003"] [data-part="name"]{display:block;font-size:1rem;font-weight:660}
 [data-vibeui-block="testimonials-003"] [data-part="role"]{display:block;color:var(--vibeui-testimonials-003-muted);font-size:0.875rem;line-height:1.4}
@@ -139,6 +146,7 @@ function initialsOf(name: string) {
 /** Одна крупная цитата: засечный набор, автор и три проверяемые цифры. */
 export function Testimonials003({
   quote = "Мы перестали спорить о том, как должна выглядеть очередная страница. Спорим теперь о том, что на ней написано, — и это единственный спор, который приносит деньги.",
+  avatarImage = "",
   name = "Елена Ремизова",
   role = "Директор по продукту",
   company = "Артель",
@@ -177,7 +185,19 @@ export function Testimonials003({
           <figure data-part="figure">
             <blockquote data-part="quote">{quote}</blockquote>
             <figcaption data-part="author">
-              <span data-part="avatar" aria-hidden="true">
+              <span
+                data-part="avatar"
+                data-empty={avatarImage ? undefined : "true"}
+                aria-hidden="true"
+              >
+                {avatarImage ? (
+                  <img
+                    src={avatarImage}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
                 {initials}
               </span>
               <span>

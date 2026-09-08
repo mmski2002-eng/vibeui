@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react"
 
 export type Dashboard010Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   name?: string
   role?: string
   place?: string
@@ -63,10 +65,15 @@ font-family:var(--vibeui-dashboard-010-sans);color:var(--vibeui-dashboard-010-fg
 }
 [data-vibeui-block="dashboard-010"] *{box-sizing:border-box}
 [data-vibeui-block="dashboard-010"] [data-part="cover"]{
-height:5.5rem;
-background:
+position:relative;height:5.5rem;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="dashboard-010"] [data-part="cover"][data-empty="true"]{background:
 radial-gradient(120% 140% at 20% 0%, var(--vibeui-dashboard-010-glow), transparent 70%),
-var(--vibeui-dashboard-010-cover);
+var(--vibeui-dashboard-010-cover);}
+[data-vibeui-block="dashboard-010"] [data-part="cover"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="dashboard-010"] [data-part="body"]{padding:0 1rem 0.875rem}
 /* Аватар вынесен отступом, а не абсолютом: высота шапки остаётся предсказуемой. */
@@ -189,6 +196,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Dashboard010({
   name = "Анна Реброва",
+  image = "",
   role = "Дизайнер интерфейсов",
   place = "Москва",
   since = "В проекте с марта 2025",
@@ -229,7 +237,15 @@ export function Dashboard010({
         style={palette}
         aria-label={profileText.replace("{name}", name)}
       >
-        <div data-part="cover" aria-hidden="true" />
+        <div
+          data-part="cover"
+          data-empty={image ? undefined : "true"}
+          aria-hidden="true"
+        >
+          {image ? (
+            <img src={image} alt="" loading="lazy" decoding="async" />
+          ) : null}
+        </div>
         <div data-part="body">
           <span data-part="avatar" aria-hidden="true">
             {initials(name)}

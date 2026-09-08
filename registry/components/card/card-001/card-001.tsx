@@ -1,6 +1,8 @@
 import type { ComponentProps, CSSProperties, ReactNode } from "react"
 
 export type Card001Props = Omit<ComponentProps<"article">, "title"> & {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   title?: string
   description?: string
   /** Надпись над заголовком: раздел, дата, тип материала. */
@@ -64,10 +66,15 @@ border-color:var(--vibeui-card-001-accent);
 box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-card-001-accent) 20%,transparent);
 }
 [data-vibeui-block="card-001"] [data-part="media"]{
-aspect-ratio:16 / 9;border-radius:calc(var(--vibeui-card-001-radius) - 1px) calc(var(--vibeui-card-001-radius) - 1px) 0 0;
-background:
+position:relative;aspect-ratio:16 / 9;border-radius:calc(var(--vibeui-card-001-radius) - 1px) calc(var(--vibeui-card-001-radius) - 1px) 0 0;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="card-001"] [data-part="media"][data-empty="true"]{background:
 radial-gradient(120% 90% at 15% 0%,color-mix(in oklab,var(--vibeui-card-001-accent) 35%,transparent),transparent 60%),
-linear-gradient(160deg,var(--vibeui-card-001-media-from),var(--vibeui-card-001-media-to));
+linear-gradient(160deg,var(--vibeui-card-001-media-from),var(--vibeui-card-001-media-to));}
+[data-vibeui-block="card-001"] [data-part="media"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="card-001"] [data-part="body"]{
 display:flex;flex-direction:column;gap:0.375rem;padding:1rem 1.125rem 1.125rem;
@@ -132,6 +139,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Card001({
   title = "Как собрать лендинг за вечер",
+  image = "",
   description = "Разбираем сборку страницы из готовых блоков: что отдать агенту, а что править руками.",
   eyebrow = "Практика",
   href = "#",
@@ -165,7 +173,15 @@ export function Card001({
         className={className}
         style={palette}
       >
-        <div data-part="media" aria-hidden="true" />
+        <div
+          data-part="media"
+          data-empty={image ? undefined : "true"}
+          aria-hidden="true"
+        >
+          {image ? (
+            <img src={image} alt="" loading="lazy" decoding="async" />
+          ) : null}
+        </div>
         <div data-part="body">
           {eyebrow ? <span data-part="eyebrow">{eyebrow}</span> : null}
           <h3 data-part="title">{href ? <a href={href}>{title}</a> : title}</h3>

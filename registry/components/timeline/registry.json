@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Лента событий",
       "description": "Лента событий: линия нарисована бордюром самого события, поэтому тянется от точки к точке и не торчит за последним.",
-      "categories": ["timeline"],
+      "categories": [
+        "timeline"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-timeline-001-*. Серверный: хуков нет. Линия — левый бордюр элемента списка, у последнего он прозрачный. Состояние задаётся data-state: пройденное — заливка точки, текущее — кольцо, будущее — пустая точка и приглушённый текст.",
       "meta": {
-        "tags": ["timeline", "events", "status", "delivery"],
+        "tags": [
+          "timeline",
+          "events",
+          "status",
+          "delivery"
+        ],
         "preview": {
           "width": "full"
         },
@@ -152,7 +159,11 @@
             }
           }
         },
-        "cardControls": ["accent", "done", "background"]
+        "cardControls": [
+          "accent",
+          "done",
+          "background"
+        ]
       }
     },
     {
@@ -160,7 +171,9 @@
       "type": "registry:component",
       "title": "Лента активности",
       "description": "Лента активности: кружок с инициалами красится оттенком, посчитанным из имени, а время стоит отдельным столбцом с табличными цифрами.",
-      "categories": ["timeline"],
+      "categories": [
+        "timeline"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -172,9 +185,49 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-002-*. Серверный: хуков нет. Оттенок аватара считается из имени функцией на FNV-хеше, поэтому один человек всегда получает один и тот же кружок и опознаётся в ленте как повторяющееся пятно цвета. Линия ленты нарисована псевдоэлементом строки, а не отдельным столбиком: она обрывается на последнем аватаре и не свисает под списком. Время вынесено в третью колонку grid с font-variant-numeric:tabular-nums — в ленте из двадцати строк цифры обязаны стоять по одной вертикали. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.",
       "meta": {
-        "tags": ["timeline", "feed", "activity", "avatar"],
+        "tags": [
+          "timeline",
+          "feed",
+          "activity",
+          "avatar"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "entries": [
+              {
+                "author": "Аня Петрова",
+                "action": "оставила комментарий в",
+                "target": "Главная страница",
+                "time": "2 мин",
+                "dateTime": "2026-03-14T14:20",
+                "image": "/demo/avatars/dina-256.webp"
+              },
+              {
+                "author": "Марк Иванов",
+                "action": "закрыл задачу",
+                "target": "Экспорт в CSV",
+                "time": "18 мин",
+                "dateTime": "2026-03-14T14:04",
+                "image": "/demo/avatars/ilya-256.webp"
+              },
+              {
+                "author": "Аня Петрова",
+                "action": "загрузила 6 файлов",
+                "time": "1 ч",
+                "dateTime": "2026-03-14T13:22",
+                "image": "/demo/avatars/anna-256.webp"
+              },
+              {
+                "author": "Лиза Ким",
+                "action": "пригласила в проект",
+                "target": "Олег С.",
+                "time": "3 ч",
+                "dateTime": "2026-03-14T11:15",
+                "image": "/demo/avatars/mark-256.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Timeline002",
@@ -281,34 +334,42 @@
                     "action": "commented on",
                     "target": "Home page",
                     "time": "2 min",
-                    "dateTime": "2026-03-14T14:20"
+                    "dateTime": "2026-03-14T14:20",
+                    "image": "/demo/avatars/dina-256.webp"
                   },
                   {
                     "author": "Mark Ivanov",
                     "action": "closed the task",
                     "target": "CSV export",
                     "time": "18 min",
-                    "dateTime": "2026-03-14T14:04"
+                    "dateTime": "2026-03-14T14:04",
+                    "image": "/demo/avatars/ilya-256.webp"
                   },
                   {
                     "author": "Anna Petrova",
                     "action": "uploaded 6 files",
                     "time": "1 h",
-                    "dateTime": "2026-03-14T13:22"
+                    "dateTime": "2026-03-14T13:22",
+                    "image": "/demo/avatars/anna-256.webp"
                   },
                   {
                     "author": "Lisa Kim",
                     "action": "invited to the project",
                     "target": "Oleg S.",
                     "time": "3 h",
-                    "dateTime": "2026-03-14T11:15"
+                    "dateTime": "2026-03-14T11:15",
+                    "image": "/demo/avatars/mark-256.webp"
                   }
                 ]
               }
             }
           }
         },
-        "cardControls": ["title", "accent", "background"]
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -316,7 +377,9 @@
       "type": "registry:component",
       "title": "Статус заказа",
       "description": "Статус заказа, где будущее нарисовано иначе прошлого: пройденные шаги с галочкой и сплошной линией, будущие — пустым кружком и пунктиром.",
-      "categories": ["timeline"],
+      "categories": [
+        "timeline"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -328,7 +391,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-003-*. Серверный: хуков нет. Состояние шага передаётся тремя способами сразу — формой метки (галочка, кольцо, пустой кружок), стилем линии (сплошная против пунктирной) и плашкой у текущего шага. Галочка нарисована двумя бордюрами псевдоэлемента, поэтому иконочный шрифт не нужен. Текущий шаг вынесен на подложку из color-mix и помечен словом «сейчас»: его читают первым и часто единственным. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.",
       "meta": {
-        "tags": ["timeline", "order", "status", "steps"],
+        "tags": [
+          "timeline",
+          "order",
+          "status",
+          "steps"
+        ],
         "ai": {
           "export": "Timeline003",
           "usage": "<Timeline003\n  orderLabel=\"Заказ № 4471\"\n  eta=\"Доставим 14 марта\"\n  steps={[\n    { title: \"Оплачен\", note: \"12 марта, 10:02\", state: \"done\" },\n    { title: \"Едет в ваш город\", note: \"Прибудет 14 марта\", state: \"current\" },\n    { title: \"Получен\", state: \"todo\" },\n  ]}\n/>",
@@ -474,7 +542,12 @@
             }
           }
         },
-        "cardControls": ["eta", "accent", "nowLabel", "background"],
+        "cardControls": [
+          "eta",
+          "accent",
+          "nowLabel",
+          "background"
+        ],
         "preview": {
           "width": "full"
         }
@@ -485,7 +558,9 @@
       "type": "registry:component",
       "title": "Вехи проекта",
       "description": "Хронология проекта, где вехи не равны рядовым записям: веха рисуется ромбом и жирной датой, а на широком блоке даты уезжают в отдельный столбец.",
-      "categories": ["timeline"],
+      "categories": [
+        "timeline"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -497,7 +572,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-004-*. Серверный: хуков нет. Раскладка считается от собственной ширины блока через container-type:inline-size, а правила @container лежат на внутреннем [data-part=\"shell\"] и потомках — контейнерный запрос не действует на сам контейнер. Узкий блок даёт один столбец с датой над заголовком, широкий — grid из трёх колонок, где даты выстраиваются по правому краю и список читается как календарь. Веха отличается формой метки (повёрнутый на 45° квадрат), а не только цветом. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.",
       "meta": {
-        "tags": ["timeline", "milestones", "project", "dates"],
+        "tags": [
+          "timeline",
+          "milestones",
+          "project",
+          "dates"
+        ],
         "preview": {
           "width": "full"
         },
@@ -637,7 +717,11 @@
             }
           }
         },
-        "cardControls": ["title", "accent", "background"]
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -645,7 +729,9 @@
       "type": "registry:component",
       "title": "Версии документа",
       "description": "История правок документа: автор, комментарий и двухцветная полоска, длина частей которой пропорциональна добавленным и удалённым строкам.",
-      "categories": ["timeline"],
+      "categories": [
+        "timeline"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -657,7 +743,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-005-*. Серверный: хуков нет. Доля добавленного считается на рендере и передаётся в CSS одной переменной --vibeui-timeline-005-share, которой задаётся ширина зелёной части полоски; красная часть занимает остаток через flex:1. Числа +N и −N стоят рядом текстом: полоска без подписи — украшение, а не данные. Номер версии оформлен как отдельная плашка в первой колонке grid, текущая версия помечена цветом рамки и словом «текущая». Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.",
       "meta": {
-        "tags": ["timeline", "history", "diff", "versions"],
+        "tags": [
+          "timeline",
+          "history",
+          "diff",
+          "versions"
+        ],
         "preview": {
           "width": "full"
         },
@@ -817,7 +908,12 @@
             }
           }
         },
-        "cardControls": ["title", "accent", "currentLabel", "background"]
+        "cardControls": [
+          "title",
+          "accent",
+          "currentLabel",
+          "background"
+        ]
       }
     },
     {
@@ -825,7 +921,9 @@
       "type": "registry:component",
       "title": "События по типам",
       "description": "Лента событий, где тип узнаётся по значку: встроенный SVG в плитке, которая красится оттенком своего типа, плюс подпись типа для скринридера.",
-      "categories": ["timeline"],
+      "categories": [
+        "timeline"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -837,7 +935,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-006-*. Серверный: хуков нет. Цвет плитки задан одной переменной --vibeui-timeline-006-hue, которая переопределяется правилом на строке по атрибуту data-kind: четыре типа стоят четырьмя строчками CSS вместо четырёх наборов правил. Иконки — инлайновые пути SVG в объекте KIND_PATH, поэтому иконочная библиотека не нужна. Название типа продублировано текстом, скрытым через clip-path: цвет и форма вслух не читаются. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.",
       "meta": {
-        "tags": ["timeline", "events", "icons", "types"],
+        "tags": [
+          "timeline",
+          "events",
+          "icons",
+          "types"
+        ],
         "ai": {
           "export": "Timeline006",
           "usage": "<Timeline006\n  title=\"События\"\n  events={[\n    { kind: \"release\", title: \"Выпущена версия 2.4\", text: \"Каталог, поиск и экспорт\", time: \"10:40\" },\n    { kind: \"alert\", title: \"Ответ сервера замедлился\", time: \"09:12\" },\n  ]}\n/>",
@@ -966,7 +1069,10 @@
             }
           }
         },
-        "cardControls": ["title", "background"],
+        "cardControls": [
+          "title",
+          "background"
+        ],
         "preview": {
           "width": "full"
         }
@@ -977,7 +1083,9 @@
       "type": "registry:component",
       "title": "Полоса этапов",
       "description": "Горизонтальная лента этапов: соединитель красится пройденным состоянием, а на узкой ширине лента не ломается в столбец, а прокручивается со scroll-snap.",
-      "categories": ["timeline"],
+      "categories": [
+        "timeline"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -989,7 +1097,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-007-*. Серверный: хуков нет. Соединитель — псевдоэлемент каждого этапа, растянутый от центра узла до центра следующего через left:calc(50% + 1rem) и right:calc(-50% + 1rem); он красится состоянием своего этапа и убирается у последнего. Узкая ширина не переворачивает ленту в столбец: горизонтальный путь, свёрнутый в вертикальный, врёт про порядок, поэтому список прокручивается с scroll-snap-type:x proximity. Текущий узел помечен кольцом box-shadow и aria-current=\"step\". Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.",
       "meta": {
-        "tags": ["timeline", "steps", "horizontal", "progress"],
+        "tags": [
+          "timeline",
+          "steps",
+          "horizontal",
+          "progress"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1128,7 +1241,11 @@
             }
           }
         },
-        "cardControls": ["title", "accent", "background"]
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1136,7 +1253,9 @@
       "type": "registry:component",
       "title": "Группы по дням",
       "description": "Лента, разрезанная по дням: заголовок дня липнет к верху своей группы, поэтому в любой момент видно, какой день читаешь.",
-      "categories": ["timeline"],
+      "categories": [
+        "timeline"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1148,7 +1267,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-008-*. Серверный: хуков нет. Дата — position:sticky внутри своей группы, а не внутри всей ленты: следующая дата выталкивает предыдущую, поэтому подпись всегда относится к тому, что под ней. Липкая дата несёт непрозрачный фон — иначе строки ленты просвечивают сквозь неё. Область прокрутки ограничена max-height, получает tabIndex и aria-label, чтобы прокручиваться с клавиатуры. Точка каждой записи позиционирована абсолютно и выпадает из grid-потока строки. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней, а фон липкой даты держит отдельный токен --vibeui-timeline-008-sticky.",
       "meta": {
-        "tags": ["timeline", "sticky", "groups", "feed"],
+        "tags": [
+          "timeline",
+          "sticky",
+          "groups",
+          "feed"
+        ],
         "ai": {
           "export": "Timeline008",
           "usage": "<Timeline008\n  title=\"Лента заявки\"\n  days={[\n    { date: \"Сегодня\", entries: [{ time: \"14:20\", title: \"Счёт оплачен\", text: \"Чек отправлен на почту\" }] },\n    { date: \"Вчера\", entries: [{ time: \"09:30\", title: \"Создана заявка\" }] },\n  ]}\n/>",
@@ -1323,7 +1447,12 @@
             }
           }
         },
-        "cardControls": ["title", "accent", "feedLabelText", "background"],
+        "cardControls": [
+          "title",
+          "accent",
+          "feedLabelText",
+          "background"
+        ],
         "preview": {
           "width": "full"
         }
@@ -1334,7 +1463,9 @@
       "type": "registry:component",
       "title": "Отслеживание доставки",
       "description": "Маршрут доставки: список этапов со временем и отдельный маркер, который показывает текущее положение посылки между двумя пунктами.",
-      "categories": ["timeline"],
+      "categories": [
+        "timeline"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1346,7 +1477,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-009-*. Серверный: хуков нет. Маркер положения — отдельный элемент поверх ленты стопов: его top задаётся процентной переменной --vibeui-timeline-009-progress, посчитанной на рендере из доли done- и current-стопов, поэтому он может стоять между двумя пунктами, а не только на одном из них. Состояние стопа передаётся и формой точки (заливка/кольцо/пустая), и скрытым словом для скринридера. Время каждого стопа — <time dateTime>, а не голая строка. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.",
       "meta": {
-        "tags": ["timeline", "delivery", "tracking", "eta"],
+        "tags": [
+          "timeline",
+          "delivery",
+          "tracking",
+          "eta"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1492,7 +1628,11 @@
             }
           }
         },
-        "cardControls": ["orderLabel", "accent", "background"]
+        "cardControls": [
+          "orderLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1500,7 +1640,9 @@
       "type": "registry:component",
       "title": "История правок",
       "description": "История правок документа: тип правки — видимая цветная плашка со словом, а не значок или скрытая подпись, плюс автор и время каждой записи.",
-      "categories": ["timeline"],
+      "categories": [
+        "timeline"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1512,7 +1654,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-010-*. Серверный: хуков нет. Тип правки — видимая текстовая плашка, цвет которой задан одной переменной --vibeui-timeline-010-hue, переопределяемой правилом по data-kind: четыре типа стоят четырьмя строчками CSS вместо четырёх наборов правил. В отличие от истории с диффом строк, здесь важен не объём правки, а её характер — правка текста, комментарий, права доступа или вложение. Время — <time dateTime>. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.",
       "meta": {
-        "tags": ["timeline", "document", "revisions", "author"],
+        "tags": [
+          "timeline",
+          "document",
+          "revisions",
+          "author"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1643,7 +1790,10 @@
             }
           }
         },
-        "cardControls": ["title", "background"]
+        "cardControls": [
+          "title",
+          "background"
+        ]
       }
     },
     {
@@ -1651,7 +1801,9 @@
       "type": "registry:component",
       "title": "Лента вех",
       "description": "Горизонтальная лента вех вокруг общего ствола: чётные карточки стоят сверху, нечётные снизу, поэтому в ряду умещается вдвое больше вех.",
-      "categories": ["timeline"],
+      "categories": [
+        "timeline"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1663,7 +1815,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-011-*. Серверный: хуков нет. Ствол — один сплошной элемент под всеми вехами (псевдоэлемент списка), а не бордюр каждой из них. Узел вехи стоит в средней grid-строке li (grid-template-rows:1fr auto 1fr), поэтому остаётся ровно на стволе независимо от длины текста карточки — карточка растёт в соседнюю 1fr-строку: вверх у нечётных вех, вниз у чётных. На узкой ширине лента не ломается в столбец, а прокручивается по горизонтали. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней, а разрыв ствола вокруг узла держит отдельный токен --vibeui-timeline-011-surface.",
       "meta": {
-        "tags": ["timeline", "milestones", "horizontal", "project"],
+        "tags": [
+          "timeline",
+          "milestones",
+          "horizontal",
+          "project"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1800,7 +1957,11 @@
             }
           }
         },
-        "cardControls": ["title", "accent", "background"]
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1808,7 +1969,9 @@
       "type": "registry:component",
       "title": "Сводка за день",
       "description": "Активность, сгруппированная по дням («Сегодня», «Вчера»), без прокрутки и sticky-заголовков: заголовок дня несёт счётчик записей.",
-      "categories": ["timeline"],
+      "categories": [
+        "timeline"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1820,9 +1983,17 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-012-*. Серверный: хуков нет. В отличие от ленты со sticky-датами, здесь заголовок дня — обычный поток: лента растёт вместе со страницей, а не прокручивается в своей области. Заголовок несёт счётчик entries.length рядом с подписью дня, поэтому объём дня виден без подсчёта строк. Каждый день — вложенный <ol> внутри <li> внешнего списка дней: последовательность сохраняется на обоих уровнях. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.",
       "meta": {
-        "tags": ["timeline", "activity", "groups", "daily"],
+        "tags": [
+          "timeline",
+          "activity",
+          "groups",
+          "daily"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "avatarImage": "/demo/avatars/artem-256.webp"
+          }
         },
         "ai": {
           "export": "Timeline012",
@@ -1976,12 +2147,17 @@
                       }
                     ]
                   }
-                ]
+                ],
+                "avatarImage": "/demo/avatars/artem-256.webp"
               }
             }
           }
         },
-        "cardControls": ["title", "accent", "background"]
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1989,7 +2165,9 @@
       "type": "registry:component",
       "title": "Двусторонние вехи",
       "description": "Вертикальная лента вех по обе стороны от общего ствола: нечётные слева, чётные справа. На узкой ширине обе стороны сходятся в один столбец у левого края, без горизонтальной прокрутки.",
-      "categories": ["timeline"],
+      "categories": [
+        "timeline"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2001,7 +2179,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-013-*. Серверный: хуков нет. Ствол — псевдоэлемент списка (ol::before), а не бордюр каждой вехи. На узком контейнере li — grid из двух колонок (узел, карточка), все карточки у правого края ствола. От 30rem ширины контейнера ствол уходит в центр, li переключается на три колонки, и карточки расходятся по чётности: nth-child(odd) — влево от ствола с выравниванием текста по правому краю, nth-child(even) — вправо с выравниванием по левому. Переключение — на container-type самого блока, а не на медиа-запросе видового окна, поэтому раскладка следует ширине родителя.",
       "meta": {
-        "tags": ["timeline", "milestones", "history", "vertical"],
+        "tags": [
+          "timeline",
+          "milestones",
+          "history",
+          "vertical"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2054,7 +2237,11 @@
             "default": ""
           }
         ],
-        "cardControls": ["title", "accent", "background"],
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "title": "Two-Sided Milestones",

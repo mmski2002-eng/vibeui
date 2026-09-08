@@ -1,6 +1,8 @@
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Iconstack001Props = Omit<ComponentProps<"div">, "children"> & {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   names?: string[]
   max?: number
   label?: string
@@ -56,8 +58,13 @@ font-weight:650;line-height:1;
 }
 /* Оттенок из имени: хеш, а не сумма кодов — иначе алфавит красится одинаково. */
 [data-vibeui-block="iconstack-001"] [data-part="face"]{
-background:light-dark(oklch(0.9 0.06 var(--vibeui-iconstack-001-hue,265)),oklch(0.36 0.07 var(--vibeui-iconstack-001-hue,265)));
-color:light-dark(oklch(0.38 0.12 var(--vibeui-iconstack-001-hue,265)),oklch(0.88 0.08 var(--vibeui-iconstack-001-hue,265)));
+position:relative;color:light-dark(oklch(0.38 0.12 var(--vibeui-iconstack-001-hue,265)),oklch(0.88 0.08 var(--vibeui-iconstack-001-hue,265)));overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="iconstack-001"] [data-part="face"][data-empty="true"]{background:light-dark(oklch(0.9 0.06 var(--vibeui-iconstack-001-hue,265)),oklch(0.36 0.07 var(--vibeui-iconstack-001-hue,265)));}
+[data-vibeui-block="iconstack-001"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="iconstack-001"] [data-part="more"]{
 background:var(--vibeui-iconstack-001-more-bg);color:var(--vibeui-iconstack-001-more-fg);
@@ -127,6 +134,7 @@ export function Iconstack001({
   names = DEFAULT_NAMES,
   max = 4,
   label = "работают над проектом",
+  avatarImage = "",
   size = "md",
   background = "",
   className,
@@ -167,10 +175,14 @@ export function Iconstack001({
             <span
               key={name}
               data-part="face"
+              data-empty={avatarImage ? undefined : "true"}
               style={
                 { "--vibeui-iconstack-001-hue": hue(name) } as CSSProperties
               }
             >
+              {avatarImage ? (
+                <img src={avatarImage} alt="" loading="lazy" decoding="async" />
+              ) : null}
               {initials(name)}
             </span>
           ))}

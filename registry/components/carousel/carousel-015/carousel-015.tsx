@@ -8,6 +8,8 @@ export type Carousel015Slide = {
   detail?: string
   credit?: string
   hue?: number
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
 }
 
 export type Carousel015Props = Omit<ComponentProps<"section">, "children"> & {
@@ -55,10 +57,15 @@ font-family:var(--vibeui-carousel-015-font);color:var(--vibeui-carousel-015-fg);
 }
 [data-vibeui-block="carousel-015"] figure{margin:0;display:flex;flex-direction:column;gap:0.5rem}
 [data-vibeui-block="carousel-015"] [data-part="frame"]{
-aspect-ratio:3 / 2;border-radius:0.875rem;
-background:
+position:relative;aspect-ratio:3 / 2;border-radius:0.875rem;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="carousel-015"] [data-part="frame"][data-empty="true"]{background:
 radial-gradient(85% 80% at 25% 20%,oklch(0.92 0.06 var(--vibeui-carousel-015-hue,250)),transparent 70%),
-linear-gradient(150deg,oklch(0.8 0.09 var(--vibeui-carousel-015-hue,250)),oklch(0.5 0.11 var(--vibeui-carousel-015-hue,250)));
+linear-gradient(150deg,oklch(0.8 0.09 var(--vibeui-carousel-015-hue,250)),oklch(0.5 0.11 var(--vibeui-carousel-015-hue,250)));}
+[data-vibeui-block="carousel-015"] [data-part="frame"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 /* Подпись под кадром на своей подложке: поверх снимка она читается не всегда. */
 [data-vibeui-block="carousel-015"] figcaption{
@@ -191,7 +198,16 @@ export function Carousel015({
         style={palette}
       >
         <figure>
-          <div data-part="frame" role="img" aria-label={slide.caption} />
+          <div
+            data-part="frame"
+            data-empty={slide.image ? undefined : "true"}
+            role="img"
+            aria-label={slide.caption}
+          >
+            {slide.image ? (
+              <img src={slide.image} alt="" loading="lazy" decoding="async" />
+            ) : null}
+          </div>
           <figcaption>
             <span data-part="caption">{slide.caption}</span>
             {slide.detail ? (

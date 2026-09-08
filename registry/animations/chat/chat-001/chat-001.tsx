@@ -193,7 +193,9 @@ export function Chat001({
             <div data-part="row" data-row="assistant">
               <div data-part="bubble">
                 <span data-part="stream">{assistantMessage}</span>
-                {streaming ? <span data-part="caret" aria-hidden="true" /> : null}
+                {streaming ? (
+                  <span data-part="caret" aria-hidden="true" />
+                ) : null}
               </div>
             </div>
           </div>

@@ -2,6 +2,8 @@ import type { CSSProperties } from "react"
 
 export type Commerce036Period = {
   value: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   label: string
   every: number
   discount: string
@@ -98,9 +100,15 @@ color:var(--vibeui-commerce-036-muted);
 [data-vibeui-block="commerce-036"] [data-part="period"]{position:relative;display:block;cursor:pointer}
 [data-vibeui-block="commerce-036"] [data-part="period"] input{position:absolute;opacity:0;pointer-events:none}
 [data-vibeui-block="commerce-036"] [data-part="face"]{
-display:block;height:100%;padding:0.75rem;border-radius:0.875rem;text-align:left;
-border:1px solid var(--vibeui-commerce-036-border);background:var(--vibeui-commerce-036-bg);
-transition:border-color .15s ease,box-shadow .15s ease;
+position:relative;display:block;height:100%;padding:0.75rem;border-radius:0.875rem;text-align:left;
+border:1px solid var(--vibeui-commerce-036-border);
+transition:border-color .15s ease,box-shadow .15s ease;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="commerce-036"] [data-part="face"][data-empty="true"]{background:var(--vibeui-commerce-036-bg);}
+[data-vibeui-block="commerce-036"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="commerce-036"] [data-part="period"] input:checked + [data-part="face"]{
 border-color:var(--vibeui-commerce-036-accent);box-shadow:inset 0 0 0 1px var(--vibeui-commerce-036-accent);
@@ -301,7 +309,18 @@ export function Commerce036({
                           value={item.value}
                           defaultChecked={item.value === period}
                         />
-                        <span data-part="face">
+                        <span
+                          data-part="face"
+                          data-empty={item.image ? undefined : "true"}
+                        >
+                          {item.image ? (
+                            <img
+                              src={item.image}
+                              alt=""
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          ) : null}
                           <b>{item.label}</b>
                           <span>{item.discount}</span>
                         </span>

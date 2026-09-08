@@ -25,6 +25,8 @@ export type Commerce060Plan = {
 }
 
 export type Commerce060Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   title?: string
   lead?: string
   parcels?: Commerce060Parcel[]
@@ -102,8 +104,11 @@ color:var(--vibeui-commerce-060-muted);
 [data-vibeui-block="commerce-060"] [data-part="plan"]{position:relative;display:block}
 [data-vibeui-block="commerce-060"] [data-part="plan"] input{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 [data-vibeui-block="commerce-060"] [data-part="face"]{
-display:block;cursor:pointer;border:1px solid var(--vibeui-commerce-060-border);border-radius:0.875rem;padding:0.75rem 0.875rem;
-transition:border-color .14s ease,background-color .14s ease;
+position:relative;display:block;cursor:pointer;border:1px solid var(--vibeui-commerce-060-border);border-radius:0.875rem;padding:0.75rem 0.875rem;
+transition:border-color .14s ease,background-color .14s ease;overflow:hidden;
+}
+[data-vibeui-block="commerce-060"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="commerce-060"] [data-part="plan"] input:checked+[data-part="face"]{
 border-color:var(--vibeui-commerce-060-accent);background:var(--vibeui-commerce-060-soft);
@@ -215,6 +220,7 @@ const DEFAULT_PLANS: Commerce060Plan[] = [
  */
 export function Commerce060({
   title = "Заказ приедет двумя посылками",
+  avatarImage = "",
   lead = "Часть товаров лежит на складе, кресло шьют под заказ. Ниже видно, что и когда приедет, и во что обойдётся каждый вариант.",
   parcels = DEFAULT_PARCELS,
   planLegend = "Как доставить",
@@ -302,7 +308,18 @@ export function Commerce060({
                       name="commerce-060-plan"
                       defaultChecked={index === 0}
                     />
-                    <span data-part="face">
+                    <span
+                      data-part="face"
+                      data-empty={avatarImage ? undefined : "true"}
+                    >
+                      {avatarImage ? (
+                        <img
+                          src={avatarImage}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      ) : null}
                       <span data-part="plabel">{plan.label}</span>
                       <span data-part="pdetail">{plan.detail}</span>
                       <span data-part="prices">

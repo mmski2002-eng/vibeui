@@ -14,7 +14,10 @@ export type Toast024Task = {
   fails?: boolean
 }
 
-export type Toast024Props = Omit<ComponentProps<"div">, "children" | "title"> & {
+export type Toast024Props = Omit<
+  ComponentProps<"div">,
+  "children" | "title"
+> & {
   tasks?: Toast024Task[]
   /** Заголовок с общим счётом. {done} и {total} подставляются. */
   titleTemplate?: string
@@ -242,7 +245,14 @@ export function Toast024({
           <div data-part="head">
             <p data-part="title">
               {titleTemplate
-                .replace("{done}", String(tasks.filter((task) => (progress[task.id] ?? 0) >= task.total).length))
+                .replace(
+                  "{done}",
+                  String(
+                    tasks.filter(
+                      (task) => (progress[task.id] ?? 0) >= task.total,
+                    ).length,
+                  ),
+                )
                 .replace("{total}", String(tasks.length))}
             </p>
             <span data-part="percent">{percent}%</span>

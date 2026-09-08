@@ -2,6 +2,8 @@ import type { CSSProperties } from "react"
 
 type Testimonials006Item = {
   quote: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   name: string
   role: string
   highlight?: boolean
@@ -65,10 +67,15 @@ margin:0 0 1rem;font-size:0.9375rem;line-height:1.65;
 }
 [data-vibeui-block="testimonials-006"] [data-part="author"]{display:flex;align-items:center;gap:0.625rem}
 [data-vibeui-block="testimonials-006"] [data-part="avatar"]{
-width:2rem;height:2rem;flex:none;border-radius:999px;
-display:grid;place-items:center;
-background:var(--vibeui-testimonials-006-accent);color:var(--vibeui-testimonials-006-accent-fg);
-font-size:0.6875rem;font-weight:760;
+position:relative;width:2rem;height:2rem;flex:none;border-radius:999px;
+display:grid;place-items:center;color:var(--vibeui-testimonials-006-accent-fg);
+font-size:0.6875rem;font-weight:760;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="testimonials-006"] [data-part="avatar"][data-empty="true"]{background:var(--vibeui-testimonials-006-accent);}
+[data-vibeui-block="testimonials-006"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="testimonials-006"] [data-part="name"]{display:block;font-size:0.875rem;font-weight:620}
 [data-vibeui-block="testimonials-006"] [data-part="role"]{display:block;color:var(--vibeui-testimonials-006-muted);font-size:0.75rem;line-height:1.35}
@@ -180,7 +187,19 @@ export function Testimonials006({
               >
                 <blockquote data-part="quote">{item.quote}</blockquote>
                 <figcaption data-part="author">
-                  <span data-part="avatar" aria-hidden="true">
+                  <span
+                    data-part="avatar"
+                    data-empty={item.image ? undefined : "true"}
+                    aria-hidden="true"
+                  >
+                    {item.image ? (
+                      <img
+                        src={item.image}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : null}
                     {initials(item.name)}
                   </span>
                   <span>

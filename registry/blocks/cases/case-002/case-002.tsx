@@ -177,7 +177,11 @@ export function Case002({
       <style href="vibeui-case-002" precedence="medium">
         {STYLES}
       </style>
-      <section data-vibeui-block="case-002" className={className} style={palette}>
+      <section
+        data-vibeui-block="case-002"
+        className={className}
+        style={palette}
+      >
         <div data-part="shell">
           <p data-part="eyebrow">{eyebrow}</p>
           <h2 data-part="title">{title}</h2>

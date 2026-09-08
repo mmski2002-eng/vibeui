@@ -3,6 +3,8 @@
 import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Hovercard002Props = Omit<ComponentProps<"div">, "children"> & {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   /**
    * Показать превью раскрытым прямо в потоке: витрина, скриншот, отладка.
    * Ссылка остаётся на месте, карточка встаёт под ней и никуда не всплывает.
@@ -85,14 +87,19 @@ transition:opacity .15s ease,translate .15s ease,visibility .15s;
 }
 /* Обложка вместо скриншота: градиент по оттенку домена и его первая буква. */
 [data-vibeui-block="hovercard-002"] [data-part="cover"]{
-display:flex;align-items:center;justify-content:center;
+position:relative;display:flex;align-items:center;justify-content:center;
 height:4.5rem;
-background:linear-gradient(135deg,
-oklch(0.72 0.13 var(--vibeui-hovercard-002-hue)),
-oklch(0.55 0.16 calc(var(--vibeui-hovercard-002-hue) + 40)));
 color:oklch(0.99 0.01 var(--vibeui-hovercard-002-hue));
 font-size:1.75rem;font-weight:800;letter-spacing:-0.02em;
-text-transform:uppercase;
+text-transform:uppercase;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="hovercard-002"] [data-part="cover"][data-empty="true"]{background:linear-gradient(135deg,
+oklch(0.72 0.13 var(--vibeui-hovercard-002-hue)),
+oklch(0.55 0.16 calc(var(--vibeui-hovercard-002-hue) + 40)));}
+[data-vibeui-block="hovercard-002"] [data-part="cover"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="hovercard-002"] [data-part="body"]{display:flex;flex-direction:column;gap:0.25rem;padding:0.6875rem 0.8125rem 0.8125rem}
 [data-vibeui-block="hovercard-002"] [data-part="domain"]{
@@ -172,6 +179,7 @@ function closeOnEscape(event: KeyboardEvent<HTMLElement>) {
 export function Hovercard002({
   open = false,
   anchorText = "разбор популярных ошибок вёрстки",
+  image = "",
   title = "Двенадцать ошибок вёрстки, которые видно с телефона",
   domain = "web.dev.example",
   excerpt = "Что ломается на узких экранах чаще всего: фиксированные ширины, шрифт меньше 16 пикселей, скрытый фокус и горизонтальная прокрутка у таблиц.",
@@ -225,7 +233,14 @@ export function Hovercard002({
               id="vibeui-hovercard-002-card"
               role="tooltip"
             >
-              <span data-part="cover" aria-hidden="true">
+              <span
+                data-part="cover"
+                data-empty={image ? undefined : "true"}
+                aria-hidden="true"
+              >
+                {image ? (
+                  <img src={image} alt="" loading="lazy" decoding="async" />
+                ) : null}
                 {domain[0]}
               </span>
               <span data-part="body">

@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Афиша списком",
       "description": "Список ближайших событий: строки с плашкой даты слева, названием и деталями в центре, кнопкой записи справа. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["events"],
+      "categories": [
+        "events"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,8 +20,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-event-001-*. Серверный компонент. Строка события — grid: плашка даты (число крупно, месяц под ним на тёплом фоне), информация и кнопка. На узком экране кнопка переносится под содержимое через grid-column, на широком встаёт справа.",
       "meta": {
-        "tags": ["events", "schedule", "listing", "agenda", "marketing"],
-        "preview": { "width": "full" },
+        "tags": [
+          "events",
+          "schedule",
+          "listing",
+          "agenda",
+          "marketing"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Event001",
           "usage": "<Event001\n  events={[{ day: \"18\", month: \"сен\", title: \"Вебинар\", meta: \"19:00\", format: \"Онлайн\" }]}\n/>",
@@ -43,12 +53,39 @@
           ]
         },
         "controls": [
-          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Ближайшие мероприятия", "maxLength": 40 },
-          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "События", "maxLength": 24 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ближайшие мероприятия",
+            "maxLength": 40
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "События",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A list of upcoming events: rows with a date plate on the left, title and details in the middle, a register button on the right. Self-contained — one file, no dependencies.",
@@ -74,10 +111,20 @@
               "usage": "<Event001\n  events={[{ day: \"18\", month: \"Sep\", title: \"Webinar\", meta: \"7pm\", format: \"Online\" }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Title", "default": "Upcoming events" },
-              "eyebrow": { "label": "Eyebrow", "default": "Events" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Title",
+                "default": "Upcoming events"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Events"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "Event List",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-event-001-* variables. A server component. An event row is a grid: a date plate (day large, month below on a warm background), the info and a button. On a narrow screen the button wraps below the content via grid-column; on a wide screen it sits on the right."
@@ -90,7 +137,9 @@
       "type": "registry:block",
       "title": "Карточка события",
       "description": "Страница одного мероприятия: обложка-градиент с бейджем, описание, детали (дата, время, место, цена), спикеры инициалами и кнопка регистрации. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["events"],
+      "categories": [
+        "events"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -102,8 +151,19 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-event-002-*. Серверный компонент. Обложка — тёплый градиент с полупрозрачным бейджем. Детали сеткой 2×2, спикеры — стопка аватаров из инициалов с обводкой цветом карточки. Инициалы вместо фото: стоковое лицо вредит доверию.",
       "meta": {
-        "tags": ["events", "conference", "detail", "registration", "marketing"],
-        "preview": { "width": "full" },
+        "tags": [
+          "events",
+          "conference",
+          "detail",
+          "registration",
+          "marketing"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "image": "/demo/scenes/scene-08.webp"
+          }
+        },
         "ai": {
           "export": "Event002",
           "usage": "<Event002\n  title=\"VibeConf\"\n  dateLabel=\"12 октября\"\n  speakers={[\"Анна Ковалёва\"]}\n/>",
@@ -127,12 +187,39 @@
           ]
         },
         "controls": [
-          { "prop": "title", "label": "Заголовок", "type": "text", "default": "VibeConf: интерфейсы для вайбкодинга", "maxLength": 52 },
-          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Конференция", "maxLength": 24 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "VibeConf: интерфейсы для вайбкодинга",
+            "maxLength": 52
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Конференция",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A single event page: a gradient cover with a badge, a summary, details (date, time, place, price), speakers by initials and a register button. Self-contained — one file, no dependencies.",
@@ -158,13 +245,28 @@
               "usage": "<Event002\n  title=\"VibeConf\"\n  dateLabel=\"Oct 12\"\n  speakers={[\"Anna Kovaleva\"]}\n/>"
             },
             "controls": {
-              "title": { "label": "Title", "default": "VibeConf: interfaces for vibe coding" },
-              "eyebrow": { "label": "Eyebrow", "default": "Conference" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Title",
+                "default": "VibeConf: interfaces for vibe coding"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Conference"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "Event Card",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-event-002-* variables. A server component. The cover is a warm gradient with a semi-transparent badge. Details are a 2×2 grid, speakers are a stack of initial avatars ringed in the card colour. Initials instead of photos: a stock face hurts trust."
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-event-002-* variables. A server component. The cover is a warm gradient with a semi-transparent badge. Details are a 2×2 grid, speakers are a stack of initial avatars ringed in the card colour. Initials instead of photos: a stock face hurts trust.",
+            "preview": {
+              "props": {
+                "image": "/demo/scenes/scene-08.webp"
+              }
+            }
           }
         }
       }
@@ -174,7 +276,9 @@
       "type": "registry:block",
       "title": "Сетка расписания",
       "description": "Сетка предстоящих событий карточками: тёплая полоса сверху, дата, название, формат и остаток мест. Три колонки на широком экране. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["events"],
+      "categories": [
+        "events"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -186,8 +290,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-event-003-*. Серверный компонент. Карточки-ссылки с тёплой полосой-градиентом сверху, датой акцентом, названием и футером «формат — остаток мест». Число колонок считает container query. Название flex:1 держит футер прижатым вниз при разной длине.",
       "meta": {
-        "tags": ["events", "schedule", "grid", "agenda", "marketing"],
-        "preview": { "width": "full" },
+        "tags": [
+          "events",
+          "schedule",
+          "grid",
+          "agenda",
+          "marketing"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Event003",
           "usage": "<Event003\n  events={[{ title: \"Вебинар\", date: \"18 сентября\", format: \"Онлайн\", spots: \"40 мест\" }]}\n/>",
@@ -211,12 +323,39 @@
           ]
         },
         "controls": [
-          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Расписание на месяц", "maxLength": 40 },
-          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "События", "maxLength": 24 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Расписание на месяц",
+            "maxLength": 40
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "События",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A grid of upcoming events as cards: a warm top bar, date, title, format and remaining spots. Three columns on a wide screen. Self-contained — one file, no dependencies.",
@@ -242,10 +381,20 @@
               "usage": "<Event003\n  events={[{ title: \"Webinar\", date: \"Sep 18\", format: \"Online\", spots: \"40 spots\" }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Title", "default": "This month's schedule" },
-              "eyebrow": { "label": "Eyebrow", "default": "Events" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Title",
+                "default": "This month's schedule"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Events"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "Schedule Grid",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-event-003-* variables. A server component. Link cards with a warm gradient bar on top, the date in the accent, a title and a format—remaining-spots footer. Column count is driven by a container query. The title flex:1 keeps the footer pinned down across varying lengths."

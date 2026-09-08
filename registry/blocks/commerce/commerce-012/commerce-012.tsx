@@ -12,6 +12,8 @@ export type Commerce012Event = {
 }
 
 export type Commerce012Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   order?: string
   status?: string
   eta?: string
@@ -116,8 +118,13 @@ display:flex;flex-wrap:wrap;align-items:center;gap:0.75rem;margin-top:1.25rem;
 padding:0.75rem;border-radius:1rem;border:1px solid var(--vibeui-commerce-012-border);background:var(--vibeui-commerce-012-soft);
 }
 [data-vibeui-block="commerce-012"] [data-part="face"]{
-display:flex;align-items:center;justify-content:center;width:2.25rem;height:2.25rem;border-radius:9999px;
-background:var(--vibeui-commerce-012-face);font-size:0.75rem;font-weight:700;color:var(--vibeui-commerce-012-on-face);
+position:relative;display:flex;align-items:center;justify-content:center;width:2.25rem;height:2.25rem;border-radius:9999px;font-size:0.75rem;font-weight:700;color:var(--vibeui-commerce-012-on-face);overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="commerce-012"] [data-part="face"][data-empty="true"]{background:var(--vibeui-commerce-012-face);}
+[data-vibeui-block="commerce-012"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="commerce-012"] [data-part="who"]{margin:0;font-size:0.8125rem;font-weight:650}
 [data-vibeui-block="commerce-012"] [data-part="note"]{margin:0.0625rem 0 0;font-size:0.6875rem;color:var(--vibeui-commerce-012-muted)}
@@ -190,6 +197,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Commerce012({
   order = "№ 2024-1187",
+  avatarImage = "",
   status = "В пути",
   eta = "Сегодня до 18:00",
   where = "Москва, Пушкина 12, кв. 40 · курьер позвонит за час",
@@ -262,7 +270,14 @@ export function Commerce012({
           </ol>
 
           <div data-part="courier">
-            <span data-part="face" aria-hidden="true">
+            <span
+              data-part="face"
+              data-empty={avatarImage ? undefined : "true"}
+              aria-hidden="true"
+            >
+              {avatarImage ? (
+                <img src={avatarImage} alt="" loading="lazy" decoding="async" />
+              ) : null}
               {courier.name.slice(0, 1)}
             </span>
             <div>

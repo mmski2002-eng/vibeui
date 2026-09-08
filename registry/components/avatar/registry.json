@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Аватар с фото",
       "description": "Базовый аватар: фотография, точка присутствия и три размера. Нет фотографии — остаются инициалы на фоне, выведенном из имени.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-001-*. Фотография подставляется пропом src обычным <img> с object-fit: cover — компонент переносим и не зависит от next/image. Без фотографии показываются инициалы, а оттенок фона считается из имени детерминированной функцией hueOf и подставляется в переменную --vibeui-avatar-001-hue: фон и цвет букв выводятся из неё через oklch, поэтому контраст держится на любом оттенке. Полное имя лежит скрытым текстом для скринридера, инициалы помечены aria-hidden. Тема берётся из color-scheme через light-dark(), классовую тёмную тему компонент включает себе сам.",
       "meta": {
-        "tags": ["avatar", "photo", "user", "presence"],
+        "tags": [
+          "avatar",
+          "photo",
+          "user",
+          "presence"
+        ],
         "ai": {
           "export": "Avatar001",
           "usage": "<Avatar001 name=\"Анна Ковалёва\" src=\"/avatars/anna.webp\" status=\"online\" />",
@@ -62,14 +69,23 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": ["sm", "md", "lg"]
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
           },
           {
             "prop": "status",
             "label": "Присутствие",
             "type": "select",
             "default": "online",
-            "options": ["none", "online", "away", "busy"]
+            "options": [
+              "none",
+              "online",
+              "away",
+              "busy"
+            ]
           },
           {
             "prop": "src",
@@ -136,7 +152,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-001-* variables. The photo is supplied through the src prop as a plain <img> with object-fit: cover — the component is portable and does not depend on next/image. Without a photo the initials are shown, and the background hue is computed from the name by the deterministic hueOf function and fed into the --vibeui-avatar-001-hue variable: the background and the letter colour are derived from it through oklch, so contrast holds at any hue. The full name lies in hidden text for a screen reader, and the initials are marked aria-hidden. The theme comes from color-scheme through light-dark(), and the component switches the class-based dark theme on for itself."
           }
         },
-        "cardControls": ["name", "size", "status", "src"],
+        "cardControls": [
+          "name",
+          "size",
+          "status",
+          "src"
+        ],
         "preview": {
           "props": {
             "src": "/demo/avatars/anna-256.webp"
@@ -161,7 +182,9 @@
       "type": "registry:component",
       "title": "Фото с запасным вариантом",
       "description": "Фотография с запасными инициалами: битая ссылка не оставляет пустого места и не требует ни строчки JS.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -173,7 +196,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-002-*. Серверный: хуков нет. Инициалы лежат абсолютной подложкой, фотография — слоем поверх с alt=\"\", поэтому при неудачной загрузке остаётся подложка, а не значок сломанной картинки. Имя вынесено скрытой строкой для скринридера. Размер задаётся одной переменной --vibeui-avatar-002-size, три готовых значения — атрибутом data-size. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "fallback", "image", "no-js"],
+        "tags": [
+          "avatar",
+          "fallback",
+          "image",
+          "no-js"
+        ],
         "ai": {
           "export": "Avatar002",
           "usage": "<Avatar002 name=\"Анна Петрова\" src=\"/people/anna.jpg\" size=\"lg\" />",
@@ -217,7 +245,11 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": ["sm", "md", "lg"]
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
           },
           {
             "prop": "src",
@@ -281,7 +313,11 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-002-* variables. Server-side: there are no hooks. The initials lie underneath as an absolutely positioned backdrop and the photo is a layer on top with alt=\"\", so a failed load leaves the backdrop rather than a broken-image icon. The name is exposed as a hidden line for a screen reader. The size is set by a single variable, --vibeui-avatar-002-size, and three ready-made values are selected by the data-size attribute. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
-        "cardControls": ["name", "size", "src"],
+        "cardControls": [
+          "name",
+          "size",
+          "src"
+        ],
         "preview": {
           "states": [
             {
@@ -300,7 +336,9 @@
       "type": "registry:component",
       "title": "Стопка аватаров",
       "description": "Стопка участников с честной шириной: перекрытие сделано отрицательным margin, хвост свёрнут в счётчик, а с включёнными подсказками кружки называют себя по наведению и по фокусу.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -312,7 +350,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-003-*. Разметка — список ul/li: перекрытие идёт отрицательным margin, поэтому ширина стопки честная, а порядок наложения задаётся переменной --vibeui-avatar-003-z и не ограничен числом участников. С tooltip кружок становится кнопкой, попадает в Tab-порядок и получает :focus-visible, а подпись лежит внутри кнопки обычным текстом и показывается правилами :hover и :focus-visible — без состояния и без JS. Имена свёрнутых участников остаются в разметке скрытым текстом. Тема берётся из color-scheme через light-dark(), классовую тёмную тему компонент включает себе сам.",
       "meta": {
-        "tags": ["avatar", "group", "stack", "tooltip"],
+        "tags": [
+          "avatar",
+          "group",
+          "stack",
+          "tooltip"
+        ],
         "ai": {
           "export": "Avatar003",
           "usage": "<Avatar003 names={[\"Анна Реброва\", \"Марк Ильин\"]} visible={4} tooltip />",
@@ -358,7 +401,11 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": ["sm", "md", "lg"]
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
           },
           {
             "prop": "label",
@@ -439,7 +486,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-003-* variables. The markup is a ul/li list: the overlap comes from a negative margin, so the stack's width is honest, and the layering order is set by the --vibeui-avatar-003-z variable and is not limited by the number of participants. With tooltip on, the circle becomes a button, enters the tab order and gets :focus-visible, while the label lies inside the button as ordinary text and is revealed by :hover and :focus-visible rules — with no state and no JS. The names of the folded participants stay in the markup as hidden text. The theme comes from color-scheme through light-dark(), and the component switches the class-based dark theme on for itself."
           }
         },
-        "cardControls": ["visible", "size", "label", "tooltip"],
+        "cardControls": [
+          "visible",
+          "size",
+          "label",
+          "tooltip"
+        ],
         "preview": {
           "props": {
             "photos": [
@@ -468,7 +520,9 @@
       "type": "registry:component",
       "title": "Кольцо прогресса",
       "description": "Аватар в кольце прогресса: заполнение задаётся одной переменной, кольцо нарисовано градиентом без SVG.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -480,7 +534,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-004-*. Серверный: хуков нет. Кольцо — conic-gradient, вырезанный radial-gradient-маской, поэтому толщина меняется одной переменной и не требует ни SVG, ни расчёта длины дуги. Значение приходит в градусах (проценты × 3.6) и продублировано текстом в aria-label и скрытой строке. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "progress", "ring", "gradient"],
+        "tags": [
+          "avatar",
+          "progress",
+          "ring",
+          "gradient"
+        ],
         "ai": {
           "export": "Avatar004",
           "usage": "<Avatar004 name=\"Анна Петрова\" value={72} size=\"lg\" />",
@@ -529,7 +588,11 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": ["sm", "md", "lg"]
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
           },
           {
             "prop": "accent",
@@ -591,7 +654,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-004-* variables. Server-side: there are no hooks. The ring is a conic-gradient cut out by a radial-gradient mask, so the thickness changes through a single variable and needs neither SVG nor arc-length maths. The value arrives in degrees (percent × 3.6) and is duplicated as text in the aria-label and in a hidden line. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
-        "cardControls": ["name", "value", "size", "accent"],
+        "cardControls": [
+          "name",
+          "value",
+          "size",
+          "accent"
+        ],
         "preview": {
           "props": {
             "src": "/demo/avatars/anna-256.webp"
@@ -616,7 +684,9 @@
       "type": "registry:component",
       "title": "Аватар со значком",
       "description": "Аватар со значком в углу: подтверждение, роль или новичок — значок вырезает под собой кружок фона.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -628,7 +698,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-005-*. Серверный: хуков нет. Значок отделён от фотографии обводкой box-shadow цветом подложки, поэтому одинаково читается на светлом и тёмном снимке. Вид значка переключается атрибутом data-badge, значение продублировано словами в aria-label. Галочка нарисована двумя бордюрами. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "badge", "verified", "role"],
+        "tags": [
+          "avatar",
+          "badge",
+          "verified",
+          "role"
+        ],
         "ai": {
           "export": "Avatar005",
           "usage": "<Avatar005 name=\"Марк Ильин\" badge=\"verified\" size=\"lg\" />",
@@ -670,14 +745,22 @@
             "label": "Значок",
             "type": "select",
             "default": "verified",
-            "options": ["verified", "admin", "new"]
+            "options": [
+              "verified",
+              "admin",
+              "new"
+            ]
           },
           {
             "prop": "size",
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": ["sm", "md", "lg"]
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
           }
         ],
         "i18n": {
@@ -731,7 +814,11 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-005-* variables. Server-side: there are no hooks. The badge is separated from the photo by a box-shadow ring in the surface colour, so it reads the same on a light and on a dark shot. The kind of badge is switched by the data-badge attribute, and its value is duplicated in words in the aria-label. The tick is drawn with two borders. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
-        "cardControls": ["name", "badge", "size"],
+        "cardControls": [
+          "name",
+          "badge",
+          "size"
+        ],
         "preview": {
           "props": {
             "src": "/demo/avatars/mark-256.webp"
@@ -756,7 +843,9 @@
       "type": "registry:component",
       "title": "Загрузка фото",
       "description": "Смена фотографии профиля на label и скрытом поле: кликается, работает с клавиатуры и не требует JS.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -768,7 +857,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-006-*. Роль кнопки играет <label>, связанный с input type=\"file\" через useId. Поле спрятано размером и прозрачностью, но остаётся в потоке — display:none забрал бы у него фокус. Плёнка с подписью проявляется и на наведении, и при фокусе поля через соседний селектор, обводка ставится на обёртку через :has(). Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "upload", "file", "no-js"],
+        "tags": [
+          "avatar",
+          "upload",
+          "file",
+          "no-js"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -907,7 +1001,13 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-006-* variables. The role of the button is played by a <label> tied to an input type=\"file\" through useId. The field is hidden by size and opacity but stays in the flow — display:none would have taken focus away from it. The veil with its caption appears both on hover and on focus of the field through an adjacent selector, and the ring is placed on the wrapper through :has(). The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
-        "cardControls": ["name", "label", "hint", "background", "textColor"]
+        "cardControls": [
+          "name",
+          "label",
+          "hint",
+          "background",
+          "textColor"
+        ]
       }
     },
     {
@@ -915,7 +1015,9 @@
       "type": "registry:component",
       "title": "Строка с именем",
       "description": "Строка личности: аватар, имя, роль и статус словом. Текст режется многоточием, чтобы строки списка были одной высоты.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -927,7 +1029,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-007-*. Серверный: хуков нет. Ссылка растянута на всю карточку псевдоэлементом ::after, а видимая обводка фокуса ставится на корень через :has(a:focus-visible) — иначе подсвечивалось бы только имя. Три текстовых поля режутся многоточием. Статус подписан словом, цвет только дублирует подпись. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "identity", "list", "status"],
+        "tags": [
+          "avatar",
+          "identity",
+          "list",
+          "status"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -980,7 +1087,11 @@
             "label": "Статус",
             "type": "select",
             "default": "online",
-            "options": ["online", "away", "offline"]
+            "options": [
+              "online",
+              "away",
+              "offline"
+            ]
           },
           {
             "prop": "background",
@@ -1084,7 +1195,9 @@
       "type": "registry:component",
       "title": "Список людей с заглушкой",
       "description": "Список участников в двух состояниях: пока грузится — круги и полосы разной длины, после загрузки — те же строки с людьми, пиксель в пиксель.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1096,7 +1209,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-008-*. Серверный: хуков нет. Блик — движущийся линейный градиент на 200% ширины, задержка задана по строкам через nth-child. Контейнер объявлен role=\"status\" с aria-busy и подписью. В prefers-reduced-motion анимация снимается, а фигуры заливаются ровным тоном. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "skeleton", "loading", "list"],
+        "tags": [
+          "avatar",
+          "skeleton",
+          "loading",
+          "list"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -1254,7 +1372,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-008-* variables. Server-side: there are no hooks. The shimmer is a moving linear gradient at 200% width, and the delay is set per row through nth-child. The container is declared role=\"status\" with aria-busy and a caption. Under prefers-reduced-motion the animation is removed and the shapes are filled with a flat tone. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
-        "cardControls": ["count", "label", "background", "ready"]
+        "cardControls": [
+          "count",
+          "label",
+          "background",
+          "ready"
+        ]
       }
     },
     {
@@ -1262,7 +1385,9 @@
       "type": "registry:component",
       "title": "Аватар ассистента",
       "description": "Аватар ассистента: квадратная форма и глиф вместо инициалов — машину в переписке нельзя путать с человеком.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1274,7 +1399,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-009-*. Серверный: хуков нет. Форма — скруглённый квадрат с радиусом от размера, фон — два наложенных градиента. Глиф собран из кольца и псевдоэлемента. Точки «печатает» мигают с задержкой по nth-child и полностью гасятся в prefers-reduced-motion. Состояние проговорено в aria-label. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "ai", "assistant", "chat"],
+        "tags": [
+          "avatar",
+          "ai",
+          "assistant",
+          "chat"
+        ],
         "ai": {
           "export": "Avatar009",
           "usage": "<Avatar009 name=\"Ассистент\" typing size=\"lg\" />",
@@ -1321,7 +1451,11 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": ["sm", "md", "lg"]
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
           },
           {
             "prop": "accent",
@@ -1383,7 +1517,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-009-* variables. Server-side: there are no hooks. The shape is a rounded square with a radius derived from the size, and the background is two overlaid gradients. The glyph is assembled from a ring and a pseudo-element. The \"typing\" dots blink with a delay set through nth-child and go out entirely under prefers-reduced-motion. The state is spelled out in the aria-label. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
-        "cardControls": ["name", "typing", "size", "accent"],
+        "cardControls": [
+          "name",
+          "typing",
+          "size",
+          "accent"
+        ],
         "preview": {
           "states": [
             {
@@ -1402,7 +1541,9 @@
       "type": "registry:component",
       "title": "Отсутствующий участник",
       "description": "Место человека, которого нет: удалённый аккаунт, аноним и приглашённый отличаются знаком, а не только цветом.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1414,7 +1555,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-010-*. Серверный: хуков нет. Вид переключается атрибутом data-reason: у приглашённого граница пунктирная и фон прозрачный, у анонима вместо знака силуэт из двух псевдоэлементов. Каждому виду соответствует своя подпись в aria-label, её можно заменить пропом label. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "placeholder", "deleted", "anonymous"],
+        "tags": [
+          "avatar",
+          "placeholder",
+          "deleted",
+          "anonymous"
+        ],
         "ai": {
           "export": "Avatar010",
           "usage": "<Avatar010 reason=\"invited\" size=\"md\" />",
@@ -1449,14 +1595,22 @@
             "label": "Случай",
             "type": "select",
             "default": "deleted",
-            "options": ["deleted", "anonymous", "invited"]
+            "options": [
+              "deleted",
+              "anonymous",
+              "invited"
+            ]
           },
           {
             "prop": "size",
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": ["sm", "md", "lg"]
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
           },
           {
             "prop": "label",
@@ -1517,7 +1671,11 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-010-* variables. Server-side: there are no hooks. The kind is switched by the data-reason attribute: an invited person gets a dashed border and a transparent background, and an anonymous one gets a silhouette made of two pseudo-elements instead of a mark. Each kind has a caption of its own in the aria-label, which can be replaced through the label prop. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
-        "cardControls": ["reason", "size", "label"],
+        "cardControls": [
+          "reason",
+          "size",
+          "label"
+        ],
         "preview": {
           "states": [
             {
@@ -1539,7 +1697,9 @@
       "type": "registry:component",
       "title": "Знак компании",
       "description": "Аватар организации: скруглённый квадрат и монограмма — в списке из людей и компаний форма различается боковым зрением.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1551,7 +1711,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-011-*. Серверный: хуков нет. Фон, текст и граница выводятся из одного акцента через color-mix, поэтому цвет бренда задаётся одним пропом. Логотип вставляется с object-fit: contain и внутренним отступом — обрезать чужой знак нельзя. Монограмма берёт первую букву названия, отбрасывая кавычки. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "company", "monogram", "brand"],
+        "tags": [
+          "avatar",
+          "company",
+          "monogram",
+          "brand"
+        ],
         "ai": {
           "export": "Avatar011",
           "usage": "<Avatar011 name=\"Студия «Полёт»\" accent=\"oklch(0.55 0.15 145)\" />",
@@ -1592,7 +1757,11 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": ["sm", "md", "lg"]
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
           },
           {
             "prop": "accent",
@@ -1651,7 +1820,11 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-011-* variables. Server-side: there are no hooks. The background, the text and the border are derived from a single accent through color-mix, so the brand colour is set by one prop. The logo is inserted with object-fit: contain and inner padding — somebody else's mark must not be cropped. The monogram takes the first letter of the name, dropping quotation marks. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
-        "cardControls": ["name", "size", "accent"],
+        "cardControls": [
+          "name",
+          "size",
+          "accent"
+        ],
         "preview": {
           "states": [
             {
@@ -1673,7 +1846,9 @@
       "type": "registry:component",
       "title": "Аватары с именами",
       "description": "Стопка аватаров с подписью словами: «Анна, Марк и ещё трое отметили макет» — кружки не отвечают, кто именно.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1685,7 +1860,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-012-*. Серверный: хуков нет. Подпись строится по правилу «двое и ещё N»: перечислять всех в ленте нельзя, строка обязана остаться однострочной и режется многоточием. Кружки помечены aria-hidden — имена уже есть в тексте, дублировать их для скринридера незачем. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "facepile", "activity", "feed"],
+        "tags": [
+          "avatar",
+          "facepile",
+          "activity",
+          "feed"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -1858,7 +2038,9 @@
       "type": "registry:component",
       "title": "Аватар со статусом",
       "description": "Аватар с присутствием и ролью: точка сидит в вырезе маски, состояния различаются формой, а роль стоит в другом углу и другой фигурой.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1870,7 +2052,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-013-*. Серверный: хуков нет. Зазор вокруг точки сделан mask-image по портрету, а не обводкой цветом фона — обводка выдаёт себя, как только фон меняется. Четыре состояния различаются формой (круг, кольцо, квадрат, пустой контур) и продублированы словом в скрытой подписи, поэтому точка не остаётся немой для скринридера. Размеры sm/md/lg переопределяют только --vibeui-avatar-013-size и --vibeui-avatar-013-dot. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "presence", "status", "badge"],
+        "tags": [
+          "avatar",
+          "presence",
+          "status",
+          "badge"
+        ],
         "ai": {
           "export": "Avatar013",
           "usage": "<Avatar013 name=\"Анна Реброва\" status=\"online\" size=\"md\" />",
@@ -1908,21 +2095,35 @@
             "label": "Состояние",
             "type": "select",
             "default": "online",
-            "options": ["online", "away", "busy", "offline"]
+            "options": [
+              "online",
+              "away",
+              "busy",
+              "offline"
+            ]
           },
           {
             "prop": "size",
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": ["sm", "md", "lg"]
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
           },
           {
             "prop": "role",
             "label": "Роль",
             "type": "select",
             "default": "none",
-            "options": ["none", "owner", "editor", "reader"]
+            "options": [
+              "none",
+              "owner",
+              "editor",
+              "reader"
+            ]
           },
           {
             "prop": "src",
@@ -2004,7 +2205,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-013-* variables. Server-side: there are no hooks. The gap around the dot is made with a mask-image over the portrait rather than with a ring in the background colour — a ring gives itself away as soon as the background changes. The four states differ in shape (a circle, a ring, a square, an empty outline) and are duplicated by a word in the hidden caption, so the dot is not left mute for a screen reader. The sm/md/lg sizes override only --vibeui-avatar-013-size and --vibeui-avatar-013-dot. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
-        "cardControls": ["status", "size", "role", "src"],
+        "cardControls": [
+          "status",
+          "size",
+          "role",
+          "src"
+        ],
         "preview": {
           "states": [
             {
@@ -2028,168 +2234,13 @@
       }
     },
     {
-      "name": "avatar-014",
-      "type": "registry:component",
-      "title": "Аватар нестандартной формы",
-      "description": "Аватар нестандартной формы: шестиугольник и «сквиркл» вырезаны clip-path, обводка нарисована подложкой — обычный border срезается вместе с фигурой.",
-      "categories": ["avatar"],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "avatar-014/avatar-014.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/avatar-014.tsx"
-        }
-      ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-014-*. Серверный: хуков нет. Формы заданы clip-path (polygon для шестиугольника, скруглением для сквиркла), поэтому остаются резкими на любом масштабе и не тянут за собой картинку-маску. Обводка нарисована отдельной подложкой под clip-path: border режется вместе с фигурой. Инициалы центрируются по прямоугольнику, поэтому у шестиугольника задан оптический сдвиг в 1px — без него буквы кажутся поднятыми. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
-      "meta": {
-        "tags": ["avatar", "shape", "clip-path", "hexagon"],
-        "ai": {
-          "export": "Avatar014",
-          "usage": "<Avatar014 name=\"Илья Мохов\" role=\"Фронтенд\" shape=\"hex\" size=\"md\" />",
-          "summary": "Аватар нестандартной формы на clip-path: шестиугольник, сквиркл и круг с общей обводкой-подложкой. Ноль зависимостей, один файл, клиентского JS нет. Тема приходит из color-scheme окружения через light-dark().",
-          "preserve": [
-            "локальную палитру --vibeui-avatar-014-* и не подменять её токенами вашей темы",
-            "clip-path вместо картинки-маски: форма обязана оставаться резкой на любом масштабе",
-            "обводку подложкой, а не border — border срезается вместе с фигурой",
-            "оптический сдвиг инициалов у шестиугольника: без него буквы кажутся поднятыми",
-            "aria-hidden на инициалах, имя читается из подписи",
-            "одну форму на весь список — смесь форм читается как разные сущности",
-            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
-            "кольцо-вырез, совпадающее с фоном страницы: белым оно остаётся только в светлой теме, в тёмной обязано темнеть вместе со страницей"
-          ],
-          "adapt": [
-            "имя и роль через role",
-            "форму через shape",
-            "размер через size",
-            "цвет обводки в переменной",
-            "фотографию через src — без неё остаются инициалы",
-            "имя и размер: name, size"
-          ],
-          "notes": [
-            "Тема берётся из color-scheme, а классовую тёмную тему компонент подхватывает сам: правило :where(.dark,[data-theme=\"dark\"]) выставляет ему color-scheme: dark. Поэтому он темнеет и в проекте на next-themes с классом, и там, где объявлен color-scheme: light dark.",
-            "Шестиугольник заметно съедает углы портрета: для фото лиц берите squircle.",
-            "Не смешивайте формы в одном списке: разная форма читается как разный тип участника.",
-            "Роль необязательна: без неё останется одна строка с именем.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "shape",
-            "label": "Форма",
-            "type": "select",
-            "default": "hex",
-            "options": ["hex", "squircle", "circle"]
-          },
-          {
-            "prop": "role",
-            "label": "Роль",
-            "type": "text",
-            "default": "Фронтенд",
-            "maxLength": 24
-          },
-          {
-            "prop": "name",
-            "label": "Имя",
-            "type": "text",
-            "default": "Марк Ильин",
-            "maxLength": 30
-          },
-          {
-            "prop": "size",
-            "label": "Размер",
-            "type": "select",
-            "default": "md",
-            "options": ["sm", "md", "lg"]
-          }
-        ],
-        "i18n": {
-          "en": {
-            "description": "An avatar in a non-standard shape: hexagon and squircle are cut with clip-path, the ring is a backing layer — a border would be clipped with the shape.",
-            "ai": {
-              "summary": "A clip-path avatar shape set: hexagon, squircle and circle sharing one backing-layer ring. Zero dependencies, one file, no client JS. The theme comes from the surrounding color-scheme through light-dark().",
-              "preserve": [
-                "the local --vibeui-avatar-014-* palette — do not swap it for your theme tokens",
-                "clip-path instead of an image mask: the shape must stay crisp at any scale",
-                "the ring as a backing layer, not a border — a border is clipped with the shape",
-                "the optical nudge of the initials in the hexagon: without it the letters look raised",
-                "aria-hidden on the initials, the name is read from the caption",
-                "one shape across a list — mixed shapes read as different entities",
-                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
-                "the cut-out ring matching the page background: it stays white only in the light theme and has to darken with the page in the dark one"
-              ],
-              "adapt": [
-                "the name and the role through role",
-                "the shape through shape",
-                "the size through size",
-                "the ring colour in the variable",
-                "the photo via src — without it the initials stay",
-                "the name and the size: name, size"
-              ],
-              "notes": [
-                "The theme comes from color-scheme, and a class-based dark theme is picked up by the component itself: a :where(.dark,[data-theme=\"dark\"]) rule sets color-scheme: dark on it. So it darkens both in a next-themes project that toggles a class and where color-scheme: light dark is declared.",
-                "The hexagon eats noticeable corners off a portrait: for face photos pick squircle.",
-                "Do not mix shapes in one list: a different shape reads as a different kind of member.",
-                "The role is optional: without it only the name line remains.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
-              ],
-              "usage": "<Avatar014 name=\"Ilya Mokhov\" role=\"Frontend\" shape=\"hex\" size=\"md\" />"
-            },
-            "controls": {
-              "shape": {
-                "label": "Shape",
-                "default": "hex"
-              },
-              "role": {
-                "label": "Role",
-                "default": "Frontend"
-              },
-              "name": {
-                "label": "Name",
-                "default": "Mark Ilyin"
-              },
-              "size": {
-                "label": "Size"
-              }
-            },
-            "title": "Shaped Avatar",
-            "preview": {
-              "props": {
-                "name": "Mark Ilyin",
-                "role": "Frontend"
-              }
-            },
-            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-014-* variables. Server-side: there are no hooks. The shapes are set with clip-path (a polygon for the hexagon, a rounding for the squircle), so they stay crisp at any scale and drag no mask image along. The ring is drawn as a separate backing layer under the clip-path: a border would be clipped together with the shape. The initials are centred against the rectangle, which is why the hexagon carries an optical nudge of 1px — without it the letters look raised. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
-          }
-        },
-        "cardControls": ["shape", "role", "name", "size"],
-        "preview": {
-          "states": [
-            {
-              "shape": "hex"
-            },
-            {
-              "shape": "squircle"
-            },
-            {
-              "shape": "circle"
-            }
-          ],
-          "props": {
-            "src": "/demo/avatars/mark-256.webp"
-          },
-          "width": "auto"
-        }
-      }
-    },
-    {
       "name": "avatar-015",
       "type": "registry:component",
       "title": "Редактор аватара",
       "description": "Аватар с меню правки на HTML popover: Escape и клик мимо закрывают меню сами, удаление отделено чертой и названо действием.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2201,7 +2252,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-015-*. Клиентский: \"use client\", useState и useRef держат выбранное действие и ссылку на popover. Меню — нативный HTML popover с popovertarget: закрытие по Escape и клику мимо достаётся от браузера, а не пишется руками. Позиционирование сделано CSS anchor positioning под @supports (anchor-name: --a) с обычным абсолютным запасным вариантом. Кнопка правки уменьшена и сдвинута в угол, её доступная подпись называет имя — в списке карточек «изменить фото» без имени бесполезно. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "upload", "popover", "menu"],
+        "tags": [
+          "avatar",
+          "upload",
+          "popover",
+          "menu"
+        ],
         "ai": {
           "export": "Avatar015",
           "usage": "<Avatar015\n  name=\"Анна Реброва\"\n  hint=\"PNG или JPG до 2 МБ, квадрат от 200 пикселей\"\n  editLabel=\"Загрузить фото\"\n  removeLabel=\"Удалить фото\"\n/>",
@@ -2358,7 +2414,9 @@
       "type": "registry:component",
       "title": "Сетка аватаров",
       "description": "Сетка лиц вместо стопки: состав команды виден целиком, число колонок считает браузер через auto-fill.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2370,7 +2428,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-016-*. Серверный: хуков нет. Колонки заданы repeat(auto-fill, minmax(4.5rem, 1fr)), поэтому их число считает браузер по фактической ширине, а не пропс: при смене ширины ряды перестраиваются сами. Оттенок кружка выводится из имени функцией FNV-1a, поэтому один человек всегда одного цвета. Имена подписаны под лицами и режутся многоточием — обрезанное имя честнее подсказки, которая не появляется на телефоне. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "grid", "team", "roster"],
+        "tags": [
+          "avatar",
+          "grid",
+          "team",
+          "roster"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -2438,7 +2501,11 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": ["sm", "md", "lg"]
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
           },
           {
             "prop": "textColor",
@@ -2539,7 +2606,9 @@
       "type": "registry:component",
       "title": "Строка участника",
       "description": "Строка человека, кликабельная целиком: ссылка растянута псевдоэлементом, кнопка действия поднята над ней и остаётся отдельной целью.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2551,7 +2620,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-017-*. Серверный: хуков нет. Вся строка — цель ссылки: a::after растянут на inset:0, а кнопка справа поднята z-index, поэтому открыть профиль и написать сообщение остаются разными действиями. Обводка фокуса ставится на строку через :has(a:focus-visible), поэтому с клавиатуры видно всю цель, а не подчёркнутое имя. Роль и служебная строка разведены начертанием: два одинаковых серых текста сливаются в один. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "row", "list", "profile"],
+        "tags": [
+          "avatar",
+          "row",
+          "list",
+          "profile"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -2695,7 +2769,13 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-017-* variables. Server-side: there are no hooks. The whole row is the link target: a::after is stretched to inset:0, while the button on the right is lifted by z-index, so opening the profile and writing a message stay separate actions. The focus ring is placed on the row through :has(a:focus-visible), so from the keyboard the whole target is visible rather than an underlined name. The role and the secondary line are separated by weight: two identical greys merge into one. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
-        "cardControls": ["role", "action", "background", "name", "textColor"]
+        "cardControls": [
+          "role",
+          "action",
+          "background",
+          "name",
+          "textColor"
+        ]
       }
     },
     {
@@ -2703,7 +2783,9 @@
       "type": "registry:component",
       "title": "Кольцо роли",
       "description": "Аватар с ролью в кольце: роли различаются длиной дуги, а цвет кольца можно считать из названия команды — тогда он одинаковый у всех коллег.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2715,7 +2797,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-018-*. Серверный: хуков нет. Кольцо роли собрано из conic-gradient с radial-маской: оно остаётся ровным на любом размере и не требует SVG. Роли различаются длиной дуги (владелец — полное кольцо, редактор — три четверти, читатель — половина, робот — четверть), а не только цветом, и продублированы словом в подписи: дуга без текста непонятна. Точка присутствия сюда намеренно не добавлена — она занята другим смыслом и вешать на кольцо второй индикатор нельзя. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "role", "ring", "permissions"],
+        "tags": [
+          "avatar",
+          "role",
+          "ring",
+          "permissions"
+        ],
         "ai": {
           "export": "Avatar018",
           "usage": "<Avatar018 name=\"Пётр Гай\" role=\"editor\" size=\"md\" />",
@@ -2752,14 +2839,23 @@
             "label": "Роль",
             "type": "select",
             "default": "editor",
-            "options": ["owner", "editor", "reader", "bot"]
+            "options": [
+              "owner",
+              "editor",
+              "reader",
+              "bot"
+            ]
           },
           {
             "prop": "size",
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": ["sm", "md", "lg"]
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
           },
           {
             "prop": "team",
@@ -2830,7 +2926,11 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-018-* variables. Server-side: there are no hooks. The role ring is a conic-gradient with a radial mask: it stays even at any size and needs no SVG. The roles differ in arc length (owner is the full ring, editor three quarters, reader a half, robot a quarter) rather than colour alone, and are duplicated by a word in the caption: an arc without text is unreadable. A presence dot is deliberately not added here — it is taken by a different meaning, and hanging a second indicator on the ring is not allowed. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
-        "cardControls": ["role", "size", "team"],
+        "cardControls": [
+          "role",
+          "size",
+          "team"
+        ],
         "preview": {
           "states": [
             {
@@ -2858,7 +2958,9 @@
       "type": "registry:component",
       "title": "Карточка профиля",
       "description": "Карточка человека для hover-card, но без всплытия по наведению: на сенсорном экране всплывающая карточка либо не появляется, либо закрывает то, на что нажали.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2870,7 +2972,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-019-*. Серверный: хуков нет. Это содержимое карточки, а не механизм всплытия: вызывающий код кладёт её в popover или hover-card по своему усмотрению — так карточка остаётся пригодной и на сенсорном экране, где наведения нет. Показатели набраны табличными цифрами и стоят в ряд по три; четвёртый ломает строку на узком экране, поэтому лишние отбрасываются в разметке через slice. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "profile", "card", "hover-card"],
+        "tags": [
+          "avatar",
+          "profile",
+          "card",
+          "hover-card"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -3028,7 +3135,13 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-019-* variables. Server-side: there are no hooks. This is the content of the card, not the popping-up mechanism: the calling code places it in a popover or a hover-card at its own discretion — that keeps the card usable on a touch screen too, where hovering does not exist. The stats are set in tabular figures and stand three to a row; a fourth breaks the line on a narrow screen, so the extras are dropped from the markup through slice. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
-        "cardControls": ["action", "background", "name", "bio", "textColor"]
+        "cardControls": [
+          "action",
+          "background",
+          "name",
+          "bio",
+          "textColor"
+        ]
       }
     },
     {
@@ -3036,7 +3149,9 @@
       "type": "registry:component",
       "title": "Аватар с непрочитанным",
       "description": "Аватар со счётчиком непрочитанного: значок сидит в вырезе маски, больше девяноста девяти показывается как «99+», ноль не рисуется вовсе.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3048,7 +3163,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-020-*. Серверный: хуков нет. Значок сидит в вырезе mask-image, поэтому зазор между числом и портретом остаётся ровным на любом фоне. Больше девяноста девяти показывается как «99+»: точное число в кружке нечитаемо и ни на что не влияет. Ноль не рисуется вовсе — пустой кружок читается как «есть что-то новое». Число продублировано словами в скрытой подписи, иначе для скринридера оно останется немым значком. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "badge", "unread", "counter"],
+        "tags": [
+          "avatar",
+          "badge",
+          "unread",
+          "counter"
+        ],
         "ai": {
           "export": "Avatar020",
           "usage": "<Avatar020\n  name=\"Илья Мохов\"\n  count={12}\n  label=\"непрочитанных сообщения\"\n  size=\"md\"\n/>",
@@ -3092,7 +3212,11 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": ["sm", "md", "lg"]
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
           },
           {
             "prop": "name",
@@ -3168,7 +3292,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-020-* variables. Server-side: there are no hooks. The badge sits in a mask-image cut-out, so the gap between the number and the portrait stays even on any background. More than ninety-nine is shown as \"99+\": an exact number in a circle is unreadable and changes nothing. Zero is not drawn at all — an empty circle reads as \"there is something new\". The number is duplicated in words in the hidden caption, otherwise it stays a mute badge for a screen reader. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
-        "cardControls": ["count", "size", "name", "label"],
+        "cardControls": [
+          "count",
+          "size",
+          "name",
+          "label"
+        ],
         "preview": {
           "states": [
             {
@@ -3193,7 +3322,9 @@
       "type": "registry:component",
       "title": "Кольцо истории",
       "description": "Аватар в рамке истории: непросмотренная светится градиентом, просмотренная худеет и теряет цвет, но остаётся кольцом.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3205,7 +3336,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-021-*. Серверный: хуков нет, корень — обычная кнопка. Кольцо нарисовано conic-gradient и вырезано radial-маской по closest-side, поэтому зазор между рамкой и портретом держится на любом фоне, а толщина меняется одной переменной. Просмотренное состояние не гасится до невидимости: оно теряет цвет и худеет вдвое, но кольцо остаётся — иначе непонятно, есть ли у человека история вообще. Состояние продублировано словом в скрытой подписи. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "story", "ring", "social"],
+        "tags": [
+          "avatar",
+          "story",
+          "ring",
+          "social"
+        ],
         "ai": {
           "export": "Avatar021",
           "usage": "<Avatar021 name=\"Анна Реброва\" state=\"unseen\" size=\"md\" />",
@@ -3241,14 +3377,22 @@
             "label": "Состояние",
             "type": "select",
             "default": "unseen",
-            "options": ["unseen", "seen", "none"]
+            "options": [
+              "unseen",
+              "seen",
+              "none"
+            ]
           },
           {
             "prop": "size",
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": ["sm", "md", "lg"]
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
           },
           {
             "prop": "name",
@@ -3315,7 +3459,11 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-021-* variables. Server-side: there are no hooks, the root is an ordinary button. The ring is drawn with a conic-gradient and cut out by a radial mask on closest-side, so the gap between the frame and the portrait holds on any background and the thickness changes through a single variable. The seen state is not dimmed into invisibility: it loses colour and halves in thickness, but the ring remains — otherwise there is no telling whether the person has a story at all. The state is duplicated by a word in the hidden caption. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
-        "cardControls": ["state", "size", "name"],
+        "cardControls": [
+          "state",
+          "size",
+          "name"
+        ],
         "preview": {
           "states": [
             {
@@ -3340,7 +3488,9 @@
       "type": "registry:component",
       "title": "Аватар с набором текста",
       "description": "Аватар с индикатором набора текста: пузырёк с точками на портрете и та же мысль строкой, которая держит высоту в обоих состояниях.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3352,7 +3502,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-022-*. Серверный: хуков нет. Пузырёк с тремя точками отделён от портрета обводкой цвета карточки — карточка своя, поэтому цвет подложки известен. Точки мигают по nth-child с задержкой и полностью гаснут в prefers-reduced-motion. Состояние продублировано строкой в role=\"status\": прыгающие точки для скринридера пустое место. Служебная строка имеет фиксированную высоту, поэтому список не дёргается, когда человек начинает и перестаёт печатать. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "typing", "chat", "presence"],
+        "tags": [
+          "avatar",
+          "typing",
+          "chat",
+          "presence"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -3507,7 +3662,9 @@
       "type": "registry:component",
       "title": "Мозаика группы",
       "description": "Аватар группового чата: до четырёх лиц мозаикой в одном круге, а раскладка мозаики меняется от их числа.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3519,7 +3676,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-023-*. Серверный: хуков нет. Мозаика — grid 2×2 внутри круглой обёртки с overflow: hidden; раскладка переключается атрибутом data-count, потому что при трёх лицах в квадрате остаётся пустая клетка — первое лицо тогда занимает целую колонку. Зазор между клетками нарисован цветом карточки, а не border, чтобы не съедать полезную площадь. Пятый участник и дальше сворачиваются в счётчик, а полный список имён вынесен в текст рядом: клетки нечитаемы. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "group", "chat", "mosaic"],
+        "tags": [
+          "avatar",
+          "group",
+          "chat",
+          "mosaic"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -3580,7 +3742,11 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": ["sm", "md", "lg"]
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
           },
           {
             "prop": "background",
@@ -3686,7 +3852,9 @@
       "type": "registry:component",
       "title": "Меню профиля",
       "description": "Аватар в шапке, который сам открывает меню профиля: нативный popover, шапка с почтой и отделённый выход — без единой строки состояния.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3698,7 +3866,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-028-*. Серверный: состояния нет вовсе — открытие и закрытие делает нативный HTML popover через popovertarget, а Escape, клик мимо и верхний слой достаются от браузера. Позиционирование сделано CSS anchor positioning под @supports (anchor-name: --a) с запасным фиксированным вариантом. В шапке меню повторены имя и почта: в продуктах с несколькими аккаунтами это единственное место, где видно, под кем ты сидишь. Выход отделён чертой и покрашен в опасный цвет. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "menu", "popover", "account"],
+        "tags": [
+          "avatar",
+          "menu",
+          "popover",
+          "account"
+        ],
         "ai": {
           "export": "Avatar028",
           "usage": "<Avatar028\n  name=\"Анна Реброва\"\n  email=\"anna@vibeui.dev\"\n  items={[\"Профиль\", \"Настройки\", \"Оформление\"]}\n  signOutLabel=\"Выйти\"\n/>",
@@ -3828,7 +4001,11 @@
             "preview": {
               "props": {
                 "name": "Anna Rebrova",
-                "items": ["Profile", "Settings", "Appearance"],
+                "items": [
+                  "Profile",
+                  "Settings",
+                  "Appearance"
+                ],
                 "signOutLabel": "Sign out",
                 "open": true
               }
@@ -3857,7 +4034,9 @@
       "type": "registry:component",
       "title": "Имя в две строки",
       "description": "Карточка человека, где должность занимает ровно две строки: место зарезервировано, хвост срезан, и ряд карточек не пляшет по высоте.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3869,7 +4048,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-030-*. Серверный: хуков нет. Должности в реальных списках разной длины — «Дизайнер» и «Руководитель направления клиентского опыта»; свободный перенос разваливает высоту карточек в ряду, а обрезка в одну строку съедает половину смысла. Место под две строки зарезервировано min-height от переменной строки, а хвост режется -webkit-line-clamp. Полный текст остаётся в title, поэтому обрезка ничего не теряет насовсем. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "profile", "grid", "truncation"],
+        "tags": [
+          "avatar",
+          "profile",
+          "grid",
+          "truncation"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -3923,7 +4107,11 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": ["sm", "md", "lg"]
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
           },
           {
             "prop": "background",
@@ -4010,7 +4198,13 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-030-* variables. Server-side: there are no hooks. Job titles in real lists differ in length — \"Designer\" and \"Head of the customer experience practice\"; free wrapping wrecks the height of the cards in a row, while truncating to a single line eats half the meaning. Room for two lines is reserved by a min-height derived from the line variable, and the tail is cut by -webkit-line-clamp. The full text stays in title, so the truncation loses nothing for good. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
-        "cardControls": ["role", "size", "background", "name", "textColor"]
+        "cardControls": [
+          "role",
+          "size",
+          "background",
+          "name",
+          "textColor"
+        ]
       }
     },
     {
@@ -4018,7 +4212,9 @@
       "type": "registry:component",
       "title": "Раскрывающаяся стопка",
       "description": "Стопка, которая раздвигается и показывает всех: раскрытие висит и на наведении, и на фокусе, потому что на клавиатуре наведения нет.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4030,7 +4226,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-031-*. Серверный: хуков нет, раскрытие целиком на CSS. Перекрытие задано отрицательным margin в долях размера, поэтому одно число управляет и плотностью, и шириной строки, а раскрытие — это тот же margin, уезжающий в ноль с переходом. Раскрытие висит на :hover и на :focus-within: на клавиатуре наведения нет. Каждое лицо — отдельная кнопка с доступной подписью: закрытый наполовину кружок нажать нельзя. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "stack", "hover", "team"],
+        "tags": [
+          "avatar",
+          "stack",
+          "hover",
+          "team"
+        ],
         "ai": {
           "export": "Avatar031",
           "usage": "<Avatar031\n  names={[\"Анна Реброва\", \"Илья Мохов\", \"Ким Сон\"]}\n  overlap={55}\n  size=\"md\"\n/>",
@@ -4074,7 +4275,11 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": ["sm", "md", "lg"]
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
           },
           {
             "prop": "visible",
@@ -4142,7 +4347,11 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-031-* variables. Server-side: there are no hooks, the spreading is entirely in CSS. The overlap is set by a negative margin expressed as a fraction of the size, so a single number governs both the density and the width of the row, and the spreading is that same margin going to zero with a transition. The spreading hangs on :hover and on :focus-within: there is no hovering on a keyboard. Every face is a separate button with an accessible caption: a circle covered by half cannot be clicked. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
-        "cardControls": ["overlap", "size", "visible"],
+        "cardControls": [
+          "overlap",
+          "size",
+          "visible"
+        ],
         "preview": {
           "props": {
             "photos": [
@@ -4163,7 +4372,9 @@
       "type": "registry:component",
       "title": "Говорящий участник",
       "description": "Строка участника звонка: у говорящего от портрета расходится кольцо, микрофон нарисован отдельным значком, а состояние названо словом.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4175,7 +4386,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-033-*. Серверный: хуков нет. Кольцо-пульс расходится от портрета: движение ловится боковым зрением, а список из десяти человек глазами не сканируют. Но движение не может быть единственным признаком — в prefers-reduced-motion пульс заменяется ровным кольцом того же цвета, микрофон нарисован псевдоэлементами (капсула на ножке, у выключенного перечёркнутая), а состояние продублировано словом. Три состояния переключаются атрибутом data-state. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "call", "speaking", "microphone"],
+        "tags": [
+          "avatar",
+          "call",
+          "speaking",
+          "microphone"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -4222,7 +4438,11 @@
             "label": "Состояние",
             "type": "select",
             "default": "speaking",
-            "options": ["speaking", "listening", "muted"]
+            "options": [
+              "speaking",
+              "listening",
+              "muted"
+            ]
           },
           {
             "prop": "name",
@@ -4332,7 +4552,9 @@
       "type": "registry:component",
       "title": "Время последнего визита",
       "description": "Аватар с датой последнего входа: человеческая подпись лежит в <time> с машинной отметкой, а давность различается формой метки, а не оттенком серого.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4344,7 +4566,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-034-*. Серверный: хуков нет — относительное время не пересчитывается на клиенте и не тянет за собой расхождение гидрации. Подпись живёт в <time> с машинным dateTime: человек читает «вчера в 18:40», а разметка несёт точную отметку, которую можно разобрать программно. Давность продублирована формой метки — залитая, полая, пунктирная, — потому что три оттенка серого между собой не различаются, а метка объявлена role=\"img\" с подписью. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "last-seen", "time", "list"],
+        "tags": [
+          "avatar",
+          "last-seen",
+          "time",
+          "list"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -4398,7 +4625,11 @@
             "label": "Давность",
             "type": "select",
             "default": "week",
-            "options": ["today", "week", "long"]
+            "options": [
+              "today",
+              "week",
+              "long"
+            ]
           },
           {
             "prop": "background",
@@ -4505,7 +4736,9 @@
       "type": "registry:component",
       "title": "Подтверждённое имя",
       "description": "Знак подтверждения стоит после имени, а не в углу портрета: подтверждают имя, и в углу галочка теряется среди присутствия и роли.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4517,7 +4750,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-035-*. Серверный: хуков нет. Знак вынесен в строку имени, а не в угол портрета: подтверждают имя, а в углу галочка соседствует с присутствием и ролью и теряется среди них. Три вида подтверждения различаются формой знака — круг, скруглённый квадрат, шестиугольник на clip-path, — и каждый расшифрован словами во второй строке. Сама галочка нарисована двумя бордюрами псевдоэлемента, иконочный пакет ради неё не нужен. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
       "meta": {
-        "tags": ["avatar", "verified", "badge", "identity"],
+        "tags": [
+          "avatar",
+          "verified",
+          "badge",
+          "identity"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -4564,7 +4802,11 @@
             "label": "Вид",
             "type": "select",
             "default": "person",
-            "options": ["person", "organisation", "creator"]
+            "options": [
+              "person",
+              "organisation",
+              "creator"
+            ]
           },
           {
             "prop": "since",
@@ -4675,7 +4917,9 @@
       "type": "registry:component",
       "title": "Обрезка фото",
       "description": "Загруженную фотографию кадрирует человек, а не середина картинки: снимок тянется в кружке и масштабируется ползунком.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4687,7 +4931,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-036-*. Файл читается через URL.createObjectURL, кадр задаётся CSS-переменными --vibeui-avatar-036-x/-y/-zoom на transform картинки, перетаскивание идёт на pointer-событиях с setPointerCapture, а стрелки клавиатуры двигают снимок шагом в восемь пикселей. Вырезание делает canvas: то же преобразование в масштабе выходного кадра, результат уходит в onCrop как image/webp Blob. Круглая маска — только вид: в файл кружок не запекается, иначе прозрачные углы лягут на чужой фон. Тема приходит из color-scheme через light-dark(), классовую тёмную тему компонент включает себе сам.",
       "meta": {
-        "tags": ["avatar", "upload", "crop", "profile"],
+        "tags": [
+          "avatar",
+          "upload",
+          "crop",
+          "profile"
+        ],
         "ai": {
           "export": "Avatar036",
           "usage": "<Avatar036 onCrop={(blob) => upload(blob)} output={512} />",
@@ -4747,7 +4996,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["label", "hint", "output", "textColor"],
+        "cardControls": [
+          "label",
+          "hint",
+          "output",
+          "textColor"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -4821,7 +5075,9 @@
       "type": "registry:component",
       "title": "Генеративный аватар",
       "description": "Запасной аватар без инициалов: узор считается из идентификатора, поэтому у почты, номера и адреса кошелька тоже есть лицо.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4833,7 +5089,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-037-*. Идентификатор сворачивается в FNV-1a — тот же хеш, что у остальных аватаров категории, поэтому оттенок человека везде совпадает. Из хеша считается сетка 5×5: три левых столбца берутся из битов, два правых зеркалят их, потому что симметричная фигура читается как знак, а несимметричная — как шум. Рисуется inline-SVG в viewBox 0 0 5 5, без картинок и запросов. Имя лежит скрытым текстом для скринридера, узор помечен aria-hidden. Тема приходит из color-scheme через light-dark(), классовую тёмную тему компонент включает себе сам.",
       "meta": {
-        "tags": ["avatar", "identicon", "fallback", "generative"],
+        "tags": [
+          "avatar",
+          "identicon",
+          "fallback",
+          "generative"
+        ],
         "ai": {
           "export": "Avatar037",
           "usage": "<Avatar037 seed=\"anna@vibeui.ru\" name=\"Анна Ковалёва\" />",
@@ -4878,17 +5139,29 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": ["sm", "md", "lg"]
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
           },
           {
             "prop": "shape",
             "label": "Форма",
             "type": "select",
             "default": "circle",
-            "options": ["circle", "square"]
+            "options": [
+              "circle",
+              "square"
+            ]
           }
         ],
-        "cardControls": ["seed", "name", "size", "shape"],
+        "cardControls": [
+          "seed",
+          "name",
+          "size",
+          "shape"
+        ],
         "preview": {
           "states": [
             {
@@ -4962,7 +5235,9 @@
       "type": "registry:component",
       "title": "Шапка профиля",
       "description": "Шапка страницы человека: обложка, крупный портрет внахлёст, имя, действие и счётчики одной раскладкой.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4974,7 +5249,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-039-*. Портрет наезжает на обложку отрицательным margin, а не абсолютным позиционированием: высота шапки считается сама, и текст под портретом не приходится отодвигать вручную. Обложка нарисована градиентами, чтобы компонент выглядел готовым без картинки. Раскладка идёт от ширины самой шапки через container-type: inline-size — в узкой колонке она вертикальная, от 30rem имя и кнопка встают в строку. Оттенок обложки и портрета считается из имени тем же FNV-1a, что и у остальных аватаров категории. Тема приходит из color-scheme через light-dark(), классовую тёмную тему компонент включает себе сам.",
       "meta": {
-        "tags": ["avatar", "profile", "header", "cover"],
+        "tags": [
+          "avatar",
+          "profile",
+          "header",
+          "cover"
+        ],
         "ai": {
           "export": "Avatar039",
           "usage": "<Avatar039 name=\"Мария Гурова\" role=\"Продуктовый дизайнер\" src=\"/avatars/maria.webp\" />",
@@ -5037,7 +5317,13 @@
             "default": ""
           }
         ],
-        "cardControls": ["name", "role", "action", "accent", "textColor"],
+        "cardControls": [
+          "name",
+          "role",
+          "action",
+          "accent",
+          "textColor"
+        ],
         "preview": {
           "width": "full",
           "props": {

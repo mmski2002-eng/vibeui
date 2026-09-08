@@ -2,6 +2,8 @@ import type { CSSProperties } from "react"
 
 export type Commerce011Line = {
   title: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   option?: string
   price: string
   hue?: number
@@ -97,8 +99,13 @@ display:grid;grid-template-columns:2.5rem minmax(0,1fr) auto;gap:0.625rem;align-
 padding-bottom:0.5rem;border-bottom:1px solid var(--vibeui-commerce-011-border);
 }
 [data-vibeui-block="commerce-011"] [data-part="shot"]{
-width:2.5rem;height:2.5rem;border-radius:0.5rem;
-background:linear-gradient(145deg,light-dark(oklch(0.94 0.05 var(--vibeui-commerce-011-hue,262)),oklch(0.43 0.06 var(--vibeui-commerce-011-hue,262))),light-dark(oklch(0.87 0.09 var(--vibeui-commerce-011-hue,262)),oklch(0.33 0.07 var(--vibeui-commerce-011-hue,262))));
+position:relative;width:2.5rem;height:2.5rem;border-radius:0.5rem;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="commerce-011"] [data-part="shot"][data-empty="true"]{background:linear-gradient(145deg,light-dark(oklch(0.94 0.05 var(--vibeui-commerce-011-hue,262)),oklch(0.43 0.06 var(--vibeui-commerce-011-hue,262))),light-dark(oklch(0.87 0.09 var(--vibeui-commerce-011-hue,262)),oklch(0.33 0.07 var(--vibeui-commerce-011-hue,262))));}
+[data-vibeui-block="commerce-011"] [data-part="shot"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-011"] [data-part="name"]{margin:0;font-size:0.8125rem;font-weight:600}
 [data-vibeui-block="commerce-011"] [data-part="option"]{margin:0.0625rem 0 0;font-size:0.6875rem;color:var(--vibeui-commerce-011-muted)}
@@ -262,7 +269,20 @@ export function Commerce011({
                   } as CSSProperties
                 }
               >
-                <span data-part="shot" aria-hidden="true" />
+                <span
+                  data-part="shot"
+                  data-empty={line.image ? undefined : "true"}
+                  aria-hidden="true"
+                >
+                  {line.image ? (
+                    <img
+                      src={line.image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : null}
+                </span>
                 <div>
                   <p data-part="name">{line.title}</p>
                   {line.option ? <p data-part="option">{line.option}</p> : null}

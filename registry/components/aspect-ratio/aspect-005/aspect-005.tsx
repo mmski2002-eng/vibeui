@@ -4,6 +4,8 @@ export type Aspect005Props = Omit<
   ComponentProps<"div">,
   "title" | "children"
 > & {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   title?: string
   description?: string
   actionLabel?: string
@@ -46,11 +48,18 @@ position:relative;display:flex;align-items:center;
 width:100%;box-sizing:border-box;overflow:hidden;
 aspect-ratio:var(--vibeui-aspect-005-ratio);
 border-radius:var(--vibeui-aspect-005-radius);
-background:
-radial-gradient(80% 140% at 12% 50%,color-mix(in oklab,var(--vibeui-aspect-005-accent) 40%,transparent),transparent 60%),
-linear-gradient(120deg,var(--vibeui-aspect-005-ink),oklch(0.3 0.05 285));
 color:var(--vibeui-aspect-005-fg);font-family:var(--vibeui-aspect-005-font);
 }
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="aspect-005"] [data-part="frame"][data-empty="true"]{background:
+radial-gradient(80% 140% at 12% 50%,color-mix(in oklab,var(--vibeui-aspect-005-accent) 40%,transparent),transparent 60%),
+linear-gradient(120deg,var(--vibeui-aspect-005-ink),oklch(0.3 0.05 285));}
+[data-vibeui-block="aspect-005"] [data-part="frame"] > *:not(img){position:relative}
+[data-vibeui-block="aspect-005"] [data-part="frame"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+}
+[data-vibeui-block="aspect-005"] [data-part="frame"] > *:not(img){position:relative}
 [data-vibeui-block="aspect-005"] [data-part="frame"] img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 [data-vibeui-block="aspect-005"] [data-part="text"]{
 position:relative;display:flex;flex-direction:column;gap:0.375rem;
@@ -84,6 +93,7 @@ font-size:0.875rem;font-weight:650;
  */
 export function Aspect005({
   title = "Соберите страницу за вечер",
+  image = "",
   description = "Готовые блоки, установка одной командой и инструкция для ИИ-агента.",
   actionLabel = "Открыть каталог",
   actionHref = "#",
@@ -109,7 +119,10 @@ export function Aspect005({
         className={className}
         style={palette}
       >
-        <div data-part="frame">
+        <div data-part="frame" data-empty={image ? undefined : "true"}>
+          {image ? (
+            <img src={image} alt="" loading="lazy" decoding="async" />
+          ) : null}
           <span data-part="text">
             <span data-part="title">{title}</span>
             {description ? (

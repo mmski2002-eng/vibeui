@@ -4,6 +4,8 @@ export type Card013Props = Omit<
   ComponentProps<"article">,
   "children" | "title"
 > & {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   title?: string
   description?: string
   /** Надпись над заголовком: раздел, автор, тип. */
@@ -50,12 +52,17 @@ font-family:var(--vibeui-card-013-font);overflow:hidden;
 display:flex;flex-direction:column;
 }
 [data-vibeui-block="card-013"] [data-part="media"]{
-flex:none;aspect-ratio:16 / 9;
-background:
+position:relative;flex:none;aspect-ratio:16 / 9;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="card-013"] [data-part="media"][data-empty="true"]{background:
 radial-gradient(100% 90% at 25% 10%,color-mix(in oklab,var(--vibeui-card-013-accent) 45%,transparent),transparent 65%),
 linear-gradient(150deg,
 light-dark(oklch(0.94 0.03 200),oklch(0.36 0.04 200)),
-light-dark(oklch(0.87 0.05 220),oklch(0.44 0.06 220)));
+light-dark(oklch(0.87 0.05 220),oklch(0.44 0.06 220)));}
+[data-vibeui-block="card-013"] [data-part="media"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="card-013"] [data-part="body"]{
 display:flex;flex-direction:column;gap:0.375rem;padding:0.9375rem 1.0625rem 1.0625rem;
@@ -137,6 +144,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Card013({
   title = "Курс: раскладка без медиазапросов",
+  image = "",
   description = "Шесть занятий про container queries, :has() и подстройку компонента под место, в котором он оказался.",
   eyebrow = "Курс",
   meta = "6 занятий · 3 часа",
@@ -172,7 +180,15 @@ export function Card013({
         style={palette}
       >
         <div data-part="shell">
-          <div data-part="media" aria-hidden="true" />
+          <div
+            data-part="media"
+            data-empty={image ? undefined : "true"}
+            aria-hidden="true"
+          >
+            {image ? (
+              <img src={image} alt="" loading="lazy" decoding="async" />
+            ) : null}
+          </div>
           <div data-part="body">
             {eyebrow ? <span data-part="eyebrow">{eyebrow}</span> : null}
             <h3 data-part="title">{title}</h3>

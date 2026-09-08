@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react"
 
 export type Ai020Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   state?: "idle" | "listening" | "transcribing"
   title?: string
   hint?: string
@@ -63,9 +65,15 @@ font-family:var(--vibeui-ai-020-sans);color:var(--vibeui-ai-020-fg);
 [data-vibeui-block="ai-020"] h2{margin:0 0 0.125rem;font-size:0.9375rem;font-weight:700}
 [data-vibeui-block="ai-020"] [data-part="lead"]{margin:0 0 0.875rem;font-size:0.75rem;color:var(--vibeui-ai-020-muted)}
 [data-vibeui-block="ai-020"] [data-part="stage"]{
-display:flex;flex-direction:column;align-items:center;gap:0.75rem;
-padding:1.25rem 1rem;border-radius:0.875rem;background:var(--vibeui-ai-020-card);
-text-align:center;
+position:relative;display:flex;flex-direction:column;align-items:center;gap:0.75rem;
+padding:1.25rem 1rem;border-radius:0.875rem;
+text-align:center;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="ai-020"] [data-part="stage"][data-empty="true"]{background:var(--vibeui-ai-020-card);}
+[data-vibeui-block="ai-020"] [data-part="stage"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="ai-020"] [data-part="mic"]{
 appearance:none;cursor:pointer;border:0;flex:none;
@@ -167,6 +175,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Ai020({
   state = "idle",
+  image = "",
   title = "Голосовой ввод",
   hint = "Нажмите и скажите запрос — можно вернуться к клавиатуре в любой момент.",
   micLabel = "Начать запись",
@@ -206,7 +215,10 @@ export function Ai020({
         <h2>{title}</h2>
         <p data-part="lead">{hint}</p>
 
-        <div data-part="stage">
+        <div data-part="stage" data-empty={image ? undefined : "true"}>
+          {image ? (
+            <img src={image} alt="" loading="lazy" decoding="async" />
+          ) : null}
           {state === "transcribing" ? (
             <p data-part="transcript" aria-live="polite">
               {transcript || placeholder}
@@ -222,7 +234,9 @@ export function Ai020({
                   aria-pressed={state === "listening"}
                   aria-label={micLabel}
                 >
-                  <span aria-hidden="true">{state === "listening" ? "■" : "●"}</span>
+                  <span aria-hidden="true">
+                    {state === "listening" ? "■" : "●"}
+                  </span>
                 </button>
               </span>
               <span data-part="status" aria-live="polite">

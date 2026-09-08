@@ -235,7 +235,8 @@ export function Phoneinput009({
   const [chosen, setChosen] = useState(countries[0]?.name ?? "")
   const [digits, setDigits] = useState("")
 
-  const country = countries.find((entry) => entry.name === chosen) ?? countries[0]
+  const country =
+    countries.find((entry) => entry.name === chosen) ?? countries[0]
   const limit = (country?.mask.match(/#/g) ?? []).length
   const needle = query.trim().toLowerCase()
   const found = needle

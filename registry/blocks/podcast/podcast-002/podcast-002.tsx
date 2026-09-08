@@ -1,6 +1,8 @@
 import type { CSSProperties, ReactNode } from "react"
 
 export type Podcast002Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   eyebrow?: string
   showTitle?: string
   episodeTitle?: string
@@ -47,9 +49,14 @@ display:grid;gap:1.5rem;align-items:start;
 padding:1.5rem;border:1px solid var(--vibeui-podcast-002-border);border-radius:1.25rem;background:var(--vibeui-podcast-002-card);
 }
 [data-vibeui-block="podcast-002"] [data-part="cover"]{
-aspect-ratio:1;border-radius:1rem;display:grid;place-items:center;
-background:linear-gradient(145deg,oklch(0.56 0.17 39.8),oklch(0.34 0.11 25));
-color:oklch(0.98 0 0);font-size:2.5rem;font-weight:800;letter-spacing:-0.02em;
+position:relative;aspect-ratio:1;border-radius:1rem;display:grid;place-items:center;
+color:oklch(0.98 0 0);font-size:2.5rem;font-weight:800;letter-spacing:-0.02em;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="podcast-002"] [data-part="cover"][data-empty="true"]{background:linear-gradient(145deg,oklch(0.56 0.17 39.8),oklch(0.34 0.11 25));}
+[data-vibeui-block="podcast-002"] [data-part="cover"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="podcast-002"] [data-part="eyebrow"]{margin:0 0 0.375rem;color:var(--vibeui-podcast-002-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase}
 [data-vibeui-block="podcast-002"] [data-part="ep-title"]{margin:0 0 0.5rem;font-size:clamp(1.375rem,4cqi,1.75rem);line-height:1.15;letter-spacing:-0.02em;font-weight:700}
@@ -180,6 +187,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 /** Карточка выпуска подкаста: обложка, мини-плеер и ссылки на площадки. */
 export function Podcast002({
   eyebrow = "Выпуск 12",
+  image = "",
   showTitle = "Вайб",
   episodeTitle = "Как ИИ меняет фронтенд",
   summary = "Говорим с Анной Ковалёвой о том, как агенты собирают интерфейсы, где заканчивается автоматизация и что остаётся дизайнеру.",
@@ -215,7 +223,14 @@ export function Podcast002({
       >
         <div data-part="shell">
           <div data-part="card">
-            <div data-part="cover" aria-hidden="true">
+            <div
+              data-part="cover"
+              data-empty={image ? undefined : "true"}
+              aria-hidden="true"
+            >
+              {image ? (
+                <img src={image} alt="" loading="lazy" decoding="async" />
+              ) : null}
               {showTitle.charAt(0)}
             </div>
             <div>

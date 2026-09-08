@@ -6,6 +6,8 @@ export type Dashboard089Swatch = {
 }
 
 export type Dashboard089Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   title?: string
   brandName?: string
   swatches?: Dashboard089Swatch[]
@@ -116,9 +118,14 @@ background:var(--vibeui-dashboard-089-accent);color:var(--vibeui-dashboard-089-o
 }
 /* Предпросмотр: кусок настоящего интерфейса, а не квадрат с цветом. */
 [data-vibeui-block="dashboard-089"] [data-part="preview"]{
-padding:0.75rem;border-radius:0.875rem;
-background:var(--vibeui-dashboard-089-card);border:1px solid var(--vibeui-dashboard-089-border);
-display:flex;flex-direction:column;gap:0.625rem;
+position:relative;padding:0.75rem;border-radius:0.875rem;border:1px solid var(--vibeui-dashboard-089-border);
+display:flex;flex-direction:column;gap:0.625rem;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="dashboard-089"] [data-part="preview"][data-empty="true"]{background:var(--vibeui-dashboard-089-card);}
+[data-vibeui-block="dashboard-089"] [data-part="preview"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="dashboard-089"] [data-part="bar"]{
 display:flex;align-items:center;gap:0.5rem;padding:0.5rem 0.625rem;
@@ -226,6 +233,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Dashboard089({
   title = "Брендинг и тема",
+  image = "",
   brandName = "Северный лес",
   swatches = DEFAULT_SWATCHES,
   activeColor = "Сапфир",
@@ -323,7 +331,14 @@ export function Dashboard089({
             </button>
           </div>
 
-          <div data-part="preview" aria-label={text.previewLabel}>
+          <div
+            data-part="preview"
+            data-empty={image ? undefined : "true"}
+            aria-label={text.previewLabel}
+          >
+            {image ? (
+              <img src={image} alt="" loading="lazy" decoding="async" />
+            ) : null}
             <h3>{text.previewTitle}</h3>
 
             <div data-part="bar">

@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react"
 
 export type Hero010Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   eyebrow?: string
   title?: string
   lede?: string
@@ -85,7 +87,10 @@ clip-path:polygon(0 62%,100% 30%,100% 100%,0 100%);
 }
 [data-vibeui-block="hero-010"] [data-part="ring"]{
 position:absolute;left:50%;top:50%;width:min(60%,18rem);aspect-ratio:1;transform:translate(-50%,-50%);
-border-radius:9999px;border:1px solid oklch(1 0 0 / 45%);
+border-radius:9999px;border:1px solid oklch(1 0 0 / 45%);overflow:hidden;
+}
+[data-vibeui-block="hero-010"] [data-part="ring"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="hero-010"] [data-part="ring"]::after{
 content:"";position:absolute;inset:18%;border-radius:9999px;border:1px solid oklch(1 0 0 / 30%);
@@ -137,6 +142,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 /** Hero пополам: текст в левой половине, изображение во всю высоту в правой. */
 export function Hero010({
   eyebrow = "Дизайн-система без дизайнера",
+  image = "",
   title = "Половина страницы — картинка, половина — суть",
   lede = "Классическая раскладка, в которой изображение прижато к краю экрана и работает на всю высоту секции.",
   primary = { label: "Взять секцию", href: "#" },
@@ -209,7 +215,15 @@ export function Hero010({
 
           <figure>
             <span data-part="cut" aria-hidden="true" />
-            <span data-part="ring" aria-hidden="true" />
+            <span
+              data-part="ring"
+              data-empty={image ? undefined : "true"}
+              aria-hidden="true"
+            >
+              {image ? (
+                <img src={image} alt="" loading="lazy" decoding="async" />
+              ) : null}
+            </span>
             <figcaption>{imageCaption}</figcaption>
           </figure>
         </div>

@@ -4,6 +4,8 @@ export type Aspect002Props = Omit<
   ComponentProps<"div">,
   "title" | "children"
 > & {
+  /** Фотография кадра. Без неё остаётся нарисованная подложка. */
+  image?: string
   title?: string
   /** Длительность ролика: «12:04». Показывается плашкой в углу. */
   duration?: string
@@ -31,6 +33,9 @@ const STYLES = `
 --vibeui-aspect-002-accent:oklch(0.62 0.2 25);
 --vibeui-aspect-002-radius:0.875rem;
 --vibeui-aspect-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="aspect-002"] > img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="aspect-002"]{
 position:relative;display:block;width:100%;box-sizing:border-box;overflow:hidden;
@@ -85,6 +90,7 @@ font-size:0.6875rem;font-weight:600;font-variant-numeric:tabular-nums;
  */
 export function Aspect002({
   title = "Как собрать лендинг за вечер",
+  image = "",
   duration = "12:04",
   href = "#",
   watchLabel = "Смотреть: {title}",
@@ -116,6 +122,7 @@ export function Aspect002({
         <a
           data-slot="aspect-ratio"
           data-vibeui-block="aspect-002"
+          data-empty={image ? "false" : "true"}
           href={href}
           className={className}
           style={palette}
@@ -123,6 +130,9 @@ export function Aspect002({
             title ? watchLabel.replace("{title}", title) : watchFallbackLabel
           }
         >
+          {image ? (
+            <img src={image} alt="" loading="lazy" decoding="async" />
+          ) : null}
           {content}
         </a>
       ) : (

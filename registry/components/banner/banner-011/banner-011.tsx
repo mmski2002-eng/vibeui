@@ -157,7 +157,8 @@ export function Banner011({
 
   const ordered = [...entries].sort(
     (first, second) =>
-      (WEIGHT[first.tone ?? "info"] ?? 2) - (WEIGHT[second.tone ?? "info"] ?? 2),
+      (WEIGHT[first.tone ?? "info"] ?? 2) -
+      (WEIGHT[second.tone ?? "info"] ?? 2),
   )
   const shown = Math.max(1, visible)
   const hidden = Math.max(0, ordered.length - shown)

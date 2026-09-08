@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Призыв с горизонтом",
       "description": "Финальная секция призыва: тёмное пятно в конце светлой страницы, одно главное действие и снимающая возражение строка под ним.",
-      "categories": ["cta"],
+      "categories": [
+        "cta"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-001-*. Кегль заголовка считается в cqi от собственной ширины блока, поэтому секция одинаково верна в миниатюре каталога и на живой странице. Свечение — один радиальный градиент в отдельном слое с pointer-events:none, а не заливка фона. Второе действие намеренно сделано ссылкой, а не второй кнопкой.",
       "meta": {
-        "tags": ["cta", "conversion", "landing", "dark"],
+        "tags": [
+          "cta",
+          "conversion",
+          "landing",
+          "dark"
+        ],
         "ai": {
           "export": "Cta001",
           "usage": "<Cta001\n  title=\"Соберите первую страницу сегодня\"\n  primaryAction={{ label: \"Начать бесплатно\", href: \"/signup\" }}\n  note=\"Без карты. 14 дней полного доступа.\"\n/>",
@@ -132,7 +139,11 @@
             "default": ""
           }
         ],
-        "cardControls": ["title", "note", "accent"],
+        "cardControls": [
+          "title",
+          "note",
+          "accent"
+        ],
         "preview": {
           "width": "full"
         }
@@ -143,7 +154,9 @@
       "type": "registry:block",
       "title": "Два действия по центру",
       "description": "Светлый центрированный призыв на карточке: две равные по весу кнопки для двух честных входов и строка коротких подтверждений вместо ещё одного абзаца.",
-      "categories": ["cta"],
+      "categories": [
+        "cta"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -155,7 +168,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-002-*. Серверный компонент. Кегль заголовка считается в cqi от собственной ширины блока, поэтому карточка одинаково верна в миниатюре каталога и на живой странице. Свечение над карточкой — радиальный градиент в background-image самой карточки, отдельного слоя нет. До 40rem кнопки становятся колонкой и растягиваются на всю ширину: на телефоне две кнопки в ряд превращаются в две узкие полоски.",
       "meta": {
-        "tags": ["cta", "conversion", "centered", "landing"],
+        "tags": [
+          "cta",
+          "conversion",
+          "centered",
+          "landing"
+        ],
         "preview": {
           "width": "full"
         },
@@ -289,7 +307,12 @@
             }
           }
         },
-        "cardControls": ["title", "primaryLabel", "accent", "background"]
+        "cardControls": [
+          "title",
+          "primaryLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -297,7 +320,9 @@
       "type": "registry:block",
       "title": "Призыв подписаться",
       "description": "Призыв с формой почты: настоящая форма с видимой подписью поля, честным согласием и строкой про частоту писем — вместо голого поля с кнопкой.",
-      "categories": ["cta"],
+      "categories": [
+        "cta"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -309,7 +334,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-003-*. Серверный компонент: поле неуправляемое, форма отправляется обычным POST и работает до гидратации. Подпись поля видимая и связана через htmlFor, а не спрятана в placeholder: подпись внутри поля исчезает при заполнении, ровно когда нужнее. От 38rem поле и кнопка встают в один ряд через grid-template-columns:1fr auto, до этого идут колонкой. Заголовок набран засечной гарнитурой — рассылка про интерфейсы обязана выглядеть как текст, а не как форма.",
       "meta": {
-        "tags": ["cta", "newsletter", "email", "form"],
+        "tags": [
+          "cta",
+          "newsletter",
+          "email",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -468,7 +498,9 @@
       "type": "registry:block",
       "title": "Призыв на цветной плашке",
       "description": "Призыв на сплошной цветной плите: узор из повторяющихся градиентов, погашенный маской к краям, крупная цифра-доказательство и одна белая кнопка.",
-      "categories": ["cta"],
+      "categories": [
+        "cta"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -480,7 +512,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-004-*. Серверный компонент. Узор — два repeating-linear-gradient в отдельном слое с pointer-events:none, погашенный mask-image к левому нижнему углу, поэтому текст всегда лежит на спокойном месте. Плита градиентная, а не одноцветная: сплошная заливка на всю ширину выглядит как ошибка стиля. Раскладка от собственной ширины: до 46rem одна колонка, дальше текст и блок с цифрой встают рядом, причём правая колонка выравнивается по правому краю.",
       "meta": {
-        "tags": ["cta", "color", "conversion", "gradient"],
+        "tags": [
+          "cta",
+          "color",
+          "conversion",
+          "gradient"
+        ],
         "preview": {
           "width": "full"
         },
@@ -598,7 +635,11 @@
             }
           }
         },
-        "cardControls": ["stat", "title", "accent"]
+        "cardControls": [
+          "stat",
+          "title",
+          "accent"
+        ]
       }
     },
     {
@@ -606,7 +647,9 @@
       "type": "registry:block",
       "title": "Призыв с картинкой",
       "description": "Призыв с картинкой сбоку: место под изображение держит соотношение сторон, а без картинки в нём рисуется CSS-заглушка — блок выглядит законченным без внешних файлов.",
-      "categories": ["cta"],
+      "categories": [
+        "cta"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -618,9 +661,17 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-005-*. Серверный компонент. Место под картинку задано через aspect-ratio, поэтому раскладка не прыгает, пока изображение грузится. Проп imageSrc необязателен: если его нет, в том же месте рисуется композиция из двух псевдоэлементов с тенями — блок обязан быть полноценным без единого внешнего файла. Раскладка от собственной ширины блока: до 46rem одна колонка, дальше текст и картинка встают рядом равными долями.",
       "meta": {
-        "tags": ["cta", "split", "media", "service"],
+        "tags": [
+          "cta",
+          "split",
+          "media",
+          "service"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "imageSrc": "/demo/scenes/scene-05.webp"
+          }
         },
         "ai": {
           "export": "Cta005",
@@ -748,12 +799,18 @@
                 ],
                 "actionLabel": "Book a surveyor",
                 "noteLabel": "We work across the city and the region",
-                "imageAlt": "A finished kitchen after the renovation"
+                "imageAlt": "A finished kitchen after the renovation",
+                "imageSrc": "/demo/scenes/scene-05.webp"
               }
             }
           }
         },
-        "cardControls": ["title", "noteLabel", "accent", "background"]
+        "cardControls": [
+          "title",
+          "noteLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -761,7 +818,9 @@
       "type": "registry:block",
       "title": "Призыв с гарантией",
       "description": "Призыв с гарантией: круглая печать, условия списком определений и честный мелкий шрифт, набранный читаемым кеглем там, где его действительно ищут.",
-      "categories": ["cta"],
+      "categories": [
+        "cta"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -773,7 +832,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-006-*. Серверный компонент. Условия размечены списком определений <dl>/<dt>/<dd>: это пары «условие — пояснение», а не абзацы, и скринридер читает их как пары. Печать — круг с коническим градиентом и вложенным белым кругом, отдельного изображения нет. На широкой раскладке условия отделяются вертикальной чертой слева, на узкой — горизонтальной сверху: одна и та же граница меняет сторону вместе с раскладкой.",
       "meta": {
-        "tags": ["cta", "guarantee", "trust", "legal"],
+        "tags": [
+          "cta",
+          "guarantee",
+          "trust",
+          "legal"
+        ],
         "preview": {
           "width": "full"
         },
@@ -917,7 +981,12 @@
             }
           }
         },
-        "cardControls": ["badge", "title", "accent", "background"]
+        "cardControls": [
+          "badge",
+          "title",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -925,7 +994,9 @@
       "type": "registry:block",
       "title": "Призыв с формой в строку",
       "description": "Компактный призыв с формой почты в одну строку: поле и оранжевая кнопка стоят рядом капсулами, а под ними одна фраза, снимающая страх спама.",
-      "categories": ["cta"],
+      "categories": [
+        "cta"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -937,7 +1008,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-007-*. Серверный компонент: поле неуправляемое, форма отправляется обычным POST и работает до гидратации. Подпись поля скрыта визуально, но связана через htmlFor — однострочная форма не терпит видимой подписи, а скринридер обязан её слышать. От 34rem поле и кнопка встают в один ряд через grid-template-columns:1fr auto, до этого идут колонкой.",
       "meta": {
-        "tags": ["cta", "email", "form", "inline", "conversion"],
+        "tags": [
+          "cta",
+          "email",
+          "form",
+          "inline",
+          "conversion"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1066,7 +1143,12 @@
             }
           }
         },
-        "cardControls": ["title", "submitLabel", "accent", "background"]
+        "cardControls": [
+          "title",
+          "submitLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1074,7 +1156,9 @@
       "type": "registry:block",
       "title": "Призыв с отсчётом",
       "description": "Призыв с отсчётом до дедлайна: три плитки «дни — часы — минуты» над одной кнопкой. Цифры статичны и приходят пропсами — тикание остаётся за проектом.",
-      "categories": ["cta"],
+      "categories": [
+        "cta"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1086,7 +1170,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-008-*. Серверный компонент: отсчёт намеренно статический, дни, часы и минуты приходят строковыми пропсами. Тикающий таймер потребовал бы клиентского кода и всё равно врал бы до гидратации — честнее отдать цифры проекту. Плитки набраны с font-variant-numeric:tabular-nums, чтобы значения разной ширины не расшатывали раскладку, двоеточия между ними скрыты от скринридера.",
       "meta": {
-        "tags": ["cta", "countdown", "deadline", "urgency", "launch"],
+        "tags": [
+          "cta",
+          "countdown",
+          "deadline",
+          "urgency",
+          "launch"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1219,7 +1309,12 @@
             }
           }
         },
-        "cardControls": ["title", "days", "accent", "background"]
+        "cardControls": [
+          "title",
+          "days",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1227,7 +1322,9 @@
       "type": "registry:block",
       "title": "Оранжевая полоса",
       "description": "Полоса фирменного оранжевого во всю ширину: чёрная типографика, одна белая кнопка и ни одного лишнего элемента.",
-      "categories": ["cta"],
+      "categories": [
+        "cta"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1239,7 +1336,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-009-*. Серверный компонент. Собственный оранжевый фон — осознанное исключение из правила «прозрачной подложки»: контраст полосы с остальной страницей и есть дизайн блока. Текст фиксированно тёмный в обеих темах — полоса не темнеет вместе со страницей, иначе она перестаёт быть полосой. От 44rem текст и кнопка встают в один ряд через grid-template-columns:1fr auto, до этого кнопка уходит под текст.",
       "meta": {
-        "tags": ["cta", "banner", "brand", "color", "conversion"],
+        "tags": [
+          "cta",
+          "banner",
+          "brand",
+          "color",
+          "conversion"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1356,7 +1459,12 @@
             }
           }
         },
-        "cardControls": ["title", "actionLabel", "accent", "background"]
+        "cardControls": [
+          "title",
+          "actionLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1364,7 +1472,9 @@
       "type": "registry:block",
       "title": "Призыв с чек-листом",
       "description": "Призыв в две колонки: слева обещание с кнопкой, справа четыре галочки выгод. Галочки нарисованы CSS-уголком — без иконочной библиотеки.",
-      "categories": ["cta"],
+      "categories": [
+        "cta"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1376,7 +1486,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-010-*. Серверный компонент. Галочка — псевдоэлемент с двумя границами, повёрнутый на 42 градуса, на круге из тёплого тинта через color-mix: иконочная библиотека ради четырёх галочек сломала бы правило одного файла. Раскладка от собственной ширины: до 46rem одна колонка, дальше текст и чек-лист встают рядом в пропорции 1.2:1.",
       "meta": {
-        "tags": ["cta", "checklist", "benefits", "split", "conversion"],
+        "tags": [
+          "cta",
+          "checklist",
+          "benefits",
+          "split",
+          "conversion"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1509,7 +1625,12 @@
             }
           }
         },
-        "cardControls": ["title", "note", "accent", "background"]
+        "cardControls": [
+          "title",
+          "note",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1517,7 +1638,9 @@
       "type": "registry:block",
       "title": "Два пути",
       "description": "Две панели для двух аудиторий: разработчику — команда npx в код-плашке, команде — кнопка демо. Входы разные, потому что решения принимают по-разному.",
-      "categories": ["cta"],
+      "categories": [
+        "cta"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1529,7 +1652,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-011-*. Серверный компонент. Код-плашка тёмная в обеих темах: терминал не бывает светло-серым, и команда должна читаться как команда. Панель для команд подкрашена тёплым тинтом через color-mix — веса панелей различаются, но обе остаются настоящими входами. Длинная команда прокручивается по горизонтали, а не ломает раскладку. От 44rem панели встают рядом равными долями.",
       "meta": {
-        "tags": ["cta", "developers", "teams", "demo", "split"],
+        "tags": [
+          "cta",
+          "developers",
+          "teams",
+          "demo",
+          "split"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1659,7 +1788,12 @@
             }
           }
         },
-        "cardControls": ["title", "command", "accent", "background"]
+        "cardControls": [
+          "title",
+          "command",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1667,7 +1801,9 @@
       "type": "registry:block",
       "title": "Призыв с доверием",
       "description": "Призыв с социальным доказательством: под кнопкой стопка аватаров-инициалов и строка «5 000+ команд уже строят». Аватары рисуются из имён, без картинок.",
-      "categories": ["cta"],
+      "categories": [
+        "cta"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1679,9 +1815,18 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-012-*. Серверный компонент. Аватары — круги с инициалами, вычисленными из имён: без внешних файлов и без стоковых лиц. Стопка накладывается отрицательным отступом, кольцо вокруг каждого круга нарисовано box-shadow и имитирует цвет страницы. Вся стопка помечена aria-hidden: скринридеру важна строка доказательства, а не декорация.",
       "meta": {
-        "tags": ["cta", "social-proof", "trust", "avatars", "conversion"],
+        "tags": [
+          "cta",
+          "social-proof",
+          "trust",
+          "avatars",
+          "conversion"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "avatarImage": "/demo/avatars/sofia-256.webp"
+          }
         },
         "ai": {
           "export": "Cta012",
@@ -1808,12 +1953,18 @@
                   "Peter Lyakhov",
                   "Olga Titova"
                 ],
-                "proof": "5,000+ teams already build with VibeUI"
+                "proof": "5,000+ teams already build with VibeUI",
+                "avatarImage": "/demo/avatars/sofia-256.webp"
               }
             }
           }
         },
-        "cardControls": ["title", "proof", "accent", "background"]
+        "cardControls": [
+          "title",
+          "proof",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1821,7 +1972,9 @@
       "type": "registry:block",
       "title": "Липкая полоса",
       "description": "Тонкий бар-анонс с одним сообщением и одной кнопкой. Позиционирование статическое: где полосе липнуть — верх, низ, над подвалом — решает страница.",
-      "categories": ["cta"],
+      "categories": [
+        "cta"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1833,7 +1986,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-013-*. Серверный компонент, размечен как <aside>: полоса — дополнение к странице, а не её раздел. Позиционирование намеренно статическое — прилипание задаётся снаружи через className (position:sticky и top, z-index по вкусу проекта). Фон бара — тёплый тинт от акцента через color-mix поверх прозрачного, поэтому полоса заметна на любом цвете страницы, не пряча его.",
       "meta": {
-        "tags": ["cta", "banner", "announcement", "sticky", "bar"],
+        "tags": [
+          "cta",
+          "banner",
+          "announcement",
+          "sticky",
+          "bar"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1954,7 +2113,12 @@
             }
           }
         },
-        "cardControls": ["message", "actionLabel", "accent", "background"]
+        "cardControls": [
+          "message",
+          "actionLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1962,7 +2126,9 @@
       "type": "registry:block",
       "title": "Команда установки",
       "description": "Терминальная плашка с командой npx и кнопкой «Копировать»: подпись кнопки меняется на «Скопировано» и возвращается сама. Единственный клиентский блок категории.",
-      "categories": ["cta"],
+      "categories": [
+        "cta"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1974,7 +2140,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-014-*. Клиентский компонент — копирование через navigator.clipboard без JS не бывает, и это единственная причина \"use client\"; без пропсов блок рендерится полностью. Плашка тёмная в обеих темах: терминал не бывает светло-серым. Подпись кнопки меняется на «Скопировано» и возвращается через две секунды, повторные клики сбрасывают таймер через ref.",
       "meta": {
-        "tags": ["cta", "terminal", "developers", "clipboard", "install"],
+        "tags": [
+          "cta",
+          "terminal",
+          "developers",
+          "clipboard",
+          "install"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2103,7 +2275,12 @@
             }
           }
         },
-        "cardControls": ["title", "command", "accent", "background"]
+        "cardControls": [
+          "title",
+          "command",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2111,7 +2288,9 @@
       "type": "registry:block",
       "title": "Приложение и QR",
       "description": "Призыв поставить приложение: плашки сторов без брендовых логотипов и QR-заглушка, нарисованная CSS-паттерном на белой плате.",
-      "categories": ["cta"],
+      "categories": [
+        "cta"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2123,7 +2302,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-015-*. Серверный компонент. QR-заглушка — шахматный узор repeating-conic-gradient и три угловых маркера из псевдоэлементов, помечена aria-hidden: это макет места под настоящий код. Плата под QR всегда белая, узор всегда тёмный — сканеру нужен тёмный рисунок на светлом, темнить плату вместе с темой нельзя. Плашки сторов нарисованы текстом, без брендовых логотипов. От 46rem текст и QR встают рядом.",
       "meta": {
-        "tags": ["cta", "mobile", "app", "qr", "download"],
+        "tags": [
+          "cta",
+          "mobile",
+          "app",
+          "qr",
+          "download"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2263,7 +2448,12 @@
             }
           }
         },
-        "cardControls": ["title", "qrCaption", "accent", "background"]
+        "cardControls": [
+          "title",
+          "qrCaption",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

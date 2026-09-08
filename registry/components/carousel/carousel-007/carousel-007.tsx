@@ -3,6 +3,8 @@ import type { ComponentProps, CSSProperties } from "react"
 export type Carousel007Shot = {
   label: string
   hue?: number
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
 }
 
 export type Carousel007Props = Omit<ComponentProps<"section">, "children"> & {
@@ -58,10 +60,15 @@ flex:0 0 34%;scroll-snap-align:start;
 display:flex;flex-direction:column;gap:0.3125rem;min-width:0;
 }
 [data-vibeui-block="carousel-007"] [data-part="frame"]{
-aspect-ratio:4 / 3;border-radius:0.625rem;
-background:
+position:relative;aspect-ratio:4 / 3;border-radius:0.625rem;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="carousel-007"] [data-part="frame"][data-empty="true"]{background:
 radial-gradient(90% 80% at 25% 20%,oklch(0.92 0.06 var(--vibeui-carousel-007-hue,250)),transparent 70%),
-linear-gradient(150deg,oklch(0.8 0.08 var(--vibeui-carousel-007-hue,250)),oklch(0.55 0.1 var(--vibeui-carousel-007-hue,250)));
+linear-gradient(150deg,oklch(0.8 0.08 var(--vibeui-carousel-007-hue,250)),oklch(0.55 0.1 var(--vibeui-carousel-007-hue,250)));}
+[data-vibeui-block="carousel-007"] [data-part="frame"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 /* Подпись под кадром, а не поверх: на светлом снимке текст поверх пропадает. */
 [data-vibeui-block="carousel-007"] [data-part="caption"]{
@@ -154,7 +161,20 @@ export function Carousel007({
                   } as CSSProperties
                 }
               >
-                <span data-part="frame" aria-hidden="true" />
+                <span
+                  data-part="frame"
+                  data-empty={shot.image ? undefined : "true"}
+                  aria-hidden="true"
+                >
+                  {shot.image ? (
+                    <img
+                      src={shot.image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : null}
+                </span>
                 <span data-part="caption">{shot.label}</span>
               </li>
             ))}

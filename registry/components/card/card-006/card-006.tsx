@@ -4,6 +4,8 @@ export type Card006Props = Omit<
   ComponentProps<"article">,
   "children" | "title"
 > & {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   title?: string
   status?: "todo" | "doing" | "review" | "done"
   done?: number
@@ -86,11 +88,16 @@ font-size:0.75rem;color:var(--vibeui-card-006-muted);
 [data-vibeui-block="card-006"] [data-part="due"][data-late="true"]{color:var(--vibeui-card-006-late);font-weight:650}
 [data-vibeui-block="card-006"] [data-part="assignee"]{display:inline-flex;align-items:center;gap:0.375rem}
 [data-vibeui-block="card-006"] [data-part="face"]{
-display:flex;align-items:center;justify-content:center;flex:none;
+position:relative;display:flex;align-items:center;justify-content:center;flex:none;
 width:1.375rem;height:1.375rem;border-radius:9999px;
-background:light-dark(oklch(0.92 0.05 var(--vibeui-card-006-hue,250)),oklch(0.33 0.07 var(--vibeui-card-006-hue,250)));
 color:light-dark(oklch(0.38 0.09 var(--vibeui-card-006-hue,250)),oklch(0.92 0.05 var(--vibeui-card-006-hue,250)));
-font-size:0.625rem;font-weight:700;
+font-size:0.625rem;font-weight:700;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="card-006"] [data-part="face"][data-empty="true"]{background:light-dark(oklch(0.92 0.05 var(--vibeui-card-006-hue,250)),oklch(0.33 0.07 var(--vibeui-card-006-hue,250)));}
+[data-vibeui-block="card-006"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="card-006"] *{animation:none!important;transition:none!important}}
 `
@@ -160,6 +167,7 @@ function initials(name: string) {
  */
 export function Card006({
   title = "Собрать каталог компонентов",
+  avatarImage = "",
   status = "doing",
   done = 7,
   total = 12,
@@ -225,7 +233,14 @@ export function Card006({
         </div>
         <p data-part="foot">
           <span data-part="assignee">
-            <span data-part="face" aria-hidden="true">
+            <span
+              data-part="face"
+              data-empty={avatarImage ? undefined : "true"}
+              aria-hidden="true"
+            >
+              {avatarImage ? (
+                <img src={avatarImage} alt="" loading="lazy" decoding="async" />
+              ) : null}
               {initials(assignee)}
             </span>
             {assignee}

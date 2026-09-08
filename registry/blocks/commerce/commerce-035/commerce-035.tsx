@@ -2,6 +2,8 @@ import type { CSSProperties } from "react"
 
 export type Commerce035Wrap = {
   id: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   label: string
   price: string
   hue: number
@@ -90,9 +92,15 @@ color:var(--vibeui-commerce-035-muted);
 [data-vibeui-block="commerce-035"] [data-part="wrap"]{position:relative;display:block;cursor:pointer}
 [data-vibeui-block="commerce-035"] [data-part="wrap"] input{position:absolute;opacity:0;pointer-events:none}
 [data-vibeui-block="commerce-035"] [data-part="face"]{
-display:block;padding:0.625rem;border-radius:1rem;text-align:center;
-border:1px solid var(--vibeui-commerce-035-border);background:var(--vibeui-commerce-035-bg);
-transition:border-color .15s ease,box-shadow .15s ease;
+position:relative;display:block;padding:0.625rem;border-radius:1rem;text-align:center;
+border:1px solid var(--vibeui-commerce-035-border);
+transition:border-color .15s ease,box-shadow .15s ease;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="commerce-035"] [data-part="face"][data-empty="true"]{background:var(--vibeui-commerce-035-bg);}
+[data-vibeui-block="commerce-035"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="commerce-035"] [data-part="wrap"] input:checked + [data-part="face"]{
 border-color:var(--vibeui-commerce-035-accent);box-shadow:inset 0 0 0 1px var(--vibeui-commerce-035-accent);
@@ -264,7 +272,18 @@ export function Commerce035({
                       value={wrap.id}
                       defaultChecked={index === 2}
                     />
-                    <span data-part="face">
+                    <span
+                      data-part="face"
+                      data-empty={wrap.image ? undefined : "true"}
+                    >
+                      {wrap.image ? (
+                        <img
+                          src={wrap.image}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      ) : null}
                       <span
                         data-part="box"
                         aria-hidden="true"

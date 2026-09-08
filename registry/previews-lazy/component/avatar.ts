@@ -45,9 +45,6 @@ export const PREVIEWS = {
   "avatar-013": dynamic(() =>
     import("@/registry/components/avatar/avatar-013/avatar-013").then((module) => module.Avatar013),
   ),
-  "avatar-014": dynamic(() =>
-    import("@/registry/components/avatar/avatar-014/avatar-014").then((module) => module.Avatar014),
-  ),
   "avatar-015": dynamic(() =>
     import("@/registry/components/avatar/avatar-015/avatar-015").then((module) => module.Avatar015),
   ),

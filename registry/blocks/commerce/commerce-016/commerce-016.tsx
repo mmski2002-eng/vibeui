@@ -5,6 +5,8 @@ import type { CSSProperties } from "react"
 
 export type Commerce016Item = {
   id: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   title: string
   note: string
   price: number
@@ -86,8 +88,13 @@ border:1px solid var(--vibeui-commerce-016-border);
 [data-vibeui-block="commerce-016"] [data-part="card"]:has(input:disabled){cursor:default;background:var(--vibeui-commerce-016-soft)}
 [data-vibeui-block="commerce-016"] input[type="checkbox"]{accent-color:var(--vibeui-commerce-016-accent);width:1rem;height:1rem;margin:0;flex:none}
 [data-vibeui-block="commerce-016"] [data-part="shot"]{
-width:3rem;height:3rem;border-radius:0.625rem;flex:none;
-background:linear-gradient(145deg,oklch(0.94 0.05 var(--vibeui-commerce-016-hue,262)),oklch(0.86 0.09 var(--vibeui-commerce-016-hue,262)));
+position:relative;width:3rem;height:3rem;border-radius:0.625rem;flex:none;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="commerce-016"] [data-part="shot"][data-empty="true"]{background:linear-gradient(145deg,oklch(0.94 0.05 var(--vibeui-commerce-016-hue,262)),oklch(0.86 0.09 var(--vibeui-commerce-016-hue,262)));}
+[data-vibeui-block="commerce-016"] [data-part="shot"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-016"] [data-part="name"]{display:block;font-size:0.8125rem;font-weight:650;line-height:1.3}
 [data-vibeui-block="commerce-016"] [data-part="note"]{display:block;font-size:0.6875rem;color:var(--vibeui-commerce-016-muted);line-height:1.35}
@@ -235,7 +242,20 @@ export function Commerce016({
                     disabled={item.fixed}
                     onChange={() => toggle(item)}
                   />
-                  <span data-part="shot" aria-hidden="true" />
+                  <span
+                    data-part="shot"
+                    data-empty={item.image ? undefined : "true"}
+                    aria-hidden="true"
+                  >
+                    {item.image ? (
+                      <img
+                        src={item.image}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : null}
+                  </span>
                   <span>
                     <span data-part="name">
                       {index > 0 ? "+ " : ""}

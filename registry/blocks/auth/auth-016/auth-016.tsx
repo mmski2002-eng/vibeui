@@ -11,6 +11,8 @@ export type Auth016Workspace = {
 }
 
 export type Auth016Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   title?: string
   account?: string
   workspaces?: Auth016Workspace[]
@@ -126,12 +128,17 @@ border-color:var(--vibeui-auth-016-accent);background:var(--vibeui-auth-016-pick
 [data-vibeui-block="auth-016"] [data-part="option"]:has(input:focus-visible){outline:2px solid var(--vibeui-auth-016-accent);outline-offset:2px}
 [data-vibeui-block="auth-016"] [data-part="option"] input{flex:none;width:1.0625rem;height:1.0625rem;accent-color:var(--vibeui-auth-016-accent)}
 [data-vibeui-block="auth-016"] [data-part="avatar"]{
-flex:none;
+position:relative;flex:none;
 display:inline-flex;align-items:center;justify-content:center;
 width:2rem;height:2rem;border-radius:0.625rem;
-background:oklch(0.9 0.06 var(--vibeui-auth-016-hue));
 color:oklch(0.35 0.11 var(--vibeui-auth-016-hue));
-font-size:0.75rem;font-weight:700;
+font-size:0.75rem;font-weight:700;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="auth-016"] [data-part="avatar"][data-empty="true"]{background:oklch(0.9 0.06 var(--vibeui-auth-016-hue));}
+[data-vibeui-block="auth-016"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="auth-016"] [data-part="body"]{display:flex;flex-direction:column;gap:0.0625rem;min-width:0}
 [data-vibeui-block="auth-016"] [data-part="name"]{font-size:0.875rem;font-weight:650;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -190,6 +197,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Auth016({
   title = "Куда войти",
+  avatarImage = "",
   account = "anna@vibeui.ru",
   workspaces = DEFAULT_WORKSPACES,
   submit = "Продолжить",
@@ -279,7 +287,19 @@ export function Auth016({
                       checked={chosen === workspace.name}
                       onChange={() => setChosen(workspace.name)}
                     />
-                    <span data-part="avatar" aria-hidden="true">
+                    <span
+                      data-part="avatar"
+                      data-empty={avatarImage ? undefined : "true"}
+                      aria-hidden="true"
+                    >
+                      {avatarImage ? (
+                        <img
+                          src={avatarImage}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      ) : null}
                       {workspace.name.slice(0, 2).toUpperCase()}
                     </span>
                     <span data-part="body">

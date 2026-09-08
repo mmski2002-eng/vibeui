@@ -342,15 +342,36 @@
     align-items: start;
   }
 
+  /* Выпадающие списки, меню и подсказки внутри превью обрезались краем
+     карточки: и кадр, и сама карточка каталога скрывают переполнение.
+     Пока внутри карточки есть фокус, обрезку снимаем и поднимаем карточку
+     над соседями — иначе список ложится под соседнюю карточку. */
+  .catalog-card,
+  .catalog-card-body,
+  .preview-frame {
+    overflow: hidden;
+  }
+
+  .catalog-card:has(:focus-within),
+  .catalog-card:has(:focus-within) .catalog-card-body,
+  .catalog-card:has(:focus-within) .preview-frame {
+    overflow: visible;
+  }
+
+  .catalog-card:has(:focus-within) {
+    position: relative;
+    z-index: 20;
+  }
+
   /* Высота и поля кадра задаются здесь, а не утилитами min-h-44 и py-10:
      слой utilities идёт после components и не дал бы обзору ужать кадр. */
-  [data-part="frame"] {
+  .preview-frame {
     min-height: 11rem;
     padding: 1.5rem;
   }
 
   @media (min-width: 64rem) {
-    [data-part="frame"] {
+    .preview-frame {
       padding: 2.5rem 2rem;
     }
   }
@@ -359,8 +380,8 @@
      сорокапиксельные поля, из-за которых карточка была вдвое выше самого
      компонента. Нижняя граница оставлена, чтобы совсем крошечные значки
      не схлопывались в полоску. */
-  [data-grid-view="overview"] [data-part="frame"],
-  [data-grid-view="overview"] [data-part="frame"]:where(*) {
+  [data-grid-view="overview"] .preview-frame,
+  [data-grid-view="overview"] .preview-frame:where(*) {
     min-height: 5rem;
     padding: 0.75rem;
   }
@@ -371,7 +392,7 @@
      перебивает инлайновую высоту, и на экран влезает шесть вариантов
      вместо одного; видна верхняя часть секции — заголовок и главная
      кнопка, то есть ровно то, чем варианты и различаются. */
-  [data-grid-view="overview"] .catalog-grid[data-single] [data-part="frame"] {
+  [data-grid-view="overview"] .catalog-grid[data-single] .preview-frame {
     max-height: 15rem;
   }
 

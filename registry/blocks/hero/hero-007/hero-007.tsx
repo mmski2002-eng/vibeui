@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react"
 
 export type Hero007Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  poster?: string
   eyebrow?: string
   title?: string
   lede?: string
@@ -59,10 +61,15 @@ color:var(--vibeui-hero-007-muted);text-wrap:pretty;
 [data-vibeui-block="hero-007"] [data-part="player"]{
 position:relative;display:block;margin:2.25rem 0 0;aspect-ratio:16 / 9;border-radius:1rem;overflow:hidden;
 border:1px solid var(--vibeui-hero-007-line);text-decoration:none;color:var(--vibeui-hero-007-on-poster);
-background:
-radial-gradient(60% 80% at 22% 18%,color-mix(in oklab,var(--vibeui-hero-007-accent) 55%,transparent),transparent 70%),
-conic-gradient(from 210deg at 70% 80%,oklch(0.35 0.13 39.8),oklch(0.28 0.1 25),oklch(0.22 0.06 45),oklch(0.35 0.13 39.8));
 transition:transform .2s ease,border-color .2s ease;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="hero-007"] [data-part="player"][data-empty="true"]{background:
+radial-gradient(60% 80% at 22% 18%,color-mix(in oklab,var(--vibeui-hero-007-accent) 55%,transparent),transparent 70%),
+conic-gradient(from 210deg at 70% 80%,oklch(0.35 0.13 39.8),oklch(0.28 0.1 25),oklch(0.22 0.06 45),oklch(0.35 0.13 39.8));}
+[data-vibeui-block="hero-007"] [data-part="player"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="hero-007"] [data-part="player"]:hover{transform:translateY(-2px);border-color:var(--vibeui-hero-007-accent)}
 [data-vibeui-block="hero-007"] [data-part="player"]:focus-visible{outline:2px solid var(--vibeui-hero-007-accent);outline-offset:4px}
@@ -134,6 +141,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 /** Hero с видео-заглушкой: нарисованный постер, кнопка play и список глав. */
 export function Hero007({
   eyebrow = "Обзор за шесть минут",
+  poster = "",
   title = "Посмотрите, как собирается страница",
   lede = "Ролик без слайдов: экран, каталог и агент, который ставит секцию в реальный проект.",
   watchLabel = "Смотреть обзор продукта",
@@ -171,7 +179,15 @@ export function Hero007({
           <h1>{title}</h1>
           {lede ? <p data-part="lede">{lede}</p> : null}
 
-          <a data-part="player" href={watchHref} aria-label={watchLabel}>
+          <a
+            data-part="player"
+            data-empty={poster ? undefined : "true"}
+            href={watchHref}
+            aria-label={watchLabel}
+          >
+            {poster ? (
+              <img src={poster} alt="" loading="lazy" decoding="async" />
+            ) : null}
             <span data-part="scrim" aria-hidden="true" />
             <span data-part="play" aria-hidden="true">
               <svg viewBox="0 0 24 24" width="24" height="24" fill="none">

@@ -16,6 +16,8 @@ export type Commerce045Stat = {
 }
 
 export type Commerce045Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   name?: string
   email?: string
   phone?: string
@@ -84,9 +86,14 @@ padding-bottom:1rem;border-bottom:1px solid var(--vibeui-commerce-045-border);
 }
 /* Инициалы вместо аватара: блок остаётся одним файлом без внешних картинок. */
 [data-vibeui-block="commerce-045"] [data-part="avatar"]{
-width:3.5rem;height:3.5rem;border-radius:9999px;display:grid;place-items:center;
-background:color-mix(in oklab,var(--vibeui-commerce-045-accent) 15%,transparent);
-color:var(--vibeui-commerce-045-accent);font-size:1.25rem;font-weight:750;letter-spacing:-0.02em;
+position:relative;width:3.5rem;height:3.5rem;border-radius:9999px;display:grid;place-items:center;
+color:var(--vibeui-commerce-045-accent);font-size:1.25rem;font-weight:750;letter-spacing:-0.02em;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="commerce-045"] [data-part="avatar"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-commerce-045-accent) 15%,transparent);}
+[data-vibeui-block="commerce-045"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="commerce-045"] h2{margin:0;font-size:1.1875rem;font-weight:700;letter-spacing:-0.02em}
 [data-vibeui-block="commerce-045"] [data-part="contacts"]{
@@ -235,6 +242,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Commerce045({
   name = "Анна Смирнова",
+  avatarImage = "",
   email = "a•••@example.com",
   phone = "+7 921 ••• ••-22",
   since = "2019",
@@ -284,7 +292,14 @@ export function Commerce045({
       >
         <div data-part="shell">
           <div data-part="head">
-            <span data-part="avatar" aria-hidden="true">
+            <span
+              data-part="avatar"
+              data-empty={avatarImage ? undefined : "true"}
+              aria-hidden="true"
+            >
+              {avatarImage ? (
+                <img src={avatarImage} alt="" loading="lazy" decoding="async" />
+              ) : null}
               {initials}
             </span>
             <div>

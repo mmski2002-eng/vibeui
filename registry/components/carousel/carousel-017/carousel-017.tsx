@@ -5,6 +5,8 @@ import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Carousel017Shot = {
   title: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   /** Тон кадра в градусах: снимок рисуется градиентом, а не картинкой. */
   hue: number
 }
@@ -73,11 +75,16 @@ overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;
 }
 [data-vibeui-block="carousel-017"] [data-part="item"]{flex:none;scroll-snap-align:start}
 [data-vibeui-block="carousel-017"] [data-part="thumb"]{
-display:block;width:5.5rem;aspect-ratio:4/3;padding:0;
+position:relative;display:block;width:5.5rem;aspect-ratio:4/3;padding:0;
 appearance:none;cursor:pointer;border:1px solid var(--vibeui-carousel-017-border);
 border-radius:0.5rem;overflow:hidden;
-background:linear-gradient(146deg,oklch(0.74 0.15 var(--vibeui-carousel-017-hue)),oklch(0.4 0.13 calc(var(--vibeui-carousel-017-hue) + 42)));
 transition:transform .16s ease,box-shadow .16s ease;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="carousel-017"] [data-part="thumb"][data-empty="true"]{background:linear-gradient(146deg,oklch(0.74 0.15 var(--vibeui-carousel-017-hue)),oklch(0.4 0.13 calc(var(--vibeui-carousel-017-hue) + 42)));}
+[data-vibeui-block="carousel-017"] [data-part="thumb"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="carousel-017"] [data-part="thumb"]:hover{transform:translateY(-2px);box-shadow:0 8px 18px -10px var(--vibeui-carousel-017-shadow)}
 [data-vibeui-block="carousel-017"] [data-part="thumb"]:focus-visible{outline:2px solid var(--vibeui-carousel-017-accent);outline-offset:2px}
@@ -94,8 +101,13 @@ font-family:var(--vibeui-carousel-017-font);
 [data-vibeui-block="carousel-017"] dialog::backdrop{background:light-dark(oklch(0.2 0 265 / 55%),oklch(0.06 0 265 / 72%))}
 [data-vibeui-block="carousel-017"] [data-part="stage"]{
 position:relative;display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
-padding:0.5rem;border-radius:0.625rem;aspect-ratio:4/3;
-background:linear-gradient(146deg,oklch(0.74 0.15 var(--vibeui-carousel-017-hue)),oklch(0.4 0.13 calc(var(--vibeui-carousel-017-hue) + 42)));
+padding:0.5rem;border-radius:0.625rem;aspect-ratio:4/3;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="carousel-017"] [data-part="stage"][data-empty="true"]{background:linear-gradient(146deg,oklch(0.74 0.15 var(--vibeui-carousel-017-hue)),oklch(0.4 0.13 calc(var(--vibeui-carousel-017-hue) + 42)));}
+[data-vibeui-block="carousel-017"] [data-part="stage"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="carousel-017"] [data-part="stage"][data-ratio="16:9"]{aspect-ratio:16/9}
 [data-vibeui-block="carousel-017"] [data-part="stage"][data-ratio="1:1"]{aspect-ratio:1/1}
@@ -260,6 +272,7 @@ export function Carousel017({
               <button
                 type="button"
                 data-part="thumb"
+                data-empty={shot.image ? undefined : "true"}
                 aria-label={entry.title}
                 aria-current={position === index || undefined}
                 style={
@@ -271,7 +284,16 @@ export function Carousel017({
                   setIndex(position)
                   box.current?.showModal()
                 }}
-              />
+              >
+                {shot.image ? (
+                  <img
+                    src={shot.image}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
+              </button>
             </li>
           ))}
         </ul>
@@ -283,6 +305,7 @@ export function Carousel017({
         >
           <div
             data-part="stage"
+            data-empty={shot.image ? undefined : "true"}
             data-ratio={ratio}
             style={
               {
@@ -290,6 +313,9 @@ export function Carousel017({
               } as CSSProperties
             }
           >
+            {shot.image ? (
+              <img src={shot.image} alt="" loading="lazy" decoding="async" />
+            ) : null}
             <button
               type="button"
               data-part="prev"

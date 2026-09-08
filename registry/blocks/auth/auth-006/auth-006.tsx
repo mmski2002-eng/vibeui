@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react"
 
 export type Auth006Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   project?: string
   inviter?: string
   inviterRole?: string
@@ -66,11 +68,16 @@ font-family:var(--vibeui-auth-006-sans);color:var(--vibeui-auth-006-fg);
 display:flex;align-items:center;gap:0.625rem;margin-bottom:0.875rem;
 }
 [data-vibeui-block="auth-006"] [data-part="avatar"]{
-display:inline-flex;align-items:center;justify-content:center;flex:none;
+position:relative;display:inline-flex;align-items:center;justify-content:center;flex:none;
 width:2.25rem;height:2.25rem;border-radius:9999px;
-background:oklch(0.9 0.07 var(--vibeui-auth-006-hue,262));
 color:oklch(0.35 0.12 var(--vibeui-auth-006-hue,262));
-font-size:0.8125rem;font-weight:700;
+font-size:0.8125rem;font-weight:700;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="auth-006"] [data-part="avatar"][data-empty="true"]{background:oklch(0.9 0.07 var(--vibeui-auth-006-hue,262));}
+[data-vibeui-block="auth-006"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 /* Кто пригласил — вместе с ролью: видно, вправе ли он раздавать доступ. */
 [data-vibeui-block="auth-006"] [data-part="inviter"]{margin:0;font-size:0.8125rem;font-weight:650}
@@ -173,6 +180,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Auth006({
   project = "Каталог VibeUI",
+  avatarImage = "",
   inviter = "Анна Реброва",
   inviterRole = "владелец проекта",
   role = "Редактор",
@@ -215,7 +223,14 @@ export function Auth006({
         aria-label={headingTemplate.replace("{project}", project)}
       >
         <div data-part="who">
-          <span data-part="avatar" aria-hidden="true">
+          <span
+            data-part="avatar"
+            data-empty={avatarImage ? undefined : "true"}
+            aria-hidden="true"
+          >
+            {avatarImage ? (
+              <img src={avatarImage} alt="" loading="lazy" decoding="async" />
+            ) : null}
             {initials(inviter)}
           </span>
           <div>

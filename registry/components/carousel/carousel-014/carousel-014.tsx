@@ -4,6 +4,8 @@ export type Carousel014Card = {
   title: string
   text?: string
   hue?: number
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
 }
 
 export type Carousel014Props = Omit<ComponentProps<"section">, "children"> & {
@@ -65,10 +67,15 @@ position:relative;flex:0 0 100%;min-width:0;
 scroll-snap-align:center;scroll-snap-stop:always;
 display:flex;flex-direction:column;justify-content:flex-end;gap:0.25rem;
 aspect-ratio:16 / 9;padding:1rem 2.75rem;box-sizing:border-box;
-background:
+color:oklch(0.99 0 265);overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="carousel-014"] [data-part="slide"][data-empty="true"]{background:
 radial-gradient(90% 80% at 22% 18%,oklch(0.9 0.06 var(--vibeui-carousel-014-hue,250)),transparent 70%),
-linear-gradient(150deg,oklch(0.74 0.1 var(--vibeui-carousel-014-hue,250)),oklch(0.44 0.11 var(--vibeui-carousel-014-hue,250)));
-color:oklch(0.99 0 265);
+linear-gradient(150deg,oklch(0.74 0.1 var(--vibeui-carousel-014-hue,250)),oklch(0.44 0.11 var(--vibeui-carousel-014-hue,250)));}
+[data-vibeui-block="carousel-014"] [data-part="slide"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="carousel-014"] [data-part="title"]{margin:0;font-size:1.0625rem;font-weight:680;line-height:1.2}
 [data-vibeui-block="carousel-014"] [data-part="text"]{margin:0;font-size:0.8125rem;line-height:1.45;color:oklch(0.94 0 265)}
@@ -188,6 +195,7 @@ export function Carousel014({
             return (
               <li
                 data-part="slide"
+                data-empty={card.image ? undefined : "true"}
                 key={card.title}
                 id={`${idPrefix}-${index + 1}`}
                 style={
@@ -196,6 +204,14 @@ export function Carousel014({
                   } as CSSProperties
                 }
               >
+                {card.image ? (
+                  <img
+                    src={card.image}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
                 <a
                   data-part="arrow"
                   data-way="prev"

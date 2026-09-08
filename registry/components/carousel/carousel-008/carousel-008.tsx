@@ -5,6 +5,8 @@ import type { ComponentProps, CSSProperties } from "react"
 
 export type Carousel008Step = {
   title: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   text: string
 }
 
@@ -52,13 +54,18 @@ font-family:var(--vibeui-carousel-008-font);color:var(--vibeui-carousel-008-fg);
 /* Картинка шага стоит вместо иллюстрации: градиент и светлый номер на нём
    одинаковы в любой теме страницы, поэтому второй ветки у них нет. */
 [data-vibeui-block="carousel-008"] [data-part="art"]{
-display:flex;align-items:center;justify-content:center;
+position:relative;display:flex;align-items:center;justify-content:center;
 aspect-ratio:16 / 9;border-radius:0.75rem;
-background:
-radial-gradient(90% 80% at 25% 20%,oklch(0.92 0.06 var(--vibeui-carousel-008-hue,250)),transparent 70%),
-linear-gradient(150deg,oklch(0.82 0.08 var(--vibeui-carousel-008-hue,250)),oklch(0.58 0.1 var(--vibeui-carousel-008-hue,250)));
 color:oklch(0.99 0 265);font-size:1.5rem;font-weight:700;
-font-variant-numeric:tabular-nums;
+font-variant-numeric:tabular-nums;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="carousel-008"] [data-part="art"][data-empty="true"]{background:
+radial-gradient(90% 80% at 25% 20%,oklch(0.92 0.06 var(--vibeui-carousel-008-hue,250)),transparent 70%),
+linear-gradient(150deg,oklch(0.82 0.08 var(--vibeui-carousel-008-hue,250)),oklch(0.58 0.1 var(--vibeui-carousel-008-hue,250)));}
+[data-vibeui-block="carousel-008"] [data-part="art"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="carousel-008"] [data-part="body"]{display:grid}
 /* Шаги лежат в одной ячейке грида: высота держится по самому длинному. */
@@ -178,7 +185,19 @@ export function Carousel008({
         className={className}
         style={palette}
       >
-        <div data-part="art" aria-hidden="true">
+        <div
+          data-part="art"
+          data-empty={steps[index]?.image ? undefined : "true"}
+          aria-hidden="true"
+        >
+          {steps[index]?.image ? (
+            <img
+              src={steps[index]?.image}
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          ) : null}
           {index + 1}
         </div>
         <div data-part="body" aria-live="polite">

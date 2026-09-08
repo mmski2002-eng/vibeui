@@ -15,6 +15,8 @@ export type Commerce058Module = {
 }
 
 export type Commerce058Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   kicker?: string
   title?: string
   lead?: string
@@ -127,8 +129,13 @@ background:var(--vibeui-commerce-058-accent);color:var(--vibeui-commerce-058-ona
 [data-vibeui-block="commerce-058"] [data-part="go"]:focus-visible{outline:2px solid var(--vibeui-commerce-058-accent);outline-offset:2px}
 [data-vibeui-block="commerce-058"] [data-part="author"]{display:flex;gap:0.75rem;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--vibeui-commerce-058-border)}
 [data-vibeui-block="commerce-058"] [data-part="avatar"]{
-flex:none;width:2.5rem;height:2.5rem;border-radius:9999px;
-background:linear-gradient(140deg,oklch(0.9 0.06 39.8),oklch(0.76 0.12 39.8));
+position:relative;flex:none;width:2.5rem;height:2.5rem;border-radius:9999px;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="commerce-058"] [data-part="avatar"][data-empty="true"]{background:linear-gradient(140deg,oklch(0.9 0.06 39.8),oklch(0.76 0.12 39.8));}
+[data-vibeui-block="commerce-058"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="commerce-058"] [data-part="aname"]{margin:0;font-size:0.875rem;font-weight:650}
 [data-vibeui-block="commerce-058"] [data-part="arole"]{margin:0.0625rem 0 0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-commerce-058-muted)}
@@ -220,6 +227,7 @@ const DEFAULT_MODULES: Commerce058Module[] = [
  */
 export function Commerce058({
   kicker = "Онлайн-курс",
+  avatarImage = "",
   title = "Шитьё с нуля: от отреза до готовой вещи",
   lead = "Четыре модуля, тринадцать уроков и один фартук, который вы сошьёте сами. Записи открыты навсегда, домашние работы проверяет автор.",
   author = "Мария Гущина",
@@ -323,7 +331,20 @@ export function Commerce058({
               {cta}
             </button>
             <div data-part="author">
-              <span data-part="avatar" aria-hidden="true" />
+              <span
+                data-part="avatar"
+                data-empty={avatarImage ? undefined : "true"}
+                aria-hidden="true"
+              >
+                {avatarImage ? (
+                  <img
+                    src={avatarImage}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
+              </span>
               <div>
                 <p data-part="aname">{author}</p>
                 <p data-part="arole">{authorRole}</p>

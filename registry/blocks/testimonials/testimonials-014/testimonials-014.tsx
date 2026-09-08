@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react"
 
 export type Testimonials014Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   eyebrow?: string
   title?: string
   posterLabel?: string
@@ -58,10 +60,15 @@ font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;fo
 position:relative;aspect-ratio:16/9;min-inline-size:0;
 display:grid;place-items:center;overflow:hidden;
 border-radius:1.125rem;
-background:
-radial-gradient(120% 150% at 15% 0%,color-mix(in oklab,var(--vibeui-testimonials-014-accent) 30%,transparent),transparent 55%),
-linear-gradient(140deg,var(--vibeui-testimonials-014-poster-a),var(--vibeui-testimonials-014-poster-b));
 color-scheme:dark;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="testimonials-014"] [data-part="poster"][data-empty="true"]{background:
+radial-gradient(120% 150% at 15% 0%,color-mix(in oklab,var(--vibeui-testimonials-014-accent) 30%,transparent),transparent 55%),
+linear-gradient(140deg,var(--vibeui-testimonials-014-poster-a),var(--vibeui-testimonials-014-poster-b));}
+[data-vibeui-block="testimonials-014"] [data-part="poster"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="testimonials-014"] [data-part="play"]{
 width:4rem;height:4rem;border-radius:999px;
@@ -131,6 +138,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 /** Постер видео-отзыва с кнопкой play и текстовой расшифровкой рядом. */
 export function Testimonials014({
   eyebrow = "Видео-отзыв",
+  image = "",
   title = "Две минуты о том, как это работает",
   posterLabel = "Анна Ковалёва — о переходе на VibeUI",
   duration = "2:14",
@@ -173,7 +181,14 @@ export function Testimonials014({
           <p data-part="eyebrow">{eyebrow}</p>
           <h2 data-part="title">{title}</h2>
           <div data-part="layout">
-            <div data-part="poster" aria-hidden="true">
+            <div
+              data-part="poster"
+              data-empty={image ? undefined : "true"}
+              aria-hidden="true"
+            >
+              {image ? (
+                <img src={image} alt="" loading="lazy" decoding="async" />
+              ) : null}
               <span data-part="play">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                   <path d="M7 4.6c0-1.2 1.3-2 2.4-1.4l11 6.4c1 .6 1 2.2 0 2.8l-11 6.4c-1.1.6-2.4-.2-2.4-1.4V4.6Z" />

@@ -2,6 +2,8 @@ import type { CSSProperties } from "react"
 
 export type Dashboard004Member = {
   name: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   email: string
   role: string
   status?: "active" | "invited"
@@ -112,11 +114,16 @@ border:1px solid var(--vibeui-dashboard-004-border);border-radius:0.875rem;
 }
 /* Оттенок из имени считается хешем: сумма кодов сводит алфавит в один цвет. */
 [data-vibeui-block="dashboard-004"] [data-part="avatar"]{
-display:inline-flex;align-items:center;justify-content:center;flex:none;
+position:relative;display:inline-flex;align-items:center;justify-content:center;flex:none;
 width:2.25rem;height:2.25rem;border-radius:9999px;
-background:oklch(0.93 0.05 var(--vibeui-dashboard-004-hue,265));
 color:oklch(0.38 0.12 var(--vibeui-dashboard-004-hue,265));
-font-size:0.8125rem;font-weight:700;
+font-size:0.8125rem;font-weight:700;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="dashboard-004"] [data-part="avatar"][data-empty="true"]{background:oklch(0.93 0.05 var(--vibeui-dashboard-004-hue,265));}
+[data-vibeui-block="dashboard-004"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="dashboard-004"] [data-part="name"]{margin:0;font-size:0.875rem;font-weight:650}
 [data-vibeui-block="dashboard-004"] [data-part="email"]{margin:0;font-size:0.75rem;color:var(--vibeui-dashboard-004-muted)}
@@ -302,6 +309,7 @@ export function Dashboard004({
             >
               <span
                 data-part="avatar"
+                data-empty={member.image ? undefined : "true"}
                 aria-hidden="true"
                 style={
                   {
@@ -309,6 +317,14 @@ export function Dashboard004({
                   } as CSSProperties
                 }
               >
+                {member.image ? (
+                  <img
+                    src={member.image}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
                 {initials(member.name)}
               </span>
               <div>

@@ -7,6 +7,8 @@ export type Carousel016Slide = {
   title: string
   meta?: string
   hue?: number
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
 }
 
 export type Carousel016Props = Omit<ComponentProps<"section">, "children"> & {
@@ -65,11 +67,16 @@ position:relative;aspect-ratio:16 / 9;border-radius:0.875rem;overflow:hidden;
 position:absolute;inset:0;
 display:flex;flex-direction:column;justify-content:flex-end;gap:0.125rem;
 padding:1rem;box-sizing:border-box;
-background:
-radial-gradient(90% 80% at 22% 18%,oklch(0.9 0.06 var(--vibeui-carousel-016-hue,250)),transparent 70%),
-linear-gradient(150deg,oklch(0.74 0.1 var(--vibeui-carousel-016-hue,250)),oklch(0.44 0.11 var(--vibeui-carousel-016-hue,250)));
 color:oklch(0.99 0 265);
-opacity:0;visibility:hidden;transition:opacity .28s ease,visibility .28s ease;
+opacity:0;visibility:hidden;transition:opacity .28s ease,visibility .28s ease;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="carousel-016"] [data-part="slide"][data-empty="true"]{background:
+radial-gradient(90% 80% at 22% 18%,oklch(0.9 0.06 var(--vibeui-carousel-016-hue,250)),transparent 70%),
+linear-gradient(150deg,oklch(0.74 0.1 var(--vibeui-carousel-016-hue,250)),oklch(0.44 0.11 var(--vibeui-carousel-016-hue,250)));}
+[data-vibeui-block="carousel-016"] [data-part="slide"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="carousel-016"] [data-part="slide"][data-live="true"]{opacity:1;visibility:visible}
 [data-vibeui-block="carousel-016"] [data-part="title"]{margin:0;font-size:1.0625rem;font-weight:680;line-height:1.2}
@@ -183,6 +190,7 @@ export function Carousel016({
           {slides.map((slide, position) => (
             <div
               data-part="slide"
+              data-empty={slide.image ? undefined : "true"}
               key={slide.title}
               data-live={position === index}
               inert={position !== index}
@@ -193,6 +201,9 @@ export function Carousel016({
                 } as CSSProperties
               }
             >
+              {slide.image ? (
+                <img src={slide.image} alt="" loading="lazy" decoding="async" />
+              ) : null}
               <h3 data-part="title">{slide.title}</h3>
               {slide.meta ? <p data-part="meta">{slide.meta}</p> : null}
             </div>

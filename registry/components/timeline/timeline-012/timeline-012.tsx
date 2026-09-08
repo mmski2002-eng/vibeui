@@ -14,6 +14,8 @@ export type Timeline012Day = {
 }
 
 export type Timeline012Props = Omit<ComponentProps<"section">, "children"> & {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   days?: Timeline012Day[]
   title?: string
   accent?: string
@@ -73,10 +75,15 @@ width:1px;background:var(--vibeui-timeline-012-border);
 [data-vibeui-block="timeline-012"] [data-part="row"]:last-child{padding-bottom:0}
 [data-vibeui-block="timeline-012"] [data-part="row"]:last-child::before{display:none}
 [data-vibeui-block="timeline-012"] [data-part="avatar"]{
-display:flex;align-items:center;justify-content:center;
-width:1.75rem;height:1.75rem;border-radius:9999px;
-background:var(--vibeui-timeline-012-border);color:var(--vibeui-timeline-012-fg);
-font-size:0.6875rem;font-weight:700;
+position:relative;display:flex;align-items:center;justify-content:center;
+width:1.75rem;height:1.75rem;border-radius:9999px;color:var(--vibeui-timeline-012-fg);
+font-size:0.6875rem;font-weight:700;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="timeline-012"] [data-part="avatar"][data-empty="true"]{background:var(--vibeui-timeline-012-border);}
+[data-vibeui-block="timeline-012"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="timeline-012"] [data-part="text"]{margin:0;font-size:0.8125rem;line-height:1.45;padding-top:0.1875rem}
 [data-vibeui-block="timeline-012"] [data-part="author"]{color:var(--vibeui-timeline-012-fg);font-weight:650}
@@ -177,6 +184,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 export function Timeline012({
   days = DEFAULT_DAYS,
   title = "Активность по дням",
+  avatarImage = "",
   accent,
   background = "",
   className,
@@ -217,7 +225,19 @@ export function Timeline012({
               <ol data-part="entries">
                 {day.entries.map((entry, index) => (
                   <li data-part="row" key={`${entry.dateTime}-${index}`}>
-                    <span data-part="avatar" aria-hidden="true">
+                    <span
+                      data-part="avatar"
+                      data-empty={avatarImage ? undefined : "true"}
+                      aria-hidden="true"
+                    >
+                      {avatarImage ? (
+                        <img
+                          src={avatarImage}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      ) : null}
                       {initial(entry.author)}
                     </span>
                     <p data-part="text">

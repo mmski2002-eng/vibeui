@@ -2,6 +2,8 @@ import type { CSSProperties } from "react"
 
 export type Commerce034Plan = {
   id: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   label: string
   parts: number
   overpay: number
@@ -90,9 +92,15 @@ color:var(--vibeui-commerce-034-muted);
 [data-vibeui-block="commerce-034"] [data-part="plan"]{position:relative;display:block;cursor:pointer}
 [data-vibeui-block="commerce-034"] [data-part="plan"] input{position:absolute;opacity:0;pointer-events:none}
 [data-vibeui-block="commerce-034"] [data-part="face"]{
-display:block;height:100%;padding:0.875rem;border-radius:1rem;
-border:1px solid var(--vibeui-commerce-034-border);background:var(--vibeui-commerce-034-bg);
-transition:border-color .15s ease,box-shadow .15s ease;
+position:relative;display:block;height:100%;padding:0.875rem;border-radius:1rem;
+border:1px solid var(--vibeui-commerce-034-border);
+transition:border-color .15s ease,box-shadow .15s ease;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="commerce-034"] [data-part="face"][data-empty="true"]{background:var(--vibeui-commerce-034-bg);}
+[data-vibeui-block="commerce-034"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="commerce-034"] [data-part="plan"] input:checked + [data-part="face"]{
 border-color:var(--vibeui-commerce-034-accent);
@@ -272,7 +280,18 @@ export function Commerce034({
                         value={plan.id}
                         defaultChecked={plan.id === chosen?.id}
                       />
-                      <span data-part="face">
+                      <span
+                        data-part="face"
+                        data-empty={plan.image ? undefined : "true"}
+                      >
+                        {plan.image ? (
+                          <img
+                            src={plan.image}
+                            alt=""
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        ) : null}
                         <span data-part="label">{plan.label}</span>
                         <span data-part="per">
                           {money(total / plan.parts, currency, numberLocale)}

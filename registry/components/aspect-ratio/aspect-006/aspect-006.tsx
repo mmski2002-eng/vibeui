@@ -6,6 +6,8 @@ export type Aspect006Tile = {
 }
 
 export type Aspect006Props = Omit<ComponentProps<"div">, "children"> & {
+  /** Снимки плиток по порядку. Без них остаются цветные поля. */
+  images?: string[]
   tiles?: Aspect006Tile[]
   /** Сколько кадров показывать сверх главного: остальные сворачиваются в счётчик. */
   visible?: number
@@ -31,6 +33,9 @@ container-type:inline-size;
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="aspect-006"]{color-scheme:dark}
+[data-vibeui-block="aspect-006"] [data-part="tile"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+}
 [data-vibeui-block="aspect-006"]{
 display:block;width:100%;
 /* container-type отрывает ширину от содержимого: без нижней границы
@@ -91,6 +96,7 @@ export function Aspect006({
   tiles = DEFAULT_TILES,
   visible = 5,
   moreLabel = "+",
+  images = [],
   className,
   style,
   ...props
@@ -118,12 +124,21 @@ export function Aspect006({
               <div
                 key={tile.label}
                 data-part="tile"
+                data-empty={images[index] ? undefined : "true"}
                 style={
                   {
                     "--vibeui-aspect-006-hue": tile.hue ?? 250,
                   } as CSSProperties
                 }
               >
+                {images[index] ? (
+                  <img
+                    src={images[index]}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
                 <span data-part="label">{tile.label}</span>
                 {last && rest > 0 ? (
                   <span data-part="more">

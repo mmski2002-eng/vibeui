@@ -2,6 +2,8 @@ import type { CSSProperties } from "react"
 
 export type Commerce005Category = {
   title: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   count: string
   hint?: string
   hue?: number
@@ -67,9 +69,14 @@ display:grid;grid-template-columns:1fr;gap:0.625rem;
 position:relative;display:flex;flex-direction:column;justify-content:flex-end;
 min-height:8.5rem;padding:0.75rem;overflow:hidden;
 border-radius:0.875rem;border:1px solid var(--vibeui-commerce-005-border);
-background:
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="commerce-005"] [data-part="tile"][data-empty="true"]{background:
 radial-gradient(120% 100% at 20% 0%, light-dark(oklch(0.93 0.08 var(--vibeui-commerce-005-hue,262)),oklch(0.44 0.09 var(--vibeui-commerce-005-hue,262))), transparent 70%),
-light-dark(oklch(0.97 0.02 var(--vibeui-commerce-005-hue,262)),oklch(0.3 0.03 var(--vibeui-commerce-005-hue,262)));
+light-dark(oklch(0.97 0.02 var(--vibeui-commerce-005-hue,262)),oklch(0.3 0.03 var(--vibeui-commerce-005-hue,262)));}
+[data-vibeui-block="commerce-005"] [data-part="tile"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-005"] h3{margin:0;font-size:0.9375rem;font-weight:650;line-height:1.25}
 /* Растянутая ссылка: цель — вся плитка, а фокус ловит именно плитка. */
@@ -168,12 +175,21 @@ export function Commerce005({
             >
               <article
                 data-part="tile"
+                data-empty={category.image ? undefined : "true"}
                 style={
                   {
                     "--vibeui-commerce-005-hue": category.hue ?? 262,
                   } as CSSProperties
                 }
               >
+                {category.image ? (
+                  <img
+                    src={category.image}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
                 <h3>
                   <a href="#">{category.title}</a>
                 </h3>

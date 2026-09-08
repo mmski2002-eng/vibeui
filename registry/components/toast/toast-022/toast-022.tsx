@@ -3,7 +3,10 @@
 import { useState } from "react"
 import type { ComponentProps, CSSProperties } from "react"
 
-export type Toast022Props = Omit<ComponentProps<"div">, "children" | "title"> & {
+export type Toast022Props = Omit<
+  ComponentProps<"div">,
+  "children" | "title"
+> & {
   title?: string
   message?: string
   actionLabel?: string

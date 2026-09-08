@@ -277,6 +277,13 @@ export function Drawer006({
               setAsking(true)
             }
           }}
+
+          onClick={(event) => {
+            // щелчок мимо панели приходит самому <dialog>: закрываем
+            if (event.target === event.currentTarget) {
+              event.currentTarget.close()
+            }
+          }}
         >
           <form
             method="dialog"

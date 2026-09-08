@@ -244,7 +244,12 @@ export function Commerce017({
                           aria-hidden={product.image ? undefined : true}
                         >
                           {product.image ? (
-                            <img src={product.image} alt="" loading="lazy" decoding="async" />
+                            <img
+                              src={product.image}
+                              alt=""
+                              loading="lazy"
+                              decoding="async"
+                            />
                           ) : null}
                         </span>
                         <span data-part="name">{product.title}</span>

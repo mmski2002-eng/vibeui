@@ -8,6 +8,8 @@ export type Commerce008Variant = {
 }
 
 export type Commerce008Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   title?: string
   brand?: string
   price?: string
@@ -74,6 +76,9 @@ padding:1rem;max-width:72rem;margin:0 auto;display:grid;gap:1rem;grid-template-c
 [data-vibeui-block="commerce-008"] [data-part="stage"]{
 position:relative;aspect-ratio:4/3;border-radius:1rem;overflow:hidden;
 border:1px solid var(--vibeui-commerce-008-border);
+}
+[data-vibeui-block="commerce-008"] [data-part="stage"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-008"] [data-part="stage"] span{
 position:absolute;inset:0;opacity:0;transition:opacity .2s ease;
@@ -184,6 +189,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Commerce008({
   title = "Кресло «Хмарь» с подлокотниками",
+  image = "",
   brand = "Хмарь",
   price = "38 900 ₽",
   variants = DEFAULT_VARIANTS,
@@ -235,7 +241,10 @@ export function Commerce008({
                   aria-label={shot}
                 />
               ))}
-              <div data-part="stage">
+              <div data-part="stage" data-empty={image ? undefined : "true"}>
+                {image ? (
+                  <img src={image} alt="" loading="lazy" decoding="async" />
+                ) : null}
                 {frames.map((shot, index) => (
                   <span
                     key={shot}

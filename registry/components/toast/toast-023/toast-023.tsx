@@ -9,7 +9,10 @@ export type Toast023Problem = {
   text: string
 }
 
-export type Toast023Props = Omit<ComponentProps<"div">, "children" | "title"> & {
+export type Toast023Props = Omit<
+  ComponentProps<"div">,
+  "children" | "title"
+> & {
   /** Заголовок сводки. {count} — сколько полей с ошибкой. */
   titleTemplate?: string
   problems?: Toast023Problem[]
@@ -214,52 +217,52 @@ export function Toast023({
             </button>
           </p>
         ) : (
-        <div data-part="card">
-          <div data-part="head">
-            {/* Считаются поля, а не ошибки: «три ошибки» в одном поле пугают
+          <div data-part="card">
+            <div data-part="head">
+              {/* Считаются поля, а не ошибки: «три ошибки» в одном поле пугают
                 сильнее, чем стоило бы. */}
-            <p data-part="title">
-              {titleTemplate.replace("{count}", String(problems.length))}
-            </p>
-            <button
-              type="button"
-              data-part="close"
-              aria-label={closeLabel}
-              onClick={() => setOpen(false)}
-            >
-              ×
-            </button>
-          </div>
+              <p data-part="title">
+                {titleTemplate.replace("{count}", String(problems.length))}
+              </p>
+              <button
+                type="button"
+                data-part="close"
+                aria-label={closeLabel}
+                onClick={() => setOpen(false)}
+              >
+                ×
+              </button>
+            </div>
 
-          <ul data-part="list">
-            {problems.map((problem) => (
-              <li key={problem.field}>
-                <button
-                  type="button"
-                  data-part="jump"
-                  aria-label={jumpTemplate.replace("{field}", problem.field)}
-                  onClick={() => setJumped(problem.field)}
-                >
-                  <span data-part="field">{problem.field}</span>
-                  <span data-part="text">{problem.text}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
+            <ul data-part="list">
+              {problems.map((problem) => (
+                <li key={problem.field}>
+                  <button
+                    type="button"
+                    data-part="jump"
+                    aria-label={jumpTemplate.replace("{field}", problem.field)}
+                    onClick={() => setJumped(problem.field)}
+                  >
+                    <span data-part="field">{problem.field}</span>
+                    <span data-part="text">{problem.text}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
 
-          <div data-part="foot">
-            <span data-part="done" aria-live="polite">
-              {jumped ? jumpedTemplate.replace("{field}", jumped) : ""}
-            </span>
-            <button
-              type="button"
-              data-part="first"
-              onClick={() => setJumped(problems[0]?.field ?? "")}
-            >
-              {firstLabel}
-            </button>
+            <div data-part="foot">
+              <span data-part="done" aria-live="polite">
+                {jumped ? jumpedTemplate.replace("{field}", jumped) : ""}
+              </span>
+              <button
+                type="button"
+                data-part="first"
+                onClick={() => setJumped(problems[0]?.field ?? "")}
+              >
+                {firstLabel}
+              </button>
+            </div>
           </div>
-        </div>
         )}
       </div>
     </>

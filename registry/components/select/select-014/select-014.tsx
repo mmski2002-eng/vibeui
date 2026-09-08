@@ -10,6 +10,8 @@ export type Select014Person = {
 }
 
 export type Select014Props = Omit<ComponentProps<"div">, "children"> & {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   label?: string
   name?: string
   people?: Select014Person[]
@@ -65,11 +67,16 @@ outline:none;border-color:var(--vibeui-select-014-accent);
 box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-select-014-accent) 22%,transparent);
 }
 [data-vibeui-block="select-014"] [data-part="avatar"]{
-flex:none;display:flex;align-items:center;justify-content:center;
+position:relative;flex:none;display:flex;align-items:center;justify-content:center;
 width:2.25rem;height:2.25rem;border-radius:9999px;
-background:light-dark(oklch(0.9 0.05 var(--vibeui-select-014-hue,265)),oklch(0.37 0.05 var(--vibeui-select-014-hue,265)));
 color:light-dark(oklch(0.35 0.09 var(--vibeui-select-014-hue,265)),oklch(0.9 0.06 var(--vibeui-select-014-hue,265)));
-font-size:0.75rem;font-weight:700;
+font-size:0.75rem;font-weight:700;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="select-014"] [data-part="avatar"][data-empty="true"]{background:light-dark(oklch(0.9 0.05 var(--vibeui-select-014-hue,265)),oklch(0.37 0.05 var(--vibeui-select-014-hue,265)));}
+[data-vibeui-block="select-014"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="select-014"] [data-part="body"]{min-width:0;display:flex;flex-direction:column;gap:0.0625rem}
 [data-vibeui-block="select-014"] [data-part="name"]{
@@ -173,6 +180,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Select014({
   label = "Исполнитель",
+  avatarImage = "",
   name,
   people = DEFAULT_PEOPLE,
   defaultValue = people[0]?.value,
@@ -294,6 +302,7 @@ export function Select014({
           >
             <span
               data-part="avatar"
+              data-empty={avatarImage ? undefined : "true"}
               aria-hidden="true"
               style={
                 {
@@ -301,6 +310,9 @@ export function Select014({
                 } as CSSProperties
               }
             >
+              {avatarImage ? (
+                <img src={avatarImage} alt="" loading="lazy" decoding="async" />
+              ) : null}
               {initials(current.name)}
             </span>
             <span data-part="body">

@@ -132,7 +132,8 @@ const DEFAULT_ITEMS: Faq013Item[] = [
       "Нет. Достаточно выбрать блоки в каталоге и передать инструкции агенту. Код появляется в проекте готовым, править его руками не обязательно.",
   },
   {
-    question: "Что будет, если попросить агента «сделать похожее» без каталога?",
+    question:
+      "Что будет, если попросить агента «сделать похожее» без каталога?",
     answer:
       "Агент сгенерирует секцию заново, и результат каждый раз разный: плывут отступы, ломается мобильная вёрстка. Инструкция из каталога ставит проверенный файл — итог предсказуем.",
   },
@@ -200,7 +201,11 @@ export function Faq013({
       <style href="vibeui-faq-013" precedence="medium">
         {STYLES}
       </style>
-      <section data-vibeui-block="faq-013" className={className} style={palette}>
+      <section
+        data-vibeui-block="faq-013"
+        className={className}
+        style={palette}
+      >
         <div data-part="shell">
           <h2 data-part="title">{title}</h2>
           <div data-part="list">

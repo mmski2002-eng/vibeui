@@ -158,10 +158,14 @@ export function Otp011({
       .replace("{total}", String(size))
 
   const reveal = (index: number) => {
-    setShown((was) => was.map((value, position) => (position === index ? true : value)))
+    setShown((was) =>
+      was.map((value, position) => (position === index ? true : value)),
+    )
     clearTimeout(timers.current[index])
     timers.current[index] = setTimeout(() => {
-      setShown((was) => was.map((value, position) => (position === index ? false : value)))
+      setShown((was) =>
+        was.map((value, position) => (position === index ? false : value)),
+      )
     }, revealMs)
   }
 
@@ -180,7 +184,9 @@ export function Otp011({
       if (index < size - 1) boxes.current[index + 1]?.focus()
     } else {
       clearTimeout(timers.current[index])
-      setShown((was) => was.map((value, position) => (position === index ? false : value)))
+      setShown((was) =>
+        was.map((value, position) => (position === index ? false : value)),
+      )
     }
   }
 
@@ -206,7 +212,9 @@ export function Otp011({
       next[index - 1] = ""
       push(next)
       clearTimeout(timers.current[index - 1])
-      setShown((was) => was.map((value, position) => (position === index - 1 ? false : value)))
+      setShown((was) =>
+        was.map((value, position) => (position === index - 1 ? false : value)),
+      )
     } else if (event.key === "ArrowLeft" && index > 0) {
       boxes.current[index - 1]?.focus()
     } else if (event.key === "ArrowRight" && index < size - 1) {
@@ -249,7 +257,11 @@ export function Otp011({
                 onPaste={paste}
                 onKeyDown={(event) => onKeyDown(event, index)}
               />
-              <span data-part="face" data-shown={shown[index] ? "1" : "0"} aria-hidden="true">
+              <span
+                data-part="face"
+                data-shown={shown[index] ? "1" : "0"}
+                aria-hidden="true"
+              >
                 {digit ? (shown[index] ? digit : "•") : ""}
               </span>
             </div>

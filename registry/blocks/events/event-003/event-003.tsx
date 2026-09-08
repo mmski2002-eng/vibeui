@@ -66,9 +66,24 @@ transition:transform .18s ease,border-color .18s ease;
 `
 
 const DEFAULT_EVENTS: Event003Item[] = [
-  { title: "Вебинар: лендинг за вечер", date: "18 сентября", format: "Онлайн", spots: "Свободно 40 мест" },
-  { title: "Воркшоп по Copy for AI", date: "24 сентября", format: "Онлайн", spots: "Свободно 12 мест" },
-  { title: "Митап вайбкодеров", date: "2 октября", format: "Москва", spots: "Свободно 8 мест" },
+  {
+    title: "Вебинар: лендинг за вечер",
+    date: "18 сентября",
+    format: "Онлайн",
+    spots: "Свободно 40 мест",
+  },
+  {
+    title: "Воркшоп по Copy for AI",
+    date: "24 сентября",
+    format: "Онлайн",
+    spots: "Свободно 12 мест",
+  },
+  {
+    title: "Митап вайбкодеров",
+    date: "2 октября",
+    format: "Москва",
+    spots: "Свободно 8 мест",
+  },
 ]
 
 /**

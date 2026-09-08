@@ -1,6 +1,8 @@
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Card017Props = Omit<ComponentProps<"figure">, "children"> & {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   /** Сама цитата, без кавычек: их рисует CSS. */
   quote?: string
   author?: string
@@ -74,11 +76,16 @@ display:flex;align-items:center;gap:0.625rem;
 padding-top:0.875rem;border-top:1px solid var(--vibeui-card-017-border);
 }
 [data-vibeui-block="card-017"] [data-part="face"]{
-display:flex;align-items:center;justify-content:center;flex:none;
+position:relative;display:flex;align-items:center;justify-content:center;flex:none;
 width:2.125rem;height:2.125rem;border-radius:9999px;
-background:light-dark(oklch(0.92 0.05 var(--vibeui-card-017-hue)),oklch(0.33 0.07 var(--vibeui-card-017-hue)));
 color:light-dark(oklch(0.38 0.09 var(--vibeui-card-017-hue)),oklch(0.92 0.05 var(--vibeui-card-017-hue)));
-font-size:0.75rem;font-weight:700;
+font-size:0.75rem;font-weight:700;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="card-017"] [data-part="face"][data-empty="true"]{background:light-dark(oklch(0.92 0.05 var(--vibeui-card-017-hue)),oklch(0.33 0.07 var(--vibeui-card-017-hue)));}
+[data-vibeui-block="card-017"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="card-017"] [data-part="who"]{display:flex;flex-direction:column;min-width:0}
 [data-vibeui-block="card-017"] [data-part="author"]{font-size:0.875rem;font-weight:650;line-height:1.3}
@@ -139,6 +146,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Card017({
   quote = "Отдали агенту три блока из каталога и получили рабочую страницу за вечер. Правили только тексты — вёрстку трогать не пришлось.",
+  avatarImage = "",
   author = "Ольга Терентьева",
   role = "Продакт, «Ранняя птица»",
   rating = 5,
@@ -195,7 +203,14 @@ export function Card017({
         ) : null}
         <blockquote data-part="quote">{quote}</blockquote>
         <figcaption data-part="caption">
-          <span data-part="face" aria-hidden="true">
+          <span
+            data-part="face"
+            data-empty={avatarImage ? undefined : "true"}
+            aria-hidden="true"
+          >
+            {avatarImage ? (
+              <img src={avatarImage} alt="" loading="lazy" decoding="async" />
+            ) : null}
             {initials(author)}
           </span>
           <span data-part="who">

@@ -2,6 +2,8 @@ import type { CSSProperties } from "react"
 
 export type Commerce014Item = {
   id: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   title: string
   option?: string
   price: string
@@ -90,8 +92,13 @@ border:1px solid var(--vibeui-commerce-014-border);
 [data-vibeui-block="commerce-014"] input[type="checkbox"],
 [data-vibeui-block="commerce-014"] input[type="radio"]{accent-color:var(--vibeui-commerce-014-accent);width:1rem;height:1rem;margin:0}
 [data-vibeui-block="commerce-014"] [data-part="shot"]{
-width:2.5rem;height:2.5rem;border-radius:0.5rem;
-background:linear-gradient(145deg,oklch(0.94 0.05 var(--vibeui-commerce-014-hue,262)),oklch(0.86 0.09 var(--vibeui-commerce-014-hue,262)));
+position:relative;width:2.5rem;height:2.5rem;border-radius:0.5rem;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="commerce-014"] [data-part="shot"][data-empty="true"]{background:linear-gradient(145deg,oklch(0.94 0.05 var(--vibeui-commerce-014-hue,262)),oklch(0.86 0.09 var(--vibeui-commerce-014-hue,262)));}
+[data-vibeui-block="commerce-014"] [data-part="shot"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-014"] [data-part="name"]{display:block;font-size:0.8125rem;font-weight:650;line-height:1.3}
 [data-vibeui-block="commerce-014"] [data-part="option"]{display:block;font-size:0.6875rem;color:var(--vibeui-commerce-014-muted)}
@@ -256,7 +263,20 @@ export function Commerce014({
                       value={item.id}
                       defaultChecked={index === 0}
                     />
-                    <span data-part="shot" aria-hidden="true" />
+                    <span
+                      data-part="shot"
+                      data-empty={item.image ? undefined : "true"}
+                      aria-hidden="true"
+                    >
+                      {item.image ? (
+                        <img
+                          src={item.image}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      ) : null}
+                    </span>
                     <span>
                       <span data-part="name">{item.title}</span>
                       {item.option ? (

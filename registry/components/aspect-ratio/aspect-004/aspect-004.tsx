@@ -4,6 +4,8 @@ export type Aspect004Props = Omit<
   ComponentProps<"div">,
   "title" | "children"
 > & {
+  /** Фотография кадра. Без неё остаётся нарисованная подложка. */
+  image?: string
   title?: string
   subtitle?: string
   /** Надпись в верхнем углу: рубрика, дата, номер выпуска. */
@@ -36,6 +38,9 @@ container-type:inline-size;
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="aspect-004"]{color-scheme:dark}
+[data-vibeui-block="aspect-004"] > img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+}
 [data-vibeui-block="aspect-004"]{
 position:relative;display:block;width:100%;
 /* container-type отрывает ширину от содержимого: без нижней границы
@@ -82,6 +87,7 @@ font-size:clamp(1.125rem,7cqi,1.75rem);line-height:1.15;letter-spacing:-0.01em;
  */
 export function Aspect004({
   title = "Вечерний свет над мастерской",
+  image = "",
   subtitle = "Съёмка студии «Полёт», март",
   eyebrow = "Портфолио",
   href = "#",
@@ -117,10 +123,14 @@ export function Aspect004({
         <a
           data-slot="aspect-ratio"
           data-vibeui-block="aspect-004"
+          data-empty={image ? "false" : "true"}
           href={href}
           className={className}
           style={palette}
         >
+          {image ? (
+            <img src={image} alt="" loading="lazy" decoding="async" />
+          ) : null}
           {content}
         </a>
       ) : (

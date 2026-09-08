@@ -72,9 +72,21 @@ background:var(--vibeui-roadmap-003-accent);border-color:transparent;color:var(-
 `
 
 const DEFAULT_IDEAS: Roadmap003Idea[] = [
-  { title: "Плагин для Figma", note: "Вставлять блоки прямо в макет", votes: 214 },
-  { title: "Тёмные варианты по умолчанию", note: "Отдельная тёмная версия каждого блока", votes: 158 },
-  { title: "Командные пресеты", note: "Общая палитра и токены на команду", votes: 96 },
+  {
+    title: "Плагин для Figma",
+    note: "Вставлять блоки прямо в макет",
+    votes: 214,
+  },
+  {
+    title: "Тёмные варианты по умолчанию",
+    note: "Отдельная тёмная версия каждого блока",
+    votes: 158,
+  },
+  {
+    title: "Командные пресеты",
+    note: "Общая палитра и токены на команду",
+    votes: 96,
+  },
   { title: "Экспорт в Vue", note: "Тот же реестр под Vue-проекты", votes: 73 },
 ]
 

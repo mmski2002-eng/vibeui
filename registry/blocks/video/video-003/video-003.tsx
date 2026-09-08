@@ -2,6 +2,8 @@ import type { CSSProperties } from "react"
 
 type Video003Item = {
   title: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   duration: string
   views: string
 }
@@ -47,8 +49,13 @@ font-family:var(--vibeui-video-003-font);
 [data-vibeui-block="video-003"] [data-part="card"]{min-inline-size:0;display:flex;flex-direction:column;gap:0.625rem;text-decoration:none;color:inherit}
 [data-vibeui-block="video-003"] [data-part="poster"]{
 position:relative;display:block;aspect-ratio:16 / 9;border-radius:0.875rem;overflow:hidden;
-background:linear-gradient(140deg,oklch(0.52 0.16 39.8),oklch(0.32 0.11 28));
 transition:transform .18s ease;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="video-003"] [data-part="poster"][data-empty="true"]{background:linear-gradient(140deg,oklch(0.52 0.16 39.8),oklch(0.32 0.11 28));}
+[data-vibeui-block="video-003"] [data-part="poster"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="video-003"] [data-part="card"]:hover [data-part="poster"]{transform:translateY(-3px)}
 [data-vibeui-block="video-003"] [data-part="card"]:focus-visible [data-part="poster"]{outline:2px solid var(--vibeui-video-003-accent);outline-offset:2px}
@@ -67,12 +74,36 @@ transition:transform .18s ease;
 `
 
 const DEFAULT_VIDEOS: Video003Item[] = [
-  { title: "Обзор каталога за две минуты", duration: "2:14", views: "12 тыс. просмотров" },
-  { title: "Copy for AI на реальном проекте", duration: "5:31", views: "8,4 тыс. просмотров" },
-  { title: "Как собрать лендинг за вечер", duration: "9:12", views: "21 тыс. просмотров" },
-  { title: "Своя палитра без токенов темы", duration: "4:05", views: "5,2 тыс. просмотров" },
-  { title: "Блоки против готовых конструкторов", duration: "7:48", views: "14 тыс. просмотров" },
-  { title: "Разбор структуры реестра", duration: "11:03", views: "3,9 тыс. просмотров" },
+  {
+    title: "Обзор каталога за две минуты",
+    duration: "2:14",
+    views: "12 тыс. просмотров",
+  },
+  {
+    title: "Copy for AI на реальном проекте",
+    duration: "5:31",
+    views: "8,4 тыс. просмотров",
+  },
+  {
+    title: "Как собрать лендинг за вечер",
+    duration: "9:12",
+    views: "21 тыс. просмотров",
+  },
+  {
+    title: "Своя палитра без токенов темы",
+    duration: "4:05",
+    views: "5,2 тыс. просмотров",
+  },
+  {
+    title: "Блоки против готовых конструкторов",
+    duration: "7:48",
+    views: "14 тыс. просмотров",
+  },
+  {
+    title: "Разбор структуры реестра",
+    duration: "11:03",
+    views: "3,9 тыс. просмотров",
+  },
 ]
 
 /**
@@ -134,7 +165,18 @@ export function Video003({
           <div data-part="grid">
             {videos.map((video) => (
               <a key={video.title} href="#" data-part="card">
-                <span data-part="poster">
+                <span
+                  data-part="poster"
+                  data-empty={video.image ? undefined : "true"}
+                >
+                  {video.image ? (
+                    <img
+                      src={video.image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : null}
                   <span data-part="play" aria-hidden="true" />
                   <span data-part="dur">{video.duration}</span>
                 </span>

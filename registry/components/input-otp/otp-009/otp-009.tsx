@@ -211,7 +211,11 @@ export function Otp009({
           {Array.from({ length: groups }, (_, group) => (
             <div key={group} style={{ display: "contents" }}>
               {group > 0 ? (
-                <span data-part="dash" role="separator" aria-label={separator} />
+                <span
+                  data-part="dash"
+                  role="separator"
+                  aria-label={separator}
+                />
               ) : null}
               <div data-part="group">
                 {Array.from({ length: groupSize }, (_, offset) => {

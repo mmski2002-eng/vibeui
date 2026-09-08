@@ -15,6 +15,8 @@ export type Card012Props = Omit<
   meta?: ReactNode
   /** Содержимое кадра: <img>, <video>. Пусто — рисуется градиент-заглушка. */
   media?: ReactNode
+  /** Путь к фотографии кадра. Проще, чем media, и работает из metadata. */
+  image?: string
   /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
   background?: string
   accent?: string
@@ -134,6 +136,7 @@ export function Card012({
   duration = "12:40",
   meta = "Опубликовано вчера",
   media,
+  image = "",
   background = "",
   accent,
   className,
@@ -165,7 +168,10 @@ export function Card012({
         style={palette}
       >
         <div data-part="frame">
-          {media}
+          {media ??
+            (image ? (
+              <img src={image} alt="" loading="lazy" decoding="async" />
+            ) : null)}
           {badge ? <span data-part="badge">{badge}</span> : null}
           {duration ? <span data-part="duration">{duration}</span> : null}
         </div>

@@ -185,7 +185,11 @@ export function Blog010({
       <style href="vibeui-blog-010" precedence="medium">
         {STYLES}
       </style>
-      <section data-vibeui-block="blog-010" className={className} style={palette}>
+      <section
+        data-vibeui-block="blog-010"
+        className={className}
+        style={palette}
+      >
         <div data-part="shell">
           <p data-part="eyebrow">{eyebrow}</p>
           <h2 data-part="title">{title}</h2>
@@ -198,7 +202,9 @@ export function Blog010({
                     <a
                       data-part="toc-link"
                       href={`#${section.id}`}
-                      aria-current={section.id === activeId ? "true" : undefined}
+                      aria-current={
+                        section.id === activeId ? "true" : undefined
+                      }
                     >
                       {section.heading}
                     </a>

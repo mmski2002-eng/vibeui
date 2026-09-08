@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react"
 
 export type Hero018Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   eyebrow?: string
   title?: string
   /** Хвост заголовка, подчёркнутый мягкой заливкой. Пусто — заголовок цельный. */
@@ -50,6 +52,9 @@ font-family:var(--vibeui-hero-018-font);
 [data-vibeui-block="hero-018"] *{box-sizing:border-box}
 [data-vibeui-block="hero-018"] [data-part="frame"]{
 position:relative;overflow:hidden;padding:3.5rem 1.25rem;
+}
+[data-vibeui-block="hero-018"] [data-part="frame"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="hero-018"] [data-part="canvas"]{
 position:absolute;inset:0;pointer-events:none;
@@ -129,6 +134,7 @@ margin:1.25rem 0 0;font-size:0.875rem;color:var(--vibeui-hero-018-muted);
 /** Светлый первый экран: кремовая сетка, крупный заголовок и пара кнопок. */
 export function Hero018({
   eyebrow = "Обновление 2.0 — светлая тема",
+  image = "",
   title = "Соберите лендинг, который",
   titleAccent = "выглядит дорого",
   lede = "Готовые секции ставятся одной командой, остаются в вашем репозитории и не тянут ни одной зависимости.",
@@ -156,7 +162,10 @@ export function Hero018({
         className={className}
         style={palette}
       >
-        <div data-part="frame">
+        <div data-part="frame" data-empty={image ? undefined : "true"}>
+          {image ? (
+            <img src={image} alt="" loading="lazy" decoding="async" />
+          ) : null}
           <div data-part="canvas" aria-hidden="true" />
 
           <div data-part="inner">

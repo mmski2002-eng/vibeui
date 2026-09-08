@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Видео с постером",
       "description": "Видео-секция с постером: кадр 16:9 с кнопкой play по центру и меткой длительности, текст и кнопка сбоку. Постер — тёплый градиент. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["video"],
+      "categories": [
+        "video"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,8 +20,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-video-001-*. Серверный компонент. Постер — тёплый градиент, кнопка play нарисована бордюрами (круг + треугольник из border) без иконочного шрифта. Кадр — ссылка-заглушка: реальное видео подключает приложение. На широком экране текст слева, кадр справа.",
       "meta": {
-        "tags": ["video", "player", "poster", "media", "marketing"],
-        "preview": { "width": "full" },
+        "tags": [
+          "video",
+          "player",
+          "poster",
+          "media",
+          "marketing"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Video001",
           "usage": "<Video001\n  title=\"Посмотрите за две минуты\"\n  posterTitle=\"Обзор каталога\"\n  durationLabel=\"2:14\"\n/>",
@@ -43,12 +53,39 @@
           ]
         },
         "controls": [
-          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Посмотрите за две минуты", "maxLength": 40 },
-          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Как это работает", "maxLength": 24 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Посмотрите за две минуты",
+            "maxLength": 40
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Как это работает",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A video section with a poster: a 16:9 frame with a centred play button and a duration tag, text and button beside it. The poster is a warm gradient. Self-contained — one file, no dependencies.",
@@ -74,10 +111,20 @@
               "usage": "<Video001\n  title=\"Watch it in two minutes\"\n  posterTitle=\"Catalog overview\"\n  durationLabel=\"2:14\"\n/>"
             },
             "controls": {
-              "title": { "label": "Title", "default": "Watch it in two minutes" },
-              "eyebrow": { "label": "Eyebrow", "default": "How it works" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Title",
+                "default": "Watch it in two minutes"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "How it works"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "Video with Poster",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-video-001-* variables. A server component. The poster is a warm gradient, the play button is drawn with borders (circle + triangle) without an icon font. The frame is a placeholder link: a real video is wired by the app. On a wide screen the text is on the left, the frame on the right."
@@ -90,7 +137,9 @@
       "type": "registry:block",
       "title": "Видео-плейлист",
       "description": "Плейлист роликов: большой кадр выбранного видео слева, список роликов с длительностью справа, выбор меняет кадр. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["video"],
+      "categories": [
+        "video"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -102,8 +151,19 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-video-002-*. Клиентский компонент: выбор ролика в списке меняет постер и подпись через состояние, активный пункт помечен aria-current и выделен акцентом. Постер — тёплый градиент-заглушка.",
       "meta": {
-        "tags": ["video", "playlist", "lessons", "media", "marketing"],
-        "preview": { "width": "full" },
+        "tags": [
+          "video",
+          "playlist",
+          "lessons",
+          "media",
+          "marketing"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "image": "/demo/scenes/scene-16.webp"
+          }
+        },
         "ai": {
           "export": "Video002",
           "usage": "<Video002\n  title=\"Плейлист\"\n  clips={[{ title: \"Знакомство\", duration: \"2:14\" }]}\n/>",
@@ -127,12 +187,39 @@
           ]
         },
         "controls": [
-          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Плейлист для старта", "maxLength": 40 },
-          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Уроки", "maxLength": 24 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Плейлист для старта",
+            "maxLength": 40
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Уроки",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A video playlist: a large frame of the selected clip on the left, a list of clips with duration on the right, selection changes the frame. Self-contained — one file, no dependencies.",
@@ -158,13 +245,28 @@
               "usage": "<Video002\n  title=\"Playlist\"\n  clips={[{ title: \"Intro\", duration: \"2:14\" }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Title", "default": "Starter playlist" },
-              "eyebrow": { "label": "Eyebrow", "default": "Lessons" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Title",
+                "default": "Starter playlist"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Lessons"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "Video Playlist",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-video-002-* variables. A client component: selecting a clip in the list changes the poster and caption via state, the active item is marked with aria-current and highlighted with the accent. The poster is a warm gradient placeholder."
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-video-002-* variables. A client component: selecting a clip in the list changes the poster and caption via state, the active item is marked with aria-current and highlighted with the accent. The poster is a warm gradient placeholder.",
+            "preview": {
+              "props": {
+                "image": "/demo/scenes/scene-16.webp"
+              }
+            }
           }
         }
       }
@@ -174,7 +276,9 @@
       "type": "registry:block",
       "title": "Сетка роликов",
       "description": "Сетка роликов карточками: постер-градиент с play и длительностью, название и число просмотров. Три колонки на широком экране. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["video"],
+      "categories": [
+        "video"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -186,8 +290,56 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-video-003-*. Серверный компонент. Карточки роликов с постером-градиентом (оттенок по nth-child), кнопкой play из бордюров, меткой длительности в углу, названием и просмотрами. Число колонок считает container query.",
       "meta": {
-        "tags": ["video", "grid", "channel", "media", "marketing"],
-        "preview": { "width": "full" },
+        "tags": [
+          "video",
+          "grid",
+          "channel",
+          "media",
+          "marketing"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "videos": [
+              {
+                "title": "Обзор каталога за две минуты",
+                "duration": "2:14",
+                "views": "12 тыс. просмотров",
+                "image": "/demo/scenes/scene-16.webp"
+              },
+              {
+                "title": "Copy for AI на реальном проекте",
+                "duration": "5:31",
+                "views": "8,4 тыс. просмотров",
+                "image": "/demo/scenes/scene-13.webp"
+              },
+              {
+                "title": "Как собрать лендинг за вечер",
+                "duration": "9:12",
+                "views": "21 тыс. просмотров",
+                "image": "/demo/scenes/scene-08.webp"
+              },
+              {
+                "title": "Своя палитра без токенов темы",
+                "duration": "4:05",
+                "views": "5,2 тыс. просмотров",
+                "image": "/demo/scenes/scene-10.webp"
+              },
+              {
+                "title": "Блоки против готовых конструкторов",
+                "duration": "7:48",
+                "views": "14 тыс. просмотров",
+                "image": "/demo/scenes/scene-16.webp"
+              },
+              {
+                "title": "Разбор структуры реестра",
+                "duration": "11:03",
+                "views": "3,9 тыс. просмотров",
+                "image": "/demo/scenes/scene-13.webp"
+              }
+            ]
+          }
+        },
         "ai": {
           "export": "Video003",
           "usage": "<Video003\n  videos={[{ title: \"Обзор\", duration: \"2:14\", views: \"12 тыс.\" }]}\n/>",
@@ -211,12 +363,39 @@
           ]
         },
         "controls": [
-          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Записи и разборы", "maxLength": 40 },
-          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Видео", "maxLength": 24 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Записи и разборы",
+            "maxLength": 40
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Видео",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A grid of clips as cards: a gradient poster with play and duration, a title and view count. Three columns on a wide screen. Self-contained — one file, no dependencies.",
@@ -242,10 +421,20 @@
               "usage": "<Video003\n  videos={[{ title: \"Overview\", duration: \"2:14\", views: \"12k\" }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Title", "default": "Recordings and deep dives" },
-              "eyebrow": { "label": "Eyebrow", "default": "Video" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Title",
+                "default": "Recordings and deep dives"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Video"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "Clip Grid",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-video-003-* variables. A server component. Clip cards with a gradient poster (hue by nth-child), a play button from borders, a duration tag in the corner, a title and views. Column count is driven by a container query."

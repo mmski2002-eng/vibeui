@@ -1,12 +1,7 @@
 import type { ComponentProps, CSSProperties } from "react"
 
 export type CodeBlockAnim002TokenType =
-  | "kw"
-  | "str"
-  | "fn"
-  | "num"
-  | "punct"
-  | "plain"
+  "kw" | "str" | "fn" | "num" | "punct" | "plain"
 
 export type CodeBlockAnim002Token = {
   text: string

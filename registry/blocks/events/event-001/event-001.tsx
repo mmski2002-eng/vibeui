@@ -80,9 +80,27 @@ font-size:0.875rem;font-weight:650;text-decoration:none;transition:opacity .16s 
 `
 
 const DEFAULT_EVENTS: Event001Item[] = [
-  { day: "18", month: "сен", title: "Вебинар: собираем лендинг за вечер", meta: "19:00 МСК · 45 мин", format: "Онлайн" },
-  { day: "24", month: "сен", title: "Мастер-класс по Copy for AI", meta: "18:00 МСК · 90 мин", format: "Онлайн" },
-  { day: "02", month: "окт", title: "Митап сообщества вайбкодеров", meta: "Москва · 3 часа", format: "Оффлайн" },
+  {
+    day: "18",
+    month: "сен",
+    title: "Вебинар: собираем лендинг за вечер",
+    meta: "19:00 МСК · 45 мин",
+    format: "Онлайн",
+  },
+  {
+    day: "24",
+    month: "сен",
+    title: "Мастер-класс по Copy for AI",
+    meta: "18:00 МСК · 90 мин",
+    format: "Онлайн",
+  },
+  {
+    day: "02",
+    month: "окт",
+    title: "Митап сообщества вайбкодеров",
+    meta: "Москва · 3 часа",
+    format: "Оффлайн",
+  },
 ]
 
 /**

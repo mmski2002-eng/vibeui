@@ -6,6 +6,8 @@ type About004Stat = {
 }
 
 export type About004Props = {
+  /** Фото команды или офиса. Без него секция остаётся текстовой. */
+  image?: string
   eyebrow?: string
   title?: string
   paragraphs?: string[]
@@ -40,6 +42,13 @@ container-type:inline-size;
 min-width:min(100%,16rem);
 display:block;background:var(--vibeui-about-004-bg);color:var(--vibeui-about-004-ink);
 font-family:var(--vibeui-about-004-font);
+}
+[data-vibeui-block="about-004"] [data-part="figure"]{
+position:relative;overflow:hidden;aspect-ratio:16 / 9;
+margin-top:1.5rem;border-radius:0.875rem;
+}
+[data-vibeui-block="about-004"] [data-part="figure"] img{
+display:block;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="about-004"] [data-part="shell"]{
 max-width:72rem;margin:0 auto;padding:3.5rem 1.25rem;
@@ -123,6 +132,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 /** Рассказ о компании: текст слева, столбик крупных оранжевых метрик справа. */
 export function About004({
   eyebrow = "О нас",
+  image = "",
   title = "Компоненты, которые не нужно поддерживать",
   paragraphs = DEFAULT_PARAGRAPHS,
   stats = DEFAULT_STATS,
@@ -170,6 +180,12 @@ export function About004({
               </div>
             ))}
           </dl>
+
+          {image ? (
+            <figure data-part="figure">
+              <img src={image} alt="" loading="lazy" decoding="async" />
+            </figure>
+          ) : null}
         </div>
       </section>
     </>

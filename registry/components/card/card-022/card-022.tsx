@@ -171,7 +171,13 @@ export function Card022({
                   fill="none"
                   aria-hidden="true"
                 >
-                  <circle cx="6" cy="6" r="5" stroke="currentColor" strokeWidth="1" />
+                  <circle
+                    cx="6"
+                    cy="6"
+                    r="5"
+                    stroke="currentColor"
+                    strokeWidth="1"
+                  />
                   <path
                     d="M6 3.4V6l1.8 1.1"
                     stroke="currentColor"
@@ -198,7 +204,13 @@ export function Card022({
                     strokeWidth="1"
                     strokeLinejoin="round"
                   />
-                  <circle cx="6" cy="5.4" r="1.05" stroke="currentColor" strokeWidth="1" />
+                  <circle
+                    cx="6"
+                    cy="5.4"
+                    r="1.05"
+                    stroke="currentColor"
+                    strokeWidth="1"
+                  />
                 </svg>
                 <span>{location}</span>
               </span>

@@ -13,6 +13,8 @@ export type Commerce057Day = {
 }
 
 export type Commerce057Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   service?: string
   title?: string
   lead?: string
@@ -121,8 +123,13 @@ border:1px solid var(--vibeui-commerce-057-border);border-radius:1rem;padding:1r
 [data-vibeui-block="commerce-057"] h3{margin:0 0 0.5rem;font-size:0.9375rem;font-weight:700}
 [data-vibeui-block="commerce-057"] [data-part="master"]{display:flex;gap:0.75rem;align-items:center;margin-bottom:0.875rem}
 [data-vibeui-block="commerce-057"] [data-part="avatar"]{
-flex:none;width:2.75rem;height:2.75rem;border-radius:9999px;
-background:linear-gradient(140deg,oklch(0.9 0.06 20),oklch(0.78 0.11 30));
+position:relative;flex:none;width:2.75rem;height:2.75rem;border-radius:9999px;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="commerce-057"] [data-part="avatar"][data-empty="true"]{background:linear-gradient(140deg,oklch(0.9 0.06 20),oklch(0.78 0.11 30));}
+[data-vibeui-block="commerce-057"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="commerce-057"] [data-part="mname"]{margin:0;font-size:0.875rem;font-weight:650}
 [data-vibeui-block="commerce-057"] [data-part="mrole"]{margin:0.0625rem 0 0;font-size:0.75rem;color:var(--vibeui-commerce-057-muted)}
@@ -228,6 +235,7 @@ const DEFAULT_DAYS: Commerce057Day[] = [
  */
 export function Commerce057({
   service = "Услуга мастерской",
+  avatarImage = "",
   title = "Реставрация деревянной столешницы",
   lead = "Шлифуем, выравниваем сколы и покрываем маслом. Работаем у вас дома — стол никуда везти не нужно.",
   duration = "3 часа",
@@ -348,7 +356,20 @@ export function Commerce057({
           <aside data-part="panel">
             <h3>{masterTitle}</h3>
             <div data-part="master">
-              <span data-part="avatar" aria-hidden="true" />
+              <span
+                data-part="avatar"
+                data-empty={avatarImage ? undefined : "true"}
+                aria-hidden="true"
+              >
+                {avatarImage ? (
+                  <img
+                    src={avatarImage}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
+              </span>
               <div>
                 <p data-part="mname">{master}</p>
                 <p data-part="mrole">{masterRole}</p>

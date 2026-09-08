@@ -9,6 +9,8 @@ export type Blog001Post = {
   author: string
   href?: string
   hue?: number
+  /** Обложка. Без неё на том же месте остаётся цветное поле. */
+  image?: string
 }
 
 export type Blog001Props = {
@@ -86,11 +88,18 @@ border-color:color-mix(in oklab,var(--vibeui-blog-001-accent) 40%,var(--vibeui-b
 }
 /* Обложка — градиент от оттенка рубрики: ноль ассетов, ноль баннеров. */
 [data-vibeui-block="blog-001"] [data-part="cover"]{
-aspect-ratio:16 / 9;position:relative;overflow:hidden;
+position:relative;overflow:hidden;
+aspect-ratio:16 / 9;
 }
 [data-vibeui-block="blog-001"] [data-part="cover"]::after{
 content:"";position:absolute;inset:0;
 background:radial-gradient(120% 100% at 15% 15%,oklch(1 0 0 / 34%),transparent 60%);
+}
+/* Подложка — только когда фотографии нет: блок обязан оставаться
+   полноценным без единого внешнего файла. */
+[data-vibeui-block="blog-001"] [data-part="cover"][data-empty="true"]{background:linear-gradient(135deg, oklch(0.72 0.16 var(--vibeui-blog-001-hue,262)), oklch(0.5 0.19 var(--vibeui-blog-001-hue,262)));}
+[data-vibeui-block="blog-001"] [data-part="cover"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="blog-001"] [data-part="body"]{display:grid;gap:0.5rem;padding:1rem 1.125rem 1.125rem}
 [data-vibeui-block="blog-001"] [data-part="topic"]{
@@ -248,11 +257,19 @@ export function Blog001({
                 <article key={post.title}>
                   <div
                     data-part="cover"
+                    data-empty={post.image ? undefined : "true"}
                     aria-hidden="true"
-                    style={{
-                      background: `linear-gradient(135deg, oklch(0.72 0.16 ${tone}), oklch(0.5 0.19 ${tone + 14}))`,
-                    }}
-                  />
+                    style={{ "--vibeui-blog-001-hue": tone } as CSSProperties}
+                  >
+                    {post.image ? (
+                      <img
+                        src={post.image}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : null}
+                  </div>
                   <div data-part="body">
                     <span data-part="topic">{post.topic}</span>
                     <h3>

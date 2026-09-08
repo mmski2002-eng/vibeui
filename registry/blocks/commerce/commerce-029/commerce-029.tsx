@@ -382,7 +382,12 @@ export function Commerce029({
                   aria-hidden={hit.image ? undefined : true}
                 >
                   {hit.image ? (
-                    <img src={hit.image} alt="" loading="lazy" decoding="async" />
+                    <img
+                      src={hit.image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
                   ) : null}
                 </span>
                 <div>

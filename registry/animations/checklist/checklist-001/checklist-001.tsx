@@ -196,9 +196,9 @@ export function Checklist001({
           </div>
           <ol data-part="list">
             {items.map((item, index) => {
-              const delay = `calc(var(--vibeui-checklist-001-duration) * ${(
-                -(index / items.length)
-              ).toFixed(4)})`
+              const delay = `calc(var(--vibeui-checklist-001-duration) * ${(-(
+                index / items.length
+              )).toFixed(4)})`
 
               return (
                 <li data-part="row" key={item.label}>

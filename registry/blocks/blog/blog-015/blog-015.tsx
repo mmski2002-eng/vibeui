@@ -189,7 +189,9 @@ export function Blog015({
   style,
 }: Blog015Props) {
   const palette = {
-    ...(accent ? { "--vibeui-blog-015-accent": accent, "--vibeui-blog-015-fill": accent } : null),
+    ...(accent
+      ? { "--vibeui-blog-015-accent": accent, "--vibeui-blog-015-fill": accent }
+      : null),
     ...(background
       ? {
           "--vibeui-blog-015-bg": background,
@@ -204,7 +206,11 @@ export function Blog015({
       <style href="vibeui-blog-015" precedence="medium">
         {STYLES}
       </style>
-      <section data-vibeui-block="blog-015" className={className} style={palette}>
+      <section
+        data-vibeui-block="blog-015"
+        className={className}
+        style={palette}
+      >
         <div data-part="shell">
           <p data-part="eyebrow">{eyebrow}</p>
           <h2 data-part="title">{title}</h2>

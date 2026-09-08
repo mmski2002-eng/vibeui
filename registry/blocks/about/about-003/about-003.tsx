@@ -203,7 +203,11 @@ export function About003({
           <div data-part="grid">
             {items.map((item) => (
               <article key={item.title} data-part="card">
-                <span data-part="icon" data-icon={item.icon} aria-hidden="true" />
+                <span
+                  data-part="icon"
+                  data-icon={item.icon}
+                  aria-hidden="true"
+                />
                 <h3 data-part="value-title">{item.title}</h3>
                 <p data-part="value-text">{item.text}</p>
               </article>

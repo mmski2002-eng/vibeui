@@ -7,6 +7,8 @@ export type Carousel003Slide = {
   title: string
   text: string
   hue?: number
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
 }
 
 export type Carousel003Props = Omit<ComponentProps<"section">, "children"> & {
@@ -62,10 +64,15 @@ font-family:var(--vibeui-carousel-003-font);color:var(--vibeui-carousel-003-fg);
 position:relative;display:flex;flex-direction:column;justify-content:flex-end;gap:0.25rem;
 aspect-ratio:16 / 9;padding:1rem;box-sizing:border-box;overflow:hidden;
 border-radius:0.875rem;
-background:
-radial-gradient(90% 80% at 20% 20%,oklch(0.9 0.06 var(--vibeui-carousel-003-hue,250)),transparent 70%),
-linear-gradient(150deg,oklch(0.72 0.1 var(--vibeui-carousel-003-hue,250)),oklch(0.42 0.11 var(--vibeui-carousel-003-hue,250)));
 color:oklch(0.99 0 265);
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="carousel-003"] [data-part="stage"][data-empty="true"]{background:
+radial-gradient(90% 80% at 20% 20%,oklch(0.9 0.06 var(--vibeui-carousel-003-hue,250)),transparent 70%),
+linear-gradient(150deg,oklch(0.72 0.1 var(--vibeui-carousel-003-hue,250)),oklch(0.42 0.11 var(--vibeui-carousel-003-hue,250)));}
+[data-vibeui-block="carousel-003"] [data-part="stage"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="carousel-003"] [data-part="title"]{margin:0;font-size:1.125rem;font-weight:680;line-height:1.2}
 [data-vibeui-block="carousel-003"] [data-part="text"]{margin:0;font-size:0.8125rem;line-height:1.45;color:oklch(0.93 0 265);max-width:22rem}
@@ -76,12 +83,17 @@ overflow-x:auto;scrollbar-width:none;
 }
 [data-vibeui-block="carousel-003"] [data-part="thumbs"]::-webkit-scrollbar{display:none}
 [data-vibeui-block="carousel-003"] [data-part="thumb"]{
-appearance:none;cursor:pointer;flex:none;
+position:relative;appearance:none;cursor:pointer;flex:none;
 width:3.5rem;aspect-ratio:16 / 10;padding:0;
 border:1px solid var(--vibeui-carousel-003-border);border-radius:0.5rem;
-background:
-linear-gradient(150deg,oklch(0.8 0.09 var(--vibeui-carousel-003-thumb,250)),oklch(0.55 0.1 var(--vibeui-carousel-003-thumb,250)));
-opacity:.55;
+opacity:.55;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="carousel-003"] [data-part="thumb"][data-empty="true"]{background:
+linear-gradient(150deg,oklch(0.8 0.09 var(--vibeui-carousel-003-thumb,250)),oklch(0.55 0.1 var(--vibeui-carousel-003-thumb,250)));}
+[data-vibeui-block="carousel-003"] [data-part="thumb"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="carousel-003"] [data-part="thumb"][aria-current="true"]{
 opacity:1;border-color:var(--vibeui-carousel-003-accent);
@@ -188,7 +200,10 @@ export function Carousel003({
         className={className}
         style={palette}
       >
-        <div data-part="stage">
+        <div data-part="stage" data-empty={current.image ? undefined : "true"}>
+          {current.image ? (
+            <img src={current.image} alt="" loading="lazy" decoding="async" />
+          ) : null}
           {slides.map((slide, position) => (
             <div
               key={slide.title}
@@ -210,6 +225,7 @@ export function Carousel003({
               <button
                 type="button"
                 data-part="thumb"
+                data-empty={slide.image ? undefined : "true"}
                 aria-current={position === index}
                 aria-label={fill(thumbText, {
                   index: position + 1,
@@ -222,7 +238,16 @@ export function Carousel003({
                   } as CSSProperties
                 }
                 onClick={() => setIndex(position)}
-              />
+              >
+                {slide.image ? (
+                  <img
+                    src={slide.image}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
+              </button>
             </li>
           ))}
         </ul>

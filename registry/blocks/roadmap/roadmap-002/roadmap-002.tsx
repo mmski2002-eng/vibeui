@@ -77,9 +77,21 @@ color:var(--vibeui-roadmap-002-accent);background:color-mix(in oklab,var(--vibeu
 
 const DEFAULT_QUARTERS: Roadmap002Quarter[] = [
   { label: "Q2 2026", state: "Готово", items: ["Живое превью", "Copy for AI"] },
-  { label: "Q3 2026", state: "Сейчас", items: ["Новые блоки", "Фирменная палитра"] },
-  { label: "Q4 2026", state: "Далее", items: ["Раздел анимаций", "Экспорт токенов"] },
-  { label: "Q1 2027", state: "Идея", items: ["Плагин для Figma", "Командные пресеты"] },
+  {
+    label: "Q3 2026",
+    state: "Сейчас",
+    items: ["Новые блоки", "Фирменная палитра"],
+  },
+  {
+    label: "Q4 2026",
+    state: "Далее",
+    items: ["Раздел анимаций", "Экспорт токенов"],
+  },
+  {
+    label: "Q1 2027",
+    state: "Идея",
+    items: ["Плагин для Figma", "Командные пресеты"],
+  },
 ]
 
 /**

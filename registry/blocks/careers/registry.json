@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Вакансии по отделам",
       "description": "Список вакансий, сгруппированный по отделам: строки ролей с местом и типом занятости, вся строка — ссылка на карточку. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["careers"],
+      "categories": [
+        "careers"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,8 +20,19 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-career-001-*. Серверный компонент. Вакансии сгруппированы по отделам, каждая роль — ссылка на всю строку с местом и типом справа и стрелкой-акцентом. При наведении строка сдвигается на 2px.",
       "meta": {
-        "tags": ["careers", "jobs", "listing", "hiring", "marketing"],
-        "preview": { "width": "full" },
+        "tags": [
+          "careers",
+          "jobs",
+          "listing",
+          "hiring",
+          "marketing"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "image": "/demo/people/person-01.webp"
+          }
+        },
         "ai": {
           "export": "Career001",
           "usage": "<Career001\n  title=\"К команде\"\n  groups={[{ department: \"Инженерия\", roles: [{ title: \"Фронтенд\", location: \"Удалённо\", type: \"Полная\" }] }]}\n/>",
@@ -43,12 +56,39 @@
           ]
         },
         "controls": [
-          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Присоединяйтесь к команде", "maxLength": 48 },
-          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Вакансии", "maxLength": 24 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Присоединяйтесь к команде",
+            "maxLength": 48
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Вакансии",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A job listing grouped by department: role rows with location and employment type, the whole row is a link to the posting. Self-contained — one file, no dependencies.",
@@ -74,13 +114,28 @@
               "usage": "<Career001\n  title=\"Join us\"\n  groups={[{ department: \"Engineering\", roles: [{ title: \"Frontend\", location: \"Remote\", type: \"Full-time\" }] }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Title", "default": "Join the team" },
-              "eyebrow": { "label": "Eyebrow", "default": "Careers" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Title",
+                "default": "Join the team"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Careers"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "Jobs by Department",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-career-001-* variables. A server component. Jobs are grouped by department; each role is a whole-row link with location and type on the right and an accent arrow. On hover the row shifts by 2px."
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-career-001-* variables. A server component. Jobs are grouped by department; each role is a whole-row link with location and type on the right and an accent arrow. On hover the row shifts by 2px.",
+            "preview": {
+              "props": {
+                "image": "/demo/people/person-01.webp"
+              }
+            }
           }
         }
       }
@@ -90,7 +145,9 @@
       "type": "registry:block",
       "title": "Почему у нас",
       "description": "Вводная секция карьеры: рассказ о команде слева, сетка перков с галочками справа и кнопка к вакансиям. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["careers"],
+      "categories": [
+        "careers"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -102,8 +159,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-career-002-*. Серверный компонент. Две колонки на широком экране: слева текст и CTA, справа сетка перков. Галочка каждого перка нарисована бордюрами (border-width 0 2 2 0 + rotate), без иконочного шрифта.",
       "meta": {
-        "tags": ["careers", "perks", "benefits", "hiring", "marketing"],
-        "preview": { "width": "full" },
+        "tags": [
+          "careers",
+          "perks",
+          "benefits",
+          "hiring",
+          "marketing"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Career002",
           "usage": "<Career002\n  title=\"Работа у нас\"\n  perks={[{ title: \"Удалёнка\", note: \"Из любого города\" }]}\n/>",
@@ -127,12 +192,39 @@
           ]
         },
         "controls": [
-          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Маленькая команда, большие задачи", "maxLength": 52 },
-          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Работа у нас", "maxLength": 24 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Маленькая команда, большие задачи",
+            "maxLength": 52
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Работа у нас",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A careers intro: a story about the team on the left, a grid of check-marked perks on the right and a button to the openings. Self-contained — one file, no dependencies.",
@@ -158,10 +250,20 @@
               "usage": "<Career002\n  title=\"Work with us\"\n  perks={[{ title: \"Remote\", note: \"From anywhere\" }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Title", "default": "Small team, big problems" },
-              "eyebrow": { "label": "Eyebrow", "default": "Work with us" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Title",
+                "default": "Small team, big problems"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Work with us"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "Why Join Us",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-career-002-* variables. A server component. Two columns when wide: text and CTA on the left, a perks grid on the right. Each perk check is drawn with borders (border-width 0 2 2 0 + rotate), no icon font."
@@ -174,7 +276,9 @@
       "type": "registry:block",
       "title": "Карточка вакансии",
       "description": "Страница одной вакансии: роль и метаданные, резюме, списки обязанностей и требований, кнопка отклика. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["careers"],
+      "categories": [
+        "careers"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -186,8 +290,19 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-career-003-*. Серверный компонент. Страница отдельной вакансии: шапка с ролью, чипы метаданных (команда, место, занятость), резюме и два списка с маркерами-акцентами, кнопка отклика внизу.",
       "meta": {
-        "tags": ["careers", "job", "posting", "hiring", "marketing"],
-        "preview": { "width": "full" },
+        "tags": [
+          "careers",
+          "job",
+          "posting",
+          "hiring",
+          "marketing"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "image": "/demo/places/place-04.webp"
+          }
+        },
         "ai": {
           "export": "Career003",
           "usage": "<Career003\n  role=\"Фронтенд-разработчик\"\n  responsibilities={[\"Писать компоненты\"]}\n  requirements={[\"React и TypeScript\"]}\n/>",
@@ -211,12 +326,39 @@
           ]
         },
         "controls": [
-          { "prop": "role", "label": "Роль", "type": "text", "default": "Фронтенд-разработчик", "maxLength": 40 },
-          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Вакансия", "maxLength": 24 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "role",
+            "label": "Роль",
+            "type": "text",
+            "default": "Фронтенд-разработчик",
+            "maxLength": 40
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Вакансия",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["role", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "role",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A single job posting: the role and metadata, a summary, lists of responsibilities and requirements, an apply button. Self-contained — one file, no dependencies.",
@@ -242,13 +384,28 @@
               "usage": "<Career003\n  role=\"Frontend Engineer\"\n  responsibilities={[\"Write components\"]}\n  requirements={[\"React and TypeScript\"]}\n/>"
             },
             "controls": {
-              "role": { "label": "Role", "default": "Frontend Engineer" },
-              "eyebrow": { "label": "Eyebrow", "default": "Open role" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "role": {
+                "label": "Role",
+                "default": "Frontend Engineer"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Open role"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "Job Posting",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-career-003-* variables. A server component. A single-posting page: a header with the role, metadata chips (team, location, employment), a summary and two lists with accent markers, an apply button at the bottom."
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-career-003-* variables. A server component. A single-posting page: a header with the role, metadata chips (team, location, employment), a summary and two lists with accent markers, an apply button at the bottom.",
+            "preview": {
+              "props": {
+                "image": "/demo/places/place-04.webp"
+              }
+            }
           }
         }
       }

@@ -174,11 +174,7 @@ function holdsActive(node: Tree009Node, activeId: string): boolean {
   return (node.children ?? []).some((child) => holdsActive(child, activeId))
 }
 
-function renderNodes(
-  nodes: Tree009Node[],
-  level: number,
-  activeId: string,
-) {
+function renderNodes(nodes: Tree009Node[], level: number, activeId: string) {
   return nodes.map((node) => {
     if (!node.children?.length) {
       return (

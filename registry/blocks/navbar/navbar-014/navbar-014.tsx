@@ -17,6 +17,8 @@ type Navbar014Link = {
 }
 
 export type Navbar014Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   brand?: string
   /** Раздел, под которым раскрывается мега-панель. */
   triggerLabel?: string
@@ -181,10 +183,15 @@ transition:border-color .16s ease;
 /* Заглушка вместо фотографии: градиент из акцента, чтобы блок оставался
    одним файлом и не тянул за собой картинку. */
 [data-vibeui-block="navbar-014"] [data-part="thumb"]{
-display:block;aspect-ratio:16 / 9;border-radius:0.75rem;
-background:
+position:relative;display:block;aspect-ratio:16 / 9;border-radius:0.75rem;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="navbar-014"] [data-part="thumb"][data-empty="true"]{background:
 radial-gradient(120% 120% at 15% 15%,color-mix(in oklab,var(--vibeui-navbar-014-accent) 70%,white) 0%,transparent 55%),
-linear-gradient(145deg,var(--vibeui-navbar-014-accent),color-mix(in oklab,var(--vibeui-navbar-014-accent) 45%,black));
+linear-gradient(145deg,var(--vibeui-navbar-014-accent),color-mix(in oklab,var(--vibeui-navbar-014-accent) 45%,black));}
+[data-vibeui-block="navbar-014"] [data-part="thumb"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="navbar-014"] [data-part="feature-title"]{
 display:block;margin:0.625rem 0 0;font-size:0.9375rem;font-weight:660;letter-spacing:-0.01em;
@@ -283,6 +290,7 @@ const DEFAULT_LINKS: Navbar014Link[] = [
 /** Шапка с мега-меню: панель во всю ширину, колонки разделов и карточка-превью. */
 export function Navbar014({
   brand = "Панорама",
+  image = "",
   triggerLabel = "Продукт",
   columns = DEFAULT_COLUMNS,
   links = DEFAULT_LINKS,
@@ -370,7 +378,15 @@ export function Navbar014({
               ))}
             </div>
             <a data-part="feature" href={featureHref}>
-              <span data-part="thumb" aria-hidden="true" />
+              <span
+                data-part="thumb"
+                data-empty={image ? undefined : "true"}
+                aria-hidden="true"
+              >
+                {image ? (
+                  <img src={image} alt="" loading="lazy" decoding="async" />
+                ) : null}
+              </span>
               <span data-part="feature-title">{featureTitle}</span>
               <span data-part="feature-text">{featureText}</span>
               <span data-part="feature-more">{featureLinkLabel}</span>

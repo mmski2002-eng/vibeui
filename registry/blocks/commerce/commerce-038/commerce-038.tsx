@@ -320,9 +320,7 @@ export function Commerce038({
             <table>
               <thead>
                 <tr>
-                  <th scope="col">
-                    {columnText.case ?? DEFAULT_COLUMNS.case}
-                  </th>
+                  <th scope="col">{columnText.case ?? DEFAULT_COLUMNS.case}</th>
                   <th scope="col">
                     {columnText.covered ?? DEFAULT_COLUMNS.covered}
                   </th>

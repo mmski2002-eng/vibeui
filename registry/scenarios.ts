@@ -288,13 +288,6 @@ export const SCENARIOS: Scenario[] = [
         whyEn: "The door: sign in, sign up, password reset",
       },
       {
-        category: "sidebar",
-        role: "Боковое меню",
-        roleEn: "Sidebar",
-        why: "Постоянная навигация по разделам кабинета",
-        whyEn: "Permanent navigation across the app sections",
-      },
-      {
         category: "dashboard",
         role: "Панель показателей",
         roleEn: "Overview",

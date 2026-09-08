@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Бейджи магазинов",
       "description": "Секция загрузки приложения с бейджами магазинов: приписка и название магазина, нейтральные плашки без брендовых логотипов. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["downloads"],
+      "categories": [
+        "downloads"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-download-001-*. Серверный компонент. Бейджи собраны своей вёрсткой (мелкая приписка сверху, название магазина крупно) без логотипов Apple или Google — только нейтральные тёмные плашки-ссылки, приподнимающиеся на наведении.",
       "meta": {
-        "tags": ["downloads", "app", "store", "mobile", "marketing"],
+        "tags": [
+          "downloads",
+          "app",
+          "store",
+          "mobile",
+          "marketing"
+        ],
         "preview": {
           "width": "full"
         },
@@ -73,7 +81,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "An app download section with store badges: a kicker and store name, neutral plates without brand logos. Self-contained — one file, no dependencies.",
@@ -126,7 +139,9 @@
       "type": "registry:block",
       "title": "QR и бейджи",
       "description": "Секция загрузки с QR-заглушкой: текст и бейджи магазинов слева, декоративный QR-узор на CSS справа. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["downloads"],
+      "categories": [
+        "downloads"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -138,7 +153,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-download-002-*. Серверный компонент. QR — декоративный узор из двух repeating-linear-gradient с background-blend-mode:multiply на белом поле, а не считываемый код: у него role=\"img\" с aria-label, настоящий QR подставит приложение.",
       "meta": {
-        "tags": ["downloads", "qr", "app", "store", "marketing"],
+        "tags": [
+          "downloads",
+          "qr",
+          "app",
+          "store",
+          "marketing"
+        ],
         "preview": {
           "width": "full"
         },
@@ -193,7 +214,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A download section with a QR placeholder: text and store badges on the left, a decorative CSS QR pattern on the right. Self-contained — one file, no dependencies.",
@@ -246,7 +272,9 @@
       "type": "registry:block",
       "title": "Сборки по платформам",
       "description": "Загрузка десктопного приложения по платформам: карточки macOS, Windows, Linux с типом файла и весом, своя система выделена. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["downloads"],
+      "categories": [
+        "downloads"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -258,7 +286,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-download-003-*. Серверный компонент. Карточки платформ с глифом из первой буквы (без брендовых логотипов), типом файла и весом. Платформа с флагом primary выделена брендовой рамкой и заливкой кнопки. Число колонок считает container query.",
       "meta": {
-        "tags": ["downloads", "desktop", "platforms", "app", "marketing"],
+        "tags": [
+          "downloads",
+          "desktop",
+          "platforms",
+          "app",
+          "marketing"
+        ],
         "preview": {
           "width": "full"
         },
@@ -313,7 +347,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A desktop app download by platform: macOS, Windows, Linux cards with file type and size, your own system highlighted. Self-contained — one file, no dependencies.",
@@ -366,7 +405,9 @@
       "type": "registry:block",
       "title": "Экран приложения и магазины",
       "description": "Секция загрузки с рамкой телефона: скриншот приложения слева, факты и бейджи магазинов справа. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["downloads"],
+      "categories": [
+        "downloads"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -378,9 +419,19 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-download-004-*. Серверный компонент. Рамка телефона нарисована рамкой, радиусами и тенью, без картинки устройства: оно декорация, и тащить ради него изображение незачем. Скриншот необязателен — без него внутри рамки живёт градиентная заглушка, а сама рамка помечается aria-hidden, чтобы скринридер не читал пустое устройство.",
       "meta": {
-        "tags": ["downloads", "app", "mobile", "stores", "device", "marketing"],
+        "tags": [
+          "downloads",
+          "app",
+          "mobile",
+          "stores",
+          "device",
+          "marketing"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "screenshot": "/demo/screens/screen-03.webp"
+          }
         },
         "ai": {
           "export": "Download004",
@@ -441,7 +492,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["title", "eyebrow", "lead", "accent"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "lead",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "App screen and stores",
@@ -489,6 +545,11 @@
               "background": {
                 "label": "Background"
               }
+            },
+            "preview": {
+              "props": {
+                "screenshot": "/demo/screens/screen-03.webp"
+              }
             }
           }
         }
@@ -499,7 +560,9 @@
       "type": "registry:block",
       "title": "Полоса релиза",
       "description": "Компактная карточка обновления: версия, дата, что нового и кнопка загрузки. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["downloads"],
+      "categories": [
+        "downloads"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -511,7 +574,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-download-005-*. Серверный компонент. Это одна карточка, а не секция во весь экран: её ставят между разделами страницы продукта, и высокий блок разорвал бы ритм. Номер версии набран моноширинным и подсвечен акцентом, изменения идут списком с маркерами на псевдоэлементах.",
       "meta": {
-        "tags": ["downloads", "release", "version", "changelog", "update"],
+        "tags": [
+          "downloads",
+          "release",
+          "version",
+          "changelog",
+          "update"
+        ],
         "preview": {
           "width": "full"
         },
@@ -581,7 +650,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["version", "date", "primaryLabel", "primaryNote"],
+        "cardControls": [
+          "version",
+          "date",
+          "primaryLabel",
+          "primaryNote"
+        ],
         "i18n": {
           "en": {
             "title": "Release strip",
@@ -643,7 +717,9 @@
       "type": "registry:block",
       "title": "Кнопка под платформу",
       "description": "Одна крупная кнопка для нужной платформы, мелкие ссылки на остальные сборки и контрольная сумма. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["downloads"],
+      "categories": [
+        "downloads"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -655,7 +731,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-download-006-*. Серверный компонент. Платформа приходит пропом, а не определяется по navigator: блок остаётся серверным и не мигает подменой подписи после гидратации. Проекту, которому нужен автовыбор, достаточно подставить значение самому. Контрольная сумма набрана моноширинным и переносится по любому символу, поэтому не растягивает секцию на узком экране.",
       "meta": {
-        "tags": ["downloads", "desktop", "platform", "install", "checksum"],
+        "tags": [
+          "downloads",
+          "desktop",
+          "platform",
+          "install",
+          "checksum"
+        ],
         "preview": {
           "width": "full"
         },
@@ -725,7 +807,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["title", "platform", "buildNote", "primaryLabel"],
+        "cardControls": [
+          "title",
+          "platform",
+          "buildNote",
+          "primaryLabel"
+        ],
         "i18n": {
           "en": {
             "title": "Platform-aware button",

@@ -17,6 +17,8 @@ export type Commerce073Group = {
 }
 
 export type Commerce073Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   title?: string
   lead?: string
   groups?: Commerce073Group[]
@@ -86,8 +88,13 @@ border-bottom:1px solid var(--vibeui-commerce-073-border);
 [data-vibeui-block="commerce-073"] [data-part="row"]:last-child{border-bottom:0}
 [data-vibeui-block="commerce-073"] [data-part="row"]:has(a:focus-visible){outline:2px solid var(--vibeui-commerce-073-accent);outline-offset:-2px}
 [data-vibeui-block="commerce-073"] [data-part="thumb"]{
-flex:none;width:2.75rem;height:2.75rem;border-radius:0.5rem;
-background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-073-hue,240)),oklch(0.85 0.09 var(--vibeui-commerce-073-hue,240)));
+position:relative;flex:none;width:2.75rem;height:2.75rem;border-radius:0.5rem;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="commerce-073"] [data-part="thumb"][data-empty="true"]{background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-073-hue,240)),oklch(0.85 0.09 var(--vibeui-commerce-073-hue,240)));}
+[data-vibeui-block="commerce-073"] [data-part="thumb"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-073"] [data-part="texts"]{flex:1;min-width:0}
 [data-vibeui-block="commerce-073"] [data-part="name"]{margin:0;font-size:0.875rem;font-weight:650;line-height:1.3}
@@ -203,6 +210,7 @@ const DEFAULT_GROUPS: Commerce073Group[] = [
  */
 export function Commerce073({
   title = "Вы недавно смотрели",
+  image = "",
   lead = "История хранится 30 дней и видна только вам. Убрать можно всю сразу или по одной позиции.",
   groups = DEFAULT_GROUPS,
   clearLabel = "Очистить историю",
@@ -267,7 +275,20 @@ export function Commerce073({
                         } as CSSProperties
                       }
                     >
-                      <span data-part="thumb" aria-hidden="true" />
+                      <span
+                        data-part="thumb"
+                        data-empty={image ? undefined : "true"}
+                        aria-hidden="true"
+                      >
+                        {image ? (
+                          <img
+                            src={image}
+                            alt=""
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        ) : null}
+                      </span>
                       <div data-part="texts">
                         <p data-part="name">
                           <a href="#product">{item.title}</a>

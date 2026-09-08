@@ -12,6 +12,8 @@ type Navbar008MenuItem = {
 }
 
 export type Navbar008Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   workspace?: string
   plan?: string
   tabs?: Navbar008Tab[]
@@ -136,10 +138,15 @@ transition:background-color .16s ease;
 }
 [data-vibeui-block="navbar-008"] [data-part="user"]:hover{background:color-mix(in oklab,var(--vibeui-navbar-008-border) 45%,transparent)}
 [data-vibeui-block="navbar-008"] [data-part="avatar"]{
-width:1.625rem;height:1.625rem;border-radius:999px;flex:none;
+position:relative;width:1.625rem;height:1.625rem;border-radius:999px;flex:none;
 display:grid;place-items:center;font-size:0.6875rem;font-weight:700;
-background:color-mix(in oklab,var(--vibeui-navbar-008-accent) 16%,var(--vibeui-navbar-008-tint));
-color:var(--vibeui-navbar-008-accent);
+color:var(--vibeui-navbar-008-accent);overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="navbar-008"] [data-part="avatar"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-navbar-008-accent) 16%,var(--vibeui-navbar-008-tint));}
+[data-vibeui-block="navbar-008"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="navbar-008"] [data-part="user-name"]{display:none;font-size:0.8125rem;font-weight:560}
 [data-vibeui-block="navbar-008"] button:focus-visible,
@@ -218,6 +225,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 /** Шапка приложения: вкладки разделов, счётчик уведомлений, меню аккаунта. */
 export function Navbar008({
   workspace = "Ателье Восход",
+  avatarImage = "",
   plan = "Команда",
   tabs = DEFAULT_TABS,
   open = false,
@@ -295,7 +303,19 @@ export function Navbar008({
               popoverTarget={id}
               aria-label={accountLabel.replace("{name}", userName)}
             >
-              <span data-part="avatar" aria-hidden="true">
+              <span
+                data-part="avatar"
+                data-empty={avatarImage ? undefined : "true"}
+                aria-hidden="true"
+              >
+                {avatarImage ? (
+                  <img
+                    src={avatarImage}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
                 {userInitials}
               </span>
               <span data-part="user-name">{userName}</span>

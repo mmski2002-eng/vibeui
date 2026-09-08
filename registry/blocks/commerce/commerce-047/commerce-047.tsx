@@ -2,6 +2,8 @@ import type { CSSProperties } from "react"
 
 export type Commerce047Edit = {
   id: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   title: string
   note: string
   count: string
@@ -98,8 +100,13 @@ background:var(--vibeui-commerce-047-card);display:flex;flex-direction:column;mi
 }
 [data-vibeui-block="commerce-047"] [data-part="edit"]:has(a:focus-visible){outline:2px solid var(--vibeui-commerce-047-accent);outline-offset:2px}
 [data-vibeui-block="commerce-047"] [data-part="cover"]{
-flex:1;min-height:6rem;
-background:linear-gradient(150deg,oklch(0.93 0.06 var(--vibeui-commerce-047-hue,35)),oklch(0.82 0.11 var(--vibeui-commerce-047-hue,35)));
+position:relative;flex:1;min-height:6rem;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="commerce-047"] [data-part="cover"][data-empty="true"]{background:linear-gradient(150deg,oklch(0.93 0.06 var(--vibeui-commerce-047-hue,35)),oklch(0.82 0.11 var(--vibeui-commerce-047-hue,35)));}
+[data-vibeui-block="commerce-047"] [data-part="cover"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-047"] [data-part="body"]{padding:0.75rem 0.875rem 0.875rem}
 [data-vibeui-block="commerce-047"] [data-part="name"]{margin:0;font-size:1rem;font-weight:700;letter-spacing:-0.01em}
@@ -277,7 +284,20 @@ export function Commerce047({
                   } as CSSProperties
                 }
               >
-                <span data-part="cover" aria-hidden="true" />
+                <span
+                  data-part="cover"
+                  data-empty={edit.image ? undefined : "true"}
+                  aria-hidden="true"
+                >
+                  {edit.image ? (
+                    <img
+                      src={edit.image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : null}
+                </span>
                 <div data-part="body">
                   <p data-part="name">
                     <a href="#edit">{edit.title}</a>

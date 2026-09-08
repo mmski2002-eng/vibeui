@@ -10,6 +10,8 @@ export type Chat002Props = Omit<
   ComponentProps<"section">,
   "children" | "title"
 > & {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   title?: string
   status?: string
   messages?: Chat002Message[]
@@ -94,10 +96,15 @@ animation:vibeui-chat-002-rise 0.5s cubic-bezier(0.22,1,0.36,1) both;
 [data-vibeui-block="chat-002"] [data-part="row"]:nth-child(5){animation-delay:1.13s}
 [data-vibeui-block="chat-002"] [data-author="me"]{justify-content:flex-end}
 [data-vibeui-block="chat-002"] [data-part="avatar"]{
-display:flex;align-items:center;justify-content:center;flex:none;
+position:relative;display:flex;align-items:center;justify-content:center;flex:none;
 width:1.375rem;height:1.375rem;border-radius:9999px;
-background:color-mix(in oklab,var(--vibeui-chat-002-accent) 18%,transparent);
-color:var(--vibeui-chat-002-accent);font-size:0.5625rem;font-weight:700;
+color:var(--vibeui-chat-002-accent);font-size:0.5625rem;font-weight:700;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="chat-002"] [data-part="avatar"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-chat-002-accent) 18%,transparent);}
+[data-vibeui-block="chat-002"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="chat-002"] [data-part="bubble"]{
 max-width:74%;padding:0.5rem 0.75rem;border-radius:0.875rem;
@@ -150,6 +157,7 @@ function initial(name: string) {
  */
 export function Chat002({
   title = "Аня Соколова",
+  avatarImage = "",
   status = "в сети",
   messages = DEFAULT_MESSAGES,
   typing = true,
@@ -193,9 +201,25 @@ export function Chat002({
               const author = message.author ?? "them"
 
               return (
-                <div data-part="row" data-author={author} key={`${author}-${message.text}`}>
+                <div
+                  data-part="row"
+                  data-author={author}
+                  key={`${author}-${message.text}`}
+                >
                   {author === "them" ? (
-                    <span data-part="avatar" aria-hidden="true">
+                    <span
+                      data-part="avatar"
+                      data-empty={avatarImage ? undefined : "true"}
+                      aria-hidden="true"
+                    >
+                      {avatarImage ? (
+                        <img
+                          src={avatarImage}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      ) : null}
                       {initial(title)}
                     </span>
                   ) : null}

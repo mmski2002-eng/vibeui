@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react"
 
 export type Dialog011Props = {
+  /** Фото в шапке окна. Без него остаётся цветная подложка. */
+  image?: string
   id?: string
   /**
    * Показать окно раскрытым в потоке страницы: витрина, скриншот, отладка.
@@ -64,7 +66,10 @@ transition:opacity .18s ease,transform .18s ease,display .18s allow-discrete,ove
 @starting-style{[data-vibeui-dialog-011-window]:popover-open{opacity:0;transform:scale(0.97)}}
 [data-vibeui-dialog-011-window]::backdrop{background:oklch(0.18 0 265 / 50%);backdrop-filter:blur(2px)}
 /* Обложка градиентами: внешних файлов у компонента быть не может. */
-[data-vibeui-dialog-011-window] [data-part="cover"]{
+[data-vibeui-dialog-011-window] [data-part="cover"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+}
+[data-vibeui-dialog-011-window] [data-part="cover"]{position:relative;overflow:hidden;
 position:relative;aspect-ratio:16 / 9;
 background:
 radial-gradient(110% 90% at 18% 10%,color-mix(in oklab,var(--vibeui-dialog-011-accent,light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8))) 55%,transparent),transparent 62%),
@@ -139,6 +144,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Dialog011({
   id = "vibeui-dialog-011",
+  image = "",
   open = false,
   trigger = "Открыть превью",
   title = "Главная страница",
@@ -187,7 +193,15 @@ export function Dialog011({
           aria-describedby={description ? `${id}-description` : undefined}
           style={palette}
         >
-          <div data-part="cover" aria-hidden="true" />
+          <div
+            data-part="cover"
+            data-empty={image ? undefined : "true"}
+            aria-hidden="true"
+          >
+            {image ? (
+              <img src={image} alt="" loading="lazy" decoding="async" />
+            ) : null}
+          </div>
           <div data-part="body">
             <h2 data-part="title" id={`${id}-title`}>
               {title}

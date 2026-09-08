@@ -210,7 +210,11 @@ export function Blog011({
       <style href="vibeui-blog-011" precedence="medium">
         {STYLES}
       </style>
-      <section data-vibeui-block="blog-011" className={className} style={palette}>
+      <section
+        data-vibeui-block="blog-011"
+        className={className}
+        style={palette}
+      >
         <div data-part="shell">
           <p data-part="eyebrow">{eyebrow}</p>
           <h2 data-part="title">{title}</h2>

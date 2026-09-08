@@ -130,10 +130,6 @@ import {
   SEED as FiltersSeed,
 } from "@/components/lab/checks/filters"
 import {
-  CHECKS as Frame,
-  SEED as FrameSeed,
-} from "@/components/lab/checks/frame"
-import {
   CHECKS as HoverCard,
   SEED as HoverCardSeed,
 } from "@/components/lab/checks/hover-card"
@@ -219,10 +215,6 @@ import {
   CHECKS as Separator,
   SEED as SeparatorSeed,
 } from "@/components/lab/checks/separator"
-import {
-  CHECKS as Sidebar,
-  SEED as SidebarSeed,
-} from "@/components/lab/checks/sidebar"
 import {
   CHECKS as Skeleton,
   SEED as SkeletonSeed,
@@ -321,7 +313,6 @@ export const LAB_RUNS: Record<string, { checks: LabCheck[]; seed: number }> = {
   field: { checks: Field, seed: FieldSeed },
   "file-upload": { checks: FileUpload, seed: FileUploadSeed },
   filters: { checks: Filters, seed: FiltersSeed },
-  frame: { checks: Frame, seed: FrameSeed },
   "hover-card": { checks: HoverCard, seed: HoverCardSeed },
   "icon-stack": { checks: IconStack, seed: IconStackSeed },
   "icon-tile": { checks: IconTile, seed: IconTileSeed },
@@ -345,7 +336,6 @@ export const LAB_RUNS: Record<string, { checks: LabCheck[]; seed: number }> = {
   scrollspy: { checks: Scrollspy, seed: ScrollspySeed },
   select: { checks: Select, seed: SelectSeed },
   separator: { checks: Separator, seed: SeparatorSeed },
-  sidebar: { checks: Sidebar, seed: SidebarSeed },
   skeleton: { checks: Skeleton, seed: SkeletonSeed },
   slider: { checks: Slider, seed: SliderSeed },
   sortable: { checks: Sortable, seed: SortableSeed },

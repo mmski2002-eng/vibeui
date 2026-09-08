@@ -4,6 +4,8 @@ export type Commerce069State = "active" | "paused" | "ending"
 
 export type Commerce069Sub = {
   id: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   title: string
   detail: string
   price: string
@@ -81,8 +83,13 @@ color:var(--vibeui-commerce-069-fg);font-family:var(--vibeui-commerce-069-sans);
 [data-vibeui-block="commerce-069"] [data-part="sub"]{border:1px solid var(--vibeui-commerce-069-border);border-radius:1rem;padding:0.875rem 1rem}
 [data-vibeui-block="commerce-069"] [data-part="head"]{display:flex;gap:0.75rem;align-items:flex-start}
 [data-vibeui-block="commerce-069"] [data-part="thumb"]{
-flex:none;width:2.75rem;height:2.75rem;border-radius:0.75rem;
-background:linear-gradient(150deg,oklch(0.93 0.06 var(--vibeui-commerce-069-hue,300)),oklch(0.82 0.11 var(--vibeui-commerce-069-hue,300)));
+position:relative;flex:none;width:2.75rem;height:2.75rem;border-radius:0.75rem;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="commerce-069"] [data-part="thumb"][data-empty="true"]{background:linear-gradient(150deg,oklch(0.93 0.06 var(--vibeui-commerce-069-hue,300)),oklch(0.82 0.11 var(--vibeui-commerce-069-hue,300)));}
+[data-vibeui-block="commerce-069"] [data-part="thumb"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-069"] [data-part="texts"]{flex:1;min-width:0}
 [data-vibeui-block="commerce-069"] [data-part="row"]{display:flex;flex-wrap:wrap;gap:0.375rem;align-items:center}
@@ -268,7 +275,20 @@ export function Commerce069({
                 }
               >
                 <div data-part="head">
-                  <span data-part="thumb" aria-hidden="true" />
+                  <span
+                    data-part="thumb"
+                    data-empty={sub.image ? undefined : "true"}
+                    aria-hidden="true"
+                  >
+                    {sub.image ? (
+                      <img
+                        src={sub.image}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : null}
+                  </span>
                   <div data-part="texts">
                     <div data-part="row">
                       <p data-part="name">{sub.title}</p>

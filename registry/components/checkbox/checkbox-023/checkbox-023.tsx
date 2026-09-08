@@ -140,12 +140,7 @@ const DEFAULT_COLUMNS: Checkbox023Column[] = [
   { id: "delete", label: "Удалять" },
 ]
 
-const DEFAULT_VALUE = [
-  "pages:view",
-  "pages:edit",
-  "media:view",
-  "team:view",
-]
+const DEFAULT_VALUE = ["pages:view", "pages:edit", "media:view", "team:view"]
 
 function keyOf(rowId: string, columnId: string): string {
   return `${rowId}:${columnId}`
@@ -313,9 +308,7 @@ export function Checkbox023({
                         type="checkbox"
                         checked={value.has(keyOf(row.id, column.id))}
                         aria-label={`${row.label}: ${column.label}`}
-                        onChange={() =>
-                          toggleCell(keyOf(row.id, column.id))
-                        }
+                        onChange={() => toggleCell(keyOf(row.id, column.id))}
                       />
                     </td>
                   ))}

@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Список эпизодов",
       "description": "Лента выпусков подкаста: строки с кнопкой play, номером, названием, гостем и длительностью. Строка кликается целиком. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["podcast"],
+      "categories": [
+        "podcast"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,8 +20,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-podcast-001-*. Серверный компонент. Строка выпуска — grid: кнопка play (круг с треугольником из бордюров), номер, информация (название и гость) и длительность. Строка — ссылка целиком с aria-label; воспроизведение подключает приложение.",
       "meta": {
-        "tags": ["podcast", "episodes", "audio", "listing", "marketing"],
-        "preview": { "width": "full" },
+        "tags": [
+          "podcast",
+          "episodes",
+          "audio",
+          "listing",
+          "marketing"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Podcast001",
           "usage": "<Podcast001\n  episodes={[{ number: \"12\", title: \"Выпуск\", guest: \"Гость\", duration: \"48 мин\" }]}\n/>",
@@ -43,12 +53,39 @@
           ]
         },
         "controls": [
-          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Свежие выпуски", "maxLength": 40 },
-          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Подкаст", "maxLength": 24 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Свежие выпуски",
+            "maxLength": 40
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Подкаст",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A podcast episode feed: rows with a play button, number, title, guest and duration. The whole row is a link. Self-contained — one file, no dependencies.",
@@ -74,10 +111,20 @@
               "usage": "<Podcast001\n  episodes={[{ number: \"12\", title: \"Episode\", guest: \"Guest\", duration: \"48 min\" }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Title", "default": "Latest episodes" },
-              "eyebrow": { "label": "Eyebrow", "default": "Podcast" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Title",
+                "default": "Latest episodes"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Podcast"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "Episode List",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-podcast-001-* variables. A server component. An episode row is a grid: a play button (circle with a triangle from borders), the number, the info (title and guest) and duration. The row is a whole link with an aria-label; playback is wired by the app."
@@ -90,7 +137,9 @@
       "type": "registry:block",
       "title": "Карточка выпуска",
       "description": "Страница одного выпуска: обложка-монограмма, название, описание, мини-плеер с прогрессом и ссылки на площадки прослушивания. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["podcast"],
+      "categories": [
+        "podcast"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -102,8 +151,19 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-podcast-002-*. Серверный компонент. Обложка — квадратный градиент с первой буквой названия подкаста. Мини-плеер: кнопка play из бордюров и статичная дорожка прогресса с role=progressbar. Реальное воспроизведение подключает приложение.",
       "meta": {
-        "tags": ["podcast", "episode", "player", "audio", "marketing"],
-        "preview": { "width": "full" },
+        "tags": [
+          "podcast",
+          "episode",
+          "player",
+          "audio",
+          "marketing"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "image": "/demo/posters/poster-01.webp"
+          }
+        },
         "ai": {
           "export": "Podcast002",
           "usage": "<Podcast002\n  episodeTitle=\"Выпуск\"\n  platforms={[\"Spotify\", \"Apple Podcasts\"]}\n/>",
@@ -127,12 +187,39 @@
           ]
         },
         "controls": [
-          { "prop": "episodeTitle", "label": "Название выпуска", "type": "text", "default": "Как ИИ меняет фронтенд", "maxLength": 44 },
-          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Выпуск 12", "maxLength": 24 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "episodeTitle",
+            "label": "Название выпуска",
+            "type": "text",
+            "default": "Как ИИ меняет фронтенд",
+            "maxLength": 44
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Выпуск 12",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["episodeTitle", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "episodeTitle",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A single episode page: a monogram cover, title, summary, a mini player with progress and links to listening platforms. Self-contained — one file, no dependencies.",
@@ -158,13 +245,28 @@
               "usage": "<Podcast002\n  episodeTitle=\"Episode\"\n  platforms={[\"Spotify\", \"Apple Podcasts\"]}\n/>"
             },
             "controls": {
-              "episodeTitle": { "label": "Episode title", "default": "How AI is changing frontend" },
-              "eyebrow": { "label": "Eyebrow", "default": "Episode 12" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "episodeTitle": {
+                "label": "Episode title",
+                "default": "How AI is changing frontend"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Episode 12"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "Episode Card",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-podcast-002-* variables. A server component. The cover is a square gradient with the first letter of the show title. The mini player: a border-drawn play button and a static progress track with role=progressbar. Real playback is wired by the app."
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-podcast-002-* variables. A server component. The cover is a square gradient with the first letter of the show title. The mini player: a border-drawn play button and a static progress track with role=progressbar. Real playback is wired by the app.",
+            "preview": {
+              "props": {
+                "image": "/demo/posters/poster-01.webp"
+              }
+            }
           }
         }
       }
@@ -174,7 +276,9 @@
       "type": "registry:block",
       "title": "Промо с подпиской",
       "description": "Вводная секция подкаста: описание шоу и ссылки на площадки слева, компактная сетка последних выпусков справа. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["podcast"],
+      "categories": [
+        "podcast"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -186,8 +290,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-podcast-003-*. Серверный компонент. Две колонки на широком экране: слева описание и площадки (первая ссылка — акцентная кнопка «Слушать», остальные — обведённые), справа список последних выпусков карточками. Число колонок считает container query.",
       "meta": {
-        "tags": ["podcast", "subscribe", "promo", "audio", "marketing"],
-        "preview": { "width": "full" },
+        "tags": [
+          "podcast",
+          "subscribe",
+          "promo",
+          "audio",
+          "marketing"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Podcast003",
           "usage": "<Podcast003\n  title=\"Подкаст\"\n  episodes={[{ number: \"12\", title: \"Выпуск\", duration: \"48 мин\" }]}\n/>",
@@ -211,12 +323,39 @@
           ]
         },
         "controls": [
-          { "prop": "title", "label": "Заголовок", "type": "text", "default": "«Вайб» — о том, как строят интерфейсы", "maxLength": 52 },
-          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Подкаст", "maxLength": 24 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "«Вайб» — о том, как строят интерфейсы",
+            "maxLength": 52
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Подкаст",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A podcast intro: the show description and platform links on the left, a compact grid of latest episodes on the right. Self-contained — one file, no dependencies.",
@@ -242,10 +381,20 @@
               "usage": "<Podcast003\n  title=\"Podcast\"\n  episodes={[{ number: \"12\", title: \"Episode\", duration: \"48 min\" }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Title", "default": "Vibe — on how interfaces get built" },
-              "eyebrow": { "label": "Eyebrow", "default": "Podcast" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Title",
+                "default": "Vibe — on how interfaces get built"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Podcast"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "Podcast Promo",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-podcast-003-* variables. A server component. Two columns on a wide screen: the description and platforms on the left (the first link an accent Listen button, the rest outlined), a list of latest episodes as cards on the right. Column count is driven by a container query."

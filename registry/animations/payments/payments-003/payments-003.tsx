@@ -209,7 +209,9 @@ export function Payments003({
                   <span
                     data-part="fill"
                     style={
-                      { "--vibeui-payments-003-v": `${clamped}%` } as CSSProperties
+                      {
+                        "--vibeui-payments-003-v": `${clamped}%`,
+                      } as CSSProperties
                     }
                   />
                 </div>

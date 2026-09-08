@@ -4,6 +4,8 @@ import { useState } from "react"
 import type { CSSProperties } from "react"
 
 export type Dashboard019Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   title?: string
   hint?: string
   name?: string
@@ -124,8 +126,13 @@ border:1px solid var(--vibeui-dashboard-019-border);border-radius:0.75rem;
 overflow:hidden;
 }
 [data-vibeui-block="dashboard-019"] [data-part="cover"]{
-height:3.25rem;
-background:linear-gradient(120deg,light-dark(oklch(0.72 0.14 var(--vibeui-dashboard-019-hue)),oklch(0.52 0.12 var(--vibeui-dashboard-019-hue))),light-dark(oklch(0.88 0.07 var(--vibeui-dashboard-019-hue)),oklch(0.34 0.06 var(--vibeui-dashboard-019-hue))));
+position:relative;height:3.25rem;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="dashboard-019"] [data-part="cover"][data-empty="true"]{background:linear-gradient(120deg,light-dark(oklch(0.72 0.14 var(--vibeui-dashboard-019-hue)),oklch(0.52 0.12 var(--vibeui-dashboard-019-hue))),light-dark(oklch(0.88 0.07 var(--vibeui-dashboard-019-hue)),oklch(0.34 0.06 var(--vibeui-dashboard-019-hue))));}
+[data-vibeui-block="dashboard-019"] [data-part="cover"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="dashboard-019"] [data-part="body"]{padding:0 0.875rem 0.875rem}
 [data-vibeui-block="dashboard-019"] [data-part="avatar"]{
@@ -206,6 +213,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Dashboard019({
   title = "Профиль",
+  image = "",
   hint = "Так вас видят другие участники проекта",
   name = "Анна Реброва",
   role = "Дизайнер интерфейсов",
@@ -339,7 +347,11 @@ export function Dashboard019({
           <aside data-part="preview" aria-live="polite">
             <p data-part="previewhead">{previewTitle}</p>
             <div data-part="card">
-              <div data-part="cover" />
+              <div data-part="cover" data-empty={image ? undefined : "true"}>
+                {image ? (
+                  <img src={image} alt="" loading="lazy" decoding="async" />
+                ) : null}
+              </div>
               <div data-part="body">
                 <div data-part="avatar" aria-hidden="true">
                   {initials(draftName)}

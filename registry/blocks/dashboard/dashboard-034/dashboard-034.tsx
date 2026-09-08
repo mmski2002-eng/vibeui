@@ -8,6 +8,8 @@ export type Dashboard034Template = {
 }
 
 export type Dashboard034Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   title?: string
   lead?: string
   templates?: Dashboard034Template[]
@@ -70,7 +72,10 @@ max-width:52rem;margin:0 auto;padding:2rem 1.125rem;text-align:center;
 }
 [data-vibeui-block="dashboard-034"] [data-part="art"]{
 width:4.5rem;height:3.25rem;margin:0 auto 1rem;position:relative;
-border:2px dashed var(--vibeui-dashboard-034-border);border-radius:0.625rem;
+border:2px dashed var(--vibeui-dashboard-034-border);border-radius:0.625rem;overflow:hidden;
+}
+[data-vibeui-block="dashboard-034"] [data-part="art"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="dashboard-034"] [data-part="art"]::before,
 [data-vibeui-block="dashboard-034"] [data-part="art"]::after{
@@ -208,6 +213,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Dashboard034({
   title = "Здесь пока пусто",
+  image = "",
   lead = "Рабочее пространство создано, но в нём нет ни одного проекта. Начните с готового набора блоков — его всегда можно разобрать и собрать по-своему.",
   templates = DEFAULT_TEMPLATES,
   picked = "Витрина товаров",
@@ -247,7 +253,15 @@ export function Dashboard034({
         aria-label={title}
       >
         <div data-part="shell">
-          <div data-part="art" aria-hidden="true" />
+          <div
+            data-part="art"
+            data-empty={image ? undefined : "true"}
+            aria-hidden="true"
+          >
+            {image ? (
+              <img src={image} alt="" loading="lazy" decoding="async" />
+            ) : null}
+          </div>
           <h2>{title}</h2>
           <p data-part="lead">{lead}</p>
 

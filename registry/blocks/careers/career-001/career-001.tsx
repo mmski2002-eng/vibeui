@@ -12,6 +12,8 @@ type Career001Group = {
 }
 
 export type Career001Props = {
+  /** Фото команды за работой. Без него список вакансий остаётся текстовым. */
+  image?: string
   eyebrow?: string
   title?: string
   groups?: Career001Group[]
@@ -44,6 +46,13 @@ min-width:min(100%,16rem);
 display:block;background:var(--vibeui-career-001-bg);color:var(--vibeui-career-001-ink);
 font-family:var(--vibeui-career-001-font);
 }
+[data-vibeui-block="career-001"] [data-part="figure"]{
+position:relative;overflow:hidden;aspect-ratio:16 / 9;
+margin-top:1.5rem;border-radius:0.875rem;
+}
+[data-vibeui-block="career-001"] [data-part="figure"] img{
+display:block;width:100%;height:100%;object-fit:cover;
+}
 [data-vibeui-block="career-001"] [data-part="shell"]{max-width:52rem;margin:0 auto;padding:3rem 1.25rem}
 [data-vibeui-block="career-001"] [data-part="eyebrow"]{margin:0 0 0.5rem;color:var(--vibeui-career-001-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
 [data-vibeui-block="career-001"] [data-part="title"]{margin:0 0 2.25rem;font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700}
@@ -73,7 +82,11 @@ const DEFAULT_GROUPS: Career001Group[] = [
     department: "Инженерия",
     roles: [
       { title: "Фронтенд-разработчик", location: "Удалённо", type: "Полная" },
-      { title: "Инженер по инфраструктуре", location: "Москва", type: "Полная" },
+      {
+        title: "Инженер по инфраструктуре",
+        location: "Москва",
+        type: "Полная",
+      },
     ],
   },
   {
@@ -116,6 +129,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 /** Вакансии, сгруппированные по отделам: строки-ссылки на карточки ролей. */
 export function Career001({
   eyebrow = "Вакансии",
+  image = "",
   title = "Присоединяйтесь к команде",
   groups = DEFAULT_GROUPS,
   background = "",
@@ -168,6 +182,12 @@ export function Career001({
               </ul>
             </div>
           ))}
+
+          {image ? (
+            <figure data-part="figure">
+              <img src={image} alt="" loading="lazy" decoding="async" />
+            </figure>
+          ) : null}
         </div>
       </section>
     </>

@@ -280,10 +280,7 @@ export function Calendar026({
     }))
   }, [locale])
 
-  const start = useMemo(
-    () => new Date(`${startDate}T00:00:00`),
-    [startDate],
-  )
+  const start = useMemo(() => new Date(`${startDate}T00:00:00`), [startDate])
 
   const dates = useMemo(() => {
     const result: Date[] = []

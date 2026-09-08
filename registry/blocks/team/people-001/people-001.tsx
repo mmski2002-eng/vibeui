@@ -8,6 +8,8 @@ type People001Link = {
 
 type People001Member = {
   name: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   role: string
   links?: People001Link[]
 }
@@ -73,11 +75,16 @@ transform:translateY(-2px);
 box-shadow:0 22px 44px -36px var(--vibeui-people-001-shadow);
 }
 [data-vibeui-block="people-001"] [data-part="avatar"]{
-width:3.5rem;height:3.5rem;flex:none;border-radius:999px;margin-bottom:0.625rem;
+position:relative;width:3.5rem;height:3.5rem;flex:none;border-radius:999px;margin-bottom:0.625rem;
 display:grid;place-items:center;
-background:color-mix(in oklab,var(--vibeui-people-001-accent) 12%,var(--vibeui-people-001-card));
 color:var(--vibeui-people-001-accent);
-font-size:1rem;font-weight:750;letter-spacing:0.02em;
+font-size:1rem;font-weight:750;letter-spacing:0.02em;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="people-001"] [data-part="avatar"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-people-001-accent) 12%,var(--vibeui-people-001-card));}
+[data-vibeui-block="people-001"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="people-001"] [data-part="name"]{margin:0;font-size:1rem;font-weight:650}
 [data-vibeui-block="people-001"] [data-part="role"]{margin:0;color:var(--vibeui-people-001-muted);font-size:0.8125rem;line-height:1.4}
@@ -247,7 +254,19 @@ export function People001({
           <ul data-part="grid">
             {members.map((member) => (
               <li key={member.name} data-part="card">
-                <span data-part="avatar" aria-hidden="true">
+                <span
+                  data-part="avatar"
+                  data-empty={member.image ? undefined : "true"}
+                  aria-hidden="true"
+                >
+                  {member.image ? (
+                    <img
+                      src={member.image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : null}
                   {initials(member.name)}
                 </span>
                 <p data-part="name">{member.name}</p>

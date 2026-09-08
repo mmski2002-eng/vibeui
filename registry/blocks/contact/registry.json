@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Форма обратной связи",
       "description": "Форма связи, где тема обращения спрашивается первым полем, а рядом с ней стоят прямые контакты для тех, кто формы не заполняет никогда.",
-      "categories": ["contact"],
+      "categories": [
+        "contact"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-001-*. Серверный: валидация нативная — required, type=\"email\", minLength у сообщения. Ошибка показывается по :user-invalid, а не :invalid: пустое поле не должно краснеть до первого ввода. Текст ошибки всегда есть в разметке, визуально скрыт clip-path и связан с полем через aria-describedby. Две колонки включаются container query. Отправку реализует вызывающий код.",
       "meta": {
-        "tags": ["contact", "form", "support", "topics"],
+        "tags": [
+          "contact",
+          "form",
+          "support",
+          "topics"
+        ],
         "preview": {
           "width": "full"
         },
@@ -179,7 +186,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-001-*. Server-side: the validation is native — required, type=\"email\", minLength on the message. The error is shown through :user-invalid rather than :invalid: an empty field must not turn red before the first input. The error text is always present in the markup, hidden visually with clip-path and tied to the field through aria-describedby. The two columns are turned on by a container query. Submission is implemented by the calling code."
           }
         },
-        "cardControls": ["title", "submitLabel", "accent", "background"]
+        "cardControls": [
+          "title",
+          "submitLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -187,7 +199,9 @@
       "type": "registry:block",
       "title": "Карточка офиса с картой",
       "description": "Контакты офиса с нарисованной CSS-заглушкой карты: ни одного внешнего запроса, зато есть адрес текстом, часы работы таблицей и подсказка про вход.",
-      "categories": ["contact"],
+      "categories": [
+        "contact"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -199,9 +213,17 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-002-*. Серверный: хуков нет. Карта нарисована повторяющимися градиентами и не подключает внешний iframe — блок не тянет чужие скрипты и не ставит куки. Заглушка помечена aria-hidden, смысл несёт адрес текстом. Часы работы размечены таблицей с заголовками строк, телефон и почта — настоящими ссылками tel: и mailto:.",
       "meta": {
-        "tags": ["contact", "office", "map", "hours"],
+        "tags": [
+          "contact",
+          "office",
+          "map",
+          "hours"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "image": "/demo/places/place-03.webp"
+          }
         },
         "ai": {
           "export": "Contact002",
@@ -345,13 +367,19 @@
                   "phone": "Phone",
                   "email": "Email",
                   "hours": "Opening hours"
-                }
+                },
+                "image": "/demo/places/place-03.webp"
               }
             },
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-002-*. Server-side: no hooks. The map is drawn with repeating gradients and pulls in no external iframe — the block loads no third-party scripts and sets no cookies. The placeholder is marked aria-hidden, the meaning is carried by the address as text. The opening hours are marked up as a table with row headers, the phone and the email as real tel: and mailto: links."
           }
         },
-        "cardControls": ["address", "pinLabel", "accent", "background"]
+        "cardControls": [
+          "address",
+          "pinLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -359,7 +387,9 @@
       "type": "registry:block",
       "title": "Заявка на демо",
       "description": "Заявка на демо, где три шага встречи стоят над формой: человек решает, оставлять ли контакты, до того как начнёт заполнять поля.",
-      "categories": ["contact"],
+      "categories": [
+        "contact"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -371,7 +401,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-003-*. Серверный: валидация нативная, ошибка показывается по :user-invalid и связана с полем через aria-describedby. Цель встречи выбирается радиогруппой в чипах, состояние читается через :has(input:checked), радиокнопка уменьшена, но не спрятана. Шаги пронумерованы CSS-счётчиком. Поля встают попарно по container query.",
       "meta": {
-        "tags": ["contact", "demo", "lead", "form"],
+        "tags": [
+          "contact",
+          "demo",
+          "lead",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -524,7 +559,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-003-*. Server-side: the validation is native, the error is shown through :user-invalid and tied to the field through aria-describedby. The goal of the meeting is picked by a radio group in chips, the state is read through :has(input:checked), and the radio button is shrunk rather than hidden. The steps are numbered with a CSS counter. The fields pair up through a container query."
           }
         },
-        "cardControls": ["badge", "title", "accent", "background"]
+        "cardControls": [
+          "badge",
+          "title",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -532,7 +572,9 @@
       "type": "registry:block",
       "title": "Форма поддержки с вопросами",
       "description": "Частые вопросы и короткая форма рядом: половина обращений закрывается списком, и форма стоит после него, а не вместо.",
-      "categories": ["contact"],
+      "categories": [
+        "contact"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -544,7 +586,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-004-*. Серверный: раскрытие держат нативные details/summary, поэтому браузер сам раскрывает раздел, найденный поиском по странице. Знак «плюс» собран из двух полос псевдоэлементами. Форма на три поля с нативной валидацией и ошибками по :user-invalid. На широком блоке container query делает форму липкой сбоку.",
       "meta": {
-        "tags": ["contact", "faq", "support", "form"],
+        "tags": [
+          "contact",
+          "faq",
+          "support",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -699,7 +746,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-004-*. Server-side: native details/summary hold the disclosure, so the browser opens a section found by the page search on its own. The plus sign is assembled from two bars with pseudo-elements. The form has three fields with native validation and errors through :user-invalid. On a wide block a container query makes the form sticky at the side."
           }
         },
-        "cardControls": ["title", "formTitle", "accent", "background"]
+        "cardControls": [
+          "title",
+          "formTitle",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -707,7 +759,9 @@
       "type": "registry:block",
       "title": "Контакты отделов",
       "description": "Контакты отделов списком, где у каждого есть назначение и обещанное время ответа, а внизу — общий адрес на случай «не знаю, кому писать».",
-      "categories": ["contact"],
+      "categories": [
+        "contact"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -719,7 +773,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-005-*. Серверный: хуков нет. Адреса и телефоны выводятся настоящими ссылками mailto: и tel:, номер для ссылки вычищается до цифр и плюса. Время ответа набрано tabular-nums, чтобы колонка не прыгала. Список встаёт в две колонки по container query, запасной адрес всегда идёт последним отдельной карточкой.",
       "meta": {
-        "tags": ["contact", "departments", "directory", "email"],
+        "tags": [
+          "contact",
+          "departments",
+          "directory",
+          "email"
+        ],
         "preview": {
           "width": "full"
         },
@@ -873,7 +932,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-005-*. Server-side: no hooks. The addresses and phone numbers are rendered as real mailto: and tel: links, and the number for the link is stripped down to digits and a plus. The reply time is set in tabular-nums so that the column does not jump. The list goes into two columns through a container query, and the catch-all address always comes last as a separate card."
           }
         },
-        "cardControls": ["title", "fallbackEmail", "accent", "background"]
+        "cardControls": [
+          "title",
+          "fallbackEmail",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -881,7 +945,9 @@
       "type": "registry:block",
       "title": "Слоты для звонка",
       "description": "Заявка на обратный звонок с выбором дня и получасового окна: занятые слоты остаются в сетке и подписаны, а не исчезают.",
-      "categories": ["contact"],
+      "categories": [
+        "contact"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -893,7 +959,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-006-*. Серверный: день и слот выбираются радиогруппами, состояние читается через :has(input:checked), фокус — через :has(input:focus-visible). Радиокнопки визуально убраны, но остаются в потоке фокуса. Телефон — input type=\"tel\" с inputMode и pattern, ошибка показывается по :user-invalid. Сетка слотов строится auto-fill, поля встают попарно по container query.",
       "meta": {
-        "tags": ["contact", "callback", "schedule", "phone"],
+        "tags": [
+          "contact",
+          "callback",
+          "schedule",
+          "phone"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1075,7 +1146,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-006-*. Server-side: the day and the slot are picked by radio groups, the state is read through :has(input:checked) and the focus through :has(input:focus-visible). The radio buttons are removed visually but stay in the focus order. The phone is an input type=\"tel\" with inputMode and pattern, and the error is shown through :user-invalid. The grid of slots is built with auto-fill, and the fields pair up through a container query."
           }
         },
-        "cardControls": ["title", "phoneLabel", "accent", "background"]
+        "cardControls": [
+          "title",
+          "phoneLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1083,7 +1159,9 @@
       "type": "registry:block",
       "title": "Каналы связи",
       "description": "Три канала связи равными карточками: у каждого назначение, честное время ответа плашкой и одно действие оранжевой ссылкой.",
-      "categories": ["contact"],
+      "categories": [
+        "contact"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1095,7 +1173,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-007-*. Серверный: хуков нет. Иконки — inline-SVG внутри файла, пакетов иконок не тянут. Время ответа вынесено плашкой с точкой-маркером, действие — настоящая ссылка: mailto:, tel: или якорь чата. Сетка встаёт в три колонки по container query.",
       "meta": {
-        "tags": ["contact", "channels", "chat", "email", "phone"],
+        "tags": [
+          "contact",
+          "channels",
+          "chat",
+          "email",
+          "phone"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1238,7 +1322,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-007-*. Server-side: no hooks. The icons are inline SVG inside the file and pull in no icon packages. The reply time sits in a badge with a dot marker, and the action is a real link: mailto:, tel: or a chat anchor. The grid goes into three columns through a container query."
           }
         },
-        "cardControls": ["title", "eyebrow", "accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1246,7 +1335,9 @@
       "type": "registry:block",
       "title": "Форма с темой обращения",
       "description": "Центрированная форма, где тема обращения — первый и главный элемент: select направляет письмо нужной команде, ниже — поля, согласие и кнопка.",
-      "categories": ["contact"],
+      "categories": [
+        "contact"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1258,7 +1349,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-008-*. Серверный: валидация нативная, ошибки показываются по :user-invalid и связаны с полями через aria-describedby, текст ошибки всегда присутствует в разметке. Select стилизован через appearance:none, стрелку рисует псевдоэлемент обёртки — сам список остаётся нативным. Имя и почта встают парой по container query.",
       "meta": {
-        "tags": ["contact", "form", "select", "consent"],
+        "tags": [
+          "contact",
+          "form",
+          "select",
+          "consent"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1401,7 +1497,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-008-*. Server-side: the validation is native, the errors are shown through :user-invalid and tied to the fields with aria-describedby, and the error text is always present in the markup. The select is styled with appearance:none while the arrow is drawn by the wrapper's pseudo-element — the list itself stays native. The name and email pair up through a container query."
           }
         },
-        "cardControls": ["title", "submitLabel", "accent", "background"]
+        "cardControls": [
+          "title",
+          "submitLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1409,7 +1510,9 @@
       "type": "registry:block",
       "title": "Офисы и часовые пояса",
       "description": "Карточки городов с локальным временем крупными табличными цифрами: часовой пояс подписан рядом, адрес — текстом, время статично из данных.",
-      "categories": ["contact"],
+      "categories": [
+        "contact"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1421,7 +1524,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-009-*. Серверный: хуков нет и времени он не считает — время приходит пропсами статикой, поэтому подпись под сеткой прямо говорит, что это ориентир по поясам, а не живые часы. Цифры набраны tabular-nums, чтобы карточки не прыгали. Адрес размечен элементом address. Сетка 1→2→3 колонки по container query.",
       "meta": {
-        "tags": ["contact", "offices", "timezones", "locations"],
+        "tags": [
+          "contact",
+          "offices",
+          "timezones",
+          "locations"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1565,7 +1673,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-009-*. Server-side: no hooks and no time computation — the time arrives as static props, so the caption under the grid says outright that it is a time-zone reference, not a live clock. The digits are set in tabular-nums so the cards do not jump. The address is marked up with the address element. The grid goes 1→2→3 columns through container queries."
           }
         },
-        "cardControls": ["title", "eyebrow", "accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1573,7 +1686,9 @@
       "type": "registry:block",
       "title": "Обещание ответа",
       "description": "Форма поддержки рядом с SLA-плашкой «отвечаем за 4 часа»: оранжевая молния, условия обещания и факты списком вместо голого слогана.",
-      "categories": ["contact"],
+      "categories": [
+        "contact"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1585,7 +1700,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-010-*. Серверный: валидация нативная, ошибки по :user-invalid и aria-describedby, текст ошибки всегда в разметке. SLA-панель залита тёплым тинтом через color-mix от акцента, молния — inline-SVG без пакетов иконок. Колонки 2fr/3fr включаются container query.",
       "meta": {
-        "tags": ["contact", "support", "sla", "form"],
+        "tags": [
+          "contact",
+          "support",
+          "sla",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1725,7 +1845,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-010-*. Server-side: the validation is native, errors go through :user-invalid and aria-describedby, and the error text is always in the markup. The SLA panel is filled with a warm tint via color-mix from the accent, and the lightning bolt is an inline SVG with no icon packages. The 2fr/3fr columns are turned on by a container query."
           }
         },
-        "cardControls": ["title", "slaTitle", "accent", "background"]
+        "cardControls": [
+          "title",
+          "slaTitle",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1733,7 +1858,9 @@
       "type": "registry:block",
       "title": "Слоты на демо",
       "description": "Сетка демо-слотов по дням недели: вся неделя — одна радиогруппа, занятые окна подписаны, а подтверждение с полем почты появляется после выбора на чистом CSS.",
-      "categories": ["contact"],
+      "categories": [
+        "contact"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1745,7 +1872,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-011-*. Серверный: слоты всех дней — одна радиогруппа, состояние читается через :has(input:checked), фокус — через :has(input:focus-visible); радиокнопки убраны визуально, но остаются в потоке фокуса. Блок подтверждения с почтой и кнопкой скрыт до выбора слота и появляется селектором :has без строчки JS. Занятые слоты disabled, подписаны и остаются в сетке. Колонки дней включаются container query.",
       "meta": {
-        "tags": ["contact", "demo", "schedule", "slots", "booking"],
+        "tags": [
+          "contact",
+          "demo",
+          "schedule",
+          "slots",
+          "booking"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1936,7 +2069,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-011-*. Server-side: the slots of all days form one radio group, the state is read through :has(input:checked) and the focus through :has(input:focus-visible); the radios are removed visually but stay in the focus order. The confirmation block with the email and the button is hidden until a slot is picked and appears through a :has selector without a line of JS. Taken slots are disabled, labelled and stay in the grid. The day columns are turned on by a container query."
           }
         },
-        "cardControls": ["title", "submitLabel", "accent", "background"]
+        "cardControls": [
+          "title",
+          "submitLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1944,7 +2082,9 @@
       "type": "registry:block",
       "title": "Форма с вложением",
       "description": "Обращение в поддержку с пунктирной зоной вложения: label растягивает клик на всю область, а видимый нативный input сам показывает имя выбранного файла.",
-      "categories": ["contact"],
+      "categories": [
+        "contact"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1956,7 +2096,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-012-*. Серверный: дропзона — label вокруг нативного input type=\"file\": клик по всей пунктирной области открывает диалог, кнопка выбора стилизована через ::file-selector-button, а имя выбранного файла показывает сам нативный контрол — без JS его иначе не показать. Фокус на зоне виден через :has(input:focus-visible), ошибки полей — по :user-invalid.",
       "meta": {
-        "tags": ["contact", "form", "upload", "attachment"],
+        "tags": [
+          "contact",
+          "form",
+          "upload",
+          "attachment"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2089,7 +2234,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-012-*. Server-side: the drop area is a label around a native input type=\"file\": a click anywhere on the dashed area opens the dialog, the choose button is styled through ::file-selector-button, and the chosen file name is shown by the native control itself — there is no other way to show it without JS. Focus on the zone is visible through :has(input:focus-visible), field errors go through :user-invalid."
           }
         },
-        "cardControls": ["title", "submitLabel", "accent", "background"]
+        "cardControls": [
+          "title",
+          "submitLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2097,7 +2247,9 @@
       "type": "registry:block",
       "title": "Сначала ответы",
       "description": "Мини-FAQ из трёх details и короткая форма «не нашли — спросите» ниже: список закрывает частые вопросы до того, как письмо уйдёт в поддержку.",
-      "categories": ["contact"],
+      "categories": [
+        "contact"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2109,7 +2261,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-013-*. Серверный: раскрытие держат нативные details/summary, поэтому браузер сам раскрывает раздел, найденный поиском по странице. Номера вопросов рисует CSS-счётчик, стрелку — псевдоэлемент. Форма — textarea и почта с ошибками по :user-invalid; на широком блоке почта и кнопка встают в ряд по container query.",
       "meta": {
-        "tags": ["contact", "faq", "questions", "form"],
+        "tags": [
+          "contact",
+          "faq",
+          "questions",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2255,7 +2412,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-013-*. Server-side: native details/summary hold the disclosure, so the browser opens a section found by the page search on its own. The question numbers are drawn by a CSS counter, the arrow by a pseudo-element. The form is a textarea plus an email with errors through :user-invalid; on a wide block the email and the button line up through a container query."
           }
         },
-        "cardControls": ["title", "formTitle", "accent", "background"]
+        "cardControls": [
+          "title",
+          "formTitle",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2263,7 +2425,9 @@
       "type": "registry:block",
       "title": "Карточка поддержки",
       "description": "Одна карточка: статус «онлайн» зелёной точкой, часы работы по дням таблицей и кнопки каналов — чат главный, почта и звонок рядом.",
-      "categories": ["contact"],
+      "categories": [
+        "contact"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2275,7 +2439,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-014-*. Серверный: хуков нет. Статус — данные блока, а не проверка смены: точка пульсирует CSS-анимацией и глушится prefers-reduced-motion. Часы размечены таблицей с заголовками строк и caption. Кнопки каналов — настоящие ссылки: якорь чата, mailto: и tel:; главный канал залит акцентом. Иконки — inline-SVG.",
       "meta": {
-        "tags": ["contact", "support", "status", "hours", "channels"],
+        "tags": [
+          "contact",
+          "support",
+          "status",
+          "hours",
+          "channels"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2429,7 +2599,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-014-*. Server-side: no hooks. The status is block data, not a shift check: the dot pulses with a CSS animation silenced by prefers-reduced-motion. The hours are marked up as a table with row headers and a caption. The channel buttons are real links: a chat anchor, mailto: and tel:; the primary channel is filled with the accent. The icons are inline SVG."
           }
         },
-        "cardControls": ["title", "statusLabel", "accent", "background"]
+        "cardControls": [
+          "title",
+          "statusLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2437,7 +2612,9 @@
       "type": "registry:block",
       "title": "Карта-заглушка с офисом",
       "description": "Декоративная CSS-карта во весь блок: сетка улиц градиентами, диагональный проспект, пульсирующий оранжевый пин — и карточка адреса поверх.",
-      "categories": ["contact"],
+      "categories": [
+        "contact"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2449,7 +2626,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-015-*. Серверный: хуков нет. Карта нарисована слоями фоновых градиентов — две repeating-linear-gradient-сетки улиц, диагональный проспект и тёплое пятно от акцента; внешних запросов и куки нет. Рисунок помечен aria-hidden: смысл несёт карточка с адресом и ссылка в настоящие карты. На узком блоке карточка встаёт под карту, на широком ложится поверх absolute-позиционированием по container query.",
       "meta": {
-        "tags": ["contact", "map", "office", "address"],
+        "tags": [
+          "contact",
+          "map",
+          "office",
+          "address"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2573,7 +2755,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-015-*. Server-side: no hooks. The map is drawn with layered background gradients — two repeating-linear-gradient street grids, a diagonal avenue and a warm accent blob; no external requests and no cookies. The drawing is aria-hidden: the meaning is carried by the address card and the link out to real maps. At narrow widths the card sits under the map; on a wide block it overlays it with absolute positioning through a container query."
           }
         },
-        "cardControls": ["title", "address", "accent", "background"]
+        "cardControls": [
+          "title",
+          "address",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

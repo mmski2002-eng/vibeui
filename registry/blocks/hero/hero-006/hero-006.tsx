@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react"
 
 export type Hero006Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   eyebrow?: string
   title?: string
   lede?: string
@@ -94,8 +96,13 @@ font-size:0.8125rem;font-weight:600;color:var(--vibeui-hero-006-muted);
 }
 [data-vibeui-block="hero-006"] [data-part="faces"]{display:flex}
 [data-vibeui-block="hero-006"] [data-part="face"]{
-width:1.5rem;height:1.5rem;border-radius:9999px;border:2px solid var(--vibeui-hero-006-field);margin-left:-0.5rem;
-background:color-mix(in oklab,var(--vibeui-hero-006-accent) 45%,var(--vibeui-hero-006-field));
+position:relative;width:1.5rem;height:1.5rem;border-radius:9999px;border:2px solid var(--vibeui-hero-006-field);margin-left:-0.5rem;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="hero-006"] [data-part="face"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-hero-006-accent) 45%,var(--vibeui-hero-006-field));}
+[data-vibeui-block="hero-006"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="hero-006"] [data-part="face"]:first-child{margin-left:0}
 [data-vibeui-block="hero-006"] [data-part="facts"]{
@@ -141,6 +148,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 /** Hero с формой подписки: поле и кнопка в одной рамке, фокус общий. */
 export function Hero006({
   eyebrow = "Рассылка «Секция недели»",
+  avatarImage = "",
   title = "Разбираем по одной секции каждую пятницу",
   lede = "Что сработало, что провалилось и почему. Короткое письмо с примерами вёрстки и цифрами конверсии.",
   placeholder = "you@example.com",
@@ -208,7 +216,19 @@ export function Hero006({
           {proof ? (
             <p data-part="proof">
               <span data-part="faces" aria-hidden="true">
-                <span data-part="face" />
+                <span
+                  data-part="face"
+                  data-empty={avatarImage ? undefined : "true"}
+                >
+                  {avatarImage ? (
+                    <img
+                      src={avatarImage}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : null}
+                </span>
                 <span data-part="face" />
                 <span data-part="face" />
               </span>

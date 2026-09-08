@@ -21,6 +21,8 @@ export type Commerce059Seller = {
 }
 
 export type Commerce059Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   title?: string
   lead?: string
   sellers?: Commerce059Seller[]
@@ -92,8 +94,13 @@ padding:0.75rem 0.875rem;background:var(--vibeui-commerce-059-soft);border-botto
 [data-vibeui-block="commerce-059"] [data-part="lines"]{list-style:none;margin:0;padding:0}
 [data-vibeui-block="commerce-059"] [data-part="line"]{display:flex;gap:0.75rem;padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-commerce-059-border)}
 [data-vibeui-block="commerce-059"] [data-part="thumb"]{
-flex:none;width:3.25rem;height:3.25rem;border-radius:0.625rem;
-background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-059-hue,260)),oklch(0.85 0.09 var(--vibeui-commerce-059-hue,260)));
+position:relative;flex:none;width:3.25rem;height:3.25rem;border-radius:0.625rem;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="commerce-059"] [data-part="thumb"][data-empty="true"]{background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-059-hue,260)),oklch(0.85 0.09 var(--vibeui-commerce-059-hue,260)));}
+[data-vibeui-block="commerce-059"] [data-part="thumb"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-059"] [data-part="ltexts"]{flex:1;min-width:0}
 [data-vibeui-block="commerce-059"] [data-part="lname"]{margin:0;font-size:0.875rem;font-weight:650;line-height:1.35}
@@ -233,6 +240,7 @@ const DEFAULT_SELLERS: Commerce059Seller[] = [
  */
 export function Commerce059({
   title = "Корзина: три продавца",
+  image = "",
   lead = "Заказ оплачивается один раз, но посылок будет три — у каждого продавца свои сроки, доставка и правила возврата.",
   sellers = DEFAULT_SELLERS,
   itemsLabel = "Товары",
@@ -303,7 +311,20 @@ export function Commerce059({
                           } as CSSProperties
                         }
                       >
-                        <span data-part="thumb" aria-hidden="true" />
+                        <span
+                          data-part="thumb"
+                          data-empty={image ? undefined : "true"}
+                          aria-hidden="true"
+                        >
+                          {image ? (
+                            <img
+                              src={image}
+                              alt=""
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          ) : null}
+                        </span>
                         <div data-part="ltexts">
                           <p data-part="lname">{line.title}</p>
                           <p data-part="lspec">{line.spec}</p>

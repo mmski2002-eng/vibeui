@@ -154,7 +154,10 @@ export function Sparkline005({
   }))
 
   const line = points
-    .map((point, index) => `${index === 0 ? "M" : "L"}${point.x.toFixed(1)} ${point.y.toFixed(1)}`)
+    .map(
+      (point, index) =>
+        `${index === 0 ? "M" : "L"}${point.x.toFixed(1)} ${point.y.toFixed(1)}`,
+    )
     .join(" ")
   const last = points[points.length - 1]
   const breaches = points.filter((point) => point.breach)
@@ -204,13 +207,7 @@ export function Sparkline005({
             width={WIDTH}
             height={Math.max(bandBottom - bandTop, 1)}
           />
-          <line
-            data-part="edge"
-            x1={0}
-            y1={bandTop}
-            x2={WIDTH}
-            y2={bandTop}
-          />
+          <line data-part="edge" x1={0} y1={bandTop} x2={WIDTH} y2={bandTop} />
           <line
             data-part="edge"
             x1={0}

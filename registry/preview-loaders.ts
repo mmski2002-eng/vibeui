@@ -139,8 +139,6 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/component/file-upload")).PREVIEWS
     case "component/filters":
       return (await import("@/registry/previews/component/filters")).PREVIEWS
-    case "component/frame":
-      return (await import("@/registry/previews/component/frame")).PREVIEWS
     case "component/hover-card":
       return (await import("@/registry/previews/component/hover-card")).PREVIEWS
     case "component/icon-stack":
@@ -187,8 +185,6 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/component/select")).PREVIEWS
     case "component/separator":
       return (await import("@/registry/previews/component/separator")).PREVIEWS
-    case "component/sidebar":
-      return (await import("@/registry/previews/component/sidebar")).PREVIEWS
     case "component/skeleton":
       return (await import("@/registry/previews/component/skeleton")).PREVIEWS
     case "component/slider":
@@ -257,6 +253,8 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/animation/stacks")).PREVIEWS
     case "animation/cursor":
       return (await import("@/registry/previews/animation/cursor")).PREVIEWS
+    case "animation/text":
+      return (await import("@/registry/previews/animation/text")).PREVIEWS
     default:
       return null
   }

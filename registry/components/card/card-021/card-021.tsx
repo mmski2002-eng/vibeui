@@ -1,6 +1,8 @@
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Card021Props = Omit<ComponentProps<"div">, "children"> & {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   /** Что именно грузится. Читается вслух, на экране не показывается. */
   label?: string
   /** Сколько строк ленты изобразить. Столько же, сколько придёт данных. */
@@ -52,7 +54,10 @@ var(--vibeui-card-021-bone) 66%) 0 0 / 300% 100%;
 animation:vibeui-card-021-sweep 1.5s linear infinite;
 }
 [data-vibeui-block="card-021"] [data-part="face"]{
-flex:none;width:2.25rem;height:2.25rem;border-radius:9999px;
+position:relative;flex:none;width:2.25rem;height:2.25rem;border-radius:9999px;overflow:hidden;
+}
+[data-vibeui-block="card-021"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="card-021"] [data-part="name"]{height:0.6875rem;width:42%}
 [data-vibeui-block="card-021"] [data-part="text"]{height:0.5625rem;width:100%}
@@ -107,6 +112,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Card021({
   label = "Загружаются комментарии",
+  avatarImage = "",
   rows = 3,
   avatar = true,
   background = "",
@@ -146,7 +152,21 @@ export function Card021({
         <span data-part="sr">{label}</span>
         {Array.from({ length: count }, (_, index) => (
           <div key={index} data-part="row" aria-hidden="true">
-            {avatar ? <span data-part="face" /> : null}
+            {avatar ? (
+              <span
+                data-part="face"
+                data-empty={avatarImage ? undefined : "true"}
+              >
+                {avatarImage ? (
+                  <img
+                    src={avatarImage}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
+              </span>
+            ) : null}
             <div data-part="lines">
               <span data-part="name" />
               <span data-part="text" />

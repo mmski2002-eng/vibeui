@@ -2,6 +2,8 @@ import type { CSSProperties } from "react"
 
 export type Dashboard017Member = {
   name: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   email: string
   role: string
   rights: string
@@ -84,10 +86,15 @@ padding:0.75rem 0;border-top:1px solid var(--vibeui-dashboard-017-border);
 }
 [data-vibeui-block="dashboard-017"] [data-part="member"]:first-child{border-top:0;padding-top:0}
 [data-vibeui-block="dashboard-017"] [data-part="avatar"]{
-grid-row:span 2;width:2.25rem;height:2.25rem;border-radius:9999px;
+position:relative;grid-row:span 2;width:2.25rem;height:2.25rem;border-radius:9999px;
 display:grid;place-items:center;font-size:0.75rem;font-weight:700;
-background:light-dark(oklch(0.94 0.03 var(--vibeui-dashboard-017-hue)),oklch(0.36 0.05 var(--vibeui-dashboard-017-hue)));
-color:light-dark(oklch(0.38 0.09 var(--vibeui-dashboard-017-hue)),oklch(0.88 0.05 var(--vibeui-dashboard-017-hue)));
+color:light-dark(oklch(0.38 0.09 var(--vibeui-dashboard-017-hue)),oklch(0.88 0.05 var(--vibeui-dashboard-017-hue)));overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="dashboard-017"] [data-part="avatar"][data-empty="true"]{background:light-dark(oklch(0.94 0.03 var(--vibeui-dashboard-017-hue)),oklch(0.36 0.05 var(--vibeui-dashboard-017-hue)));}
+[data-vibeui-block="dashboard-017"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="dashboard-017"] [data-part="who"]{margin:0;font-size:0.8125rem;font-weight:650}
 [data-vibeui-block="dashboard-017"] [data-part="mail"]{
@@ -278,7 +285,19 @@ export function Dashboard017({
                     } as CSSProperties
                   }
                 >
-                  <span data-part="avatar" aria-hidden="true">
+                  <span
+                    data-part="avatar"
+                    data-empty={member.image ? undefined : "true"}
+                    aria-hidden="true"
+                  >
+                    {member.image ? (
+                      <img
+                        src={member.image}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : null}
                     {initials(member.name)}
                   </span>
                   <p data-part="who">

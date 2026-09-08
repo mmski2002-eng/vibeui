@@ -2,6 +2,8 @@ import type { CSSProperties } from "react"
 
 export type Commerce071Item = {
   id: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   title: string
   spec: string
   price: string
@@ -78,8 +80,13 @@ padding:0.75rem;display:flex;flex-direction:column;gap:0.5rem;
 [data-vibeui-block="commerce-071"] [data-part="item"]:has(a:focus-visible){outline:2px solid var(--vibeui-commerce-071-accent);outline-offset:2px}
 [data-vibeui-block="commerce-071"] [data-part="head"]{display:flex;gap:0.625rem;align-items:flex-start}
 [data-vibeui-block="commerce-071"] [data-part="thumb"]{
-flex:none;width:3rem;height:3rem;border-radius:0.625rem;
-background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-071-hue,145)),oklch(0.85 0.09 var(--vibeui-commerce-071-hue,145)));
+position:relative;flex:none;width:3rem;height:3rem;border-radius:0.625rem;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="commerce-071"] [data-part="thumb"][data-empty="true"]{background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-071-hue,145)),oklch(0.85 0.09 var(--vibeui-commerce-071-hue,145)));}
+[data-vibeui-block="commerce-071"] [data-part="thumb"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-071"] [data-part="name"]{margin:0;font-size:0.875rem;font-weight:650;line-height:1.3}
 [data-vibeui-block="commerce-071"] [data-part="name"] a{color:inherit;text-decoration:none;outline:none}
@@ -229,7 +236,20 @@ export function Commerce071({
                 }
               >
                 <div data-part="head">
-                  <span data-part="thumb" aria-hidden="true" />
+                  <span
+                    data-part="thumb"
+                    data-empty={item.image ? undefined : "true"}
+                    aria-hidden="true"
+                  >
+                    {item.image ? (
+                      <img
+                        src={item.image}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : null}
+                  </span>
                   <div>
                     <p data-part="name">
                       <a href="#product">{item.title}</a>

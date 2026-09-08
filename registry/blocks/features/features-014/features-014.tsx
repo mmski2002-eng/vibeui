@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react"
 
 export type Features014Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   quote?: string
   authorName?: string
   authorRole?: string
@@ -67,10 +69,15 @@ display:flex;align-items:center;gap:0.75rem;margin-top:1.75rem;padding-top:1.25r
 border-top:1px solid var(--vibeui-features-014-line);
 }
 [data-vibeui-block="features-014"] [data-part="face"]{
-flex:0 0 auto;width:2.75rem;height:2.75rem;border-radius:9999px;
+position:relative;flex:0 0 auto;width:2.75rem;height:2.75rem;border-radius:9999px;
 display:flex;align-items:center;justify-content:center;
-background:color-mix(in oklab,var(--vibeui-features-014-accent) 16%,transparent);
-color:var(--vibeui-features-014-accent);font-size:0.9375rem;font-weight:700;
+color:var(--vibeui-features-014-accent);font-size:0.9375rem;font-weight:700;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="features-014"] [data-part="face"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-features-014-accent) 16%,transparent);}
+[data-vibeui-block="features-014"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="features-014"] [data-part="name"]{display:block;font-size:0.9375rem;font-weight:650}
 [data-vibeui-block="features-014"] [data-part="role"]{display:block;margin-top:0.125rem;font-size:0.8125rem;color:var(--vibeui-features-014-muted)}
@@ -144,6 +151,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 /** Блок с большой цитатой и метрикой: реплика клиента слева, измеримый результат справа. */
 export function Features014({
   quote = "Мы перестали ставить лендинги в очередь к разработке. Маркетолог собирает страницу сам, а разработчик подключается только там, где нужна логика.",
+  avatarImage = "",
   authorName = "Анна Кравцова",
   authorRole = "Руководитель маркетинга",
   company = "Литера",
@@ -180,7 +188,19 @@ export function Features014({
           <figure>
             <blockquote>{quote}</blockquote>
             <figcaption>
-              <span data-part="face" aria-hidden="true">
+              <span
+                data-part="face"
+                data-empty={avatarImage ? undefined : "true"}
+                aria-hidden="true"
+              >
+                {avatarImage ? (
+                  <img
+                    src={avatarImage}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
                 {authorName.slice(0, 1)}
               </span>
               <span>

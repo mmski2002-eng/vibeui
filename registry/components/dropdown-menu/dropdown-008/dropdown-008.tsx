@@ -4,6 +4,8 @@ import { useId, useRef, useState } from "react"
 import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Dropdown008Props = Omit<ComponentProps<"div">, "children"> & {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   /**
    * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
    * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
@@ -66,11 +68,16 @@ transition:background-color .16s ease;
 [data-vibeui-block="dropdown-008"] [data-part="trigger"]:hover{background:var(--vibeui-dropdown-008-hover)}
 [data-vibeui-block="dropdown-008"] [data-part="trigger"]:focus-visible{outline:2px solid var(--vibeui-dropdown-008-accent);outline-offset:2px}
 [data-vibeui-block="dropdown-008"] [data-part="face"]{
-display:flex;align-items:center;justify-content:center;flex:none;
+position:relative;display:flex;align-items:center;justify-content:center;flex:none;
 width:1.75rem;height:1.75rem;border-radius:9999px;
-background:color-mix(in oklab,var(--vibeui-dropdown-008-accent) 18%,var(--vibeui-dropdown-008-bg));
 color:var(--vibeui-dropdown-008-accent);
-font-size:0.6875rem;font-weight:700;letter-spacing:0.02em;
+font-size:0.6875rem;font-weight:700;letter-spacing:0.02em;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="dropdown-008"] [data-part="face"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-dropdown-008-accent) 18%,var(--vibeui-dropdown-008-bg));}
+[data-vibeui-block="dropdown-008"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="dropdown-008"] [data-part="menu"]{
 position:fixed;padding:0.3125rem;width:16rem;box-sizing:border-box;
@@ -205,6 +212,7 @@ function stepFocus(menu: HTMLElement | null, delta: number) {
 export function Dropdown008({
   open = false,
   name = "Вера Логинова",
+  avatarImage = "",
   email = "vera@poldenstudio.ru",
   plan = "Pro",
   workspaces = DEFAULT_WORKSPACES,
@@ -269,7 +277,14 @@ export function Dropdown008({
             }
           }}
         >
-          <span data-part="face" aria-hidden="true">
+          <span
+            data-part="face"
+            data-empty={avatarImage ? undefined : "true"}
+            aria-hidden="true"
+          >
+            {avatarImage ? (
+              <img src={avatarImage} alt="" loading="lazy" decoding="async" />
+            ) : null}
             {initials(name)}
           </span>
           {name.split(" ")[0]}

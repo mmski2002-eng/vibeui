@@ -1,6 +1,8 @@
 import type { ComponentProps, CSSProperties, ReactNode } from "react"
 
 export type Aspect001Props = Omit<ComponentProps<"div">, "children"> & {
+  /** Фотография кадра. Без неё остаётся нарисованная подложка. */
+  image?: string
   /** Соотношение сторон: «16 / 9», «4 / 3», «1 / 1». */
   ratio?: string
   /** Подпись поверх подложки, пока содержимого нет. */
@@ -33,6 +35,13 @@ const STYLES = `
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="aspect-001"]{color-scheme:dark}
+[data-vibeui-block="aspect-001"] > img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+}
+/* Нарисованная подложка нужна, только пока снимка нет. */
+[data-vibeui-block="aspect-001"][data-empty="false"] [data-part="hill"],
+[data-vibeui-block="aspect-001"][data-empty="false"] [data-part="sun"],
+[data-vibeui-block="aspect-001"][data-empty="false"] [data-part="ratio"]{display:none}
 [data-vibeui-block="aspect-001"]{
 position:relative;display:block;width:100%;box-sizing:border-box;overflow:hidden;
 aspect-ratio:var(--vibeui-aspect-001-ratio);
@@ -100,6 +109,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Aspect001({
   ratio = "16 / 9",
+  image = "",
   label = "16 / 9",
   background = "",
   children,
@@ -127,9 +137,13 @@ export function Aspect001({
         {...props}
         data-slot="aspect-ratio"
         data-vibeui-block="aspect-001"
+        data-empty={image ? "false" : "true"}
         className={className}
         style={palette}
       >
+        {image ? (
+          <img src={image} alt="" loading="lazy" decoding="async" />
+        ) : null}
         {children ?? (
           <span data-part="label" aria-hidden="true">
             <span data-part="sun" />

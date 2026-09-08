@@ -2,6 +2,8 @@ import type { CSSProperties } from "react"
 
 type Testimonials007Item = {
   quote: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   name: string
   role: string
 }
@@ -83,11 +85,16 @@ margin:0;flex:1 1 auto;font-size:0.9375rem;line-height:1.55;
 display:flex;align-items:center;gap:0.625rem;
 }
 [data-vibeui-block="testimonials-007"] [data-part="avatar"]{
-width:2rem;height:2rem;flex:none;border-radius:999px;
+position:relative;width:2rem;height:2rem;flex:none;border-radius:999px;
 display:grid;place-items:center;
-background:color-mix(in oklab,var(--vibeui-testimonials-007-accent) 14%,var(--vibeui-testimonials-007-card));
 color:var(--vibeui-testimonials-007-accent);
-font-size:0.6875rem;font-weight:750;letter-spacing:0.02em;
+font-size:0.6875rem;font-weight:750;letter-spacing:0.02em;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="testimonials-007"] [data-part="avatar"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-testimonials-007-accent) 14%,var(--vibeui-testimonials-007-card));}
+[data-vibeui-block="testimonials-007"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="testimonials-007"] [data-part="who"]{display:grid;gap:0.0625rem;min-width:0}
 [data-vibeui-block="testimonials-007"] [data-part="name"]{font-size:0.875rem;font-weight:640}
@@ -144,8 +151,7 @@ const DEFAULT_ITEMS: Testimonials007Item[] = [
     role: "CTO, Remark",
   },
   {
-    quote:
-      "Раньше спорили о вёрстке неделями. Теперь спорим только о текстах.",
+    quote: "Раньше спорили о вёрстке неделями. Теперь спорим только о текстах.",
     name: "Ирина Белова",
     role: "Продакт-менеджер",
   },
@@ -195,7 +201,19 @@ function MarqueeGroup({
           <figure data-part="card">
             <blockquote data-part="quote">{item.quote}</blockquote>
             <figcaption data-part="author">
-              <span data-part="avatar" aria-hidden="true">
+              <span
+                data-part="avatar"
+                data-empty={item.image ? undefined : "true"}
+                aria-hidden="true"
+              >
+                {item.image ? (
+                  <img
+                    src={item.image}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
                 {initials(item.name)}
               </span>
               <span data-part="who">

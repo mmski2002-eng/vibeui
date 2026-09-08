@@ -5,6 +5,8 @@ import type { CSSProperties, MouseEvent as ReactMouseEvent } from "react"
 
 export type Navmenu005Entry = {
   label: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   hint?: string
   shotTitle?: string
   shotText?: string
@@ -107,12 +109,17 @@ display:block;padding:0.5rem;border-radius:0.5rem;text-decoration:none;color:inh
 position:absolute;inset:0;opacity:0;
 display:flex;flex-direction:column;justify-content:flex-end;gap:0.25rem;
 padding:0.875rem;box-sizing:border-box;
-background:
-radial-gradient(120% 80% at 20% 15%,var(--vibeui-navmenu-005-sheen),transparent 62%),
-linear-gradient(150deg,oklch(0.92 0.08 var(--vibeui-navmenu-005-hue)),oklch(0.86 0.11 calc(var(--vibeui-navmenu-005-hue) + 40)));
 border:1px solid var(--vibeui-navmenu-005-border);border-radius:0.75rem;
 color:var(--vibeui-navmenu-005-shot-fg);
-transition:opacity .18s ease;
+transition:opacity .18s ease;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="navmenu-005"] [data-part="shot"][data-empty="true"]{background:
+radial-gradient(120% 80% at 20% 15%,var(--vibeui-navmenu-005-sheen),transparent 62%),
+linear-gradient(150deg,oklch(0.92 0.08 var(--vibeui-navmenu-005-hue)),oklch(0.86 0.11 calc(var(--vibeui-navmenu-005-hue) + 40)));}
+[data-vibeui-block="navmenu-005"] [data-part="shot"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="navmenu-005"] [data-part="shot-title"]{margin:0;font-size:0.9375rem;font-weight:650}
 [data-vibeui-block="navmenu-005"] [data-part="shot-text"]{margin:0;font-size:0.75rem;line-height:1.45;color:var(--vibeui-navmenu-005-shot-text)}
@@ -329,6 +336,7 @@ export function Navmenu005({
               <div
                 key={entry.label}
                 data-part="shot"
+                data-empty={entry.image ? undefined : "true"}
                 data-index={index}
                 style={
                   {
@@ -336,6 +344,14 @@ export function Navmenu005({
                   } as CSSProperties
                 }
               >
+                {entry.image ? (
+                  <img
+                    src={entry.image}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
                 <p data-part="shot-title">{entry.shotTitle ?? entry.label}</p>
                 <p data-part="shot-text">{entry.shotText ?? entry.hint}</p>
               </div>

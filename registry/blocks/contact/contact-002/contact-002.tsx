@@ -6,6 +6,8 @@ export type Contact002Hours = {
 }
 
 export type Contact002Props = {
+  /** Фото офиса. Без него блок остаётся текстовым. */
+  image?: string
   eyebrow?: string
   title?: string
   address?: string
@@ -68,6 +70,13 @@ background:var(--vibeui-contact-002-bg);color:var(--vibeui-contact-002-fg);
 font-family:var(--vibeui-contact-002-sans);
 }
 [data-vibeui-block="contact-002"] *{box-sizing:border-box}
+[data-vibeui-block="contact-002"] [data-part="figure"]{
+position:relative;overflow:hidden;aspect-ratio:3 / 2;
+margin-top:1.5rem;border-radius:0.875rem;
+}
+[data-vibeui-block="contact-002"] [data-part="figure"] img{
+display:block;width:100%;height:100%;object-fit:cover;
+}
 [data-vibeui-block="contact-002"] [data-part="frame"]{
 max-width:72rem;margin:0 auto;padding:3rem 1.25rem;display:grid;gap:1.75rem;align-items:start;
 }
@@ -216,6 +225,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Contact002({
   eyebrow = "Офис",
+  image = "",
   title = "Приезжайте, мы на месте",
   address = "Москва, Большая Дмитровка, 14, строение 2",
   addressNote = "Вход со двора, синяя дверь без вывески. Второй этаж, направо до конца коридора.",
@@ -311,6 +321,12 @@ export function Contact002({
               <span data-part="map-caption">{mapCaption}</span>
             </figcaption>
           </figure>
+
+          {image ? (
+            <figure data-part="figure">
+              <img src={image} alt="" loading="lazy" decoding="async" />
+            </figure>
+          ) : null}
         </div>
       </section>
     </>

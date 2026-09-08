@@ -15,6 +15,8 @@ export type Select029Props = Omit<
   ComponentProps<"div">,
   "children" | "onChange"
 > & {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   label?: string
   templates?: Select029Template[]
   defaultValue?: string
@@ -55,10 +57,15 @@ container-type:inline-size;
 [data-vibeui-block="select-029"] [data-part="label"]{font-size:0.8125rem;font-weight:600}
 [data-vibeui-block="select-029"] [data-part="row"]{display:flex;align-items:center;gap:0.75rem}
 [data-vibeui-block="select-029"] [data-part="thumb"]{
-flex:none;display:grid;gap:0.1875rem;box-sizing:border-box;
+position:relative;flex:none;display:grid;gap:0.1875rem;box-sizing:border-box;
 width:3rem;height:2.375rem;padding:0.25rem;
-border:1px solid var(--vibeui-select-029-border);border-radius:0.4375rem;
-background:var(--vibeui-select-029-thumb-bg);overflow:hidden;
+border:1px solid var(--vibeui-select-029-border);border-radius:0.4375rem;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="select-029"] [data-part="thumb"][data-empty="true"]{background:var(--vibeui-select-029-thumb-bg);}
+[data-vibeui-block="select-029"] [data-part="thumb"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="select-029"] [data-part="thumb"] span{
 display:block;border-radius:0.125rem;
@@ -143,6 +150,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Select029({
   label = "Шаблон страницы",
+  image = "",
   templates = DEFAULT_TEMPLATES,
   defaultValue = templates[0]?.value,
   background = "",
@@ -187,9 +195,13 @@ export function Select029({
         <span data-part="row">
           <span
             data-part="thumb"
+            data-empty={image ? undefined : "true"}
             data-layout={current?.layout}
             aria-hidden="true"
           >
+            {image ? (
+              <img src={image} alt="" loading="lazy" decoding="async" />
+            ) : null}
             <span data-block="a" />
             <span data-block="b" />
           </span>

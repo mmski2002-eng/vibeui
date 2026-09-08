@@ -320,9 +320,7 @@ export function Switch015({
                           role="switch"
                           checked={value.has(keyOf(row.id, column.id))}
                           aria-label={`${row.label}: ${column.label}`}
-                          onChange={() =>
-                            toggleCell(keyOf(row.id, column.id))
-                          }
+                          onChange={() => toggleCell(keyOf(row.id, column.id))}
                         />
                         <span data-part="thumb" aria-hidden="true" />
                       </span>

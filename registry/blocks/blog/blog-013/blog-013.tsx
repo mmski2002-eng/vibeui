@@ -5,6 +5,8 @@ export type Blog013Props = {
   title?: string
   lede?: string
   author?: string
+  /** Фото автора. Без него в кружке остаются инициалы. */
+  avatarImage?: string
   role?: string
   date?: string
   readingTime?: string
@@ -74,11 +76,16 @@ display:flex;flex-wrap:wrap;align-items:center;gap:0.75rem 1rem;
 padding-top:1.25rem;border-top:1px solid var(--vibeui-blog-013-border);
 }
 [data-vibeui-block="blog-013"] [data-part="avatar"]{
-width:2.75rem;height:2.75rem;flex:none;border-radius:999px;
+position:relative;width:2.75rem;height:2.75rem;flex:none;border-radius:999px;
 display:grid;place-items:center;
-background:var(--vibeui-blog-013-tint);
 color:var(--vibeui-blog-013-accent);
-font-size:0.875rem;font-weight:750;letter-spacing:0.02em;
+font-size:0.875rem;font-weight:750;letter-spacing:0.02em;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="blog-013"] [data-part="avatar"][data-empty="true"]{background:var(--vibeui-blog-013-tint);}
+[data-vibeui-block="blog-013"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="blog-013"] [data-part="who"]{display:grid;gap:0.0625rem;min-width:0}
 [data-vibeui-block="blog-013"] [data-part="author"]{font-size:0.9375rem;font-weight:650}
@@ -129,6 +136,7 @@ export function Blog013({
   title = "Отдайте вёрстку агенту: как «Copy for AI» переносит блок в проект",
   lede = "Кнопка в каталоге отдаёт агенту не код, а инструкцию: что установить, что сохранить и что можно менять. Разбираем, из чего она собирается и почему агент по ней не выдумывает лишнего.",
   author = "Вера Славина",
+  avatarImage = "",
   role = "редактор VibeUI",
   date = "26 марта 2026",
   readingTime = "9 минут чтения",
@@ -156,14 +164,25 @@ export function Blog013({
       <style href="vibeui-blog-013" precedence="medium">
         {STYLES}
       </style>
-      <header data-vibeui-block="blog-013" className={className} style={palette}>
+      <header
+        data-vibeui-block="blog-013"
+        className={className}
+        style={palette}
+      >
         <div data-part="bar" aria-hidden="true" />
         <div data-part="shell">
           <p data-part="topic">{topic}</p>
           <h1 data-part="title">{title}</h1>
           <p data-part="lede">{lede}</p>
           <div data-part="byline">
-            <span data-part="avatar" aria-hidden="true">
+            <span
+              data-part="avatar"
+              data-empty={avatarImage ? undefined : "true"}
+              aria-hidden="true"
+            >
+              {avatarImage ? (
+                <img src={avatarImage} alt="" loading="lazy" decoding="async" />
+              ) : null}
               {initials(author)}
             </span>
             <span data-part="who">

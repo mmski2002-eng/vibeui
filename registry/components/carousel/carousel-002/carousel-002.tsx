@@ -7,6 +7,8 @@ export type Carousel002Item = {
   title: string
   meta: string
   hue?: number
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
 }
 
 export type Carousel002Props = Omit<ComponentProps<"section">, "children"> & {
@@ -88,10 +90,15 @@ border:1px solid var(--vibeui-carousel-002-border);border-radius:0.875rem;
 background:var(--vibeui-carousel-002-bg);
 }
 [data-vibeui-block="carousel-002"] [data-part="cover"]{
-aspect-ratio:16 / 10;border-radius:0.625rem;
-background:
+position:relative;aspect-ratio:16 / 10;border-radius:0.625rem;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="carousel-002"] [data-part="cover"][data-empty="true"]{background:
 radial-gradient(90% 80% at 25% 20%,oklch(0.92 0.06 var(--vibeui-carousel-002-hue,250)),transparent 70%),
-linear-gradient(150deg,oklch(0.8 0.08 var(--vibeui-carousel-002-hue,250)),oklch(0.55 0.1 var(--vibeui-carousel-002-hue,250)));
+linear-gradient(150deg,oklch(0.8 0.08 var(--vibeui-carousel-002-hue,250)),oklch(0.55 0.1 var(--vibeui-carousel-002-hue,250)));}
+[data-vibeui-block="carousel-002"] [data-part="cover"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="carousel-002"] [data-part="card-title"]{font-size:0.875rem;font-weight:650;line-height:1.3}
 [data-vibeui-block="carousel-002"] [data-part="meta"]{font-size:0.75rem;color:var(--vibeui-carousel-002-muted)}
@@ -222,7 +229,20 @@ export function Carousel002({
                 } as CSSProperties
               }
             >
-              <span data-part="cover" aria-hidden="true" />
+              <span
+                data-part="cover"
+                data-empty={item.image ? undefined : "true"}
+                aria-hidden="true"
+              >
+                {item.image ? (
+                  <img
+                    src={item.image}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
+              </span>
               <span data-part="card-title">{item.title}</span>
               <span data-part="meta">{item.meta}</span>
             </li>

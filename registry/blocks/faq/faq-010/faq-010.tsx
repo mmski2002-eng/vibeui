@@ -196,7 +196,11 @@ export function Faq010({
       <style href="vibeui-faq-010" precedence="medium">
         {STYLES}
       </style>
-      <section data-vibeui-block="faq-010" className={className} style={palette}>
+      <section
+        data-vibeui-block="faq-010"
+        className={className}
+        style={palette}
+      >
         <div data-part="shell">
           <h2 data-part="title">{title}</h2>
           {popular.length > 0 ? (

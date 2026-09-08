@@ -255,7 +255,16 @@ export function Drawer008({
         <button type="button" data-part="trigger" onClick={open}>
           {triggerLabel}
         </button>
-        <dialog ref={drawer} aria-label={title}>
+        <dialog
+          ref={drawer}
+          aria-label={title}
+          onClick={(event) => {
+            // щелчок мимо панели приходит самому <dialog>: закрываем
+            if (event.target === event.currentTarget) {
+              event.currentTarget.close()
+            }
+          }}
+        >
           <div data-part="panel">
             <div
               data-part="progress"

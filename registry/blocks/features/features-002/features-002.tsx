@@ -7,6 +7,8 @@ export type Features002Item = {
 }
 
 export type Features002Props = {
+  /** Иллюстрация возможности. Без неё секция остаётся текстовой. */
+  image?: string
   eyebrow?: string
   title?: string
   lede?: string
@@ -50,6 +52,13 @@ box-sizing:border-box;background:var(--vibeui-features-002-bg);color:var(--vibeu
 font-family:var(--vibeui-features-002-sans);
 }
 [data-vibeui-block="features-002"] *{box-sizing:border-box}
+[data-vibeui-block="features-002"] [data-part="figure"]{
+position:relative;overflow:hidden;aspect-ratio:16 / 10;
+margin-top:1.5rem;border-radius:0.875rem;
+}
+[data-vibeui-block="features-002"] [data-part="figure"] img{
+display:block;width:100%;height:100%;object-fit:cover;
+}
 [data-vibeui-block="features-002"] [data-part="shell"]{max-width:72rem;width:100%;margin:0 auto;padding:3.5rem 1.25rem}
 [data-vibeui-block="features-002"] [data-part="head"]{max-width:38rem;margin:0 auto 2.25rem;text-align:center}
 [data-vibeui-block="features-002"] [data-part="eyebrow"]{
@@ -163,6 +172,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 /** Сетка из шести возможностей с иконками: три колонки, ячейки на зазорах-линиях. */
 export function Features002({
   eyebrow = "Возможности",
+  image = "",
   title = "Шесть причин не верстать секции руками",
   lede = "Каждая возможность работает сама по себе — включать их по очереди не нужно.",
   items = DEFAULT_ITEMS,
@@ -218,6 +228,12 @@ export function Features002({
               </li>
             ))}
           </ul>
+
+          {image ? (
+            <figure data-part="figure">
+              <img src={image} alt="" loading="lazy" decoding="async" />
+            </figure>
+          ) : null}
         </div>
       </section>
     </>

@@ -233,64 +233,64 @@ export function Features008({
           <h2>{title}</h2>
 
           <form data-part="tabs">
-          {visible.map((tab, index) => (
-            <input
-              key={tab.id}
-              data-part={`t${index + 1}`}
-              id={`vibeui-features-008-${tab.id}`}
-              type="radio"
-              name="vibeui-features-008"
-              defaultChecked={index === 0}
-            />
-          ))}
-
-          <div data-part="tablist" role="group" aria-label={tablistLabel}>
-            {visible.map((tab) => (
-              <label
+            {visible.map((tab, index) => (
+              <input
                 key={tab.id}
-                data-part="tab"
-                htmlFor={`vibeui-features-008-${tab.id}`}
-              >
-                {tab.label}
-              </label>
+                data-part={`t${index + 1}`}
+                id={`vibeui-features-008-${tab.id}`}
+                type="radio"
+                name="vibeui-features-008"
+                defaultChecked={index === 0}
+              />
             ))}
-          </div>
 
-          <div data-part="panels">
-            {visible.map((tab) => (
-              <article key={tab.id} data-part="panel">
-                <div data-part="panelgrid">
-                  <div>
-                    <h3>{tab.title}</h3>
-                    <p>{tab.description}</p>
-                    <ul>
-                      {tab.points.slice(0, 4).map((point) => (
-                        <li key={point}>
-                          <span data-part="tick" aria-hidden="true">
-                            <svg viewBox="0 0 16 16" width="12" height="12">
-                              <path
-                                d="M3.5 8.5 6.5 11.5 12.5 4.5"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                            </svg>
-                          </span>
-                          {point}
-                        </li>
-                      ))}
-                    </ul>
+            <div data-part="tablist" role="group" aria-label={tablistLabel}>
+              {visible.map((tab) => (
+                <label
+                  key={tab.id}
+                  data-part="tab"
+                  htmlFor={`vibeui-features-008-${tab.id}`}
+                >
+                  {tab.label}
+                </label>
+              ))}
+            </div>
+
+            <div data-part="panels">
+              {visible.map((tab) => (
+                <article key={tab.id} data-part="panel">
+                  <div data-part="panelgrid">
+                    <div>
+                      <h3>{tab.title}</h3>
+                      <p>{tab.description}</p>
+                      <ul>
+                        {tab.points.slice(0, 4).map((point) => (
+                          <li key={point}>
+                            <span data-part="tick" aria-hidden="true">
+                              <svg viewBox="0 0 16 16" width="12" height="12">
+                                <path
+                                  d="M3.5 8.5 6.5 11.5 12.5 4.5"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                              </svg>
+                            </span>
+                            {point}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <p data-part="metric">
+                      <span data-part="value">{tab.metric.value}</span>
+                      <span data-part="metriclabel">{tab.metric.label}</span>
+                    </p>
                   </div>
-                  <p data-part="metric">
-                    <span data-part="value">{tab.metric.value}</span>
-                    <span data-part="metriclabel">{tab.metric.label}</span>
-                  </p>
-                </div>
-              </article>
-            ))}
-          </div>
+                </article>
+              ))}
+            </div>
           </form>
         </div>
       </section>

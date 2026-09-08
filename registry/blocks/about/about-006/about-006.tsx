@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react"
 
 export type About006Props = {
+  /** Фотографии мозаики по порядку плиток. Без них остаются цветные поля. */
+  images?: string[]
   eyebrow?: string
   title?: string
   caption?: string
@@ -53,6 +55,9 @@ max-width:72rem;margin:0 auto;padding:3.5rem 1.25rem;
 [data-vibeui-block="about-006"] [data-part="mosaic"]{
 display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.75rem;
 }
+[data-vibeui-block="about-006"] [data-part="tile"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+}
 [data-vibeui-block="about-006"] [data-part="note"]{
 grid-column:span 2;min-inline-size:0;
 display:flex;flex-direction:column;justify-content:center;gap:0.625rem;
@@ -78,6 +83,7 @@ content:"";position:absolute;inset:0;
 background:radial-gradient(120% 90% at 28% 20%,oklch(1 0 0 / 22%),transparent 55%);
 }
 [data-vibeui-block="about-006"] [data-part="tile"][data-wide]{aspect-ratio:2/1;grid-column:span 2}
+[data-vibeui-block="about-006"] [data-part="tile"]:not([data-empty="true"])::before{display:none}
 [data-vibeui-block="about-006"] [data-part="tile"][data-tone="1"]{
 background:linear-gradient(135deg,color-mix(in oklab,var(--vibeui-about-006-accent) 8%,var(--vibeui-about-006-tile)),color-mix(in oklab,var(--vibeui-about-006-accent) 16%,var(--vibeui-about-006-tile)));
 }
@@ -126,6 +132,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 /** Мозаика тёплых плиток-заглушек с карточкой-подписью о культуре команды. */
 export function About006({
   eyebrow = "Команда",
+  images = [],
   title = "Культура сильнее офиса",
   caption = "Мы распределённая команда: дизайнеры, инженеры и технические писатели в четырёх часовых поясах. Вместо общих стен — общий стандарт качества блоков.",
   background = "",
@@ -165,10 +172,20 @@ export function About006({
               <div
                 key={index}
                 data-part="tile"
+                data-empty={images[index] ? undefined : "true"}
                 data-tone={tile.tone}
                 data-wide={tile.wide ? "" : undefined}
                 aria-hidden="true"
-              />
+              >
+                {images[index] ? (
+                  <img
+                    src={images[index]}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
+              </div>
             ))}
           </div>
         </div>

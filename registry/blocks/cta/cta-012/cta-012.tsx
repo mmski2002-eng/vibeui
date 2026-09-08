@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react"
 
 export type Cta012Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   eyebrow?: string
   title?: string
   description?: string
@@ -71,11 +73,16 @@ display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:0.375r
 }
 [data-vibeui-block="cta-012"] [data-part="stack"]{display:flex}
 [data-vibeui-block="cta-012"] [data-part="avatar"]{
-width:2.25rem;height:2.25rem;border-radius:999px;
-display:grid;place-items:center;
-background:var(--vibeui-cta-012-avatar);color:var(--vibeui-cta-012-accent);
+position:relative;width:2.25rem;height:2.25rem;border-radius:999px;
+display:grid;place-items:center;color:var(--vibeui-cta-012-accent);
 box-shadow:0 0 0 2px var(--vibeui-cta-012-ring);
-font-size:0.6875rem;font-weight:750;letter-spacing:0.02em;
+font-size:0.6875rem;font-weight:750;letter-spacing:0.02em;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="cta-012"] [data-part="avatar"][data-empty="true"]{background:var(--vibeui-cta-012-avatar);}
+[data-vibeui-block="cta-012"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="cta-012"] [data-part="avatar"]+[data-part="avatar"]{margin-left:-0.5rem}
 [data-vibeui-block="cta-012"] [data-part="proof"]{
@@ -128,6 +135,7 @@ const DEFAULT_NAMES = [
 /** Центрированный призыв со стопкой аватаров и строкой социального доказательства. */
 export function Cta012({
   eyebrow = "К нам уже пришли",
+  avatarImage = "",
   title = "Стройте страницы вместе с теми, кто уже строит",
   description = "Команды собирают сайты из готовых секций и отдают рутину AI-агенту. Присоединяйтесь — первый макет получится сегодня.",
   actionLabel = "Присоединиться",
@@ -160,7 +168,11 @@ export function Cta012({
       <style href="vibeui-cta-012" precedence="medium">
         {STYLES}
       </style>
-      <section data-vibeui-block="cta-012" className={className} style={palette}>
+      <section
+        data-vibeui-block="cta-012"
+        className={className}
+        style={palette}
+      >
         <div data-part="shell">
           <p data-part="eyebrow">{eyebrow}</p>
           <h2 data-part="title">{title}</h2>
@@ -171,7 +183,19 @@ export function Cta012({
           <div data-part="trust">
             <span data-part="stack" aria-hidden="true">
               {names.map((name) => (
-                <span key={name} data-part="avatar">
+                <span
+                  key={name}
+                  data-part="avatar"
+                  data-empty={avatarImage ? undefined : "true"}
+                >
+                  {avatarImage ? (
+                    <img
+                      src={avatarImage}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : null}
                   {initials(name)}
                 </span>
               ))}

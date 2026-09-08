@@ -197,7 +197,11 @@ export function Case004({
       <style href="vibeui-case-004" precedence="medium">
         {STYLES}
       </style>
-      <section data-vibeui-block="case-004" className={className} style={palette}>
+      <section
+        data-vibeui-block="case-004"
+        className={className}
+        style={palette}
+      >
         <div data-part="shell">
           <div data-part="head">
             <div>

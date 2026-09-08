@@ -9,6 +9,8 @@ export type Carousel010Product = {
   oldPrice?: string
   rating?: number
   hue?: number
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
 }
 
 export type Carousel010Props = Omit<ComponentProps<"section">, "children"> & {
@@ -81,9 +83,14 @@ display:flex;flex-direction:column;gap:0.375rem;
 }
 [data-vibeui-block="carousel-010"] [data-part="shot"]{
 position:relative;aspect-ratio:4 / 3;border-radius:0.75rem;overflow:hidden;
-background:
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="carousel-010"] [data-part="shot"][data-empty="true"]{background:
 radial-gradient(85% 80% at 25% 20%,oklch(0.93 0.05 var(--vibeui-carousel-010-hue,250)),transparent 70%),
-linear-gradient(150deg,oklch(0.84 0.07 var(--vibeui-carousel-010-hue,250)),oklch(0.6 0.09 var(--vibeui-carousel-010-hue,250)));
+linear-gradient(150deg,oklch(0.84 0.07 var(--vibeui-carousel-010-hue,250)),oklch(0.6 0.09 var(--vibeui-carousel-010-hue,250)));}
+[data-vibeui-block="carousel-010"] [data-part="shot"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="carousel-010"] [data-part="sale"]{
 position:absolute;left:0.375rem;top:0.375rem;
@@ -259,7 +266,18 @@ export function Carousel010({
                 } as CSSProperties
               }
             >
-              <div data-part="shot">
+              <div
+                data-part="shot"
+                data-empty={product.image ? undefined : "true"}
+              >
+                {product.image ? (
+                  <img
+                    src={product.image}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
                 {product.oldPrice ? (
                   <span data-part="sale">{saleLabel}</span>
                 ) : null}

@@ -4,6 +4,8 @@ export type Card003Props = Omit<
   ComponentProps<"article">,
   "children" | "title"
 > & {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   name?: string
   role?: string
   about?: string
@@ -45,11 +47,16 @@ color:var(--vibeui-card-003-fg);font-family:var(--vibeui-card-003-font);
 }
 [data-vibeui-block="card-003"] [data-part="head"]{display:flex;align-items:center;gap:0.625rem}
 [data-vibeui-block="card-003"] [data-part="avatar"]{
-display:flex;align-items:center;justify-content:center;flex:none;
+position:relative;display:flex;align-items:center;justify-content:center;flex:none;
 width:2.75rem;height:2.75rem;border-radius:9999px;
-background:light-dark(oklch(0.92 0.05 var(--vibeui-card-003-hue)),oklch(0.33 0.07 var(--vibeui-card-003-hue)));
 color:light-dark(oklch(0.38 0.09 var(--vibeui-card-003-hue)),oklch(0.92 0.05 var(--vibeui-card-003-hue)));
-font-size:0.9375rem;font-weight:700;
+font-size:0.9375rem;font-weight:700;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="card-003"] [data-part="avatar"][data-empty="true"]{background:light-dark(oklch(0.92 0.05 var(--vibeui-card-003-hue)),oklch(0.33 0.07 var(--vibeui-card-003-hue)));}
+[data-vibeui-block="card-003"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="card-003"] [data-part="name"]{margin:0;font-size:0.9375rem;font-weight:650;line-height:1.25}
 [data-vibeui-block="card-003"] [data-part="role"]{font-size:0.8125rem;color:var(--vibeui-card-003-muted)}
@@ -134,6 +141,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Card003({
   name = "Мария Гурова",
+  avatarImage = "",
   role = "Продуктовый дизайнер",
   about = "Веду каталог и дизайн-систему, собираю интерфейсы, которые не приходится объяснять словами.",
   stats = DEFAULT_STATS,
@@ -170,7 +178,14 @@ export function Card003({
         style={palette}
       >
         <div data-part="head">
-          <span data-part="avatar" aria-hidden="true">
+          <span
+            data-part="avatar"
+            data-empty={avatarImage ? undefined : "true"}
+            aria-hidden="true"
+          >
+            {avatarImage ? (
+              <img src={avatarImage} alt="" loading="lazy" decoding="async" />
+            ) : null}
             {initials(name)}
           </span>
           <span>

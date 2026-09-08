@@ -2,11 +2,15 @@ import type { ComponentProps, CSSProperties } from "react"
 
 export type Devices002Notification = {
   title: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   body: string
   meta: string
 }
 
 export type Devices002Props = Omit<ComponentProps<"section">, "children"> & {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   /** Текст для aria-label: секция декоративна, содержимого для чтения нет. */
   label?: string
   accent?: string
@@ -67,8 +71,14 @@ box-shadow:0 1.5rem 2.5rem -1.5rem oklch(0 0 0 / 0.4);
 }
 [data-vibeui-block="devices-002"] [data-part="screen"]{
 position:relative;overflow:hidden;border-radius:1.25rem;
-aspect-ratio:9/18.5;background:var(--vibeui-devices-002-bg);
+aspect-ratio:9/18.5;
 display:flex;flex-direction:column;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="devices-002"] [data-part="screen"][data-empty="true"]{background:var(--vibeui-devices-002-bg);}
+[data-vibeui-block="devices-002"] [data-part="screen"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="devices-002"] [data-part="notch"]{
 position:absolute;top:0.4375rem;left:50%;width:2.375rem;height:0.5625rem;
@@ -108,10 +118,15 @@ background:var(--vibeui-devices-002-card);
 border:1px solid var(--vibeui-devices-002-border);
 }
 [data-vibeui-block="devices-002"] [data-part="avatar"]{
-flex:none;width:1.125rem;height:1.125rem;border-radius:9999px;
-background:var(--vibeui-devices-002-accent);color:var(--vibeui-devices-002-accent-fg);
+position:relative;flex:none;width:1.125rem;height:1.125rem;border-radius:9999px;color:var(--vibeui-devices-002-accent-fg);
 display:flex;align-items:center;justify-content:center;
-font-size:0.5rem;font-weight:700;
+font-size:0.5rem;font-weight:700;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="devices-002"] [data-part="avatar"][data-empty="true"]{background:var(--vibeui-devices-002-accent);}
+[data-vibeui-block="devices-002"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="devices-002"] [data-part="text"]{min-width:0;flex:1}
 [data-vibeui-block="devices-002"] [data-part="title"]{
@@ -150,6 +165,7 @@ const DEFAULT_NOTIFICATIONS: Devices002Notification[] = [
  */
 export function Devices002({
   label = "Смартфон с лентой уведомлений на экране",
+  image = "",
   accent,
   notifications = DEFAULT_NOTIFICATIONS,
   autoScroll = true,
@@ -189,7 +205,10 @@ export function Devices002({
             <span data-part="button" data-side="left" aria-hidden="true" />
             <span data-part="button" data-side="right" aria-hidden="true" />
             <div data-part="phone">
-              <div data-part="screen">
+              <div data-part="screen" data-empty={image ? undefined : "true"}>
+                {image ? (
+                  <img src={image} alt="" loading="lazy" decoding="async" />
+                ) : null}
                 <span data-part="notch" aria-hidden="true" />
                 <div data-part="status">
                   <span data-part="time">9:41</span>
@@ -203,7 +222,19 @@ export function Devices002({
                   <ul data-part="feed">
                     {items.map((item, index) => (
                       <li data-part="card" key={`${item.title}-${index}`}>
-                        <span data-part="avatar" aria-hidden="true">
+                        <span
+                          data-part="avatar"
+                          data-empty={item.image ? undefined : "true"}
+                          aria-hidden="true"
+                        >
+                          {item.image ? (
+                            <img
+                              src={item.image}
+                              alt=""
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          ) : null}
                           {item.title.charAt(0)}
                         </span>
                         <div data-part="text">

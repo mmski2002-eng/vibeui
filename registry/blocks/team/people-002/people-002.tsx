@@ -2,6 +2,8 @@ import type { CSSProperties } from "react"
 
 type People002Member = {
   name: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   role: string
   department: string
 }
@@ -95,10 +97,15 @@ transition:border-color .18s ease;
 border-color:color-mix(in oklab,var(--vibeui-people-002-accent) 40%,var(--vibeui-people-002-border));
 }
 [data-vibeui-block="people-002"] [data-part="avatar"]{
-width:2.75rem;height:2.75rem;flex:none;border-radius:999px;display:grid;place-items:center;
-background:color-mix(in oklab,var(--vibeui-people-002-accent) 12%,var(--vibeui-people-002-card));
+position:relative;width:2.75rem;height:2.75rem;flex:none;border-radius:999px;display:grid;place-items:center;
 color:var(--vibeui-people-002-accent);
-font-size:0.875rem;font-weight:750;letter-spacing:0.02em;
+font-size:0.875rem;font-weight:750;letter-spacing:0.02em;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="people-002"] [data-part="avatar"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-people-002-accent) 12%,var(--vibeui-people-002-card));}
+[data-vibeui-block="people-002"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="people-002"] [data-part="who"]{display:grid;gap:0.0625rem;min-width:0}
 [data-vibeui-block="people-002"] [data-part="name"]{margin:0;font-size:0.9375rem;font-weight:650}
@@ -135,15 +142,35 @@ display:none;
 `
 
 const DEFAULT_MEMBERS: People002Member[] = [
-  { name: "Вера Лапина", role: "Дизайн-система и токены", department: "Дизайн" },
+  {
+    name: "Вера Лапина",
+    role: "Дизайн-система и токены",
+    department: "Дизайн",
+  },
   { name: "Полина Царёва", role: "Дизайнер блоков", department: "Дизайн" },
-  { name: "Олег Раков", role: "Моушен и микровзаимодействия", department: "Дизайн" },
+  {
+    name: "Олег Раков",
+    role: "Моушен и микровзаимодействия",
+    department: "Дизайн",
+  },
   { name: "Марат Гареев", role: "Фронтенд-инженер", department: "Разработка" },
   { name: "Никита Белов", role: "Инженер registry", department: "Разработка" },
-  { name: "Инна Штерн", role: "Инфраструктура и сборка", department: "Разработка" },
-  { name: "Ксения Орлова", role: "Документация и Copy for AI", department: "Контент" },
+  {
+    name: "Инна Штерн",
+    role: "Инфраструктура и сборка",
+    department: "Разработка",
+  },
+  {
+    name: "Ксения Орлова",
+    role: "Документация и Copy for AI",
+    department: "Контент",
+  },
   { name: "Дарья Мельник", role: "Примеры и гайды", department: "Контент" },
-  { name: "Алексей Громов", role: "Основатель, продукт", department: "Продукт" },
+  {
+    name: "Алексей Громов",
+    role: "Основатель, продукт",
+    department: "Продукт",
+  },
 ]
 
 /**
@@ -250,7 +277,19 @@ export function People002({
                 data-part="card"
                 data-dep={`d${departments.indexOf(member.department) + 1}`}
               >
-                <span data-part="avatar" aria-hidden="true">
+                <span
+                  data-part="avatar"
+                  data-empty={member.image ? undefined : "true"}
+                  aria-hidden="true"
+                >
+                  {member.image ? (
+                    <img
+                      src={member.image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : null}
                   {initials(member.name)}
                 </span>
                 <span data-part="who">

@@ -4,6 +4,8 @@ export type Aspect003Props = Omit<
   ComponentProps<"div">,
   "title" | "children"
 > & {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   title?: string
   price?: string
   oldPrice?: string
@@ -56,13 +58,24 @@ color:var(--vibeui-aspect-003-fg);font-family:var(--vibeui-aspect-003-font);
 position:relative;aspect-ratio:1 / 1;overflow:hidden;
 border:1px solid var(--vibeui-aspect-003-border);
 border-radius:var(--vibeui-aspect-003-radius);
-background:
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="aspect-003"] [data-part="frame"][data-empty="true"]{background:
 radial-gradient(90% 80% at 30% 20%,var(--vibeui-aspect-003-sheen),transparent 70%),
-var(--vibeui-aspect-003-frame);
+var(--vibeui-aspect-003-frame);}
+[data-vibeui-block="aspect-003"] [data-part="frame"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="aspect-003"] [data-part="frame"] img{display:block;width:100%;height:100%;object-fit:cover}
 /* Пока снимка нет, кадр рисует силуэт товара средствами CSS: пустой квадрат
    в сетке магазина читается как товар без фотографии, то есть как поломка. */
+/* Силуэт нужен, только пока фотографии нет: поверх снимка он читается
+   как посторонняя деталь. */
+[data-vibeui-block="aspect-003"] [data-part="frame"]:not([data-empty="true"]) [data-part="glow"],
+[data-vibeui-block="aspect-003"] [data-part="frame"]:not([data-empty="true"]) [data-part="shade"],
+[data-vibeui-block="aspect-003"] [data-part="frame"]:not([data-empty="true"]) [data-part="stem"],
+[data-vibeui-block="aspect-003"] [data-part="frame"]:not([data-empty="true"]) [data-part="foot"]{display:none}
 [data-vibeui-block="aspect-003"] [data-part="glow"]{
 position:absolute;left:50%;top:34%;width:70%;aspect-ratio:1 / 1;
 transform:translate(-50%,-50%);border-radius:9999px;
@@ -135,6 +148,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Aspect003({
   title = "Настольная лампа «Полёт», тёплый свет",
+  image = "",
   price = "4 900 ₽",
   oldPrice = "6 900 ₽",
   badge = "−30 %",
@@ -168,7 +182,10 @@ export function Aspect003({
         className={className}
         style={palette}
       >
-        <div data-part="frame">
+        <div data-part="frame" data-empty={image ? undefined : "true"}>
+          {image ? (
+            <img src={image} alt="" loading="lazy" decoding="async" />
+          ) : null}
           <span data-part="glow" aria-hidden="true" />
           <span data-part="shade" aria-hidden="true" />
           <span data-part="stem" aria-hidden="true" />

@@ -1,13 +1,7 @@
 import type { ComponentProps, CSSProperties } from "react"
 
 export type CodeBlockAnim001TokenType =
-  | "kw"
-  | "str"
-  | "fn"
-  | "num"
-  | "com"
-  | "punct"
-  | "plain"
+  "kw" | "str" | "fn" | "num" | "com" | "punct" | "plain"
 
 export type CodeBlockAnim001Token = {
   text: string
@@ -234,9 +228,7 @@ const DEFAULT_LINES: CodeBlockAnim001Line[] = [
   },
   { tokens: [] },
   {
-    tokens: [
-      { text: "  return (", type: "kw" },
-    ],
+    tokens: [{ text: "  return (", type: "kw" }],
   },
   {
     tokens: [

@@ -13,6 +13,8 @@ export type Dropdown021Status = {
 }
 
 export type Dropdown021Props = Omit<ComponentProps<"div">, "children"> & {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   id?: string
   /**
    * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
@@ -78,9 +80,14 @@ transition:background-color .16s ease;
 position:relative;flex:none;
 display:grid;place-items:center;
 inline-size:1.625rem;block-size:1.625rem;border-radius:999px;
-background:color-mix(in oklab,var(--vibeui-dropdown-021-accent) 18%,transparent);
 color:var(--vibeui-dropdown-021-fg);
-font-size:0.6875rem;font-weight:700;letter-spacing:0.02em;
+font-size:0.6875rem;font-weight:700;letter-spacing:0.02em;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="dropdown-021"] [data-part="face"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-dropdown-021-accent) 18%,transparent);}
+[data-vibeui-block="dropdown-021"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="dropdown-021"] [data-part="dot"]{
 position:absolute;inset-block-end:-0.0625rem;inset-inline-end:-0.0625rem;
@@ -233,6 +240,7 @@ function initials(name: string): string {
  */
 export function Dropdown021({
   id = "vibeui-dropdown-021",
+  avatarImage = "",
   open = false,
   name = "Женя Осипов",
   title = "Статус",
@@ -290,7 +298,14 @@ export function Dropdown021({
         style={palette}
       >
         <button data-part="trigger" type="button" popoverTarget={id}>
-          <span data-part="face" aria-hidden="true">
+          <span
+            data-part="face"
+            data-empty={avatarImage ? undefined : "true"}
+            aria-hidden="true"
+          >
+            {avatarImage ? (
+              <img src={avatarImage} alt="" loading="lazy" decoding="async" />
+            ) : null}
             {initials(name)}
             <span data-part="dot" />
           </span>

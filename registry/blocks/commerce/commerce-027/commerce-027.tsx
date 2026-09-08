@@ -354,7 +354,12 @@ export function Commerce027({
                     aria-hidden="true"
                   >
                     {item.image ? (
-                      <img src={item.image} alt="" loading="lazy" decoding="async" />
+                      <img
+                        src={item.image}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                      />
                     ) : null}
                     {item.badge ? (
                       <span data-part="badge">{item.badge}</span>

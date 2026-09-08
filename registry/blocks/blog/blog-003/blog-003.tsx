@@ -1,11 +1,15 @@
 import type { CSSProperties } from "react"
 
 export type Blog003Props = {
+  /** Обложка статьи. Без неё остаётся цветное поле. */
+  coverImage?: string
   badge?: string
   topic?: string
   title?: string
   excerpt?: string
   author?: string
+  /** Фото автора. Без него в кружке остаются инициалы. */
+  avatarImage?: string
   role?: string
   date?: string
   readingTime?: string
@@ -68,6 +72,7 @@ background:var(--vibeui-blog-003-card);
 [data-vibeui-block="blog-003"] [data-part="card"]:focus-within{outline:2px solid var(--vibeui-blog-003-accent);outline-offset:3px}
 /* Обложка слоями градиентов: анонс не ждёт иллюстратора. */
 [data-vibeui-block="blog-003"] [data-part="cover"]{
+position:relative;overflow:hidden;
 position:relative;min-height:11rem;aspect-ratio:16 / 10;overflow:hidden;
 display:flex;align-items:flex-end;padding:1rem;
 }
@@ -82,6 +87,12 @@ position:relative;z-index:1;
 padding:0.25rem 0.625rem;border-radius:9999px;
 background:var(--vibeui-blog-003-chip);color:var(--vibeui-blog-003-chip-fg);
 font-size:0.6875rem;font-weight:660;letter-spacing:0.03em;
+}
+/* Подложка — только когда фотографии нет: блок обязан оставаться
+   полноценным без единого внешнего файла. */
+[data-vibeui-block="blog-003"] [data-part="cover"][data-empty="true"]{background:linear-gradient(150deg, oklch(0.74 0.15 var(--vibeui-blog-003-hue,262)), oklch(0.46 0.2 var(--vibeui-blog-003-hue,262)));}
+[data-vibeui-block="blog-003"] [data-part="cover"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="blog-003"] [data-part="body"]{display:grid;gap:0.75rem;align-content:center;padding:1.375rem 1.25rem 1.5rem}
 [data-vibeui-block="blog-003"] [data-part="tags"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.4375rem}
@@ -113,10 +124,15 @@ padding-top:0.875rem;border-top:1px solid var(--vibeui-blog-003-border);
 font-size:0.8125rem;color:var(--vibeui-blog-003-muted);
 }
 [data-vibeui-block="blog-003"] [data-part="avatar"]{
-display:inline-flex;align-items:center;justify-content:center;flex:none;
+position:relative;display:inline-flex;align-items:center;justify-content:center;flex:none;
 width:2.125rem;height:2.125rem;border-radius:9999px;
-background:color-mix(in oklab,var(--vibeui-blog-003-accent) 16%,transparent);
-color:var(--vibeui-blog-003-accent);font-size:0.8125rem;font-weight:700;
+color:var(--vibeui-blog-003-accent);font-size:0.8125rem;font-weight:700;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="blog-003"] [data-part="avatar"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-blog-003-accent) 16%,transparent);}
+[data-vibeui-block="blog-003"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="blog-003"] [data-part="who"]{display:grid;line-height:1.35}
 [data-vibeui-block="blog-003"] [data-part="name"]{color:var(--vibeui-blog-003-fg);font-weight:650}
@@ -176,8 +192,10 @@ export function Blog003({
   badge = "Свежее",
   topic = "Разработка",
   title = "Почему мы отказались от библиотеки иконок",
+  coverImage = "",
   excerpt = "Двести килобайт ради восьми иконок — плохая сделка. Рассказываем, как перешли на инлайновые SVG, что при этом сломалось и почему в итоге сборка похудела вдвое.",
   author = "Аня Соколова",
+  avatarImage = "",
   role = "фронтенд-лид",
   date = "12 марта 2025",
   readingTime = "7 минут",
@@ -217,10 +235,12 @@ export function Blog003({
           <article data-part="card">
             <div
               data-part="cover"
-              style={{
-                background: `linear-gradient(150deg, oklch(0.74 0.15 ${hue}), oklch(0.46 0.2 ${hue + 14}))`,
-              }}
+              data-empty={coverImage ? undefined : "true"}
+              style={{ "--vibeui-blog-003-hue": hue } as CSSProperties}
             >
+              {coverImage ? (
+                <img src={coverImage} alt="" loading="lazy" decoding="async" />
+              ) : null}
               <span data-part="cover-label">{coverLabel}</span>
             </div>
 
@@ -236,7 +256,19 @@ export function Blog003({
               <p data-part="excerpt">{excerpt}</p>
 
               <p data-part="byline">
-                <span data-part="avatar" aria-hidden="true">
+                <span
+                  data-part="avatar"
+                  data-empty={avatarImage ? undefined : "true"}
+                  aria-hidden="true"
+                >
+                  {avatarImage ? (
+                    <img
+                      src={avatarImage}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : null}
                   {author.slice(0, 1)}
                 </span>
                 <span data-part="who">

@@ -3,6 +3,8 @@ import type { ComponentProps, CSSProperties } from "react"
 
 export type Carousel001Slide = {
   label: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   hue?: number
 }
 
@@ -66,14 +68,19 @@ scrollbar-width:none;
 /* Кадр стоит вместо фотографии: градиент и светлый текст на нём одинаковы
    в любой теме страницы, поэтому второй ветки у них нет. */
 [data-vibeui-block="carousel-001"] [data-part="slide"]{
-flex:0 0 100%;scroll-snap-align:center;
+position:relative;flex:0 0 100%;scroll-snap-align:center;
 display:flex;align-items:flex-end;
 aspect-ratio:16 / 9;padding:0.875rem;box-sizing:border-box;
 border-radius:var(--vibeui-carousel-001-radius);
-background:
+color:oklch(0.99 0 265);font-size:0.9375rem;font-weight:650;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="carousel-001"] [data-part="slide"][data-empty="true"]{background:
 radial-gradient(90% 80% at 25% 20%,oklch(0.9 0.06 var(--vibeui-carousel-001-hue,250)),transparent 70%),
-linear-gradient(150deg,oklch(0.78 0.09 var(--vibeui-carousel-001-hue,250)),oklch(0.5 0.11 var(--vibeui-carousel-001-hue,250)));
-color:oklch(0.99 0 265);font-size:0.9375rem;font-weight:650;
+linear-gradient(150deg,oklch(0.78 0.09 var(--vibeui-carousel-001-hue,250)),oklch(0.5 0.11 var(--vibeui-carousel-001-hue,250)));}
+[data-vibeui-block="carousel-001"] [data-part="slide"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="carousel-001"] [data-part="dots"]{
 display:flex;justify-content:center;gap:0.4375rem;
@@ -186,6 +193,7 @@ export function Carousel001({
               key={slide.label}
               id={`${id}-slide-${index}`}
               data-part="slide"
+              data-empty={slide.image ? undefined : "true"}
               aria-roledescription={slideRoleText}
               aria-label={fill(slideText, {
                 index: index + 1,
@@ -198,6 +206,9 @@ export function Carousel001({
                 } as CSSProperties
               }
             >
+              {slide.image ? (
+                <img src={slide.image} alt="" loading="lazy" decoding="async" />
+              ) : null}
               {slide.label}
             </li>
           ))}

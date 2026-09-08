@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react"
 
 export type Event002Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   eyebrow?: string
   badge?: string
   title?: string
@@ -46,8 +48,13 @@ font-family:var(--vibeui-event-002-font);
 [data-vibeui-block="event-002"] [data-part="shell"]{max-width:40rem;margin:0 auto;padding:3rem 1.25rem}
 [data-vibeui-block="event-002"] [data-part="card"]{border:1px solid var(--vibeui-event-002-border);border-radius:1.25rem;overflow:hidden;background:var(--vibeui-event-002-card)}
 [data-vibeui-block="event-002"] [data-part="cover"]{
-position:relative;aspect-ratio:21 / 9;display:flex;align-items:flex-start;padding:1.25rem;
-background:linear-gradient(140deg,oklch(0.62 0.19 39.8),oklch(0.42 0.14 28));
+position:relative;aspect-ratio:21 / 9;display:flex;align-items:flex-start;padding:1.25rem;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="event-002"] [data-part="cover"][data-empty="true"]{background:linear-gradient(140deg,oklch(0.62 0.19 39.8),oklch(0.42 0.14 28));}
+[data-vibeui-block="event-002"] [data-part="cover"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="event-002"] [data-part="badge"]{
 padding:0.25rem 0.75rem;border-radius:999px;font-size:0.6875rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
@@ -116,6 +123,7 @@ function initials(name: string) {
 /** Карточка одного события: обложка с бейджем, детали, спикеры, запись. */
 export function Event002({
   eyebrow = "Конференция",
+  image = "",
   badge = "Открыта регистрация",
   title = "VibeConf: интерфейсы для вайбкодинга",
   summary = "Однодневная конференция о том, как собирать сайты вместе с ИИ-агентами: доклады, воркшопы и живые сборки на сцене.",
@@ -154,7 +162,10 @@ export function Event002({
       >
         <div data-part="shell">
           <div data-part="card">
-            <div data-part="cover">
+            <div data-part="cover" data-empty={image ? undefined : "true"}>
+              {image ? (
+                <img src={image} alt="" loading="lazy" decoding="async" />
+              ) : null}
               <span data-part="badge">{badge}</span>
             </div>
             <div data-part="body">

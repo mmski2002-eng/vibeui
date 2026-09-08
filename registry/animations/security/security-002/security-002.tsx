@@ -136,11 +136,15 @@ export function Security002({
               aria-hidden="true"
               overflow="visible"
             >
-              <path
-                data-part="shackle"
-                d="M7.5 11V7.5a4.5 4.5 0 0 1 9 0V11"
+              <path data-part="shackle" d="M7.5 11V7.5a4.5 4.5 0 0 1 9 0V11" />
+              <rect
+                data-part="body"
+                x="4.5"
+                y="11"
+                width="15"
+                height="10"
+                rx="2"
               />
-              <rect data-part="body" x="4.5" y="11" width="15" height="10" rx="2" />
               <circle data-part="keyhole" cx="12" cy="15" r="1.15" />
               <rect
                 data-part="keyhole"

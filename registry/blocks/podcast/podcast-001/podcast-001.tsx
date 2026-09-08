@@ -70,10 +70,30 @@ background:var(--vibeui-podcast-001-accent);
 `
 
 const DEFAULT_EPISODES: Podcast001Episode[] = [
-  { number: "12", title: "Как ИИ меняет фронтенд", guest: "Анна Ковалёва", duration: "48 мин" },
-  { number: "11", title: "Дизайн-системы без боли", guest: "Игорь Демидов", duration: "52 мин" },
-  { number: "10", title: "Переносимые компоненты", guest: "Пётр Ляхов", duration: "41 мин" },
-  { number: "09", title: "Вайбкодинг на практике", guest: "Мария Соболева", duration: "57 мин" },
+  {
+    number: "12",
+    title: "Как ИИ меняет фронтенд",
+    guest: "Анна Ковалёва",
+    duration: "48 мин",
+  },
+  {
+    number: "11",
+    title: "Дизайн-системы без боли",
+    guest: "Игорь Демидов",
+    duration: "52 мин",
+  },
+  {
+    number: "10",
+    title: "Переносимые компоненты",
+    guest: "Пётр Ляхов",
+    duration: "41 мин",
+  },
+  {
+    number: "09",
+    title: "Вайбкодинг на практике",
+    guest: "Мария Соболева",
+    duration: "57 мин",
+  },
 ]
 
 /**
@@ -136,7 +156,11 @@ export function Podcast001({
           <ul data-part="list">
             {episodes.map((episode) => (
               <li key={episode.number}>
-                <a href="#" data-part="row" aria-label={`${playLabel}: ${episode.title}`}>
+                <a
+                  href="#"
+                  data-part="row"
+                  aria-label={`${playLabel}: ${episode.title}`}
+                >
                   <span data-part="play" aria-hidden="true" />
                   <span data-part="num">#{episode.number}</span>
                   <span data-part="info">

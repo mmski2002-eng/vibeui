@@ -80,9 +80,21 @@ color:var(--vibeui-consent-003-accent);font-size:0.9375rem;font-weight:600;
 `
 
 const DEFAULT_ITEMS: Consent003Item[] = [
-  { id: "terms", label: "Я согласен с условиями использования и политикой конфиденциальности", required: true },
-  { id: "data", label: "Разрешаю обрабатывать мои данные для работы сервиса", required: true },
-  { id: "news", label: "Хочу получать новости о новых компонентах (необязательно)" },
+  {
+    id: "terms",
+    label:
+      "Я согласен с условиями использования и политикой конфиденциальности",
+    required: true,
+  },
+  {
+    id: "data",
+    label: "Разрешаю обрабатывать мои данные для работы сервиса",
+    required: true,
+  },
+  {
+    id: "news",
+    label: "Хочу получать новости о новых компонентах (необязательно)",
+  },
 ]
 
 /**
@@ -180,14 +192,9 @@ export function Consent003({
                         }))
                       }
                     />
-                    <label
-                      data-part="label"
-                      htmlFor={`consent-003-${item.id}`}
-                    >
+                    <label data-part="label" htmlFor={`consent-003-${item.id}`}>
                       {item.label}
-                      {item.required ? (
-                        <span data-part="req"> *</span>
-                      ) : null}
+                      {item.required ? <span data-part="req"> *</span> : null}
                     </label>
                   </li>
                 ))}

@@ -7,11 +7,13 @@ import { CatalogColumns } from "@/components/catalog/catalog-columns"
 import { CatalogSidebar } from "@/components/catalog/catalog-sidebar"
 import { ItemWorkbench } from "@/components/catalog/item-workbench"
 import { CodeBlock } from "@/components/code-block"
+import { JsonLd } from "@/components/json-ld"
 import { CopyButton } from "@/components/copy-button"
 import { resolveControlValues, resolvePreviewSurface } from "@/lib/controls"
 import { buildCopyForAiPrompt } from "@/lib/copy-for-ai"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
 import { localizeItem } from "@/lib/localize"
+import { breadcrumbs, SITE_URL } from "@/lib/seo"
 import {
   getInstallCommand,
   getItemDocUrl,
@@ -70,8 +72,44 @@ export async function ItemPage({
   const category = block.categories?.[0]
   const tags = block.meta?.tags ?? []
 
+  const rootLabel =
+    kind === "block"
+      ? t.topbar.blocks
+      : kind === "animation"
+        ? t.topbar.animations
+        : t.topbar.components
+  const path = `${catalogBasePath(kind)}/${block.name}`
+
   return (
     <CatalogShell locale={locale}>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "SoftwareSourceCode",
+          name: block.title ?? block.name,
+          description: block.description,
+          url: `${SITE_URL}${localePath(locale, path)}`,
+          codeSampleType: "full solution",
+          programmingLanguage: "TypeScript",
+          runtimePlatform: "React",
+          keywords: tags.join(", ") || undefined,
+          isPartOf: { "@id": `${SITE_URL}/#website` },
+        }}
+      />
+      <JsonLd
+        data={breadcrumbs(locale, [
+          { name: rootLabel, path: catalogBasePath(kind) },
+          ...(category
+            ? [
+                {
+                  name: getCategoryLabel(category, locale),
+                  path: `${catalogBasePath(kind)}/${category}`,
+                },
+              ]
+            : []),
+          { name: block.title ?? block.name, path },
+        ])}
+      />
       <CatalogColumns>
         <CatalogSidebar>
           <CatalogItemNav activeSlug={block.name} locale={locale} />
@@ -85,11 +123,7 @@ export async function ItemPage({
                   href={localePath(locale, catalogBasePath(kind))}
                   className="hover:text-shell-fg"
                 >
-                  {kind === "block"
-                    ? t.topbar.blocks
-                    : kind === "animation"
-                      ? t.topbar.animations
-                      : t.topbar.components}
+                  {rootLabel}
                 </Link>
               </li>
               {category ? (

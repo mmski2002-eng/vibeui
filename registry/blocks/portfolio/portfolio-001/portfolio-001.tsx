@@ -2,6 +2,8 @@ import type { CSSProperties } from "react"
 
 type Portfolio001Work = {
   title: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   category: string
   span?: "tall" | "wide"
 }
@@ -49,6 +51,9 @@ position:relative;display:flex;flex-direction:column;justify-content:flex-end;
 padding:1.25rem;border-radius:1rem;overflow:hidden;text-decoration:none;
 color:var(--vibeui-portfolio-001-tile-ink);min-inline-size:0;
 transition:transform .18s ease;
+}
+[data-vibeui-block="portfolio-001"] [data-part="tile"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="portfolio-001"] [data-part="tile"]:hover{transform:translateY(-3px)}
 [data-vibeui-block="portfolio-001"] [data-part="tile"]:focus-visible{outline:2px solid var(--vibeui-portfolio-001-accent);outline-offset:3px}
@@ -139,8 +144,17 @@ export function Portfolio001({
                 key={work.title}
                 href="#"
                 data-part="tile"
+                data-empty={work.image ? undefined : "true"}
                 data-span={work.span}
               >
+                {work.image ? (
+                  <img
+                    src={work.image}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
                 <span data-part="cat">{work.category}</span>
                 <span data-part="work-title">{work.title}</span>
               </a>

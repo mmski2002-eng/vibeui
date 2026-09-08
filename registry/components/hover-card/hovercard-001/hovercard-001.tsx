@@ -4,6 +4,8 @@ import { useId } from "react"
 import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Hovercard001Props = Omit<ComponentProps<"span">, "children"> & {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   /**
    * Показать карточку раскрытой прямо в потоке: витрина, скриншот, отладка.
    * Упоминание остаётся на месте, карточка встаёт под ним и никуда не всплывает.
@@ -78,11 +80,16 @@ opacity:1;visibility:visible;translate:0 0;
 }
 [data-vibeui-block="hovercard-001"] [data-part="head"]{display:flex;align-items:center;gap:0.5rem}
 [data-vibeui-block="hovercard-001"] [data-part="face"]{
-display:flex;align-items:center;justify-content:center;flex:none;
+position:relative;display:flex;align-items:center;justify-content:center;flex:none;
 width:2.25rem;height:2.25rem;border-radius:9999px;
-background:light-dark(oklch(0.92 0.05 var(--vibeui-hovercard-001-hue)),oklch(0.33 0.07 var(--vibeui-hovercard-001-hue)));
 color:light-dark(oklch(0.38 0.09 var(--vibeui-hovercard-001-hue)),oklch(0.92 0.05 var(--vibeui-hovercard-001-hue)));
-font-size:0.75rem;font-weight:700;
+font-size:0.75rem;font-weight:700;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="hovercard-001"] [data-part="face"][data-empty="true"]{background:light-dark(oklch(0.92 0.05 var(--vibeui-hovercard-001-hue)),oklch(0.33 0.07 var(--vibeui-hovercard-001-hue)));}
+[data-vibeui-block="hovercard-001"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="hovercard-001"] [data-part="name"]{font-size:0.875rem;font-weight:650;line-height:1.2}
 [data-vibeui-block="hovercard-001"] [data-part="handle"]{font-size:0.75rem;color:var(--vibeui-hovercard-001-muted)}
@@ -161,6 +168,7 @@ function closeOnEscape(event: KeyboardEvent<HTMLElement>) {
 export function Hovercard001({
   open = false,
   name = "Мария Гурова",
+  avatarImage = "",
   handle = "@masha",
   about = "Ведёт каталог и дизайн-систему, собирает интерфейсы без лишних слов.",
   stats = DEFAULT_STATS,
@@ -202,7 +210,14 @@ export function Hovercard001({
         </a>
         <span data-part="card" id={`${id}-card`} role="tooltip">
           <span data-part="head">
-            <span data-part="face" aria-hidden="true">
+            <span
+              data-part="face"
+              data-empty={avatarImage ? undefined : "true"}
+              aria-hidden="true"
+            >
+              {avatarImage ? (
+                <img src={avatarImage} alt="" loading="lazy" decoding="async" />
+              ) : null}
               {initials(name)}
             </span>
             <span>

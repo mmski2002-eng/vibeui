@@ -12,6 +12,8 @@ export type Blog002Props = {
   title?: string
   lede?: string
   author?: string
+  /** Фото автора. Без него в кружке остаются инициалы. */
+  avatarImage?: string
   role?: string
   date?: string
   readingTime?: string
@@ -83,10 +85,15 @@ padding-top:0.75rem;border-top:1px solid var(--vibeui-blog-002-border);
 font-size:0.8125rem;color:var(--vibeui-blog-002-muted);
 }
 [data-vibeui-block="blog-002"] [data-part="avatar"]{
-display:inline-flex;align-items:center;justify-content:center;
-width:2rem;height:2rem;border-radius:9999px;
-background:var(--vibeui-blog-002-accent);color:var(--vibeui-blog-002-on-accent);
-font-size:0.75rem;font-weight:700;
+position:relative;display:inline-flex;align-items:center;justify-content:center;
+width:2rem;height:2rem;border-radius:9999px;color:var(--vibeui-blog-002-on-accent);
+font-size:0.75rem;font-weight:700;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="blog-002"] [data-part="avatar"][data-empty="true"]{background:var(--vibeui-blog-002-accent);}
+[data-vibeui-block="blog-002"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="blog-002"] [data-part="author"]{color:var(--vibeui-blog-002-fg);font-weight:640}
 [data-vibeui-block="blog-002"] [data-part="dot"]{opacity:.5}
@@ -209,6 +216,7 @@ export function Blog002({
   title = "Контейнерные запросы вместо брейкпоинтов",
   lede = "Компонент должен знать свою ширину, а не ширину окна. Разбираем, что это меняет в вёрстке карточек и куда девать старые медиазапросы.",
   author = "Кирилл Дёмин",
+  avatarImage = "",
   role = "фронтенд-разработчик",
   date = "4 марта 2025",
   readingTime = "11 минут",
@@ -247,7 +255,19 @@ export function Blog002({
             <h2>{title}</h2>
             <p data-part="lede">{lede}</p>
             <p data-part="byline">
-              <span data-part="avatar" aria-hidden="true">
+              <span
+                data-part="avatar"
+                data-empty={avatarImage ? undefined : "true"}
+                aria-hidden="true"
+              >
+                {avatarImage ? (
+                  <img
+                    src={avatarImage}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
                 {author.slice(0, 1)}
               </span>
               <span data-part="author">{author}</span>

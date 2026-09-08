@@ -6,6 +6,8 @@ export type Dashboard035Tab = {
 }
 
 export type Dashboard035Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   product?: string
   crumbs?: string[]
   searchHint?: string
@@ -142,10 +144,15 @@ border:1px solid var(--vibeui-dashboard-035-border);
 }
 [data-vibeui-block="dashboard-035"] summary::-webkit-details-marker{display:none}
 [data-vibeui-block="dashboard-035"] [data-part="face"]{
-width:1.625rem;height:1.625rem;border-radius:50%;flex:none;display:grid;place-items:center;
+position:relative;width:1.625rem;height:1.625rem;border-radius:50%;flex:none;display:grid;place-items:center;
 font-size:0.625rem;font-weight:800;
-background:var(--vibeui-dashboard-035-face);
-color:var(--vibeui-dashboard-035-accent);
+color:var(--vibeui-dashboard-035-accent);overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="dashboard-035"] [data-part="face"][data-empty="true"]{background:var(--vibeui-dashboard-035-face);}
+[data-vibeui-block="dashboard-035"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="dashboard-035"] [data-part="who"]{font-size:0.75rem;font-weight:650;white-space:nowrap}
 [data-vibeui-block="dashboard-035"] [data-part="menu"]{
@@ -232,6 +239,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Dashboard035({
   product = "Контур",
+  avatarImage = "",
   crumbs = ["Рабочее место", "Заявки"],
   searchHint = "Поиск по заявкам, клиентам и документам",
   shortcut = "Ctrl K",
@@ -326,7 +334,19 @@ export function Dashboard035({
 
               <details>
                 <summary>
-                  <span data-part="face" aria-hidden="true">
+                  <span
+                    data-part="face"
+                    data-empty={avatarImage ? undefined : "true"}
+                    aria-hidden="true"
+                  >
+                    {avatarImage ? (
+                      <img
+                        src={avatarImage}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : null}
                     {initials}
                   </span>
                   <span data-part="who">{userName}</span>

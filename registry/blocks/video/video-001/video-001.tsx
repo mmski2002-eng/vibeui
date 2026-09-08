@@ -142,7 +142,11 @@ export function Video001({
               {ctaLabel}
             </a>
           </div>
-          <a href={ctaHref} data-part="player" aria-label={`Смотреть: ${posterTitle}`}>
+          <a
+            href={ctaHref}
+            data-part="player"
+            aria-label={`Смотреть: ${posterTitle}`}
+          >
             <span data-part="play" aria-hidden="true" />
             <span data-part="duration">{durationLabel}</span>
             <span data-part="poster-title">{posterTitle}</span>

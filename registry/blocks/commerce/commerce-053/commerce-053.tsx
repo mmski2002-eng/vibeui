@@ -26,6 +26,8 @@ export type Commerce053Extra = {
 }
 
 export type Commerce053Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   title?: string
   lead?: string
   base?: number
@@ -92,9 +94,12 @@ color:var(--vibeui-commerce-053-muted);
 [data-vibeui-block="commerce-053"] [data-part="option"]{position:relative;display:block}
 [data-vibeui-block="commerce-053"] [data-part="option"] input{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 [data-vibeui-block="commerce-053"] [data-part="face"]{
-display:flex;gap:0.75rem;align-items:flex-start;cursor:pointer;
+position:relative;display:flex;gap:0.75rem;align-items:flex-start;cursor:pointer;
 border:1px solid var(--vibeui-commerce-053-border);border-radius:0.875rem;padding:0.6875rem 0.875rem;
-transition:border-color .14s ease,background-color .14s ease;
+transition:border-color .14s ease,background-color .14s ease;overflow:hidden;
+}
+[data-vibeui-block="commerce-053"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="commerce-053"] [data-part="option"] input:checked+[data-part="face"]{
 border-color:var(--vibeui-commerce-053-accent);background:var(--vibeui-commerce-053-soft);
@@ -260,6 +265,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Commerce053({
   title = "Стол «Отмель» под заказ",
+  avatarImage = "",
   lead = "Соберите стол под свою кухню: у каждой опции написано, сколько она добавляет к цене и к сроку изготовления.",
   base = 42000,
   currency = "₽",
@@ -366,7 +372,18 @@ export function Commerce053({
                           }))
                         }
                       />
-                      <span data-part="face">
+                      <span
+                        data-part="face"
+                        data-empty={avatarImage ? undefined : "true"}
+                      >
+                        {avatarImage ? (
+                          <img
+                            src={avatarImage}
+                            alt=""
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        ) : null}
                         <span data-part="texts">
                           <span data-part="olabel">{option.label}</span>
                           <span data-part="ohint">{option.hint}</span>

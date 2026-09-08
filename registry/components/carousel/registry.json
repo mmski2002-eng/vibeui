@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Карусель с прилипанием",
       "description": "Карусель без единой строки JS: прокрутку держит scroll-snap, а точки внизу — обычные якорные ссылки на слайды.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,9 +20,38 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-carousel-001-*. Серверный компонент: useId нужен только для якорей. Лента прокручивается нативно со scroll-snap и scroll-behavior: smooth, точки — ссылки на id слайдов. Секция объявлена aria-roledescription=\"карусель\", слайды — aria-roledescription=\"слайд\" с номером в подписи.",
       "meta": {
-        "tags": ["carousel", "scroll-snap", "no-js", "gallery"],
+        "tags": [
+          "carousel",
+          "scroll-snap",
+          "no-js",
+          "gallery"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "slides": [
+              {
+                "label": "Каталог компонентов",
+                "hue": 250,
+                "image": "/demo/scenes/scene-01.webp"
+              },
+              {
+                "label": "Живое превью",
+                "hue": 150,
+                "image": "/demo/scenes/scene-03.webp"
+              },
+              {
+                "label": "Инструкция для агента",
+                "hue": 30,
+                "image": "/demo/scenes/scene-07.webp"
+              },
+              {
+                "label": "Установка одной командой",
+                "hue": 300,
+                "image": "/demo/scenes/scene-13.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Carousel001",
@@ -143,26 +174,35 @@
                 "slides": [
                   {
                     "label": "Component catalog",
-                    "hue": 250
+                    "hue": 250,
+                    "image": "/demo/scenes/scene-01.webp"
                   },
                   {
                     "label": "Live preview",
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/scenes/scene-03.webp"
                   },
                   {
                     "label": "Instructions for the agent",
-                    "hue": 30
+                    "hue": 30,
+                    "image": "/demo/scenes/scene-07.webp"
                   },
                   {
                     "label": "One-command install",
-                    "hue": 300
+                    "hue": 300,
+                    "image": "/demo/scenes/scene-13.webp"
                   }
                 ]
               }
             }
           }
         },
-        "cardControls": ["label", "hint", "accent", "background"]
+        "cardControls": [
+          "label",
+          "hint",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -170,7 +210,9 @@
       "type": "registry:component",
       "title": "Карточки с подглядыванием",
       "description": "Лента карточек, где следующая выглядывает за краем: обрезанная карточка — единственный честный сигнал, что список продолжается.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -182,9 +224,42 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-carousel-002-*. Клиентский: \"use client\", ссылка на ленту через useRef. Стрелки вызывают scrollBy на 80% ширины кадра, а не на «одну карточку»: число карточек в кадре меняется от ширины. Ширина карточки задана процентами, поэтому следующая всегда выглядывает.",
       "meta": {
-        "tags": ["carousel", "cards", "scroll", "peek"],
+        "tags": [
+          "carousel",
+          "cards",
+          "scroll",
+          "peek"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "items": [
+              {
+                "title": "Как собрать лендинг за вечер",
+                "meta": "8 минут чтения",
+                "hue": 250,
+                "image": "/demo/scenes/scene-05.webp"
+              },
+              {
+                "title": "Что отдать агенту, а что править руками",
+                "meta": "6 минут",
+                "hue": 150,
+                "image": "/demo/scenes/scene-23.webp"
+              },
+              {
+                "title": "Токены темы без боли",
+                "meta": "11 минут",
+                "hue": 30,
+                "image": "/demo/scenes/scene-01.webp"
+              },
+              {
+                "title": "Почему компонент — один файл",
+                "meta": "5 минут",
+                "hue": 300,
+                "image": "/demo/scenes/scene-13.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Carousel002",
@@ -295,29 +370,37 @@
                   {
                     "title": "Build a landing page in one evening",
                     "meta": "8 min read",
-                    "hue": 250
+                    "hue": 250,
+                    "image": "/demo/scenes/scene-05.webp"
                   },
                   {
                     "title": "What to hand the agent and what to write yourself",
                     "meta": "6 min",
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/scenes/scene-23.webp"
                   },
                   {
                     "title": "Theme tokens without the pain",
                     "meta": "11 min",
-                    "hue": 30
+                    "hue": 30,
+                    "image": "/demo/scenes/scene-01.webp"
                   },
                   {
                     "title": "Why a component is a single file",
                     "meta": "5 min",
-                    "hue": 300
+                    "hue": 300,
+                    "image": "/demo/scenes/scene-13.webp"
                   }
                 ]
               }
             }
           }
         },
-        "cardControls": ["label", "accent", "background"]
+        "cardControls": [
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -325,7 +408,9 @@
       "type": "registry:component",
       "title": "Слайдер с миниатюрами",
       "description": "Слайдер с полосой миниатюр: она отвечает на вопрос «сколько ещё и что там», на который точки не отвечают.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -337,9 +422,36 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-carousel-003-*. Клиентский: \"use client\". Слайды не удаляются из разметки, а прячутся атрибутом hidden, поэтому порядок чтения не рвётся. Активная миниатюра помечена aria-current и отличается непрозрачностью и обводкой. Оттенок сцены выводится из текущего слайда.",
       "meta": {
-        "tags": ["carousel", "slider", "thumbnails", "gallery"],
+        "tags": [
+          "carousel",
+          "slider",
+          "thumbnails",
+          "gallery"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "slides": [
+              {
+                "title": "Выберите дизайн",
+                "text": "Каталог показывает живое превью каждого компонента, а не картинку.",
+                "hue": 250,
+                "image": "/demo/scenes/scene-04.webp"
+              },
+              {
+                "title": "Отдайте ИИ",
+                "text": "Copy for AI собирает инструкцию: что установить и что нельзя менять.",
+                "hue": 150,
+                "image": "/demo/scenes/scene-12.webp"
+              },
+              {
+                "title": "Получите сайт",
+                "text": "Агент ставит компонент одной командой и не пересобирает его заново.",
+                "hue": 30,
+                "image": "/demo/scenes/scene-09.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Carousel003",
@@ -461,24 +573,32 @@
                   {
                     "title": "Pick a design",
                     "text": "The catalog shows a live preview of every component, not a screenshot.",
-                    "hue": 250
+                    "hue": 250,
+                    "image": "/demo/scenes/scene-04.webp"
                   },
                   {
                     "title": "Hand it to the AI",
                     "text": "Copy for AI assembles the brief: what to install and what must not change.",
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/scenes/scene-12.webp"
                   },
                   {
                     "title": "Get your site",
                     "text": "The agent installs the component with one command instead of rebuilding it.",
-                    "hue": 30
+                    "hue": 30,
+                    "image": "/demo/scenes/scene-09.webp"
                   }
                 ]
               }
             }
           }
         },
-        "cardControls": ["label", "counterText", "accent", "background"]
+        "cardControls": [
+          "label",
+          "counterText",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -486,7 +606,9 @@
       "type": "registry:component",
       "title": "Бегущая строка логотипов",
       "description": "Бегущая лента логотипов: список продублирован и сдвигается ровно на половину, поэтому шва между повторами не видно.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -498,7 +620,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-carousel-004-*. Серверный: хуков нет. Список выводится дважды, вторая копия помечена aria-hidden, анимация сдвигает ленту на половину ширины — так повтор бесшовный. Края подтёрты mask-градиентом. При prefers-reduced-motion анимация выключается, а лента превращается в обычную прокрутку.",
       "meta": {
-        "tags": ["carousel", "marquee", "logos", "animation"],
+        "tags": [
+          "carousel",
+          "marquee",
+          "logos",
+          "animation"
+        ],
         "preview": {
           "width": "full"
         },
@@ -614,7 +741,11 @@
             }
           }
         },
-        "cardControls": ["label", "duration", "background"]
+        "cardControls": [
+          "label",
+          "duration",
+          "background"
+        ]
       }
     },
     {
@@ -622,7 +753,9 @@
       "type": "registry:component",
       "title": "Слайдер отзывов",
       "description": "Отзывы по одному со стрелками на клавиатуре: высота держится по самому длинному, чтобы страница не дёргалась.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -634,7 +767,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-carousel-005-*. Клиентский: \"use client\". Все отзывы лежат в одной ячейке грида, скрытые получают visibility: hidden — так высота считается по самому длинному и не прыгает. Стрелки влево-вправо листают, когда фокус внутри секции; область объявлена aria-live=\"polite\".",
       "meta": {
-        "tags": ["carousel", "reviews", "keyboard", "testimonials"],
+        "tags": [
+          "carousel",
+          "reviews",
+          "keyboard",
+          "testimonials"
+        ],
         "preview": {
           "width": "full"
         },
@@ -765,7 +903,11 @@
             }
           }
         },
-        "cardControls": ["label", "accent", "background"]
+        "cardControls": [
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -773,7 +915,9 @@
       "type": "registry:component",
       "title": "Проигрыватель историй",
       "description": "Истории с полосками прогресса и паузой по наведению и фокусу: без паузы текст в них прочитать невозможно.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -785,7 +929,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-carousel-006-*. Клиентский: \"use client\". Прогресс считается интервалом в 100 мс и хранится числом от 0 до 100; пауза живёт в ref, поэтому наведение не вызывает перерисовку. Половины кадра — кнопки «назад» и «вперёд» с именами. Оттенок фона берётся из текущей истории.",
       "meta": {
-        "tags": ["carousel", "stories", "autoplay", "progress"],
+        "tags": [
+          "carousel",
+          "stories",
+          "autoplay",
+          "progress"
+        ],
         "ai": {
           "export": "Carousel006",
           "usage": "<Carousel006 stories={stories} seconds={6} />",
@@ -910,7 +1059,11 @@
             }
           }
         },
-        "cardControls": ["seconds", "label", "hintText"],
+        "cardControls": [
+          "seconds",
+          "label",
+          "hintText"
+        ],
         "preview": {
           "width": "full"
         }
@@ -921,7 +1074,9 @@
       "type": "registry:component",
       "title": "Киноплёнка",
       "description": "Галерея-плёнка: в кадре сразу несколько снимков с подписями под ними — лента читается как обзор, а не как пролистывание.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -933,9 +1088,43 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-carousel-007-*. Серверный: хуков нет. Корень объявлен контейнером, раскладка живёт на внутренней карточке: контейнерный запрос действует только на потомков. Кадр занимает треть ширины, в узкой колонке — половину. Привязка прокрутки мягкая (proximity), чтобы обзор не дёргался.",
       "meta": {
-        "tags": ["carousel", "gallery", "screenshots", "scroll"],
+        "tags": [
+          "carousel",
+          "gallery",
+          "screenshots",
+          "scroll"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "shots": [
+              {
+                "label": "Главная страница",
+                "hue": 250,
+                "image": "/demo/scenes/scene-17.webp"
+              },
+              {
+                "label": "Каталог с фильтрами",
+                "hue": 150,
+                "image": "/demo/scenes/scene-22.webp"
+              },
+              {
+                "label": "Страница компонента",
+                "hue": 30,
+                "image": "/demo/scenes/scene-10.webp"
+              },
+              {
+                "label": "Инструкция для агента",
+                "hue": 300,
+                "image": "/demo/scenes/scene-14.webp"
+              },
+              {
+                "label": "Тёмная тема",
+                "hue": 200,
+                "image": "/demo/scenes/scene-17.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Carousel007",
@@ -1041,30 +1230,39 @@
                 "shots": [
                   {
                     "label": "Home page",
-                    "hue": 250
+                    "hue": 250,
+                    "image": "/demo/scenes/scene-17.webp"
                   },
                   {
                     "label": "Catalog with filters",
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/scenes/scene-22.webp"
                   },
                   {
                     "label": "Component page",
-                    "hue": 30
+                    "hue": 30,
+                    "image": "/demo/scenes/scene-10.webp"
                   },
                   {
                     "label": "Instructions for the agent",
-                    "hue": 300
+                    "hue": 300,
+                    "image": "/demo/scenes/scene-14.webp"
                   },
                   {
                     "label": "Dark theme",
-                    "hue": 200
+                    "hue": 200,
+                    "image": "/demo/scenes/scene-17.webp"
                   }
                 ]
               }
             }
           }
         },
-        "cardControls": ["label", "hint", "background"]
+        "cardControls": [
+          "label",
+          "hint",
+          "background"
+        ]
       }
     },
     {
@@ -1072,7 +1270,9 @@
       "type": "registry:component",
       "title": "Шаги знакомства",
       "description": "Карусель-онбординг: у неё есть конец — на последнем шаге кнопка меняет подпись, а пропустить можно с первого.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1084,9 +1284,33 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-carousel-008-*. Клиентский: \"use client\". Шаги лежат в одной ячейке грида, скрытые получают visibility: hidden — высота держится по самому длинному. Область текста объявлена aria-live=\"polite\", точки описаны подписью «шаг N из M». Оттенок картинки меняется с шагом.",
       "meta": {
-        "tags": ["carousel", "onboarding", "steps", "wizard"],
+        "tags": [
+          "carousel",
+          "onboarding",
+          "steps",
+          "wizard"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "steps": [
+              {
+                "title": "Выберите компонент",
+                "text": "Каталог показывает живое превью и категорию — картинок нет, всё настоящее.",
+                "image": "/demo/scenes/scene-07.webp"
+              },
+              {
+                "title": "Скопируйте инструкцию",
+                "text": "Copy for AI соберёт команду установки и правила, которые нельзя нарушать.",
+                "image": "/demo/scenes/scene-02.webp"
+              },
+              {
+                "title": "Отдайте агенту",
+                "text": "Он поставит компонент одной командой и не станет пересобирать его заново.",
+                "image": "/demo/scenes/scene-16.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Carousel008",
@@ -1218,15 +1442,18 @@
                 "steps": [
                   {
                     "title": "Pick a component",
-                    "text": "The catalog shows a live preview and a category — no screenshots, everything is real."
+                    "text": "The catalog shows a live preview and a category — no screenshots, everything is real.",
+                    "image": "/demo/scenes/scene-07.webp"
                   },
                   {
                     "title": "Copy the brief",
-                    "text": "Copy for AI assembles the install command and the rules that must not be broken."
+                    "text": "Copy for AI assembles the install command and the rules that must not be broken.",
+                    "image": "/demo/scenes/scene-02.webp"
                   },
                   {
                     "title": "Hand it to the agent",
-                    "text": "It installs the component with one command instead of rebuilding it from scratch."
+                    "text": "It installs the component with one command instead of rebuilding it from scratch.",
+                    "image": "/demo/scenes/scene-16.webp"
                   }
                 ]
               }
@@ -1247,7 +1474,9 @@
       "type": "registry:component",
       "title": "Точки-листалка",
       "description": "Карусель, где точки — настоящие кнопки с подписью «Слайд N из M»: по ряду ходят стрелки клавиатуры, а лента едет трансформацией, а не прокруткой.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1259,9 +1488,42 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-009-*. Клиентский (\"use client\") — позицию держит useState. Лента сдвигается translateX от переменной --vibeui-carousel-009-index: позиция задаётся числом и не зависит от того, куда докрутили пальцем, поэтому точка и кадр не расходятся. Стрелки, Home и End обрабатываются на контейнере точек и переносят фокус на выбранную точку. Невидимые слайды помечены inert и aria-hidden — иначе Tab уходит за край кадра к недоступному содержимому.",
       "meta": {
-        "tags": ["carousel", "dots", "keyboard", "slider"],
+        "tags": [
+          "carousel",
+          "dots",
+          "keyboard",
+          "slider"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "slides": [
+              {
+                "title": "Северный маршрут",
+                "text": "Четыре дня вдоль побережья с ночёвками в деревянных домах",
+                "hue": 220,
+                "image": "/demo/scenes/scene-04.webp"
+              },
+              {
+                "title": "Горная петля",
+                "text": "Подъём на рассвете и спуск к озеру тем же днём",
+                "hue": 150,
+                "image": "/demo/scenes/scene-09.webp"
+              },
+              {
+                "title": "Городские крыши",
+                "text": "Вечерняя прогулка по старым кварталам с гидом",
+                "hue": 30,
+                "image": "/demo/scenes/scene-12.webp"
+              },
+              {
+                "title": "Долина ветров",
+                "text": "Два перевала и ночёвка в палатке",
+                "hue": 285,
+                "image": "/demo/scenes/scene-15.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Carousel009",
@@ -1372,29 +1634,37 @@
                   {
                     "title": "Northern route",
                     "text": "Four days along the coast with nights in wooden cabins",
-                    "hue": 220
+                    "hue": 220,
+                    "image": "/demo/scenes/scene-04.webp"
                   },
                   {
                     "title": "Mountain loop",
                     "text": "A sunrise climb and a descent to the lake the same day",
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/scenes/scene-09.webp"
                   },
                   {
                     "title": "City rooftops",
                     "text": "An evening walk through the old quarters with a guide",
-                    "hue": 30
+                    "hue": 30,
+                    "image": "/demo/scenes/scene-12.webp"
                   },
                   {
                     "title": "Valley of winds",
                     "text": "Two passes and a night in a tent",
-                    "hue": 285
+                    "hue": 285,
+                    "image": "/demo/scenes/scene-15.webp"
                   }
                 ]
               }
             }
           }
         },
-        "cardControls": ["label", "accent", "background"]
+        "cardControls": [
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1402,7 +1672,9 @@
       "type": "registry:component",
       "title": "Полка товаров",
       "description": "Витрина товаров, где следующая карточка выглядывает за краем, а стрелки гаснут на концах ленты: отключённая стрелка отвечает «дальше пусто» до нажатия.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1414,9 +1686,55 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-010-*. Клиентский (\"use client\") — состояние краёв считается на прокрутке. Лента остаётся нативной прокруткой со scroll-snap: палец и колесо работают сами. Шаг стрелки равен ширине карточки с зазором, поэтому лента останавливается ровно на карточке, а не в середине. Позиция краёв пересчитывается в обработчике onScroll и один раз после монтирования: кнопки отключаются атрибутом disabled, а не стилем, чтобы они выпадали из порядка обхода.",
       "meta": {
-        "tags": ["carousel", "products", "peek", "shop"],
+        "tags": [
+          "carousel",
+          "products",
+          "peek",
+          "shop"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "products": [
+              {
+                "title": "Кофемолка ручная",
+                "price": "4 290 ₽",
+                "oldPrice": "5 900 ₽",
+                "rating": 4.8,
+                "hue": 40,
+                "image": "/demo/products/product-07.webp"
+              },
+              {
+                "title": "Чайник на 1,2 л",
+                "price": "3 150 ₽",
+                "rating": 4.6,
+                "hue": 200,
+                "image": "/demo/products/product-21.webp"
+              },
+              {
+                "title": "Френч-пресс стеклянный",
+                "price": "1 890 ₽",
+                "oldPrice": "2 400 ₽",
+                "rating": 4.4,
+                "hue": 150,
+                "image": "/demo/products/product-27.webp"
+              },
+              {
+                "title": "Весы кухонные",
+                "price": "2 750 ₽",
+                "rating": 4.9,
+                "hue": 280,
+                "image": "/demo/products/product-16.webp"
+              },
+              {
+                "title": "Термос 0,5 л",
+                "price": "2 190 ₽",
+                "rating": 4.5,
+                "hue": 20,
+                "image": "/demo/products/product-07.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Carousel010",
@@ -1541,39 +1859,49 @@
                     "price": "$48",
                     "oldPrice": "$65",
                     "rating": 4.8,
-                    "hue": 40
+                    "hue": 40,
+                    "image": "/demo/products/product-07.webp"
                   },
                   {
                     "title": "1.2 l kettle",
                     "price": "$35",
                     "rating": 4.6,
-                    "hue": 200
+                    "hue": 200,
+                    "image": "/demo/products/product-21.webp"
                   },
                   {
                     "title": "Glass french press",
                     "price": "$21",
                     "oldPrice": "$27",
                     "rating": 4.4,
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/products/product-27.webp"
                   },
                   {
                     "title": "Kitchen scales",
                     "price": "$31",
                     "rating": 4.9,
-                    "hue": 280
+                    "hue": 280,
+                    "image": "/demo/products/product-16.webp"
                   },
                   {
                     "title": "0.5 l thermos",
                     "price": "$24",
                     "rating": 4.5,
-                    "hue": 20
+                    "hue": 20,
+                    "image": "/demo/products/product-07.webp"
                   }
                 ]
               }
             }
           }
         },
-        "cardControls": ["title", "saleLabel", "accent", "background"]
+        "cardControls": [
+          "title",
+          "saleLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1581,7 +1909,9 @@
       "type": "registry:component",
       "title": "Автопрокрутка отзывов",
       "description": "Отзывы листаются сами, но замирают от любого намёка на интерес: наведения, фокуса внутри блока и нажатия на паузу, а при prefers-reduced-motion не запускаются вовсе.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1593,7 +1923,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-011-*. Клиентский (\"use client\") — таймер живёт в useEffect и пересоздаётся на каждой смене отзыва. Пауза складывается из трёх источников: наведение и фокус ставят held, кнопка переключает playing. prefers-reduced-motion проверяется через matchMedia на монтировании и просто выключает показ: движение здесь действие, а не украшение, поэтому отменять его надо целиком. Высота цитаты зафиксирована min-height, чтобы страница не прыгала на смене.",
       "meta": {
-        "tags": ["carousel", "reviews", "autoplay", "pause"],
+        "tags": [
+          "carousel",
+          "reviews",
+          "autoplay",
+          "pause"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1738,7 +2073,12 @@
             }
           }
         },
-        "cardControls": ["interval", "label", "accent", "background"]
+        "cardControls": [
+          "interval",
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1746,7 +2086,9 @@
       "type": "registry:component",
       "title": "Ленты со счётчиком",
       "description": "Две встречные ленты логотипов с растворёнными краями: встречное движение читается как «список большой», а не как «карусель едет».",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1758,7 +2100,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-012-*. Серверный: хуков нет, движение целиком на CSS-анимации. Каждая лента продублирована в разметке и сдвигается ровно на половину ширины с учётом зазора, поэтому шва между повторами не видно; копия помечена aria-hidden, чтобы список не прочитался дважды. Края растворены mask-image. Анимация замирает и при наведении, и при фокусе внутри блока, а при prefers-reduced-motion ленты останавливаются и превращаются в обычную горизонтальную прокрутку.",
       "meta": {
-        "tags": ["carousel", "marquee", "logos", "infinite"],
+        "tags": [
+          "carousel",
+          "marquee",
+          "logos",
+          "infinite"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1884,7 +2231,11 @@
             }
           }
         },
-        "cardControls": ["title", "duration", "background"]
+        "cardControls": [
+          "title",
+          "duration",
+          "background"
+        ]
       }
     },
     {
@@ -1892,7 +2243,9 @@
       "type": "registry:component",
       "title": "Центрирующиеся миниатюры",
       "description": "Галерея с полосой миниатюр, где выбранная сама доезжает до центра полосы, а по кадрам ходят стрелки клавиатуры.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1904,9 +2257,54 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-013-*. Клиентский (\"use client\") — позицию держит useState. Миниатюр обычно больше, чем влезает в ширину, поэтому выбранная доводится до центра вызовом scrollIntoView({block:\"nearest\",inline:\"center\"}): block:\"nearest\" не даёт браузеру дёрнуть всю страницу. Миниатюры — настоящие кнопки с подписью «Кадр N», выбранная помечена aria-current и рамкой, а не только яркостью: приглушение соседей на маленьком экране почти незаметно.",
       "meta": {
-        "tags": ["carousel", "gallery", "thumbnails", "keyboard"],
+        "tags": [
+          "carousel",
+          "gallery",
+          "thumbnails",
+          "keyboard"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "shots": [
+              {
+                "title": "Утро в порту",
+                "place": "Мурманск",
+                "hue": 220,
+                "image": "/demo/scenes/scene-10.webp"
+              },
+              {
+                "title": "Дорога на перевал",
+                "place": "Алтай",
+                "hue": 150,
+                "image": "/demo/scenes/scene-22.webp"
+              },
+              {
+                "title": "Старый мост",
+                "place": "Псков",
+                "hue": 40,
+                "image": "/demo/scenes/scene-21.webp"
+              },
+              {
+                "title": "Тихая бухта",
+                "place": "Приморье",
+                "hue": 190,
+                "image": "/demo/scenes/scene-20.webp"
+              },
+              {
+                "title": "Поле под снегом",
+                "place": "Вологда",
+                "hue": 280,
+                "image": "/demo/scenes/scene-10.webp"
+              },
+              {
+                "title": "Крыши на закате",
+                "place": "Казань",
+                "hue": 20,
+                "image": "/demo/scenes/scene-22.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Carousel013",
@@ -2029,39 +2427,50 @@
                   {
                     "title": "Morning at the port",
                     "place": "Murmansk",
-                    "hue": 220
+                    "hue": 220,
+                    "image": "/demo/scenes/scene-10.webp"
                   },
                   {
                     "title": "Road to the pass",
                     "place": "Altai",
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/scenes/scene-22.webp"
                   },
                   {
                     "title": "The old bridge",
                     "place": "Pskov",
-                    "hue": 40
+                    "hue": 40,
+                    "image": "/demo/scenes/scene-21.webp"
                   },
                   {
                     "title": "A quiet bay",
                     "place": "Primorye",
-                    "hue": 190
+                    "hue": 190,
+                    "image": "/demo/scenes/scene-20.webp"
                   },
                   {
                     "title": "Field under snow",
                     "place": "Vologda",
-                    "hue": 280
+                    "hue": 280,
+                    "image": "/demo/scenes/scene-10.webp"
                   },
                   {
                     "title": "Rooftops at sunset",
                     "place": "Kazan",
-                    "hue": 20
+                    "hue": 20,
+                    "image": "/demo/scenes/scene-22.webp"
                   }
                 ]
               }
             }
           }
         },
-        "cardControls": ["label", "hint", "accent", "background"]
+        "cardControls": [
+          "label",
+          "hint",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2069,7 +2478,9 @@
       "type": "registry:component",
       "title": "Колода с якорями",
       "description": "Карусель без единой строки JS, но со стрелками: пара стрелок лежит внутри каждого слайда и ведёт на соседний якорь, поэтому текущая позиция компоненту не нужна.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2081,9 +2492,42 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-014-*. Серверный: хуков нет вообще. Прокрутку и остановку держит scroll-snap-type:x mandatory со scroll-snap-stop:always, поэтому лента не проскакивает через слайд. Стрелки — обычные ссылки на идентификаторы соседних слайдов: браузер сам доезжает до нужного, а «предыдущий» и «следующий» известны на рендере. Идентификаторы собираются из пропа idPrefix, чтобы два блока на одной странице не перебили якоря друг друга.",
       "meta": {
-        "tags": ["carousel", "scroll-snap", "no-js", "anchors"],
+        "tags": [
+          "carousel",
+          "scroll-snap",
+          "no-js",
+          "anchors"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "cards": [
+              {
+                "title": "Сначала данные",
+                "text": "Компонент получает массив и рисует ровно то, что в нём есть",
+                "hue": 250,
+                "image": "/demo/scenes/scene-02.webp"
+              },
+              {
+                "title": "Потом раскладка",
+                "text": "Ширина считается от контейнера, а не от окна браузера",
+                "hue": 160,
+                "image": "/demo/scenes/scene-08.webp"
+              },
+              {
+                "title": "И только затем цвет",
+                "text": "Палитра живёт в локальных переменных и не спорит с вашей темой",
+                "hue": 35,
+                "image": "/demo/scenes/scene-16.webp"
+              },
+              {
+                "title": "Ничего лишнего",
+                "text": "Ни рантайма, ни зависимостей: один файл в вашем проекте",
+                "hue": 300,
+                "image": "/demo/scenes/scene-07.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Carousel014",
@@ -2219,29 +2663,39 @@
                   {
                     "title": "Data first",
                     "text": "The component takes an array and draws exactly what is in it",
-                    "hue": 250
+                    "hue": 250,
+                    "image": "/demo/scenes/scene-02.webp"
                   },
                   {
                     "title": "Layout next",
                     "text": "Width is measured from the container, not from the browser window",
-                    "hue": 160
+                    "hue": 160,
+                    "image": "/demo/scenes/scene-08.webp"
                   },
                   {
                     "title": "Colour last",
                     "text": "The palette lives in local variables and never argues with your theme",
-                    "hue": 35
+                    "hue": 35,
+                    "image": "/demo/scenes/scene-16.webp"
                   },
                   {
                     "title": "Nothing spare",
                     "text": "No runtime, no dependencies: one file in your project",
-                    "hue": 300
+                    "hue": 300,
+                    "image": "/demo/scenes/scene-07.webp"
                   }
                 ]
               }
             }
           }
         },
-        "cardControls": ["label", "idPrefix", "hint", "accent", "background"]
+        "cardControls": [
+          "label",
+          "idPrefix",
+          "hint",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2249,7 +2703,9 @@
       "type": "registry:component",
       "title": "Кадры с подписями",
       "description": "Карусель, где подпись равноправна кадру: figure с figcaption под снимком, а место под текст зарезервировано, чтобы блок не прыгал.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2261,9 +2717,46 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-015-*. Клиентский (\"use client\") — позицию держит useState. Разметка построена на figure/figcaption, поэтому подпись остаётся подписью и для скринридера, и для поисковика. Текст стоит под кадром на светлой подложке: поверх снимка он читается только на тёмной картинке. Высота подписи зафиксирована min-height по самой длинной — иначе кнопки под ней подпрыгивают на каждом переключении. Кадр помечен role=\"img\" с подписью.",
       "meta": {
-        "tags": ["carousel", "caption", "figure", "gallery"],
+        "tags": [
+          "carousel",
+          "caption",
+          "figure",
+          "gallery"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "slides": [
+              {
+                "caption": "Цех перед сменой",
+                "detail": "Станки прогреваются час, поэтому смена начинается раньше рабочего дня.",
+                "credit": "Фото: архив завода",
+                "hue": 220,
+                "image": "/demo/scenes/scene-10.webp"
+              },
+              {
+                "caption": "Литейная форма",
+                "detail": "Одна форма выдерживает около двухсот отливок, потом её переплавляют.",
+                "credit": "Фото: Н. Королёв",
+                "hue": 30,
+                "image": "/demo/scenes/scene-22.webp"
+              },
+              {
+                "caption": "Контроль качества",
+                "detail": "Каждая десятая деталь уходит на замер: размеры проверяют вручную.",
+                "credit": "Фото: Н. Королёв",
+                "hue": 150,
+                "image": "/demo/scenes/scene-21.webp"
+              },
+              {
+                "caption": "Готовая партия",
+                "detail": "Ящики маркируют в тот же день, отгрузка идёт утром следующего.",
+                "credit": "Фото: архив завода",
+                "hue": 280,
+                "image": "/demo/scenes/scene-20.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Carousel015",
@@ -2375,32 +2868,40 @@
                     "caption": "The floor before the shift",
                     "detail": "The machines warm up for an hour, so the shift starts before the working day.",
                     "credit": "Photo: plant archive",
-                    "hue": 220
+                    "hue": 220,
+                    "image": "/demo/scenes/scene-10.webp"
                   },
                   {
                     "caption": "A casting mould",
                     "detail": "One mould survives about two hundred casts, then it goes back into the melt.",
                     "credit": "Photo: N. Korolev",
-                    "hue": 30
+                    "hue": 30,
+                    "image": "/demo/scenes/scene-22.webp"
                   },
                   {
                     "caption": "Quality control",
                     "detail": "Every tenth part goes to the bench: the dimensions are checked by hand.",
                     "credit": "Photo: N. Korolev",
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/scenes/scene-21.webp"
                   },
                   {
                     "caption": "A finished batch",
                     "detail": "The crates are labelled the same day and shipped the next morning.",
                     "credit": "Photo: plant archive",
-                    "hue": 280
+                    "hue": 280,
+                    "image": "/demo/scenes/scene-20.webp"
                   }
                 ]
               }
             }
           }
         },
-        "cardControls": ["label", "accent", "background"]
+        "cardControls": [
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2408,7 +2909,9 @@
       "type": "registry:component",
       "title": "Счётчик слайдов",
       "description": "Карусель со счётчиком вместо точек: «3 из 8» и полоса заполнения отвечают точнее ряда кружков, а стрелки гаснут на краях незацикленной ленты.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2420,9 +2923,66 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-016-*. Клиентский (\"use client\") — позицию держит useState. Кадры лежат стопкой и меняются проявлением: ленте некуда ехать, потому что позиция передаётся счётчиком. Невидимые кадры помечены inert и aria-hidden, а видимость гасится не только opacity, но и visibility — иначе они остаются целями нажатия. Счётчик объявляется через role=\"status\", доля пройденного уезжает в CSS переменной --vibeui-carousel-016-progress.",
       "meta": {
-        "tags": ["carousel", "counter", "progress", "slider"],
+        "tags": [
+          "carousel",
+          "counter",
+          "progress",
+          "slider"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "slides": [
+              {
+                "title": "Прихожая",
+                "meta": "4 м², шкаф во всю стену",
+                "hue": 250,
+                "image": "/demo/scenes/scene-06.webp"
+              },
+              {
+                "title": "Гостиная",
+                "meta": "22 м², окна на юг",
+                "hue": 200,
+                "image": "/demo/scenes/scene-18.webp"
+              },
+              {
+                "title": "Кухня",
+                "meta": "11 м², техника остаётся",
+                "hue": 150,
+                "image": "/demo/scenes/scene-19.webp"
+              },
+              {
+                "title": "Спальня",
+                "meta": "14 м², гардеробная",
+                "hue": 40,
+                "image": "/demo/scenes/scene-24.webp"
+              },
+              {
+                "title": "Детская",
+                "meta": "12 м², окно во двор",
+                "hue": 300,
+                "image": "/demo/scenes/scene-06.webp"
+              },
+              {
+                "title": "Ванная",
+                "meta": "6 м², окно есть",
+                "hue": 20,
+                "image": "/demo/scenes/scene-18.webp"
+              },
+              {
+                "title": "Балкон",
+                "meta": "5 м², остеклён",
+                "hue": 100,
+                "image": "/demo/scenes/scene-19.webp"
+              },
+              {
+                "title": "Двор",
+                "meta": "закрытый, парковка",
+                "hue": 220,
+                "image": "/demo/scenes/scene-24.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Carousel016",
@@ -2544,42 +3104,50 @@
                   {
                     "title": "Hallway",
                     "meta": "4 m², wall-to-wall wardrobe",
-                    "hue": 250
+                    "hue": 250,
+                    "image": "/demo/scenes/scene-06.webp"
                   },
                   {
                     "title": "Living room",
                     "meta": "22 m², south-facing windows",
-                    "hue": 200
+                    "hue": 200,
+                    "image": "/demo/scenes/scene-18.webp"
                   },
                   {
                     "title": "Kitchen",
                     "meta": "11 m², appliances included",
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/scenes/scene-19.webp"
                   },
                   {
                     "title": "Bedroom",
                     "meta": "14 m², walk-in closet",
-                    "hue": 40
+                    "hue": 40,
+                    "image": "/demo/scenes/scene-24.webp"
                   },
                   {
                     "title": "Kids' room",
                     "meta": "12 m², window on the yard",
-                    "hue": 300
+                    "hue": 300,
+                    "image": "/demo/scenes/scene-06.webp"
                   },
                   {
                     "title": "Bathroom",
                     "meta": "6 m², has a window",
-                    "hue": 20
+                    "hue": 20,
+                    "image": "/demo/scenes/scene-18.webp"
                   },
                   {
                     "title": "Balcony",
                     "meta": "5 m², glazed",
-                    "hue": 100
+                    "hue": 100,
+                    "image": "/demo/scenes/scene-19.webp"
                   },
                   {
                     "title": "Courtyard",
                     "meta": "gated, parking",
-                    "hue": 220
+                    "hue": 220,
+                    "image": "/demo/scenes/scene-24.webp"
                   }
                 ],
                 "counterText": "{index} of {total}"
@@ -2587,7 +3155,12 @@
             }
           }
         },
-        "cardControls": ["label", "counterText", "accent", "background"]
+        "cardControls": [
+          "label",
+          "counterText",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2595,7 +3168,9 @@
       "type": "registry:component",
       "title": "Галерея с лайтбоксом",
       "description": "Лента миниатюр, по клику кадр открывается крупно поверх страницы: стрелки, счётчик «3 из 12», а ловушка фокуса и Escape достаются от нативного dialog.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2607,11 +3182,59 @@
       ],
       "docs": "Клиентский компонент: номер открытого кадра лежит в useState, окно — нативный <dialog>, открываемый через showModal(). Один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-017-*. Кадры не картинки: каждый снимок описан тоном в градусах и рисуется градиентом через переменную --vibeui-carousel-017-hue, поэтому у item'а нет ни изображений, ни сетевых запросов. Модальный режим даёт ловушку фокуса, закрытие по Escape и затемнение фона бесплатно; правило html:has(dialog[open]:modal){overflow:hidden} добирает то, чего браузер не делает, — блокировку прокрутки страницы. Стрелки внутри окна листают по кругу, ArrowLeft и ArrowRight делают то же с клавиатуры, счётчик собирается из шаблона counter. Проп defaultOpen открывает окно немодально через show(): оно остаётся внутри блока и попадает в кадр витрины.",
       "meta": {
-        "tags": ["gallery", "lightbox", "dialog", "carousel", "client"],
+        "tags": [
+          "gallery",
+          "lightbox",
+          "dialog",
+          "carousel",
+          "client"
+        ],
         "preview": {
           "width": "full",
           "props": {
-            "defaultOpen": true
+            "defaultOpen": true,
+            "shots": [
+              {
+                "title": "Рассвет над фьордом",
+                "hue": 250,
+                "image": "/demo/scenes/scene-05.webp"
+              },
+              {
+                "title": "Терраса у воды",
+                "hue": 196,
+                "image": "/demo/scenes/scene-23.webp"
+              },
+              {
+                "title": "Сосны в тумане",
+                "hue": 156,
+                "image": "/demo/scenes/scene-15.webp"
+              },
+              {
+                "title": "Поле в июле",
+                "hue": 104,
+                "image": "/demo/scenes/scene-11.webp"
+              },
+              {
+                "title": "Песчаный склон",
+                "hue": 64,
+                "image": "/demo/scenes/scene-05.webp"
+              },
+              {
+                "title": "Закат на трассе",
+                "hue": 32,
+                "image": "/demo/scenes/scene-23.webp"
+              },
+              {
+                "title": "Ночной квартал",
+                "hue": 300,
+                "image": "/demo/scenes/scene-15.webp"
+              },
+              {
+                "title": "Витрина в дождь",
+                "hue": 274,
+                "image": "/demo/scenes/scene-11.webp"
+              }
+            ]
           }
         },
         "ai": {
@@ -2662,7 +3285,11 @@
             "prop": "ratio",
             "label": "Пропорции",
             "type": "select",
-            "options": ["4:3", "16:9", "1:1"],
+            "options": [
+              "4:3",
+              "16:9",
+              "1:1"
+            ],
             "default": "4:3"
           },
           {
@@ -2678,7 +3305,13 @@
             "default": ""
           }
         ],
-        "cardControls": ["label", "counter", "ratio", "accent", "background"],
+        "cardControls": [
+          "label",
+          "counter",
+          "ratio",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "title": "Gallery With Lightbox",
@@ -2742,35 +3375,43 @@
                 "shots": [
                   {
                     "title": "Dawn over the fjord",
-                    "hue": 250
+                    "hue": 250,
+                    "image": "/demo/scenes/scene-05.webp"
                   },
                   {
                     "title": "Terrace by the water",
-                    "hue": 196
+                    "hue": 196,
+                    "image": "/demo/scenes/scene-23.webp"
                   },
                   {
                     "title": "Pines in the fog",
-                    "hue": 156
+                    "hue": 156,
+                    "image": "/demo/scenes/scene-15.webp"
                   },
                   {
                     "title": "A field in July",
-                    "hue": 104
+                    "hue": 104,
+                    "image": "/demo/scenes/scene-11.webp"
                   },
                   {
                     "title": "Sand slope",
-                    "hue": 64
+                    "hue": 64,
+                    "image": "/demo/scenes/scene-05.webp"
                   },
                   {
                     "title": "Sunset on the highway",
-                    "hue": 32
+                    "hue": 32,
+                    "image": "/demo/scenes/scene-23.webp"
                   },
                   {
                     "title": "Night block",
-                    "hue": 300
+                    "hue": 300,
+                    "image": "/demo/scenes/scene-15.webp"
                   },
                   {
                     "title": "Shop window in the rain",
-                    "hue": 274
+                    "hue": 274,
+                    "image": "/demo/scenes/scene-11.webp"
                   }
                 ]
               }
@@ -2784,7 +3425,9 @@
       "type": "registry:component",
       "title": "Слайдер с растворением",
       "description": "Кадры сменяются растворением, а не сдвигом: слайды лежат стопкой в одной ячейке грида, снизу точки-пейджер, подпись живёт вместе с кадром.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2796,9 +3439,43 @@
       ],
       "docs": "Клиентский компонент: номер текущего слайда лежит в useState, переключают его точки-пейджер. Один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-018-*. Слайды не едут лентой: они лежат в одной ячейке грида (grid-area:1/1) и меняются прозрачностью, поэтому кадр не дёргается и высота держится сама. Кадры рисуются градиентами по тону --vibeui-carousel-018-hue, картинок в item'е нет. Каждая точка — настоящая кнопка с подписью-названием слайда и aria-current, вокруг видимого кружка есть невидимое поле нажатия в 24 пикселя; по ряду ходят стрелки, Home и End. Подпись слайда стоит в aria-live=\"polite\" и переключается вместе с кадром, а её место задаётся пропом captionPlace: поверх кадра со шторкой-градиентом или отдельной строкой под ним.",
       "meta": {
-        "tags": ["carousel", "fade", "hero", "pager", "client"],
+        "tags": [
+          "carousel",
+          "fade",
+          "hero",
+          "pager",
+          "client"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "slides": [
+              {
+                "title": "Летняя коллекция",
+                "text": "Двадцать четыре модели, отшитые небольшими партиями.",
+                "hue": 22,
+                "image": "/demo/hero/hero-01.webp"
+              },
+              {
+                "title": "Северное направление",
+                "text": "Маршруты выходного дня в четырёх часах от города.",
+                "hue": 232,
+                "image": "/demo/hero/hero-02.webp"
+              },
+              {
+                "title": "Сезон подписки",
+                "text": "Первый месяц открыт, дальше можно уйти в один клик.",
+                "hue": 152,
+                "image": "/demo/hero/hero-03.webp"
+              },
+              {
+                "title": "Работа мастерской",
+                "text": "Каждую пятницу показываем, что вышло за неделю.",
+                "hue": 300,
+                "image": "/demo/hero/hero-04.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Carousel018",
@@ -2834,14 +3511,21 @@
             "prop": "ratio",
             "label": "Пропорции",
             "type": "select",
-            "options": ["16:9", "4:3", "21:9"],
+            "options": [
+              "16:9",
+              "4:3",
+              "21:9"
+            ],
             "default": "16:9"
           },
           {
             "prop": "captionPlace",
             "label": "Подпись",
             "type": "select",
-            "options": ["over", "under"],
+            "options": [
+              "over",
+              "under"
+            ],
             "default": "over"
           },
           {
@@ -2857,7 +3541,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["ratio", "captionPlace", "accent", "background"],
+        "cardControls": [
+          "ratio",
+          "captionPlace",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "title": "Cross-Fade Slider",
@@ -2913,22 +3602,26 @@
                   {
                     "title": "Summer collection",
                     "text": "Twenty four models, sewn in small batches.",
-                    "hue": 22
+                    "hue": 22,
+                    "image": "/demo/hero/hero-01.webp"
                   },
                   {
                     "title": "Northern routes",
                     "text": "Weekend trips four hours away from the city.",
-                    "hue": 232
+                    "hue": 232,
+                    "image": "/demo/hero/hero-02.webp"
                   },
                   {
                     "title": "Subscription season",
                     "text": "The first month is open, after that you leave in one click.",
-                    "hue": 152
+                    "hue": 152,
+                    "image": "/demo/hero/hero-03.webp"
                   },
                   {
                     "title": "Workshop diary",
                     "text": "Every Friday we show what came out of the week.",
-                    "hue": 300
+                    "hue": 300,
+                    "image": "/demo/hero/hero-04.webp"
                   }
                 ]
               }
@@ -2942,7 +3635,9 @@
       "type": "registry:component",
       "title": "Куб с гранями",
       "description": "Карусель на гранях куба: каждый шаг доворачивает объём на четверть, и следующая грань въезжает в кадр с перелётом.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2954,7 +3649,13 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-carousel-019-*. Клиентский компонент: useState хранит число поворотов, а не индекс, поэтому куб продолжает крутиться в одну сторону и не отматывает три четверти назад на переходе с последней грани на первую. Четыре грани расставлены поворотом и выносом на половину ребра, сам куб отодвинут назад на ту же половину — центр вращения остаётся в середине кадра. Ребро задаётся пропом size в rem, глубина граней считается от него же через calc. Кадр объявлен aria-roledescription, невидимые грани помечены aria-hidden, строка состояния — живая область.",
       "meta": {
-        "tags": ["carousel", "cube", "3d", "rotate", "spring"],
+        "tags": [
+          "carousel",
+          "cube",
+          "3d",
+          "rotate",
+          "spring"
+        ],
         "preview": {
           "width": "auto"
         },
@@ -3077,7 +3778,12 @@
             },
             "preview": {
               "props": {
-                "faces": ["Catalog", "Preview", "Prompt", "Install"],
+                "faces": [
+                  "Catalog",
+                  "Preview",
+                  "Prompt",
+                  "Install"
+                ],
                 "label": "How it works",
                 "hint": "Click the cube or the arrows",
                 "roleText": "carousel",
@@ -3088,7 +3794,12 @@
             }
           }
         },
-        "cardControls": ["label", "hint", "size", "accent"]
+        "cardControls": [
+          "label",
+          "hint",
+          "size",
+          "accent"
+        ]
       }
     }
   ]

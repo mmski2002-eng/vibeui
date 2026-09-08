@@ -1,6 +1,8 @@
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Card010Props = Omit<ComponentProps<"div">, "children"> & {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   label?: string
   lines?: number
   media?: boolean
@@ -39,7 +41,12 @@ linear-gradient(90deg,var(--vibeui-card-010-base) 0%,var(--vibeui-card-010-shine
 animation:vibeui-card-010-sweep 1.4s ease-in-out infinite;
 }
 /* Обложка квадратом: те же метрики, что у настоящей карточки товара. */
-[data-vibeui-block="card-010"] [data-part="media"]{aspect-ratio:1 / 1;border-radius:0.625rem}
+[data-vibeui-block="card-010"] [data-part="media"]{
+position:relative;aspect-ratio:1 / 1;border-radius:0.625rem;overflow:hidden;
+}
+[data-vibeui-block="card-010"] [data-part="media"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+}
 [data-vibeui-block="card-010"] [data-part="line"]{height:0.6875rem;border-radius:9999px}
 [data-vibeui-block="card-010"] [data-part="line"]:nth-of-type(1){width:92%}
 [data-vibeui-block="card-010"] [data-part="line"]:nth-of-type(2){width:64%}
@@ -86,6 +93,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Card010({
   label = "Загружается карточка товара",
+  image = "",
   lines = 3,
   media = true,
   background = "",
@@ -118,7 +126,13 @@ export function Card010({
         aria-busy="true"
         aria-label={label}
       >
-        {media ? <span data-part="media" /> : null}
+        {media ? (
+          <span data-part="media" data-empty={image ? undefined : "true"}>
+            {image ? (
+              <img src={image} alt="" loading="lazy" decoding="async" />
+            ) : null}
+          </span>
+        ) : null}
         {Array.from({ length: Math.max(1, lines) }, (_, index) => (
           <span key={index} data-part="line" />
         ))}

@@ -6,6 +6,8 @@ export type Commerce033Perk = {
 }
 
 export type Commerce033Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   title?: string
   lead?: string
   guestLabel?: string
@@ -75,9 +77,12 @@ color:var(--vibeui-commerce-033-fg);font-family:var(--vibeui-commerce-033-sans);
 [data-vibeui-block="commerce-033"] [data-part="way"]{position:relative;display:block;cursor:pointer}
 [data-vibeui-block="commerce-033"] [data-part="way"] input{position:absolute;top:0.9375rem;left:0.9375rem;margin:0;width:1.125rem;height:1.125rem;accent-color:var(--vibeui-commerce-033-accent)}
 [data-vibeui-block="commerce-033"] [data-part="face"]{
-display:block;height:100%;padding:0.875rem 0.875rem 0.875rem 2.75rem;border-radius:1rem;
+position:relative;display:block;height:100%;padding:0.875rem 0.875rem 0.875rem 2.75rem;border-radius:1rem;
 border:1px solid var(--vibeui-commerce-033-border);
-transition:border-color .15s ease,background-color .15s ease;
+transition:border-color .15s ease,background-color .15s ease;overflow:hidden;
+}
+[data-vibeui-block="commerce-033"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="commerce-033"] [data-part="way"] input:checked + [data-part="face"]{
 border-color:var(--vibeui-commerce-033-accent);background:color-mix(in oklab,var(--vibeui-commerce-033-accent) 7%,transparent);
@@ -198,6 +203,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Commerce033({
   title = "Как оформить заказ",
+  avatarImage = "",
   lead = "Регистрация не обязательна. Чек и статус доставки придут на почту, а завести аккаунт можно после оплаты — заказ к нему привяжется сам.",
   guestLabel = "Оформить как гость",
   guestHint = "Два поля и оплата. Пароль придумывать не нужно.",
@@ -257,7 +263,18 @@ export function Commerce033({
                   id="commerce-033-guest"
                   defaultChecked
                 />
-                <span data-part="face">
+                <span
+                  data-part="face"
+                  data-empty={avatarImage ? undefined : "true"}
+                >
+                  {avatarImage ? (
+                    <img
+                      src={avatarImage}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : null}
                   <b>{guestLabel}</b>
                   <span>{guestHint}</span>
                 </span>

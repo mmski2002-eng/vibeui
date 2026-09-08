@@ -5,6 +5,8 @@ import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Carousel018Slide = {
   title: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   text: string
   /** Тон кадра в градусах: кадр рисуется градиентом, а не картинкой. */
   hue: number
@@ -62,11 +64,16 @@ border-radius:var(--vibeui-carousel-018-radius);overflow:hidden;
 [data-vibeui-block="carousel-018"] [data-part="stage"][data-ratio="4:3"]{aspect-ratio:4/3}
 [data-vibeui-block="carousel-018"] [data-part="stage"][data-ratio="21:9"]{aspect-ratio:21/9}
 [data-vibeui-block="carousel-018"] [data-part="slide"]{
-grid-area:1/1;opacity:0;pointer-events:none;
-transition:opacity var(--vibeui-carousel-018-fade) ease;
-background:
+position:relative;grid-area:1/1;opacity:0;pointer-events:none;
+transition:opacity var(--vibeui-carousel-018-fade) ease;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="carousel-018"] [data-part="slide"][data-empty="true"]{background:
 radial-gradient(120% 90% at 18% 12%,oklch(0.86 0.11 var(--vibeui-carousel-018-hue) / 85%),transparent 62%),
-linear-gradient(148deg,oklch(0.66 0.16 var(--vibeui-carousel-018-hue)),oklch(0.34 0.12 calc(var(--vibeui-carousel-018-hue) + 48)));
+linear-gradient(148deg,oklch(0.66 0.16 var(--vibeui-carousel-018-hue)),oklch(0.34 0.12 calc(var(--vibeui-carousel-018-hue) + 48)));}
+[data-vibeui-block="carousel-018"] [data-part="slide"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="carousel-018"] [data-part="slide"][data-current="true"]{opacity:1}
 [data-vibeui-block="carousel-018"] [data-part="caption"]{
@@ -240,6 +247,7 @@ export function Carousel018({
               <div
                 key={entry.title}
                 data-part="slide"
+                data-empty={entry.image ? undefined : "true"}
                 data-current={position === index || undefined}
                 aria-hidden={position === index ? undefined : true}
                 style={
@@ -247,7 +255,16 @@ export function Carousel018({
                     "--vibeui-carousel-018-hue": String(entry.hue),
                   } as CSSProperties
                 }
-              />
+              >
+                {entry.image ? (
+                  <img
+                    src={entry.image}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
+              </div>
             ))}
           </div>
           <p

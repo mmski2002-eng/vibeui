@@ -7,6 +7,8 @@ type About002Item = {
 }
 
 export type About002Props = {
+  /** Фото из истории компании. Без него секция остаётся текстовой. */
+  image?: string
   eyebrow?: string
   title?: string
   items?: About002Item[]
@@ -41,6 +43,13 @@ container-type:inline-size;
 min-width:min(100%,16rem);
 display:block;background:var(--vibeui-about-002-bg);color:var(--vibeui-about-002-ink);
 font-family:var(--vibeui-about-002-font);
+}
+[data-vibeui-block="about-002"] [data-part="figure"]{
+position:relative;overflow:hidden;aspect-ratio:16 / 9;
+margin-top:1.5rem;border-radius:0.875rem;
+}
+[data-vibeui-block="about-002"] [data-part="figure"] img{
+display:block;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="about-002"] [data-part="shell"]{
 max-width:56rem;margin:0 auto;padding:3.5rem 1.25rem;
@@ -152,6 +161,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 /** История компании вертикальным таймлайном с годами и оранжевыми точками. */
 export function About002({
   eyebrow = "История",
+  image = "",
   title = "Как мы к этому пришли",
   items = DEFAULT_ITEMS,
   background = "",
@@ -194,6 +204,12 @@ export function About002({
               </li>
             ))}
           </ol>
+
+          {image ? (
+            <figure data-part="figure">
+              <img src={image} alt="" loading="lazy" decoding="async" />
+            </figure>
+          ) : null}
         </div>
       </section>
     </>

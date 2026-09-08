@@ -7,6 +7,8 @@ export type Dropdown018Props = Omit<
   ComponentProps<"div">,
   "children" | "onChange"
 > & {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   /**
    * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
    * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
@@ -117,11 +119,16 @@ transition:background-color .14s ease;
 [data-vibeui-block="dropdown-018"] [data-part="item"]:focus-visible{outline:2px solid var(--vibeui-dropdown-018-accent);outline-offset:-2px}
 [data-vibeui-block="dropdown-018"] [data-part="item"][aria-checked="true"]{font-weight:650}
 [data-vibeui-block="dropdown-018"] [data-part="face"]{
-display:flex;align-items:center;justify-content:center;flex:none;
+position:relative;display:flex;align-items:center;justify-content:center;flex:none;
 width:1.5rem;height:1.5rem;border-radius:9999px;
-background:light-dark(oklch(0.92 0.05 var(--vibeui-dropdown-018-hue)),oklch(0.34 0.065 var(--vibeui-dropdown-018-hue)));
 color:light-dark(oklch(0.38 0.09 var(--vibeui-dropdown-018-hue)),oklch(0.88 0.063 var(--vibeui-dropdown-018-hue)));
-font-size:0.625rem;font-weight:700;
+font-size:0.625rem;font-weight:700;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="dropdown-018"] [data-part="face"][data-empty="true"]{background:light-dark(oklch(0.92 0.05 var(--vibeui-dropdown-018-hue)),oklch(0.34 0.065 var(--vibeui-dropdown-018-hue)));}
+[data-vibeui-block="dropdown-018"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="dropdown-018"] [data-part="name"]{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 [data-vibeui-block="dropdown-018"] [data-part="tick"]{
@@ -213,6 +220,7 @@ function stepFocus(list: HTMLElement | null, delta: number) {
 export function Dropdown018({
   open = false,
   placeholder = "Поиск по имени",
+  avatarImage = "",
   people = DEFAULT_PEOPLE,
   onChange,
   assignedTemplate = "Исполнитель: {name}",
@@ -339,7 +347,19 @@ export function Dropdown018({
                   }
                   onClick={() => choose(person)}
                 >
-                  <span data-part="face" aria-hidden="true">
+                  <span
+                    data-part="face"
+                    data-empty={avatarImage ? undefined : "true"}
+                    aria-hidden="true"
+                  >
+                    {avatarImage ? (
+                      <img
+                        src={avatarImage}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : null}
                     {initials(person)}
                   </span>
                   <span data-part="name">{person}</span>

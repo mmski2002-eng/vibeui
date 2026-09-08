@@ -92,9 +92,7 @@ font-variant-numeric:tabular-nums;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="sparkline-004"] *{animation:none!important;transition:none!important}}
 `
 
-const DEFAULT_OUTCOMES = [
-  1, 1, -1, 1, 1, 1, -1, -1, 1, 0, 1, 1, 1, -1, 1, 1,
-]
+const DEFAULT_OUTCOMES = [1, 1, -1, 1, 1, 1, -1, -1, 1, 0, 1, 1, 1, -1, 1, 1]
 
 /**
  * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту

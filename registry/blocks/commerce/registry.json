@@ -245,7 +245,34 @@
         "preview": {
           "width": "full",
           "props": {
-            "image": "/demo/products/product-tall-07.webp"
+            "image": "/demo/products/product-46.webp",
+            "sizes": [
+              {
+                "label": "S",
+                "value": "s",
+                "available": true
+              },
+              {
+                "label": "M",
+                "value": "m",
+                "available": true
+              },
+              {
+                "label": "L",
+                "value": "l",
+                "available": false
+              },
+              {
+                "label": "XL",
+                "value": "xl",
+                "available": true
+              }
+            ],
+            "thumbs": [
+              "/demo/products/product-46.webp",
+              "/demo/products/product-47.webp",
+              "/demo/products/product-48.webp"
+            ]
           }
         },
         "ai": {
@@ -371,7 +398,12 @@
             "title": "Product Detail",
             "preview": {
               "props": {
-                "image": "/demo/products/product-tall-07.webp"
+                "image": "/demo/products/product-46.webp",
+                "thumbs": [
+                  "/demo/products/product-46.webp",
+                  "/demo/products/product-47.webp",
+                  "/demo/products/product-48.webp"
+                ]
               }
             }
           }
@@ -411,7 +443,29 @@
           "totals"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "lines": [
+              {
+                "id": "1",
+                "title": "Свитшот «Тихий вечер»",
+                "option": "Размер M, серый",
+                "price": 5400,
+                "count": 1,
+                "hue": 262,
+                "image": "/demo/products/product-01.webp"
+              },
+              {
+                "id": "2",
+                "title": "Настольная лампа «Луч»",
+                "option": "Тёплый свет",
+                "price": 4900,
+                "count": 2,
+                "hue": 75,
+                "image": "/demo/products/product-02.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce003",
@@ -538,7 +592,8 @@
                     "option": "Size M, grey",
                     "price": 54,
                     "count": 1,
-                    "hue": 262
+                    "hue": 262,
+                    "image": "/demo/products/product-01.webp"
                   },
                   {
                     "id": "2",
@@ -546,7 +601,8 @@
                     "option": "Warm light",
                     "price": 49,
                     "count": 2,
-                    "hue": 75
+                    "hue": 75,
+                    "image": "/demo/products/product-02.webp"
                   }
                 ],
                 "labels": {
@@ -828,7 +884,49 @@
           "navigation"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "categories": [
+              {
+                "title": "Свет",
+                "count": "128 товаров",
+                "hint": "Лампы, торшеры, гирлянды",
+                "hue": 75,
+                "wide": true,
+                "image": "/demo/products/product-05.webp"
+              },
+              {
+                "title": "Мебель",
+                "count": "94 товара",
+                "hue": 152,
+                "image": "/demo/products/product-16.webp"
+              },
+              {
+                "title": "Текстиль",
+                "count": "212 товаров",
+                "hue": 262,
+                "image": "/demo/products/product-27.webp"
+              },
+              {
+                "title": "Посуда",
+                "count": "76 товаров",
+                "hue": 25,
+                "image": "/demo/products/product-13.webp"
+              },
+              {
+                "title": "Хранение",
+                "count": "58 товаров",
+                "hue": 200,
+                "image": "/demo/products/product-05.webp"
+              },
+              {
+                "title": "Растения",
+                "count": "41 товар",
+                "hue": 130,
+                "image": "/demo/products/product-16.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce005",
@@ -948,32 +1046,38 @@
                     "count": "128 items",
                     "hint": "Lamps, floor lamps, string lights",
                     "hue": 75,
-                    "wide": true
+                    "wide": true,
+                    "image": "/demo/products/product-05.webp"
                   },
                   {
                     "title": "Furniture",
                     "count": "94 items",
-                    "hue": 152
+                    "hue": 152,
+                    "image": "/demo/products/product-16.webp"
                   },
                   {
                     "title": "Textiles",
                     "count": "212 items",
-                    "hue": 262
+                    "hue": 262,
+                    "image": "/demo/products/product-27.webp"
                   },
                   {
                     "title": "Tableware",
                     "count": "76 items",
-                    "hue": 25
+                    "hue": 25,
+                    "image": "/demo/products/product-13.webp"
                   },
                   {
                     "title": "Storage",
                     "count": "58 items",
-                    "hue": 200
+                    "hue": 200,
+                    "image": "/demo/products/product-05.webp"
                   },
                   {
                     "title": "Plants",
                     "count": "41 items",
-                    "hue": 130
+                    "hue": 130,
+                    "image": "/demo/products/product-16.webp"
                   }
                 ]
               }
@@ -1195,7 +1299,55 @@
           "sorting"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "products": [
+              {
+                "id": "1",
+                "title": "Кресло «Хмарь»",
+                "spec": "Дуб, шерсть, каркас 12 лет",
+                "price": 38900,
+                "old": 44900,
+                "rating": 4.8,
+                "votes": 213,
+                "hue": 262,
+                "badge": "−13%",
+                "image": "/demo/products/product-21.webp"
+              },
+              {
+                "id": "2",
+                "title": "Лампа «Луч»",
+                "spec": "Тёплый свет, диммер",
+                "price": 4900,
+                "rating": 4.6,
+                "votes": 88,
+                "hue": 75,
+                "image": "/demo/products/product-29.webp"
+              },
+              {
+                "id": "3",
+                "title": "Стол «Полдень»",
+                "spec": "Ясень, 140 × 80 см",
+                "price": 52400,
+                "rating": 4.9,
+                "votes": 41,
+                "hue": 150,
+                "image": "/demo/products/product-30.webp"
+              },
+              {
+                "id": "4",
+                "title": "Ковёр «Туман»",
+                "spec": "Шерсть, 200 × 300 см",
+                "price": 27600,
+                "old": 31000,
+                "rating": 4.4,
+                "votes": 156,
+                "hue": 20,
+                "badge": "−11%",
+                "image": "/demo/products/product-31.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce007",
@@ -1350,7 +1502,8 @@
                     "rating": 4.8,
                     "votes": 213,
                     "hue": 262,
-                    "badge": "−13%"
+                    "badge": "−13%",
+                    "image": "/demo/products/product-21.webp"
                   },
                   {
                     "id": "2",
@@ -1359,7 +1512,8 @@
                     "price": 49,
                     "rating": 4.6,
                     "votes": 88,
-                    "hue": 75
+                    "hue": 75,
+                    "image": "/demo/products/product-29.webp"
                   },
                   {
                     "id": "3",
@@ -1368,7 +1522,8 @@
                     "price": 524,
                     "rating": 4.9,
                     "votes": 41,
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/products/product-30.webp"
                   },
                   {
                     "id": "4",
@@ -1379,7 +1534,8 @@
                     "rating": 4.4,
                     "votes": 156,
                     "hue": 20,
-                    "badge": "−11%"
+                    "badge": "−11%",
+                    "image": "/demo/products/product-31.webp"
                   }
                 ]
               }
@@ -1420,7 +1576,10 @@
           "variants"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "image": "/demo/products/product-18.webp"
+          }
         },
         "ai": {
           "export": "Commerce008",
@@ -1568,7 +1727,8 @@
                   "Back",
                   "Fabric close-up",
                   "In a room"
-                ]
+                ],
+                "image": "/demo/products/product-18.webp"
               }
             }
           }
@@ -2029,7 +2189,25 @@
           "receipt"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "lines": [
+              {
+                "title": "Кресло «Хмарь»",
+                "option": "Песочный, дуб",
+                "price": "38 900 ₽",
+                "hue": 75,
+                "image": "/demo/products/product-05.webp"
+              },
+              {
+                "title": "Плед «Пасмурно» × 2",
+                "option": "Шерсть, 140 × 200",
+                "price": "14 800 ₽",
+                "hue": 262,
+                "image": "/demo/products/product-06.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce011",
@@ -2159,13 +2337,15 @@
                     "title": "Haze armchair",
                     "option": "Sand, oak",
                     "price": "$389",
-                    "hue": 75
+                    "hue": 75,
+                    "image": "/demo/products/product-05.webp"
                   },
                   {
                     "title": "Overcast throw × 2",
                     "option": "Wool, 140 × 200",
                     "price": "$148",
-                    "hue": 262
+                    "hue": 262,
+                    "image": "/demo/products/product-06.webp"
                   }
                 ],
                 "facts": [
@@ -2225,7 +2405,10 @@
           "timeline"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "avatarImage": "/demo/avatars/anna-256.webp"
+          }
         },
         "ai": {
           "export": "Commerce012",
@@ -2391,7 +2574,8 @@
                     "at": "10.03 14:02",
                     "text": "Paid by card •• 4417"
                   }
-                ]
+                ],
+                "avatarImage": "/demo/avatars/anna-256.webp"
               }
             }
           }
@@ -2642,7 +2826,27 @@
           "support"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "items": [
+              {
+                "id": "1",
+                "title": "Кресло «Хмарь»",
+                "option": "Песочный, дуб",
+                "price": "38 900 ₽",
+                "hue": 75,
+                "image": "/demo/products/product-11.webp"
+              },
+              {
+                "id": "2",
+                "title": "Плед «Пасмурно»",
+                "option": "Шерсть, 140 × 200",
+                "price": "7 400 ₽",
+                "hue": 262,
+                "image": "/demo/products/product-12.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce014",
@@ -2781,14 +2985,16 @@
                     "title": "Haze armchair",
                     "option": "Sand, oak",
                     "price": "$389",
-                    "hue": 75
+                    "hue": 75,
+                    "image": "/demo/products/product-11.webp"
                   },
                   {
                     "id": "2",
                     "title": "Overcast throw",
                     "option": "Wool, 140 × 200",
                     "price": "$74",
-                    "hue": 262
+                    "hue": 262,
+                    "image": "/demo/products/product-12.webp"
                   }
                 ],
                 "reasons": [
@@ -2849,7 +3055,51 @@
           "rating"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "filters": [
+              {
+                "id": "1",
+                "author": "Анна Р.",
+                "date": "12 марта",
+                "rating": 5,
+                "text": "Взяла размер M при росте 172 — сидит свободно. После четырёх стирок на 30° полотно не село.",
+                "photos": 2,
+                "verified": true
+              },
+              {
+                "id": "2",
+                "author": "Илья М.",
+                "date": "9 марта",
+                "rating": 4,
+                "text": "На фото серый светлее, чем в жизни: пришёл почти графитовый. Швы аккуратные, доставка за день.",
+                "verified": true
+              },
+              {
+                "id": "3",
+                "author": "Вера С.",
+                "date": "2 марта",
+                "rating": 5,
+                "text": "Второй заказ за год. Первый до сих пор выглядит новым, поэтому взяла ещё один цвет.",
+                "verified": true
+              },
+              {
+                "id": "4",
+                "author": "Кирилл Д.",
+                "date": "26 февраля",
+                "rating": 3,
+                "text": "Ткань приятная, но рукав коротковат для роста 190. Возврат оформили без вопросов."
+              },
+              {
+                "id": "5",
+                "author": "Ольга Т.",
+                "date": "18 февраля",
+                "rating": 2,
+                "text": "Пришла затяжка на плече. Заменили, но ждать пришлось неделю.",
+                "photos": 1
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce015",
@@ -3010,7 +3260,8 @@
                     "rating": 5,
                     "text": "Took the M at 172 cm — roomy fit. Four washes at 30° and the fabric has not shrunk.",
                     "photos": 2,
-                    "verified": true
+                    "verified": true,
+                    "image": "/demo/avatars/vera-256.webp"
                   },
                   {
                     "id": "2",
@@ -3018,7 +3269,8 @@
                     "date": "9 March",
                     "rating": 4,
                     "text": "The grey looks lighter in the photos than in life: it arrived almost graphite. Neat seams, next-day delivery.",
-                    "verified": true
+                    "verified": true,
+                    "image": "/demo/avatars/artem-256.webp"
                   },
                   {
                     "id": "3",
@@ -3026,14 +3278,16 @@
                     "date": "2 March",
                     "rating": 5,
                     "text": "Second order this year. The first still looks new, so I picked up another colour.",
-                    "verified": true
+                    "verified": true,
+                    "image": "/demo/avatars/nina-256.webp"
                   },
                   {
                     "id": "4",
                     "author": "Kirill D.",
                     "date": "26 February",
                     "rating": 3,
-                    "text": "Nice fabric, but the sleeve runs short at 190 cm. The return was processed without questions."
+                    "text": "Nice fabric, but the sleeve runs short at 190 cm. The return was processed without questions.",
+                    "image": "/demo/avatars/pavel-256.webp"
                   },
                   {
                     "id": "5",
@@ -3041,7 +3295,8 @@
                     "date": "18 February",
                     "rating": 2,
                     "text": "Arrived with a pull on the shoulder. They replaced it, but I waited a week.",
-                    "photos": 1
+                    "photos": 1,
+                    "image": "/demo/avatars/vera-256.webp"
                   }
                 ]
               }
@@ -3083,7 +3338,36 @@
           "cart"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "items": [
+              {
+                "id": "main",
+                "title": "Кресло «Хмарь»",
+                "note": "Этот товар · песочный, дуб",
+                "price": 38900,
+                "hue": 75,
+                "fixed": true,
+                "image": "/demo/products/product-15.webp"
+              },
+              {
+                "id": "pouf",
+                "title": "Пуф «Хмарь»",
+                "note": "Та же ткань, высота 40 см",
+                "price": 12400,
+                "hue": 100,
+                "image": "/demo/products/product-16.webp"
+              },
+              {
+                "id": "care",
+                "title": "Набор для ухода",
+                "note": "Щётка и спрей для шерсти",
+                "price": 1900,
+                "hue": 150,
+                "image": "/demo/products/product-17.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce016",
@@ -3223,21 +3507,24 @@
                     "note": "This item · sand, oak",
                     "price": 389,
                     "hue": 75,
-                    "fixed": true
+                    "fixed": true,
+                    "image": "/demo/products/product-15.webp"
                   },
                   {
                     "id": "pouf",
                     "title": "Haze pouffe",
                     "note": "Same fabric, 40 cm tall",
                     "price": 124,
-                    "hue": 100
+                    "hue": 100,
+                    "image": "/demo/products/product-16.webp"
                   },
                   {
                     "id": "care",
                     "title": "Care kit",
                     "note": "Brush and wool spray",
                     "price": 19,
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/products/product-17.webp"
                   }
                 ]
               }
@@ -3279,7 +3566,33 @@
           "specs"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "products": [
+              {
+                "id": "a",
+                "title": "Кресло «Хмарь»",
+                "price": "38 900 ₽",
+                "hue": 75,
+                "best": true,
+                "image": "/demo/products/product-21.webp"
+              },
+              {
+                "id": "b",
+                "title": "Кресло «Полдень»",
+                "price": "44 200 ₽",
+                "hue": 150,
+                "image": "/demo/products/product-34.webp"
+              },
+              {
+                "id": "c",
+                "title": "Кресло «Туман»",
+                "price": "29 700 ₽",
+                "hue": 262,
+                "image": "/demo/products/product-35.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce017",
@@ -3418,19 +3731,22 @@
                     "title": "Haze armchair",
                     "price": "$389",
                     "hue": 75,
-                    "best": true
+                    "best": true,
+                    "image": "/demo/products/product-21.webp"
                   },
                   {
                     "id": "b",
                     "title": "Noon armchair",
                     "price": "$442",
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/products/product-34.webp"
                   },
                   {
                     "id": "c",
                     "title": "Mist armchair",
                     "price": "$297",
-                    "hue": 262
+                    "hue": 262,
+                    "image": "/demo/products/product-35.webp"
                   }
                 ],
                 "rows": [
@@ -4738,7 +5054,37 @@
           "grid"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "items": [
+              {
+                "id": "1",
+                "title": "Кресло «Хмарь», песочный",
+                "price": "34 900 ₽",
+                "old": "38 900 ₽",
+                "drop": "Подешевело на 4 000 ₽ с 3 марта",
+                "stock": "in",
+                "hue": 75,
+                "image": "/demo/products/product-21.webp"
+              },
+              {
+                "id": "2",
+                "title": "Торшер «Сумерки»",
+                "price": "16 200 ₽",
+                "stock": "low",
+                "hue": 150,
+                "image": "/demo/products/product-29.webp"
+              },
+              {
+                "id": "3",
+                "title": "Ковёр «Туман», 200 × 300",
+                "price": "27 600 ₽",
+                "stock": "out",
+                "hue": 262,
+                "image": "/demo/products/product-31.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce024",
@@ -4882,21 +5228,24 @@
                     "old": "$389",
                     "drop": "Down by $40 since 3 March",
                     "stock": "in",
-                    "hue": 75
+                    "hue": 75,
+                    "image": "/demo/products/product-21.webp"
                   },
                   {
                     "id": "2",
                     "title": "Dusk floor lamp",
                     "price": "$162",
                     "stock": "low",
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/products/product-29.webp"
                   },
                   {
                     "id": "3",
                     "title": "Mist rug, 200 × 300",
                     "price": "$276",
                     "stock": "out",
-                    "hue": 262
+                    "hue": 262,
+                    "image": "/demo/products/product-31.webp"
                   }
                 ]
               }
@@ -5189,7 +5538,43 @@
           "recommendations"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "picks": [
+              {
+                "id": "1",
+                "title": "Кресло «Хмарь»",
+                "price": "38 900 ₽",
+                "note": "смотрели вчера",
+                "hue": 75,
+                "image": "/demo/products/product-21.webp"
+              },
+              {
+                "id": "2",
+                "title": "Торшер «Сумерки»",
+                "price": "16 200 ₽",
+                "note": "смотрели вчера",
+                "hue": 150,
+                "image": "/demo/products/product-29.webp"
+              },
+              {
+                "id": "3",
+                "title": "Плед «Пасмурно»",
+                "price": "7 400 ₽",
+                "note": "к креслу",
+                "hue": 262,
+                "image": "/demo/products/product-16.webp"
+              },
+              {
+                "id": "4",
+                "title": "Ковёр «Туман»",
+                "price": "27 600 ₽",
+                "note": "подешевел",
+                "hue": 20,
+                "image": "/demo/products/product-31.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce026",
@@ -5324,28 +5709,32 @@
                     "title": "Haze armchair",
                     "price": "$389",
                     "note": "viewed yesterday",
-                    "hue": 75
+                    "hue": 75,
+                    "image": "/demo/products/product-21.webp"
                   },
                   {
                     "id": "2",
                     "title": "Dusk floor lamp",
                     "price": "$162",
                     "note": "viewed yesterday",
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/products/product-29.webp"
                   },
                   {
                     "id": "3",
                     "title": "Overcast throw",
                     "price": "$74",
                     "note": "goes with the chair",
-                    "hue": 262
+                    "hue": 262,
+                    "image": "/demo/products/product-16.webp"
                   },
                   {
                     "id": "4",
                     "title": "Mist rug",
                     "price": "$276",
                     "note": "price dropped",
-                    "hue": 20
+                    "hue": 20,
+                    "image": "/demo/products/product-31.webp"
                   }
                 ]
               }
@@ -5387,7 +5776,76 @@
           "collections"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "facts": [
+              {
+                "id": "d1",
+                "title": "Тёплый свет",
+                "note": "34 товара",
+                "hue": 75
+              },
+              {
+                "id": "d2",
+                "title": "Для маленькой кухни",
+                "note": "58 товаров",
+                "hue": 150
+              },
+              {
+                "id": "d3",
+                "title": "Всё для сна",
+                "note": "26 товаров",
+                "hue": 262
+              },
+              {
+                "id": "d4",
+                "title": "Дешевле 3 000 ₽",
+                "note": "112 товаров",
+                "hue": 20
+              }
+            ],
+            "items": [
+              {
+                "id": "1",
+                "title": "Торшер «Сумерки»",
+                "price": "16 200 ₽",
+                "old": "19 900 ₽",
+                "badge": "−19%",
+                "hue": 75,
+                "image": "/demo/products/product-29.webp"
+              },
+              {
+                "id": "2",
+                "title": "Плед «Пасмурно»",
+                "price": "7 400 ₽",
+                "hue": 150,
+                "image": "/demo/products/product-16.webp"
+              },
+              {
+                "id": "3",
+                "title": "Ковёр «Туман» 160×230",
+                "price": "27 600 ₽",
+                "old": "32 000 ₽",
+                "badge": "−14%",
+                "hue": 262,
+                "image": "/demo/products/product-31.webp"
+              },
+              {
+                "id": "4",
+                "title": "Ваза «Отмель»",
+                "price": "3 900 ₽",
+                "hue": 20,
+                "image": "/demo/products/product-27.webp"
+              },
+              {
+                "id": "5",
+                "title": "Полка «Полдень»",
+                "price": "11 300 ₽",
+                "hue": 200,
+                "image": "/demo/products/product-32.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce027",
@@ -5563,13 +6021,15 @@
                     "price": "$162",
                     "old": "$199",
                     "badge": "−19%",
-                    "hue": 75
+                    "hue": 75,
+                    "image": "/demo/products/product-29.webp"
                   },
                   {
                     "id": "2",
                     "title": "Overcast throw",
                     "price": "$74",
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/products/product-16.webp"
                   },
                   {
                     "id": "3",
@@ -5577,19 +6037,22 @@
                     "price": "$276",
                     "old": "$320",
                     "badge": "−14%",
-                    "hue": 262
+                    "hue": 262,
+                    "image": "/demo/products/product-31.webp"
                   },
                   {
                     "id": "4",
                     "title": "Shoal vase",
                     "price": "$39",
-                    "hue": 20
+                    "hue": 20,
+                    "image": "/demo/products/product-27.webp"
                   },
                   {
                     "id": "5",
                     "title": "Noon shelf",
                     "price": "$113",
-                    "hue": 200
+                    "hue": 200,
+                    "image": "/demo/products/product-32.webp"
                   }
                 ]
               }
@@ -5630,7 +6093,61 @@
           "grid"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "facts": [
+              {
+                "label": "товаров в продаже",
+                "value": "184"
+              },
+              {
+                "label": "средняя оценка",
+                "value": "4,8"
+              },
+              {
+                "label": "отзывов покупателей",
+                "value": "2 340"
+              },
+              {
+                "label": "работает с",
+                "value": "2009"
+              }
+            ],
+            "products": [
+              {
+                "id": "1",
+                "title": "Торшер «Сумерки»",
+                "spec": "Ясень, тканый абажур",
+                "price": "16 200 ₽",
+                "hue": 75,
+                "image": "/demo/products/product-29.webp"
+              },
+              {
+                "id": "2",
+                "title": "Плед «Пасмурно»",
+                "spec": "Шерсть, 140×200",
+                "price": "7 400 ₽",
+                "hue": 150,
+                "image": "/demo/products/product-16.webp"
+              },
+              {
+                "id": "3",
+                "title": "Ваза «Отмель»",
+                "spec": "Керамика ручной работы",
+                "price": "3 900 ₽",
+                "hue": 200,
+                "image": "/demo/products/product-27.webp"
+              },
+              {
+                "id": "4",
+                "title": "Короб «Полдень»",
+                "spec": "Лён, 30×40 см",
+                "price": "2 700 ₽",
+                "hue": 262,
+                "image": "/demo/products/product-36.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce028",
@@ -5787,28 +6304,32 @@
                     "title": "Dusk floor lamp",
                     "spec": "Ash, woven shade",
                     "price": "$162",
-                    "hue": 75
+                    "hue": 75,
+                    "image": "/demo/products/product-29.webp"
                   },
                   {
                     "id": "2",
                     "title": "Overcast throw",
                     "spec": "Wool, 140×200",
                     "price": "$74",
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/products/product-16.webp"
                   },
                   {
                     "id": "3",
                     "title": "Shoal vase",
                     "spec": "Hand-thrown ceramic",
                     "price": "$39",
-                    "hue": 200
+                    "hue": 200,
+                    "image": "/demo/products/product-27.webp"
                   },
                   {
                     "id": "4",
                     "title": "Noon box",
                     "spec": "Linen, 30×40 cm",
                     "price": "$27",
-                    "hue": 262
+                    "hue": 262,
+                    "image": "/demo/products/product-36.webp"
                   }
                 ]
               }
@@ -5849,7 +6370,74 @@
           "refine"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "refines": [
+              {
+                "group": "Тип",
+                "values": [
+                  "Настольная",
+                  "Настенная",
+                  "Торшер",
+                  "Подвес"
+                ]
+              },
+              {
+                "group": "Цена",
+                "values": [
+                  "до 5 000 ₽",
+                  "5–15 тыс.",
+                  "дороже 15 тыс."
+                ]
+              },
+              {
+                "group": "Свет",
+                "values": [
+                  "Тёплый",
+                  "Нейтральный",
+                  "С диммером"
+                ]
+              }
+            ],
+            "hits": [
+              {
+                "id": "1",
+                "title": "Настольная лампа «Полдень»",
+                "spec": "Тёплый свет, диммер, дуб",
+                "price": "6 900 ₽",
+                "stock": "на складе, 12 шт.",
+                "hue": 75,
+                "image": "/demo/products/product-07.webp"
+              },
+              {
+                "id": "2",
+                "title": "Лампа «Отмель» на прищепке",
+                "spec": "Крепление до 4 см, гибкая ножка",
+                "price": "3 200 ₽",
+                "stock": "на складе, 4 шт.",
+                "hue": 200,
+                "image": "/demo/products/product-29.webp"
+              },
+              {
+                "id": "3",
+                "title": "Лампа «Сумерки» с абажуром",
+                "spec": "Тканый абажур, кнопка на шнуре",
+                "price": "8 400 ₽",
+                "stock": "под заказ, 5 дней",
+                "hue": 150,
+                "image": "/demo/products/product-43.webp"
+              },
+              {
+                "id": "4",
+                "title": "Лампа «Туман» для чтения",
+                "spec": "Нейтральный свет, поворотная",
+                "price": "5 600 ₽",
+                "stock": "на складе, 30 шт.",
+                "hue": 262,
+                "image": "/demo/products/product-44.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce029",
@@ -6019,7 +6607,8 @@
                     "spec": "Warm light, dimmer, oak",
                     "price": "$69",
                     "stock": "in stock, 12 left",
-                    "hue": 75
+                    "hue": 75,
+                    "image": "/demo/products/product-07.webp"
                   },
                   {
                     "id": "2",
@@ -6027,7 +6616,8 @@
                     "spec": "Clamps up to 4 cm, flexible arm",
                     "price": "$32",
                     "stock": "in stock, 4 left",
-                    "hue": 200
+                    "hue": 200,
+                    "image": "/demo/products/product-29.webp"
                   },
                   {
                     "id": "3",
@@ -6035,7 +6625,8 @@
                     "spec": "Woven shade, inline switch",
                     "price": "$84",
                     "stock": "made to order, 5 days",
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/products/product-43.webp"
                   },
                   {
                     "id": "4",
@@ -6043,7 +6634,8 @@
                     "spec": "Neutral light, swivel head",
                     "price": "$56",
                     "stock": "in stock, 30 left",
-                    "hue": 262
+                    "hue": 262,
+                    "image": "/demo/products/product-44.webp"
                   }
                 ]
               }
@@ -6291,7 +6883,10 @@
           "map"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "avatarImage": "/demo/avatars/irina-256.webp"
+          }
         },
         "ai": {
           "export": "Commerce031",
@@ -6459,7 +7054,8 @@
                     "top": 22,
                     "left": 72
                   }
-                ]
+                ],
+                "avatarImage": "/demo/avatars/irina-256.webp"
               }
             }
           }
@@ -6706,7 +7302,10 @@
           "account"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "avatarImage": "/demo/avatars/petr-256.webp"
+          }
         },
         "ai": {
           "export": "Commerce033",
@@ -6859,7 +7458,8 @@
                   "phone": "+7 921 000-11-22",
                   "email": "anna@example.com",
                   "loginEmail": "anna@example.com"
-                }
+                },
+                "avatarImage": "/demo/avatars/petr-256.webp"
               }
             }
           }
@@ -6898,7 +7498,35 @@
           "schedule"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "plans": [
+              {
+                "id": "once",
+                "label": "Сразу",
+                "parts": 1,
+                "overpay": 0,
+                "note": "Одним платежом картой или через СБП.",
+                "image": "/demo/avatars/dina-256.webp"
+              },
+              {
+                "id": "four",
+                "label": "4 платежа",
+                "parts": 4,
+                "overpay": 0,
+                "note": "Каждые две недели, первый — сегодня. Без процентов.",
+                "image": "/demo/avatars/ilya-256.webp"
+              },
+              {
+                "id": "twelve",
+                "label": "12 месяцев",
+                "parts": 12,
+                "overpay": 0.14,
+                "note": "Банковская рассрочка, решение за минуту.",
+                "image": "/demo/avatars/anna-256.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce034",
@@ -7031,21 +7659,24 @@
                     "label": "In full",
                     "parts": 1,
                     "overpay": 0,
-                    "note": "One payment by card or bank transfer."
+                    "note": "One payment by card or bank transfer.",
+                    "image": "/demo/avatars/dina-256.webp"
                   },
                   {
                     "id": "four",
                     "label": "4 payments",
                     "parts": 4,
                     "overpay": 0,
-                    "note": "Every two weeks, the first one today. No interest."
+                    "note": "Every two weeks, the first one today. No interest.",
+                    "image": "/demo/avatars/ilya-256.webp"
                   },
                   {
                     "id": "twelve",
                     "label": "12 months",
                     "parts": 12,
                     "overpay": 0.14,
-                    "note": "A bank installment, decided in a minute."
+                    "note": "A bank installment, decided in a minute.",
+                    "image": "/demo/avatars/anna-256.webp"
                   }
                 ],
                 "schedule": [
@@ -7102,7 +7733,43 @@
           "card"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "wraps": [
+              {
+                "id": "none",
+                "label": "Без упаковки",
+                "price": "0 ₽",
+                "hue": 265,
+                "ribbon": 265,
+                "image": "/demo/avatars/maria-256.webp"
+              },
+              {
+                "id": "kraft",
+                "label": "Крафт и шпагат",
+                "price": "190 ₽",
+                "hue": 70,
+                "ribbon": 40,
+                "image": "/demo/avatars/oleg-256.webp"
+              },
+              {
+                "id": "linen",
+                "label": "Лён и лента",
+                "price": "290 ₽",
+                "hue": 200,
+                "ribbon": 85,
+                "image": "/demo/avatars/irina-256.webp"
+              },
+              {
+                "id": "red",
+                "label": "Праздничная",
+                "price": "390 ₽",
+                "hue": 15,
+                "ribbon": 95,
+                "image": "/demo/avatars/petr-256.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce035",
@@ -7236,28 +7903,32 @@
                     "label": "No wrapping",
                     "price": "$0",
                     "hue": 265,
-                    "ribbon": 265
+                    "ribbon": 265,
+                    "image": "/demo/avatars/maria-256.webp"
                   },
                   {
                     "id": "kraft",
                     "label": "Kraft and twine",
                     "price": "$2",
                     "hue": 70,
-                    "ribbon": 40
+                    "ribbon": 40,
+                    "image": "/demo/avatars/oleg-256.webp"
                   },
                   {
                     "id": "linen",
                     "label": "Linen and ribbon",
                     "price": "$3",
                     "hue": 200,
-                    "ribbon": 85
+                    "ribbon": 85,
+                    "image": "/demo/avatars/irina-256.webp"
                   },
                   {
                     "id": "red",
                     "label": "Festive",
                     "price": "$4",
                     "hue": 15,
-                    "ribbon": 95
+                    "ribbon": 95,
+                    "image": "/demo/avatars/petr-256.webp"
                   }
                 ]
               }
@@ -7298,7 +7969,32 @@
           "delivery"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "periods": [
+              {
+                "value": "week",
+                "label": "Раз в неделю",
+                "every": 7,
+                "discount": "−15% к цене",
+                "image": "/demo/avatars/sofia-256.webp"
+              },
+              {
+                "value": "biweek",
+                "label": "Раз в две недели",
+                "every": 14,
+                "discount": "−10% к цене",
+                "image": "/demo/avatars/timur-256.webp"
+              },
+              {
+                "value": "month",
+                "label": "Раз в месяц",
+                "every": 28,
+                "discount": "−5% к цене",
+                "image": "/demo/avatars/vera-256.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce036",
@@ -7445,19 +8141,22 @@
                     "value": "week",
                     "label": "Every week",
                     "every": 7,
-                    "discount": "15% off"
+                    "discount": "15% off",
+                    "image": "/demo/avatars/sofia-256.webp"
                   },
                   {
                     "value": "biweek",
                     "label": "Every two weeks",
                     "every": 14,
-                    "discount": "10% off"
+                    "discount": "10% off",
+                    "image": "/demo/avatars/timur-256.webp"
                   },
                   {
                     "value": "month",
                     "label": "Every month",
                     "every": 28,
-                    "discount": "5% off"
+                    "discount": "5% off",
+                    "image": "/demo/avatars/vera-256.webp"
                   }
                 ],
                 "rules": [
@@ -7514,7 +8213,7 @@
                 "price": "5 400 ₽",
                 "count": 2,
                 "hue": 262,
-                "image": "/demo/products/product-tall-07.webp"
+                "image": "/demo/products/product-46.webp"
               },
               {
                 "id": "2",
@@ -7663,7 +8362,8 @@
                     "spec": "Size L, grey",
                     "price": "$54",
                     "count": 2,
-                    "hue": 262
+                    "hue": 262,
+                    "image": "/demo/products/product-46.webp"
                   },
                   {
                     "id": "2",
@@ -7671,7 +8371,8 @@
                     "spec": "Wool, 140×200",
                     "price": "$74",
                     "count": 1,
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/products/product-16.webp"
                   },
                   {
                     "id": "3",
@@ -7680,7 +8381,8 @@
                     "price": "$19",
                     "count": 1,
                     "hue": 75,
-                    "blocked": "The item has been opened and counts as fragrance — it cannot be returned by law."
+                    "blocked": "The item has been opened and counts as fragrance — it cannot be returned by law.",
+                    "image": "/demo/products/product-15.webp"
                   }
                 ],
                 "reasons": [
@@ -7974,7 +8676,47 @@
           "grid"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "deals": [
+              {
+                "id": "1",
+                "title": "Кресло «Хмарь» с подлокотниками",
+                "grade": "Витринный образец",
+                "defect": "Потёртость на задней ножке, 2 см. Обивка и каркас без нареканий.",
+                "price": "23 300 ₽",
+                "full": "38 900 ₽",
+                "cut": "−40%",
+                "left": 1,
+                "hue": 75,
+                "image": "/demo/products/product-21.webp"
+              },
+              {
+                "id": "2",
+                "title": "Торшер «Сумерки»",
+                "grade": "Повреждена упаковка",
+                "defect": "Коробка помята при перевозке, сам светильник не вскрывали.",
+                "price": "13 800 ₽",
+                "full": "16 200 ₽",
+                "cut": "−15%",
+                "left": 4,
+                "hue": 150,
+                "image": "/demo/products/product-29.webp"
+              },
+              {
+                "id": "3",
+                "title": "Ковёр «Туман» 160×230",
+                "grade": "Возврат покупателя",
+                "defect": "Разложили дома, не подошёл по цвету. Проверен и вычищен.",
+                "price": "20 700 ₽",
+                "full": "27 600 ₽",
+                "cut": "−25%",
+                "left": 2,
+                "hue": 262,
+                "image": "/demo/products/product-31.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce039",
@@ -8105,7 +8847,8 @@
                     "full": "$389",
                     "cut": "-40%",
                     "left": 1,
-                    "hue": 75
+                    "hue": 75,
+                    "image": "/demo/products/product-21.webp"
                   },
                   {
                     "id": "2",
@@ -8116,7 +8859,8 @@
                     "full": "$162",
                     "cut": "-15%",
                     "left": 4,
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/products/product-29.webp"
                   },
                   {
                     "id": "3",
@@ -8127,7 +8871,8 @@
                     "full": "$276",
                     "cut": "-25%",
                     "left": 2,
-                    "hue": 262
+                    "hue": 262,
+                    "image": "/demo/products/product-31.webp"
                   }
                 ],
                 "cta": "Add to cart",
@@ -8369,7 +9114,35 @@
           "savings"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "parts": [
+              {
+                "id": "1",
+                "title": "Торшер «Сумерки»",
+                "role": "Основа набора",
+                "price": "16 200 ₽",
+                "hue": 75,
+                "image": "/demo/products/product-29.webp"
+              },
+              {
+                "id": "2",
+                "title": "Лампа накаливания 4 Вт, тёплая",
+                "role": "Подходит по цоколю",
+                "price": "890 ₽",
+                "hue": 60,
+                "image": "/demo/products/product-43.webp"
+              },
+              {
+                "id": "3",
+                "title": "Диммер напольный, 2 м",
+                "role": "Регулирует яркость",
+                "price": "2 400 ₽",
+                "hue": 200,
+                "image": "/demo/products/product-44.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce041",
@@ -8493,21 +9266,24 @@
                     "title": "Dusk floor lamp",
                     "role": "Kit base",
                     "price": "$162",
-                    "hue": 75
+                    "hue": 75,
+                    "image": "/demo/products/product-29.webp"
                   },
                   {
                     "id": "2",
                     "title": "Incandescent bulb 4 W, warm",
                     "role": "Matching socket",
                     "price": "$9",
-                    "hue": 60
+                    "hue": 60,
+                    "image": "/demo/products/product-43.webp"
                   },
                   {
                     "id": "3",
                     "title": "Floor dimmer, 2 m",
                     "role": "Sets the brightness",
                     "price": "$24",
-                    "hue": 200
+                    "hue": 200,
+                    "image": "/demo/products/product-44.webp"
                   }
                 ],
                 "apart": "$194",
@@ -9196,7 +9972,10 @@
           "account"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "avatarImage": "/demo/avatars/mark-256.webp"
+          }
         },
         "ai": {
           "export": "Commerce045",
@@ -9376,7 +10155,8 @@
                   "makeMain": "Make the “{label}” address the main one",
                   "remove": "Delete the “{label}” address"
                 },
-                "profileAriaText": "Profile: {name}"
+                "profileAriaText": "Profile: {name}",
+                "avatarImage": "/demo/avatars/mark-256.webp"
               }
             }
           }
@@ -9425,7 +10205,7 @@
                 "price": "16 200 ₽",
                 "count": 1,
                 "hue": 75,
-                "image": "/demo/products/product-07.webp"
+                "image": "/demo/products/product-29.webp"
               },
               {
                 "id": "2",
@@ -9571,7 +10351,8 @@
                     "spec": "Ash, woven shade",
                     "price": "$162",
                     "count": 1,
-                    "hue": 75
+                    "hue": 75,
+                    "image": "/demo/products/product-29.webp"
                   },
                   {
                     "id": "2",
@@ -9579,7 +10360,8 @@
                     "spec": "Wool, 140×200, grey",
                     "price": "$148",
                     "count": 2,
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/products/product-16.webp"
                   },
                   {
                     "id": "3",
@@ -9588,7 +10370,8 @@
                     "price": "$19",
                     "count": 1,
                     "hue": 262,
-                    "gift": true
+                    "gift": true,
+                    "image": "/demo/products/product-15.webp"
                   }
                 ],
                 "goods": "$329",
@@ -9650,7 +10433,44 @@
           "collections"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "edits": [
+              {
+                "id": "1",
+                "title": "Тёплый свет",
+                "note": "Торшеры и настольные лампы с тёплой температурой — для коротких вечеров.",
+                "count": "42 товара",
+                "hue": 65,
+                "wide": true,
+                "image": "/demo/products/product-19.webp"
+              },
+              {
+                "id": "2",
+                "title": "Пледы и текстиль",
+                "note": "Шерсть, лён и хлопок плотностью от 400 г/м².",
+                "count": "28 товаров",
+                "hue": 20,
+                "image": "/demo/products/product-20.webp"
+              },
+              {
+                "id": "3",
+                "title": "Керамика ручной работы",
+                "note": "Небольшие тиражи мастерских, каждая вещь в единственном исполнении.",
+                "count": "16 товаров",
+                "hue": 150,
+                "image": "/demo/products/product-22.webp"
+              },
+              {
+                "id": "4",
+                "title": "Уценка прошлого сезона",
+                "note": "Витринные образцы и остатки коллекций со скидкой до 40%.",
+                "count": "63 товара",
+                "hue": 262,
+                "image": "/demo/products/product-23.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce047",
@@ -9778,28 +10598,32 @@
                     "note": "Floor and table lamps in warm temperatures — for short evenings.",
                     "count": "42 items",
                     "hue": 65,
-                    "wide": true
+                    "wide": true,
+                    "image": "/demo/products/product-19.webp"
                   },
                   {
                     "id": "2",
                     "title": "Throws and textiles",
                     "note": "Wool, linen and cotton from 400 g/m² upwards.",
                     "count": "28 items",
-                    "hue": 20
+                    "hue": 20,
+                    "image": "/demo/products/product-20.webp"
                   },
                   {
                     "id": "3",
                     "title": "Handmade ceramics",
                     "note": "Small studio runs, every piece one of a kind.",
                     "count": "16 items",
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/products/product-22.webp"
                   },
                   {
                     "id": "4",
                     "title": "Last season markdowns",
                     "note": "Display pieces and collection remainders at up to 40% off.",
                     "count": "63 items",
-                    "hue": 262
+                    "hue": 262,
+                    "image": "/demo/products/product-23.webp"
                   }
                 ],
                 "reasons": [
@@ -10049,7 +10873,57 @@
           "catalog"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "crumbs": [
+              {
+                "id": "1",
+                "label": "Каталог"
+              },
+              {
+                "id": "2",
+                "label": "Коллекции"
+              },
+              {
+                "id": "3",
+                "label": "Северный лён"
+              }
+            ],
+            "items": [
+              {
+                "id": "1",
+                "title": "Скатерть «Заводь»",
+                "material": "Лён 240 г/м²",
+                "price": "6 900 ₽",
+                "hue": 195,
+                "image": "/demo/products/product-37.webp"
+              },
+              {
+                "id": "2",
+                "title": "Салфетки, 4 шт.",
+                "material": "Лён с мережкой",
+                "price": "2 400 ₽",
+                "hue": 150,
+                "image": "/demo/products/product-38.webp"
+              },
+              {
+                "id": "3",
+                "title": "Полотенце «Плёс»",
+                "material": "Вафельное плетение",
+                "price": "1 800 ₽",
+                "hue": 265,
+                "image": "/demo/products/product-39.webp"
+              },
+              {
+                "id": "4",
+                "title": "Фартук «Пристань»",
+                "material": "Лён с кожаным шнуром",
+                "price": "4 300 ₽",
+                "hue": 25,
+                "image": "/demo/products/product-40.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce049",
@@ -10195,28 +11069,32 @@
                     "title": "Backwater tablecloth",
                     "material": "Linen 240 g/m²",
                     "price": "$69",
-                    "hue": 195
+                    "hue": 195,
+                    "image": "/demo/products/product-37.webp"
                   },
                   {
                     "id": "2",
                     "title": "Napkins, set of 4",
                     "material": "Linen with drawn thread",
                     "price": "$24",
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/products/product-38.webp"
                   },
                   {
                     "id": "3",
                     "title": "Ples hand towel",
                     "material": "Waffle weave",
                     "price": "$18",
-                    "hue": 265
+                    "hue": 265,
+                    "image": "/demo/products/product-39.webp"
                   },
                   {
                     "id": "4",
                     "title": "Quay apron",
                     "material": "Linen with a leather cord",
                     "price": "$43",
-                    "hue": 25
+                    "hue": 25,
+                    "image": "/demo/products/product-40.webp"
                   }
                 ],
                 "releasedLabel": "Released",
@@ -10260,7 +11138,75 @@
           "skeleton"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "cards": [
+              {
+                "id": "1",
+                "title": "Стеллаж «Причал»",
+                "spec": "Дуб, 5 полок",
+                "price": "34 900 ₽",
+                "hue": 65,
+                "image": "/demo/products/product-32.webp"
+              },
+              {
+                "id": "2",
+                "title": "Кресло «Хмарь»",
+                "spec": "Букле, подлокотники",
+                "price": "38 900 ₽",
+                "hue": 285,
+                "image": "/demo/products/product-21.webp"
+              },
+              {
+                "id": "3",
+                "title": "Торшер «Сумерки»",
+                "spec": "Тёплый свет 2700 K",
+                "price": "16 200 ₽",
+                "hue": 150,
+                "image": "/demo/products/product-29.webp"
+              },
+              {
+                "id": "4",
+                "title": "Стол «Отмель»",
+                "spec": "Ясень, 140×80 см",
+                "price": "52 400 ₽",
+                "hue": 20,
+                "image": "/demo/products/product-30.webp"
+              },
+              {
+                "id": "5",
+                "title": "Комод «Затон»",
+                "spec": "4 ящика, доводчики",
+                "price": "41 700 ₽",
+                "hue": 200,
+                "image": "/demo/products/product-33.webp"
+              },
+              {
+                "id": "6",
+                "title": "Ковёр «Туман»",
+                "spec": "Шерсть, 200×300 см",
+                "price": "27 600 ₽",
+                "hue": 330,
+                "image": "/demo/products/product-31.webp"
+              },
+              {
+                "id": "7",
+                "title": "Тумба «Осока»",
+                "spec": "Берёза, ниша под книги",
+                "price": "18 300 ₽",
+                "hue": 110,
+                "image": "/demo/products/product-35.webp"
+              },
+              {
+                "id": "8",
+                "title": "Пуф «Кочка»",
+                "spec": "Съёмный чехол",
+                "price": "9 900 ₽",
+                "hue": 45,
+                "image": "/demo/products/product-34.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce050",
@@ -10383,56 +11329,64 @@
                     "title": "Quay shelving unit",
                     "spec": "Oak, 5 shelves",
                     "price": "$349",
-                    "hue": 65
+                    "hue": 65,
+                    "image": "/demo/products/product-32.webp"
                   },
                   {
                     "id": "2",
                     "title": "Khmar armchair",
                     "spec": "Bouclé, with armrests",
                     "price": "$389",
-                    "hue": 285
+                    "hue": 285,
+                    "image": "/demo/products/product-21.webp"
                   },
                   {
                     "id": "3",
                     "title": "Dusk floor lamp",
                     "spec": "Warm light 2700 K",
                     "price": "$162",
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/products/product-29.webp"
                   },
                   {
                     "id": "4",
                     "title": "Sandbar table",
                     "spec": "Ash, 140×80 cm",
                     "price": "$524",
-                    "hue": 20
+                    "hue": 20,
+                    "image": "/demo/products/product-30.webp"
                   },
                   {
                     "id": "5",
                     "title": "Backwater dresser",
                     "spec": "4 drawers, soft close",
                     "price": "$417",
-                    "hue": 200
+                    "hue": 200,
+                    "image": "/demo/products/product-33.webp"
                   },
                   {
                     "id": "6",
                     "title": "Mist rug",
                     "spec": "Wool, 200×300 cm",
                     "price": "$276",
-                    "hue": 330
+                    "hue": 330,
+                    "image": "/demo/products/product-31.webp"
                   },
                   {
                     "id": "7",
                     "title": "Sedge cabinet",
                     "spec": "Birch, book niche",
                     "price": "$183",
-                    "hue": 110
+                    "hue": 110,
+                    "image": "/demo/products/product-35.webp"
                   },
                   {
                     "id": "8",
                     "title": "Tussock pouffe",
                     "spec": "Removable cover",
                     "price": "$99",
-                    "hue": 45
+                    "hue": 45,
+                    "image": "/demo/products/product-34.webp"
                   }
                 ],
                 "skeletons": 4,
@@ -10481,7 +11435,51 @@
           "toggle"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "rows": [
+              {
+                "id": "1",
+                "title": "Кофемолка «Жёрнов»",
+                "spec": "Конические жернова",
+                "detail": "38 степеней помола от эспрессо до френч-пресса, бункер на 250 г, шум до 62 дБ.",
+                "price": "14 900 ₽",
+                "stock": "На складе: 12 шт.",
+                "hue": 45,
+                "image": "/demo/products/product-25.webp"
+              },
+              {
+                "id": "2",
+                "title": "Чайник «Гейзер»",
+                "spec": "Контроль температуры",
+                "detail": "Пять режимов нагрева, удержание температуры 60 минут, тонкий носик для пуровера.",
+                "price": "9 400 ₽",
+                "stock": "На складе: 4 шт.",
+                "hue": 200,
+                "image": "/demo/products/product-06.webp"
+              },
+              {
+                "id": "3",
+                "title": "Весы «Капля»",
+                "spec": "Точность 0,1 г",
+                "detail": "Встроенный таймер, автотара, работа от аккумулятора до 40 часов, влагозащита корпуса.",
+                "price": "5 600 ₽",
+                "stock": "На складе: 27 шт.",
+                "hue": 155,
+                "image": "/demo/products/product-41.webp"
+              },
+              {
+                "id": "4",
+                "title": "Воронка «Пуровер»",
+                "spec": "Керамика, размер 02",
+                "detail": "Обжиг 1250 °C, спиральные рёбра для равномерного пролива, подходит под фильтры V02.",
+                "price": "3 200 ₽",
+                "stock": "На складе: 41 шт.",
+                "hue": 25,
+                "image": "/demo/products/product-42.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce051",
@@ -10608,7 +11606,8 @@
                     "detail": "38 grind steps from espresso to French press, a 250 g hopper, under 62 dB.",
                     "price": "$149",
                     "stock": "In stock: 12",
-                    "hue": 45
+                    "hue": 45,
+                    "image": "/demo/products/product-25.webp"
                   },
                   {
                     "id": "2",
@@ -10617,7 +11616,8 @@
                     "detail": "Five heat settings, holds temperature for 60 minutes, a thin spout for pour-over.",
                     "price": "$94",
                     "stock": "In stock: 4",
-                    "hue": 200
+                    "hue": 200,
+                    "image": "/demo/products/product-06.webp"
                   },
                   {
                     "id": "3",
@@ -10626,7 +11626,8 @@
                     "detail": "Built-in timer, auto-tare, up to 40 hours on a charge, splash-proof body.",
                     "price": "$56",
                     "stock": "In stock: 27",
-                    "hue": 155
+                    "hue": 155,
+                    "image": "/demo/products/product-41.webp"
                   },
                   {
                     "id": "4",
@@ -10635,7 +11636,8 @@
                     "detail": "Fired at 1250 °C, spiral ribs for an even pour, fits V02 filters.",
                     "price": "$32",
                     "stock": "In stock: 41",
-                    "hue": 25
+                    "hue": 25,
+                    "image": "/demo/products/product-42.webp"
                   }
                 ],
                 "cta": "Add to cart",
@@ -10872,7 +11874,10 @@
           "options"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "avatarImage": "/demo/avatars/maria-256.webp"
+          }
         },
         "ai": {
           "export": "Commerce053",
@@ -11085,7 +12090,8 @@
                 "includedLabel": "included",
                 "daysTemplate": "{days} working days",
                 "cta": "Order the build",
-                "note": "Keep the configuration code: the workshop restores the order from it even if the cart is lost."
+                "note": "Keep the configuration code: the workshop restores the order from it even if the cart is lost.",
+                "avatarImage": "/demo/avatars/maria-256.webp"
               }
             }
           }
@@ -11532,7 +12538,61 @@
           "download"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "licenses": [
+              {
+                "value": "personal",
+                "label": "Личная",
+                "price": "1 900 ₽",
+                "audience": "Учебные работы, личный сайт, портфолио без оплаты",
+                "allowed": [
+                  "использовать в личных проектах без ограничения по сроку",
+                  "устанавливать на два своих устройства",
+                  "показывать работы в портфолио и соцсетях"
+                ],
+                "denied": [
+                  "продавать что-либо, сделанное с использованием файла",
+                  "передавать файл заказчику или коллеге",
+                  "использовать в рекламе и на упаковке"
+                ],
+                "image": "/demo/avatars/nina-256.webp"
+              },
+              {
+                "value": "business",
+                "label": "Коммерческая",
+                "price": "6 400 ₽",
+                "audience": "Сайты, приложения и материалы одной компании",
+                "allowed": [
+                  "использовать в проектах компании и её клиентов",
+                  "устанавливать на пять рабочих устройств",
+                  "встраивать в сайт и мобильное приложение",
+                  "печатать тираж до 50 000 экземпляров"
+                ],
+                "denied": [
+                  "перепродавать файл как самостоятельный товар",
+                  "включать в шаблоны и конструкторы для перепродажи"
+                ],
+                "image": "/demo/avatars/pavel-256.webp"
+              },
+              {
+                "value": "extended",
+                "label": "Расширенная",
+                "price": "24 000 ₽",
+                "audience": "Продукты, которые сами продаются: шаблоны, игры, SaaS",
+                "allowed": [
+                  "встраивать в продукт, который вы продаёте",
+                  "устанавливать без ограничения по числу устройств",
+                  "печатать неограниченный тираж",
+                  "передавать файл подрядчикам под договором"
+                ],
+                "denied": [
+                  "перепродавать файл в исходном виде как отдельный товар"
+                ],
+                "image": "/demo/avatars/dina-256.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce056",
@@ -11668,7 +12728,8 @@
                       "sell anything made with the file",
                       "pass the file to a client or a colleague",
                       "use it in advertising or on packaging"
-                    ]
+                    ],
+                    "image": "/demo/avatars/nina-256.webp"
                   },
                   {
                     "value": "business",
@@ -11684,7 +12745,8 @@
                     "denied": [
                       "resell the file as a product of its own",
                       "bundle it into templates and builders for resale"
-                    ]
+                    ],
+                    "image": "/demo/avatars/pavel-256.webp"
                   },
                   {
                     "value": "extended",
@@ -11699,7 +12761,8 @@
                     ],
                     "denied": [
                       "resell the file as-is as a standalone product"
-                    ]
+                    ],
+                    "image": "/demo/avatars/dina-256.webp"
                   }
                 ],
                 "facts": [
@@ -11770,7 +12833,10 @@
           "schedule"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "avatarImage": "/demo/avatars/sofia-256.webp"
+          }
         },
         "ai": {
           "export": "Commerce057",
@@ -12009,7 +13075,8 @@
                 ],
                 "takenHint": "Struck-through hours are already booked by someone else.",
                 "cta": "Book it",
-                "policy": "Rescheduling or cancelling is free up to 12 hours before. Later than that we keep the call-out fee of $9."
+                "policy": "Rescheduling or cancelling is free up to 12 hours before. Later than that we keep the call-out fee of $9.",
+                "avatarImage": "/demo/avatars/sofia-256.webp"
               }
             }
           }
@@ -12048,7 +13115,10 @@
           "education"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "avatarImage": "/demo/avatars/timur-256.webp"
+          }
         },
         "ai": {
           "export": "Commerce058",
@@ -12282,7 +13352,8 @@
                     ]
                   }
                 ],
-                "guarantee": "The first seven days are refundable with no questions asked — even if you are halfway through."
+                "guarantee": "The first seven days are refundable with no questions asked — even if you are halfway through.",
+                "avatarImage": "/demo/avatars/timur-256.webp"
               }
             }
           }
@@ -12322,7 +13393,10 @@
           "sellers"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "image": "/demo/products/product-05.webp"
+          }
         },
         "ai": {
           "export": "Commerce059",
@@ -12514,7 +13588,8 @@
                       }
                     ]
                   }
-                ]
+                ],
+                "image": "/demo/products/product-05.webp"
               }
             }
           }
@@ -12553,7 +13628,10 @@
           "split"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "avatarImage": "/demo/avatars/oleg-256.webp"
+          }
         },
         "ai": {
           "export": "Commerce060",
@@ -12726,7 +13804,8 @@
                     "shipping": "$5.80",
                     "total": "$625.80"
                   }
-                ]
+                ],
+                "avatarImage": "/demo/avatars/oleg-256.webp"
               }
             }
           }
@@ -14342,7 +15421,47 @@
           "billing"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "subs": [
+              {
+                "id": "1",
+                "title": "Кофе каждый месяц",
+                "detail": "250 г зерна свежей обжарки, помол под ваш способ заваривания.",
+                "price": "1 690 ₽",
+                "every": "раз в месяц",
+                "next": "Спишем 2 апреля",
+                "card": "Мир •• 4821",
+                "state": "active",
+                "hue": 45,
+                "image": "/demo/products/product-24.webp"
+              },
+              {
+                "id": "2",
+                "title": "Фильтры для воды",
+                "detail": "Комплект из двух картриджей на квартал.",
+                "price": "2 300 ₽",
+                "every": "раз в 3 месяца",
+                "next": "На паузе до 1 июня",
+                "card": "Мир •• 4821",
+                "state": "paused",
+                "hue": 200,
+                "image": "/demo/products/product-25.webp"
+              },
+              {
+                "id": "3",
+                "title": "Клуб мастерской",
+                "detail": "Доступ к мастер-классам и скидка 10% на весь каталог.",
+                "price": "6 900 ₽",
+                "every": "раз в год",
+                "next": "Продлится 18 мая, если не отменить до 17 мая",
+                "card": "Мир •• 0175",
+                "state": "ending",
+                "hue": 300,
+                "image": "/demo/products/product-26.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce069",
@@ -14483,7 +15602,8 @@
                     "next": "Charged on 2 April",
                     "card": "Visa •• 4821",
                     "state": "active",
-                    "hue": 45
+                    "hue": 45,
+                    "image": "/demo/products/product-24.webp"
                   },
                   {
                     "id": "2",
@@ -14494,7 +15614,8 @@
                     "next": "Paused until 1 June",
                     "card": "Visa •• 4821",
                     "state": "paused",
-                    "hue": 200
+                    "hue": 200,
+                    "image": "/demo/products/product-25.webp"
                   },
                   {
                     "id": "3",
@@ -14505,7 +15626,8 @@
                     "next": "Renews on 18 May unless cancelled before 17 May",
                     "card": "Visa •• 0175",
                     "state": "ending",
-                    "hue": 300
+                    "hue": 300,
+                    "image": "/demo/products/product-26.webp"
                   }
                 ]
               }
@@ -14745,7 +15867,52 @@
           "rail"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "items": [
+              {
+                "id": "1",
+                "title": "Зерно «Плёс», обжарка под фильтр",
+                "spec": "250 г, Эфиопия",
+                "price": "1 690 ₽",
+                "times": "Брали 7 раз",
+                "last": "последний — 12 февраля",
+                "hue": 45,
+                "image": "/demo/products/product-01.webp"
+              },
+              {
+                "id": "2",
+                "title": "Фильтры бумажные V02",
+                "spec": "100 шт., отбеленные",
+                "price": "540 ₽",
+                "times": "Брали 4 раза",
+                "last": "последний — 3 февраля",
+                "hue": 200,
+                "image": "/demo/products/product-06.webp"
+              },
+              {
+                "id": "3",
+                "title": "Средство для промывки группы",
+                "spec": "500 г, без запаха",
+                "price": "1 240 ₽",
+                "times": "Брали 2 раза",
+                "last": "последний — 18 декабря",
+                "changed": "Подорожало на 190 ₽ с прошлой покупки",
+                "hue": 300,
+                "image": "/demo/products/product-15.webp"
+              },
+              {
+                "id": "4",
+                "title": "Молоко для капучино",
+                "spec": "1 л, ультрапастеризованное",
+                "price": "180 ₽",
+                "times": "Брали 12 раз",
+                "last": "последний — 28 февраля",
+                "hue": 150,
+                "image": "/demo/products/product-20.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce071",
@@ -14868,7 +16035,8 @@
                     "price": "$18.90",
                     "times": "Bought 7 times",
                     "last": "last on 12 February",
-                    "hue": 45
+                    "hue": 45,
+                    "image": "/demo/products/product-01.webp"
                   },
                   {
                     "id": "2",
@@ -14877,7 +16045,8 @@
                     "price": "$6.00",
                     "times": "Bought 4 times",
                     "last": "last on 3 February",
-                    "hue": 200
+                    "hue": 200,
+                    "image": "/demo/products/product-06.webp"
                   },
                   {
                     "id": "3",
@@ -14887,7 +16056,8 @@
                     "times": "Bought twice",
                     "last": "last on 18 December",
                     "changed": "Up by $2.10 since your last order",
-                    "hue": 300
+                    "hue": 300,
+                    "image": "/demo/products/product-15.webp"
                   },
                   {
                     "id": "4",
@@ -14896,7 +16066,8 @@
                     "price": "$2.00",
                     "times": "Bought 12 times",
                     "last": "last on 28 February",
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/products/product-20.webp"
                   }
                 ]
               }
@@ -14937,7 +16108,47 @@
           "grid"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "picks": [
+              {
+                "id": "1",
+                "title": "Кружка «Затон», 350 мл",
+                "spec": "Керамика ручной работы",
+                "price": "2 400 ₽",
+                "because": "вы купили кофемолку «Жёрнов»",
+                "hue": 25,
+                "image": "/demo/products/product-05.webp"
+              },
+              {
+                "id": "2",
+                "title": "Плед «Пасмурно»",
+                "spec": "Шерсть, 140×200 см",
+                "price": "6 900 ₽",
+                "because": "вы смотрели кресло «Хмарь» три раза",
+                "hue": 265,
+                "image": "/demo/products/product-16.webp"
+              },
+              {
+                "id": "3",
+                "title": "Подставка под чайник",
+                "spec": "Дуб, масло-воск",
+                "price": "1 800 ₽",
+                "because": "часто берут вместе с чайником «Гейзер»",
+                "hue": 65,
+                "image": "/demo/products/product-45.webp"
+              },
+              {
+                "id": "4",
+                "title": "Салфетки льняные, 4 шт.",
+                "spec": "Лён с мережкой",
+                "price": "2 400 ₽",
+                "because": "вы покупали скатерть из этой коллекции",
+                "hue": 150,
+                "image": "/demo/products/product-38.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce072",
@@ -15061,7 +16272,8 @@
                     "spec": "Hand-thrown ceramic",
                     "price": "$26",
                     "because": "you bought the Zhyornov grinder",
-                    "hue": 25
+                    "hue": 25,
+                    "image": "/demo/products/product-05.webp"
                   },
                   {
                     "id": "2",
@@ -15069,7 +16281,8 @@
                     "spec": "Wool, 140x200 cm",
                     "price": "$75",
                     "because": "you looked at the Khmar armchair three times",
-                    "hue": 265
+                    "hue": 265,
+                    "image": "/demo/products/product-16.webp"
                   },
                   {
                     "id": "3",
@@ -15077,7 +16290,8 @@
                     "spec": "Oak, oil-wax finish",
                     "price": "$20",
                     "because": "often bought with the Geyser kettle",
-                    "hue": 65
+                    "hue": 65,
+                    "image": "/demo/products/product-45.webp"
                   },
                   {
                     "id": "4",
@@ -15085,7 +16299,8 @@
                     "spec": "Linen with hemstitch",
                     "price": "$26",
                     "because": "you bought the tablecloth from this collection",
-                    "hue": 150
+                    "hue": 150,
+                    "image": "/demo/products/product-38.webp"
                   }
                 ]
               }
@@ -15126,7 +16341,10 @@
           "privacy"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "image": "/demo/products/product-13.webp"
+          }
         },
         "ai": {
           "export": "Commerce073",
@@ -15302,7 +16520,8 @@
                       }
                     ]
                   }
-                ]
+                ],
+                "image": "/demo/products/product-13.webp"
               }
             }
           }

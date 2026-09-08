@@ -11,6 +11,8 @@ export type Commerce031Point = {
 }
 
 export type Commerce031Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   title?: string
   city?: string
   courierLabel?: string
@@ -88,9 +90,15 @@ color:var(--vibeui-commerce-031-fg);font-family:var(--vibeui-commerce-031-sans);
 [data-vibeui-block="commerce-031"] [data-part="way"]{position:relative;display:block;cursor:pointer}
 [data-vibeui-block="commerce-031"] [data-part="way"] input{position:absolute;top:0.9375rem;left:0.9375rem;margin:0;accent-color:var(--vibeui-commerce-031-accent);width:1.125rem;height:1.125rem}
 [data-vibeui-block="commerce-031"] [data-part="face"]{
-display:block;padding:0.875rem 0.875rem 0.875rem 2.75rem;border-radius:1rem;
-border:1px solid var(--vibeui-commerce-031-border);background:var(--vibeui-commerce-031-bg);
-transition:border-color .15s ease,background-color .15s ease;
+position:relative;display:block;padding:0.875rem 0.875rem 0.875rem 2.75rem;border-radius:1rem;
+border:1px solid var(--vibeui-commerce-031-border);
+transition:border-color .15s ease,background-color .15s ease;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="commerce-031"] [data-part="face"][data-empty="true"]{background:var(--vibeui-commerce-031-bg);}
+[data-vibeui-block="commerce-031"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="commerce-031"] [data-part="way"] input:checked + [data-part="face"]{
 border-color:var(--vibeui-commerce-031-accent);
@@ -243,6 +251,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Commerce031({
   title = "Как доставить заказ",
+  avatarImage = "",
   city = "Петрозаводск",
   courierLabel = "Курьером до двери",
   courierHint = "490 ₽ · завтра, 12:00–18:00. Бесплатно при заказе от 5 000 ₽.",
@@ -305,7 +314,18 @@ export function Commerce031({
                   id="commerce-031-courier"
                   defaultChecked
                 />
-                <span data-part="face">
+                <span
+                  data-part="face"
+                  data-empty={avatarImage ? undefined : "true"}
+                >
+                  {avatarImage ? (
+                    <img
+                      src={avatarImage}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : null}
                   <b>{courierLabel}</b>
                   <span>{courierHint}</span>
                 </span>

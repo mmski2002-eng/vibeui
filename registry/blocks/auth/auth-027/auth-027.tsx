@@ -9,6 +9,8 @@ export type Auth027Admin = {
 }
 
 export type Auth027Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   title?: string
   resource?: string
   needed?: string
@@ -130,12 +132,17 @@ background:var(--vibeui-auth-027-soft);font-size:0.8125rem;
 [data-vibeui-block="auth-027"] [data-part="admins"]{list-style:none;margin:0 0 1.25rem;padding:0;display:flex;flex-direction:column;gap:0.5rem}
 [data-vibeui-block="auth-027"] [data-part="admin"]{display:flex;align-items:center;gap:0.625rem;font-size:0.8125rem}
 [data-vibeui-block="auth-027"] [data-part="face"]{
-flex:none;
+position:relative;flex:none;
 display:inline-flex;align-items:center;justify-content:center;
 width:1.875rem;height:1.875rem;border-radius:9999px;
-background:oklch(0.89 0.06 var(--vibeui-auth-027-hue));
 color:oklch(0.34 0.11 var(--vibeui-auth-027-hue));
-font-size:0.6875rem;font-weight:700;
+font-size:0.6875rem;font-weight:700;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="auth-027"] [data-part="face"][data-empty="true"]{background:oklch(0.89 0.06 var(--vibeui-auth-027-hue));}
+[data-vibeui-block="auth-027"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="auth-027"] [data-part="aname"]{font-weight:650}
 [data-vibeui-block="auth-027"] [data-part="arole"]{font-size:0.75rem;color:var(--vibeui-auth-027-muted)}
@@ -199,6 +206,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Auth027({
   title = "Доступ закрыт",
+  avatarImage = "",
   resource = "Каталог «Мера» / приватные блоки",
   needed = "Право «Читатель приватных блоков»",
   admins = DEFAULT_ADMINS,
@@ -286,7 +294,19 @@ export function Auth027({
                       } as CSSProperties
                     }
                   >
-                    <span data-part="face" aria-hidden="true">
+                    <span
+                      data-part="face"
+                      data-empty={avatarImage ? undefined : "true"}
+                      aria-hidden="true"
+                    >
+                      {avatarImage ? (
+                        <img
+                          src={avatarImage}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      ) : null}
                       {admin.name
                         .split(" ")
                         .map((part) => part[0])

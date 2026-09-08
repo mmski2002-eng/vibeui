@@ -7,6 +7,8 @@ export type Dashboard064Tag = {
 }
 
 export type Dashboard064Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   title?: string
   selectedCount?: number
   tags?: Dashboard064Tag[]
@@ -138,9 +140,14 @@ padding:0.25rem 0.5625rem;border-radius:9999px;background:var(--vibeui-dashboard
 color:inherit;border:1px solid var(--vibeui-dashboard-064-border);
 }
 [data-vibeui-block="dashboard-064"] [data-part="preview"]{
-display:grid;grid-template-columns:1fr;gap:0.5rem;padding:0.8125rem;border-radius:0.875rem;
-background:var(--vibeui-dashboard-064-soft);
-border:1px solid var(--vibeui-dashboard-064-accent-line);
+position:relative;display:grid;grid-template-columns:1fr;gap:0.5rem;padding:0.8125rem;border-radius:0.875rem;
+border:1px solid var(--vibeui-dashboard-064-accent-line);overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="dashboard-064"] [data-part="preview"][data-empty="true"]{background:var(--vibeui-dashboard-064-soft);}
+[data-vibeui-block="dashboard-064"] [data-part="preview"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="dashboard-064"] [data-part="line"]{margin:0;font-size:0.8125rem;display:flex;flex-wrap:wrap;gap:0.3125rem;align-items:baseline}
 [data-vibeui-block="dashboard-064"] [data-part="line"] strong{font-weight:750}
@@ -223,6 +230,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Dashboard064({
   title = "Теги для выбранных заявок",
+  image = "",
   selectedCount = 42,
   tags = DEFAULT_TAGS,
   suggestions = DEFAULT_SUGGESTIONS,
@@ -319,7 +327,10 @@ export function Dashboard064({
             </div>
           </div>
 
-          <div data-part="preview">
+          <div data-part="preview" data-empty={image ? undefined : "true"}>
+            {image ? (
+              <img src={image} alt="" loading="lazy" decoding="async" />
+            ) : null}
             <p data-part="line">
               <strong>{preview.add}</strong>
               {adding.length > 0

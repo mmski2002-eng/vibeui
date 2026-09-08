@@ -7,6 +7,8 @@ export type Carousel013Shot = {
   title: string
   place?: string
   hue?: number
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
 }
 
 export type Carousel013Props = Omit<ComponentProps<"section">, "children"> & {
@@ -60,10 +62,15 @@ font-family:var(--vibeui-carousel-013-font);color:var(--vibeui-carousel-013-fg);
 position:relative;display:flex;flex-direction:column;justify-content:flex-end;
 aspect-ratio:16 / 10;padding:0.875rem;box-sizing:border-box;overflow:hidden;
 border-radius:0.875rem;
-background:
-radial-gradient(90% 80% at 20% 20%,oklch(0.9 0.06 var(--vibeui-carousel-013-hue,250)),transparent 70%),
-linear-gradient(150deg,oklch(0.74 0.1 var(--vibeui-carousel-013-hue,250)),oklch(0.42 0.11 var(--vibeui-carousel-013-hue,250)));
 color:oklch(0.99 0 265);
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="carousel-013"] [data-part="stage"][data-empty="true"]{background:
+radial-gradient(90% 80% at 20% 20%,oklch(0.9 0.06 var(--vibeui-carousel-013-hue,250)),transparent 70%),
+linear-gradient(150deg,oklch(0.74 0.1 var(--vibeui-carousel-013-hue,250)),oklch(0.42 0.11 var(--vibeui-carousel-013-hue,250)));}
+[data-vibeui-block="carousel-013"] [data-part="stage"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="carousel-013"] [data-part="name"]{margin:0;font-size:1rem;font-weight:680;line-height:1.2}
 [data-vibeui-block="carousel-013"] [data-part="place"]{margin:0.125rem 0 0;font-size:0.75rem;color:oklch(0.93 0 265)}
@@ -79,11 +86,16 @@ overflow-x:auto;overscroll-behavior-x:contain;scroll-behavior:smooth;scrollbar-w
 }
 [data-vibeui-block="carousel-013"] [data-part="thumbs"]::-webkit-scrollbar{display:none}
 [data-vibeui-block="carousel-013"] [data-part="thumb"]{
-appearance:none;cursor:pointer;flex:none;padding:0;
+position:relative;appearance:none;cursor:pointer;flex:none;padding:0;
 width:3.5rem;aspect-ratio:4 / 3;border-radius:0.5rem;overflow:hidden;
 border:2px solid transparent;
-background:linear-gradient(150deg,oklch(0.82 0.08 var(--vibeui-carousel-013-hue,250)),oklch(0.55 0.1 var(--vibeui-carousel-013-hue,250)));
 opacity:.65;transition:opacity .16s ease,border-color .16s ease;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="carousel-013"] [data-part="thumb"][data-empty="true"]{background:linear-gradient(150deg,oklch(0.82 0.08 var(--vibeui-carousel-013-hue,250)),oklch(0.55 0.1 var(--vibeui-carousel-013-hue,250)));}
+[data-vibeui-block="carousel-013"] [data-part="thumb"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="carousel-013"] [data-part="thumb"]:hover{opacity:1}
 [data-vibeui-block="carousel-013"] [data-part="thumb"]:focus-visible{outline:2px solid var(--vibeui-carousel-013-accent);outline-offset:2px}
@@ -192,7 +204,10 @@ export function Carousel013({
         className={className}
         style={palette}
       >
-        <div data-part="stage">
+        <div data-part="stage" data-empty={shot.image ? undefined : "true"}>
+          {shot.image ? (
+            <img src={shot.image} alt="" loading="lazy" decoding="async" />
+          ) : null}
           <span data-part="counter">
             {index + 1}/{shots.length}
           </span>
@@ -220,6 +235,7 @@ export function Carousel013({
               key={item.title}
               type="button"
               data-part="thumb"
+              data-empty={item.image ? undefined : "true"}
               aria-current={position === index}
               aria-label={thumbLabel
                 .replace("{n}", String(position + 1))
@@ -230,7 +246,11 @@ export function Carousel013({
                 } as CSSProperties
               }
               onClick={() => setIndex(position)}
-            />
+            >
+              {item.image ? (
+                <img src={item.image} alt="" loading="lazy" decoding="async" />
+              ) : null}
+            </button>
           ))}
         </div>
         {hint ? <span data-part="hint">{hint}</span> : null}

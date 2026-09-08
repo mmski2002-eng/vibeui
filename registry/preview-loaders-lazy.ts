@@ -139,8 +139,6 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/component/file-upload")).PREVIEWS
     case "component/filters":
       return (await import("@/registry/previews-lazy/component/filters")).PREVIEWS
-    case "component/frame":
-      return (await import("@/registry/previews-lazy/component/frame")).PREVIEWS
     case "component/hover-card":
       return (await import("@/registry/previews-lazy/component/hover-card")).PREVIEWS
     case "component/icon-stack":
@@ -187,8 +185,6 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/component/select")).PREVIEWS
     case "component/separator":
       return (await import("@/registry/previews-lazy/component/separator")).PREVIEWS
-    case "component/sidebar":
-      return (await import("@/registry/previews-lazy/component/sidebar")).PREVIEWS
     case "component/skeleton":
       return (await import("@/registry/previews-lazy/component/skeleton")).PREVIEWS
     case "component/slider":
@@ -257,6 +253,8 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/animation/stacks")).PREVIEWS
     case "animation/cursor":
       return (await import("@/registry/previews-lazy/animation/cursor")).PREVIEWS
+    case "animation/text":
+      return (await import("@/registry/previews-lazy/animation/text")).PREVIEWS
     default:
       return null
   }

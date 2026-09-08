@@ -269,7 +269,12 @@ export function Commerce050({
                   aria-hidden={card.image ? undefined : true}
                 >
                   {card.image ? (
-                    <img src={card.image} alt="" loading="lazy" decoding="async" />
+                    <img
+                      src={card.image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
                   ) : null}
                 </span>
                 <div data-part="body">

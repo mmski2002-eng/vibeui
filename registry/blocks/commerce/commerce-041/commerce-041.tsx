@@ -256,7 +256,12 @@ export function Commerce041({
                   aria-hidden={part.image ? undefined : true}
                 >
                   {part.image ? (
-                    <img src={part.image} alt="" loading="lazy" decoding="async" />
+                    <img
+                      src={part.image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
                   ) : null}
                 </span>
                 <div>

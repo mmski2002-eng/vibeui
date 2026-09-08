@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Смартфон",
       "description": "Рамка смартфона для демонстрации мобильного экрана: чёлка, статус-бар и лента уведомлений, которая бесконечно едет вверх без остановки.",
-      "categories": ["devices"],
+      "categories": [
+        "devices"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,14 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-devices-002-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Корпус — скруглённая CSS-рамка с чёлкой и боковыми кнопками; экран содержит статус-бар (время, индикатор сигнала) и окно ленты уведомлений с маской по верхнему и нижнему краю. Лента — продублированный список карточек, который едет вверх по кругу через translateY; останавливается при prefers-reduced-motion или пропе autoScroll={false}. Рамку можно наклонить в изометрию пропом isometric.",
       "meta": {
-        "tags": ["device", "phone", "mobile", "mockup", "frame", "animated"],
+        "tags": [
+          "device",
+          "phone",
+          "mobile",
+          "mockup",
+          "frame",
+          "animated"
+        ],
         "ai": {
           "export": "Devices002",
           "usage": "<Devices002 notifications={[{ title: \"Sara Ruiz\", body: \"Обедаем в час?\", meta: \"сейчас\" }]} autoScroll />",
@@ -106,32 +115,69 @@
                   {
                     "title": "Sara Ruiz",
                     "body": "Lunch at 1?",
-                    "meta": "now"
+                    "meta": "now",
+                    "image": "/demo/avatars/anna-256.webp"
                   },
                   {
                     "title": "Team",
                     "body": "Sprint review moved",
-                    "meta": "2m"
+                    "meta": "2m",
+                    "image": "/demo/avatars/mark-256.webp"
                   },
                   {
                     "title": "Calendar",
                     "body": "Call starts in 15 min",
-                    "meta": "5m"
+                    "meta": "5m",
+                    "image": "/demo/avatars/maria-256.webp"
                   },
                   {
                     "title": "Bank",
                     "body": "Payment completed",
-                    "meta": "12m"
+                    "meta": "12m",
+                    "image": "/demo/avatars/anna-256.webp"
                   }
-                ]
+                ],
+                "image": "/demo/screens/screen-02.webp"
               }
             }
           }
         },
         "preview": {
-          "props": {}
+          "props": {
+            "image": "/demo/screens/screen-02.webp",
+            "notifications": [
+              {
+                "title": "Sara Ruiz",
+                "body": "Обедаем в час?",
+                "meta": "сейчас",
+                "image": "/demo/avatars/anna-256.webp"
+              },
+              {
+                "title": "Команда",
+                "body": "Спринт-ревью перенесли",
+                "meta": "2 мин",
+                "image": "/demo/avatars/mark-256.webp"
+              },
+              {
+                "title": "Календарь",
+                "body": "Созвон через 15 минут",
+                "meta": "5 мин",
+                "image": "/demo/avatars/maria-256.webp"
+              },
+              {
+                "title": "Банк",
+                "body": "Платёж выполнен",
+                "meta": "12 мин",
+                "image": "/demo/avatars/anna-256.webp"
+              }
+            ]
+          }
         },
-        "cardControls": ["autoScroll", "isometric", "accent"]
+        "cardControls": [
+          "autoScroll",
+          "isometric",
+          "accent"
+        ]
       }
     }
   ]

@@ -236,7 +236,12 @@ export function Commerce072({
                   aria-hidden={pick.image ? undefined : true}
                 >
                   {pick.image ? (
-                    <img src={pick.image} alt="" loading="lazy" decoding="async" />
+                    <img
+                      src={pick.image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
                   ) : null}
                 </span>
                 <button type="button" data-part="hide">

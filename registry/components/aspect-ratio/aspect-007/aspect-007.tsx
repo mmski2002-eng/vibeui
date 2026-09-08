@@ -4,6 +4,8 @@ export type Aspect007Props = Omit<
   ComponentProps<"div">,
   "title" | "children"
 > & {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   title?: string
   /** Адрес встраиваемого документа: карта, таблица, презентация. */
   src?: string
@@ -50,7 +52,12 @@ color:var(--vibeui-aspect-007-fg);font-family:var(--vibeui-aspect-007-font);
 position:relative;aspect-ratio:16 / 10;overflow:hidden;
 border:1px solid var(--vibeui-aspect-007-border);
 border-radius:var(--vibeui-aspect-007-radius);
-background:var(--vibeui-aspect-007-bg);
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="aspect-007"] [data-part="frame"][data-empty="true"]{background:var(--vibeui-aspect-007-bg);}
+[data-vibeui-block="aspect-007"] [data-part="frame"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="aspect-007"] iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 /* Сетка-заглушка: пустая рамка карты должна читаться как карта. Поверх
@@ -127,6 +134,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Aspect007({
   title = "Карта проезда к студии",
+  image = "",
   src,
   source = "Источник: OpenStreetMap",
   background = "",
@@ -158,7 +166,10 @@ export function Aspect007({
         className={className}
         style={palette}
       >
-        <div data-part="frame">
+        <div data-part="frame" data-empty={image ? undefined : "true"}>
+          {image ? (
+            <img src={image} alt="" loading="lazy" decoding="async" />
+          ) : null}
           {src ? (
             <iframe src={src} title={title} loading="lazy" />
           ) : (

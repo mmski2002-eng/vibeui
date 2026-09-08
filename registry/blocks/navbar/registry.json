@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Стеклянная шапка",
       "description": "Шапка сайта со стеклянной подложкой: логотип, меню, кнопка действия. Мобильное меню открывается через HTML popover — без единой строки JS.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-001-*. Раскладка считается от собственной ширины блока через container-запросы, а не от ширины окна: до 52rem показывается кнопка меню, дальше — полная шапка со ссылками и кнопкой. Мобильная панель открывается атрибутами popover и popovertarget, живёт в верхнем слое и потому стилизуется по атрибуту [data-vibeui-navbar-001-menu] с собственной палитрой. Подложка полупрозрачная с backdrop-filter, поэтому шапку можно ставить sticky поверх содержимого.",
       "meta": {
-        "tags": ["navbar", "header", "navigation", "sticky"],
+        "tags": [
+          "navbar",
+          "header",
+          "navigation",
+          "sticky"
+        ],
         "ai": {
           "export": "Navbar001",
           "usage": "<Navbar001\n  brand=\"Полёт\"\n  links={[{ label: \"Тарифы\", href: \"/pricing\" }]}\n  actionLabel=\"Начать бесплатно\"\n  actionHref=\"/signup\"\n/>",
@@ -164,7 +171,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["brand", "actionLabel", "accent", "background"],
+        "cardControls": [
+          "brand",
+          "actionLabel",
+          "accent",
+          "background"
+        ],
         "preview": {
           "props": {
             "open": true
@@ -179,7 +191,9 @@
       "type": "registry:block",
       "title": "Шапка с пилюлями",
       "description": "Тёмная шапка, в которой меню собрано в одну пилюлю: разделы читаются как единый объект, а в узкой колонке пилюля не прячется в бургер, а превращается в ленту с горизонтальной прокруткой.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -191,7 +205,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-002-*. Серверный компонент, клиентского JS нет. Раскладка считается container-запросом от собственной ширины блока: до 54rem пилюля переносится на вторую строку и прокручивается по горизонтали, дальше встаёт в один ряд по центру шапки. Текущий раздел помечается атрибутом aria-current=\"page\" и подсвечивается селектором по этому атрибуту, а не отдельным классом, поэтому подсветка и доступность не расходятся.",
       "meta": {
-        "tags": ["navbar", "header", "navigation", "dark"],
+        "tags": [
+          "navbar",
+          "header",
+          "navigation",
+          "dark"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 121"
@@ -342,7 +361,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navbar-002-*. A server component, no client JS. The layout is computed by a container query from the block's own width: below 54rem the pill moves to a second row and scrolls horizontally, beyond it it stands in a single row in the centre of the header. The current section is marked with the aria-current=\"page\" attribute and highlighted by a selector on that attribute rather than by a separate class, so the highlight and the accessibility never drift apart."
           }
         },
-        "cardControls": ["brand", "loginLabel", "actionLabel", "accent"]
+        "cardControls": [
+          "brand",
+          "loginLabel",
+          "actionLabel",
+          "accent"
+        ]
       }
     },
     {
@@ -350,7 +374,9 @@
       "type": "registry:block",
       "title": "Шапка с разделами в меню",
       "description": "Шапка с выпадающими разделами: панель раскрывается по наведению и по фокусу, каждый пункт несёт поясняющую строку. Ни строки JS и ни одного состояния в React.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -362,7 +388,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-003-*. Серверный компонент. Раскрытие панели держится на :hover и :focus-within у элемента списка, поэтому меню одинаково работает мышью и с клавиатуры: пока фокус внутри панели, она открыта. Панель позиционируется относительно <li> с position:relative, ширина ограничена через min() с единицей cqi — в узком контейнере она не вылезает за край. Стрелка триггера — псевдоэлемент с поворотом, отдельной иконки нет.",
       "meta": {
-        "tags": ["navbar", "dropdown", "menu", "no-js"],
+        "tags": [
+          "navbar",
+          "dropdown",
+          "menu",
+          "no-js"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 120"
@@ -560,7 +591,9 @@
       "type": "registry:block",
       "title": "Шапка, сжимающаяся при прокрутке",
       "description": "Прозрачная шапка поверх обложки, которая уплотняется при прокрутке. Делает это анимация по прогрессу прокрутки — без слушателя scroll и без клиентского состояния.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -572,7 +605,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-004-*. Серверный компонент. Уплотнение описано ключевыми кадрами и привязано к прокрутке страницы через animation-timeline:scroll(root block) под @supports: где свойства нет, шапка просто остаётся развёрнутой, и это осознанная деградация. Анимация лежит на внутреннем [data-part=\"shell\"], а не на корне, поэтому правило prefers-reduced-motion её честно выключает. Собственный тёмный градиент нужен, чтобы прозрачная шапка была видна и вне страницы с обложкой.",
       "meta": {
-        "tags": ["navbar", "scroll", "transparent", "no-js"],
+        "tags": [
+          "navbar",
+          "scroll",
+          "transparent",
+          "no-js"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 267"
@@ -717,7 +755,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navbar-004-*. A server component. The condensing is described with keyframes and tied to the page scroll through animation-timeline:scroll(root block) under @supports: where the property is missing, the header simply stays expanded, and that is deliberate degradation. The animation sits on the inner [data-part=\"shell\"] rather than on the root, so the prefers-reduced-motion rule honestly turns it off. The block's own dark gradient is there to keep the transparent header visible off a cover page as well."
           }
         },
-        "cardControls": ["brand", "actionLabel", "hint", "accent"]
+        "cardControls": [
+          "brand",
+          "actionLabel",
+          "hint",
+          "accent"
+        ]
       }
     },
     {
@@ -725,7 +768,9 @@
       "type": "registry:block",
       "title": "Шапка с поиском в центре",
       "description": "Шапка, построенная вокруг поиска: поле стоит в середине и забирает всю свободную ширину, разделы ужимаются вокруг него. Настоящая форма, работает и без JS.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -737,7 +782,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-005-*. Серверный компонент: поле неуправляемое, отправка формы уходит на страницу поиска обычным GET. Раскладка — CSS-сетка: в узком контейнере поле и разделы занимают отдельные строки, от 56rem всё встаёт в один ряд, где поле получает minmax(12rem,26rem). Лупа собрана из двух псевдоэлементов, подсказка горячей клавиши — <kbd> с pointer-events:none, чтобы не мешать клику по полю.",
       "meta": {
-        "tags": ["navbar", "search", "header", "form"],
+        "tags": [
+          "navbar",
+          "search",
+          "header",
+          "form"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 120"
@@ -909,7 +959,9 @@
       "type": "registry:block",
       "title": "Шапка с переключателем языка",
       "description": "Шапка международного сайта: рядом с меню стоит переключатель языка, открывающий список локализованных версий ссылками, а не состоянием интерфейса.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -921,7 +973,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-006-*. Серверный компонент. Список языков — HTML popover: браузер сам даёт закрытие по Esc и клику мимо. Панель живёт в верхнем слое и потому стилизуется по атрибуту [data-vibeui-navbar-006-locales] и получает палитру отдельным style. Где поддерживается якорное позиционирование, панель встаёт прямо под кнопкой (position-anchor + position-area под @supports), иначе — в правом верхнем углу. Языки остаются ссылками с атрибутом lang: переключение языка — это переход на другой адрес.",
       "meta": {
-        "tags": ["navbar", "locale", "i18n", "popover"],
+        "tags": [
+          "navbar",
+          "locale",
+          "i18n",
+          "popover"
+        ],
         "preview": {
           "props": {
             "open": true
@@ -977,7 +1034,12 @@
             "label": "Текущий язык",
             "type": "select",
             "default": "RU",
-            "options": ["RU", "EN", "DE", "KK"]
+            "options": [
+              "RU",
+              "EN",
+              "DE",
+              "KK"
+            ]
           },
           {
             "prop": "actionLabel",
@@ -1128,7 +1190,9 @@
       "type": "registry:block",
       "title": "Шапка с бесплатным периодом",
       "description": "Шапка продукта с пробным периодом: вход остаётся текстовой ссылкой, кнопка одна, а под ней мелкая строка, снимающая возражение про банковскую карту.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1140,7 +1204,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-007-*. Серверный компонент. Кнопка и подпись под ней собраны в одну колонку, поэтому подпись выравнивается по правому краю кнопки и не растягивает шапку. На узкой раскладке подпись скрывается — в мобильной шапке она съедает высоту, ради которой всё и затевалось. Знак логотипа вырезан mask-image с радиальным градиентом: отдельного файла иконки нет.",
       "meta": {
-        "tags": ["navbar", "saas", "trial", "conversion"],
+        "tags": [
+          "navbar",
+          "saas",
+          "trial",
+          "conversion"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 129"
@@ -1315,7 +1384,9 @@
       "type": "registry:block",
       "title": "Шапка рабочего пространства",
       "description": "Шапка внутреннего приложения: рабочее пространство с тарифом слева, вкладки разделов с подчёркиванием текущего, колокол со счётчиком и меню аккаунта.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1327,10 +1398,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-008-*. Серверный компонент: меню аккаунта — HTML popover, состояния в React нет. Текущая вкладка помечается aria-current=\"page\", подчёркивание рисует псевдоэлемент по этому же атрибуту. Счётчик уведомлений нарисован кружком, но продублирован словами в aria-label кнопки: цифра в кружке сама по себе скринридеру ничего не сообщает. Колокол и корзиноподобные иконки собраны из границ и box-shadow, файлов иконок нет.",
       "meta": {
-        "tags": ["navbar", "app", "dashboard", "account"],
+        "tags": [
+          "navbar",
+          "app",
+          "dashboard",
+          "account"
+        ],
         "preview": {
           "props": {
-            "open": true
+            "open": true,
+            "avatarImage": "/demo/avatars/anna-256.webp"
           },
           "width": "full",
           "aspect": "1280 / 344"
@@ -1505,13 +1582,19 @@
                     "label": "Sign out",
                     "href": "#logout"
                   }
-                ]
+                ],
+                "avatarImage": "/demo/avatars/anna-256.webp"
               }
             },
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navbar-008-*. A server component: the account menu is an HTML popover, there is no React state. The current tab is marked aria-current=\"page\", and the underline is drawn by a pseudo-element on that same attribute. The notification counter is drawn as a circle but duplicated in words in the button's aria-label: a digit in a circle tells a screen reader nothing on its own. The bell and the basket-like icons are assembled from borders and box-shadow, there are no icon files."
           }
         },
-        "cardControls": ["workspace", "notifications", "accent", "background"]
+        "cardControls": [
+          "workspace",
+          "notifications",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1519,7 +1602,9 @@
       "type": "registry:block",
       "title": "Шапка с объявлением",
       "description": "Шапка с полосой объявления над ней. Полоса закрывается без JS: скрытый чекбокс держит состояние, а :has() убирает объявление, когда он отмечен.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1531,7 +1616,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-009-*. Серверный компонент. Закрытие объявления сделано на скрытом чекбоксе и селекторе :has(:checked) у корня блока: состояние живёт в DOM, React о нём не знает. Чекбокс спрятан visually-hidden, но остаётся в потоке фокуса, поэтому крестик доступен с клавиатуры, а кольцо фокуса рисуется на метке через :has(:focus-visible). Сам крестик собран из двух псевдоэлементов.",
       "meta": {
-        "tags": ["navbar", "announcement", "banner", "no-js"],
+        "tags": [
+          "navbar",
+          "announcement",
+          "banner",
+          "no-js"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 148"
@@ -1708,7 +1798,9 @@
       "type": "registry:block",
       "title": "Шапка магазина",
       "description": "Шапка магазина: поиск с кнопкой, кабинет и корзина, где рядом со счётчиком стоит сумма заказа. Ниже — лента категорий и строка про сроки доставки.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1720,7 +1812,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-010-*. Серверный компонент: поиск — обычная форма с ролью search, состояния в React нет. Раскладка — CSS-сетка от собственной ширины блока: до 56rem поиск и категории занимают отдельные строки, дальше всё встаёт в один ряд. Значок корзины и его крышка нарисованы границами и псевдоэлементом. Ссылка корзины несёт aria-label с числом товаров и суммой прописью, а сами кружок и сумма помечены aria-hidden, чтобы не читаться дважды.",
       "meta": {
-        "tags": ["navbar", "ecommerce", "cart", "search"],
+        "tags": [
+          "navbar",
+          "ecommerce",
+          "cart",
+          "search"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 199"
@@ -1911,7 +2008,9 @@
       "type": "registry:block",
       "title": "Шапка документации с версиями",
       "description": "Шапка документации с выбором версии: человек, пришедший из поисковика, сразу видит, к какой версии относится страница. Выбор — нативный select, без JS.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1923,7 +2022,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-011-*. Серверный компонент: <select> неуправляемый, с defaultValue, поэтому состояния в React нет и блок остаётся серверным. Стрелка селекта нарисована двумя линейными градиентами в background-image — своей иконки нет. Раздел и версия набраны моноширинным шрифтом: это подпись к техническому объекту, а не заголовок. От 54rem разделы встают в один ряд с логотипом, до этого уезжают на вторую строку с горизонтальной прокруткой.",
       "meta": {
-        "tags": ["navbar", "docs", "version", "select"],
+        "tags": [
+          "navbar",
+          "docs",
+          "version",
+          "select"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 120"
@@ -1975,7 +2079,12 @@
             "label": "Версия",
             "type": "select",
             "default": "v4.2 (текущая)",
-            "options": ["v4.2 (текущая)", "v4.1", "v3.9 LTS", "v2.14"]
+            "options": [
+              "v4.2 (текущая)",
+              "v4.1",
+              "v3.9 LTS",
+              "v2.14"
+            ]
           },
           {
             "prop": "stars",
@@ -2061,7 +2170,12 @@
                 "section": "docs",
                 "versionLabel": "Documentation version",
                 "navLabel": "Documentation sections",
-                "versions": ["v4.2 (current)", "v4.1", "v3.9 LTS", "v2.14"],
+                "versions": [
+                  "v4.2 (current)",
+                  "v4.1",
+                  "v3.9 LTS",
+                  "v2.14"
+                ],
                 "currentVersion": "v4.2 (current)",
                 "links": [
                   {
@@ -2107,7 +2221,9 @@
       "type": "registry:block",
       "title": "Шапка с меню-шторкой",
       "description": "Компактная шапка, у которой меню всегда ящик: панель во всю высоту уезжает справа и остаётся такой на любой ширине — для сайтов с длинным деревом разделов.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2119,7 +2235,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-012-*. Серверный компонент. Ящик — HTML popover, поэтому закрытие по Esc и по клику мимо достаётся без JS, а ::backdrop затемняет страницу. Панель живёт в верхнем слое и стилизуется по атрибуту [data-vibeui-navbar-012-drawer], палитра передаётся ей отдельным style. Выезд сделан свойством translate вместе с transition-behavior для discrete-свойств и @starting-style, поэтому анимация работает и при открытии, и при закрытии. Разделы сгруппированы заголовками: плоский список из пятнадцати ссылок не читается.",
       "meta": {
-        "tags": ["navbar", "drawer", "mobile", "popover"],
+        "tags": [
+          "navbar",
+          "drawer",
+          "mobile",
+          "popover"
+        ],
         "preview": {
           "props": {
             "open": true
@@ -2337,7 +2458,9 @@
       "type": "registry:block",
       "title": "Двухъярусная шапка",
       "description": "Двухуровневая шапка для сайта с большим деревом разделов: служебная полоса сверху, основные разделы посередине и подразделы текущего в третьем ряду.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2349,7 +2472,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-013-*. Серверный компонент. Три ряда — три отдельные группы навигации, каждая со своим aria-label, поэтому скринридер перечисляет их раздельно, а не как одну кашу из двадцати ссылок. Ряд подразделов рендерится только при непустом массиве: пустая полоса читается как ошибка вёрстки. Подчёркивание активного раздела — псевдоэлемент с transform:scaleX, он же работает при наведении. Служебная полоса и ряд подразделов прокручиваются по горизонтали в узком контейнере.",
       "meta": {
-        "tags": ["navbar", "two tier", "navigation", "institution"],
+        "tags": [
+          "navbar",
+          "two tier",
+          "navigation",
+          "institution"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 187"
@@ -2541,13 +2669,20 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navbar-013-*. A server component. The three rows are three separate navigation groups, each with its own aria-label, so a screen reader lists them separately rather than as one mush of twenty links. The row of subsections is rendered only when the array is non-empty: an empty strip reads as a layout bug. The underline of the active section is a pseudo-element with transform:scaleX, and the same one works on hover. The utility strip and the row of subsections scroll horizontally in a narrow container."
           }
         },
-        "cardControls": ["brand", "actionLabel", "accent", "background"]
+        "cardControls": [
+          "brand",
+          "actionLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
       "name": "navbar-014",
       "type": "registry:block",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2561,7 +2696,12 @@
       "description": "Шапка с панелью во всю ширину: три колонки разделов с пояснениями и карточка-превью с картинкой-заглушкой. Раскрытое состояние видно прямо на витрине.",
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-014-*. Серверный компонент, клиентского JS нет. Панель раскрывается парой :hover и :focus-within у элемента списка, поэтому меню одинаково работает мышью и с клавиатуры. Панель растянута во всю ширину шапки, поэтому position:relative стоит на корне блока, а не на <li>, и панель позиционируется absolute с left:0 и right:0. Проп open переводит панель в витринный режим: position:static кладёт её в поток, блок вырастает вниз, и статичная миниатюра каталога показывает раскрытое меню, а не одну строку шапки. Раскладка колонок считается container-запросом от собственной ширины блока: одна колонка, с 34rem — две, с 52rem — три плюс карточка-превью шириной 19rem. Картинка в карточке — градиент из акцента, чтобы блок оставался одним файлом.",
       "meta": {
-        "tags": ["navbar", "mega-menu", "dropdown", "no-js"],
+        "tags": [
+          "navbar",
+          "mega-menu",
+          "dropdown",
+          "no-js"
+        ],
         "ai": {
           "export": "Navbar014",
           "usage": "<Navbar014\n  brand=\"Панорама\"\n  triggerLabel=\"Продукт\"\n  columns={[{ label: \"Платформа\", items: [{ label: \"Конструктор\", href: \"/builder\", hint: \"Секции из готовых блоков\" }] }]}\n  featureTitle=\"Обновление: тёмная тема\"\n  actionLabel=\"Начать\"\n/>",
@@ -2643,7 +2783,8 @@
         ],
         "preview": {
           "props": {
-            "open": true
+            "open": true,
+            "image": "/demo/products/product-12.webp"
           },
           "width": "full",
           "aspect": "1280 / 449"
@@ -2790,7 +2931,8 @@
                 "featureTitle": "Release: dark theme",
                 "featureText": "How to move a library onto two theme branches in one evening.",
                 "featureLinkLabel": "Read the write-up",
-                "actionLabel": "Get started"
+                "actionLabel": "Get started",
+                "image": "/demo/products/product-12.webp"
               }
             }
           }
@@ -2800,7 +2942,9 @@
     {
       "name": "navbar-015",
       "type": "registry:block",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2814,7 +2958,12 @@
       "description": "Логотип стоит ровно по центру, разделы разведены влево и вправо, справа — поиск, корзина со счётчиком и личный кабинет. Раскладка магазина и издания.",
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-015-*. Серверный компонент, клиентского JS нет. Центр держится сеткой minmax(0,1fr) auto minmax(0,1fr): боковые колонки одинаковой доли, поэтому логотип стоит по середине шапки независимо от того, сколько ссылок слева и справа. Порядок в разметке — логотип, левая навигация, правая группа, — а на широкой раскладке левая навигация уезжает в первую колонку через order:-1: так логотип остаётся первым для скринридера и первым в стопке на узкой ширине. До 56rem шапка складывается в один центрированный столбец. Иконки — инлайновые <svg> без зависимостей, счётчик корзины продублирован в aria-label ссылки, поэтому его число не теряется для скринридера.",
       "meta": {
-        "tags": ["navbar", "ecommerce", "centered", "icons"],
+        "tags": [
+          "navbar",
+          "ecommerce",
+          "centered",
+          "icons"
+        ],
         "ai": {
           "export": "Navbar015",
           "usage": "<Navbar015\n  brand=\"Атлас\"\n  tagline=\"Одежда и предметы\"\n  linksLeft={[{ label: \"Новинки\", href: \"/new\" }]}\n  linksRight={[{ label: \"Журнал\", href: \"/journal\" }]}\n  cartCount={2}\n/>",
@@ -2879,7 +3028,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["brand", "tagline", "cartCount", "accent"],
+        "cardControls": [
+          "brand",
+          "tagline",
+          "cartCount",
+          "accent"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 123"
@@ -2980,7 +3134,9 @@
     {
       "name": "navbar-016",
       "type": "registry:block",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2994,7 +3150,12 @@
       "description": "Шапка на белой подложке с волосяной нижней границей: пилюля релиза у логотипа, спокойные разделы и одна кнопка с мягкой тенью того же тона.",
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-016-*. Серверный компонент, клиентского JS нет. Палитра задана явно светлой, без light-dark(): светлый фон здесь — идея блока, а не ветка темы, поэтому шапка остаётся светлой и на тёмной странице. Объявленный color-scheme:light не даёт браузеру перекрасить встроенные элементы под тёмную систему. Кнопка держится не густой заливкой, а мягкой тенью того же тона: 0 1px 2px даёт край, а вторая тень с отрицательным разлётом — свечение под кнопкой. Раскладка считается container-запросом: до 52rem шапка переносит группу действий на вторую строку, дальше встаёт в один ряд.",
       "meta": {
-        "tags": ["navbar", "light", "header", "cta"],
+        "tags": [
+          "navbar",
+          "light",
+          "header",
+          "cta"
+        ],
         "ai": {
           "export": "Navbar016",
           "usage": "<Navbar016\n  brand=\"Ясность\"\n  badgeLabel=\"Версия 2.0\"\n  links={[{ label: \"Тарифы\", href: \"/pricing\" }]}\n  loginLabel=\"Войти\"\n  actionLabel=\"Попробовать бесплатно\"\n/>",

@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Упоминания в прессе",
       "description": "Карточки упоминаний: название издания wordmark-текстом, цитата из публикации и дата. Карточка — ссылка на материал. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["press"],
+      "categories": [
+        "press"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,8 +20,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pres-001-*. Серверный компонент. Название издания — wordmark-текстом без реальных логотипов СМИ, цитата в кавычках-псевдоэлементах в blockquote. Карточка — ссылка на публикацию, число колонок считает container query.",
       "meta": {
-        "tags": ["press", "mentions", "media", "quotes", "marketing"],
-        "preview": { "width": "full" },
+        "tags": [
+          "press",
+          "mentions",
+          "media",
+          "quotes",
+          "marketing"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Pres001",
           "usage": "<Pres001\n  mentions={[{ outlet: \"ТехВестник\", quote: \"Отзыв\", date: \"Сентябрь 2026\" }]}\n/>",
@@ -43,12 +53,39 @@
           ]
         },
         "controls": [
-          { "prop": "title", "label": "Заголовок", "type": "text", "default": "В прессе", "maxLength": 40 },
-          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "О нас пишут", "maxLength": 24 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "В прессе",
+            "maxLength": 40
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "О нас пишут",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "Mention cards: the outlet name as a wordmark, a quote from the publication and a date. The card links to the piece. Self-contained — one file, no dependencies.",
@@ -74,10 +111,20 @@
               "usage": "<Pres001\n  mentions={[{ outlet: \"TechHerald\", quote: \"A review\", date: \"September 2026\" }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Title", "default": "In the press" },
-              "eyebrow": { "label": "Eyebrow", "default": "Press coverage" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Title",
+                "default": "In the press"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Press coverage"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "Press Mentions",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-pres-001-* variables. A server component. The outlet name is a wordmark without real outlet logos, the quote is in a blockquote with pseudo-element guillemets. The card links to the publication, column count driven by a container query."
@@ -90,7 +137,9 @@
       "type": "registry:block",
       "title": "Медиа-кит",
       "description": "Карточки ассетов бренда: превью-плитка, описание и кнопка скачивания формата (логотип, палитра, шрифты). Самодостаточна: один файл, без зависимостей.",
-      "categories": ["press"],
+      "categories": [
+        "press"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -102,8 +151,38 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pres-002-*. Серверный компонент. Карточки ассетов с превью-плиткой (тёплый градиент с монограммой, оттенок по nth-child), описанием и кнопкой скачивания с форматом. Кнопка прижата к низу карточки через margin-top:auto. Число колонок считает container query.",
       "meta": {
-        "tags": ["press", "media-kit", "brand", "download", "marketing"],
-        "preview": { "width": "full" },
+        "tags": [
+          "press",
+          "media-kit",
+          "brand",
+          "download",
+          "marketing"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "assets": [
+              {
+                "title": "Логотип",
+                "note": "Основной и монохромный варианты, safe-зоны.",
+                "format": "SVG · PNG",
+                "image": "/demo/scenes/scene-12.webp"
+              },
+              {
+                "title": "Палитра",
+                "note": "Фирменный оранжевый и нейтрали в HEX и OKLCH.",
+                "format": "PDF",
+                "image": "/demo/scenes/scene-04.webp"
+              },
+              {
+                "title": "Шрифты",
+                "note": "Гарнитуры интерфейса и заголовков с лицензией.",
+                "format": "ZIP",
+                "image": "/demo/scenes/scene-13.webp"
+              }
+            ]
+          }
+        },
         "ai": {
           "export": "Pres002",
           "usage": "<Pres002\n  assets={[{ title: \"Логотип\", note: \"SVG и PNG\", format: \"SVG · PNG\" }]}\n/>",
@@ -127,12 +206,39 @@
           ]
         },
         "controls": [
-          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Ассеты бренда", "maxLength": 40 },
-          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Медиа-кит", "maxLength": 24 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ассеты бренда",
+            "maxLength": 40
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Медиа-кит",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "Brand asset cards: a preview tile, a description and a format download button (logo, palette, fonts). Self-contained — one file, no dependencies.",
@@ -158,10 +264,20 @@
               "usage": "<Pres002\n  assets={[{ title: \"Logo\", note: \"SVG and PNG\", format: \"SVG · PNG\" }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Title", "default": "Brand assets" },
-              "eyebrow": { "label": "Eyebrow", "default": "Media kit" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Title",
+                "default": "Brand assets"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Media kit"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "Media Kit",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-pres-002-* variables. A server component. Asset cards with a preview tile (warm gradient with a monogram, hue by nth-child), a description and a format download button. The button is pinned to the bottom via margin-top:auto. Column count is driven by a container query."
@@ -174,7 +290,9 @@
       "type": "registry:block",
       "title": "Контакты для прессы",
       "description": "Контакты пресс-службы и факты о компании двумя колонками: справка и контакт слева, сетка ключевых цифр справа. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["press"],
+      "categories": [
+        "press"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -186,8 +304,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pres-003-*. Серверный компонент. Две колонки на широком экране: слева справка, карточка контакта пресс-службы с mailto и кнопка письма, справа сетка фактов (значение акцентом, подпись под ним). Число колонок и раскладку считает container query.",
       "meta": {
-        "tags": ["press", "contact", "facts", "media", "marketing"],
-        "preview": { "width": "full" },
+        "tags": [
+          "press",
+          "contact",
+          "facts",
+          "media",
+          "marketing"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Pres003",
           "usage": "<Pres003\n  contactEmail=\"press@site.example\"\n  facts={[{ label: \"Основана\", value: \"2025\" }]}\n/>",
@@ -211,12 +337,39 @@
           ]
         },
         "controls": [
-          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Связаться и взять цифры", "maxLength": 40 },
-          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Для прессы", "maxLength": 24 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Связаться и взять цифры",
+            "maxLength": 40
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Для прессы",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "Press contact and company facts in two columns: a note and contact on the left, a grid of key numbers on the right. Self-contained — one file, no dependencies.",
@@ -242,10 +395,20 @@
               "usage": "<Pres003\n  contactEmail=\"press@site.example\"\n  facts={[{ label: \"Founded\", value: \"2025\" }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Title", "default": "Get in touch and grab the numbers" },
-              "eyebrow": { "label": "Eyebrow", "default": "For press" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Title",
+                "default": "Get in touch and grab the numbers"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "For press"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "Press Contact",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-pres-003-* variables. A server component. Two columns on a wide screen: a note, a press-office contact card with mailto and an email button on the left, a grid of facts (value in the accent, label below) on the right. Columns and layout driven by a container query."

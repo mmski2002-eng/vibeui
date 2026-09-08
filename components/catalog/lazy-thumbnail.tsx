@@ -176,7 +176,7 @@ export function LazyThumbnail({
       <div
         ref={frameRef}
         data-part="frame"
-        className="bg-preview-surface flex w-full flex-1 items-center justify-center overflow-hidden"
+        className="preview-frame bg-preview-surface flex w-full flex-1 items-center justify-center"
         onClick={holdDemoLinks}
       >
         <div
@@ -208,7 +208,7 @@ export function LazyThumbnail({
     // поэтому рост обёртки по высоте его не трогает.
     <div
       ref={frameRef}
-      className="bg-preview-surface @container flex w-full flex-1 items-center overflow-hidden"
+      className="preview-frame bg-preview-surface @container flex w-full flex-1 items-center"
       onClick={holdDemoLinks}
       style={{ "--thumbnail-width": `${SECTION_WIDTH}px` } as CSSProperties}
     >

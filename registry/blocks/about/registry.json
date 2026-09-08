@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Миссия крупно",
       "description": "Манифест одной крупной фразой с оранжевыми маркерами на опорных словах. Самодостаточен: один файл, без зависимостей, выделение задаётся массивом сегментов.",
-      "categories": ["about"],
+      "categories": [
+        "about"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-about-001-*. Серверный компонент. Текст миссии передаётся массивом сегментов {text, highlight} — выделение живёт в данных, а не в разметке, поэтому фразу можно переписать, не трогая JSX. Выделенные сегменты рендерятся тегом <mark> с маркерной подложкой через color-mix и box-decoration-break: clone, чтобы подсветка не рвалась на переносе строки. Размер набора считается от собственной ширины блока (cqi), под текстом — короткая оранжевая черта и сноска о команде.",
       "meta": {
-        "tags": ["mission", "manifesto", "typography", "highlight", "statement"],
+        "tags": [
+          "mission",
+          "manifesto",
+          "typography",
+          "highlight",
+          "statement"
+        ],
         "preview": {
           "width": "full"
         },
@@ -117,20 +125,41 @@
               "props": {
                 "eyebrow": "About us",
                 "segments": [
-                  { "text": "We build a library where " },
-                  { "text": "design", "highlight": true },
-                  { "text": " stops being the bottleneck: every block is clear to an " },
-                  { "text": "AI agent", "highlight": true },
-                  { "text": " on the first pass and turns into a " },
-                  { "text": "working site", "highlight": true },
-                  { "text": " in a single evening." }
+                  {
+                    "text": "We build a library where "
+                  },
+                  {
+                    "text": "design",
+                    "highlight": true
+                  },
+                  {
+                    "text": " stops being the bottleneck: every block is clear to an "
+                  },
+                  {
+                    "text": "AI agent",
+                    "highlight": true
+                  },
+                  {
+                    "text": " on the first pass and turns into a "
+                  },
+                  {
+                    "text": "working site",
+                    "highlight": true
+                  },
+                  {
+                    "text": " in a single evening."
+                  }
                 ],
                 "footnote": "VibeUI is a team of designers and engineers writing components for people and models at the same time."
               }
             }
           }
         },
-        "cardControls": ["eyebrow", "accent", "background"]
+        "cardControls": [
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -138,7 +167,9 @@
       "type": "registry:block",
       "title": "История таймлайном",
       "description": "Вехи компании на вертикальной оси: годы, оранжевые точки, короткие рассказы. Самодостаточен: один файл, без зависимостей, ось нарисована псевдоэлементами.",
-      "categories": ["about"],
+      "categories": [
+        "about"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -150,9 +181,18 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-about-002-*. Серверный компонент. Хронология — честный <ol>: ось и оранжевые точки нарисованы псевдоэлементами li, поэтому без стилей список остаётся читаемым перечнем вех. На узком контейнере год стоит над заголовком, ось слева; от 44rem собственной ширины год уезжает в левую колонку с выравниванием по правому краю, и ось встаёт между годом и текстом — координаты точки заданы в rem и не зависят от контента. Линия у последней вехи скрыта, чтобы ось не утекала в пустоту.",
       "meta": {
-        "tags": ["timeline", "history", "milestones", "company", "story"],
+        "tags": [
+          "timeline",
+          "history",
+          "milestones",
+          "company",
+          "story"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "image": "/demo/places/place-02.webp"
+          }
         },
         "ai": {
           "export": "About002",
@@ -281,12 +321,18 @@
                     "heading": "Fifteen hundred blocks",
                     "text": "The catalog grew to fifteen hundred sections, and building a site shrank from a month to a single evening."
                   }
-                ]
+                ],
+                "image": "/demo/places/place-02.webp"
               }
             }
           }
         },
-        "cardControls": ["title", "eyebrow", "accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -294,7 +340,9 @@
       "type": "registry:block",
       "title": "Ценности сеткой",
       "description": "Четыре карточки ценностей с иконками, нарисованными чистым CSS. Самодостаточен: один файл, без зависимостей и без иконочных библиотек.",
-      "categories": ["about"],
+      "categories": [
+        "about"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -306,7 +354,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-about-003-*. Серверный компонент. Иконки — не шрифт и не SVG-библиотека: четыре знака (стопка, искра, молния, кольцо) нарисованы псевдоэлементами на тёплой плашке — рамки, повороты и skew, цвет наследует акцент. Сетка складывается от собственной ширины блока: одна, две, четыре колонки. Карточка — <article> с заголовком и текстом; иконка помечена aria-hidden, потому что дублирует смысл заголовка.",
       "meta": {
-        "tags": ["values", "grid", "cards", "css icons", "culture"],
+        "tags": [
+          "values",
+          "grid",
+          "cards",
+          "css icons",
+          "culture"
+        ],
         "preview": {
           "width": "full"
         },
@@ -442,7 +496,12 @@
             }
           }
         },
-        "cardControls": ["title", "eyebrow", "accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -450,7 +509,9 @@
       "type": "registry:block",
       "title": "О нас с цифрами",
       "description": "Рассказ о компании с доказательствами: текст слева, столбик крупных оранжевых метрик справа. Самодостаточен: один файл, без зависимостей, метрики — список определений.",
-      "categories": ["about"],
+      "categories": [
+        "about"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -462,9 +523,18 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-about-004-*. Серверный компонент. На узком контейнере метрики встают сеткой два на два под текстом; от 52rem собственной ширины — колонкой справа от рассказа. Метрики свёрстаны <dl>: в разметке подпись (dt) идёт перед значением (dd), как требует список определений, а визуально цифра стоит над подписью за счёт flex-direction: column-reverse. Цифры оранжевые, tabular-nums, размер считается от ширины контейнера.",
       "meta": {
-        "tags": ["about", "stats", "metrics", "split", "numbers"],
+        "tags": [
+          "about",
+          "stats",
+          "metrics",
+          "split",
+          "numbers"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "image": "/demo/places/place-01.webp"
+          }
         },
         "ai": {
           "export": "About004",
@@ -577,16 +647,34 @@
                   "Today teams without developers build sites with this catalog: a person picks the design, an AI agent installs the block, the page works on the first run."
                 ],
                 "stats": [
-                  { "value": "1,500+", "label": "blocks in the catalog" },
-                  { "value": "0", "label": "dependencies in every block" },
-                  { "value": "1 evening", "label": "from idea to a working page" },
-                  { "value": "40+", "label": "section categories" }
-                ]
+                  {
+                    "value": "1,500+",
+                    "label": "blocks in the catalog"
+                  },
+                  {
+                    "value": "0",
+                    "label": "dependencies in every block"
+                  },
+                  {
+                    "value": "1 evening",
+                    "label": "from idea to a working page"
+                  },
+                  {
+                    "value": "40+",
+                    "label": "section categories"
+                  }
+                ],
+                "image": "/demo/places/place-01.webp"
               }
             }
           }
         },
-        "cardControls": ["title", "eyebrow", "accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -594,7 +682,9 @@
       "type": "registry:block",
       "title": "Принципы списком",
       "description": "Нумерованный манифест: крупные оранжевые 01/02/03, рядом принцип и пояснение. Самодостаточен: один файл, без зависимостей, номера считаются на сервере.",
-      "categories": ["about"],
+      "categories": [
+        "about"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -606,7 +696,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-about-005-*. Серверный компонент. Принципы — честный <ol>: у каждого пункта крупный оранжевый номер 01/02/03, заголовок и пояснение. Номер печатается из индекса массива прямо в JSX, а не CSS-счётчиком — серверный рендер детерминирован, и номер виден даже там, где стили не доехали; для скринридера номер скрыт aria-hidden, порядок объявляет сам список. Пункты разделены линиями, раскладка «номер слева» считается от собственной ширины блока.",
       "meta": {
-        "tags": ["principles", "manifesto", "list", "numbered", "culture"],
+        "tags": [
+          "principles",
+          "manifesto",
+          "list",
+          "numbered",
+          "culture"
+        ],
         "preview": {
           "width": "full"
         },
@@ -734,7 +830,12 @@
             }
           }
         },
-        "cardControls": ["title", "eyebrow", "accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -742,7 +843,9 @@
       "type": "registry:block",
       "title": "Фото-мозаика без фото",
       "description": "Сетка «офисных» плиток на тёплых CSS-градиентах разной глубины и карточка с подписью о культуре. Самодостаточен: один файл, без зависимостей и без единой картинки.",
-      "categories": ["about"],
+      "categories": [
+        "about"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -754,9 +857,24 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-about-006-*. Серверный компонент. Плитки — заглушки под фотографии офиса: пять тонов тёплого градиента с разной долей оранжевого (8–72% через color-mix) дают сетке ритм фотоленты без единого запроса за картинкой; сверху лёгкий радиальный блик, чтобы плитка читалась как снимок при свете окна. Карточка-подпись живёт в той же сетке и на широком контейнере занимает 2×2 ячейки. Плитки помечены aria-hidden — они декоративны.",
       "meta": {
-        "tags": ["mosaic", "gallery", "culture", "gradient", "team"],
+        "tags": [
+          "mosaic",
+          "gallery",
+          "culture",
+          "gradient",
+          "team"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "images": [
+              "/demo/places/place-05.webp",
+              "/demo/places/place-06.webp",
+              "/demo/people/person-05.webp",
+              "/demo/places/place-07.webp",
+              "/demo/people/person-06.webp"
+            ]
+          }
         },
         "ai": {
           "export": "About006",
@@ -864,12 +982,24 @@
               "props": {
                 "eyebrow": "Team",
                 "title": "Culture over office",
-                "caption": "We are a distributed team: designers, engineers and technical writers across four time zones. Instead of shared walls — a shared standard of block quality."
+                "caption": "We are a distributed team: designers, engineers and technical writers across four time zones. Instead of shared walls — a shared standard of block quality.",
+                "images": [
+                  "/demo/places/place-05.webp",
+                  "/demo/places/place-06.webp",
+                  "/demo/people/person-05.webp",
+                  "/demo/places/place-07.webp",
+                  "/demo/people/person-06.webp"
+                ]
               }
             }
           }
         },
-        "cardControls": ["title", "eyebrow", "accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

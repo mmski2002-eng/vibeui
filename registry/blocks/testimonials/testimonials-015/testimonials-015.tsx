@@ -86,7 +86,14 @@ opacity:0.85;white-space:nowrap;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="testimonials-015"] *{animation:none!important;transition:none!important}}
 `
 
-const DEFAULT_LOGOS = ["Северный путь", "Sturm", "Плот", "Remark", "Верстак", "Слой"]
+const DEFAULT_LOGOS = [
+  "Северный путь",
+  "Sturm",
+  "Плот",
+  "Remark",
+  "Верстак",
+  "Слой",
+]
 
 /**
  * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы

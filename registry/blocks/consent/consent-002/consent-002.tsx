@@ -84,9 +84,22 @@ border:1px solid var(--vibeui-consent-002-border);background:transparent;color:i
 `
 
 const DEFAULT_CATEGORIES: Consent002Category[] = [
-  { id: "necessary", title: "Необходимые", note: "Нужны для работы сайта. Отключить нельзя.", required: true },
-  { id: "analytics", title: "Аналитика", note: "Помогают понять, как вы пользуетесь каталогом." },
-  { id: "marketing", title: "Маркетинг", note: "Показывают релевантные предложения на других сайтах." },
+  {
+    id: "necessary",
+    title: "Необходимые",
+    note: "Нужны для работы сайта. Отключить нельзя.",
+    required: true,
+  },
+  {
+    id: "analytics",
+    title: "Аналитика",
+    note: "Помогают понять, как вы пользуетесь каталогом.",
+  },
+  {
+    id: "marketing",
+    title: "Маркетинг",
+    note: "Показывают релевантные предложения на других сайтах.",
+  },
 ]
 
 /**
@@ -165,9 +178,7 @@ export function Consent002({
                   <input
                     type="checkbox"
                     checked={
-                      category.required
-                        ? true
-                        : (enabled[category.id] ?? false)
+                      category.required ? true : (enabled[category.id] ?? false)
                     }
                     disabled={category.required}
                     aria-label={category.title}

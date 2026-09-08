@@ -160,7 +160,11 @@ export function Cta010({
       <style href="vibeui-cta-010" precedence="medium">
         {STYLES}
       </style>
-      <section data-vibeui-block="cta-010" className={className} style={palette}>
+      <section
+        data-vibeui-block="cta-010"
+        className={className}
+        style={palette}
+      >
         <div data-part="shell">
           <div data-part="copy">
             <p data-part="eyebrow">{eyebrow}</p>

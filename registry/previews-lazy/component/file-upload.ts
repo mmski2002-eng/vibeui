@@ -15,12 +15,6 @@ export const PREVIEWS = {
   "file-003": dynamic(() =>
     import("@/registry/components/file-upload/file-003/file-003").then((module) => module.File003),
   ),
-  "file-004": dynamic(() =>
-    import("@/registry/components/file-upload/file-004/file-004").then((module) => module.File004),
-  ),
-  "file-005": dynamic(() =>
-    import("@/registry/components/file-upload/file-005/file-005").then((module) => module.File005),
-  ),
   "file-006": dynamic(() =>
     import("@/registry/components/file-upload/file-006/file-006").then((module) => module.File006),
   ),

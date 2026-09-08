@@ -171,7 +171,11 @@ display:block;position:relative;width:100%;min-height:24rem;
 `
 
 const DEFAULT_OPTIONS: Drawer010Option[] = [
-  { id: "nord", label: "ООО «Северный порт»", note: "ИНН 7801234567 · Санкт-Петербург" },
+  {
+    id: "nord",
+    label: "ООО «Северный порт»",
+    note: "ИНН 7801234567 · Санкт-Петербург",
+  },
   { id: "vega", label: "ИП Вегин А. С.", note: "ИНН 780987654321 · Москва" },
   { id: "kompas", label: "ООО «Компас»", note: "ИНН 7709876543 · Москва" },
   { id: "delta", label: "ООО «Дельта Плюс»", note: "ИНН 7723456789 · Казань" },
@@ -285,7 +289,16 @@ export function Drawer010({
           {triggerLabel}
         </button>
 
-        <dialog ref={panel} aria-label={title}>
+        <dialog
+          ref={panel}
+          aria-label={title}
+          onClick={(event) => {
+            // щелчок мимо панели приходит самому <dialog>: закрываем
+            if (event.target === event.currentTarget) {
+              event.currentTarget.close()
+            }
+          }}
+        >
           <div data-part="panel">
             <div data-part="head">
               <div data-part="row">

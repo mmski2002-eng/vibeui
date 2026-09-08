@@ -3,6 +3,8 @@ import type { ComponentProps, CSSProperties } from "react"
 export type Timeline002Entry = {
   /** Имя автора: из него берутся инициалы и оттенок кружка. */
   author: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   action: string
   target?: string
   time: string
@@ -61,11 +63,16 @@ width:1px;background:var(--vibeui-timeline-002-line);
 [data-vibeui-block="timeline-002"] [data-part="row"]:last-child{padding-bottom:0}
 [data-vibeui-block="timeline-002"] [data-part="row"]:last-child::before{display:none}
 [data-vibeui-block="timeline-002"] [data-part="avatar"]{
-display:flex;align-items:center;justify-content:center;
+position:relative;display:flex;align-items:center;justify-content:center;
 width:1.75rem;height:1.75rem;border-radius:9999px;
-background:light-dark(oklch(0.92 0.05 var(--vibeui-timeline-002-hue,250)),oklch(0.36 0.06 var(--vibeui-timeline-002-hue,250)));
 color:light-dark(oklch(0.35 0.09 var(--vibeui-timeline-002-hue,250)),oklch(0.9 0.07 var(--vibeui-timeline-002-hue,250)));
-font-size:0.6875rem;font-weight:700;letter-spacing:0.02em;
+font-size:0.6875rem;font-weight:700;letter-spacing:0.02em;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="timeline-002"] [data-part="avatar"][data-empty="true"]{background:light-dark(oklch(0.92 0.05 var(--vibeui-timeline-002-hue,250)),oklch(0.36 0.06 var(--vibeui-timeline-002-hue,250)));}
+[data-vibeui-block="timeline-002"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="timeline-002"] [data-part="text"]{margin:0;font-size:0.8125rem;line-height:1.45;color:var(--vibeui-timeline-002-muted)}
 [data-vibeui-block="timeline-002"] [data-part="author"]{color:var(--vibeui-timeline-002-fg);font-weight:600}
@@ -191,6 +198,7 @@ export function Timeline002({
             <li data-part="row" key={`${entry.author}-${index}`}>
               <span
                 data-part="avatar"
+                data-empty={entry.image ? undefined : "true"}
                 aria-hidden="true"
                 style={
                   {
@@ -198,6 +206,14 @@ export function Timeline002({
                   } as CSSProperties
                 }
               >
+                {entry.image ? (
+                  <img
+                    src={entry.image}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
                 {initials(entry.author)}
               </span>
               <p data-part="text">

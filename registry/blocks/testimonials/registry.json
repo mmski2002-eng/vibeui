@@ -207,7 +207,53 @@
           "reviews"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "items": [
+              {
+                "quote": "Раньше на посадочную страницу уходила неделя вёрстки. Сейчас маркетолог собирает её сам за вечер, а мы только проверяем тексты.",
+                "name": "Анна Ковалёва",
+                "role": "Руководитель маркетинга, «Северный путь»",
+                "source": "Отзыв в чате",
+                "image": "/demo/avatars/anna-256.webp"
+              },
+              {
+                "quote": "Понравилось, что компоненты приходят обычными файлами в проект. Ничего не ломается при обновлении, потому что обновлять нечего.",
+                "name": "Игорь Демидов",
+                "role": "Технический директор, Sturm",
+                "source": "Письмо",
+                "image": "/demo/avatars/mark-256.webp"
+              },
+              {
+                "quote": "Пришли за одной секцией, остались из-за документации. Впервые встретил инструкцию, написанную для того, кто будет это поддерживать.",
+                "name": "Пётр Ляхов",
+                "role": "Фронтенд-разработчик",
+                "source": "Отзыв на GitHub",
+                "image": "/demo/avatars/oleg-256.webp"
+              },
+              {
+                "quote": "Собрали лендинг под кампанию за два дня вместе с текстами. Успели к дате запуска, чего за три года не случалось ни разу.",
+                "name": "Мария Соболева",
+                "role": "Продюсер образовательных программ",
+                "source": "Созвон",
+                "image": "/demo/avatars/maria-256.webp"
+              },
+              {
+                "quote": "Дизайнер в команде один, а проектов пять. Библиотека закрыла рутину и оставила ему время на то, ради чего его нанимали.",
+                "name": "Дмитрий Хан",
+                "role": "Основатель студии «Плот»",
+                "source": "Отзыв в чате",
+                "image": "/demo/avatars/petr-256.webp"
+              },
+              {
+                "quote": "Отдельно ценно, что блоки не тянут за собой библиотеку компонентов. Взяли три штуки и не получили сорок мегабайт зависимостей.",
+                "name": "Ольга Титова",
+                "role": "Инженер, финтех",
+                "source": "Письмо",
+                "image": "/demo/avatars/irina-256.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Testimonials002",
@@ -327,37 +373,43 @@
                     "quote": "A landing page used to eat a week of markup. Now the marketer builds it in an evening and we only check the copy.",
                     "name": "Anna Kovalyova",
                     "role": "Head of marketing, Severny Put",
-                    "source": "Chat message"
+                    "source": "Chat message",
+                    "image": "/demo/avatars/timur-256.webp"
                   },
                   {
                     "quote": "I liked that the components arrive as ordinary files in the project. Nothing breaks on update, because there is nothing to update.",
                     "name": "Igor Demidov",
                     "role": "CTO, Sturm",
-                    "source": "Email"
+                    "source": "Email",
+                    "image": "/demo/avatars/artem-256.webp"
                   },
                   {
                     "quote": "We came for one section and stayed for the documentation. First time I have seen instructions written for whoever maintains this later.",
                     "name": "Pyotr Lyakhov",
                     "role": "Frontend developer",
-                    "source": "GitHub review"
+                    "source": "GitHub review",
+                    "image": "/demo/avatars/pavel-256.webp"
                   },
                   {
                     "quote": "We built the campaign landing page in two days, copy included. We hit the launch date, which had not happened once in three years.",
                     "name": "Maria Soboleva",
                     "role": "Producer of educational programmes",
-                    "source": "Call"
+                    "source": "Call",
+                    "image": "/demo/avatars/ilya-256.webp"
                   },
                   {
                     "quote": "We have one designer and five projects. The library took the routine off him and gave back the time he was hired for.",
                     "name": "Dmitry Khan",
                     "role": "Founder, Plot studio",
-                    "source": "Chat message"
+                    "source": "Chat message",
+                    "image": "/demo/avatars/mark-256.webp"
                   },
                   {
                     "quote": "It matters separately that the blocks do not drag a component library behind them. We took three and did not get forty megabytes of dependencies.",
                     "name": "Olga Titova",
                     "role": "Engineer, fintech",
-                    "source": "Email"
+                    "source": "Email",
+                    "image": "/demo/avatars/oleg-256.webp"
                   }
                 ]
               }
@@ -399,7 +451,10 @@
           "metrics"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "avatarImage": "/demo/avatars/pavel-256.webp"
+          }
         },
         "ai": {
           "export": "Testimonials003",
@@ -533,7 +588,8 @@
                     "value": "17",
                     "caption": "pages built in the first quarter"
                   }
-                ]
+                ],
+                "avatarImage": "/demo/avatars/pavel-256.webp"
               }
             },
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-003-*. A server component. The type size of the quote is computed in cqi from the block's own width, and the lines are balanced with text-wrap:balance. The quotation mark is a large glyph in a separate layer with pointer-events:none and user-select:none, clipped by the edge of the section: it is a backdrop rather than an ornament, so it does not get in the way of selecting the text. The numbers are marked up as a definition list <dl>: the value and its caption are a pair, not two independent paragraphs."
@@ -958,7 +1014,61 @@
           "dark"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "items": [
+              {
+                "quote": "Раньше каждый лендинг начинался с пустого файла и заканчивался спором о кнопке.",
+                "name": "Анна Ковалёва",
+                "role": "Маркетинг, «Северный путь»",
+                "image": "/demo/avatars/anna-256.webp"
+              },
+              {
+                "quote": "Три месяца назад мы держали два набора компонентов: один для сайта, другой для приложения. Каждый релиз кто-нибудь забывал перенести правку, и половина работы уходила на сверку. Сейчас библиотека одна, и споров о том, какая версия кнопки правильная, просто не осталось.",
+                "name": "Игорь Демидов",
+                "role": "Технический директор, Sturm",
+                "highlight": true,
+                "image": "/demo/avatars/mark-256.webp"
+              },
+              {
+                "quote": "Секции ставятся в проект копированием файла. Это звучит скучно ровно до первого обновления библиотеки в соседнем проекте.",
+                "name": "Пётр Ляхов",
+                "role": "Фронтенд-разработчик",
+                "image": "/demo/avatars/oleg-256.webp"
+              },
+              {
+                "quote": "У нас один дизайнер на пять продуктов. Он наконец занимается тем, чего не сделает шаблон.",
+                "name": "Дмитрий Хан",
+                "role": "Основатель студии «Плот»",
+                "image": "/demo/avatars/petr-256.webp"
+              },
+              {
+                "quote": "Запускаем курс каждую неделю. Посадочная страница перестала быть узким местом: её собирает методист, а не очередь в дизайн-отделе. За квартал вышло семнадцать страниц, и ни одна не потребовала верстальщика.",
+                "name": "Мария Соболева",
+                "role": "Продюсер образовательных программ",
+                "image": "/demo/avatars/maria-256.webp"
+              },
+              {
+                "quote": "Взяли три блока и не получили сорок мегабайт чужих зависимостей. Для нас это решило вопрос.",
+                "name": "Ольга Титова",
+                "role": "Инженер, финтех",
+                "image": "/demo/avatars/irina-256.webp"
+              },
+              {
+                "quote": "Документация написана так, будто её писал тот, кто потом это поддерживает. Редкость.",
+                "name": "Кирилл Асеев",
+                "role": "Тимлид",
+                "image": "/demo/avatars/timur-256.webp"
+              },
+              {
+                "quote": "Клиенты правят свои сайты сами и не звонят нам по субботам. Этого достаточно, чтобы остаться.",
+                "name": "Елена Ремизова",
+                "role": "Директор по продукту, «Артель»",
+                "highlight": true,
+                "image": "/demo/avatars/sofia-256.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Testimonials006",
@@ -1062,44 +1172,52 @@
                   {
                     "quote": "Every landing page used to start with an empty file and end in an argument about a button.",
                     "name": "Anna Kovalyova",
-                    "role": "Marketing, Severny Put"
+                    "role": "Marketing, Severny Put",
+                    "image": "/demo/avatars/artem-256.webp"
                   },
                   {
                     "quote": "Three months ago we kept two sets of components: one for the site, one for the app. Every release somebody forgot to carry a fix across, and half the work went into reconciling them. Now there is one library, and the argument about which button is the right one simply stopped.",
                     "name": "Igor Demidov",
                     "role": "CTO, Sturm",
-                    "highlight": true
+                    "highlight": true,
+                    "image": "/demo/avatars/pavel-256.webp"
                   },
                   {
                     "quote": "Sections go into the project by copying a file. That sounds dull right up to the first library update in a neighbouring project.",
                     "name": "Pyotr Lyakhov",
-                    "role": "Frontend developer"
+                    "role": "Frontend developer",
+                    "image": "/demo/avatars/ilya-256.webp"
                   },
                   {
                     "quote": "We have one designer across five products. He finally works on what no template will do.",
                     "name": "Dmitry Khan",
-                    "role": "Founder, Plot studio"
+                    "role": "Founder, Plot studio",
+                    "image": "/demo/avatars/mark-256.webp"
                   },
                   {
                     "quote": "We launch a course every week. The landing page stopped being the bottleneck: the course lead builds it instead of queueing for design. Seventeen pages went out in a quarter and not one needed a markup developer.",
                     "name": "Maria Soboleva",
-                    "role": "Producer of educational programmes"
+                    "role": "Producer of educational programmes",
+                    "image": "/demo/avatars/oleg-256.webp"
                   },
                   {
                     "quote": "We took three blocks and did not get forty megabytes of somebody else's dependencies. That settled it for us.",
                     "name": "Olga Titova",
-                    "role": "Engineer, fintech"
+                    "role": "Engineer, fintech",
+                    "image": "/demo/avatars/petr-256.webp"
                   },
                   {
                     "quote": "The documentation reads as if written by the person who maintains it afterwards. That is rare.",
                     "name": "Kirill Aseev",
-                    "role": "Tech lead"
+                    "role": "Tech lead",
+                    "image": "/demo/avatars/timur-256.webp"
                   },
                   {
                     "quote": "Clients edit their own sites and do not call us on Saturdays. That alone is enough to stay.",
                     "name": "Elena Remizova",
                     "role": "Head of product, Artel",
-                    "highlight": true
+                    "highlight": true,
+                    "image": "/demo/avatars/artem-256.webp"
                   }
                 ]
               }
@@ -1141,7 +1259,59 @@
           "scroll"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "items": [
+              {
+                "quote": "Лендинг собрали за вечер: выбрали блоки, отдали агенту, поправили тексты.",
+                "name": "Анна Ковалёва",
+                "role": "Маркетинг, «Северный путь»",
+                "image": "/demo/avatars/anna-256.webp"
+              },
+              {
+                "quote": "Компоненты приходят обычными файлами. Обновлять нечего — и ломаться нечему.",
+                "name": "Игорь Демидов",
+                "role": "Технический директор, Sturm",
+                "image": "/demo/avatars/mark-256.webp"
+              },
+              {
+                "quote": "Агент впервые не изобрёл свою версию секции, а поставил ровно ту, что я выбрал.",
+                "name": "Пётр Ляхов",
+                "role": "Фронтенд-разработчик",
+                "image": "/demo/avatars/oleg-256.webp"
+              },
+              {
+                "quote": "Успели к дате запуска кампании. За три года такое случилось впервые.",
+                "name": "Мария Соболева",
+                "role": "Продюсер курсов",
+                "image": "/demo/avatars/maria-256.webp"
+              },
+              {
+                "quote": "Дизайнер один, проектов пять. Библиотека забрала рутину и вернула ему время.",
+                "name": "Дмитрий Хан",
+                "role": "Основатель студии «Плот»",
+                "image": "/demo/avatars/petr-256.webp"
+              },
+              {
+                "quote": "Взяли три блока — и не получили сорок мегабайт зависимостей в довесок.",
+                "name": "Ольга Титова",
+                "role": "Инженер, финтех",
+                "image": "/demo/avatars/irina-256.webp"
+              },
+              {
+                "quote": "Переменные бренда переопределили за час, и секции легли в старый сайт без конфликтов.",
+                "name": "Павел Гусев",
+                "role": "CTO, Remark",
+                "image": "/demo/avatars/timur-256.webp"
+              },
+              {
+                "quote": "Раньше спорили о вёрстке неделями. Теперь спорим только о текстах.",
+                "name": "Ирина Белова",
+                "role": "Продакт-менеджер",
+                "image": "/demo/avatars/sofia-256.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Testimonials007",
@@ -1259,42 +1429,50 @@
                   {
                     "quote": "We built the landing page in an evening: picked the blocks, handed them to the agent, fixed the copy.",
                     "name": "Anna Kovalyova",
-                    "role": "Marketing, Severny Put"
+                    "role": "Marketing, Severny Put",
+                    "image": "/demo/avatars/artem-256.webp"
                   },
                   {
                     "quote": "Components arrive as plain files. Nothing to update — and nothing to break.",
                     "name": "Igor Demidov",
-                    "role": "CTO, Sturm"
+                    "role": "CTO, Sturm",
+                    "image": "/demo/avatars/pavel-256.webp"
                   },
                   {
                     "quote": "For once the agent did not invent its own section and installed exactly the one I chose.",
                     "name": "Pyotr Lyakhov",
-                    "role": "Frontend developer"
+                    "role": "Frontend developer",
+                    "image": "/demo/avatars/ilya-256.webp"
                   },
                   {
                     "quote": "We hit the campaign launch date. First time in three years.",
                     "name": "Maria Soboleva",
-                    "role": "Course producer"
+                    "role": "Course producer",
+                    "image": "/demo/avatars/mark-256.webp"
                   },
                   {
                     "quote": "One designer, five projects. The library took the routine and gave him his time back.",
                     "name": "Dmitry Khan",
-                    "role": "Founder, Plot studio"
+                    "role": "Founder, Plot studio",
+                    "image": "/demo/avatars/oleg-256.webp"
                   },
                   {
                     "quote": "We took three blocks — and did not get forty megabytes of dependencies on top.",
                     "name": "Olga Titova",
-                    "role": "Engineer, fintech"
+                    "role": "Engineer, fintech",
+                    "image": "/demo/avatars/petr-256.webp"
                   },
                   {
                     "quote": "We overrode the brand variables in an hour and the sections dropped into the old site with no conflicts.",
                     "name": "Pavel Gusev",
-                    "role": "CTO, Remark"
+                    "role": "CTO, Remark",
+                    "image": "/demo/avatars/timur-256.webp"
                   },
                   {
                     "quote": "We used to argue about markup for weeks. Now we only argue about the copy.",
                     "name": "Irina Belova",
-                    "role": "Product manager"
+                    "role": "Product manager",
+                    "image": "/demo/avatars/artem-256.webp"
                   }
                 ]
               }
@@ -1512,7 +1690,67 @@
           "wall"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "items": [
+              {
+                "name": "Анна Ковалёва",
+                "handle": "@akovaleva",
+                "text": "Собрала лендинг курса за вечер. Выбрала блоки в каталоге, скинула агенту — он поставил всё сам. Утром поправила тексты и запустила рекламу.",
+                "likes": 214,
+                "image": "/demo/avatars/anna-256.webp"
+              },
+              {
+                "name": "Игорь Демидов",
+                "handle": "@idemidov",
+                "text": "Компоненты приходят обычными файлами в проект. Ничего не ломается при обновлении, потому что обновлять нечего.",
+                "likes": 187,
+                "image": "/demo/avatars/mark-256.webp"
+              },
+              {
+                "name": "Пётр Ляхов",
+                "handle": "@plyakhov",
+                "text": "Впервые агент не изобрёл свою версию секции, а поставил ровно ту, что я выбрал. Инструкция для ИИ в комплекте решает.",
+                "likes": 342,
+                "image": "/demo/avatars/oleg-256.webp"
+              },
+              {
+                "name": "Мария Соболева",
+                "handle": "@msoboleva",
+                "text": "Два дня — и страница кампании в проде вместе с текстами. Успели к дате запуска, чего не случалось три года.",
+                "likes": 96,
+                "image": "/demo/avatars/maria-256.webp"
+              },
+              {
+                "name": "Дмитрий Хан",
+                "handle": "@dkhan",
+                "text": "Дизайнер у нас один, а проектов пять. Библиотека закрыла рутину и оставила ему время на то, ради чего его нанимали. Секции совпадают с превью один в один, спорить стало не о чем.",
+                "likes": 158,
+                "image": "/demo/avatars/petr-256.webp"
+              },
+              {
+                "name": "Ольга Титова",
+                "handle": "@otitova",
+                "text": "Взяли три блока — ноль новых зависимостей. Лучшая часть.",
+                "likes": 421,
+                "image": "/demo/avatars/irina-256.webp"
+              },
+              {
+                "name": "Павел Гусев",
+                "handle": "@pgusev",
+                "text": "Переопределили переменные бренда за час, и секции легли в существующий сайт без конфликтов стилей.",
+                "likes": 133,
+                "image": "/demo/avatars/timur-256.webp"
+              },
+              {
+                "name": "Ирина Белова",
+                "handle": "@ibelova",
+                "text": "Раньше спорили о вёрстке. Теперь спорим только о текстах — и это прогресс.",
+                "likes": 267,
+                "image": "/demo/avatars/sofia-256.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Testimonials009",
@@ -1631,49 +1869,57 @@
                     "name": "Anna Kovalyova",
                     "handle": "@akovaleva",
                     "text": "Built the course landing page in one evening. Picked the blocks in the catalog, handed them to the agent — it installed everything itself. Fixed the copy in the morning and launched the ads.",
-                    "likes": 214
+                    "likes": 214,
+                    "image": "/demo/avatars/artem-256.webp"
                   },
                   {
                     "name": "Igor Demidov",
                     "handle": "@idemidov",
                     "text": "Components arrive as plain files in the project. Nothing breaks on update, because there is nothing to update.",
-                    "likes": 187
+                    "likes": 187,
+                    "image": "/demo/avatars/pavel-256.webp"
                   },
                   {
                     "name": "Pyotr Lyakhov",
                     "handle": "@plyakhov",
                     "text": "For the first time the agent did not invent its own version of a section and installed exactly the one I chose. The bundled AI instruction does the trick.",
-                    "likes": 342
+                    "likes": 342,
+                    "image": "/demo/avatars/ilya-256.webp"
                   },
                   {
                     "name": "Maria Soboleva",
                     "handle": "@msoboleva",
                     "text": "Two days — and the campaign page is in production, copy included. We hit the launch date, which had not happened in three years.",
-                    "likes": 96
+                    "likes": 96,
+                    "image": "/demo/avatars/mark-256.webp"
                   },
                   {
                     "name": "Dmitry Khan",
                     "handle": "@dkhan",
                     "text": "We have one designer and five projects. The library took over the routine and left him the work he was actually hired for. Sections match the preview one to one, so there is nothing left to argue about.",
-                    "likes": 158
+                    "likes": 158,
+                    "image": "/demo/avatars/oleg-256.webp"
                   },
                   {
                     "name": "Olga Titova",
                     "handle": "@otitova",
                     "text": "Took three blocks — zero new dependencies. Best part.",
-                    "likes": 421
+                    "likes": 421,
+                    "image": "/demo/avatars/petr-256.webp"
                   },
                   {
                     "name": "Pavel Gusev",
                     "handle": "@pgusev",
                     "text": "Overrode the brand variables in an hour and the sections dropped into the existing site with no style conflicts.",
-                    "likes": 133
+                    "likes": 133,
+                    "image": "/demo/avatars/timur-256.webp"
                   },
                   {
                     "name": "Irina Belova",
                     "handle": "@ibelova",
                     "text": "We used to argue about markup. Now we only argue about the copy — and that is progress.",
-                    "likes": 267
+                    "likes": 267,
+                    "image": "/demo/avatars/artem-256.webp"
                   }
                 ]
               }
@@ -2044,7 +2290,59 @@
           "css-only"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "segments": [
+              {
+                "label": "Стартапы",
+                "items": [
+                  {
+                    "quote": "Нас двое, дизайнера нет. Выбрали блоки, отдали агенту — лендинг для инвесторов был готов к утренней встрече.",
+                    "name": "Павел Гусев",
+                    "role": "Сооснователь, Remark"
+                  },
+                  {
+                    "quote": "Считали каждый день до запуска. Библиотека сэкономила нам недели: страница выглядит так, будто над ней работала студия.",
+                    "name": "Мария Соболева",
+                    "role": "CEO, «Слой»"
+                  }
+                ],
+                "image": "/demo/avatars/irina-256.webp"
+              },
+              {
+                "label": "Агентства",
+                "items": [
+                  {
+                    "quote": "Пять проектов в месяц на одного дизайнера. Рутину закрыли блоками, дизайнеру осталась работа, ради которой его нанимали.",
+                    "name": "Дмитрий Хан",
+                    "role": "Основатель студии «Плот»"
+                  },
+                  {
+                    "quote": "Клиент видит превью и получает ровно его. Исчезла самая дорогая фраза в нашей смете — «на сайте выглядит иначе».",
+                    "name": "Ирина Белова",
+                    "role": "Аккаунт-директор, «Верстак»"
+                  }
+                ],
+                "image": "/demo/avatars/petr-256.webp"
+              },
+              {
+                "label": "Продуктовые команды",
+                "items": [
+                  {
+                    "quote": "Маркетинг собирает посадочные без очереди к фронтендерам. Разработка впервые за год занимается продуктом, а не лендингами.",
+                    "name": "Игорь Демидов",
+                    "role": "Технический директор, Sturm"
+                  },
+                  {
+                    "quote": "Блоки пришли файлами в репозиторий, ноль новых зависимостей. Наш аудит безопасности прошёл их за один день.",
+                    "name": "Ольга Титова",
+                    "role": "Инженер, финтех"
+                  }
+                ],
+                "image": "/demo/avatars/sofia-256.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Testimonials012",
@@ -2172,7 +2470,8 @@
                         "name": "Maria Soboleva",
                         "role": "CEO, Sloy"
                       }
-                    ]
+                    ],
+                    "image": "/demo/avatars/irina-256.webp"
                   },
                   {
                     "label": "Agencies",
@@ -2187,7 +2486,8 @@
                         "name": "Irina Belova",
                         "role": "Account director, Verstak"
                       }
-                    ]
+                    ],
+                    "image": "/demo/avatars/petr-256.webp"
                   },
                   {
                     "label": "Product teams",
@@ -2202,7 +2502,8 @@
                         "name": "Olga Titova",
                         "role": "Engineer, fintech"
                       }
-                    ]
+                    ],
+                    "image": "/demo/avatars/sofia-256.webp"
                   }
                 ]
               }
@@ -2414,7 +2715,10 @@
           "poster"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "image": "/demo/posters/poster-03.webp"
+          }
         },
         "ai": {
           "export": "Testimonials014",
@@ -2535,7 +2839,8 @@
                 "transcriptLabel": "Transcript",
                 "quote": "I picked the blocks in the catalog and simply handed the link to the agent. An hour later the sections stood in the project — exactly as I saw them in the preview. We turned a week of markup into one evening.",
                 "name": "Anna Kovalyova",
-                "role": "Head of marketing, Severny Put"
+                "role": "Head of marketing, Severny Put",
+                "image": "/demo/posters/poster-03.webp"
               }
             }
           }

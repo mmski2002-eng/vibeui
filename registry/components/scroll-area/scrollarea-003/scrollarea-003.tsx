@@ -2,6 +2,8 @@ import type { ComponentProps, CSSProperties } from "react"
 
 export type Scrollarea003Card = {
   title: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   meta: string
 }
 
@@ -78,8 +80,13 @@ background:var(--vibeui-scrollarea-003-tile);
 border:1px solid var(--vibeui-scrollarea-003-border);
 }
 [data-vibeui-block="scrollarea-003"] [data-part="thumb"]{
-aspect-ratio:16 / 10;border-radius:0.5rem;
-background:linear-gradient(135deg,var(--vibeui-scrollarea-003-thumb-from),var(--vibeui-scrollarea-003-thumb-to));
+position:relative;aspect-ratio:16 / 10;border-radius:0.5rem;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="scrollarea-003"] [data-part="thumb"][data-empty="true"]{background:linear-gradient(135deg,var(--vibeui-scrollarea-003-thumb-from),var(--vibeui-scrollarea-003-thumb-to));}
+[data-vibeui-block="scrollarea-003"] [data-part="thumb"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="scrollarea-003"] [data-part="name"]{
 font-size:0.75rem;font-weight:650;line-height:1.25;
@@ -175,7 +182,20 @@ export function Scrollarea003({
         >
           {cards.map((card) => (
             <article key={card.title} data-part="card">
-              <span data-part="thumb" aria-hidden="true" />
+              <span
+                data-part="thumb"
+                data-empty={card.image ? undefined : "true"}
+                aria-hidden="true"
+              >
+                {card.image ? (
+                  <img
+                    src={card.image}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
+              </span>
               <span data-part="name">{card.title}</span>
               <span data-part="meta">{card.meta}</span>
             </article>

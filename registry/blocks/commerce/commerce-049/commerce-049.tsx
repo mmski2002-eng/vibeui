@@ -300,7 +300,12 @@ export function Commerce049({
                     aria-hidden={item.image ? undefined : true}
                   >
                     {item.image ? (
-                      <img src={item.image} alt="" loading="lazy" decoding="async" />
+                      <img
+                        src={item.image}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                      />
                     ) : null}
                   </span>
                   <div data-part="body">

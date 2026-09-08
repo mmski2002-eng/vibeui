@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Сетка статей",
       "description": "Лента статей карточками с обложкой-градиентом: оттенок считается из названия рубрики, поэтому одинаковые рубрики красятся одинаково без таблицы соответствий.",
-      "categories": ["blog"],
+      "categories": [
+        "blog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,9 +20,45 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-001-*. Серверный: хуков нет. Обложка рисуется линейным градиентом от оттенка, который получается хешированием названия рубрики, — ассетов и картинок нет вовсе. Ссылка заголовка растянута псевдоэлементом ::after на всю карточку, поэтому кликается любое место, а текстом ссылки остаётся заголовок. Сетка на две и три колонки включается container query.",
       "meta": {
-        "tags": ["blog", "cards", "feed", "articles"],
+        "tags": [
+          "blog",
+          "cards",
+          "feed",
+          "articles"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "posts": [
+              {
+                "title": "Почему мы отказались от библиотеки иконок",
+                "excerpt": "Двести килобайт ради восьми иконок — плохая сделка. Рассказываем, как перешли на инлайновые SVG и что при этом сломалось.",
+                "topic": "Разработка",
+                "date": "12 марта 2025",
+                "readingTime": "7 мин",
+                "author": "Аня Соколова",
+                "image": "/demo/scenes/scene-03.webp"
+              },
+              {
+                "title": "Контейнерные запросы вместо брейкпоинтов",
+                "excerpt": "Компонент должен знать свою ширину, а не ширину окна. Разбираем, как это меняет вёрстку карточек и что делать со старыми медиазапросами.",
+                "topic": "Вёрстка",
+                "date": "4 марта 2025",
+                "readingTime": "11 мин",
+                "author": "Кирилл Дёмин",
+                "image": "/demo/scenes/scene-01.webp"
+              },
+              {
+                "title": "Форма, которую заполняют до конца",
+                "excerpt": "Семь полей вместо восемнадцати, понятные ошибки и ни одной звёздочки. Что мы поменяли в заявке и как это отразилось на отказах.",
+                "topic": "Продукт",
+                "date": "26 февраля 2025",
+                "readingTime": "6 мин",
+                "author": "Марина Лебедева",
+                "image": "/demo/scenes/scene-07.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Blog001",
@@ -138,7 +176,8 @@
                     "topic": "Engineering",
                     "date": "12 March 2025",
                     "readingTime": "7 min",
-                    "author": "Anna Sokolova"
+                    "author": "Anna Sokolova",
+                    "image": "/demo/scenes/scene-03.webp"
                   },
                   {
                     "title": "Container queries over breakpoints",
@@ -146,7 +185,8 @@
                     "topic": "CSS",
                     "date": "4 March 2025",
                     "readingTime": "11 min",
-                    "author": "Kirill Dyomin"
+                    "author": "Kirill Dyomin",
+                    "image": "/demo/scenes/scene-01.webp"
                   },
                   {
                     "title": "A form people actually finish",
@@ -154,7 +194,8 @@
                     "topic": "Product",
                     "date": "26 February 2025",
                     "readingTime": "6 min",
-                    "author": "Marina Lebedeva"
+                    "author": "Marina Lebedeva",
+                    "image": "/demo/scenes/scene-07.webp"
                   }
                 ],
                 "eyebrow": "Journal",
@@ -164,7 +205,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-001-*. A server component: there are no hooks. The cover is drawn with a linear gradient from a hue obtained by hashing the topic name — there are no assets or images at all. The heading link is stretched over the whole card with an ::after pseudo-element, so any spot is clickable while the link text stays the heading. The two- and three-column grid is turned on by a container query."
           }
         },
-        "cardControls": ["title", "eyebrow", "accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -172,7 +218,9 @@
       "type": "registry:block",
       "title": "Чтение статьи",
       "description": "Страница статьи с оглавлением: на широком блоке оно липнет сбоку, на узком сворачивается в details, чтобы не съедать половину экрана.",
-      "categories": ["blog"],
+      "categories": [
+        "blog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -184,9 +232,17 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-002-*. Серверный: оглавление собрано из тех же секций, что и текст, раскрытие держит нативный <details open>. На широком блоке контейнерный запрос делает колонку липкой и гасит стрелку, а у summary снимает pointer-events, чтобы оглавление нельзя было свернуть. Заголовки несут id и scroll-margin-top, ширина текста ограничена в ch.",
       "meta": {
-        "tags": ["blog", "article", "toc", "longread"],
+        "tags": [
+          "blog",
+          "article",
+          "toc",
+          "longread"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "avatarImage": "/demo/avatars/anna-256.webp"
+          }
         },
         "ai": {
           "export": "Blog002",
@@ -329,13 +385,19 @@
                   }
                 ],
                 "title": "Container queries over breakpoints",
-                "tocTitle": "In this article"
+                "tocTitle": "In this article",
+                "avatarImage": "/demo/avatars/anna-256.webp"
               }
             },
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-002-*. A server component: the contents are built from the same sections as the text, and a native <details open> holds the disclosure. On a wide block a container query makes the column sticky and hides the arrow, and removes pointer-events from summary so that the contents cannot be collapsed. The headings carry an id and scroll-margin-top, and the text width is limited in ch."
           }
         },
-        "cardControls": ["title", "tocTitle", "accent", "background"]
+        "cardControls": [
+          "title",
+          "tocTitle",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -343,7 +405,9 @@
       "type": "registry:block",
       "title": "Главный материал",
       "description": "Крупный анонс одной статьи: обложка-градиент слева, а рядом с именем автора — время чтения и объём текста, то есть ответ на вопрос перед кликом.",
-      "categories": ["blog"],
+      "categories": [
+        "blog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -355,9 +419,18 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-003-*. Серверный: хуков нет. Обложка собрана из слоёв радиальных градиентов поверх линейного, оттенок задаётся числом hue. Ссылка заголовка растянута ::after на всю карточку, состояние обводки держит :focus-within. Раскладка в две колонки включается container query, на узком блоке обложка становится горизонтальной.",
       "meta": {
-        "tags": ["blog", "featured", "announce", "author"],
+        "tags": [
+          "blog",
+          "featured",
+          "announce",
+          "author"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "coverImage": "/demo/scenes/scene-17.webp",
+            "avatarImage": "/demo/avatars/maria-256.webp"
+          }
         },
         "ai": {
           "export": "Blog003",
@@ -476,13 +549,20 @@
                 "words": "1,400 words",
                 "ctaLabel": "Read the article",
                 "coverLabel": "Issue №14",
-                "badge": "New"
+                "badge": "New",
+                "coverImage": "/demo/scenes/scene-17.webp",
+                "avatarImage": "/demo/avatars/maria-256.webp"
               }
             },
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-003-*. A server component: there are no hooks. The cover is assembled from layers of radial gradients over a linear one, and the hue is set by the hue number. The heading link is stretched over the whole card with ::after, and :focus-within holds the ring state. The two-column layout is turned on by a container query; on a narrow block the cover becomes horizontal."
           }
         },
-        "cardControls": ["badge", "hue", "accent", "background"]
+        "cardControls": [
+          "badge",
+          "hue",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -490,7 +570,9 @@
       "type": "registry:block",
       "title": "Подписка на рассылку",
       "description": "Подписка на рассылку с проверяемым обещанием: три пункта о содержимом письма, периодичность и число подписчиков рядом с полем.",
-      "categories": ["blog"],
+      "categories": [
+        "blog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -502,7 +584,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-004-*. Серверный: валидация нативная — type=\"email\" и required, ошибка показывается по :user-invalid, а не :invalid. Текст ошибки всегда есть в разметке, но визуально скрыт clip-path, и связан с полем через aria-describedby. Тёмная подложка своя, поэтому блок читается и на светлой странице, и на тёмной карточке каталога. Отправку реализует вызывающий код.",
       "meta": {
-        "tags": ["blog", "newsletter", "subscribe", "form"],
+        "tags": [
+          "blog",
+          "newsletter",
+          "subscribe",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -619,7 +706,11 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-004-*. A server component: the validation is native — type=\"email\" and required, and the error is shown by :user-invalid rather than :invalid. The error text is always present in the markup but visually hidden with clip-path, and is tied to the field through aria-describedby. The dark ground is the block's own, so the block reads both on a light page and on a dark catalogue card. Submission is implemented by the calling code."
           }
         },
-        "cardControls": ["title", "submitLabel", "accent"]
+        "cardControls": [
+          "title",
+          "submitLabel",
+          "accent"
+        ]
       }
     },
     {
@@ -627,7 +718,9 @@
       "type": "registry:block",
       "title": "Лента по темам",
       "description": "Архив статей строками с фильтром по рубрикам: рубрики собираются из самих записей, поэтому счётчик всегда совпадает с тем, что покажет фильтр.",
-      "categories": ["blog"],
+      "categories": [
+        "blog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -639,7 +732,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-005-*. Клиентский: \"use client\" ради фильтра в useState. Список рубрик выводится из массива записей через Set, счётчик считает те же записи, что покажет фильтр. Обёртка списка объявлена aria-live=\"polite\". На широком блоке container query переносит дату и рубрику в отдельную колонку слева.",
       "meta": {
-        "tags": ["blog", "archive", "filter", "list"],
+        "tags": [
+          "blog",
+          "archive",
+          "filter",
+          "list"
+        ],
         "preview": {
           "width": "full"
         },
@@ -805,7 +903,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-005-*. A client component: \"use client\" is there for the filter in useState. The list of topics is derived from the entries array through a Set, and the counter counts the same entries the filter will show. The list wrapper is declared aria-live=\"polite\". On a wide block a container query moves the date and the topic into a separate column on the left."
           }
         },
-        "cardControls": ["title", "allLabel", "accent", "background"]
+        "cardControls": [
+          "title",
+          "allLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -813,7 +916,9 @@
       "type": "registry:block",
       "title": "Похожие материалы",
       "description": "Похожие статьи с объяснением связи: у каждой карточки есть строка «почему рядом» — продолжение разбора, общая тема или противоположный вывод.",
-      "categories": ["blog"],
+      "categories": [
+        "blog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -825,7 +930,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-006-*. Серверный: хуков нет. Корень — <aside> с aria-label: это дополнение к статье, а не самостоятельный раздел. Ссылка заголовка растянута ::after на карточку, обводка держится на :focus-within. Порядковая подпись занимает место рубрики. Три колонки включаются container query.",
       "meta": {
-        "tags": ["blog", "related", "recirculation", "cards"],
+        "tags": [
+          "blog",
+          "related",
+          "recirculation",
+          "cards"
+        ],
         "preview": {
           "width": "full"
         },
@@ -966,7 +1076,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-006-*. A server component: there are no hooks. The root is an <aside> with aria-label: this supplements the article, it is not a section in its own right. The heading link is stretched over the card with ::after, and the ring rests on :focus-within. The sequence caption takes the place of the topic. Three columns are turned on by a container query."
           }
         },
-        "cardControls": ["title", "afterTitle", "accent", "background"]
+        "cardControls": [
+          "title",
+          "afterTitle",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -974,7 +1089,9 @@
       "type": "registry:block",
       "title": "Карточки выпусков",
       "description": "Сетка выпусков журнала с обложками из фирменного оранжевого градиента: вместо иллюстраций — крупный номер выпуска, поэтому публикация не ждёт дизайнера.",
-      "categories": ["blog"],
+      "categories": [
+        "blog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -986,9 +1103,43 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-007-*. Серверный: хуков нет. Обложка — линейный градиент из трёх остановок акцентной заливки, номер выпуска вдавлен полупрозрачной тёмной краской, ассетов и картинок нет вовсе. Ссылка заголовка растянута ::after на всю карточку, обводку держит :focus-within. Две и три колонки включаются container query.",
       "meta": {
-        "tags": ["blog", "cards", "gradient", "issues", "grid"],
+        "tags": [
+          "blog",
+          "cards",
+          "gradient",
+          "issues",
+          "grid"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "posts": [
+              {
+                "issue": "№12",
+                "title": "Секции, которые собираются сами",
+                "excerpt": "Как каталог отдаёт агенту не картинку, а готовый файл: палитра, раскладка и инструкция в одном месте.",
+                "date": "21 февраля 2026",
+                "readingTime": "6 мин",
+                "image": "/demo/scenes/scene-13.webp"
+              },
+              {
+                "issue": "№13",
+                "title": "Один акцент на всю библиотеку",
+                "excerpt": "Почему бренд держится на одном оранжевом и десяти нейтралях — и что это даёт полутора тысячам блоков.",
+                "date": "7 марта 2026",
+                "readingTime": "8 мин",
+                "image": "/demo/scenes/scene-02.webp"
+              },
+              {
+                "issue": "№14",
+                "title": "Блок без зависимостей",
+                "excerpt": "Что должно лежать в одном файле, чтобы компонент пережил переезд в любой чужой проект без правок.",
+                "date": "20 марта 2026",
+                "readingTime": "7 мин",
+                "image": "/demo/scenes/scene-16.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Blog007",
@@ -1105,28 +1256,36 @@
                     "title": "Sections that assemble themselves",
                     "excerpt": "How the catalogue hands the agent a ready file rather than a picture: palette, layout and instructions in one place.",
                     "date": "21 February 2026",
-                    "readingTime": "6 min"
+                    "readingTime": "6 min",
+                    "image": "/demo/scenes/scene-13.webp"
                   },
                   {
                     "issue": "№13",
                     "title": "One accent for the whole library",
                     "excerpt": "Why the brand rests on a single orange and ten neutrals — and what that gives fifteen hundred blocks.",
                     "date": "7 March 2026",
-                    "readingTime": "8 min"
+                    "readingTime": "8 min",
+                    "image": "/demo/scenes/scene-02.webp"
                   },
                   {
                     "issue": "№14",
                     "title": "A block with zero dependencies",
                     "excerpt": "What has to live in one file for a component to survive the move into any foreign project untouched.",
                     "date": "20 March 2026",
-                    "readingTime": "7 min"
+                    "readingTime": "7 min",
+                    "image": "/demo/scenes/scene-16.webp"
                   }
                 ]
               }
             }
           }
         },
-        "cardControls": ["title", "eyebrow", "accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1134,7 +1293,9 @@
       "type": "registry:block",
       "title": "Главная и лента",
       "description": "Главная журнала: слева крупный featured-материал на тёплой оранжевой плашке, справа плотная лента из четырёх строк — один текст получает всё внимание, остальные перечислены.",
-      "categories": ["blog"],
+      "categories": [
+        "blog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1146,7 +1307,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-008-*. Серверный: хуков нет. Featured-карточка лежит на тёплом тинте color-mix от акцента, лента справа — строки без обложек: строка стоит дешевле карточки и не спорит с главным материалом. Обе зоны кликаются растянутыми ссылками ::after, обводку держит :focus-within. Две колонки включает container query на 56rem, до этого лента стоит под карточкой.",
       "meta": {
-        "tags": ["blog", "featured", "feed", "layout", "magazine"],
+        "tags": [
+          "blog",
+          "featured",
+          "feed",
+          "layout",
+          "magazine"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1296,7 +1463,12 @@
             }
           }
         },
-        "cardControls": ["title", "eyebrow", "accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1304,7 +1476,9 @@
       "type": "registry:block",
       "title": "Карточка автора",
       "description": "Карточка автора блога: аватар из инициалов, роль, биография и соцссылки слева, три последних статьи справа — доверие к автору проверяют его текстами.",
-      "categories": ["blog"],
+      "categories": [
+        "blog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1316,9 +1490,18 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-009-*. Серверный: хуков нет. Аватар — инициалы на тёплой оранжевой заливке color-mix, картинок и ассетов нет. Соцссылки — настоящие <a> пилюлями с видимым фокус-кольцом, список последних статей — отдельная колонка, которую container query уводит вправо на широком блоке.",
       "meta": {
-        "tags": ["blog", "author", "profile", "bio", "links"],
+        "tags": [
+          "blog",
+          "author",
+          "profile",
+          "bio",
+          "links"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "avatarImage": "/demo/avatars/oleg-256.webp"
+          }
         },
         "ai": {
           "export": "Blog009",
@@ -1431,9 +1614,15 @@
                 "role": "VibeUI editor. Writes about interfaces, components and building sites with AI",
                 "bio": "Spent seven years building product interfaces, now explains how to assemble them from ready blocks. Takes the catalogue's decisions apart from the inside: why a section is built this way and what is safe to touch.",
                 "links": [
-                  { "label": "Telegram" },
-                  { "label": "GitHub" },
-                  { "label": "RSS" }
+                  {
+                    "label": "Telegram"
+                  },
+                  {
+                    "label": "GitHub"
+                  },
+                  {
+                    "label": "RSS"
+                  }
                 ],
                 "articlesTitle": "Latest articles",
                 "articles": [
@@ -1452,12 +1641,18 @@
                     "date": "7 March 2026",
                     "readingTime": "6 min"
                   }
-                ]
+                ],
+                "avatarImage": "/demo/avatars/oleg-256.webp"
               }
             }
           }
         },
-        "cardControls": ["name", "eyebrow", "accent", "background"]
+        "cardControls": [
+          "name",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1465,7 +1660,9 @@
       "type": "registry:block",
       "title": "Липкое оглавление",
       "description": "Макет статьи с липким оглавлением сбоку: активный пункт отмечен оранжевой полосой и цветом, на узком блоке колонка становится обычным списком перед текстом.",
-      "categories": ["blog"],
+      "categories": [
+        "blog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1477,7 +1674,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-010-*. Серверный: активный пункт задаётся пропом activeId и помечается aria-current — наблюдателя пересечений нет намеренно. Оглавление — nav с aria-label, пункты сидят на общей левой линии, активный перекрывает её оранжевой полосой. Липкость включает container query на 56rem, заголовки несут id и scroll-margin-top, ширина текста ограничена в ch.",
       "meta": {
-        "tags": ["blog", "toc", "sticky", "article", "navigation"],
+        "tags": [
+          "blog",
+          "toc",
+          "sticky",
+          "article",
+          "navigation"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1630,7 +1833,12 @@
             }
           }
         },
-        "cardControls": ["title", "tocTitle", "accent", "background"]
+        "cardControls": [
+          "title",
+          "tocTitle",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1638,7 +1846,9 @@
       "type": "registry:block",
       "title": "Архив по месяцам",
       "description": "Архив-таймлайн: статьи сгруппированы по месяцам вдоль вертикальной оси с оранжевыми точками — паузы и плотные месяцы видны без чтения дат.",
-      "categories": ["blog"],
+      "categories": [
+        "blog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1650,7 +1860,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-011-*. Серверный: хуков нет. Ось — левая граница списка, точка месяца сидит на ней псевдоэлементом и оторвана от линии обводкой цветом страницы. Группы — ol по месяцам, внутри ul статей. На широком блоке container query переносит дату и время чтения к правому краю строки.",
       "meta": {
-        "tags": ["blog", "archive", "timeline", "months", "list"],
+        "tags": [
+          "blog",
+          "archive",
+          "timeline",
+          "months",
+          "list"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1816,7 +2032,12 @@
             }
           }
         },
-        "cardControls": ["title", "eyebrow", "accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1824,7 +2045,9 @@
       "type": "registry:block",
       "title": "Плитки рубрик",
       "description": "Сетка рубрик блога плитками: имя темы, крупный оранжевый счётчик статей и строка о содержимом — честный ответ на вопрос, есть ли там что читать.",
-      "categories": ["blog"],
+      "categories": [
+        "blog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1836,7 +2059,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-012-*. Серверный: хуков нет. Счётчик набран крупно акцентом, подпись под числом отдаёт проп countLabel. Плитка кликается растянутой ссылкой ::after на имени рубрики, hover подкладывает тёплый тинт color-mix от акцента. Две и три колонки включаются container query.",
       "meta": {
-        "tags": ["blog", "topics", "categories", "grid", "tiles"],
+        "tags": [
+          "blog",
+          "topics",
+          "categories",
+          "grid",
+          "tiles"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1983,7 +2212,12 @@
             }
           }
         },
-        "cardControls": ["title", "eyebrow", "accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1991,7 +2225,9 @@
       "type": "registry:block",
       "title": "Шапка статьи",
       "description": "Шапка поста: тег рубрики, крупный заголовок, лид и строка автора с датой и временем чтения; сверху — декоративная оранжевая полоса прогресса чтения.",
-      "categories": ["blog"],
+      "categories": [
+        "blog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2003,9 +2239,18 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-013-*. Серверный: полоса прогресса статичная и декоративная — ширину задаёт проп progress в процентах, живой прогресс требует скролл-слушателя и остаётся вызывающему коду. Корень — <header> с h1: блок рассчитан на верх страницы статьи. Аватар — инициалы на тёплой заливке, полоса скрыта aria-hidden.",
       "meta": {
-        "tags": ["blog", "hero", "article", "header", "progress"],
+        "tags": [
+          "blog",
+          "hero",
+          "article",
+          "header",
+          "progress"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "avatarImage": "/demo/avatars/petr-256.webp"
+          }
         },
         "ai": {
           "export": "Blog013",
@@ -2120,12 +2365,18 @@
                 "role": "VibeUI editor",
                 "date": "26 March 2026",
                 "readingTime": "9 minutes read",
-                "progress": 24
+                "progress": 24,
+                "avatarImage": "/demo/avatars/petr-256.webp"
               }
             }
           }
         },
-        "cardControls": ["title", "topic", "accent", "background"]
+        "cardControls": [
+          "title",
+          "topic",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2133,7 +2384,9 @@
       "type": "registry:block",
       "title": "Читать дальше",
       "description": "Блок «читайте дальше» горизонтальными строками: рубрика, заголовок, время чтения и стрелка у края — под дочитанной статьёй три строки занимают меньше экрана, чем ряд обложек.",
-      "categories": ["blog"],
+      "categories": [
+        "blog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2145,7 +2398,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-014-*. Серверный: хуков нет. Корень — <aside> с aria-label: это дополнение к статье, а не самостоятельный раздел. Строки кликаются растянутой ссылкой ::after, обводку держит :focus-within, стрелка уезжает вправо на hover и глушится prefers-reduced-motion. Ссылка на весь архив стоит в шапке блока.",
       "meta": {
-        "tags": ["blog", "related", "next", "rows", "recirculation"],
+        "tags": [
+          "blog",
+          "related",
+          "next",
+          "rows",
+          "recirculation"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2276,7 +2535,12 @@
             }
           }
         },
-        "cardControls": ["title", "allLabel", "accent", "background"]
+        "cardControls": [
+          "title",
+          "allLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2284,7 +2548,9 @@
       "type": "registry:block",
       "title": "Дайджест недели",
       "description": "Нумерованный дайджест: пять ссылок с комментарием и источником, номера рисует CSS-счётчик, снизу — плашка подписки с оранжевой кнопкой.",
-      "categories": ["blog"],
+      "categories": [
+        "blog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2296,7 +2562,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-015-*. Серверный: хуков нет. Номера ставит CSS-счётчик с decimal-leading-zero — порядок на экране нельзя рассинхронизировать с разметкой. Каждая запись — грид «номер плюс текст», номер тянется на три ряда. Плашка подписки — ссылка-кнопка с акцентной заливкой и почти чёрным текстом; формы и отправки в блоке нет намеренно.",
       "meta": {
-        "tags": ["blog", "digest", "links", "newsletter", "list"],
+        "tags": [
+          "blog",
+          "digest",
+          "links",
+          "newsletter",
+          "list"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2442,7 +2714,12 @@
             }
           }
         },
-        "cardControls": ["title", "eyebrow", "accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

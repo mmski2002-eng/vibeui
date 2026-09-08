@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react"
 
 export type Hero005Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   title?: string
   lede?: string
   primary?: { label: string; href: string }
@@ -62,9 +64,15 @@ font-size:0.9375rem;font-weight:600;text-decoration:none;transition:opacity .16s
 [data-vibeui-block="hero-005"] a:hover{opacity:.88}
 [data-vibeui-block="hero-005"] a:focus-visible{outline:2px solid var(--vibeui-hero-005-accent);outline-offset:3px}
 [data-vibeui-block="hero-005"] [data-part="shot"]{
-margin:2.75rem auto 0;max-width:60rem;width:100%;border:1px solid var(--vibeui-hero-005-line);
-border-bottom:0;border-radius:0.875rem 0.875rem 0 0;background:var(--vibeui-hero-005-panel);overflow:hidden;
+position:relative;margin:2.75rem auto 0;max-width:60rem;width:100%;border:1px solid var(--vibeui-hero-005-line);
+border-bottom:0;border-radius:0.875rem 0.875rem 0 0;overflow:hidden;
 -webkit-mask-image:linear-gradient(to bottom,black 68%,transparent);mask-image:linear-gradient(to bottom,black 68%,transparent);
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="hero-005"] [data-part="shot"][data-empty="true"]{background:var(--vibeui-hero-005-panel);}
+[data-vibeui-block="hero-005"] [data-part="shot"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="hero-005"] [data-part="bar"]{
 display:flex;align-items:center;gap:0.375rem;padding:0.625rem 0.875rem;border-bottom:1px solid var(--vibeui-hero-005-line);
@@ -135,6 +143,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 /** Hero со снимком продукта: текст по центру, под ним обрезанное окно приложения. */
 export function Hero005({
   title = "Покажите продукт, а не обещание",
+  image = "",
   lede = "Секция открывается снимком интерфейса: посетитель видит, что внутри, ещё до регистрации.",
   primary = { label: "Открыть демо", href: "#" },
   secondary = { label: "Как это работает", href: "#" },
@@ -181,7 +190,14 @@ export function Hero005({
             </div>
           </div>
 
-          <div data-part="shot" aria-hidden="true">
+          <div
+            data-part="shot"
+            data-empty={image ? undefined : "true"}
+            aria-hidden="true"
+          >
+            {image ? (
+              <img src={image} alt="" loading="lazy" decoding="async" />
+            ) : null}
             <div data-part="bar">
               <span data-part="dot" />
               <span data-part="dot" />

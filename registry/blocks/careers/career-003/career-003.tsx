@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react"
 
 export type Career003Props = {
+  /** Фото рабочего места. Без него блок остаётся текстовым. */
+  image?: string
   eyebrow?: string
   role?: string
   location?: string
@@ -41,6 +43,13 @@ container-type:inline-size;
 min-width:min(100%,16rem);
 display:block;background:var(--vibeui-career-003-bg);color:var(--vibeui-career-003-ink);
 font-family:var(--vibeui-career-003-font);
+}
+[data-vibeui-block="career-003"] [data-part="figure"]{
+position:relative;overflow:hidden;aspect-ratio:16 / 9;
+margin-top:1.5rem;border-radius:0.875rem;
+}
+[data-vibeui-block="career-003"] [data-part="figure"] img{
+display:block;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="career-003"] [data-part="shell"]{max-width:44rem;margin:0 auto;padding:3rem 1.25rem}
 [data-vibeui-block="career-003"] [data-part="eyebrow"]{margin:0 0 0.5rem;color:var(--vibeui-career-003-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
@@ -108,6 +117,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 /** Карточка одной вакансии: метаданные, резюме, обязанности и требования. */
 export function Career003({
   eyebrow = "Вакансия",
+  image = "",
   role = "Фронтенд-разработчик",
   location = "Удалённо",
   employment = "Полная занятость",
@@ -175,6 +185,12 @@ export function Career003({
           <a href={ctaHref} data-part="cta">
             {ctaLabel}
           </a>
+
+          {image ? (
+            <figure data-part="figure">
+              <img src={image} alt="" loading="lazy" decoding="async" />
+            </figure>
+          ) : null}
         </div>
       </section>
     </>

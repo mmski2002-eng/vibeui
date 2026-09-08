@@ -174,7 +174,12 @@ export function Blog014({
       <style href="vibeui-blog-014" precedence="medium">
         {STYLES}
       </style>
-      <aside data-vibeui-block="blog-014" aria-label={title} className={className} style={palette}>
+      <aside
+        data-vibeui-block="blog-014"
+        aria-label={title}
+        className={className}
+        style={palette}
+      >
         <div data-part="shell">
           <div data-part="head">
             <h2 data-part="title">{title}</h2>

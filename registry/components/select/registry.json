@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Нативный список",
       "description": "Выпадающий список в собственной рамке: список открывает система, поэтому на телефоне это привычное колесо, а не самодельное меню. Стрелка нарисована на CSS.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-select-001-*. Внутри нативный <select> с appearance:none: рамка, типографика и стрелка наши, список рисует операционная система. Стрелка — две грани квадрата, повёрнутые на 45°, иконочная библиотека не нужна. Варианты передаются массивом options; заглушка placeholder добавляется первым disabled-вариантом с пустым значением.",
       "meta": {
-        "tags": ["select", "dropdown", "form", "native"],
+        "tags": [
+          "select",
+          "dropdown",
+          "form",
+          "native"
+        ],
         "ai": {
           "export": "Select001",
           "usage": "<Select001\n  id=\"project\"\n  name=\"project\"\n  label=\"Тип проекта\"\n  options={[\n    { value: \"landing\", label: \"Лендинг\" },\n    { value: \"shop\", label: \"Интернет-магазин\" },\n  ]}\n/>",
@@ -70,7 +77,10 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": ["md", "lg"]
+            "options": [
+              "md",
+              "lg"
+            ]
           },
           {
             "prop": "accent",
@@ -192,7 +202,9 @@
       "type": "registry:component",
       "title": "Список с иконкой",
       "description": "Select с иконкой выбранного варианта: кнопку рисуем сами, а список открывает нативный select, лежащий поверх неё прозрачным слоем.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -204,7 +216,12 @@
       ],
       "docs": "Клиентский компонент: useState хранит выбранное значение, чтобы обновлять иконку и подпись в кнопке. Настоящий <select> растянут на всю область триггера через position:absolute;inset:0 и opacity:0 — клик, клавиатура и системный список остаются браузерными, оформление наше. Триггер помечен aria-hidden, потому что доступное имя и значение уже несёт сам select. Фокус ловится правилом select:focus + [data-part=trigger]. Палитра в --vibeui-select-003-*.",
       "meta": {
-        "tags": ["select", "icon", "form", "native"],
+        "tags": [
+          "select",
+          "icon",
+          "form",
+          "native"
+        ],
         "preview": {
           "width": "full"
         },
@@ -249,7 +266,12 @@
             "label": "Значение",
             "type": "select",
             "default": "card",
-            "options": ["card", "invoice", "crypto", "cash"]
+            "options": [
+              "card",
+              "invoice",
+              "crypto",
+              "cash"
+            ]
           },
           {
             "prop": "accent",
@@ -341,7 +363,12 @@
             "docs": "Client component: useState holds the selected value in order to update the icon and the caption in the button. The real <select> is stretched over the whole trigger area through position:absolute;inset:0 and opacity:0 — the click, the keyboard and the system list stay the browser's, while the styling is ours. The trigger is marked aria-hidden, because the accessible name and the value are already carried by the select itself. Focus is caught by the select:focus + [data-part=trigger] rule. The palette lives in --vibeui-select-003-*."
           }
         },
-        "cardControls": ["label", "defaultValue", "accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -349,7 +376,9 @@
       "type": "registry:component",
       "title": "Список с пояснениями",
       "description": "Select, под которым живёт объяснение выбранного варианта: короткое название в поле, последствия выбора — отдельной строкой.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -361,7 +390,12 @@
       ],
       "docs": "Клиентский компонент: useState держит значение, чтобы подставлять описание текущего варианта. Пояснение связано с полем через aria-describedby и объявлено role=\"status\", поэтому смена текста читается вслух без перевода фокуса. Внутрь <option> описание положить нельзя — системный список рисует только текст, отсюда отдельный абзац. Палитра в --vibeui-select-005-*, зависимостей нет.",
       "meta": {
-        "tags": ["select", "description", "form", "a11y"],
+        "tags": [
+          "select",
+          "description",
+          "form",
+          "a11y"
+        ],
         "preview": {
           "width": "full"
         },
@@ -406,7 +440,11 @@
             "label": "Значение",
             "type": "select",
             "default": "editor",
-            "options": ["viewer", "editor", "admin"]
+            "options": [
+              "viewer",
+              "editor",
+              "admin"
+            ]
           },
           {
             "prop": "accent",
@@ -493,7 +531,12 @@
             "docs": "Client component: useState holds the value so that the description of the current option can be substituted. The explanation is linked to the field through aria-describedby and declared role=\"status\", so a change of text is read aloud without moving focus. A description cannot be put inside an <option> — the system list draws text only, hence the separate paragraph. The palette lives in --vibeui-select-005-*, and there are no dependencies."
           }
         },
-        "cardControls": ["label", "defaultValue", "accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -501,7 +544,9 @@
       "type": "registry:component",
       "title": "Список в строке заказа",
       "description": "Строка заказа из двух select'ов: размер и количество рядом, итоговая сумма пересчитывается сразу и стоит на той же карточке.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -513,7 +558,12 @@
       ],
       "docs": "Клиентский компонент: useState на размер и количество, сумма считается на лету. Распроданный размер остаётся в списке с disabled — так видно, что он существует. Разряды разделяет собственная функция money, а не toLocaleString: локальный формат на сервере и в браузере может отличаться и развалить гидрацию. Раскладка — flex с фиксированной колонкой количества. Палитра в --vibeui-select-006-*.",
       "meta": {
-        "tags": ["select", "commerce", "form", "price"],
+        "tags": [
+          "select",
+          "commerce",
+          "form",
+          "price"
+        ],
         "preview": {
           "width": "full"
         },
@@ -667,7 +717,13 @@
             "docs": "Client component: useState for the size and the quantity, with the total computed on the fly. A sold-out size stays in the list as disabled — that way it is visible that it exists. Thousands are separated by the component's own money function rather than toLocaleString: the local format can differ between server and browser and break hydration. The layout is flex with a fixed quantity column. The palette lives in --vibeui-select-006-*."
           }
         },
-        "cardControls": ["title", "price", "currency", "accent", "background"]
+        "cardControls": [
+          "title",
+          "price",
+          "currency",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -675,7 +731,9 @@
       "type": "registry:component",
       "title": "Загружающийся список",
       "description": "Select в состоянии загрузки: поле выключено, рядом крутится кольцо, а под ним полоса-скелет и текст, объясняющий паузу.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -687,7 +745,12 @@
       ],
       "docs": "Серверный компонент с пропом loading. Пока список едет, select выключен и помечен aria-busy, а вместо стрелки стоит спиннер: кольцо из conic-gradient с вырезом через mask — SVG и иконочный пакет не нужны. Строка статуса объявлена role=\"status\". Скелет анимирован смещением background-position. Обе анимации гасятся правилом prefers-reduced-motion. Палитра в --vibeui-select-007-*.",
       "meta": {
-        "tags": ["select", "loading", "skeleton", "state"],
+        "tags": [
+          "select",
+          "loading",
+          "skeleton",
+          "state"
+        ],
         "preview": {
           "width": "full"
         },
@@ -837,7 +900,9 @@
       "type": "registry:component",
       "title": "Список с ошибкой",
       "description": "Select с ошибкой валидации, которая снимается сама при первом осмысленном выборе: красная рамка, заливка, значок и текст.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -849,7 +914,12 @@
       ],
       "docs": "Клиентский компонент: useState хранит значение, ошибка выводится, пока оно пустое. Состояние вынесено в data-invalid на корне, поэтому CSS красит рамку, заливку и стрелку одним переключателем. Сообщение объявлено role=\"alert\" и связано с полем через aria-describedby; поле помечено aria-invalid. Значок ошибки нарисован рамкой круга и двумя псевдоэлементами, без иконочного пакета. Палитра в --vibeui-select-008-*.",
       "meta": {
-        "tags": ["select", "validation", "error", "form"],
+        "tags": [
+          "select",
+          "validation",
+          "error",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -986,7 +1056,13 @@
             "docs": "Client component: useState holds the value, and the error is shown while it is empty. The state is lifted into data-invalid on the root, so CSS colours the border, the fill and the arrow through a single switch. The message is declared role=\"alert\" and linked to the field through aria-describedby; the field is marked aria-invalid. The error glyph is drawn with a circle border and two pseudo-elements, without an icon package. The palette lives in --vibeui-select-008-*."
           }
         },
-        "cardControls": ["error", "placeholder", "hint", "accent", "background"]
+        "cardControls": [
+          "error",
+          "placeholder",
+          "hint",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -994,7 +1070,9 @@
       "type": "registry:component",
       "title": "Список с поиском",
       "description": "Комбобокс с текстовым поиском: набор фильтрует длинный список вариантов, а стрелки и Enter выбирают без мыши, без нативного select.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1006,7 +1084,12 @@
       ],
       "docs": "Клиентский компонент: useState хранит запрос, открытость панели, подсвеченный индекс и выбранное значение; useMemo фильтрует options по подстроке без учёта регистра; useEffect закрывает панель по клику вне корня (document mousedown) и синхронизирует подсвеченный индекс с отфильтрованным списком. Поле — role=combobox с aria-expanded/aria-controls/aria-activedescendant, список — role=listbox с role=option и aria-selected. Клик по варианту ловится на onMouseDown с preventDefault, чтобы клик не терялся из-за blur инпута. Если передан name, рядом рендерится скрытый input с реальным значением — видимое поле хранит только текст поиска. Палитра в --vibeui-select-010-*.",
       "meta": {
-        "tags": ["select", "combobox", "search", "form"],
+        "tags": [
+          "select",
+          "combobox",
+          "search",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1188,7 +1271,9 @@
       "type": "registry:component",
       "title": "Список с точкой статуса",
       "description": "Select статуса: перед текущим значением цветная точка, которая передаёт состояние с одного взгляда, ещё до чтения текста.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1200,7 +1285,12 @@
       ],
       "docs": "Клиентский компонент: useState хранит выбранное значение, чтобы обновлять точку и подпись в плитке-триггере. Настоящий <select> растянут на всю область триггера через position:absolute;inset:0 и opacity:0 — клик, клавиатура и системный список остаются браузерными, как в select-003. Цвет точки берётся из data-tone на span[data-part=dot], а сами тоновые переменные объявлены на корне блока. Триггер помечен aria-hidden — доступное имя несёт сам select. Палитра в --vibeui-select-011-*.",
       "meta": {
-        "tags": ["select", "status", "dot", "form"],
+        "tags": [
+          "select",
+          "status",
+          "dot",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1246,7 +1336,12 @@
             "label": "Значение",
             "type": "select",
             "default": "progress",
-            "options": ["open", "progress", "review", "done"]
+            "options": [
+              "open",
+              "progress",
+              "review",
+              "done"
+            ]
           },
           {
             "prop": "accent",
@@ -1339,7 +1434,12 @@
             "docs": "Client component: useState holds the selected value in order to update the dot and the caption in the trigger tile. The real <select> is stretched over the whole trigger area through position:absolute;inset:0 and opacity:0 — the click, the keyboard and the system list stay the browser's, as in select-003. The dot colour is taken from data-tone on span[data-part=dot], and the tone variables themselves are declared on the block root. The trigger is marked aria-hidden — the accessible name is carried by the select itself. The palette lives in --vibeui-select-011-*."
           }
         },
-        "cardControls": ["label", "defaultValue", "accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1347,7 +1447,9 @@
       "type": "registry:component",
       "title": "Список кодов стран",
       "description": "Select страны с флагом-эмодзи и телефонным кодом в плитке-триггере: страну находят по флагу быстрее, чем по названию.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1359,7 +1461,12 @@
       ],
       "docs": "Клиентский компонент: useState хранит выбранное значение, чтобы обновлять флаг, название и код в плитке-триггере. Настоящий <select> растянут на всю область триггера через position:absolute;inset:0 и opacity:0, как в select-003 и select-011 — клик, клавиатура и системный список остаются браузерными. Флаг — символ emoji прямо в тексте option и триггера, отдельного набора иконок не нужно. Триггер помечен aria-hidden — доступное имя несёт сам select, у которого текст каждой опции включает флаг, название и код. Палитра в --vibeui-select-012-*.",
       "meta": {
-        "tags": ["select", "country", "phone", "form"],
+        "tags": [
+          "select",
+          "country",
+          "phone",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1405,7 +1512,14 @@
             "label": "Значение",
             "type": "select",
             "default": "ru",
-            "options": ["ru", "kz", "de", "us", "in", "br"]
+            "options": [
+              "ru",
+              "kz",
+              "de",
+              "us",
+              "in",
+              "br"
+            ]
           },
           {
             "prop": "accent",
@@ -1514,7 +1628,12 @@
             "docs": "Client component: useState holds the selected value in order to update the flag, the name and the code in the trigger tile. The real <select> is stretched over the whole trigger area through position:absolute;inset:0 and opacity:0, as in select-003 and select-011 — the click, the keyboard and the system list stay the browser's. The flag is an emoji character right inside the text of the option and the trigger, and no separate icon set is needed. The trigger is marked aria-hidden — the accessible name is carried by the select itself, whose option text includes the flag, the name and the code. The palette lives in --vibeui-select-012-*."
           }
         },
-        "cardControls": ["label", "defaultValue", "accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1522,7 +1641,9 @@
       "type": "registry:component",
       "title": "Множественный выбор чипами",
       "description": "Множественный выбор чипами: выбранные значения показаны отдельными чипами с крестиком удаления, список открывает своя кнопка.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1534,7 +1655,12 @@
       ],
       "docs": "Клиентский компонент: useState хранит массив выбранных значений, открытость панели и подсвеченный индекс. Кнопка-триггер (не select) открывает панель role=listbox с aria-multiselectable — она отделена от select[multiple], потому что чипам нужно жить отдельно от поля со списком. Клик по варианту ловится на onMouseDown с preventDefault, чтобы не терять его из-за blur кнопки. useEffect закрывает панель по клику вне корня. Чип — это отдельный span с кнопкой удаления внутри; кнопки не вложены друг в друга. Если передан name, каждое выбранное значение рендерится отдельным скрытым input. Палитра в --vibeui-select-013-*.",
       "meta": {
-        "tags": ["select", "multiselect", "chips", "form"],
+        "tags": [
+          "select",
+          "multiselect",
+          "chips",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1701,7 +1827,10 @@
                     "label": "News"
                   }
                 ],
-                "defaultValue": ["design", "case"]
+                "defaultValue": [
+                  "design",
+                  "case"
+                ]
               }
             },
             "docs": "Client component: useState holds the array of selected values, whether the panel is open and the highlighted index. A trigger button (not a select) opens a role=listbox panel with aria-multiselectable — it is kept apart from select[multiple], because the chips need to live separately from the list field. A click on an option is caught on onMouseDown with preventDefault, so that it is not lost to the button's blur. useEffect closes the panel on a click outside the root. A chip is a separate span with a remove button inside; the buttons are not nested in one another. If name is passed, every selected value is rendered as its own hidden input. The palette lives in --vibeui-select-013-*."
@@ -1722,7 +1851,9 @@
       "type": "registry:component",
       "title": "Выбор исполнителя с аватаром",
       "description": "Select исполнителя: аватар с инициалами и подпись роли есть у каждого варианта и в самом триггере — человека узнают по лицу, а не только по фамилии.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1734,9 +1865,17 @@
       ],
       "docs": "Клиентский компонент: useState хранит выбранное значение, открытость панели и подсвеченный индекс. Кнопка-триггер (не select) открывает панель role=listbox — аватар с инициалами и подпись роли не умещаются в текст нативного option. Оттенок аватара считается из имени функцией hue (FNV-1a по кодовым точкам, 12 ступеней круга по 30°) — та же техника, что и в autocomplete-011. Клик по варианту ловится на onMouseDown с preventDefault, чтобы не терять его из-за blur кнопки. useEffect закрывает панель по клику вне корня и переводит фокус в список при открытии. Если передан name, значение уходит скрытым input. Палитра в --vibeui-select-014-*.",
       "meta": {
-        "tags": ["select", "avatar", "people", "form"],
+        "tags": [
+          "select",
+          "avatar",
+          "people",
+          "form"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "avatarImage": "/demo/avatars/timur-256.webp"
+          }
         },
         "ai": {
           "export": "Select014",
@@ -1781,7 +1920,12 @@
             "label": "Значение",
             "type": "select",
             "default": "oleg",
-            "options": ["anna", "oleg", "irina", "mark"]
+            "options": [
+              "anna",
+              "oleg",
+              "irina",
+              "mark"
+            ]
           },
           {
             "prop": "accent",
@@ -1870,13 +2014,19 @@
                     "role": "Frontend developer"
                   }
                 ],
-                "defaultValue": "oleg"
+                "defaultValue": "oleg",
+                "avatarImage": "/demo/avatars/timur-256.webp"
               }
             },
             "docs": "Client component: useState holds the selected value, whether the panel is open and the highlighted index. A trigger button (not a select) opens a role=listbox panel — an initials avatar and a role caption do not fit into the text of a native option. The avatar hue is computed from the name by the hue function (FNV-1a over the code points, 12 steps of 30° around the wheel) — the same technique as in autocomplete-011. A click on an option is caught on onMouseDown with preventDefault, so that it is not lost to the button's blur. useEffect closes the panel on a click outside the root and moves focus into the list when it opens. If name is passed, the value goes out through a hidden input. The palette lives in --vibeui-select-014-*."
           }
         },
-        "cardControls": ["label", "defaultValue", "accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1884,7 +2034,9 @@
       "type": "registry:component",
       "title": "Варианты в две строки",
       "description": "Select, где под названием каждого варианта в открытой панели живёт вторая строка с пояснением — сравнивать варианты можно до выбора, а не после.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1896,7 +2048,12 @@
       ],
       "docs": "Клиентский компонент: useState хранит выбранное значение, открытость панели и подсвеченный индекс. Кнопка-триггер (не select) открывает панель role=listbox — нативный option не умеет рисовать вторую строку текста, поэтому пояснение живёт в отдельном span рядом с заголовком варианта. После выбора триггер показывает только короткое название: пояснения уже сделали своё дело в момент сравнения. Клик по варианту ловится на onMouseDown с preventDefault, чтобы не терять его из-за blur кнопки. useEffect закрывает панель по клику вне корня. Палитра в --vibeui-select-015-*.",
       "meta": {
-        "tags": ["select", "description", "listbox", "form"],
+        "tags": [
+          "select",
+          "description",
+          "listbox",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1943,7 +2100,12 @@
             "label": "Значение",
             "type": "select",
             "default": "daily",
-            "options": ["instant", "daily", "weekly", "off"]
+            "options": [
+              "instant",
+              "daily",
+              "weekly",
+              "off"
+            ]
           },
           {
             "prop": "accent",
@@ -2038,7 +2200,12 @@
             "docs": "Client component: useState holds the selected value, whether the panel is open and the highlighted index. A trigger button (not a select) opens a role=listbox panel — a native option cannot draw a second line of text, so the explanation lives in a separate span next to the option's title. After a choice the trigger shows only the short name: the explanations have already done their work at the moment of comparison. A click on an option is caught on onMouseDown with preventDefault, so that it is not lost to the button's blur. useEffect closes the panel on a click outside the root. The palette lives in --vibeui-select-015-*."
           }
         },
-        "cardControls": ["label", "defaultValue", "accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2046,7 +2213,9 @@
       "type": "registry:component",
       "title": "Часовой пояс с часами",
       "description": "Select часового пояса: у каждого варианта в открытой панели и в триггере — живое текущее время города, которое тикает раз в секунду.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2058,7 +2227,12 @@
       ],
       "docs": "Клиентский компонент: useState хранит выбранный пояс, открытость панели, подсвеченный индекс и текущее время (изначально null). useEffect стартует интервал раз в секунду и первый тик через setTimeout(0), а не синхронным вызовом в теле эффекта — так избегается каскадный рендер прямо при монтировании. До первого тика поле показывает «--:--», чтобы не разойтись с серверной отрисовкой (Date вычисляется только на клиенте). Время форматируется Intl.DateTimeFormat с timeZone варианта — свой часовой пояс на вариант, без библиотек дат. Кнопка-триггер и панель role=listbox устроены как в select-013/014: нативный option не умеет рисовать вторую колонку с часами. Палитра в --vibeui-select-016-*.",
       "meta": {
-        "tags": ["select", "timezone", "clock", "form"],
+        "tags": [
+          "select",
+          "timezone",
+          "clock",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2106,7 +2280,13 @@
             "label": "Значение",
             "type": "select",
             "default": "london",
-            "options": ["moscow", "london", "newyork", "tokyo", "sydney"]
+            "options": [
+              "moscow",
+              "london",
+              "newyork",
+              "tokyo",
+              "sydney"
+            ]
           },
           {
             "prop": "accent",
@@ -2233,7 +2413,9 @@
       "type": "registry:component",
       "title": "Повтор после ошибки",
       "description": "Select с тремя состояниями списка: загрузка с индикатором, ошибка с кнопкой повтора и обычный рабочий режим — все три на одном и том же поле.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2245,7 +2427,12 @@
       ],
       "docs": "Клиентский компонент: useState хранит статус (loading/error/ready) и выбранное значение, useRef считает номер попытки. useEffect запускает таймер только в статусе loading: по умолчанию первая попытка нарочно завершается ошибкой, повтор — успехом, так демонстрация проходит весь путь без переключения контролов. Поле — тот же select, что в select-007: disabled и aria-busy во время загрузки, при этом добавлены aria-invalid и aria-describedby на статус ошибки. Кнопка «Повторить» лежит в параграфе role=alert рядом с текстом ошибки и просто переводит статус обратно в loading. Палитра в --vibeui-select-017-*.",
       "meta": {
-        "tags": ["select", "loading", "error", "state"],
+        "tags": [
+          "select",
+          "loading",
+          "error",
+          "state"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2292,7 +2479,11 @@
             "label": "Состояние",
             "type": "select",
             "default": "loading",
-            "options": ["loading", "error", "ready"]
+            "options": [
+              "loading",
+              "error",
+              "ready"
+            ]
           },
           {
             "prop": "accent",
@@ -2370,7 +2561,12 @@
             "preview": {
               "props": {
                 "label": "Delivery method",
-                "options": ["Standard", "Express", "Overnight", "Pickup"],
+                "options": [
+                  "Standard",
+                  "Express",
+                  "Overnight",
+                  "Pickup"
+                ],
                 "loadingText": "Loading delivery options",
                 "errorText": "Could not load delivery options",
                 "retryLabel": "Retry",
@@ -2394,7 +2590,9 @@
       "type": "registry:component",
       "title": "Язык интерфейса",
       "description": "Select языка интерфейса: полное имя слева, короткий код справа в той же плитке — переключение видно с одного взгляда, без захода в список.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2406,7 +2604,12 @@
       ],
       "docs": "Select языка интерфейса: полное имя слева, короткий код справа в той же плитке — переключение видно с одного взгляда, без захода в список.",
       "meta": {
-        "tags": ["select", "language", "i18n", "form"],
+        "tags": [
+          "select",
+          "language",
+          "i18n",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2450,7 +2653,13 @@
             "label": "Значение",
             "type": "select",
             "default": "ru",
-            "options": ["ru", "en", "de", "es", "zh"]
+            "options": [
+              "ru",
+              "en",
+              "de",
+              "es",
+              "zh"
+            ]
           },
           {
             "prop": "accent",
@@ -2520,7 +2729,12 @@
             "docs": "An interface language select: the full name on the left and the short code on the right inside the same tile — the switch is visible at a glance, without opening the list."
           }
         },
-        "cardControls": ["label", "defaultValue", "accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2528,7 +2742,9 @@
       "type": "registry:component",
       "title": "Валюта с курсом",
       "description": "Select валюты со знаком в плитке-триггере и живым курсом к рублю отдельной строкой под полем — не нужно уходить со страницы, чтобы понять, сколько это в рублях.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2540,7 +2756,12 @@
       ],
       "docs": "Select валюты со знаком в плитке-триггере и живым курсом к рублю отдельной строкой под полем — не нужно уходить со страницы, чтобы понять, сколько это в рублях.",
       "meta": {
-        "tags": ["select", "currency", "commerce", "form"],
+        "tags": [
+          "select",
+          "currency",
+          "commerce",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2585,7 +2806,12 @@
             "label": "Значение",
             "type": "select",
             "default": "usd",
-            "options": ["usd", "eur", "rub", "cny"]
+            "options": [
+              "usd",
+              "eur",
+              "rub",
+              "cny"
+            ]
           },
           {
             "prop": "accent",
@@ -2709,7 +2935,9 @@
       "type": "registry:component",
       "title": "Выбор периода",
       "description": "Select периода: обычные пресеты сверху и пункт «Свой диапазон» последним — он раскрывает два поля дат прямо под полем, вместо перехода в календарь.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2721,7 +2949,12 @@
       ],
       "docs": "Select периода: обычные пресеты сверху и пункт «Свой диапазон» последним — он раскрывает два поля дат прямо под полем, вместо перехода в календарь.",
       "meta": {
-        "tags": ["select", "date", "period", "form"],
+        "tags": [
+          "select",
+          "date",
+          "period",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2766,7 +2999,13 @@
             "label": "Значение",
             "type": "select",
             "default": "week",
-            "options": ["today", "week", "month", "quarter", "custom"]
+            "options": [
+              "today",
+              "week",
+              "month",
+              "quarter",
+              "custom"
+            ]
           },
           {
             "prop": "accent",
@@ -2883,7 +3122,9 @@
       "type": "registry:component",
       "title": "Нативный список с иконками",
       "description": "Честный нативный select, у которого перед каждым вариантом стоит символ-иконка прямо в тексте option — список по-прежнему открывает система, без своей плитки поверх.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2895,7 +3136,12 @@
       ],
       "docs": "Честный нативный select, у которого перед каждым вариантом стоит символ-иконка прямо в тексте option — список по-прежнему открывает система, без своей плитки поверх.",
       "meta": {
-        "tags": ["select", "icon", "form", "native"],
+        "tags": [
+          "select",
+          "icon",
+          "form",
+          "native"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2939,7 +3185,12 @@
             "label": "Значение",
             "type": "select",
             "default": "email",
-            "options": ["email", "phone", "telegram", "whatsapp"]
+            "options": [
+              "email",
+              "phone",
+              "telegram",
+              "whatsapp"
+            ]
           },
           {
             "prop": "accent",
@@ -3031,7 +3282,12 @@
             "docs": "An honest native select with an icon character before every option right inside the option text — the list is still opened by the system, with no custom tile on top."
           }
         },
-        "cardControls": ["label", "defaultValue", "accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -3039,7 +3295,9 @@
       "type": "registry:component",
       "title": "Список внутри предложения",
       "description": "Компактный select, вживлённый прямо в строку текста: без подписи и рамки поля он читается как переменная часть предложения, а не как отдельный элемент формы.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3051,7 +3309,12 @@
       ],
       "docs": "Компактный select, вживлённый прямо в строку текста: без подписи и рамки поля он читается как переменная часть предложения, а не как отдельный элемент формы.",
       "meta": {
-        "tags": ["select", "inline", "compact", "form"],
+        "tags": [
+          "select",
+          "inline",
+          "compact",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3101,7 +3364,12 @@
             "label": "Значение",
             "type": "select",
             "default": "10",
-            "options": ["10", "25", "50", "100"]
+            "options": [
+              "10",
+              "25",
+              "50",
+              "100"
+            ]
           },
           {
             "prop": "accent",
@@ -3185,7 +3453,12 @@
             "docs": "A compact select embedded straight into a line of text: with no caption and no field border it reads as the variable part of the sentence rather than a separate form element."
           }
         },
-        "cardControls": ["before", "after", "defaultValue", "accent"]
+        "cardControls": [
+          "before",
+          "after",
+          "defaultValue",
+          "accent"
+        ]
       }
     },
     {
@@ -3193,7 +3466,9 @@
       "type": "registry:component",
       "title": "Размер с подсказкой",
       "description": "Select размера с постоянной подсказкой под полем: короткий совет не зависит от выбранного варианта и не исчезает после выбора, в отличие от подсказки-описания или ошибки валидации.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3205,7 +3480,12 @@
       ],
       "docs": "Select размера с постоянной подсказкой под полем: короткий совет не зависит от выбранного варианта и не исчезает после выбора, в отличие от подсказки-описания или ошибки валидации.",
       "meta": {
-        "tags": ["select", "size", "hint", "form"],
+        "tags": [
+          "select",
+          "size",
+          "hint",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3263,7 +3543,12 @@
             "label": "Значение",
             "type": "select",
             "default": "s",
-            "options": ["s", "m", "l", "xl"]
+            "options": [
+              "s",
+              "m",
+              "l",
+              "xl"
+            ]
           },
           {
             "prop": "background",
@@ -3365,7 +3650,9 @@
       "type": "registry:component",
       "title": "Причина недоступности",
       "description": "Select с частью запрещённых вариантов: недоступные строки остаются в списке с disabled, а причину недоступности видно и в самом тексте варианта, и отдельным списком под полем.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3377,7 +3664,12 @@
       ],
       "docs": "Select с частью запрещённых вариантов: недоступные строки остаются в списке с disabled, а причину недоступности видно и в самом тексте варианта, и отдельным списком под полем.",
       "meta": {
-        "tags": ["select", "disabled", "a11y", "form"],
+        "tags": [
+          "select",
+          "disabled",
+          "a11y",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3517,7 +3809,12 @@
             "docs": "A select with some of its options forbidden: unavailable rows stay in the list as disabled, and the reason for the unavailability is visible both in the option's own text and as a separate list under the field."
           }
         },
-        "cardControls": ["label", "placeholder", "accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -3525,7 +3822,9 @@
       "type": "registry:component",
       "title": "Зависимая категория",
       "description": "Связанные списки: второй select существует только в контексте первого — при смене категории список товаров пересобирается заново, а выбор сбрасывается на первый доступный пункт.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3537,7 +3836,12 @@
       ],
       "docs": "Связанные списки: второй select существует только в контексте первого — при смене категории список товаров пересобирается заново, а выбор сбрасывается на первый доступный пункт.",
       "meta": {
-        "tags": ["select", "cascading", "dependent", "form"],
+        "tags": [
+          "select",
+          "cascading",
+          "dependent",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3588,7 +3892,11 @@
             "label": "Категория по умолчанию",
             "type": "select",
             "default": "clothes",
-            "options": ["clothes", "shoes", "accessories"]
+            "options": [
+              "clothes",
+              "shoes",
+              "accessories"
+            ]
           },
           {
             "prop": "accent",
@@ -3728,7 +4036,9 @@
       "type": "registry:component",
       "title": "Количество по остатку",
       "description": "Select количества, ограниченный остатком на складе: вариантов больше, чем есть в наличии, в списке нет вовсе, а подпись честно называет остаток и меняет тон, когда он на исходе.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3740,7 +4050,12 @@
       ],
       "docs": "Клиентский компонент: useState хранит выбранное количество, а список вариантов строится из остатка (stock) с потолком maxOption — вариантов больше остатка нет физически, не через disabled на option. Подпись под полем помечена role=\"status\" и называет точный остаток, меняя тон через data-tone на \"warn\" при остатке не выше lowStockThreshold и на \"danger\" при нуле. При нулевом остатке select выключен и показывает единственную заглушку «—». Палитра в --vibeui-select-026-*.",
       "meta": {
-        "tags": ["select", "quantity", "stock", "commerce"],
+        "tags": [
+          "select",
+          "quantity",
+          "stock",
+          "commerce"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3898,7 +4213,9 @@
       "type": "registry:component",
       "title": "Переход по алфавиту",
       "description": "Длинный список сгруппирован по первой букве через optgroup, а строка кнопок-букв над полем — быстрый переход: клик сразу ставит первый вариант нужной буквы.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3910,7 +4227,12 @@
       ],
       "docs": "Клиентский компонент: useMemo группирует options по первой букве (регистронезависимо через toUpperCase) и сортирует буквы по алфавиту, useState хранит выбранное значение. Список — настоящий select с <optgroup> на каждую букву. Ряд кнопок над полем построен из тех же букв: клик по кнопке находит первый вариант группы, ставит его значением и переводит фокус на select через useRef. Активная буква подсвечивается по data-active, вычисленному из текущего значения. Палитра в --vibeui-select-027-*.",
       "meta": {
-        "tags": ["select", "alphabet", "optgroup", "form"],
+        "tags": [
+          "select",
+          "alphabet",
+          "optgroup",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -4099,7 +4421,11 @@
             "docs": "Client component: useMemo groups options by their first letter (case-insensitively through toUpperCase) and sorts the letters alphabetically, and useState holds the selected value. The list is a real select with an <optgroup> per letter. The row of buttons above the field is built from the same letters: a click on a button finds the first option of that group, sets it as the value and moves focus to the select through useRef. The active letter is highlighted by data-active, computed from the current value. The palette lives in --vibeui-select-027-*."
           }
         },
-        "cardControls": ["label", "accent", "background"]
+        "cardControls": [
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -4107,7 +4433,9 @@
       "type": "registry:component",
       "title": "Приоритет плашкой",
       "description": "Select приоритета задачи: цветная метка в поле выбора называет уровень с одного взгляда, а живая подпись под полем объясняет, что этот приоритет значит на практике.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4119,7 +4447,12 @@
       ],
       "docs": "Клиентский компонент: useState хранит выбранное значение, чтобы обновлять метку и пояснение. Настоящий <select> растянут на всю область триггера через position:absolute;inset:0 и opacity:0, как в select-003 и select-011 — клик, клавиатура и системный список остаются браузерными. Цветная метка внутри триггера получает тон через data-tone на span[data-part=badge], тоновые переменные объявлены на корне блока. Под полем живёт абзац с пояснением текущего приоритета, связанный с select через aria-describedby и объявленный role=\"status\". Палитра в --vibeui-select-028-*.",
       "meta": {
-        "tags": ["select", "priority", "badge", "form"],
+        "tags": [
+          "select",
+          "priority",
+          "badge",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -4166,7 +4499,12 @@
             "label": "Значение",
             "type": "select",
             "default": "medium",
-            "options": ["low", "medium", "high", "critical"]
+            "options": [
+              "low",
+              "medium",
+              "high",
+              "critical"
+            ]
           },
           {
             "prop": "accent",
@@ -4265,7 +4603,12 @@
             "docs": "Client component: useState holds the selected value in order to update the badge and the explanation. The real <select> is stretched over the whole trigger area through position:absolute;inset:0 and opacity:0, as in select-003 and select-011 — the click, the keyboard and the system list stay the browser's. The colour badge inside the trigger gets its tone from data-tone on span[data-part=badge], and the tone variables are declared on the block root. Under the field lives a paragraph with an explanation of the current priority, linked to the select through aria-describedby and declared role=\"status\". The palette lives in --vibeui-select-028-*."
           }
         },
-        "cardControls": ["label", "defaultValue", "accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -4273,7 +4616,9 @@
       "type": "registry:component",
       "title": "Шаблон миниатюрой",
       "description": "Select шаблона страницы с миниатюрой раскладки рядом с полем: маленькая схема из блоков на CSS показывает форму шаблона ещё до открытия предпросмотра.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4285,9 +4630,17 @@
       ],
       "docs": "Клиентский компонент: useState хранит выбранный шаблон. Миниатюра — CSS-grid внутри span[data-part=thumb] с data-layout, переключающим grid-template-columns/rows и тем самым форму схемы (боковая колонка, сетка, стопка строк, крупный блок с полосой). Блоки внутри миниатюры — обычные span, окрашенные через color-mix от акцента. Рядом обычный видимый select с нарисованной стрелкой, как в select-025. Палитра в --vibeui-select-029-*.",
       "meta": {
-        "tags": ["select", "template", "thumbnail", "form"],
+        "tags": [
+          "select",
+          "template",
+          "thumbnail",
+          "form"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "image": "/demo/products/product-19.webp"
+          }
         },
         "ai": {
           "export": "Select029",
@@ -4329,7 +4682,12 @@
             "label": "Значение",
             "type": "select",
             "default": "grid",
-            "options": ["header-side", "grid", "stack", "hero"]
+            "options": [
+              "header-side",
+              "grid",
+              "stack",
+              "hero"
+            ]
           },
           {
             "prop": "accent",
@@ -4414,13 +4772,19 @@
                     "label": "Large banner",
                     "layout": "hero"
                   }
-                ]
+                ],
+                "image": "/demo/products/product-19.webp"
               }
             },
             "docs": "Client component: useState holds the selected template. The thumbnail is a CSS grid inside span[data-part=thumb] with data-layout switching grid-template-columns/rows and thereby the shape of the diagram (a side column, a grid, a stack of rows, a large block with a bar). The blocks inside the thumbnail are ordinary spans, coloured through color-mix from the accent. Beside it is an ordinary visible select with a drawn arrow, as in select-025. The palette lives in --vibeui-select-029-*."
           }
         },
-        "cardControls": ["label", "defaultValue", "accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -4428,7 +4792,9 @@
       "type": "registry:component",
       "title": "Компактная строка фильтров",
       "description": "Панель фильтров из нескольких независимых select'ов в одну плотную строку: каждое поле маленькое и своё, а на узком экране строка переносится в столбец.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4440,7 +4806,12 @@
       ],
       "docs": "Клиентский компонент: useState хранит объект со значениями всех полей, инициализированный из defaultValues или первого варианта каждого поля. Разметка — <fieldset> с <legend> и рядом ячеек data-part=cell, в каждой — подпись и обычный видимый select со стрелкой. Поля рендерятся циклом по массиву fields и полностью независимы: смена одного не трогает состояние остальных. На узком контейнере @container переводит ячейки в одну колонку через flex-basis:100%. Палитра в --vibeui-select-030-*.",
       "meta": {
-        "tags": ["select", "filters", "toolbar", "form"],
+        "tags": [
+          "select",
+          "filters",
+          "toolbar",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -4598,7 +4969,11 @@
             "docs": "Client component: useState holds an object with the values of every field, initialised from defaultValues or from the first option of each field. The markup is a <fieldset> with a <legend> and a row of data-part=cell cells, each holding a caption and an ordinary visible select with an arrow. The fields are rendered by looping over the fields array and are entirely independent: changing one does not touch the state of the others. On a narrow container @container moves the cells into a single column through flex-basis:100%. The palette lives in --vibeui-select-030-*."
           }
         },
-        "cardControls": ["legend", "accent", "background"]
+        "cardControls": [
+          "legend",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -4606,7 +4981,9 @@
       "type": "registry:component",
       "title": "Недавние значения",
       "description": "Select, который запоминает последний выбор в localStorage и предлагает его отдельным чипом «Недавнее» при следующем визите — вместо того чтобы молча подставить его как значение по умолчанию.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4618,7 +4995,12 @@
       ],
       "docs": "Клиентский компонент: useState хранит применённое значение и отдельно — обнаруженное недавнее значение. В useEffect чтение localStorage.getItem(storageKey) отложено через setTimeout(…, 0) и обёрнуто в try/catch, чтобы не вызывать setState синхронно в теле эффекта и не падать в приватном режиме браузера. Если сохранённое значение входит в options и отличается от текущего, под select появляется кнопка-чип с меткой «Недавнее» и названием варианта; клик применяет его через commitValue, которая же пишет новое значение в localStorage при каждой смене select. Палитра в --vibeui-select-031-*.",
       "meta": {
-        "tags": ["select", "recent", "localStorage", "form"],
+        "tags": [
+          "select",
+          "recent",
+          "localStorage",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -4743,7 +5125,11 @@
             "docs": "Client component: useState holds the applied value and, separately, the recent value that was found. In useEffect the localStorage.getItem(storageKey) read is deferred through setTimeout(…, 0) and wrapped in try/catch, so as not to call setState synchronously in the effect body and not to crash in a browser's private mode. If the stored value is among options and differs from the current one, a chip button labelled \"Recent\" together with the option's name appears under the select; a click applies it through commitValue, which is also what writes the new value into localStorage on every change of the select. The palette lives in --vibeui-select-031-*."
           }
         },
-        "cardControls": ["label", "accent", "background"]
+        "cardControls": [
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -4751,7 +5137,9 @@
       "type": "registry:component",
       "title": "Подтверждение смены",
       "description": "Select со ступенчатым подтверждением смены значения: выбор нового варианта не применяется сразу, а открывает панель с вопросом и кнопками «Подтвердить» и «Отмена».",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4763,7 +5151,12 @@
       ],
       "docs": "Клиентский компонент: value хранит применённое значение, pending — предложенное, но не подтверждённое. select всегда показывает pending ?? value, поэтому визуально реагирует на выбор сразу, а не только после подтверждения. Смена в select вызывает handleSelectChange: если новое значение совпадает с value, панель не открывается; иначе оно уходит в pending и рисуется панель с role=\"alertdialog\". useEffect переводит фокус на кнопку «Подтвердить» при появлении pending. confirm() переносит pending в value и возвращает фокус на select, cancel() и Escape в handleKeyDown сбрасывают pending без изменения value. Палитра в --vibeui-select-032-*.",
       "meta": {
-        "tags": ["select", "confirm", "dialog", "form"],
+        "tags": [
+          "select",
+          "confirm",
+          "dialog",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -4810,7 +5203,12 @@
             "label": "Значение",
             "type": "select",
             "default": "draft",
-            "options": ["draft", "review", "published", "archived"]
+            "options": [
+              "draft",
+              "review",
+              "published",
+              "archived"
+            ]
           },
           {
             "prop": "accent",
@@ -4905,7 +5303,12 @@
             "docs": "Client component: value holds the applied value, and pending the one proposed but not yet confirmed. The select always shows pending ?? value, so visually it reacts to the choice at once rather than only after confirmation. A change in the select calls handleSelectChange: if the new value equals value, the panel does not open; otherwise it goes into pending and a panel with role=\"alertdialog\" is drawn. useEffect moves focus to the \"Confirm\" button when pending appears. confirm() moves pending into value and returns focus to the select, while cancel() and Escape in handleKeyDown discard pending without changing value. The palette lives in --vibeui-select-032-*."
           }
         },
-        "cardControls": ["label", "defaultValue", "accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -4913,7 +5316,9 @@
       "type": "registry:component",
       "title": "Список по ширине содержимого",
       "description": "Select, чья ширина рассчитана от самого длинного варианта в символах, а не задана фиксированной величиной и не растянута на всю ширину родителя — короткий список даёт короткое поле.",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4925,7 +5330,12 @@
       ],
       "docs": "Серверный компонент без клиентского состояния. Ширина считается на этапе рендера: reduce находит длину самого длинного label в options, значение зажимается между 4 и maxWidthCh и уходит в CSS-переменную --vibeui-select-033-content-width через inline style. Сам select использует width:min(100%, calc(var(...) + 3rem)) — запас в 3rem покрывает отступы и стрелку. defaultValue передаётся напрямую в нативный select, компонент неконтролируемый. Палитра в --vibeui-select-033-*.",
       "meta": {
-        "tags": ["select", "width", "layout", "native"],
+        "tags": [
+          "select",
+          "width",
+          "layout",
+          "native"
+        ],
         "preview": {
           "width": "full"
         },
@@ -5056,13 +5466,20 @@
             "docs": "Server component with no client state. The width is computed at render time: reduce finds the length of the longest label in options, the value is clamped between 4 and maxWidthCh and goes into the --vibeui-select-033-content-width CSS variable through an inline style. The select itself uses width:min(100%, calc(var(...) + 3rem)) — the 3rem allowance covers the padding and the arrow. defaultValue is passed straight into the native select, and the component is uncontrolled. The palette lives in --vibeui-select-033-*."
           }
         },
-        "cardControls": ["label", "maxWidthCh", "accent", "background"]
+        "cardControls": [
+          "label",
+          "maxWidthCh",
+          "accent",
+          "background"
+        ]
       }
     },
     {
       "name": "select-034",
       "type": "registry:component",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5076,7 +5493,13 @@
       "description": "Список рисует сам компонент, а не операционная система: заголовки разделов прилипают к верху при прокрутке, выбранная строка помечена галочкой, а раздел текущего значения подписан справа в поле.",
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-select-034-*. Нативный <select> не используется: список рисуется разметкой, поэтому разделы, галочка и подсветка активной строки видны в дизайне, а не отданы операционной системе. Внутри role=\"listbox\" с вложенными role=\"group\", заголовок каждого раздела связан с группой через aria-labelledby и прилипает position:sticky к верху панели. Клавиатура: стрелки водят активную строку, Home и End прыгают к краям списка, Enter и пробел выбирают, Esc закрывает и возвращает фокус на поле; активная строка объявляется через aria-activedescendant. Галочка нарисована двумя гранями рамки, повёрнутыми на 45°, иконочная библиотека не нужна; у невыбранных строк её место сохранено через visibility, иначе текст прыгает в момент выбора. Проп open раскрывает список в потоке страницы — витринный режим для карточки каталога и скриншотов, закрытия кликом мимо в нём нет. При заданном name значение уезжает в форму скрытым input.",
       "meta": {
-        "tags": ["select", "listbox", "group", "checkmark", "keyboard"],
+        "tags": [
+          "select",
+          "listbox",
+          "group",
+          "checkmark",
+          "keyboard"
+        ],
         "preview": {
           "props": {
             "open": true
@@ -5245,13 +5668,20 @@
             }
           }
         },
-        "cardControls": ["label", "defaultValue", "accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "accent",
+          "background"
+        ]
       }
     },
     {
       "name": "select-035",
       "type": "registry:component",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5265,7 +5695,13 @@
       "description": "Галочки в списке правят черновик, а не поле: отмеченное въезжает чипами в поле только по «Применить», счётчик под списком всё время называет число отмеченных, «Сбросить» снимает все галочки разом.",
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-select-035-*. Строки списка — настоящие <input type=\"checkbox\"> внутри <label>: пробел, чтение состояния и работа с клавиатуры достаются от браузера, роль руками не собирается. Состояний два: applied — то, что показано чипами в поле и уходит в форму, draft — черновик внутри списка. Открытие копирует applied в черновик, «Применить» переносит черновик обратно и закрывает список, «Сбросить» снимает все галочки, Esc откатывает черновик к применённому. Счётчик под списком помечен aria-live=\"polite\", поэтому число отмеченных озвучивается по мере работы. Чипы лежат прямо в поле и переносятся на вторую строку, высота поля набирается содержимым. При заданном name уходит по одному скрытому input на значение. Проп open раскрывает список в потоке страницы — витринный режим для карточки каталога, закрытия кликом мимо в нём нет.",
       "meta": {
-        "tags": ["select", "multiselect", "checkbox", "filter", "chips"],
+        "tags": [
+          "select",
+          "multiselect",
+          "checkbox",
+          "filter",
+          "chips"
+        ],
         "preview": {
           "props": {
             "open": true
@@ -5419,13 +5855,20 @@
             }
           }
         },
-        "cardControls": ["label", "applyLabel", "accent", "background"]
+        "cardControls": [
+          "label",
+          "applyLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
       "name": "select-036",
       "type": "registry:component",
-      "categories": ["select"],
+      "categories": [
+        "select"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5439,7 +5882,13 @@
       "description": "Поиск живёт внутри раскрытого списка и подсвечивает совпавший кусок, а последней строкой стоит «Создать» — она появляется, только пока точного совпадения нет; заведённое значение остаётся в списке с плашкой «новое».",
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-select-036-*. Поле — обычная кнопка со значением, поиск открывается вместе со списком и лежит внутри панели: input с role=\"combobox\", aria-autocomplete=\"list\" и aria-activedescendant, рядом role=\"listbox\", в котором строки вариантов и последней — строка создания. Совпадение ищется без учёта регистра, найденный кусок обёрнут в <mark> и подсвечен фоном, а не цветом текста: на цветной подложке перекрашенный текст перестаёт читаться. Строка «Создать» показывается, только пока в списке нет точного совпадения с запросом, — иначе она предлагала бы завести дубль; на ней напечатана подсказка Enter, и Enter действительно её выполняет, когда активна именно она. Заведённое значение добавляется в список и помечается плашкой, чтобы его было видно среди справочных. Проп defaultQuery заранее набирает запрос — им пользуются витрина и отладка. Проп open раскрывает список в потоке страницы; закрытия кликом мимо в этом режиме нет. При заданном name значение уезжает в форму скрытым input.",
       "meta": {
-        "tags": ["select", "creatable", "search", "highlight", "tags"],
+        "tags": [
+          "select",
+          "creatable",
+          "search",
+          "highlight",
+          "tags"
+        ],
         "preview": {
           "props": {
             "open": true,
@@ -5591,7 +6040,12 @@
             }
           }
         },
-        "cardControls": ["label", "createLabel", "accent", "background"]
+        "cardControls": [
+          "label",
+          "createLabel",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

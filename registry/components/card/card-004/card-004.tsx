@@ -4,6 +4,8 @@ export type Card004Props = Omit<
   ComponentProps<"article">,
   "children" | "title"
 > & {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   title?: string
   price?: string
   oldPrice?: string
@@ -54,9 +56,14 @@ color:var(--vibeui-card-004-fg);font-family:var(--vibeui-card-004-font);
 [data-vibeui-block="card-004"] [data-part="frame"]{
 position:relative;aspect-ratio:1 / 1;overflow:hidden;
 border-radius:0.625rem;
-background:
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="card-004"] [data-part="frame"][data-empty="true"]{background:
 radial-gradient(90% 80% at 30% 20%,var(--vibeui-card-004-frame-light),transparent 70%),
-var(--vibeui-card-004-frame);
+var(--vibeui-card-004-frame);}
+[data-vibeui-block="card-004"] [data-part="frame"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="card-004"] img{width:100%;height:100%;object-fit:cover;display:block}
 [data-vibeui-block="card-004"] [data-part="badge"]{
@@ -130,6 +137,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Card004({
   title = "Настольная лампа «Полёт», тёплый свет",
+  image = "",
   price = "4 900 ₽",
   oldPrice = "6 900 ₽",
   rating = 4.7,
@@ -167,7 +175,10 @@ export function Card004({
         className={className}
         style={palette}
       >
-        <div data-part="frame">
+        <div data-part="frame" data-empty={image ? undefined : "true"}>
+          {image ? (
+            <img src={image} alt="" loading="lazy" decoding="async" />
+          ) : null}
           {badge ? <span data-part="badge">{badge}</span> : null}
         </div>
         <h3 data-part="title">

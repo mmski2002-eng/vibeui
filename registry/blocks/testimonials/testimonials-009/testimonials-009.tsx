@@ -2,6 +2,8 @@ import type { CSSProperties } from "react"
 
 type Testimonials009Item = {
   name: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   handle: string
   text: string
   likes: number
@@ -62,11 +64,16 @@ background:var(--vibeui-testimonials-009-card);
 display:flex;align-items:center;gap:0.625rem;margin-bottom:0.75rem;
 }
 [data-vibeui-block="testimonials-009"] [data-part="avatar"]{
-width:2.25rem;height:2.25rem;flex:none;border-radius:999px;
+position:relative;width:2.25rem;height:2.25rem;flex:none;border-radius:999px;
 display:grid;place-items:center;
-background:color-mix(in oklab,var(--vibeui-testimonials-009-accent) 14%,var(--vibeui-testimonials-009-card));
 color:var(--vibeui-testimonials-009-accent);
-font-size:0.75rem;font-weight:750;letter-spacing:0.02em;
+font-size:0.75rem;font-weight:750;letter-spacing:0.02em;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="testimonials-009"] [data-part="avatar"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-testimonials-009-accent) 14%,var(--vibeui-testimonials-009-card));}
+[data-vibeui-block="testimonials-009"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="testimonials-009"] [data-part="who"]{display:grid;gap:0.0625rem;min-width:0}
 [data-vibeui-block="testimonials-009"] [data-part="name"]{font-size:0.875rem;font-weight:640}
@@ -216,7 +223,19 @@ export function Testimonials009({
             {items.map((item) => (
               <article key={item.handle} data-part="post">
                 <header data-part="post-head">
-                  <span data-part="avatar" aria-hidden="true">
+                  <span
+                    data-part="avatar"
+                    data-empty={item.image ? undefined : "true"}
+                    aria-hidden="true"
+                  >
+                    {item.image ? (
+                      <img
+                        src={item.image}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : null}
                     {initials(item.name)}
                   </span>
                   <span data-part="who">

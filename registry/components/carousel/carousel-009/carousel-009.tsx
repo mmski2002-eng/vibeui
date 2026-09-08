@@ -7,6 +7,8 @@ export type Carousel009Slide = {
   title: string
   text?: string
   hue?: number
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
 }
 
 export type Carousel009Props = Omit<ComponentProps<"section">, "children"> & {
@@ -62,13 +64,18 @@ transition:transform .32s ease;
 /* Кадр стоит вместо фотографии: градиент и светлый текст на нём одинаковы
    в любой теме страницы, поэтому второй ветки у них нет. */
 [data-vibeui-block="carousel-009"] [data-part="slide"]{
-flex:0 0 100%;min-width:0;
+position:relative;flex:0 0 100%;min-width:0;
 display:flex;flex-direction:column;justify-content:flex-end;gap:0.25rem;
 aspect-ratio:16 / 9;padding:1rem;box-sizing:border-box;
-background:
+color:oklch(0.99 0 265);overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="carousel-009"] [data-part="slide"][data-empty="true"]{background:
 radial-gradient(90% 80% at 22% 18%,oklch(0.9 0.06 var(--vibeui-carousel-009-hue,250)),transparent 70%),
-linear-gradient(150deg,oklch(0.74 0.1 var(--vibeui-carousel-009-hue,250)),oklch(0.44 0.11 var(--vibeui-carousel-009-hue,250)));
-color:oklch(0.99 0 265);
+linear-gradient(150deg,oklch(0.74 0.1 var(--vibeui-carousel-009-hue,250)),oklch(0.44 0.11 var(--vibeui-carousel-009-hue,250)));}
+[data-vibeui-block="carousel-009"] [data-part="slide"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="carousel-009"] [data-part="title"]{margin:0;font-size:1.0625rem;font-weight:680;line-height:1.2}
 [data-vibeui-block="carousel-009"] [data-part="text"]{margin:0;font-size:0.8125rem;line-height:1.45;color:oklch(0.94 0 265);max-width:20rem}
@@ -203,6 +210,7 @@ export function Carousel009({
             {slides.map((slide, position) => (
               <li
                 data-part="slide"
+                data-empty={slide.image ? undefined : "true"}
                 key={slide.title}
                 inert={position !== index}
                 aria-hidden={position !== index}
@@ -212,6 +220,14 @@ export function Carousel009({
                   } as CSSProperties
                 }
               >
+                {slide.image ? (
+                  <img
+                    src={slide.image}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
                 <h3 data-part="title">{slide.title}</h3>
                 {slide.text ? <p data-part="text">{slide.text}</p> : null}
               </li>

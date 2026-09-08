@@ -293,9 +293,7 @@ export function Notifications002({
           </div>
           <ul data-part="list">
             {items.map((item, index) => {
-              const delay = loop
-                ? `${-index * 0.42}s`
-                : `${index * 0.09}s`
+              const delay = loop ? `${-index * 0.42}s` : `${index * 0.09}s`
 
               return (
                 <li

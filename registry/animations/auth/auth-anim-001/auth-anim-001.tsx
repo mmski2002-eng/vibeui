@@ -109,7 +109,11 @@ transition:filter .15s ease,transform .15s ease;
 `
 
 const GOOGLE_ICON = (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+  >
     <path
       fill="#4285F4"
       d="M23.04 12.27c0-.82-.07-1.42-.22-2.05H12.24v3.72h6.19c-.12 1.02-.8 2.56-2.31 3.6l-.02.14 3.36 2.6.23.02c2.14-1.97 3.35-4.87 3.35-8.03Z"
@@ -240,7 +244,11 @@ export function AuthAnim001({
 
               <div data-part="enter" style={step(5)}>
                 <div data-part="submit-wrap">
-                  <span data-part="submit-glow" aria-hidden="true" style={step(5)} />
+                  <span
+                    data-part="submit-glow"
+                    aria-hidden="true"
+                    style={step(5)}
+                  />
                   <button type="submit" data-part="submit">
                     {submitLabel}
                   </button>

@@ -265,7 +265,9 @@ export function Otp010({
           {/* Бегущие секунды вслух не читаются: aria-live превратил бы
               поле в непрерывную речь. Объявляется только истечение. */}
           <span data-part="left">
-            {expired ? expiredText : leftTemplate.replace("{time}", clock(left))}
+            {expired
+              ? expiredText
+              : leftTemplate.replace("{time}", clock(left))}
           </span>
           <span data-part="sr" aria-live="polite">
             {expired ? expiredText : ""}

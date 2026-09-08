@@ -5,6 +5,8 @@ import type { CSSProperties } from "react"
 
 export type Commerce015Review = {
   id: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   author: string
   date: string
   rating: number
@@ -110,8 +112,13 @@ background:var(--vibeui-commerce-015-paper);
 }
 [data-vibeui-block="commerce-015"] [data-part="head"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.375rem 0.5rem;margin-bottom:0.25rem}
 [data-vibeui-block="commerce-015"] [data-part="face"]{
-display:flex;align-items:center;justify-content:center;width:1.75rem;height:1.75rem;border-radius:9999px;
-background:var(--vibeui-commerce-015-soft);font-size:0.6875rem;font-weight:700;
+position:relative;display:flex;align-items:center;justify-content:center;width:1.75rem;height:1.75rem;border-radius:9999px;font-size:0.6875rem;font-weight:700;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="commerce-015"] [data-part="face"][data-empty="true"]{background:var(--vibeui-commerce-015-soft);}
+[data-vibeui-block="commerce-015"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="commerce-015"] [data-part="who"]{font-size:0.8125rem;font-weight:650}
 [data-vibeui-block="commerce-015"] [data-part="date"]{margin-left:auto;font-size:0.6875rem;color:var(--vibeui-commerce-015-muted)}
@@ -312,7 +319,19 @@ export function Commerce015({
               {shown.map((review) => (
                 <li key={review.id} data-part="review">
                   <div data-part="head">
-                    <span data-part="face" aria-hidden="true">
+                    <span
+                      data-part="face"
+                      data-empty={review.image ? undefined : "true"}
+                      aria-hidden="true"
+                    >
+                      {review.image ? (
+                        <img
+                          src={review.image}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      ) : null}
                       {review.author.slice(0, 1)}
                     </span>
                     <span data-part="who">{review.author}</span>

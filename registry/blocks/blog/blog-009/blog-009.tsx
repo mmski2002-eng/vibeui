@@ -15,6 +15,8 @@ type Blog009Article = {
 export type Blog009Props = {
   eyebrow?: string
   name?: string
+  /** Фото автора. Без него в кружке остаются инициалы. */
+  avatarImage?: string
   role?: string
   bio?: string
   links?: Blog009Link[]
@@ -66,11 +68,16 @@ font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase
 }
 [data-vibeui-block="blog-009"] [data-part="head"]{display:flex;align-items:center;gap:1rem}
 [data-vibeui-block="blog-009"] [data-part="avatar"]{
-width:4rem;height:4rem;flex:none;border-radius:999px;
+position:relative;width:4rem;height:4rem;flex:none;border-radius:999px;
 display:grid;place-items:center;
-background:var(--vibeui-blog-009-tint);
 color:var(--vibeui-blog-009-accent);
-font-size:1.25rem;font-weight:750;letter-spacing:0.02em;
+font-size:1.25rem;font-weight:750;letter-spacing:0.02em;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="blog-009"] [data-part="avatar"][data-empty="true"]{background:var(--vibeui-blog-009-tint);}
+[data-vibeui-block="blog-009"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="blog-009"] [data-part="name"]{
 margin:0;font-size:clamp(1.25rem,3.5cqi,1.625rem);line-height:1.15;letter-spacing:-0.02em;font-weight:750;
@@ -191,6 +198,7 @@ function initials(name: string) {
 export function Blog009({
   eyebrow = "Автор",
   name = "Вера Славина",
+  avatarImage = "",
   role = "Редактор VibeUI. Пишет про интерфейсы, компоненты и сборку сайтов с ИИ",
   bio = "Семь лет верстала продуктовые интерфейсы, теперь объясняет, как собирать их из готовых блоков. Разбирает решения каталога изнутри: почему секция устроена так, а не иначе, и что в ней можно трогать.",
   links = DEFAULT_LINKS,
@@ -217,13 +225,29 @@ export function Blog009({
       <style href="vibeui-blog-009" precedence="medium">
         {STYLES}
       </style>
-      <section data-vibeui-block="blog-009" className={className} style={palette}>
+      <section
+        data-vibeui-block="blog-009"
+        className={className}
+        style={palette}
+      >
         <div data-part="shell">
           <div data-part="card">
             <div data-part="person">
               <p data-part="eyebrow">{eyebrow}</p>
               <div data-part="head">
-                <span data-part="avatar" aria-hidden="true">
+                <span
+                  data-part="avatar"
+                  data-empty={avatarImage ? undefined : "true"}
+                  aria-hidden="true"
+                >
+                  {avatarImage ? (
+                    <img
+                      src={avatarImage}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : null}
                   {initials(name)}
                 </span>
                 <div>

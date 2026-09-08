@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "ИИ-чат",
       "description": "Диалог с ИИ-ассистентом: ответ печатается по буквам с мигающим курсором, сообщение пользователя — пузырём справа, снизу неактивная строка ввода промпта.",
-      "categories": ["chat"],
+      "categories": [
+        "chat"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,14 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-chat-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Ответ ассистента раскрывается ступенями (steps()) до ширины, посчитанной из длины текста через CSS-переменную --vibeui-chat-001-chars, в конце мигает текстовый курсор; всё гаснет при prefers-reduced-motion. Точка статуса в шапке дышит кольцом.",
       "meta": {
-        "tags": ["chat", "ai", "streaming", "typing", "prompt", "animated"],
+        "tags": [
+          "chat",
+          "ai",
+          "streaming",
+          "typing",
+          "prompt",
+          "animated"
+        ],
         "ai": {
           "export": "Chat001",
           "usage": "<Chat001 title=\"Ассистент\" userMessage=\"Привет\" assistantMessage=\"Чем помочь?\" streaming />",
@@ -122,7 +131,11 @@
             "placeholder": "Спросите что-нибудь…"
           }
         },
-        "cardControls": ["streaming", "badge", "accent"]
+        "cardControls": [
+          "streaming",
+          "badge",
+          "accent"
+        ]
       }
     },
     {
@@ -130,7 +143,9 @@
       "type": "registry:component",
       "title": "Пузыри",
       "description": "Переписка двух собеседников: пузыри поднимаются по очереди снизу вверх, у собеседника — аватар с инициалом, после последней реплики держится индикатор «печатает…» из трёх точек.",
-      "categories": ["chat"],
+      "categories": [
+        "chat"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -239,7 +254,8 @@
                     "text": "Great, sending the link over",
                     "author": "them"
                   }
-                ]
+                ],
+                "avatarImage": "/demo/avatars/vera-256.webp"
               }
             }
           }
@@ -261,10 +277,14 @@
                 "text": "Отлично, скину ссылку на встречу",
                 "author": "them"
               }
-            ]
+            ],
+            "avatarImage": "/demo/avatars/vera-256.webp"
           }
         },
-        "cardControls": ["typing", "accent"]
+        "cardControls": [
+          "typing",
+          "accent"
+        ]
       }
     }
   ]

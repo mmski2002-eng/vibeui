@@ -13,7 +13,6 @@ import { Avatar010 } from "@/registry/components/avatar/avatar-010/avatar-010"
 import { Avatar011 } from "@/registry/components/avatar/avatar-011/avatar-011"
 import { Avatar012 } from "@/registry/components/avatar/avatar-012/avatar-012"
 import { Avatar013 } from "@/registry/components/avatar/avatar-013/avatar-013"
-import { Avatar014 } from "@/registry/components/avatar/avatar-014/avatar-014"
 import { Avatar015 } from "@/registry/components/avatar/avatar-015/avatar-015"
 import { Avatar016 } from "@/registry/components/avatar/avatar-016/avatar-016"
 import { Avatar017 } from "@/registry/components/avatar/avatar-017/avatar-017"
@@ -167,24 +166,6 @@ export const CHECKS: LabCheck[] = [
     title: "Аватар со статусом",
     notes: ["Состояние: busy", "Размер: md", "Роль: editor", "Фото: Черновик"],
     node: <Avatar013 status="busy" size="md" role="editor" src="Черновик" />,
-  },
-  {
-    name: "avatar-014",
-    title: "Аватар нестандартной формы",
-    notes: [
-      "Форма: circle",
-      "Роль: Подпись: тест",
-      "Имя: Подпись: тест",
-      "Размер: md",
-    ],
-    node: (
-      <Avatar014
-        shape="circle"
-        role="Подпись: тест"
-        name="Подпись: тест"
-        size="md"
-      />
-    ),
   },
   {
     name: "avatar-015",

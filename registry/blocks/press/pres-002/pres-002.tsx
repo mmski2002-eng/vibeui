@@ -2,6 +2,8 @@ import type { CSSProperties } from "react"
 
 type Pres002Asset = {
   title: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   note: string
   format: string
 }
@@ -52,9 +54,15 @@ font-family:var(--vibeui-pres-002-font);
 min-inline-size:0;display:flex;flex-direction:column;gap:0.875rem;
 padding:1.25rem;border:1px solid var(--vibeui-pres-002-border);border-radius:1.125rem;background:var(--vibeui-pres-002-card)}
 [data-vibeui-block="pres-002"] [data-part="thumb"]{
-aspect-ratio:16 / 9;border-radius:0.75rem;display:grid;place-items:center;
-background:linear-gradient(140deg,oklch(0.6 0.18 39.8),oklch(0.38 0.13 28));
-color:oklch(0.98 0 0);font-size:1.75rem;font-weight:800}
+position:relative;aspect-ratio:16 / 9;border-radius:0.75rem;display:grid;place-items:center;
+color:oklch(0.98 0 0);font-size:1.75rem;font-weight:800;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="pres-002"] [data-part="thumb"][data-empty="true"]{background:linear-gradient(140deg,oklch(0.6 0.18 39.8),oklch(0.38 0.13 28));}
+[data-vibeui-block="pres-002"] [data-part="thumb"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+}
 [data-vibeui-block="pres-002"] [data-part="asset"]:nth-child(3n+2) [data-part="thumb"]{background:linear-gradient(140deg,oklch(0.58 0.16 55),oklch(0.36 0.11 42))}
 [data-vibeui-block="pres-002"] [data-part="asset"]:nth-child(3n+3) [data-part="thumb"]{background:linear-gradient(140deg,oklch(0.5 0.15 25),oklch(0.3 0.1 18))}
 [data-vibeui-block="pres-002"] [data-part="asset-title"]{margin:0;font-size:1rem;font-weight:700}
@@ -75,9 +83,21 @@ transition:border-color .16s ease,background-color .16s ease}
 `
 
 const DEFAULT_ASSETS: Pres002Asset[] = [
-  { title: "Логотип", note: "Основной и монохромный варианты, safe-зоны.", format: "SVG · PNG" },
-  { title: "Палитра", note: "Фирменный оранжевый и нейтрали в HEX и OKLCH.", format: "PDF" },
-  { title: "Шрифты", note: "Гарнитуры интерфейса и заголовков с лицензией.", format: "ZIP" },
+  {
+    title: "Логотип",
+    note: "Основной и монохромный варианты, safe-зоны.",
+    format: "SVG · PNG",
+  },
+  {
+    title: "Палитра",
+    note: "Фирменный оранжевый и нейтрали в HEX и OKLCH.",
+    format: "PDF",
+  },
+  {
+    title: "Шрифты",
+    note: "Гарнитуры интерфейса и заголовков с лицензией.",
+    format: "ZIP",
+  },
 ]
 
 /**
@@ -142,7 +162,19 @@ export function Pres002({
           <div data-part="grid">
             {assets.map((asset) => (
               <div key={asset.title} data-part="asset">
-                <div data-part="thumb" aria-hidden="true">
+                <div
+                  data-part="thumb"
+                  data-empty={asset.image ? undefined : "true"}
+                  aria-hidden="true"
+                >
+                  {asset.image ? (
+                    <img
+                      src={asset.image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : null}
                   {asset.title.charAt(0)}
                 </div>
                 <div>

@@ -152,10 +152,7 @@ export function Waitlist002({
               </li>
             ))}
           </ul>
-          <form
-            data-part="form"
-            onSubmit={(event) => event.preventDefault()}
-          >
+          <form data-part="form" onSubmit={(event) => event.preventDefault()}>
             <input
               data-part="input"
               type="email"

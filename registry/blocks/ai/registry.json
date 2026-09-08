@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Чат с ассистентом",
       "description": "Окно чата с ассистентом: лента объявлена role=\"log\", Enter отправляет, Shift+Enter переносит строку.",
-      "categories": ["ai"],
+      "categories": [
+        "ai"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-001-*. Клиентский: \"use client\" ради поля ввода. Лента объявлена role=\"log\" с aria-live=\"polite\": ответ будет услышан, но не перебьёт набор. Поле растёт вместе с текстом через field-sizing и упирается в потолок, дальше прокручивается.",
       "meta": {
-        "tags": ["ai", "chat", "assistant", "messages"],
+        "tags": [
+          "ai",
+          "chat",
+          "assistant",
+          "messages"
+        ],
         "preview": {
           "width": "full"
         },
@@ -184,7 +191,13 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-001-*. A client component: \"use client\" is there for the input field. The feed is declared role=\"log\" with aria-live=\"polite\": the reply will be heard but will not interrupt typing. The field grows with the text through field-sizing and stops at a ceiling, scrolling beyond it."
           }
         },
-        "cardControls": ["title", "status", "sendText", "accent", "background"]
+        "cardControls": [
+          "title",
+          "status",
+          "sendText",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -192,7 +205,9 @@
       "type": "registry:block",
       "title": "Составитель запроса",
       "description": "Панель запроса к модели: пресеты, приложенные файлы и выбор модели рядом с полем, счётчик появляется у предела.",
-      "categories": ["ai"],
+      "categories": [
+        "ai"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -204,7 +219,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-002-*. Клиентский: \"use client\" ради поля и счётчика. Настройки лежат в одной рамке с полем и попадают в фокусное кольцо через :focus-within. Счётчик появляется только на подходе к пределу и объявляется aria-live.",
       "meta": {
-        "tags": ["ai", "prompt", "composer", "model"],
+        "tags": [
+          "ai",
+          "prompt",
+          "composer",
+          "model"
+        ],
         "preview": {
           "width": "full"
         },
@@ -337,7 +357,11 @@
                 "modelLabel": "Model",
                 "counterText": "{left} left",
                 "sendText": "Send",
-                "models": ["Fast model", "Precise model", "Draft model"],
+                "models": [
+                  "Fast model",
+                  "Precise model",
+                  "Draft model"
+                ],
                 "presets": [
                   "Build a landing page",
                   "Rewrite the copy",
@@ -359,7 +383,13 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-002-*. A client component: \"use client\" is there for the field and the counter. The settings sit inside the same frame as the field and fall into the focus ring through :focus-within. The counter appears only on the approach to the limit and is announced through aria-live."
           }
         },
-        "cardControls": ["title", "sendText", "limit", "accent", "background"]
+        "cardControls": [
+          "title",
+          "sendText",
+          "limit",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -367,7 +397,9 @@
       "type": "registry:block",
       "title": "Запуск агента",
       "description": "Лента шагов агента: состояние передаётся формой значка, подробности каждого шага спрятаны в details.",
-      "categories": ["ai"],
+      "categories": [
+        "ai"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -379,7 +411,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-003-*. Серверный: хуков нет. Линия ленты — левый бордюр шага, у последнего он прозрачный. Состояния различаются формой значка: галочка, кольцо, пустой кружок и квадрат. Журнал шага лежит в details, поэтому лента не превращается в стену текста.",
       "meta": {
-        "tags": ["ai", "agent", "steps", "log"],
+        "tags": [
+          "ai",
+          "agent",
+          "steps",
+          "log"
+        ],
         "preview": {
           "width": "full"
         },
@@ -557,7 +594,9 @@
       "type": "registry:block",
       "title": "Рабочее место чата",
       "description": "Рабочее окно длинного диалога: закреплённый контекст задачи слева, разделители дней в переписке и действия над репликой ассистента.",
-      "categories": ["ai"],
+      "categories": [
+        "ai"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -569,7 +608,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-004-*. Клиентский: \"use client\" ради поля ввода. Две колонки включаются container query от собственной ширины блока. Разделитель дня рисуется, когда день записи отличается от предыдущей, — отдельного массива групп нет. Панель действий над репликой показывается по :hover и по :focus-within, поэтому доступна с клавиатуры.",
       "meta": {
-        "tags": ["ai", "chat", "workspace", "history"],
+        "tags": [
+          "ai",
+          "chat",
+          "workspace",
+          "history"
+        ],
         "preview": {
           "width": "full"
         },
@@ -759,7 +803,9 @@
       "type": "registry:block",
       "title": "Ответ с источниками",
       "description": "Ответ ассистента со сносками прямо в тексте и карточками источников, где у каждого есть цитата — тот самый фрагмент, на который опирается ответ.",
-      "categories": ["ai"],
+      "categories": [
+        "ai"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -771,7 +817,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-005-*. Серверный: хуков нет. Сноски вырезаются из текста регулярным выражением по шаблону [1] и превращаются в <sup><a> с aria-label «Источник N»; якорь ведёт к карточке с id ai-005-source-N, у карточек есть scroll-margin-top и подсветка по :target. Источники раскладываются в две колонки container query.",
       "meta": {
-        "tags": ["ai", "answer", "sources", "citations"],
+        "tags": [
+          "ai",
+          "answer",
+          "sources",
+          "citations"
+        ],
         "preview": {
           "width": "full"
         },
@@ -920,7 +971,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-005-*. A server component: there are no hooks. The footnotes are cut out of the text by a regular expression matching the [1] pattern and turned into <sup><a> with an aria-label of the \"Source N\" form; the anchor leads to a card with the id ai-005-source-N, and the cards carry scroll-margin-top and a :target highlight. The sources are laid out in two columns by a container query."
           }
         },
-        "cardControls": ["title", "sourcesTitle", "accent", "background"]
+        "cardControls": [
+          "title",
+          "sourcesTitle",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -928,7 +984,9 @@
       "type": "registry:block",
       "title": "Потоковый ответ",
       "description": "Ответ, который печатается: слова проявляются каскадом, каретка мигает, а при prefers-reduced-motion текст показывается целиком и сразу.",
-      "categories": ["ai"],
+      "categories": [
+        "ai"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -940,7 +998,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-006-*. Серверный: анимацию целиком ведёт CSS, клиентского JS нет. Текст режется на слова, каждому слову проставляется animation-delay = позиция × speed. Каретка нарисована псевдоэлементом и помечена aria-hidden. В медиазапросе prefers-reduced-motion слова принудительно показываются: одного animation:none мало, потому что стартовое состояние слова — opacity 0.",
       "meta": {
-        "tags": ["ai", "streaming", "animation", "answer"],
+        "tags": [
+          "ai",
+          "streaming",
+          "animation",
+          "answer"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1098,7 +1161,9 @@
       "type": "registry:block",
       "title": "Библиотека запросов",
       "description": "Библиотека готовых запросов с рубриками-вкладками: карточка — целиком кнопка, которая подставляет формулировку в поле ввода.",
-      "categories": ["ai"],
+      "categories": [
+        "ai"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1110,7 +1175,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-007-*. Клиентский: \"use client\" ради переключения рубрик через useState. Переключатель собран как tablist: кнопки несут role=\"tab\" и aria-selected, список — role=\"tabpanel\" с aria-live. Карточка промпта — одна кнопка целиком, вложенной интерактивности нет. Сетка на две и три колонки включается container query.",
       "meta": {
-        "tags": ["ai", "prompts", "presets", "tabs"],
+        "tags": [
+          "ai",
+          "prompts",
+          "presets",
+          "tabs"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1226,7 +1296,12 @@
                 "actionLabel": "Insert into the field",
                 "emptyLabel": "No presets in this topic yet.",
                 "tabsLabel": "Preset topics",
-                "groups": ["Site", "Copy", "Code", "Analytics"],
+                "groups": [
+                  "Site",
+                  "Copy",
+                  "Code",
+                  "Analytics"
+                ],
                 "prompts": [
                   {
                     "group": "Site",
@@ -1276,7 +1351,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-007-*. A client component: \"use client\" is there for switching topics through useState. The switch is built as a tablist: the buttons carry role=\"tab\" and aria-selected, and the list is a role=\"tabpanel\" with aria-live. A prompt card is a single button as a whole, with no nested interactivity. The two- and three-column grid is turned on by a container query."
           }
         },
-        "cardControls": ["title", "actionLabel", "accent", "background"]
+        "cardControls": [
+          "title",
+          "actionLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1284,7 +1364,9 @@
       "type": "registry:block",
       "title": "Сравнение ответов",
       "description": "Два ответа на один запрос рядом с разбором сильных и слабых сторон: выбор лучшего сделан радиогруппой без единой строки JS.",
-      "categories": ["ai"],
+      "categories": [
+        "ai"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1296,7 +1378,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-008-*. Серверный: выбор держат радиокнопки внутри <label>, обёрнутого вокруг всей колонки, состояние читается через :has(input:checked). Радиокнопка уменьшена, но не спрятана display:none, иначе группа выпадает из фокуса. Две колонки включаются container query: на узком блоке столбцы по 30 символов сравнивать невозможно.",
       "meta": {
-        "tags": ["ai", "compare", "evaluation", "radio"],
+        "tags": [
+          "ai",
+          "compare",
+          "evaluation",
+          "radio"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1453,7 +1540,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-008-*. A server component: the choice is held by radio buttons inside a <label> wrapped around the whole column, and the state is read through :has(input:checked). The radio is made smaller but not hidden with display:none, otherwise the group falls out of the focus order. Two columns are turned on by a container query: on a narrow block, columns 30 characters wide cannot be compared."
           }
         },
-        "cardControls": ["title", "chooseLabel", "accent", "background"]
+        "cardControls": [
+          "title",
+          "chooseLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1461,7 +1553,9 @@
       "type": "registry:block",
       "title": "Вызов инструмента",
       "description": "Карточка вызова инструмента: аргументы словарём, результат рядом с ними, состояние формой значка и сырой ответ в раскрывающемся блоке.",
-      "categories": ["ai"],
+      "categories": [
+        "ai"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1473,7 +1567,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-009-*. Серверный: хуков нет, раскрытие держит нативный <details>. Аргументы размечены <dl> парами «имя — значение», результат лежит в <pre> с переносом длинных строк. Состояние вызова несут цвет, подпись и форма значка одновременно. Аргументы и результат встают в две колонки по container query.",
       "meta": {
-        "tags": ["ai", "tools", "function-call", "debug"],
+        "tags": [
+          "ai",
+          "tools",
+          "function-call",
+          "debug"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1527,7 +1626,11 @@
             "label": "Состояние",
             "type": "select",
             "default": "ok",
-            "options": ["ok", "running", "failed"]
+            "options": [
+              "ok",
+              "running",
+              "failed"
+            ]
           },
           {
             "prop": "accent",
@@ -1630,7 +1733,13 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-009-*. A server component: there are no hooks, and a native <details> holds the disclosure. The arguments are marked up as a <dl> of name–value pairs, and the result sits in a <pre> that wraps long lines. The call state is carried by colour, caption and badge shape at once. The arguments and the result go into two columns through a container query."
           }
         },
-        "cardControls": ["tool", "argsTitle", "state", "accent", "background"]
+        "cardControls": [
+          "tool",
+          "argsTitle",
+          "state",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1638,7 +1747,9 @@
       "type": "registry:block",
       "title": "Доска плана агента",
       "description": "План агента доской из трёх колонок: очередь, работа и готовое видны разом, сверху — доля выполненных задач.",
-      "categories": ["ai"],
+      "categories": [
+        "ai"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1650,7 +1761,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-010-*. Серверный: хуков нет. Доля выполненного считается из самих колонок — отдельного числа в пропсах нет, поэтому прогресс не может разойтись с задачами. Полоска объявлена role=\"progressbar\" с aria-valuenow и продублирована подписью. Три колонки включаются container query, на узком блоке они встают друг под друга.",
       "meta": {
-        "tags": ["ai", "agent", "board", "progress"],
+        "tags": [
+          "ai",
+          "agent",
+          "board",
+          "progress"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1823,7 +1939,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-010-*. A server component: there are no hooks. The completed share is computed from the columns themselves — there is no separate number in the props, so the progress cannot drift from the tasks. The bar is declared role=\"progressbar\" with aria-valuenow and is duplicated by a caption. Three columns are turned on by a container query; on a narrow block they stack one under another."
           }
         },
-        "cardControls": ["title", "progressLabel", "accent", "background"]
+        "cardControls": [
+          "title",
+          "progressLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1831,7 +1952,9 @@
       "type": "registry:block",
       "title": "Настройки модели",
       "description": "Настройки ответа модели, где каждый ползунок подписан следствием: видно, что изменится в ответе, а не только какое стало число.",
-      "categories": ["ai"],
+      "categories": [
+        "ai"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1843,7 +1966,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-011-*. Клиентский: \"use client\" ради значений ползунков в useState. Значение выводится в <output> с for на ползунок — браузер объявляет изменение сам, отдельный aria-live не нужен. Режим выбирается радиогруппой, состояние чипа читается через :has(input:checked). У <legend> проставлен clear:both у соседнего блока, иначе flex-дети обтекают его.",
       "meta": {
-        "tags": ["ai", "settings", "sliders", "model"],
+        "tags": [
+          "ai",
+          "settings",
+          "sliders",
+          "model"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1976,7 +2104,11 @@
                 "modeLabel": "Mode",
                 "lengthText": "{value} tokens",
                 "decimalSeparator": ".",
-                "modes": ["Precise", "Balanced", "Free"],
+                "modes": [
+                  "Precise",
+                  "Balanced",
+                  "Free"
+                ],
                 "temperatureText": {
                   "low": "Almost always the same answer. Good for facts and code.",
                   "mid": "The wording shifts, the substance holds. The everyday mode for copy.",
@@ -2006,7 +2138,9 @@
       "type": "registry:block",
       "title": "Загрузка контекста",
       "description": "Сбор контекста файлами: зона перетаскивания, стадии чтения и индексации у каждого файла и доля занятого окна контекста.",
-      "categories": ["ai"],
+      "categories": [
+        "ai"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2018,7 +2152,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-012-*. Серверный: зона перетаскивания — обычный <label> вокруг <input type=\"file\">, поэтому диалог открывается по клику и с клавиатуры без JS. Полоски прогресса объявлены role=\"progressbar\" с aria-valuenow; состояние файла продублировано текстом. Список файлов встаёт в две колонки по container query.",
       "meta": {
-        "tags": ["ai", "context", "upload", "files"],
+        "tags": [
+          "ai",
+          "context",
+          "upload",
+          "files"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2203,7 +2342,9 @@
       "type": "registry:block",
       "title": "Оценка ответа",
       "description": "Оценка ответа, у которой есть продолжение: палец вниз раскрывает список причин и поле комментария — раскрытие держит :has() без JS.",
-      "categories": ["ai"],
+      "categories": [
+        "ai"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2215,7 +2356,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-013-*. Серверный: подробности показываются селектором form:has([data-vote=\"down\"]:checked). Скрытая часть убрана display:none, а не прозрачностью, чтобы её поля не ловили Tab в пустоту. Причины — чекбоксы: у плохого ответа обычно несколько бед сразу. Причины встают в две колонки по container query.",
       "meta": {
-        "tags": ["ai", "feedback", "rating", "form"],
+        "tags": [
+          "ai",
+          "feedback",
+          "rating",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2350,7 +2496,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-013-*. A server component: the details are shown by the selector form:has([data-vote=\"down\"]:checked). The hidden part is removed with display:none rather than by transparency, so that its fields do not catch Tab into nowhere. The reasons are checkboxes: a bad answer usually has several faults at once. The reasons go into two columns through a container query."
           }
         },
-        "cardControls": ["title", "downLabel", "accent", "background"]
+        "cardControls": [
+          "title",
+          "downLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2358,7 +2509,9 @@
       "type": "registry:block",
       "title": "Бюджет токенов",
       "description": "Расход окна контекста долями: системная инструкция, файлы, переписка и остаток — с числами, объяснением и предупреждением у предела.",
-      "categories": ["ai"],
+      "categories": [
+        "ai"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2370,7 +2523,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-014-*. Серверный: доли рисуются grid-template-columns из процентов, а не абсолютными кусками, поэтому не разъезжаются при округлении. Занятое считается суммой всех долей, кроме tone \"free\". Полоса помечена role=\"img\" с aria-label, числа набраны tabular-nums. Легенда встаёт в две колонки по container query.",
       "meta": {
-        "tags": ["ai", "tokens", "budget", "context"],
+        "tags": [
+          "ai",
+          "tokens",
+          "budget",
+          "context"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2522,7 +2680,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-014-*. A server component: the shares are drawn by grid-template-columns from percentages rather than as absolute pieces, so they do not drift on rounding. The used amount is counted as the sum of all shares except the \"free\" tone. The bar is marked role=\"img\" with an aria-label, and the numbers are set in tabular-nums. The legend goes into two columns through a container query."
           }
         },
-        "cardControls": ["title", "limit", "accent", "background"]
+        "cardControls": [
+          "title",
+          "limit",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2530,7 +2693,9 @@
       "type": "registry:block",
       "title": "История чатов",
       "description": "Боковая колонка истории диалогов: поиск идёт и по заголовку, и по первой реплике, а записи сгруппированы по закреплённым и датам.",
-      "categories": ["ai"],
+      "categories": [
+        "ai"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2542,7 +2707,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-015-*. Клиентский: \"use client\" ради поиска в useState. Фильтр смотрит и на title, и на preview — название диалога обычно сгенерировано моделью, и человек помнит не его. Группы собираются из поля group и выводятся отдельными <section> с заголовками. Активная запись помечена aria-current, а не только цветом.",
       "meta": {
-        "tags": ["ai", "history", "sidebar", "search"],
+        "tags": [
+          "ai",
+          "history",
+          "sidebar",
+          "search"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2707,7 +2877,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-015-*. A client component: \"use client\" is there for the search in useState. The filter looks at both title and preview — a thread name is usually generated by the model, and that is not what a person remembers. The groups are assembled from the group field and rendered as separate <section> elements with headings. The active row is marked with aria-current, not by colour alone."
           }
         },
-        "cardControls": ["title", "activeId", "accent", "background"]
+        "cardControls": [
+          "title",
+          "activeId",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2715,7 +2890,9 @@
       "type": "registry:block",
       "title": "Подтверждение действия",
       "description": "Подтверждение действия ассистента: последствия списком, диф правки со знаками «плюс» и «минус» и три равнозначные кнопки решения.",
-      "categories": ["ai"],
+      "categories": [
+        "ai"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2727,7 +2904,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-016-*. Серверный: хуков нет. Строки дифа помечены и цветом, и знаком в отдельной колонке — цвет не переживает печать и не читается вслух. Кнопка отклонения стоит в одном ряду с подтверждением. Чекбокс «не спрашивать снова» намеренно последний. Последствия и диф встают в две колонки по container query.",
       "meta": {
-        "tags": ["ai", "approval", "diff", "confirm"],
+        "tags": [
+          "ai",
+          "approval",
+          "diff",
+          "confirm"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2885,7 +3067,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-016-*. A server component: there are no hooks. The diff lines are marked both by colour and by a sign in a separate column — colour does not survive printing and is not read aloud. The reject button stands in the same row as the approve one. The \"do not ask again\" checkbox is deliberately last. The consequences and the diff go into two columns through a container query."
           }
         },
-        "cardControls": ["confirmLabel", "target", "accent", "background"]
+        "cardControls": [
+          "confirmLabel",
+          "target",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2893,7 +3080,9 @@
       "type": "registry:block",
       "title": "Ошибка модели",
       "description": "Экран отказа модели, после которого понятно, что делать: объяснение без «что-то пошло не так», шаги, сохранённый черновик и код для поддержки.",
-      "categories": ["ai"],
+      "categories": [
+        "ai"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2905,7 +3094,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-017-*. Серверный: хуков нет, технические подробности спрятаны в нативный <details>. Корень объявлен role=\"alert\": ошибка должна быть услышана сразу. Код ошибки помечен user-select:all, чтобы выделяться одним кликом. Черновик запроса показан рядом с кнопкой повтора.",
       "meta": {
-        "tags": ["ai", "error", "retry", "recovery"],
+        "tags": [
+          "ai",
+          "error",
+          "retry",
+          "recovery"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3036,7 +3230,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-017-*. A server component: there are no hooks, and the technical details are hidden inside a native <details>. The root is declared role=\"alert\": an error has to be heard at once. The error code is marked user-select:all so that it is selected in one click. The draft of the request is shown next to the retry button."
           }
         },
-        "cardControls": ["title", "code", "accent", "background"]
+        "cardControls": [
+          "title",
+          "code",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -3044,7 +3243,9 @@
       "type": "registry:block",
       "title": "Цитата из документа",
       "description": "Цитата из документа вместе с соседними предложениями и выводом, который на ней стоит: видно, что фрагмент не обрезан по удобному слову.",
-      "categories": ["ai"],
+      "categories": [
+        "ai"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3056,7 +3257,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-018-*. Серверный: хуков нет. Подсветка сделана тегом <mark> с box-decoration-break:clone, поэтому фон не рвётся на переносе строки. Цитата лежит в <figure> с <blockquote> и <cite> в подписи. Соседние предложения приглушены цветом, но оставлены на месте. Две колонки включаются container query.",
       "meta": {
-        "tags": ["ai", "citation", "document", "evidence"],
+        "tags": [
+          "ai",
+          "citation",
+          "document",
+          "evidence"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3184,7 +3390,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-018-*. A server component: there are no hooks. The highlight is made with the <mark> tag and box-decoration-break:clone, so the background does not break at a line wrap. The quote sits in a <figure> with a <blockquote> and a <cite> in the caption. The neighbouring sentences are muted in colour but left in place. Two columns are turned on by a container query."
           }
         },
-        "cardControls": ["source", "location", "accent", "background"]
+        "cardControls": [
+          "source",
+          "location",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -3192,7 +3403,9 @@
       "type": "registry:block",
       "title": "Пустой чат",
       "description": "Первый экран чата: вместо перечня возможностей — готовые запросы, которые можно нажать, и честный список того, чего ассистент не умеет.",
-      "categories": ["ai"],
+      "categories": [
+        "ai"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3204,7 +3417,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-019-*. Серверный: хуков нет, поле ввода — обычная форма. Примеры стоят в разметке до поля, поэтому в порядке обхода клавиатурой идут первыми. Рамка поля подсвечивается по :focus-within целиком. Примеры и список ограничений встают в две колонки по container query.",
       "meta": {
-        "tags": ["ai", "empty-state", "onboarding", "examples"],
+        "tags": [
+          "ai",
+          "empty-state",
+          "onboarding",
+          "examples"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3349,7 +3567,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-019-*. A server component: there are no hooks, and the input field is a plain form. The examples stand before the field in the markup, so they come first in keyboard order. The field frame is highlighted as a whole through :focus-within. The examples and the list of limits go into two columns through a container query."
           }
         },
-        "cardControls": ["greeting", "sendLabel", "accent", "background"]
+        "cardControls": [
+          "greeting",
+          "sendLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -3357,7 +3580,9 @@
       "type": "registry:block",
       "title": "Голосовой ввод",
       "description": "Голосовой ввод запроса: микрофон с постоянной ссылкой на клавиатуру рядом, запись звуковой волной и распознавание строкой, которая растёт вживую.",
-      "categories": ["ai"],
+      "categories": [
+        "ai"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3369,9 +3594,18 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-020-*. Серверный: хуков нет, три состояния — ожидание, запись и распознавание — переключаются пропом state. Волна из полос анимируется во время записи и объявлена aria-hidden, а статус и текст распознавания идут через aria-live. Переход на клавиатуру стоит в подвале постоянно, а не в меню.",
       "meta": {
-        "tags": ["ai", "voice", "speech", "composer", "microphone"],
+        "tags": [
+          "ai",
+          "voice",
+          "speech",
+          "composer",
+          "microphone"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "image": "/demo/scenes/scene-20.webp"
+          }
         },
         "ai": {
           "export": "Ai020",
@@ -3410,7 +3644,11 @@
             "label": "Состояние",
             "type": "select",
             "default": "idle",
-            "options": ["idle", "listening", "transcribing"]
+            "options": [
+              "idle",
+              "listening",
+              "transcribing"
+            ]
           },
           {
             "prop": "title",
@@ -3502,13 +3740,20 @@
                 "placeholder": "The recognized text will appear here",
                 "keyboardText": "Type instead",
                 "cancelText": "Cancel",
-                "sendText": "Send"
+                "sendText": "Send",
+                "image": "/demo/scenes/scene-20.webp"
               }
             },
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-020-*. A server component: there are no hooks, and the three states — idle, recording and transcribing — switch through the state prop. The bar wave animates while recording and is marked aria-hidden, while the status and the transcribed text go through aria-live. The keyboard switch sits in the footer permanently, not behind a menu."
           }
         },
-        "cardControls": ["state", "title", "transcript", "accent", "background"]
+        "cardControls": [
+          "state",
+          "title",
+          "transcript",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

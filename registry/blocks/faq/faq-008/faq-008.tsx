@@ -192,7 +192,11 @@ export function Faq008({
       <style href="vibeui-faq-008" precedence="medium">
         {STYLES}
       </style>
-      <section data-vibeui-block="faq-008" className={className} style={palette}>
+      <section
+        data-vibeui-block="faq-008"
+        className={className}
+        style={palette}
+      >
         <div data-part="shell">
           <h2 data-part="title">{title}</h2>
           <div data-part="columns">

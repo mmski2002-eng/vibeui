@@ -8,6 +8,8 @@ export type Features003Column = {
 }
 
 export type Features003Props = {
+  /** Иллюстрация возможности. Без неё секция остаётся текстовой. */
+  image?: string
   title?: string
   lede?: string
   columns?: Features003Column[]
@@ -51,6 +53,13 @@ box-sizing:border-box;background:var(--vibeui-features-003-bg);color:var(--vibeu
 font-family:var(--vibeui-features-003-sans);
 }
 [data-vibeui-block="features-003"] *{box-sizing:border-box}
+[data-vibeui-block="features-003"] [data-part="figure"]{
+position:relative;overflow:hidden;aspect-ratio:16 / 10;
+margin-top:1.5rem;border-radius:0.875rem;
+}
+[data-vibeui-block="features-003"] [data-part="figure"] img{
+display:block;width:100%;height:100%;object-fit:cover;
+}
 [data-vibeui-block="features-003"] [data-part="shell"]{max-width:68rem;width:100%;margin:0 auto;padding:3.5rem 1.25rem}
 [data-vibeui-block="features-003"] h2{
 margin:0;max-width:22ch;font-family:var(--vibeui-features-003-serif);font-weight:400;
@@ -143,6 +152,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 /** Три колонки с описаниями: верхние линейки, порядковые номера, serif-заголовки. */
 export function Features003({
   title = "Три принципа, на которых держится библиотека",
+  image = "",
   lede = "Не список галочек, а редакционная полоса: каждая колонка объясняет одно решение и ведёт в документацию.",
   columns = DEFAULT_COLUMNS,
   background = "",
@@ -187,6 +197,12 @@ export function Features003({
               </li>
             ))}
           </ul>
+
+          {image ? (
+            <figure data-part="figure">
+              <img src={image} alt="" loading="lazy" decoding="async" />
+            </figure>
+          ) : null}
         </div>
       </section>
     </>

@@ -11,6 +11,8 @@ type Features001Feature = {
 }
 
 export type Features001Props = {
+  /** Иллюстрация возможности. Без неё секция остаётся текстовой. */
+  image?: string
   eyebrow?: string
   title?: string
   titleAccent?: string
@@ -66,6 +68,13 @@ container-type:inline-size;
 }
 @container (min-width:80rem){
 [data-vibeui-block="features-001"] [data-part="frame"]{min-height:720px;padding-left:4rem;padding-right:4rem}
+[data-vibeui-block="features-001"] [data-part="figure"]{
+position:relative;overflow:hidden;aspect-ratio:16 / 10;
+margin-top:1.5rem;border-radius:0.875rem;
+}
+[data-vibeui-block="features-001"] [data-part="figure"] img{
+display:block;width:100%;height:100%;object-fit:cover;
+}
 [data-vibeui-block="features-001"] [data-part="inner"]{max-width:1200px;margin-inline:auto}
 [data-vibeui-block="features-001"] [data-part="body"]{gap:4rem}
 }
@@ -136,6 +145,7 @@ function LayerDiagram() {
 
 export function Features001({
   eyebrow = "Возможности",
+  image = "",
   title = "Всё, что начинается после первого",
   titleAccent = "деплоя",
   description = "Неприметная половина работы — наблюдаемость, откаты, доступы — сделана до того, как она понадобится.",
@@ -315,6 +325,12 @@ export function Features001({
             ) : null}
           </div>
         </div>
+
+        {image ? (
+          <figure data-part="figure">
+            <img src={image} alt="" loading="lazy" decoding="async" />
+          </figure>
+        ) : null}
       </div>
     </section>
   )

@@ -2,6 +2,8 @@ import type { CSSProperties } from "react"
 
 type People003Leader = {
   name: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   role: string
   quote: string
 }
@@ -66,10 +68,15 @@ box-shadow:0 22px 44px -36px var(--vibeui-people-003-shadow);
 display:flex;align-items:center;gap:1rem;order:-1;
 }
 [data-vibeui-block="people-003"] [data-part="avatar"]{
-width:4rem;height:4rem;flex:none;border-radius:999px;display:grid;place-items:center;
-background:color-mix(in oklab,var(--vibeui-people-003-accent) 12%,var(--vibeui-people-003-card));
+position:relative;width:4rem;height:4rem;flex:none;border-radius:999px;display:grid;place-items:center;
 color:var(--vibeui-people-003-accent);
-font-size:1.25rem;font-weight:750;letter-spacing:0.02em;
+font-size:1.25rem;font-weight:750;letter-spacing:0.02em;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="people-003"] [data-part="avatar"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-people-003-accent) 12%,var(--vibeui-people-003-card));}
+[data-vibeui-block="people-003"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="people-003"] [data-part="who"]{display:grid;gap:0.125rem;min-width:0}
 [data-vibeui-block="people-003"] [data-part="name"]{font-size:1.125rem;font-weight:700;letter-spacing:-0.01em}
@@ -178,7 +185,19 @@ export function People003({
               <figure key={leader.name} data-part="card">
                 <blockquote data-part="quote">{leader.quote}</blockquote>
                 <figcaption data-part="person">
-                  <span data-part="avatar" aria-hidden="true">
+                  <span
+                    data-part="avatar"
+                    data-empty={leader.image ? undefined : "true"}
+                    aria-hidden="true"
+                  >
+                    {leader.image ? (
+                      <img
+                        src={leader.image}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : null}
                     {initials(leader.name)}
                   </span>
                   <span data-part="who">

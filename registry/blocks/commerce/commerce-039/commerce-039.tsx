@@ -252,13 +252,18 @@ export function Commerce039({
                 }
               >
                 <span
-                    data-part="cover"
-                    data-empty={deal.image ? undefined : "true"}
-                    aria-hidden="true"
-                  >
-                    {deal.image ? (
-                      <img src={deal.image} alt="" loading="lazy" decoding="async" />
-                    ) : null}
+                  data-part="cover"
+                  data-empty={deal.image ? undefined : "true"}
+                  aria-hidden="true"
+                >
+                  {deal.image ? (
+                    <img
+                      src={deal.image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : null}
                   <span data-part="cut">{deal.cut}</span>
                   <span data-part="grade">{deal.grade}</span>
                 </span>

@@ -2,6 +2,8 @@ import type { CSSProperties } from "react"
 
 export type Commerce056License = {
   value: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   label: string
   price: string
   audience: string
@@ -82,8 +84,11 @@ color:var(--vibeui-commerce-056-muted);
 [data-vibeui-block="commerce-056"] [data-part="pick"]{position:relative;display:block}
 [data-vibeui-block="commerce-056"] [data-part="pick"] input{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 [data-vibeui-block="commerce-056"] [data-part="face"]{
-display:block;cursor:pointer;border:1px solid var(--vibeui-commerce-056-border);border-radius:0.875rem;padding:0.75rem 0.875rem;
-transition:border-color .14s ease,background-color .14s ease;
+position:relative;display:block;cursor:pointer;border:1px solid var(--vibeui-commerce-056-border);border-radius:0.875rem;padding:0.75rem 0.875rem;
+transition:border-color .14s ease,background-color .14s ease;overflow:hidden;
+}
+[data-vibeui-block="commerce-056"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="commerce-056"] [data-part="pick"] input:checked+[data-part="face"]{
 border-color:var(--vibeui-commerce-056-accent);background:var(--vibeui-commerce-056-soft);
@@ -274,7 +279,18 @@ export function Commerce056({
                       name="commerce-056-license"
                       defaultChecked={index === 0}
                     />
-                    <span data-part="face">
+                    <span
+                      data-part="face"
+                      data-empty={license.image ? undefined : "true"}
+                    >
+                      {license.image ? (
+                        <img
+                          src={license.image}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      ) : null}
                       <span data-part="name">{license.label}</span>
                       <span data-part="price">{license.price}</span>
                       <span data-part="audience">{license.audience}</span>

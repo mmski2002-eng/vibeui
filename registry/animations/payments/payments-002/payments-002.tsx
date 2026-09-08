@@ -112,9 +112,25 @@ font-family:var(--vibeui-payments-002-mono);font-size:0.75rem;font-weight:600;le
 `
 
 const CHIP_LINES = (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 18" fill="none" aria-hidden="true">
-    <rect x="0.5" y="0.5" width="23" height="17" rx="2.5" stroke="currentColor" />
-    <path d="M8 0.5V17.5M16 0.5V17.5M0.5 6H8M16 6H23.5M0.5 12H8M16 12H23.5" stroke="currentColor" strokeWidth="0.75" />
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 18"
+    fill="none"
+    aria-hidden="true"
+  >
+    <rect
+      x="0.5"
+      y="0.5"
+      width="23"
+      height="17"
+      rx="2.5"
+      stroke="currentColor"
+    />
+    <path
+      d="M8 0.5V17.5M16 0.5V17.5M0.5 6H8M16 6H23.5M0.5 12H8M16 12H23.5"
+      stroke="currentColor"
+      strokeWidth="0.75"
+    />
   </svg>
 )
 

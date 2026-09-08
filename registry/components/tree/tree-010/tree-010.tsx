@@ -317,9 +317,7 @@ export function Tree010({
           {renderNodes(nodes, 1, statusText)}
         </div>
         {summaryTemplate ? (
-          <p data-part="summary">
-            {fillTemplate(summaryTemplate, totals)}
-          </p>
+          <p data-part="summary">{fillTemplate(summaryTemplate, totals)}</p>
         ) : null}
       </div>
     </>

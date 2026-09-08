@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Сетка команды",
       "description": "Сетка карточек команды: инициалы вместо фотографий, имя, роль и контакты нейтральными глифами. Самодостаточен: один файл, без зависимостей и клиентского JS.",
-      "categories": ["team"],
+      "categories": [
+        "team"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,8 +20,156 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-people-001-*. Серверный компонент. Число колонок считается от собственной ширины блока: одна, две, три, четыре. Люди свёрстаны списком <ul>, контакты — ссылки с aria-label, а глифы рисуются псевдоэлементами по data-kind (mail, site, chat), поэтому иконочные шрифты и логотипы брендов не нужны. Инициалы вместо фотографий: стоковые лица в разделе «Команда» вредят доверию.",
       "meta": {
-        "tags": ["team", "grid", "cards", "about", "people"],
-        "preview": { "width": "full" },
+        "tags": [
+          "team",
+          "grid",
+          "cards",
+          "about",
+          "people"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "members": [
+              {
+                "name": "Алексей Громов",
+                "role": "Основатель, продукт",
+                "links": [
+                  {
+                    "kind": "mail",
+                    "label": "Почта",
+                    "href": "#"
+                  },
+                  {
+                    "kind": "site",
+                    "label": "Сайт",
+                    "href": "#"
+                  }
+                ],
+                "image": "/demo/avatars/mark-256.webp"
+              },
+              {
+                "name": "Вера Лапина",
+                "role": "Дизайн-система и токены",
+                "links": [
+                  {
+                    "kind": "mail",
+                    "label": "Почта",
+                    "href": "#"
+                  },
+                  {
+                    "kind": "chat",
+                    "label": "Чат сообщества",
+                    "href": "#"
+                  }
+                ],
+                "image": "/demo/avatars/anna-256.webp"
+              },
+              {
+                "name": "Марат Гареев",
+                "role": "Фронтенд-инженер",
+                "links": [
+                  {
+                    "kind": "mail",
+                    "label": "Почта",
+                    "href": "#"
+                  },
+                  {
+                    "kind": "site",
+                    "label": "Сайт",
+                    "href": "#"
+                  }
+                ],
+                "image": "/demo/avatars/oleg-256.webp"
+              },
+              {
+                "name": "Ксения Орлова",
+                "role": "Технический писатель",
+                "links": [
+                  {
+                    "kind": "mail",
+                    "label": "Почта",
+                    "href": "#"
+                  },
+                  {
+                    "kind": "chat",
+                    "label": "Чат сообщества",
+                    "href": "#"
+                  }
+                ],
+                "image": "/demo/avatars/maria-256.webp"
+              },
+              {
+                "name": "Никита Белов",
+                "role": "Инженер registry",
+                "links": [
+                  {
+                    "kind": "mail",
+                    "label": "Почта",
+                    "href": "#"
+                  },
+                  {
+                    "kind": "site",
+                    "label": "Сайт",
+                    "href": "#"
+                  }
+                ],
+                "image": "/demo/avatars/petr-256.webp"
+              },
+              {
+                "name": "Полина Царёва",
+                "role": "Дизайнер блоков",
+                "links": [
+                  {
+                    "kind": "mail",
+                    "label": "Почта",
+                    "href": "#"
+                  },
+                  {
+                    "kind": "chat",
+                    "label": "Чат сообщества",
+                    "href": "#"
+                  }
+                ],
+                "image": "/demo/avatars/irina-256.webp"
+              },
+              {
+                "name": "Тимур Ахметов",
+                "role": "Доступность и качество",
+                "links": [
+                  {
+                    "kind": "mail",
+                    "label": "Почта",
+                    "href": "#"
+                  },
+                  {
+                    "kind": "site",
+                    "label": "Сайт",
+                    "href": "#"
+                  }
+                ],
+                "image": "/demo/avatars/timur-256.webp"
+              },
+              {
+                "name": "Дарья Мельник",
+                "role": "Поддержка сообщества",
+                "links": [
+                  {
+                    "kind": "mail",
+                    "label": "Почта",
+                    "href": "#"
+                  },
+                  {
+                    "kind": "chat",
+                    "label": "Чат сообщества",
+                    "href": "#"
+                  }
+                ],
+                "image": "/demo/avatars/sofia-256.webp"
+              }
+            ]
+          }
+        },
         "ai": {
           "export": "People001",
           "usage": "<People001\n  title=\"Наша команда\"\n  members={[{ name: \"Анна Ковалёва\", role: \"Дизайн\", links: [{ kind: \"mail\", label: \"Почта\", href: \"mailto:anna@example.com\" }] }]}\n/>",
@@ -62,8 +212,18 @@
             "default": "Команда",
             "maxLength": 20
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
         "i18n": {
           "en": {
@@ -97,30 +257,173 @@
               "usage": "<People001\n  title=\"Our team\"\n  members={[{ name: \"Anna Kovaleva\", role: \"Design\", links: [{ kind: \"mail\", label: \"Email\", href: \"mailto:anna@example.com\" }] }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Heading", "default": "The people building VibeUI" },
-              "eyebrow": { "label": "Eyebrow", "default": "Team" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Heading",
+                "default": "The people building VibeUI"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Team"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
                 "eyebrow": "Team",
                 "title": "The people building VibeUI",
                 "members": [
-                  { "name": "Alexey Gromov", "role": "Founder, product", "links": [{ "kind": "mail", "label": "Email", "href": "#" }, { "kind": "site", "label": "Website", "href": "#" }] },
-                  { "name": "Vera Lapina", "role": "Design system and tokens", "links": [{ "kind": "mail", "label": "Email", "href": "#" }, { "kind": "chat", "label": "Community chat", "href": "#" }] },
-                  { "name": "Marat Gareev", "role": "Frontend engineer", "links": [{ "kind": "mail", "label": "Email", "href": "#" }, { "kind": "site", "label": "Website", "href": "#" }] },
-                  { "name": "Ksenia Orlova", "role": "Technical writer", "links": [{ "kind": "mail", "label": "Email", "href": "#" }, { "kind": "chat", "label": "Community chat", "href": "#" }] },
-                  { "name": "Nikita Belov", "role": "Registry engineer", "links": [{ "kind": "mail", "label": "Email", "href": "#" }, { "kind": "site", "label": "Website", "href": "#" }] },
-                  { "name": "Polina Tsaryova", "role": "Block designer", "links": [{ "kind": "mail", "label": "Email", "href": "#" }, { "kind": "chat", "label": "Community chat", "href": "#" }] },
-                  { "name": "Timur Akhmetov", "role": "Accessibility and QA", "links": [{ "kind": "mail", "label": "Email", "href": "#" }, { "kind": "site", "label": "Website", "href": "#" }] },
-                  { "name": "Darya Melnik", "role": "Community support", "links": [{ "kind": "mail", "label": "Email", "href": "#" }, { "kind": "chat", "label": "Community chat", "href": "#" }] }
+                  {
+                    "name": "Alexey Gromov",
+                    "role": "Founder, product",
+                    "links": [
+                      {
+                        "kind": "mail",
+                        "label": "Email",
+                        "href": "#"
+                      },
+                      {
+                        "kind": "site",
+                        "label": "Website",
+                        "href": "#"
+                      }
+                    ],
+                    "image": "/demo/avatars/artem-256.webp"
+                  },
+                  {
+                    "name": "Vera Lapina",
+                    "role": "Design system and tokens",
+                    "links": [
+                      {
+                        "kind": "mail",
+                        "label": "Email",
+                        "href": "#"
+                      },
+                      {
+                        "kind": "chat",
+                        "label": "Community chat",
+                        "href": "#"
+                      }
+                    ],
+                    "image": "/demo/avatars/pavel-256.webp"
+                  },
+                  {
+                    "name": "Marat Gareev",
+                    "role": "Frontend engineer",
+                    "links": [
+                      {
+                        "kind": "mail",
+                        "label": "Email",
+                        "href": "#"
+                      },
+                      {
+                        "kind": "site",
+                        "label": "Website",
+                        "href": "#"
+                      }
+                    ],
+                    "image": "/demo/avatars/ilya-256.webp"
+                  },
+                  {
+                    "name": "Ksenia Orlova",
+                    "role": "Technical writer",
+                    "links": [
+                      {
+                        "kind": "mail",
+                        "label": "Email",
+                        "href": "#"
+                      },
+                      {
+                        "kind": "chat",
+                        "label": "Community chat",
+                        "href": "#"
+                      }
+                    ],
+                    "image": "/demo/avatars/mark-256.webp"
+                  },
+                  {
+                    "name": "Nikita Belov",
+                    "role": "Registry engineer",
+                    "links": [
+                      {
+                        "kind": "mail",
+                        "label": "Email",
+                        "href": "#"
+                      },
+                      {
+                        "kind": "site",
+                        "label": "Website",
+                        "href": "#"
+                      }
+                    ],
+                    "image": "/demo/avatars/oleg-256.webp"
+                  },
+                  {
+                    "name": "Polina Tsaryova",
+                    "role": "Block designer",
+                    "links": [
+                      {
+                        "kind": "mail",
+                        "label": "Email",
+                        "href": "#"
+                      },
+                      {
+                        "kind": "chat",
+                        "label": "Community chat",
+                        "href": "#"
+                      }
+                    ],
+                    "image": "/demo/avatars/petr-256.webp"
+                  },
+                  {
+                    "name": "Timur Akhmetov",
+                    "role": "Accessibility and QA",
+                    "links": [
+                      {
+                        "kind": "mail",
+                        "label": "Email",
+                        "href": "#"
+                      },
+                      {
+                        "kind": "site",
+                        "label": "Website",
+                        "href": "#"
+                      }
+                    ],
+                    "image": "/demo/avatars/timur-256.webp"
+                  },
+                  {
+                    "name": "Darya Melnik",
+                    "role": "Community support",
+                    "links": [
+                      {
+                        "kind": "mail",
+                        "label": "Email",
+                        "href": "#"
+                      },
+                      {
+                        "kind": "chat",
+                        "label": "Community chat",
+                        "href": "#"
+                      }
+                    ],
+                    "image": "/demo/avatars/artem-256.webp"
+                  }
                 ]
               }
             }
           }
         },
-        "cardControls": ["title", "eyebrow", "accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -128,7 +431,9 @@
       "type": "registry:block",
       "title": "Команда с фильтром отделов",
       "description": "Команда с фильтром по отделам на чистом CSS: radio-чипы и селектор :has() прячут чужие карточки без строчки JS. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["team"],
+      "categories": [
+        "team"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -140,8 +445,74 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в --vibeui-people-002-*. Серверный компонент: фильтр работает без JS — чипы это скрытые radio-инпуты внутри <fieldset>, а правило с :has() прячет карточки, чей слот не совпадает с выбранным значением. Отделы получают слоты d1…d6 по порядку появления в массиве людей, поэтому CSS остаётся статичным при любых названиях отделов (до шести). Выбранный чип заливается фирменным оранжевым, каждая карточка несёт бейдж своего отдела.",
       "meta": {
-        "tags": ["team", "filter", "departments", "css-only", "people"],
-        "preview": { "width": "full" },
+        "tags": [
+          "team",
+          "filter",
+          "departments",
+          "css-only",
+          "people"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "members": [
+              {
+                "name": "Вера Лапина",
+                "role": "Дизайн-система и токены",
+                "department": "Дизайн",
+                "image": "/demo/avatars/anna-256.webp"
+              },
+              {
+                "name": "Полина Царёва",
+                "role": "Дизайнер блоков",
+                "department": "Дизайн",
+                "image": "/demo/avatars/maria-256.webp"
+              },
+              {
+                "name": "Олег Раков",
+                "role": "Моушен и микровзаимодействия",
+                "department": "Дизайн",
+                "image": "/demo/avatars/mark-256.webp"
+              },
+              {
+                "name": "Марат Гареев",
+                "role": "Фронтенд-инженер",
+                "department": "Разработка",
+                "image": "/demo/avatars/oleg-256.webp"
+              },
+              {
+                "name": "Никита Белов",
+                "role": "Инженер registry",
+                "department": "Разработка",
+                "image": "/demo/avatars/petr-256.webp"
+              },
+              {
+                "name": "Инна Штерн",
+                "role": "Инфраструктура и сборка",
+                "department": "Разработка",
+                "image": "/demo/avatars/irina-256.webp"
+              },
+              {
+                "name": "Ксения Орлова",
+                "role": "Документация и Copy for AI",
+                "department": "Контент",
+                "image": "/demo/avatars/sofia-256.webp"
+              },
+              {
+                "name": "Дарья Мельник",
+                "role": "Примеры и гайды",
+                "department": "Контент",
+                "image": "/demo/avatars/vera-256.webp"
+              },
+              {
+                "name": "Алексей Громов",
+                "role": "Основатель, продукт",
+                "department": "Продукт",
+                "image": "/demo/avatars/timur-256.webp"
+              }
+            ]
+          }
+        },
         "ai": {
           "export": "People002",
           "usage": "<People002\n  title=\"Наша команда\"\n  members={[{ name: \"Анна Ковалёва\", role: \"Дизайн-система\", department: \"Дизайн\" }]}\n/>",
@@ -185,8 +556,18 @@
             "default": "Команда",
             "maxLength": 20
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
         "i18n": {
           "en": {
@@ -221,10 +602,20 @@
               "usage": "<People002\n  title=\"Our team\"\n  members={[{ name: \"Anna Kovaleva\", role: \"Design system\", department: \"Design\" }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Heading", "default": "Four departments, one catalog" },
-              "eyebrow": { "label": "Eyebrow", "default": "Team" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Heading",
+                "default": "Four departments, one catalog"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Team"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
@@ -232,21 +623,71 @@
                 "title": "Four departments, one catalog",
                 "allLabel": "All",
                 "members": [
-                  { "name": "Vera Lapina", "role": "Design system and tokens", "department": "Design" },
-                  { "name": "Polina Tsaryova", "role": "Block designer", "department": "Design" },
-                  { "name": "Oleg Rakov", "role": "Motion and micro-interactions", "department": "Design" },
-                  { "name": "Marat Gareev", "role": "Frontend engineer", "department": "Engineering" },
-                  { "name": "Nikita Belov", "role": "Registry engineer", "department": "Engineering" },
-                  { "name": "Inna Shtern", "role": "Infrastructure and builds", "department": "Engineering" },
-                  { "name": "Ksenia Orlova", "role": "Docs and Copy for AI", "department": "Content" },
-                  { "name": "Darya Melnik", "role": "Examples and guides", "department": "Content" },
-                  { "name": "Alexey Gromov", "role": "Founder, product", "department": "Product" }
+                  {
+                    "name": "Vera Lapina",
+                    "role": "Design system and tokens",
+                    "department": "Design",
+                    "image": "/demo/avatars/artem-256.webp"
+                  },
+                  {
+                    "name": "Polina Tsaryova",
+                    "role": "Block designer",
+                    "department": "Design",
+                    "image": "/demo/avatars/pavel-256.webp"
+                  },
+                  {
+                    "name": "Oleg Rakov",
+                    "role": "Motion and micro-interactions",
+                    "department": "Design",
+                    "image": "/demo/avatars/ilya-256.webp"
+                  },
+                  {
+                    "name": "Marat Gareev",
+                    "role": "Frontend engineer",
+                    "department": "Engineering",
+                    "image": "/demo/avatars/mark-256.webp"
+                  },
+                  {
+                    "name": "Nikita Belov",
+                    "role": "Registry engineer",
+                    "department": "Engineering",
+                    "image": "/demo/avatars/oleg-256.webp"
+                  },
+                  {
+                    "name": "Inna Shtern",
+                    "role": "Infrastructure and builds",
+                    "department": "Engineering",
+                    "image": "/demo/avatars/petr-256.webp"
+                  },
+                  {
+                    "name": "Ksenia Orlova",
+                    "role": "Docs and Copy for AI",
+                    "department": "Content",
+                    "image": "/demo/avatars/timur-256.webp"
+                  },
+                  {
+                    "name": "Darya Melnik",
+                    "role": "Examples and guides",
+                    "department": "Content",
+                    "image": "/demo/avatars/artem-256.webp"
+                  },
+                  {
+                    "name": "Alexey Gromov",
+                    "role": "Founder, product",
+                    "department": "Product",
+                    "image": "/demo/avatars/pavel-256.webp"
+                  }
                 ]
               }
             }
           }
         },
-        "cardControls": ["title", "eyebrow", "accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -254,7 +695,9 @@
       "type": "registry:block",
       "title": "Ряд руководителей",
       "description": "Три крупные карточки руководителей, у каждого — прямая речь: должность говорит, кем человек работает, а цитата — как он думает. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["team"],
+      "categories": [
+        "team"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -266,8 +709,37 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в --vibeui-people-003-*. Серверный компонент. Каждый руководитель — <figure> с <blockquote> и <figcaption>; визуальный порядок «человек сверху, цитата ниже» достигается CSS-свойством order, а не перестановкой семантики. Цитата подчёркнута левой акцентной линией. До 48rem собственной ширины карточки стоят колонкой, дальше — рядом по три. Инициалы вместо фотографий: стоковые лица подрывают доверие.",
       "meta": {
-        "tags": ["team", "leadership", "quotes", "founders"],
-        "preview": { "width": "full" },
+        "tags": [
+          "team",
+          "leadership",
+          "quotes",
+          "founders"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "leaders": [
+              {
+                "name": "Алексей Громов",
+                "role": "Основатель и продукт",
+                "quote": "Мы не продаём компоненты — мы продаём вечер, за который маркетолог собирает страницу без разработчика.",
+                "image": "/demo/avatars/mark-256.webp"
+              },
+              {
+                "name": "Вера Лапина",
+                "role": "Руководитель дизайна",
+                "quote": "Каждый блок обязан выдержать чужой бренд: поменяли акцент и тексты — и он всё ещё выглядит спроектированным.",
+                "image": "/demo/avatars/anna-256.webp"
+              },
+              {
+                "name": "Марат Гареев",
+                "role": "Технический директор",
+                "quote": "Один файл и ноль зависимостей — не ограничение, а обещание: через год проект соберётся точно так же.",
+                "image": "/demo/avatars/oleg-256.webp"
+              }
+            ]
+          }
+        },
         "ai": {
           "export": "People003",
           "usage": "<People003\n  title=\"Руководство\"\n  leaders={[{ name: \"Анна Ковалёва\", role: \"Директор по продукту\", quote: \"Мы продаём сэкономленный вечер, а не компоненты.\" }]}\n/>",
@@ -308,8 +780,18 @@
             "default": "Руководство",
             "maxLength": 20
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
         "i18n": {
           "en": {
@@ -341,10 +823,20 @@
               "usage": "<People003\n  title=\"Leadership\"\n  leaders={[{ name: \"Anna Kovaleva\", role: \"Chief product officer\", quote: \"We sell the saved evening, not the components.\" }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Heading", "default": "Who answers for what you download" },
-              "eyebrow": { "label": "Eyebrow", "default": "Leadership" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Heading",
+                "default": "Who answers for what you download"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Leadership"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
@@ -354,24 +846,32 @@
                   {
                     "name": "Alexey Gromov",
                     "role": "Founder and product",
-                    "quote": "We do not sell components — we sell the evening in which a marketer builds a page without a developer."
+                    "quote": "We do not sell components — we sell the evening in which a marketer builds a page without a developer.",
+                    "image": "/demo/avatars/petr-256.webp"
                   },
                   {
                     "name": "Vera Lapina",
                     "role": "Head of design",
-                    "quote": "Every block has to survive someone else's brand: swap the accent and the copy, and it still looks designed."
+                    "quote": "Every block has to survive someone else's brand: swap the accent and the copy, and it still looks designed.",
+                    "image": "/demo/avatars/timur-256.webp"
                   },
                   {
                     "name": "Marat Gareev",
                     "role": "CTO",
-                    "quote": "One file and zero dependencies is not a constraint but a promise: a year from now the project builds exactly the same."
+                    "quote": "One file and zero dependencies is not a constraint but a promise: a year from now the project builds exactly the same.",
+                    "image": "/demo/avatars/artem-256.webp"
                   }
                 ]
               }
             }
           }
         },
-        "cardControls": ["title", "eyebrow", "accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -379,7 +879,9 @@
       "type": "registry:block",
       "title": "Команда списком",
       "description": "Команда компактным списком: строка на человека — имя, роль, город и год прихода. Для больших составов, где сетка карточек превращается в стену. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["team"],
+      "categories": [
+        "team"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -391,8 +893,104 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в --vibeui-people-004-*. Серверный компонент. Люди — <ul>, строка — грид «аватар, имя с ролью, город со стажем», разделённый волосяными линиями; имя и роль обрезаются многоточием, а не ломают сетку. В шапке — бейдж-счётчик: по умолчанию считается из длины массива, перекрывается пропом countLabel. Узкая колонка контента (56rem): список читается как оглавление, а не как таблица на всю ширину.",
       "meta": {
-        "tags": ["team", "list", "roster", "compact", "people"],
-        "preview": { "width": "full" },
+        "tags": [
+          "team",
+          "list",
+          "roster",
+          "compact",
+          "people"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "members": [
+              {
+                "name": "Алексей Громов",
+                "role": "Основатель, продукт",
+                "city": "Санкт-Петербург",
+                "since": "с 2021",
+                "image": "/demo/avatars/mark-256.webp"
+              },
+              {
+                "name": "Вера Лапина",
+                "role": "Дизайн-система и токены",
+                "city": "Москва",
+                "since": "с 2021",
+                "image": "/demo/avatars/anna-256.webp"
+              },
+              {
+                "name": "Марат Гареев",
+                "role": "Фронтенд-инженер",
+                "city": "Казань",
+                "since": "с 2022",
+                "image": "/demo/avatars/oleg-256.webp"
+              },
+              {
+                "name": "Ксения Орлова",
+                "role": "Технический писатель",
+                "city": "Тбилиси",
+                "since": "с 2022",
+                "image": "/demo/avatars/maria-256.webp"
+              },
+              {
+                "name": "Никита Белов",
+                "role": "Инженер registry",
+                "city": "Белград",
+                "since": "с 2023",
+                "image": "/demo/avatars/petr-256.webp"
+              },
+              {
+                "name": "Полина Царёва",
+                "role": "Дизайнер блоков",
+                "city": "Екатеринбург",
+                "since": "с 2023",
+                "image": "/demo/avatars/irina-256.webp"
+              },
+              {
+                "name": "Тимур Ахметов",
+                "role": "Доступность и качество",
+                "city": "Алматы",
+                "since": "с 2023",
+                "image": "/demo/avatars/timur-256.webp"
+              },
+              {
+                "name": "Инна Штерн",
+                "role": "Инфраструктура и сборка",
+                "city": "Рига",
+                "since": "с 2024",
+                "image": "/demo/avatars/sofia-256.webp"
+              },
+              {
+                "name": "Олег Раков",
+                "role": "Моушен и микровзаимодействия",
+                "city": "Ереван",
+                "since": "с 2024",
+                "image": "/demo/avatars/artem-256.webp"
+              },
+              {
+                "name": "Дарья Мельник",
+                "role": "Поддержка сообщества",
+                "city": "Новосибирск",
+                "since": "с 2024",
+                "image": "/demo/avatars/vera-256.webp"
+              },
+              {
+                "name": "Гнат Вильде",
+                "role": "Примеры и шаблоны",
+                "city": "Лимасол",
+                "since": "с 2025",
+                "image": "/demo/avatars/pavel-256.webp"
+              },
+              {
+                "name": "Софья Ким",
+                "role": "Развитие каталога",
+                "city": "Минск",
+                "since": "с 2025",
+                "image": "/demo/avatars/nina-256.webp"
+              }
+            ]
+          }
+        },
         "ai": {
           "export": "People004",
           "usage": "<People004\n  title=\"Вся команда\"\n  members={[{ name: \"Анна Ковалёва\", role: \"Дизайн-система\", city: \"Москва\", since: \"с 2021\" }]}\n/>",
@@ -434,8 +1032,18 @@
             "default": "Команда",
             "maxLength": 20
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
         "i18n": {
           "en": {
@@ -468,10 +1076,20 @@
               "usage": "<People004\n  title=\"The whole team\"\n  members={[{ name: \"Anna Kovaleva\", role: \"Design system\", city: \"Moscow\", since: \"since 2021\" }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Heading", "default": "Everyone making VibeUI" },
-              "eyebrow": { "label": "Eyebrow", "default": "Team" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Heading",
+                "default": "Everyone making VibeUI"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Team"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
@@ -479,24 +1097,101 @@
                 "title": "Everyone making VibeUI",
                 "countLabel": "12 people",
                 "members": [
-                  { "name": "Alexey Gromov", "role": "Founder, product", "city": "Saint Petersburg", "since": "since 2021" },
-                  { "name": "Vera Lapina", "role": "Design system and tokens", "city": "Moscow", "since": "since 2021" },
-                  { "name": "Marat Gareev", "role": "Frontend engineer", "city": "Kazan", "since": "since 2022" },
-                  { "name": "Ksenia Orlova", "role": "Technical writer", "city": "Tbilisi", "since": "since 2022" },
-                  { "name": "Nikita Belov", "role": "Registry engineer", "city": "Belgrade", "since": "since 2023" },
-                  { "name": "Polina Tsaryova", "role": "Block designer", "city": "Yekaterinburg", "since": "since 2023" },
-                  { "name": "Timur Akhmetov", "role": "Accessibility and QA", "city": "Almaty", "since": "since 2023" },
-                  { "name": "Inna Shtern", "role": "Infrastructure and builds", "city": "Riga", "since": "since 2024" },
-                  { "name": "Oleg Rakov", "role": "Motion and micro-interactions", "city": "Yerevan", "since": "since 2024" },
-                  { "name": "Darya Melnik", "role": "Community support", "city": "Novosibirsk", "since": "since 2024" },
-                  { "name": "Gnat Vilde", "role": "Examples and templates", "city": "Limassol", "since": "since 2025" },
-                  { "name": "Sofia Kim", "role": "Catalog growth", "city": "Minsk", "since": "since 2025" }
+                  {
+                    "name": "Alexey Gromov",
+                    "role": "Founder, product",
+                    "city": "Saint Petersburg",
+                    "since": "since 2021",
+                    "image": "/demo/avatars/ilya-256.webp"
+                  },
+                  {
+                    "name": "Vera Lapina",
+                    "role": "Design system and tokens",
+                    "city": "Moscow",
+                    "since": "since 2021",
+                    "image": "/demo/avatars/mark-256.webp"
+                  },
+                  {
+                    "name": "Marat Gareev",
+                    "role": "Frontend engineer",
+                    "city": "Kazan",
+                    "since": "since 2022",
+                    "image": "/demo/avatars/oleg-256.webp"
+                  },
+                  {
+                    "name": "Ksenia Orlova",
+                    "role": "Technical writer",
+                    "city": "Tbilisi",
+                    "since": "since 2022",
+                    "image": "/demo/avatars/petr-256.webp"
+                  },
+                  {
+                    "name": "Nikita Belov",
+                    "role": "Registry engineer",
+                    "city": "Belgrade",
+                    "since": "since 2023",
+                    "image": "/demo/avatars/timur-256.webp"
+                  },
+                  {
+                    "name": "Polina Tsaryova",
+                    "role": "Block designer",
+                    "city": "Yekaterinburg",
+                    "since": "since 2023",
+                    "image": "/demo/avatars/artem-256.webp"
+                  },
+                  {
+                    "name": "Timur Akhmetov",
+                    "role": "Accessibility and QA",
+                    "city": "Almaty",
+                    "since": "since 2023",
+                    "image": "/demo/avatars/pavel-256.webp"
+                  },
+                  {
+                    "name": "Inna Shtern",
+                    "role": "Infrastructure and builds",
+                    "city": "Riga",
+                    "since": "since 2024",
+                    "image": "/demo/avatars/ilya-256.webp"
+                  },
+                  {
+                    "name": "Oleg Rakov",
+                    "role": "Motion and micro-interactions",
+                    "city": "Yerevan",
+                    "since": "since 2024",
+                    "image": "/demo/avatars/mark-256.webp"
+                  },
+                  {
+                    "name": "Darya Melnik",
+                    "role": "Community support",
+                    "city": "Novosibirsk",
+                    "since": "since 2024",
+                    "image": "/demo/avatars/oleg-256.webp"
+                  },
+                  {
+                    "name": "Gnat Vilde",
+                    "role": "Examples and templates",
+                    "city": "Limassol",
+                    "since": "since 2025",
+                    "image": "/demo/avatars/petr-256.webp"
+                  },
+                  {
+                    "name": "Sofia Kim",
+                    "role": "Catalog growth",
+                    "city": "Minsk",
+                    "since": "since 2025",
+                    "image": "/demo/avatars/timur-256.webp"
+                  }
                 ]
               }
             }
           }
         },
-        "cardControls": ["title", "eyebrow", "accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -504,7 +1199,9 @@
       "type": "registry:block",
       "title": "Мы нанимаем",
       "description": "Сетка команды с карточкой-приглашением в конце: пунктирная рамка «твоё место», тёплая подложка и оранжевая кнопка вакансий прямо среди будущих коллег. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["team"],
+      "categories": [
+        "team"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -516,8 +1213,55 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в --vibeui-people-005-*. Серверный компонент. Обычные карточки — инициалы, имя, роль; последняя ячейка сетки — приглашение: пунктирная рамка читается как «место не занято», тёплая подложка — color-mix от акцента, кнопка залита фирменным оранжевым с почти чёрным текстом. Приглашение живёт в общей сетке, а не отдельным баннером: кандидат видит свою будущую карточку рядом с будущими коллегами. Колонки 1 → 2 → 3 → 4 от собственной ширины блока.",
       "meta": {
-        "tags": ["team", "hiring", "careers", "cta", "grid"],
-        "preview": { "width": "full" },
+        "tags": [
+          "team",
+          "hiring",
+          "careers",
+          "cta",
+          "grid"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "members": [
+              {
+                "name": "Алексей Громов",
+                "role": "Основатель, продукт",
+                "image": "/demo/avatars/mark-256.webp"
+              },
+              {
+                "name": "Вера Лапина",
+                "role": "Дизайн-система и токены",
+                "image": "/demo/avatars/anna-256.webp"
+              },
+              {
+                "name": "Марат Гареев",
+                "role": "Фронтенд-инженер",
+                "image": "/demo/avatars/oleg-256.webp"
+              },
+              {
+                "name": "Ксения Орлова",
+                "role": "Технический писатель",
+                "image": "/demo/avatars/maria-256.webp"
+              },
+              {
+                "name": "Никита Белов",
+                "role": "Инженер registry",
+                "image": "/demo/avatars/petr-256.webp"
+              },
+              {
+                "name": "Полина Царёва",
+                "role": "Дизайнер блоков",
+                "image": "/demo/avatars/irina-256.webp"
+              },
+              {
+                "name": "Тимур Ахметов",
+                "role": "Доступность и качество",
+                "image": "/demo/avatars/timur-256.webp"
+              }
+            ]
+          }
+        },
         "ai": {
           "export": "People005",
           "usage": "<People005\n  title=\"Команда растёт\"\n  ctaLabel=\"Открытые вакансии\"\n  ctaHref=\"/careers\"\n  members={[{ name: \"Анна Ковалёва\", role: \"Дизайн-система\" }]}\n/>",
@@ -561,8 +1305,18 @@
             "default": "Команда",
             "maxLength": 20
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
         "i18n": {
           "en": {
@@ -597,10 +1351,20 @@
               "usage": "<People005\n  title=\"The team is growing\"\n  ctaLabel=\"Open positions\"\n  ctaHref=\"/careers\"\n  members={[{ name: \"Anna Kovaleva\", role: \"Design system\" }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Heading", "default": "Still a small team — that is a vacancy" },
-              "eyebrow": { "label": "Eyebrow", "default": "Team" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Heading",
+                "default": "Still a small team — that is a vacancy"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Team"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
@@ -611,19 +1375,52 @@
                 "ctaLabel": "See open roles",
                 "ctaHref": "#",
                 "members": [
-                  { "name": "Alexey Gromov", "role": "Founder, product" },
-                  { "name": "Vera Lapina", "role": "Design system and tokens" },
-                  { "name": "Marat Gareev", "role": "Frontend engineer" },
-                  { "name": "Ksenia Orlova", "role": "Technical writer" },
-                  { "name": "Nikita Belov", "role": "Registry engineer" },
-                  { "name": "Polina Tsaryova", "role": "Block designer" },
-                  { "name": "Timur Akhmetov", "role": "Accessibility and QA" }
+                  {
+                    "name": "Alexey Gromov",
+                    "role": "Founder, product",
+                    "image": "/demo/avatars/artem-256.webp"
+                  },
+                  {
+                    "name": "Vera Lapina",
+                    "role": "Design system and tokens",
+                    "image": "/demo/avatars/pavel-256.webp"
+                  },
+                  {
+                    "name": "Marat Gareev",
+                    "role": "Frontend engineer",
+                    "image": "/demo/avatars/ilya-256.webp"
+                  },
+                  {
+                    "name": "Ksenia Orlova",
+                    "role": "Technical writer",
+                    "image": "/demo/avatars/mark-256.webp"
+                  },
+                  {
+                    "name": "Nikita Belov",
+                    "role": "Registry engineer",
+                    "image": "/demo/avatars/oleg-256.webp"
+                  },
+                  {
+                    "name": "Polina Tsaryova",
+                    "role": "Block designer",
+                    "image": "/demo/avatars/petr-256.webp"
+                  },
+                  {
+                    "name": "Timur Akhmetov",
+                    "role": "Accessibility and QA",
+                    "image": "/demo/avatars/timur-256.webp"
+                  }
                 ]
               }
             }
           }
         },
-        "cardControls": ["title", "eyebrow", "accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -631,7 +1428,9 @@
       "type": "registry:block",
       "title": "Цифры команды",
       "description": "Команда цифрами: счётчики людей, городов и лет опыта плюс маленькая сетка аватаров-инициалов. Отвечает на «кто за этим стоит» быстрее любых портретов. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["team"],
+      "categories": [
+        "team"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -643,8 +1442,15 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в --vibeui-people-006-*. Серверный компонент. Слева — надзаголовок, заголовок, описание и сетка кружков-инициалов (имя каждого доступно скринридеру и в title кружка). Справа — счётчики, свёрстанные <dl>: пары «значение — подпись», значение поверх подписи через flex-direction:column-reverse без перестановки семантики; цифры акцентного цвета с tabular-nums. С 48rem собственной ширины блок раскладывается в две колонки.",
       "meta": {
-        "tags": ["team", "stats", "numbers", "about"],
-        "preview": { "width": "full" },
+        "tags": [
+          "team",
+          "stats",
+          "numbers",
+          "about"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "People006",
           "usage": "<People006\n  title=\"Команда в цифрах\"\n  stats={[{ value: \"12\", label: \"человек в команде\" }, { value: \"9\", label: \"городов\" }]}\n  faces={[\"Анна Ковалёва\", \"Игорь Демидов\"]}\n/>",
@@ -687,8 +1493,18 @@
             "default": "Команда",
             "maxLength": 20
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
         "i18n": {
           "en": {
@@ -722,10 +1538,20 @@
               "usage": "<People006\n  title=\"The team in numbers\"\n  stats={[{ value: \"12\", label: \"people on the team\" }, { value: \"9\", label: \"cities\" }]}\n  faces={[\"Anna Kovaleva\", \"Igor Demidov\"]}\n/>"
             },
             "controls": {
-              "title": { "label": "Heading", "default": "A small team with a long will" },
-              "eyebrow": { "label": "Eyebrow", "default": "Team" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Heading",
+                "default": "A small team with a long will"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Team"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
@@ -733,9 +1559,18 @@
                 "title": "A small team with a long will",
                 "description": "VibeUI is built by a distributed team: designers, engineers and writers across nine cities. Below are numbers instead of ceremonial portraits.",
                 "stats": [
-                  { "value": "12", "label": "people on the team" },
-                  { "value": "9", "label": "cities and four time zones" },
-                  { "value": "9 yrs", "label": "average frontend experience" }
+                  {
+                    "value": "12",
+                    "label": "people on the team"
+                  },
+                  {
+                    "value": "9",
+                    "label": "cities and four time zones"
+                  },
+                  {
+                    "value": "9 yrs",
+                    "label": "average frontend experience"
+                  }
                 ],
                 "faces": [
                   "Alexey Gromov",
@@ -755,7 +1590,12 @@
             }
           }
         },
-        "cardControls": ["title", "eyebrow", "accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

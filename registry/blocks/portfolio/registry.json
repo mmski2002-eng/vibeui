@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Masonry-галерея",
       "description": "Портфолио masonry-сеткой: плитки работ разной высоты и ширины с градиентными обложками, категория и название поверх. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["portfolio"],
+      "categories": [
+        "portfolio"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,9 +20,51 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-portfolio-001-*. Серверный компонент. Masonry через grid-auto-rows и span tall/wide (grid-row/column span 2), включается по container query. Обложки — тёплые градиенты, оттенок сдвигается по nth-child; поверх затемняющий градиент для читаемости подписи.",
       "meta": {
-        "tags": ["portfolio", "gallery", "masonry", "works", "marketing"],
+        "tags": [
+          "portfolio",
+          "gallery",
+          "masonry",
+          "works",
+          "marketing"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "works": [
+              {
+                "title": "Лендинг для финтех-стартапа",
+                "category": "Веб",
+                "span": "tall",
+                "image": "/demo/scenes/scene-17.webp"
+              },
+              {
+                "title": "Ребрендинг сети кофеен",
+                "category": "Айдентика",
+                "image": "/demo/scenes/scene-22.webp"
+              },
+              {
+                "title": "Дашборд аналитики",
+                "category": "Продукт",
+                "image": "/demo/scenes/scene-05.webp"
+              },
+              {
+                "title": "Промо-сайт запуска",
+                "category": "Веб",
+                "span": "wide",
+                "image": "/demo/scenes/scene-11.webp"
+              },
+              {
+                "title": "Упаковка линейки чая",
+                "category": "Печать",
+                "image": "/demo/scenes/scene-01.webp"
+              },
+              {
+                "title": "Мобильное приложение доставки",
+                "category": "Продукт",
+                "image": "/demo/scenes/scene-23.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Portfolio001",
@@ -72,7 +116,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A masonry portfolio: work tiles of varying height and width with gradient covers, category and title on top. Self-contained — one file, no dependencies.",
@@ -124,7 +173,9 @@
       "type": "registry:block",
       "title": "Галерея с фильтром",
       "description": "Портфолио с клиентским фильтром по тегу: чипы направлений над сеткой карточек работ с градиентными обложками. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["portfolio"],
+      "categories": [
+        "portfolio"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -136,9 +187,55 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-portfolio-002-*. Клиентский компонент: чипы фильтруют сетку по тегу через состояние и hidden на карточках. Набор чипов выводится из данных, активный объявлен через aria-pressed. Обложки — градиенты по nth-child.",
       "meta": {
-        "tags": ["portfolio", "gallery", "filter", "works", "marketing"],
+        "tags": [
+          "portfolio",
+          "gallery",
+          "filter",
+          "works",
+          "marketing"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "works": [
+              {
+                "title": "Лендинг платёжного сервиса",
+                "client": "Финпилот",
+                "tag": "Веб",
+                "image": "/demo/scenes/scene-17.webp"
+              },
+              {
+                "title": "Айдентика сети кофеен",
+                "client": "Кедр",
+                "tag": "Бренд",
+                "image": "/demo/scenes/scene-22.webp"
+              },
+              {
+                "title": "Дашборд логистики",
+                "client": "Путь",
+                "tag": "Продукт",
+                "image": "/demo/scenes/scene-11.webp"
+              },
+              {
+                "title": "Промо-сайт запуска лампы",
+                "client": "Полдень",
+                "tag": "Веб",
+                "image": "/demo/scenes/scene-05.webp"
+              },
+              {
+                "title": "Гайдлайн бренда",
+                "client": "Штурм",
+                "tag": "Бренд",
+                "image": "/demo/scenes/scene-17.webp"
+              },
+              {
+                "title": "Приложение доставки",
+                "client": "Рано",
+                "tag": "Продукт",
+                "image": "/demo/scenes/scene-22.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Portfolio002",
@@ -190,7 +287,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A portfolio with a client-side tag filter: direction chips above a grid of work cards with gradient covers. Self-contained — one file, no dependencies.",
@@ -242,7 +344,9 @@
       "type": "registry:block",
       "title": "Кейс-плитки",
       "description": "Портфолио кейс-плитками: карточки с клиентом, метрикой результата и названием работы, ссылка «читать кейс» проявляется на наведении. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["portfolio"],
+      "categories": [
+        "portfolio"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -254,7 +358,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-portfolio-003-*. Серверный компонент. Кейс-плитки с упором на результат: клиент, крупная метрика акцентом, название и ссылка «читать кейс», которая проявляется на наведении/фокусе (opacity+translate). Сверху тёплая полоса-градиент. reduced-motion показывает ссылку сразу.",
       "meta": {
-        "tags": ["portfolio", "cases", "results", "works", "marketing"],
+        "tags": [
+          "portfolio",
+          "cases",
+          "results",
+          "works",
+          "marketing"
+        ],
         "preview": {
           "width": "full"
         },
@@ -308,7 +418,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A portfolio in case tiles: cards with the client, a result metric and the work title, a read-the-case link revealed on hover. Self-contained — one file, no dependencies.",
@@ -360,7 +475,9 @@
       "type": "registry:block",
       "title": "Кейсы лентой",
       "description": "Крупные кейсы лентой: обложка и текст парой, стороны чередуются, у каждой работы — результат цифрами. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["portfolio"],
+      "categories": [
+        "portfolio"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -372,9 +489,70 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-portfolio-004-*. Серверный компонент. Чередование сторон сделано порядком в гриде, а не направлением флекса: на узкой ширине пары складываются в столбик, и обложка всегда остаётся над своим текстом. Без картинки обложка показывает градиентную заглушку из акцента — блок обязан выглядеть законченным на пустом проекте. Результаты работы выводятся парами «значение — показатель» и набраны акцентом.",
       "meta": {
-        "tags": ["portfolio", "case-study", "works", "agency", "freelance"],
+        "tags": [
+          "portfolio",
+          "case-study",
+          "works",
+          "agency",
+          "freelance"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "works": [
+              {
+                "client": "Северный банк",
+                "title": "Личный кабинет для малого бизнеса",
+                "summary": "Собрали кабинет заново: платежи, счета и налоги в одном месте. Перенесли триста экранов на общую сетку и сократили путь до перевода вдвое.",
+                "results": [
+                  {
+                    "value": "×2",
+                    "label": "быстрее перевод"
+                  },
+                  {
+                    "value": "38%",
+                    "label": "меньше обращений"
+                  }
+                ],
+                "year": "2025",
+                "image": "/demo/scenes/scene-17.webp"
+              },
+              {
+                "client": "Кофейня «Полка»",
+                "title": "Сайт сети и предзаказ",
+                "summary": "Один сайт вместо трёх лендингов: карта точек, меню с остатками и предзаказ через телефон. Запустили за шесть недель.",
+                "results": [
+                  {
+                    "value": "6 недель",
+                    "label": "от брифа до запуска"
+                  },
+                  {
+                    "value": "1 400",
+                    "label": "предзаказов в месяц"
+                  }
+                ],
+                "year": "2025",
+                "image": "/demo/scenes/scene-22.webp"
+              },
+              {
+                "client": "Сервис доставки",
+                "title": "Панель курьерской логистики",
+                "summary": "Диспетчерская, где видно каждый заказ и каждого курьера. Таблица на десять тысяч строк, фильтры и карта в одном экране.",
+                "results": [
+                  {
+                    "value": "10 000",
+                    "label": "строк без лагов"
+                  },
+                  {
+                    "value": "−22%",
+                    "label": "холостых поездок"
+                  }
+                ],
+                "year": "2024",
+                "image": "/demo/scenes/scene-05.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Portfolio004",
@@ -435,7 +613,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["title", "eyebrow", "linkLabel", "accent"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "linkLabel",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Case studies feed",
@@ -493,7 +676,9 @@
       "type": "registry:block",
       "title": "Список работ",
       "description": "Портфолио строками: название, тип, клиент и год. Вся строка — ссылка. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["portfolio"],
+      "categories": [
+        "portfolio"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -505,7 +690,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-portfolio-005-*. Серверный компонент. Формат редакторского портфолио: тридцать строк читаются быстрее тридцати плиток. Ссылкой сделана вся строка, поэтому цель нажатия во всю ширину, а не в размер названия. На широкой ширине метаданные встают в отдельную колонку рядом с названием, на узкой уходят под него — раскладку считает container query.",
       "meta": {
-        "tags": ["portfolio", "list", "index", "editorial", "works"],
+        "tags": [
+          "portfolio",
+          "list",
+          "index",
+          "editorial",
+          "works"
+        ],
         "preview": {
           "width": "full"
         },
@@ -566,7 +757,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["title", "eyebrow", "lead", "accent"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "lead",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Work list",
@@ -622,7 +818,9 @@
       "type": "registry:block",
       "title": "Главная работа и плитки",
       "description": "Одна главная работа крупной плиткой и три мелких рядом: иерархия задана размером, а не порядком. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["portfolio"],
+      "categories": [
+        "portfolio"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -634,9 +832,23 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-portfolio-006-*. Серверный компонент. Главная работа занимает две колонки и две строки грида, остальные выстраиваются справа; на узкой ширине всё складывается в один столбец. Пропорции плиток фиксированы, поэтому сетка не рассыпается от разной высоты картинок, а плитка без картинки показывает градиентную заглушку.",
       "meta": {
-        "tags": ["portfolio", "bento", "grid", "featured", "works"],
+        "tags": [
+          "portfolio",
+          "bento",
+          "grid",
+          "featured",
+          "works"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "feature": {
+              "title": "Ребрендинг сети пекарен",
+              "kind": "Айдентика",
+              "href": "#case",
+              "image": "/demo/scenes/scene-23.webp"
+            }
+          }
         },
         "ai": {
           "export": "Portfolio006",
@@ -697,7 +909,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["title", "eyebrow", "moreLabel", "accent"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "moreLabel",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Featured work and tiles",

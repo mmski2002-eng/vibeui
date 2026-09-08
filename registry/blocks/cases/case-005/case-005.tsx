@@ -250,7 +250,11 @@ export function Case005({
       <style href="vibeui-case-005" precedence="medium">
         {STYLES}
       </style>
-      <section data-vibeui-block="case-005" className={className} style={palette}>
+      <section
+        data-vibeui-block="case-005"
+        className={className}
+        style={palette}
+      >
         <div data-part="shell">
           <p data-part="eyebrow">{eyebrow}</p>
           <h2 data-part="title">{title}</h2>
@@ -276,7 +280,10 @@ export function Case005({
                   value={entry.group}
                   id={`${filterName}-${entry.group}`}
                 />
-                <label data-part="chip" htmlFor={`${filterName}-${entry.group}`}>
+                <label
+                  data-part="chip"
+                  htmlFor={`${filterName}-${entry.group}`}
+                >
                   {entry.industry}
                 </label>
               </span>

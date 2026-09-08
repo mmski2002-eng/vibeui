@@ -2,6 +2,8 @@ import type { CSSProperties } from "react"
 
 type Blog007Post = {
   issue: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   title: string
   excerpt: string
   date: string
@@ -74,13 +76,18 @@ transform:translateY(-2px);
 outline:2px solid var(--vibeui-blog-007-accent);outline-offset:2px;
 }
 [data-vibeui-block="blog-007"] [data-part="cover"]{
-display:flex;align-items:flex-end;justify-content:space-between;gap:0.75rem;
+position:relative;display:flex;align-items:flex-end;justify-content:space-between;gap:0.75rem;
 aspect-ratio:16/9;padding:1rem 1.25rem;
-background:linear-gradient(135deg,
+color:var(--vibeui-blog-007-fill-ink);overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="blog-007"] [data-part="cover"][data-empty="true"]{background:linear-gradient(135deg,
 color-mix(in oklab,var(--vibeui-blog-007-fill) 72%,oklch(1 0 0)) 0%,
 var(--vibeui-blog-007-fill) 55%,
-color-mix(in oklab,var(--vibeui-blog-007-fill) 74%,oklch(0.15 0.02 39.8)) 100%);
-color:var(--vibeui-blog-007-fill-ink);
+color-mix(in oklab,var(--vibeui-blog-007-fill) 74%,oklch(0.15 0.02 39.8)) 100%);}
+[data-vibeui-block="blog-007"] [data-part="cover"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="blog-007"] [data-part="issue"]{
 font-size:clamp(3rem,14cqi,4.75rem);line-height:0.85;font-weight:800;letter-spacing:-0.04em;
@@ -185,7 +192,9 @@ export function Blog007({
   style,
 }: Blog007Props) {
   const palette = {
-    ...(accent ? { "--vibeui-blog-007-accent": accent, "--vibeui-blog-007-fill": accent } : null),
+    ...(accent
+      ? { "--vibeui-blog-007-accent": accent, "--vibeui-blog-007-fill": accent }
+      : null),
     ...(background
       ? {
           "--vibeui-blog-007-bg": background,
@@ -200,14 +209,30 @@ export function Blog007({
       <style href="vibeui-blog-007" precedence="medium">
         {STYLES}
       </style>
-      <section data-vibeui-block="blog-007" className={className} style={palette}>
+      <section
+        data-vibeui-block="blog-007"
+        className={className}
+        style={palette}
+      >
         <div data-part="shell">
           <p data-part="eyebrow">{eyebrow}</p>
           <h2 data-part="title">{title}</h2>
           <div data-part="grid">
             {posts.map((post) => (
               <article key={post.issue} data-part="card">
-                <div data-part="cover" aria-hidden="true">
+                <div
+                  data-part="cover"
+                  data-empty={post.image ? undefined : "true"}
+                  aria-hidden="true"
+                >
+                  {post.image ? (
+                    <img
+                      src={post.image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : null}
                   <span data-part="issue">{post.issue}</span>
                   <span data-part="issue-label">{issueLabel}</span>
                 </div>

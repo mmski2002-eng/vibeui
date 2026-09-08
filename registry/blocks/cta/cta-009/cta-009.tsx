@@ -93,7 +93,11 @@ export function Cta009({
       <style href="vibeui-cta-009" precedence="medium">
         {STYLES}
       </style>
-      <section data-vibeui-block="cta-009" className={className} style={palette}>
+      <section
+        data-vibeui-block="cta-009"
+        className={className}
+        style={palette}
+      >
         <div data-part="shell">
           <div data-part="copy">
             <h2 data-part="title">{title}</h2>

@@ -13,6 +13,8 @@ export type Dashboard044Incident = {
 }
 
 export type Dashboard044Props = {
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  avatarImage?: string
   title?: string
   onDuty?: string
   dutyUntil?: string
@@ -83,10 +85,15 @@ background:var(--vibeui-dashboard-044-card);
 border:1px solid var(--vibeui-dashboard-044-border);
 }
 [data-vibeui-block="dashboard-044"] [data-part="face"]{
-width:1.75rem;height:1.75rem;border-radius:50%;flex:none;display:grid;place-items:center;
+position:relative;width:1.75rem;height:1.75rem;border-radius:50%;flex:none;display:grid;place-items:center;
 font-size:0.6875rem;font-weight:800;
-background:color-mix(in oklab,var(--vibeui-dashboard-044-accent) 18%,var(--vibeui-dashboard-044-card));
-color:var(--vibeui-dashboard-044-accent);
+color:var(--vibeui-dashboard-044-accent);overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="dashboard-044"] [data-part="face"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-dashboard-044-accent) 18%,var(--vibeui-dashboard-044-card));}
+[data-vibeui-block="dashboard-044"] [data-part="face"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="dashboard-044"] [data-part="dutyText"]{display:grid;line-height:1.25}
 [data-vibeui-block="dashboard-044"] [data-part="dutyText"] b{font-size:0.75rem;font-weight:750}
@@ -223,6 +230,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Dashboard044({
   title = "Инциденты",
+  avatarImage = "",
   onDuty = "Мария Соловьёва",
   dutyUntil = "дежурит до 20:00",
   incidents = DEFAULT_INCIDENTS,
@@ -268,7 +276,19 @@ export function Dashboard044({
           <div data-part="head">
             <h2>{title}</h2>
             <p data-part="duty">
-              <span data-part="face" aria-hidden="true">
+              <span
+                data-part="face"
+                data-empty={avatarImage ? undefined : "true"}
+                aria-hidden="true"
+              >
+                {avatarImage ? (
+                  <img
+                    src={avatarImage}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
                 {initials}
               </span>
               <span data-part="dutyText">

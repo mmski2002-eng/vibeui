@@ -2,6 +2,8 @@ import type { CSSProperties } from "react"
 
 type People004Member = {
   name: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   role: string
   city: string
   since: string
@@ -75,10 +77,15 @@ transition:background .15s ease;
 background:color-mix(in oklab,var(--vibeui-people-004-accent) 7%,transparent);
 }
 [data-vibeui-block="people-004"] [data-part="avatar"]{
-width:2.5rem;height:2.5rem;flex:none;border-radius:999px;display:grid;place-items:center;
-background:color-mix(in oklab,var(--vibeui-people-004-accent) 12%,var(--vibeui-people-004-card));
+position:relative;width:2.5rem;height:2.5rem;flex:none;border-radius:999px;display:grid;place-items:center;
 color:var(--vibeui-people-004-accent);
-font-size:0.8125rem;font-weight:750;letter-spacing:0.02em;
+font-size:0.8125rem;font-weight:750;letter-spacing:0.02em;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="people-004"] [data-part="avatar"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-people-004-accent) 12%,var(--vibeui-people-004-card));}
+[data-vibeui-block="people-004"] [data-part="avatar"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="people-004"] [data-part="who"]{display:grid;gap:0.0625rem;min-width:0}
 [data-vibeui-block="people-004"] [data-part="name"]{
@@ -102,18 +109,78 @@ display:grid;gap:0.0625rem;text-align:right;
 `
 
 const DEFAULT_MEMBERS: People004Member[] = [
-  { name: "Алексей Громов", role: "Основатель, продукт", city: "Санкт-Петербург", since: "с 2021" },
-  { name: "Вера Лапина", role: "Дизайн-система и токены", city: "Москва", since: "с 2021" },
-  { name: "Марат Гареев", role: "Фронтенд-инженер", city: "Казань", since: "с 2022" },
-  { name: "Ксения Орлова", role: "Технический писатель", city: "Тбилиси", since: "с 2022" },
-  { name: "Никита Белов", role: "Инженер registry", city: "Белград", since: "с 2023" },
-  { name: "Полина Царёва", role: "Дизайнер блоков", city: "Екатеринбург", since: "с 2023" },
-  { name: "Тимур Ахметов", role: "Доступность и качество", city: "Алматы", since: "с 2023" },
-  { name: "Инна Штерн", role: "Инфраструктура и сборка", city: "Рига", since: "с 2024" },
-  { name: "Олег Раков", role: "Моушен и микровзаимодействия", city: "Ереван", since: "с 2024" },
-  { name: "Дарья Мельник", role: "Поддержка сообщества", city: "Новосибирск", since: "с 2024" },
-  { name: "Гнат Вильде", role: "Примеры и шаблоны", city: "Лимасол", since: "с 2025" },
-  { name: "Софья Ким", role: "Развитие каталога", city: "Минск", since: "с 2025" },
+  {
+    name: "Алексей Громов",
+    role: "Основатель, продукт",
+    city: "Санкт-Петербург",
+    since: "с 2021",
+  },
+  {
+    name: "Вера Лапина",
+    role: "Дизайн-система и токены",
+    city: "Москва",
+    since: "с 2021",
+  },
+  {
+    name: "Марат Гареев",
+    role: "Фронтенд-инженер",
+    city: "Казань",
+    since: "с 2022",
+  },
+  {
+    name: "Ксения Орлова",
+    role: "Технический писатель",
+    city: "Тбилиси",
+    since: "с 2022",
+  },
+  {
+    name: "Никита Белов",
+    role: "Инженер registry",
+    city: "Белград",
+    since: "с 2023",
+  },
+  {
+    name: "Полина Царёва",
+    role: "Дизайнер блоков",
+    city: "Екатеринбург",
+    since: "с 2023",
+  },
+  {
+    name: "Тимур Ахметов",
+    role: "Доступность и качество",
+    city: "Алматы",
+    since: "с 2023",
+  },
+  {
+    name: "Инна Штерн",
+    role: "Инфраструктура и сборка",
+    city: "Рига",
+    since: "с 2024",
+  },
+  {
+    name: "Олег Раков",
+    role: "Моушен и микровзаимодействия",
+    city: "Ереван",
+    since: "с 2024",
+  },
+  {
+    name: "Дарья Мельник",
+    role: "Поддержка сообщества",
+    city: "Новосибирск",
+    since: "с 2024",
+  },
+  {
+    name: "Гнат Вильде",
+    role: "Примеры и шаблоны",
+    city: "Лимасол",
+    since: "с 2025",
+  },
+  {
+    name: "Софья Ким",
+    role: "Развитие каталога",
+    city: "Минск",
+    since: "с 2025",
+  },
 ]
 
 /**
@@ -189,7 +256,19 @@ export function People004({
           <ul data-part="list">
             {members.map((member) => (
               <li key={member.name} data-part="row">
-                <span data-part="avatar" aria-hidden="true">
+                <span
+                  data-part="avatar"
+                  data-empty={member.image ? undefined : "true"}
+                  aria-hidden="true"
+                >
+                  {member.image ? (
+                    <img
+                      src={member.image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : null}
                   {initials(member.name)}
                 </span>
                 <span data-part="who">

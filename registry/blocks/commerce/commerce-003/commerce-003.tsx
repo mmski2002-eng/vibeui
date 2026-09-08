@@ -5,6 +5,8 @@ import type { CSSProperties } from "react"
 
 export type Commerce003Line = {
   id: string
+  /** Фото. Без него на том же месте остаётся цветная подложка. */
+  image?: string
   title: string
   option?: string
   price: number
@@ -79,8 +81,13 @@ padding:0.5rem;border-radius:0.75rem;
 border:1px solid var(--vibeui-commerce-003-border);
 }
 [data-vibeui-block="commerce-003"] [data-part="shot"]{
-width:3rem;height:3rem;border-radius:0.5rem;
-background:light-dark(oklch(0.94 0.05 var(--vibeui-commerce-003-hue,262)),oklch(0.4 0.06 var(--vibeui-commerce-003-hue,262)));
+position:relative;width:3rem;height:3rem;border-radius:0.5rem;overflow:hidden;
+}
+/* Подложка — только когда фотографии нет: компонент обязан
+   оставаться полноценным без единого внешнего файла. */
+[data-vibeui-block="commerce-003"] [data-part="shot"][data-empty="true"]{background:light-dark(oklch(0.94 0.05 var(--vibeui-commerce-003-hue,262)),oklch(0.4 0.06 var(--vibeui-commerce-003-hue,262)));}
+[data-vibeui-block="commerce-003"] [data-part="shot"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-003"] [data-part="name"]{margin:0;font-size:0.8125rem;font-weight:600;line-height:1.3}
 [data-vibeui-block="commerce-003"] [data-part="option"]{margin:0.0625rem 0 0;font-size:0.6875rem;color:var(--vibeui-commerce-003-muted)}
@@ -266,13 +273,23 @@ export function Commerce003({
                   <li key={line.id} data-part="line">
                     <span
                       data-part="shot"
+                      data-empty={line.image ? undefined : "true"}
                       aria-hidden="true"
                       style={
                         {
                           "--vibeui-commerce-003-hue": line.hue ?? 262,
                         } as CSSProperties
                       }
-                    />
+                    >
+                      {line.image ? (
+                        <img
+                          src={line.image}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      ) : null}
+                    </span>
                     <div>
                       <p data-part="name">{line.title}</p>
                       {line.option ? (

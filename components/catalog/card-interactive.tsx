@@ -227,7 +227,7 @@ export function CardInteractive({
         ref={frameRef}
         data-preview-theme={theme}
         style={floor ? { minHeight: floor } : undefined}
-        className="border-shell-border bg-shell flex min-w-0 flex-1 flex-col overflow-hidden rounded-xl border"
+        className="border-shell-border bg-shell catalog-card-body flex min-w-0 flex-1 flex-col rounded-xl border"
       >
         {/* Отдельная полоса, а не наложение поверх кадра: у компонентов
             высота разная, и при переключении настройки содержимое доезжало
@@ -520,7 +520,7 @@ export function CardInteractive({
         </div>
 
         {configured ? (
-          <div className="bg-preview-surface flex min-h-32 flex-1 items-center justify-center overflow-hidden p-6">
+          <div className="preview-frame bg-preview-surface flex min-h-32 flex-1 items-center justify-center p-6">
             <ConfigurablePreview
               slug={name}
               kind={kind}
