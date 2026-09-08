@@ -1,11 +1,6 @@
 import type { MetadataRoute } from "next"
 
-import {
-  DEFAULT_LOCALE,
-  LOCALES,
-  type Locale,
-  localePath,
-} from "@/lib/i18n"
+import { DEFAULT_LOCALE, LOCALES, type Locale, localePath } from "@/lib/i18n"
 import { getScenarios } from "@/lib/scenario"
 import { SITE_URL } from "@/lib/seo"
 import { KINDS } from "@/registry/categories"
@@ -31,9 +26,7 @@ function url(locale: Locale, path: string): string {
 
 function localized(path: string, rest: Omit<Entry, "url">): Entry[] {
   const languages = {
-    ...Object.fromEntries(
-      LOCALES.map((locale) => [locale, url(locale, path)]),
-    ),
+    ...Object.fromEntries(LOCALES.map((locale) => [locale, url(locale, path)])),
     "x-default": url(DEFAULT_LOCALE, path),
   }
 

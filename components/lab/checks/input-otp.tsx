@@ -108,12 +108,7 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #6d597a",
     ],
     node: (
-      <Otp009
-        title="Ключ доступа"
-        groupSize={3}
-        groups={3}
-        accent="#6d597a"
-      />
+      <Otp009 title="Ключ доступа" groupSize={3} groups={3} accent="#6d597a" />
     ),
   },
   {

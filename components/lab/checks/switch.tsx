@@ -290,9 +290,11 @@ export const CHECKS: LabCheck[] = [
   {
     name: "switch-015",
     title: "Матрица каналов уведомлений",
-    notes: ["Заголовок: Черновик", "Подпись строк: Проверка", "Акцент: #6a05ec"],
-    node: (
-      <Switch015 title="Черновик" rowsLabel="Проверка" accent="#6a05ec" />
-    ),
+    notes: [
+      "Заголовок: Черновик",
+      "Подпись строк: Проверка",
+      "Акцент: #6a05ec",
+    ],
+    node: <Switch015 title="Черновик" rowsLabel="Проверка" accent="#6a05ec" />,
   },
 ]

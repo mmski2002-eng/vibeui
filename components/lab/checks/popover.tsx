@@ -29,7 +29,9 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #d4e090",
     ],
     node: (
-      <Popover001 defaultOpen         label="Смена"
+      <Popover001
+        defaultOpen
+        label="Смена"
         title="Смена"
         actionLabel="Смена"
         accent="#d4e090"
@@ -47,7 +49,9 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #335392",
     ],
     node: (
-      <Popover002 defaultOpen         label="Смена"
+      <Popover002
+        defaultOpen
+        label="Смена"
         fieldLabel="Подпись: тест"
         listLabel="Подпись: тест"
         submitLabel="Что дальше"
@@ -65,7 +69,9 @@ export const CHECKS: LabCheck[] = [
       "Опасность: #e5e6de",
     ],
     node: (
-      <Popover003 defaultOpen         label="Подпись: тест"
+      <Popover003
+        defaultOpen
+        label="Подпись: тест"
         confirmLabel="Проверка"
         cancelLabel="Черновик"
         danger="#e5e6de"
@@ -82,7 +88,9 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #5fb80d",
     ],
     node: (
-      <Popover004 defaultOpen         label="Черновик"
+      <Popover004
+        defaultOpen
+        label="Черновик"
         sortsLabel="Смена"
         columnsLabel="Что дальше"
         accent="#5fb80d"
@@ -99,7 +107,9 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #c2c33d",
     ],
     node: (
-      <Popover005 defaultOpen         label="Смена"
+      <Popover005
+        defaultOpen
+        label="Смена"
         hint="Черновик"
         selected="Жёлтый"
         accent="#c2c33d"
@@ -116,7 +126,9 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #2b8299",
     ],
     node: (
-      <Popover006 defaultOpen         term="Черновик"
+      <Popover006
+        defaultOpen
+        term="Черновик"
         title="Черновик"
         linkLabel="Проверка"
         accent="#2b8299"
@@ -133,7 +145,9 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #dd7cbc",
     ],
     node: (
-      <Popover007 defaultOpen         count={95}
+      <Popover007
+        defaultOpen
+        count={95}
         title="Подпись: тест"
         footerLabel="Что дальше"
         accent="#dd7cbc"
@@ -150,7 +164,9 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #cdc4b4",
     ],
     node: (
-      <Popover008 defaultOpen         label="Подпись: тест"
+      <Popover008
+        defaultOpen
+        label="Подпись: тест"
         title="Черновик"
         nestedLabel="Черновик"
         accent="#cdc4b4"
@@ -169,7 +185,9 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #2628e1",
     ],
     node: (
-      <Popover009 defaultOpen         label="Что дальше"
+      <Popover009
+        defaultOpen
+        label="Что дальше"
         fieldLabel="Подпись: тест"
         value="Проверка"
         saveLabel="Черновик"
@@ -188,7 +206,9 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #13d739",
     ],
     node: (
-      <Popover010 defaultOpen         name="Черновик"
+      <Popover010
+        defaultOpen
+        name="Черновик"
         role="Проверка"
         actionLabel="Проверка"
         accent="#13d739"
@@ -204,7 +224,12 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #1656bf",
     ],
     node: (
-      <Popover011 defaultOpen label="Смена" placeholder="Подпись: тест" accent="#1656bf" />
+      <Popover011
+        defaultOpen
+        label="Смена"
+        placeholder="Подпись: тест"
+        accent="#1656bf"
+      />
     ),
   },
   {

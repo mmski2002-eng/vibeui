@@ -27,7 +27,9 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #140747",
     ],
     node: (
-      <Drawer001 defaultOpen         triggerLabel="Смена"
+      <Drawer001
+        defaultOpen
+        triggerLabel="Смена"
         title="Что дальше"
         primaryLabel="Черновик"
         cancelLabel="Смена"
@@ -45,7 +47,9 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #3a0ad7",
     ],
     node: (
-      <Drawer002 defaultOpen         triggerLabel="Что дальше"
+      <Drawer002
+        defaultOpen
+        triggerLabel="Что дальше"
         title="Что дальше"
         cancelLabel="Проверка"
         accent="#3a0ad7"
@@ -62,7 +66,9 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #ef2254",
     ],
     node: (
-      <Drawer003 defaultOpen         title="Смена"
+      <Drawer003
+        defaultOpen
+        title="Смена"
         applyLabel="Смена"
         resetLabel="Смена"
         accent="#ef2254"
@@ -79,7 +85,9 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #ea8b34",
     ],
     node: (
-      <Drawer004 defaultOpen         title="Смена"
+      <Drawer004
+        defaultOpen
+        title="Смена"
         status="Подпись: тест"
         historyLabel="Проверка"
         accent="#ea8b34"
@@ -96,7 +104,9 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #3ca143",
     ],
     node: (
-      <Drawer005 defaultOpen         title="Подпись: тест"
+      <Drawer005
+        defaultOpen
+        title="Подпись: тест"
         delivery={2298}
         currency="42"
         accent="#3ca143"
@@ -113,7 +123,9 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #8ec4f3",
     ],
     node: (
-      <Drawer006 defaultOpen         title="Смена"
+      <Drawer006
+        defaultOpen
+        title="Смена"
         warning="Проверка"
         saveLabel="Смена"
         accent="#8ec4f3"
@@ -130,7 +142,9 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #7c9fc1",
     ],
     node: (
-      <Drawer007 defaultOpen         title="Проверка"
+      <Drawer007
+        defaultOpen
+        title="Проверка"
         acceptLabel="Смена"
         agreeLabel="Подпись: тест"
         accent="#7c9fc1"
@@ -147,7 +161,9 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #cf7c43",
     ],
     node: (
-      <Drawer008 defaultOpen         title="Подпись: тест"
+      <Drawer008
+        defaultOpen
+        title="Подпись: тест"
         finishLabel="Смена"
         nextLabel="Смена"
         accent="#cf7c43"
@@ -157,7 +173,11 @@ export const CHECKS: LabCheck[] = [
   {
     name: "drawer-009",
     title: "Шторка с вкладками",
-    notes: ["Заголовок: Договор 118", "Открытый раздел: history", "Акцент: #2a9d8f"],
+    notes: [
+      "Заголовок: Договор 118",
+      "Открытый раздел: history",
+      "Акцент: #2a9d8f",
+    ],
     node: (
       <Drawer009
         defaultOpen
@@ -171,7 +191,11 @@ export const CHECKS: LabCheck[] = [
   {
     name: "drawer-010",
     title: "Выбор из списка",
-    notes: ["Заголовок: Плательщик", "Подсказка поиска: Кого ищем", "Акцент: #9d4edd"],
+    notes: [
+      "Заголовок: Плательщик",
+      "Подсказка поиска: Кого ищем",
+      "Акцент: #9d4edd",
+    ],
     node: (
       <Drawer010
         defaultOpen

@@ -218,12 +218,26 @@ export const CHECKS: LabCheck[] = [
     name: "dropdown-020",
     title: "Меню, которое становится листом",
     notes: ["Кнопка: Действия", "Заголовок листа: Файл", "Развернуто: true"],
-    node: <Dropdown020 trigger="Действия" title="Файл" open={true} accent="#0f9d6b" />,
+    node: (
+      <Dropdown020
+        trigger="Действия"
+        title="Файл"
+        open={true}
+        accent="#0f9d6b"
+      />
+    ),
   },
   {
     name: "dropdown-021",
     title: "Меню присутствия",
     notes: ["Имя: Женя Осипов", "Статус: busy", "Развернуто: true"],
-    node: <Dropdown021 name="Женя Осипов" status="busy" open={true} accent="#c0416a" />,
+    node: (
+      <Dropdown021
+        name="Женя Осипов"
+        status="busy"
+        open={true}
+        accent="#c0416a"
+      />
+    ),
   },
 ]
