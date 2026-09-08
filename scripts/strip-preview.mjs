@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync, writeFileSync } from "node:fs"
+import { readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs"
 import path from "node:path"
 
 /**
@@ -10,6 +10,11 @@ import path from "node:path"
  * агент читает JSON целиком и вполне может подставить такой путь в разметку.
  *
  * Всё остальное в `meta` — `ai`, `controls`, `tags` — агенту нужно и остаётся.
+ *
+ * Здесь же из публичной раздачи убираются закрытые item'ы (`meta.pro`):
+ * `public/r/` отдаёт nginx без всяких проверок, поэтому оставленный там
+ * файл — это подписка, отданная даром. Их раздаёт `/r/pro/<name>.json`,
+ * который сверяет ключ и подписку.
  */
 const ROOT = "public/r"
 const DEMO = "/demo/"
@@ -48,6 +53,7 @@ function stripItem(item) {
 }
 
 let cleaned = 0
+let closed = 0
 
 for (const file of readdirSync(ROOT)) {
   if (!file.endsWith(".json")) {
@@ -57,7 +63,28 @@ for (const file of readdirSync(ROOT)) {
   const full = path.join(ROOT, file)
   const content = JSON.parse(readFileSync(full, "utf8"))
   // Сводный `registry.json` — список item'ов, остальные файлы — сами item'ы.
-  const items = Array.isArray(content.items) ? content.items : [content]
+  const isIndex = Array.isArray(content.items)
+  const items = isIndex ? content.items : [content]
+
+  if (!isIndex && items[0]?.meta?.pro) {
+    rmSync(full)
+    closed += 1
+    continue
+  }
+
+  if (isIndex) {
+    const open = items.filter((item) => !item.meta?.pro)
+
+    if (open.length !== items.length) {
+      content.items = open
+      closed += items.length - open.length
+      open.map(stripItem)
+      writeFileSync(full, `${JSON.stringify(content, null, 2)}\n`)
+      cleaned += 1
+      continue
+    }
+  }
+
   const touched = items.map(stripItem).some(Boolean)
 
   if (!touched) {
@@ -69,3 +96,7 @@ for (const file of readdirSync(ROOT)) {
 }
 
 console.log(`✓ витринные данные убраны из ${cleaned} файлов registry`)
+
+if (closed > 0) {
+  console.log(`✓ закрытых item'ов не опубликовано: ${closed}`)
+}

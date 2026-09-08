@@ -10,6 +10,15 @@ mkdir -p "$REL"
 tar -xzf "$TARBALL" -C "$REL"
 rm -f "$TARBALL"
 
+# Схема базы приводится в порядок до переключения: новая версия не должна
+# увидеть старую схему, а старая — новую.
+if [ -f /etc/vibeui.env ]; then
+  set -a
+  . /etc/vibeui.env
+  set +a
+  (cd "$REL" && node scripts/migrate.mjs)
+fi
+
 # Подмена симлинка атомарна: полусостояния не бывает.
 ln -sfn "$REL" /srv/vibeui-live.tmp
 mv -Tf /srv/vibeui-live.tmp /srv/vibeui-live

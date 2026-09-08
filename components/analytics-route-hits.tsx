@@ -5,8 +5,10 @@ import { useEffect, useRef } from "react"
 
 declare global {
   interface Window {
-    ym?: (id: number, action: string, ...rest: unknown[]) => void
-    gtag?: (command: string, ...rest: unknown[]) => void
+    // Тип нарочно допускает не-функцию: счётчик подменяет очередь своим
+    // объектом, когда tag.js уже загрузился.
+    ym?: ((id: number, action: string, ...rest: unknown[]) => void) | object
+    gtag?: ((command: string, ...rest: unknown[]) => void) | object
   }
 }
 
@@ -36,12 +38,16 @@ export function RouteHits({
     const query = searchParams.toString()
     const url = pathname + (query ? `?${query}` : "")
 
-    if (metrikaId) {
-      window.ym?.(Number(metrikaId), "hit", url)
+    // Проверяем именно тип, а не существование: после загрузки tag.js
+    // window.ym перестаёт быть функцией-очередью и становится объектом, а
+    // `?.()` от вызова объекта не спасает — исключение внутри эффекта роняло
+    // рендер страницы целиком.
+    if (metrikaId && typeof window.ym === "function") {
+      window.ym(Number(metrikaId), "hit", url)
     }
 
-    if (gaId) {
-      window.gtag?.("event", "page_view", {
+    if (gaId && typeof window.gtag === "function") {
+      window.gtag("event", "page_view", {
         page_path: url,
         page_location: window.location.href,
       })

@@ -32,7 +32,8 @@ export function CatalogPage({
   variant: CatalogVariant
 }) {
   const t = getDictionary(locale)
-  const kind: ItemKind = variant === "home" ? "component" : VARIANT_KIND[variant]
+  const kind: ItemKind =
+    variant === "home" ? "component" : VARIANT_KIND[variant]
   const items = getItemsByKind(kind)
   const categories = getCategoryCards(kind, locale)
 

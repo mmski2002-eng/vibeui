@@ -47,11 +47,15 @@ catalog → component preview → Copy for AI → установка компо�
 - shadcn-compatible registry;
 - несколько демонстрационных компонентов.
 
-**Не входит** (не реализовывать, не готовить инфраструктуру заранее):
-auth, billing, subscriptions, referrals, marketplace, MCP, visual builder,
-собственный AI, database.
+Идёт работа (Phase 5, [docs/PLAN-ACCOUNT-BILLING.md](docs/PLAN-ACCOUNT-BILLING.md)):
+аккаунты, подписка Pro, оплата через ЮKassa, лимит копирований и приглашения.
 
-Данные каталога — статические, из кода registry. Без БД и без бэкенд-сервисов.
+**Не входит** (не реализовывать, не готовить инфраструктуру заранее):
+marketplace, MCP, visual builder, собственный AI, командные лицензии,
+денежные выплаты партнёрам.
+
+Данные каталога остаются статическими, из кода registry: база нужна только
+аккаунтам, подписке и лимитам, каталога она не касается.
 
 ## Stack
 

@@ -150,14 +150,13 @@ export function breadcrumbs(
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    itemListElement: [
-      { name: SITE_NAME, path: "/" },
-      ...trail,
-    ].map((entry, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      name: entry.name,
-      item: `${SITE_URL}${localePath(locale, entry.path)}`,
-    })),
+    itemListElement: [{ name: SITE_NAME, path: "/" }, ...trail].map(
+      (entry, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: entry.name,
+        item: `${SITE_URL}${localePath(locale, entry.path)}`,
+      }),
+    ),
   }
 }

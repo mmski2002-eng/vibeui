@@ -107,6 +107,15 @@ export function getCategoryLabel(slug: string, locale: Locale = "ru"): string {
 }
 
 /**
+ * Закрытый item. Проверяется на каждой раздаче исходника, поэтому смотрит
+ * прямо в metadata: отдельного списка Pro-item'ов нет и быть не должно —
+ * два источника правды рано или поздно разойдутся.
+ */
+export function isProItem(slug: string): boolean {
+  return getCatalogItem(slug)?.meta?.pro === true
+}
+
+/**
  * Категория, которой нужна вся ширина ряда: её карточки идут по одной,
  * как у блоков. Объявляется в таксономии (`wide`), а не на странице.
  */

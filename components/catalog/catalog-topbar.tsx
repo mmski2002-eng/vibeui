@@ -2,11 +2,11 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { FlaskConical, Search, UserRound, X } from "lucide-react"
-import { useRef } from "react"
+import { FlaskConical, Search, UserRound } from "lucide-react"
 
 import { LocaleSwitch } from "@/components/catalog/locale-switch"
 import { ThemeSwitch } from "@/components/catalog/theme-switch"
+import { useSession } from "@/lib/auth-client"
 import { getDictionary, localePath, stripLocale, type Locale } from "@/lib/i18n"
 
 const ICON_LINK =
@@ -22,7 +22,7 @@ export function CatalogTopbar({
   const t = getDictionary(locale)
   const en = locale === "en"
   const pathname = stripLocale(usePathname())
-  const accountDialog = useRef<HTMLDialogElement>(null)
+  const { data: session } = useSession()
   const sections = [
     { href: "/components", label: t.topbar.components },
     { href: "/blocks", label: t.topbar.blocks },
@@ -93,52 +93,15 @@ export function CatalogTopbar({
             className="bg-shell-border mx-0.5 hidden h-5 w-px sm:block"
             aria-hidden="true"
           />
-          <button
-            type="button"
-            onClick={() => accountDialog.current?.showModal()}
-            aria-haspopup="dialog"
+          <Link
+            href={session ? "/account" : "/signin"}
             className="border-shell-border-strong bg-shell-elevated text-shell-fg hover:border-shell-accent focus-visible:ring-shell-ring inline-flex h-9 shrink-0 items-center justify-center gap-2 rounded-lg border px-3 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none"
           >
             <UserRound className="hidden size-4 sm:block" aria-hidden="true" />
-            {en ? "Sign in" : "Войти"}
-          </button>
+            {session ? (en ? "Account" : "Кабинет") : en ? "Sign in" : "Войти"}
+          </Link>
         </div>
       </div>
-
-      <dialog
-        ref={accountDialog}
-        aria-labelledby="account-title"
-        aria-describedby="account-description"
-        className="border-shell-border bg-shell-panel text-shell-fg fixed inset-0 m-auto w-[calc(100%-2rem)] max-w-sm rounded-2xl border p-7 shadow-2xl backdrop:bg-black/60"
-        onClick={(event) => {
-          if (event.target === event.currentTarget)
-            accountDialog.current?.close()
-        }}
-      >
-        <button
-          type="button"
-          autoFocus
-          onClick={() => accountDialog.current?.close()}
-          aria-label={en ? "Close" : "Закрыть"}
-          className={`${ICON_LINK} absolute top-3 right-3`}
-        >
-          <X className="size-4" aria-hidden="true" />
-        </button>
-        <div className="bg-shell-elevated text-shell-accent mb-5 flex size-11 items-center justify-center rounded-xl">
-          <UserRound className="size-5" aria-hidden="true" />
-        </div>
-        <h2 id="account-title" className="text-xl font-semibold tracking-tight">
-          {en ? "Your account is coming soon" : "Личный кабинет скоро появится"}
-        </h2>
-        <p
-          id="account-description"
-          className="text-shell-muted mt-3 text-sm leading-relaxed"
-        >
-          {en
-            ? "For now, explore designs and copy components for AI without signing in."
-            : "А пока выбирай дизайн и копируй компоненты для ИИ без регистрации."}
-        </p>
-      </dialog>
     </header>
   )
 }

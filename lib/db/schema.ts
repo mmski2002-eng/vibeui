@@ -98,9 +98,7 @@ export const subscription = pgTable(
     /** active | past_due | canceled | expired */
     status: text("status").notNull(),
     currentPeriodEnd: timestamp("current_period_end").notNull(),
-    cancelAtPeriodEnd: boolean("cancel_at_period_end")
-      .notNull()
-      .default(false),
+    cancelAtPeriodEnd: boolean("cancel_at_period_end").notNull().default(false),
     /** Токен способа оплаты ЮKassa: по нему идут автосписания. */
     paymentMethodId: text("payment_method_id"),
     /** Сколько неудачных списаний подряд: после третьего — expired. */

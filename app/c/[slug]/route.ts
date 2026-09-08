@@ -1,3 +1,4 @@
+import { denialText, resolveAccess } from "@/lib/access"
 import { resolveControlValues } from "@/lib/controls"
 import { buildAgentBrief } from "@/lib/copy-for-ai"
 import { isLocale, type Locale } from "@/lib/i18n"
@@ -32,6 +33,12 @@ export async function GET(
     return new Response("Not found\n", { status: 404 })
   }
 
+  const access = await resolveAccess(slug)
+
+  if (!access.allowed) {
+    return new Response(denialText(access.reason), { status: 401 })
+  }
+
   const search = new URL(request.url).searchParams
   const lang = search.get("lang") ?? undefined
   const locale: Locale = isLocale(lang) ? lang : "ru"
@@ -56,7 +63,8 @@ export async function GET(
   return new Response(`${brief}\n`, {
     headers: {
       "content-type": "text/plain; charset=utf-8",
-      "cache-control": "public, max-age=3600",
+      // Ответ зависит от подписки и остатка лимита: общий кэш недопустим.
+      "cache-control": "private, no-store",
     },
   })
 }
