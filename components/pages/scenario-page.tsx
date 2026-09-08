@@ -172,6 +172,10 @@ export function ScenarioPage({
                                 }),
                               )}
                               scroll={false}
+                              // Единственная ссылка, кладущая выбор в query:
+                              // краулер накапливал параметры и разошёлся на
+                              // 114 550 адресов за сутки (docs/HOSTING-AUDIT.md).
+                              rel="nofollow"
                               className="text-shell-muted hover:text-shell-fg shrink-0 text-xs underline"
                             >
                               {t.scenarios.choose}
