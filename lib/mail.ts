@@ -18,12 +18,24 @@ type Letter = {
   text: string
 }
 
-const transport = process.env.SMTP_HOST
+const host = process.env.SMTP_HOST
+const port = Number(process.env.SMTP_PORT ?? 587)
+
+/**
+ * Свой Postfix на этой же машине отвечает самоподписанным сертификатом, и
+ * проверка его отвергает — письма не уходили вовсе. Шифровать петлю
+ * незачем: трафик не покидает сервер. Для внешнего релея всё остаётся как
+ * обычно, с полноценной проверкой.
+ */
+const local = host === "127.0.0.1" || host === "localhost" || host === "::1"
+
+const transport = host
   ? nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT ?? 587),
+      host,
+      port,
       // 465 — implicit TLS, 587 — STARTTLS: у портов разный смысл флага.
-      secure: Number(process.env.SMTP_PORT ?? 587) === 465,
+      secure: !local && port === 465,
+      ignoreTLS: local,
       auth: process.env.SMTP_USER
         ? {
             user: process.env.SMTP_USER,
