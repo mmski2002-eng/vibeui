@@ -10,20 +10,32 @@ export function generateStaticParams() {
 
 export async function generateMetadata({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>
+  searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
   const { slug } = await params
   const scenario = getScenario(slug)
 
-  return scenario
-    ? pageMetadata({
-        locale: "ru",
-        path: `/scenarios/${scenario.slug}`,
-        title: scenario.label,
-        description: scenario.summary,
-      })
-    : {}
+  if (!scenario) {
+    return {}
+  }
+
+  // Выбранные блоки живут в query, и каждая комбинация — отдельный адрес:
+  // их тысячи, а содержание то же самое. Canonical и без того указывает на
+  // чистый адрес сценария, но краулер до него доходит только через noindex.
+  const picked = Object.keys(await searchParams).length > 0
+
+  return {
+    ...pageMetadata({
+      locale: "ru",
+      path: `/scenarios/${scenario.slug}`,
+      title: scenario.label,
+      description: scenario.summary,
+    }),
+    ...(picked ? { robots: { index: false, follow: false } } : null),
+  }
 }
 
 export default async function Scenario({
