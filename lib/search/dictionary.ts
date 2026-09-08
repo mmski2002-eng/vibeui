@@ -410,11 +410,6 @@ export const SYNONYMS: Synonym[] = [
     terms: ["video"],
   },
   {
-    say: ["боковое меню", "сайдбар", "левое меню"],
-    categories: ["sidebar"],
-    terms: ["sidebar"],
-  },
-  {
     say: ["аккордеон", "раскрывающийся список", "сворачиваемый блок"],
     categories: ["accordion", "collapsible"],
     terms: ["accordion"],
@@ -559,6 +554,19 @@ export const SYNONYMS: Synonym[] = [
     say: ["технические работы", "заглушка сайта", "скоро вернёмся"],
     categories: ["maintenance", "status"],
     terms: ["maintenance"],
+  },
+  {
+    say: [
+      "анимация текста",
+      "оживший текст",
+      "буквы",
+      "подсветка слов",
+      "маркер по тексту",
+      "надпись меняется",
+      "заголовок с эффектом",
+    ],
+    categories: ["text"],
+    terms: ["text", "typography", "highlight", "letters", "reveal"],
   },
 ]
 

@@ -876,6 +876,13 @@ export const CATEGORIES = [
     en: "Cursors",
     group: "application",
   },
+  {
+    slug: "text",
+    label: "Текстовая анимация",
+    en: "Text animation",
+    group: "marketing",
+    wide: true,
+  },
 ] as const satisfies readonly {
   slug: string
   /** Подпись на витрине. Базовый язык каталога — русский. */
@@ -883,6 +890,12 @@ export const CATEGORIES = [
   /** Английское имя типа: оно же имя компонента в чужих библиотеках. */
   en: string
   group: ItemGroup
+  /**
+   * Одна карточка в ряд. Нужна категориям, чей item — строка или абзац во
+   * всю ширину: вдвоём в ряду кадр сужается и крупная типографика,
+   * ради которой item и берут, читается как мелкий текст.
+   */
+  wide?: boolean
 }[]
 
 export type CategorySlug = (typeof CATEGORIES)[number]["slug"]

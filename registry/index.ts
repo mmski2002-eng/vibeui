@@ -106,6 +106,16 @@ export function getCategoryLabel(slug: string, locale: Locale = "ru"): string {
   return locale === "ru" ? category.label : category.en
 }
 
+/**
+ * Категория, которой нужна вся ширина ряда: её карточки идут по одной,
+ * как у блоков. Объявляется в таксономии (`wide`), а не на странице.
+ */
+export function isWideCategory(slug: string): boolean {
+  const category = CATEGORIES.find((entry) => entry.slug === slug)
+
+  return category !== undefined && "wide" in category && category.wide === true
+}
+
 type CategoryCount = {
   slug: string
   label: string

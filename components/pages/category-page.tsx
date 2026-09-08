@@ -4,7 +4,9 @@ import { notFound } from "next/navigation"
 import { CatalogChrome } from "@/components/catalog/catalog-chrome"
 import { CatalogGrid } from "@/components/catalog/catalog-grid"
 import { CatalogShell } from "@/components/catalog/catalog-shell"
+import { JsonLd } from "@/components/json-ld"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
+import { breadcrumbs } from "@/lib/seo"
 import type { ItemKind } from "@/registry/categories"
 import {
   catalogBasePath,
@@ -12,6 +14,7 @@ import {
   getCategoryLabel,
   getItemsByCategory,
   getItemsByKind,
+  isWideCategory,
 } from "@/registry/index"
 
 /**
@@ -72,6 +75,12 @@ export function CategoryPage({
 
   return (
     <CatalogShell locale={locale}>
+      <JsonLd
+        data={breadcrumbs(locale, [
+          { name: rootLabel, path: base },
+          { name: label, path: `${base}/${category}` },
+        ])}
+      />
       <CatalogChrome
         locale={locale}
         kind={kind}
@@ -80,7 +89,11 @@ export function CategoryPage({
         active={category}
         heading={heading}
       >
-        <CatalogGrid items={items} locale={locale} single={kind === "block"} />
+        <CatalogGrid
+          items={items}
+          locale={locale}
+          single={kind === "block" || isWideCategory(category)}
+        />
       </CatalogChrome>
     </CatalogShell>
   )

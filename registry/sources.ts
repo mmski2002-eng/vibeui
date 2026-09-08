@@ -68,7 +68,6 @@ import eventCalendarRegistry from "@/registry/components/event-calendar/registry
 import fieldRegistry from "@/registry/components/field/registry.json"
 import fileUploadRegistry from "@/registry/components/file-upload/registry.json"
 import filtersRegistry from "@/registry/components/filters/registry.json"
-import frameRegistry from "@/registry/components/frame/registry.json"
 import hoverCardRegistry from "@/registry/components/hover-card/registry.json"
 import iconStackRegistry from "@/registry/components/icon-stack/registry.json"
 import iconTileRegistry from "@/registry/components/icon-tile/registry.json"
@@ -92,7 +91,6 @@ import scrollAreaRegistry from "@/registry/components/scroll-area/registry.json"
 import scrollspyRegistry from "@/registry/components/scrollspy/registry.json"
 import selectRegistry from "@/registry/components/select/registry.json"
 import separatorRegistry from "@/registry/components/separator/registry.json"
-import sidebarRegistry from "@/registry/components/sidebar/registry.json"
 import skeletonRegistry from "@/registry/components/skeleton/registry.json"
 import sliderRegistry from "@/registry/components/slider/registry.json"
 import sortableRegistry from "@/registry/components/sortable/registry.json"
@@ -127,6 +125,7 @@ import statusRegistry from "@/registry/animations/status/registry.json"
 import checklistRegistry from "@/registry/animations/checklist/registry.json"
 import stacksRegistry from "@/registry/animations/stacks/registry.json"
 import cursorRegistry from "@/registry/animations/cursor/registry.json"
+import textRegistry from "@/registry/animations/text/registry.json"
 
 /**
  * Реестры, попадающие на сайт. Это и есть файловая база каталога: другого
@@ -464,11 +463,6 @@ export const SOURCES = [
     items: filtersRegistry.items,
   },
   {
-    directory: "registry/components/frame",
-    kind: "component",
-    items: frameRegistry.items,
-  },
-  {
     directory: "registry/components/hover-card",
     kind: "component",
     items: hoverCardRegistry.items,
@@ -582,11 +576,6 @@ export const SOURCES = [
     directory: "registry/components/separator",
     kind: "component",
     items: separatorRegistry.items,
-  },
-  {
-    directory: "registry/components/sidebar",
-    kind: "component",
-    items: sidebarRegistry.items,
   },
   {
     directory: "registry/components/skeleton",
@@ -757,6 +746,11 @@ export const SOURCES = [
     directory: "registry/animations/cursor",
     kind: "animation",
     items: cursorRegistry.items,
+  },
+  {
+    directory: "registry/animations/text",
+    kind: "animation",
+    items: textRegistry.items,
   },
 ] as const satisfies readonly {
   directory: string
