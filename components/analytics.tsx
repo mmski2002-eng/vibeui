@@ -3,8 +3,12 @@ import { Suspense } from "react"
 
 import { RouteHits } from "@/components/analytics-route-hits"
 
-const METRIKA_ID = process.env.NEXT_PUBLIC_YM_ID
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID
+// Номер счётчика не секрет — он и так виден в коде страницы. Держим его
+// здесь, а не в переменных CI: иначе настройка живёт вне репозитория и
+// пропадает при первом же переезде сборки. Переменная окружения нужна форку
+// на своём домене и перекрывает значение.
+const METRIKA_ID = process.env.NEXT_PUBLIC_YM_ID || "112394418"
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "G-0JSZ10JSHW"
 
 /**
  * Счётчики. Идентификаторы приходят из окружения и вшиваются на сборке:
@@ -34,8 +38,8 @@ function Metrika({ id }: { id: string }) {
 m[i].l=1*new Date();
 for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
 k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
-ym(${id},"init",{ssr:true,webvisor:true,clickmap:true,trackLinks:true,accurateTrackBounce:true});`}
+(window,document,"script","https://mc.yandex.ru/metrika/tag.js?id=${id}","ym");
+ym(${id},"init",{ssr:true,webvisor:true,clickmap:true,trackLinks:true,accurateTrackBounce:true,referrer:document.referrer,url:location.href});`}
       </Script>
       <noscript>
         <div>

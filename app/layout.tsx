@@ -66,9 +66,13 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
+  // Токены подтверждения прав публичны по своей природе: поисковик как раз
+  // и проверяет, что они лежат в открытой разметке.
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION,
-    yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION,
+    google:
+      process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION ||
+      "HcuGcVeu4NGN_Ruulsn7Xkd8VQB8rw_iftfCCZwLLjE",
+    yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION || "73c966fb1814e673",
   },
 }
 
