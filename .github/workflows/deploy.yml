@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  DEPLOY_HOST: 216.173.70.241
+  DEPLOY_HOST: 185.104.251.106
   DEPLOY_USER: root
   REGISTRY_BASE_URL: https://vibeui.ru/r
   NEXT_PUBLIC_SITE_URL: https://vibeui.ru
