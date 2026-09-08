@@ -39,6 +39,8 @@ visual discovery -> installable component -> AI context -> predictable result
 - Репозиторий приватный.
 
 Деплой фактически self-hosted на VPS: Next standalone, nginx, systemd, HTTPS.
+Сервер — `185.104.251.106` (Debian 12, 2 ядра, 2.9 ГБ), общий с другими
+проектами; переехали туда 08.09.2026 с латвийского одноядерного.
 Подробности: [DEPLOY.md](DEPLOY.md).
 
 Важно: `REGISTRY_BASE_URL` вшивается во время production build. Смена значения
