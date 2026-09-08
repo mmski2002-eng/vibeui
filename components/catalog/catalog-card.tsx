@@ -56,6 +56,7 @@ export function CatalogCard({
           englishTitle && englishTitle !== localized.title ? englishTitle : null
         }
         installCommand={getInstallCommand(localized.name)}
+        pro={localized.meta?.pro === true}
       >
         <CatalogThumbnail slug={localized.name} locale={locale} />
       </CardInteractive>

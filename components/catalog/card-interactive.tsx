@@ -3,6 +3,11 @@
 import dynamic from "next/dynamic"
 import Link from "next/link"
 import { CircleAlert, Heart, Moon, RotateCcw, Sun } from "lucide-react"
+
+import { useRouter } from "next/navigation"
+
+import { toggleFavorite } from "@/lib/account-actions"
+import { useSession } from "@/lib/auth-client"
 import { useEffect, useId, useRef, useState, type ReactNode } from "react"
 
 import { CopyButton } from "@/components/copy-button"
@@ -63,6 +68,7 @@ export function CardInteractive({
   englishTitle,
   previewProps,
   installCommand,
+  pro,
   children,
 }: {
   name: string
@@ -83,6 +89,8 @@ export function CardInteractive({
   /** Демо-содержимое превью на языке витрины. */
   previewProps?: Record<string, unknown>
   installCommand: string | null
+  /** Закрытый item: исходник отдаётся только по подписке. */
+  pro: boolean
   children: ReactNode
 }) {
   const t = getDictionary(locale)
@@ -156,6 +164,8 @@ export function CardInteractive({
   const [reportText, setReportText] = useState("")
   const [reportSent, setReportSent] = useState(false)
   const [favourite, setFavourite] = useState(false)
+  const signedIn = Boolean(useSession().data)
+  const router = useRouter()
 
   const [floor, setFloor] = useState<number>()
 
@@ -428,13 +438,23 @@ export function CardInteractive({
               </span>
             </button>
 
-            {/* Избранное пока только помечает карточку в этой вкладке:
-                хранилища у витрины нет, а кнопка нужна уже сейчас. */}
+            {/* Сердце отмечается сразу, а запись в базу идёт следом: ждать
+                ответа сервера ради переключения иконки незачем. Анониму
+                кнопка предлагает завести аккаунт — хранить отметку негде. */}
             <button
               type="button"
-              onClick={() => setFavourite((current) => !current)}
+              onClick={() => {
+                if (!signedIn) {
+                  router.push("/signup")
+
+                  return
+                }
+
+                setFavourite((current) => !current)
+                void toggleFavorite(name)
+              }}
               aria-pressed={favourite}
-              title={`${t.card.favourite} · ${t.card.favouriteSoon}`}
+              title={t.card.favourite}
               className={`${TOGGLE} ${favourite ? "text-shell-fg border-shell-border-strong" : ""}`}
             >
               <Heart
@@ -561,6 +581,13 @@ export function CardInteractive({
               {copiedCode ? t.card.idCopied : ""}
             </span>
           </button>
+          {pro ? (
+            /* Метка стоит до названия: человек должен увидеть её раньше,
+               чем нажмёт «Копировать для ИИ» и упрётся в отказ. */
+            <span className="border-shell-accent text-shell-accent mr-1.5 inline-flex h-5 shrink-0 items-center rounded border px-1.5 align-[1px] text-[0.6875rem] font-semibold">
+              Pro
+            </span>
+          ) : null}
           <Link
             href={`${itemUrl}?${itemParams}`}
             className="hover:text-shell-fg transition-colors focus-visible:outline-none"
