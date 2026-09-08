@@ -20,15 +20,34 @@ const globalForDb = globalThis as unknown as {
   vibeuiDb?: PostgresJsDatabase<typeof schema>
 }
 
-function connect() {
+/**
+ * Строка подключения. На сборке её нет и быть не должно: runner собирает
+ * релиз, база живёт на сервере и слушает только localhost. Клиент postgres.js
+ * ничего не открывает до первого запроса, поэтому на этом этапе достаточно
+ * любой строки — а вот в рантайме отсутствие переменной должно быть громкой
+ * ошибкой, а не невнятным отказом соединения.
+ */
+function connectionString() {
   const url = process.env.DATABASE_URL
 
-  if (!url) {
-    throw new Error("DATABASE_URL не задан: без него база недоступна")
+  if (url) {
+    return url
   }
 
+  if (process.env.NEXT_PHASE === "phase-production-build") {
+    return "postgresql://build@127.0.0.1:5432/build"
+  }
+
+  throw new Error("DATABASE_URL не задан: без него база недоступна")
+}
+
+function connect() {
   return drizzle(
-    postgres(url, { max: 10, idle_timeout: 20, connect_timeout: 10 }),
+    postgres(connectionString(), {
+      max: 10,
+      idle_timeout: 20,
+      connect_timeout: 10,
+    }),
     { schema },
   )
 }
