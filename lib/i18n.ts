@@ -35,6 +35,10 @@ type Dictionary = {
     description: string
     blocksLink: string
     counts: (items: number, categories: number) => string
+    // Отдельно от текста на экране: тот обрывается на ссылке «в блоках»
+    // и в выдачу поисковика не годится.
+    metaTitle: string
+    metaDescription: string
   }
   components: { title: string; description: string; metaTitle: string }
   blocks: { title: string; description: string; metaTitle: string }
@@ -179,6 +183,9 @@ const RU: Dictionary = {
     blocksLink: "блоках",
     counts: (items, categories) =>
       `элементов: ${items} · категорий: ${categories} · установка одной командой`,
+    metaTitle: "VibeUI — библиотека UI-компонентов для вайбкодинга",
+    metaDescription:
+      "Готовые React-компоненты и секции страниц на Tailwind CSS: живое превью, установка одной командой из shadcn-совместимого реестра и готовая инструкция для ИИ-агента. Выбери дизайн, отдай ИИ, получи сайт.",
   },
   components: {
     title: "Компоненты",
@@ -381,6 +388,9 @@ const EN: Dictionary = {
     blocksLink: "Blocks",
     counts: (items, categories) =>
       `${items} items · ${categories} categories · one command to install`,
+    metaTitle: "VibeUI — UI component library for vibe coding",
+    metaDescription:
+      "Ready-made React components and page sections on Tailwind CSS: live preview, one-command install from a shadcn-compatible registry and a ready prompt for your AI agent.",
   },
   components: {
     title: "Components",

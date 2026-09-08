@@ -17,6 +17,13 @@ env:
   DEPLOY_HOST: 216.173.70.241
   DEPLOY_USER: root
   REGISTRY_BASE_URL: https://vibeui.ru/r
+  NEXT_PUBLIC_SITE_URL: https://vibeui.ru
+  # NEXT_PUBLIC_* вшиваются в клиентский бандл на сборке: без них счётчики и
+  # meta подтверждения прав в релиз не попадут, нужен редеплой.
+  NEXT_PUBLIC_YM_ID: ${{ vars.NEXT_PUBLIC_YM_ID }}
+  NEXT_PUBLIC_GA_ID: ${{ vars.NEXT_PUBLIC_GA_ID }}
+  NEXT_PUBLIC_YANDEX_VERIFICATION: ${{ vars.NEXT_PUBLIC_YANDEX_VERIFICATION }}
+  NEXT_PUBLIC_GOOGLE_VERIFICATION: ${{ vars.NEXT_PUBLIC_GOOGLE_VERIFICATION }}
   # Каталог дорос до ~1770 items: проверка типов в `next build` (и отдельный
   # typecheck) упирается в дефолтный ~2 ГБ heap Node 20 и падает с OOM.
   # Runner ubuntu-latest несёт 16 ГБ — поднимаем потолок кучи.
@@ -70,3 +77,5 @@ jobs:
         run: |
           curl -fsS -o /dev/null -w 'components %{http_code}\n' https://vibeui.ru/components
           curl -fsS https://vibeui.ru/c/hero-001 | grep -q "npx shadcn"
+          curl -fsS https://vibeui.ru/robots.txt | grep -q "Sitemap: https://vibeui.ru/sitemap.xml"
+          curl -fsS https://vibeui.ru/sitemap.xml | grep -q "<loc>https://vibeui.ru/components</loc>"

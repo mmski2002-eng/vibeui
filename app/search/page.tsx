@@ -4,6 +4,7 @@ import { getDictionary } from "@/lib/i18n"
 export const metadata = {
   title: getDictionary("ru").search.metaTitle,
   description: getDictionary("ru").search.hint,
+  robots: { index: false, follow: true },
 }
 
 /**

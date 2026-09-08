@@ -1,11 +1,10 @@
 import { CategoryPage } from "@/components/pages/category-page"
 import { ItemPage } from "@/components/pages/item-page"
-import { localizeItem } from "@/lib/localize"
+import { catalogSlugMetadata } from "@/lib/seo"
 import {
   getCatalogItem,
   getCatalogItems,
   getCategoryCards,
-  getCategoryLabel,
   getItemKind,
 } from "@/registry/index"
 
@@ -22,22 +21,8 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const found = getCatalogItem(slug)
 
-  if (!found) {
-    const category = getCategoryCards("component").find(
-      (entry) => entry.slug === slug,
-    )
-
-    return category ? { title: getCategoryLabel(category.slug) } : {}
-  }
-
-  const block = localizeItem(found, "ru")
-
-  return {
-    title: block.title ?? block.name,
-    description: block.description,
-  }
+  return catalogSlugMetadata({ kind: "component", locale: "ru", slug })
 }
 
 export function generateStaticParams() {

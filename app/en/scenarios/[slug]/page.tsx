@@ -1,5 +1,6 @@
 import { ScenarioPage } from "@/components/pages/scenario-page"
 import { getScenario, getScenarios } from "@/lib/scenario"
+import { pageMetadata } from "@/lib/seo"
 
 export const dynamicParams = false
 
@@ -15,7 +16,14 @@ export async function generateMetadata({
   const { slug } = await params
   const scenario = getScenario(slug)
 
-  return scenario ? { title: scenario.en, description: scenario.summaryEn } : {}
+  return scenario
+    ? pageMetadata({
+        locale: "en",
+        path: `/scenarios/${scenario.slug}`,
+        title: scenario.en,
+        description: scenario.summaryEn,
+      })
+    : {}
 }
 
 export default async function Scenario({

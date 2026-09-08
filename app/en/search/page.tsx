@@ -4,6 +4,7 @@ import { getDictionary } from "@/lib/i18n"
 export const metadata = {
   title: getDictionary("en").search.metaTitle,
   description: getDictionary("en").search.hint,
+  robots: { index: false, follow: true },
 }
 
 export const dynamic = "force-dynamic"

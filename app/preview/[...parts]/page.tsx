@@ -29,6 +29,12 @@ function queryString(params: { theme?: string; lang?: string }) {
   return query.toString()
 }
 
+// Голый iframe без текста и навигации: в robots.txt закрыт, но URL мог бы
+// попасть в индекс по внешней ссылке — тег отвечает и на этот случай.
+export const metadata = {
+  robots: { index: false, follow: false },
+}
+
 export default async function PreviewPage({
   params,
   searchParams,

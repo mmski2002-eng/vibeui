@@ -19,7 +19,8 @@
 [docs/PROJECT_CONTEXT.md](docs/PROJECT_CONTEXT.md). Если сведения расходятся,
 предпочитать более свежий `PROJECT_CONTEXT.md` и фактический код/`package.json`.
 
-Контекст: [docs/PRODUCT.md](docs/PRODUCT.md) — продукт и сценарий, [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — устройство кода, [docs/ROADMAP.md](docs/ROADMAP.md) — фазы и Definition of Done, [docs/SEARCH.md](docs/SEARCH.md) — поиск по каталогу и что делает item находимым, [docs/SCENARIOS.md](docs/SCENARIOS.md) — вход в каталог со стороны задачи.
+Контекст: [docs/PRODUCT.md](docs/PRODUCT.md) — продукт и сценарий, [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — устройство кода, [docs/ROADMAP.md](docs/ROADMAP.md) — фазы и Definition of Done, [docs/SEARCH.md](docs/SEARCH.md) — поиск по каталогу и что делает item находимым, [docs/SCENARIOS.md](docs/SCENARIOS.md) — вход в каталог со стороны задачи,
+[docs/SEO.md](docs/SEO.md) — индексация, метаданные, счётчики и кабинеты.
 
 ## Product
 
