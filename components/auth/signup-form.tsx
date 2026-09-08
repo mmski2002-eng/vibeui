@@ -4,19 +4,19 @@ import Link from "next/link"
 import { useState } from "react"
 
 import { Field, INPUT_CLASS, SUBMIT_CLASS } from "@/components/auth/auth-card"
+import { AUTH_TEXTS } from "@/components/auth/texts"
 import { authClient } from "@/lib/auth-client"
+import { localePath, type Locale } from "@/lib/i18n"
 
-export function SignUpForm() {
+export function SignUpForm({ locale }: { locale: Locale }) {
+  const t = AUTH_TEXTS[locale]
   const [error, setError] = useState<string>()
   const [sent, setSent] = useState(false)
   const [pending, setPending] = useState(false)
 
   if (sent) {
     return (
-      <p className="text-shell-muted text-sm leading-relaxed">
-        Письмо со ссылкой отправлено. Откройте её, чтобы подтвердить адрес и
-        войти. Ссылка действует 30 минут.
-      </p>
+      <p className="text-shell-muted text-sm leading-relaxed">{t.verifySent}</p>
     )
   }
 
@@ -37,11 +37,7 @@ export function SignUpForm() {
         setPending(false)
 
         if (failure) {
-          setError(
-            failure.status === 422
-              ? "Такая почта уже зарегистрирована."
-              : "Не удалось зарегистрироваться. Попробуйте ещё раз.",
-          )
+          setError(failure.status === 422 ? t.emailTaken : t.signUpFailed)
 
           return
         }
@@ -49,7 +45,7 @@ export function SignUpForm() {
         setSent(true)
       }}
     >
-      <Field label="Имя">
+      <Field label={t.name}>
         <input
           className={INPUT_CLASS}
           type="text"
@@ -60,7 +56,7 @@ export function SignUpForm() {
           autoFocus
         />
       </Field>
-      <Field label="Почта">
+      <Field label={t.email}>
         <input
           className={INPUT_CLASS}
           type="email"
@@ -69,7 +65,7 @@ export function SignUpForm() {
           required
         />
       </Field>
-      <Field label="Пароль" hint="Не короче 10 символов">
+      <Field label={t.password} hint={t.passwordHint}>
         <input
           className={INPUT_CLASS}
           type="password"
@@ -89,13 +85,19 @@ export function SignUpForm() {
           className="accent-shell-accent mt-0.5 size-4 shrink-0"
         />
         <span className="text-shell-muted leading-relaxed">
-          Соглашаюсь с{" "}
-          <Link href="/legal/offer" className="text-shell-fg underline">
-            офертой
+          {t.consent}{" "}
+          <Link
+            href={localePath(locale, "/legal/offer")}
+            className="text-shell-fg underline"
+          >
+            {t.offer}
           </Link>{" "}
-          и{" "}
-          <Link href="/legal/privacy" className="text-shell-fg underline">
-            обработкой персональных данных
+          {t.consentAnd}{" "}
+          <Link
+            href={localePath(locale, "/legal/privacy")}
+            className="text-shell-fg underline"
+          >
+            {t.privacy}
           </Link>
         </span>
       </label>
@@ -107,7 +109,7 @@ export function SignUpForm() {
       ) : null}
 
       <button type="submit" className={SUBMIT_CLASS} disabled={pending}>
-        {pending ? "Создаём…" : "Создать аккаунт"}
+        {pending ? t.creating : t.create}
       </button>
     </form>
   )

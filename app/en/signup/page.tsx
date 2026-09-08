@@ -1,39 +1,39 @@
 import Link from "next/link"
 
 import { AuthCard } from "@/components/auth/auth-card"
-import { SignInForm } from "@/components/auth/signin-form"
+import { SignUpForm } from "@/components/auth/signup-form"
 import { AUTH_TEXTS } from "@/components/auth/texts"
 import { CatalogShell } from "@/components/catalog/catalog-shell"
 import { localePath } from "@/lib/i18n"
 
-const LOCALE = "ru" as const
+const LOCALE = "en" as const
 const t = AUTH_TEXTS[LOCALE]
 
 export const metadata = {
-  title: "Вход",
+  title: "Create account",
   robots: { index: false, follow: false },
 }
 
-export default function SignInPage() {
+export default function SignUpPageEn() {
   return (
     <CatalogShell locale={LOCALE}>
       <AuthCard
         locale={LOCALE}
-        title={t.signInTitle}
-        description={t.signInHint}
+        title={t.signUpTitle}
+        description={t.signUpHint}
         footer={
           <>
-            {t.noAccount}{" "}
+            {t.haveAccount}{" "}
             <Link
-              href={localePath(LOCALE, "/signup")}
+              href={localePath(LOCALE, "/signin")}
               className="text-shell-fg underline"
             >
-              {t.createShort}
+              {t.enterShort}
             </Link>
           </>
         }
       >
-        <SignInForm locale={LOCALE} />
+        <SignUpForm locale={LOCALE} />
       </AuthCard>
     </CatalogShell>
   )

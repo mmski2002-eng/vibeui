@@ -6,15 +6,15 @@ import { AUTH_TEXTS } from "@/components/auth/texts"
 import { CatalogShell } from "@/components/catalog/catalog-shell"
 import { localePath } from "@/lib/i18n"
 
-const LOCALE = "ru" as const
+const LOCALE = "en" as const
 const t = AUTH_TEXTS[LOCALE]
 
 export const metadata = {
-  title: "Вход",
+  title: "Sign in",
   robots: { index: false, follow: false },
 }
 
-export default function SignInPage() {
+export default function SignInPageEn() {
   return (
     <CatalogShell locale={LOCALE}>
       <AuthCard

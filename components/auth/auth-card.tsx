@@ -1,29 +1,36 @@
 import Link from "next/link"
 import type { ReactNode } from "react"
 
+import { AUTH_TEXTS } from "@/components/auth/texts"
+import { localePath, type Locale } from "@/lib/i18n"
+
 /**
  * Рамка для форм входа, регистрации и восстановления. Одна на все четыре
  * страницы: они отличаются полями, а не оформлением.
  */
 export function AuthCard({
+  locale,
   title,
   description,
   children,
   footer,
 }: {
+  locale: Locale
   title: string
   description?: string
   children: ReactNode
   footer?: ReactNode
 }) {
+  const t = AUTH_TEXTS[locale]
+
   return (
     <main className="flex flex-1 items-start justify-center px-4 py-12 sm:py-20">
       <div className="w-full max-w-sm">
         <Link
-          href="/"
+          href={localePath(locale, "/")}
           className="text-shell-muted hover:text-shell-fg mb-8 inline-block text-sm transition-colors"
         >
-          ← На витрину
+          {t.back}
         </Link>
         <div className="border-shell-border bg-shell-panel rounded-2xl border p-7">
           <h1 className="text-shell-fg text-xl font-semibold tracking-tight">

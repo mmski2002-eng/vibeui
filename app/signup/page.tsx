@@ -2,7 +2,12 @@ import Link from "next/link"
 
 import { AuthCard } from "@/components/auth/auth-card"
 import { SignUpForm } from "@/components/auth/signup-form"
+import { AUTH_TEXTS } from "@/components/auth/texts"
 import { CatalogShell } from "@/components/catalog/catalog-shell"
+import { localePath } from "@/lib/i18n"
+
+const LOCALE = "ru" as const
+const t = AUTH_TEXTS[LOCALE]
 
 export const metadata = {
   title: "Регистрация",
@@ -11,20 +16,24 @@ export const metadata = {
 
 export default function SignUpPage() {
   return (
-    <CatalogShell locale="ru">
+    <CatalogShell locale={LOCALE}>
       <AuthCard
-        title="Регистрация"
-        description="Бесплатно: 100 компонентов в месяц, избранное и история."
+        locale={LOCALE}
+        title={t.signUpTitle}
+        description={t.signUpHint}
         footer={
           <>
-            Уже есть аккаунт?{" "}
-            <Link href="/signin" className="text-shell-fg underline">
-              Войти
+            {t.haveAccount}{" "}
+            <Link
+              href={localePath(LOCALE, "/signin")}
+              className="text-shell-fg underline"
+            >
+              {t.enterShort}
             </Link>
           </>
         }
       >
-        <SignUpForm />
+        <SignUpForm locale={LOCALE} />
       </AuthCard>
     </CatalogShell>
   )

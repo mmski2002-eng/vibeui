@@ -5,9 +5,12 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 import { Field, INPUT_CLASS, SUBMIT_CLASS } from "@/components/auth/auth-card"
+import { AUTH_TEXTS } from "@/components/auth/texts"
 import { authClient } from "@/lib/auth-client"
+import { localePath, type Locale } from "@/lib/i18n"
 
-export function SignInForm() {
+export function SignInForm({ locale }: { locale: Locale }) {
+  const t = AUTH_TEXTS[locale]
   const router = useRouter()
   const [error, setError] = useState<string>()
   const [pending, setPending] = useState(false)
@@ -30,20 +33,16 @@ export function SignInForm() {
         if (failure) {
           // Разные причины отказа объединены намеренно: подсказка «такой
           // почты нет» сама по себе выдаёт, кто зарегистрирован.
-          setError(
-            failure.status === 403
-              ? "Почта не подтверждена. Проверьте письмо со ссылкой."
-              : "Не удалось войти. Проверьте адрес и пароль.",
-          )
+          setError(failure.status === 403 ? t.notVerified : t.signInFailed)
 
           return
         }
 
-        router.push("/account")
+        router.push(localePath(locale, "/account"))
         router.refresh()
       }}
     >
-      <Field label="Почта">
+      <Field label={t.email}>
         <input
           className={INPUT_CLASS}
           type="email"
@@ -53,7 +52,7 @@ export function SignInForm() {
           autoFocus
         />
       </Field>
-      <Field label="Пароль">
+      <Field label={t.password}>
         <input
           className={INPUT_CLASS}
           type="password"
@@ -70,14 +69,14 @@ export function SignInForm() {
       ) : null}
 
       <button type="submit" className={SUBMIT_CLASS} disabled={pending}>
-        {pending ? "Входим…" : "Войти"}
+        {pending ? t.entering : t.enter}
       </button>
 
       <Link
-        href="/reset"
+        href={localePath(locale, "/reset")}
         className="text-shell-muted hover:text-shell-fg mt-4 block text-center text-sm transition-colors"
       >
-        Забыли пароль?
+        {t.forgot}
       </Link>
     </form>
   )

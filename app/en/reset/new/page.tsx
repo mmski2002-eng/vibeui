@@ -5,15 +5,15 @@ import { ResetPasswordForm } from "@/components/auth/reset-forms"
 import { AUTH_TEXTS } from "@/components/auth/texts"
 import { CatalogShell } from "@/components/catalog/catalog-shell"
 
-const LOCALE = "ru" as const
+const LOCALE = "en" as const
 const t = AUTH_TEXTS[LOCALE]
 
 export const metadata = {
-  title: "Новый пароль",
+  title: "New password",
   robots: { index: false, follow: false },
 }
 
-export default function ResetNewPage() {
+export default function ResetNewPageEn() {
   return (
     <CatalogShell locale={LOCALE}>
       <AuthCard locale={LOCALE} title={t.newPasswordTitle}>

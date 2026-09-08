@@ -4,19 +4,19 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
 
 import { Field, INPUT_CLASS, SUBMIT_CLASS } from "@/components/auth/auth-card"
+import { AUTH_TEXTS } from "@/components/auth/texts"
 import { authClient } from "@/lib/auth-client"
+import { localePath, type Locale } from "@/lib/i18n"
 
 /** Шаг первый: запросить письмо со ссылкой. */
-export function ResetRequestForm() {
+export function ResetRequestForm({ locale }: { locale: Locale }) {
+  const t = AUTH_TEXTS[locale]
   const [sent, setSent] = useState(false)
   const [pending, setPending] = useState(false)
 
   if (sent) {
     return (
-      <p className="text-shell-muted text-sm leading-relaxed">
-        Если такой адрес зарегистрирован, письмо со ссылкой уже отправлено.
-        Ссылка действует 30 минут.
-      </p>
+      <p className="text-shell-muted text-sm leading-relaxed">{t.resetSent}</p>
     )
   }
 
@@ -29,7 +29,7 @@ export function ResetRequestForm() {
         const form = new FormData(event.currentTarget)
         await authClient.requestPasswordReset({
           email: String(form.get("email")),
-          redirectTo: "/reset/new",
+          redirectTo: localePath(locale, "/reset/new"),
         })
 
         // Результат не показываем: ответ «такой почты нет» превращает форму
@@ -38,7 +38,7 @@ export function ResetRequestForm() {
         setSent(true)
       }}
     >
-      <Field label="Почта">
+      <Field label={t.email}>
         <input
           className={INPUT_CLASS}
           type="email"
@@ -50,14 +50,15 @@ export function ResetRequestForm() {
       </Field>
 
       <button type="submit" className={SUBMIT_CLASS} disabled={pending}>
-        {pending ? "Отправляем…" : "Прислать ссылку"}
+        {pending ? t.sending : t.send}
       </button>
     </form>
   )
 }
 
 /** Шаг второй: задать новый пароль по токену из письма. */
-export function ResetPasswordForm() {
+export function ResetPasswordForm({ locale }: { locale: Locale }) {
+  const t = AUTH_TEXTS[locale]
   const router = useRouter()
   const token = useSearchParams().get("token")
   const [error, setError] = useState<string>()
@@ -65,10 +66,7 @@ export function ResetPasswordForm() {
 
   if (!token) {
     return (
-      <p className="text-shell-muted text-sm leading-relaxed">
-        Ссылка неполная или устарела. Запросите новое письмо на странице
-        восстановления.
-      </p>
+      <p className="text-shell-muted text-sm leading-relaxed">{t.linkBroken}</p>
     )
   }
 
@@ -88,15 +86,15 @@ export function ResetPasswordForm() {
         setPending(false)
 
         if (failure) {
-          setError("Ссылка устарела. Запросите новое письмо.")
+          setError(t.linkExpired)
 
           return
         }
 
-        router.push("/signin")
+        router.push(localePath(locale, "/signin"))
       }}
     >
-      <Field label="Новый пароль" hint="Не короче 10 символов">
+      <Field label={t.newPassword} hint={t.passwordHint}>
         <input
           className={INPUT_CLASS}
           type="password"
@@ -116,7 +114,7 @@ export function ResetPasswordForm() {
       ) : null}
 
       <button type="submit" className={SUBMIT_CLASS} disabled={pending}>
-        {pending ? "Сохраняем…" : "Задать пароль"}
+        {pending ? t.saving : t.save}
       </button>
     </form>
   )
