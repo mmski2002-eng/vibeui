@@ -258,6 +258,13 @@
     display: flex;
   }
 
+  /* Отмеченные карточки идут первыми. Порядок меняется в CSS, а не
+     пересборкой списка: сетка отрисована на сервере, и переставлять её в
+     браузере — значит заново поднимать все превью. */
+  .catalog-grid > li:has([data-favourite="true"]) {
+    order: -1;
+  }
+
   @container grid (min-width: 42rem) {
     .catalog-grid:not([data-single]) {
       grid-template-columns: repeat(2, minmax(0, 1fr));

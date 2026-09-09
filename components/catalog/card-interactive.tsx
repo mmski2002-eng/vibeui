@@ -6,7 +6,7 @@ import { CircleAlert, Heart, Moon, RotateCcw, Sun } from "lucide-react"
 
 import { useRouter } from "next/navigation"
 
-import { toggleFavorite } from "@/lib/account-actions"
+import { useFavorites } from "@/components/catalog/favorites-provider"
 import { useSession } from "@/lib/auth-client"
 import { useEffect, useId, useRef, useState, type ReactNode } from "react"
 
@@ -163,7 +163,8 @@ export function CardInteractive({
   const [reportAt, setReportAt] = useState({ top: 0, left: 0 })
   const [reportText, setReportText] = useState("")
   const [reportSent, setReportSent] = useState(false)
-  const [favourite, setFavourite] = useState(false)
+  const { items: favorites, pinned, toggle: toggleFavourite } = useFavorites()
+  const favourite = favorites?.has(name) ?? false
   const signedIn = Boolean(useSession().data)
   const router = useRouter()
 
@@ -450,10 +451,12 @@ export function CardInteractive({
                   return
                 }
 
-                setFavourite((current) => !current)
-                void toggleFavorite(name)
+                toggleFavourite(name)
               }}
               aria-pressed={favourite}
+              // Признак читает CSS витрины: отмеченные карточки поднимаются
+              // в начало сетки.
+              data-favourite={pinned?.has(name) ? "true" : undefined}
               title={t.card.favourite}
               className={`${TOGGLE} ${favourite ? "text-shell-fg border-shell-border-strong" : ""}`}
             >
