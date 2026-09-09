@@ -8,13 +8,15 @@ import { getCatalogItem, getItemKind, itemBasePath } from "@/registry/index"
 
 const PICKS = [
   {
-    slug: "hero-018",
+    // Ведущая плитка: сцена во всю ширину ряда. Сетка из шести колонок
+    // остаётся ровной — 6 + (3 + 3) + три узких по две.
+    slug: "background-005",
     width: 1280,
-    ru: "Первый экран с фотографией",
-    en: "A photo-led hero",
-    note: "Лендинг · крупная типографика",
-    noteEn: "Landing page · bold typography",
-    wide: true,
+    ru: "Хоровод кадров вокруг фразы",
+    en: "Frames orbiting a phrase",
+    note: "Фон · анимация",
+    noteEn: "Background · animation",
+    full: true,
   },
   {
     slug: "hero-001",
@@ -26,6 +28,15 @@ const PICKS = [
     wide: true,
   },
   {
+    slug: "hero-011",
+    width: 1280,
+    ru: "Первый экран на сетке",
+    en: "A hero on a glowing grid",
+    note: "Лендинг · сетка и свечение",
+    noteEn: "Landing page · grid and glow",
+    wide: true,
+  },
+  {
     slug: "stack-001",
     width: 480,
     ru: "Фотографии веером",
@@ -34,44 +45,20 @@ const PICKS = [
     noteEn: "Gallery · animation",
   },
   {
-    slug: "pricing-001",
-    width: 1100,
-    ru: "Тарифы с акцентом",
-    en: "Pricing that stands out",
-    note: "Готовая секция · три плана",
-    noteEn: "Page section · three plans",
+    slug: "errorpage-001",
+    width: 900,
+    ru: "Страница 404 с поиском",
+    en: "A 404 page with search",
+    note: "Страница ошибки · поиск",
+    noteEn: "Error page · search",
   },
   {
-    slug: "auth-001",
-    width: 370,
-    ru: "Вход в личный кабинет",
-    en: "A welcoming sign-in",
-    note: "Форма · вход и регистрация",
-    noteEn: "Form · account access",
-  },
-  {
-    slug: "chart-001",
-    width: 440,
-    ru: "Метрики на виду",
-    en: "Metrics at a glance",
-    note: "График · личный кабинет",
-    noteEn: "Chart · dashboard",
-  },
-  {
-    slug: "button-003",
-    width: 340,
-    ru: "Кнопка, которую замечают",
-    en: "A button worth clicking",
-    note: "Компонент · градиент",
-    noteEn: "Component · gradient",
-  },
-  {
-    slug: "activity-001",
-    width: 340,
-    ru: "События в движении",
-    en: "A timeline in motion",
-    note: "Лента событий · анимация",
-    noteEn: "Timeline · animation",
+    slug: "video-001",
+    width: 900,
+    ru: "Видео с постером",
+    en: "Video with a poster",
+    note: "Медиа · плеер",
+    noteEn: "Media · player",
   },
 ]
 
@@ -107,14 +94,26 @@ export function DesignShowcase({ locale }: { locale: Locale }) {
           return (
             <article
               key={pick.slug}
-              className={`group border-shell-border bg-shell-panel hover:border-shell-accent/60 relative min-w-0 overflow-hidden rounded-2xl border transition-colors ${pick.wide ? "lg:col-span-3" : "lg:col-span-2"}`}
+              className={`group border-shell-border bg-shell-panel hover:border-shell-accent/60 relative min-w-0 overflow-hidden rounded-2xl border transition-colors ${
+                pick.full
+                  ? "sm:col-span-2 lg:col-span-6"
+                  : pick.wide
+                    ? "lg:col-span-3"
+                    : "lg:col-span-2"
+              }`}
             >
               <div
                 // Подложку красит CSS по теме сайта: витрина на главной
                 // живёт в той же теме, что и всё вокруг, иначе на светлой
                 // странице половина примеров стоит тёмными плашками.
                 data-preview-theme="auto"
-                className={`bg-preview-surface pointer-events-none overflow-hidden ${pick.wide ? "h-[250px] sm:h-[280px] lg:h-[340px]" : "h-[300px] p-5"}`}
+                className={`bg-preview-surface pointer-events-none overflow-hidden ${
+                  pick.full
+                    ? "h-[150px] sm:h-[260px] lg:h-[448px]"
+                    : pick.wide
+                      ? "h-[250px] sm:h-[280px] lg:h-[340px]"
+                      : "h-[300px] p-5"
+                }`}
               >
                 <ShowcasePreview
                   slug={pick.slug}
