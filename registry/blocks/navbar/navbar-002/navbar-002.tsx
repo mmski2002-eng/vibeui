@@ -31,16 +31,19 @@ export type Navbar002Props = {
 // тёмной и на светлой странице, поэтому палитра намеренно одноцветная.
 const STYLES = `
 :where([data-vibeui-block="navbar-002"]){
---vibeui-navbar-002-bg:oklch(0.21 0 265);
---vibeui-navbar-002-rail:oklch(0.27 0 265);
---vibeui-navbar-002-ink:oklch(0.97 0 265);
---vibeui-navbar-002-muted:oklch(0.72 0 265);
---vibeui-navbar-002-border:oklch(0.35 0 265);
---vibeui-navbar-002-accent:oklch(0.72 0.16 39.8);
---vibeui-navbar-002-accent-fg:oklch(0.2 0.04 39.8);
+--vibeui-navbar-002-bg:light-dark(oklch(0.995 0 265),oklch(0.21 0 265));
+--vibeui-navbar-002-rail:light-dark(oklch(0.965 0 265),oklch(0.27 0 265));
+--vibeui-navbar-002-ink:light-dark(oklch(0.21 0 265),oklch(0.97 0 265));
+--vibeui-navbar-002-muted:light-dark(oklch(0.51 0 265),oklch(0.72 0 265));
+--vibeui-navbar-002-border:light-dark(oklch(0.915 0 265),oklch(0.35 0 265));
+--vibeui-navbar-002-accent:light-dark(oklch(0.52 0.16 39.8),oklch(0.72 0.16 39.8));
+--vibeui-navbar-002-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.2 0.04 39.8));
 --vibeui-navbar-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="navbar-002"]{color-scheme:dark}
 [data-vibeui-block="navbar-002"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */

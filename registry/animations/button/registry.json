@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Шнур-выключатель темы",
       "description": "Шнур с ручкой у края экрана: тянешь вниз и отпускаешь — свет переключается, шнур отпружинивает и качается затухающим маятником.",
-      "categories": ["button"],
+      "categories": [
+        "button"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -50,7 +52,8 @@
             "target — что переключается: класс dark на документе или только сам блок",
             "sound — щелчок выключателя, его можно выключить",
             "darkLabel и lightLabel — подписи подсказки и aria-label ручки",
-            "размер сцены и цвета ручки, шнура и крепления"
+            "размер сцены и цвета ручки, шнура и крепления",
+            "Цвет ручки при включённом свете — проп gripColor или переменная --vibeui-button-anim-001-grip-lit"
           ],
           "notes": [
             "Компонент клиентский: ему нужны pointer-события и доступ к классу документа, поэтому директива \"use client\" обязательна.",
@@ -61,34 +64,15 @@
         },
         "controls": [
           {
-            "prop": "target",
-            "label": "Что переключает",
-            "type": "select",
-            "default": "self",
-            "options": ["self", "document"]
-          },
-          {
-            "prop": "sound",
-            "label": "Щелчок",
-            "type": "boolean",
-            "default": false
-          },
-          {
-            "prop": "darkLabel",
-            "label": "Подпись тёмной",
-            "type": "text",
-            "default": "Тёмная",
-            "maxLength": 16
-          },
-          {
-            "prop": "lightLabel",
-            "label": "Подпись светлой",
-            "type": "text",
-            "default": "Светлая",
-            "maxLength": 16
+            "prop": "gripColor",
+            "label": "Цвет ручки",
+            "type": "color",
+            "default": ""
           }
         ],
-        "cardControls": ["target", "sound"],
+        "cardControls": [
+          "gripColor"
+        ],
         "i18n": {
           "en": {
             "title": "Pull cord theme switch",
@@ -107,7 +91,8 @@
                 "target — what gets switched: the dark class on the document or the block itself",
                 "sound — the switch click, which can be turned off",
                 "darkLabel and lightLabel — the hint text and the grip's aria-label",
-                "the size of the stage and the colours of the grip, cord and mount"
+                "the size of the stage and the colours of the grip, cord and mount",
+                "Grip colour while the light is on — the gripColor prop or the --vibeui-button-anim-001-grip-lit variable"
               ],
               "notes": [
                 "The component is client-side: it needs pointer events and access to the document class, so the \"use client\" directive is required.",
@@ -118,19 +103,8 @@
               "usage": "<ButtonAnim001 target=\"document\" />"
             },
             "controls": {
-              "target": {
-                "label": "What it switches"
-              },
-              "sound": {
-                "label": "Click sound"
-              },
-              "darkLabel": {
-                "label": "Dark label",
-                "default": "Dark"
-              },
-              "lightLabel": {
-                "label": "Light label",
-                "default": "Light"
+              "gripColor": {
+                "label": "Grip colour"
               }
             },
             "preview": {

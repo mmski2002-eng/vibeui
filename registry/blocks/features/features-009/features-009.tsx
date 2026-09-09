@@ -26,15 +26,18 @@ export type Features009Props = {
 // Ячейки разделены линиями сетки, а не рамками карточек.
 const STYLES = `
 :where([data-vibeui-block="features-009"]){
---vibeui-features-009-bg:oklch(0.17 0 250);
---vibeui-features-009-fg:oklch(0.98 0 250);
---vibeui-features-009-muted:oklch(0.7 0 250);
---vibeui-features-009-dim:oklch(0.55 0 250);
---vibeui-features-009-line:oklch(1 0 0 / 12%);
---vibeui-features-009-accent:oklch(0.8 0.16 39.8);
+--vibeui-features-009-bg:light-dark(oklch(0.985 0 250),oklch(0.17 0 250));
+--vibeui-features-009-fg:light-dark(oklch(0.2 0 250),oklch(0.98 0 250));
+--vibeui-features-009-muted:light-dark(oklch(0.48 0 250),oklch(0.7 0 250));
+--vibeui-features-009-dim:light-dark(oklch(0.62 0 250),oklch(0.55 0 250));
+--vibeui-features-009-line:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 12%));
+--vibeui-features-009-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.8 0.16 39.8));
 --vibeui-features-009-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="features-009"]{color-scheme:dark}
 [data-vibeui-block="features-009"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */

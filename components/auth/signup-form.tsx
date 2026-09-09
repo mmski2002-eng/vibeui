@@ -16,7 +16,16 @@ export function SignUpForm({ locale }: { locale: Locale }) {
 
   if (sent) {
     return (
-      <p className="text-shell-muted text-sm leading-relaxed">{t.verifySent}</p>
+      <div className="grid gap-3">
+        <p className="text-shell-muted text-sm leading-relaxed">
+          {t.verifySent}
+        </p>
+        {/* Про спам говорим сразу, а не после жалобы: домен молодой, и первые
+            письма почтовые службы охотно кладут в «Спам». */}
+        <p className="border-shell-border text-shell-muted rounded-xl border border-dashed p-3 text-sm leading-relaxed">
+          {t.spamHint}
+        </p>
+      </div>
     )
   }
 
@@ -32,6 +41,9 @@ export function SignUpForm({ locale }: { locale: Locale }) {
           name: String(form.get("name")),
           email: String(form.get("email")),
           password: String(form.get("password")),
+          // Письма уходят позже, из фоновых задач: язык страницы известен
+          // только здесь, и дальше его помнит сам аккаунт.
+          locale,
         })
 
         setPending(false)

@@ -24,23 +24,26 @@ export type Navbar016Props = {
 }
 
 // Светлая шапка: белая подложка, волосяная нижняя граница и одна аккуратная
-// кнопка справа. Палитра задана явно светлой и не зависит от color-scheme:
+// кнопка справа. Палитра переключается light-dark() вслед за окружением:
 // светлый фон здесь — сама идея блока, а не ветка темы, поэтому шапка
 // остаётся светлой и на тёмной странице. Тому, кому нужна пара веток темы,
 // подойдут соседние блоки категории.
 const STYLES = `
 :where([data-vibeui-block="navbar-016"]){
---vibeui-navbar-016-bg:oklch(0.995 0 265);
---vibeui-navbar-016-ink:oklch(0.21 0 265);
---vibeui-navbar-016-muted:oklch(0.51 0 265);
---vibeui-navbar-016-border:oklch(0.915 0 265);
---vibeui-navbar-016-tile:oklch(0.965 0 265);
---vibeui-navbar-016-accent:oklch(0.52 0.16 39.8);
+--vibeui-navbar-016-bg:light-dark(oklch(0.995 0 265),oklch(0.21 0 265));
+--vibeui-navbar-016-ink:light-dark(oklch(0.21 0 265),oklch(0.97 0 265));
+--vibeui-navbar-016-muted:light-dark(oklch(0.51 0 265),oklch(0.72 0 265));
+--vibeui-navbar-016-border:light-dark(oklch(0.915 0 265),oklch(0.35 0 265));
+--vibeui-navbar-016-tile:light-dark(oklch(0.965 0 265),oklch(0.27 0 265));
+--vibeui-navbar-016-accent:light-dark(oklch(0.52 0.16 39.8),oklch(0.75 0.16 39.8));
 --vibeui-navbar-016-accent-fg:oklch(from var(--vibeui-navbar-016-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-navbar-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
-color-scheme:light;
+
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="navbar-016"]{color-scheme:dark}
 [data-vibeui-block="navbar-016"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */

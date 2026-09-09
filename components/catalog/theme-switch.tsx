@@ -33,11 +33,35 @@ export function ThemeSwitch() {
 
   useEffect(() => {
     applyLight(document.documentElement.dataset.shellTheme === "light")
+
+    // Пока человек не выбрал тему сам, сайт идёт за системой — в том числе
+    // когда она переключается при открытой вкладке (расписание день/ночь).
+    const media = window.matchMedia("(prefers-color-scheme: light)")
+
+    const onSystem = (event: MediaQueryListEvent) => {
+      const root = document.documentElement
+
+      if (!("shellFollowsSystem" in root.dataset)) return
+
+      const light = event.matches
+      root.setAttribute("data-shell-theme", light ? "light" : "dark")
+      applyLight(light)
+      document.dispatchEvent(
+        new CustomEvent(SHELL_THEME_EVENT, { detail: { light } }),
+      )
+    }
+
+    media.addEventListener("change", onSystem)
+
+    return () => media.removeEventListener("change", onSystem)
   }, [])
 
   const toggle = () => {
     const next = !lightRef.current
     applyLight(next)
+    // Ручной выбор старше системы: снимаем признак «идём за системой»,
+    // иначе следующая смена системной темы перебила бы решение человека.
+    delete document.documentElement.dataset.shellFollowsSystem
     document.documentElement.setAttribute(
       "data-shell-theme",
       next ? "light" : "dark",

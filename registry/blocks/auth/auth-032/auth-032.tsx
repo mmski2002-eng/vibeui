@@ -30,32 +30,35 @@ export type Auth032Props = {
 // градиенте и строка правовых ссылок внизу, — поэтому блок занимает всю
 // ширину, а не стоит колонкой посередине.
 //
-// Палитра задана явно светлой и не переворачивается по теме: color-scheme
+// Палитра переключается light-dark() вслед за окружением: схему задаёт
 // зафиксирован, функция выбора ветки не используется. Это не забытая тёмная
 // ветка, а суть блока — светлый вход остаётся светлым и на тёмной странице.
 const STYLES = `
 :where([data-vibeui-block="auth-032"]){
---vibeui-auth-032-accent:#3538cd;
---vibeui-auth-032-surface:#f4f6fb;
---vibeui-auth-032-card:#ffffff;
---vibeui-auth-032-fg:#141a2e;
---vibeui-auth-032-dim:#5b6478;
---vibeui-auth-032-line:#e3e7f0;
---vibeui-auth-032-field:#fbfcfe;
---vibeui-auth-032-on-accent:#ffffff;
+--vibeui-auth-032-accent:light-dark(#3538cd,#7c7fee);
+--vibeui-auth-032-surface:light-dark(#f4f6fb,#12151f);
+--vibeui-auth-032-card:light-dark(#ffffff,#191d2a);
+--vibeui-auth-032-fg:light-dark(#141a2e,#eef1f8);
+--vibeui-auth-032-dim:light-dark(#5b6478,#9aa3b8);
+--vibeui-auth-032-line:light-dark(#e3e7f0,#2a3040);
+--vibeui-auth-032-field:light-dark(#fbfcfe,#141824);
+--vibeui-auth-032-on-accent:light-dark(#ffffff,#0d0f18);
 --vibeui-auth-032-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 /* Блок светлый по замыслу: поля и полосы прокрутки внутри него обязаны
    остаться светлыми даже на тёмной странице-хозяине. */
-color-scheme:light;
+
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="auth-032"]{color-scheme:dark}
 [data-vibeui-block="auth-032"]{
 min-width:min(100%,17rem);
 box-sizing:border-box;
 font-family:var(--vibeui-auth-032-font);
 color:var(--vibeui-auth-032-fg);
 background:
-radial-gradient(58% 42% at 50% 0%,#ffffff,transparent 70%),
+radial-gradient(58% 42% at 50% 0%,light-dark(#ffffff,color-mix(in oklab,var(--vibeui-auth-032-accent) 16%,transparent)),transparent 70%),
 radial-gradient(40% 34% at 12% 100%,color-mix(in oklab,var(--vibeui-auth-032-accent) 9%,transparent),transparent 72%),
 var(--vibeui-auth-032-surface);
 }

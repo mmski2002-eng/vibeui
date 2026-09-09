@@ -31,16 +31,19 @@ export type Blog004Props = {
 // только визуально, — иначе скринридер не найдёт его в момент появления.
 const STYLES = `
 :where([data-vibeui-block="blog-004"]){
---vibeui-blog-004-bg:oklch(0.21 0 265);
---vibeui-blog-004-panel:oklch(0.26 0.032 39.8);
---vibeui-blog-004-fg:oklch(0.97 0 265);
---vibeui-blog-004-muted:oklch(0.76 0 265);
---vibeui-blog-004-border:oklch(0.36 0 265);
---vibeui-blog-004-accent:oklch(0.72 0.16 39.8);
---vibeui-blog-004-alarm:oklch(0.72 0.15 25);
+--vibeui-blog-004-bg:light-dark(oklch(0.985 0 265),oklch(0.21 0 265));
+--vibeui-blog-004-panel:light-dark(oklch(0.96 0.014 39.8),oklch(0.26 0.032 39.8));
+--vibeui-blog-004-fg:light-dark(oklch(0.22 0 265),oklch(0.97 0 265));
+--vibeui-blog-004-muted:light-dark(oklch(0.5 0 265),oklch(0.76 0 265));
+--vibeui-blog-004-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-blog-004-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.72 0.16 39.8));
+--vibeui-blog-004-alarm:light-dark(oklch(0.55 0.16 25),oklch(0.72 0.15 25));
 --vibeui-blog-004-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="blog-004"]{color-scheme:dark}
 [data-vibeui-block="blog-004"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */

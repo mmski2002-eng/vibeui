@@ -40,17 +40,20 @@ export type Features001Props = {
 // выше утилит.
 const STYLES = `
 :where([data-vibeui-block="features-001"]){
---vibeui-features-001-bg:oklch(0.19 0 260);
---vibeui-features-001-panel:oklch(0.23 0 260);
---vibeui-features-001-fg:oklch(0.97 0 260);
---vibeui-features-001-muted:oklch(0.72 0 260);
---vibeui-features-001-border:oklch(1 0 0 / 12%);
---vibeui-features-001-accent:oklch(0.78 0.14 39.8);
---vibeui-features-001-accent-fg:oklch(0.2 0.03 175);
+--vibeui-features-001-bg:light-dark(oklch(0.985 0 260),oklch(0.19 0 260));
+--vibeui-features-001-panel:light-dark(oklch(1 0 0),oklch(0.23 0 260));
+--vibeui-features-001-fg:light-dark(oklch(0.22 0 260),oklch(0.97 0 260));
+--vibeui-features-001-muted:light-dark(oklch(0.5 0 260),oklch(0.72 0 260));
+--vibeui-features-001-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 12%));
+--vibeui-features-001-accent:light-dark(oklch(0.55 0.16 39.8),oklch(0.78 0.14 39.8));
+--vibeui-features-001-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.2 0.03 175));
 --vibeui-features-001-accent-soft:color-mix(in oklab, var(--vibeui-features-001-accent) 16%, transparent);
 --vibeui-features-001-ring:color-mix(in oklab, var(--vibeui-features-001-accent) 70%, transparent);
 --vibeui-features-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="features-001"]{color-scheme:dark}
 [data-vibeui-block="features-001"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */

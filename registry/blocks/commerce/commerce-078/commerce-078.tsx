@@ -52,12 +52,12 @@ export type Commerce078Props = {
 // делает её светлой.
 const STYLES = `
 :where([data-vibeui-block="commerce-078"]){
---vibeui-commerce-078-bg:oklch(0.21 0 285);
---vibeui-commerce-078-panel:oklch(0.27 0 285);
---vibeui-commerce-078-fg:oklch(0.97 0 285);
---vibeui-commerce-078-muted:oklch(0.73 0 285);
---vibeui-commerce-078-border:oklch(0.37 0 285);
---vibeui-commerce-078-accent:oklch(0.82 0.14 39.8);
+--vibeui-commerce-078-bg:light-dark(oklch(0.985 0 285),oklch(0.21 0 285));
+--vibeui-commerce-078-panel:light-dark(oklch(1 0 0),oklch(0.27 0 285));
+--vibeui-commerce-078-fg:light-dark(oklch(0.22 0 285),oklch(0.97 0 285));
+--vibeui-commerce-078-muted:light-dark(oklch(0.5 0 285),oklch(0.73 0 285));
+--vibeui-commerce-078-border:light-dark(oklch(0.9 0 285),oklch(0.37 0 285));
+--vibeui-commerce-078-accent:light-dark(oklch(0.55 0.16 39.8),oklch(0.82 0.14 39.8));
 --vibeui-commerce-078-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

@@ -151,7 +151,7 @@ export function LandingPage({ locale }: { locale: Locale }) {
     <CatalogShell locale={locale}>
       <main className="w-full flex-1">
         {/* Hero */}
-        <section className="mx-auto w-full max-w-[1440px] px-4 pt-12 pb-12 text-center lg:px-6 lg:pt-16">
+        <section className="mx-auto w-full max-w-[1440px] px-4 pt-6 pb-8 text-center sm:pt-10 lg:px-6 lg:pt-12">
           <Link
             href={localePath(locale, catalogBasePath("animation"))}
             className="border-shell-border bg-shell-panel text-shell-muted hover:text-shell-fg hover:border-shell-border-strong mx-auto inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium transition-colors"
@@ -164,16 +164,19 @@ export function LandingPage({ locale }: { locale: Locale }) {
             <ArrowRight className="size-3" aria-hidden="true" />
           </Link>
 
-          <h1 className="text-shell-fg mx-auto mt-6 max-w-4xl text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl">
-            {t.home.title}
+          {/* Строки заданы вручную: автоперенос рвал фразу между «Отдай» и
+              «ИИ», а обещание читается только целыми предложениями. */}
+          <h1 className="text-shell-fg mx-auto mt-5 max-w-4xl text-4xl leading-[1.14] font-semibold tracking-[-0.015em] text-balance sm:text-5xl lg:text-6xl">
+            <span className="block">{t.home.titleLines[0]}</span>
+            <span className="block">{t.home.titleLines[1]}</span>
           </h1>
-          <p className="text-shell-muted mx-auto mt-6 max-w-2xl text-base leading-relaxed text-pretty sm:text-lg">
+          <p className="text-shell-muted mx-auto mt-4 max-w-xl text-base leading-relaxed text-balance sm:text-lg">
             {en
-              ? "Page sections, components and animations for your site. Choose a look you love, copy it for AI and add it to your project."
-              : "Готовые секции, компоненты и анимации для твоего сайта. Выбери то, что нравится, скопируй для ИИ и добавь в свой проект."}
+              ? "Sections, components and animations. Pick one, copy it for AI, drop it into your project."
+              : "Секции, компоненты и анимации. Выбери, скопируй для ИИ и вставь в проект."}
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             <Link href="#designs" className={BTN_PRIMARY}>
               {en ? "Explore designs" : "Выбрать дизайн"}
               <ArrowRight className="size-4" aria-hidden="true" />

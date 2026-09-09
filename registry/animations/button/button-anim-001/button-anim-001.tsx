@@ -14,6 +14,11 @@ export type ButtonAnim001Props = Omit<ComponentProps<"div">, "children"> & {
   sound?: boolean
   darkLabel?: string
   lightLabel?: string
+  /**
+   * Цвет ручки при включённом свете. Пустая строка — заводской жёлтый:
+   * ручка светится, как лампа, которую она включает.
+   */
+  gripColor?: string
 }
 
 // Шнур-выключатель: тянешь ручку вниз, отпускаешь — свет переключается, а
@@ -89,10 +94,19 @@ background:var(--vibeui-button-anim-001-grip);
 border:1px solid var(--vibeui-button-anim-001-grip-edge);
 transition:background-color .3s cubic-bezier(.4,0,.2,1),border-color .3s cubic-bezier(.4,0,.2,1);
 }
+/* Свет выключен — ручка гаснет, но оттенок выбранного цвета в ней остаётся:
+   так видно, что настройка применилась, даже когда лампа не горит. */
+[data-vibeui-block="button-anim-001"][data-dark="true"] [data-part="body"]{
+--vibeui-button-anim-001-grip:color-mix(in oklab,var(--vibeui-button-anim-001-grip-lit,oklch(0.86 0.17 92)) 22%,oklch(0.14 0 0));
+--vibeui-button-anim-001-grip-edge:color-mix(in oklab,var(--vibeui-button-anim-001-grip) 55%,oklch(0.34 0 0));
+--vibeui-button-anim-001-grip-line:color-mix(in oklab,var(--vibeui-button-anim-001-grip) 60%,oklch(0.4 0 0));
+}
+/* Свет включён — ручка горит. Оттенки кромки и насечек считаются от неё,
+   поэтому свой цвет достаточно задать один раз, в --grip-lit. */
 [data-vibeui-block="button-anim-001"][data-dark="false"] [data-part="body"]{
---vibeui-button-anim-001-grip:oklch(0.96 0 0);
---vibeui-button-anim-001-grip-edge:oklch(0.89 0 0);
---vibeui-button-anim-001-grip-line:oklch(0.74 0 0);
+--vibeui-button-anim-001-grip:var(--vibeui-button-anim-001-grip-lit,oklch(0.86 0.17 92));
+--vibeui-button-anim-001-grip-edge:color-mix(in oklab,var(--vibeui-button-anim-001-grip) 78%,oklch(0.3 0 0));
+--vibeui-button-anim-001-grip-line:color-mix(in oklab,var(--vibeui-button-anim-001-grip) 55%,oklch(0.25 0 0));
 }
 [data-vibeui-block="button-anim-001"] [data-part="grooves"]{
 position:absolute;left:0.25rem;right:0.25rem;top:0.75rem;bottom:0.75rem;
@@ -226,6 +240,7 @@ export function ButtonAnim001({
   sound = true,
   darkLabel = "Тёмная",
   lightLabel = "Светлая",
+  gripColor = "",
   className,
   style,
   ...props
@@ -579,7 +594,14 @@ export function ButtonAnim001({
         data-slot="pull-cord-switch"
         data-dark={dark ? "true" : "false"}
         className={className}
-        style={style as CSSProperties}
+        style={
+          {
+            ...(style as CSSProperties),
+            ...(gripColor
+              ? { "--vibeui-button-anim-001-grip-lit": gripColor }
+              : null),
+          } as CSSProperties
+        }
       >
         <div data-part="mount" aria-hidden="true">
           <span data-part="plate" />

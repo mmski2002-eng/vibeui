@@ -41,6 +41,8 @@ export const AUTH_TEXTS = {
       "Письмо со ссылкой отправлено. Откройте её, чтобы подтвердить адрес и войти. Ссылка действует 30 минут.",
     resetSent:
       "Если такой адрес зарегистрирован, письмо со ссылкой уже отправлено. Ссылка действует 30 минут.",
+    spamHint:
+      "Письма нет через минуту — загляните в «Спам» и «Промоакции». Мы молодой отправитель, и почтовые службы иногда перестраховываются.",
     linkBroken:
       "Ссылка неполная или устарела. Запросите новое письмо на странице восстановления.",
     linkExpired: "Ссылка устарела. Запросите новое письмо.",
@@ -84,6 +86,8 @@ export const AUTH_TEXTS = {
       "The link is on its way. Open it to confirm your address and sign in. It expires in 30 minutes.",
     resetSent:
       "If that address is registered, the link is already on its way. It expires in 30 minutes.",
+    spamHint:
+      "Nothing after a minute — check Spam and Promotions. We are a young sender, and mail services sometimes play it safe.",
     linkBroken:
       "The link is incomplete or expired. Request a new one on the reset page.",
     linkExpired: "The link has expired. Request a new one.",

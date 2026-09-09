@@ -10,8 +10,8 @@ const PICKS = [
   {
     slug: "hero-018",
     width: 1280,
-    ru: "Светлый первый экран",
-    en: "A lighter first impression",
+    ru: "Первый экран с фотографией",
+    en: "A photo-led hero",
     note: "Лендинг · крупная типографика",
     noteEn: "Landing page · bold typography",
     wide: true,
@@ -81,24 +81,21 @@ export function DesignShowcase({ locale }: { locale: Locale }) {
     <section
       id="designs"
       aria-labelledby="designs-title"
-      className="mx-auto w-full max-w-[1320px] scroll-mt-24 px-4 pt-4 pb-8 lg:px-6"
+      className="mx-auto w-full max-w-[1320px] scroll-mt-24 px-4 pb-8 lg:px-6"
     >
-      <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <p className="text-shell-accent mb-2 text-xs font-medium tracking-[0.16em] uppercase">
-            {en ? "Selected for inspiration" : "Выбрали для вдохновения"}
-          </p>
-          <h2
-            id="designs-title"
-            className="text-shell-fg text-2xl font-semibold tracking-tight sm:text-3xl"
-          >
-            {en ? "What will your site look like?" : "Каким будет твой сайт?"}
-          </h2>
-        </div>
-        <p className="text-shell-muted max-w-sm text-sm">
+      {/* Заголовок держим в одну строку с подписью: на телефоне каждая
+          лишняя строка здесь отодвигает первый пример за край экрана. */}
+      <div className="mb-4 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+        <h2
+          id="designs-title"
+          className="text-shell-fg text-2xl font-semibold tracking-tight sm:text-3xl"
+        >
+          {en ? "What will your site look like?" : "Каким будет твой сайт?"}
+        </h2>
+        <p className="text-shell-muted max-w-sm text-sm sm:max-w-md">
           {en
-            ? "Pick a design to open its preview and take it to your AI."
-            : "Нажми на понравившийся дизайн — посмотри вживую и забери для ИИ."}
+            ? "Pick one to see it live and take it to your AI."
+            : "Нажми на дизайн — посмотри вживую и забери для ИИ."}
         </p>
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
@@ -113,11 +110,10 @@ export function DesignShowcase({ locale }: { locale: Locale }) {
               className={`group border-shell-border bg-shell-panel hover:border-shell-accent/60 relative min-w-0 overflow-hidden rounded-2xl border transition-colors ${pick.wide ? "lg:col-span-3" : "lg:col-span-2"}`}
             >
               <div
-                data-preview-theme={
-                  pick.slug === "hero-018" || pick.slug === "auth-001"
-                    ? "light"
-                    : "dark"
-                }
+                // Подложку красит CSS по теме сайта: витрина на главной
+                // живёт в той же теме, что и всё вокруг, иначе на светлой
+                // странице половина примеров стоит тёмными плашками.
+                data-preview-theme="auto"
                 className={`bg-preview-surface pointer-events-none overflow-hidden ${pick.wide ? "h-[250px] sm:h-[280px] lg:h-[340px]" : "h-[300px] p-5"}`}
               >
                 <ShowcasePreview

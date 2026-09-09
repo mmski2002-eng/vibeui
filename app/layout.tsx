@@ -79,10 +79,15 @@ export const metadata: Metadata = {
 // Ставит data-shell-theme на <html> до первой отрисовки: без этого React
 // смонтировал бы тёмную оболочку по умолчанию, а затем перекрасил в светлую
 // после гидратации — заметная вспышка.
+//
+// Порядок источников: явный выбор человека в localStorage → тема системы →
+// тёмная. Системную читаем здесь же, синхронно: matchMedia в эффекте дал бы
+// ту самую вспышку, ради которой скрипт и стоит блокирующим в <head>.
+//
 // Заодно правит lang на английской витрине: <html> объявлен в единственном
 // корневом layout'е, а язык раздела известен только по пути. Для поисковиков
 // язык страницы задают hreflang в <head> и sitemap, здесь — для читалок.
-const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem("vibeui-shell-theme");if(t==="light")document.documentElement.setAttribute("data-shell-theme","light")}catch(e){}var p=location.pathname;if(p==="/en"||p.indexOf("/en/")===0)document.documentElement.lang="en"})()`
+const THEME_INIT_SCRIPT = `(function(){var d=document.documentElement;var t=null;try{t=localStorage.getItem("vibeui-shell-theme")}catch(e){}if(t!=="light"&&t!=="dark"){t=null;d.setAttribute("data-shell-follows-system","")}if(!t){try{t=window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}catch(e){t="dark"}}d.setAttribute("data-shell-theme",t);var p=location.pathname;if(p==="/en"||p.indexOf("/en/")===0)d.lang="en"})()`
 
 // Поисковикам: что за сайт и как искать по нему. Достаточно объявить один раз
 // в корне — на всех страницах разметка одна и та же.

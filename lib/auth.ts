@@ -8,10 +8,58 @@ import { cookies } from "next/headers"
 import { db } from "@/lib/db"
 import * as schema from "@/lib/db/schema"
 import { referral } from "@/lib/db/schema"
+import type { Locale } from "@/lib/i18n"
 import { letterWithLink, sendMail } from "@/lib/mail"
 
 /** Версия документов, на которые человек согласился при регистрации. */
 export const CONSENT_VERSION = "2026-09-08"
+
+/**
+ * Тексты писем. Живут рядом с отправкой, а не в общем словаре: письмо
+ * читают вне сайта, и его язык определяется не текущей страницей, а тем,
+ * на какой версии человек завёл аккаунт.
+ */
+const MAIL_COPY = {
+  ru: {
+    verify: {
+      subject: "Подтвердите почту — VibeUI",
+      heading: "Остался один шаг",
+      intro:
+        "Подтвердите адрес, и аккаунт заработает: избранное, история копирований и месячный лимит.",
+      action: "Подтвердить почту",
+      hint: "Нашли это письмо в «Спаме»? Нажмите «Не спам» и добавьте noreply@vibeui.ru в контакты — следующие письма придут во «Входящие».",
+    },
+    reset: {
+      subject: "Новый пароль — VibeUI",
+      heading: "Смена пароля",
+      intro:
+        "Вы запросили новый пароль для аккаунта VibeUI. Откройте страницу и задайте его.",
+      action: "Задать пароль",
+    },
+  },
+  en: {
+    verify: {
+      subject: "Confirm your email — VibeUI",
+      heading: "One step left",
+      intro:
+        "Confirm your address and the account is ready: favourites, copy history and your monthly limit.",
+      action: "Confirm email",
+      hint: "Found this in Spam? Mark it as not spam and add noreply@vibeui.ru to your contacts — the next letters will land in your inbox.",
+    },
+    reset: {
+      subject: "New password — VibeUI",
+      heading: "Password reset",
+      intro:
+        "You asked for a new password for your VibeUI account. Open the page and set it.",
+      action: "Set password",
+    },
+  },
+} satisfies Record<Locale, unknown>
+
+/** Язык аккаунта. Незнакомое значение — русский: сайт начинался с него. */
+function localeOf(user: { locale?: unknown }): Locale {
+  return user.locale === "en" ? "en" : "ru"
+}
 
 const BASE_URL = process.env.BETTER_AUTH_URL ?? "https://vibeui.ru"
 
@@ -38,14 +86,20 @@ export const auth = betterAuth({
     // строки — способ нагрузить единственное ядро сервера.
     maxPasswordLength: 128,
     sendResetPassword: async ({ user, url }) => {
+      const locale = localeOf(user)
+      const copy = MAIL_COPY[locale].reset
+
       await sendMail({
         to: user.email,
-        subject: "Восстановление пароля VibeUI",
-        text: letterWithLink(
-          "Чтобы задать новый пароль, откройте ссылку:",
+        subject: copy.subject,
+        ...letterWithLink({
+          locale,
+          heading: copy.heading,
+          intro: copy.intro,
+          action: copy.action,
           url,
-          "30 минут",
-        ),
+          minutes: 30,
+        }),
       })
     },
     resetPasswordTokenExpiresIn: 60 * 30,
@@ -58,14 +112,21 @@ export const auth = betterAuth({
     autoSignInAfterVerification: true,
     expiresIn: 60 * 30,
     sendVerificationEmail: async ({ user, url }) => {
+      const locale = localeOf(user)
+      const copy = MAIL_COPY[locale].verify
+
       await sendMail({
         to: user.email,
-        subject: "Подтверждение почты VibeUI",
-        text: letterWithLink(
-          "Подтвердите адрес, чтобы закончить регистрацию:",
+        subject: copy.subject,
+        ...letterWithLink({
+          locale,
+          heading: copy.heading,
+          intro: copy.intro,
+          action: copy.action,
+          hint: copy.hint,
           url,
-          "30 минут",
-        ),
+          minutes: 30,
+        }),
       })
     },
   },
@@ -79,6 +140,10 @@ export const auth = betterAuth({
   user: {
     additionalFields: {
       invitedBy: { type: "string", required: false, input: false },
+      // Язык приходит с формы регистрации: она знает, на какой версии сайта
+      // человек находится, а письма уходят позже и заголовков запроса уже
+      // не видят.
+      locale: { type: "string", required: false, input: true },
       consentAt: { type: "date", required: false, input: false },
       consentVersion: { type: "string", required: false, input: false },
     },
@@ -115,6 +180,14 @@ export const auth = betterAuth({
               invitedBy: inviter[0]?.userId ?? null,
               consentAt: new Date(),
               consentVersion: CONSENT_VERSION,
+              // Форма присылает язык сама; кука — запасной источник для
+              // случая, когда регистрация пришла не из нашей формы.
+              locale:
+                data.locale === "en" || data.locale === "ru"
+                  ? data.locale
+                  : store.get("vibeui-locale")?.value === "en"
+                    ? "en"
+                    : "ru",
             },
           }
         },

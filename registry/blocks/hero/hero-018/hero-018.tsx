@@ -26,26 +26,29 @@ export type Hero018Props = {
 //
 // Палитра задана явными значениями, без переключения веток темы: светлота — это и есть
 // смысл блока, на тёмной странице он остаётся кремовым листом, как разворот
-// журнала. Поэтому же на корне объявлен color-scheme:light — иначе браузер
+// журнала. Палитра переключается light-dark(): в тёмной теме экран темнеет
 // отрисовал бы фокусные кольца и выделение текста по тёмной ветке поверх
 // светлого фона.
 const STYLES = `
 :where([data-vibeui-block="hero-018"]){
---vibeui-hero-018-bg:oklch(0.983 0.011 85);
---vibeui-hero-018-fg:oklch(0.24 0.021 62);
---vibeui-hero-018-muted:oklch(0.51 0.019 62);
---vibeui-hero-018-line:oklch(0.9 0.013 80);
---vibeui-hero-018-surface:oklch(1 0 0);
---vibeui-hero-018-accent:oklch(0.62 0.16 39.8);
+--vibeui-hero-018-bg:light-dark(oklch(0.983 0.011 85),oklch(0.17 0.008 85));
+--vibeui-hero-018-fg:light-dark(oklch(0.24 0.021 62),oklch(0.96 0.008 85));
+--vibeui-hero-018-muted:light-dark(oklch(0.51 0.019 62),oklch(0.73 0.012 85));
+--vibeui-hero-018-line:light-dark(oklch(0.9 0.013 80),oklch(1 0 0 / 12%));
+--vibeui-hero-018-surface:light-dark(oklch(1 0 0),oklch(0.22 0.006 85));
+--vibeui-hero-018-accent:light-dark(oklch(0.62 0.16 39.8),oklch(0.78 0.15 39.8));
 --vibeui-hero-018-accent-fg:oklch(from var(--vibeui-hero-018-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="hero-018"]{color-scheme:dark}
 [data-vibeui-block="hero-018"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
 min-width:min(100%,16rem);
-box-sizing:border-box;color-scheme:light;
+box-sizing:border-box;
 background:var(--vibeui-hero-018-bg);color:var(--vibeui-hero-018-fg);
 font-family:var(--vibeui-hero-018-font);
 }
@@ -56,8 +59,19 @@ position:relative;overflow:hidden;padding:3.5rem 1.25rem;
 [data-vibeui-block="hero-018"] [data-part="frame"] img{
 position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
+/* Вуаль между фотографией и текстом. Снимок приносит свои тона — от почти
+   белой бумаги до чёрного рукава, — и заголовок на нём то читался, то тонул.
+   Слой берёт цвет фона секции, поэтому в светлой теме он высветляет кадр, а
+   в тёмной затемняет: контраст держится в обеих. */
+[data-vibeui-block="hero-018"] [data-part="frame"]::before{
+content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+background:linear-gradient(to bottom,
+color-mix(in oklab,var(--vibeui-hero-018-bg) 72%,transparent),
+color-mix(in oklab,var(--vibeui-hero-018-bg) 55%,transparent) 55%,
+color-mix(in oklab,var(--vibeui-hero-018-bg) 70%,transparent));
+}
 [data-vibeui-block="hero-018"] [data-part="canvas"]{
-position:absolute;inset:0;pointer-events:none;
+position:absolute;inset:0;z-index:2;pointer-events:none;
 background-image:
 linear-gradient(to right,var(--vibeui-hero-018-line) 1px,transparent 1px),
 linear-gradient(to bottom,var(--vibeui-hero-018-line) 1px,transparent 1px);
@@ -70,7 +84,7 @@ content:"";position:absolute;left:50%;top:-18%;width:min(46rem,120%);aspect-rati
 background:radial-gradient(closest-side,color-mix(in oklab,var(--vibeui-hero-018-accent) 26%,transparent),transparent 100%);
 }
 [data-vibeui-block="hero-018"] [data-part="inner"]{
-position:relative;max-width:52rem;margin:0 auto;text-align:center;
+position:relative;z-index:3;max-width:52rem;margin:0 auto;text-align:center;
 }
 [data-vibeui-block="hero-018"] [data-part="eyebrow"]{
 display:inline-flex;align-items:center;gap:0.5rem;margin:0 0 1.5rem;
@@ -133,7 +147,7 @@ margin:1.25rem 0 0;font-size:0.875rem;color:var(--vibeui-hero-018-muted);
 
 /** Светлый первый экран: кремовая сетка, крупный заголовок и пара кнопок. */
 export function Hero018({
-  eyebrow = "Обновление 2.0 — светлая тема",
+  eyebrow = "Обновление 2.0 — новый первый экран",
   image = "",
   title = "Соберите лендинг, который",
   titleAccent = "выглядит дорого",

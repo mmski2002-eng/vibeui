@@ -10,6 +10,10 @@ const LABELS: Record<Locale, string> = { ru: "Рус", en: "Eng" }
 /**
  * Переключатель языка. Ведёт на ту же страницу в другом языке, а не на
  * главную: человек читает конкретный компонент и хочет прочитать его же.
+ *
+ * Выбор запоминается кукой: главную язык подбирает по заголовку браузера
+ * (см. middleware), и без этой отметки следующий заход снова уводил бы
+ * англоязычного гостя с русской версии, которую он только что выбрал сам.
  */
 export function LocaleSwitch({ locale }: { locale: Locale }) {
   const pathname = usePathname()
@@ -25,6 +29,9 @@ export function LocaleSwitch({ locale }: { locale: Locale }) {
         <Link
           key={option}
           href={localePath(option, bare)}
+          onClick={() => {
+            document.cookie = `vibeui-locale=${option}; path=/; max-age=31536000; samesite=lax`
+          }}
           aria-current={option === locale ? "true" : undefined}
           className={
             "focus-visible:ring-shell-ring rounded px-2 py-0.5 text-xs font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none " +

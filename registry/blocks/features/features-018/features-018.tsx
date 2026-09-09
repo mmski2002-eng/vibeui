@@ -29,24 +29,27 @@ export type Features018Props = {
 //
 // Палитра задана явными значениями, без переключения веток темы: светлота здесь и есть
 // содержание блока, на тёмной странице секция остаётся бумажным листом.
-// Поэтому же на корне объявлен color-scheme:light — иначе браузер отрисовал бы
+// Палитра переключается light-dark(): в тёмной теме секция темнеет вместе с
 // фокусные кольца и выделение текста по тёмной ветке поверх светлого фона.
 const STYLES = `
 :where([data-vibeui-block="features-018"]){
---vibeui-features-018-bg:oklch(0.986 0.006 95);
---vibeui-features-018-fg:oklch(0.22 0.015 90);
---vibeui-features-018-muted:oklch(0.5 0.014 90);
---vibeui-features-018-line:oklch(0.9 0.01 90);
---vibeui-features-018-accent:oklch(0.52 0.12 39.8);
+--vibeui-features-018-bg:light-dark(oklch(0.986 0.006 95),oklch(0.19 0.008 95));
+--vibeui-features-018-fg:light-dark(oklch(0.22 0.015 90),oklch(0.96 0.008 90));
+--vibeui-features-018-muted:light-dark(oklch(0.5 0.014 90),oklch(0.72 0.012 90));
+--vibeui-features-018-line:light-dark(oklch(0.9 0.01 90),oklch(1 0 0 / 12%));
+--vibeui-features-018-accent:light-dark(oklch(0.52 0.12 39.8),oklch(0.78 0.14 39.8));
 --vibeui-features-018-soft:color-mix(in oklab,var(--vibeui-features-018-accent) 12%,transparent);
 --vibeui-features-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="features-018"]{color-scheme:dark}
 [data-vibeui-block="features-018"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
 min-width:min(100%,16rem);
-box-sizing:border-box;color-scheme:light;
+box-sizing:border-box;
 background:var(--vibeui-features-018-bg);color:var(--vibeui-features-018-fg);
 font-family:var(--vibeui-features-018-font);
 }

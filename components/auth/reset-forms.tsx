@@ -16,7 +16,14 @@ export function ResetRequestForm({ locale }: { locale: Locale }) {
 
   if (sent) {
     return (
-      <p className="text-shell-muted text-sm leading-relaxed">{t.resetSent}</p>
+      <div className="grid gap-3">
+        <p className="text-shell-muted text-sm leading-relaxed">
+          {t.resetSent}
+        </p>
+        <p className="border-shell-border text-shell-muted rounded-xl border border-dashed p-3 text-sm leading-relaxed">
+          {t.spamHint}
+        </p>
+      </div>
     )
   }
 

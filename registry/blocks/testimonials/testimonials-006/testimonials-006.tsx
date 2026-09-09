@@ -24,16 +24,19 @@ export type Testimonials006Props = {
 // размер — а именно длина отзыва и есть признак того, что он настоящий.
 const STYLES = `
 :where([data-vibeui-block="testimonials-006"]){
---vibeui-testimonials-006-bg:oklch(0.21 0 275);
---vibeui-testimonials-006-card:oklch(0.26 0 275);
---vibeui-testimonials-006-ink:oklch(0.97 0 275);
---vibeui-testimonials-006-muted:oklch(0.76 0 275);
---vibeui-testimonials-006-border:oklch(0.34 0 275);
---vibeui-testimonials-006-accent:oklch(0.78 0.15 39.8);
---vibeui-testimonials-006-accent-fg:oklch(0.2 0.05 39.8);
+--vibeui-testimonials-006-bg:light-dark(oklch(0.985 0 275),oklch(0.21 0 275));
+--vibeui-testimonials-006-card:light-dark(oklch(1 0 0),oklch(0.26 0 275));
+--vibeui-testimonials-006-ink:light-dark(oklch(0.22 0 275),oklch(0.97 0 275));
+--vibeui-testimonials-006-muted:light-dark(oklch(0.5 0 275),oklch(0.76 0 275));
+--vibeui-testimonials-006-border:light-dark(oklch(0.9 0 275),oklch(0.34 0 275));
+--vibeui-testimonials-006-accent:light-dark(oklch(0.55 0.16 39.8),oklch(0.78 0.15 39.8));
+--vibeui-testimonials-006-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.2 0.05 39.8));
 --vibeui-testimonials-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="testimonials-006"]{color-scheme:dark}
 [data-vibeui-block="testimonials-006"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */

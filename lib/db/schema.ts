@@ -29,6 +29,11 @@ export const user = pgTable("user", {
   /** Дата и версия принятой политики: согласие нужно уметь доказать. */
   consentAt: timestamp("consent_at"),
   consentVersion: text("consent_version"),
+  /**
+   * Язык, на котором человек зарегистрировался. Нужен письмам: они уходят
+   * из фоновых задач, где ни запроса, ни его заголовков уже нет.
+   */
+  locale: text("locale").notNull().default("ru"),
 })
 
 export const session = pgTable(

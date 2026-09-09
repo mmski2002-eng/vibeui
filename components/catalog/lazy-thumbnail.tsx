@@ -16,6 +16,15 @@ import type { PreviewProps } from "@/registry/preview-types"
 const SECTION_WIDTH = 1280
 
 /**
+ * Сколько высоты экрана отдаём кадру блока. Высокие секции (шесть экранов
+ * возможностей, длинный прайс) в натуральном масштабе не помещались в окно:
+ * карточка уезжала под липкую полосу поиска, и её верх приходилось искать
+ * прокруткой вверх. Всё, что выше лимита, ужимается сильнее — блок остаётся
+ * целым, только мельче.
+ */
+const MAX_FRAME_HEIGHT = 0.62
+
+/**
  * Клиентская часть миниатюры: компонент грузится только когда карточка
  * подъезжает к экрану.
  *
@@ -78,6 +87,10 @@ export function LazyThumbnail({
   // Меряем реальную высоту блока в 1280px и задаём кадру ту же высоту в
   // масштабе — тогда секция влезает целиком.
   const [frameHeight, setFrameHeight] = useState<number>()
+  // Ширина, от которой считается масштаб. Обычно это ширина секции; у блока,
+  // который не влезает в экран по высоте, она объявляется больше — так блок
+  // ужимается целиком, без обрезки.
+  const [frameWidth, setFrameWidth] = useState(SECTION_WIDTH)
 
   useEffect(() => {
     const frame = frameRef.current
@@ -142,7 +155,20 @@ export function LazyThumbnail({
       const naturalHeight = scale.offsetHeight
 
       if (width > 0 && naturalHeight > 0) {
-        setFrameHeight((naturalHeight * width) / SECTION_WIDTH)
+        const height = (naturalHeight * width) / SECTION_WIDTH
+        const limit = window.innerHeight * MAX_FRAME_HEIGHT
+
+        if (height > limit) {
+          // Масштаб задан как ширина кадра / --thumbnail-width, поэтому
+          // ужать блок можно, объявив ширину секции больше настоящей.
+          setFrameWidth(Math.round((SECTION_WIDTH * height) / limit))
+          setFrameHeight(limit)
+
+          return
+        }
+
+        setFrameWidth(SECTION_WIDTH)
+        setFrameHeight(height)
       }
     }
 
@@ -210,7 +236,7 @@ export function LazyThumbnail({
       ref={frameRef}
       className="preview-frame bg-preview-surface @container flex w-full flex-1 items-center"
       onClick={holdDemoLinks}
-      style={{ "--thumbnail-width": `${SECTION_WIDTH}px` } as CSSProperties}
+      style={{ "--thumbnail-width": `${frameWidth}px` } as CSSProperties}
     >
       <div
         className="relative w-full"

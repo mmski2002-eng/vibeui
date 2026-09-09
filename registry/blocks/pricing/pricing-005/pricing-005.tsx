@@ -25,16 +25,19 @@ export type Pricing005Props = {
 // заменяет собой сравнение с соседями.
 const STYLES = `
 :where([data-vibeui-block="pricing-005"]){
---vibeui-pricing-005-bg:oklch(0.21 0 275);
---vibeui-pricing-005-fg:oklch(0.98 0 275);
---vibeui-pricing-005-muted:oklch(0.75 0 275);
---vibeui-pricing-005-panel:oklch(0.26 0.035 39.8);
---vibeui-pricing-005-line:oklch(1 0 0 / 14%);
---vibeui-pricing-005-accent:oklch(0.82 0.15 39.8);
---vibeui-pricing-005-accent-fg:oklch(0.2 0.04 39.8);
+--vibeui-pricing-005-bg:light-dark(oklch(0.985 0 275),oklch(0.21 0 275));
+--vibeui-pricing-005-fg:light-dark(oklch(0.22 0 275),oklch(0.98 0 275));
+--vibeui-pricing-005-muted:light-dark(oklch(0.5 0 275),oklch(0.75 0 275));
+--vibeui-pricing-005-panel:light-dark(oklch(0.965 0.012 39.8),oklch(0.26 0.035 39.8));
+--vibeui-pricing-005-line:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 14%));
+--vibeui-pricing-005-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.82 0.15 39.8));
+--vibeui-pricing-005-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.2 0.04 39.8));
 --vibeui-pricing-005-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="pricing-005"]{color-scheme:dark}
 [data-vibeui-block="pricing-005"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */

@@ -298,6 +298,29 @@ function validateSource(where, directory, item) {
     )
   }
 
+  // Секция, зафиксировавшая color-scheme на самой себе, обнуляет собственную
+  // палитру: light-dark() внутри навсегда выбирает одну ветку, и на витрине
+  // такой блок стоит тёмной плашкой посреди светлой страницы.
+  //
+  // Правило .dark из этой проверки исключено — оно как раз объявляет схему
+  // для чужих проектов. Блок, у которого тёмная поверхность есть часть вещи
+  // (стекло на градиенте, текст поверх фотографии), light-dark() не
+  // объявляет, и его схема остаётся его делом.
+  if (source.includes("light-dark(")) {
+    for (const rule of source.matchAll(/([^{}]*)\{([^{}]*)\}/g)) {
+      const [, selector, body] = rule
+      const self = /\[data-vibeui-block="[^"]+"\]\s*$/.test(selector.trim())
+      const scheme = body.match(/color-scheme:\s*(light|dark)/)
+
+      if (self && !selector.includes(".dark") && scheme) {
+        errors.push(
+          `${where}: color-scheme:${scheme[1]} на корне отменяет light-dark() — схему задаёт окружение`,
+        )
+        break
+      }
+    }
+  }
+
   const themeToken = source.match(THEME_TOKENS)
 
   if (themeToken) {

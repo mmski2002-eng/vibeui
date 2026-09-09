@@ -39,15 +39,18 @@ export type Commerce048Props = {
 // Тёмная подложка блока своя, а не заимствованная у темы проекта.
 const STYLES = `
 :where([data-vibeui-block="commerce-048"]){
---vibeui-commerce-048-bg:oklch(0.18 0 285);
---vibeui-commerce-048-panel:oklch(0.24 0.035 39.8);
---vibeui-commerce-048-fg:oklch(0.97 0 285);
---vibeui-commerce-048-muted:oklch(0.72 0 285);
---vibeui-commerce-048-border:oklch(0.34 0 285);
---vibeui-commerce-048-accent:oklch(0.72 0.19 39.8);
+--vibeui-commerce-048-bg:light-dark(oklch(0.985 0 285),oklch(0.18 0 285));
+--vibeui-commerce-048-panel:light-dark(oklch(0.96 0.014 39.8),oklch(0.24 0.035 39.8));
+--vibeui-commerce-048-fg:light-dark(oklch(0.22 0 285),oklch(0.97 0 285));
+--vibeui-commerce-048-muted:light-dark(oklch(0.5 0 285),oklch(0.72 0 285));
+--vibeui-commerce-048-border:light-dark(oklch(0.9 0 285),oklch(0.34 0 285));
+--vibeui-commerce-048-accent:light-dark(oklch(0.55 0.19 39.8),oklch(0.72 0.19 39.8));
 --vibeui-commerce-048-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="commerce-048"]{color-scheme:dark}
 [data-vibeui-block="commerce-048"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
