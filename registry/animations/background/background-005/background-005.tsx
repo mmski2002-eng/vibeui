@@ -8,7 +8,10 @@ export type Background005Photo = {
   alt?: string
 }
 
-export type Background005Props = Omit<ComponentProps<"div">, "children"> & {
+export type Background005Props = Omit<
+  ComponentProps<"div">,
+  "children" | "title"
+> & {
   /** Надпись над фразой. */
   eyebrow?: string
   /** Сама фраза: переносы строк задаются массивом. */
