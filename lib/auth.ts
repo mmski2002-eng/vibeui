@@ -56,9 +56,15 @@ const MAIL_COPY = {
   },
 } satisfies Record<Locale, unknown>
 
-/** Язык аккаунта. Незнакомое значение — русский: сайт начинался с него. */
-function localeOf(user: { locale?: unknown }): Locale {
-  return user.locale === "en" ? "en" : "ru"
+/**
+ * Язык аккаунта. Незнакомое значение — русский: сайт начинался с него.
+ *
+ * Тип пользователя приходит из библиотеки и о дополнительных полях не знает,
+ * поэтому проверяем наличие поля, а не объявляем его в сигнатуре: описание
+ * `{ locale?: unknown }` с тем типом не пересекается вовсе.
+ */
+function localeOf(user: object): Locale {
+  return "locale" in user && user.locale === "en" ? "en" : "ru"
 }
 
 const BASE_URL = process.env.BETTER_AUTH_URL ?? "https://vibeui.ru"
