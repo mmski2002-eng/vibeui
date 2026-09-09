@@ -4,36 +4,6 @@
 import type { PreviewLoaderMap } from "@/registry/preview-types"
 
 export const PREVIEWS = {
-  "navbar-001": () =>
-    import("@/registry/blocks/navbar/navbar-001/navbar-001").then((module) => module.Navbar001),
   "navbar-002": () =>
     import("@/registry/blocks/navbar/navbar-002/navbar-002").then((module) => module.Navbar002),
-  "navbar-003": () =>
-    import("@/registry/blocks/navbar/navbar-003/navbar-003").then((module) => module.Navbar003),
-  "navbar-004": () =>
-    import("@/registry/blocks/navbar/navbar-004/navbar-004").then((module) => module.Navbar004),
-  "navbar-005": () =>
-    import("@/registry/blocks/navbar/navbar-005/navbar-005").then((module) => module.Navbar005),
-  "navbar-006": () =>
-    import("@/registry/blocks/navbar/navbar-006/navbar-006").then((module) => module.Navbar006),
-  "navbar-007": () =>
-    import("@/registry/blocks/navbar/navbar-007/navbar-007").then((module) => module.Navbar007),
-  "navbar-008": () =>
-    import("@/registry/blocks/navbar/navbar-008/navbar-008").then((module) => module.Navbar008),
-  "navbar-009": () =>
-    import("@/registry/blocks/navbar/navbar-009/navbar-009").then((module) => module.Navbar009),
-  "navbar-010": () =>
-    import("@/registry/blocks/navbar/navbar-010/navbar-010").then((module) => module.Navbar010),
-  "navbar-011": () =>
-    import("@/registry/blocks/navbar/navbar-011/navbar-011").then((module) => module.Navbar011),
-  "navbar-012": () =>
-    import("@/registry/blocks/navbar/navbar-012/navbar-012").then((module) => module.Navbar012),
-  "navbar-013": () =>
-    import("@/registry/blocks/navbar/navbar-013/navbar-013").then((module) => module.Navbar013),
-  "navbar-014": () =>
-    import("@/registry/blocks/navbar/navbar-014/navbar-014").then((module) => module.Navbar014),
-  "navbar-015": () =>
-    import("@/registry/blocks/navbar/navbar-015/navbar-015").then((module) => module.Navbar015),
-  "navbar-016": () =>
-    import("@/registry/blocks/navbar/navbar-016/navbar-016").then((module) => module.Navbar016),
 } satisfies PreviewLoaderMap

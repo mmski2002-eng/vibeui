@@ -74,7 +74,10 @@ border-color:var(--vibeui-radio-001-accent);border-width:5px;
 [data-vibeui-block="radio-001"] [data-part="option"]:has(input:checked){
 border-color:var(--vibeui-radio-001-accent);background:var(--vibeui-radio-001-tint);
 }
-[data-vibeui-block="radio-001"] [data-part="text"]{display:flex;flex-direction:column;gap:0.125rem;min-width:0}
+/* Текстовый столбец тянется на всю строку: без flex:1 он сжимался по
+   содержимому, и цена вставала не у правого края карточки, а сразу за
+   названием — в списке цены оказывались на разной высоте по горизонтали. */
+[data-vibeui-block="radio-001"] [data-part="text"]{display:flex;flex:1 1 auto;flex-direction:column;gap:0.125rem;min-width:0}
 /* Название тянется, цена держится одной строкой у правого края: без nowrap
    «5 900 ₽» разрывалось по пробелу и уезжало под подпись. */
 [data-vibeui-block="radio-001"] [data-part="label"]{

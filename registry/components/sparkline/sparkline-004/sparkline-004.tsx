@@ -65,17 +65,32 @@ content:"";position:absolute;inset-inline:0;inset-block-start:50%;
 block-size:1px;background:var(--vibeui-sparkline-004-rule);
 }
 [data-vibeui-block="sparkline-004"] [data-part="mark"]{
-display:block;border-radius:2px;block-size:calc(100% - 2px);
+display:block;border-radius:9999px;block-size:calc(100% - 2px);
 /* Отметка у́же своей ячейки: столбик во всю ширину читается как квадрат,
    а ряд исходов должен оставаться рядом штрихов. */
-inline-size:min(100%,0.375rem);justify-self:center;
+inline-size:min(100%,0.4375rem);justify-self:center;
+/* Отметки появляются по очереди слева направо: ряд читается как история
+   запусков, а не как готовая картинка. */
+animation:vibeui-sparkline-004-pop 0.4s cubic-bezier(0.2,0.8,0.2,1) both;
+animation-delay:calc(var(--step,0) * 30ms);
 }
+/* Скруглённая пилюля с градиентом: успех гуще у нулевой линии и светлеет
+   кверху, провал — зеркально. Ряд перестаёт быть частоколом. */
 [data-vibeui-block="sparkline-004"] [data-part="mark"][data-kind="win"]{
-grid-row:1;align-self:end;background:var(--vibeui-sparkline-004-accent);
+grid-row:1;align-self:end;transform-origin:bottom;
+background:linear-gradient(0deg,
+var(--vibeui-sparkline-004-accent),
+color-mix(in oklab,var(--vibeui-sparkline-004-accent) 55%,transparent));
+box-shadow:0 0.125rem 0.375rem -0.125rem color-mix(in oklab,var(--vibeui-sparkline-004-accent) 45%,transparent);
 }
 [data-vibeui-block="sparkline-004"] [data-part="mark"][data-kind="loss"]{
-grid-row:2;align-self:start;background:var(--vibeui-sparkline-004-loss);
+grid-row:2;align-self:start;transform-origin:top;
+background:linear-gradient(180deg,
+var(--vibeui-sparkline-004-loss),
+color-mix(in oklab,var(--vibeui-sparkline-004-loss) 55%,transparent));
+box-shadow:0 -0.125rem 0.375rem -0.125rem color-mix(in oklab,var(--vibeui-sparkline-004-loss) 45%,transparent);
 }
+@keyframes vibeui-sparkline-004-pop{from{transform:scaleY(0.2);opacity:0}to{transform:scaleY(1);opacity:1}}
 /* Ничья — короткая чёрточка на самой линии: пропуск в ряду выглядел бы
    как отсутствие данных, а это другой смысл. */
 [data-vibeui-block="sparkline-004"] [data-part="mark"][data-kind="draw"]{
@@ -182,7 +197,7 @@ export function Sparkline004({
               data-kind={outcome > 0 ? "win" : outcome < 0 ? "loss" : "draw"}
               // Колонка задаётся явно: при заданном ряде автоматическое
               // размещение расставило бы столбики не по порядку исходов.
-              style={{ gridColumn: index + 1 } as CSSProperties}
+              style={{ gridColumn: index + 1, "--step": index } as CSSProperties}
             />
           ))}
         </span>

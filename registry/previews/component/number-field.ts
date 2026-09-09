@@ -4,6 +4,8 @@
 import type { PreviewLoaderMap } from "@/registry/preview-types"
 
 export const PREVIEWS = {
+  "number-009": () =>
+    import("@/registry/components/number-field/number-009/number-009").then((module) => module.Number009),
   "number-001": () =>
     import("@/registry/components/number-field/number-001/number-001").then((module) => module.Number001),
   "number-002": () =>
@@ -20,6 +22,4 @@ export const PREVIEWS = {
     import("@/registry/components/number-field/number-007/number-007").then((module) => module.Number007),
   "number-008": () =>
     import("@/registry/components/number-field/number-008/number-008").then((module) => module.Number008),
-  "number-009": () =>
-    import("@/registry/components/number-field/number-009/number-009").then((module) => module.Number009),
 } satisfies PreviewLoaderMap

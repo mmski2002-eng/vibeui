@@ -11,6 +11,7 @@ import {
 } from "react"
 
 import { SHELL_THEME_EVENT } from "@/components/catalog/theme-switch"
+import { holdPreviewLink } from "@/lib/preview-links"
 
 /**
  * Кадр обложки категории. Раньше он был `inert`: вся карточка была одной
@@ -76,9 +77,9 @@ export function CategoryCover({
   const onClick = (event: MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLElement
 
-    const link = target.closest("a[href]")
-    if (link) {
-      event.preventDefault()
+    // Ссылка внутри блока: переход гасится, но якорь на слайд листает ленту.
+    if (target.closest("a[href]")) {
+      holdPreviewLink(event)
       return
     }
 
@@ -101,6 +102,7 @@ export function CategoryCover({
   return (
     <div
       ref={frame}
+      data-part="cover"
       onPointerDown={onPointerDown}
       onClick={onClick}
       className="border-shell-card bg-shell relative flex aspect-[16/10] min-w-0 cursor-pointer flex-col justify-center overflow-hidden rounded-xl border"

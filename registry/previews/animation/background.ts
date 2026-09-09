@@ -1,0 +1,17 @@
+// Сгенерировано `npm run indexes` из registry/**/registry.json.
+// Не править руками: правки затрёт следующая сборка.
+
+import type { PreviewLoaderMap } from "@/registry/preview-types"
+
+export const PREVIEWS = {
+  "background-001": () =>
+    import("@/registry/animations/background/background-001/background-001").then((module) => module.Background001),
+  "background-002": () =>
+    import("@/registry/animations/background/background-002/background-002").then((module) => module.Background002),
+  "background-003": () =>
+    import("@/registry/animations/background/background-003/background-003").then((module) => module.Background003),
+  "background-004": () =>
+    import("@/registry/animations/background/background-004/background-004").then((module) => module.Background004),
+  "background-005": () =>
+    import("@/registry/animations/background/background-005/background-005").then((module) => module.Background005),
+} satisfies PreviewLoaderMap

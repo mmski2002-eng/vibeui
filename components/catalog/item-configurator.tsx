@@ -4,6 +4,7 @@ import { useEffect, useId, useState, type ComponentType } from "react"
 
 import { type ControlValues } from "@/lib/controls"
 import { getDictionary, type Locale } from "@/lib/i18n"
+import { holdPreviewLink } from "@/lib/preview-links"
 import { loadLazyPreviewMap } from "@/registry/preview-loaders-lazy"
 import type { ItemKind } from "@/registry/categories"
 import type { ItemControl } from "@/registry/meta"
@@ -175,14 +176,7 @@ export function ConfigurablePreview({
     // прокручивает страницу к началу и меняет адрес.
     <div
       className={full ? "w-full max-w-[30rem]" : undefined}
-      onClick={(event) => {
-        const link = (event.target as HTMLElement).closest("a")
-        const href = link?.getAttribute("href")
-
-        if (link && (href == null || href === "" || href.startsWith("#"))) {
-          event.preventDefault()
-        }
-      }}
+      onClick={holdPreviewLink}
     >
       <Preview {...previewProps} {...toProps(controls, values)} />
     </div>

@@ -182,6 +182,22 @@ export const SYNONYMS: Synonym[] = [
     terms: ["contact"],
   },
   {
+    say: [
+      "карта",
+      "карты",
+      "карта проезда",
+      "как добраться",
+      "адрес на карте",
+      "метка на карте",
+      "яндекс карты",
+      "гугл карты",
+      "2гис",
+      "двагис",
+    ],
+    categories: ["map"],
+    terms: ["map", "maps", "yandex", "google", "2gis"],
+  },
+  {
     say: ["кнопка", "кнопочка", "баттон", "клавиша действия"],
     categories: ["button", "button-group"],
     terms: ["button"],
@@ -567,6 +583,21 @@ export const SYNONYMS: Synonym[] = [
     ],
     categories: ["text"],
     terms: ["text", "typography", "highlight", "letters", "reveal"],
+  },
+  {
+    say: [
+      "фон",
+      "фон секции",
+      "анимированный фон",
+      "живой фон",
+      "градиентный фон",
+      "подложка",
+      "лента света",
+      "переливы",
+      "сияние на фоне",
+    ],
+    categories: ["background"],
+    terms: ["background", "gradient", "ribbon", "ambient", "webgl", "shader"],
   },
 ]
 

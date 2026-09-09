@@ -55,12 +55,38 @@ font-family:var(--vibeui-sparkline-001-font);color:var(--vibeui-sparkline-001-fg
 font-size:1.125rem;font-weight:650;line-height:1.1;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="sparkline-001"] [data-part="chart"]{display:flex;align-items:center;gap:0.4375rem}
-[data-vibeui-block="sparkline-001"] svg{display:block;width:5.5rem;height:1.75rem;overflow:visible}
-[data-vibeui-block="sparkline-001"] [data-part="line"]{
-fill:none;stroke:var(--vibeui-sparkline-001-accent);stroke-width:1.5;
-stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;
+[data-vibeui-block="sparkline-001"] svg{display:block;width:6.5rem;height:2rem;overflow:visible}
+/* Заливка под кривой: она показывает объём, а не только направление, и
+   держит взгляд на графике, когда кривая почти горизонтальна. Цвет —
+   разбавленный акцент, поэтому падение остаётся красным и в заливке. */
+[data-vibeui-block="sparkline-001"] [data-part="area"]{
+stroke:none;fill:color-mix(in oklab,var(--vibeui-sparkline-001-accent) 18%,transparent);
+animation:vibeui-sparkline-001-rise 0.7s ease-out both;
 }
-[data-vibeui-block="sparkline-001"] [data-part="dot"]{fill:var(--vibeui-sparkline-001-accent)}
+/* Мягкое свечение — та же кривая толстой полупрозрачной линией под основной:
+   без него тонкая линия на светлой подложке выглядит вычерченной, а не живой. */
+[data-vibeui-block="sparkline-001"] [data-part="glow"]{
+fill:none;stroke:var(--vibeui-sparkline-001-accent);stroke-width:5;opacity:0.16;
+stroke-linecap:round;stroke-linejoin:round;
+}
+[data-vibeui-block="sparkline-001"] [data-part="line"]{
+fill:none;stroke:var(--vibeui-sparkline-001-accent);stroke-width:2;
+stroke-linecap:round;stroke-linejoin:round;
+/* pathLength="1" на самом пути: длина кривой заранее неизвестна, а так
+   штрих нормирован и линия «рисуется» одной строкой CSS. */
+stroke-dasharray:1;animation:vibeui-sparkline-001-draw 0.9s ease-out both;
+}
+[data-vibeui-block="sparkline-001"] [data-part="halo"]{
+fill:var(--vibeui-sparkline-001-accent);opacity:0.2;
+animation:vibeui-sparkline-001-pulse 2.4s ease-out infinite;
+}
+[data-vibeui-block="sparkline-001"] [data-part="dot"]{
+fill:var(--vibeui-sparkline-001-accent);
+stroke:light-dark(oklch(1 0 0),oklch(0.16 0 265));stroke-width:1.5;
+}
+@keyframes vibeui-sparkline-001-draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes vibeui-sparkline-001-rise{from{opacity:0}to{opacity:1}}
+@keyframes vibeui-sparkline-001-pulse{0%{r:3;opacity:0.28}70%{r:6;opacity:0}100%{r:6;opacity:0}}
 [data-vibeui-block="sparkline-001"] [data-part="delta"]{
 display:inline-flex;align-items:center;gap:0.1875rem;
 font-size:0.75rem;font-weight:600;font-variant-numeric:tabular-nums;
@@ -77,9 +103,39 @@ transform:rotate(-45deg);
 `
 
 const DEFAULT_VALUES = [12, 15, 13, 19, 17, 24, 22, 28, 31, 29, 36, 41]
-const WIDTH = 88
-const HEIGHT = 28
+const WIDTH = 104
+const HEIGHT = 32
 const ARIA_TEMPLATE = "{label}: {value}, изменение {delta}{unit}"
+
+/**
+ * Гладкая кривая через все точки: Catmull-Rom, переписанный кубическими
+ * Безье. Ломаная из прямых отрезков читается как «данные скачут», хотя
+ * скачет только частота замеров; кривая показывает ту же правду мягче и
+ * при этом проходит ровно через значения, ничего не сглаживая по существу.
+ */
+function curve(points: { x: number; y: number }[]) {
+  if (points.length < 2) {
+    return points.length === 1 ? `M${points[0].x} ${points[0].y}` : ""
+  }
+
+  const round = (value: number) => Math.round(value * 100) / 100
+  const parts = [`M${round(points[0].x)} ${round(points[0].y)}`]
+
+  for (let index = 0; index < points.length - 1; index += 1) {
+    const previous = points[index - 1] ?? points[index]
+    const start = points[index]
+    const end = points[index + 1]
+    const next = points[index + 2] ?? end
+
+    parts.push(
+      `C${round(start.x + (end.x - previous.x) / 6)} ${round(start.y + (end.y - previous.y) / 6)} ` +
+        `${round(end.x - (next.x - start.x) / 6)} ${round(end.y - (next.y - start.y) / 6)} ` +
+        `${round(end.x)} ${round(end.y)}`,
+    )
+  }
+
+  return parts.join(" ")
+}
 
 /**
  * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
@@ -135,14 +191,16 @@ export function Sparkline001({
   const max = Math.max(...values)
   const min = Math.min(...values)
   const span = max - min || 1
+  // Полтора пикселя сверху и снизу — место для толстой линии и кружка:
+  // без них крайние точки срезались бы краем кадра.
+  const inset = 3
   const points = values.map((point, index) => ({
     x: (index / Math.max(1, values.length - 1)) * WIDTH,
-    y: HEIGHT - ((point - min) / span) * HEIGHT,
+    y: HEIGHT - inset - ((point - min) / span) * (HEIGHT - inset * 2),
   }))
 
-  const line = points
-    .map((point, index) => `${index === 0 ? "M" : "L"}${point.x} ${point.y}`)
-    .join(" ")
+  const line = curve(points)
+  const area = `${line} L${WIDTH} ${HEIGHT} L0 ${HEIGHT} Z`
   const tail = points[points.length - 1]
   const trend = delta > 0.5 ? "up" : delta < -0.5 ? "down" : "flat"
   const description = ariaTemplate
@@ -174,8 +232,11 @@ export function Sparkline001({
             role="img"
             aria-label={description}
           >
-            <path data-part="line" d={line} />
-            <circle data-part="dot" cx={tail.x} cy={tail.y} r={2} />
+            <path data-part="area" d={area} />
+            <path data-part="glow" d={line} pathLength={1} />
+            <path data-part="line" d={line} pathLength={1} />
+            <circle data-part="halo" cx={tail.x} cy={tail.y} r={3} />
+            <circle data-part="dot" cx={tail.x} cy={tail.y} r={2.5} />
           </svg>
           <span data-part="delta">
             <span data-part="arrow" aria-hidden="true" />

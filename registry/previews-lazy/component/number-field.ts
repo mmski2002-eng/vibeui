@@ -6,6 +6,9 @@ import dynamic from "next/dynamic"
 import type { PreviewMap } from "@/registry/preview-types"
 
 export const PREVIEWS = {
+  "number-009": dynamic(() =>
+    import("@/registry/components/number-field/number-009/number-009").then((module) => module.Number009),
+  ),
   "number-001": dynamic(() =>
     import("@/registry/components/number-field/number-001/number-001").then((module) => module.Number001),
   ),
@@ -29,8 +32,5 @@ export const PREVIEWS = {
   ),
   "number-008": dynamic(() =>
     import("@/registry/components/number-field/number-008/number-008").then((module) => module.Number008),
-  ),
-  "number-009": dynamic(() =>
-    import("@/registry/components/number-field/number-009/number-009").then((module) => module.Number009),
   ),
 } satisfies PreviewMap

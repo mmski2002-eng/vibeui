@@ -1,0 +1,18 @@
+// Сгенерировано `npm run indexes` из registry/**/registry.json.
+// Не править руками: правки затрёт следующая сборка.
+
+import dynamic from "next/dynamic"
+
+import type { PreviewMap } from "@/registry/preview-types"
+
+export const PREVIEWS = {
+  "map-001": dynamic(() =>
+    import("@/registry/blocks/map/map-001/map-001").then((module) => module.Map001),
+  ),
+  "map-002": dynamic(() =>
+    import("@/registry/blocks/map/map-002/map-002").then((module) => module.Map002),
+  ),
+  "map-003": dynamic(() =>
+    import("@/registry/blocks/map/map-003/map-003").then((module) => module.Map003),
+  ),
+} satisfies PreviewMap

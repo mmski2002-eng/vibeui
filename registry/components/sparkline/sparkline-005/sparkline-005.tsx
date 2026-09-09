@@ -56,22 +56,48 @@ font-size:0.75rem;color:var(--vibeui-sparkline-005-muted);
 [data-vibeui-block="sparkline-005"] [data-part="value"]{
 font-size:1.0625rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.2;
 }
-[data-vibeui-block="sparkline-005"] svg{display:block;inline-size:100%;block-size:2.5rem}
-[data-vibeui-block="sparkline-005"] [data-part="band"]{fill:var(--vibeui-sparkline-005-band)}
+[data-vibeui-block="sparkline-005"] svg{display:block;inline-size:100%;block-size:3rem}
+[data-vibeui-block="sparkline-005"] [data-part="band"]{
+fill:var(--vibeui-sparkline-005-band);rx:3;
+}
 [data-vibeui-block="sparkline-005"] [data-part="edge"]{
 stroke:color-mix(in oklab,var(--vibeui-sparkline-005-accent) 40%,transparent);
 stroke-width:1;stroke-dasharray:3 3;
 }
-[data-vibeui-block="sparkline-005"] [data-part="line"]{
-fill:none;stroke:var(--vibeui-sparkline-005-accent);stroke-width:1.75;
+/* Заливка под кривой: полоса нормы отвечает «в пределах ли», заливка —
+   «сколько», и вместе они читаются как одна картинка, а не два слоя. */
+[data-vibeui-block="sparkline-005"] [data-part="area"]{
+stroke:none;fill:color-mix(in oklab,var(--vibeui-sparkline-005-accent) 14%,transparent);
+animation:vibeui-sparkline-005-rise 0.6s ease-out both;
+}
+/* Мягкое свечение под кривой: тонкая линия поверх полосы иначе теряется. */
+[data-vibeui-block="sparkline-005"] [data-part="glow"]{
+fill:none;stroke:var(--vibeui-sparkline-005-accent);stroke-width:5;opacity:0.14;
 stroke-linejoin:round;stroke-linecap:round;
 }
+[data-vibeui-block="sparkline-005"] [data-part="line"]{
+fill:none;stroke:var(--vibeui-sparkline-005-accent);stroke-width:2.25;
+stroke-linejoin:round;stroke-linecap:round;
+stroke-dasharray:1;animation:vibeui-sparkline-005-draw 0.9s ease-out both;
+}
+@keyframes vibeui-sparkline-005-draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes vibeui-sparkline-005-rise{from{opacity:0}to{opacity:1}}
+@keyframes vibeui-sparkline-005-flash{0%{opacity:0.35;r:3}70%{opacity:0;r:7}100%{opacity:0;r:7}}
 /* Точки выхода за норму: их ищут в первую очередь, поэтому они крупнее
    последней точки ряда и своего цвета. */
 [data-vibeui-block="sparkline-005"] [data-part="breach"]{
 fill:var(--vibeui-sparkline-005-breach);
+stroke:light-dark(oklch(1 0 0),oklch(0.16 0 265));stroke-width:1.25;
 }
-[data-vibeui-block="sparkline-005"] [data-part="last"]{fill:var(--vibeui-sparkline-005-accent)}
+/* Пульс вокруг выхода за норму: именно эти точки ищут глазами первыми. */
+[data-vibeui-block="sparkline-005"] [data-part="flash"]{
+fill:var(--vibeui-sparkline-005-breach);
+animation:vibeui-sparkline-005-flash 2.6s ease-out infinite;
+}
+[data-vibeui-block="sparkline-005"] [data-part="last"]{
+fill:var(--vibeui-sparkline-005-accent);
+stroke:light-dark(oklch(1 0 0),oklch(0.16 0 265));stroke-width:1.25;
+}
 [data-vibeui-block="sparkline-005"] [data-part="foot"]{
 display:flex;flex-wrap:wrap;gap:0.25rem 0.75rem;
 font-size:0.6875rem;color:var(--vibeui-sparkline-005-muted);
@@ -89,6 +115,35 @@ const HEIGHT = 40
 const DEFAULT_VALUES = [
   120, 132, 128, 145, 138, 210, 156, 141, 133, 129, 188, 147, 139, 131,
 ]
+
+/**
+ * Гладкая кривая через все точки: Catmull-Rom, переписанный кубическими
+ * Безье. Ломаная углами спорит с мягкой полосой нормы; кривая проходит
+ * ровно через значения и оставляет углы данным, а не отрисовке.
+ */
+function curve(points: { x: number; y: number }[]) {
+  if (points.length < 2) {
+    return points.length === 1 ? `M${points[0].x} ${points[0].y}` : ""
+  }
+
+  const round = (value: number) => Math.round(value * 100) / 100
+  const parts = [`M${round(points[0].x)} ${round(points[0].y)}`]
+
+  for (let index = 0; index < points.length - 1; index += 1) {
+    const previous = points[index - 1] ?? points[index]
+    const start = points[index]
+    const end = points[index + 1]
+    const next = points[index + 2] ?? end
+
+    parts.push(
+      `C${round(start.x + (end.x - previous.x) / 6)} ${round(start.y + (end.y - previous.y) / 6)} ` +
+        `${round(end.x - (next.x - start.x) / 6)} ${round(end.y - (next.y - start.y) / 6)} ` +
+        `${round(end.x)} ${round(end.y)}`,
+    )
+  }
+
+  return parts.join(" ")
+}
 
 /**
  * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
@@ -146,19 +201,19 @@ export function Sparkline005({
   const min = Math.min(...values, low)
   const span = max - min || 1
 
-  const toY = (point: number) => HEIGHT - ((point - min) / span) * HEIGHT
+  // Три пикселя сверху и снизу — место под толстую линию и кружки: без
+  // отступа крайние точки срезались бы краем кадра.
+  const inset = 3
+  const toY = (point: number) =>
+    HEIGHT - inset - ((point - min) / span) * (HEIGHT - inset * 2)
   const points = values.map((point, index) => ({
     x: (index / Math.max(1, values.length - 1)) * WIDTH,
     y: toY(point),
     breach: point > high || point < low,
   }))
 
-  const line = points
-    .map(
-      (point, index) =>
-        `${index === 0 ? "M" : "L"}${point.x.toFixed(1)} ${point.y.toFixed(1)}`,
-    )
-    .join(" ")
+  const line = curve(points)
+  const area = `${line} L${WIDTH} ${HEIGHT} L0 ${HEIGHT} Z`
   const last = points[points.length - 1]
   const breaches = points.filter((point) => point.breach)
 
@@ -215,17 +270,16 @@ export function Sparkline005({
             x2={WIDTH}
             y2={bandBottom}
           />
-          <path data-part="line" d={line} />
+          <path data-part="area" d={area} />
+          <path data-part="glow" d={line} />
+          <path data-part="line" d={line} pathLength={1} />
           {breaches.map((point) => (
-            <circle
-              key={`${point.x}-${point.y}`}
-              data-part="breach"
-              cx={point.x}
-              cy={point.y}
-              r={2.5}
-            />
+            <g key={`${point.x}-${point.y}`}>
+              <circle data-part="flash" cx={point.x} cy={point.y} r={3} />
+              <circle data-part="breach" cx={point.x} cy={point.y} r={3} />
+            </g>
           ))}
-          <circle data-part="last" cx={last.x} cy={last.y} r={2} />
+          <circle data-part="last" cx={last.x} cy={last.y} r={2.5} />
         </svg>
         <span data-part="foot">
           <span>{fillTemplate(bandTemplate, numbers)}</span>

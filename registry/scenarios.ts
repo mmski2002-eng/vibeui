@@ -126,6 +126,14 @@ export const SCENARIOS: Scenario[] = [
         whyEn: "The reason the page exists",
       },
       {
+        category: "map",
+        role: "Карта проезда",
+        roleEn: "Directions map",
+        why: "Нужна, когда услугу оказывают на месте: адрес, вход, маршрут",
+        whyEn: "For a service delivered on site: address, entrance, route",
+        optional: true,
+      },
+      {
         category: "footer",
         role: "Подвал",
         roleEn: "Footer",
@@ -134,7 +142,7 @@ export const SCENARIOS: Scenario[] = [
       },
     ],
     cover: "features",
-    parts: ["button", "input", "field", "textarea", "toast"],
+    parts: ["button", "input", "field", "toast"],
   },
   {
     slug: "store",
@@ -156,13 +164,6 @@ export const SCENARIOS: Scenario[] = [
         roleEn: "Hero",
         why: "Сезон, акция или главная категория",
         whyEn: "A season, a sale or the main category",
-      },
-      {
-        category: "commerce",
-        role: "Витрина и карточка товара",
-        roleEn: "Showcase and product page",
-        why: "Сетка товаров, карточка, корзина, оформление",
-        whyEn: "Product grid, product page, cart, checkout",
       },
       {
         category: "comparison",
@@ -202,7 +203,7 @@ export const SCENARIOS: Scenario[] = [
         whyEn: "Payment, delivery, legal documents",
       },
     ],
-    cover: "commerce",
+    cover: "hero",
     parts: ["button", "badge", "rating", "select", "pagination", "filters"],
   },
   {
@@ -288,13 +289,6 @@ export const SCENARIOS: Scenario[] = [
         whyEn: "The door: sign in, sign up, password reset",
       },
       {
-        category: "dashboard",
-        role: "Панель показателей",
-        roleEn: "Overview",
-        why: "Главные цифры на первом экране после входа",
-        whyEn: "The key numbers on the first screen after sign-in",
-      },
-      {
         category: "data-grid",
         role: "Таблица данных",
         roleEn: "Data table",
@@ -317,7 +311,7 @@ export const SCENARIOS: Scenario[] = [
         optional: true,
       },
     ],
-    cover: "dashboard",
+    cover: "data-grid",
     parts: ["button", "table", "dialog", "toast", "dropdown-menu", "skeleton"],
   },
   {

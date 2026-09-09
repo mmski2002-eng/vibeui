@@ -25,18 +25,14 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/block/cta")).PREVIEWS
     case "block/footer":
       return (await import("@/registry/previews/block/footer")).PREVIEWS
-    case "block/ai":
-      return (await import("@/registry/previews/block/ai")).PREVIEWS
-    case "block/dashboard":
-      return (await import("@/registry/previews/block/dashboard")).PREVIEWS
-    case "block/commerce":
-      return (await import("@/registry/previews/block/commerce")).PREVIEWS
     case "block/auth":
       return (await import("@/registry/previews/block/auth")).PREVIEWS
     case "block/blog":
       return (await import("@/registry/previews/block/blog")).PREVIEWS
     case "block/contact":
       return (await import("@/registry/previews/block/contact")).PREVIEWS
+    case "block/map":
+      return (await import("@/registry/previews/block/map")).PREVIEWS
     case "block/errors":
       return (await import("@/registry/previews/block/errors")).PREVIEWS
     case "block/about":
@@ -177,8 +173,6 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/component/range")).PREVIEWS
     case "component/rating":
       return (await import("@/registry/previews/component/rating")).PREVIEWS
-    case "component/scroll-area":
-      return (await import("@/registry/previews/component/scroll-area")).PREVIEWS
     case "component/scrollspy":
       return (await import("@/registry/previews/component/scrollspy")).PREVIEWS
     case "component/select":
@@ -205,8 +199,6 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/component/tabs")).PREVIEWS
     case "component/tags-input":
       return (await import("@/registry/previews/component/tags-input")).PREVIEWS
-    case "component/textarea":
-      return (await import("@/registry/previews/component/textarea")).PREVIEWS
     case "component/timeline":
       return (await import("@/registry/previews/component/timeline")).PREVIEWS
     case "component/toast":
@@ -255,6 +247,8 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/animation/cursor")).PREVIEWS
     case "animation/text":
       return (await import("@/registry/previews/animation/text")).PREVIEWS
+    case "animation/background":
+      return (await import("@/registry/previews/animation/background")).PREVIEWS
     default:
       return null
   }

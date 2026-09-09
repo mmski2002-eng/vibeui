@@ -1,0 +1,446 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "map-001",
+      "type": "registry:block",
+      "title": "Карта Яндекса с меткой",
+      "description": "Секция «как добраться»: виджет Яндекс Карт во всю ширину, карточка с адресом и ориентирами и кнопка построения маршрута.",
+      "categories": ["map"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "map-001/map-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/map-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточный: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-map-001-*. Карта настоящая без всякой настройки: по умолчанию встраивается штатный виджет Яндекс Карт (yandex.ru/map-widget/v1), которому не нужен ключ, а тёмная схема включается параметром theme. Если задан apiKey, вместо виджета поднимается JS API v3: тогда картой можно управлять из кода, а точку искать по адресу через ymaps3.search. Координаты важнее адреса: заданы latitude и longitude — виджет ставит метку по ним, не заданы — ищет по строке адреса. Если JS API не загрузился, блок возвращается к виджету и пишет об этом плашкой.",
+      "meta": {
+        "tags": ["map", "yandex", "location", "address", "directions", "contacts"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Map001",
+          "usage": "<Map001 address=\"Москва, Пресненская наб., 12\" latitude={55.7495} longitude={37.5372} theme=\"auto\" />",
+          "summary": "Секция «как добраться»: карта Яндекса во всю ширину и карточка с адресом, ориентирами и кнопкой маршрута. Без ключа работает штатный виджет Яндекс Карт со светлой и тёмной схемой; с apiKey подключается JS API v3.",
+          "preserve": [
+            "локальную палитру --vibeui-map-001-* — не подменять её токенами темы проекта",
+            "виджет Яндекс Карт как режим по умолчанию: карта обязана работать без ключа, иначе на странице пустой кадр",
+            "переключение схемы: параметр theme у виджета и тема слоя у JS API — тёмный сайт с белой картой выглядит сломанным",
+            "карточку адреса рядом с картой: адрес и ориентир нужны тем, кто карту вообще не разглядывает",
+            "ссылки маршрута и открытия в Яндекс Картах — на телефоне человек уходит в приложение, а не ведёт пальцем по встроенной карте",
+            "прозрачный фон по умолчанию: блок ложится на фон страницы, а не подкладывает под себя плашку",
+            "возврат к виджету, когда JS API не загрузился: карта на странице важнее сообщения об ошибке",
+            "очистку контейнера и destroy() карты в клине эффекта — иначе смена точки оставляет вторую карту поверх первой"
+          ],
+          "adapt": [
+            "address — адрес точки: подпись карточки, ссылки и запрос виджета, когда координат нет",
+            "latitude и longitude — координаты метки; уберите их, чтобы виджет искал точку по адресу",
+            "details — строки ориентиров: часы, вход, метро, парковка",
+            "eyebrow, title, description — заголовочная часть секции",
+            "routeLabel, openLabel, providerLabel — подписи кнопок и заголовок кадра карты",
+            "theme, zoom, accent и background — оформление карты и секции",
+            "apiKey — ключ JS API, когда картой нужно управлять из кода"
+          ],
+          "notes": [
+            "Виджету ключ не нужен: yandex.ru/map-widget/v1 встраивается как есть и показывает настоящую карту Яндекса.",
+            "Ключ JS API берётся в кабинете разработчика Яндекса и привязывается к домену. Держите его в переменной окружения, а не в исходнике блока.",
+            "Поиск ymaps3.search подключается к ключу отдельно: если он не выдан, карта останется на заданных координатах.",
+            "В режиме поиска по адресу виджет сам показывает карточку места — это его штатное поведение, а не наша разметка.",
+            "Не переносите CSS-переменные в globals.css: блок должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "address",
+            "label": "Адрес",
+            "type": "text",
+            "default": "Москва, Пресненская наб., 12, башня «Федерация»",
+            "maxLength": 64
+          },
+          {
+            "prop": "theme",
+            "label": "Тема карты",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
+          {
+            "prop": "zoom",
+            "label": "Масштаб",
+            "type": "number",
+            "default": 16,
+            "min": 10,
+            "max": 19
+          },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Yandex Map With A Pin",
+            "description": "A directions section: a full-width Yandex Maps widget with an address card, landmarks and a route button.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-map-001-*. The map is real with no setup: by default it embeds the standard Yandex Maps widget (yandex.ru/map-widget/v1), which needs no key, and its dark scheme is switched on by the theme parameter. When apiKey is set, the JS API v3 replaces the widget: the map becomes scriptable and the point can be looked up through ymaps3.search. Coordinates win over the address: with latitude and longitude the widget pins them, without them it searches the address string. If the JS API fails to load, the block falls back to the widget and says so on a small plate.",
+            "ai": {
+              "summary": "A directions section: a full-width Yandex map with an address card, landmarks and a route button. With no key the standard Yandex Maps widget works, in light and dark; with apiKey the JS API v3 takes over.",
+              "preserve": [
+                "the local --vibeui-map-001-* palette — do not swap it for your theme tokens",
+                "the Yandex Maps widget as the default mode: the map must work without a key, otherwise the page shows an empty frame",
+                "the scheme switch: the widget's theme parameter and the JS API layer theme — a dark site with a white map looks broken",
+                "the address card beside the map: the address and the landmark are for people who never study the map",
+                "the route and open-in-Yandex-Maps links — on a phone people leave for the app instead of dragging an embedded map",
+                "the transparent background by default: the block sits on the page background instead of laying a panel under itself",
+                "the fallback to the widget when the JS API fails: a map on the page matters more than an error message",
+                "emptying the container and calling destroy() in the effect cleanup — otherwise a new point stacks a second map over the first"
+              ],
+              "adapt": [
+                "address — the point address: the card heading, the links and the widget query when there are no coordinates",
+                "latitude and longitude — the marker coordinates; drop them to let the widget search by address",
+                "details — the landmark lines: hours, entrance, metro, parking",
+                "eyebrow, title, description — the heading part of the section",
+                "routeLabel, openLabel, providerLabel — the button captions and the map frame title",
+                "theme, zoom, accent and background — the look of the map and the section",
+                "apiKey — the JS API key, when the map has to be scriptable"
+              ],
+              "notes": [
+                "The widget needs no key: yandex.ru/map-widget/v1 embeds as is and shows the real Yandex map.",
+                "The JS API key comes from the Yandex developer cabinet and is bound to a domain. Keep it in an environment variable rather than in the block source.",
+                "ymaps3.search is granted per key: if it is not, the map stays on the coordinates you passed.",
+                "In address-search mode the widget shows its own place card — that is its standard behaviour, not our markup.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Map001 address=\"12 Presnenskaya nab., Moscow\" latitude={55.7495} longitude={37.5372} theme=\"auto\" />"
+            },
+            "controls": {
+              "address": {
+                "label": "Address",
+                "default": "12 Presnenskaya nab., Moscow City"
+              },
+              "theme": { "label": "Map theme" },
+              "zoom": { "label": "Zoom" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Getting here",
+                "title": "Our office in Moscow City",
+                "description": "Federation Tower, 42nd floor. The pin points at the entrance rather than at the middle of the block: in Moscow City that is fifteen minutes of difference.",
+                "address": "12 Presnenskaya nab., Federation Tower, Moscow",
+                "details": [
+                  "Mon–Fri, 10:00–19:00, use the north lobby",
+                  "Delovoy Tsentr station — 5 minutes on foot, Vystavochnaya — 8 minutes",
+                  "Parking on level −2, the first hour is free with a reception pass"
+                ],
+                "routeLabel": "Get directions",
+                "openLabel": "Open in Yandex Maps",
+                "providerLabel": "Yandex Maps",
+                "statusText": {
+                  "failed": "The JS API failed to load — the standard Yandex Maps widget is shown instead. Check the key and the allowed domains."
+                }
+              }
+            }
+          }
+        },
+        "cardControls": ["address", "theme", "zoom", "accent", "background"]
+      }
+    },
+    {
+      "name": "map-002",
+      "type": "registry:block",
+      "title": "Карта Google рядом со справкой",
+      "description": "Карта Google и панель контактов в одном ряду: адрес, часы работы, телефон и вход читаются, не закрывая саму карту.",
+      "categories": ["map"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "map-002/map-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/map-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточный: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-map-002-*. Карта настоящая без всякой настройки: по умолчанию встраивается google.com/maps в режиме output=embed — ключ не нужен, метка встаёт по адресу из пропа, поэтому смена адреса двигает точку. Если задан apiKey, вместо встроенной карты поднимается JavaScript API: тогда работают тёмная схема (массив styles, а не облачный mapId), геокодер и управление картой из кода. Две колонки включает container query, поэтому блок одинаково живёт и в узкой колонке, и во всю ширину страницы.",
+      "meta": {
+        "tags": ["map", "google", "location", "address", "office", "contacts"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Map002",
+          "usage": "<Map002 address=\"Москва, 1-й Красногвардейский проезд, 21с1\" facts={[{ label: \"Часы\", value: \"Пн–Пт, 10:00–19:00\" }]} />",
+          "summary": "Секция адреса: карта Google слева и панель справки справа — часы, телефон, почта и как найти вход. Без ключа работает встроенная карта Google, метка встаёт по адресу; с apiKey подключается JavaScript API с тёмной схемой и геокодером.",
+          "preserve": [
+            "локальную палитру --vibeui-map-002-* — не подменять её токенами темы проекта",
+            "встроенную карту как режим по умолчанию: карта обязана работать без ключа, иначе на странице пустой кадр",
+            "панель справки рядом с картой: часы и телефон спрашивают чаще, чем разглядывают метку",
+            "тёмную схему массивом styles вместо mapId — иначе item тянет за собой чужой аккаунт Google Cloud",
+            "две колонки через container query, а не через viewport: блок ставят и в узкую колонку",
+            "прозрачный фон по умолчанию: блок ложится на фон страницы, а не подкладывает под себя плашку",
+            "возврат к встроенной карте, когда JavaScript API не загрузился: карта на странице важнее сообщения об ошибке",
+            "очистку контейнера в клине эффекта — иначе смена адреса оставляет вторую карту поверх первой"
+          ],
+          "adapt": [
+            "address — адрес точки: заголовок панели, ссылки и запрос, по которому встроенная карта ставит метку",
+            "latitude и longitude — координаты метки, когда адрес разбирается неточно",
+            "facts — строки справки: часы, телефон, почта, как найти вход",
+            "eyebrow, title, description — заголовочная часть секции",
+            "openLabel, routeLabel, providerLabel — подписи кнопок и заголовок кадра карты",
+            "language — язык подписей на самой карте",
+            "apiKey, theme, zoom, accent и background — оформление карты и секции"
+          ],
+          "notes": [
+            "Встроенной карте ключ не нужен: google.com/maps с output=embed работает в iframe и показывает настоящую карту Google.",
+            "Тёмная схема есть только у JavaScript API: встроенная карта всегда светлая, и проп theme на неё не влияет.",
+            "Ключ берётся в Google Cloud Console, требует включённого биллинга и ограничения по домену. Держите его в переменной окружения.",
+            "Массив styles игнорируется, когда карте задан mapId: выбирайте что-то одно.",
+            "Не переносите CSS-переменные в globals.css: блок должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "address",
+            "label": "Адрес",
+            "type": "text",
+            "default": "Москва, 1-й Красногвардейский проезд, 21с1",
+            "maxLength": 64
+          },
+          {
+            "prop": "zoom",
+            "label": "Масштаб",
+            "type": "number",
+            "default": 16,
+            "min": 10,
+            "max": 19
+          },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Google Map Beside The Details",
+            "description": "A Google map and a details panel in one row: the address, hours, phone and entrance stay readable without covering the map.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-map-002-*. The map is real with no setup: by default it embeds google.com/maps with output=embed — no key needed, and the pin follows the address prop, so changing the address moves the point. When apiKey is set, the JavaScript API replaces the embed: the dark scheme (a styles array rather than a cloud mapId), the geocoder and scripting become available. The two columns are switched on by a container query, so the block works in a narrow column as well as full width.",
+            "ai": {
+              "summary": "An address section: a Google map on the left and a details panel on the right — hours, phone, email and how to find the entrance. With no key the standard Google embed works and the pin follows the address; with apiKey the JavaScript API adds the dark scheme and the geocoder.",
+              "preserve": [
+                "the local --vibeui-map-002-* palette — do not swap it for your theme tokens",
+                "the embedded map as the default mode: the map must work without a key, otherwise the page shows an empty frame",
+                "the details panel beside the map: hours and phone are asked for far more often than the pin is studied",
+                "the dark scheme as a styles array instead of a mapId — a mapId drags someone else's Google Cloud account into the item",
+                "the two columns through a container query rather than the viewport: the block is also dropped into a narrow column",
+                "the transparent background by default: the block sits on the page background instead of laying a panel under itself",
+                "the fallback to the embedded map when the JavaScript API fails: a map on the page matters more than an error message",
+                "emptying the container in the effect cleanup — otherwise a new address stacks a second map over the first"
+              ],
+              "adapt": [
+                "address — the point address: the panel heading, the links and the query the embedded map pins",
+                "latitude and longitude — the marker coordinates, when the address parses imprecisely",
+                "facts — the detail rows: hours, phone, email, how to find the entrance",
+                "eyebrow, title, description — the heading part of the section",
+                "openLabel, routeLabel, providerLabel — the button captions and the map frame title",
+                "language — the language of the labels on the map itself",
+                "apiKey, theme, zoom, accent and background — the look of the map and the section"
+              ],
+              "notes": [
+                "The embed needs no key: google.com/maps with output=embed works inside an iframe and shows the real Google map.",
+                "Only the JavaScript API has a dark scheme: the embedded map is always light and the theme prop does not reach it.",
+                "The key comes from the Google Cloud Console, needs billing enabled and a domain restriction. Keep it in an environment variable.",
+                "The styles array is ignored when the map is given a mapId: pick one of the two.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Map002 address=\"21 1st Krasnogvardeisky proezd, Moscow\" facts={[{ label: \"Hours\", value: \"Mon–Fri, 10:00–19:00\" }]} />"
+            },
+            "controls": {
+              "address": {
+                "label": "Address",
+                "default": "21 1st Krasnogvardeisky proezd, Moscow"
+              },
+              "zoom": { "label": "Zoom" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Office address",
+                "title": "Find us in Moscow City",
+                "description": "IQ-quarter, 21 1st Krasnogvardeisky proezd. Next to the map is what people usually ask on the phone: hours, entrance and contacts.",
+                "address": "21 1st Krasnogvardeisky proezd, Moscow",
+                "facts": [
+                  {
+                    "label": "Hours",
+                    "value": "Mon–Fri, 10:00–19:00. Saturday by appointment"
+                  },
+                  { "label": "Phone", "value": "+7 495 120-45-90" },
+                  { "label": "Email", "value": "office@studio.ru" },
+                  {
+                    "label": "How to find us",
+                    "value": "Entrance A, reception desk on the ground floor"
+                  }
+                ],
+                "openLabel": "Open in Google Maps",
+                "routeLabel": "Directions",
+                "providerLabel": "Google Maps",
+                "language": "en",
+                "statusText": {
+                  "failed": "The JavaScript API failed to load — the standard Google embed is shown instead. Check the key, billing and the allowed domains."
+                }
+              }
+            }
+          }
+        },
+        "cardControls": ["address", "zoom", "accent", "background"]
+      }
+    },
+    {
+      "name": "map-003",
+      "type": "registry:block",
+      "title": "Карта 2ГИС с адресной строкой",
+      "description": "Виджет 2ГИС во всю ширину и строка под ним: адрес, часы и вход стоят под картой, а не закрывают собой нужный квартал.",
+      "categories": ["map"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "map-003/map-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/map-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточный: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-map-003-*. Карта настоящая без всякой настройки: по умолчанию встраивается штатный виджет 2ГИС (widgets.2gis.com), которому не нужен ключ, — точка, масштаб и город передаются в options. Готовую ссылку из конструктора виджетов можно подставить пропом embedUrl. Если задан apiKey, вместо виджета поднимается MapGL: тогда доступны тёмное оформление по идентификатору стиля и управление картой из кода. Если MapGL не загрузился, блок возвращается к виджету и пишет об этом плашкой.",
+      "meta": {
+        "tags": ["map", "2gis", "mapgl", "location", "address", "branch"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Map003",
+          "usage": "<Map003 address=\"Москва, Пресненская наб., 6с2\" latitude={55.7482} longitude={37.539} city=\"moscow\" />",
+          "summary": "Секция адреса филиала: карта 2ГИС во всю ширину и строка справки под ней — адрес, часы, вход и кнопка перехода в 2ГИС. Без ключа работает штатный виджет 2ГИС; с apiKey подключается MapGL с тёмным оформлением.",
+          "preserve": [
+            "локальную палитру --vibeui-map-003-* — не подменять её токенами темы проекта",
+            "виджет 2ГИС как режим по умолчанию: карта обязана работать без ключа, иначе на странице пустой кадр",
+            "строку справки под картой, а не поверх неё: на телефоне плашка поверх карты закрывает как раз нужный квартал",
+            "город в options виджета: без верного города 2ГИС открывает карту не там",
+            "прозрачный фон по умолчанию: блок ложится на фон страницы, а не подкладывает под себя плашку",
+            "возврат к виджету, когда MapGL не загрузился: карта на странице важнее сообщения об ошибке",
+            "очистку контейнера и destroy() карты в клине эффекта — иначе смена точки оставляет вторую карту поверх первой"
+          ],
+          "adapt": [
+            "address — адрес точки: подпись под картой и ссылка в 2ГИС",
+            "latitude, longitude и city — точка и город виджета",
+            "embedUrl — готовая ссылка из конструктора виджетов 2ГИС вместо собранной по координатам",
+            "notes — короткие строки справки: часы, вход, телефон",
+            "eyebrow и title — заголовочная часть секции",
+            "lightStyleId и darkStyleId — оформление MapGL из кабинета 2ГИС",
+            "apiKey, theme, zoom, accent и background — оформление карты и секции"
+          ],
+          "notes": [
+            "Виджету ключ не нужен: widgets.2gis.com встраивается как есть и показывает настоящую карту 2ГИС.",
+            "Тёмное оформление есть только у MapGL: у виджета схемы нет, и проп theme на него не влияет.",
+            "Ключ MapGL берётся в кабинете 2ГИС и привязывается к домену. Держите его в переменной окружения, а не в исходнике блока.",
+            "Идентификаторы стилей меняются в кабинете 2ГИС. Пустой lightStyleId означает стиль по умолчанию, а не отсутствие карты.",
+            "Не переносите CSS-переменные в globals.css: блок должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "address",
+            "label": "Адрес",
+            "type": "text",
+            "default": "Москва, Пресненская наб., 6с2",
+            "maxLength": 64
+          },
+          {
+            "prop": "zoom",
+            "label": "Масштаб",
+            "type": "number",
+            "default": 16,
+            "min": 10,
+            "max": 19
+          },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "2GIS Map With An Address Bar",
+            "description": "A full-width 2GIS widget with a bar underneath: the address, hours and entrance sit below the map instead of covering the block you came to see.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-map-003-*. The map is real with no setup: by default it embeds the standard 2GIS widget (widgets.2gis.com), which needs no key — the point, the zoom and the city go into its options. A ready link from the 2GIS widget constructor can be passed through embedUrl. When apiKey is set, MapGL replaces the widget: the dark style id and scripting become available. If MapGL fails to load, the block falls back to the widget and says so on a small plate.",
+            "ai": {
+              "summary": "A branch address section: a full-width 2GIS map with a details bar underneath — address, hours, entrance and a link into 2GIS. With no key the standard 2GIS widget works; with apiKey MapGL takes over and adds the dark style.",
+              "preserve": [
+                "the local --vibeui-map-003-* palette — do not swap it for your theme tokens",
+                "the 2GIS widget as the default mode: the map must work without a key, otherwise the page shows an empty frame",
+                "the details bar under the map rather than over it: on a phone an overlay covers exactly the block people came to see",
+                "the city in the widget options: with the wrong city 2GIS opens the map somewhere else",
+                "the transparent background by default: the block sits on the page background instead of laying a panel under itself",
+                "the fallback to the widget when MapGL fails: a map on the page matters more than an error message",
+                "emptying the container and calling destroy() in the effect cleanup — otherwise a new point stacks a second map over the first"
+              ],
+              "adapt": [
+                "address — the point address: the caption under the map and the link into 2GIS",
+                "latitude, longitude and city — the point and the widget city",
+                "embedUrl — a ready link from the 2GIS widget constructor instead of the one built from coordinates",
+                "notes — the short detail rows: hours, entrance, phone",
+                "eyebrow and title — the heading part of the section",
+                "lightStyleId and darkStyleId — the MapGL look from the 2GIS cabinet",
+                "apiKey, theme, zoom, accent and background — the look of the map and the section"
+              ],
+              "notes": [
+                "The widget needs no key: widgets.2gis.com embeds as is and shows the real 2GIS map.",
+                "Only MapGL has a dark look: the widget has no scheme and the theme prop does not reach it.",
+                "The MapGL key comes from the 2GIS cabinet and is bound to a domain. Keep it in an environment variable rather than in the block source.",
+                "Style ids are managed in the 2GIS cabinet. An empty lightStyleId means the default style, not a missing map.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Map003 address=\"6 Presnenskaya nab., Moscow\" latitude={55.7482} longitude={37.539} city=\"moscow\" />"
+            },
+            "controls": {
+              "address": {
+                "label": "Address",
+                "default": "6 Presnenskaya nab., Moscow"
+              },
+              "zoom": { "label": "Zoom" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Office",
+                "title": "Moscow City, Imperia Tower",
+                "address": "6 Presnenskaya nab., Moscow",
+                "notes": [
+                  { "label": "Hours", "value": "Mon–Fri, 09:00–20:00" },
+                  {
+                    "label": "Entrance",
+                    "value": "From the embankment, entrance 2, floor 8"
+                  },
+                  { "label": "Phone", "value": "+7 495 120-45-90" }
+                ],
+                "openLabel": "Open in 2GIS",
+                "providerLabel": "2GIS",
+                "statusText": {
+                  "failed": "MapGL failed to load — the standard 2GIS widget is shown instead. Check the key and the allowed domains."
+                }
+              }
+            }
+          }
+        },
+        "cardControls": ["address", "zoom", "accent", "background"]
+      }
+    }
+  ]
+}

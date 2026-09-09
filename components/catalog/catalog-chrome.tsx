@@ -122,7 +122,7 @@ export function CatalogChrome({
 
   return (
     <>
-      <div className="border-shell-border bg-shell sticky top-[var(--catalog-header-height)] z-20 border-b">
+      <div className="border-shell-border bg-shell sticky top-[var(--catalog-header-height)] z-30 border-b">
         <div className="mx-auto flex w-full max-w-[1440px] items-center gap-3 px-4 py-2 lg:gap-8 lg:px-6">
           <div className="hidden shrink-0 items-center gap-1 lg:flex lg:w-56">
             <div className="relative min-w-0 flex-1">

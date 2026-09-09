@@ -11,12 +11,10 @@ import testimonialsRegistry from "@/registry/blocks/testimonials/registry.json"
 import faqRegistry from "@/registry/blocks/faq/registry.json"
 import ctaRegistry from "@/registry/blocks/cta/registry.json"
 import footerRegistry from "@/registry/blocks/footer/registry.json"
-import aiRegistry from "@/registry/blocks/ai/registry.json"
-import dashboardRegistry from "@/registry/blocks/dashboard/registry.json"
-import commerceRegistry from "@/registry/blocks/commerce/registry.json"
 import authRegistry from "@/registry/blocks/auth/registry.json"
 import blogRegistry from "@/registry/blocks/blog/registry.json"
 import contactRegistry from "@/registry/blocks/contact/registry.json"
+import mapRegistry from "@/registry/blocks/map/registry.json"
 import errorsRegistry from "@/registry/blocks/errors/registry.json"
 import aboutRegistry from "@/registry/blocks/about/registry.json"
 import casesRegistry from "@/registry/blocks/cases/registry.json"
@@ -87,7 +85,6 @@ import progressRegistry from "@/registry/components/progress/registry.json"
 import radioGroupRegistry from "@/registry/components/radio-group/registry.json"
 import rangeRegistry from "@/registry/components/range/registry.json"
 import ratingRegistry from "@/registry/components/rating/registry.json"
-import scrollAreaRegistry from "@/registry/components/scroll-area/registry.json"
 import scrollspyRegistry from "@/registry/components/scrollspy/registry.json"
 import selectRegistry from "@/registry/components/select/registry.json"
 import separatorRegistry from "@/registry/components/separator/registry.json"
@@ -101,7 +98,6 @@ import switchRegistry from "@/registry/components/switch/registry.json"
 import tableRegistry from "@/registry/components/table/registry.json"
 import tabsRegistry from "@/registry/components/tabs/registry.json"
 import tagsInputRegistry from "@/registry/components/tags-input/registry.json"
-import textareaRegistry from "@/registry/components/textarea/registry.json"
 import timelineRegistry from "@/registry/components/timeline/registry.json"
 import toastRegistry from "@/registry/components/toast/registry.json"
 import toggleRegistry from "@/registry/components/toggle/registry.json"
@@ -109,7 +105,7 @@ import toggleGroupRegistry from "@/registry/components/toggle-group/registry.jso
 import tooltipRegistry from "@/registry/components/tooltip/registry.json"
 import treeRegistry from "@/registry/components/tree/registry.json"
 import ctaAnimationRegistry from "@/registry/animations/cta/registry.json"
-import dashboardAnimationRegistry from "@/registry/animations/dashboard/registry.json"
+import dashboardRegistry from "@/registry/animations/dashboard/registry.json"
 import authAnimationRegistry from "@/registry/animations/auth/registry.json"
 import avatarAnimationRegistry from "@/registry/animations/avatar/registry.json"
 import buttonAnimationRegistry from "@/registry/animations/button/registry.json"
@@ -126,6 +122,7 @@ import checklistRegistry from "@/registry/animations/checklist/registry.json"
 import stacksRegistry from "@/registry/animations/stacks/registry.json"
 import cursorRegistry from "@/registry/animations/cursor/registry.json"
 import textRegistry from "@/registry/animations/text/registry.json"
+import backgroundRegistry from "@/registry/animations/background/registry.json"
 
 /**
  * Реестры, попадающие на сайт. Это и есть файловая база каталога: другого
@@ -178,21 +175,6 @@ export const SOURCES = [
     items: footerRegistry.items,
   },
   {
-    directory: "registry/blocks/ai",
-    kind: "block",
-    items: aiRegistry.items,
-  },
-  {
-    directory: "registry/blocks/dashboard",
-    kind: "block",
-    items: dashboardRegistry.items,
-  },
-  {
-    directory: "registry/blocks/commerce",
-    kind: "block",
-    items: commerceRegistry.items,
-  },
-  {
     directory: "registry/blocks/auth",
     kind: "block",
     items: authRegistry.items,
@@ -206,6 +188,11 @@ export const SOURCES = [
     directory: "registry/blocks/contact",
     kind: "block",
     items: contactRegistry.items,
+  },
+  {
+    directory: "registry/blocks/map",
+    kind: "block",
+    items: mapRegistry.items,
   },
   {
     directory: "registry/blocks/errors",
@@ -558,11 +545,6 @@ export const SOURCES = [
     items: ratingRegistry.items,
   },
   {
-    directory: "registry/components/scroll-area",
-    kind: "component",
-    items: scrollAreaRegistry.items,
-  },
-  {
     directory: "registry/components/scrollspy",
     kind: "component",
     items: scrollspyRegistry.items,
@@ -628,11 +610,6 @@ export const SOURCES = [
     items: tagsInputRegistry.items,
   },
   {
-    directory: "registry/components/textarea",
-    kind: "component",
-    items: textareaRegistry.items,
-  },
-  {
     directory: "registry/components/timeline",
     kind: "component",
     items: timelineRegistry.items,
@@ -670,7 +647,7 @@ export const SOURCES = [
   {
     directory: "registry/animations/dashboard",
     kind: "animation",
-    items: dashboardAnimationRegistry.items,
+    items: dashboardRegistry.items,
   },
   {
     directory: "registry/animations/auth",
@@ -751,6 +728,11 @@ export const SOURCES = [
     directory: "registry/animations/text",
     kind: "animation",
     items: textRegistry.items,
+  },
+  {
+    directory: "registry/animations/background",
+    kind: "animation",
+    items: backgroundRegistry.items,
   },
 ] as const satisfies readonly {
   directory: string

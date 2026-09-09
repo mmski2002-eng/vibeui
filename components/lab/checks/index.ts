@@ -200,10 +200,6 @@ import {
   SEED as RatingSeed,
 } from "@/components/lab/checks/rating"
 import {
-  CHECKS as ScrollArea,
-  SEED as ScrollAreaSeed,
-} from "@/components/lab/checks/scroll-area"
-import {
   CHECKS as Scrollspy,
   SEED as ScrollspySeed,
 } from "@/components/lab/checks/scrollspy"
@@ -252,10 +248,6 @@ import {
   CHECKS as TagsInput,
   SEED as TagsInputSeed,
 } from "@/components/lab/checks/tags-input"
-import {
-  CHECKS as Textarea,
-  SEED as TextareaSeed,
-} from "@/components/lab/checks/textarea"
 import {
   CHECKS as Timeline,
   SEED as TimelineSeed,
@@ -332,7 +324,6 @@ export const LAB_RUNS: Record<string, { checks: LabCheck[]; seed: number }> = {
   "radio-group": { checks: RadioGroup, seed: RadioGroupSeed },
   range: { checks: Range, seed: RangeSeed },
   rating: { checks: Rating, seed: RatingSeed },
-  "scroll-area": { checks: ScrollArea, seed: ScrollAreaSeed },
   scrollspy: { checks: Scrollspy, seed: ScrollspySeed },
   select: { checks: Select, seed: SelectSeed },
   separator: { checks: Separator, seed: SeparatorSeed },
@@ -346,7 +337,6 @@ export const LAB_RUNS: Record<string, { checks: LabCheck[]; seed: number }> = {
   table: { checks: Table, seed: TableSeed },
   tabs: { checks: Tabs, seed: TabsSeed },
   "tags-input": { checks: TagsInput, seed: TagsInputSeed },
-  textarea: { checks: Textarea, seed: TextareaSeed },
   timeline: { checks: Timeline, seed: TimelineSeed },
   toast: { checks: Toast, seed: ToastSeed },
   toggle: { checks: Toggle, seed: ToggleSeed },

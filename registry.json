@@ -11,12 +11,10 @@
     "registry/blocks/faq/registry.json",
     "registry/blocks/cta/registry.json",
     "registry/blocks/footer/registry.json",
-    "registry/blocks/ai/registry.json",
-    "registry/blocks/dashboard/registry.json",
-    "registry/blocks/commerce/registry.json",
     "registry/blocks/auth/registry.json",
     "registry/blocks/blog/registry.json",
     "registry/blocks/contact/registry.json",
+    "registry/blocks/map/registry.json",
     "registry/blocks/errors/registry.json",
     "registry/blocks/about/registry.json",
     "registry/blocks/cases/registry.json",
@@ -87,7 +85,6 @@
     "registry/components/radio-group/registry.json",
     "registry/components/range/registry.json",
     "registry/components/rating/registry.json",
-    "registry/components/scroll-area/registry.json",
     "registry/components/scrollspy/registry.json",
     "registry/components/select/registry.json",
     "registry/components/separator/registry.json",
@@ -101,7 +98,6 @@
     "registry/components/table/registry.json",
     "registry/components/tabs/registry.json",
     "registry/components/tags-input/registry.json",
-    "registry/components/textarea/registry.json",
     "registry/components/timeline/registry.json",
     "registry/components/toast/registry.json",
     "registry/components/toggle/registry.json",
@@ -125,6 +121,7 @@
     "registry/animations/checklist/registry.json",
     "registry/animations/stacks/registry.json",
     "registry/animations/cursor/registry.json",
-    "registry/animations/text/registry.json"
+    "registry/animations/text/registry.json",
+    "registry/animations/background/registry.json"
   ]
 }

@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "ASCII-жидкость за курсором",
       "description": "Поле ASCII-символов, в котором за курсором расходится облако: под символами считается настоящая жидкость — вливание, адвекция, давление, — а её плотность выбирает символ.",
-      "categories": ["cursor"],
+      "categories": [
+        "cursor"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -120,7 +122,11 @@
             ]
           }
         ],
-        "cardControls": ["color", "cellSize", "charset"],
+        "cardControls": [
+          "color",
+          "cellSize",
+          "charset"
+        ],
         "preview": {
           "width": "full"
         },
@@ -156,17 +162,599 @@
               "usage": "<Cursor001 cellSize={12} dissipation={0.05} brush={0.55} />"
             },
             "controls": {
-              "color": { "label": "Ink colour" },
-              "backgroundColor": { "label": "Paper colour" },
-              "cellSize": { "label": "Character cell" },
-              "dissipation": { "label": "Trail decay" },
-              "brush": { "label": "Brush radius" },
-              "force": { "label": "Splat strength" },
-              "animate": { "label": "Idle drift" },
-              "charset": { "label": "Character ramp" }
+              "color": {
+                "label": "Ink colour"
+              },
+              "backgroundColor": {
+                "label": "Paper colour"
+              },
+              "cellSize": {
+                "label": "Character cell"
+              },
+              "dissipation": {
+                "label": "Trail decay"
+              },
+              "brush": {
+                "label": "Brush radius"
+              },
+              "force": {
+                "label": "Splat strength"
+              },
+              "animate": {
+                "label": "Idle drift"
+              },
+              "charset": {
+                "label": "Character ramp"
+              }
             }
           }
         }
+      }
+    },
+    {
+      "name": "cursor-002",
+      "type": "registry:component",
+      "title": "Магнитный курсор",
+      "description": "Курсор здесь не точка, а кольцо с инерцией: оно отстаёт от руки, растягивается по направлению движения и садится на ближайшую кнопку, надевая её форму.",
+      "categories": [
+        "cursor"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cursor-002/cursor-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cursor-002.tsx"
+        }
+      ],
+      "docs": "Поле рисует собственный курсор и прячет родной через cursor: none. Пружина считается в rAF, а не CSS-переходом: переход не умеет менять цель на середине пути, а рука меняет её постоянно. Каждый кадр ищется ближайшая кнопка в радиусе pull; найденная забирает кольцо себе и отдаёт ему свою ширину, высоту и скругление — кольцо надевается на цель, а сама кнопка приподнимается и берёт акцент. Пока цели нет, кольцо вытягивается вдоль движения и сжимается поперёк: растяжение считается по скорости самого кольца, а не по событиям указателя, потому что события приходят рывками. Кадры считаются только пока рука внутри поля и пружина не пришла в покой. Тема берётся у окружения через light-dark(), prefers-reduced-motion выключает инерцию — кольцо просто следует за рукой.",
+      "meta": {
+        "tags": [
+          "cursor",
+          "magnetic",
+          "hover",
+          "spring",
+          "pointer",
+          "interaction",
+          "buttons",
+          "micro-interaction"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Cursor002",
+          "usage": "<Cursor002 targets={[{ label: \"Открыть\", hint: \"⏎\" }]} pull={110} />",
+          "summary": "Магнитный курсор: кольцо с инерцией отстаёт от руки, растягивается на скорости и садится на ближайшую кнопку, принимая её форму. Родной курсор в поле скрыт, всё считает один rAF-цикл.",
+          "preserve": [
+            "локальную палитру --vibeui-cursor-002-* — не подменять её токенами темы проекта",
+            "cursor: none у поля: два курсора одновременно читаются как сбой отрисовки",
+            "пружину в rAF, а не в CSS-переходе: цель меняется на середине пути, переход этого не умеет",
+            "притяжение к ближайшей цели вместе с подсветкой самой кнопки — иначе магнит виден только по кольцу, а не по интерфейсу",
+            "растяжение по скорости кольца, а не по событиям указателя: события приходят рывками",
+            "остановку кадров, когда рука вышла из поля и пружина успокоилась",
+            "правило prefers-reduced-motion: инерция обязана выключаться"
+          ],
+          "adapt": [
+            "targets — кнопки в поле: подпись и горячая клавиша",
+            "caption и подпись внизу — тексты вокруг демонстрации",
+            "pull — радиус притяжения в пикселях",
+            "lag — инерция кольца: меньше значит ленивее",
+            "stretch — сила растяжения по движению; 0 отключает",
+            "accent — цвет кольца и подсветки цели",
+            "interactive — можно выключить реакцию на курсор"
+          ],
+          "notes": [
+            "Кольцо лежит поверх поля и не ловит события: иначе оно закрывало бы собой ту самую кнопку, к которой стремится.",
+            "Радиус притяжения считается от центра кнопки, поэтому у широкой кнопки края притягивают слабее — при длинных подписях увеличивайте pull.",
+            "На касании компонент остаётся зрелищем без магнита: у пальца нет наведения, и это нормально.",
+            "Не переносите CSS-переменные в globals.css: компонент должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "pull",
+            "label": "Радиус притяжения",
+            "type": "number",
+            "default": 90,
+            "min": 0,
+            "max": 220
+          },
+          {
+            "prop": "lag",
+            "label": "Инерция",
+            "type": "number",
+            "default": 0.18,
+            "min": 0.05,
+            "max": 0.6
+          },
+          {
+            "prop": "stretch",
+            "label": "Растяжение",
+            "type": "number",
+            "default": 1,
+            "min": 0,
+            "max": 2
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "interactive",
+            "label": "Реакция на курсор",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Magnetic Cursor",
+            "description": "The cursor here is not a dot but a ring with inertia: it lags behind the hand, stretches along the movement and settles onto the nearest button, taking its shape.",
+            "docs": "The field draws its own cursor and hides the native one with cursor: none. The spring runs in rAF rather than a CSS transition: a transition cannot change its target mid-flight, and the hand changes it constantly. Every frame the nearest button within the pull radius is found; it takes the ring over and hands it its own width, height and corner radius — the ring slips onto the target while the button itself lifts and takes the accent. With no target in reach the ring stretches along the movement and squeezes across it: the stretch is computed from the ring's own speed rather than from pointer events, because those arrive in bursts. Frames are computed only while the hand is inside the field and the spring has not settled. The theme comes from the surroundings through light-dark(), and prefers-reduced-motion turns the inertia off — the ring simply follows the hand.",
+            "ai": {
+              "summary": "A magnetic cursor: a ring with inertia lags behind the hand, stretches with speed and settles onto the nearest button, taking its shape. The native cursor is hidden in the field and one rAF loop does the work.",
+              "preserve": [
+                "the local --vibeui-cursor-002-* palette — do not swap it for your theme tokens",
+                "cursor: none on the field: two cursors at once read as a rendering glitch",
+                "the spring in rAF rather than a CSS transition: the target changes mid-flight and a transition cannot follow",
+                "the pull towards the nearest target together with the button's own highlight — otherwise the magnet shows only on the ring, not in the interface",
+                "the stretch computed from the ring's speed rather than from pointer events: those arrive in bursts",
+                "stopping frames once the hand leaves the field and the spring settles",
+                "the prefers-reduced-motion rule: the inertia has to switch off"
+              ],
+              "adapt": [
+                "targets — the buttons in the field: label and shortcut",
+                "caption and the line at the bottom — the texts around the demo",
+                "pull — the magnet radius in pixels",
+                "lag — the ring inertia: lower means lazier",
+                "stretch — how strongly the ring stretches with movement; 0 turns it off",
+                "accent — the colour of the ring and of the target highlight",
+                "interactive — the pointer reaction can be switched off"
+              ],
+              "notes": [
+                "The ring sits above the field and catches no events: otherwise it would cover the very button it is reaching for.",
+                "The pull radius is measured from the button centre, so the edges of a wide button attract less — raise pull for long labels.",
+                "On touch the component stays a spectacle without the magnet: a finger has no hover, and that is fine.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Cursor002 targets={[{ label: \"Open\", hint: \"⏎\" }]} pull={110} />"
+            },
+            "controls": {
+              "pull": {
+                "label": "Magnet radius"
+              },
+              "lag": {
+                "label": "Inertia"
+              },
+              "stretch": {
+                "label": "Stretch"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "interactive": {
+                "label": "Pointer reaction"
+              }
+            },
+            "preview": {
+              "props": {
+                "caption": "Move the cursor",
+                "targets": [
+                  {
+                    "label": "Open project",
+                    "hint": "⏎"
+                  },
+                  {
+                    "label": "Share",
+                    "hint": "S"
+                  },
+                  {
+                    "label": "Archive",
+                    "hint": "⌫"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "pull",
+          "lag",
+          "stretch",
+          "accent"
+        ]
+      }
+    },
+    {
+      "name": "cursor-003",
+      "type": "registry:component",
+      "title": "Прицел дизайнера",
+      "description": "Перекрестье во весь кадр, координаты у курсора и направляющие, которые липнут к краям и центрам элементов, а без них — к шагу сетки.",
+      "categories": [
+        "cursor"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cursor-003/cursor-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cursor-003.tsx"
+        }
+      ],
+      "docs": "Курсор здесь инструмент, а не украшение: родной курсор скрыт, вместо него крест, две направляющие во всю ширину и высоту кадра и плашка с координатами. На каждое движение считается расстояние до всех граней элементов — левой, правой и центральной по каждой оси; ближайшая в радиусе snap забирает направляющую себе, та становится сплошной и акцентной, а элемент подсвечивается. Пока рядом нет ни одной грани, координата садится на шаг сетки: свободное значение в макете почти всегда случайность, а не решение. Отдельной полосой рисуется замер — расстояние от настоящего положения руки до грани, к которой прилип прицел. Всё считается в обработчике движения, без анимационного цикла: между движениями курсора картинка не меняется. Тема берётся у окружения через light-dark().",
+      "meta": {
+        "tags": [
+          "cursor",
+          "crosshair",
+          "guides",
+          "snapping",
+          "design-tool",
+          "pointer",
+          "grid",
+          "measure"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Cursor003",
+          "usage": "<Cursor003 grid={24} snap={12} nodes={[{ label: \"Шапка\", box: [0.06, 0.12, 0.88, 0.14] }]} />",
+          "summary": "Прицел дизайнера: перекрестье во весь кадр, координаты у курсора, направляющие липнут к краям и центрам элементов, а без них — к сетке. Родной курсор скрыт, всё считается на движении, без анимационного цикла.",
+          "preserve": [
+            "локальную палитру --vibeui-cursor-003-* — не подменять её токенами темы проекта",
+            "прилипание и к граням, и к центрам: по центру в макетах выравнивают не реже, чем по краю",
+            "запасную опору на сетку: свободная координата почти всегда случайность",
+            "разницу пунктира и сплошной линии: прилипание должно читаться боковым зрением",
+            "замер до грани числом рядом: линия без числа ничего не сообщает",
+            "подсветку самого элемента: иначе непонятно, к чему прилипла направляющая",
+            "cursor: none у поля: два курсора одновременно читаются как сбой отрисовки",
+            "расчёт на событии движения, а не в rAF: между движениями картинке меняться незачем"
+          ],
+          "adapt": [
+            "nodes — элементы макета: подпись и рамка в долях кадра",
+            "grid — шаг сетки в пикселях",
+            "snap — радиус прилипания к грани",
+            "accent — цвет направляющих, замера и плашки координат",
+            "interactive — можно выключить реакцию на курсор"
+          ],
+          "notes": [
+            "Координаты показываются после прилипания: это те числа, которые получит макет, а не сырое положение руки.",
+            "Радиус прилипания меньше половины шага сетки делает сетку главной, больше — гранями; по умолчанию выбран компромисс.",
+            "На касании прицел остаётся там, где палец last коснулся поля: у пальца нет наведения.",
+            "Не переносите CSS-переменные в globals.css: компонент должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "grid",
+            "label": "Шаг сетки",
+            "type": "number",
+            "default": 32,
+            "min": 8,
+            "max": 96
+          },
+          {
+            "prop": "snap",
+            "label": "Радиус прилипания",
+            "type": "number",
+            "default": 10,
+            "min": 0,
+            "max": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "interactive",
+            "label": "Реакция на курсор",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Designer's Crosshair",
+            "description": "A crosshair across the whole frame, coordinates beside the cursor and guides that stick to the edges and centres of elements — and to the grid step when none is near.",
+            "docs": "The cursor here is a tool rather than decoration: the native cursor is hidden and replaced by a cross, two guides spanning the frame and a chip with the coordinates. On every move the distance to every element edge is measured — left, right and centre on each axis; the nearest one within the snap radius takes the guide over, the guide turns solid and accented, and the element lights up. While no edge is near, the coordinate settles on the grid step: a free value in a layout is almost always an accident rather than a decision. A separate bar draws the measurement — the distance from the real position of the hand to the edge the crosshair snapped to. Everything is computed in the move handler, with no animation loop: between cursor moves the picture has no reason to change. The theme comes from the surroundings through light-dark().",
+            "ai": {
+              "summary": "A designer's crosshair: guides across the frame, coordinates beside the cursor, snapping to element edges and centres and to the grid. The native cursor is hidden and everything is computed on move, with no animation loop.",
+              "preserve": [
+                "the local --vibeui-cursor-003-* palette — do not swap it for your theme tokens",
+                "snapping to centres as well as edges: layouts align to the centre no less often",
+                "the grid as the fallback: a free coordinate is almost always an accident",
+                "the difference between the dashed and the solid line: the snap has to read from the corner of the eye",
+                "the measurement in numbers next to the line: a line without a number says nothing",
+                "highlighting the element itself: otherwise it is unclear what the guide snapped to",
+                "cursor: none on the field: two cursors at once read as a rendering glitch",
+                "computing on the move event rather than in rAF: between moves the picture has no reason to change"
+              ],
+              "adapt": [
+                "nodes — the layout elements: label and box in fractions of the frame",
+                "grid — the grid step in pixels",
+                "snap — the snapping radius to an edge",
+                "accent — the colour of the guides, the measurement and the coordinate chip",
+                "interactive — the pointer reaction can be switched off"
+              ],
+              "notes": [
+                "The coordinates are shown after snapping: those are the numbers the layout will get, not the raw position of the hand.",
+                "A snap radius below half the grid step makes the grid dominant, above it the edges; the default is a compromise.",
+                "On touch the crosshair stays where the finger last touched the field: a finger has no hover.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Cursor003 grid={24} snap={12} nodes={[{ label: \"Header\", box: [0.06, 0.12, 0.88, 0.14] }]} />"
+            },
+            "controls": {
+              "grid": {
+                "label": "Grid step"
+              },
+              "snap": {
+                "label": "Snap radius"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "interactive": {
+                "label": "Pointer reaction"
+              }
+            },
+            "preview": {
+              "props": {
+                "nodes": [
+                  {
+                    "label": "Header",
+                    "box": [
+                      0.06,
+                      0.12,
+                      0.88,
+                      0.14
+                    ]
+                  },
+                  {
+                    "label": "Card",
+                    "box": [
+                      0.06,
+                      0.34,
+                      0.4,
+                      0.42
+                    ]
+                  },
+                  {
+                    "label": "List",
+                    "box": [
+                      0.52,
+                      0.34,
+                      0.42,
+                      0.24
+                    ]
+                  },
+                  {
+                    "label": "Button",
+                    "box": [
+                      0.52,
+                      0.64,
+                      0.18,
+                      0.12
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "grid",
+          "snap",
+          "accent",
+          "interactive"
+        ]
+      }
+    },
+    {
+      "name": "cursor-004",
+      "type": "registry:component",
+      "title": "Резинка к узлу",
+      "description": "От курсора к ближайшему узлу тянется настоящая нить: провисает под своим весом, пружинит на рывке, натягивается в струну и рвётся, если перетянуть.",
+      "categories": [
+        "cursor"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cursor-004/cursor-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cursor-004.tsx"
+        }
+      ],
+      "docs": "Нить — цепочка из шестнадцати узлов, посчитанная по Верле: каждый узел помнит своё прошлое положение, скорость выводится из разницы, а между соседями держится расстояние. Ограничения прогоняются шестью проходами за кадр: за один проход цепочка остаётся резиновой и провисает сильнее, чем нужно. Первый узел всегда в руке, последний прибит к порту, пока нить цела; когда ближайший узел уходит за предел досягаемости, связь рвётся и хвост отлетает — исчезновение без отдачи читалось бы как сбой отрисовки. Рисуется нить одной кривой через середины отрезков: ломаная из шестнадцати точек выдала бы себя углами. Родной курсор скрыт, его место занимает конец нити. Кадры считаются только пока рука внутри поля; prefers-reduced-motion оставляет нить статичной. Тема берётся у окружения через light-dark().",
+      "meta": {
+        "tags": [
+          "cursor",
+          "rope",
+          "verlet",
+          "physics",
+          "canvas",
+          "pointer",
+          "node-editor",
+          "connection"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Cursor004",
+          "usage": "<Cursor004 reach={300} sag={0.7} nodes={[{ label: \"Источник\", at: [0.2, 0.3] }]} />",
+          "summary": "Резинка к узлу: от курсора к ближайшему порту тянется нить на физике Верле — провисает, пружинит, натягивается и рвётся за пределом досягаемости. Рисуется на canvas одной кривой.",
+          "preserve": [
+            "локальную палитру --vibeui-cursor-004-* — не подменять её токенами темы проекта",
+            "цепочку Верле вместо пружины на transform: запаздывание хвоста и провис получаются только из физики",
+            "несколько проходов ограничений за кадр: за один нить остаётся резиновой",
+            "разрыв с отдачей: связь, исчезающая мгновенно, читается как сбой отрисовки",
+            "рисование кривой через середины отрезков: ломаная выдаёт себя углами",
+            "подсветку узла, за который держится нить: иначе непонятно, к чему тянется рука",
+            "cursor: none у поля и точку на конце нити вместо родного курсора",
+            "остановку кадров, когда рука вышла из поля"
+          ],
+          "adapt": [
+            "nodes — узлы: подпись и место в долях кадра",
+            "reach — расстояние, дальше которого нить рвётся",
+            "sag — провисание: 0 даёт струну, 1 — верёвку",
+            "thickness — толщина нити",
+            "accent — цвет нити и подсветки узла",
+            "interactive — можно выключить реакцию на курсор"
+          ],
+          "notes": [
+            "Число узлов в нити зашито константой: меньше шестнадцати — видны углы, больше — лишняя работа без разницы для глаза.",
+            "Провисание считается от расстояния между рукой и портом, поэтому короткая связь провисает сильнее длинной — как настоящая верёвка.",
+            "На касании нить тянется от точки последнего касания: у пальца нет наведения.",
+            "Не переносите CSS-переменные в globals.css: компонент должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "reach",
+            "label": "Дальность",
+            "type": "number",
+            "default": 260,
+            "min": 80,
+            "max": 600
+          },
+          {
+            "prop": "sag",
+            "label": "Провисание",
+            "type": "number",
+            "default": 0.55,
+            "min": 0,
+            "max": 1
+          },
+          {
+            "prop": "thickness",
+            "label": "Толщина",
+            "type": "number",
+            "default": 2,
+            "min": 1,
+            "max": 6
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет нити",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "interactive",
+            "label": "Реакция на курсор",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Rope To The Node",
+            "description": "A real rope stretches from the cursor to the nearest node: it sags under its own weight, springs on a jerk, pulls taut and snaps if you stretch it too far.",
+            "docs": "The rope is a chain of sixteen knots solved with Verlet integration: each knot remembers its previous position, the velocity follows from the difference, and the distance between neighbours is held. The constraints are relaxed six times per frame: with a single pass the chain stays rubbery and sags more than it should. The first knot is always in the hand and the last is pinned to the port while the rope holds; when the nearest node leaves the reach the link snaps and the tail flies off — vanishing without a recoil would read as a rendering glitch. The rope is drawn as one curve through the midpoints of the segments: a polyline of sixteen points would give itself away with corners. The native cursor is hidden and the end of the rope takes its place. Frames are computed only while the hand is inside the field; prefers-reduced-motion leaves the rope still. The theme comes from the surroundings through light-dark().",
+            "ai": {
+              "summary": "A rope to the node: from the cursor to the nearest port stretches a Verlet rope — it sags, springs, pulls taut and snaps beyond the reach. Drawn on canvas as a single curve.",
+              "preserve": [
+                "the local --vibeui-cursor-004-* palette — do not swap it for your theme tokens",
+                "the Verlet chain instead of a spring on transform: the lag of the tail and the sag come only from the physics",
+                "several constraint passes per frame: with one the rope stays rubbery",
+                "the snap with a recoil: a link that vanishes instantly reads as a rendering glitch",
+                "drawing the curve through the midpoints of the segments: a polyline gives itself away with corners",
+                "highlighting the node the rope holds on to: otherwise it is unclear what the hand is reaching for",
+                "cursor: none on the field and the dot at the end of the rope instead of the native cursor",
+                "stopping frames once the hand leaves the field"
+              ],
+              "adapt": [
+                "nodes — the ports: label and position in fractions of the frame",
+                "reach — the distance beyond which the rope snaps",
+                "sag — the slack: 0 gives a string, 1 a rope",
+                "thickness — the thickness of the rope",
+                "accent — the colour of the rope and of the node highlight",
+                "interactive — the pointer reaction can be switched off"
+              ],
+              "notes": [
+                "The number of knots is a constant: fewer than sixteen shows corners, more is extra work with no visible difference.",
+                "The slack is derived from the distance between the hand and the port, so a short link sags more than a long one — like a real rope.",
+                "On touch the rope stretches from the point of the last touch: a finger has no hover.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Cursor004 reach={300} sag={0.7} nodes={[{ label: \"Source\", at: [0.2, 0.3] }]} />"
+            },
+            "controls": {
+              "reach": {
+                "label": "Reach"
+              },
+              "sag": {
+                "label": "Slack"
+              },
+              "thickness": {
+                "label": "Thickness"
+              },
+              "accent": {
+                "label": "Rope colour"
+              },
+              "interactive": {
+                "label": "Pointer reaction"
+              }
+            },
+            "preview": {
+              "props": {
+                "nodes": [
+                  {
+                    "label": "Source",
+                    "at": [
+                      0.16,
+                      0.28
+                    ]
+                  },
+                  {
+                    "label": "Filter",
+                    "at": [
+                      0.5,
+                      0.2
+                    ]
+                  },
+                  {
+                    "label": "Model",
+                    "at": [
+                      0.82,
+                      0.36
+                    ]
+                  },
+                  {
+                    "label": "Report",
+                    "at": [
+                      0.3,
+                      0.74
+                    ]
+                  },
+                  {
+                    "label": "Webhook",
+                    "at": [
+                      0.72,
+                      0.76
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "reach",
+          "sag",
+          "thickness",
+          "accent"
+        ]
       }
     }
   ]

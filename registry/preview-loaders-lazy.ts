@@ -25,18 +25,14 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/block/cta")).PREVIEWS
     case "block/footer":
       return (await import("@/registry/previews-lazy/block/footer")).PREVIEWS
-    case "block/ai":
-      return (await import("@/registry/previews-lazy/block/ai")).PREVIEWS
-    case "block/dashboard":
-      return (await import("@/registry/previews-lazy/block/dashboard")).PREVIEWS
-    case "block/commerce":
-      return (await import("@/registry/previews-lazy/block/commerce")).PREVIEWS
     case "block/auth":
       return (await import("@/registry/previews-lazy/block/auth")).PREVIEWS
     case "block/blog":
       return (await import("@/registry/previews-lazy/block/blog")).PREVIEWS
     case "block/contact":
       return (await import("@/registry/previews-lazy/block/contact")).PREVIEWS
+    case "block/map":
+      return (await import("@/registry/previews-lazy/block/map")).PREVIEWS
     case "block/errors":
       return (await import("@/registry/previews-lazy/block/errors")).PREVIEWS
     case "block/about":
@@ -177,8 +173,6 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/component/range")).PREVIEWS
     case "component/rating":
       return (await import("@/registry/previews-lazy/component/rating")).PREVIEWS
-    case "component/scroll-area":
-      return (await import("@/registry/previews-lazy/component/scroll-area")).PREVIEWS
     case "component/scrollspy":
       return (await import("@/registry/previews-lazy/component/scrollspy")).PREVIEWS
     case "component/select":
@@ -205,8 +199,6 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/component/tabs")).PREVIEWS
     case "component/tags-input":
       return (await import("@/registry/previews-lazy/component/tags-input")).PREVIEWS
-    case "component/textarea":
-      return (await import("@/registry/previews-lazy/component/textarea")).PREVIEWS
     case "component/timeline":
       return (await import("@/registry/previews-lazy/component/timeline")).PREVIEWS
     case "component/toast":
@@ -255,6 +247,8 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/animation/cursor")).PREVIEWS
     case "animation/text":
       return (await import("@/registry/previews-lazy/animation/text")).PREVIEWS
+    case "animation/background":
+      return (await import("@/registry/previews-lazy/animation/background")).PREVIEWS
     default:
       return null
   }

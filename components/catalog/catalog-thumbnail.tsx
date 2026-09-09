@@ -46,10 +46,14 @@ export function CatalogThumbnail({
       slug={slug}
       kind={kind}
       category={category}
-      compact={kind !== "block"}
+      // Фон — не «компонент в кадре», а подложка целого экрана: ему нужен
+      // тот же режим, что у секций, иначе он рисуется мелким прямоугольником
+      // посреди пустой карточки.
+      compact={kind !== "block" && preview?.width !== "section"}
       // Компоненту, которому нужна настоящая ширина строки, её надо дать:
       // во flex-кадре он иначе схлопывается по содержимому и врёт про дизайн.
       full={preview?.width === "full"}
+      half={preview?.width === "section"}
       props={preview?.props}
       states={preview?.states}
       aspect={preview?.aspect}

@@ -67,10 +67,13 @@ transition:transform .25s cubic-bezier(.34,1.56,.64,1),color .15s ease;
 [data-vibeui-block="rating-001"] [data-part="stars"]:hover [data-part="star"]{color:var(--vibeui-rating-001-empty)}
 [data-vibeui-block="rating-001"] [data-part="stars"]:hover label:hover [data-part="star"],
 [data-vibeui-block="rating-001"] [data-part="stars"]:hover label:hover ~ label [data-part="star"]{color:var(--vibeui-rating-001-accent)}
-/* Та же подсветка на фокусе: без мыши превью работает клавиатурой. */
-[data-vibeui-block="rating-001"] [data-part="stars"]:focus-within [data-part="star"]{color:var(--vibeui-rating-001-empty)}
-[data-vibeui-block="rating-001"] [data-part="stars"]:focus-within label:has(input:focus-visible) [data-part="star"],
-[data-vibeui-block="rating-001"] [data-part="stars"]:focus-within label:has(input:focus-visible) ~ label [data-part="star"]{color:var(--vibeui-rating-001-accent)}
+/* Та же подсветка на фокусе: без мыши превью работает клавиатурой.
+   Гасить выбранное можно только когда фокус видимый: мышиный клик оставляет
+   на радиокнопке :focus без :focus-visible, и без этой оговорки после выбора
+   гасли все звёзды — оценка выглядела несохранённой. */
+[data-vibeui-block="rating-001"] [data-part="stars"]:has(input:focus-visible) [data-part="star"]{color:var(--vibeui-rating-001-empty)}
+[data-vibeui-block="rating-001"] [data-part="stars"]:has(input:focus-visible) label:has(input:focus-visible) [data-part="star"],
+[data-vibeui-block="rating-001"] [data-part="stars"]:has(input:focus-visible) label:has(input:focus-visible) ~ label [data-part="star"]{color:var(--vibeui-rating-001-accent)}
 [data-vibeui-block="rating-001"] input:focus-visible + [data-part="star"]{outline:2px solid var(--vibeui-rating-001-accent);outline-offset:1px}
 /* Подпись оценки тоже без JS: видна та строка, чей value отмечен. */
 [data-vibeui-block="rating-001"] [data-part="hint"]{display:none;margin:0;font-size:0.75rem;color:var(--vibeui-rating-001-muted)}

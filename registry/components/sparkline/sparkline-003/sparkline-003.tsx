@@ -53,21 +53,34 @@ font-size:1.0625rem;font-weight:700;font-variant-numeric:tabular-nums;line-heigh
 /* Столбики выстроены гридом по числу отсчётов: ширина делится поровну и не
    зависит от того, сколько значений передали. */
 [data-vibeui-block="sparkline-003"] [data-part="bars"]{
-display:grid;align-items:end;gap:2px;
+display:grid;align-items:end;gap:3px;
 grid-template-columns:repeat(var(--vibeui-sparkline-003-count,12),minmax(0,1fr));
-block-size:2.25rem;
+block-size:2.75rem;
 }
+/* Столбик с градиентом вниз: у основания цвет гуще, к вершине светлеет —
+   ряд читается как объём, а не как частокол одинаковых прямоугольников. */
 [data-vibeui-block="sparkline-003"] [data-part="bar"]{
 align-self:end;display:block;
-border-radius:2px 2px 1px 1px;
-background:var(--vibeui-sparkline-003-bar);
+border-radius:0.25rem 0.25rem 0.125rem 0.125rem;
+background:linear-gradient(180deg,
+color-mix(in oklab,var(--vibeui-sparkline-003-bar) 92%,transparent),
+color-mix(in oklab,var(--vibeui-sparkline-003-bar) 45%,transparent));
 /* Высота — доля от максимума. Нижняя граница в 2px оставляет видимым и
    нулевой отсчёт: пропуск в ряду читается как сбой данных, а не как ноль. */
 block-size:max(2px,calc(var(--share,0) * 100%));
+transform-origin:bottom;
+/* Столбики вырастают по очереди слева направо: ряд читается как время,
+   а не как готовая картинка. */
+animation:vibeui-sparkline-003-grow 0.5s cubic-bezier(0.2,0.8,0.2,1) both;
+animation-delay:calc(var(--step,0) * 35ms);
 }
 [data-vibeui-block="sparkline-003"] [data-part="bar"][data-peak="true"]{
-background:var(--vibeui-sparkline-003-accent);
+background:linear-gradient(180deg,
+var(--vibeui-sparkline-003-accent),
+color-mix(in oklab,var(--vibeui-sparkline-003-accent) 62%,transparent));
+box-shadow:0 0.125rem 0.5rem -0.125rem color-mix(in oklab,var(--vibeui-sparkline-003-accent) 55%,transparent);
 }
+@keyframes vibeui-sparkline-003-grow{from{transform:scaleY(0.15);opacity:0}to{transform:scaleY(1);opacity:1}}
 [data-vibeui-block="sparkline-003"] [data-part="foot"]{
 display:flex;align-items:baseline;justify-content:space-between;gap:0.5rem;
 font-size:0.6875rem;color:var(--vibeui-sparkline-003-muted);
@@ -173,7 +186,7 @@ export function Sparkline003({
               key={`${index}-${point}`}
               data-part="bar"
               data-peak={index === peak ? "true" : undefined}
-              style={{ "--share": point / max } as CSSProperties}
+              style={{ "--share": point / max, "--step": index } as CSSProperties}
             />
           ))}
         </span>

@@ -122,6 +122,12 @@ export const CATEGORIES = [
     group: "marketing",
   },
   {
+    slug: "map",
+    label: "Карты",
+    en: "Maps",
+    group: "marketing",
+  },
+  {
     slug: "errors",
     label: "Страницы ошибок",
     en: "Error Pages",
@@ -881,6 +887,15 @@ export const CATEGORIES = [
     label: "Текстовая анимация",
     en: "Text animation",
     group: "marketing",
+    wide: true,
+  },
+  {
+    slug: "background",
+    label: "Фон",
+    en: "Background",
+    group: "marketing",
+    // Фон живёт во всю ширину экрана: в половинном кадре от него остаётся
+    // угол, по которому не понять ни рисунка, ни движения.
     wide: true,
   },
 ] as const satisfies readonly {

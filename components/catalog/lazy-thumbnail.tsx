@@ -6,9 +6,9 @@ import {
   useState,
   type ComponentType,
   type CSSProperties,
-  type MouseEvent,
 } from "react"
 
+import { holdPreviewLink } from "@/lib/preview-links"
 import { loadLazyPreviewMap } from "@/registry/preview-loaders-lazy"
 import type { ItemKind } from "@/registry/categories"
 import type { PreviewProps } from "@/registry/preview-types"
@@ -23,6 +23,13 @@ const SECTION_WIDTH = 1280
  * целым, только мельче.
  */
 const MAX_FRAME_HEIGHT = 0.62
+
+/** «8 / 3» → 2.67. Пропорция кадра приходит из metadata строкой. */
+function parseAspect(value: string) {
+  const [width, height] = value.split("/").map((part) => Number(part.trim()))
+
+  return width > 0 && height > 0 ? width / height : 8 / 3
+}
 
 /**
  * Клиентская часть миниатюры: компонент грузится только когда карточка
@@ -41,28 +48,13 @@ const MAX_FRAME_HEIGHT = 0.62
  * (`@starting-style`), чтобы анимация начиналась ровно в момент вставки
  * загруженного компонента, а не в момент старта загрузки.
  */
-/**
- * Гасит переход по демо-ссылке внутри превью. В компонентах каталога ссылки
- * ведут в "#": на витрине такой клик прокручивает страницу к началу и меняет
- * адрес, хотя человек просто щёлкнул по карточке.
- */
-function holdDemoLinks(event: MouseEvent<HTMLDivElement>) {
-  const link = (event.target as HTMLElement).closest("a")
-  const href = link?.getAttribute("href")
-
-  // Якорные ссылки демо («#», «#top») в каталоге уводят на верх страницы
-  // витрины, а не блока — гасим их вместе с пустыми.
-  if (link && (href == null || href === "" || href.startsWith("#"))) {
-    event.preventDefault()
-  }
-}
-
 export function LazyThumbnail({
   slug,
   kind,
   category,
   compact,
   full,
+  half,
   props,
   states,
   aspect,
@@ -72,6 +64,8 @@ export function LazyThumbnail({
   category: string
   compact: boolean
   full: boolean
+  /** Рисовать вдвое крупнее кадра: масштаб ровно 0.5. */
+  half?: boolean
   props?: Record<string, unknown>
   states?: Record<string, unknown>[]
   aspect?: string
@@ -155,6 +149,18 @@ export function LazyThumbnail({
       const naturalHeight = scale.offsetHeight
 
       if (width > 0 && naturalHeight > 0) {
+        if (half) {
+          // Ширина секции — двойная ширина кадра, масштаб выходит ровно
+          // вдвое. Высоту кадра берём из пропорции: подложка растягивается
+          // на всё, что ей дали, и своей высоты не имеет.
+          const ratio = aspect ? parseAspect(aspect) : 8 / 3
+
+          setFrameWidth(width * 2)
+          setFrameHeight(width / ratio)
+
+          return
+        }
+
         const height = (naturalHeight * width) / SECTION_WIDTH
         const limit = window.innerHeight * MAX_FRAME_HEIGHT
 
@@ -179,7 +185,7 @@ export function LazyThumbnail({
     observer.observe(scale)
 
     return () => observer.disconnect()
-  }, [compact, Preview, visible])
+  }, [compact, Preview, visible, half, aspect])
 
   // Ряд состояний: тот же компонент, разные пропсы. Кадр мелкого компонента
   // иначе стоит почти пустым, а размеры и состояния присутствия с витрины
@@ -202,8 +208,8 @@ export function LazyThumbnail({
       <div
         ref={frameRef}
         data-part="frame"
-        className="preview-frame bg-preview-surface flex w-full flex-1 items-center justify-center"
-        onClick={holdDemoLinks}
+        className="preview-frame bg-preview-surface flex w-full flex-1 justify-center"
+        onClick={holdPreviewLink}
       >
         <div
           className={
@@ -234,9 +240,20 @@ export function LazyThumbnail({
     // поэтому рост обёртки по высоте его не трогает.
     <div
       ref={frameRef}
-      className="preview-frame bg-preview-surface @container flex w-full flex-1 items-center"
-      onClick={holdDemoLinks}
-      style={{ "--thumbnail-width": `${frameWidth}px` } as CSSProperties}
+      // Подложке поля не нужны: она и есть фон карточки, а не картинка в
+      // паспарту. У остальных секций поля остаются — там кадр отделяет
+      // блок от края.
+      data-frame={half ? "section" : undefined}
+      className="preview-frame bg-preview-surface @container flex w-full flex-1"
+      onClick={holdPreviewLink}
+      style={
+        {
+          "--thumbnail-width": `${frameWidth}px`,
+          ...(half && frameHeight
+            ? { "--thumbnail-height": `${frameHeight * 2}px` }
+            : null),
+        } as CSSProperties
+      }
     >
       <div
         className="relative w-full"

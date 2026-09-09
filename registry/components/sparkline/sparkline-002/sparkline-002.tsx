@@ -75,21 +75,32 @@ text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;
 [data-vibeui-block="sparkline-002"] [data-part="delta"][data-trend="up"]{color:var(--vibeui-sparkline-002-up)}
 [data-vibeui-block="sparkline-002"] [data-part="delta"][data-trend="down"]{color:var(--vibeui-sparkline-002-down)}
 [data-vibeui-block="sparkline-002"] [data-part="delta"][data-trend="flat"]{color:var(--vibeui-sparkline-002-flat)}
-[data-vibeui-block="sparkline-002"] [data-part="spark"]{width:6rem;padding-right:0}
-[data-vibeui-block="sparkline-002"] svg{display:block;width:5.5rem;height:1.5rem}
+[data-vibeui-block="sparkline-002"] [data-part="spark"]{width:7rem;padding-right:0}
+[data-vibeui-block="sparkline-002"] svg{display:block;width:6.5rem;height:1.75rem}
+/* Цвет строки объявляется один раз: линия, заливка и точка берут его из
+   одной переменной, поэтому строка не может оказаться наполовину красной. */
+[data-vibeui-block="sparkline-002"] tr[data-trend="up"]{--vibeui-sparkline-002-trend:var(--vibeui-sparkline-002-up)}
+[data-vibeui-block="sparkline-002"] tr[data-trend="down"]{--vibeui-sparkline-002-trend:var(--vibeui-sparkline-002-down)}
+[data-vibeui-block="sparkline-002"] tr[data-trend="flat"]{--vibeui-sparkline-002-trend:var(--vibeui-sparkline-002-flat)}
 /* Толщина линии не масштабируется вместе с viewBox: иначе в узкой колонке
    кривая становится ниткой, а в широкой — жирной. */
 [data-vibeui-block="sparkline-002"] [data-part="line"]{
-fill:none;stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round;
-vector-effect:non-scaling-stroke;
+fill:none;stroke:var(--vibeui-sparkline-002-trend);stroke-width:2;
+stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke;
+stroke-dasharray:1;animation:vibeui-sparkline-002-draw 0.8s ease-out both;
 }
-[data-vibeui-block="sparkline-002"] tr[data-trend="up"] [data-part="line"]{stroke:var(--vibeui-sparkline-002-up)}
-[data-vibeui-block="sparkline-002"] tr[data-trend="down"] [data-part="line"]{stroke:var(--vibeui-sparkline-002-down)}
-[data-vibeui-block="sparkline-002"] tr[data-trend="flat"] [data-part="line"]{stroke:var(--vibeui-sparkline-002-flat)}
-[data-vibeui-block="sparkline-002"] [data-part="last"]{r:2}
-[data-vibeui-block="sparkline-002"] tr[data-trend="up"] [data-part="last"]{fill:var(--vibeui-sparkline-002-up)}
-[data-vibeui-block="sparkline-002"] tr[data-trend="down"] [data-part="last"]{fill:var(--vibeui-sparkline-002-down)}
-[data-vibeui-block="sparkline-002"] tr[data-trend="flat"] [data-part="last"]{fill:var(--vibeui-sparkline-002-flat)}
+/* Заливка под кривой: в таблице она отделяет строку от строки лучше, чем
+   ещё одна линейка, и сразу читается как «столько было». */
+[data-vibeui-block="sparkline-002"] [data-part="area"]{
+stroke:none;fill:color-mix(in oklab,var(--vibeui-sparkline-002-trend) 16%,transparent);
+animation:vibeui-sparkline-002-rise 0.6s ease-out both;
+}
+[data-vibeui-block="sparkline-002"] [data-part="last"]{
+r:2.5;fill:var(--vibeui-sparkline-002-trend);
+stroke:light-dark(oklch(1 0 0),oklch(0.16 0 265));stroke-width:1.5;
+}
+@keyframes vibeui-sparkline-002-draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes vibeui-sparkline-002-rise{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="sparkline-002"] *{animation:none!important;transition:none!important}}
 `
 
@@ -155,28 +166,52 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
-function pathFor(values: number[]) {
-  const max = Math.max(...values)
-  const min = Math.min(...values)
-  const span = max - min || 1
+/**
+ * Гладкая кривая через все точки: Catmull-Rom, переписанный кубическими
+ * Безье. Ломаная из отрезков в строке таблицы читается как «данные скачут»,
+ * хотя скачет только частота замеров; кривая проходит ровно через значения
+ * и при этом не рвёт глаз углами.
+ */
+function curve(points: { x: number; y: number }[]) {
+  if (points.length < 2) {
+    return points.length === 1 ? `M${points[0].x} ${points[0].y}` : ""
+  }
 
-  return values
-    .map((value, index) => {
-      const x = values.length > 1 ? (index / (values.length - 1)) * 100 : 0
-      const y = 22 - ((value - min) / span) * 18
+  const round = (value: number) => Math.round(value * 100) / 100
+  const parts = [`M${round(points[0].x)} ${round(points[0].y)}`]
 
-      return `${index === 0 ? "M" : "L"}${x.toFixed(2)} ${y.toFixed(2)}`
-    })
-    .join(" ")
+  for (let index = 0; index < points.length - 1; index += 1) {
+    const previous = points[index - 1] ?? points[index]
+    const start = points[index]
+    const end = points[index + 1]
+    const next = points[index + 2] ?? end
+
+    parts.push(
+      `C${round(start.x + (end.x - previous.x) / 6)} ${round(start.y + (end.y - previous.y) / 6)} ` +
+        `${round(end.x - (next.x - start.x) / 6)} ${round(end.y - (next.y - start.y) / 6)} ` +
+        `${round(end.x)} ${round(end.y)}`,
+    )
+  }
+
+  return parts.join(" ")
 }
 
-function lastPoint(values: number[]) {
+/** Кривая, заливка под ней и последняя точка — из одного набора координат. */
+function geometry(values: number[]) {
   const max = Math.max(...values)
   const min = Math.min(...values)
   const span = max - min || 1
-  const value = values[values.length - 1]
+  const points = values.map((value, index) => ({
+    x: values.length > 1 ? (index / (values.length - 1)) * 100 : 0,
+    y: 21 - ((value - min) / span) * 17,
+  }))
+  const line = curve(points)
 
-  return { x: 100, y: 22 - ((value - min) / span) * 18 }
+  return {
+    line,
+    area: `${line} L100 24 L0 24 Z`,
+    last: points[points.length - 1],
+  }
 }
 
 /**
@@ -235,7 +270,7 @@ export function Sparkline002({
             {rows.map((row) => {
               const trend =
                 row.delta > FLAT ? "up" : row.delta < -FLAT ? "down" : "flat"
-              const point = lastPoint(row.values)
+              const chart = geometry(row.values)
 
               return (
                 <tr key={row.label} data-trend={trend}>
@@ -248,12 +283,12 @@ export function Sparkline002({
                       aria-hidden="true"
                       focusable="false"
                     >
-                      <path data-part="line" d={pathFor(row.values)} />
+                      <path data-part="area" d={chart.area} />
+                      <path data-part="line" d={chart.line} pathLength={1} />
                       <circle
                         data-part="last"
-                        cx={point.x - 1.5}
-                        cy={point.y}
-                        r={2}
+                        cx={chart.last.x - 2}
+                        cy={chart.last.y}
                       />
                     </svg>
                   </td>
