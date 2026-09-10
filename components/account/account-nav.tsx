@@ -126,8 +126,6 @@ export function AccountNav({
     return () => document.removeEventListener("pointerdown", onPointerDown)
   }, [open])
 
-  useEffect(() => setOpen(false), [pathname])
-
   return (
     <nav aria-label={t.nav.sections} className="lg:w-60 lg:shrink-0">
       {/* Телефон и планшет */}
@@ -172,6 +170,7 @@ export function AccountNav({
                       locale={locale}
                       section={section}
                       active={isActive(pathname, section.href)}
+                      onNavigate={() => setOpen(false)}
                     />
                   </li>
                 ))}
@@ -217,10 +216,16 @@ function NavLink({
   locale,
   section,
   active,
+  onNavigate,
 }: {
   locale: Locale
   section: Section
   active: boolean
+  /** Закрыть раскрытое меню. Нужен только мобильной версии: там список
+   *  перекрывает содержимое, и оставлять его открытым после перехода
+   *  нельзя. Эффект по адресу для этого не нужен — переход начинается
+   *  здесь же, по нажатию. */
+  onNavigate?: () => void
 }) {
   const Icon = section.icon
 
@@ -228,6 +233,7 @@ function NavLink({
     <Link
       href={localePath(locale, section.href)}
       aria-current={active ? "page" : undefined}
+      onClick={onNavigate}
       className={`focus-visible:ring-shell-ring flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none ${
         active
           ? "bg-shell-elevated text-shell-fg font-medium"
