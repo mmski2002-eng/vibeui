@@ -5,6 +5,8 @@ type Layout009Card = {
   note: string
   href: string
   look?: "dark" | "paper" | "warm"
+  /** Путь к фото карточки; без него — тональная заглушка. */
+  src?: string
 }
 
 export type Layout009Props = {
@@ -87,8 +89,11 @@ display:flex;flex-direction:column;gap:0.5rem;
 color:inherit;text-decoration:none;
 }
 [data-vibeui-block="layout-009"] [data-part="frame"]{
-aspect-ratio:4/3;position:relative;
+aspect-ratio:4/3;position:relative;overflow:hidden;
 background:linear-gradient(150deg,#1a1a1a 0%,#000000 88%);
+}
+[data-vibeui-block="layout-009"] [data-part="frame"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
 }
 [data-vibeui-block="layout-009"] [data-part="frame"][data-look="paper"]{
 background:linear-gradient(150deg,#ececea 0%,#d3d0c8 100%);
@@ -174,7 +179,9 @@ export function Layout009({
                     data-part="frame"
                     data-look={card.look === "dark" ? undefined : card.look}
                     aria-hidden="true"
-                  />
+                  >
+                    {card.src ? <img src={card.src} alt="" /> : null}
+                  </span>
                   <h3>{card.title}</h3>
                   <span>{card.note}</span>
                 </a>

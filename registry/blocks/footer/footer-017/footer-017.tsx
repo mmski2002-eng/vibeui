@@ -9,6 +9,8 @@ export type Footer017Props = {
   href?: string
   /** Тон кадра-превью. */
   look?: "warm" | "paper" | "dark"
+  /** Путь к превью следующего проекта; без него — тональная заглушка. */
+  src?: string
   /** Контакты студии под карточкой. */
   studioName?: string
   contactLabel?: string
@@ -56,6 +58,9 @@ color:var(--vibeui-footer-017-accent);
 [data-vibeui-block="footer-017"] [data-part="frame"]{
 aspect-ratio:21/9;overflow:hidden;position:relative;
 background:linear-gradient(150deg,#3b3129 0%,#14100d 76%);
+}
+[data-vibeui-block="footer-017"] [data-part="frame"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
 }
 [data-vibeui-block="footer-017"] [data-part="frame"]::after{
 content:"";position:absolute;inset:0;
@@ -115,6 +120,7 @@ export function Footer017({
   note = "Архитектура · 2026",
   href = "#next-case",
   look = "warm",
+  src,
   studioName = "Студия «Русло»",
   contactLabel = "hello@ruslo.studio",
   contactHref = "mailto:hello@ruslo.studio",
@@ -137,7 +143,13 @@ export function Footer017({
         <div data-part="shell">
           <a data-part="next" href={href}>
             <span data-part="kicker">{kicker}</span>
-            <span data-part="frame" data-look={look === "warm" ? undefined : look} aria-hidden="true" />
+            <span
+              data-part="frame"
+              data-look={look === "warm" ? undefined : look}
+              aria-hidden={src ? undefined : "true"}
+            >
+              {src ? <img src={src} alt={title} /> : null}
+            </span>
             <span data-part="caption">
               <strong>{title}</strong>
               <span>{note}</span>

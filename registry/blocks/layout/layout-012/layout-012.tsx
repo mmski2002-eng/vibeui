@@ -6,6 +6,8 @@ type Layout012Item = {
   price: string
   href: string
   current?: boolean
+  /** Путь к фото объекта; без него — тональная заглушка. */
+  src?: string
 }
 
 export type Layout012Props = {
@@ -96,8 +98,11 @@ border-color:var(--vibeui-layout-012-accent);
 box-shadow:inset 3px 0 0 var(--vibeui-layout-012-accent);
 }
 [data-vibeui-block="layout-012"] [data-part="photo"]{
-flex:none;width:7.5rem;aspect-ratio:4/3;
+flex:none;width:7.5rem;aspect-ratio:4/3;overflow:hidden;
 background:linear-gradient(150deg,#2c3238 0%,#6e675c 100%);
+}
+[data-vibeui-block="layout-012"] [data-part="photo"] img{
+width:100%;height:100%;object-fit:cover;display:block;
 }
 [data-vibeui-block="layout-012"] [data-part="card"]:nth-child(even) [data-part="photo"]{
 background:linear-gradient(150deg,#ececea 0%,#cfccc4 100%);
@@ -220,7 +225,9 @@ export function Layout012({
                     aria-current={item.current ? "true" : undefined}
                     key={item.href}
                   >
-                    <span data-part="photo" aria-hidden="true" />
+                    <span data-part="photo" aria-hidden="true">
+                      {item.src ? <img src={item.src} alt="" /> : null}
+                    </span>
                     <span data-part="info">
                       <h2>{item.title}</h2>
                       <p>{item.note}</p>

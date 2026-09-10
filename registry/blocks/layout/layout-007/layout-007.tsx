@@ -8,6 +8,8 @@ type Layout007Work = {
   size?: "wide" | "tall" | "normal"
   /** Тон заглушки кадра. */
   look?: "dark" | "paper" | "warm"
+  /** Путь к фото работы; без него — тональная заглушка. */
+  src?: string
 }
 
 export type Layout007Props = {
@@ -79,8 +81,11 @@ background:linear-gradient(150deg,#3b3129 0%,#14100d 76%);
 content:"";position:absolute;inset:0;
 background:radial-gradient(20rem 12rem at 72% 26%,rgb(255 160 90 / 30%),transparent 64%);
 }
+[data-vibeui-block="layout-007"] [data-part="frame"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+}
 [data-vibeui-block="layout-007"] [data-part="frame"]::before{
-content:"";position:absolute;inset:0;
+content:"";position:absolute;inset:0;z-index:1;
 outline:1px solid color-mix(in oklab,#000000 8%,transparent);outline-offset:-1px;
 }
 [data-vibeui-block="layout-007"] [data-part="caption"]{
@@ -162,8 +167,10 @@ export function Layout007({
                   <span
                     data-part="frame"
                     data-look={work.look === "dark" ? undefined : work.look}
-                    aria-hidden="true"
-                  />
+                    aria-hidden={work.src ? undefined : "true"}
+                  >
+                    {work.src ? <img src={work.src} alt={work.title} /> : null}
+                  </span>
                   <span data-part="caption">
                     <h2>{work.title}</h2>
                     <span>{work.note}</span>

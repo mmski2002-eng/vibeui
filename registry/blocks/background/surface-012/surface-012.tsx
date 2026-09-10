@@ -137,6 +137,10 @@ export function Surface012({
               controls={controls}
             />
           </div>
+        ) : poster ? (
+          <div data-part="media">
+            <img src={poster} alt="" aria-hidden="true" />
+          </div>
         ) : (
           <div data-part="placeholder" role="img" aria-label="Спокойный кинокадр интерьера" />
         )}

@@ -11,8 +11,10 @@ export type Layout013Props = {
   children?: ReactNode
   heading?: string
   chapters?: Layout013Chapter[]
-  /** Слот закреплённой иллюстрации; без него — стилизованная сцена. */
+  /** Слот закреплённой иллюстрации (ReactNode). Приоритетнее src. */
   visual?: ReactNode
+  /** Путь к иллюстрации строкой — фолбэк, когда visual не передан. */
+  src?: string
   visualLabel?: string
   accent?: string
   className?: string
@@ -73,6 +75,9 @@ color:color-mix(in oklab,#000000 80%,#ffffff);
 [data-vibeui-block="layout-013"] [data-part="visual"]{
 flex:none;min-height:18rem;
 }
+[data-vibeui-block="layout-013"] [data-part="visual"]>img{
+width:100%;height:100%;min-height:18rem;object-fit:cover;display:block;
+}
 [data-vibeui-block="layout-013"] [data-part="scene"]{
 position:relative;height:100%;min-height:18rem;overflow:hidden;
 background:linear-gradient(150deg,#1a1a1a 0%,#000000 82%);
@@ -126,6 +131,7 @@ export function Layout013({
   heading = "Как устроен продукт",
   chapters = DEFAULT_CHAPTERS,
   visual,
+  src,
   visualLabel = "Иллюстрация продукта",
   accent,
   className,
@@ -156,7 +162,12 @@ export function Layout013({
                 ))}
             </div>
             <div data-part="visual">
-              {visual ?? <div data-part="scene" role="img" aria-label={visualLabel} />}
+              {visual ??
+                (src ? (
+                  <img src={src} alt={visualLabel} />
+                ) : (
+                  <div data-part="scene" role="img" aria-label={visualLabel} />
+                ))}
             </div>
           </div>
         </div>

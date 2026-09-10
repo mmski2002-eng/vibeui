@@ -6,6 +6,8 @@ type Layout019Frame = {
   text: string
   /** Ракурс кадра-заглушки. */
   angle?: "front" | "side" | "detail" | "open"
+  /** Путь к реальному кадру; без него — заглушка-предмет в выбранном ракурсе. */
+  src?: string
 }
 
 export type Layout019Props = {
@@ -74,6 +76,9 @@ display:flex;flex-direction:column;gap:1rem;
 [data-vibeui-block="layout-019"] [data-part="stage"]{
 position:relative;aspect-ratio:16/9;overflow:hidden;
 background:radial-gradient(60% 90% at 50% 100%,#231d16 0%,#0a0806 70%,#000000 100%);
+}
+[data-vibeui-block="layout-019"] [data-part="stage"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
 }
 [data-vibeui-block="layout-019"] [data-part="stage"]::before{
 content:"";position:absolute;inset:0;
@@ -190,7 +195,11 @@ export function Layout019({
                   key={frame.index}
                 >
                   <div data-part="stage" role="img" aria-label={frame.title}>
-                    <span data-part="object" aria-hidden="true" />
+                    {frame.src ? (
+                      <img src={frame.src} alt="" aria-hidden="true" />
+                    ) : (
+                      <span data-part="object" aria-hidden="true" />
+                    )}
                   </div>
                   <div data-part="caption">
                     <span>{frame.index}</span>

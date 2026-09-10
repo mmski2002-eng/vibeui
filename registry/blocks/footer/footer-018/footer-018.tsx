@@ -6,8 +6,10 @@ type Footer018Link = {
 }
 
 export type Footer018Props = {
-  /** Слот медиа-кадра; без него — стилизованная сцена. */
+  /** Слот медиа-кадра (ReactNode): изображение или видеофон. Приоритетнее src. */
   media?: ReactNode
+  /** Путь к кадру строкой — фолбэк, когда media не передан. */
+  src?: string
   mediaLabel?: string
   /** Крупная контактная фраза. */
   title?: string
@@ -125,6 +127,7 @@ const DEFAULT_LEGAL: Footer018Link[] = [
 /** Кинематографический финал: кадр, крупная контактная фраза и видимые документы. */
 export function Footer018({
   media,
+  src,
   mediaLabel = "Вечерний вид отеля в горах",
   title = "Приезжайте — горы подождут вас",
   actionLabel = "Забронировать",
@@ -150,6 +153,10 @@ export function Footer018({
       <footer data-vibeui-block="footer-018" className={className} style={palette}>
         {media ? (
           <div data-part="media">{media}</div>
+        ) : src ? (
+          <div data-part="media">
+            <img src={src} alt={mediaLabel} />
+          </div>
         ) : (
           <div data-part="scene" role="img" aria-label={mediaLabel} />
         )}

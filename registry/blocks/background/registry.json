@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Светлая архитектурная поверхность",
       "description": "Белый фон страницы с крупными спокойными зонами #F2F2F2, двумя тонкими линейками разметки и одним оранжевым узлом. Подложка для услуг, SaaS, медицины и каталога: контент кладётся поверх, декоративный слой не мешает чтению.",
-      "categories": ["background"],
+      "categories": [
+        "background"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,13 @@
       ],
       "docs": "Один файл, ноль зависимостей, без клиентского JS и движения. Декоративный слой — absolute-элемент под контентом с pointer-events:none, вне порядка фокуса. Контент передаётся через children и лежит в data-part=\"frame\" с относительным позиционированием; без children блок показывает демонстрационный пример. Раскладка считается container-запросом от собственной ширины. Палитра в локальных переменных --vibeui-surface-001-*.",
       "meta": {
-        "tags": ["background", "surface", "light", "architectural", "page"],
+        "tags": [
+          "background",
+          "surface",
+          "light",
+          "architectural",
+          "page"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 560"
@@ -66,7 +74,11 @@
             "default": ""
           }
         ],
-        "cardControls": ["zones", "lines", "accent"],
+        "cardControls": [
+          "zones",
+          "lines",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Light Architectural Surface",
@@ -115,7 +127,9 @@
       "type": "registry:block",
       "title": "Графитовая глубина",
       "description": "Тёмный фон страницы: чёрная основа, графитовые панели #1A1A1A и мягкое тёплое свечение из фирменного оранжевого. Подложка для технологического продукта, кабинета, студии — глубину дают поверхности и свет, а не размытие.",
-      "categories": ["background"],
+      "categories": [
+        "background"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -127,7 +141,13 @@
       ],
       "docs": "Один файл, ноль зависимостей, без клиентского JS. Свечение — обычный radial-gradient, три позиции задаются атрибутом data-glow; постоянного рендер-цикла нет. Декоративный слой absolute с pointer-events:none, контент через children в data-part=\"frame\". Тёмная поверхность — идея блока, а не тёмная тема: палитра одноцветная, light-dark() не используется. Переменные --vibeui-surface-002-*.",
       "meta": {
-        "tags": ["background", "surface", "dark", "graphite", "glow"],
+        "tags": [
+          "background",
+          "surface",
+          "dark",
+          "graphite",
+          "glow"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 560"
@@ -160,7 +180,11 @@
             "prop": "glow",
             "label": "Свет",
             "type": "select",
-            "options": ["top", "corner", "low"],
+            "options": [
+              "top",
+              "corner",
+              "low"
+            ],
             "default": "top"
           },
           {
@@ -176,7 +200,11 @@
             "default": ""
           }
         ],
-        "cardControls": ["glow", "panels", "accent"],
+        "cardControls": [
+          "glow",
+          "panels",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Graphite Depth",
@@ -225,7 +253,9 @@
       "type": "registry:block",
       "title": "Чертёжная сетка",
       "description": "Фон-чертёж: тонкая квадратная сетка, затухающая к краям, угловые координатные метки и пара оранжевых узлов. Подложка для документации, разработчиков, аналитики и промышленности — центр остаётся спокойным под текст.",
-      "categories": ["background"],
+      "categories": [
+        "background"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -237,7 +267,13 @@
       ],
       "docs": "Один файл, ноль зависимостей, без клиентского JS. Сетка рисуется двумя linear-gradient в background-image и затухает mask-image: ни одна линия не является DOM-элементом. Светлая и тёмная поверхности — атрибут data-tone с двумя наборами переменных, без light-dark(). Плотность — data-density меняет --vibeui-surface-003-step. Контент через children в data-part=\"frame\".",
       "meta": {
-        "tags": ["background", "grid", "blueprint", "developer", "docs"],
+        "tags": [
+          "background",
+          "grid",
+          "blueprint",
+          "developer",
+          "docs"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 560"
@@ -270,14 +306,21 @@
             "prop": "tone",
             "label": "Поверхность",
             "type": "select",
-            "options": ["light", "dark"],
+            "options": [
+              "light",
+              "dark"
+            ],
             "default": "light"
           },
           {
             "prop": "density",
             "label": "Плотность",
             "type": "select",
-            "options": ["sparse", "normal", "dense"],
+            "options": [
+              "sparse",
+              "normal",
+              "dense"
+            ],
             "default": "normal"
           },
           {
@@ -293,7 +336,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["tone", "density", "nodes", "accent"],
+        "cardControls": [
+          "tone",
+          "density",
+          "nodes",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Blueprint Grid",
@@ -345,7 +393,9 @@
       "type": "registry:block",
       "title": "Бумага и тонкое зерно",
       "description": "Фон-бумага: белая или светло-серая поверхность с почти незаметным зерном из двух смещённых точечных растров. Подложка для редакционного сайта, портфолио, архитектуры и личного бренда — текстура поддерживает крупный набор.",
-      "categories": ["background"],
+      "categories": [
+        "background"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -357,7 +407,13 @@
       ],
       "docs": "Один файл, ноль зависимостей, без JS, ресурсов и фильтров: зерно — два radial-gradient в background-image со смещёнными позициями. Поверхность и заметность зерна — атрибуты data-tone и data-grain, меняющие переменные. Контент через children в data-part=\"frame\"; декоративный слой pointer-events:none. Палитра --vibeui-surface-004-*.",
       "meta": {
-        "tags": ["background", "paper", "grain", "texture", "editorial"],
+        "tags": [
+          "background",
+          "paper",
+          "grain",
+          "texture",
+          "editorial"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 560"
@@ -390,14 +446,20 @@
             "prop": "tone",
             "label": "Поверхность",
             "type": "select",
-            "options": ["white", "grey"],
+            "options": [
+              "white",
+              "grey"
+            ],
             "default": "white"
           },
           {
             "prop": "grain",
             "label": "Зерно",
             "type": "select",
-            "options": ["subtle", "visible"],
+            "options": [
+              "subtle",
+              "visible"
+            ],
             "default": "subtle"
           },
           {
@@ -407,7 +469,11 @@
             "default": ""
           }
         ],
-        "cardControls": ["tone", "grain", "accent"],
+        "cardControls": [
+          "tone",
+          "grain",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Paper and Fine Grain",
@@ -456,7 +522,9 @@
       "type": "registry:block",
       "title": "Оранжевый постер",
       "description": "Плакатный фон: крупная плоскость #FF5900 с чёрной типографикой и спокойной белой секцией снизу. Для событий, запуска продукта, творческой студии и акционного лендинга — впечатление создают масштаб и ритм, а не эффекты.",
-      "categories": ["background"],
+      "categories": [
+        "background"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -468,7 +536,13 @@
       ],
       "docs": "Один файл, ноль зависимостей, без JS и движения. Режим split добавляет белую секцию под оранжевым полем — туда переносится длинное чтение; border включает тонкую чёрную рамку inset-тенью. Заголовок капсом с плотным интерлиньяжем; кнопка — чёрная плашка с оранжевым текстом. Контент через children. Палитра --vibeui-surface-005-*.",
       "meta": {
-        "tags": ["background", "poster", "orange", "event", "bold"],
+        "tags": [
+          "background",
+          "poster",
+          "orange",
+          "event",
+          "bold"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 640"
@@ -516,7 +590,11 @@
             "default": ""
           }
         ],
-        "cardControls": ["split", "border", "accent"],
+        "cardControls": [
+          "split",
+          "border",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Orange Poster",
@@ -565,7 +643,9 @@
       "type": "registry:block",
       "title": "Мягкая градиентная сетка",
       "description": "Фон из больших растушёванных тёплых пятен на белой или графитовой базе. Для приложений, SaaS и авторской страницы: свет собирается у краёв, за текстом остаётся спокойное поле. Три CSS-градиента, без WebGL и движения.",
-      "categories": ["background"],
+      "categories": [
+        "background"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -577,7 +657,13 @@
       ],
       "docs": "Один файл, ноль зависимостей, без JS. Композиция — три radial-gradient в одном background; сила света задаётся переменной --vibeui-surface-006-spot через атрибуты data-tone/data-intensity. Тепло строится только из фирменного оранжевого через color-mix — радужной палитры нет. Контент через children. Палитра --vibeui-surface-006-*.",
       "meta": {
-        "tags": ["background", "gradient", "mesh", "glow", "app"],
+        "tags": [
+          "background",
+          "gradient",
+          "mesh",
+          "glow",
+          "app"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 560"
@@ -610,14 +696,20 @@
             "prop": "tone",
             "label": "База",
             "type": "select",
-            "options": ["light", "dark"],
+            "options": [
+              "light",
+              "dark"
+            ],
             "default": "light"
           },
           {
             "prop": "intensity",
             "label": "Свет",
             "type": "select",
-            "options": ["soft", "rich"],
+            "options": [
+              "soft",
+              "rich"
+            ],
             "default": "soft"
           },
           {
@@ -627,7 +719,11 @@
             "default": ""
           }
         ],
-        "cardControls": ["tone", "intensity", "accent"],
+        "cardControls": [
+          "tone",
+          "intensity",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Soft Gradient Mesh",
@@ -676,7 +772,9 @@
       "type": "registry:block",
       "title": "Фотографическая атмосфера",
       "description": "Фон-фотография во весь блок с градиентной вуалью под текст: атмосфера отеля, ресторана, архитектуры или личного бренда. Фото сохраняет естественные цвета, интерфейс поверх остаётся брендовым. Изображение передаётся пропом.",
-      "categories": ["background"],
+      "categories": [
+        "background"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -688,10 +786,22 @@
       ],
       "docs": "Один файл, ноль зависимостей, без JS. Изображение — обычный <img> с object-fit:cover; точка кадрирования пропом focus (object-position), alt обязателен по смыслу кадра. Без src рисуется стилизованный CSS-пейзаж-заглушка с role=\"img\". Вуаль — заранее выбранный линейный градиент двух сил (data-scrim), не вычисление по пикселям; текст прижат к тёмной зоне (align start/end). Палитра --vibeui-surface-007-*.",
       "meta": {
-        "tags": ["background", "photo", "image", "hero", "hotel", "atmosphere"],
+        "tags": [
+          "background",
+          "photo",
+          "image",
+          "hero",
+          "hotel",
+          "atmosphere"
+        ],
         "preview": {
           "width": "full",
-          "aspect": "1280 / 640"
+          "aspect": "1280 / 640",
+          "props": {
+            "src": "/demo/foundations/atmosphere-ridge.webp",
+            "alt": "Горный хребет на рассвете",
+            "focus": "center 38%"
+          }
         },
         "ai": {
           "usage": "<Surface007 src=\"/photos/mountains.jpg\" alt=\"Хребет на закате\" focus=\"center 30%\" scrim=\"soft\">\n  {/* ваш контент */}\n</Surface007>",
@@ -722,14 +832,20 @@
             "prop": "scrim",
             "label": "Вуаль",
             "type": "select",
-            "options": ["soft", "strong"],
+            "options": [
+              "soft",
+              "strong"
+            ],
             "default": "soft"
           },
           {
             "prop": "align",
             "label": "Текст",
             "type": "select",
-            "options": ["end", "start"],
+            "options": [
+              "end",
+              "start"
+            ],
             "default": "end"
           },
           {
@@ -739,7 +855,11 @@
             "default": ""
           }
         ],
-        "cardControls": ["scrim", "align", "accent"],
+        "cardControls": [
+          "scrim",
+          "align",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Photographic Atmosphere",
@@ -779,6 +899,13 @@
               "accent": {
                 "label": "Accent"
               }
+            },
+            "preview": {
+              "props": {
+                "src": "/demo/foundations/atmosphere-ridge.webp",
+                "alt": "A mountain ridge at dawn",
+                "focus": "center 38%"
+              }
             }
           }
         }
@@ -789,7 +916,9 @@
       "type": "registry:block",
       "title": "Световой горизонт",
       "description": "Фон с тонкой оранжевой линией горизонта и мягким свечением, уходящим в чёрную или белую глубину. Для технологического релиза, исследования и инвестиционного продукта. Медленное дыхание света отключается reduced motion.",
-      "categories": ["background"],
+      "categories": [
+        "background"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -801,8 +930,17 @@
       ],
       "docs": "Один файл, ноль зависимостей, без JS и shader'ов: линия и свечение — CSS-градиенты. Высота горизонта — переменная через data-horizon; дыхание — CSS-анимация непрозрачности (7 с), полностью снимается prefers-reduced-motion. Текст стоит выше линии, рамка резервирует место под горизонт снизу. Контент через children. Палитра --vibeui-surface-008-*.",
       "meta": {
-        "tags": ["background", "horizon", "glow", "tech", "dark"],
-        "preview": { "width": "full", "aspect": "1280 / 600" },
+        "tags": [
+          "background",
+          "horizon",
+          "glow",
+          "tech",
+          "dark"
+        ],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 600"
+        },
         "ai": {
           "usage": "<Surface008 tone=\"dark\" horizon=\"low\" breathe>\n  {/* ваш контент */}\n</Surface008>",
           "summary": "Фон-горизонт: тонкая оранжевая линия с растянутым свечением на чёрной или белой базе, две высоты горизонта, медленное дыхание света CSS-анимацией. Текст выше линии, центр не пересвечен. Слой-обёртка с children, без JS.",
@@ -824,12 +962,45 @@
           ]
         },
         "controls": [
-          { "prop": "tone", "label": "База", "type": "select", "options": ["dark", "light"], "default": "dark" },
-          { "prop": "horizon", "label": "Горизонт", "type": "select", "options": ["low", "middle"], "default": "low" },
-          { "prop": "breathe", "label": "Дыхание", "type": "boolean", "default": true },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" }
+          {
+            "prop": "tone",
+            "label": "База",
+            "type": "select",
+            "options": [
+              "dark",
+              "light"
+            ],
+            "default": "dark"
+          },
+          {
+            "prop": "horizon",
+            "label": "Горизонт",
+            "type": "select",
+            "options": [
+              "low",
+              "middle"
+            ],
+            "default": "low"
+          },
+          {
+            "prop": "breathe",
+            "label": "Дыхание",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["tone", "horizon", "breathe", "accent"],
+        "cardControls": [
+          "tone",
+          "horizon",
+          "breathe",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Light Horizon",
@@ -856,10 +1027,18 @@
               "usage": "<Surface008 tone=\"dark\" horizon=\"low\" breathe>\n  {/* your content */}\n</Surface008>"
             },
             "controls": {
-              "tone": { "label": "Base" },
-              "horizon": { "label": "Horizon" },
-              "breathe": { "label": "Breathing" },
-              "accent": { "label": "Accent" }
+              "tone": {
+                "label": "Base"
+              },
+              "horizon": {
+                "label": "Horizon"
+              },
+              "breathe": {
+                "label": "Breathing"
+              },
+              "accent": {
+                "label": "Accent"
+              }
             }
           }
         }
@@ -870,7 +1049,9 @@
       "type": "registry:block",
       "title": "Свет за курсором",
       "description": "Графитовый фон с тёплым пятном, следующим за указателем и проявляющим сетку материала. Для студии, портфолио и презентации инструмента. На touch и при reduced motion свет статичен — композиция не зависит от эффекта.",
-      "categories": ["background"],
+      "categories": [
+        "background"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -882,8 +1063,17 @@
       ],
       "docs": "Единственный клиентский фон набора (\"use client\"), ноль зависимостей кроме react. Координаты пишутся в CSS-переменные --vibeui-surface-009-x/y через requestAnimationFrame без state и перерисовок; обрабатывается только pointerType === \"mouse\" — на touch пятно стоит в стартовой точке. Свет — radial-gradient, сетка материала проявляется маской вокруг пятна. Замены системного курсора нет. Палитра --vibeui-surface-009-*.",
       "meta": {
-        "tags": ["background", "spotlight", "cursor", "interactive", "studio"],
-        "preview": { "width": "full", "aspect": "1280 / 560" },
+        "tags": [
+          "background",
+          "spotlight",
+          "cursor",
+          "interactive",
+          "studio"
+        ],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 560"
+        },
         "ai": {
           "usage": "<Surface009 radius=\"large\" strength=\"soft\">\n  {/* ваш контент */}\n</Surface009>",
           "summary": "Тёплое световое пятно следует за мышью и проявляет тонкую сетку графитового материала; координаты пишутся в CSS-переменные через rAF без перерисовок React. На touch — статичная точка. Радиус и сила настройками. Маленький клиентский компонент.",
@@ -905,11 +1095,38 @@
           ]
         },
         "controls": [
-          { "prop": "radius", "label": "Радиус", "type": "select", "options": ["large", "small"], "default": "large" },
-          { "prop": "strength", "label": "Сила", "type": "select", "options": ["soft", "bright"], "default": "soft" },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" }
+          {
+            "prop": "radius",
+            "label": "Радиус",
+            "type": "select",
+            "options": [
+              "large",
+              "small"
+            ],
+            "default": "large"
+          },
+          {
+            "prop": "strength",
+            "label": "Сила",
+            "type": "select",
+            "options": [
+              "soft",
+              "bright"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["radius", "strength", "accent"],
+        "cardControls": [
+          "radius",
+          "strength",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Cursor Spotlight",
@@ -936,9 +1153,15 @@
               "usage": "<Surface009 radius=\"large\" strength=\"soft\">\n  {/* your content */}\n</Surface009>"
             },
             "controls": {
-              "radius": { "label": "Radius" },
-              "strength": { "label": "Strength" },
-              "accent": { "label": "Accent" }
+              "radius": {
+                "label": "Radius"
+              },
+              "strength": {
+                "label": "Strength"
+              },
+              "accent": {
+                "label": "Accent"
+              }
             }
           }
         }
@@ -949,7 +1172,9 @@
       "type": "registry:block",
       "title": "Топографические линии",
       "description": "Фон-рельеф: тонкие контуры высот адаптивным SVG у правого края и пунктирный оранжевый маршрут с точками старта и финиша. Для путешествий, недвижимости, outdoor и инженерии. Декоративный рельеф, а не настоящая карта.",
-      "categories": ["background"],
+      "categories": [
+        "background"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -961,8 +1186,17 @@
       ],
       "docs": "Один файл, ноль зависимостей, без JS и движения. Рельеф — восемь path в одном инлайн-SVG с preserveAspectRatio slice: контуры прижаты к правому краю на любой ширине, текстовая зона слева чиста. Плотность sparse прячет чётные контуры; маршрут и точки — data-route. Графит и бумага — data-tone. Палитра --vibeui-surface-010-*.",
       "meta": {
-        "tags": ["background", "topography", "map", "travel", "outdoor"],
-        "preview": { "width": "full", "aspect": "1280 / 560" },
+        "tags": [
+          "background",
+          "topography",
+          "map",
+          "travel",
+          "outdoor"
+        ],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 560"
+        },
         "ai": {
           "usage": "<Surface010 tone=\"dark\" route density=\"normal\">\n  {/* ваш контент */}\n</Surface010>",
           "summary": "Топографический фон: контуры рельефа одним инлайн-SVG у правого края, пунктирный оранжевый маршрут между двумя точками, графитовая и бумажная поверхности, две плотности. Слева спокойная зона под текст. Без JS.",
@@ -984,12 +1218,45 @@
           ]
         },
         "controls": [
-          { "prop": "tone", "label": "Поверхность", "type": "select", "options": ["dark", "light"], "default": "dark" },
-          { "prop": "route", "label": "Маршрут", "type": "boolean", "default": true },
-          { "prop": "density", "label": "Плотность", "type": "select", "options": ["normal", "sparse"], "default": "normal" },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" }
+          {
+            "prop": "tone",
+            "label": "Поверхность",
+            "type": "select",
+            "options": [
+              "dark",
+              "light"
+            ],
+            "default": "dark"
+          },
+          {
+            "prop": "route",
+            "label": "Маршрут",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "density",
+            "label": "Плотность",
+            "type": "select",
+            "options": [
+              "normal",
+              "sparse"
+            ],
+            "default": "normal"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["tone", "route", "density", "accent"],
+        "cardControls": [
+          "tone",
+          "route",
+          "density",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Topographic Lines",
@@ -1016,10 +1283,18 @@
               "usage": "<Surface010 tone=\"dark\" route density=\"normal\">\n  {/* your content */}\n</Surface010>"
             },
             "controls": {
-              "tone": { "label": "Surface" },
-              "route": { "label": "Route" },
-              "density": { "label": "Density" },
-              "accent": { "label": "Accent" }
+              "tone": {
+                "label": "Surface"
+              },
+              "route": {
+                "label": "Route"
+              },
+              "density": {
+                "label": "Density"
+              },
+              "accent": {
+                "label": "Accent"
+              }
             }
           }
         }
@@ -1030,7 +1305,9 @@
       "type": "registry:block",
       "title": "Точечное поле",
       "description": "Регулярная матрица серых точек, тающая к центру, и один медленный оранжевый импульс. Для AI-инструмента, данных и образования. Точки не мельчают до шума, импульс отключается reduced motion. CSS без canvas.",
-      "categories": ["background"],
+      "categories": [
+        "background"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1042,8 +1319,17 @@
       ],
       "docs": "Один файл, ноль зависимостей, без JS. Матрица — radial-gradient в background-image; затухание к центру — маска, поэтому зона текста чиста. Импульс — один узел с расходящимся кольцом (CSS-анимация 4,5 с), прячется при reduced motion и пропом pulse. Шаг матрицы — data-step. Светлая и графитовая поверхности. Палитра --vibeui-surface-011-*.",
       "meta": {
-        "tags": ["background", "dots", "grid", "ai", "data"],
-        "preview": { "width": "full", "aspect": "1280 / 560" },
+        "tags": [
+          "background",
+          "dots",
+          "grid",
+          "ai",
+          "data"
+        ],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 560"
+        },
         "ai": {
           "usage": "<Surface011 tone=\"light\" step=\"normal\" pulse>\n  {/* ваш контент */}\n</Surface011>",
           "summary": "Точечное поле CSS-градиентом с маской-затуханием к центру и одним медленным оранжевым импульсом-кольцом. Светлая и графитовая версии, два шага сетки. Canvas не используется — динамическое поле было бы другим компонентом. Без JS.",
@@ -1065,12 +1351,45 @@
           ]
         },
         "controls": [
-          { "prop": "tone", "label": "Поверхность", "type": "select", "options": ["light", "dark"], "default": "light" },
-          { "prop": "step", "label": "Шаг", "type": "select", "options": ["normal", "sparse"], "default": "normal" },
-          { "prop": "pulse", "label": "Импульс", "type": "boolean", "default": true },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" }
+          {
+            "prop": "tone",
+            "label": "Поверхность",
+            "type": "select",
+            "options": [
+              "light",
+              "dark"
+            ],
+            "default": "light"
+          },
+          {
+            "prop": "step",
+            "label": "Шаг",
+            "type": "select",
+            "options": [
+              "normal",
+              "sparse"
+            ],
+            "default": "normal"
+          },
+          {
+            "prop": "pulse",
+            "label": "Импульс",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["tone", "step", "pulse", "accent"],
+        "cardControls": [
+          "tone",
+          "step",
+          "pulse",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Dot Field",
@@ -1097,10 +1416,18 @@
               "usage": "<Surface011 tone=\"light\" step=\"normal\" pulse>\n  {/* your content */}\n</Surface011>"
             },
             "controls": {
-              "tone": { "label": "Surface" },
-              "step": { "label": "Step" },
-              "pulse": { "label": "Pulse" },
-              "accent": { "label": "Accent" }
+              "tone": {
+                "label": "Surface"
+              },
+              "step": {
+                "label": "Step"
+              },
+              "pulse": {
+                "label": "Pulse"
+              },
+              "accent": {
+                "label": "Accent"
+              }
             }
           }
         }
@@ -1111,7 +1438,9 @@
       "type": "registry:block",
       "title": "Кинематографический видеофон",
       "description": "Фон-видео: короткая спокойная петля без звука с обязательным постером и тёмной вуалью под текст. Для hospitality, fashion, мероприятий и предметного продукта. При reduced motion и ошибке загрузки остаётся постер — пустого экрана не бывает.",
-      "categories": ["background"],
+      "categories": [
+        "background"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1123,8 +1452,20 @@
       ],
       "docs": "Один файл, ноль зависимостей, без JS. <video> с autoplay muted loop playsInline preload=\"metadata\"; постер продублирован <img> под видео — блокировка autoplay или ошибка сети оставляют кадр, не пустоту. При prefers-reduced-motion видео скрывается CSS и остаётся постер. Проп controls включает нативные элементы управления с доступной паузой. Без src рисуется CSS-заглушка кадра. Вуаль двух сил — data-scrim. Палитра --vibeui-surface-012-*.",
       "meta": {
-        "tags": ["background", "video", "cinematic", "hotel", "hero"],
-        "preview": { "width": "full", "aspect": "1280 / 640" },
+        "tags": [
+          "background",
+          "video",
+          "cinematic",
+          "hotel",
+          "hero"
+        ],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 640",
+          "props": {
+            "poster": "/demo/foundations/lobby-poster.webp"
+          }
+        },
         "ai": {
           "usage": "<Surface012 src=\"/media/loop.mp4\" poster=\"/media/poster.jpg\" scrim=\"soft\" controls>\n  {/* ваш контент */}\n</Surface012>",
           "summary": "Видеофон: петля muted+loop+playsInline с постером-страховкой (дубль <img> под видео), вуаль двух сил, текст в устойчивой тёмной зоне. Reduced motion показывает постер; нативные controls — по пропу. Заглушка-кадр без src. Ни смысла, ни звука в видео нет.",
@@ -1146,11 +1487,34 @@
           ]
         },
         "controls": [
-          { "prop": "scrim", "label": "Вуаль", "type": "select", "options": ["soft", "strong"], "default": "soft" },
-          { "prop": "controls", "label": "Управление", "type": "boolean", "default": false },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" }
+          {
+            "prop": "scrim",
+            "label": "Вуаль",
+            "type": "select",
+            "options": [
+              "soft",
+              "strong"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "controls",
+            "label": "Управление",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["scrim", "controls", "accent"],
+        "cardControls": [
+          "scrim",
+          "controls",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Cinematic Video Background",
@@ -1177,9 +1541,20 @@
               "usage": "<Surface012 src=\"/media/loop.mp4\" poster=\"/media/poster.jpg\" scrim=\"soft\" controls>\n  {/* your content */}\n</Surface012>"
             },
             "controls": {
-              "scrim": { "label": "Scrim" },
-              "controls": { "label": "Controls" },
-              "accent": { "label": "Accent" }
+              "scrim": {
+                "label": "Scrim"
+              },
+              "controls": {
+                "label": "Controls"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "poster": "/demo/foundations/lobby-poster.webp"
+              }
             }
           }
         }
@@ -1190,7 +1565,9 @@
       "type": "registry:block",
       "title": "Верхний архитектурный свет",
       "description": "Студийная сцена: тёплый световой проём падает сверху на графитовую глубину и собирает внимание в центре. Для рабочего инструмента, премиального сервиса и продуктового анонса. Чистый CSS вместо рендеринга.",
-      "categories": ["background"],
+      "categories": [
+        "background"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1202,8 +1579,17 @@
       ],
       "docs": "Один файл, ноль зависимостей, без JS: конус света — вертикальный градиент с маской по ширине проёма, отражение на «полу» — второй radial-градиент. Ширина проёма и мягкость краёв — переменные через data-width/data-softness. Композиция центрированная; текст стоит в луче. Статический вариант — единственный: смены интенсивности нет. Палитра --vibeui-surface-013-*.",
       "meta": {
-        "tags": ["background", "light", "studio", "spotlight", "stage"],
-        "preview": { "width": "full", "aspect": "1280 / 640" },
+        "tags": [
+          "background",
+          "light",
+          "studio",
+          "spotlight",
+          "stage"
+        ],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 640"
+        },
         "ai": {
           "usage": "<Surface013 width=\"narrow\" softness=\"crisp\">\n  {/* ваш контент */}\n</Surface013>",
           "summary": "Верхний свет: тёплый проём из CSS-градиента с маской падает на графитовую сцену, у пола — мягкое отражение. Ширина и мягкость проёма настройками, композиция по центру. Никакого WebGL: нужный вид достигнут CSS. Без JS.",
@@ -1225,11 +1611,38 @@
           ]
         },
         "controls": [
-          { "prop": "width", "label": "Проём", "type": "select", "options": ["narrow", "wide"], "default": "narrow" },
-          { "prop": "softness", "label": "Края", "type": "select", "options": ["crisp", "soft"], "default": "crisp" },
-          { "prop": "accent", "label": "Свет", "type": "color", "default": "" }
+          {
+            "prop": "width",
+            "label": "Проём",
+            "type": "select",
+            "options": [
+              "narrow",
+              "wide"
+            ],
+            "default": "narrow"
+          },
+          {
+            "prop": "softness",
+            "label": "Края",
+            "type": "select",
+            "options": [
+              "crisp",
+              "soft"
+            ],
+            "default": "crisp"
+          },
+          {
+            "prop": "accent",
+            "label": "Свет",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["width", "softness", "accent"],
+        "cardControls": [
+          "width",
+          "softness",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Overhead Architectural Light",
@@ -1256,9 +1669,15 @@
               "usage": "<Surface013 width=\"narrow\" softness=\"crisp\">\n  {/* your content */}\n</Surface013>"
             },
             "controls": {
-              "width": { "label": "Shaft" },
-              "softness": { "label": "Edges" },
-              "accent": { "label": "Light" }
+              "width": {
+                "label": "Shaft"
+              },
+              "softness": {
+                "label": "Edges"
+              },
+              "accent": {
+                "label": "Light"
+              }
             }
           }
         }
@@ -1269,7 +1688,9 @@
       "type": "registry:block",
       "title": "Фон, меняющийся по главам",
       "description": "Единая страница проходит белую, графитовую и оранжевую поверхности по смысловым главам. Для истории продукта, агентства и спецпроекта. Каждой поверхности заранее согласованы цвета текста и ссылок — случайного контраста не бывает.",
-      "categories": ["background"],
+      "categories": [
+        "background"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1281,8 +1702,17 @@
       ],
       "docs": "Один файл, ноль зависимостей, без JS и наблюдателей. Каждая глава — секция с data-surface (white/graphite/orange) и полным набором согласованных переменных: фон, текст, приглушённый, маркер. Смена происходит на границе секции; плавность сознательно не добавлена, поэтому reduced motion и обычный режим ведут себя одинаково — промежуточных состояний контраста не существует. Главы задаются данными chapters (surface + content). Палитра --vibeui-surface-014-*.",
       "meta": {
-        "tags": ["background", "chapters", "story", "sections", "color-change"],
-        "preview": { "width": "full", "aspect": "1280 / 900" },
+        "tags": [
+          "background",
+          "chapters",
+          "story",
+          "sections",
+          "color-change"
+        ],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 900"
+        },
         "ai": {
           "usage": "<Surface014\n  chapters={[\n    { surface: \"white\", content: <section>…</section> },\n    { surface: \"graphite\", content: <section>…</section> },\n    { surface: \"orange\", content: <section>…</section> }\n  ]}\n/>",
           "summary": "Фон по главам: массив chapters задаёт последовательность секций с белой, графитовой и оранжевой поверхностями; у каждой заранее согласованы цвета текста, приглушённого и маркеров. Смена — на границе секции, без наблюдателей и промежуточного контраста. Без JS.",

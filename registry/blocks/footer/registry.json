@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Подвал на фоне страницы",
       "description": "Подвал без собственной плиты: фон и палитра берутся у страницы. Подпись бренда, три колонки ссылок и нижняя строка с юридическим. Тёмная плита в конце спорила бы с финальной секцией призыва.",
-      "categories": ["footer"],
+      "categories": [
+        "footer"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-001-*. Раскладка считается от собственной ширины блока: две колонки ссылок, затем три, затем бренд уходит в отдельную колонку слева. Каждая группа ссылок — <nav> со своей подписью, поэтому скринридер перечисляет их отдельно, а не как одну кашу из двадцати ссылок.",
       "meta": {
-        "tags": ["footer", "links", "site map", "legal"],
+        "tags": [
+          "footer",
+          "links",
+          "site map",
+          "legal"
+        ],
         "ai": {
           "export": "Footer001",
           "usage": "<Footer001\n  brand=\"Полёт\"\n  columns={[{ title: \"Продукт\", links: [{ label: \"Тарифы\", href: \"/pricing\" }] }]}\n  legal=\"© 2026 Студия «Полёт»\"\n/>",
@@ -187,7 +194,10 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"],
+        "cardControls": [
+          "accent",
+          "background"
+        ],
         "preview": {
           "width": "full"
         }
@@ -198,7 +208,9 @@
       "type": "registry:block",
       "title": "Подвал в четыре колонки",
       "description": "Тёмный подвал в четыре колонки ссылок: каждая группа — отдельная навигация со своей подписью, а в нижнем ряду живая строка состояния сервисов.",
-      "categories": ["footer"],
+      "categories": [
+        "footer"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -210,7 +222,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-002-*. Серверный компонент. Каждая группа ссылок — отдельный <nav> с aria-label, иначе скринридер читает двадцать ссылок подряд одной кашей. Раскладка считается от собственной ширины блока: две колонки, затем четыре, затем бренд уходит в отдельную колонку слева. Точка у строки состояния пульсирует через box-shadow в ключевых кадрах и гаснет при prefers-reduced-motion.",
       "meta": {
-        "tags": ["footer", "links", "dark", "status"],
+        "tags": [
+          "footer",
+          "links",
+          "dark",
+          "status"
+        ],
         "preview": {
           "width": "full"
         },
@@ -424,7 +441,12 @@
             }
           }
         },
-        "cardControls": ["brand", "status", "accent", "background"]
+        "cardControls": [
+          "brand",
+          "status",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -432,7 +454,9 @@
       "type": "registry:block",
       "title": "Подвал с подпиской",
       "description": "Подвал с подпиской: форма занимает верхний ряд целиком, у поля видимая подпись, рядом честное согласие, а колонки ссылок идут под ней.",
-      "categories": ["footer"],
+      "categories": [
+        "footer"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -444,7 +468,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-003-*. Серверный компонент: поле неуправляемое, форма отправляется обычным POST и работает до гидратации. Форма поставлена в верхний ряд и отделена чертой: если подписка нужна бизнесу, она не должна ютиться сбоку от ссылок. Подпись поля видимая и связана через htmlFor, а не спрятана в placeholder. От 46rem форма делится на две колонки, а поле с кнопкой встают в один ряд.",
       "meta": {
-        "tags": ["footer", "newsletter", "form", "links"],
+        "tags": [
+          "footer",
+          "newsletter",
+          "form",
+          "links"
+        ],
         "preview": {
           "width": "full"
         },
@@ -671,7 +700,9 @@
       "type": "registry:block",
       "title": "Подвал одной строкой",
       "description": "Минимальный подвал в одну строку: бренд, копирайт, три служебные ссылки и «наверх». Для коротких страниц, где четыре колонки выглядят чужой деталью.",
-      "categories": ["footer"],
+      "categories": [
+        "footer"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -683,7 +714,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-004-*. Серверный компонент. Всё содержимое лежит в одном flex-ряду: на узкой ширине он переносится, от 40rem собственной ширины — идёт строго в строку. Ссылка «наверх» прижата margin-left:auto и не прячется на телефоне: на длинной странице это единственный быстрый путь обратно. Стрелка нарисована двумя границами, отдельной иконки нет.",
       "meta": {
-        "tags": ["footer", "minimal", "compact", "landing"],
+        "tags": [
+          "footer",
+          "minimal",
+          "compact",
+          "landing"
+        ],
         "preview": {
           "width": "full"
         },
@@ -838,7 +874,13 @@
             }
           }
         },
-        "cardControls": ["brand", "legal", "backLabel", "accent", "background"]
+        "cardControls": [
+          "brand",
+          "legal",
+          "backLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -846,7 +888,9 @@
       "type": "registry:block",
       "title": "Подвал с картой сайта",
       "description": "Подвал-карта сайта: шесть групп ссылок и выбор языка. На телефоне группы сворачиваются, на широкой раскладке заголовки становятся инертными.",
-      "categories": ["footer"],
+      "categories": [
+        "footer"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -858,7 +902,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-005-*. Серверный компонент. Каждая группа — раскрытый <details>: на телефоне карту сайта можно свернуть и не листать экран длиной со страницу, а от 46rem заголовок получает pointer-events:none, стрелка прячется, и группы просто стоят колонками. Разметка при этом одна, без дублирования узлов под разные ширины. Языки — ссылки с атрибутом lang и aria-current у текущего.",
       "meta": {
-        "tags": ["footer", "sitemap", "locale", "details"],
+        "tags": [
+          "footer",
+          "sitemap",
+          "locale",
+          "details"
+        ],
         "preview": {
           "width": "full"
         },
@@ -908,7 +957,12 @@
             "label": "Текущий язык",
             "type": "select",
             "default": "RU",
-            "options": ["RU", "EN", "DE", "KK"]
+            "options": [
+              "RU",
+              "EN",
+              "DE",
+              "KK"
+            ]
           },
           {
             "prop": "accent",
@@ -1090,7 +1144,12 @@
             }
           }
         },
-        "cardControls": ["brand", "currentLocale", "accent", "background"]
+        "cardControls": [
+          "brand",
+          "currentLocale",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1098,7 +1157,9 @@
       "type": "registry:block",
       "title": "Подвал с контактами",
       "description": "Подвал с контактами и соцсетями: телефон и почта — настоящие ссылки tel: и mailto: с видимым значением, адрес размечен тегом address.",
-      "categories": ["footer"],
+      "categories": [
+        "footer"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1110,7 +1171,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-006-*. Серверный компонент. Контакты размечены списком определений <dl>: подпись и значение — пара, а не два независимых абзаца. Телефон и почта остаются настоящими ссылками tel: и mailto: с видимым значением, потому что подвал открывают именно ради них. Адрес обёрнут в <address>. Значки соцсетей — буквенные плашки с aria-label: блок не имеет права тянуть иконочный набор.",
       "meta": {
-        "tags": ["footer", "contacts", "social", "address"],
+        "tags": [
+          "footer",
+          "contacts",
+          "social",
+          "address"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1280,7 +1346,12 @@
             }
           }
         },
-        "cardControls": ["brand", "hours", "accent", "background"]
+        "cardControls": [
+          "brand",
+          "hours",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1288,7 +1359,9 @@
       "type": "registry:block",
       "title": "Подвал магазина",
       "description": "Подвал магазина: колонки ссылок, полоса про доставку и ряд способов оплаты над копирайтом — там, где его ищут перед тем, как решиться на заказ.",
-      "categories": ["footer"],
+      "categories": [
+        "footer"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1300,7 +1373,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-007-*. Серверный компонент. Способы оплаты — текстовые плашки в списке <ul> с aria-label у каждой, а не логотипы платёжных систем: логотипы требуют лицензии, обновляются без предупреждения и утяжеляют страницу. Ряд оплаты стоит отдельной секцией с подписью и отделён чертой, потому что за ним спускаются вниз перед оформлением. Раскладка колонок считается от собственной ширины блока.",
       "meta": {
-        "tags": ["footer", "ecommerce", "payments", "delivery"],
+        "tags": [
+          "footer",
+          "ecommerce",
+          "payments",
+          "delivery"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1561,7 +1639,9 @@
       "type": "registry:block",
       "title": "Юридический подвал",
       "description": "Юридический подвал: реквизиты списком определений, обязательные документы отдельной навигацией, дисклеймер и отдельная ссылка на настройки cookie.",
-      "categories": ["footer"],
+      "categories": [
+        "footer"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1573,7 +1653,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-008-*. Серверный компонент. Реквизиты размечены списком определений <dl>: это пары «что это — значение», и скринридер обязан читать их парами, а не сплошной строкой цифр. Числовые значения набраны tabular-nums, поэтому колонка цифр не пляшет. Настройки cookie вынесены отдельной ссылкой в нижнем ряду: по регламентам согласие должно отзываться так же просто, как давалось, и прятать эту ссылку в тексте нельзя.",
       "meta": {
-        "tags": ["footer", "legal", "compliance", "cookies"],
+        "tags": [
+          "footer",
+          "legal",
+          "compliance",
+          "cookies"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1740,7 +1825,12 @@
             }
           }
         },
-        "cardControls": ["company", "cookieLabel", "accent", "background"]
+        "cardControls": [
+          "company",
+          "cookieLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1748,7 +1838,9 @@
       "type": "registry:block",
       "title": "Мега-подвал с подпиской",
       "description": "Мега-подвал: строка подписки на рассылку сверху, карта сайта в пять колонок и нижний ряд с копирайтом и соцссылками. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["footer"],
+      "categories": [
+        "footer"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1760,7 +1852,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-009-*. Серверный компонент, клиентского JS нет. Строка подписки стоит первой: до подвала доходят самые вовлечённые посетители, и форма здесь конвертирует лучше, чем в середине страницы. Каждая колонка карты сайта — отдельный <nav> со своей подписью, иначе скринридер читает тридцать ссылок одной кашей. Колонки раскрываются от 2 до 5 по собственной ширине блока через container queries, поэтому в узкой врезке блок честно показывает мобильную раскладку.",
       "meta": {
-        "tags": ["footer", "sitemap", "newsletter", "social", "mega"],
+        "tags": [
+          "footer",
+          "sitemap",
+          "newsletter",
+          "social",
+          "mega"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2021,7 +2119,9 @@
       "type": "registry:block",
       "title": "Подвал с большим логотипом",
       "description": "Подвал с гигантским полупрозрачным wordmark: колонки ссылок сверху, под ними имя бренда во всю ширину. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["footer"],
+      "categories": [
+        "footer"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2033,7 +2133,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-010-*. Серверный компонент. Wordmark набран цветом color-mix от чернил с прозрачностью, а не отдельным серым: так он остаётся различимым на любой подложке и в обеих темах без второй пары значений. Размер задан в cqi и масштабируется от собственной ширины блока; надпись видна целиком и упирается в нижнюю кромку. Wordmark скрыт от скринридера: имя бренда уже есть в копирайте.",
       "meta": {
-        "tags": ["footer", "wordmark", "brand", "typography"],
+        "tags": [
+          "footer",
+          "wordmark",
+          "brand",
+          "typography"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2213,7 +2318,11 @@
             }
           }
         },
-        "cardControls": ["brand", "accent", "background"]
+        "cardControls": [
+          "brand",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2221,7 +2330,9 @@
       "type": "registry:block",
       "title": "Подвал с переключателями",
       "description": "Подвал с панелью настроек региона: колонки ссылок плюс селекты языка и валюты и декоративный переключатель темы. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["footer"],
+      "categories": [
+        "footer"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2233,7 +2344,13 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-011-*. Серверный компонент: селекты — нативные <select> и работают без JS, переключатель темы декоративный, логику вешает проект. Свои выпадашки ломают клавиатуру и мобильные пикеры ради косметики, поэтому селекты нативные, а стрелка нарисована двумя градиентами — appearance:none убирает браузерную, и без своей селект выглядит обычным полем. Панель настроек собрана в правой колонке отдельной карточкой с тёплым тинтом из акцента: там её ищут по привычке из крупных магазинов.",
       "meta": {
-        "tags": ["footer", "language", "currency", "theme", "settings"],
+        "tags": [
+          "footer",
+          "language",
+          "currency",
+          "theme",
+          "settings"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2351,11 +2468,24 @@
               "props": {
                 "brand": "Compass",
                 "languageLabel": "Language",
-                "languages": ["English", "Deutsch", "Español", "Français"],
+                "languages": [
+                  "English",
+                  "Deutsch",
+                  "Español",
+                  "Français"
+                ],
                 "currencyLabel": "Currency",
-                "currencies": ["$ Dollar", "€ Euro", "£ Pound"],
+                "currencies": [
+                  "$ Dollar",
+                  "€ Euro",
+                  "£ Pound"
+                ],
                 "themeLabel": "Theme",
-                "themeOptions": ["Light", "Dark", "Auto"],
+                "themeOptions": [
+                  "Light",
+                  "Dark",
+                  "Auto"
+                ],
                 "columns": [
                   {
                     "title": "Product",
@@ -2426,7 +2556,12 @@
             }
           }
         },
-        "cardControls": ["brand", "languageLabel", "accent", "background"]
+        "cardControls": [
+          "brand",
+          "languageLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2434,7 +2569,9 @@
       "type": "registry:block",
       "title": "Подвал со статусом сервиса",
       "description": "Подвал с плашкой состояния сервиса над колонками: зелёная пульсирующая точка, аптайм и ссылка на страницу статуса. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["footer"],
+      "categories": [
+        "footer"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2446,7 +2583,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-012-*. Серверный компонент. Плашка статуса стоит первой, над колонками: в подвал спускаются в двух случаях — что-то ищут или что-то сломалось, и вторым статус нужен сразу, а не мелкой ссылкой в углу. Зелёный в блоке семантический: он означает «работает» и на другие роли не тратится; тинт плашки замешан из него через color-mix. Точка пульсирует лёгким box-shadow, и анимация глушится в prefers-reduced-motion. Аптайм набран tabular-nums, чтобы цифры не плясали при обновлении.",
       "meta": {
-        "tags": ["footer", "status", "uptime", "monitoring"],
+        "tags": [
+          "footer",
+          "status",
+          "uptime",
+          "monitoring"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2656,7 +2798,12 @@
             }
           }
         },
-        "cardControls": ["statusText", "uptime", "accent", "background"]
+        "cardControls": [
+          "statusText",
+          "uptime",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2664,7 +2811,9 @@
       "type": "registry:block",
       "title": "Минимальный подвал по центру",
       "description": "Минимальный подвал по центру: знак, имя бренда, одна строка ссылок, соцсети и копирайт в узкой центральной колонке. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["footer"],
+      "categories": [
+        "footer"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2676,7 +2825,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-013-*. Серверный компонент. Всё содержимое собрано в узкую центральную колонку 44rem: минимализм держится на воздухе, растянутый на всю ширину он разваливается. Ссылки собраны в один <nav> — это одна навигация, а не пять групп, и городить колонки ради пяти ссылок значит претендовать на масштаб, которого нет. Знак нарисован акцентной заливкой через mask-image, поэтому перекрашивается пропом accent без правки SVG. Соцссылки — текстовые пилюли: ради трёх ссылок не тащим набор иконок.",
       "meta": {
-        "tags": ["footer", "minimal", "centered", "landing"],
+        "tags": [
+          "footer",
+          "minimal",
+          "centered",
+          "landing"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2830,7 +2984,12 @@
             }
           }
         },
-        "cardControls": ["brand", "copyright", "accent", "background"]
+        "cardControls": [
+          "brand",
+          "copyright",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2838,7 +2997,9 @@
       "type": "registry:block",
       "title": "Подвал с последними статьями",
       "description": "Подвал с колонкой «В блоге»: обычные колонки ссылок плюс три свежих материала с датами и ссылка на все статьи. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["footer"],
+      "categories": [
+        "footer"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2850,7 +3011,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-014-*. Серверный компонент. Даты статей размечены <time datetime>: машиночитаемая дата остаётся в разметке, даже когда подпись человеку — «12 августа». Дата стоит над заголовком: сначала свежесть, потом тема — свежие даты в подвале работают сигналом живости проекта. Вся карточка статьи — одна ссылка с наведением на заголовке. Колонка блога — отдельный <nav> со своей подписью, как и каждая колонка ссылок; двухчастная раскладка включается только от 64rem собственной ширины блока.",
       "meta": {
-        "tags": ["footer", "blog", "articles", "content"],
+        "tags": [
+          "footer",
+          "blog",
+          "articles",
+          "content"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3056,7 +3222,12 @@
             }
           }
         },
-        "cardControls": ["blogTitle", "blogLinkLabel", "accent", "background"]
+        "cardControls": [
+          "blogTitle",
+          "blogLinkLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -3064,7 +3235,9 @@
       "type": "registry:block",
       "title": "Подвал с призывом",
       "description": "Подвал с CTA-плашкой: тёплая панель с заголовком и оранжевой кнопкой сверху, ниже обычные колонки ссылок и копирайт. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["footer"],
+      "categories": [
+        "footer"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3076,7 +3249,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-015-*. Серверный компонент. CTA-плашка стоит именно в подвале не случайно: это последний экран, и посетитель, долиставший сюда, уже прочитал аргументы — ему нужна не ещё одна выгода, а кнопка. Тёплый тинт и рамка плашки замешаны из акцента через color-mix, поэтому при смене accent панель перекрашивается сама. Вторичное действие — ссылка, а не вторая кнопка: два равных призыва отменяют друг друга. Каждая колонка ссылок — отдельный <nav> со своей подписью.",
       "meta": {
-        "tags": ["footer", "cta", "conversion", "action"],
+        "tags": [
+          "footer",
+          "cta",
+          "conversion",
+          "action"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3287,7 +3465,12 @@
             }
           }
         },
-        "cardControls": ["ctaTitle", "ctaButtonLabel", "accent", "background"]
+        "cardControls": [
+          "ctaTitle",
+          "ctaButtonLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -3295,7 +3478,9 @@
       "type": "registry:block",
       "title": "Завершение документа или урока",
       "description": "Футер страницы документации или урока: карточки предыдущей и следующей главы, дата обновления, вопрос «Страница помогла?» и ссылка на исправление. Контекстные действия в колонке чтения, служебная строка тише и отдельно.",
-      "categories": ["footer"],
+      "categories": [
+        "footer"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3307,7 +3492,14 @@
       ],
       "docs": "Один файл, ноль зависимостей, клиентского JS нет. Пейджер — <nav> с двумя карточками-ссылками; пустой prevLabel оставляет только «Дальше». Кнопки отзыва — демонстрационные <button>: обработчик и состояния «отправлено/ошибка» подключает принимающий проект. Ширина колонки 46rem совпадает с колонкой чтения каркаса документации. Служебная строка — отдельная серая полоса во всю ширину. Палитра --vibeui-footer-016-*.",
       "meta": {
-        "tags": ["footer", "docs", "pager", "prev-next", "feedback", "lesson"],
+        "tags": [
+          "footer",
+          "docs",
+          "pager",
+          "prev-next",
+          "feedback",
+          "lesson"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 300"
@@ -3365,7 +3557,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["prevLabel", "nextLabel", "updated", "accent"],
+        "cardControls": [
+          "prevLabel",
+          "nextLabel",
+          "updated",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Document or Lesson Ending",
@@ -3435,7 +3632,9 @@
       "type": "registry:block",
       "title": "Следующий проект",
       "description": "Футер кейса и портфолио: крупное превью следующей работы одной однозначной ссылкой, название с контекстом и контакты студии тихой строкой ниже. Автоматического открытия следующего кейса при достижении низа нет.",
-      "categories": ["footer"],
+      "categories": [
+        "footer"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3447,10 +3646,21 @@
       ],
       "docs": "Один файл, ноль зависимостей, без клиентского JS. Вся карточка следующего проекта — одна ссылка <a> без вложенных интерактивов: конфликтов вложенных кнопок нет. Кадр 21:9 — CSS-заглушка трёх тонов (data-look); реальное превью — изображение проекта. Наведение — оранжевый контур кадра и подкраска названия. Строка студии: имя, контакт с оранжевым подчёркиванием, копирайт. Палитра --vibeui-footer-017-*.",
       "meta": {
-        "tags": ["footer", "portfolio", "next-project", "case", "studio"],
+        "tags": [
+          "footer",
+          "portfolio",
+          "next-project",
+          "case",
+          "studio"
+        ],
         "preview": {
           "width": "full",
-          "aspect": "1280 / 520"
+          "aspect": "1280 / 520",
+          "props": {
+            "src": "/demo/foundations/arch-slope-wide.webp",
+            "title": "Дом на склоне",
+            "note": "Архитектура · 2026"
+          }
         },
         "ai": {
           "usage": "<Footer017\n  title=\"Дом на склоне\"\n  note=\"Архитектура · 2026\"\n  href=\"/cases/dom\"\n  studioName=\"Студия «Русло»\"\n/>",
@@ -3491,7 +3701,11 @@
             "prop": "look",
             "label": "Кадр",
             "type": "select",
-            "options": ["warm", "paper", "dark"],
+            "options": [
+              "warm",
+              "paper",
+              "dark"
+            ],
             "default": "warm"
           },
           {
@@ -3501,7 +3715,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["title", "note", "look", "accent"],
+        "cardControls": [
+          "title",
+          "note",
+          "look",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Next Project",
@@ -3542,6 +3761,13 @@
               "accent": {
                 "label": "Accent"
               }
+            },
+            "preview": {
+              "props": {
+                "src": "/demo/foundations/arch-slope-wide.webp",
+                "title": "House on a slope",
+                "note": "Architecture · 2026"
+              }
             }
           }
         }
@@ -3552,7 +3778,9 @@
       "type": "registry:block",
       "title": "Кинематографический финальный экран",
       "description": "Финал отеля, архитектуры или fashion: кадр во весь футер, тёмная вуаль под текстом, крупная контактная фраза, оранжевое действие и компактная навигация. Служебные документы всегда видны, кадр выразителен без движения.",
-      "categories": ["footer"],
+      "categories": [
+        "footer"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3564,8 +3792,21 @@
       ],
       "docs": "Один файл, ноль зависимостей, без клиентского JS. Медиа — слот media (изображение или видеофон по правилам видеофона); без него — стилизованная CSS-сцена с role=\"img\". Вуаль — линейный градиент с тёмной нижней зоной под текстом. Крупная фраза, ряд действия и навигации, служебная строка с документами над нижним краем — за декоративной сценой ничего не прячется. Палитра --vibeui-footer-018-*.",
       "meta": {
-        "tags": ["footer", "cinematic", "hotel", "finale", "photo"],
-        "preview": { "width": "full", "aspect": "1280 / 620" },
+        "tags": [
+          "footer",
+          "cinematic",
+          "hotel",
+          "finale",
+          "photo"
+        ],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 620",
+          "props": {
+            "src": "/demo/foundations/finale-evening.webp",
+            "mediaLabel": "Вечерний вид отеля в горах"
+          }
+        },
         "ai": {
           "usage": "<Footer018\n  media={<img src=\"/photos/evening.jpg\" alt=\"\" />}\n  title=\"Приезжайте — горы подождут вас\"\n  actionHref=\"/booking\"\n/>",
           "summary": "Кинематографический финал: кадр во весь футер (слот media или CSS-сцена), вуаль с тёмным низом, контактная фраза до 4.75rem, оранжевое действие, компактная навигация и строка документов с копирайтом. Статичный кадр — основной режим. Без JS.",
@@ -3587,12 +3828,40 @@
           ]
         },
         "controls": [
-          { "prop": "title", "label": "Фраза", "type": "text", "default": "Приезжайте — горы подождут вас", "maxLength": 48 },
-          { "prop": "actionLabel", "label": "Действие", "type": "text", "default": "Забронировать", "maxLength": 24 },
-          { "prop": "copyright", "label": "Копирайт", "type": "text", "default": "© 2026 Отель «Перевал»", "maxLength": 40 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" }
+          {
+            "prop": "title",
+            "label": "Фраза",
+            "type": "text",
+            "default": "Приезжайте — горы подождут вас",
+            "maxLength": 48
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Забронировать",
+            "maxLength": 24
+          },
+          {
+            "prop": "copyright",
+            "label": "Копирайт",
+            "type": "text",
+            "default": "© 2026 Отель «Перевал»",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["title", "actionLabel", "copyright", "accent"],
+        "cardControls": [
+          "title",
+          "actionLabel",
+          "copyright",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Cinematic Final Screen",
@@ -3619,10 +3888,27 @@
               "usage": "<Footer018\n  media={<img src=\"/photos/evening.jpg\" alt=\"\" />}\n  title=\"Come over — the mountains will wait\"\n  actionHref=\"/booking\"\n/>"
             },
             "controls": {
-              "title": { "label": "Phrase", "default": "Come over — the mountains will wait" },
-              "actionLabel": { "label": "Action", "default": "Book a stay" },
-              "copyright": { "label": "Copyright", "default": "© 2026 Summit Hotel" },
-              "accent": { "label": "Accent" }
+              "title": {
+                "label": "Phrase",
+                "default": "Come over — the mountains will wait"
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Book a stay"
+              },
+              "copyright": {
+                "label": "Copyright",
+                "default": "© 2026 Summit Hotel"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "src": "/demo/foundations/finale-evening.webp",
+                "mediaLabel": "A mountain hotel at dusk"
+              }
             }
           }
         }

@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Каркас вертикального лендинга",
       "description": "Структура страницы-лендинга: слоты шапки и футера, контентная колонка с настраиваемой шириной и вертикальным ритмом секций. Обычная прокрутка документа, секции разной высоты — без принудительных полноэкранных блоков.",
-      "categories": ["layout"],
+      "categories": [
+        "layout"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,13 @@
       ],
       "docs": "Один файл, ноль зависимостей, клиентского JS нет. Владелец прокрутки — сам документ: каркас не создаёт внутренних scroll-областей и ничего не закрепляет. Слоты header и footer принимают ваши блоки, children — секции main; без children рендерится демонстрационный лендинг (hero, доказательства, сетка возможностей, двухколоночная деталь, графитовый финал). Ширина колонки и ритм — переменные --vibeui-layout-001-width/gap через атрибуты. Раскладка от container-запроса.",
       "meta": {
-        "tags": ["layout", "landing", "page", "structure", "skeleton"],
+        "tags": [
+          "layout",
+          "landing",
+          "page",
+          "structure",
+          "skeleton"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 900"
@@ -53,14 +61,21 @@
             "prop": "width",
             "label": "Ширина",
             "type": "select",
-            "options": ["narrow", "normal", "wide"],
+            "options": [
+              "narrow",
+              "normal",
+              "wide"
+            ],
             "default": "normal"
           },
           {
             "prop": "rhythm",
             "label": "Ритм",
             "type": "select",
-            "options": ["calm", "tight"],
+            "options": [
+              "calm",
+              "tight"
+            ],
             "default": "calm"
           },
           {
@@ -76,7 +91,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["width", "rhythm", "dividers", "accent"],
+        "cardControls": [
+          "width",
+          "rhythm",
+          "dividers",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Vertical Landing Skeleton",
@@ -130,7 +150,9 @@
       "type": "registry:block",
       "title": "Каталог с фильтрами",
       "description": "Структура страницы каталога: фильтры группами-раскрытиями, панель с количеством и сортировкой, сетка карточек и кнопка «Показать ещё» вместо бесконечной ленты. Состояния «загрузка» и «ничего не нашлось» встроены.",
-      "categories": ["layout"],
+      "categories": [
+        "layout"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -142,7 +164,14 @@
       ],
       "docs": "Один файл, ноль зависимостей, клиентского JS нет. Фильтры — доступные <details>-группы с нативными checkbox; сортировка — нативный <select>; счётчик выдачи — role=\"status\". Три состояния демонстрируются пропом state: results, loading (скелетоны с пульсацией и prefers-reduced-motion), empty (пустая выдача с советом). На широкой раскладке фильтры sticky в пределах раздела. Настоящий поиск, URL-состояние фильтров и подгрузку реализует принимающий проект. Палитра --vibeui-layout-002-*.",
       "meta": {
-        "tags": ["layout", "catalog", "filters", "grid", "shop", "listing"],
+        "tags": [
+          "layout",
+          "catalog",
+          "filters",
+          "grid",
+          "shop",
+          "listing"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 800"
@@ -177,7 +206,11 @@
             "prop": "state",
             "label": "Состояние",
             "type": "select",
-            "options": ["results", "loading", "empty"],
+            "options": [
+              "results",
+              "loading",
+              "empty"
+            ],
             "default": "results"
           },
           {
@@ -194,7 +227,11 @@
             "default": ""
           }
         ],
-        "cardControls": ["state", "heading", "accent"],
+        "cardControls": [
+          "state",
+          "heading",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Catalog with Filters",
@@ -254,15 +291,29 @@
                 "filters": [
                   {
                     "title": "Category",
-                    "options": ["Chairs", "Tables", "Lighting", "Storage"]
+                    "options": [
+                      "Chairs",
+                      "Tables",
+                      "Lighting",
+                      "Storage"
+                    ]
                   },
                   {
                     "title": "Material",
-                    "options": ["Oak", "Ash", "Metal", "Textile"]
+                    "options": [
+                      "Oak",
+                      "Ash",
+                      "Metal",
+                      "Textile"
+                    ]
                   },
                   {
                     "title": "Price",
-                    "options": ["Under $100", "$100–500", "Over $500"]
+                    "options": [
+                      "Under $100",
+                      "$100–500",
+                      "Over $500"
+                    ]
                   }
                 ],
                 "cards": [
@@ -308,7 +359,9 @@
       "type": "registry:block",
       "title": "Товар со закреплённым предложением",
       "description": "Структура страницы товара: галерея крупных кадров идёт естественным потоком, панель с ценой, вариантами и покупкой закреплена sticky в пределах раздела. Ниже — характеристики и отзывы. Состояние «нет в наличии» встроено.",
-      "categories": ["layout"],
+      "categories": [
+        "layout"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -320,7 +373,13 @@
       ],
       "docs": "Один файл, ноль зависимостей, клиентского JS нет. Панель предложения — position:sticky в пределах data-part=\"top\": ниже характеристик она не уезжает; в узкой колонке закрепление снимается и страница идёт одним потоком. Варианты — нативные radio в fieldset/legend, недоступный вариант — disabled с перечёркиванием. Состояние out переключает кнопку на «Нет в наличии». Оплату, корзину и реальную галерею подключает принимающий проект; кадры-заглушки — CSS-градиенты с aria-label. Палитра --vibeui-layout-003-*.",
       "meta": {
-        "tags": ["layout", "product", "ecommerce", "sticky", "gallery"],
+        "tags": [
+          "layout",
+          "product",
+          "ecommerce",
+          "sticky",
+          "gallery"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 820"
@@ -355,7 +414,10 @@
             "prop": "state",
             "label": "Наличие",
             "type": "select",
-            "options": ["available", "out"],
+            "options": [
+              "available",
+              "out"
+            ],
             "default": "available"
           },
           {
@@ -379,7 +441,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["state", "title", "price", "accent"],
+        "cardControls": [
+          "state",
+          "title",
+          "price",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Product with Sticky Offer",
@@ -461,7 +528,9 @@
       "type": "registry:block",
       "title": "Документация с деревом и оглавлением",
       "description": "Трёхколоночная структура документации: дерево разделов слева, статья в центре, оглавление страницы справа. Боковые колонки закреплены, чтение идёт обычным потоком; в узкой колонке дерево и оглавление складываются в раскрытия.",
-      "categories": ["layout"],
+      "categories": [
+        "layout"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -531,7 +600,11 @@
             "default": ""
           }
         ],
-        "cardControls": ["treeLabel", "tocLabel", "accent"],
+        "cardControls": [
+          "treeLabel",
+          "tocLabel",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Docs with Tree and TOC",
@@ -645,7 +718,9 @@
       "type": "registry:block",
       "title": "Кабинет с боковой панелью",
       "description": "Структура рабочего пространства: графитовая боковая навигация, верхняя контекстная строка с действием и рабочая область с карточками показателей и таблицей. Для кабинета, CRM, аналитики и управления магазином.",
-      "categories": ["layout"],
+      "categories": [
+        "layout"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -657,7 +732,14 @@
       ],
       "docs": "Один файл, ноль зависимостей, клиентского JS нет. Владелец прокрутки по умолчанию — документ: блок переносим и не навязывает 100vh. Если приложению нужна фиксированная оболочка, оно задаёт блоку высоту снаружи (height:100dvh на родителе) — тогда прокручивается рабочая область data-part=\"work\"; этот выбор надо явно указать и в Copy for AI принимающего проекта. Боковая панель sticky, на узкой ширине превращается в верхнюю полосу с горизонтальным рядом разделов. Таблица живёт в панели с собственным overflow-x — колонки не сжимаются до нечитаемых. Палитра --vibeui-layout-005-*.",
       "meta": {
-        "tags": ["layout", "dashboard", "workspace", "sidebar", "app", "admin"],
+        "tags": [
+          "layout",
+          "dashboard",
+          "workspace",
+          "sidebar",
+          "app",
+          "admin"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 720"
@@ -706,7 +788,10 @@
             "prop": "tone",
             "label": "Поверхность",
             "type": "select",
-            "options": ["light", "dark"],
+            "options": [
+              "light",
+              "dark"
+            ],
             "default": "light"
           },
           {
@@ -716,7 +801,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["appName", "screenTitle", "tone", "accent"],
+        "cardControls": [
+          "appName",
+          "screenTitle",
+          "tone",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Workspace with Sidebar",
@@ -803,7 +893,9 @@
       "type": "registry:block",
       "title": "Редакционная сетка",
       "description": "Структура медиа-страницы: крупный ведущий материал, асимметричные карточки и узкая колонка коротких заметок с тонкими линейками. Ритм создаётся размером материалов, порядок чтения совпадает с DOM на любой ширине.",
-      "categories": ["layout"],
+      "categories": [
+        "layout"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -815,7 +907,14 @@
       ],
       "docs": "Один файл, ноль зависимостей, клиентского JS нет. Широкая раскладка — CSS Grid 7/5/16rem: ведущий материал занимает две строки первой колонки, заметки — всю правую. В узкой колонке сетка складывается в один столбец в порядке DOM: ведущий материал первый. Фото — CSS-заглушки с пропорцией 16:9; реальные изображения передаёт проект. Обычная вертикальная прокрутка, без анимации карточек. Палитра --vibeui-layout-006-*.",
       "meta": {
-        "tags": ["layout", "editorial", "magazine", "news", "grid", "media"],
+        "tags": [
+          "layout",
+          "editorial",
+          "magazine",
+          "news",
+          "grid",
+          "media"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 760"
@@ -865,7 +964,11 @@
             "default": ""
           }
         ],
-        "cardControls": ["heading", "asideTitle", "accent"],
+        "cardControls": [
+          "heading",
+          "asideTitle",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Editorial Grid",
@@ -916,7 +1019,9 @@
       "type": "registry:block",
       "title": "Асимметричное портфолио",
       "description": "Структура портфолио студии, дизайнера или фотографа: крупные работы разного масштаба — на всю строку, вертикальные, обычные — с короткими подписями и свободными полями. На телефоне складывается в удобную ленту.",
-      "categories": ["layout"],
+      "categories": [
+        "layout"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -928,10 +1033,56 @@
       ],
       "docs": "Один файл, ноль зависимостей, клиентского JS нет. Масштаб работы задаётся полем size: wide растягивается на всю строку (grid-column 1/-1), tall получает пропорцию 3:4, обычная — 4:3. Кадры — CSS-заглушки трёх тонов (look); реальные изображения передаёт проект с теми же пропорциями. Наведение — оранжевый контур кадра и подкраска названия; появления и параллакса нет. DOM-порядок совпадает с чтением. Палитра --vibeui-layout-007-*.",
       "meta": {
-        "tags": ["layout", "portfolio", "gallery", "studio", "works", "grid"],
+        "tags": [
+          "layout",
+          "portfolio",
+          "gallery",
+          "studio",
+          "works",
+          "grid"
+        ],
         "preview": {
           "width": "full",
-          "aspect": "1280 / 860"
+          "aspect": "1280 / 860",
+          "props": {
+            "works": [
+              {
+                "title": "Дом на склоне",
+                "note": "Архитектура · 2026",
+                "href": "#w1",
+                "size": "wide",
+                "look": "warm",
+                "src": "/demo/foundations/arch-slope-wide.webp"
+              },
+              {
+                "title": "Айдентика «Русла»",
+                "note": "Брендинг",
+                "href": "#w2",
+                "look": "paper"
+              },
+              {
+                "title": "Интерьер мастерской",
+                "note": "Пространство",
+                "href": "#w3",
+                "size": "tall",
+                "look": "dark",
+                "src": "/demo/foundations/interior-stair-tall.webp"
+              },
+              {
+                "title": "Серия «Тихий свет»",
+                "note": "Фотография",
+                "href": "#w4",
+                "look": "warm",
+                "src": "/demo/foundations/photo-series-still.webp"
+              },
+              {
+                "title": "Витрина «Лавки»",
+                "note": "Веб · e-commerce",
+                "href": "#w5",
+                "look": "paper"
+              }
+            ]
+          }
         },
         "ai": {
           "usage": "<Layout007\n  heading=\"Студия «Русло»\"\n  works={[{ title: \"Дом у озера\", note: \"2026\", href: \"/w1\", size: \"wide\", look: \"warm\" }]}\n/>",
@@ -978,7 +1129,10 @@
             "default": ""
           }
         ],
-        "cardControls": ["heading", "accent"],
+        "cardControls": [
+          "heading",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Asymmetric Portfolio",
@@ -1019,6 +1173,47 @@
               "accent": {
                 "label": "Accent"
               }
+            },
+            "preview": {
+              "props": {
+                "works": [
+                  {
+                    "title": "House on a slope",
+                    "note": "Architecture · 2026",
+                    "href": "#w1",
+                    "size": "wide",
+                    "look": "warm",
+                    "src": "/demo/foundations/arch-slope-wide.webp"
+                  },
+                  {
+                    "title": "Ruslo identity",
+                    "note": "Branding",
+                    "href": "#w2",
+                    "look": "paper"
+                  },
+                  {
+                    "title": "Workshop interior",
+                    "note": "Space",
+                    "href": "#w3",
+                    "size": "tall",
+                    "look": "dark",
+                    "src": "/demo/foundations/interior-stair-tall.webp"
+                  },
+                  {
+                    "title": "Quiet Light series",
+                    "note": "Photography",
+                    "href": "#w4",
+                    "look": "warm",
+                    "src": "/demo/foundations/photo-series-still.webp"
+                  },
+                  {
+                    "title": "Storefront",
+                    "note": "Web · e-commerce",
+                    "href": "#w5",
+                    "look": "paper"
+                  }
+                ]
+              }
             }
           }
         }
@@ -1029,7 +1224,9 @@
       "type": "registry:block",
       "title": "Закреплённое описание и длинная колонка",
       "description": "Структура «предложение + детали»: краткая колонка с названием, ценой и действием держится sticky в пределах раздела, длинная колонка с фото и условиями идёт обычным потоком. Для услуг, отеля, консультанта, программ.",
-      "categories": ["layout"],
+      "categories": [
+        "layout"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1041,7 +1238,14 @@
       ],
       "docs": "Один файл, ноль зависимостей, клиентского JS нет. Закрепление — position:sticky у краткой колонки в пределах общего flex-раздела: если колонка выше окна, sticky не срабатывает — это штатное поведение, а не поломка. Сторона выбирается пропом side. В узкой колонке (порог 54rem) закрепление снимается: описание, детали и действие идут одним потоком без постоянной нижней плашки. Фото — CSS-заглушки 3:2. Палитра --vibeui-layout-008-*.",
       "meta": {
-        "tags": ["layout", "sticky", "offer", "service", "hotel", "two-column"],
+        "tags": [
+          "layout",
+          "sticky",
+          "offer",
+          "service",
+          "hotel",
+          "two-column"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 720"
@@ -1088,7 +1292,10 @@
             "prop": "side",
             "label": "Сторона",
             "type": "select",
-            "options": ["left", "right"],
+            "options": [
+              "left",
+              "right"
+            ],
             "default": "left"
           },
           {
@@ -1098,7 +1305,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["title", "price", "side", "accent"],
+        "cardControls": [
+          "title",
+          "price",
+          "side",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Sticky Summary and Long Column",
@@ -1152,7 +1364,9 @@
       "type": "registry:block",
       "title": "Горизонтальная галерея",
       "description": "Лента карточек с нативной горизонтальной прокруткой внутри обычной страницы: виден край следующей карточки, мягкий scroll snap, колесо мыши не перехватывается. Для портфолио, путешествий, магазина и медиа.",
-      "categories": ["layout"],
+      "categories": [
+        "layout"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1174,7 +1388,50 @@
         ],
         "preview": {
           "width": "full",
-          "aspect": "1280 / 460"
+          "aspect": "1280 / 460",
+          "props": {
+            "cards": [
+              {
+                "title": "Дом у озера",
+                "note": "Карелия · 2026",
+                "href": "#c1",
+                "look": "warm",
+                "src": "/demo/foundations/stay-cabin.webp"
+              },
+              {
+                "title": "Квартира-студия",
+                "note": "Москва",
+                "href": "#c2",
+                "look": "paper",
+                "src": "/demo/foundations/stay-loft.webp"
+              },
+              {
+                "title": "Гостевой флигель",
+                "note": "Суздаль",
+                "href": "#c3",
+                "look": "dark"
+              },
+              {
+                "title": "Мансарда «Свет»",
+                "note": "Казань",
+                "href": "#c4",
+                "look": "paper",
+                "src": "/demo/foundations/stay-mansard.webp"
+              },
+              {
+                "title": "Баня по-белому",
+                "note": "Урал",
+                "href": "#c5",
+                "look": "warm"
+              },
+              {
+                "title": "Терраса на крыше",
+                "note": "Сочи",
+                "href": "#c6",
+                "look": "dark"
+              }
+            ]
+          }
         },
         "ai": {
           "usage": "<Layout009\n  heading=\"Свежие проекты\"\n  cards={[{ title: \"Дом у озера\", note: \"2026\", href: \"/c1\", look: \"warm\" }]}\n  snap\n/>",
@@ -1221,7 +1478,11 @@
             "default": ""
           }
         ],
-        "cardControls": ["heading", "snap", "accent"],
+        "cardControls": [
+          "heading",
+          "snap",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Horizontal Gallery",
@@ -1262,6 +1523,51 @@
               "accent": {
                 "label": "Accent"
               }
+            },
+            "preview": {
+              "props": {
+                "cards": [
+                  {
+                    "title": "Lake house",
+                    "note": "Karelia · 2026",
+                    "href": "#c1",
+                    "look": "warm",
+                    "src": "/demo/foundations/stay-cabin.webp"
+                  },
+                  {
+                    "title": "Studio flat",
+                    "note": "Moscow",
+                    "href": "#c2",
+                    "look": "paper",
+                    "src": "/demo/foundations/stay-loft.webp"
+                  },
+                  {
+                    "title": "Guest wing",
+                    "note": "Suzdal",
+                    "href": "#c3",
+                    "look": "dark"
+                  },
+                  {
+                    "title": "Skylight attic",
+                    "note": "Kazan",
+                    "href": "#c4",
+                    "look": "paper",
+                    "src": "/demo/foundations/stay-mansard.webp"
+                  },
+                  {
+                    "title": "Bathhouse",
+                    "note": "Ural",
+                    "href": "#c5",
+                    "look": "warm"
+                  },
+                  {
+                    "title": "Rooftop terrace",
+                    "note": "Sochi",
+                    "href": "#c6",
+                    "look": "dark"
+                  }
+                ]
+              }
             }
           }
         }
@@ -1272,7 +1578,9 @@
       "type": "registry:block",
       "title": "Длинное чтение с главами",
       "description": "Структура лонгрида: спокойная колонка около 42rem, крупный заголовок с рубрикой, оглавление раскрытием, цитата с оранжевой линией, широкие изображения и заметки на полях в потоке. Для статьи, урока, отчёта, исследования.",
-      "categories": ["layout"],
+      "categories": [
+        "layout"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1341,7 +1649,11 @@
             "default": ""
           }
         ],
-        "cardControls": ["kicker", "title", "accent"],
+        "cardControls": [
+          "kicker",
+          "title",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Longread with Chapters",
@@ -1392,7 +1704,9 @@
       "type": "registry:block",
       "title": "Трёхпанельный сервис",
       "description": "Структура почты, AI-чата или поддержки: графитовая панель разделов, список разговоров и выбранный диалог с полем ввода. На desktop у списка и диалога свои прокрутки; на телефоне панели идут последовательно.",
-      "categories": ["layout"],
+      "categories": [
+        "layout"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1404,7 +1718,14 @@
       ],
       "docs": "Один файл, ноль зависимостей, без клиентского JS. Desktop — grid 11rem/19rem/1fr высотой 34rem: список и сообщения прокручиваются каждая своей областью, переключение разговора не сбрасывает позицию списка. Чат не прокручивается принудительно — прокрутку к новому сообщению делает приложение при отправке. Узкая колонка — последовательный поток DOM. Отправку, хранение и AI подключает приложение; форма демонстрационная. Палитра --vibeui-layout-011-*.",
       "meta": {
-        "tags": ["layout", "chat", "mail", "inbox", "three-pane", "support"],
+        "tags": [
+          "layout",
+          "chat",
+          "mail",
+          "inbox",
+          "three-pane",
+          "support"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 640"
@@ -1451,7 +1772,11 @@
             "default": ""
           }
         ],
-        "cardControls": ["appName", "threadName", "accent"],
+        "cardControls": [
+          "appName",
+          "threadName",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Three-Pane Service",
@@ -1499,7 +1824,9 @@
       "type": "registry:block",
       "title": "Результаты и карта",
       "description": "Структура «список объектов + карта»: карточки с выбранным объектом слева, sticky-карта с метками справа, на телефоне — переключатель «список / карта» на чистом CSS. Для недвижимости, отелей, заведений и событий поблизости.",
-      "categories": ["layout"],
+      "categories": [
+        "layout"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1511,10 +1838,49 @@
       ],
       "docs": "Один файл, ноль зависимостей, без клиентского JS. Карта — явно подписанная демонстрационная схема (role=\"img\" с подписью «не карта»): реальный провайдер и ключи подключает проект вместо слота data-part=\"map\". Мобильный переключатель — нативные radio + :has() в container-запросе; на desktop оба вида видны и переключатель скрыт. Заглушка-карта — обычный блок, жесты не блокируют прокрутку страницы. Выбранный объект — aria-current с оранжевой рамкой. Палитра --vibeui-layout-012-*.",
       "meta": {
-        "tags": ["layout", "map", "listing", "real-estate", "split", "results"],
+        "tags": [
+          "layout",
+          "map",
+          "listing",
+          "real-estate",
+          "split",
+          "results"
+        ],
         "preview": {
           "width": "full",
-          "aspect": "1280 / 680"
+          "aspect": "1280 / 680",
+          "props": {
+            "items": [
+              {
+                "title": "Дом у озера",
+                "note": "Карелия · 4 гостя · сауна",
+                "price": "9 800 ₽ / ночь",
+                "href": "#i1",
+                "current": true,
+                "src": "/demo/foundations/stay-cabin.webp"
+              },
+              {
+                "title": "Квартира-студия",
+                "note": "Центр · 2 гостя",
+                "price": "4 200 ₽ / ночь",
+                "href": "#i2",
+                "src": "/demo/foundations/stay-loft.webp"
+              },
+              {
+                "title": "Гостевой флигель",
+                "note": "Суздаль · 3 гостя · сад",
+                "price": "6 500 ₽ / ночь",
+                "href": "#i3"
+              },
+              {
+                "title": "Мансарда «Свет»",
+                "note": "Казань · 2 гостя · вид",
+                "price": "5 100 ₽ / ночь",
+                "href": "#i4",
+                "src": "/demo/foundations/stay-mansard.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "usage": "<Layout012\n  heading=\"Жильё в поездку\"\n  items={[{ title: \"Дом у озера\", note: \"4 гостя\", price: \"9 800 ₽\", href: \"/i1\", current: true }]}\n/>",
@@ -1558,7 +1924,11 @@
             "default": ""
           }
         ],
-        "cardControls": ["heading", "resultsLabel", "accent"],
+        "cardControls": [
+          "heading",
+          "resultsLabel",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Results and Map",
@@ -1596,6 +1966,40 @@
               "accent": {
                 "label": "Accent"
               }
+            },
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "title": "Lake house",
+                    "note": "Karelia · 4 guests · sauna",
+                    "price": "$98 / night",
+                    "href": "#i1",
+                    "current": true,
+                    "src": "/demo/foundations/stay-cabin.webp"
+                  },
+                  {
+                    "title": "Studio flat",
+                    "note": "Center · 2 guests",
+                    "price": "$42 / night",
+                    "href": "#i2",
+                    "src": "/demo/foundations/stay-loft.webp"
+                  },
+                  {
+                    "title": "Guest wing",
+                    "note": "Suzdal · 3 guests · garden",
+                    "price": "$65 / night",
+                    "href": "#i3"
+                  },
+                  {
+                    "title": "Skylight attic",
+                    "note": "Kazan · 2 guests · view",
+                    "price": "$51 / night",
+                    "href": "#i4",
+                    "src": "/demo/foundations/stay-mansard.webp"
+                  }
+                ]
+              }
             }
           }
         }
@@ -1606,7 +2010,9 @@
       "type": "registry:block",
       "title": "Главы с закреплённой иллюстрацией",
       "description": "Сцена объяснения продукта: короткие главы текста идут потоком, один визуал держится sticky рядом в пределах секции. Длина сцены равна сумме глав — пустых экранов ради эффекта нет. Смену состояния визуала добавляет scrollspy проекта.",
-      "categories": ["layout"],
+      "categories": [
+        "layout"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1627,7 +2033,11 @@
         ],
         "preview": {
           "width": "full",
-          "aspect": "1280 / 700"
+          "aspect": "1280 / 700",
+          "props": {
+            "src": "/demo/foundations/interior-workshop.webp",
+            "visualLabel": "Интерьер студии"
+          }
         },
         "ai": {
           "usage": "<Layout013\n  heading=\"Как устроен продукт\"\n  chapters={[{ index: \"01\", title: \"Замер\", text: \"…\" }]}\n  visual={<YourVisual />}\n/>",
@@ -1664,7 +2074,10 @@
             "default": ""
           }
         ],
-        "cardControls": ["heading", "accent"],
+        "cardControls": [
+          "heading",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Chapters with a Pinned Visual",
@@ -1698,6 +2111,12 @@
               "accent": {
                 "label": "Accent"
               }
+            },
+            "preview": {
+              "props": {
+                "src": "/demo/foundations/interior-workshop.webp",
+                "visualLabel": "A studio interior"
+              }
             }
           }
         }
@@ -1708,7 +2127,9 @@
       "type": "registry:block",
       "title": "Накладывающиеся панели",
       "description": "Сцена этапов: крупные панели последовательно прилипают к верху со ступенчатым смещением — предыдущая остаётся видимой краем. Чистый CSS sticky без захвата прокрутки; высота панелей растёт от русского текста, ничего не обрезается.",
-      "categories": ["layout"],
+      "categories": [
+        "layout"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1720,7 +2141,14 @@
       ],
       "docs": "Один файл, ноль зависимостей, без клиентского JS. Каждая панель — position:sticky с top-ступенькой (1rem, 2.25rem, …): при прокрутке следующая наезжает, а видимой остаётся полоска предыдущей с номером этапа. До пяти панелей; поверхность каждой — data-surface (paper/graphite/orange) с согласованными цветами. В узкой колонке перекрытие отключается — обычная стопка. Интерактивные элементы внутри панелей не перекрываются: полоска — заголовочная зона. Палитра --vibeui-layout-014-*.",
       "meta": {
-        "tags": ["layout", "sticky", "stack", "cards", "process", "steps"],
+        "tags": [
+          "layout",
+          "sticky",
+          "stack",
+          "cards",
+          "process",
+          "steps"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 760"
@@ -1760,7 +2188,10 @@
             "default": ""
           }
         ],
-        "cardControls": ["heading", "accent"],
+        "cardControls": [
+          "heading",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Stacking Panels",
@@ -1804,7 +2235,9 @@
       "type": "registry:block",
       "title": "Экранная презентация",
       "description": "Несколько выразительных экранов с мягкими остановками: scroll-snap-align на секциях, чередование белой, графитовой и оранжевой поверхностей, видимая подсказка «листайте». Колесо не перехватывается, длинная секция дочитывается свободно.",
-      "categories": ["layout"],
+      "categories": [
+        "layout"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1816,7 +2249,13 @@
       ],
       "docs": "Один файл, ноль зависимостей, без клиентского JS. Секции несут scroll-snap-align:start; сам scroll-snap-type блок не задаёт — его включает принимающий проект одной строкой на владельце прокрутки (html{scroll-snap-type:y proximity}), поэтому блок не захватывает чужой scroll-root, а без этой строки остаётся обычной страницей. Высота экрана — минимум 36rem (не vh), длинный контент растёт свободно. Поверхности — data-surface с согласованными цветами. Палитра --vibeui-layout-015-*.",
       "meta": {
-        "tags": ["layout", "snap", "presentation", "screens", "fullscreen"],
+        "tags": [
+          "layout",
+          "snap",
+          "presentation",
+          "screens",
+          "fullscreen"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 800"
@@ -1856,7 +2295,10 @@
             "default": ""
           }
         ],
-        "cardControls": ["nextHint", "accent"],
+        "cardControls": [
+          "nextHint",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Screen Presentation",
@@ -1900,7 +2342,9 @@
       "type": "registry:block",
       "title": "Раскрытие медиа при прокрутке",
       "description": "Сцена, где кадр начинается в аккуратной скруглённой рамке и расширяется до ширины секции по мере прокрутки. CSS scroll-driven animation без JS; без поддержки или при reduced motion кадр сразу широкий — контент не заперт.",
-      "categories": ["layout"],
+      "categories": [
+        "layout"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1922,7 +2366,11 @@
         ],
         "preview": {
           "width": "full",
-          "aspect": "1280 / 700"
+          "aspect": "1280 / 700",
+          "props": {
+            "src": "/demo/foundations/atmosphere-coast.webp",
+            "mediaLabel": "Туманное побережье"
+          }
         },
         "ai": {
           "usage": "<Layout016\n  title=\"Кадр раскрывается по мере чтения\"\n  media={<img src=\"/photo.jpg\" alt=\"…\" />}\n/>",
@@ -1959,7 +2407,10 @@
             "default": ""
           }
         ],
-        "cardControls": ["title", "accent"],
+        "cardControls": [
+          "title",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Scroll-Driven Media Reveal",
@@ -1993,6 +2444,12 @@
               "accent": {
                 "label": "Accent"
               }
+            },
+            "preview": {
+              "props": {
+                "src": "/demo/foundations/atmosphere-coast.webp",
+                "mediaLabel": "A misty coastline"
+              }
             }
           }
         }
@@ -2003,7 +2460,9 @@
       "type": "registry:block",
       "title": "Футер, открывающийся из-под страницы",
       "description": "Финальная сцена: контент лежит верхним слоем с тенью, а футер закреплён под ним — последняя секция приподнимается и открывает подготовленный финал. Чистый CSS sticky без захвата прокрутки; при reduced motion — обычный футер.",
-      "categories": ["layout"],
+      "categories": [
+        "layout"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2015,7 +2474,13 @@
       ],
       "docs": "Один файл, ноль зависимостей, без клиентского JS. Механика: контент — слой z-index:1 с тенью, футер — position:sticky;bottom:0 под ним; прокрутка обычная, футер занимает реальное место в раскладке и читается полностью. При reduced motion sticky снимается — футер становится обычным. Слот footer принимает любой футер каталога (например «крупное имя» или «кинематографический финал»); children — страница над ним. Фокус на ссылках футера штатно доскролливает к ним. Палитра --vibeui-layout-017-*.",
       "meta": {
-        "tags": ["layout", "footer", "reveal", "sticky", "finale"],
+        "tags": [
+          "layout",
+          "footer",
+          "reveal",
+          "sticky",
+          "finale"
+        ],
         "preview": {
           "width": "full",
           "aspect": "1280 / 820"
@@ -2062,7 +2527,11 @@
             "default": ""
           }
         ],
-        "cardControls": ["footerName", "contactLabel", "accent"],
+        "cardControls": [
+          "footerName",
+          "contactLabel",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Footer Revealed from Under the Page",
@@ -2110,7 +2579,9 @@
       "type": "registry:block",
       "title": "Горизонтальная история от прокрутки",
       "description": "Сцена, где на широком экране участок закрепляется и сцены проходят горизонтально ровно на длину вертикальной прокрутки. CSS view-timeline без JS и GSAP; на телефоне и при reduced motion — обычная вертикальная последовательность.",
-      "categories": ["layout"],
+      "categories": [
+        "layout"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2122,8 +2593,18 @@
       ],
       "docs": "Один файл, ноль зависимостей, без клиентского JS. Механика: высокий контейнер-pin (60rem на сцену), sticky-viewport и трек с animation-timeline:view() — горизонтальный translateX привязан к прогрессу прокрутки участка. Всё внутри @supports (animation-timeline: view()) + @media (no-preference) + @container (min-width:52rem): вне этих условий закрепление полностью снимается и сцены идут вертикально. Число сцен — переменная count из данных. Контент и ссылки существуют вне анимационного состояния; после сцены — видимая кнопка перехода. Палитра --vibeui-layout-018-*.",
       "meta": {
-        "tags": ["layout", "horizontal", "scrollytelling", "pin", "view-timeline", "story"],
-        "preview": { "width": "full", "aspect": "1280 / 760" },
+        "tags": [
+          "layout",
+          "horizontal",
+          "scrollytelling",
+          "pin",
+          "view-timeline",
+          "story"
+        ],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 760"
+        },
         "ai": {
           "usage": "<Layout018\n  heading=\"История коллекции\"\n  scenes={[{ index: \"01\", title: \"…\", text: \"…\", look: \"warm\" }]}\n/>",
           "summary": "Горизонтальная история: sticky-viewport и CSS view-timeline везут сцены вбок на длину вертикальной прокрутки; длина закрепления пропорциональна числу сцен. Без поддержки, на телефоне и при reduced motion — вертикальная последовательность тех же сцен. Кнопка выхода после сцены. Без JS.",
@@ -2145,11 +2626,32 @@
           ]
         },
         "controls": [
-          { "prop": "heading", "label": "Название", "type": "text", "default": "История коллекции", "maxLength": 40 },
-          { "prop": "exitLabel", "label": "Выход", "type": "text", "default": "К следующему разделу", "maxLength": 32 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" }
+          {
+            "prop": "heading",
+            "label": "Название",
+            "type": "text",
+            "default": "История коллекции",
+            "maxLength": 40
+          },
+          {
+            "prop": "exitLabel",
+            "label": "Выход",
+            "type": "text",
+            "default": "К следующему разделу",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["heading", "exitLabel", "accent"],
+        "cardControls": [
+          "heading",
+          "exitLabel",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Horizontal Story from Vertical Scroll",
@@ -2176,9 +2678,17 @@
               "usage": "<Layout018\n  heading=\"The collection story\"\n  scenes={[{ index: \"01\", title: \"…\", text: \"…\", look: \"warm\" }]}\n/>"
             },
             "controls": {
-              "heading": { "label": "Name", "default": "The collection story" },
-              "exitLabel": { "label": "Exit", "default": "To the next section" },
-              "accent": { "label": "Accent" }
+              "heading": {
+                "label": "Name",
+                "default": "The collection story"
+              },
+              "exitLabel": {
+                "label": "Exit",
+                "default": "To the next section"
+              },
+              "accent": {
+                "label": "Accent"
+              }
             }
           }
         }
@@ -2189,7 +2699,9 @@
       "type": "registry:block",
       "title": "Покадровая история продукта",
       "description": "История hardware-предмета по смысловым кадрам: общий вид, профиль, деталь, разборка — каждый кадр с подписью и текстом рядом. Статичная основа семейства и одновременно его честный fallback; canvas-секвенция — расширение проекта.",
-      "categories": ["layout"],
+      "categories": [
+        "layout"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2201,8 +2713,47 @@
       ],
       "docs": "Один файл, ноль зависимостей, без клиентского JS и без загрузки сотен кадров. Кадры — CSS-сцены с предметом-заглушкой в четырёх ракурсах (data-angle: front/side/detail/open); реальные кадры — изображения проекта. Чередование сторон на широкой раскладке. Ссылка «пропустить» ведёт к характеристикам мимо кадров. Canvas/секвенция как прокруточная сцена — отдельное расширение с оценкой веса ассетов; этот блок — его смысловые этапы и fallback. Палитра --vibeui-layout-019-*.",
       "meta": {
-        "tags": ["layout", "product", "hardware", "frames", "story", "showcase"],
-        "preview": { "width": "full", "aspect": "1280 / 900" },
+        "tags": [
+          "layout",
+          "product",
+          "hardware",
+          "frames",
+          "story",
+          "showcase"
+        ],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 900",
+          "props": {
+            "frames": [
+              {
+                "index": "Кадр 01 · Общий вид",
+                "title": "Предмет в студийном свете",
+                "text": "Каждый смысловой этап — отдельный кадр с подписью и характеристиками. История читается и без движения.",
+                "angle": "front",
+                "src": "/demo/foundations/object-hero-dark.webp"
+              },
+              {
+                "index": "Кадр 02 · Профиль",
+                "title": "Тоньше, чем кажется",
+                "text": "Ракурсы меняются кадрами, а не прокруткой сотен изображений: вес страницы предсказуем.",
+                "angle": "side"
+              },
+              {
+                "index": "Кадр 03 · Деталь",
+                "title": "Крупный план узла",
+                "text": "Технические характеристики живут текстом рядом с кадром — сцена их не заменяет.",
+                "angle": "detail"
+              },
+              {
+                "index": "Кадр 04 · Разборка",
+                "title": "Что внутри",
+                "text": "Финальный этап показывает устройство. Дальше — обычные секции страницы.",
+                "angle": "open"
+              }
+            ]
+          }
+        },
         "ai": {
           "usage": "<Layout019\n  heading=\"Устройство «Прибор-4»\"\n  frames={[{ index: \"Кадр 01\", title: \"…\", text: \"…\", angle: \"front\" }]}\n/>",
           "summary": "Покадровая история предмета: тёмные студийные кадры четырёх ракурсов с подписями и характеристиками рядом, чередование сторон, ссылка «пропустить» мимо кадров. Всё статично и читается текстом; сотни изображений не загружаются. Без JS.",
@@ -2224,11 +2775,31 @@
           ]
         },
         "controls": [
-          { "prop": "heading", "label": "Заголовок", "type": "text", "default": "Устройство «Прибор-4»", "maxLength": 40 },
-          { "prop": "skipLabel", "label": "Пропуск", "type": "text", "default": "Пропустить и перейти к характеристикам", "maxLength": 48 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" }
+          {
+            "prop": "heading",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Устройство «Прибор-4»",
+            "maxLength": 40
+          },
+          {
+            "prop": "skipLabel",
+            "label": "Пропуск",
+            "type": "text",
+            "default": "Пропустить и перейти к характеристикам",
+            "maxLength": 48
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["heading", "accent"],
+        "cardControls": [
+          "heading",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Frame-by-Frame Product Story",
@@ -2255,9 +2826,48 @@
               "usage": "<Layout019\n  heading=\"Inside Device-4\"\n  frames={[{ index: \"Frame 01\", title: \"…\", text: \"…\", angle: \"front\" }]}\n/>"
             },
             "controls": {
-              "heading": { "label": "Heading", "default": "Inside Device-4" },
-              "skipLabel": { "label": "Skip", "default": "Skip to the specs" },
-              "accent": { "label": "Accent" }
+              "heading": {
+                "label": "Heading",
+                "default": "Inside Device-4"
+              },
+              "skipLabel": {
+                "label": "Skip",
+                "default": "Skip to the specs"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "frames": [
+                  {
+                    "index": "Frame 01 · Overview",
+                    "title": "The object in studio light",
+                    "text": "Each meaningful stage is a separate frame with a caption and specs. The story reads without motion.",
+                    "angle": "front",
+                    "src": "/demo/foundations/object-hero-dark.webp"
+                  },
+                  {
+                    "index": "Frame 02 · Profile",
+                    "title": "Thinner than it looks",
+                    "text": "Angles change by frame, not by scrolling hundreds of images: page weight stays predictable.",
+                    "angle": "side"
+                  },
+                  {
+                    "index": "Frame 03 · Detail",
+                    "title": "A close-up of the joint",
+                    "text": "Specs live as text beside the frame — the scene does not replace them.",
+                    "angle": "detail"
+                  },
+                  {
+                    "index": "Frame 04 · Teardown",
+                    "title": "What is inside",
+                    "text": "The final stage shows the build. Below — ordinary page sections.",
+                    "angle": "open"
+                  }
+                ]
+              }
             }
           }
         }

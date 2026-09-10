@@ -5,8 +5,10 @@ export type Layout016Props = {
   children?: ReactNode
   kicker?: string
   title?: string
-  /** Слот медиа; без него — стилизованный кадр. */
+  /** Слот медиа (ReactNode). Приоритетнее src. */
   media?: ReactNode
+  /** Путь к кадру строкой — фолбэк, когда media не передан. */
+  src?: string
   mediaLabel?: string
   caption?: string
   accent?: string
@@ -58,6 +60,9 @@ margin:1rem 0;
 width:100%;margin:0 auto;overflow:hidden;
 aspect-ratio:16/9;position:relative;
 }
+[data-vibeui-block="layout-016"] [data-part="media"] img{
+position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+}
 [data-vibeui-block="layout-016"] [data-part="scene"]{
 position:absolute;inset:0;
 background:linear-gradient(155deg,#2b3036 0%,#59606a 46%,#93887a 78%,#3b352c 100%);
@@ -97,6 +102,7 @@ export function Layout016({
   kicker = "Пространство",
   title = "Кадр раскрывается по мере чтения",
   media,
+  src,
   mediaLabel = "Интерьер с тёплым светом",
   caption = "Раскрытие — CSS view-timeline; без поддержки и при reduced motion кадр сразу широкий.",
   accent,
@@ -119,7 +125,12 @@ export function Layout016({
           <h2 data-part="title">{title}</h2>
           <div data-part="stage">
             <div data-part="media">
-              {media ?? <div data-part="scene" role="img" aria-label={mediaLabel} />}
+              {media ??
+                (src ? (
+                  <img src={src} alt={mediaLabel} />
+                ) : (
+                  <div data-part="scene" role="img" aria-label={mediaLabel} />
+                ))}
             </div>
           </div>
           <p data-part="caption">{caption}</p>
