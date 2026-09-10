@@ -42,24 +42,26 @@ const DEFAULT_TITLE = ["Твоё место", "для вдохновения"]
 //
 // Идея компонента: фраза стоит на месте, а вокруг неё идёт хоровод кадров.
 // Орбита эллиптическая и наклонная, поэтому кадры то приближаются к зрителю,
-// то уходят вглубь: ближние крупнее, резче и темнее тенью, дальние — мельче,
-// бледнее и размыты. Глубина и есть вся анимация: без неё это карусель, а
-// не пространство.
+// то уходят вглубь: передний план идёт крупно и в полной резкости, дальний —
+// мельче, бледнее и размыт. Глубина и есть вся анимация: без неё это
+// карусель, а не пространство. Холст ровный: ни виньетки, ни ореола —
+// градиентные круги на фоне выдавали себя раньше самих кадров.
 //
 // Позиции считает rAF, а не CSS-анимация: одному кадру нужны сразу масштаб,
 // прозрачность, размытие и порядок перекрытия, и держать их в keyframes
 // пришлось бы четырьмя параллельными анимациями.
 const STYLES = `
 :where([data-vibeui-block="background-005"]){
---vibeui-background-005-bg:light-dark(#f4f3f1,#0e0e11);
---vibeui-background-005-ink:light-dark(#16151a,#f1efec);
+--vibeui-background-005-bg:light-dark(#f2f2f2,#1a1a1a);
+--vibeui-background-005-ink:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-background-005-paper:color-mix(in oklab,var(--vibeui-background-005-ink) 8%,transparent);
-/* Свет в подложке холста: днём кадры лежат на белёсом листе, ночью — в
+/* Заливка холста отдельно от его цвета: страница со своей подложкой
+   гасит её (--vibeui-background-005-canvas:transparent), а свечение под
+   фразой продолжает считаться от цвета холста. */
+--vibeui-background-005-canvas:var(--vibeui-background-005-bg);
+/* Свет в пустой заготовке кадра: днём это белёсый лист, ночью — бумага в
    тёмной комнате, поэтому подмешивается разный цвет. */
---vibeui-background-005-lift:light-dark(#ffffff,#26262c);
-/* Тень кадра: на светлом холсте она чёрная, на тёмном — почти невидимая,
-   и её место занимает светлая кромка. */
---vibeui-background-005-shadow:light-dark(rgb(0 0 0 / 28%),rgb(0 0 0 / 55%));
+--vibeui-background-005-lift:light-dark(#ffffff,#2a2a2a);
 --vibeui-background-005-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -69,30 +71,28 @@ container-type:inline-size;
 [data-vibeui-block="background-005"]{
 position:relative;box-sizing:border-box;overflow:hidden;isolation:isolate;
 width:100%;min-width:min(100%,16rem);min-height:28rem;height:100%;
-background:
-radial-gradient(80% 60% at 50% 45%,color-mix(in oklab,var(--vibeui-background-005-bg) 88%,var(--vibeui-background-005-lift)) 0,transparent 70%),
-var(--vibeui-background-005-bg);
+background:var(--vibeui-background-005-canvas);
 color:var(--vibeui-background-005-ink);
 font-family:var(--vibeui-background-005-sans);
 }
 [data-vibeui-block="background-005"] *{box-sizing:border-box}
-/* Точки и виньетка: чистый холст выглядит незаполненным слоем, а не
-   пространством, в котором что-то происходит. */
-[data-vibeui-block="background-005"] [data-part="grain"]{
-position:absolute;inset:0;z-index:0;pointer-events:none;
-background-image:radial-gradient(circle,color-mix(in oklab,var(--vibeui-background-005-ink) 16%,transparent) 0.0313rem,transparent 0.0313rem);
-background-size:1.25rem 1.25rem;
-mask-image:radial-gradient(70% 60% at 50% 50%,transparent 0,#000 85%);
-opacity:0.5;
-}
-[data-vibeui-block="background-005"] [data-part="vignette"]{
-position:absolute;inset:0;z-index:300;pointer-events:none;
-background:radial-gradient(72% 62% at 50% 50%,transparent 40%,color-mix(in oklab,var(--vibeui-background-005-bg) 82%,#000000) 100%);
-opacity:0.5;
-}
-/* Орбита: кадры лежат в одном слое, глубину им задаёт скрипт. */
+/* Орбита: кадры лежат в одном слое, глубину им задаёт скрипт.
+   До первого расчёта слой скрыт: в разметке все кадры стоят в центре
+   стопкой, и без этого зритель успевает увидеть кучу поверх фразы,
+   которая только потом разлетается по орбите. Дальше проявлением
+   занимается сам скрипт — кадр за кадром, из дымки. */
 [data-vibeui-block="background-005"] [data-part="orbit"]{
 position:absolute;inset:0;z-index:1;pointer-events:none;
+opacity:0;
+/* Порядок перекрытия задаёт третья координата, а не z-index. Он менялся
+   каждый кадр, и чаще всего по бокам орбиты, где глубина бежит быстрее
+   всего: каждая смена — перерисовка кадра и вздрагивание его рамки.
+   Перспективы нет, поэтому сдвиг по Z ничего не масштабирует — он только
+   расставляет кадры по глубине. */
+transform-style:preserve-3d;
+}
+[data-vibeui-block="background-005"][data-ready="true"] [data-part="orbit"]{
+opacity:1;
 }
 [data-vibeui-block="background-005"] [data-part="frame"]{
 position:absolute;left:50%;top:50%;
@@ -101,8 +101,11 @@ aspect-ratio:var(--vibeui-background-005-ratio,3 / 4);
 margin:calc(var(--vibeui-background-005-frame,9rem) * -0.5 * 1.333) 0 0 calc(var(--vibeui-background-005-frame,9rem) * -0.5);
 border-radius:0.75rem;overflow:hidden;
 background:var(--vibeui-background-005-paper);
-box-shadow:0 1.5rem 2.5rem -1.25rem var(--vibeui-background-005-shadow),0 0 0 1px color-mix(in oklab,var(--vibeui-background-005-ink) 10%,transparent);
-will-change:transform,opacity,filter;
+/* Обводки у кадра нет. Волосяная линия в один пиксель на карточке, которую
+   одновременно вращают, масштабируют и размывают, ложится на дробные
+   пиксели и мерцает — сильнее всего по бокам орбиты, где кадр движется
+   быстрее. Край фотографии держит форму и без неё. */
+will-change:transform,opacity;
 }
 [data-vibeui-block="background-005"] [data-part="frame"] img{
 width:100%;height:100%;object-fit:cover;display:block;
@@ -113,18 +116,24 @@ width:100%;height:100%;object-fit:cover;display:block;
 background:
 linear-gradient(160deg,color-mix(in oklab,var(--vibeui-background-005-ink) 5%,var(--vibeui-background-005-lift)) 0,color-mix(in oklab,var(--vibeui-background-005-ink) 14%,var(--vibeui-background-005-lift)) 100%);
 }
-/* Подложка под фразой: кадры проходят близко, и без мягкого ореола текст
-   ложится прямо на фотографию. Ореол цвета холста, поэтому его не видно. */
-[data-vibeui-block="background-005"] [data-part="halo"]{
-position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-width:min(80%,44rem);height:min(70%,22rem);z-index:150;pointer-events:none;
-background:radial-gradient(60% 55% at 50% 50%,var(--vibeui-background-005-bg) 0,color-mix(in oklab,var(--vibeui-background-005-bg) 70%,transparent) 55%,transparent 78%);
-}
 /* Фраза: она центр сцены, поэтому лежит выше кадров и не уезжает с ними. */
 [data-vibeui-block="background-005"] [data-part="center"]{
 position:absolute;inset:0;z-index:200;
 display:flex;flex-direction:column;align-items:center;justify-content:center;
 gap:0.75rem;padding:1.5rem;text-align:center;pointer-events:none;
+/* Фразу можно поднять над центром, не трогая орбиту: кадры считаются от
+   центра холста, а текст живёт своим слоем. Значение положительное и
+   означает подъём. */
+transform:translateY(calc(var(--vibeui-background-005-center-shift,0px) * -1));
+/* Свечение цветом холста вместо подложки: кадр может пройти прямо под
+   строкой, а рисовать под текстом круг — значит показывать зрителю круг. */
+text-shadow:0 0 0.75rem var(--vibeui-background-005-bg),0 0 2rem var(--vibeui-background-005-bg);
+}
+/* Ссылки и кнопки в слоте центра снова кликаются: сам слой прозрачен для
+   мыши, иначе кадры перехватывали бы наведение, но действие внутри фразы —
+   это действие, а не украшение. */
+[data-vibeui-block="background-005"] [data-part="center"] :where(a,button){
+pointer-events:auto;
 }
 [data-vibeui-block="background-005"] [data-part="eyebrow"]{
 font-size:0.6875rem;font-weight:650;letter-spacing:0.22em;text-transform:uppercase;
@@ -146,6 +155,29 @@ color:color-mix(in oklab,var(--vibeui-background-005-ink) 55%,transparent);
 
 /** Пропорции кадров: орбита живее, когда среди них есть и портрет, и пейзаж. */
 const RATIOS = ["3 / 4", "4 / 5", "1 / 1", "4 / 3", "3 / 4", "5 / 4"]
+
+/** С какой глубины кадр считается передним планом и держит полную резкость. */
+const FOCUS = 0.85
+
+/** Полуоси орбиты в долях холста. */
+const ORBIT_X = 0.4
+const ORBIT_Y = 0.35
+/** Насколько кадр гуляет по вертикали сверх орбиты. */
+const DRIFT = 0.04
+/** Самый крупный масштаб кадра и запас на его наклон. */
+const MAX_SCALE = 1.2
+const TILT = 1.08
+
+/**
+ * Первое появление: кадры проступают из тумана, а не включаются разом.
+ * STEP разводит их по времени — иначе двенадцать одинаковых проявлений
+ * читаются как один мигнувший слой. BLUR — та самая дымка, из которой
+ * кадр выходит, DEPTH — насколько далеко он в этот момент стоит.
+ */
+const INTRO_MS = 1800
+const INTRO_STEP = 120
+const INTRO_BLUR = 32
+const INTRO_DEPTH = 0.3
 
 /**
  * Хоровод кадров вокруг фразы: эллиптическая орбита, ближние кадры крупнее
@@ -190,6 +222,22 @@ export function Background005({
     let visible = true
     let previous = 0
     let angle = 0
+    let widest = 0
+    let tallest = 0
+    let bornAt = 0
+    const previousBlur: number[] = []
+
+    // Размер кадров читаем отдельно от кадра анимации: это единственное
+    // место, где нужен layout, и в rAF он стоил бы пересчёта стилей.
+    const measure = () => {
+      widest = 0
+      tallest = 0
+
+      for (const frame of frames) {
+        widest = Math.max(widest, frame.offsetWidth)
+        tallest = Math.max(tallest, frame.offsetHeight)
+      }
+    }
 
     const draw = (now: number) => {
       raf = 0
@@ -208,25 +256,79 @@ export function Background005({
 
       const width = host.clientWidth
       const height = host.clientHeight
-      const radiusX = width * 0.44 * current.spread
-      // Орбита выше кадра: снизу и сверху карточки должны уходить за край,
-      // а не проезжать сквозь фразу.
-      const radiusY = height * 0.54 * current.spread
+      // Орбита широкая и пологая: по горизонтали кадры идут далеко, по
+      // вертикали — заметно меньше, иначе они уезжают под край холста.
+      const radiusX = width * ORBIT_X * current.spread
+      const radiusY = height * ORBIT_Y * current.spread
+
+      // Кадр целиком остаётся на холсте: от края до орбиты должно хватать
+      // места на половину самого крупного кадра в его самом большом
+      // масштабе. Не хватает — уменьшаем все кадры, а не режем их.
+      const roomX = Math.max(0, width - radiusX * 2)
+      const roomY = Math.max(0, height - radiusY * 2 * (1 + DRIFT))
+      const fit =
+        widest > 0 && tallest > 0
+          ? Math.min(
+              1,
+              roomX / (widest * MAX_SCALE * TILT),
+              roomY / (tallest * MAX_SCALE * TILT),
+            )
+          : 1
+
+      if (!bornAt) bornAt = now
 
       for (let index = 0; index < frames.length; index += 1) {
         const frame = frames[index]
         const own = angle + (index / frames.length) * Math.PI * 2
         // Глубина: единица внизу орбиты, у самого зрителя, ноль наверху.
         const depth = (Math.sin(own) + 1) / 2
-        const scale = 0.58 + depth * 0.62
-        const drift = Math.sin(own * 2 + index) * 0.04
+        const drift = Math.sin(own * 2 + index) * DRIFT
 
-        frame.style.transform = `translate3d(${(Math.cos(own) * radiusX).toFixed(1)}px, ${(Math.sin(own) * radiusY + drift * radiusY).toFixed(1)}px, 0) scale(${scale.toFixed(3)}) rotate(${(Math.cos(own + index) * 7).toFixed(2)}deg)`
-        frame.style.opacity = (0.3 + depth * 0.7).toFixed(3)
-        // Дальние кадры теряют резкость: без этого орбита читается плоской.
-        frame.style.filter = `blur(${((1 - depth) * 2.6).toFixed(2)}px)`
-        frame.style.zIndex = String(Math.round(depth * 100))
+        // Проявление кадра: своя доля пути от тумана к сцене. При
+        // выключенной анимации сцена сразу собрана — проявляться там
+        // нечему, кадр и так стоит неподвижно.
+        const step = calm.matches
+          ? 1
+          : Math.min(
+              1,
+              Math.max(0, (now - bornAt - index * INTRO_STEP) / INTRO_MS),
+            )
+        // Проявление идёт двумя разными скоростями. Плотность набирается
+        // быстро: пока кадр прозрачен, никакого дыма не видно — видно
+        // пустоту. Резкость возвращается медленно, и всё это время кадр
+        // стоит на экране мутным пятном, из которого проступает картинка.
+        const dense = 1 - (1 - Math.min(1, step * 2.6)) ** 2
+        const shown = step * step * (3 - 2 * step)
+
+        const scale = (0.58 + depth * 0.62) * fit * (1 - INTRO_DEPTH * (1 - shown))
+
+        frame.style.transform = `translate3d(${(Math.cos(own) * radiusX).toFixed(1)}px, ${(Math.sin(own) * radiusY + drift * radiusY).toFixed(1)}px, ${(depth * 100).toFixed(1)}px) scale(${scale.toFixed(3)}) rotate(${(Math.cos(own + index) * 7).toFixed(2)}deg)`
+        frame.style.opacity = ((0.34 + depth * 0.66) * dense).toFixed(3)
+        // Резкость держится, пока кадр идёт передним планом: размывается он
+        // только уходя вбок и дальше вглубь. Иначе орбита выглядит мутной
+        // целиком, а не глубокой. Дымка первого появления добавляется сверху
+        // и сходит на нет вместе с проявлением.
+        const far = Math.max(0, (FOCUS - depth) / FOCUS)
+        // Фильтр стоит всегда, даже нулевой. Переключение blur ↔ none
+        // роняет кадр с отдельного слоя композитора обратно в общий и
+        // обратно, и на каждом таком переходе мигает волосяная рамка.
+        // Размытие ступеньками по половине пикселя. Плавно меняющийся
+        // filter заставляет браузер перерисовывать слой кадра каждый кадр
+        // анимации, и волосяная рамка при этом мерцает; со ступеньками
+        // строка фильтра меняется редко, а глаз разницы не видит.
+        const blur = far * far * 3.4 + (1 - shown) * INTRO_BLUR
+        const stepped = Math.round(blur * 2) / 2
+
+        if (stepped !== previousBlur[index]) {
+          previousBlur[index] = stepped
+          frame.style.filter = `blur(${stepped}px)`
+        }
+
+
       }
+
+      // Кадры расставлены — можно показывать слой.
+      host.dataset.ready = "true"
 
       if (calm.matches) return
 
@@ -260,10 +362,12 @@ export function Background005({
     }
 
     const sizes = new ResizeObserver(() => {
+      measure()
       if (!raf) run()
     })
 
     sizes.observe(host)
+    measure()
     document.addEventListener("visibilitychange", onVisibility)
     calm.addEventListener("change", run)
     run()
@@ -305,8 +409,6 @@ export function Background005({
         className={className}
         style={palette}
       >
-        <div data-part="grain" />
-
         <div data-part="orbit" ref={orbitRef} aria-hidden="true">
           {frames.map(({ photo, ratio, index }) => (
             <div
@@ -334,8 +436,6 @@ export function Background005({
           ))}
         </div>
 
-        <div data-part="halo" />
-
         <div data-part="center">
           {children ?? (
             <>
@@ -349,8 +449,6 @@ export function Background005({
             </>
           )}
         </div>
-
-        <div data-part="vignette" />
       </div>
     </>
   )

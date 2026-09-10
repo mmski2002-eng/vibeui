@@ -884,7 +884,7 @@
           "target": "@components/vibeui/background-005.tsx"
         }
       ],
-      "docs": "Кадры лежат в одном слое, а глубину им каждый кадр задаёт скрипт: положение на эллиптической орбите даёт масштаб, прозрачность, размытие и порядок перекрытия. Держать это в CSS-анимации пришлось бы четырьмя параллельными keyframes на каждую карточку, поэтому позиции считает rAF. Полный оборот занимает минуту при speed = 1: хоровод должен читаться как движение, а не как вращение колеса. Размеры и пропорции кадров чередуются — одинаковые прямоугольники читаются как сетка, а не как охапка карточек. Фотографии приходят пропом photos; без них на орбите остаются бумажные заготовки, поэтому компонент ставится в чужой проект без единого ассета. Фраза лежит выше кадров и не уезжает с ними, содержимое центра целиком заменяется через children. Тема берётся у окружения через light-dark(): днём холст светлый, ночью тёмный, вместе с ним меняются подложка кадров, тени и виньетка. Пропы background и ink перебивают обе ветки сразу. Точечная сетка и виньетка есть в любой теме: чистый фон читался бы незаполненным слоем. Хоровод останавливается вне экрана и в скрытой вкладке, а prefers-reduced-motion оставляет один статичный кадр.",
+      "docs": "Кадры лежат в одном слое, а глубину им каждый кадр задаёт скрипт: положение на эллиптической орбите даёт масштаб, прозрачность, размытие и порядок перекрытия. Держать это в CSS-анимации пришлось бы четырьмя параллельными keyframes на каждую карточку, поэтому позиции считает rAF. Полный оборот занимает минуту при speed = 1: хоровод должен читаться как движение, а не как вращение колеса. Размеры и пропорции кадров чередуются — одинаковые прямоугольники читаются как сетка, а не как охапка карточек. Фотографии приходят пропом photos; без них на орбите остаются бумажные заготовки, поэтому компонент ставится в чужой проект без единого ассета. Фраза лежит выше кадров и не уезжает с ними, содержимое центра целиком заменяется через children. Тема берётся у окружения через light-dark(): днём холст светлый, ночью тёмный, вместе с ним меняется подложка кадров. Пропы background и ink перебивают обе ветки сразу. Холст ровный, без виньетки и ореола: градиентные круги на фоне выдают себя раньше самих кадров, а текст в центре держит свечение цветом холста. Кадр всегда остаётся на холсте целиком — не хватает места, орбита уменьшает карточки, а не режет их. Хоровод останавливается вне экрана и в скрытой вкладке, а prefers-reduced-motion оставляет один статичный кадр.",
       "meta": {
         "tags": [
           "background",
@@ -966,11 +966,11 @@
           "summary": "Фон-сцена: фраза в центре и хоровод фотокарточек вокруг неё по наклонной орбите. Глубину каждому кадру считает скрипт — масштаб, прозрачность, размытие и порядок перекрытия. Фотографии передаются пропом, без них остаются бумажные заготовки.",
           "preserve": [
             "локальную палитру --vibeui-background-005-* — не подменять её токенами темы проекта",
-            "глубину орбиты: масштаб, прозрачность, размытие и порядок перекрытия вместе — без них хоровод читается плоской каруселью",
+            "глубину орбиты: передний план идёт в полной резкости, размывается только уход вбок и вглубь — без этого хоровод читается плоской каруселью",
             "разные размеры и пропорции кадров: одинаковые прямоугольники превращают орбиту в сетку",
             "фразу выше кадров: она центр сцены, и карточки не должны её перекрывать",
             "бумажные заготовки на месте пустых кадров: компонент обязан работать без единой фотографии",
-            "точки и виньетку на холсте: чистый фон читается как незаполненный слой",
+            "ровный холст: никаких кругов и виньеток за кадрами",
             "остановку хоровода вне экрана, в скрытой вкладке и статичный кадр при prefers-reduced-motion",
             "оборот примерно за минуту: быстрее — и сцена превращается в карусель товаров",
             "light-dark() в палитре: компонент обязан следовать теме страницы, а не носить собственную тёмную ветку"
@@ -1034,16 +1034,16 @@
           "en": {
             "title": "Orbit Of Frames",
             "description": "A phrase stands in the centre while photo cards travel around it on a tilted orbit: the near ones are larger and sharper, the far ones smaller, paler and blurred.",
-            "docs": "The frames live in one layer and the script gives each of them depth every frame: the position on the elliptical orbit sets the scale, the opacity, the blur and the stacking order. Keeping that in CSS animation would take four parallel keyframes per card, so rAF computes the positions. A full turn takes a minute at speed = 1: the orbit has to read as movement rather than as a spinning wheel. Frame sizes and ratios alternate — identical rectangles read as a grid rather than an armful of cards. Photos come through the photos prop; without them paper blanks stay on the orbit, so the component drops into someone else's project with no assets at all. The phrase sits above the frames and does not travel with them, and the whole centre can be replaced through children. The theme comes from the surroundings through light-dark(): by day the canvas is light, by night dark, and the frame surface, the shadows and the vignette follow it. The background and ink props override both branches at once. The dotted grid and the vignette stay in either theme: a clean background would read as an unfilled layer. The orbit stops off-screen and in a hidden tab, and prefers-reduced-motion leaves a single still frame.",
+            "docs": "The frames live in one layer and the script gives each of them depth every frame: the position on the elliptical orbit sets the scale, the opacity, the blur and the stacking order. Keeping that in CSS animation would take four parallel keyframes per card, so rAF computes the positions. A full turn takes a minute at speed = 1: the orbit has to read as movement rather than as a spinning wheel. Frame sizes and ratios alternate — identical rectangles read as a grid rather than an armful of cards. Photos come through the photos prop; without them paper blanks stay on the orbit, so the component drops into someone else's project with no assets at all. The phrase sits above the frames and does not travel with them, and the whole centre can be replaced through children. The theme comes from the surroundings through light-dark(): by day the canvas is light, by night dark, and the frame surface follows it. The background and ink props override both branches at once. The canvas stays flat, with no vignette and no halo: gradient circles give themselves away before the frames do, and the centre text is held by a glow in the canvas colour. A frame always stays fully on the canvas — when room runs short the orbit shrinks the cards instead of cutting them. The orbit stops off-screen and in a hidden tab, and prefers-reduced-motion leaves a single still frame.",
             "ai": {
               "summary": "A background scene: a phrase in the centre and an orbit of photo cards around it. The script computes depth for every frame — scale, opacity, blur and stacking order. Photos are passed as a prop; without them paper blanks remain.",
               "preserve": [
                 "the local --vibeui-background-005-* palette — do not swap it for your theme tokens",
-                "the depth of the orbit: scale, opacity, blur and stacking order together — without them the orbit reads as a flat carousel",
+                "the depth of the orbit: the front plane stays fully sharp and blur comes only as a frame drifts aside and back — without that the orbit reads as a flat carousel",
                 "the varied sizes and ratios of the frames: identical rectangles turn the orbit into a grid",
                 "the phrase above the frames: it is the centre of the scene and the cards must not cover it",
                 "the paper blanks in place of empty frames: the component has to work without a single photograph",
-                "the dots and the vignette on the canvas: a clean background reads as an unfilled layer",
+                "the flat canvas: no circles and no vignette behind the frames",
                 "stopping the orbit off-screen, in a hidden tab and the still frame under prefers-reduced-motion",
                 "the turn of about a minute: any faster and the scene becomes a product carousel",
                 "light-dark() in the palette: the component has to follow the page theme rather than ship a dark branch of its own"
