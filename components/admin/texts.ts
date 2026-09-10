@@ -1,4 +1,29 @@
 /**
+ * Подписи действий в журнале. Отдельной константой с явным типом: журнал
+ * индексируется строкой из базы, и литеральные ключи здесь только мешают.
+ */
+const LOG_ACTIONS: Record<string, string> = {
+  "report.reply": "Ответ на обращение",
+  "report.note": "Заметка к обращению",
+  "report.status": "Смена статуса обращения",
+  "report.assign": "Взял обращение",
+  "user.grant_pro": "Выдал Pro",
+  "user.cancel_renewal": "Отключил продление",
+  "user.resume_renewal": "Включил продление",
+  "user.block": "Заблокировал",
+  "user.unblock": "Разблокировал",
+  "user.revoke_tokens": "Отозвал ключи",
+  "user.reset_limit": "Сбросил лимит месяца",
+  "user.verify_email": "Подтвердил почту",
+  "user.resend_verification": "Отправил письмо подтверждения",
+  "user.sign_out_all": "Завершил сессии",
+  "user.note": "Изменил заметку",
+  "payment.sync": "Сверил платёж",
+  "payment.replay": "Применил событие заново",
+  "payment.mark_refunded": "Пометил возвращённым",
+}
+
+/**
  * Тексты админки. Только русские: это внутренний инструмент одного-двух
  * человек, и вторая языковая ветка здесь удваивала бы работу без читателя.
  */
@@ -194,26 +219,7 @@ export const ADMIN_TEXTS = {
     columnWhat: "Что",
     columnTarget: "Над кем",
     more: "Показать ещё",
-    actions: {
-      "report.reply": "Ответ на обращение",
-      "report.note": "Заметка к обращению",
-      "report.status": "Смена статуса обращения",
-      "report.assign": "Взял обращение",
-      "user.grant_pro": "Выдал Pro",
-      "user.cancel_renewal": "Отключил продление",
-      "user.resume_renewal": "Включил продление",
-      "user.block": "Заблокировал",
-      "user.unblock": "Разблокировал",
-      "user.revoke_tokens": "Отозвал ключи",
-      "user.reset_limit": "Сбросил лимит месяца",
-      "user.verify_email": "Подтвердил почту",
-      "user.resend_verification": "Отправил письмо подтверждения",
-      "user.sign_out_all": "Завершил сессии",
-      "user.note": "Изменил заметку",
-      "payment.sync": "Сверил платёж",
-      "payment.replay": "Применил событие заново",
-      "payment.mark_refunded": "Пометил возвращённым",
-    } as Record<string, string>,
+    actions: LOG_ACTIONS,
   },
   common: {
     back: "Назад",

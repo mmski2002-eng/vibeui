@@ -7,7 +7,9 @@ import { report } from "@/lib/db/schema"
 import type { Locale } from "@/lib/i18n"
 import { requireUser } from "@/lib/session"
 
-const STATUS_LABEL = {
+// Подписи статусов: словарь индексируется строкой из базы, поэтому тип
+// объявлен явно — литеральные ключи здесь только мешали бы.
+const STATUS_LABEL: Record<Locale, Record<string, string>> = {
   ru: {
     new: "Принято",
     in_progress: "В работе",
@@ -22,7 +24,7 @@ const STATUS_LABEL = {
     closed: "Closed",
     spam: "Closed",
   },
-} satisfies Record<Locale, Record<string, string>>
+}
 
 /**
  * Поддержка в кабинете: форма и список своих обращений.

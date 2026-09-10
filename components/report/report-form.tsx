@@ -6,7 +6,8 @@ import { Loader2 } from "lucide-react"
 import { Field, INPUT_CLASS, SUBMIT_CLASS } from "@/components/auth/auth-card"
 import { REPORT_FORM_TEXTS } from "@/components/admin/texts"
 import { authClient } from "@/lib/auth-client"
-import { createReport, type ReportKind } from "@/lib/report-actions"
+import { createReport } from "@/lib/report-actions"
+import type { ReportKind } from "@/lib/report-types"
 import type { Locale } from "@/lib/i18n"
 
 /**

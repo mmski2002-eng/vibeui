@@ -10,6 +10,11 @@ import { db } from "@/lib/db"
 import { report, reportMessage } from "@/lib/db/schema"
 import type { Locale } from "@/lib/i18n"
 import { sendMail } from "@/lib/mail"
+import type {
+  CreateReportResult,
+  ReportKind,
+  ReportStatus,
+} from "@/lib/report-types"
 import { SITE_URL } from "@/lib/seo"
 import { getSession } from "@/lib/session"
 import { hashToken } from "@/lib/token"
@@ -21,14 +26,6 @@ import { hashToken } from "@/lib/token"
  * общий жизненный цикл, а различает их `kind`. Переписка хранится у нас, а
  * не только в почтовом ящике заявителя.
  */
-
-export type ReportKind = "component" | "support" | "legal"
-export type ReportStatus =
-  | "new"
-  | "in_progress"
-  | "answered"
-  | "closed"
-  | "spam"
 
 /** Сколько обращений принимаем с одного адреса за десять минут. */
 const RATE_WINDOW_MS = 10 * 60 * 1000
@@ -47,10 +44,6 @@ async function ipFingerprint() {
   // а держать IP заявителя дольше нужного незачем.
   return ip ? hashToken(ip) : null
 }
-
-export type CreateReportResult =
-  | { ok: true }
-  | { ok: false; reason: "rate" | "invalid" }
 
 export async function createReport(input: {
   kind: ReportKind

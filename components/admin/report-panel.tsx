@@ -10,8 +10,8 @@ import {
   assignReport,
   replyToReport,
   setReportStatus,
-  type ReportStatus,
 } from "@/lib/report-actions"
+import type { ReportStatus } from "@/lib/report-types"
 
 /**
  * Разбор обращения: ответ, заметка, статус, «взять себе».
