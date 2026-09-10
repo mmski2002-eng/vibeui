@@ -5,6 +5,10 @@ export type Video001Props = {
   title?: string
   summary?: string
   posterTitle?: string
+  /** Кадр постера. Пусто — остаётся тёплый градиент-заглушка. */
+  poster?: string
+  /** Описание кадра. Пусто — постер считается оформлением. */
+  posterAlt?: string
   durationLabel?: string
   ctaLabel?: string
   ctaHref?: string
@@ -16,8 +20,9 @@ export type Video001Props = {
 }
 
 // Видео-секция с постером: крупный кадр 16:9 с кнопкой play по центру,
-// подписью и длительностью в углу. Постер — тёплый градиент, кнопка play —
-// круг с треугольником из бордюров. Это заглушка плеера: реальное видео
+// подписью и длительностью в углу. Кадр берётся из пропа poster, а без него
+// остаётся тёплый градиент — блок обязан работать без единого ассета.
+// Кнопка play — круг с треугольником из бордюров. Это заглушка плеера: реальное видео
 // подключает приложение по клику. Слева текст, справа кадр на широком экране.
 const STYLES = `
 :where([data-vibeui-block="video-001"]){
@@ -56,10 +61,19 @@ background:linear-gradient(140deg,oklch(0.5 0.16 39.8),oklch(0.3 0.1 25));
 transition:transform .18s ease;
 }
 [data-vibeui-block="video-001"] [data-part="player"]:hover{transform:translateY(-2px)}
+/* Кадр и затемнение под подписями: без затемнения белый текст теряется на
+   светлой фотографии, а с ним постер читается при любом кадре. */
+[data-vibeui-block="video-001"] [data-part="poster"]{
+position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;
+}
+[data-vibeui-block="video-001"] [data-part="scrim"]{
+position:absolute;inset:0;z-index:1;
+background:linear-gradient(to top,oklch(0.14 0.03 39.8 / 78%) 0,oklch(0.14 0.03 39.8 / 22%) 45%,oklch(0.14 0.03 39.8 / 34%) 100%);
+}
 [data-vibeui-block="video-001"] [data-part="player"]:focus-visible{outline:2px solid var(--vibeui-video-001-accent);outline-offset:3px}
 /* Кнопка play: круг с треугольником из бордюров по центру кадра. */
 [data-vibeui-block="video-001"] [data-part="play"]{
-position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;
 width:4rem;height:4rem;border-radius:999px;display:grid;place-items:center;
 background:oklch(1 0 0 / 92%);
 }
@@ -68,8 +82,8 @@ content:"";margin-left:0.25rem;
 border-style:solid;border-width:0.6875rem 0 0.6875rem 1.125rem;
 border-color:transparent transparent transparent oklch(0.2 0.05 39.8);
 }
-[data-vibeui-block="video-001"] [data-part="poster-title"]{position:relative;font-size:1rem;font-weight:640}
-[data-vibeui-block="video-001"] [data-part="duration"]{position:absolute;right:1rem;top:1rem;padding:0.1875rem 0.5rem;border-radius:0.375rem;background:oklch(0.15 0.02 39.8 / 55%);font-size:0.75rem;font-weight:600}
+[data-vibeui-block="video-001"] [data-part="poster-title"]{position:relative;z-index:2;font-size:1rem;font-weight:640}
+[data-vibeui-block="video-001"] [data-part="duration"]{position:absolute;z-index:2;right:1rem;top:1rem;padding:0.1875rem 0.5rem;border-radius:0.375rem;background:oklch(0.15 0.02 39.8 / 55%);font-size:0.75rem;font-weight:600}
 @container (min-width: 48rem){
 [data-vibeui-block="video-001"] [data-part="shell"]{padding:4rem 2rem;grid-template-columns:1fr 1.15fr;gap:3rem}
 }
@@ -104,6 +118,8 @@ export function Video001({
   title = "Посмотрите за две минуты",
   summary = "Короткий ролик о том, как выбрать блок в каталоге, отдать его агенту и получить готовую секцию в своём проекте.",
   posterTitle = "Обзор каталога VibeUI",
+  poster = "",
+  posterAlt = "",
   durationLabel = "2:14",
   ctaLabel = "Смотреть на YouTube",
   ctaHref = "#",
@@ -147,6 +163,18 @@ export function Video001({
             data-part="player"
             aria-label={`Смотреть: ${posterTitle}`}
           >
+            {poster ? (
+              <>
+                <img
+                  src={poster}
+                  alt={posterAlt}
+                  data-part="poster"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span data-part="scrim" aria-hidden="true" />
+              </>
+            ) : null}
             <span data-part="play" aria-hidden="true" />
             <span data-part="duration">{durationLabel}</span>
             <span data-part="poster-title">{posterTitle}</span>

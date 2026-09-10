@@ -28,27 +28,33 @@
           "marketing"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "poster": "/demo/features/feature-02.webp",
+            "posterAlt": "Двое у доски с раскадровкой на фоне закатного окна"
+          }
         },
         "ai": {
           "export": "Video001",
-          "usage": "<Video001\n  title=\"Посмотрите за две минуты\"\n  posterTitle=\"Обзор каталога\"\n  durationLabel=\"2:14\"\n/>",
-          "summary": "Видео-секция с постером: крупный кадр 16:9 с кнопкой play по центру, подписью и длительностью в углу. Постер — тёплый градиент, play нарисован бордюрами. Кадр-заглушка: реальное видео подключает приложение. Ноль зависимостей, один файл, своя палитра.",
+          "usage": "<Video001\n  title=\"Посмотрите за две минуты\"\n  poster=\"/video-poster.webp\"\n  posterTitle=\"Обзор каталога\"\n  durationLabel=\"2:14\"\n/>",
+          "summary": "Видео-секция с постером: крупный кадр 16:9 с кнопкой play по центру, подписью и длительностью в углу. Кадр постера приходит пропом poster, без него остаётся тёплый градиент; play нарисован бордюрами. Кадр-заглушка: реальное видео подключает приложение. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-video-001-* и не подменять её токенами вашей темы",
             "кнопку play из бордюров (круг + треугольник) без иконочного шрифта",
-            "постер-градиент как заглушку — реальное видео подключает приложение",
+            "градиент-заглушку на месте пустого постера: блок обязан работать без единого ассета",
+            "затемнение поверх кадра: без него белая подпись теряется на светлой фотографии",
             "light-dark() в палитре: компонент следует color-scheme окружения"
           ],
           "adapt": [
             "eyebrow, title, summary — надзаголовок, заголовок и описание",
             "posterTitle, durationLabel — подпись и длительность на постере",
+            "poster и posterAlt — кадр постера и его описание",
             "ctaLabel и ctaHref — подпись и адрес кнопки/ссылки на видео",
             "акцент через проп accent — надзаголовок и кнопка"
           ],
           "notes": [
             "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
-            "Постер — градиент: замените фон кадра реальным превью ролика.",
+            "Постер: передайте кадр ролика пропом poster; без него кадр остаётся градиентом.",
             "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
           ]
         },
@@ -94,12 +100,14 @@
               "preserve": [
                 "the local --vibeui-video-001-* palette — do not swap it for your theme tokens",
                 "the play button from borders (circle + triangle) without an icon font",
-                "the gradient poster as a placeholder — a real video is wired by the app",
+                "the gradient placeholder when no poster is given: the block must work with no assets at all",
+                "the scrim over the frame: without it the white caption is lost on a light photo",
                 "light-dark() in the palette: the component follows the surrounding color-scheme"
               ],
               "adapt": [
                 "eyebrow, title, summary — the eyebrow, heading and summary",
                 "posterTitle, durationLabel — the caption and duration on the poster",
+                "poster and posterAlt — the poster frame and its description",
                 "ctaLabel and ctaHref — the label and address of the video link",
                 "the accent via the accent prop — eyebrow and button"
               ],
@@ -108,7 +116,7 @@
                 "The poster is a gradient: replace the frame background with a real video thumbnail.",
                 "Do not lift the CSS variables into globals.css: the block has to stay a single file."
               ],
-              "usage": "<Video001\n  title=\"Watch it in two minutes\"\n  posterTitle=\"Catalog overview\"\n  durationLabel=\"2:14\"\n/>"
+              "usage": "<Video001\n  title=\"Посмотрите за две минуты\"\n  poster=\"/video-poster.webp\"\n  posterTitle=\"Обзор каталога\"\n  durationLabel=\"2:14\"\n/>"
             },
             "controls": {
               "title": {
