@@ -41,13 +41,14 @@ function prefersEnglish(header: string | null) {
 }
 
 /**
- * Две задачи: закрыть кабинет от анонимов и встретить человека на его языке.
+ * Прокси-слой Next (бывший middleware). Две задачи: закрыть кабинет от
+ * анонимов и встретить человека на его языке.
  *
  * Язык подбирается только на главной и только при первом заходе: дальше
  * решает выбор в переключателе (кука), потому что раздел уже открыт в
  * конкретной языковой ветке и менять её под заголовок браузера нельзя.
  */
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   if (pathname === "/") {
