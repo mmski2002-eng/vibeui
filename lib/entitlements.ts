@@ -60,6 +60,14 @@ export async function spendItem(userId: string, itemName: string) {
   const period = currentPeriod()
 
   if (await isPro(userId)) {
+    // Подписка снимает лимит, а не историю: без этой записи журнал и обзор
+    // у оплатившего пустеют — ровно в тот момент, когда он берёт больше
+    // всего компонентов.
+    await db
+      .insert(usage)
+      .values({ userId, period, itemName })
+      .onConflictDoNothing()
+
     return { allowed: true, remaining: Infinity, counted: false }
   }
 

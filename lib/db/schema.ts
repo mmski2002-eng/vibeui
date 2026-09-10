@@ -34,6 +34,11 @@ export const user = pgTable("user", {
    * из фоновых задач, где ни запроса, ни его заголовков уже нет.
    */
   locale: text("locale").notNull().default("ru"),
+  /** Блокировка администратором: вход и выдача исходников закрываются. */
+  blockedAt: timestamp("blocked_at"),
+  blockedReason: text("blocked_reason"),
+  /** Внутренняя заметка поддержки. Пользователю не показывается. */
+  adminNote: text("admin_note"),
 })
 
 export const session = pgTable(
@@ -245,4 +250,106 @@ export const referralReward = pgTable(
     grantedAt: timestamp("granted_at").notNull().defaultNow(),
   },
   (table) => [index("referral_reward_inviter_idx").on(table.inviterId)],
+)
+
+/**
+ * Обращения: проблема с компонентом, вопрос в поддержку и претензия по
+ * правам. Один поток с полем `kind`, а не три таблицы: жизненный цикл у них
+ * общий — пришло, взяли, ответили, закрыли.
+ */
+export const report = pgTable(
+  "report",
+  {
+    id: text("id").primaryKey(),
+    /** component | support | legal */
+    kind: text("kind").notNull(),
+    /** new | in_progress | answered | closed | spam */
+    status: text("status").notNull().default("new"),
+    subject: text("subject").notNull(),
+    message: text("message").notNull(),
+    /** Код item'а для жалобы на компонент: в карточке рядом живое превью. */
+    itemName: text("item_name"),
+    userId: text("user_id").references(() => user.id, {
+      onDelete: "set null",
+    }),
+    email: text("email").notNull(),
+    locale: text("locale").notNull().default("ru"),
+    /** Отпечаток адреса для ограничения частоты: сам адрес не храним. */
+    ipHash: text("ip_hash"),
+    assigneeEmail: text("assignee_email"),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
+    closedAt: timestamp("closed_at"),
+  },
+  (table) => [
+    index("report_status_idx").on(table.status, table.createdAt),
+    index("report_user_idx").on(table.userId),
+    index("report_ip_idx").on(table.ipHash, table.createdAt),
+  ],
+)
+
+/** Переписка по обращению. Ответ уходит письмом и остаётся здесь. */
+export const reportMessage = pgTable(
+  "report_message",
+  {
+    id: text("id").primaryKey(),
+    reportId: text("report_id")
+      .notNull()
+      .references(() => report.id, { onDelete: "cascade" }),
+    /** user | admin | note — заметка видна только администратору. */
+    authorType: text("author_type").notNull(),
+    authorEmail: text("author_email"),
+    body: text("body").notNull(),
+    deliveredByEmail: boolean("delivered_by_email").notNull().default(false),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (table) => [
+    index("report_message_report_idx").on(table.reportId, table.createdAt),
+  ],
+)
+
+/**
+ * Журнал действий администратора. Без него нельзя ответить, почему у
+ * аккаунта есть Pro, за который никто не платил.
+ */
+export const adminAction = pgTable(
+  "admin_action",
+  {
+    id: text("id").primaryKey(),
+    adminEmail: text("admin_email").notNull(),
+    action: text("action").notNull(),
+    /** user | payment | report | token */
+    targetType: text("target_type").notNull(),
+    targetId: text("target_id").notNull(),
+    details: jsonb("details"),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (table) => [
+    index("admin_action_created_idx").on(table.createdAt),
+    index("admin_action_target_idx").on(table.targetType, table.targetId),
+  ],
+)
+
+/**
+ * Поисковые запросы. Нужны ровно для одного вопроса: чего в каталоге ищут и
+ * не находят. Строки старше полугода удаляет ночная задача — запрос может
+ * содержать что угодно, включая случайно вставленный чужой текст.
+ */
+export const searchQuery = pgTable(
+  "search_query",
+  {
+    id: text("id").primaryKey(),
+    query: text("query").notNull(),
+    locale: text("locale").notNull().default("ru"),
+    kind: text("kind"),
+    results: integer("results").notNull().default(0),
+    userId: text("user_id").references(() => user.id, {
+      onDelete: "set null",
+    }),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (table) => [
+    index("search_query_created_idx").on(table.createdAt),
+    index("search_query_results_idx").on(table.results, table.createdAt),
+  ],
 )

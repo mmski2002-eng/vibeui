@@ -80,6 +80,15 @@ export const CATEGORIES = [
     group: "navigation",
   },
   {
+    slug: "layout",
+    label: "Каркас страницы",
+    en: "Layout",
+    group: "navigation",
+    // Каркас — целая страница: в половинном кадре колонки и закрепления
+    // не читаются.
+    wide: true,
+  },
+  {
     slug: "ai",
     label: "ИИ",
     en: "AI",
@@ -914,3 +923,42 @@ export const CATEGORIES = [
 }[]
 
 export type CategorySlug = (typeof CATEGORIES)[number]["slug"]
+
+/**
+ * Категории, с которых начинают. Список категорий длинный — семьдесят
+ * штук у компонентов, — и алфавит честно показывает всё, но не помогает
+ * тому, кто пришёл за кнопкой или первым экраном. Поэтому наверху колонки
+ * стоит короткая подборка, а ниже, за разделителем, идёт весь алфавит.
+ *
+ * Порядок внутри подборки смысловой, а не алфавитный: сначала то, с чего
+ * собирают страницу.
+ */
+export const POPULAR_CATEGORIES: Record<ItemKind, readonly CategorySlug[]> = {
+  block: [
+    "hero",
+    "features",
+    "pricing",
+    "cta",
+    "testimonials",
+    "faq",
+    "footer",
+    "contact",
+    "auth",
+    "blog",
+  ],
+  component: [
+    "button",
+    "input",
+    "select",
+    "card",
+    "table",
+    "dialog",
+    "tabs",
+    "badge",
+    "avatar",
+    "toast",
+  ],
+  animation: ["background", "text", "cursor", "stacks", "button", "avatar"],
+  template: [],
+}
+

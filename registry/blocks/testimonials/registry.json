@@ -787,7 +787,7 @@
       "name": "testimonials-005",
       "type": "registry:block",
       "title": "Отзывы со звёздами",
-      "description": "Отзывы с оценками в звёздах: звёзды вырезаны clip-path и заливаются на нужную долю, а средняя оценка стоит в шапке вместе с числом отзывов.",
+      "description": "Отзывы с оценкой в звёздах и средним баллом в шапке. Подходит лендингу и странице продукта. Меняются тексты, имена, оценки и число отзывов.",
       "categories": [
         "testimonials"
       ],
@@ -874,7 +874,7 @@
         ],
         "i18n": {
           "en": {
-            "description": "Reviews with star ratings: the stars are cut with clip-path and filled to the exact fraction, while the average sits in the header next to the review count.",
+            "description": "Reviews with star ratings and the average score in the header. Suits a landing or a product page. Change the quotes, the names, the ratings and the review count.",
             "ai": {
               "summary": "A review section with ratings: the header holds the average, a row of stars and the review count; below are cards with their own rating, a short title, the text, a name and a date. The stars are drawn in CSS and filled to the fraction of the score. Zero dependencies, one file, its own palette.",
               "preserve": [

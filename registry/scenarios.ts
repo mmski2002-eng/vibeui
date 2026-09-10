@@ -63,6 +63,14 @@ export const SCENARIOS: Scenario[] = [
     summaryEn: "A one-pager that sells a service and collects requests",
     steps: [
       {
+        category: "layout",
+        role: "Каркас страницы",
+        roleEn: "Page skeleton",
+        why: "Слоты шапки и футера, ширина колонки и ритм секций",
+        whyEn: "Header and footer slots, column width and section rhythm",
+        optional: true,
+      },
+      {
         category: "navbar",
         role: "Шапка",
         roleEn: "Header",

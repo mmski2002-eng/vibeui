@@ -5,7 +5,7 @@
       "name": "iconstack-001",
       "type": "registry:component",
       "title": "Стопка аватаров",
-      "description": "Стопка участников: перекрытие задано обратным флексом вместо z-index, а остаток свёрнут в «+N».",
+      "description": "Стопка аватаров участников с остатком «+N». Подходит карточке проекта или задачи. Меняются фото, порядок и предел показа.",
       "categories": [
         "icon-stack"
       ],
@@ -92,7 +92,7 @@
         "i18n": {
           "en": {
             "title": "Avatar Stack",
-            "description": "An avatar stack: the overlap comes from a reversed flex row instead of z-index, and the remainder collapses into \"+N\".",
+            "description": "A stack of member avatars with a \"+N\" remainder. Suits a project or task card. Change the photos, the order and how many are shown.",
             "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-iconstack-001-* variables. Server component: no hooks. The stacking order is set by flex-direction: row-reverse, so the left circle lands above the right one without a z-index on every element. The circle hue is computed as an FNV-1a hash of the name.",
             "ai": {
               "summary": "An overlapping avatar stack with a \"+N\" counter and a group caption. Zero dependencies, one file, no client JS.",

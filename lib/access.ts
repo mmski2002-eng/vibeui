@@ -121,7 +121,11 @@ export async function resolveAccess(itemName: string): Promise<Access> {
 }
 
 /** Текст отказа: его читает человек в терминале, поэтому без жаргона. */
-export function denialText(reason: "pro" | "limit") {
+export function denialText(reason: "pro" | "limit" | "blocked") {
+  if (reason === "blocked") {
+    return "Доступ к аккаунту закрыт. Напишите нам: https://vibeui.ru/report\n"
+  }
+
   return reason === "pro"
     ? "Этот компонент входит в подписку Pro.\nОформить: https://vibeui.ru/pricing\n"
     : "Бесплатный лимит на этот месяц исчерпан.\nPro снимает ограничение: https://vibeui.ru/pricing\n"

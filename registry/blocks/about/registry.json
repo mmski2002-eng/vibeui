@@ -166,7 +166,7 @@
       "name": "about-002",
       "type": "registry:block",
       "title": "История таймлайном",
-      "description": "Вехи компании на вертикальной оси: годы, оранжевые точки, короткие рассказы. Самодостаточен: один файл, без зависимостей, ось нарисована псевдоэлементами.",
+      "description": "Хронология компании для страницы «О нас»: годы на вертикальной оси, точки и короткие рассказы. Меняются годы, заголовки и текст — сколько вех добавите, столько и будет.",
       "categories": [
         "about"
       ],
@@ -252,7 +252,7 @@
         "i18n": {
           "en": {
             "title": "Timeline History",
-            "description": "Company milestones on a vertical axis: years, orange dots, short stories. Self-contained: one file, no dependencies, the axis is drawn with pseudo-elements.",
+            "description": "A company timeline for an About page: years on a vertical axis, dots and short stories. Change the years, the headings and the copy — add as many milestones as you need.",
             "docs": "The block is self-contained: one file, no dependencies, its palette in local variables --vibeui-about-002-*. A server component. The chronology is an honest <ol>: the axis and the orange dots are drawn with li pseudo-elements, so without styles the list stays a readable sequence of milestones. In a narrow container the year sits above the heading with the axis on the left; from 44rem of the block's own width the year moves into a right-aligned left column and the axis lands between the year and the text — the dot coordinates are set in rem and do not depend on content. The line of the last milestone is hidden so the axis does not leak into emptiness.",
             "ai": {
               "summary": "A company history as a vertical timeline: an eyebrow, a heading and a list of milestones with a year, a name and a text. The axis and the orange dots are pseudo-elements, the markup is an ordered list. One file, zero dependencies, no client JS.",

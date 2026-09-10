@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Плакат 404 с поиском",
       "description": "Страница 404 с гигантскими контурными цифрами и оранжевым штрихом: под ними поиск по каталогу и ссылки на главные разделы, чтобы тупик стал развилкой.",
-      "categories": ["errors"],
+      "categories": [
+        "errors"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,8 +20,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-errorpage-001-*. Серверный компонент, форма поиска — обычный GET-submit без JS. Цифры кода набраны штрихом через -webkit-text-stroke с фолбэком @supports: где штриха нет, цифры остаются залитыми акцентом. Раскладка центрированная колонка, размер цифр считается от собственной ширины блока (cqi). Ссылки разделов — nav с чипами, форма — role=search.",
       "meta": {
-        "tags": ["404", "error", "search", "not found", "typography"],
-        "preview": { "width": "full" },
+        "tags": [
+          "404",
+          "error",
+          "search",
+          "not found",
+          "typography"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Errorpage001",
           "usage": "<Errorpage001\n  title=\"Такой страницы нет\"\n  searchAction=\"/search\"\n  links={[{ label: \"Каталог\", href: \"/components\" }]}\n/>",
@@ -60,8 +70,18 @@
             "default": "404",
             "maxLength": 6
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
         "i18n": {
           "en": {
@@ -93,10 +113,20 @@
               "usage": "<Errorpage001\n  title=\"This page does not exist\"\n  searchAction=\"/search\"\n  links={[{ label: \"Catalog\", href: \"/components\" }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Heading", "default": "This page does not exist" },
-              "code": { "label": "Code", "default": "404" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Heading",
+                "default": "This page does not exist"
+              },
+              "code": {
+                "label": "Code",
+                "default": "404"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
@@ -106,16 +136,33 @@
                 "searchButton": "Search",
                 "linksLabel": "Where to next",
                 "links": [
-                  { "label": "Component catalog", "href": "/components" },
-                  { "label": "Home", "href": "/" },
-                  { "label": "Docs", "href": "/docs" },
-                  { "label": "Pricing", "href": "/pricing" }
+                  {
+                    "label": "Component catalog",
+                    "href": "/components"
+                  },
+                  {
+                    "label": "Home",
+                    "href": "/"
+                  },
+                  {
+                    "label": "Docs",
+                    "href": "/docs"
+                  },
+                  {
+                    "label": "Pricing",
+                    "href": "/pricing"
+                  }
                 ]
               }
             }
           }
         },
-        "cardControls": ["title", "code", "accent", "background"]
+        "cardControls": [
+          "title",
+          "code",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -123,7 +170,9 @@
       "type": "registry:block",
       "title": "500 с кодом инцидента",
       "description": "Страница 500 в духе «мы уже чиним»: сигнальная лента из CSS-полос, код инцидента для поддержки в пунктирной рамке, кнопка «обновить» и ссылка на статус сервисов.",
-      "categories": ["errors"],
+      "categories": [
+        "errors"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -135,8 +184,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-errorpage-002-*. Серверный компонент без JS: кнопка «обновить» — ссылка с пустым href, которая ведёт на текущий адрес, а при 500 повторный запрос обычно уже проходит. Сигнальная лента нарисована repeating-linear-gradient — никаких изображений. Код инцидента размечен как dl и выделен user-select:all: одно касание выделяет его целиком для копирования в тикет.",
       "meta": {
-        "tags": ["500", "error", "incident", "status", "server"],
-        "preview": { "width": "full" },
+        "tags": [
+          "500",
+          "error",
+          "incident",
+          "status",
+          "server"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Errorpage002",
           "usage": "<Errorpage002\n  incident=\"INC-0906-2417\"\n  statusHref=\"/status\"\n/>",
@@ -177,8 +234,18 @@
             "default": "INC-0906-2417",
             "maxLength": 20
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
         "i18n": {
           "en": {
@@ -210,10 +277,20 @@
               "usage": "<Errorpage002\n  incident=\"INC-0906-2417\"\n  statusHref=\"/status\"\n/>"
             },
             "controls": {
-              "title": { "label": "Heading", "default": "It broke on our side" },
-              "incident": { "label": "Incident code", "default": "INC-0906-2417" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Heading",
+                "default": "It broke on our side"
+              },
+              "incident": {
+                "label": "Incident code",
+                "default": "INC-0906-2417"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
@@ -227,7 +304,12 @@
             }
           }
         },
-        "cardControls": ["title", "incident", "accent", "background"]
+        "cardControls": [
+          "title",
+          "incident",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -235,7 +317,9 @@
       "type": "registry:block",
       "title": "Технические работы",
       "description": "Maintenance-страница, снимающая тревогу: время окончания работ, полосатый прогресс с процентами и подписка «напишем, когда вернёмся». Проценты и время приходят пропами.",
-      "categories": ["errors"],
+      "categories": [
+        "errors"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -247,8 +331,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-errorpage-003-*. Серверный компонент: прогресс приходит пропом 0–100 и кладётся в ширину заливки инлайн-стилем — это динамическое значение, классом его не выразить. Дорожка размечена role=progressbar с aria-value*. Бегущие полоски заливки и пульс точки в бейдже — CSS-анимации, обе глушатся prefers-reduced-motion. Форма подписки — обычный GET-submit без JS.",
       "meta": {
-        "tags": ["maintenance", "progress", "downtime", "notify", "status"],
-        "preview": { "width": "full" },
+        "tags": [
+          "maintenance",
+          "progress",
+          "downtime",
+          "notify",
+          "status"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "usage": "<Errorpage003\n  finishTime=\"сегодня к 14:00 МСК\"\n  progress={68}\n  notifyAction=\"/notify\"\n/>",
           "export": "Errorpage003",
@@ -289,8 +381,18 @@
             "default": "сегодня к 14:00 МСК",
             "maxLength": 32
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
         "i18n": {
           "en": {
@@ -322,10 +424,20 @@
               "usage": "<Errorpage003\n  finishTime=\"today by 2:00 PM UTC\"\n  progress={68}\n  notifyAction=\"/notify\"\n/>"
             },
             "controls": {
-              "title": { "label": "Heading", "default": "Updating the catalog" },
-              "finishTime": { "label": "Finish time", "default": "today by 2:00 PM UTC" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Heading",
+                "default": "Updating the catalog"
+              },
+              "finishTime": {
+                "label": "Finish time",
+                "default": "today by 2:00 PM UTC"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
@@ -342,7 +454,12 @@
             }
           }
         },
-        "cardControls": ["title", "finishTime", "accent", "background"]
+        "cardControls": [
+          "title",
+          "finishTime",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -350,7 +467,9 @@
       "type": "registry:block",
       "title": "403 с CSS-замком",
       "description": "Страница «нет доступа» с замком, нарисованным чистым CSS: спокойное объяснение и два выхода — сменить аккаунт или запросить доступ у владельца.",
-      "categories": ["errors"],
+      "categories": [
+        "errors"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -362,8 +481,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-errorpage-004-*. Серверный компонент без JS. Замок собран из двух элементов: дужка — рамка со скруглением без нижней стороны, корпус — оранжевая плита, скважина — два псевдоэлемента (круг и ножка). Иллюстрация помечена aria-hidden — смысл несут заголовок и текст. Два действия: заливная кнопка «сменить аккаунт» и контурная «запросить доступ», под ними подсказка о сроке ответа.",
       "meta": {
-        "tags": ["403", "forbidden", "access", "lock", "permissions"],
-        "preview": { "width": "full" },
+        "tags": [
+          "403",
+          "forbidden",
+          "access",
+          "lock",
+          "permissions"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Errorpage004",
           "usage": "<Errorpage004\n  switchHref=\"/login\"\n  requestHref=\"/access\"\n/>",
@@ -404,8 +531,18 @@
             "default": "Ошибка 403",
             "maxLength": 16
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
         "i18n": {
           "en": {
@@ -437,10 +574,20 @@
               "usage": "<Errorpage004\n  switchHref=\"/login\"\n  requestHref=\"/access\"\n/>"
             },
             "controls": {
-              "title": { "label": "Heading", "default": "You need access here" },
-              "code": { "label": "Code", "default": "Error 403" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Heading",
+                "default": "You need access here"
+              },
+              "code": {
+                "label": "Code",
+                "default": "Error 403"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
@@ -454,15 +601,22 @@
             }
           }
         },
-        "cardControls": ["title", "code", "accent", "background"]
+        "cardControls": [
+          "title",
+          "code",
+          "accent",
+          "background"
+        ]
       }
     },
     {
       "name": "errorpage-005",
       "type": "registry:block",
       "title": "Оффлайн с чек-листом",
-      "description": "Страница «нет соединения»: пунктирная волна сигнала, нарисованная градиентом и маской, чек-лист «проверьте» и кнопка повтора. Работает целиком без сети и без JS.",
-      "categories": ["errors"],
+      "description": "Страница «нет соединения»: волна сигнала, короткий список «что проверить» и кнопка «Повторить». Работает без сети. Меняются заголовок, пункты списка и подпись кнопки.",
+      "categories": [
+        "errors"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -474,8 +628,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-errorpage-005-*. Серверный компонент без JS. Волна — повторяющийся радиальный градиент (арки), поверх — маска из вертикальных штрихов, дающая пунктир; медленный дрейф — CSS-анимация background-position, глушится prefers-reduced-motion. Никаких изображений: в оффлайне внешние ресурсы не загрузятся. Чек-лист — ul с CSS-чекбоксами, кнопка повтора — ссылка с пустым href на текущий адрес.",
       "meta": {
-        "tags": ["offline", "network", "connection", "checklist", "retry"],
-        "preview": { "width": "full" },
+        "tags": [
+          "offline",
+          "network",
+          "connection",
+          "checklist",
+          "retry"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Errorpage005",
           "usage": "<Errorpage005\n  checklist={[\"Wi-Fi включён\", \"Авиарежим выключен\"]}\n/>",
@@ -516,13 +678,23 @@
             "default": "Попробовать ещё раз",
             "maxLength": 28
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
         "i18n": {
           "en": {
             "title": "Offline with a Checklist",
-            "description": "A no-connection page: a dashed signal wave drawn with a gradient and a mask, a \"check these\" list and a retry button. Works entirely without the network and without JS.",
+            "description": "A no-connection page: a signal wave, a short \"check these\" list and a retry button. Works with the network down. Change the headline, the list items and the button label.",
             "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-errorpage-005-* variables. A server component with no JS. The wave is a repeating radial gradient (arcs) with a mask of vertical dashes on top that makes it dotted; the slow drift is a background-position CSS animation, silenced by prefers-reduced-motion. No images: offline, external resources will not load. The checklist is a ul with CSS checkboxes, the retry button is a link with an empty href pointing at the current address.",
             "ai": {
               "summary": "An offline page: a dashed signal wave made of a gradient and a mask, a checklist of user-side causes and a retry button. A server component, one file, its own palette, zero dependencies, images or client JS.",
@@ -549,10 +721,20 @@
               "usage": "<Errorpage005\n  checklist={[\"Wi-Fi is on\", \"Airplane mode is off\"]}\n/>"
             },
             "controls": {
-              "title": { "label": "Heading", "default": "No connection" },
-              "retryLabel": { "label": "Button", "default": "Try again" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Heading",
+                "default": "No connection"
+              },
+              "retryLabel": {
+                "label": "Button",
+                "default": "Try again"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
@@ -570,7 +752,12 @@
             }
           }
         },
-        "cardControls": ["title", "retryLabel", "accent", "background"]
+        "cardControls": [
+          "title",
+          "retryLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -578,7 +765,9 @@
       "type": "registry:block",
       "title": "Пустая выдача поиска",
       "description": "Страница «ничего не найдено»: запрос крупно в оранжевых кавычках, CSS-лупа, советы, как переформулировать, и чипы популярных разделов — из пустоты всегда есть ссылка дальше.",
-      "categories": ["errors"],
+      "categories": [
+        "errors"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -590,8 +779,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-errorpage-006-*. Серверный компонент без JS. Запрос показан крупнее заголовка и обёрнут в кавычки-псевдоэлементы: человек сразу видит, что именно искалось, и замечает опечатку; overflow-wrap страхует от длинных запросов. Лупа — кольцо-рамка с повёрнутой ручкой-псевдоэлементом. Два уровня помощи: советы (ul на тёплой тинт-подложке) и популярные разделы (nav с чипами).",
       "meta": {
-        "tags": ["search", "empty state", "no results", "tips", "suggestions"],
-        "preview": { "width": "full" },
+        "tags": [
+          "search",
+          "empty state",
+          "no results",
+          "tips",
+          "suggestions"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Errorpage006",
           "usage": "<Errorpage006\n  query=\"фиолетовый навбар со стеклом\"\n  popular={[{ label: \"Навбары\", href: \"/components?c=navbar\" }]}\n/>",
@@ -632,8 +829,18 @@
             "default": "фиолетовый навбар со стеклом",
             "maxLength": 48
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
         "i18n": {
           "en": {
@@ -665,10 +872,20 @@
               "usage": "<Errorpage006\n  query=\"purple glass navbar\"\n  popular={[{ label: \"Navbars\", href: \"/components?c=navbar\" }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Heading", "default": "Nothing found" },
-              "query": { "label": "Query", "default": "purple glass navbar" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Heading",
+                "default": "Nothing found"
+              },
+              "query": {
+                "label": "Query",
+                "default": "purple glass navbar"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
@@ -683,16 +900,33 @@
                 ],
                 "popularLabel": "Popular searches",
                 "popular": [
-                  { "label": "Hero sections", "href": "/components?c=hero" },
-                  { "label": "Navbars", "href": "/components?c=navbar" },
-                  { "label": "Pricing", "href": "/components?c=pricing" },
-                  { "label": "Footers", "href": "/components?c=footer" }
+                  {
+                    "label": "Hero sections",
+                    "href": "/components?c=hero"
+                  },
+                  {
+                    "label": "Navbars",
+                    "href": "/components?c=navbar"
+                  },
+                  {
+                    "label": "Pricing",
+                    "href": "/components?c=pricing"
+                  },
+                  {
+                    "label": "Footers",
+                    "href": "/components?c=footer"
+                  }
                 ]
               }
             }
           }
         },
-        "cardControls": ["title", "query", "accent", "background"]
+        "cardControls": [
+          "title",
+          "query",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

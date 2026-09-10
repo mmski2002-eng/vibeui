@@ -497,7 +497,7 @@
       "name": "cta-004",
       "type": "registry:block",
       "title": "Призыв на цветной плашке",
-      "description": "Призыв на сплошной цветной плите: узор из повторяющихся градиентов, погашенный маской к краям, крупная цифра-доказательство и одна белая кнопка.",
+      "description": "Призыв к действию на сплошной цветной плите: крупная цифра-доказательство и одна светлая кнопка. Меняются цвет плиты, цифра, текст и адрес кнопки.",
       "categories": [
         "cta"
       ],
@@ -576,7 +576,7 @@
         ],
         "i18n": {
           "en": {
-            "description": "A call to action on a solid colour slab: a repeating-gradient pattern faded out by a mask, one large proof number and a single white button.",
+            "description": "A call to action on a solid colour slab: one large proof number and a single light button. Change the slab colour, the number, the copy and the button link.",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-004-* variables. A server component. The pattern is two repeating-linear-gradients in a separate layer with pointer-events:none, faded by a mask-image towards the lower left corner, so the text always sits on a calm area. The slab is a gradient rather than a single colour: a solid fill across the whole width reads as a mistake of style. The layout is driven by the block's own width: below 46rem one column, beyond that the text and the block with the number stand side by side, with the right column aligned to the right edge.",
             "ai": {
               "summary": "A CTA section on a colour slab: a kicker, a large heading, an explanation, a glass panel with a proof number, a white button and a text link beside it. The pattern is drawn with repeating gradients and faded by a mask so it never fights the text. Zero dependencies, one file, its own palette, no client JS.",

@@ -1,18 +1,19 @@
 import "server-only"
 
 import { betterAuth } from "better-auth"
+import { APIError } from "better-auth/api"
 import { drizzleAdapter } from "better-auth/adapters/drizzle"
 import { eq } from "drizzle-orm"
 import { cookies } from "next/headers"
 
+import { CONSENT_VERSION } from "@/lib/consent"
 import { db } from "@/lib/db"
 import * as schema from "@/lib/db/schema"
 import { referral } from "@/lib/db/schema"
 import type { Locale } from "@/lib/i18n"
 import { letterWithLink, sendMail } from "@/lib/mail"
 
-/** Версия документов, на которые человек согласился при регистрации. */
-export const CONSENT_VERSION = "2026-09-08"
+export { CONSENT_VERSION }
 
 /**
  * Тексты писем. Живут рядом с отправкой, а не в общем словаре: письмо
@@ -151,7 +152,12 @@ export const auth = betterAuth({
       // не видят.
       locale: { type: "string", required: false, input: true },
       consentAt: { type: "date", required: false, input: false },
-      consentVersion: { type: "string", required: false, input: false },
+      /**
+       * Версию согласия присылает форма — это и есть доказательство, что
+       * галочку поставил человек. Сервер её проверяет: браузерная валидация
+       * checkbox'а доказывает только то, что запрос пришёл из нашей формы.
+       */
+      consentVersion: { type: "string", required: false, input: true },
     },
   },
 
@@ -160,6 +166,31 @@ export const auth = betterAuth({
   },
 
   databaseHooks: {
+    session: {
+      create: {
+        /**
+         * Заблокированный аккаунт не должен входить. Сессии при блокировке
+         * гасятся, но пароль остаётся верным — без этой проверки человек
+         * просто войдёт заново.
+         */
+        before: async (data) => {
+          const [target] = await db
+            .select({ blockedAt: schema.user.blockedAt })
+            .from(schema.user)
+            .where(eq(schema.user.id, data.userId))
+            .limit(1)
+
+          if (target?.blockedAt) {
+            throw new APIError("FORBIDDEN", {
+              code: "ACCOUNT_BLOCKED",
+              message: "Account is blocked",
+            })
+          }
+
+          return { data }
+        },
+      },
+    },
     user: {
       create: {
         /**
@@ -169,6 +200,13 @@ export const auth = betterAuth({
          * Здесь же фиксируется согласие: его нужно уметь доказать.
          */
         before: async (data) => {
+          if (data.consentVersion !== CONSENT_VERSION) {
+            throw new APIError("BAD_REQUEST", {
+              code: "CONSENT_REQUIRED",
+              message: "Consent to the terms is required",
+            })
+          }
+
           const store = await cookies()
           const code = store.get("vibeui_ref")?.value
 
@@ -211,6 +249,9 @@ export const auth = betterAuth({
       "/sign-in/email": { window: 60, max: 5 },
       "/request-password-reset": { window: 300, max: 3 },
       "/sign-up/email": { window: 300, max: 5 },
+      // Повторная отправка письма — тоже отправка почты с нашего домена:
+      // без ограничения одну кнопку легко превратить в рассылку.
+      "/send-verification-email": { window: 300, max: 3 },
     },
   },
 

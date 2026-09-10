@@ -48,7 +48,7 @@ type Dictionary = {
   components: { title: string; description: string; metaTitle: string }
   blocks: { title: string; description: string; metaTitle: string }
   animations: { title: string; description: string; metaTitle: string }
-  nav: { heading: string; all: string; filter: string }
+  nav: { heading: string; popular: string; all: string; filter: string }
   catalog: {
     filterCategories: string
     search: string
@@ -137,6 +137,16 @@ type Dictionary = {
   item: {
     preview: string
     use: string
+    /** Подпись у главной кнопки: что именно окажется в буфере. */
+    copyLead: string
+    /** Что делать со ссылкой сразу после копирования. */
+    copyHint: string
+    flow: string
+    flowSteps: [string, string, string]
+    flowChat: string
+    adapt: string
+    tags: string
+    notes: string
     steps: [string, string, string]
     example: string
     showFull: string
@@ -211,7 +221,12 @@ const RU: Dictionary = {
     description:
       "Анимированные компоненты, воссозданные в нашей концепции: один файл, ноль зависимостей, своя палитра. Каждый ставится одной командой и приходит с инструкцией для ИИ-агента.",
   },
-  nav: { heading: "Каталог", all: "Всё", filter: "Фильтр каталога" },
+  nav: {
+    heading: "Каталог",
+    popular: "Популярное",
+    all: "Всё",
+    filter: "Фильтр каталога",
+  },
   catalog: {
     filterCategories: "Фильтр категорий…",
     search: "Поиск компонентов…",
@@ -352,6 +367,19 @@ const RU: Dictionary = {
   item: {
     preview: "Превью",
     use: "Использовать с ИИ",
+    copyLead: "Ссылка для ИИ-агента: в ней превью, код и инструкция.",
+    copyHint:
+      "Вставь ссылку в чат агента в своём проекте и напиши, куда добавить блок.",
+    flow: "Как это работает",
+    flowSteps: [
+      "Выбрали здесь",
+      "Вставили в чат агента",
+      "Получили в проекте",
+    ],
+    flowChat: "добавь это на главную первым экраном:",
+    adapt: "Что можно поменять",
+    tags: "Теги",
+    notes: "Технические заметки",
     steps: [
       "Скопируйте ссылку.",
       "Напишите агенту своими словами и вставьте её в предложение.",
@@ -417,7 +445,12 @@ const EN: Dictionary = {
     description:
       "Animated components recreated in our concept: one file, zero dependencies, their own palette. Each installs with a single command and ships with instructions your agent can follow.",
   },
-  nav: { heading: "Catalog", all: "All", filter: "Filter the catalog" },
+  nav: {
+    heading: "Catalog",
+    popular: "Popular",
+    all: "All",
+    filter: "Filter the catalog",
+  },
   catalog: {
     filterCategories: "Filter categories…",
     search: "Search components…",
@@ -508,6 +541,15 @@ const EN: Dictionary = {
   item: {
     preview: "Preview",
     use: "Use it with AI",
+    copyLead: "A link for your AI agent: preview, code and instructions.",
+    copyHint:
+      "Paste the link into your agent's chat and say where the block should go.",
+    flow: "How it works",
+    flowSteps: ["Pick it here", "Paste into the chat", "Get it in your project"],
+    flowChat: "put this on the home page as the hero:",
+    adapt: "What you can change",
+    tags: "Tags",
+    notes: "Technical notes",
     steps: [
       "Copy the link.",
       "Write to your agent in your own words and drop the link into the sentence.",

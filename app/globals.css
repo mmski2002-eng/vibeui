@@ -25,6 +25,7 @@
   --color-shell-muted: var(--shell-muted);
   --color-shell-accent: var(--shell-accent);
   --color-shell-accent-fg: var(--shell-accent-fg);
+  --color-shell-accent-text: var(--shell-accent-text);
   --color-shell-ring: var(--shell-ring);
   --color-ring: var(--ring);
   --color-input: var(--input);
@@ -158,6 +159,9 @@
     /* Брендовый оранжевый (#FF5900); текст на нём тёмный — см. --primary. */
     --shell-accent: oklch(0.6803 0.2144 39.8);
     --shell-accent-fg: oklch(0.145 0 0);
+    /* Тот же акцент для текста: на почти чёрном фоне заливка кнопки читается
+       и как надпись, поэтому здесь значения совпадают. */
+    --shell-accent-text: oklch(0.6803 0.2144 39.8);
     --shell-ring: oklch(0.6803 0.2144 39.8);
     /* Дефолт кадра — тот же почти-чёрный, что и страница: карточка не должна
        быть светлее фона, её отделяет рамка. Значение перекрывается атрибутом
@@ -185,6 +189,10 @@
     /* Ступень темнее брендового #FF5900 — см. комментарий у --primary. */
     --shell-accent: oklch(0.64 0.2144 39.8);
     --shell-accent-fg: oklch(0.145 0 0);
+    /* Надпись тем же оранжевым на белом даёт около 3:1 — мало для обычного
+       текста. Заливка кнопки и цвет ссылки разведены: контраст этой ступени
+       с белым выше 4.5:1 (W3C, Contrast Minimum). */
+    --shell-accent-text: oklch(0.52 0.19 39.8);
     --shell-ring: oklch(0.64 0.2144 39.8);
   }
 

@@ -9,6 +9,7 @@ import { ItemWorkbench } from "@/components/catalog/item-workbench"
 import { CodeBlock } from "@/components/code-block"
 import { JsonLd } from "@/components/json-ld"
 import { CopyButton } from "@/components/copy-button"
+import { ReportDialog } from "@/components/report/report-dialog"
 import { resolveControlValues, resolvePreviewSurface } from "@/lib/controls"
 import { buildCopyForAiPrompt } from "@/lib/copy-for-ai"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
@@ -25,6 +26,7 @@ import {
   getCategoryLabel,
   getItemKind,
 } from "@/registry/index"
+import { getSession } from "@/lib/session"
 import { getBlockSource } from "@/registry/source.server"
 
 /**
@@ -59,6 +61,9 @@ export async function ItemPage({
   const initialValues = resolveControlValues(block, flat)
 
   const source = await getBlockSource(slug)
+  // Почта вошедшего подставляется в форму жалобы: спрашивать её у того, кто
+  // уже вошёл, — лишний шаг ровно там, где человек раздражён.
+  const session = await getSession()
   const installCommand = getInstallCommand(block.name)
   const registryUrl = getRegistryItemUrl(block.name)
   const docUrl = getItemDocUrl(block.name)
@@ -71,6 +76,9 @@ export async function ItemPage({
   })
   const category = block.categories?.[0]
   const tags = block.meta?.tags ?? []
+  // Три пункта — верхняя граница читаемого списка в шапке: дальше человек
+  // перестаёт их различать и просто пролистывает.
+  const adapt = (block.meta?.ai?.adapt ?? []).slice(0, 3)
 
   const rootLabel =
     kind === "block"
@@ -163,17 +171,25 @@ export async function ItemPage({
                 {block.description}
               </p>
             ) : null}
-            {tags.length > 0 ? (
-              <ul className="mt-4 flex flex-wrap gap-2">
-                {tags.map((tag) => (
-                  <li
-                    key={tag}
-                    className="border-shell-border text-shell-muted rounded-full border px-2.5 py-1 text-xs"
-                  >
-                    {tag}
-                  </li>
-                ))}
-              </ul>
+            {/* Вместо английских тегов — то, ради чего человек и открыл
+                страницу: что в этом дизайне можно поменять под себя. Теги
+                нужны поиску и лежат ниже, в разделе для разработчика. */}
+            {adapt.length > 0 ? (
+              <div className="mt-5 max-w-2xl">
+                <p className="text-shell-muted mb-2 text-xs font-medium tracking-wide uppercase">
+                  {t.item.adapt}
+                </p>
+                <ul className="text-shell-fg space-y-1 text-sm">
+                  {adapt.map((line) => (
+                    <li key={line} className="flex gap-2">
+                      <span aria-hidden="true" className="text-shell-accent">
+                        ·
+                      </span>
+                      <span className="text-pretty">{line}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ) : null}
           </header>
 
@@ -228,10 +244,43 @@ export async function ItemPage({
             </div>
 
             {block.docs ? (
-              <p className="text-shell-muted mt-4 max-w-2xl text-sm text-pretty">
-                {block.docs}
-              </p>
+              <details className="border-shell-border mt-4 rounded-xl border">
+                <summary className="text-shell-fg cursor-pointer px-4 py-3 text-sm font-medium select-none marker:content-none [&::-webkit-details-marker]:hidden">
+                  {t.item.notes}
+                </summary>
+                <p className="text-shell-muted border-shell-border border-t px-4 py-3 text-sm text-pretty">
+                  {block.docs}
+                </p>
+              </details>
             ) : null}
+
+            {tags.length > 0 ? (
+              <div className="mt-4">
+                <p className="text-shell-muted mb-2 text-xs font-medium tracking-wide uppercase">
+                  {t.item.tags}
+                </p>
+                <ul className="flex flex-wrap gap-2">
+                  {tags.map((tag) => (
+                    <li
+                      key={tag}
+                      className="border-shell-border text-shell-muted rounded-full border px-2.5 py-1 text-xs"
+                    >
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+
+            {/* Жалоба на компонент отсюда: человек уже стоит перед тем, что
+                у него не заработало, и код item'а подставится сам. */}
+            <div className="mt-4">
+              <ReportDialog
+                locale={locale}
+                itemName={block.name}
+                email={session?.user.email}
+              />
+            </div>
 
             <details
               id="code"

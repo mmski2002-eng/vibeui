@@ -11,6 +11,7 @@ import testimonialsRegistry from "@/registry/blocks/testimonials/registry.json"
 import faqRegistry from "@/registry/blocks/faq/registry.json"
 import ctaRegistry from "@/registry/blocks/cta/registry.json"
 import footerRegistry from "@/registry/blocks/footer/registry.json"
+import layoutRegistry from "@/registry/blocks/layout/registry.json"
 import authRegistry from "@/registry/blocks/auth/registry.json"
 import blogRegistry from "@/registry/blocks/blog/registry.json"
 import contactRegistry from "@/registry/blocks/contact/registry.json"
@@ -34,6 +35,7 @@ import dataGridRegistry from "@/registry/blocks/data-grid/registry.json"
 import logosRegistry from "@/registry/blocks/logos/registry.json"
 import newsletterRegistry from "@/registry/blocks/newsletter/registry.json"
 import teamRegistry from "@/registry/blocks/team/registry.json"
+import backgroundRegistry from "@/registry/blocks/background/registry.json"
 import accordionRegistry from "@/registry/components/accordion/registry.json"
 import alertRegistry from "@/registry/components/alert/registry.json"
 import alertDialogRegistry from "@/registry/components/alert-dialog/registry.json"
@@ -122,7 +124,7 @@ import checklistRegistry from "@/registry/animations/checklist/registry.json"
 import stacksRegistry from "@/registry/animations/stacks/registry.json"
 import cursorRegistry from "@/registry/animations/cursor/registry.json"
 import textRegistry from "@/registry/animations/text/registry.json"
-import backgroundRegistry from "@/registry/animations/background/registry.json"
+import backgroundAnimationRegistry from "@/registry/animations/background/registry.json"
 
 /**
  * Реестры, попадающие на сайт. Это и есть файловая база каталога: другого
@@ -173,6 +175,11 @@ export const SOURCES = [
     directory: "registry/blocks/footer",
     kind: "block",
     items: footerRegistry.items,
+  },
+  {
+    directory: "registry/blocks/layout",
+    kind: "block",
+    items: layoutRegistry.items,
   },
   {
     directory: "registry/blocks/auth",
@@ -288,6 +295,11 @@ export const SOURCES = [
     directory: "registry/blocks/team",
     kind: "block",
     items: teamRegistry.items,
+  },
+  {
+    directory: "registry/blocks/background",
+    kind: "block",
+    items: backgroundRegistry.items,
   },
   {
     directory: "registry/components/accordion",
@@ -732,7 +744,7 @@ export const SOURCES = [
   {
     directory: "registry/animations/background",
     kind: "animation",
-    items: backgroundRegistry.items,
+    items: backgroundAnimationRegistry.items,
   },
 ] as const satisfies readonly {
   directory: string

@@ -51,4 +51,13 @@ export const PREVIEWS = {
   "footer-015": dynamic(() =>
     import("@/registry/blocks/footer/footer-015/footer-015").then((module) => module.Footer015),
   ),
+  "footer-016": dynamic(() =>
+    import("@/registry/blocks/footer/footer-016/footer-016").then((module) => module.Footer016),
+  ),
+  "footer-017": dynamic(() =>
+    import("@/registry/blocks/footer/footer-017/footer-017").then((module) => module.Footer017),
+  ),
+  "footer-018": dynamic(() =>
+    import("@/registry/blocks/footer/footer-018/footer-018").then((module) => module.Footer018),
+  ),
 } satisfies PreviewMap

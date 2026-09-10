@@ -4,6 +4,7 @@ import { db } from "@/lib/db"
 import { subscription, user } from "@/lib/db/schema"
 import { sendMail } from "@/lib/mail"
 import { PLANS, isPlanId } from "@/lib/plans"
+import { pruneSearchLog } from "@/lib/search-log"
 import { chargeSaved } from "@/lib/yookassa"
 
 /**
@@ -42,6 +43,10 @@ export async function POST(request: Request) {
         isNotNull(subscription.paymentMethodId),
       ),
     )
+
+  // Заодно чистим лог поисковых запросов: отдельный таймер ради одной
+  // операции в сутки заводить незачем.
+  await pruneSearchLog()
 
   let charged = 0
   let closed = 0

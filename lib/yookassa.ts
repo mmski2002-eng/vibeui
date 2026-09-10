@@ -55,6 +55,28 @@ async function request(body: unknown): Promise<Payment> {
 }
 
 /**
+ * Текущее состояние платежа по его идентификатору.
+ *
+ * Нужно администратору: вебхук мог не дойти (сеть, перезапуск сервиса), а
+ * деньги при этом списались. Тогда единственный источник правды — сам
+ * платёжный сервис, а не наша таблица.
+ */
+export async function fetchPayment(id: string): Promise<Payment> {
+  const response = await fetch(`${API}/payments/${encodeURIComponent(id)}`, {
+    headers: { Authorization: auth() },
+    cache: "no-store",
+  })
+
+  if (!response.ok) {
+    throw new Error(
+      `ЮKassa ответила ${response.status}: ${await response.text()}`,
+    )
+  }
+
+  return response.json()
+}
+
+/**
  * Чек для самозанятого. `vat_code: 1` — без НДС; предмет расчёта — услуга,
  * способ — полная оплата. Адрес покупателя обязателен: чек уходит на него.
  */

@@ -1,8 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import { BlockPreview } from "@/components/block-preview"
+import { CopyFlow } from "@/components/catalog/copy-flow"
 import {
   ConfigurablePreview,
   ItemControls,
@@ -52,6 +53,18 @@ export function ItemWorkbench({
   const frameTheme = theme === "auto" ? (shellLight ? "light" : "dark") : theme
   const [values, setValues] = useState<ControlValues>(initialValues)
   const controls = getControls(item)
+  // Подсказка живёт дольше, чем «Скопировано» на кнопке: человек в этот
+  // момент уже переключается в свой редактор и читает её там краем глаза.
+  const [copied, setCopied] = useState(false)
+  const hintTimer = useRef<number | undefined>(undefined)
+
+  useEffect(() => () => window.clearTimeout(hintTimer.current), [])
+
+  function noteCopied() {
+    setCopied(true)
+    window.clearTimeout(hintTimer.current)
+    hintTimer.current = window.setTimeout(() => setCopied(false), 10000)
+  }
 
   const params = toSearchParams(controls, values)
 
@@ -67,6 +80,33 @@ export function ItemWorkbench({
 
   return (
     <>
+      {/* Главное действие стоит до превью, а не после него: на телефоне
+          превью занимает экран целиком, и кнопка под ним начиналась только
+          после долгой прокрутки. Ниже она повторяется — там, где человек
+          читает шаги. */}
+      <div className="border-shell-border-strong bg-shell-panel mb-6 flex flex-col gap-3 rounded-xl border p-4 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-shell-muted max-w-md text-sm text-pretty">
+          {t.item.copyLead}
+        </p>
+        <CopyButton
+          value={link}
+          label={t.card.copy}
+          copiedLabel={t.card.copied}
+          variant="primary"
+          className="h-11 shrink-0 px-5"
+          onCopied={noteCopied}
+        />
+      </div>
+
+      {copied ? (
+        <p
+          role="status"
+          className="border-shell-accent/40 bg-shell-accent/10 text-shell-fg mb-6 rounded-lg border px-3 py-2 text-sm"
+        >
+          {t.item.copyHint}
+        </p>
+      ) : null}
+
       <section aria-labelledby="preview-heading" className="mb-12">
         <h2
           id="preview-heading"
@@ -140,15 +180,23 @@ export function ItemWorkbench({
           </div>
         ) : null}
 
-        <div className="mt-5">
+        <div className="mt-5 flex flex-wrap items-center gap-3">
           <CopyButton
             value={link}
             label={t.card.copy}
             copiedLabel={t.card.copied}
             variant="primary"
             className="h-11 px-5"
+            onCopied={noteCopied}
           />
+          {copied ? (
+            <p role="status" className="text-shell-fg max-w-md text-sm">
+              {t.item.copyHint}
+            </p>
+          ) : null}
         </div>
+
+        <CopyFlow locale={locale} link={link} className="mt-6" />
 
         {/* Запасной путь: если агент не может открыть ссылку, инструкцию
             копируют целиком. */}

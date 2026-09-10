@@ -1544,7 +1544,7 @@
       "name": "hero-010",
       "type": "registry:block",
       "title": "Первый экран с картинкой сбоку",
-      "description": "Hero пополам без полей: текст с чеклистом в левой половине, изображение во всю высоту секции в правой. Композиция картинки собрана градиентами и clip-path.",
+      "description": "Первый экран пополам: слева текст с чек-листом, справа изображение во всю высоту. Подходит лендингу услуги. Меняются заголовок, пункты списка, кнопки и картинка.",
       "categories": [
         "hero"
       ],
@@ -1631,7 +1631,7 @@
         ],
         "i18n": {
           "en": {
-            "description": "A hero split in half with no gutters: copy and a checklist in the left half, a full-height image in the right. The picture is composed from gradients and clip-path.",
+            "description": "A hero split in half: copy with a checklist on the left, a full-height image on the right. Suits a service landing page. Change the headline, the list items, the buttons and the image.",
             "ai": {
               "summary": "A light hero in two equal halves: an eyebrow, headline, subhead, three-item checklist and two buttons on the left; a full-height image with a corner caption on the right. One file, zero dependencies.",
               "preserve": [
@@ -1715,7 +1715,7 @@
       "name": "hero-011",
       "type": "registry:block",
       "title": "Первый экран со светящейся сеткой",
-      "description": "Hero, где фон и есть дизайн: сетка из повторяющихся градиентов, погашенная радиальной маской, и два цветных пятна поверх. Ни одного лишнего слоя в разметке.",
+      "description": "Первый экран, где всю работу делает фон: тонкая сетка и два цветных пятна за заголовком. Подходит лендингу продукта. Меняются заголовок, подпись, кнопки и акцентный цвет.",
       "categories": [
         "hero"
       ],
@@ -1798,7 +1798,7 @@
         ],
         "i18n": {
           "en": {
-            "description": "A hero where the background is the design: a grid of repeating gradients faded by a radial mask, with two colour blooms on top. Not one extra layer in the markup.",
+            "description": "A hero where the background does the work: a fine grid and two colour blooms behind the headline. Suits a product landing page. Change the headline, the subtitle, the buttons and the accent colour.",
             "ai": {
               "summary": "A dark centred hero: an announcement pill, a large headline with a gradient second half, a subhead, two buttons and a row of short facts. The grid and the glow are painted onto the section itself. One file, zero dependencies.",
               "preserve": [
@@ -2935,7 +2935,7 @@
       "name": "hero-018",
       "type": "registry:block",
       "title": "Светлый первый экран",
-      "description": "Светлый флагманский hero на кремовой бумаге: миллиметровая сетка под радиальной маской, одно тёплое пятно под заголовком, крупная типографика и пара кнопок. Палитра фиксированно светлая и не темнеет вместе с темой сайта.",
+      "description": "Светлый первый экран для лендинга: кремовая бумага, тёплое пятно под заголовком, крупная типографика и две кнопки. Остаётся светлым, даже когда сайт в тёмной теме. Меняются заголовок, подпись, кнопки и акцентный цвет.",
       "categories": [
         "hero"
       ],
@@ -3025,7 +3025,7 @@
         "i18n": {
           "en": {
             "title": "Light Hero",
-            "description": "A light flagship hero on cream paper: a fine grid faded by a radial mask, one warm glow under the headline, large type and a pair of buttons. The palette is deliberately light and does not darken with the site theme.",
+            "description": "A light hero for a landing page: cream paper, a warm glow under the headline, large type and two buttons. It stays light even when the site is dark. Change the headline, the subtitle, the buttons and the accent colour.",
             "docs": "A server component, one file, zero dependencies. The --vibeui-hero-018-* palette is written out in explicit oklch values rather than light-dark(): lightness is the point of the block, so on a dark page it stays a sheet of cream paper. For the same reason color-scheme:light is declared on the root — otherwise the browser would paint focus rings and text selection from the dark branch on top of a light background. The background is decorated by a single [data-part=\"canvas\"] layer: two repeating linear gradients draw a 4rem grid, a radial-gradient in mask-image fades it towards the edges, and ::after lays a warm accent glow under the headline. The text colour on the accent button is derived from the lightness of the accent itself through oklch(from …), so a light custom accent never produces white on yellow. The headline is set in clamp(2rem,7cqi,4.25rem) against the block width, and the titleAccent tail is underlined by a soft linear-gradient. The buttons carry min-height rather than height: a long translation wraps to a second line instead of spilling out. Frame padding grows through container queries at 40rem and 64rem.",
             "ai": {
               "summary": "A light hero: a cream canvas with a grid and a warm glow, an eyebrow pill, a large centred headline with an underlined tail, a subhead, two buttons and a fine-print line below. One file, zero dependencies.",

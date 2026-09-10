@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Редактор",
       "description": "Мокап редактора кода с вкладкой файла, номерами строк и подсветкой синтаксиса: строки печатаются каскадом сверху вниз через steps(), символы появляются дискретными скачками, курсор мигает после последней строки.",
-      "categories": ["code-block"],
+      "categories": [
+        "code-block"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -150,8 +152,10 @@
       "name": "code-block-anim-002",
       "type": "registry:component",
       "title": "Сниппет",
-      "description": "Копируемая карточка фрагмента кода с лейблом языка: код разворачивается через clip-path со ступенчатым timing-function, а кнопка копирования по демо-циклу меняет иконку на галочку с пружинным pop-эффектом.",
-      "categories": ["code-block"],
+      "description": "Карточка с фрагментом кода для документации или лендинга для разработчиков: код появляется построчно, а кнопка копирования отвечает галочкой. Меняются код, язык и подписи кнопки.",
+      "categories": [
+        "code-block"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -163,7 +167,14 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-code-block-anim-002-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark, поэтому в тёмном проекте не остаётся светлым. Код открывается построчной разверткой: обёртка анимирует clip-path от inset(0 100% 0 0) до inset(0 0 0 0) через timing-function steps(), поэтому маска сдвигается дискретными шагами, как настоящий набор текста. Через паузу иконка кнопки «копировать» скрывается и на её месте пружинным pop-эффектом (overshoot масштаба) появляется галочка, держится и возвращается обратно — демо-цикл по CSS-таймеру, без единой строчки клиентского JS и без реального копирования в буфер обмена. Всё гаснет при prefers-reduced-motion.",
       "meta": {
-        "tags": ["code", "snippet", "copy", "clip-path", "animated", "steps"],
+        "tags": [
+          "code",
+          "snippet",
+          "copy",
+          "clip-path",
+          "animated",
+          "steps"
+        ],
         "ai": {
           "export": "CodeBlockAnim002",
           "usage": "<CodeBlockAnim002 language=\"tsx\" lines={[{ tokens: [{ text: \"const x = 1\", type: \"plain\" }] }]} />",
@@ -209,7 +220,7 @@
         "i18n": {
           "en": {
             "title": "Snippet",
-            "description": "A copyable code snippet card with a language label: the code unfolds via a stepped clip-path timing-function, while the copy button swaps its icon for a checkmark with a spring pop effect on a demo cycle.",
+            "description": "A code snippet card for documentation or a developer landing page: the code appears line by line and the copy button answers with a check mark. Change the code, the language and the button labels.",
             "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-code-block-anim-002-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class, so it does not stay light in a dark project. The code opens with a line-wide reveal: a wrapper animates clip-path from inset(0 100% 0 0) to inset(0 0 0 0) through a steps() timing-function, so the mask shifts in discrete jumps like real typing. After a pause the copy icon hides and a checkmark pops in its place with a spring overshoot, holds, and swaps back — a demo cycle driven purely by a CSS timer, with no client JS and no real clipboard copy. Everything stops under prefers-reduced-motion.",
             "ai": {
               "summary": "A copyable snippet card: language label in the corner, code unfolds via a stepped clip-path timing-function, and the copy button swaps its icon for a checkmark with a pop effect on a demo cycle. Zero dependencies, one file, no client JS.",
@@ -255,7 +266,11 @@
             "language": "tsx"
           }
         },
-        "cardControls": ["gradient", "isometric", "accent"]
+        "cardControls": [
+          "gradient",
+          "isometric",
+          "accent"
+        ]
       }
     },
     {
@@ -263,7 +278,9 @@
       "type": "registry:component",
       "title": "Терминал",
       "description": "Окно терминала: команда печатается посимвольно через steps(), затем построчно с нарастающим сдвигом проявляется вывод, после паузы происходит мгновенный сброс и демо-цикл начинается заново.",
-      "categories": ["code-block"],
+      "categories": [
+        "code-block"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -275,7 +292,14 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-code-block-anim-003-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark, поэтому в тёмном проекте не остаётся светлым. Команда печатается посимвольно: ширина строки команды раскрывается от 0 до var(--ch) через timing-function steps(), рядом мигает курсор. После набора построчно проявляется вывод команды — непрозрачность и лёгкий подъём, старт каждой строки сдвинут через nth-child, поэтому вывод «печатается» с нарастающей задержкой. Далее пауза, мгновенный сброс печати и вывода и цикл начинается заново — весь таймлайн на чистом CSS, без клиентского JS. Строка вывода, начинающаяся с ✓, подсвечивается акцентным цветом успеха. Всё гаснет при prefers-reduced-motion.",
       "meta": {
-        "tags": ["code", "terminal", "console", "typing", "animated", "steps"],
+        "tags": [
+          "code",
+          "terminal",
+          "console",
+          "typing",
+          "animated",
+          "steps"
+        ],
         "ai": {
           "export": "CodeBlockAnim003",
           "usage": "<CodeBlockAnim003 title=\"~/project\" prompt=\"$\" command=\"npm run build\" output={[\"✓ done\"]} />",
@@ -369,7 +393,11 @@
             "title": "~/vibeui-app"
           }
         },
-        "cardControls": ["gradient", "isometric", "accent"]
+        "cardControls": [
+          "gradient",
+          "isometric",
+          "accent"
+        ]
       }
     }
   ]

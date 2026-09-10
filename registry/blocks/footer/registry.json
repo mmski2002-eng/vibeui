@@ -3289,6 +3289,344 @@
         },
         "cardControls": ["ctaTitle", "ctaButtonLabel", "accent", "background"]
       }
+    },
+    {
+      "name": "footer-016",
+      "type": "registry:block",
+      "title": "Завершение документа или урока",
+      "description": "Футер страницы документации или урока: карточки предыдущей и следующей главы, дата обновления, вопрос «Страница помогла?» и ссылка на исправление. Контекстные действия в колонке чтения, служебная строка тише и отдельно.",
+      "categories": ["footer"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-016/footer-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-016.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, клиентского JS нет. Пейджер — <nav> с двумя карточками-ссылками; пустой prevLabel оставляет только «Дальше». Кнопки отзыва — демонстрационные <button>: обработчик и состояния «отправлено/ошибка» подключает принимающий проект. Ширина колонки 46rem совпадает с колонкой чтения каркаса документации. Служебная строка — отдельная серая полоса во всю ширину. Палитра --vibeui-footer-016-*.",
+      "meta": {
+        "tags": ["footer", "docs", "pager", "prev-next", "feedback", "lesson"],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 300"
+        },
+        "ai": {
+          "usage": "<Footer016\n  prevLabel=\"Установка\"\n  prevHref=\"/docs/install\"\n  nextLabel=\"Конфигурация\"\n  nextHref=\"/docs/config\"\n  updated=\"Обновлено 4 сентября 2026\"\n/>",
+          "summary": "Завершение документа: две карточки соседних глав со стрелками, строка с датой обновления, кнопками «Да/Нет» о пользе страницы и ссылкой «Исправить». Колонка 46rem под ширину чтения; тихая служебная полоса отдельно. Кнопки отзыва — демонстрация без обработчика. Без JS.",
+          "preserve": [
+            "локальную палитру --vibeui-footer-016-* и не подменять её токенами вашей темы: блок обязан выглядеть одинаково в любом проекте",
+            "карточки глав как крупные зоны нажатия с подписью направления — маленькие текстовые стрелки хуже и пальцу, и глазу",
+            "ширину колонки 46rem, совпадающую с колонкой чтения — футер документа не расползается шире статьи",
+            "разделение контекстных действий и служебной строки: юридическое живёт тише и отдельно",
+            "направление стрелок в ::before/::after — при переводе на RTL их нужно осознанно развернуть, а не потерять"
+          ],
+          "adapt": [
+            "prevLabel/prevHref и nextLabel/nextHref — соседние главы; пустой prevLabel на первой странице",
+            "updated — реальная дата из вашей системы, не зашитая строка",
+            "обработчик кнопок отзыва и состояния «спасибо/ошибка» подключает проект",
+            "editHref — ссылка на исходник страницы в вашем репозитории",
+            "legal — служебная строка; пустая строка убирает полосу",
+            "accent — цвет наведения и фокуса"
+          ],
+          "notes": [
+            "В рабочем приложении не добавляйте большой маркетинговый футер к каждому короткому экрану — этот блок и есть завершение.",
+            "Названия соседних глав переносятся на несколько строк — не обрезайте их.",
+            "Если отзыв не подключён, уберите кнопки, а не оставляйте молчащие."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "prevLabel",
+            "label": "Назад",
+            "type": "text",
+            "default": "Установка",
+            "maxLength": 40
+          },
+          {
+            "prop": "nextLabel",
+            "label": "Дальше",
+            "type": "text",
+            "default": "Конфигурация",
+            "maxLength": 40
+          },
+          {
+            "prop": "updated",
+            "label": "Обновлено",
+            "type": "text",
+            "default": "Обновлено 4 сентября 2026",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["prevLabel", "nextLabel", "updated", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Document or Lesson Ending",
+            "description": "A footer for a docs page or a lesson: previous and next chapter cards, the updated date, a Was this page helpful? question and an edit link. Contextual actions stay in the reading column, the legal line is quieter and separate.",
+            "docs": "One file, zero dependencies, no client JS. The pager is a <nav> with two card links; an empty prevLabel leaves only Next. The feedback buttons are demo <button>s: the handler and the sent/error states are wired by the host project. The 46rem column matches the docs skeleton's reading column. The legal line is a separate grey strip across the full width. Palette --vibeui-footer-016-*.",
+            "ai": {
+              "summary": "A document ending: two neighboring chapter cards with arrows, a line with the updated date, Yes/No buttons about the page's usefulness and an Edit link. A 46rem column to match the reading width; a quiet legal strip apart. The feedback buttons are a demo without a handler. No JS.",
+              "preserve": [
+                "the local --vibeui-footer-016-* palette — do not swap it for your theme tokens: the block must look the same in any project",
+                "the chapter cards as large hit areas with a direction caption — small text arrows are worse for both finger and eye",
+                "the 46rem column matching the reading column — a document footer does not sprawl wider than the article",
+                "the separation of contextual actions and the legal line: the legal lives quieter and apart",
+                "the arrow direction in ::before/::after — on RTL flip them deliberately rather than lose them"
+              ],
+              "adapt": [
+                "prevLabel/prevHref and nextLabel/nextHref — the neighboring chapters; an empty prevLabel on the first page",
+                "updated — a real date from your system, not a hardcoded string",
+                "the feedback handler and the thanks/error states are wired by the project",
+                "editHref — the link to the page source in your repository",
+                "legal — the service line; an empty string removes the strip",
+                "accent — the hover and focus color"
+              ],
+              "notes": [
+                "In a working app do not add a big marketing footer to every short screen — this block is the ending.",
+                "Neighboring chapter titles wrap over several lines — do not clip them.",
+                "If feedback is not wired, remove the buttons instead of leaving mute ones."
+              ],
+              "usage": "<Footer016\n  prevLabel=\"Install\"\n  prevHref=\"/docs/install\"\n  nextLabel=\"Configuration\"\n  nextHref=\"/docs/config\"\n  updated=\"Updated September 4, 2026\"\n/>"
+            },
+            "controls": {
+              "prevLabel": {
+                "label": "Previous",
+                "default": "Install"
+              },
+              "nextLabel": {
+                "label": "Next",
+                "default": "Configuration"
+              },
+              "updated": {
+                "label": "Updated",
+                "default": "Updated September 4, 2026"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "prevLabel": "Install",
+                "nextLabel": "Configuration",
+                "prevCaption": "Back",
+                "nextCaption": "Next",
+                "updated": "Updated September 4, 2026",
+                "feedbackLabel": "Was this page helpful?",
+                "yesLabel": "Yes",
+                "noLabel": "No",
+                "editLabel": "Edit on GitHub",
+                "legal": "© 2026 Device · The docs are licensed under CC BY 4.0"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footer-017",
+      "type": "registry:block",
+      "title": "Следующий проект",
+      "description": "Футер кейса и портфолио: крупное превью следующей работы одной однозначной ссылкой, название с контекстом и контакты студии тихой строкой ниже. Автоматического открытия следующего кейса при достижении низа нет.",
+      "categories": ["footer"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-017/footer-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-017.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, без клиентского JS. Вся карточка следующего проекта — одна ссылка <a> без вложенных интерактивов: конфликтов вложенных кнопок нет. Кадр 21:9 — CSS-заглушка трёх тонов (data-look); реальное превью — изображение проекта. Наведение — оранжевый контур кадра и подкраска названия. Строка студии: имя, контакт с оранжевым подчёркиванием, копирайт. Палитра --vibeui-footer-017-*.",
+      "meta": {
+        "tags": ["footer", "portfolio", "next-project", "case", "studio"],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 520"
+        },
+        "ai": {
+          "usage": "<Footer017\n  title=\"Дом на склоне\"\n  note=\"Архитектура · 2026\"\n  href=\"/cases/dom\"\n  studioName=\"Студия «Русло»\"\n/>",
+          "summary": "Футер «следующий проект»: кадр 21:9 одной ссылкой, подпись «Следующий проект», крупное название с контекстом и строка студии с контактом. Три тона заглушки кадра; переход — обычная ссылка, ничего не открывается само.",
+          "preserve": [
+            "локальную палитру --vibeui-footer-017-* и не подменять её токенами вашей темы",
+            "одну ссылку на всю карточку без вложенных кнопок — однозначная цель нажатия",
+            "отсутствие автоперехода при достижении низа страницы",
+            "финал как часть истории кейса: превью крупное, служебное — тихое"
+          ],
+          "adapt": [
+            "title, note, href — следующий кейс из вашей навигации",
+            "look — тон заглушки; реальное превью замените изображением с кропом 21:9",
+            "studioName, contactLabel, contactHref, legal — контакты студии",
+            "accent — цвет подписи, контура и подчёркивания"
+          ],
+          "notes": [
+            "Связанный переход изображения в следующий кейс добавляет проект; обычная ссылка — всегда база.",
+            "Если нужен большой служебный футер — это другой блок, не расширяйте этот."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Проект",
+            "type": "text",
+            "default": "Дом на склоне",
+            "maxLength": 40
+          },
+          {
+            "prop": "note",
+            "label": "Контекст",
+            "type": "text",
+            "default": "Архитектура · 2026",
+            "maxLength": 32
+          },
+          {
+            "prop": "look",
+            "label": "Кадр",
+            "type": "select",
+            "options": ["warm", "paper", "dark"],
+            "default": "warm"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["title", "note", "look", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Next Project",
+            "description": "A case study and portfolio footer: a large preview of the next work as one unambiguous link, the title with context and the studio contacts in a quiet line below. No automatic opening of the next case at the bottom.",
+            "docs": "One file, zero dependencies, no client JS. The whole next-project card is a single <a> without nested interactives: no nested button conflicts. The 21:9 frame is a CSS placeholder in three tones (data-look); the real preview is the project's image. Hover is an orange frame outline and a title tint. The studio line: the name, a contact with an orange underline, the copyright. Palette --vibeui-footer-017-*.",
+            "ai": {
+              "summary": "A next-project footer: a 21:9 frame as one link, the Next Project kicker, a large title with context and a studio line with a contact. Three placeholder tones; navigation is a plain link, nothing opens by itself.",
+              "preserve": [
+                "the local --vibeui-footer-017-* palette — do not swap it for your theme tokens",
+                "one link for the whole card without nested buttons — an unambiguous tap target",
+                "no auto-navigation at the page bottom",
+                "the finale as part of the case story: the preview is large, the service line quiet"
+              ],
+              "adapt": [
+                "title, note, href — the next case from your navigation",
+                "look — the placeholder tone; replace the preview with a real 21:9 image",
+                "studioName, contactLabel, contactHref, legal — the studio contacts",
+                "accent — the kicker, outline and underline color"
+              ],
+              "notes": [
+                "A shared-element transition into the next case is the project's addition; the plain link is always the base.",
+                "If you need a big service footer — that is another block, do not extend this one."
+              ],
+              "usage": "<Footer017\n  title=\"Hillside house\"\n  note=\"Architecture · 2026\"\n  href=\"/cases/hillside\"\n  studioName=\"Ruslo Studio\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Project",
+                "default": "Hillside house"
+              },
+              "note": {
+                "label": "Context",
+                "default": "Architecture · 2026"
+              },
+              "look": {
+                "label": "Frame"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footer-018",
+      "type": "registry:block",
+      "title": "Кинематографический финальный экран",
+      "description": "Финал отеля, архитектуры или fashion: кадр во весь футер, тёмная вуаль под текстом, крупная контактная фраза, оранжевое действие и компактная навигация. Служебные документы всегда видны, кадр выразителен без движения.",
+      "categories": ["footer"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-018/footer-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-018.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, без клиентского JS. Медиа — слот media (изображение или видеофон по правилам видеофона); без него — стилизованная CSS-сцена с role=\"img\". Вуаль — линейный градиент с тёмной нижней зоной под текстом. Крупная фраза, ряд действия и навигации, служебная строка с документами над нижним краем — за декоративной сценой ничего не прячется. Палитра --vibeui-footer-018-*.",
+      "meta": {
+        "tags": ["footer", "cinematic", "hotel", "finale", "photo"],
+        "preview": { "width": "full", "aspect": "1280 / 620" },
+        "ai": {
+          "usage": "<Footer018\n  media={<img src=\"/photos/evening.jpg\" alt=\"\" />}\n  title=\"Приезжайте — горы подождут вас\"\n  actionHref=\"/booking\"\n/>",
+          "summary": "Кинематографический финал: кадр во весь футер (слот media или CSS-сцена), вуаль с тёмным низом, контактная фраза до 4.75rem, оранжевое действие, компактная навигация и строка документов с копирайтом. Статичный кадр — основной режим. Без JS.",
+          "preserve": [
+            "локальную палитру --vibeui-footer-018-* и не подменять её токенами вашей темы",
+            "тёмную нижнюю зону вуали под текстом и служебной строкой — контраст не зависит от кадра",
+            "видимость документов: не прятать обязательные ссылки за декоративной сценой",
+            "выразительность без движения — видео необязательно и живёт по правилам видеофона"
+          ],
+          "adapt": [
+            "media — ваш кадр: <img> с осмысленным alt или видеофон с постером",
+            "title — контактная фраза; длинная русская переносится, не сжимайте буквы",
+            "links, legalLinks, copyright — навигация и документы",
+            "actionLabel/actionHref и accent — действие и фирменный цвет"
+          ],
+          "notes": [
+            "Сочетается со сценой «футер из-под страницы» — раскрытие необязательно.",
+            "Заглушку-сцену замените реальным кадром до выпуска: она только для витрины."
+          ]
+        },
+        "controls": [
+          { "prop": "title", "label": "Фраза", "type": "text", "default": "Приезжайте — горы подождут вас", "maxLength": 48 },
+          { "prop": "actionLabel", "label": "Действие", "type": "text", "default": "Забронировать", "maxLength": 24 },
+          { "prop": "copyright", "label": "Копирайт", "type": "text", "default": "© 2026 Отель «Перевал»", "maxLength": 40 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" }
+        ],
+        "cardControls": ["title", "actionLabel", "copyright", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Cinematic Final Screen",
+            "description": "A finale for hotels, architecture or fashion: a full-bleed frame, a dark scrim under the text, a large contact phrase, an orange action and compact navigation. Legal documents stay visible, the frame is expressive without motion.",
+            "docs": "One file, zero dependencies, no client JS. Media is the media slot (an image, or video per the video background rules); without it — a stylized CSS scene with role=\"img\". The scrim is a linear gradient with a dark bottom zone under the text. The large phrase, the action-and-navigation row, the legal line with documents above the bottom edge — nothing hides behind the decorative scene. Palette --vibeui-footer-018-*.",
+            "ai": {
+              "summary": "A cinematic finale: a full-footer frame (the media slot or a CSS scene), a scrim with a dark base, a contact phrase up to 4.75rem, an orange action, compact navigation and a documents line with the copyright. The static frame is the primary mode. No JS.",
+              "preserve": [
+                "the local --vibeui-footer-018-* palette — do not swap it for your theme tokens",
+                "the scrim's dark bottom zone under the text and legal line — contrast never depends on the frame",
+                "document visibility: never hide required links behind the decorative scene",
+                "expressiveness without motion — video is optional and follows the video background rules"
+              ],
+              "adapt": [
+                "media — your frame: an <img> with a meaningful alt or a video with a poster",
+                "title — the contact phrase; a long one wraps, do not squeeze the letters",
+                "links, legalLinks, copyright — the navigation and documents",
+                "actionLabel/actionHref and accent — the action and brand color"
+              ],
+              "notes": [
+                "Pairs with the footer-from-under scene — the reveal is optional.",
+                "Replace the placeholder scene with a real frame before shipping: it exists for the showcase."
+              ],
+              "usage": "<Footer018\n  media={<img src=\"/photos/evening.jpg\" alt=\"\" />}\n  title=\"Come over — the mountains will wait\"\n  actionHref=\"/booking\"\n/>"
+            },
+            "controls": {
+              "title": { "label": "Phrase", "default": "Come over — the mountains will wait" },
+              "actionLabel": { "label": "Action", "default": "Book a stay" },
+              "copyright": { "label": "Copyright", "default": "© 2026 Summit Hotel" },
+              "accent": { "label": "Accent" }
+            }
+          }
+        }
+      }
     }
   ]
 }

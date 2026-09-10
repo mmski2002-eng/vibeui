@@ -2037,7 +2037,7 @@
       "name": "avatar-013",
       "type": "registry:component",
       "title": "Аватар со статусом",
-      "description": "Аватар с присутствием и ролью: точка сидит в вырезе маски, состояния различаются формой, а роль стоит в другом углу и другой фигурой.",
+      "description": "Аватар, который сразу говорит, на месте ли человек и какая у него роль. Подходит списку команды и чату. Меняются фото, статус и подпись роли.",
       "categories": [
         "avatar"
       ],
@@ -2135,7 +2135,7 @@
         ],
         "i18n": {
           "en": {
-            "description": "An avatar with presence and role: the dot sits in a cut-out mask, the states differ in shape, and the role stands in the opposite corner in a different figure.",
+            "description": "An avatar that says at a glance whether the person is around and what their role is. Suits a team list or a chat. Change the photo, the status and the role label.",
             "ai": {
               "summary": "An avatar with a presence state and an optional role badge. The dot lives in a mask cut-out so the gap stays even on any background; the states differ in shape rather than colour alone; the role goes to the opposite corner as a square badge so the two meanings do not merge. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -3148,7 +3148,7 @@
       "name": "avatar-020",
       "type": "registry:component",
       "title": "Аватар с непрочитанным",
-      "description": "Аватар со счётчиком непрочитанного: значок сидит в вырезе маски, больше девяноста девяти показывается как «99+», ноль не рисуется вовсе.",
+      "description": "Аватар со счётчиком непрочитанного: больше девяноста девяти показывается как «99+», ноль не рисуется вовсе. Меняются фото и число.",
       "categories": [
         "avatar"
       ],
@@ -3235,7 +3235,7 @@
         ],
         "i18n": {
           "en": {
-            "description": "An avatar with an unread counter: the badge sits in a mask cut-out, anything above ninety-nine shows as \"99+\", and zero is not drawn at all.",
+            "description": "An avatar with an unread counter: anything above ninety-nine shows as \"99+\" and zero is not drawn at all. Change the photo and the number.",
             "ai": {
               "summary": "An avatar with an unread counter: the badge lives in a mask cut-out, \"99+\" replaces an exact large number, and zero draws nothing. Zero dependencies, one file, no client JS. The theme comes from the surrounding color-scheme through light-dark().",
               "preserve": [

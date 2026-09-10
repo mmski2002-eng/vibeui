@@ -1,6 +1,8 @@
 import { getSessionCookie } from "better-auth/cookies"
 import { NextResponse, type NextRequest } from "next/server"
 
+import { PATH_HEADER } from "@/lib/session.shared"
+
 const LOCALE_COOKIE = "vibeui-locale"
 
 // Краулерам язык не подбираем: у страниц есть hreflang и sitemap, а увод
@@ -71,10 +73,20 @@ export function middleware(request: NextRequest) {
   // Префикс обязателен: он задан в конфигурации Better Auth, а по умолчанию
   // здесь ищется кука с чужим именем — и вошедшего разворачивало на вход.
   if (getSessionCookie(request, { cookiePrefix: "vibeui" })) {
-    return NextResponse.next()
+    // Адрес нужен серверным страницам: сессия могла умереть в базе, и тогда
+    // человека всё равно развернёт на вход — с сохранённым «куда он шёл».
+    const passthrough = new Headers(request.headers)
+    passthrough.set(PATH_HEADER, pathname + request.nextUrl.search)
+
+    return NextResponse.next({ request: { headers: passthrough } })
   }
 
-  const signin = new URL("/signin", request.url)
+  // Английский кабинет разворачивает на английский вход: иначе человек с
+  // /en/account попадал на русскую форму и терял язык на весь сценарий.
+  const english = pathname.startsWith("/en/")
+  const signin = new URL(english ? "/en/signin" : "/signin", request.url)
+
+  signin.searchParams.set("next", pathname + request.nextUrl.search)
 
   return NextResponse.redirect(signin)
 }
@@ -84,5 +96,5 @@ function isCrawler(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/account/:path*", "/"],
+  matcher: ["/account/:path*", "/en/account/:path*", "/"],
 }

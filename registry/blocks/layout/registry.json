@@ -1,0 +1,2267 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "layout-001",
+      "type": "registry:block",
+      "title": "Каркас вертикального лендинга",
+      "description": "Структура страницы-лендинга: слоты шапки и футера, контентная колонка с настраиваемой шириной и вертикальным ритмом секций. Обычная прокрутка документа, секции разной высоты — без принудительных полноэкранных блоков.",
+      "categories": ["layout"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-001/layout-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-001.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, клиентского JS нет. Владелец прокрутки — сам документ: каркас не создаёт внутренних scroll-областей и ничего не закрепляет. Слоты header и footer принимают ваши блоки, children — секции main; без children рендерится демонстрационный лендинг (hero, доказательства, сетка возможностей, двухколоночная деталь, графитовый финал). Ширина колонки и ритм — переменные --vibeui-layout-001-width/gap через атрибуты. Раскладка от container-запроса.",
+      "meta": {
+        "tags": ["layout", "landing", "page", "structure", "skeleton"],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 900"
+        },
+        "ai": {
+          "usage": "<Layout001 header={<YourNavbar />} footer={<YourFooter />}>\n  {/* секции страницы */}\n</Layout001>",
+          "summary": "Каркас вертикального лендинга: слоты шапки, секций и футера, ширина колонки narrow/normal/wide, спокойный или плотный ритм, необязательные разделители. Прокрутка — обычный документ, ничего не закрепляется. Демо-лендинг внутри показывает ритм: свободный hero, плотная сетка, двухколоночная деталь, графитовый финал.",
+          "preserve": [
+            "владельца прокрутки — документ: не оборачивать main во внутренний overflow и не добавлять второй scroll-root",
+            "вертикальный ритм через --vibeui-layout-001-gap: секции дышат одинаково, а не случайными отступами",
+            "чередование плотных и свободных участков — это идея каркаса; полноэкранная высота каждой секции не нужна",
+            "локальную палитру --vibeui-layout-001-* и не подменять её токенами вашей темы",
+            "мобильный порядок из DOM: колонки split складываются текстом вперёд",
+            "container-запрос вместо медиазапроса: раскладка считается от ширины блока"
+          ],
+          "adapt": [
+            "children — ваши секции вместо демонстрационных; header и footer — ваши шапка и подвал",
+            "width — ширина колонки: narrow 56rem, normal 72rem, wide 84rem",
+            "rhythm — calm или tight; dividers включает тонкие линии между секциями",
+            "accent — фирменный цвет действий и маркеров",
+            "фон страницы кладите вокруг каркаса (например, фоновый блок как обёртку) — сам каркас белый",
+            "если шапка sticky, задайте секциям scroll-margin-top на её высоту для честных якорей"
+          ],
+          "notes": [
+            "Это переносимый каркас с произвольным содержимым, а не шаблон одного бизнеса.",
+            "Демо-контент замените целиком: он показывает ритм, а не тексты вашего продукта.",
+            "Один основной каркас на страницу: не вкладывайте layout-каркасы друг в друга."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "width",
+            "label": "Ширина",
+            "type": "select",
+            "options": ["narrow", "normal", "wide"],
+            "default": "normal"
+          },
+          {
+            "prop": "rhythm",
+            "label": "Ритм",
+            "type": "select",
+            "options": ["calm", "tight"],
+            "default": "calm"
+          },
+          {
+            "prop": "dividers",
+            "label": "Разделители",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["width", "rhythm", "dividers", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Vertical Landing Skeleton",
+            "description": "A landing page structure: header and footer slots, a content column with configurable width and a vertical rhythm of sections. Plain document scrolling, sections of different heights — no forced full-screen blocks.",
+            "docs": "One file, zero dependencies, no client JS. The scroll owner is the document itself: the skeleton creates no inner scroll areas and pins nothing. The header and footer slots take your blocks, children are the main sections; without children a demo landing renders (hero, proof, a feature grid, a two-column detail, a graphite finale). Column width and rhythm are the --vibeui-layout-001-width/gap variables driven by attributes. The layout is a container query.",
+            "ai": {
+              "summary": "A vertical landing skeleton: header, sections and footer slots, a narrow/normal/wide column, a calm or tight rhythm, optional dividers. Scrolling is the plain document, nothing is pinned. The inner demo landing shows the rhythm: a free hero, a dense grid, a two-column detail, a graphite finale.",
+              "preserve": [
+                "the document as the scroll owner: do not wrap main into an inner overflow or add a second scroll root",
+                "the vertical rhythm through --vibeui-layout-001-gap: sections breathe evenly, not with random margins",
+                "the alternation of dense and free areas — that is the idea; full-screen height per section is not needed",
+                "the local --vibeui-layout-001-* palette — do not swap it for your theme tokens",
+                "the mobile order from the DOM: split columns stack text-first",
+                "the container query instead of a media query: the layout measures the block"
+              ],
+              "adapt": [
+                "children — your sections instead of the demo ones; header and footer — your navbar and footer",
+                "width — the column: narrow 56rem, normal 72rem, wide 84rem",
+                "rhythm — calm or tight; dividers adds thin rules between sections",
+                "accent — the brand color of actions and markers",
+                "page background goes around the skeleton (e.g. a background block as a wrapper) — the skeleton itself is white",
+                "with a sticky header give sections scroll-margin-top equal to its height for honest anchors"
+              ],
+              "notes": [
+                "This is a portable skeleton with arbitrary content, not a template of one business.",
+                "Replace the demo content entirely: it shows the rhythm, not your product's copy.",
+                "One main skeleton per page: do not nest layout skeletons."
+              ],
+              "usage": "<Layout001 header={<YourNavbar />} footer={<YourFooter />}>\n  {/* page sections */}\n</Layout001>"
+            },
+            "controls": {
+              "width": {
+                "label": "Width"
+              },
+              "rhythm": {
+                "label": "Rhythm"
+              },
+              "dividers": {
+                "label": "Dividers"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-002",
+      "type": "registry:block",
+      "title": "Каталог с фильтрами",
+      "description": "Структура страницы каталога: фильтры группами-раскрытиями, панель с количеством и сортировкой, сетка карточек и кнопка «Показать ещё» вместо бесконечной ленты. Состояния «загрузка» и «ничего не нашлось» встроены.",
+      "categories": ["layout"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-002/layout-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-002.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, клиентского JS нет. Фильтры — доступные <details>-группы с нативными checkbox; сортировка — нативный <select>; счётчик выдачи — role=\"status\". Три состояния демонстрируются пропом state: results, loading (скелетоны с пульсацией и prefers-reduced-motion), empty (пустая выдача с советом). На широкой раскладке фильтры sticky в пределах раздела. Настоящий поиск, URL-состояние фильтров и подгрузку реализует принимающий проект. Палитра --vibeui-layout-002-*.",
+      "meta": {
+        "tags": ["layout", "catalog", "filters", "grid", "shop", "listing"],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 800"
+        },
+        "ai": {
+          "usage": "<Layout002\n  heading=\"Каталог мебели\"\n  state=\"results\"\n  filters={[{ title: \"Категория\", options: [\"Кресла\", \"Столы\"] }]}\n/>",
+          "summary": "Каркас каталога: слева фильтры-раскрытия с checkbox, справа тулбар с количеством и сортировкой, сетка карточек auto-fill и «Показать ещё». Пустая выдача и загрузка — встроенные состояния (проп state), а не сюрприз. Всё нативное, без JS: логику фильтров подключает проект.",
+          "preserve": [
+            "«Показать ещё» или пагинацию вместо бесконечной ленты — футер страницы обязан оставаться достижимым",
+            "три состояния выдачи (results, loading, empty): удаление пустого состояния оставит пользователя перед молчащей сеткой",
+            "фильтры как <details> с нативными checkbox — доступный disclosure, не переписывать на div",
+            "счётчик выдачи с role=\"status\": смена числа должна озвучиваться",
+            "локальную палитру --vibeui-layout-002-* и не подменять её токенами вашей темы",
+            "container-запрос вместо медиазапроса: раскладка считается от ширины блока"
+          ],
+          "adapt": [
+            "filters и cards — ваши данные; children заменяет всю область выдачи собственной",
+            "state — переключение результатов, загрузки и пустой выдачи из логики проекта",
+            "heading, resultsLabel, sortOptions — тексты; синхронизацию сортировки и URL делает проект",
+            "accent — фирменный цвет флажков и наведения",
+            "фотографии карточек — замените градиентные заглушки реальными изображениями с фиксированным соотношением 4:3",
+            "на телефоне фильтры логично выносить в drawer вашего проекта — каркас отдаёт их обычным потоком сверху"
+          ],
+          "notes": [
+            "Возврат из карточки должен сохранять выдачу и позицию — это отвечает маршрутизация проекта.",
+            "Скелетоны пульсируют только при разрешённом движении: prefers-reduced-motion отключает анимацию.",
+            "Демо-состояние фильтров (первый отмеченный флажок) — иллюстрация, не логика."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "state",
+            "label": "Состояние",
+            "type": "select",
+            "options": ["results", "loading", "empty"],
+            "default": "results"
+          },
+          {
+            "prop": "heading",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Каталог мебели",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["state", "heading", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Catalog with Filters",
+            "description": "A catalog page structure: filters as disclosure groups, a toolbar with a count and sorting, a card grid and a Show More button instead of an endless feed. The loading and empty states are built in.",
+            "docs": "One file, zero dependencies, no client JS. Filters are accessible <details> groups with native checkboxes; sorting is a native <select>; the results counter is role=\"status\". Three states are demonstrated by the state prop: results, loading (pulsing skeletons honoring prefers-reduced-motion), empty (an empty result with advice). On the wide layout the filters are sticky within the section. Real search, URL filter state and loading are implemented by the host project. Palette --vibeui-layout-002-*.",
+            "ai": {
+              "summary": "A catalog skeleton: disclosure filters with checkboxes on the left, a toolbar with a count and sorting on the right, an auto-fill card grid and Show More. The empty and loading states are built in (the state prop), not a surprise. All native, no JS: the filter logic is wired by the project.",
+              "preserve": [
+                "Show More or pagination instead of an endless feed — the page footer must stay reachable",
+                "the three result states (results, loading, empty): removing the empty state leaves the user before a silent grid",
+                "the filters as <details> with native checkboxes — an accessible disclosure, do not rewrite onto divs",
+                "the results counter with role=\"status\": the changing number must be voiced",
+                "the local --vibeui-layout-002-* palette — do not swap it for your theme tokens",
+                "the container query instead of a media query: the layout measures the block"
+              ],
+              "adapt": [
+                "filters and cards — your data; children replaces the whole results area with your own",
+                "state — switch results, loading and empty from your project's logic",
+                "heading, resultsLabel, sortOptions — texts; sorting and URL sync is the project's job",
+                "accent — the brand color of checkboxes and hover",
+                "card photos — replace the gradient placeholders with real images at a fixed 4:3 ratio",
+                "on phones filters belong in your project's drawer — the skeleton renders them in flow on top"
+              ],
+              "notes": [
+                "Returning from an item must restore the results and the position — that is the project's routing.",
+                "Skeletons pulse only when motion is allowed: prefers-reduced-motion turns the animation off.",
+                "The demo filter state (the first checked box) is an illustration, not logic."
+              ],
+              "usage": "<Layout002\n  heading=\"Furniture catalog\"\n  state=\"results\"\n  filters={[{ title: \"Category\", options: [\"Chairs\", \"Tables\"] }]}\n/>"
+            },
+            "controls": {
+              "state": {
+                "label": "State"
+              },
+              "heading": {
+                "label": "Heading",
+                "default": "Furniture catalog"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "heading": "Furniture catalog",
+                "resultsLabel": "126 items",
+                "sortLabel": "Sort",
+                "sortOptions": [
+                  "Popular first",
+                  "Cheapest first",
+                  "Priciest first",
+                  "New in"
+                ],
+                "emptyTitle": "Nothing found",
+                "emptyText": "Try removing some filters or changing the query — the catalog is large.",
+                "moreLabel": "Show more",
+                "filters": [
+                  {
+                    "title": "Category",
+                    "options": ["Chairs", "Tables", "Lighting", "Storage"]
+                  },
+                  {
+                    "title": "Material",
+                    "options": ["Oak", "Ash", "Metal", "Textile"]
+                  },
+                  {
+                    "title": "Price",
+                    "options": ["Under $100", "$100–500", "Over $500"]
+                  }
+                ],
+                "cards": [
+                  {
+                    "title": "Sector chair",
+                    "note": "Oak, dark finish",
+                    "price": "$429"
+                  },
+                  {
+                    "title": "Plane table",
+                    "note": "Ash, 140 cm",
+                    "price": "$580"
+                  },
+                  {
+                    "title": "Ray lamp",
+                    "note": "Metal, brass",
+                    "price": "$124"
+                  },
+                  {
+                    "title": "Frame shelf",
+                    "note": "Metal, 5 shelves",
+                    "price": "$273"
+                  },
+                  {
+                    "title": "Arc chair",
+                    "note": "Textile, graphite",
+                    "price": "$365"
+                  },
+                  {
+                    "title": "Edge table",
+                    "note": "Oak, folding",
+                    "price": "$749"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-003",
+      "type": "registry:block",
+      "title": "Товар со закреплённым предложением",
+      "description": "Структура страницы товара: галерея крупных кадров идёт естественным потоком, панель с ценой, вариантами и покупкой закреплена sticky в пределах раздела. Ниже — характеристики и отзывы. Состояние «нет в наличии» встроено.",
+      "categories": ["layout"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-003/layout-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-003.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, клиентского JS нет. Панель предложения — position:sticky в пределах data-part=\"top\": ниже характеристик она не уезжает; в узкой колонке закрепление снимается и страница идёт одним потоком. Варианты — нативные radio в fieldset/legend, недоступный вариант — disabled с перечёркиванием. Состояние out переключает кнопку на «Нет в наличии». Оплату, корзину и реальную галерею подключает принимающий проект; кадры-заглушки — CSS-градиенты с aria-label. Палитра --vibeui-layout-003-*.",
+      "meta": {
+        "tags": ["layout", "product", "ecommerce", "sticky", "gallery"],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 820"
+        },
+        "ai": {
+          "usage": "<Layout003\n  title=\"Кресло «Сектор»\"\n  price=\"42 900 ₽\"\n  variants={[{ label: \"Дуб\", available: true }, { label: \"Орех\", available: false }]}\n  state=\"available\"\n/>",
+          "summary": "Каркас страницы товара: галерея слева обычным потоком, справа sticky-панель с названием, ценой, вариантами-radio и кнопкой покупки; закрепление действует только в пределах основного раздела. Ниже — характеристики dl-сеткой и отзывы. Состояния «в наличии» и «нет в наличии» встроены. Без JS.",
+          "preserve": [
+            "закрепление панели только в пределах верхнего раздела: под характеристиками она обязана остановиться, это и есть идея каркаса",
+            "снятие sticky в узкой колонке — на телефоне страница идёт одним потоком: описание, варианты, действие",
+            "варианты как нативные radio в fieldset/legend: недоступный вариант — disabled, а не спрятанный",
+            "видимое состояние «нет в наличии» вместо исчезающей кнопки",
+            "локальную палитру --vibeui-layout-003-* и не подменять её токенами вашей темы",
+            "container-запрос вместо медиазапроса: раскладка считается от ширины блока"
+          ],
+          "adapt": [
+            "title, price, oldPrice, lede, variants — данные товара из вашего проекта",
+            "state — available или out из реальных остатков",
+            "children — свои секции вместо демонстрационных характеристик и отзывов",
+            "кадры галереи — замените градиентные заглушки реальными фото с соотношением 4:3",
+            "обработчик кнопки покупки подключает проект: здесь она демонстрационная",
+            "accent — фирменный цвет кнопки, выбранного варианта и фокуса"
+          ],
+          "notes": [
+            "Если добавляете фиксированную нижнюю кнопку на телефоне, не дублируйте несколько закреплённых панелей сразу.",
+            "Демо не выдаёт себя за подключённый магазин: цена и остатки — пропсы.",
+            "При sticky-шапке сайта задайте панели top с учётом её высоты."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "state",
+            "label": "Наличие",
+            "type": "select",
+            "options": ["available", "out"],
+            "default": "available"
+          },
+          {
+            "prop": "title",
+            "label": "Название",
+            "type": "text",
+            "default": "Кресло «Сектор»",
+            "maxLength": 40
+          },
+          {
+            "prop": "price",
+            "label": "Цена",
+            "type": "text",
+            "default": "42 900 ₽",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["state", "title", "price", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Product with Sticky Offer",
+            "description": "A product page structure: a gallery of large frames flows naturally while the panel with the price, variants and purchase stays sticky within its section. Below — specs and reviews. The out-of-stock state is built in.",
+            "docs": "One file, zero dependencies, no client JS. The offer panel is position:sticky within data-part=\"top\": it never travels below the specs; in a narrow column the pinning is dropped and the page becomes one flow. Variants are native radios in fieldset/legend, an unavailable variant is disabled and struck through. The out state switches the button to Out of Stock. Payment, cart and the real gallery are wired by the host project; the placeholder frames are CSS gradients with aria-label. Palette --vibeui-layout-003-*.",
+            "ai": {
+              "summary": "A product page skeleton: the gallery flows on the left, a sticky panel with the title, price, radio variants and the buy button on the right; pinning works only within the main section. Below — specs as a dl grid and reviews. The available and out-of-stock states are built in. No JS.",
+              "preserve": [
+                "the panel pinned only within the top section: below the specs it must stop, that is the idea of the skeleton",
+                "dropping sticky in a narrow column — on the phone the page is one flow: description, variants, action",
+                "variants as native radios in fieldset/legend: an unavailable variant is disabled, not hidden",
+                "a visible out-of-stock state instead of a disappearing button",
+                "the local --vibeui-layout-003-* palette — do not swap it for your theme tokens",
+                "the container query instead of a media query: the layout measures the block"
+              ],
+              "adapt": [
+                "title, price, oldPrice, lede, variants — product data from your project",
+                "state — available or out from real stock",
+                "children — your sections instead of the demo specs and reviews",
+                "gallery frames — replace the gradient placeholders with real 4:3 photos",
+                "the buy button handler is wired by the project: here it is a demo",
+                "accent — the brand color of the button, the selected variant and focus"
+              ],
+              "notes": [
+                "If you add a fixed bottom button on the phone, do not stack several pinned panels at once.",
+                "The demo does not pretend to be a wired shop: price and stock are props.",
+                "With a sticky site header give the panel a top that accounts for its height."
+              ],
+              "usage": "<Layout003\n  title=\"Sector chair\"\n  price=\"$429\"\n  variants={[{ label: \"Oak\", available: true }, { label: \"Walnut\", available: false }]}\n  state=\"available\"\n/>"
+            },
+            "controls": {
+              "state": {
+                "label": "Stock"
+              },
+              "title": {
+                "label": "Title",
+                "default": "Sector chair"
+              },
+              "price": {
+                "label": "Price",
+                "default": "$429"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Sector chair",
+                "price": "$429",
+                "oldPrice": "$499",
+                "lede": "Solid oak, dark finish, removable cushion. Assembles without tools in ten minutes.",
+                "variantsLabel": "Material",
+                "variants": [
+                  {
+                    "label": "Oak",
+                    "available": true
+                  },
+                  {
+                    "label": "Ash",
+                    "available": true
+                  },
+                  {
+                    "label": "Walnut",
+                    "available": false
+                  }
+                ],
+                "actionLabel": "Add to cart",
+                "outLabel": "Out of stock",
+                "noteLabel": "Delivery 3–5 days · 30-day returns"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-004",
+      "type": "registry:block",
+      "title": "Документация с деревом и оглавлением",
+      "description": "Трёхколоночная структура документации: дерево разделов слева, статья в центре, оглавление страницы справа. Боковые колонки закреплены, чтение идёт обычным потоком; в узкой колонке дерево и оглавление складываются в раскрытия.",
+      "categories": ["layout"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-004/layout-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-004.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, клиентского JS нет. Владелец прокрутки — документ; боковые колонки position:sticky. На узкой ширине дерево и оглавление — открытые по умолчанию <details> над статьёй, на широкой их summary становится простым заголовком (pointer-events:none). Активные пункты — aria-current из данных; связь с реальной прокруткой добавляет scrollspy принимающего проекта. Демо-статья показывает типографику: колонка 46rem, callout с оранжевой линией, тёмный код-блок. Палитра --vibeui-layout-004-*.",
+      "meta": {
+        "tags": [
+          "layout",
+          "docs",
+          "documentation",
+          "sidebar",
+          "toc",
+          "knowledge-base"
+        ],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 720"
+        },
+        "ai": {
+          "usage": "<Layout004\n  tree={[{ title: \"Начало\", links: [{ label: \"Установка\", href: \"/install\", current: true }] }]}\n  toc={[{ label: \"Требования\", href: \"#requirements\" }]}\n>\n  {/* статья */}\n</Layout004>",
+          "summary": "Каркас документации: слева дерево разделов группами, в центре статья с типографикой чтения (колонка 46rem, callout, код-блок), справа оглавление страницы. Боковые колонки sticky; на узкой ширине превращаются в раскрытия над текстом. Активная глава приходит данными. Без JS.",
+          "preserve": [
+            "один scroll-root — документ: боковые колонки sticky, а не собственные прокручиваемые области без нужды",
+            "ширину колонки чтения около 46rem — строка не шире 75 знаков, это условие комфортной кириллицы",
+            "порядок в узкой колонке: дерево, статья, оглавление — чтение остаётся обычным потоком",
+            "активные пункты через aria-current — разметка и доступность обязаны совпадать",
+            "локальную палитру --vibeui-layout-004-* и не подменять её токенами вашей темы",
+            "container-запрос вместо медиазапроса: раскладка считается от ширины блока"
+          ],
+          "adapt": [
+            "tree и toc — ваша структура; children — сама статья вместо демонстрационной",
+            "активную главу (current) обновляет ваша навигация; для подсветки от прокрутки подключите scrollspy проекта",
+            "при sticky-шапке сайта задайте боковым колонкам top с учётом её высоты и статьям scroll-margin-top",
+            "accent — цвет активных маркеров и callout",
+            "поиск по документации живёт в шапке документации, каркас его не дублирует"
+          ],
+          "notes": [
+            "После выбора главы в узкой раскладке <details> остаётся открытым — закрытие по переходу делает проект.",
+            "Оглавление статьи не смешивается с деревом всего сайта — это два разных списка.",
+            "Демо-статью замените целиком: она показывает типографику, а не содержание."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "treeLabel",
+            "label": "Подпись дерева",
+            "type": "text",
+            "default": "Разделы",
+            "maxLength": 24
+          },
+          {
+            "prop": "tocLabel",
+            "label": "Подпись оглавления",
+            "type": "text",
+            "default": "На этой странице",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["treeLabel", "tocLabel", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Docs with Tree and TOC",
+            "description": "A three-column documentation structure: a section tree on the left, the article in the center, the page TOC on the right. The side columns are pinned, reading flows normally; in a narrow column the tree and the TOC fold into disclosures.",
+            "docs": "One file, zero dependencies, no client JS. The scroll owner is the document; the side columns are position:sticky. On narrow widths the tree and the TOC are open-by-default <details> above the article; on wide ones their summary becomes a plain heading (pointer-events:none). Active items are aria-current from data; wiring to real scrolling is added by the host project's scrollspy. The demo article shows the reading typography: a 46rem column, a callout with an orange rule, a dark code block. Palette --vibeui-layout-004-*.",
+            "ai": {
+              "summary": "A documentation skeleton: a grouped section tree on the left, an article with reading typography in the center (a 46rem column, a callout, a code block), the page TOC on the right. The side columns are sticky; on narrow widths they become disclosures above the text. The active chapter arrives as data. No JS.",
+              "preserve": [
+                "one scroll root — the document: the side columns are sticky, not needless scroll areas of their own",
+                "the reading column around 46rem — a line no wider than 75 characters is what makes Cyrillic comfortable",
+                "the narrow-column order: tree, article, TOC — reading stays a plain flow",
+                "active items through aria-current — markup and accessibility must agree",
+                "the local --vibeui-layout-004-* palette — do not swap it for your theme tokens",
+                "the container query instead of a media query: the layout measures the block"
+              ],
+              "adapt": [
+                "tree and toc — your structure; children — the article itself instead of the demo one",
+                "the active chapter (current) is updated by your navigation; for scroll-driven highlighting wire your project's scrollspy",
+                "with a sticky site header give the side columns a top accounting for its height and the articles scroll-margin-top",
+                "accent — the color of active markers and the callout",
+                "docs search lives in the docs header, the skeleton does not duplicate it"
+              ],
+              "notes": [
+                "After picking a chapter in the narrow layout the <details> stays open — closing on navigation is the project's job.",
+                "The page TOC does not mix with the site-wide tree — they are two different lists.",
+                "Replace the demo article entirely: it shows the typography, not the content."
+              ],
+              "usage": "<Layout004\n  tree={[{ title: \"Start\", links: [{ label: \"Install\", href: \"/install\", current: true }] }]}\n  toc={[{ label: \"Requirements\", href: \"#requirements\" }]}\n>\n  {/* the article */}\n</Layout004>"
+            },
+            "controls": {
+              "treeLabel": {
+                "label": "Tree label",
+                "default": "Sections"
+              },
+              "tocLabel": {
+                "label": "TOC label",
+                "default": "On this page"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "treeLabel": "Sections",
+                "tocLabel": "On this page",
+                "tree": [
+                  {
+                    "title": "Start",
+                    "links": [
+                      {
+                        "label": "Install",
+                        "href": "#install"
+                      },
+                      {
+                        "label": "Quickstart",
+                        "href": "#quickstart",
+                        "current": true
+                      },
+                      {
+                        "label": "Configuration",
+                        "href": "#config"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Basics",
+                    "links": [
+                      {
+                        "label": "Routes",
+                        "href": "#routes"
+                      },
+                      {
+                        "label": "Data",
+                        "href": "#data"
+                      },
+                      {
+                        "label": "Deploy",
+                        "href": "#deploy"
+                      }
+                    ]
+                  }
+                ],
+                "toc": [
+                  {
+                    "label": "Requirements",
+                    "href": "#requirements",
+                    "current": true
+                  },
+                  {
+                    "label": "First project",
+                    "href": "#first-project"
+                  },
+                  {
+                    "label": "File structure",
+                    "href": "#structure"
+                  },
+                  {
+                    "label": "What's next",
+                    "href": "#next"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-005",
+      "type": "registry:block",
+      "title": "Кабинет с боковой панелью",
+      "description": "Структура рабочего пространства: графитовая боковая навигация, верхняя контекстная строка с действием и рабочая область с карточками показателей и таблицей. Для кабинета, CRM, аналитики и управления магазином.",
+      "categories": ["layout"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-005/layout-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-005.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, клиентского JS нет. Владелец прокрутки по умолчанию — документ: блок переносим и не навязывает 100vh. Если приложению нужна фиксированная оболочка, оно задаёт блоку высоту снаружи (height:100dvh на родителе) — тогда прокручивается рабочая область data-part=\"work\"; этот выбор надо явно указать и в Copy for AI принимающего проекта. Боковая панель sticky, на узкой ширине превращается в верхнюю полосу с горизонтальным рядом разделов. Таблица живёт в панели с собственным overflow-x — колонки не сжимаются до нечитаемых. Палитра --vibeui-layout-005-*.",
+      "meta": {
+        "tags": ["layout", "dashboard", "workspace", "sidebar", "app", "admin"],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 720"
+        },
+        "ai": {
+          "usage": "<Layout005\n  appName=\"Пульт\"\n  nav={[{ label: \"Обзор\", href: \"/overview\", current: true }]}\n  screenTitle=\"Обзор\"\n>\n  {/* рабочая область */}\n</Layout005>",
+          "summary": "Каркас кабинета: графитовая боковая панель со знаком приложения и навигацией, верхняя строка с заголовком экрана и главным действием, рабочая область с сеткой показателей и таблицей в прокручиваемой панели. Владелец прокрутки — документ; фиксированную оболочку задаёт приложение высотой снаружи. Без JS.",
+          "preserve": [
+            "одного владельца прокрутки и явное решение о нём: по умолчанию документ; фиксированная оболочка — только высотой снаружи, о чём должен знать весь остальной интерфейс",
+            "горизонтальную прокрутку таблицы внутри её панели (overflow-x) — колонки не сжимаются до нечитаемых",
+            "боковую панель как единственную основную навигацию приложения — не добавлять вторую верхнюю",
+            "активный раздел через aria-current=\"page\" с оранжевым маркером",
+            "локальную палитру --vibeui-layout-005-* и не подменять её токенами вашей темы",
+            "container-запрос вместо медиазапроса: раскладка считается от ширины блока"
+          ],
+          "adapt": [
+            "nav, appName, screenTitle, actionLabel — структура вашего приложения",
+            "children — своя рабочая область вместо демонстрационных показателей и таблицы",
+            "маршруты, пользователь и уведомления передаются извне; auth и backend не входят в компонент",
+            "tone — светлая или тёмная рабочая область; accent — фирменный цвет",
+            "на телефоне боковая панель становится верхней полосой — если нужен drawer, его добавляет проект",
+            "шапку рабочего пространства (переключатель организации, поиск) ставьте над каркасом отдельным блоком"
+          ],
+          "notes": [
+            "Демо-цифры и заказы — иллюстрация, не подключённые данные.",
+            "Не вкладывайте второй такой каркас внутрь рабочей области.",
+            "При фиксированной оболочке проверьте, что модальные панели и тосты привязаны к окну, а не к прокручиваемому контейнеру."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "appName",
+            "label": "Приложение",
+            "type": "text",
+            "default": "Пульт",
+            "maxLength": 24
+          },
+          {
+            "prop": "screenTitle",
+            "label": "Экран",
+            "type": "text",
+            "default": "Обзор",
+            "maxLength": 28
+          },
+          {
+            "prop": "tone",
+            "label": "Поверхность",
+            "type": "select",
+            "options": ["light", "dark"],
+            "default": "light"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["appName", "screenTitle", "tone", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Workspace with Sidebar",
+            "description": "A workspace structure: graphite side navigation, a top context bar with an action and a work area with stat cards and a table. For dashboards, CRMs, analytics and store management.",
+            "docs": "One file, zero dependencies, no client JS. The default scroll owner is the document: the block is portable and does not impose 100vh. If the app needs a fixed shell, it sets the block's height from outside (height:100dvh on the parent) — then the data-part=\"work\" area scrolls; state this choice explicitly in the host project's Copy for AI too. The sidebar is sticky and turns into a top strip with a horizontal section row on narrow widths. The table lives in a panel with its own overflow-x — columns never squeeze into unreadable. Palette --vibeui-layout-005-*.",
+            "ai": {
+              "summary": "A workspace skeleton: a graphite sidebar with the app mark and navigation, a top bar with the screen title and the primary action, a work area with a stat grid and a table in a scrollable panel. The scroll owner is the document; a fixed shell is set by the app through outside height. No JS.",
+              "preserve": [
+                "one scroll owner and an explicit decision about it: the document by default; a fixed shell only through outside height, which the rest of the UI must know about",
+                "the table's horizontal scrolling inside its panel (overflow-x) — columns never squeeze into unreadable",
+                "the sidebar as the app's single main navigation — do not add a second top one",
+                "the active section through aria-current=\"page\" with the orange marker",
+                "the local --vibeui-layout-005-* palette — do not swap it for your theme tokens",
+                "the container query instead of a media query: the layout measures the block"
+              ],
+              "adapt": [
+                "nav, appName, screenTitle, actionLabel — your application's structure",
+                "children — your own work area instead of the demo stats and table",
+                "routes, the user and notifications come from outside; auth and backend are not part of the component",
+                "tone — the light or dark work area; accent — the brand color",
+                "on phones the sidebar becomes a top strip — if you need a drawer, the project adds it",
+                "the workspace header (org switcher, search) goes above the skeleton as a separate block"
+              ],
+              "notes": [
+                "The demo numbers and orders are an illustration, not wired data.",
+                "Do not nest another such skeleton inside the work area.",
+                "With a fixed shell check that modals and toasts anchor to the window, not the scrolling container."
+              ],
+              "usage": "<Layout005\n  appName=\"Deck\"\n  nav={[{ label: \"Overview\", href: \"/overview\", current: true }]}\n  screenTitle=\"Overview\"\n>\n  {/* the work area */}\n</Layout005>"
+            },
+            "controls": {
+              "appName": {
+                "label": "App",
+                "default": "Deck"
+              },
+              "screenTitle": {
+                "label": "Screen",
+                "default": "Overview"
+              },
+              "tone": {
+                "label": "Surface"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "appName": "Deck",
+                "screenTitle": "Overview",
+                "actionLabel": "New order",
+                "navLabel": "App sections",
+                "nav": [
+                  {
+                    "label": "Overview",
+                    "href": "#overview",
+                    "current": true
+                  },
+                  {
+                    "label": "Orders",
+                    "href": "#orders"
+                  },
+                  {
+                    "label": "Customers",
+                    "href": "#customers"
+                  },
+                  {
+                    "label": "Reports",
+                    "href": "#reports"
+                  },
+                  {
+                    "label": "Settings",
+                    "href": "#settings"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-006",
+      "type": "registry:block",
+      "title": "Редакционная сетка",
+      "description": "Структура медиа-страницы: крупный ведущий материал, асимметричные карточки и узкая колонка коротких заметок с тонкими линейками. Ритм создаётся размером материалов, порядок чтения совпадает с DOM на любой ширине.",
+      "categories": ["layout"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-006/layout-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-006.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, клиентского JS нет. Широкая раскладка — CSS Grid 7/5/16rem: ведущий материал занимает две строки первой колонки, заметки — всю правую. В узкой колонке сетка складывается в один столбец в порядке DOM: ведущий материал первый. Фото — CSS-заглушки с пропорцией 16:9; реальные изображения передаёт проект. Обычная вертикальная прокрутка, без анимации карточек. Палитра --vibeui-layout-006-*.",
+      "meta": {
+        "tags": ["layout", "editorial", "magazine", "news", "grid", "media"],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 760"
+        },
+        "ai": {
+          "usage": "<Layout006\n  heading=\"Журнал\"\n  lead={{ title: \"…\", lede: \"…\", tag: \"Главное\", note: \"\", href: \"/lead\" }}\n  articles={[{ title: \"…\", note: \"…\", tag: \"Практика\", href: \"/a1\" }]}\n/>",
+          "summary": "Редакционная сетка: ведущий материал на две строки, две карточки поменьше и колонка коротких заметок под чёрной линейкой. Ритм — размерами, не анимацией; на телефоне один столбец в порядке чтения. Заглушки фото с фиксированной пропорцией. Без JS.",
+          "preserve": [
+            "иерархию размеров: один ведущий материал, карточки второго плана, заметки третьего — не выравнивать всё в одинаковые карточки",
+            "порядок чтения из DOM: ведущий материал первый на любой ширине, клавиатура идёт по смыслу",
+            "тонкие чёрные линейки и оранжевые рубрики как редакционный характер",
+            "фиксированную пропорцию фото 16:9 — разнобой пропорций рушит сетку",
+            "локальную палитру --vibeui-layout-006-* и container-запрос вместо медиазапроса"
+          ],
+          "adapt": [
+            "lead, articles и колонка заметок — ваши материалы; children заменяет сетку целиком",
+            "заглушки фото замените реальными изображениями с той же пропорцией",
+            "heading — название раздела; asideTitle — подпись колонки заметок",
+            "accent — цвет рубрик и наведения",
+            "пагинацию и подгрузку следующих материалов добавляет проект ниже сетки"
+          ],
+          "notes": [
+            "Не переставляйте элементы визуально против DOM — порядок фокуса станет неожиданным.",
+            "Требовать поддержку экспериментального masonry не нужно: сетка обычная.",
+            "Демо-материалы — иллюстрация, не подключённые данные."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "heading",
+            "label": "Раздел",
+            "type": "text",
+            "default": "Журнал",
+            "maxLength": 32
+          },
+          {
+            "prop": "asideTitle",
+            "label": "Колонка",
+            "type": "text",
+            "default": "Коротко",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["heading", "asideTitle", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Editorial Grid",
+            "description": "A media page structure: a large lead story, asymmetric cards and a narrow column of short briefs under thin rules. The rhythm comes from story sizes, the reading order matches the DOM at any width.",
+            "docs": "One file, zero dependencies, no client JS. The wide layout is a CSS Grid of 7/5/16rem: the lead story spans two rows of the first column, the briefs take the whole right one. In a narrow column the grid stacks into one column in DOM order: the lead story first. Photos are CSS placeholders at 16:9; real images come from the project. Plain vertical scrolling, no card animation. Palette --vibeui-layout-006-*.",
+            "ai": {
+              "summary": "An editorial grid: a two-row lead story, two smaller cards and a column of short briefs under a black rule. Rhythm by size, not animation; one column in reading order on phones. Photo placeholders at a fixed ratio. No JS.",
+              "preserve": [
+                "the size hierarchy: one lead story, second-tier cards, third-tier briefs — do not flatten everything into equal cards",
+                "the reading order from the DOM: the lead story first at any width, the keyboard follows the meaning",
+                "the thin black rules and orange section tags as the editorial character",
+                "the fixed 16:9 photo ratio — mixed ratios wreck the grid",
+                "the local --vibeui-layout-006-* palette and the container query instead of a media query"
+              ],
+              "adapt": [
+                "lead, articles and the brief column — your stories; children replaces the whole grid",
+                "replace the photo placeholders with real images at the same ratio",
+                "heading — the section name; asideTitle — the brief column label",
+                "accent — the tag and hover color",
+                "pagination and loading more stories is added by the project below the grid"
+              ],
+              "notes": [
+                "Do not reorder elements visually against the DOM — the focus order becomes surprising.",
+                "No need to require experimental masonry: the grid is plain.",
+                "The demo stories are an illustration, not wired data."
+              ],
+              "usage": "<Layout006\n  heading=\"Magazine\"\n  lead={{ title: \"…\", lede: \"…\", tag: \"Featured\", note: \"\", href: \"/lead\" }}\n  articles={[{ title: \"…\", note: \"…\", tag: \"Practice\", href: \"/a1\" }]}\n/>"
+            },
+            "controls": {
+              "heading": {
+                "label": "Section",
+                "default": "Magazine"
+              },
+              "asideTitle": {
+                "label": "Column",
+                "default": "In brief"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-007",
+      "type": "registry:block",
+      "title": "Асимметричное портфолио",
+      "description": "Структура портфолио студии, дизайнера или фотографа: крупные работы разного масштаба — на всю строку, вертикальные, обычные — с короткими подписями и свободными полями. На телефоне складывается в удобную ленту.",
+      "categories": ["layout"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-007/layout-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-007.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, клиентского JS нет. Масштаб работы задаётся полем size: wide растягивается на всю строку (grid-column 1/-1), tall получает пропорцию 3:4, обычная — 4:3. Кадры — CSS-заглушки трёх тонов (look); реальные изображения передаёт проект с теми же пропорциями. Наведение — оранжевый контур кадра и подкраска названия; появления и параллакса нет. DOM-порядок совпадает с чтением. Палитра --vibeui-layout-007-*.",
+      "meta": {
+        "tags": ["layout", "portfolio", "gallery", "studio", "works", "grid"],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 860"
+        },
+        "ai": {
+          "usage": "<Layout007\n  heading=\"Студия «Русло»\"\n  works={[{ title: \"Дом у озера\", note: \"2026\", href: \"/w1\", size: \"wide\", look: \"warm\" }]}\n/>",
+          "summary": "Асимметричное портфолио: сетка работ с тремя масштабами кадра (wide, tall, обычный), короткими подписями и свободными полями. Ритм создают размеры, наведение — тонкий оранжевый контур. Заглушки кадров тремя тонами; на телефоне — лента в порядке DOM. Без JS.",
+          "preserve": [
+            "три масштаба кадра как источник ритма — выравнивание всех работ в одинаковые квадраты убивает идею",
+            "свободные поля и воздух: портфолио дышит, не сжимайте сетку до плотного каталога",
+            "короткие подписи из названия и одной строки контекста — без абзацев под каждой работой",
+            "предсказуемый DOM-порядок: лента на телефоне идёт как чтение",
+            "локальную палитру --vibeui-layout-007-* и container-запрос вместо медиазапроса"
+          ],
+          "adapt": [
+            "works — ваши проекты: title, note, href, size, look; children заменяет сетку целиком",
+            "заглушки кадров замените реальными изображениями с теми же пропорциями (21:9, 3:4, 4:3)",
+            "heading и intro — представление студии",
+            "accent — цвет наведения и фокуса",
+            "боковую или верхнюю навигацию выбирайте одну — этот каркас с ней не спорит"
+          ],
+          "notes": [
+            "Переход на страницу кейса — обычная ссылка; связанные переходы добавляет проект отдельно.",
+            "Мягкие появления работ допустимы, но добавляйте их в проекте с prefers-reduced-motion.",
+            "Демо-работы — иллюстрация; замените целиком."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "heading",
+            "label": "Название",
+            "type": "text",
+            "default": "Студия «Русло»",
+            "maxLength": 32
+          },
+          {
+            "prop": "intro",
+            "label": "Представление",
+            "type": "text",
+            "default": "Проектируем дома, интерьеры и айдентику. Показываем немного — только то, за что отвечаем от эскиза до реализации.",
+            "maxLength": 160
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["heading", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Asymmetric Portfolio",
+            "description": "A portfolio structure for a studio, designer or photographer: large works at different scales — full-row, vertical, regular — with short captions and generous margins. On phones it stacks into a comfortable feed.",
+            "docs": "One file, zero dependencies, no client JS. The work scale is the size field: wide spans the full row (grid-column 1/-1), tall gets a 3:4 ratio, regular — 4:3. Frames are CSS placeholders in three tones (look); real images come from the project at the same ratios. Hover is an orange frame outline and title tint; no reveals or parallax. The DOM order matches reading. Palette --vibeui-layout-007-*.",
+            "ai": {
+              "summary": "An asymmetric portfolio: a grid of works with three frame scales (wide, tall, regular), short captions and generous margins. Sizes create the rhythm, hover is a thin orange outline. Placeholder frames in three tones; a DOM-order feed on phones. No JS.",
+              "preserve": [
+                "the three frame scales as the source of rhythm — flattening all works into equal squares kills the idea",
+                "the free margins and air: a portfolio breathes, do not squeeze the grid into a dense catalog",
+                "short captions of a title and one context line — no paragraphs under each work",
+                "the predictable DOM order: the phone feed reads like text",
+                "the local --vibeui-layout-007-* palette and the container query instead of a media query"
+              ],
+              "adapt": [
+                "works — your projects: title, note, href, size, look; children replaces the grid entirely",
+                "replace the placeholder frames with real images at the same ratios (21:9, 3:4, 4:3)",
+                "heading and intro — the studio introduction",
+                "accent — the hover and focus color",
+                "pick one navigation — side or top — this skeleton does not fight it"
+              ],
+              "notes": [
+                "Opening a case page is a plain link; shared-element transitions are added by the project separately.",
+                "Soft reveals are fine, but add them in the project with prefers-reduced-motion.",
+                "The demo works are an illustration; replace them entirely."
+              ],
+              "usage": "<Layout007\n  heading=\"Ruslo Studio\"\n  works={[{ title: \"Lake house\", note: \"2026\", href: \"/w1\", size: \"wide\", look: \"warm\" }]}\n/>"
+            },
+            "controls": {
+              "heading": {
+                "label": "Name",
+                "default": "Ruslo Studio"
+              },
+              "intro": {
+                "label": "Intro",
+                "default": "We design houses, interiors and identities. We show little — only what we answer for from sketch to build."
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-008",
+      "type": "registry:block",
+      "title": "Закреплённое описание и длинная колонка",
+      "description": "Структура «предложение + детали»: краткая колонка с названием, ценой и действием держится sticky в пределах раздела, длинная колонка с фото и условиями идёт обычным потоком. Для услуг, отеля, консультанта, программ.",
+      "categories": ["layout"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-008/layout-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-008.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, клиентского JS нет. Закрепление — position:sticky у краткой колонки в пределах общего flex-раздела: если колонка выше окна, sticky не срабатывает — это штатное поведение, а не поломка. Сторона выбирается пропом side. В узкой колонке (порог 54rem) закрепление снимается: описание, детали и действие идут одним потоком без постоянной нижней плашки. Фото — CSS-заглушки 3:2. Палитра --vibeui-layout-008-*.",
+      "meta": {
+        "tags": ["layout", "sticky", "offer", "service", "hotel", "two-column"],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 720"
+        },
+        "ai": {
+          "usage": "<Layout008\n  title=\"Номер «Панорама»\"\n  price=\"12 800 ₽ / ночь\"\n  actionHref=\"/book\"\n  side=\"left\"\n>\n  {/* длинная колонка деталей */}\n</Layout008>",
+          "summary": "Каркас «описание + детали»: слева sticky-колонка с заголовком, ценой, кратким описанием и оранжевым действием, справа длинный поток фото, списков условий и секций. Сторона настраивается, на телефоне всё складывается в один поток. Без JS.",
+          "preserve": [
+            "закрепление краткой колонки только в пределах раздела — под концом деталей она останавливается",
+            "снятие sticky в узкой колонке: на телефоне последовательный поток, а не две узкие колонки",
+            "доступность действия без постоянной нижней плашки — кнопка живёт в потоке описания",
+            "списки условий как dl-подобные строки с линейками — таблица тут избыточна",
+            "локальную палитру --vibeui-layout-008-* и container-запрос вместо медиазапроса"
+          ],
+          "adapt": [
+            "title, price, lede, actionLabel, noteLabel — ваше предложение",
+            "children — длинная колонка: свои секции, фото с пропорцией 3:2, формы",
+            "side — сторона краткой колонки",
+            "при sticky-шапке сайта увеличьте top закрепления на её высоту",
+            "accent — цвет действия и фокуса"
+          ],
+          "notes": [
+            "Если краткая колонка выше окна, закрепление отключится само — не добавляйте внутренний скролл.",
+            "Бронирование и оплата не входят в каркас: кнопка ведёт по ссылке проекта.",
+            "Демо-контент замените целиком."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Название",
+            "type": "text",
+            "default": "Номер «Панорама»",
+            "maxLength": 40
+          },
+          {
+            "prop": "price",
+            "label": "Цена",
+            "type": "text",
+            "default": "12 800 ₽ / ночь",
+            "maxLength": 24
+          },
+          {
+            "prop": "side",
+            "label": "Сторона",
+            "type": "select",
+            "options": ["left", "right"],
+            "default": "left"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["title", "price", "side", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Sticky Summary and Long Column",
+            "description": "An offer-plus-details structure: a brief column with the title, price and action stays sticky within the section while a long column with photos and terms flows normally. For services, hotels, consultants, programs.",
+            "docs": "One file, zero dependencies, no client JS. Pinning is position:sticky on the brief column within the shared flex section: if the column is taller than the window, sticky does not engage — standard behavior, not a bug. The side is the side prop. In a narrow column (54rem threshold) pinning is dropped: description, details and the action go in one flow without a persistent bottom bar. Photos are 3:2 CSS placeholders. Palette --vibeui-layout-008-*.",
+            "ai": {
+              "summary": "An offer-and-details skeleton: a sticky column with the title, price, brief description and an orange action on the left, a long flow of photos, term lists and sections on the right. The side is configurable; on phones everything stacks into one flow. No JS.",
+              "preserve": [
+                "the brief column pinned only within the section — it stops at the end of the details",
+                "dropping sticky in a narrow column: a sequential flow on phones, not two narrow columns",
+                "the action reachable without a persistent bottom bar — the button lives in the description flow",
+                "the term lists as dl-like rows with rules — a table is excessive here",
+                "the local --vibeui-layout-008-* palette and the container query instead of a media query"
+              ],
+              "adapt": [
+                "title, price, lede, actionLabel, noteLabel — your offer",
+                "children — the long column: your sections, 3:2 photos, forms",
+                "side — the brief column's side",
+                "with a sticky site header increase the pin's top by its height",
+                "accent — the action and focus color"
+              ],
+              "notes": [
+                "If the brief column is taller than the window, pinning turns off by itself — do not add inner scrolling.",
+                "Booking and payment are not part of the skeleton: the button follows the project's link.",
+                "Replace the demo content entirely."
+              ],
+              "usage": "<Layout008\n  title=\"Panorama room\"\n  price=\"$128 / night\"\n  actionHref=\"/book\"\n  side=\"left\"\n>\n  {/* the long details column */}\n</Layout008>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Panorama room"
+              },
+              "price": {
+                "label": "Price",
+                "default": "$128 / night"
+              },
+              "side": {
+                "label": "Side"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-009",
+      "type": "registry:block",
+      "title": "Горизонтальная галерея",
+      "description": "Лента карточек с нативной горизонтальной прокруткой внутри обычной страницы: виден край следующей карточки, мягкий scroll snap, колесо мыши не перехватывается. Для портфолио, путешествий, магазина и медиа.",
+      "categories": ["layout"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-009/layout-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-009.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, клиентского JS нет. Лента — обычный overflow-x:auto с scroll-snap-type:x proximity (включается пропом snap) и тонкой нативной полосой прокрутки. Контейнер фокусируем (tabindex=0, role=group с подписью) — клавиатурная прокрутка стрелками работает нативно; каждая карточка — обычная ссылка, достижимая Tab. Ссылка «Все проекты» дублирует доступ к содержимому без жеста. Кнопки-стрелки при желании добавляет проект маленьким обработчиком scrollBy. Палитра --vibeui-layout-009-*.",
+      "meta": {
+        "tags": [
+          "layout",
+          "carousel",
+          "horizontal",
+          "scroll",
+          "gallery",
+          "rail"
+        ],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 460"
+        },
+        "ai": {
+          "usage": "<Layout009\n  heading=\"Свежие проекты\"\n  cards={[{ title: \"Дом у озера\", note: \"2026\", href: \"/c1\", look: \"warm\" }]}\n  snap\n/>",
+          "summary": "Горизонтальная лента внутри вертикальной страницы: нативный overflow-x, мягкий scroll snap, видимый край следующей карточки, фокусируемый контейнер для клавиатурной прокрутки и дублирующая ссылка «Все проекты». Никакого перехвата колеса и глобального закрепления. Без JS.",
+          "preserve": [
+            "нативную горизонтальную прокрутку: колесо мыши по вертикали не переназначается глобально",
+            "видимый край следующей карточки — пользователь должен видеть, что контент продолжается",
+            "фокусируемость ленты (tabindex, role, подпись) и достижимость каждой карточки клавишей Tab",
+            "дублирующую ссылку «Все …» — содержимое доступно и без жеста",
+            "scroll-snap proximity, а не mandatory: мягкое притяжение не мешает свободному листанию",
+            "локальную палитру --vibeui-layout-009-* и container-запрос вместо медиазапроса"
+          ],
+          "adapt": [
+            "heading, lede и allLabel — тексты секции; cards — ваши карточки; children заменяет содержимое ленты",
+            "snap — выключается, если притяжение мешает",
+            "ширина карточки — переменная --vibeui-layout-009-card через style",
+            "кнопки-стрелки добавляйте в проекте маленьким обработчиком scrollBy, если нужны",
+            "accent — цвет наведения, подчёркивания и фокуса"
+          ],
+          "notes": [
+            "Это самостоятельный доступный блок без закрепления всей страницы — не превращайте его в полноэкранную сцену.",
+            "Полоса прокрутки тонкая, но видимая — не прячьте её совсем: она сообщает о продолжении.",
+            "Демо-карточки — иллюстрация; замените целиком."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "heading",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Свежие проекты",
+            "maxLength": 32
+          },
+          {
+            "prop": "snap",
+            "label": "Притяжение",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["heading", "snap", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Horizontal Gallery",
+            "description": "A card rail with native horizontal scrolling inside a normal page: the next card's edge is visible, snap is soft, the mouse wheel is not hijacked. For portfolios, travel, shops and media.",
+            "docs": "One file, zero dependencies, no client JS. The rail is a plain overflow-x:auto with scroll-snap-type:x proximity (the snap prop) and a thin native scrollbar. The container is focusable (tabindex=0, role=group with a label) — native keyboard arrow scrolling works; each card is a plain link reachable by Tab. The See All link duplicates access without the gesture. Arrow buttons, if desired, are added by the project with a tiny scrollBy handler. Palette --vibeui-layout-009-*.",
+            "ai": {
+              "summary": "A horizontal rail inside a vertical page: native overflow-x, soft scroll snap, the visible edge of the next card, a focusable container for keyboard scrolling and a duplicating See All link. No wheel hijacking, no global pinning. No JS.",
+              "preserve": [
+                "native horizontal scrolling: the vertical mouse wheel is not remapped globally",
+                "the visible edge of the next card — the user must see the content continues",
+                "the rail's focusability (tabindex, role, label) and every card reachable by Tab",
+                "the duplicating See All link — the content is reachable without the gesture",
+                "scroll-snap proximity, not mandatory: soft attraction does not fight free scrolling",
+                "the local --vibeui-layout-009-* palette and the container query instead of a media query"
+              ],
+              "adapt": [
+                "heading, lede and allLabel — the section texts; cards — your cards; children replaces the rail content",
+                "snap — turn it off when attraction gets in the way",
+                "card width — the --vibeui-layout-009-card variable through style",
+                "add arrow buttons in the project with a tiny scrollBy handler if needed",
+                "accent — the hover, underline and focus color"
+              ],
+              "notes": [
+                "This is a standalone accessible block without page pinning — do not turn it into a full-screen scene.",
+                "The scrollbar is thin but visible — do not hide it entirely: it signals continuation.",
+                "The demo cards are an illustration; replace them entirely."
+              ],
+              "usage": "<Layout009\n  heading=\"Fresh projects\"\n  cards={[{ title: \"Lake house\", note: \"2026\", href: \"/c1\", look: \"warm\" }]}\n  snap\n/>"
+            },
+            "controls": {
+              "heading": {
+                "label": "Heading",
+                "default": "Fresh projects"
+              },
+              "snap": {
+                "label": "Snap"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-010",
+      "type": "registry:block",
+      "title": "Длинное чтение с главами",
+      "description": "Структура лонгрида: спокойная колонка около 42rem, крупный заголовок с рубрикой, оглавление раскрытием, цитата с оранжевой линией, широкие изображения и заметки на полях в потоке. Для статьи, урока, отчёта, исследования.",
+      "categories": ["layout"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-010/layout-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-010.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, клиентского JS нет. Колонка 42rem с кеглем 17px и интерлиньяжем 1,75; подзаголовки несут id-якоря и scroll-margin-top. Оглавление — <details> открытый по умолчанию. Изображения выходят за колонку отрицательными полями (в узкой — до краёв). Индикатор прогресса чтения не встроен: его добавляет scrollspy принимающего проекта с учётом начала и конца статьи. Палитра --vibeui-layout-010-*.",
+      "meta": {
+        "tags": [
+          "layout",
+          "article",
+          "longread",
+          "reading",
+          "blog",
+          "typography"
+        ],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 860"
+        },
+        "ai": {
+          "usage": "<Layout010\n  kicker=\"Исследование\"\n  title=\"Как читается длинный текст\"\n  meta=\"Автор · 14 минут\"\n  chapters={[{ label: \"Глава\", href: \"#chapter\" }]}\n>\n  {/* тело статьи */}\n</Layout010>",
+          "summary": "Каркас лонгрида: колонка 42rem с комфортной кириллицей, рубрика, оглавление на <details>, цитата с оранжевой линией, изображения шире колонки и заметки на полях серыми панелями в потоке. Якоря глав со scroll-margin-top. Прогресс чтения — снаружи, scrollspy проекта. Без JS.",
+          "preserve": [
+            "ширину колонки 42rem и интерлиньяж 1,75 — строка не шире 75 знаков, это условие комфортного чтения",
+            "заметки на полях в потоке рядом со своим фрагментом — не прятать их и не уводить в конец",
+            "выход изображений за колонку как единственный широкий жест — не расширять сам текст",
+            "якоря с scroll-margin-top: переход по оглавлению показывает заголовок, а не прячет его под шапкой",
+            "локальную палитру --vibeui-layout-010-* и container-запрос вместо медиазапроса"
+          ],
+          "adapt": [
+            "kicker, title, meta, chapters — данные материала; children — тело статьи",
+            "заглушку изображения замените реальным кадром 16:9 с подписью",
+            "прогресс чтения и подсветку активной главы добавляет scrollspy проекта — один владелец прогресса",
+            "при sticky-шапке увеличьте scroll-margin-top заголовков на её высоту",
+            "accent — цвет рубрики, линии цитаты и фокуса"
+          ],
+          "notes": [
+            "Никакого автоматического перелистывания и подгрузки следующей статьи без действия читателя.",
+            "Оглавление остаётся раскрытием и на десктопе — закреплённую боковую колонку даёт каркас документации.",
+            "Демо-текст — иллюстрация типографики; замените целиком."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "kicker",
+            "label": "Рубрика",
+            "type": "text",
+            "default": "Исследование",
+            "maxLength": 24
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Как читается длинный текст",
+            "maxLength": 64
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["kicker", "title", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Longread with Chapters",
+            "description": "A longread structure: a calm column around 42rem, a large heading with a kicker, a disclosure TOC, a quote with an orange rule, wide images and margin notes in the flow. For articles, lessons, reports, research.",
+            "docs": "One file, zero dependencies, no client JS. A 42rem column at 17px with 1.75 leading; subheadings carry id anchors and scroll-margin-top. The TOC is a <details> open by default. Images extend past the column with negative margins (to the edges when narrow). A reading progress indicator is not built in: the host project's scrollspy adds it, measuring the article's start and end. Palette --vibeui-layout-010-*.",
+            "ai": {
+              "summary": "A longread skeleton: a 42rem column comfortable for Cyrillic, a kicker, a <details> TOC, a quote with an orange rule, images wider than the column and grey margin notes in the flow. Chapter anchors with scroll-margin-top. Reading progress lives outside, in the project's scrollspy. No JS.",
+              "preserve": [
+                "the 42rem column and 1.75 leading — a line no wider than 75 characters is the condition of comfortable reading",
+                "margin notes in the flow next to their fragment — do not hide them or push them to the end",
+                "images extending past the column as the only wide gesture — do not widen the text itself",
+                "anchors with scroll-margin-top: a TOC jump shows the heading instead of hiding it under the header",
+                "the local --vibeui-layout-010-* palette and the container query instead of a media query"
+              ],
+              "adapt": [
+                "kicker, title, meta, chapters — the piece's data; children — the article body",
+                "replace the image placeholder with a real 16:9 frame and a caption",
+                "reading progress and active chapter highlighting come from the project's scrollspy — one progress owner",
+                "with a sticky header increase the headings' scroll-margin-top by its height",
+                "accent — the kicker, quote rule and focus color"
+              ],
+              "notes": [
+                "No automatic page-turning or next-article loading without the reader's action.",
+                "The TOC stays a disclosure on desktop too — a pinned side column belongs to the docs skeleton.",
+                "The demo text illustrates the typography; replace it entirely."
+              ],
+              "usage": "<Layout010\n  kicker=\"Research\"\n  title=\"How long text reads\"\n  meta=\"Author · 14 min\"\n  chapters={[{ label: \"Chapter\", href: \"#chapter\" }]}\n>\n  {/* the article body */}\n</Layout010>"
+            },
+            "controls": {
+              "kicker": {
+                "label": "Kicker",
+                "default": "Research"
+              },
+              "title": {
+                "label": "Title",
+                "default": "How long text reads"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-011",
+      "type": "registry:block",
+      "title": "Трёхпанельный сервис",
+      "description": "Структура почты, AI-чата или поддержки: графитовая панель разделов, список разговоров и выбранный диалог с полем ввода. На desktop у списка и диалога свои прокрутки; на телефоне панели идут последовательно.",
+      "categories": ["layout"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-011/layout-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-011.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, без клиентского JS. Desktop — grid 11rem/19rem/1fr высотой 34rem: список и сообщения прокручиваются каждая своей областью, переключение разговора не сбрасывает позицию списка. Чат не прокручивается принудительно — прокрутку к новому сообщению делает приложение при отправке. Узкая колонка — последовательный поток DOM. Отправку, хранение и AI подключает приложение; форма демонстрационная. Палитра --vibeui-layout-011-*.",
+      "meta": {
+        "tags": ["layout", "chat", "mail", "inbox", "three-pane", "support"],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 640"
+        },
+        "ai": {
+          "usage": "<Layout011\n  appName=\"Диалог\"\n  threads={[{ name: \"Марина\", preview: \"…\", time: \"12:40\", current: true }]}\n  threadName=\"Марина\"\n>\n  {/* сообщения */}\n</Layout011>",
+          "summary": "Трёхпанельный каркас: разделы графитовой полосой, список разговоров с непрочитанными точками и текущим маркером, диалог с пузырями и полем ввода. Свои прокрутки панелей на desktop, последовательный поток на телефоне. Логику сервиса подключает приложение.",
+          "preserve": [
+            "локальную палитру --vibeui-layout-011-* и не подменять её токенами вашей темы",
+            "независимые прокрутки списка и диалога на desktop — переключение разговора не сбрасывает позицию списка",
+            "отсутствие принудительной прокрутки чата: пока читают старые сообщения, вниз никто не дёргает",
+            "последовательный порядок панелей в узкой колонке из DOM"
+          ],
+          "adapt": [
+            "appName, threads, threadName, sections — данные приложения; children — область сообщений",
+            "composer — демонстрационная форма: обработчик отправки подключает проект",
+            "высоту desktop-сетки меняйте правкой grid-template-rows под свою оболочку",
+            "accent — цвет активных маркеров и кнопки"
+          ],
+          "notes": [
+            "Мобильное переключение «список ↔ диалог» экранами делает маршрутизация приложения.",
+            "Экранная клавиатура не перекроет поле: блок не фиксирует ничего поверх окна."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "appName",
+            "label": "Приложение",
+            "type": "text",
+            "default": "Диалог",
+            "maxLength": 20
+          },
+          {
+            "prop": "threadName",
+            "label": "Диалог",
+            "type": "text",
+            "default": "Марина Ковалёва",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["appName", "threadName", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Three-Pane Service",
+            "description": "A mail, AI chat or support structure: a graphite section rail, a conversation list and the selected dialog with a composer. On desktop the list and dialog scroll independently; on phones the panes flow sequentially.",
+            "docs": "One file, zero dependencies, no client JS. Desktop is an 11rem/19rem/1fr grid at 34rem height: the list and messages scroll in their own areas, switching a conversation never resets the list position. The chat is never force-scrolled — scrolling to a new message is the app's job on send. The narrow column is a sequential DOM flow. Sending, storage and AI are wired by the application; the form is a demo. Palette --vibeui-layout-011-*.",
+            "ai": {
+              "summary": "A three-pane skeleton: sections on a graphite rail, a conversation list with unread dots and a current marker, a dialog with bubbles and a composer. Independent pane scrolling on desktop, a sequential flow on phones. Service logic is the application's.",
+              "preserve": [
+                "the local --vibeui-layout-011-* palette — do not swap it for your theme tokens",
+                "independent list and dialog scrolling on desktop — switching never resets the list position",
+                "no forced chat scrolling: nobody yanks down while old messages are read",
+                "the sequential pane order in a narrow column from the DOM"
+              ],
+              "adapt": [
+                "appName, threads, threadName, sections — the app's data; children — the message area",
+                "the composer is a demo form: the send handler is the project's",
+                "change the desktop grid height by editing grid-template-rows for your shell",
+                "accent — the active markers and button color"
+              ],
+              "notes": [
+                "Mobile list-to-dialog screen switching is the app's routing.",
+                "The on-screen keyboard cannot cover the field: the block pins nothing over the window."
+              ],
+              "usage": "<Layout011\n  appName=\"Dialog\"\n  threads={[{ name: \"Marina\", preview: \"…\", time: \"12:40\", current: true }]}\n  threadName=\"Marina\"\n>\n  {/* messages */}\n</Layout011>"
+            },
+            "controls": {
+              "appName": {
+                "label": "App",
+                "default": "Dialog"
+              },
+              "threadName": {
+                "label": "Thread",
+                "default": "Marina Kovaleva"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-012",
+      "type": "registry:block",
+      "title": "Результаты и карта",
+      "description": "Структура «список объектов + карта»: карточки с выбранным объектом слева, sticky-карта с метками справа, на телефоне — переключатель «список / карта» на чистом CSS. Для недвижимости, отелей, заведений и событий поблизости.",
+      "categories": ["layout"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-012/layout-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-012.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, без клиентского JS. Карта — явно подписанная демонстрационная схема (role=\"img\" с подписью «не карта»): реальный провайдер и ключи подключает проект вместо слота data-part=\"map\". Мобильный переключатель — нативные radio + :has() в container-запросе; на desktop оба вида видны и переключатель скрыт. Заглушка-карта — обычный блок, жесты не блокируют прокрутку страницы. Выбранный объект — aria-current с оранжевой рамкой. Палитра --vibeui-layout-012-*.",
+      "meta": {
+        "tags": ["layout", "map", "listing", "real-estate", "split", "results"],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 680"
+        },
+        "ai": {
+          "usage": "<Layout012\n  heading=\"Жильё в поездку\"\n  items={[{ title: \"Дом у озера\", note: \"4 гостя\", price: \"9 800 ₽\", href: \"/i1\", current: true }]}\n/>",
+          "summary": "Каркас «результаты и карта»: список карточек с фото-заглушками и ценой, sticky-схема с оранжевыми метками, честно подписанная как демонстрация, и CSS-переключатель «список/карта» на телефоне. Реальную карту подключает проект. Без JS.",
+          "preserve": [
+            "локальную палитру --vibeui-layout-012-* и не подменять её токенами вашей темы",
+            "честную подпись демонстрационной схемы — она не выдаёт себя за карту",
+            "выбранный объект aria-current с рамкой: связь списка и карты видима",
+            "мобильный переключатель radio+CSS — доступен без JS"
+          ],
+          "adapt": [
+            "items — ваши объекты; children заменяет список",
+            "вместо слота карты подключите реального провайдера (его SDK — зависимость вашего проекта, не блока)",
+            "жест над реальной картой не должен блокировать прокрутку страницы — настройка провайдера",
+            "accent — цвет меток и выбора; heading и resultsLabel — тексты"
+          ],
+          "notes": [
+            "Выбранный объект открывается и из списка — точное попадание в маркер не требуется.",
+            "Синхронизация «карточка ↔ метка» по наведению — логика проекта поверх каркаса."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "heading",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Жильё в поездку",
+            "maxLength": 32
+          },
+          {
+            "prop": "resultsLabel",
+            "label": "Счётчик",
+            "type": "text",
+            "default": "48 вариантов",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["heading", "resultsLabel", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Results and Map",
+            "description": "A listings-plus-map structure: cards with a selected item on the left, a sticky map with pins on the right, and a pure-CSS list/map switch on phones. For real estate, hotels, venues and nearby events.",
+            "docs": "One file, zero dependencies, no client JS. The map is an explicitly labeled demo scheme (role=\"img\" captioned “not a map”): a real provider and keys are wired by the project in place of the data-part=\"map\" slot. The mobile switch is native radios + :has() in a container query; on desktop both views show and the switch hides. The placeholder map is a plain block, gestures never block page scrolling. The selected item is aria-current with an orange frame. Palette --vibeui-layout-012-*.",
+            "ai": {
+              "summary": "A results-and-map skeleton: a card list with photo placeholders and prices, a sticky scheme with orange pins honestly labeled as a demo, and a CSS list/map switch on phones. The real map is the project's. No JS.",
+              "preserve": [
+                "the local --vibeui-layout-012-* palette — do not swap it for your theme tokens",
+                "the honest demo scheme caption — it never pretends to be a map",
+                "the selected item as aria-current with a frame: the list-map link stays visible",
+                "the radio+CSS mobile switch — accessible without JS"
+              ],
+              "adapt": [
+                "items — your listings; children replaces the list",
+                "wire a real provider instead of the map slot (its SDK is your project's dependency, not the block's)",
+                "a gesture over the real map must not block page scrolling — a provider setting",
+                "accent — the pin and selection color; heading and resultsLabel — the texts"
+              ],
+              "notes": [
+                "A selected item opens from the list too — precise pin tapping is not required.",
+                "Card-to-pin hover sync is project logic on top of the skeleton."
+              ],
+              "usage": "<Layout012\n  heading=\"Stays for the trip\"\n  items={[{ title: \"Lake house\", note: \"4 guests\", price: \"$98\", href: \"/i1\", current: true }]}\n/>"
+            },
+            "controls": {
+              "heading": {
+                "label": "Heading",
+                "default": "Stays for the trip"
+              },
+              "resultsLabel": {
+                "label": "Counter",
+                "default": "48 options"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-013",
+      "type": "registry:block",
+      "title": "Главы с закреплённой иллюстрацией",
+      "description": "Сцена объяснения продукта: короткие главы текста идут потоком, один визуал держится sticky рядом в пределах секции. Длина сцены равна сумме глав — пустых экранов ради эффекта нет. Смену состояния визуала добавляет scrollspy проекта.",
+      "categories": ["layout"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-013/layout-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-013.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, без клиентского JS. Визуал — слот visual с position:sticky в пределах data-part=\"body\": закрепление начинается и заканчивается границами сцены. Базовая версия честно статична; связь «активная глава → состояние визуала» добавляет scrollspy принимающего проекта (IntersectionObserver), меняя данные слота. В узкой колонке визуал встаёт после глав обычным потоком. Палитра --vibeui-layout-013-*.",
+      "meta": {
+        "tags": [
+          "layout",
+          "sticky",
+          "chapters",
+          "scrollytelling",
+          "product-story"
+        ],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 700"
+        },
+        "ai": {
+          "usage": "<Layout013\n  heading=\"Как устроен продукт\"\n  chapters={[{ index: \"01\", title: \"Замер\", text: \"…\" }]}\n  visual={<YourVisual />}\n/>",
+          "summary": "Сцена «текст + закреплённый визуал»: главы с оранжевыми номерами идут потоком слева, иллюстрация sticky справа и отпускается на границе сцены. Честная статичная база; смену состояний по главам подключает scrollspy проекта. Без JS.",
+          "preserve": [
+            "локальную палитру --vibeui-layout-013-* и не подменять её токенами вашей темы",
+            "длину сцены от текста: не растягивать главы пустыми экранами ради длинного закрепления",
+            "закрепление в пределах сцены — ниже визуал обязан отпуститься",
+            "порядок «текст перед визуалом» в узкой колонке"
+          ],
+          "adapt": [
+            "heading и chapters — ваши тексты; children заменяет колонку глав целиком",
+            "visual — ваш визуал: изображение, график или интерактивная сцена проекта",
+            "смену состояния визуала по активной главе делайте scrollspy-обработчиком проекта — один владелец активной главы",
+            "accent — цвет номеров; при sticky-шапке добавьте top закрепления её высоту"
+          ],
+          "notes": [
+            "Reduced motion ничего не меняет: движения в базовой версии нет, все этапы читаются текстом.",
+            "Для горизонтальной покадровой истории есть отдельные сцены — не расширяйте эту."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "heading",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Как устроен продукт",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["heading", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Chapters with a Pinned Visual",
+            "description": "A product explanation scene: short text chapters flow while one visual stays sticky beside them within the section. The scene's length equals the sum of the chapters — no empty screens for the effect's sake. Visual state changes are added by the project's scrollspy.",
+            "docs": "One file, zero dependencies, no client JS. The visual is the visual slot with position:sticky within data-part=\"body\": pinning starts and ends at the scene's bounds. The base version is honestly static; the active-chapter-to-visual link is added by the host project's scrollspy (IntersectionObserver) by changing the slot's data. In a narrow column the visual follows the chapters in normal flow. Palette --vibeui-layout-013-*.",
+            "ai": {
+              "summary": "A text-plus-pinned-visual scene: chapters with orange numbers flow on the left, the illustration sticks on the right and releases at the scene boundary. An honestly static base; per-chapter state changes are wired by the project's scrollspy. No JS.",
+              "preserve": [
+                "the local --vibeui-layout-013-* palette — do not swap it for your theme tokens",
+                "the scene length from the text: do not stretch chapters with empty screens for longer pinning",
+                "pinning within the scene — below it the visual must release",
+                "the text-before-visual order in a narrow column"
+              ],
+              "adapt": [
+                "heading and chapters — your texts; children replaces the chapter column entirely",
+                "visual — your visual: an image, chart or the project's interactive scene",
+                "drive visual state by the active chapter with the project's scrollspy — one owner of the active chapter",
+                "accent — the number color; with a sticky header add its height to the pin's top"
+              ],
+              "notes": [
+                "Reduced motion changes nothing: the base has no motion, every stage reads as text.",
+                "For a horizontal frame-by-frame story there are separate scenes — do not stretch this one."
+              ],
+              "usage": "<Layout013\n  heading=\"How the product works\"\n  chapters={[{ index: \"01\", title: \"Measure\", text: \"…\" }]}\n  visual={<YourVisual />}\n/>"
+            },
+            "controls": {
+              "heading": {
+                "label": "Heading",
+                "default": "How the product works"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-014",
+      "type": "registry:block",
+      "title": "Накладывающиеся панели",
+      "description": "Сцена этапов: крупные панели последовательно прилипают к верху со ступенчатым смещением — предыдущая остаётся видимой краем. Чистый CSS sticky без захвата прокрутки; высота панелей растёт от русского текста, ничего не обрезается.",
+      "categories": ["layout"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-014/layout-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-014.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, без клиентского JS. Каждая панель — position:sticky с top-ступенькой (1rem, 2.25rem, …): при прокрутке следующая наезжает, а видимой остаётся полоска предыдущей с номером этапа. До пяти панелей; поверхность каждой — data-surface (paper/graphite/orange) с согласованными цветами. В узкой колонке перекрытие отключается — обычная стопка. Интерактивные элементы внутри панелей не перекрываются: полоска — заголовочная зона. Палитра --vibeui-layout-014-*.",
+      "meta": {
+        "tags": ["layout", "sticky", "stack", "cards", "process", "steps"],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 760"
+        },
+        "ai": {
+          "usage": "<Layout014\n  heading=\"Как мы работаем\"\n  panels={[{ index: \"Этап 01\", title: \"Исследование\", text: \"…\", surface: \"paper\" }]}\n/>",
+          "summary": "Sticky-стек панелей этапов: каждая прилипает чуть ниже предыдущей, из-под новой видна полоска старой с номером — оглавление процесса собирается само. Три поверхности панелей, до пяти штук. Чистый CSS, прокрутка не захватывается.",
+          "preserve": [
+            "локальную палитру --vibeui-layout-014-* и не подменять её токенами вашей темы",
+            "высоту панели от контента — фиксированная высота обрежет русский текст",
+            "ступенчатые top-смещения: видимые полоски с номерами и есть идея сцены",
+            "обычную стопку в узкой колонке — перекрытие на телефоне мешает чтению"
+          ],
+          "adapt": [
+            "heading и panels — ваши тексты: index, title, text и surface; children заменяет стек",
+            "порядок поверхностей — ваша драматургия; оранжевую держите финальной",
+            "больше пяти панелей — добавьте top-ступени в CSS по образцу",
+            "accent — цвет оранжевой панели; ссылки кладите в тело панели, не в полоску"
+          ],
+          "notes": [
+            "Фокус по ссылкам приводит панель в видимую область штатно — sticky не ловушка.",
+            "Reduced motion ничего не меняет: анимации нет, только позиционирование."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "heading",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Как мы работаем",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["heading", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Stacking Panels",
+            "description": "A stage scene: large panels stick to the top in sequence with a stepped offset — the previous one stays visible as a strip. Pure CSS sticky without scroll hijacking; panel height grows with text, nothing clips.",
+            "docs": "One file, zero dependencies, no client JS. Each panel is position:sticky with a stepped top (1rem, 2.25rem, …): on scroll the next one slides over while a strip of the previous with the stage number stays visible. Up to five panels; each surface is data-surface (paper/graphite/orange) with agreed colors. In a narrow column the overlap turns off — a plain stack. Interactive elements inside panels are never covered: the strip is the heading zone. Palette --vibeui-layout-014-*.",
+            "ai": {
+              "summary": "A sticky stack of stage panels: each sticks slightly below the previous, a numbered strip of the old one shows under the new — the process TOC assembles itself. Three panel surfaces, up to five panels. Pure CSS, no scroll capture.",
+              "preserve": [
+                "the local --vibeui-layout-014-* palette — do not swap it for your theme tokens",
+                "panel height from content — a fixed height clips text",
+                "the stepped top offsets: the visible numbered strips are the scene's idea",
+                "the plain stack in a narrow column — overlap on phones fights reading"
+              ],
+              "adapt": [
+                "heading and panels — your texts: index, title, text and surface; children replaces the stack",
+                "the surface order is your dramaturgy; keep orange as the finale",
+                "for more than five panels add top steps in the CSS by example",
+                "accent — the orange panel color; put links in the panel body, not the strip"
+              ],
+              "notes": [
+                "Focusing links brings a panel into view natively — sticky is not a trap.",
+                "Reduced motion changes nothing: there is no animation, only positioning."
+              ],
+              "usage": "<Layout014\n  heading=\"How we work\"\n  panels={[{ index: \"Stage 01\", title: \"Research\", text: \"…\", surface: \"paper\" }]}\n/>"
+            },
+            "controls": {
+              "heading": {
+                "label": "Heading",
+                "default": "How we work"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-015",
+      "type": "registry:block",
+      "title": "Экранная презентация",
+      "description": "Несколько выразительных экранов с мягкими остановками: scroll-snap-align на секциях, чередование белой, графитовой и оранжевой поверхностей, видимая подсказка «листайте». Колесо не перехватывается, длинная секция дочитывается свободно.",
+      "categories": ["layout"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-015/layout-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-015.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, без клиентского JS. Секции несут scroll-snap-align:start; сам scroll-snap-type блок не задаёт — его включает принимающий проект одной строкой на владельце прокрутки (html{scroll-snap-type:y proximity}), поэтому блок не захватывает чужой scroll-root, а без этой строки остаётся обычной страницей. Высота экрана — минимум 36rem (не vh), длинный контент растёт свободно. Поверхности — data-surface с согласованными цветами. Палитра --vibeui-layout-015-*.",
+      "meta": {
+        "tags": ["layout", "snap", "presentation", "screens", "fullscreen"],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 800"
+        },
+        "ai": {
+          "usage": "<Layout015\n  screens={[{ index: \"01\", title: \"Мысль\", text: \"…\", surface: \"paper\" }]}\n/>\n/* и в CSS проекта: html{scroll-snap-type:y proximity} */",
+          "summary": "Презентация экранами: крупный заголовок, подпись и подсказка «листайте» на каждой секции с snap-align; поверхность чередуется белая → графит → оранжевая. Snap-type включает проект на документе; proximity не мешает дочитать длинную секцию. Без JS.",
+          "preserve": [
+            "локальную палитру --vibeui-layout-015-* и не подменять её токенами вашей темы",
+            "proximity, а не mandatory — жёсткое притяжение запирает длинные секции",
+            "snap-type на владельце прокрутки от проекта, а не внутренний scroll-root в блоке",
+            "минимальную, а не фиксированную высоту экрана: длинный контент растёт"
+          ],
+          "adapt": [
+            "screens — ваши экраны; children заменяет их полностью",
+            "включите html{scroll-snap-type:y proximity} в CSS проекта — и отключайте, если snap мешает формам",
+            "высота экрана — переменная --vibeui-layout-015-screen через style",
+            "accent — оранжевая поверхность; nextHint — текст подсказки"
+          ],
+          "notes": [
+            "Не делайте этот режим основным для документации, каталога и длинных статей.",
+            "Учитывайте меняющуюся высоту мобильного браузера: 36rem выбраны с запасом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "nextHint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Листайте",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["nextHint", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Screen Presentation",
+            "description": "Several expressive screens with soft stops: scroll-snap-align on sections, alternating white, graphite and orange surfaces, a visible Scroll hint. The wheel is never hijacked, a long section reads freely.",
+            "docs": "One file, zero dependencies, no client JS. Sections carry scroll-snap-align:start; the block sets no scroll-snap-type — the host project enables it with one line on the scroll owner (html{scroll-snap-type:y proximity}), so the block never captures a foreign scroll root and without that line remains a plain page. Screen height is a 36rem minimum (not vh), long content grows freely. Surfaces are data-surface with agreed colors. Palette --vibeui-layout-015-*.",
+            "ai": {
+              "summary": "A screen presentation: a large heading, caption and Scroll hint per snap-aligned section; the surface alternates white → graphite → orange. Snap-type is enabled by the project on the document; proximity never blocks reading a long section. No JS.",
+              "preserve": [
+                "the local --vibeui-layout-015-* palette — do not swap it for your theme tokens",
+                "proximity, not mandatory — hard snapping traps long sections",
+                "snap-type on the project's scroll owner, not an inner scroll root in the block",
+                "the minimum, not fixed, screen height: long content grows"
+              ],
+              "adapt": [
+                "screens — your screens; children replaces them entirely",
+                "enable html{scroll-snap-type:y proximity} in the project CSS — and disable it when snap fights forms",
+                "screen height — the --vibeui-layout-015-screen variable through style",
+                "accent — the orange surface; nextHint — the hint text"
+              ],
+              "notes": [
+                "Do not make this the primary mode for docs, catalogs and long articles.",
+                "Account for the changing mobile browser height: 36rem is chosen with a margin."
+              ],
+              "usage": "<Layout015\n  screens={[{ index: \"01\", title: \"Idea\", text: \"…\", surface: \"paper\" }]}\n/>\n/* and in the project CSS: html{scroll-snap-type:y proximity} */"
+            },
+            "controls": {
+              "nextHint": {
+                "label": "Hint",
+                "default": "Scroll"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-016",
+      "type": "registry:block",
+      "title": "Раскрытие медиа при прокрутке",
+      "description": "Сцена, где кадр начинается в аккуратной скруглённой рамке и расширяется до ширины секции по мере прокрутки. CSS scroll-driven animation без JS; без поддержки или при reduced motion кадр сразу широкий — контент не заперт.",
+      "categories": ["layout"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-016/layout-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-016.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, без клиентского JS. Раскрытие — animation-timeline:view() с animation-range entry/cover: прогресс привязан к видимости сцены, покадрового scroll-обработчика нет. Всё завёрнуто в @supports (animation-timeline: view()) и @media (prefers-reduced-motion:no-preference): без поддержки и при уменьшенном движении кадр отображается сразу конечным — широким. Расширяется только медиа-слой (width и радиус), текст не масштабируется. Слот media принимает ваше изображение или видео. Палитра --vibeui-layout-016-*.",
+      "meta": {
+        "tags": [
+          "layout",
+          "scroll-driven",
+          "reveal",
+          "media",
+          "expand",
+          "view-timeline"
+        ],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 700"
+        },
+        "ai": {
+          "usage": "<Layout016\n  title=\"Кадр раскрывается по мере чтения\"\n  media={<img src=\"/photo.jpg\" alt=\"…\" />}\n/>",
+          "summary": "Сцена раскрытия: медиа стартует рамкой 62% ширины со скруглением и доезжает до 100% через CSS view-timeline. Ни JS, ни ScrollTrigger; фолбэк через @supports показывает конечный кадр. Слот media — ваше изображение или видео.",
+          "preserve": [
+            "локальную палитру --vibeui-layout-016-* и не подменять её токенами вашей темы",
+            "CSS view-timeline как механизм: не переписывать на scroll-обработчик — фолбэк и reduced motion уже решены",
+            "расширение только визуального слоя — текст и раскладка не масштабируются",
+            "конечный кадр как фолбэк: контент никогда не заперт за анимацией"
+          ],
+          "adapt": [
+            "media — ваш кадр: <img> с alt или видеофон; заглушку не выпускайте",
+            "kicker, title, caption — тексты; children — секции после сцены",
+            "амплитуду меняйте правкой keyframes (from-width); на телефоне она автоматически короче",
+            "accent — цвет маркера"
+          ],
+          "notes": [
+            "Проверьте стоимость на большом кадре: анимируются width и border-radius одного слоя.",
+            "Элементы управления видео остаются доступными — сцена их не перекрывает."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Кадр раскрывается по мере чтения",
+            "maxLength": 48
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["title", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Scroll-Driven Media Reveal",
+            "description": "A scene where the frame starts in a neat rounded box and expands to the section width as you scroll. CSS scroll-driven animation without JS; without support or with reduced motion the frame is wide right away — content is never locked.",
+            "docs": "One file, zero dependencies, no client JS. The reveal is animation-timeline:view() with an entry/cover animation-range: progress binds to the scene's visibility, no per-frame scroll handler. Everything is wrapped in @supports (animation-timeline: view()) and @media (prefers-reduced-motion:no-preference): without support or with reduced motion the frame renders in its final wide state. Only the media layer expands (width and radius), text never scales. The media slot takes your image or video. Palette --vibeui-layout-016-*.",
+            "ai": {
+              "summary": "A reveal scene: media starts as a rounded 62%-wide frame and reaches 100% through CSS view-timeline. No JS, no ScrollTrigger; the @supports fallback shows the final frame. The media slot is your image or video.",
+              "preserve": [
+                "the local --vibeui-layout-016-* palette — do not swap it for your theme tokens",
+                "CSS view-timeline as the mechanism: do not rewrite onto a scroll handler — the fallback and reduced motion are already solved",
+                "expanding only the visual layer — text and layout never scale",
+                "the final frame as the fallback: content is never locked behind animation"
+              ],
+              "adapt": [
+                "media — your frame: an <img> with alt or a video background; do not ship the placeholder",
+                "kicker, title, caption — the texts; children — sections after the scene",
+                "change the amplitude by editing the keyframes (from-width); on phones it is naturally shorter",
+                "accent — the marker color"
+              ],
+              "notes": [
+                "Check the cost on a large frame: the width and border-radius of one layer animate.",
+                "Video controls stay reachable — the scene never covers them."
+              ],
+              "usage": "<Layout016\n  title=\"The frame opens as you read\"\n  media={<img src=\"/photo.jpg\" alt=\"…\" />}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "The frame opens as you read"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-017",
+      "type": "registry:block",
+      "title": "Футер, открывающийся из-под страницы",
+      "description": "Финальная сцена: контент лежит верхним слоем с тенью, а футер закреплён под ним — последняя секция приподнимается и открывает подготовленный финал. Чистый CSS sticky без захвата прокрутки; при reduced motion — обычный футер.",
+      "categories": ["layout"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-017/layout-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-017.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, без клиентского JS. Механика: контент — слой z-index:1 с тенью, футер — position:sticky;bottom:0 под ним; прокрутка обычная, футер занимает реальное место в раскладке и читается полностью. При reduced motion sticky снимается — футер становится обычным. Слот footer принимает любой футер каталога (например «крупное имя» или «кинематографический финал»); children — страница над ним. Фокус на ссылках футера штатно доскролливает к ним. Палитра --vibeui-layout-017-*.",
+      "meta": {
+        "tags": ["layout", "footer", "reveal", "sticky", "finale"],
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 820"
+        },
+        "ai": {
+          "usage": "<Layout017 footer={<YourFooter />}>\n  {/* страница */}\n</Layout017>",
+          "summary": "Сцена «футер из-под страницы»: контент верхним слоем с тенью, финал sticky у нижнего края под ним — последняя секция приподнимается и открывает футер. Реальное место в раскладке, полная читаемость, обычная прокрутка. Слоты page и footer. Без JS.",
+          "preserve": [
+            "локальную палитру --vibeui-layout-017-* и не подменять её токенами вашей темы",
+            "реальное место футера в раскладке — длинный футер читается целиком, а не остаётся обрезанным",
+            "отсутствие захвата прокрутки: только слои и sticky",
+            "вырождение в обычный футер при reduced motion"
+          ],
+          "adapt": [
+            "footer — ваш финал (сюда встаёт любой футер каталога); footerName и тексты демо — только пример",
+            "children — страница; тень слоя настраивается селектором data-part=\"page\"",
+            "фон финала за пределами футера — цвет корня блока (по умолчанию чёрный)",
+            "accent — цвет действия демонстрационного финала"
+          ],
+          "notes": [
+            "Эффект ограничен концом документа — не применяйте его к промежуточным секциям.",
+            "Это поведение; визуальное оформление финала выбирается отдельно."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "footerName",
+            "label": "Финал",
+            "type": "text",
+            "default": "Студия «Русло»",
+            "maxLength": 32
+          },
+          {
+            "prop": "contactLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Обсудить проект",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["footerName", "contactLabel", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Footer Revealed from Under the Page",
+            "description": "A finale scene: content lies as the top layer with a shadow while the footer is pinned beneath — the last section lifts to reveal the prepared ending. Pure CSS sticky without scroll hijacking; with reduced motion — a regular footer.",
+            "docs": "One file, zero dependencies, no client JS. The mechanics: content is a z-index:1 layer with a shadow, the footer is position:sticky;bottom:0 beneath it; scrolling is normal, the footer takes real layout space and reads fully. With reduced motion sticky is dropped — the footer becomes ordinary. The footer slot takes any catalog footer (e.g. the big wordmark or the cinematic finale); children is the page above. Focusing footer links scrolls to them natively. Palette --vibeui-layout-017-*.",
+            "ai": {
+              "summary": "A footer-from-under scene: content as the top layer with a shadow, the finale sticky at the bottom beneath it — the last section lifts and reveals the footer. Real layout space, full readability, plain scrolling. Page and footer slots. No JS.",
+              "preserve": [
+                "the local --vibeui-layout-017-* palette — do not swap it for your theme tokens",
+                "the footer's real layout space — a long footer reads fully instead of staying clipped",
+                "no scroll capture: only layers and sticky",
+                "degrading to a regular footer with reduced motion"
+              ],
+              "adapt": [
+                "footer — your finale (any catalog footer fits here); footerName and the demo texts are just an example",
+                "children — the page; the layer shadow is tuned via the data-part=\"page\" selector",
+                "the finale's surround color is the block root's (black by default)",
+                "accent — the demo finale's action color"
+              ],
+              "notes": [
+                "The effect belongs to the document's end — do not apply it to middle sections.",
+                "This is behavior; the finale's visual design is chosen separately."
+              ],
+              "usage": "<Layout017 footer={<YourFooter />}>\n  {/* the page */}\n</Layout017>"
+            },
+            "controls": {
+              "footerName": {
+                "label": "Finale",
+                "default": "Ruslo Studio"
+              },
+              "contactLabel": {
+                "label": "Action",
+                "default": "Discuss a project"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-018",
+      "type": "registry:block",
+      "title": "Горизонтальная история от прокрутки",
+      "description": "Сцена, где на широком экране участок закрепляется и сцены проходят горизонтально ровно на длину вертикальной прокрутки. CSS view-timeline без JS и GSAP; на телефоне и при reduced motion — обычная вертикальная последовательность.",
+      "categories": ["layout"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-018/layout-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-018.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, без клиентского JS. Механика: высокий контейнер-pin (60rem на сцену), sticky-viewport и трек с animation-timeline:view() — горизонтальный translateX привязан к прогрессу прокрутки участка. Всё внутри @supports (animation-timeline: view()) + @media (no-preference) + @container (min-width:52rem): вне этих условий закрепление полностью снимается и сцены идут вертикально. Число сцен — переменная count из данных. Контент и ссылки существуют вне анимационного состояния; после сцены — видимая кнопка перехода. Палитра --vibeui-layout-018-*.",
+      "meta": {
+        "tags": ["layout", "horizontal", "scrollytelling", "pin", "view-timeline", "story"],
+        "preview": { "width": "full", "aspect": "1280 / 760" },
+        "ai": {
+          "usage": "<Layout018\n  heading=\"История коллекции\"\n  scenes={[{ index: \"01\", title: \"…\", text: \"…\", look: \"warm\" }]}\n/>",
+          "summary": "Горизонтальная история: sticky-viewport и CSS view-timeline везут сцены вбок на длину вертикальной прокрутки; длина закрепления пропорциональна числу сцен. Без поддержки, на телефоне и при reduced motion — вертикальная последовательность тех же сцен. Кнопка выхода после сцены. Без JS.",
+          "preserve": [
+            "локальную палитру --vibeui-layout-018-* и не подменять её токенами вашей темы",
+            "CSS view-timeline как механизм — не переписывать на ScrollTrigger: фолбэки уже решены декларативно",
+            "полное снятие закрепления в фолбэке — контент никогда не заперт за жестом",
+            "видимый выход после сцены: попадание на кнопку не требует точного скролла"
+          ],
+          "adapt": [
+            "heading и scenes — ваши сцены; children заменяет трек (каждому ребёнку нужен flex:none и ширина по образцу)",
+            "длину закрепления на сцену меняйте правкой 60rem в высоте pin",
+            "look — поверхность сцены; accent — фирменные акценты",
+            "не сочетайте с другим полноэкранным закреплением в одной видимой области"
+          ],
+          "notes": [
+            "Ограничивайте историю тремя-пятью сценами — длинное закрепление утомляет.",
+            "Это P3-сцена: применяйте к короткому портфолио или истории коллекции, не к каталогу."
+          ]
+        },
+        "controls": [
+          { "prop": "heading", "label": "Название", "type": "text", "default": "История коллекции", "maxLength": 40 },
+          { "prop": "exitLabel", "label": "Выход", "type": "text", "default": "К следующему разделу", "maxLength": 32 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" }
+        ],
+        "cardControls": ["heading", "exitLabel", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Horizontal Story from Vertical Scroll",
+            "description": "A scene where, on wide screens, a segment pins and scenes travel horizontally exactly as far as you scroll down. CSS view-timeline without JS or GSAP; on phones and with reduced motion — a plain vertical sequence.",
+            "docs": "One file, zero dependencies, no client JS. The mechanics: a tall pin container (60rem per scene), a sticky viewport and a track with animation-timeline:view() — horizontal translateX binds to the segment's scroll progress. Everything sits inside @supports (animation-timeline: view()) + @media (no-preference) + @container (min-width:52rem): outside these conditions pinning is fully dropped and the scenes flow vertically. The scene count is a variable from data. Content and links exist outside the animation state; after the scene — a visible exit button. Palette --vibeui-layout-018-*.",
+            "ai": {
+              "summary": "A horizontal story: a sticky viewport and CSS view-timeline carry scenes sideways for the length of vertical scrolling; pin length is proportional to the scene count. Without support, on phones and with reduced motion — a vertical sequence of the same scenes. An exit button after the scene. No JS.",
+              "preserve": [
+                "the local --vibeui-layout-018-* palette — do not swap it for your theme tokens",
+                "CSS view-timeline as the mechanism — do not rewrite onto ScrollTrigger: the fallbacks are solved declaratively",
+                "the full pin removal in the fallback — content is never locked behind a gesture",
+                "the visible exit after the scene: reaching the button needs no precise scrolling"
+              ],
+              "adapt": [
+                "heading and scenes — your scenes; children replaces the track (each child needs flex:none and the width per the pattern)",
+                "change the pin length per scene by editing the 60rem in the pin height",
+                "look — the scene surface; accent — the brand accents",
+                "do not combine with another full-screen pin in the same visible area"
+              ],
+              "notes": [
+                "Keep the story to three-five scenes — long pinning tires.",
+                "This is a P3 scene: use it for a short portfolio or a collection story, not a catalog."
+              ],
+              "usage": "<Layout018\n  heading=\"The collection story\"\n  scenes={[{ index: \"01\", title: \"…\", text: \"…\", look: \"warm\" }]}\n/>"
+            },
+            "controls": {
+              "heading": { "label": "Name", "default": "The collection story" },
+              "exitLabel": { "label": "Exit", "default": "To the next section" },
+              "accent": { "label": "Accent" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-019",
+      "type": "registry:block",
+      "title": "Покадровая история продукта",
+      "description": "История hardware-предмета по смысловым кадрам: общий вид, профиль, деталь, разборка — каждый кадр с подписью и текстом рядом. Статичная основа семейства и одновременно его честный fallback; canvas-секвенция — расширение проекта.",
+      "categories": ["layout"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-019/layout-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-019.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, без клиентского JS и без загрузки сотен кадров. Кадры — CSS-сцены с предметом-заглушкой в четырёх ракурсах (data-angle: front/side/detail/open); реальные кадры — изображения проекта. Чередование сторон на широкой раскладке. Ссылка «пропустить» ведёт к характеристикам мимо кадров. Canvas/секвенция как прокруточная сцена — отдельное расширение с оценкой веса ассетов; этот блок — его смысловые этапы и fallback. Палитра --vibeui-layout-019-*.",
+      "meta": {
+        "tags": ["layout", "product", "hardware", "frames", "story", "showcase"],
+        "preview": { "width": "full", "aspect": "1280 / 900" },
+        "ai": {
+          "usage": "<Layout019\n  heading=\"Устройство «Прибор-4»\"\n  frames={[{ index: \"Кадр 01\", title: \"…\", text: \"…\", angle: \"front\" }]}\n/>",
+          "summary": "Покадровая история предмета: тёмные студийные кадры четырёх ракурсов с подписями и характеристиками рядом, чередование сторон, ссылка «пропустить» мимо кадров. Всё статично и читается текстом; сотни изображений не загружаются. Без JS.",
+          "preserve": [
+            "локальную палитру --vibeui-layout-019-* и не подменять её токенами вашей темы",
+            "смысловые этапы с подписями — сцена не заменяет текстовые характеристики",
+            "ссылку «пропустить»: переход дальше не требует просмотра всех кадров",
+            "предсказуемый вес: не превращать блок в загрузку сотен полноразмерных кадров"
+          ],
+          "adapt": [
+            "heading, lede и frames — ваши этапы; кадры-заглушки замените реальными изображениями 16:9",
+            "angle — ракурс заглушки, для своих фото не нужен",
+            "canvas-секвенцию по прокрутке добавляйте как расширение проекта, оставив эти этапы фолбэком",
+            "accent — цвет подписей и подсветки"
+          ],
+          "notes": [
+            "Список ассетов реальной секвенции входит в стоимость страницы — считайте её честно.",
+            "Reduced motion ничего не меняет: движения в базовой версии нет."
+          ]
+        },
+        "controls": [
+          { "prop": "heading", "label": "Заголовок", "type": "text", "default": "Устройство «Прибор-4»", "maxLength": 40 },
+          { "prop": "skipLabel", "label": "Пропуск", "type": "text", "default": "Пропустить и перейти к характеристикам", "maxLength": 48 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" }
+        ],
+        "cardControls": ["heading", "accent"],
+        "i18n": {
+          "en": {
+            "title": "Frame-by-Frame Product Story",
+            "description": "A hardware object's story in meaningful frames: overview, profile, detail, teardown — each frame with a caption and text beside it. The family's static base and its honest fallback at once; a canvas sequence is a project extension.",
+            "docs": "One file, zero dependencies, no client JS and no loading of hundreds of frames. The frames are CSS scenes with a placeholder object in four angles (data-angle: front/side/detail/open); real frames are the project's images. Sides alternate on the wide layout. The Skip link leads to the specs past the frames. A canvas/sequence scroll scene is a separate extension with an asset weight assessment; this block is its meaningful stages and fallback. Palette --vibeui-layout-019-*.",
+            "ai": {
+              "summary": "A frame-by-frame object story: dark studio frames in four angles with captions and specs beside, alternating sides, a Skip link past the frames. All static and readable as text; no hundreds of images load. No JS.",
+              "preserve": [
+                "the local --vibeui-layout-019-* palette — do not swap it for your theme tokens",
+                "the meaningful stages with captions — the scene never replaces textual specs",
+                "the Skip link: moving on requires viewing no frames",
+                "the predictable weight: do not turn the block into loading hundreds of full-size frames"
+              ],
+              "adapt": [
+                "heading, lede and frames — your stages; replace the placeholder frames with real 16:9 images",
+                "angle — the placeholder's viewpoint, unneeded for your photos",
+                "add a scroll-driven canvas sequence as a project extension, keeping these stages as the fallback",
+                "accent — the caption and highlight color"
+              ],
+              "notes": [
+                "A real sequence's asset list is part of the page cost — count it honestly.",
+                "Reduced motion changes nothing: the base has no motion."
+              ],
+              "usage": "<Layout019\n  heading=\"Inside Device-4\"\n  frames={[{ index: \"Frame 01\", title: \"…\", text: \"…\", angle: \"front\" }]}\n/>"
+            },
+            "controls": {
+              "heading": { "label": "Heading", "default": "Inside Device-4" },
+              "skipLabel": { "label": "Skip", "default": "Skip to the specs" },
+              "accent": { "label": "Accent" }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

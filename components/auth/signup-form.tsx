@@ -1,33 +1,26 @@
 "use client"
 
 import Link from "next/link"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
 
 import { Field, INPUT_CLASS, SUBMIT_CLASS } from "@/components/auth/auth-card"
+import { PasswordInput } from "@/components/auth/password-input"
 import { AUTH_TEXTS } from "@/components/auth/texts"
+import { CONSENT_VERSION } from "@/lib/consent"
 import { authClient } from "@/lib/auth-client"
 import { localePath, type Locale } from "@/lib/i18n"
+import { safeNext } from "@/lib/safe-path"
 
 export function SignUpForm({ locale }: { locale: Locale }) {
   const t = AUTH_TEXTS[locale]
+  const router = useRouter()
+  const params = useSearchParams()
   const [error, setError] = useState<string>()
-  const [sent, setSent] = useState(false)
   const [pending, setPending] = useState(false)
 
-  if (sent) {
-    return (
-      <div className="grid gap-3">
-        <p className="text-shell-muted text-sm leading-relaxed">
-          {t.verifySent}
-        </p>
-        {/* Про спам говорим сразу, а не после жалобы: домен молодой, и первые
-            письма почтовые службы охотно кладут в «Спам». */}
-        <p className="border-shell-border text-shell-muted rounded-xl border border-dashed p-3 text-sm leading-relaxed">
-          {t.spamHint}
-        </p>
-      </div>
-    )
-  }
+  // Абсолютный путь внутри сайта: языковой префикс в нём уже учтён.
+  const next = safeNext(params.get("next"), localePath(locale, "/account"))
 
   return (
     <form
@@ -37,24 +30,46 @@ export function SignUpForm({ locale }: { locale: Locale }) {
         setPending(true)
 
         const form = new FormData(event.currentTarget)
-        const { error: failure } = await authClient.signUp.email({
-          name: String(form.get("name")),
-          email: String(form.get("email")),
-          password: String(form.get("password")),
-          // Письма уходят позже, из фоновых задач: язык страницы известен
-          // только здесь, и дальше его помнит сам аккаунт.
-          locale,
-        })
+        const email = String(form.get("email"))
 
-        setPending(false)
+        try {
+          const { error: failure } = await authClient.signUp.email({
+            name: String(form.get("name")),
+            email,
+            password: String(form.get("password")),
+            // Письма уходят позже, из фоновых задач: язык страницы известен
+            // только здесь, и дальше его помнит сам аккаунт.
+            locale,
+            // Версия документов, с которыми человек согласился. Сервер её
+            // проверяет: галочка в браузере ничего не доказывает.
+            consentVersion: CONSENT_VERSION,
+            // Куда вернуть после подтверждения адреса: раньше письмо всегда
+            // приводило на главную, а не туда, ради чего человек регистрировался.
+            callbackURL: `${localePath(locale, "/verify")}?state=done&next=${encodeURIComponent(next)}`,
+          })
 
-        if (failure) {
-          setError(failure.status === 422 ? t.emailTaken : t.signUpFailed)
+          if (failure) {
+            setError(
+              failure.status === 422
+                ? t.emailTaken
+                : failure.status === 429
+                  ? t.tooMany
+                  : failure.status === 400
+                    ? t.consentRequired
+                    : t.signUpFailed,
+            )
 
-          return
+            return
+          }
+
+          router.push(
+            `${localePath(locale, "/verify")}?email=${encodeURIComponent(email)}&next=${encodeURIComponent(next)}`,
+          )
+        } catch {
+          setError(t.offline)
+        } finally {
+          setPending(false)
         }
-
-        setSent(true)
       }}
     >
       <Field label={t.name}>
@@ -78,9 +93,9 @@ export function SignUpForm({ locale }: { locale: Locale }) {
         />
       </Field>
       <Field label={t.password} hint={t.passwordHint}>
-        <input
+        <PasswordInput
+          locale={locale}
           className={INPUT_CLASS}
-          type="password"
           name="password"
           autoComplete="new-password"
           required
@@ -115,7 +130,7 @@ export function SignUpForm({ locale }: { locale: Locale }) {
       </label>
 
       {error ? (
-        <p role="alert" className="text-shell-accent mb-4 text-sm">
+        <p role="alert" className="text-shell-accent-text mb-4 text-sm">
           {error}
         </p>
       ) : null}

@@ -10,6 +10,9 @@ type CopyButtonProps = {
   copiedLabel?: string
   variant?: "primary" | "secondary"
   className?: string
+  /** Зовётся после удачного копирования: рядом с кнопкой можно показать,
+   *  что делать со скопированным дальше. */
+  onCopied?: () => void
 }
 
 type CopyState = "idle" | "copied" | "failed"
@@ -29,6 +32,7 @@ export function CopyButton({
   copiedLabel = "Copied",
   variant = "secondary",
   className,
+  onCopied,
 }: CopyButtonProps) {
   const [state, setState] = useState<CopyState>("idle")
 
@@ -40,6 +44,7 @@ export function CopyButton({
     try {
       await navigator.clipboard.writeText(value)
       setState("copied")
+      onCopied?.()
     } catch {
       setState("failed")
     }

@@ -4,6 +4,7 @@ import { CatalogGrid } from "@/components/catalog/catalog-grid"
 import { CatalogShell } from "@/components/catalog/catalog-shell"
 import { SearchBox } from "@/components/catalog/search-box"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
+import { rememberQuery } from "@/lib/search-log"
 import { searchCatalog, type SearchHit } from "@/lib/search/engine"
 import { KINDS, type ItemKind } from "@/registry/categories"
 import type { CatalogItem } from "@/registry/meta"
@@ -29,7 +30,7 @@ function groupByKind(hits: SearchHit[]) {
   })).filter((group) => group.hits.length > 0)
 }
 
-export function SearchPage({
+export async function SearchPage({
   locale,
   query,
 }: {
@@ -39,6 +40,11 @@ export function SearchPage({
   const t = getDictionary(locale)
   const needle = query.trim()
   const outcome = searchCatalog(needle, locale, { limit: SEARCH_LIMIT })
+
+  // Запрос и число находок сохраняются: «искали и не нашли» — самый прямой
+  // сигнал, чего в каталоге не хватает. Пишем на странице выдачи, а не в
+  // подсказках, чтобы не складывать в базу каждое нажатие клавиши.
+  await rememberQuery(needle, locale, outcome.total)
   const groups = groupByKind(outcome.hits)
 
   return (

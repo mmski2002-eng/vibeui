@@ -1,13 +1,20 @@
 "use client"
 
 import Link from "next/link"
-import { Filter, LayoutGrid, Maximize2, Rows3, Grid2x2 } from "lucide-react"
+import {
+  ChevronDown,
+  Filter,
+  LayoutGrid,
+  Maximize2,
+  Rows3,
+  Grid2x2,
+} from "lucide-react"
 import { useEffect, useState, type ReactNode } from "react"
 
 import { SearchBox } from "@/components/catalog/search-box"
 import { ScrollArea } from "@/components/catalog/scroll-area"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
-import type { ItemKind } from "@/registry/categories"
+import { POPULAR_CATEGORIES, type ItemKind } from "@/registry/categories"
 import { catalogBasePath } from "@/registry/index"
 
 export type NavCategory = {
@@ -70,6 +77,10 @@ export function CatalogChrome({
   // семьдесят вариантов и нужен обзор, а блок занимает экран целиком.
   const gridViewKey = `vibeui-grid-view:${kind}`
   const [overview, setOverview] = useState(false)
+  // Подборку наверху колонки можно свернуть: тому, кто знает каталог
+  // наизусть, она только отодвигает алфавит.
+  const popularKey = `vibeui-nav-popular:${kind}`
+  const [popularOpen, setPopularOpen] = useState(true)
 
   // Плотность списка переживает переход между категориями: страница меняется
   // целиком, а меню слева для человека остаётся тем же самым.
@@ -83,6 +94,17 @@ export function CatalogChrome({
       // Хранилище может быть заблокировано — тогда список просто обычный.
     }
   }, [navViewKey])
+
+  useEffect(() => {
+    try {
+      if (window.sessionStorage.getItem(popularKey) === "closed") {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setPopularOpen(false)
+      }
+    } catch {
+      // Без хранилища подборка просто открыта.
+    }
+  }, [popularKey])
 
   useEffect(() => {
     try {
@@ -102,6 +124,28 @@ export function CatalogChrome({
         category.label.toLowerCase().includes(needle),
       )
     : categories
+  const popularSlugs = POPULAR_CATEGORIES[kind] as readonly string[]
+  // Пока в фильтре что-то набрано, список один: человек ищет категорию, а не
+  // выбирает из подборки, и деление на две части только прячет находку.
+  const popular = needle
+    ? []
+    : popularSlugs
+        .map((slug) => visible.find((category) => category.slug === slug))
+        .filter((category): category is NavCategory => category !== undefined)
+  const rest = popular.length
+    ? visible.filter((category) => !popularSlugs.includes(category.slug))
+    : visible
+
+  function togglePopular() {
+    const next = !popularOpen
+    setPopularOpen(next)
+
+    try {
+      window.sessionStorage.setItem(popularKey, next ? "open" : "closed")
+    } catch {
+      // Без хранилища подборка просто откроется снова после перехода.
+    }
+  }
 
   function setGridView(next: boolean) {
     setOverview(next)
@@ -255,12 +299,69 @@ export function CatalogChrome({
                   </li>
                 </ul>
 
-                <p className="text-shell-muted mt-5 mb-2 px-3 text-xs font-medium tracking-wide uppercase">
+                {popular.length ? (
+                  <>
+                    <button
+                      type="button"
+                      onClick={togglePopular}
+                      aria-expanded={popularOpen}
+                      aria-controls="catalog-nav-popular"
+                      className="text-shell-muted hover:text-shell-fg focus-visible:ring-shell-ring mt-5 mb-2 flex w-full items-center gap-1.5 rounded-md px-3 text-xs font-medium tracking-wide uppercase transition-colors focus-visible:ring-2 focus-visible:outline-none"
+                    >
+                      <ChevronDown
+                        className={
+                          "size-3.5 transition-transform " +
+                          (popularOpen ? "" : "-rotate-90")
+                        }
+                        aria-hidden="true"
+                      />
+                      {t.nav.popular}
+                    </button>
+
+                    <ul
+                      id="catalog-nav-popular"
+                      hidden={!popularOpen}
+                      className="catalog-nav-list"
+                    >
+                      {popular.map((category) => (
+                        <li key={category.slug}>
+                          <Link
+                            href={localePath(
+                              locale,
+                              `${base}/${category.slug}`,
+                            )}
+                            aria-current={
+                              active === category.slug ? "page" : undefined
+                            }
+                            className={itemClass(active === category.slug)}
+                          >
+                            {category.label}
+                            <span className="catalog-nav-count tabular-nums">
+                              {category.count}
+                            </span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* Полоса отделяет подборку от алфавита: без неё
+                        повторно встреченная категория читается как сбой
+                        сортировки. */}
+                    <hr className="border-shell-divider my-3" />
+                  </>
+                ) : null}
+
+                <p
+                  className={
+                    "text-shell-muted mb-2 px-3 text-xs font-medium tracking-wide uppercase " +
+                    (popular.length ? "mt-0" : "mt-5")
+                  }
+                >
                   {t.nav.heading}
                 </p>
 
                 <ul className="catalog-nav-list">
-                  {visible.map((category) => (
+                  {rest.map((category) => (
                     <li key={category.slug}>
                       <Link
                         href={localePath(locale, `${base}/${category.slug}`)}
@@ -306,7 +407,32 @@ export function CatalogChrome({
               {t.nav.all}
               <span className="text-xs tabular-nums opacity-70">{total}</span>
             </Link>
-            {categories.map((category) => (
+            {popular.map((category) => (
+              <Link
+                key={category.slug}
+                href={localePath(locale, `${base}/${category.slug}`)}
+                className={
+                  "inline-flex shrink-0 items-center gap-2 rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors " +
+                  (active === category.slug
+                    ? "bg-shell-accent text-shell-accent-fg border-shell-accent"
+                    : "border-shell-border text-shell-muted")
+                }
+              >
+                {category.label}
+                <span className="text-xs tabular-nums opacity-70">
+                  {category.count}
+                </span>
+              </Link>
+            ))}
+
+            {popular.length ? (
+              <span
+                aria-hidden="true"
+                className="bg-shell-divider my-1.5 w-px shrink-0"
+              />
+            ) : null}
+
+            {rest.map((category) => (
               <Link
                 key={category.slug}
                 href={localePath(locale, `${base}/${category.slug}`)}

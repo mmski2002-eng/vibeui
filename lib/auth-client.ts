@@ -16,6 +16,9 @@ export const authClient = createAuthClient({
     inferAdditionalFields({
       user: {
         locale: { type: "string", required: false, input: true },
+        // Версию согласия отправляет форма регистрации: сервер сверяет её
+        // перед созданием аккаунта, поэтому поле входное.
+        consentVersion: { type: "string", required: false, input: true },
       },
     }),
   ],

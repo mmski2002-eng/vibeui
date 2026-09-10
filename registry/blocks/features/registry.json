@@ -752,7 +752,7 @@
       "name": "features-005",
       "type": "registry:block",
       "title": "Возможности чеклистом",
-      "description": "Список с галочками, у которого есть вторая половина: две колонки того, что входит, и честная колонка того, чего нет. Маркеры нарисованы псевдоэлементами.",
+      "description": "Список возможностей с честной второй половиной: что входит и чего в тарифе нет. Подходит лендингу и странице тарифов. Меняются пункты обеих колонок и заголовки.",
       "categories": [
         "features"
       ],
@@ -833,7 +833,7 @@
         ],
         "i18n": {
           "en": {
-            "description": "A checklist with a second half: two columns of what is included and an honest column of what is not. The markers are drawn with pseudo-elements.",
+            "description": "A feature list with an honest second half: what is included and what is not. Suits a landing or a pricing page. Change the items in both columns and the headings.",
             "ai": {
               "summary": "A dark list section: two groups of included items with ticks and a third column of exclusions with dashes. The markers are pseudo-elements and the markup is plain lists. One file, zero dependencies.",
               "preserve": [

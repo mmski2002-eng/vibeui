@@ -9,4 +9,55 @@ export const PREVIEWS = {
   "navbar-002": dynamic(() =>
     import("@/registry/blocks/navbar/navbar-002/navbar-002").then((module) => module.Navbar002),
   ),
+  "navbar-003": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-003/navbar-003").then((module) => module.Navbar003),
+  ),
+  "navbar-004": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-004/navbar-004").then((module) => module.Navbar004),
+  ),
+  "navbar-005": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-005/navbar-005").then((module) => module.Navbar005),
+  ),
+  "navbar-006": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-006/navbar-006").then((module) => module.Navbar006),
+  ),
+  "navbar-007": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-007/navbar-007").then((module) => module.Navbar007),
+  ),
+  "navbar-008": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-008/navbar-008").then((module) => module.Navbar008),
+  ),
+  "navbar-009": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-009/navbar-009").then((module) => module.Navbar009),
+  ),
+  "navbar-010": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-010/navbar-010").then((module) => module.Navbar010),
+  ),
+  "navbar-011": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-011/navbar-011").then((module) => module.Navbar011),
+  ),
+  "navbar-012": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-012/navbar-012").then((module) => module.Navbar012),
+  ),
+  "navbar-013": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-013/navbar-013").then((module) => module.Navbar013),
+  ),
+  "navbar-014": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-014/navbar-014").then((module) => module.Navbar014),
+  ),
+  "navbar-015": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-015/navbar-015").then((module) => module.Navbar015),
+  ),
+  "navbar-016": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-016/navbar-016").then((module) => module.Navbar016),
+  ),
+  "navbar-017": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-017/navbar-017").then((module) => module.Navbar017),
+  ),
+  "navbar-018": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-018/navbar-018").then((module) => module.Navbar018),
+  ),
+  "navbar-019": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-019/navbar-019").then((module) => module.Navbar019),
+  ),
 } satisfies PreviewMap

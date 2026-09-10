@@ -5616,7 +5616,7 @@
       "name": "auth-033",
       "type": "registry:block",
       "title": "Стеклянная карточка входа",
-      "description": "Полупрозрачная карточка входа на backdrop-filter поверх цветного поля с размытыми пятнами и сеткой во всю ширину кадра.",
+      "description": "Вход поверх цветного фона с мягкими пятнами: форма стоит в стеклянной карточке по центру. Меняются заголовок, поля, кнопки и цвет фона.",
       "categories": [
         "auth"
       ],
@@ -5699,7 +5699,7 @@
         "i18n": {
           "en": {
             "title": "Glass Sign In",
-            "description": "A translucent backdrop-filter sign-in card over a colour field with blurred blobs and a grid spanning the full frame.",
+            "description": "A sign-in over a colour field with soft blooms: the form sits in a glass card in the middle. Change the heading, the fields, the buttons and the background colour.",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-033-*. A server component: there are no hooks. The block paints the colour field itself: a diagonal gradient from hue to hueEnd, four blurred blobs in the [data-part=\"field-art\"] layer and a grid in [data-part=\"grid\"] under a mask. The glass is three layers — backdrop-filter blur(22px) saturate(180%), a translucent fill and an inner light line along the top edge. The palette is explicitly dark and color-scheme:dark is pinned on the root.",
             "ai": {
               "summary": "A glass sign-in card: a translucent backdrop-filter form over a colour field with blurred blobs and a grid. Zero dependencies, one file, no client JS.",

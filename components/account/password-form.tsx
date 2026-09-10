@@ -2,44 +2,78 @@
 
 import { useState } from "react"
 
+import { ACCOUNT_TEXTS } from "@/components/account/texts"
 import { Field, INPUT_CLASS, SUBMIT_CLASS } from "@/components/auth/auth-card"
+import { PasswordInput } from "@/components/auth/password-input"
 import { authClient } from "@/lib/auth-client"
+import type { Locale } from "@/lib/i18n"
 
-export function PasswordForm() {
-  const [state, setState] = useState<"idle" | "done" | "error">("idle")
-  const [pending, setPending] = useState(false)
+/**
+ * Смена пароля. Причина отказа разводится по видам: раньше любая ошибка —
+ * включая обрыв сети и лимит попыток — подписывалась «текущий пароль не
+ * подошёл», и человек менял верный пароль на новый в поисках несуществующей
+ * опечатки.
+ */
+export function PasswordForm({ locale }: { locale: Locale }) {
+  const t = ACCOUNT_TEXTS[locale].profile
+  const [state, setState] = useState<"idle" | "pending" | "done">("idle")
+  const [error, setError] = useState<string>()
 
   return (
     <form
-      className="mt-6 max-w-sm"
       onSubmit={async (event) => {
         event.preventDefault()
-        setPending(true)
+        const form = event.currentTarget
+        const data = new FormData(form)
+        setError(undefined)
+        setState("pending")
 
-        const form = new FormData(event.currentTarget)
-        const { error } = await authClient.changePassword({
-          currentPassword: String(form.get("current")),
-          newPassword: String(form.get("next")),
-          revokeOtherSessions: true,
-        })
+        try {
+          const { error: failure } = await authClient.changePassword({
+            currentPassword: String(data.get("current")),
+            newPassword: String(data.get("next")),
+            revokeOtherSessions: true,
+          })
 
-        setPending(false)
-        setState(error ? "error" : "done")
+          if (failure) {
+            setError(
+              failure.status === 429
+                ? t.tooMany
+                : failure.status === 400 || failure.status === 401
+                  ? t.wrongPassword
+                  : t.failed,
+            )
+
+            return
+          }
+
+          form.reset()
+          setState("done")
+
+          return
+        } catch {
+          // Сюда попадают только обрывы сети: у ответа сервера есть статус.
+          setError(t.failed)
+        } finally {
+          // Ожидание снимается в любом случае: заблокированная кнопка после
+          // неудачи выглядит как зависший интерфейс.
+          setState((was) => (was === "pending" ? "idle" : was))
+        }
       }}
     >
-      <Field label="Текущий пароль">
-        <input
+      <Field label={t.current}>
+        <PasswordInput
+          locale={locale}
           className={INPUT_CLASS}
-          type="password"
           name="current"
           autoComplete="current-password"
           required
         />
       </Field>
-      <Field label="Новый пароль" hint="Не короче 10 символов">
-        <input
+      <Field label={t.next} hint={t.hint}>
+        <PasswordInput
+          locale={locale}
           className={INPUT_CLASS}
-          type="password"
           name="next"
           autoComplete="new-password"
           required
@@ -48,19 +82,24 @@ export function PasswordForm() {
         />
       </Field>
 
-      {state === "error" ? (
-        <p role="alert" className="text-shell-accent mb-4 text-sm">
-          Текущий пароль не подошёл.
-        </p>
-      ) : null}
-      {state === "done" ? (
-        <p className="text-shell-muted mb-4 text-sm">
-          Пароль изменён, остальные сессии закрыты.
+      {error ? (
+        <p role="alert" className="text-shell-accent-text mb-4 text-sm">
+          {error}
         </p>
       ) : null}
 
-      <button type="submit" className={SUBMIT_CLASS} disabled={pending}>
-        {pending ? "Сохраняем…" : "Сменить пароль"}
+      {state === "done" ? (
+        <p role="status" className="text-shell-muted mb-4 text-sm">
+          {t.changed}
+        </p>
+      ) : null}
+
+      <button
+        type="submit"
+        className={SUBMIT_CLASS}
+        disabled={state === "pending"}
+      >
+        {state === "pending" ? t.changing : t.change}
       </button>
     </form>
   )
