@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { Suspense } from "react"
 
 import { AuthCard } from "@/components/auth/auth-card"
 import { SignUpForm } from "@/components/auth/signup-form"
@@ -33,7 +34,11 @@ export default function SignUpPageEn() {
           </>
         }
       >
-        <SignUpForm locale={LOCALE} />
+        {/* Форма читает ?next= и ?reset= из адреса: без границы
+            Suspense страница входа перестала бы собираться заранее. */}
+        <Suspense fallback={null}>
+          <SignUpForm locale={LOCALE} />
+        </Suspense>
       </AuthCard>
     </CatalogShell>
   )
