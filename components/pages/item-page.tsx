@@ -26,7 +26,6 @@ import {
   getCategoryLabel,
   getItemKind,
 } from "@/registry/index"
-import { getSession } from "@/lib/session"
 import { getBlockSource } from "@/registry/source.server"
 
 /**
@@ -61,9 +60,6 @@ export async function ItemPage({
   const initialValues = resolveControlValues(block, flat)
 
   const source = await getBlockSource(slug)
-  // Почта вошедшего подставляется в форму жалобы: спрашивать её у того, кто
-  // уже вошёл, — лишний шаг ровно там, где человек раздражён.
-  const session = await getSession()
   const installCommand = getInstallCommand(block.name)
   const registryUrl = getRegistryItemUrl(block.name)
   const docUrl = getItemDocUrl(block.name)
@@ -275,11 +271,10 @@ export async function ItemPage({
             {/* Жалоба на компонент отсюда: человек уже стоит перед тем, что
                 у него не заработало, и код item'а подставится сам. */}
             <div className="mt-4">
-              <ReportDialog
-                locale={locale}
-                itemName={block.name}
-                email={session?.user.email}
-              />
+              {/* Почту вошедшего форма узнаёт на клиенте: страницы item'ов
+                  собираются заранее, и обращение к сессии на сервере сделало
+                  бы их динамическими — полторы тысячи страниц вместо файлов. */}
+              <ReportDialog locale={locale} itemName={block.name} />
             </div>
 
             <details

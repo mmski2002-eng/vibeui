@@ -5,6 +5,7 @@ import { Loader2 } from "lucide-react"
 
 import { Field, INPUT_CLASS, SUBMIT_CLASS } from "@/components/auth/auth-card"
 import { REPORT_FORM_TEXTS } from "@/components/admin/texts"
+import { authClient } from "@/lib/auth-client"
 import { createReport, type ReportKind } from "@/lib/report-actions"
 import type { Locale } from "@/lib/i18n"
 
@@ -31,6 +32,10 @@ export function ReportForm({
   compact?: boolean
 }) {
   const t = REPORT_FORM_TEXTS[locale]
+  const session = authClient.useSession()
+  // Вошедшего про почту не спрашиваем: адрес всё равно возьмётся из сессии
+  // на сервере, а лишнее поле раздражает ровно там, где человек уже сердит.
+  const known = email ?? session.data?.user.email
   const [state, setState] = useState<"idle" | "pending" | "sent">("idle")
   const [error, setError] = useState<string>()
 
@@ -71,7 +76,7 @@ export function ReportForm({
             kind,
             subject,
             message: String(form.get("message") ?? ""),
-            email: email ?? String(form.get("email") ?? ""),
+            email: known ?? String(form.get("email") ?? ""),
             itemName,
             locale,
           })
@@ -121,7 +126,7 @@ export function ReportForm({
         </Field>
       )}
 
-      {email ? null : (
+      {known ? null : (
         <Field label={t.email}>
           <input
             className={INPUT_CLASS}

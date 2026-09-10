@@ -1,6 +1,6 @@
 import { and, desc, eq, ilike, or } from "drizzle-orm"
 
-import { requireAdmin } from "@/lib/admin"
+import { isAdmin } from "@/lib/admin"
 import { db } from "@/lib/db"
 import { payment, user } from "@/lib/db/schema"
 
@@ -14,8 +14,15 @@ function escape(value: string) {
   return `"${value.replace(/"/g, '""')}"`
 }
 
+/** Выгрузка считает по живой базе, кешировать её нечего. */
+export const dynamic = "force-dynamic"
+
 export async function GET(request: Request) {
-  await requireAdmin()
+  // В маршруте отвечаем сами, а не через notFound(): у обработчика запроса
+  // нет страницы, на которую можно было бы отрендерить 404.
+  if (!(await isAdmin())) {
+    return new Response("not found\n", { status: 404 })
+  }
 
   const params = new URL(request.url).searchParams
   const needle = params.get("q")?.trim()
