@@ -3,13 +3,13 @@ import "server-only"
 import { and, count, eq, gt } from "drizzle-orm"
 
 import { db } from "@/lib/db"
+import { ANON_MONTHLY_LIMIT, FREE_MONTHLY_LIMIT } from "@/lib/limits"
 import { subscription, usage } from "@/lib/db/schema"
 
-/** Сколько разных компонентов в месяц отдаём бесплатно вошедшему. */
-export const FREE_MONTHLY_LIMIT = 100
-
-/** То же для анонима: хватает убедиться, что компоненты настоящие. */
-export const ANON_MONTHLY_LIMIT = 10
+// Сами числа лежат в lib/limits.ts: их читают и статические страницы,
+// которым серверный модуль с базой брать нельзя. Здесь они и используются,
+// и переэкспортируются — чтобы прежние импорты не переписывать.
+export { ANON_MONTHLY_LIMIT, FREE_MONTHLY_LIMIT }
 
 /** Календарный месяц: по нему же чистятся старые строки расхода. */
 export function currentPeriod(now = new Date()) {

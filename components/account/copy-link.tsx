@@ -33,7 +33,7 @@ export function CopyLink({
             // выделить руками — ломать раздел незачем.
           }
         }}
-        className="bg-shell-accent text-shell-accent-fg focus-visible:ring-shell-ring inline-flex h-11 shrink-0 items-center gap-1.5 rounded-lg px-4 text-sm font-semibold transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:outline-none"
+        className="bg-shell-accent text-shell-accent-fg focus-visible:ring-shell-ring inline-flex h-11 shrink-0 items-center gap-1.5 rounded-lg px-4 text-sm font-semibold transition-colors hover:bg-shell-accent-deep focus-visible:ring-2 focus-visible:outline-none"
       >
         {copied ? (
           <Check className="size-4" aria-hidden="true" />

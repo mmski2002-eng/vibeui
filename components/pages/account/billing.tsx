@@ -97,7 +97,7 @@ export async function AccountBilling({ locale }: { locale: Locale }) {
             </p>
             <Link
               href={localePath(locale, "/pricing")}
-              className="bg-shell-accent text-shell-accent-fg mt-5 inline-flex h-10 items-center rounded-lg px-4 text-sm font-semibold transition-opacity hover:opacity-90"
+              className="bg-shell-accent text-shell-accent-fg mt-5 inline-flex h-10 items-center rounded-lg px-4 text-sm font-semibold transition-colors hover:bg-shell-accent-deep"
             >
               {state.kind === "expired" ? t.payAgain : t.choosePlan}
             </Link>
@@ -168,7 +168,7 @@ export async function AccountBilling({ locale }: { locale: Locale }) {
             {state.kind === "past_due" ? (
               <Link
                 href={localePath(locale, "/pricing")}
-                className="bg-shell-accent text-shell-accent-fg mt-5 inline-flex h-10 items-center rounded-lg px-4 text-sm font-semibold transition-opacity hover:opacity-90"
+                className="bg-shell-accent text-shell-accent-fg mt-5 inline-flex h-10 items-center rounded-lg px-4 text-sm font-semibold transition-colors hover:bg-shell-accent-deep"
               >
                 {t.payAgain}
               </Link>

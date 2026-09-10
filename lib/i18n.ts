@@ -26,9 +26,9 @@ type Dictionary = {
     components: string
     blocks: string
     items: (count: number) => string
-    lab: string
     animations: string
     scenarios: string
+    pricing: string
   }
   home: {
     title: string
@@ -36,7 +36,9 @@ type Dictionary = {
      * Тот же заголовок, разбитый по смыслу: «Выбери дизайн.» отдельной
      * строкой. Автоперенос рвал фразу между «Отдай» и «ИИ».
      */
-    titleLines: [string, string]
+    /* Три предложения обещания по отдельности: в заголовке они идут
+       разным весом, и склеенная строка этого не позволяет. */
+    titleParts: [string, string, string]
     description: string
     blocksLink: string
     counts: (items: number, categories: number) => string
@@ -170,6 +172,7 @@ const RU: Dictionary = {
     components: "Компоненты",
     blocks: "Блоки",
     scenarios: "Сценарии",
+    pricing: "Тарифы",
     items: (count) => {
       const tail = count % 100
       const last = count % 10
@@ -188,12 +191,11 @@ const RU: Dictionary = {
 
       return `${count} элементов`
     },
-    lab: "Страница для тестов",
     animations: "Анимации",
   },
   home: {
     title: "Выбери дизайн. Отдай ИИ. Получи сайт.",
-    titleLines: ["Выбери дизайн.", "Отдай ИИ. Получи сайт."],
+    titleParts: ["Выбери дизайн.", "Отдай ИИ.", "Получи сайт."],
     description:
       "Библиотека готовых компонентов для вайбкодинга. Открой компонент, нажми «Копировать для ИИ» — агент поставит его из реестра, а не пересоздаст похожий по описанию. Целые секции страницы — в",
     blocksLink: "блоках",
@@ -412,12 +414,12 @@ const EN: Dictionary = {
     blocks: "Blocks",
     scenarios: "Scenarios",
     items: (count) => `${count} items`,
-    lab: "Test page",
     animations: "Animations",
+    pricing: "Pricing",
   },
   home: {
     title: "Pick a design. Hand it to your AI. Ship the page.",
-    titleLines: ["Pick a design.", "Hand it to AI. Ship the page."],
+    titleParts: ["Pick a design.", "Hand it to AI.", "Ship the page."],
     description:
       "A component library built for vibe coding. Open a component, hit Copy for AI, and your agent installs the real thing from the registry instead of guessing at a lookalike. Full page sections live in",
     blocksLink: "Blocks",

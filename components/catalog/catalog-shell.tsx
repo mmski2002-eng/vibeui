@@ -18,12 +18,20 @@ import { getCatalogItems } from "@/registry/index"
 export function CatalogShell({
   children,
   locale,
+  wash = false,
 }: {
   children: ReactNode
   locale: Locale
+  /** Тёплый налив под первым экраном. Только главная: в каталоге фон
+   *  обязан успокоиться, там в фокусе карточки. */
+  wash?: boolean
 }) {
   return (
-    <div className="catalog-shell bg-shell text-shell-fg flex min-h-screen flex-col [--catalog-header-height:6rem] lg:[--catalog-header-height:3.5rem]">
+    <div
+      // Пробел перед подстановкой обязателен: без него сборщик стилей
+      // читает последний класс слитно с `${` и утилиту не выпускает.
+      className={`catalog-shell bg-shell text-shell-fg flex min-h-screen flex-col [--catalog-header-height:6rem] lg:[--catalog-header-height:3.5rem] ${wash ? "shell-wash" : ""}`}
+    >
       <CatalogTopbar itemCount={getCatalogItems().length} locale={locale} />
       {/* Отметки избранного грузятся один раз на страницу и раздаются
           карточкам: каталог статический, персональных данных в нём нет. */}

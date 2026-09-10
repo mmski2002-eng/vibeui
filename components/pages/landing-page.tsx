@@ -1,13 +1,19 @@
+import type { CSSProperties } from "react"
 import Link from "next/link"
-import { ArrowRight, Check, X } from "lucide-react"
+import { ArrowRight, X } from "lucide-react"
 
 import { CatalogShell } from "@/components/catalog/catalog-shell"
+import { Background005 } from "@/registry/animations/background/background-005/background-005"
 import { DesignShowcase } from "@/components/pages/landing/design-showcase"
+import { RegistryRain } from "@/components/pages/landing/registry-rain"
 import {
   CategoryExplorer,
   type ExplorerTab,
 } from "@/components/pages/landing/category-explorer"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
+import { FREE_MONTHLY_LIMIT } from "@/lib/limits"
+import { PLANS } from "@/lib/plans"
+import { getInstallCommand } from "@/lib/site"
 import { CATEGORIES, type ItemKind } from "@/registry/categories"
 import {
   catalogBasePath,
@@ -20,10 +26,26 @@ const GROUP_OF = new Map<string, string>(
   CATEGORIES.map((category) => [category.slug, category.group]),
 )
 
+/** Кадры первого экрана — тот же набор, что в превью компонента. */
+const HERO_PHOTOS = [
+  { src: "/demo/posters/poster-05.webp", alt: "" },
+  { src: "/demo/cards/portrait-07.webp", alt: "" },
+  { src: "/demo/features/feature-05.webp", alt: "" },
+  { src: "/demo/cards/wide-03.webp", alt: "" },
+  { src: "/demo/posters/poster-03.webp", alt: "" },
+  { src: "/demo/cards/square-02.webp", alt: "" },
+  { src: "/demo/cards/portrait-01.webp", alt: "" },
+  { src: "/demo/cards/wide-01.webp", alt: "" },
+  { src: "/demo/features/feature-02.webp", alt: "" },
+  { src: "/demo/cards/portrait-05.webp", alt: "" },
+  { src: "/demo/cards/square-03.webp", alt: "" },
+  { src: "/demo/cards/wide-02.webp", alt: "" },
+]
+
 const BTN_PRIMARY =
-  "bg-shell-accent text-shell-accent-fg inline-flex h-11 items-center justify-center gap-2 rounded-full px-6 text-sm font-medium transition-opacity hover:opacity-90 focus-visible:ring-shell-ring focus-visible:ring-2 focus-visible:outline-none"
+  "bg-shell-accent text-shell-accent-fg inline-flex h-11 items-center justify-center gap-2 rounded-full px-6 text-sm font-medium transition hover:bg-shell-accent-deep active:scale-[0.98] focus-visible:ring-shell-ring focus-visible:ring-2 focus-visible:outline-none"
 const BTN_GHOST =
-  "border-shell-border text-shell-fg hover:bg-shell-panel hover:border-shell-border-strong inline-flex h-11 items-center justify-center gap-2 rounded-full border px-6 text-sm font-medium transition-colors focus-visible:ring-shell-ring focus-visible:ring-2 focus-visible:outline-none"
+  "border-shell-border text-shell-fg hover:bg-shell-panel hover:border-shell-border-strong inline-flex h-11 items-center justify-center gap-2 rounded-full border px-6 text-sm font-medium transition active:scale-[0.98] focus-visible:ring-shell-ring focus-visible:ring-2 focus-visible:outline-none"
 
 /**
  * Главная — витринный лендинг. Каталог живёт в своих разделах (/components,
@@ -45,6 +67,12 @@ export function LandingPage({ locale }: { locale: Locale }) {
           ? t.blocks
           : t.animations,
   }))
+
+  // Точка последнего предложения — акцентом: единственное место, где знак
+  // бренда стоит внутри самого обещания, а не рядом с ним.
+  const promise = t.home.titleParts[2]
+  const promiseDot = promise.endsWith(".")
+  const promiseEnd = promiseDot ? promise.slice(0, -1) : promise
 
   const total = kinds.reduce((sum, entry) => sum + entry.count, 0)
   const allCategories = kinds.flatMap((entry) =>
@@ -82,6 +110,24 @@ export function LandingPage({ locale }: { locale: Locale }) {
     })),
   ]
 
+  // Команда установки настоящая: тот же адрес реестра, что отдаёт кнопка
+  // на странице компонента.
+  const installCommand = getInstallCommand("hero-001")
+
+  const trust = en
+    ? [
+        `${total} components`,
+        "shadcn-compatible",
+        "one command to install",
+        "zero dependencies",
+      ]
+    : [
+        `${total} компонентов`,
+        "shadcn-совместимо",
+        "установка одной командой",
+        "ноль зависимостей",
+      ]
+
   const compareBad = en
     ? [
         "The agent re-invents a lookalike from a description",
@@ -107,6 +153,55 @@ export function LandingPage({ locale }: { locale: Locale }) {
         "Ноль зависимостей, собственная палитра",
         "Доступность и клавиатура на месте",
         "Одна команда — и готово",
+      ]
+
+  const monthly = Number(PLANS.monthly.price).toLocaleString("ru-RU")
+  const tiers = en
+    ? [
+        {
+          name: "Free",
+          price: "0 ₽",
+          note: `${FREE_MONTHLY_LIMIT} different components a month`,
+          lines: [
+            "The whole catalog, previews and search",
+            "Copy for AI and shadcn install",
+            "Favorites and history",
+          ],
+        },
+        {
+          name: "Pro",
+          price: `${monthly} ₽ / mo`,
+          note: "No copy limit",
+          lines: [
+            "Pro-only components",
+            "A personal install key",
+            "14 Pro days for every invite",
+          ],
+          highlight: true,
+        },
+      ]
+    : [
+        {
+          name: "Бесплатно",
+          price: "0 ₽",
+          note: `${FREE_MONTHLY_LIMIT} разных компонентов в месяц`,
+          lines: [
+            "Весь каталог, превью и поиск",
+            "Копирование для ИИ и установка через shadcn",
+            "Избранное и история",
+          ],
+        },
+        {
+          name: "Pro",
+          price: `${monthly} ₽ / мес`,
+          note: "Без лимита на копирование",
+          lines: [
+            "Закрытые Pro-компоненты",
+            "Персональный ключ установки",
+            "14 дней Pro за каждого приглашённого",
+          ],
+          highlight: true,
+        },
       ]
 
   const faq = en
@@ -148,50 +243,110 @@ export function LandingPage({ locale }: { locale: Locale }) {
       ]
 
   return (
-    <CatalogShell locale={locale}>
+    <CatalogShell locale={locale} wash>
       <main className="w-full flex-1">
-        {/* Hero */}
-        <section className="mx-auto w-full max-w-[1440px] px-4 pt-6 pb-8 text-center sm:pt-10 lg:px-6 lg:pt-12">
-          <Link
-            href={localePath(locale, catalogBasePath("animation"))}
-            className="border-shell-border bg-shell-panel text-shell-muted hover:text-shell-fg hover:border-shell-border-strong mx-auto inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium transition-colors"
-          >
-            <span
-              className="bg-shell-accent size-1.5 shrink-0 rounded-full"
-              aria-hidden="true"
-            />
-            {en ? "New · Animations section" : "Новое · раздел Анимации"}
-            <ArrowRight className="size-3" aria-hidden="true" />
-          </Link>
+        {/* Hero: обещание стоит внутри работающего компонента каталога, а
+            не над картинкой про него. Кадры кружат вокруг заголовка — это и
+            есть доказательство продукта в первую секунду. */}
+        <section className="w-full pb-8">
+          {/* Сцена во всю ширину и без рамки: она не карточка на странице, а
+              сам верх страницы. Размер кадров подбирает сама орбита от
+              высоты холста. */}
+          {/* Фраза поднята над центром сцены: кадры остаются на своей
+              орбите, а заголовок с кнопками уходит выше. На телефоне
+              подъёма нет — там текст и так занимает почти весь холст и
+              ушёл бы под шапку. */}
+          <div className="h-[30rem] overflow-hidden sm:h-[32rem] sm:[--vibeui-background-005-center-shift:2rem] lg:h-[34rem] lg:[--vibeui-background-005-center-shift:3rem]">
+            <Background005
+              photos={HERO_PHOTOS}
+              speed={0.7}
+              background="var(--shell-bg)"
+              ink="var(--shell-fg)"
+              // Холст сцены погашен: подложку первого экрана даёт страница,
+              // а цвет холста остаётся — из него считается свечение под
+              // заголовком.
+              style={
+                {
+                  "--vibeui-background-005-canvas": "transparent",
+                } as CSSProperties
+              }
+            >
+              <div className="hero-rise bg-shell/70 flex flex-col items-center gap-3 rounded-2xl px-4 py-5 backdrop-blur-[2px] sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
+                <Link
+                  href={localePath(locale, catalogBasePath("animation"))}
+                  className="border-shell-accent-line bg-shell-accent-soft/80 text-shell-accent-text hover:border-shell-accent hover:bg-shell-accent-soft inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium backdrop-blur-md transition-colors"
+                >
+                  <span
+                    className="bg-shell-accent size-1.5 shrink-0 rounded-full"
+                    aria-hidden="true"
+                  />
+                  {en ? "New · Animations section" : "Новое · раздел Анимации"}
+                  <ArrowRight className="size-3" aria-hidden="true" />
+                </Link>
 
-          {/* Строки заданы вручную: автоперенос рвал фразу между «Отдай» и
-              «ИИ», а обещание читается только целыми предложениями. */}
-          <h1 className="text-shell-fg mx-auto mt-5 max-w-4xl text-4xl leading-[1.14] font-semibold tracking-[-0.015em] text-balance sm:text-5xl lg:text-6xl">
-            <span className="block">{t.home.titleLines[0]}</span>
-            <span className="block">{t.home.titleLines[1]}</span>
-          </h1>
-          <p className="text-shell-muted mx-auto mt-4 max-w-xl text-base leading-relaxed text-balance sm:text-lg">
-            {en
-              ? "Sections, components and animations. Pick one, copy it for AI, drop it into your project."
-              : "Секции, компоненты и анимации. Выбери, скопируй для ИИ и вставь в проект."}
-          </p>
+                {/* Строки заданы вручную: автоперенос рвал фразу между «Отдай»
+                  и «ИИ», а обещание читается только целыми предложениями.
+                  Вес внутри строки — ритм: три одинаково жирных предложения
+                  склеивались в стену, средний такт снят до обычного веса. */}
+                <h1 className="type-display text-shell-fg mx-auto mt-3 max-w-4xl">
+                  <span className="block">{t.home.titleParts[0]}</span>
+                  <span className="block">
+                    <span className="text-shell-muted font-normal">
+                      {t.home.titleParts[1]}
+                    </span>{" "}
+                    {promiseEnd}
+                    {promiseDot ? (
+                      <span className="text-shell-accent">.</span>
+                    ) : null}
+                  </span>
+                </h1>
+                <p className="type-lead text-shell-muted mx-auto mt-1 max-w-xl text-balance">
+                  {en
+                    ? "Sections, components and animations. Pick one, copy it for AI, drop it into your project."
+                    : "Секции, компоненты и анимации. Выбери, скопируй для ИИ и вставь в проект."}
+                </p>
 
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-            <Link href="#designs" className={BTN_PRIMARY}>
-              {en ? "Explore designs" : "Выбрать дизайн"}
-              <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
-            <Link href={localePath(locale, "/blocks")} className={BTN_GHOST}>
-              {t.blocks.title}
-            </Link>
+                <div className="mt-3 flex flex-wrap items-center justify-center gap-3">
+                  <Link href="#designs" className={BTN_PRIMARY}>
+                    {en ? "Explore designs" : "Выбрать дизайн"}
+                    <ArrowRight className="size-4" aria-hidden="true" />
+                  </Link>
+                  <Link
+                    href={localePath(locale, "/blocks")}
+                    // Кадры проходят за кнопкой: стекло держит контраст, но
+                    // сцену за собой не закрывает.
+                    className={`${BTN_GHOST} bg-shell/40 backdrop-blur-md`}
+                  >
+                    {t.blocks.title}
+                  </Link>
+                </div>
+
+                {/* Опора под кнопками: три возражения снимаются одной
+                    строкой, и призыв перестаёт висеть в пустоте. */}
+                <ul className="type-label text-shell-muted border-shell-border bg-shell/40 mx-auto mt-5 grid max-w-full grid-cols-2 justify-items-center gap-x-4 gap-y-1.5 rounded-2xl border px-4 py-2.5 backdrop-blur-md sm:inline-flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-3 sm:rounded-full">
+                  {trust.map((line) => (
+                    <li
+                      key={line}
+                      // Точка-разделитель только там, где строка идёт одной
+                      // лентой: при переносе она вылезала бы в начало новой
+                      // строки, поэтому на телефоне это сетка без точек.
+                      className="before:text-shell-muted/50 before:mr-3 before:hidden before:content-['·'] sm:before:inline sm:first:before:hidden"
+                    >
+                      {line}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Background005>
           </div>
         </section>
 
         <DesignShowcase locale={locale} />
 
-        {/* Статы */}
-        <section className="mx-auto w-full max-w-[1440px] px-4 pt-16 text-center lg:px-6">
-          <p className="text-shell-muted mx-auto max-w-2xl text-sm sm:text-base">
+        {/* Статы и обзор категорий — одна смысловая пара: сколько всего и
+            что именно. Между ними шаг тесный, вокруг пары — обычный. */}
+        <section className="mx-auto w-full max-w-[1440px] px-4 pt-20 text-center lg:px-6">
+          <p className="type-caption text-shell-muted mx-auto max-w-2xl">
             <Stat n={total} /> {en ? "elements across" : "элементов в"}{" "}
             <Stat n={groupsTotal} /> {en ? "groups and" : "группах и"}{" "}
             <Stat n={categoriesTotal} />{" "}
@@ -201,13 +356,12 @@ export function LandingPage({ locale }: { locale: Locale }) {
           </p>
         </section>
 
-        {/* Обзор категорий */}
-        <section className="mx-auto w-full max-w-[1440px] px-4 py-12 lg:px-6">
+        <section className="mx-auto w-full max-w-[1440px] px-4 pt-6 lg:px-6">
           <CategoryExplorer tabs={tabs} locale={locale} />
         </section>
 
         {/* Разделы */}
-        <section className="mx-auto w-full max-w-[1440px] px-4 py-12 lg:px-6">
+        <section className="mx-auto w-full max-w-[1440px] px-4 pt-20 lg:px-6">
           <ul className="grid gap-4 sm:grid-cols-3">
             {kinds.map((entry) => (
               <li key={entry.kind}>
@@ -240,25 +394,29 @@ export function LandingPage({ locale }: { locale: Locale }) {
         </section>
 
         {/* Сравнение */}
-        <section className="mx-auto w-full max-w-[1100px] px-4 py-12 lg:px-6">
-          <h2 className="text-shell-fg mb-8 text-center text-2xl font-semibold tracking-tight sm:text-3xl">
+        <section className="mx-auto w-full max-w-[1100px] px-4 pt-20 lg:px-6">
+          <h2 className="type-h2 text-shell-fg mb-8 text-center">
             {en
               ? "Handcrafted, not re-invented"
               : "Готовый, а не пересозданный"}
           </h2>
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="border-shell-border bg-shell-panel rounded-2xl border p-6">
-              <h3 className="text-shell-fg mb-4 font-semibold">
+          {/* Колонки намеренно неравные. Две симметричные плашки с
+              крестиками и галочками — самый ходовой паттерн на лендингах
+              разработческих инструментов; здесь левая уходит в тень, правая
+              крупнее, теплее и приподнята. */}
+          <div className="grid items-start gap-4 md:grid-cols-[0.85fr_1.15fr] md:gap-6">
+            <div className="border-shell-border/70 rounded-2xl border border-dashed p-6">
+              <h3 className="type-label text-shell-muted mb-4">
                 {en ? "Without the library" : "Без библиотеки"}
               </h3>
               <ul className="flex flex-col gap-3">
                 {compareBad.map((line) => (
                   <li
                     key={line}
-                    className="text-shell-muted flex gap-2.5 text-sm"
+                    className="text-shell-muted/80 flex gap-2.5 text-sm"
                   >
                     <X
-                      className="mt-0.5 size-4 shrink-0 opacity-70"
+                      className="mt-0.5 size-4 shrink-0 opacity-60"
                       aria-hidden="true"
                     />
                     {line}
@@ -266,15 +424,18 @@ export function LandingPage({ locale }: { locale: Locale }) {
                 ))}
               </ul>
             </div>
-            <div className="border-shell-accent/40 bg-shell-elevated rounded-2xl border p-6">
-              <h3 className="text-shell-fg mb-4 font-semibold">
+            <div className="border-shell-accent-line bg-shell-elevated rounded-2xl border p-6 shadow-lg shadow-black/10 md:-mt-4 md:p-8">
+              <h3 className="type-label text-shell-accent-text mb-4">
                 {en ? "With VibeUI" : "С VibeUI"}
               </h3>
-              <ul className="flex flex-col gap-3">
+              <ul className="flex flex-col gap-3.5">
                 {compareGood.map((line) => (
-                  <li key={line} className="text-shell-fg flex gap-2.5 text-sm">
-                    <Check
-                      className="text-shell-accent mt-0.5 size-4 shrink-0"
+                  <li
+                    key={line}
+                    className="text-shell-fg flex gap-3 text-sm sm:text-base"
+                  >
+                    <span
+                      className="bg-shell-accent mt-2 size-1.5 shrink-0 rounded-full"
                       aria-hidden="true"
                     />
                     {line}
@@ -285,9 +446,63 @@ export function LandingPage({ locale }: { locale: Locale }) {
           </div>
         </section>
 
+        {/* Тарифы. Страница /pricing существовала с самого начала, но
+            ссылок на неё не было ни одной: человек узнавал про лимит,
+            только упершись в него. Здесь короткая выжимка, подробности —
+            на самой странице. */}
+        <section className="mx-auto w-full max-w-[1100px] px-4 pt-20 lg:px-6">
+          <h2 className="type-h2 text-shell-fg mb-8 text-center">
+            {en ? "Free to start" : "Начать можно бесплатно"}
+          </h2>
+          <div className="grid gap-4 md:grid-cols-2">
+            {tiers.map((tier) => (
+              <div
+                key={tier.name}
+                className={
+                  tier.highlight
+                    ? "border-shell-accent-line bg-shell-elevated rounded-2xl border p-6"
+                    : "border-shell-border bg-shell-panel rounded-2xl border p-6"
+                }
+              >
+                <p
+                  className={
+                    tier.highlight
+                      ? "type-label text-shell-accent-text"
+                      : "type-label text-shell-muted"
+                  }
+                >
+                  {tier.name}
+                </p>
+                <p className="type-h3 text-shell-fg mt-2">{tier.price}</p>
+                <p className="text-shell-muted mt-1 text-sm">{tier.note}</p>
+                <ul className="mt-5 flex flex-col gap-2.5">
+                  {tier.lines.map((line) => (
+                    <li
+                      key={line}
+                      className="text-shell-muted flex gap-3 text-sm"
+                    >
+                      <span
+                        className="bg-shell-accent mt-2 size-1.5 shrink-0 rounded-full"
+                        aria-hidden="true"
+                      />
+                      {line}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <div className="mt-6 flex justify-center">
+            <Link href={localePath(locale, "/pricing")} className={BTN_GHOST}>
+              {en ? "All plan details" : "Все условия тарифов"}
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+          </div>
+        </section>
+
         {/* FAQ */}
-        <section className="mx-auto w-full max-w-[760px] px-4 py-12 lg:px-6">
-          <h2 className="text-shell-fg mb-8 text-center text-2xl font-semibold tracking-tight sm:text-3xl">
+        <section className="mx-auto w-full max-w-[760px] px-4 pt-20 lg:px-6">
+          <h2 className="type-h2 text-shell-fg mb-8 text-center">
             {en ? "Frequently asked questions" : "Частые вопросы"}
           </h2>
           <div className="flex flex-col gap-2">
@@ -311,17 +526,33 @@ export function LandingPage({ locale }: { locale: Locale }) {
           </div>
         </section>
 
-        {/* Финальный CTA */}
-        <section className="mx-auto w-full max-w-[1440px] px-4 py-16 text-center lg:px-6 lg:py-24">
-          <h2 className="text-shell-fg mx-auto max-w-2xl text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+        {/* Финальный CTA. Перед ним пауза шире обычной: это конец разговора,
+            а не очередная секция. */}
+        <section className="mx-auto w-full max-w-[1440px] px-4 pt-32 pb-24 text-center lg:px-6">
+          <h2 className="type-h1 text-shell-fg mx-auto max-w-2xl">
             {en ? "Ship a page tonight." : "Собери страницу за вечер."}
           </h2>
-          <p className="text-shell-muted mx-auto mt-4 max-w-xl text-sm sm:text-base">
+          <p className="type-lead text-shell-muted mx-auto mt-4 max-w-xl">
             {en
               ? "Open the catalog, pick a component, hand it to your agent."
               : "Открой каталог, выбери компонент, отдай его агенту."}
           </p>
-          <div className="mt-8 flex justify-center">
+
+          {/* Последнее, что человек видит перед уходом, — не пересказ
+              первого экрана, а ровно та команда, которую он получит,
+              нажав «Копировать для ИИ». Адрес реестра берётся из
+              настройки: выдумывать домен, которым мы не управляем, нельзя,
+              и без него строка просто не показывается. */}
+          {installCommand ? (
+            <div className="mt-8 flex justify-center">
+              <code className="border-shell-border bg-shell-panel text-shell-muted max-w-full overflow-x-auto rounded-xl border px-4 py-3 text-left font-mono text-xs whitespace-nowrap sm:text-sm">
+                <span className="text-shell-accent select-none">$ </span>
+                {installCommand}
+              </code>
+            </div>
+          ) : null}
+
+          <div className="mt-6 flex justify-center">
             <Link
               href={localePath(locale, "/components")}
               className={BTN_PRIMARY}
@@ -332,11 +563,15 @@ export function LandingPage({ locale }: { locale: Locale }) {
           </div>
         </section>
 
-        {/* Футер */}
-        <footer className="border-shell-border border-t">
-          <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-8 px-4 py-12 sm:flex-row sm:justify-between lg:px-6">
+        {/* Футер. Под ним ползут имена реестра: единственное место, где
+            каталог присутствует на странице сам по себе. В hero такому слою
+            не место — там уже кружат кадры, и два источника движения
+            спорили бы друг с другом. */}
+        <footer className="border-shell-border relative overflow-hidden border-t">
+          <RegistryRain />
+          <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-col gap-8 px-4 py-12 sm:flex-row sm:justify-between lg:px-6">
             <div className="max-w-xs">
-              <span className="text-shell-fg text-base font-semibold tracking-tight">
+              <span className="wordmark text-shell-fg text-base">
                 Vibe<span className="text-shell-accent">UI</span>
               </span>
               <p className="text-shell-muted mt-2 text-sm leading-relaxed">
@@ -359,10 +594,16 @@ export function LandingPage({ locale }: { locale: Locale }) {
                 </Link>
               ))}
               <Link
-                href="/lab"
+                href={localePath(locale, "/scenarios")}
                 className="text-shell-muted hover:text-shell-fg text-sm transition-colors"
               >
-                {t.topbar.lab}
+                {t.topbar.scenarios}
+              </Link>
+              <Link
+                href={localePath(locale, "/pricing")}
+                className="text-shell-muted hover:text-shell-fg text-sm transition-colors"
+              >
+                {en ? "Pricing" : "Тарифы"}
               </Link>
             </nav>
           </div>

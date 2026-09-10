@@ -123,4 +123,4 @@ export const INPUT_CLASS =
   "border-shell-border bg-shell-elevated text-shell-fg placeholder:text-shell-muted focus-visible:border-shell-accent focus-visible:ring-shell-ring h-11 w-full rounded-lg border px-3 text-sm outline-none transition-colors focus-visible:ring-2"
 
 export const SUBMIT_CLASS =
-  "bg-shell-accent text-shell-accent-fg focus-visible:ring-shell-ring inline-flex h-11 w-full items-center justify-center rounded-lg text-sm font-semibold transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:outline-none disabled:opacity-60"
+  "bg-shell-accent text-shell-accent-fg focus-visible:ring-shell-ring inline-flex h-11 w-full items-center justify-center rounded-lg text-sm font-semibold transition-colors hover:bg-shell-accent-deep focus-visible:ring-2 focus-visible:outline-none disabled:opacity-60"

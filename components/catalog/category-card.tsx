@@ -26,7 +26,7 @@ export function CategoryCard({
   const t = getDictionary(locale)
 
   return (
-    <article className="bg-shell border-shell-card hover:border-shell-border-strong relative flex h-full w-full flex-col overflow-hidden rounded-xl border p-0.5 shadow-sm shadow-black/5 transition-colors">
+    <article className="bg-shell border-shell-card hover:border-shell-accent-line relative flex h-full w-full flex-col overflow-hidden rounded-xl border p-0.5 shadow-sm shadow-black/5 transition-colors">
       {/* Кадр одной пропорции у всех категорий: обложки берутся у разных
           item'ов, и без общей рамки ряд карточек прыгал бы по высоте. */}
       <CategoryCover href={localePath(locale, `${base}/${card.slug}`)}>

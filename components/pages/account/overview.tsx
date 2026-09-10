@@ -116,7 +116,7 @@ export async function AccountOverview({ locale }: { locale: Locale }) {
               </ol>
               <Link
                 href={localePath(locale, "/components")}
-                className="bg-shell-accent text-shell-accent-fg focus-visible:ring-shell-ring mt-6 inline-flex h-11 items-center rounded-lg px-4 text-sm font-semibold transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:outline-none"
+                className="bg-shell-accent text-shell-accent-fg focus-visible:ring-shell-ring mt-6 inline-flex h-11 items-center rounded-lg px-4 text-sm font-semibold transition-colors hover:bg-shell-accent-deep focus-visible:ring-2 focus-visible:outline-none"
               >
                 {t.startAction}
               </Link>
@@ -151,7 +151,7 @@ export async function AccountOverview({ locale }: { locale: Locale }) {
                       locale,
                       `${itemBasePath(getItemKind(resume) ?? "component")}/${resume}`,
                     )}
-                    className="bg-shell-accent text-shell-accent-fg focus-visible:ring-shell-ring inline-flex h-9 items-center rounded-lg px-3.5 text-sm font-semibold transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:outline-none"
+                    className="bg-shell-accent text-shell-accent-fg focus-visible:ring-shell-ring inline-flex h-9 items-center rounded-lg px-3.5 text-sm font-semibold transition-colors hover:bg-shell-accent-deep focus-visible:ring-2 focus-visible:outline-none"
                   >
                     {t.open}
                   </Link>

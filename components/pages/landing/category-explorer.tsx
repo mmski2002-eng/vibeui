@@ -71,15 +71,19 @@ export function CategoryExplorer({
       <ul className="grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
         {current.categories.map((category) => (
           <li key={`${current.key}:${category.href}`}>
+            {/* Обратная иерархия: число крупно, название мельче. Каталог
+                сканируют по количеству — «где тут много», а не по алфавиту,
+                и прежний список из одинаковых подписей с бейджами читался
+                как прайс-лист. */}
             <Link
               href={localePath(locale, category.href)}
-              className="group focus-visible:ring-shell-ring flex items-center gap-2 rounded-md py-0.5 text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
+              className="group focus-visible:ring-shell-ring flex items-baseline gap-2.5 rounded-md py-1 transition-colors focus-visible:ring-2 focus-visible:outline-none"
             >
-              <span className="text-shell-fg/85 group-hover:text-shell-fg truncate font-medium transition-colors">
-                {category.label}
-              </span>
-              <span className="border-shell-border text-shell-muted inline-flex min-w-5 items-center justify-center rounded-full border px-1.5 text-[0.6875rem] tabular-nums">
+              <span className="text-shell-fg group-hover:text-shell-accent w-9 shrink-0 text-right text-lg leading-none font-semibold tabular-nums transition-colors">
                 {category.count}
+              </span>
+              <span className="text-shell-muted group-hover:text-shell-fg truncate text-sm transition-colors">
+                {category.label}
               </span>
             </Link>
           </li>

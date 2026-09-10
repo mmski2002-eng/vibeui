@@ -8,17 +8,6 @@ import { getCatalogItem, getItemKind, itemBasePath } from "@/registry/index"
 
 const PICKS = [
   {
-    // Ведущая плитка: сцена во всю ширину ряда. Сетка из шести колонок
-    // остаётся ровной — 6 + (3 + 3) + три узких по две.
-    slug: "background-005",
-    width: 1280,
-    ru: "Хоровод кадров вокруг фразы",
-    en: "Frames orbiting a phrase",
-    note: "Фон · анимация",
-    noteEn: "Background · animation",
-    full: true,
-  },
-  {
     slug: "hero-001",
     width: 1280,
     ru: "Первый экран с сиянием",
@@ -75,11 +64,11 @@ export function DesignShowcase({ locale }: { locale: Locale }) {
       <div className="mb-4 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
         <h2
           id="designs-title"
-          className="text-shell-fg text-2xl font-semibold tracking-tight sm:text-3xl"
+          className="type-h2 text-shell-fg"
         >
           {en ? "What will your site look like?" : "Каким будет твой сайт?"}
         </h2>
-        <p className="text-shell-muted max-w-sm text-sm sm:max-w-md">
+        <p className="type-caption text-shell-muted max-w-sm sm:max-w-md">
           {en
             ? "Pick one to see it live and take it to your AI."
             : "Нажми на дизайн — посмотри вживую и забери для ИИ."}
@@ -94,12 +83,8 @@ export function DesignShowcase({ locale }: { locale: Locale }) {
           return (
             <article
               key={pick.slug}
-              className={`group border-shell-border bg-shell-panel hover:border-shell-accent/60 relative min-w-0 overflow-hidden rounded-2xl border transition-colors ${
-                pick.full
-                  ? "sm:col-span-2 lg:col-span-6"
-                  : pick.wide
-                    ? "lg:col-span-3"
-                    : "lg:col-span-2"
+              className={`group border-shell-border bg-shell-panel hover:border-shell-accent-line relative min-w-0 overflow-hidden rounded-2xl border transition-colors ${
+                pick.wide ? "lg:col-span-3" : "lg:col-span-2"
               }`}
             >
               <div
@@ -108,11 +93,9 @@ export function DesignShowcase({ locale }: { locale: Locale }) {
                 // странице половина примеров стоит тёмными плашками.
                 data-preview-theme="auto"
                 className={`bg-preview-surface pointer-events-none overflow-hidden ${
-                  pick.full
-                    ? "h-[150px] sm:h-[260px] lg:h-[448px]"
-                    : pick.wide
-                      ? "h-[250px] sm:h-[280px] lg:h-[340px]"
-                      : "h-[300px] p-5"
+                  pick.wide
+                    ? "h-[250px] sm:h-[280px] lg:h-[340px]"
+                    : "h-[300px] p-5"
                 }`}
               >
                 <ShowcasePreview
@@ -128,7 +111,7 @@ export function DesignShowcase({ locale }: { locale: Locale }) {
               </div>
               <div className="border-shell-border flex items-center justify-between gap-4 border-t px-5 py-4">
                 <div className="min-w-0">
-                  <p className="text-shell-muted mb-1 text-xs">
+                  <p className="type-label text-shell-muted mb-1.5">
                     {en ? pick.noteEn : pick.note}
                   </p>
                   <h3 className="text-shell-fg text-sm font-medium sm:text-base">

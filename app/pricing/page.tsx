@@ -95,7 +95,7 @@ export default async function PricingPage() {
                   <input type="hidden" name="plan" value="monthly" />
                   <button
                     type="submit"
-                    className="bg-shell-accent text-shell-accent-fg inline-flex h-10 items-center justify-center rounded-lg px-4 text-sm font-semibold transition-opacity hover:opacity-90"
+                    className="bg-shell-accent text-shell-accent-fg inline-flex h-10 items-center justify-center rounded-lg px-4 text-sm font-semibold transition-colors hover:bg-shell-accent-deep"
                   >
                     Оплатить месяц
                   </button>
@@ -113,7 +113,7 @@ export default async function PricingPage() {
             ) : (
               <Link
                 href="/signup"
-                className="bg-shell-accent text-shell-accent-fg mt-6 inline-flex h-10 items-center justify-center rounded-lg px-4 text-sm font-semibold transition-opacity hover:opacity-90"
+                className="bg-shell-accent text-shell-accent-fg mt-6 inline-flex h-10 items-center justify-center rounded-lg px-4 text-sm font-semibold transition-colors hover:bg-shell-accent-deep"
               >
                 Начать
               </Link>

@@ -114,7 +114,7 @@ export function ReportPanel({
               setReply("")
             })
           }
-          className="bg-shell-accent text-shell-accent-fg mt-3 inline-flex h-10 items-center gap-2 rounded-lg px-4 text-sm font-semibold transition-opacity hover:opacity-90 disabled:opacity-60"
+          className="bg-shell-accent text-shell-accent-fg mt-3 inline-flex h-10 items-center gap-2 rounded-lg px-4 text-sm font-semibold transition-colors hover:bg-shell-accent-deep disabled:opacity-60"
         >
           {pending === "reply" ? (
             <Loader2 className="size-4 animate-spin" aria-hidden="true" />

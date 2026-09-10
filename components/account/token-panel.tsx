@@ -97,7 +97,7 @@ export function TokenPanel({
                   // экране, его можно выделить руками.
                 }
               }}
-              className="bg-shell-accent text-shell-accent-fg inline-flex h-10 shrink-0 items-center gap-1.5 rounded-lg px-4 text-sm font-semibold transition-opacity hover:opacity-90"
+              className="bg-shell-accent text-shell-accent-fg inline-flex h-10 shrink-0 items-center gap-1.5 rounded-lg px-4 text-sm font-semibold transition-colors hover:bg-shell-accent-deep"
             >
               {copied ? (
                 <Check className="size-4" aria-hidden="true" />
@@ -122,7 +122,7 @@ export function TokenPanel({
                 type="button"
                 disabled={pending}
                 onClick={issue}
-                className="bg-shell-accent text-shell-accent-fg inline-flex h-10 items-center gap-2 rounded-lg px-4 text-sm font-semibold transition-opacity hover:opacity-90 disabled:opacity-60"
+                className="bg-shell-accent text-shell-accent-fg inline-flex h-10 items-center gap-2 rounded-lg px-4 text-sm font-semibold transition-colors hover:bg-shell-accent-deep disabled:opacity-60"
               >
                 {pending ? (
                   <Loader2 className="size-4 animate-spin" aria-hidden="true" />
@@ -143,7 +143,7 @@ export function TokenPanel({
             type="button"
             disabled={pending}
             onClick={() => (hasActive ? setConfirming(true) : issue())}
-            className="bg-shell-accent text-shell-accent-fg inline-flex h-10 items-center gap-2 rounded-lg px-4 text-sm font-semibold transition-opacity hover:opacity-90 disabled:opacity-60"
+            className="bg-shell-accent text-shell-accent-fg inline-flex h-10 items-center gap-2 rounded-lg px-4 text-sm font-semibold transition-colors hover:bg-shell-accent-deep disabled:opacity-60"
           >
             {pending ? (
               <Loader2 className="size-4 animate-spin" aria-hidden="true" />

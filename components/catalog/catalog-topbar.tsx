@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { FlaskConical, Search, UserRound } from "lucide-react"
+import { Search, UserRound } from "lucide-react"
 
 import { LocaleSwitch } from "@/components/catalog/locale-switch"
 import { ThemeSwitch } from "@/components/catalog/theme-switch"
@@ -27,21 +27,37 @@ export function CatalogTopbar({
     { href: "/components", label: t.topbar.components },
     { href: "/blocks", label: t.topbar.blocks },
     { href: "/animations", label: t.topbar.animations },
-    { href: "/scenarios", label: t.topbar.scenarios },
+    // Сценарии — вход со стороны задачи, а не ещё один список компонентов.
+    // Из одинаковых подписей это не читается, поэтому у пункта метка.
+    { href: "/scenarios", label: t.topbar.scenarios, marked: true },
+    { href: "/pricing", label: t.topbar.pricing },
   ]
 
   return (
     <header className="border-shell-border bg-shell sticky top-0 z-30 border-b">
       <div className="mx-auto grid h-[95px] w-full max-w-[1440px] grid-cols-[auto_1fr] grid-rows-[55px_40px] items-center gap-x-3 px-4 lg:h-[55px] lg:grid-cols-[auto_1fr_auto] lg:grid-rows-1 lg:gap-x-8 lg:px-6">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-6">
           <Link
             href={localePath(locale, "/")}
             aria-label={en ? "VibeUI home" : "VibeUI — главная"}
-            className="text-shell-fg focus-visible:ring-shell-ring rounded text-lg font-semibold tracking-tight focus-visible:ring-2 focus-visible:outline-none"
+            className="wordmark text-shell-fg focus-visible:ring-shell-ring flex items-center gap-2 rounded text-lg focus-visible:ring-2 focus-visible:outline-none"
           >
-            Vibe<span className="text-shell-accent">UI</span>
+            {/* Эквалайзер вместо иконки: имя обещает vibe, и знак должен его
+                показывать, а не просто называть. */}
+            <span className="wordmark-eq" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+              <span />
+            </span>
+            <span>
+              Vibe<span className="text-shell-accent">UI</span>
+            </span>
           </Link>
-          <span className="border-shell-border text-shell-muted hidden rounded-full border px-2 py-1 text-[11px] tabular-nums xl:inline">
+          {/* Счётчик каталога, а не версия продукта: моноширинный, тише
+              знака и отодвинут от него — вплотную «VibeUI 1572» читалось
+              как номер сборки. */}
+          <span className="type-label text-shell-muted hidden tabular-nums xl:inline">
             {t.topbar.items(itemCount)}
           </span>
         </div>
@@ -49,9 +65,12 @@ export function CatalogTopbar({
         <div className="col-span-2 row-start-2 flex min-w-0 items-center justify-between gap-1 lg:col-span-1 lg:col-start-2 lg:row-start-1 lg:justify-start lg:gap-4">
           <nav
             aria-label={en ? "Main navigation" : "Основная навигация"}
-            className="flex min-w-0 items-center gap-0.5 lg:gap-1"
+            // На узком экране пять разделов в строку не помещаются, поэтому
+            // ряд прокручивается вбок. Прятать пункт нельзя: тарифы — как
+            // раз то, что человек ищет глазами, а не находит в подвале.
+            className="nav-scroll flex min-w-0 items-center gap-0.5 overflow-x-auto lg:gap-1"
           >
-            {sections.map(({ href, label }) => {
+            {sections.map(({ href, label, marked }) => {
               const active =
                 pathname === href || pathname.startsWith(`${href}/`)
               return (
@@ -59,8 +78,14 @@ export function CatalogTopbar({
                   key={href}
                   href={localePath(locale, href)}
                   aria-current={active ? "page" : undefined}
-                  className={`focus-visible:ring-shell-ring relative flex h-9 items-center rounded-lg px-1.5 text-xs font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:outline-none sm:px-3 sm:text-sm ${active ? "bg-shell-elevated text-shell-fg after:bg-shell-accent after:absolute after:right-3 after:bottom-0 after:left-3 after:h-0.5 after:rounded-full" : "text-shell-muted hover:bg-shell-panel hover:text-shell-fg"}`}
+                  className={`focus-visible:ring-shell-ring relative flex h-9 shrink-0 items-center rounded-lg px-1.5 text-xs font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:outline-none sm:px-3 sm:text-sm ${active ? "bg-shell-elevated text-shell-fg shadow-[inset_0_-2px_0_var(--shell-accent)]" : "text-shell-muted hover:bg-shell-panel hover:text-shell-fg"}`}
                 >
+                  {marked ? (
+                    <span
+                      className="bg-shell-accent mr-1.5 size-1.5 shrink-0 rounded-full"
+                      aria-hidden="true"
+                    />
+                  ) : null}
                   {label}
                 </Link>
               )
@@ -74,14 +99,6 @@ export function CatalogTopbar({
               className={ICON_LINK}
             >
               <Search className="size-4" aria-hidden="true" />
-            </Link>
-            <Link
-              href="/lab"
-              aria-label={en ? "Workspace" : "Рабочая область"}
-              title={en ? "Workspace" : "Рабочая область"}
-              className={ICON_LINK}
-            >
-              <FlaskConical className="size-4" aria-hidden="true" />
             </Link>
           </div>
         </div>

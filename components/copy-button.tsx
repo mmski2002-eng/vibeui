@@ -21,9 +21,9 @@ type CopyState = "idle" | "copied" | "failed"
 // на её токены --shell-*, а не на глобальную светлую тему.
 const VARIANTS = {
   primary:
-    "bg-shell-accent text-shell-accent-fg border-shell-accent hover:opacity-90 ",
+    "bg-shell-accent text-shell-accent-fg border-shell-accent hover:bg-shell-accent-deep hover:border-shell-accent-deep active:scale-[0.98] ",
   secondary:
-    "border-shell-border text-shell-fg hover:bg-shell-elevated hover:border-shell-border-strong ",
+    "border-shell-border text-shell-fg hover:bg-shell-elevated hover:border-shell-border-strong active:scale-[0.98] ",
 }
 
 export function CopyButton({
@@ -58,7 +58,7 @@ export function CopyButton({
       onClick={copy}
       disabled={!value}
       className={cn(
-        "focus-visible:ring-shell-ring inline-flex h-9 shrink-0 items-center justify-center rounded-md border px-3 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+        "focus-visible:ring-shell-ring inline-flex h-9 shrink-0 items-center justify-center rounded-md border px-3 text-sm font-medium transition focus-visible:ring-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
         state === "failed"
           ? "border-destructive text-destructive"
           : VARIANTS[variant],

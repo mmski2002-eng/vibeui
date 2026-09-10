@@ -84,7 +84,7 @@ export async function AccountFavorites({ locale }: { locale: Locale }) {
           </p>
           <Link
             href={localePath(locale, "/components")}
-            className="bg-shell-accent text-shell-accent-fg mt-6 inline-flex h-10 items-center rounded-lg px-4 text-sm font-semibold transition-opacity hover:opacity-90"
+            className="bg-shell-accent text-shell-accent-fg mt-6 inline-flex h-10 items-center rounded-lg px-4 text-sm font-semibold transition-colors hover:bg-shell-accent-deep"
           >
             {t.emptyAction}
           </Link>

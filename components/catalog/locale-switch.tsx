@@ -23,7 +23,7 @@ export function LocaleSwitch({ locale }: { locale: Locale }) {
     <div
       role="group"
       aria-label="Язык · Language"
-      className="border-shell-border flex items-center rounded-md border p-0.5"
+      className="border-shell-border bg-shell-panel flex items-center rounded-full border p-0.5"
     >
       {LOCALES.map((option) => (
         <Link
@@ -34,7 +34,11 @@ export function LocaleSwitch({ locale }: { locale: Locale }) {
           }}
           aria-current={option === locale ? "true" : undefined}
           className={
-            "focus-visible:ring-shell-ring rounded px-2 py-0.5 text-xs font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none " +
+            // Одна пилюля с двумя состояниями, а не две соседние кнопки.
+            // Активный язык виден за счёт ступени между панелью пилюли и
+            // elevated — с тех пор как панель ушла ближе к фону, разница
+            // читается без цветной подсветки.
+            "focus-visible:ring-shell-ring rounded-full px-2.5 py-0.5 text-xs font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none " +
             (option === locale
               ? "bg-shell-elevated text-shell-fg"
               : "text-shell-muted hover:text-shell-fg")

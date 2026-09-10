@@ -9,6 +9,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
+  --font-display: var(--font-display);
   --color-shell: var(--shell-bg);
   --color-shell-panel: var(--shell-panel);
   --color-shell-elevated: var(--shell-elevated);
@@ -26,6 +27,9 @@
   --color-shell-accent: var(--shell-accent);
   --color-shell-accent-fg: var(--shell-accent-fg);
   --color-shell-accent-text: var(--shell-accent-text);
+  --color-shell-accent-deep: var(--shell-accent-deep);
+  --color-shell-accent-soft: var(--shell-accent-soft);
+  --color-shell-accent-line: var(--shell-accent-line);
   --color-shell-ring: var(--shell-ring);
   --color-ring: var(--ring);
   --color-input: var(--input);
@@ -134,10 +138,13 @@
      и preview не должны перекрашиваться от контекста каталога. Поэтому здесь
      не используется класс .dark — он каскадит на всё поддерево, включая блоки. */
   .catalog-shell {
-    /* Брендовая глубина: фон почти чёрный (deep black), панель на ступень
-       выше, elevated — oil black #1A1A1A из брендбука. */
+    /* Фон страницы — тот же почти чёрный, что и был. Поверхности идут по
+       брендбуку: панель почти сливается с фоном, а Oil Black #1A1A1A
+       достался elevated — уровню наведения и полей ввода.
+       Хроматика нулевая: тёплый оттенок нейтралей уводил страницу в
+       красноту, а бренд держится на чёрном, белом и оранжевом. */
     --shell-bg: oklch(0.115 0 0);
-    --shell-panel: oklch(0.16 0 0);
+    --shell-panel: oklch(0.17 0 0);
     --shell-elevated: oklch(0.2178 0 0);
     /* Подложка превью мелкого компонента. Светлая нейтральная, а не
        тёмная: большинство UI-компонентов рассчитаны на светлую
@@ -163,10 +170,138 @@
        и как надпись, поэтому здесь значения совпадают. */
     --shell-accent-text: oklch(0.6803 0.2144 39.8);
     --shell-ring: oklch(0.6803 0.2144 39.8);
+    /* Ступень глубже базового: только нажатие и наведение на главную
+       кнопку. Раньше кнопка под курсором просто выцветала прозрачностью —
+       это читается как «выключается», а не как «нажимается». */
+    --shell-accent-deep: oklch(0.6 0.2 39.8);
+    /* Тёплая подложка и тёплая линия: акцент, подмешанный в фон страницы.
+       Считаются от --shell-bg и --shell-accent, поэтому светлой теме своих
+       значений не нужно — подстановка происходит в момент применения, уже
+       с её фоном. Ими живут плашки, наведение на карточку и активный
+       раздел: до сих пор оранжевый существовал только в заливке кнопок. */
+    --shell-accent-soft: color-mix(
+      in oklab,
+      var(--shell-accent) 12%,
+      var(--shell-bg)
+    );
+    --shell-accent-line: color-mix(in oklab, var(--shell-accent) 28%, transparent);
+
     /* Дефолт кадра — тот же почти-чёрный, что и страница: карточка не должна
        быть светлее фона, её отделяет рамка. Значение перекрывается атрибутом
        data-preview-theme, который ставит переключатель карточки. */
     --preview-surface: oklch(0.115 0 0);
+  }
+
+  /* Налив и зерно живут в псевдоэлементах оболочки: обе подложки должны
+     лежать под всем содержимым, а лишний div ради фона в разметке не нужен.
+     isolation отрезает их z-index от остальной страницы. */
+  .catalog-shell {
+    position: relative;
+    isolation: isolate;
+  }
+
+  /* Тёплый налив сверху: не пятно, а линейная волна на первом экране.
+     Акцент перестаёт жить только в кнопках, но и не превращается в
+     градиентный круг, который зритель считывает раньше содержимого.
+     Только главная: в каталоге фон должен молчать, там смотрят карточки. */
+  .catalog-shell.shell-wash::before {
+    content: "";
+    position: absolute;
+    /* Начинается ровно под шапкой: она непрозрачна, и градиент, уходящий
+       ей за спину, обрывался бы на её нижней границе видимым швом. */
+    inset: var(--catalog-header-height, 0) 0 auto;
+    height: 40rem;
+    z-index: -1;
+    pointer-events: none;
+    /* Пик тепла — ниже шапки. Начнись градиент прямо у верхнего края,
+       под непрозрачной шапкой возникал бы шов: она осталась бы ровного
+       цвета, а страница под ней — уже тёплой. */
+    background: linear-gradient(
+      to bottom,
+      transparent 0,
+      color-mix(in oklab, var(--shell-accent) 3.5%, transparent) 18%,
+      color-mix(in oklab, var(--shell-accent) 1.2%, transparent) 55%,
+      transparent 100%
+    );
+  }
+
+  /* Зерно: однородная плёнка поверх всей страницы, 3.5%. Смешивание
+     overlay работает в обе стороны — на тёмном фоне зерно светлое, на
+     светлом тёмное, и второй ветки для темы не нужно. Картинка
+     генерируется фильтром прямо в data-URI: ни файла, ни запроса. */
+  .catalog-shell::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Строки реестра в подвале: имена настоящих item'ов ползут вбок как
+     ambient-декор. Каталог физически присутствует на странице. */
+  .registry-rain {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    user-select: none;
+    mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  }
+
+  .registry-rain span {
+    position: absolute;
+    display: block;
+    white-space: nowrap;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--shell-fg);
+    opacity: 0.05;
+    will-change: transform;
+    animation: registry-rain linear infinite;
+  }
+
+  .registry-rain span:nth-child(1) {
+    top: 12%;
+    animation-duration: 320s;
+  }
+
+  .registry-rain span:nth-child(2) {
+    top: 38%;
+    animation-duration: 420s;
+    animation-delay: -60s;
+  }
+
+  .registry-rain span:nth-child(3) {
+    top: 64%;
+    animation-duration: 360s;
+    animation-delay: -140s;
+  }
+
+  .registry-rain span:nth-child(4) {
+    top: 88%;
+    animation-duration: 480s;
+    animation-delay: -30s;
+  }
+
+  @keyframes registry-rain {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .registry-rain span {
+      animation: none;
+    }
   }
 
   /* Светлая тема оболочки. Переключатель ставит атрибут на <html>, а не на
@@ -174,9 +309,11 @@
      успеть выставить атрибут до отрисовки, до того как React смонтирует
      дерево. Значения — светлая сторона той же нейтральной шкалы. */
   html[data-shell-theme="light"] .catalog-shell {
+    /* Светлая сторона: фон снова чистый белый, поверхности — Porcelain
+       White #F2F2F2 из брендбука и ступень под ним. */
     --shell-bg: oklch(1 0 0);
-    --shell-panel: oklch(0.97 0 0);
-    --shell-elevated: oklch(0.94 0 0);
+    --shell-panel: oklch(0.9612 0 0);
+    --shell-elevated: oklch(0.9249 0 0);
     --shell-border: oklch(0 0 0 / 8%);
     --shell-border-strong: oklch(0 0 0 / 16%);
     --shell-divider: oklch(0 0 0 / 6%);
@@ -189,11 +326,14 @@
     /* Ступень темнее брендового #FF5900 — см. комментарий у --primary. */
     --shell-accent: oklch(0.64 0.2144 39.8);
     --shell-accent-fg: oklch(0.145 0 0);
-    /* Надпись тем же оранжевым на белом даёт около 3:1 — мало для обычного
-       текста. Заливка кнопки и цвет ссылки разведены: контраст этой ступени
-       с белым выше 4.5:1 (W3C, Contrast Minimum). */
-    --shell-accent-text: oklch(0.52 0.19 39.8);
+    /* Надпись брендовым оранжевым на белом даёт около 3:1 — мало для
+       обычного текста, поэтому заливка кнопки и цвет надписи разведены.
+       Ступень взята светлее и с тоном ближе к янтарю: прежняя читалась
+       кирпично-красной, а не оранжевой. Контраст с белым 5.0:1, с тёплой
+       плашкой 4.6:1 (W3C, Contrast Minimum). */
+    --shell-accent-text: oklch(0.56 0.19 50);
     --shell-ring: oklch(0.64 0.2144 39.8);
+    --shell-accent-deep: oklch(0.56 0.19 39.8);
   }
 
   /* Подложка превью на карточке. Переключателем меняется только она:
@@ -664,5 +804,208 @@
     .code-sheet::backdrop {
       transition: none;
     }
+  }
+
+  /* Выделение текста в брендовых цветах: системное синее выделение — самое
+     заметное чужое пятно на странице, а замечают его каждый раз, когда
+     копируют строку установки. */
+  ::selection {
+    background: color-mix(in oklab, var(--shell-accent) 28%, transparent);
+    color: var(--shell-fg);
+  }
+
+  /* Появление первого экрана: содержимое всплывает лесенкой, пока кадры
+     проступают из дымки. Ключевые кадры, а не библиотека анимаций: ради
+     пяти элементов тащить в проект зависимость незачем. */
+  .hero-rise > * {
+    animation: hero-rise 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  }
+
+  .hero-rise > *:nth-child(1) {
+    animation-delay: 0.05s;
+  }
+
+  .hero-rise > *:nth-child(2) {
+    animation-delay: 0.13s;
+  }
+
+  .hero-rise > *:nth-child(3) {
+    animation-delay: 0.21s;
+  }
+
+  .hero-rise > *:nth-child(4) {
+    animation-delay: 0.29s;
+  }
+
+  .hero-rise > *:nth-child(5) {
+    animation-delay: 0.37s;
+  }
+
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-rise > * {
+      animation: none;
+    }
+  }
+
+  /* Ряд разделов прокручивается вбок на узком экране, но полосу прокрутки
+     там показывать незачем — она съедает высоту строки. */
+  .nav-scroll {
+    scrollbar-width: none;
+  }
+
+  .nav-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Знак: тем же гротеском, что заголовки. Логотип, набранный
+     интерфейсным шрифтом, читается как подпись к кнопке, а не как имя. */
+  .wordmark {
+    font-family: var(--font-display), var(--font-sans), ui-sans-serif, system-ui,
+      sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  /* Эквалайзер у логотипа: единственное место, где бренд двигается сам.
+     Полосы идут вразнобой — одинаковый ритм читался бы как индикатор
+     загрузки, а не как живой звук. */
+  .wordmark-eq {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 14px;
+  }
+
+  .wordmark-eq span {
+    width: 2px;
+    border-radius: 1px;
+    background: var(--shell-accent);
+    transform-origin: bottom;
+    animation: wordmark-eq 1.1s ease-in-out infinite alternate;
+  }
+
+  .wordmark-eq span:nth-child(1) {
+    height: 6px;
+    animation-duration: 0.9s;
+  }
+
+  .wordmark-eq span:nth-child(2) {
+    height: 14px;
+    animation-duration: 1.3s;
+    animation-delay: -0.4s;
+  }
+
+  .wordmark-eq span:nth-child(3) {
+    height: 9px;
+    animation-duration: 1.05s;
+    animation-delay: -0.7s;
+  }
+
+  .wordmark-eq span:nth-child(4) {
+    height: 12px;
+    animation-duration: 1.5s;
+    animation-delay: -0.2s;
+  }
+
+  @keyframes wordmark-eq {
+    from {
+      transform: scaleY(0.32);
+    }
+
+    to {
+      transform: scaleY(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wordmark-eq span {
+      animation: none;
+    }
+  }
+
+  /* Типографическая шкала маркетинговых страниц.
+     Уровней в вёрстке было два — заголовок и текст, — и между ними зияла
+     пропасть в четыре кегля. Здесь их шесть, и каждый несёт свою тройку
+     размер / интерлиньяж / трекинг: крупный кегль требует тесных букв,
+     мелкий — свободных, и разводить это по месту применения бессмысленно.
+     Каталога шкала не касается: там 14–16px стоит осознанно, плотные
+     сетки карточек от 17px разъедутся. */
+  .type-display,
+  .type-h1,
+  .type-h2,
+  .type-h3 {
+    font-family: var(--font-display), var(--font-sans), ui-sans-serif, system-ui,
+      sans-serif;
+    text-wrap: balance;
+  }
+
+  .type-display {
+    font-size: clamp(2.25rem, 5.4vw, 4.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    font-weight: 600;
+  }
+
+  .type-h1 {
+    font-size: clamp(1.875rem, 4vw, 3.5rem);
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+  }
+
+  .type-h2 {
+    font-size: clamp(1.625rem, 3vw, 2.5rem);
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    font-weight: 600;
+  }
+
+  .type-h3 {
+    font-size: clamp(1.25rem, 1.8vw, 1.75rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+  }
+
+  /* Подзаголовок под крупным заголовком: промежуточный уровень, которого
+     не хватало между H1 и body. */
+  .type-lead {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    letter-spacing: -0.005em;
+  }
+
+  @media (width >= 40rem) {
+    .type-lead {
+      font-size: 1.125rem;
+    }
+  }
+
+  .type-caption {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  /* Метка: моноширинная, потому что подпись вроде «Лендинг · мягкое
+     свечение» — это ярлык, а не предложение. Тем же шрифтом и кеглем, что
+     основной текст, она читалась как недоделанный подзаголовок. */
+  .type-label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    line-height: 1.3;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 }

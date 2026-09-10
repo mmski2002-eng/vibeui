@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Geist_Mono, Inter } from "next/font/google"
+import { Geist_Mono, Inter, Onest } from "next/font/google"
 import "./globals.css"
 
 import { Analytics } from "@/components/analytics"
@@ -14,6 +14,15 @@ const inter = Inter({
 
 const geistMono = Geist_Mono({
   variable: "--font-mono",
+  subsets: ["latin", "cyrillic"],
+})
+
+// Заголовки отдельным гротеском: Inter в крупном кегле нейтрален до
+// безликости, а у Onest кириллица родная — его под неё и рисовали. Шрифт
+// вариативный (100–900), поэтому веса заголовка ничего не стоят сверх
+// одного файла на подмножество.
+const onest = Onest({
+  variable: "--font-display",
   subsets: ["latin", "cyrillic"],
 })
 
@@ -128,7 +137,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="ru"
       suppressHydrationWarning
-      className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${geistMono.variable} ${onest.variable} h-full antialiased`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
