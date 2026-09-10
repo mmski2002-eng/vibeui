@@ -1,0 +1,76 @@
+import { and, desc, eq, ilike, or } from "drizzle-orm"
+
+import { requireAdmin } from "@/lib/admin"
+import { db } from "@/lib/db"
+import { payment, user } from "@/lib/db/schema"
+
+/**
+ * Выгрузка платежей за период — для сверки с бухгалтерией.
+ *
+ * Точка входа отдельная, а не кнопка на странице: файл должен скачиваться
+ * обычной ссылкой, без клиентского кода, который собирает строки в память.
+ */
+function escape(value: string) {
+  return `"${value.replace(/"/g, '""')}"`
+}
+
+export async function GET(request: Request) {
+  await requireAdmin()
+
+  const params = new URL(request.url).searchParams
+  const needle = params.get("q")?.trim()
+  const status = params.get("status")
+
+  const filters = [
+    status && status !== "all" ? eq(payment.status, status) : undefined,
+    needle
+      ? or(
+          ilike(user.email, `%${needle}%`),
+          ilike(payment.yookassaId, `%${needle}%`),
+        )
+      : undefined,
+  ].filter(Boolean)
+
+  const rows = await db
+    .select({
+      createdAt: payment.createdAt,
+      paidAt: payment.paidAt,
+      email: user.email,
+      amount: payment.amount,
+      currency: payment.currency,
+      status: payment.status,
+      yookassaId: payment.yookassaId,
+    })
+    .from(payment)
+    .leftJoin(user, eq(user.id, payment.userId))
+    .where(filters.length ? and(...filters) : undefined)
+    .orderBy(desc(payment.createdAt))
+    // Верхняя граница осознанная: выгрузка за всю историю на общем сервере
+    // читается минутами, а бухгалтерии нужен период.
+    .limit(5000)
+
+  const header = "created_at,paid_at,email,amount,currency,status,yookassa_id"
+  const body = rows
+    .map((row) =>
+      [
+        row.createdAt.toISOString(),
+        row.paidAt?.toISOString() ?? "",
+        row.email ?? "",
+        row.amount,
+        row.currency,
+        row.status,
+        row.yookassaId,
+      ]
+        .map((value) => escape(String(value)))
+        .join(","),
+    )
+    .join("\n")
+
+  return new Response(`${header}\n${body}\n`, {
+    headers: {
+      "Content-Type": "text/csv; charset=utf-8",
+      "Content-Disposition": `attachment; filename="payments-${new Date().toISOString().slice(0, 10)}.csv"`,
+      "Cache-Control": "no-store",
+    },
+  })
+}
