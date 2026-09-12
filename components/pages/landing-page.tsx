@@ -175,7 +175,6 @@ export function LandingPage({ locale }: { locale: Locale }) {
           lines: [
             "Animations and closed blocks",
             "No limit on components",
-            "Cancel anytime",
           ],
           highlight: true,
         },
@@ -198,7 +197,6 @@ export function LandingPage({ locale }: { locale: Locale }) {
           lines: [
             "Анимации и закрытые блоки",
             "Без лимита на компоненты",
-            "Отмена в любой момент",
           ],
           highlight: true,
         },
