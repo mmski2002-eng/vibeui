@@ -38,7 +38,7 @@ const STYLES = `
 --vibeui-card-005-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-card-005-muted:color-mix(in oklab,var(--vibeui-card-005-fg) 68%,transparent);
 --vibeui-card-005-border:light-dark(oklch(0.91 0 265),oklch(0.37 0 265));
---vibeui-card-005-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-card-005-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-card-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -79,7 +79,7 @@ border-color:var(--vibeui-card-005-accent);
 box-shadow:inset 0 0 0 1px var(--vibeui-card-005-accent);
 }
 [data-vibeui-block="card-005"] label:has(input:checked) [data-part="mark"]{border-color:var(--vibeui-card-005-accent)}
-[data-vibeui-block="card-005"] label:has(input:checked) [data-part="mark"]::after{background:var(--vibeui-card-005-accent)}
+[data-vibeui-block="card-005"] label:has(input:checked) [data-part="mark"]::after{background:var(--vibeui-card-005-accent);color:oklch(from var(--vibeui-card-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="card-005"] label:has(input:focus-visible){outline:2px solid var(--vibeui-card-005-accent);outline-offset:2px}
 [data-vibeui-block="card-005"] [data-part="title"]{font-size:0.875rem;font-weight:650;line-height:1.3}
 [data-vibeui-block="card-005"] [data-part="price"]{

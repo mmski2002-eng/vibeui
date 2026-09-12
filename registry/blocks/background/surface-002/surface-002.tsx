@@ -1,112 +1,130 @@
-import type { CSSProperties, ReactNode } from "react"
+"use client"
+
+import { useRef, type CSSProperties, type PointerEvent, type ReactNode } from "react"
 
 export type Surface002Props = {
   /** Контент поверх фона. Без него блок показывает демонстрационный пример. */
   children?: ReactNode
-  /** Откуда падает тёплый свет. */
-  glow?: "top" | "corner" | "low"
-  /** Графитовые панели в глубине. */
-  panels?: boolean
+  /** Радиус светового пятна. */
+  radius?: "small" | "large"
+  /** Сила света. */
+  strength?: "soft" | "bright"
+  /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
+  tone?: "auto" | "light" | "dark"
   accent?: string
   className?: string
   style?: CSSProperties
 }
 
-// Графитовая глубина: чёрная основа, панели #1A1A1A и одно мягкое тёплое
-// свечение из фирменного оранжевого. Глубину дают различия поверхностей и
-// ограниченный свет, а не размытие: под текстом всегда стабильная тёмная
-// область. Статический фон без JS; свечение — обычный градиент.
+// Направленный свет за курсором: спокойное графитовое поле с локальным
+// тёплым пятном возле указателя. Единственный клиентский фон набора:
+// координаты пишутся в CSS-переменные через rAF-троттлинг, без state и
+// перерисовок React. При touch и prefers-reduced-motion пятно стоит в
+// выбранной точке — композиция полностью сохраняется статикой. Эффект
+// подсвечивает материал, но не обозначает интерактивность.
 const STYLES = `
 :where([data-vibeui-block="surface-002"]){
---vibeui-surface-002-bg:#000000;
---vibeui-surface-002-panel:#1a1a1a;
---vibeui-surface-002-ink:#ffffff;
---vibeui-surface-002-muted:color-mix(in oklab,#ffffff 62%,#000000);
---vibeui-surface-002-line:color-mix(in oklab,#ffffff 12%,transparent);
---vibeui-surface-002-accent:#ff5900;
+--vibeui-surface-002-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-surface-002-ink:light-dark(#000000,#ffffff);
+--vibeui-surface-002-muted:light-dark(color-mix(in oklab,#000000 56%,#ffffff),color-mix(in oklab,#ffffff 62%,#1a1a1a));
+--vibeui-surface-002-ghost:light-dark(color-mix(in oklab,#000000 10%,transparent),color-mix(in oklab,#ffffff 12%,transparent));
+--vibeui-surface-002-ghost-soft:light-dark(color-mix(in oklab,#000000 5%,transparent),color-mix(in oklab,#ffffff 6%,transparent));
+--vibeui-surface-002-grid:light-dark(color-mix(in oklab,#000000 7%,transparent),color-mix(in oklab,#ffffff 5%,transparent));
+--vibeui-surface-002-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-surface-002-x:70%;
+--vibeui-surface-002-y:30%;
+--vibeui-surface-002-r:22rem;
+--vibeui-surface-002-power:26%;
 --vibeui-surface-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+:where([data-vibeui-block="surface-002"][data-radius="small"]){--vibeui-surface-002-r:14rem}
+:where([data-vibeui-block="surface-002"][data-strength="bright"]){--vibeui-surface-002-power:40%}
+/* Тема идёт за страницей: color-scheme наследуется от неё, а классовую
+   тёмную тему (.dark у next-themes и shadcn) блок объявляет сам. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="surface-002"]{color-scheme:dark}
+:where([data-vibeui-block="surface-002"][data-tone="light"]){color-scheme:light}
+:where([data-vibeui-block="surface-002"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="surface-002"]{
-position:relative;display:block;min-width:min(100%,16rem);
+position:relative;display:block;min-width:min(100%,16rem);overflow:hidden;
 background:var(--vibeui-surface-002-bg);color:var(--vibeui-surface-002-ink);
 font-family:var(--vibeui-surface-002-font);
 }
 [data-vibeui-block="surface-002"] *{box-sizing:border-box}
-[data-vibeui-block="surface-002"] [data-part="canvas"]{
-position:absolute;inset:0;overflow:hidden;pointer-events:none;
+[data-vibeui-block="surface-002"] [data-part="spot"]{
+position:absolute;inset:0;pointer-events:none;
+background:radial-gradient(var(--vibeui-surface-002-r) var(--vibeui-surface-002-r) at var(--vibeui-surface-002-x) var(--vibeui-surface-002-y),color-mix(in oklab,var(--vibeui-surface-002-accent) var(--vibeui-surface-002-power),transparent),transparent 72%);
 }
-[data-vibeui-block="surface-002"] [data-part="glow"]{
-position:absolute;inset:0;
-background:radial-gradient(52rem 30rem at 72% -12%,color-mix(in oklab,var(--vibeui-surface-002-accent) 34%,transparent),transparent 62%);
+[data-vibeui-block="surface-002"] [data-part="texture"]{
+position:absolute;inset:0;pointer-events:none;
+background-image:linear-gradient(var(--vibeui-surface-002-grid) 1px,transparent 1px),linear-gradient(90deg,var(--vibeui-surface-002-grid) 1px,transparent 1px);
+background-size:3rem 3rem;
+-webkit-mask-image:radial-gradient(calc(var(--vibeui-surface-002-r)*1.4) calc(var(--vibeui-surface-002-r)*1.4) at var(--vibeui-surface-002-x) var(--vibeui-surface-002-y),#000000 30%,transparent 100%);
+mask-image:radial-gradient(calc(var(--vibeui-surface-002-r)*1.4) calc(var(--vibeui-surface-002-r)*1.4) at var(--vibeui-surface-002-x) var(--vibeui-surface-002-y),#000000 30%,transparent 100%);
 }
-[data-vibeui-block="surface-002"][data-glow="corner"] [data-part="glow"]{
-background:radial-gradient(46rem 34rem at -8% 4%,color-mix(in oklab,var(--vibeui-surface-002-accent) 30%,transparent),transparent 60%);
-}
-[data-vibeui-block="surface-002"][data-glow="low"] [data-part="glow"]{
-background:radial-gradient(60rem 26rem at 50% 108%,color-mix(in oklab,var(--vibeui-surface-002-accent) 26%,transparent),transparent 64%);
-}
-[data-vibeui-block="surface-002"] [data-part="panel-a"]{
-position:absolute;top:16%;right:6%;width:30%;height:46%;
-background:var(--vibeui-surface-002-panel);border:1px solid var(--vibeui-surface-002-line);
-}
-[data-vibeui-block="surface-002"] [data-part="panel-b"]{
-position:absolute;bottom:-6%;right:22%;width:22%;height:34%;
-background:color-mix(in oklab,var(--vibeui-surface-002-panel) 72%,#000000);
-border:1px solid var(--vibeui-surface-002-line);
-}
-[data-vibeui-block="surface-002"][data-panels="off"] [data-part="panel-a"],
-[data-vibeui-block="surface-002"][data-panels="off"] [data-part="panel-b"]{display:none}
 [data-vibeui-block="surface-002"] [data-part="frame"]{
 position:relative;max-width:80rem;margin:0 auto;min-height:28rem;
-padding:4rem 1.5rem;display:flex;flex-direction:column;justify-content:center;gap:1.25rem;
+padding:2.5rem clamp(1.5rem,6cqi,4rem);display:flex;flex-direction:column;
 }
-[data-vibeui-block="surface-002"] [data-part="eyebrow"]{
-display:inline-flex;align-items:center;gap:0.5rem;margin:0;
-font-size:0.8125rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
-color:var(--vibeui-surface-002-muted);
+/* Призрак портфолио: сетка работ. Свет за курсором делают ради сетки —
+   он проявляет материал ровно там, куда смотрит человек. */
+[data-vibeui-block="surface-002"] [data-part="ghost"]{
+display:flex;flex-direction:column;gap:1.75rem;flex:1;justify-content:center;
 }
-[data-vibeui-block="surface-002"] [data-part="eyebrow"]::before{
-content:"";width:0.5rem;height:0.5rem;background:var(--vibeui-surface-002-accent);
+[data-vibeui-block="surface-002"] [data-part="head"]{display:flex;align-items:center;gap:0.875rem}
+[data-vibeui-block="surface-002"] [data-part="mark"]{width:1.5rem;height:1.5rem;flex:none;border-radius:0.375rem;
+background:var(--vibeui-surface-002-accent);color:oklch(from var(--vibeui-surface-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
+[data-vibeui-block="surface-002"] [data-part="head"] span:not([data-part]){
+width:4rem;height:0.5rem;border-radius:999px;background:var(--vibeui-surface-002-ghost);
 }
-[data-vibeui-block="surface-002"] [data-part="title"]{
-margin:0;max-width:24ch;
-font-size:clamp(1.875rem,5cqi,3.5rem);line-height:1.06;letter-spacing:-0.02em;font-weight:650;
+[data-vibeui-block="surface-002"] [data-part="works"]{
+display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;
 }
-[data-vibeui-block="surface-002"] [data-part="lede"]{
-margin:0;max-width:44ch;font-size:1.0625rem;line-height:1.6;
-color:var(--vibeui-surface-002-muted);
+[data-vibeui-block="surface-002"] [data-part="works"] span{
+height:7rem;border-radius:0.75rem;background:var(--vibeui-surface-002-ghost-soft);
+border:1px solid var(--vibeui-surface-002-line);
 }
-[data-vibeui-block="surface-002"] [data-part="actions"]{
-display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:0.5rem;
-}
-[data-vibeui-block="surface-002"] [data-part="action"]{
-display:inline-flex;align-items:center;min-height:2.5rem;padding:0.375rem 1.125rem;
-background:var(--vibeui-surface-002-accent);color:#000000;
-text-decoration:none;font-size:0.9375rem;font-weight:640;
-}
-[data-vibeui-block="surface-002"] [data-part="secondary"]{
-display:inline-flex;align-items:center;min-height:2.5rem;padding:0.375rem 1.125rem;
-border:1px solid var(--vibeui-surface-002-line);color:var(--vibeui-surface-002-ink);
-text-decoration:none;font-size:0.9375rem;font-weight:520;
-}
-[data-vibeui-block="surface-002"] a:focus-visible{
-outline:2px solid var(--vibeui-surface-002-accent);outline-offset:2px;
+[data-vibeui-block="surface-002"] [data-part="works"] span:first-child{
+border-color:color-mix(in oklab,var(--vibeui-surface-002-accent) 45%,transparent);
 }
 @container (min-width: 48rem){
-[data-vibeui-block="surface-002"] [data-part="frame"]{padding:6rem 3rem;min-height:34rem}
+[data-vibeui-block="surface-002"] [data-part="frame"]{padding-block:3.5rem;min-height:34rem}
+[data-vibeui-block="surface-002"] [data-part="works"]{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="surface-002"] *{animation:none!important;transition:none!important}}
 `
 
-/** Графитовый фон продукта: чёрная глубина, панели и тёплое оранжевое свечение. */
+/** Графитовый фон с тёплым светом, следующим за курсором. Статичен на touch. */
 export function Surface002({
   children,
-  glow = "top",
-  panels = true,
+  radius = "large",
+  strength = "soft",
+  tone = "auto",
   accent,
   className,
   style,
 }: Surface002Props) {
+  const host = useRef<HTMLElement>(null)
+  const frame = useRef(0)
+
+  function handleMove(event: PointerEvent<HTMLElement>) {
+    // Только мышь: на touch пятно остаётся в статичной точке композиции.
+    if (event.pointerType !== "mouse" || !host.current) {
+      return
+    }
+
+    const target = host.current
+    const bounds = target.getBoundingClientRect()
+    const x = ((event.clientX - bounds.left) / bounds.width) * 100
+    const y = ((event.clientY - bounds.top) / bounds.height) * 100
+
+    cancelAnimationFrame(frame.current)
+    frame.current = requestAnimationFrame(() => {
+      target.style.setProperty("--vibeui-surface-002-x", `${x}%`)
+      target.style.setProperty("--vibeui-surface-002-y", `${y}%`)
+    })
+  }
+
   const palette = {
     ...(accent ? { "--vibeui-surface-002-accent": accent } : null),
     ...style,
@@ -118,35 +136,34 @@ export function Surface002({
         {STYLES}
       </style>
       <section
+        ref={host}
         data-vibeui-block="surface-002"
-        data-glow={glow === "top" ? undefined : glow}
-        data-panels={panels ? undefined : "off"}
+        data-tone={tone === "auto" ? undefined : tone}
+        data-radius={radius === "small" ? "small" : undefined}
+        data-strength={strength === "bright" ? "bright" : undefined}
+        onPointerMove={handleMove}
         className={className}
         style={palette}
       >
-        <div data-part="canvas" aria-hidden="true">
-          <div data-part="glow" />
-          <div data-part="panel-a" />
-          <div data-part="panel-b" />
-        </div>
+        <div data-part="spot" aria-hidden="true" />
+        <div data-part="texture" aria-hidden="true" />
         <div data-part="frame">
           {children ?? (
-            <>
-              <p data-part="eyebrow">Технологический продукт</p>
-              <h2 data-part="title">Глубина без визуального шума</h2>
-              <p data-part="lede">
-                Чёрная основа и графитовые панели различают уровни, а один
-                тёплый источник света ведёт взгляд к главному действию.
-              </p>
-              <div data-part="actions">
-                <a data-part="action" href="#start">
-                  Попробовать
-                </a>
-                <a data-part="secondary" href="#docs">
-                  Документация
-                </a>
+            <div data-part="ghost" aria-hidden="true">
+              <div data-part="head">
+                <span data-part="mark" />
+                <span />
+                <span />
               </div>
-            </>
+              <div data-part="works">
+                <span />
+                <span />
+                <span />
+                <span />
+                <span />
+                <span />
+              </div>
+            </div>
           )}
         </div>
       </section>

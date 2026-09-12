@@ -35,7 +35,7 @@ const STYLES = `
 --vibeui-date-004-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-date-004-muted:color-mix(in oklab,var(--vibeui-date-004-fg) 68%,transparent);
 --vibeui-date-004-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
---vibeui-date-004-accent:light-dark(oklch(0.52 0.17 39.8),oklch(0.78 0.14 39.8));
+--vibeui-date-004-accent:light-dark(oklch(0.28 0 0),oklch(0.91 0 0));
 --vibeui-date-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -85,8 +85,7 @@ font-size:0.75rem;color:var(--vibeui-date-004-muted);
 }
 [data-vibeui-block="date-004"] [data-part="dot"]{
 width:0.375rem;height:0.375rem;border-radius:9999px;flex:none;
-background:var(--vibeui-date-004-accent);
-}
+background:var(--vibeui-date-004-accent);color:oklch(from var(--vibeui-date-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="date-004"] *{animation:none!important;transition:none!important}}
 `
 

@@ -53,8 +53,8 @@ const STYLES = `
 --vibeui-contact-006-fg:light-dark(oklch(0.2 0 265),oklch(0.94 0 265));
 --vibeui-contact-006-muted:light-dark(oklch(0.52 0 265),oklch(0.72 0 265));
 --vibeui-contact-006-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-contact-006-accent:light-dark(oklch(0.55 0.18 39.8),oklch(0.74 0.16 39.8));
---vibeui-contact-006-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-contact-006-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
+--vibeui-contact-006-on-accent:oklch(from var(--vibeui-contact-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-contact-006-alarm:light-dark(oklch(0.55 0.19 25),oklch(0.73 0.16 25));
 --vibeui-contact-006-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -120,7 +120,7 @@ border:1px solid var(--vibeui-contact-006-border);background:var(--vibeui-contac
 font-size:0.875rem;font-weight:640;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="contact-006"] [data-part="slot"]:has(input:checked){
-color:var(--vibeui-contact-006-on-accent);background:var(--vibeui-contact-006-accent);border-color:var(--vibeui-contact-006-accent);
+color:oklch(from var(--vibeui-contact-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);background:var(--vibeui-contact-006-accent);border-color:var(--vibeui-contact-006-accent);
 }
 [data-vibeui-block="contact-006"] [data-part="slot"]:has(input:disabled){
 cursor:not-allowed;color:var(--vibeui-contact-006-muted);
@@ -166,7 +166,7 @@ flex:none;width:0.9375rem;height:0.9375rem;margin:0.125rem 0 0;accent-color:var(
 [data-vibeui-block="contact-006"] button{
 appearance:none;cursor:pointer;border:0;
 height:2.75rem;padding:0 1.25rem;border-radius:0.75rem;
-background:var(--vibeui-contact-006-accent);color:var(--vibeui-contact-006-on-accent);
+background:var(--vibeui-contact-006-accent);color:oklch(from var(--vibeui-contact-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.9375rem;font-weight:660;
 }
 [data-vibeui-block="contact-006"] [data-part="foot"]{

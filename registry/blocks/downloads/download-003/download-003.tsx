@@ -32,8 +32,8 @@ const STYLES = `
 --vibeui-download-003-muted:light-dark(oklch(0.5 0 0),oklch(0.72 0 0));
 --vibeui-download-003-border:light-dark(oklch(0.88 0 0),oklch(0.32 0 0));
 --vibeui-download-003-card:light-dark(oklch(0.98 0 0),oklch(0.2 0 0));
---vibeui-download-003-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-download-003-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-download-003-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
+--vibeui-download-003-on-accent:oklch(from var(--vibeui-download-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-download-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -75,7 +75,7 @@ font-size:0.9375rem;font-weight:650;transition:border-color .16s ease,background
 }
 [data-vibeui-block="download-003"] [data-part="btn"]:hover{border-color:var(--vibeui-download-003-accent)}
 [data-vibeui-block="download-003"] [data-part="btn"]:focus-visible{outline:2px solid var(--vibeui-download-003-accent);outline-offset:2px}
-[data-vibeui-block="download-003"] [data-part="card"][data-primary="true"] [data-part="btn"]{border-color:transparent;background:var(--vibeui-download-003-accent);color:var(--vibeui-download-003-on-accent)}
+[data-vibeui-block="download-003"] [data-part="card"][data-primary="true"] [data-part="btn"]{border-color:transparent;background:var(--vibeui-download-003-accent);color:oklch(from var(--vibeui-download-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="download-003"] [data-part="other"]{margin:1.75rem 0 0;font-size:0.875rem;color:var(--vibeui-download-003-muted)}
 [data-vibeui-block="download-003"] [data-part="other"] a{color:var(--vibeui-download-003-accent);text-decoration:underline;text-underline-offset:2px}
 @container (min-width: 44rem){

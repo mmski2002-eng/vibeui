@@ -117,7 +117,7 @@ background:radial-gradient(circle at 50% 50%,var(--vibeui-radio-016-accent) 0 0.
 [data-vibeui-block="radio-016"] [data-part="badge"]{
 position:absolute;top:0.1875rem;left:50%;transform:translateX(-50%);
 padding:0.0625rem 0.375rem;border-radius:9999px;
-background:var(--vibeui-radio-016-accent);color:var(--vibeui-radio-016-on-accent);
+background:var(--vibeui-radio-016-accent);color:oklch(from var(--vibeui-radio-016-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.5625rem;font-weight:700;letter-spacing:0.02em;
 }
 [data-vibeui-block="radio-016"] [data-part="plan-name"]{font-weight:650}

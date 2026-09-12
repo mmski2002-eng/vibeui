@@ -72,7 +72,7 @@ margin:0;max-width:34ch;font-size:0.8125rem;line-height:1.5;color:var(--vibeui-e
 appearance:none;border:0;cursor:pointer;margin-top:0.5rem;
 display:inline-flex;align-items:center;justify-content:center;
 min-height:2.375rem;padding:0.3125rem 1rem;border-radius:0.75rem;
-background:var(--vibeui-empty-003-accent);color:var(--vibeui-empty-003-accent-fg);
+background:var(--vibeui-empty-003-accent);color:oklch(from var(--vibeui-empty-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="empty-003"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-empty-003-accent);outline-offset:2px}

@@ -30,7 +30,7 @@ const STYLES = `
 --vibeui-switch-005-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-switch-005-track:light-dark(oklch(0.88 0 265),oklch(0.43 0 265));
 --vibeui-switch-005-thumb:light-dark(oklch(1 0 0),oklch(0.93 0 265));
---vibeui-switch-005-accent:light-dark(oklch(0.55 0.16 39.8),oklch(0.72 0.15 39.8));
+--vibeui-switch-005-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-switch-005-danger:light-dark(oklch(0.55 0.2 25),oklch(0.68 0.18 25));
 --vibeui-switch-005-danger-tint:light-dark(oklch(0.55 0.2 25 / 8%),oklch(0.68 0.18 25 / 16%));
 --vibeui-switch-005-danger-ink:light-dark(oklch(1 0 0),oklch(0.18 0.04 25));
@@ -57,7 +57,7 @@ width:2.75rem;height:1.5rem;border-radius:9999px;
 background:var(--vibeui-switch-005-track);cursor:inherit;
 transition:background-color .18s ease;
 }
-[data-vibeui-block="switch-005"] input:checked{background:var(--vibeui-switch-005-accent)}
+[data-vibeui-block="switch-005"] input:checked{background:var(--vibeui-switch-005-accent);color:oklch(from var(--vibeui-switch-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="switch-005"] input:focus-visible{outline:2px solid var(--vibeui-switch-005-accent);outline-offset:2px}
 [data-vibeui-block="switch-005"] [data-part="thumb"]{
 position:absolute;left:0.1875rem;top:0.1875rem;
@@ -94,6 +94,8 @@ background:var(--vibeui-switch-005-bg);color:inherit;
 }
 [data-vibeui-block="switch-005"] button:hover{filter:brightness(.96)}
 [data-vibeui-block="switch-005"] button:focus-visible{outline:2px solid var(--vibeui-switch-005-danger);outline-offset:2px}
+/* Ползунок на включённом треке: контраст к чернильному акценту, а не белый на белом. */
+[data-vibeui-block="switch-005"] input:checked + [data-part="thumb"],[data-vibeui-block="switch-005"] input:checked ~ [data-part="thumb"]{background:oklch(from var(--vibeui-switch-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="switch-005"] *{animation:none!important;transition:none!important}}
 `
 

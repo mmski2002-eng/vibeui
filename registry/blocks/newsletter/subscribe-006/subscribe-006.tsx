@@ -28,13 +28,13 @@ export type Subscribe006Props = {
 const STYLES = `
 :where([data-vibeui-block="subscribe-006"]){
 --vibeui-subscribe-006-bg:transparent;
---vibeui-subscribe-006-card:oklch(0.19 0.008 39.8);
+--vibeui-subscribe-006-card:oklch(0.19 0 0);
 --vibeui-subscribe-006-ink:oklch(0.95 0 0);
 --vibeui-subscribe-006-muted:oklch(0.95 0 0 / 62%);
 --vibeui-subscribe-006-border:oklch(1 0 0 / 14%);
 --vibeui-subscribe-006-field:oklch(1 0 0 / 8%);
---vibeui-subscribe-006-accent:oklch(0.6803 0.2144 39.8);
---vibeui-subscribe-006-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-subscribe-006-accent:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
+--vibeui-subscribe-006-on-accent:oklch(from var(--vibeui-subscribe-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-subscribe-006-ok:oklch(0.76 0.14 150);
 --vibeui-subscribe-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -102,7 +102,7 @@ outline:2px solid var(--vibeui-subscribe-006-accent);outline-offset:1px;
 }
 [data-vibeui-block="subscribe-006"] [data-part="button"]{
 height:2.75rem;padding:0 1.375rem;border:0;border-radius:0.625rem;
-background:var(--vibeui-subscribe-006-accent);color:var(--vibeui-subscribe-006-on-accent);
+background:var(--vibeui-subscribe-006-accent);color:oklch(from var(--vibeui-subscribe-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.9375rem;font-weight:650;cursor:pointer;
 transition:background .15s ease,transform .15s ease;
 }

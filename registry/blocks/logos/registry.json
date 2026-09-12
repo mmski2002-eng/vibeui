@@ -5,7 +5,7 @@
       "name": "logocloud-001",
       "type": "registry:block",
       "title": "Строка логотипов",
-      "description": "Полоса доверия: подпись «Нам доверяют» и ряд приглушённых текстовых wordmark, которые загораются оранжевым под курсором. Самодостаточна: один файл, без зависимостей.",
+      "description": "Полоса доверия: подпись «Нам доверяют» и ряд приглушённых текстовых wordmark, которые загораются акцентным под курсором. Самодостаточна: один файл, без зависимостей.",
       "categories": ["logos"],
       "dependencies": [],
       "registryDependencies": [],
@@ -19,7 +19,7 @@
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-logocloud-001-*. Серверный компонент. Логотипы — текстовые wordmark в разных гарнитурах (data-style: sans, serif, mono, wide, slab): одинаковый шрифт сразу выдал бы, что логотипы ненастоящие. В покое ряд приглушён серым и читается фоном, под курсором wordmark загорается акцентом. В узкой колонке подпись и ряд центрированы стопкой, от 52cqi подпись уходит влево, ряд — вправо (container queries).",
       "meta": {
         "tags": ["logos", "trust", "social proof", "wordmark", "hover"],
-        "preview": { "width": "full" },
+        "preview": { "width": "natural" },
         "ai": {
           "export": "Logocloud001",
           "usage": "<Logocloud001\n  eyebrow=\"Нам доверяют\"\n  items={[{ name: \"Nordwind\", style: \"wide\" }, { name: \"Sturm\", style: \"slab\" }]}\n/>",
@@ -27,7 +27,7 @@
           "preserve": [
             "локальную палитру --vibeui-logocloud-001-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
             "приглушённый серый логотипов в покое: полоса — фон страницы, а не её герой",
-            "акцент только на hover — постоянно оранжевый ряд спорил бы с CTA страницы",
+            "акцент только на hover — постоянно акцентный ряд спорил бы с CTA страницы",
             "разные гарнитуры wordmark через data-style: одинаковый шрифт выдаёт, что логотипы ненастоящие",
             "container-запрос на 52rem: в широкой колонке подпись уходит влево, а ряд — вправо, вместо центрированной стопки",
             "блок <style> внутри компонента — палитра и раскладка живут в одном файле",
@@ -62,14 +62,14 @@
         "i18n": {
           "en": {
             "title": "Logo Strip",
-            "description": "A trust bar: a “Trusted by” caption and a row of muted text wordmarks that light up orange under the cursor. Self-contained: one file, no dependencies.",
+            "description": "A trust bar: a “Trusted by” caption and a row of muted text wordmarks that light up accent under the cursor. Self-contained: one file, no dependencies.",
             "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-logocloud-001-* variables. A server component. The logos are text wordmarks in different typefaces (data-style: sans, serif, mono, wide, slab): a single shared font would instantly give away that the logos are fake. At rest the row is muted grey and reads as background; under the cursor a wordmark lights up with the accent. In a narrow column the caption and the row stack centered; from 52cqi the caption moves left and the row right (container queries).",
             "ai": {
               "summary": "A trust bar: a short caption and a row of text wordmarks. The logos are muted and only come alive with the accent under the cursor; the typefaces are mixed so the row looks like real brands. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
                 "the local --vibeui-logocloud-001-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the muted grey of the logos at rest: the strip is the page background, not its hero",
-                "the accent on hover only — a permanently orange row would compete with the page CTA",
+                "the accent on hover only — a permanently accent row would compete with the page CTA",
                 "the different wordmark typefaces via data-style: a single font gives away that the logos are fake",
                 "the container query at 52rem: in a wide column the caption moves left and the row right instead of a centered stack",
                 "the <style> block inside the component — the palette and the layout live in one file",
@@ -118,7 +118,7 @@
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-logocloud-002-*. Серверный компонент. Дорожка состоит из двух одинаковых групп логотипов; keyframes уводит её на translateX(-50%), поэтому цикл бесшовный. Дубль скрыт от скринридеров через aria-hidden. Под курсором animation-play-state: paused — движущийся текст нельзя прочитать. При prefers-reduced-motion анимация выключается, дорожка складывается в обычный ряд с переносами, дубль прячется. Края вьюпорта растворяются mask-image. Скорость — переменная --vibeui-logocloud-002-speed.",
       "meta": {
         "tags": ["logos", "marquee", "animation", "social proof", "wordmark"],
-        "preview": { "width": "full" },
+        "preview": { "width": "natural" },
         "ai": {
           "export": "Logocloud002",
           "usage": "<Logocloud002\n  eyebrow=\"Каталогом пользуются\"\n  items={[{ name: \"Nordwind\", style: \"wide\" }, { name: \"Plot\", style: \"serif\" }]}\n/>",
@@ -205,7 +205,7 @@
       "name": "logocloud-003",
       "type": "registry:block",
       "title": "Сетка логотипов с числом",
-      "description": "Сетка 3×2: пять wordmark-плиток и шестая плитка-счётчик «и ещё 200+ команд» оранжевым — число превращает короткий список в верхушку айсберга. Самодостаточна: один файл, без зависимостей.",
+      "description": "Сетка 3×2: пять wordmark-плиток и шестая плитка-счётчик «и ещё 200+ команд» акцентным — число превращает короткий список в верхушку айсберга. Самодостаточна: один файл, без зависимостей.",
       "categories": ["logos"],
       "dependencies": [],
       "registryDependencies": [],
@@ -219,16 +219,16 @@
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-logocloud-003-*. Серверный компонент. Пять логотипов-плиток и шестая плитка-счётчик, набранная акцентом: счётчик стоит в сетке на правах логотипа, а не подписью под ней — подпись под сеткой никто не читает. На hover плитка получает тёплый тинт через color-mix и wordmark загорается акцентом. Сетка 2 колонки, от 40cqi — 3 (container queries). Wordmark в разных гарнитурах через data-style.",
       "meta": {
         "tags": ["logos", "grid", "counter", "social proof", "tiles"],
-        "preview": { "width": "full" },
+        "preview": { "width": "natural" },
         "ai": {
           "export": "Logocloud003",
           "usage": "<Logocloud003\n  title=\"Эти команды уже собирают сайты быстрее\"\n  moreText=\"и ещё 200+ команд\"\n  items={[{ name: \"Nordwind\", style: \"wide\" }, { name: \"Sturm\", style: \"slab\" }]}\n/>",
-          "summary": "Сетка логотипов 3×2, где шестая плитка — оранжевый счётчик «и ещё 200+ команд». Пять логотипов сами по себе не доказательство; число делает их верхушкой айсберга. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "summary": "Сетка логотипов 3×2, где шестая плитка — акцентный счётчик «и ещё 200+ команд». Пять логотипов сами по себе не доказательство; число делает их верхушкой айсберга. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-logocloud-003-* — не подменять её токенами темы сайта",
             "счётчик как равноправную плитку сетки, а не подпись под ней: подпись под сеткой никто не читает",
-            "акцент только на счётчике — он единственный смысловой элемент ряда, второй оранжевый элемент размоет фокус",
-            "hover-тонировку плиток через color-mix: заливка остаётся тёплым тинтом, а не сплошным оранжевым",
+            "акцент только на счётчике — он единственный смысловой элемент ряда, второй акцентный элемент размоет фокус",
+            "hover-тонировку плиток через color-mix: заливка остаётся тёплым тинтом, а не сплошным акцентным",
             "сетку 2→3 колонки от собственной ширины блока (container queries), а не от ширины окна",
             "разные гарнитуры wordmark через data-style: одинаковый шрифт выдаёт ненастоящие логотипы",
             "light-dark() в палитре: компонент следует color-scheme окружения, а не тащит собственную тёмную тему"
@@ -269,15 +269,15 @@
         "i18n": {
           "en": {
             "title": "Logo Grid with a Counter",
-            "description": "A 3×2 grid: five wordmark tiles and a sixth counter tile — “and 200+ more teams” in orange. The number turns a short list into the tip of an iceberg. Self-contained: one file, no dependencies.",
+            "description": "A 3×2 grid: five wordmark tiles and a sixth counter tile — “and 200+ more teams” in accent. The number turns a short list into the tip of an iceberg. Self-contained: one file, no dependencies.",
             "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-logocloud-003-* variables. A server component. Five logo tiles and a sixth counter tile set in the accent colour: the counter sits in the grid with the same rights as a logo instead of a caption below it — nobody reads a caption under a grid. On hover a tile gets a warm tint via color-mix and the wordmark lights up with the accent. The grid has 2 columns, 3 from 40cqi (container queries). Wordmarks come in different typefaces via data-style.",
             "ai": {
-              "summary": "A 3×2 logo grid where the sixth tile is an orange counter — “and 200+ more teams”. Five logos alone prove nothing; the number makes them the tip of an iceberg. Zero dependencies, one file, its own palette, no client JS.",
+              "summary": "A 3×2 logo grid where the sixth tile is an accent counter — “and 200+ more teams”. Five logos alone prove nothing; the number makes them the tip of an iceberg. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
                 "the local --vibeui-logocloud-003-* palette — do not swap it for your theme tokens",
                 "the counter as a full grid tile rather than a caption below: nobody reads a caption under a grid",
-                "the accent on the counter only — it is the single meaningful element of the row; a second orange element would blur the focus",
-                "the tile hover tint via color-mix: the fill stays a warm tint, not solid orange",
+                "the accent on the counter only — it is the single meaningful element of the row; a second accent element would blur the focus",
+                "the tile hover tint via color-mix: the fill stays a warm tint, not solid accent",
                 "the 2→3 column grid driven by the block's own width (container queries), not the window width",
                 "the different wordmark typefaces via data-style: a single font gives away that the logos are fake",
                 "light-dark() in the palette: the component follows the surrounding color-scheme rather than shipping a dark theme of its own"
@@ -321,7 +321,7 @@
       "name": "logocloud-004",
       "type": "registry:block",
       "title": "Логотипы с цитатой",
-      "description": "Одна цитата клиента по центру и ряд wordmark под ней; логотип цитируемой компании подсвечен оранжевым, связывая ряд и цитату в одну историю. Самодостаточен: один файл, без зависимостей.",
+      "description": "Одна цитата клиента по центру и ряд wordmark под ней; логотип цитируемой компании подсвечен акцентным, связывая ряд и цитату в одну историю. Самодостаточен: один файл, без зависимостей.",
       "categories": ["logos"],
       "dependencies": [],
       "registryDependencies": [],
@@ -332,10 +332,10 @@
           "target": "@components/vibeui/logocloud-004.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-logocloud-004-*. Серверный компонент. По центру — одна цитата в figure/blockquote/figcaption, кавычки добавляются псевдоэлементами. Под разделительной линией — ряд wordmark; логотип цитируемой компании помечен highlight и постоянно горит акцентом, остальные приглушены и оранжевеют только на hover. Одна цитата вместо карусели — сознательно: ряд логотипов отвечает за «сколько», цитата — за «почему».",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-logocloud-004-*. Серверный компонент. По центру — одна цитата в figure/blockquote/figcaption, кавычки добавляются псевдоэлементами. Под разделительной линией — ряд wordmark; логотип цитируемой компании помечен highlight и постоянно горит акцентом, остальные приглушены и окрашиваются в акцентный цвет только на hover. Одна цитата вместо карусели — сознательно: ряд логотипов отвечает за «сколько», цитата — за «почему».",
       "meta": {
         "tags": ["logos", "quote", "testimonial", "social proof", "wordmark"],
-        "preview": { "width": "full" },
+        "preview": { "width": "natural" },
         "ai": {
           "export": "Logocloud004",
           "usage": "<Logocloud004\n  quote=\"Собрали лендинг за два дня вместе с текстами.\"\n  author=\"Мария Соболева\"\n  role=\"Продюсер, Vetra\"\n  items={[{ name: \"Vetra\", highlight: true }, { name: \"Sturm\", style: \"slab\" }]}\n/>",
@@ -379,8 +379,8 @@
         "i18n": {
           "en": {
             "title": "Logos with a Quote",
-            "description": "One client quote in the centre and a row of wordmarks below; the quoted company's logo is highlighted in orange, tying the row and the quote into one story. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-logocloud-004-* variables. A server component. In the centre — a single quote in figure/blockquote/figcaption, with quotation marks added by pseudo-elements. Below a divider — a row of wordmarks; the quoted company's logo carries highlight and glows with the accent permanently, the rest are muted and only turn orange on hover. One quote instead of a carousel is deliberate: the logo row answers “how many”, the quote answers “why”.",
+            "description": "One client quote in the centre and a row of wordmarks below; the quoted company's logo is highlighted in accent, tying the row and the quote into one story. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-logocloud-004-* variables. A server component. In the centre — a single quote in figure/blockquote/figcaption, with quotation marks added by pseudo-elements. Below a divider — a row of wordmarks; the quoted company's logo carries highlight and glows with the accent permanently, the rest are muted and only turn accent on hover. One quote instead of a carousel is deliberate: the logo row answers “how many”, the quote answers “why”.",
             "ai": {
               "summary": "A two-layer trust section: a living client quote in the centre and a row of text wordmarks below. The quoted company's logo is highlighted with the accent — the row and the quote read as one story. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
@@ -443,7 +443,7 @@
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-logocloud-005-*. Серверный компонент: табы работают на скрытых radio внутри label и селекторах :has(:checked) — стейт не нужен, стрелки клавиатуры переключают вкладки нативно. Активный таб получает акцентную заливку с почти чёрным текстом, фокус-кольцо рисуется через :has(:focus-visible). CSS переключения панелей написан на фиксированные позиции nth-of-type — вкладок может быть до четырёх. Разбивка по отраслям сознательная: «нам доверяют все» не убеждает никого, посетитель ищет компании, похожие на свою.",
       "meta": {
         "tags": ["logos", "tabs", "industries", "css-only", "social proof"],
-        "preview": { "width": "full" },
+        "preview": { "width": "natural" },
         "ai": {
           "export": "Logocloud005",
           "usage": "<Logocloud005\n  title=\"Свои команды найдутся в каждой отрасли\"\n  groups={[{ label: \"Финтех\", logos: [{ name: \"Sturm\", style: \"slab\" }] }, { label: \"Ритейл\", logos: [{ name: \"Plot\", style: \"serif\" }] }]}\n/>",
@@ -578,7 +578,7 @@
       "name": "logocloud-006",
       "type": "registry:block",
       "title": "Плитки кейс-ссылок",
-      "description": "Каждый логотип — ссылка на кейс: в покое тихая стена wordmark, при наведении или фокусе плитка раскрывает оранжевое «читать кейс →». Самодостаточен: один файл, без зависимостей.",
+      "description": "Каждый логотип — ссылка на кейс: в покое тихая стена wordmark, при наведении или фокусе плитка раскрывает акцентное «читать кейс →». Самодостаточен: один файл, без зависимостей.",
       "categories": ["logos"],
       "dependencies": [],
       "registryDependencies": [],
@@ -589,20 +589,20 @@
           "target": "@components/vibeui/logocloud-006.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-logocloud-006-*. Серверный компонент. Каждая плитка — ссылка <a> с wordmark и подписью «читать кейс →»: подпись всегда лежит в DOM (скринридер читает её вместе с именем, ссылка не остаётся безымянной), визуально она всплывает на hover и :focus-visible. При prefers-reduced-motion подпись видима постоянно — всплытие было единственным способом её увидеть. На hover логотип темнеет до основного цвета текста, а оранжевой становится подпись: один акцент на плитке. Сетка 2 колонки, от 40cqi — 3 (container queries).",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-logocloud-006-*. Серверный компонент. Каждая плитка — ссылка <a> с wordmark и подписью «читать кейс →»: подпись всегда лежит в DOM (скринридер читает её вместе с именем, ссылка не остаётся безымянной), визуально она всплывает на hover и :focus-visible. При prefers-reduced-motion подпись видима постоянно — всплытие было единственным способом её увидеть. На hover логотип темнеет до основного цвета текста, а акцентной становится подпись: один акцент на плитке. Сетка 2 колонки, от 40cqi — 3 (container queries).",
       "meta": {
         "tags": ["logos", "case studies", "links", "hover", "tiles"],
-        "preview": { "width": "full" },
+        "preview": { "width": "natural" },
         "ai": {
           "export": "Logocloud006",
           "usage": "<Logocloud006\n  title=\"Как команды переезжают на VibeUI\"\n  ctaText=\"читать кейс →\"\n  items={[{ name: \"Nordwind\", style: \"wide\", href: \"/cases/nordwind\" }]}\n/>",
-          "summary": "Сетка логотипов-ссылок на кейсы: в покое приглушённая стена wordmark, при наведении или клавиатурном фокусе плитка раскрывает оранжевую подпись «читать кейс →». Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "summary": "Сетка логотипов-ссылок на кейсы: в покое приглушённая стена wordmark, при наведении или клавиатурном фокусе плитка раскрывает акцентную подпись «читать кейс →». Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-logocloud-006-* — не подменять её токенами темы сайта",
             "всплытие подписи и по :focus-visible, не только по hover — клавиатурный пользователь должен узнать о ссылке не хуже мышиного",
             "подпись всегда в DOM: скринридер читает её вместе с именем компании, и ссылка не остаётся безымянной",
             "видимую постоянно подпись при prefers-reduced-motion — всплытие было единственным способом её увидеть",
-            "смену ролей на hover: логотип темнеет до основного текста, оранжевой становится подпись — на плитке один акцент",
+            "смену ролей на hover: логотип темнеет до основного текста, акцентной становится подпись — на плитке один акцент",
             "сетку 2→3 колонки от собственной ширины блока (container queries), а не от ширины окна",
             "light-dark() в палитре: компонент следует color-scheme окружения, а не тащит собственную тёмную тему"
           ],
@@ -642,16 +642,16 @@
         "i18n": {
           "en": {
             "title": "Case Study Logo Tiles",
-            "description": "Every logo is a link to a case study: a quiet wall of wordmarks at rest, and on hover or focus a tile reveals an orange “read the case →”. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-logocloud-006-* variables. A server component. Each tile is an <a> link with a wordmark and a “read the case →” caption: the caption always lives in the DOM (a screen reader announces it together with the name, so the link is never unnamed) and visually floats in on hover and :focus-visible. Under prefers-reduced-motion the caption is permanently visible — the reveal was the only way to discover it. On hover the logo darkens to the main text colour while the caption turns orange: one accent per tile. The grid has 2 columns, 3 from 40cqi (container queries).",
+            "description": "Every logo is a link to a case study: a quiet wall of wordmarks at rest, and on hover or focus a tile reveals an accent “read the case →”. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-logocloud-006-* variables. A server component. Each tile is an <a> link with a wordmark and a “read the case →” caption: the caption always lives in the DOM (a screen reader announces it together with the name, so the link is never unnamed) and visually floats in on hover and :focus-visible. Under prefers-reduced-motion the caption is permanently visible — the reveal was the only way to discover it. On hover the logo darkens to the main text colour while the caption turns accent: one accent per tile. The grid has 2 columns, 3 from 40cqi (container queries).",
             "ai": {
-              "summary": "A grid of logo links to case studies: a muted wall of wordmarks at rest; on hover or keyboard focus a tile reveals the orange “read the case →” caption. Zero dependencies, one file, its own palette, no client JS.",
+              "summary": "A grid of logo links to case studies: a muted wall of wordmarks at rest; on hover or keyboard focus a tile reveals the accent “read the case →” caption. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
                 "the local --vibeui-logocloud-006-* palette — do not swap it for your theme tokens",
                 "the caption reveal on :focus-visible as well as hover — a keyboard user must discover the link no worse than a mouse user",
                 "the caption always in the DOM: a screen reader announces it together with the company name, so the link is never unnamed",
                 "the permanently visible caption under prefers-reduced-motion — the reveal was the only way to see it",
-                "the role swap on hover: the logo darkens to the main text colour and the caption turns orange — one accent per tile",
+                "the role swap on hover: the logo darkens to the main text colour and the caption turns accent — one accent per tile",
                 "the 2→3 column grid driven by the block's own width (container queries), not the window width",
                 "light-dark() in the palette: the component follows the surrounding color-scheme rather than shipping a dark theme of its own"
               ],

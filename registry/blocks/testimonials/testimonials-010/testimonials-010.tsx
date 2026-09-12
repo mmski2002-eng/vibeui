@@ -20,7 +20,7 @@ const STYLES = `
 --vibeui-testimonials-010-bg:transparent;
 --vibeui-testimonials-010-ink:light-dark(oklch(0.17 0 0),oklch(0.96 0 0));
 --vibeui-testimonials-010-muted:light-dark(oklch(0.48 0 0),oklch(0.71 0 0));
---vibeui-testimonials-010-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
+--vibeui-testimonials-010-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-testimonials-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-testimonials-010-serif:Georgia,"Times New Roman",Times,serif;
 container-type:inline-size;
@@ -58,8 +58,7 @@ display:flex;align-items:baseline;gap:0.625rem;flex-wrap:wrap;
 [data-vibeui-block="testimonials-010"] [data-part="author"]::before{
 content:"";align-self:center;
 width:2.5rem;height:2px;border-radius:2px;
-background:var(--vibeui-testimonials-010-accent);
-}
+background:var(--vibeui-testimonials-010-accent);color:oklch(from var(--vibeui-testimonials-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="testimonials-010"] [data-part="name"]{font-size:1rem;font-weight:660}
 [data-vibeui-block="testimonials-010"] [data-part="role"]{color:var(--vibeui-testimonials-010-muted);font-size:0.9375rem}
 @container (min-width: 48rem){

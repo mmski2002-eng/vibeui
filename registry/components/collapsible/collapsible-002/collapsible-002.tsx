@@ -29,7 +29,7 @@ const STYLES = `
 --vibeui-collapsible-002-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-collapsible-002-muted:color-mix(in oklab,var(--vibeui-collapsible-002-fg) 68%,transparent);
 --vibeui-collapsible-002-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
---vibeui-collapsible-002-accent:light-dark(oklch(0.58 0.16 39.8),oklch(0.78 0.13 39.8));
+--vibeui-collapsible-002-accent:light-dark(oklch(0.295 0 0),oklch(0.91 0 0));
 --vibeui-collapsible-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -56,8 +56,7 @@ flex:none;margin-left:auto;position:relative;width:0.75rem;height:0.75rem;
 [data-vibeui-block="collapsible-002"] [data-part="mark"]::after{
 content:"";position:absolute;inset:50% 0 auto;
 height:2px;border-radius:2px;background:var(--vibeui-collapsible-002-accent);
-transform:translateY(-50%);transition:transform .24s ease,opacity .24s ease;
-}
+transform:translateY(-50%);transition:transform .24s ease,opacity .24s ease;color:oklch(from var(--vibeui-collapsible-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 /* Плюс превращается в минус: вторая палка просто ложится и гаснет. */
 [data-vibeui-block="collapsible-002"] [data-part="mark"]::after{transform:translateY(-50%) rotate(90deg)}
 [data-vibeui-block="collapsible-002"] [data-part="trigger"][aria-expanded="true"] [data-part="mark"]::after{transform:translateY(-50%) rotate(0deg);opacity:0}

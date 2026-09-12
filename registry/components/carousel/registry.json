@@ -953,7 +953,8 @@
             "seconds — сколько держать кадр",
             "label — название ленты",
             "пропорцию кадра",
-            "подписи для скринридера и подсказки: roleText, hintText и navText"
+            "подписи для скринридера и подсказки: roleText, hintText и navText",
+            "image у кадра — фото под текстом"
           ],
           "notes": [
             "Тёмной темы у кадра нет намеренно: фон истории — цветной градиент, и светлый текст на нём читается в любой теме страницы.",
@@ -1008,7 +1009,8 @@
                 "seconds — how long a frame holds",
                 "label — the player's name",
                 "the frame ratio",
-                "the screen-reader and hint wording: roleText, hintText and navText"
+                "the screen-reader and hint wording: roleText, hintText and navText",
+                "image on a story — a photo under the text"
               ],
               "notes": [
                 "There is deliberately no dark theme for the frame: the story background is a coloured gradient and light text stays readable on it under any page theme.",
@@ -1034,25 +1036,21 @@
             },
             "preview": {
               "props": {
-                "label": "Stories",
-                "roleText": "carousel",
-                "hintText": "{index} of {total} · hover to pause",
-                "navText": {
-                  "prev": "Previous frame",
-                  "next": "Next frame"
-                },
                 "stories": [
                   {
-                    "title": "A catalog of living components",
-                    "hue": 250
+                    "title": "A catalog of live components",
+                    "hue": 250,
+                    "image": "/demo/scenes/scene-01.webp"
                   },
                   {
-                    "title": "The brief ships with the code",
-                    "hue": 150
+                    "title": "The instructions ship with the code",
+                    "hue": 150,
+                    "image": "/demo/scenes/scene-02.webp"
                   },
                   {
-                    "title": "One command to install",
-                    "hue": 30
+                    "title": "Installed in one command",
+                    "hue": 30,
+                    "image": "/demo/places/place-01.webp"
                   }
                 ]
               }
@@ -1065,7 +1063,26 @@
           "hintText"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "stories": [
+              {
+                "title": "Каталог живых компонентов",
+                "hue": 250,
+                "image": "/demo/scenes/scene-01.webp"
+              },
+              {
+                "title": "Инструкция едет вместе с кодом",
+                "hue": 150,
+                "image": "/demo/scenes/scene-02.webp"
+              },
+              {
+                "title": "Установка одной командой",
+                "hue": 30,
+                "image": "/demo/places/place-01.webp"
+              }
+            ]
+          }
         }
       }
     },

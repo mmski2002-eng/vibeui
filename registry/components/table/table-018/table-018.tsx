@@ -38,7 +38,7 @@ const STYLES = `
 --vibeui-table-018-muted:color-mix(in oklab,var(--vibeui-table-018-fg) 68%,transparent);
 --vibeui-table-018-border:light-dark(oklch(0.92 0 265),oklch(0.36 0 265));
 --vibeui-table-018-head:light-dark(oklch(0.5 0 265 / 5%),oklch(0.85 0 265 / 7%));
---vibeui-table-018-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.75 0.16 39.8));
+--vibeui-table-018-accent:light-dark(oklch(0.287 0 0),oklch(0.905 0 0));
 --vibeui-table-018-ok:light-dark(oklch(0.55 0.14 155),oklch(0.75 0.13 155));
 --vibeui-table-018-warn:light-dark(oklch(0.68 0.15 75),oklch(0.82 0.14 75));
 --vibeui-table-018-error:light-dark(oklch(0.55 0.19 27),oklch(0.74 0.16 27));

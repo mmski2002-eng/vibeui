@@ -23,7 +23,7 @@ const STYLES = `
 --vibeui-progress-008-muted:color-mix(in oklab,var(--vibeui-progress-008-fg) 68%,transparent);
 --vibeui-progress-008-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-progress-008-track:light-dark(oklch(0.92 0 265),oklch(0.3 0 265));
---vibeui-progress-008-accent:light-dark(oklch(0.55 0.19 39.8),oklch(0.71 0.16 39.8));
+--vibeui-progress-008-accent:light-dark(oklch(0.287 0 0),oklch(0.897 0 0));
 --vibeui-progress-008-value:0;
 --vibeui-progress-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -64,20 +64,18 @@ right:0;background:var(--vibeui-progress-008-track);
 [data-vibeui-block="progress-008"] [data-part="track"]::after{
 width:calc(var(--vibeui-progress-008-value) * 1%);
 background:var(--vibeui-progress-008-accent);
-transition:width .35s cubic-bezier(.32,.72,0,1);
-}
+transition:width .35s cubic-bezier(.32,.72,0,1);color:oklch(from var(--vibeui-progress-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="progress-008"] [data-part="pin"]{
 position:relative;z-index:1;
 width:0.875rem;height:0.875rem;border-radius:9999px;
 box-sizing:border-box;border:0.1875rem solid var(--vibeui-progress-008-surface);
 background:var(--vibeui-progress-008-track);
 }
-[data-vibeui-block="progress-008"] [data-part="pin"][data-state="done"]{background:var(--vibeui-progress-008-accent)}
+[data-vibeui-block="progress-008"] [data-part="pin"][data-state="done"]{background:var(--vibeui-progress-008-accent);color:oklch(from var(--vibeui-progress-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="progress-008"] [data-part="pin"][data-state="current"]{
 background:var(--vibeui-progress-008-accent);
 outline:2px solid color-mix(in oklch,var(--vibeui-progress-008-accent) 40%,transparent);
-outline-offset:1px;
-}
+outline-offset:1px;color:oklch(from var(--vibeui-progress-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="progress-008"] *{animation:none!important;transition:none!important}
 }

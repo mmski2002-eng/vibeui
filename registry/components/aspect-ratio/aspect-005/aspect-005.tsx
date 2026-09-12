@@ -59,6 +59,13 @@ linear-gradient(120deg,var(--vibeui-aspect-005-ink),oklch(0.3 0.05 285));}
 [data-vibeui-block="aspect-005"] [data-part="frame"] img{
 position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
+/* Поверх фотографии — затемнение слева и светлый текст: без него заголовок
+   тонет в светлых участках снимка. */
+[data-vibeui-block="aspect-005"] [data-part="frame"][data-empty="false"]{color:oklch(0.98 0 0);--vibeui-aspect-005-muted:oklch(0.98 0 0 / 0.8)}
+[data-vibeui-block="aspect-005"] [data-part="frame"][data-empty="false"]::before{
+content:"";position:absolute;inset:0;
+background:linear-gradient(90deg,oklch(0 0 0 / 0.72),oklch(0 0 0 / 0.35) 55%,oklch(0 0 0 / 0.1));
+}
 [data-vibeui-block="aspect-005"] [data-part="frame"] > *:not(img){position:relative}
 [data-vibeui-block="aspect-005"] [data-part="frame"] img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 [data-vibeui-block="aspect-005"] [data-part="text"]{
@@ -75,7 +82,7 @@ margin:0;font-size:clamp(0.8125rem,1.5cqi,1rem);line-height:1.5;color:var(--vibe
 align-self:flex-start;margin-top:0.5rem;
 display:inline-flex;align-items:center;min-height:2.25rem;padding:0.3125rem 1rem;
 border-radius:0.5rem;text-decoration:none;
-background:var(--vibeui-aspect-005-accent);color:oklch(0.18 0.02 195);
+background:var(--vibeui-aspect-005-accent);color:oklch(from var(--vibeui-aspect-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="aspect-005"] [data-part="action"]:hover{filter:brightness(0.95)}

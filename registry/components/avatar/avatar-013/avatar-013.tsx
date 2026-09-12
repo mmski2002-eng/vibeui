@@ -26,7 +26,7 @@ const STYLES = `
 --vibeui-avatar-013-away:light-dark(oklch(0.75 0.14 75),oklch(0.88 0.14 75));
 --vibeui-avatar-013-busy:oklch(0.6 0.19 25);
 --vibeui-avatar-013-offline:light-dark(oklch(0.7 0 265),oklch(0.84 0 265));
---vibeui-avatar-013-owner:light-dark(oklch(0.55 0.2 39.8),oklch(0.69 0.2 39.8));
+--vibeui-avatar-013-owner:light-dark(oklch(0.287 0 0),oklch(0.894 0 0));
 --vibeui-avatar-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-013"]{

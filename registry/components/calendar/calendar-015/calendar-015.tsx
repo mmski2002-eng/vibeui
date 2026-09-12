@@ -39,8 +39,8 @@ const STYLES = `
 --vibeui-calendar-015-muted:color-mix(in oklab,var(--vibeui-calendar-015-fg) 68%,transparent);
 --vibeui-calendar-015-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-calendar-015-hover:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
---vibeui-calendar-015-accent:light-dark(oklch(0.52 0.15 39.8),oklch(0.72 0.14 39.8));
---vibeui-calendar-015-on-accent:light-dark(oklch(0.99 0 255),oklch(0.2 0.04 39.8));
+--vibeui-calendar-015-accent:light-dark(oklch(0.28 0 0),oklch(0.899 0 0));
+--vibeui-calendar-015-on-accent:light-dark(oklch(0.99 0 255),oklch(0.2 0 0));
 --vibeui-calendar-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -87,7 +87,7 @@ font:inherit;font-size:0.8125rem;font-variant-numeric:tabular-nums;
 [data-vibeui-block="calendar-015"] td button:focus-visible{outline:2px solid var(--vibeui-calendar-015-accent);outline-offset:-2px}
 [data-vibeui-block="calendar-015"] td button[data-outside="true"]{color:var(--vibeui-calendar-015-muted);opacity:.5}
 [data-vibeui-block="calendar-015"] td button[aria-pressed="true"]{
-background:var(--vibeui-calendar-015-accent);color:var(--vibeui-calendar-015-on-accent);font-weight:650;opacity:1;
+background:var(--vibeui-calendar-015-accent);color:oklch(from var(--vibeui-calendar-015-accent) clamp(0,(0.62 - l) * 100,1) 0 0);font-weight:650;opacity:1;
 }
 [data-vibeui-block="calendar-015"] [data-part="times"] button{
 appearance:none;cursor:pointer;flex:none;
@@ -102,7 +102,7 @@ font:inherit;font-size:0.8125rem;font-variant-numeric:tabular-nums;
 cursor:not-allowed;color:var(--vibeui-calendar-015-muted);opacity:.5;text-decoration:line-through;
 }
 [data-vibeui-block="calendar-015"] [data-part="times"] button[aria-pressed="true"]{
-background:var(--vibeui-calendar-015-accent);color:var(--vibeui-calendar-015-on-accent);
+background:var(--vibeui-calendar-015-accent);color:oklch(from var(--vibeui-calendar-015-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 border-color:var(--vibeui-calendar-015-accent);font-weight:650;
 }
 [data-vibeui-block="calendar-015"] [data-part="foot"]{
@@ -116,7 +116,7 @@ font-size:0.875rem;
 appearance:none;cursor:pointer;border:0;border-radius:0.5rem;
 display:inline-flex;align-items:center;justify-content:center;
 min-height:2.25rem;padding:0.25rem 1rem;
-background:var(--vibeui-calendar-015-accent);color:var(--vibeui-calendar-015-on-accent);
+background:var(--vibeui-calendar-015-accent);color:oklch(from var(--vibeui-calendar-015-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="calendar-015"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-calendar-015-accent);outline-offset:2px}

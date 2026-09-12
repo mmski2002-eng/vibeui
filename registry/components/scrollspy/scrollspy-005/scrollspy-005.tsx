@@ -36,7 +36,7 @@ const STYLES = `
 --vibeui-scrollspy-005-fg:light-dark(oklch(0.23 0 265),oklch(0.93 0 265));
 --vibeui-scrollspy-005-muted:color-mix(in oklab,var(--vibeui-scrollspy-005-fg) 68%,transparent);
 --vibeui-scrollspy-005-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
---vibeui-scrollspy-005-accent:light-dark(oklch(0.58 0.2 39.8),oklch(0.72 0.17 39.8));
+--vibeui-scrollspy-005-accent:light-dark(oklch(0.295 0 0),oklch(0.899 0 0));
 --vibeui-scrollspy-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -78,8 +78,7 @@ font-size:0.8125rem;line-height:1.2;white-space:nowrap;
 /* Подчёркивание вместо заливки: панель остаётся тонкой, а метка — заметной. */
 [data-vibeui-block="scrollspy-005"] [data-part="link"][aria-current="true"]::after{
 content:"";position:absolute;left:0.5rem;right:0.5rem;bottom:-1px;height:2px;
-border-radius:2px 2px 0 0;background:var(--vibeui-scrollspy-005-accent);
-}
+border-radius:2px 2px 0 0;background:var(--vibeui-scrollspy-005-accent);color:oklch(from var(--vibeui-scrollspy-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="scrollspy-005"] [data-part="content"]{padding:0.75rem 0.9375rem 0}
 [data-vibeui-block="scrollspy-005"] [data-part="section"]{scroll-margin-top:2.5rem}
 [data-vibeui-block="scrollspy-005"] [data-part="section"] h4{margin:0 0 0.25rem;font-size:0.875rem;font-weight:650}

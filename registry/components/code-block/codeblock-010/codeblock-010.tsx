@@ -30,8 +30,8 @@ const STYLES = `
 --vibeui-codeblock-010-muted:color-mix(in oklab,var(--vibeui-codeblock-010-fg) 68%,transparent);
 --vibeui-codeblock-010-border:light-dark(oklch(0.9 0 265),oklch(1 0 0 / 16%));
 --vibeui-codeblock-010-chip-bg:light-dark(oklch(0.94 0 265),oklch(1 0 0 / 10%));
---vibeui-codeblock-010-chip-fg:light-dark(oklch(0.32 0.09 39.8),oklch(0.85 0.11 39.8));
---vibeui-codeblock-010-path-fg:light-dark(oklch(0.36 0.09 39.8),oklch(0.83 0.1 39.8));
+--vibeui-codeblock-010-chip-fg:light-dark(oklch(0.3 0 265),oklch(0.9 0 265));
+--vibeui-codeblock-010-path-fg:light-dark(oklch(0.34 0 265),oklch(0.88 0 265));
 --vibeui-codeblock-010-key-bg:light-dark(oklch(1 0 0),oklch(1 0 0 / 8%));
 --vibeui-codeblock-010-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

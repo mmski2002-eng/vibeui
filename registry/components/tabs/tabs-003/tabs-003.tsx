@@ -34,7 +34,7 @@ const STYLES = `
 --vibeui-tabs-003-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-tabs-003-muted:color-mix(in oklab,var(--vibeui-tabs-003-fg) 68%,transparent);
 --vibeui-tabs-003-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
---vibeui-tabs-003-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8));
+--vibeui-tabs-003-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-tabs-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -66,8 +66,7 @@ position:absolute;left:0;bottom:-1px;height:2px;border-radius:2px 2px 0 0;
 width:calc(100% / var(--vibeui-tabs-003-count));
 transform:translateX(calc(var(--vibeui-tabs-003-index) * 100%)) scaleX(0.72);
 background:var(--vibeui-tabs-003-accent);
-transition:transform .24s cubic-bezier(.32,.72,0,1);
-}
+transition:transform .24s cubic-bezier(.32,.72,0,1);color:oklch(from var(--vibeui-tabs-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="tabs-003"] [data-part="panel"]{
 padding-top:0.875rem;font-size:0.875rem;line-height:1.6;color:var(--vibeui-tabs-003-muted);
 }

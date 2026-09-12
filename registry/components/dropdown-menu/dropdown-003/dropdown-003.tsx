@@ -39,7 +39,7 @@ const STYLES = `
 --vibeui-dropdown-003-muted:color-mix(in oklab,var(--vibeui-dropdown-003-fg) 68%,transparent);
 --vibeui-dropdown-003-border:light-dark(oklch(0.9 0 275),oklch(0.37 0 275));
 --vibeui-dropdown-003-hover:light-dark(oklch(0.96 0 275),oklch(0.32 0 275));
---vibeui-dropdown-003-accent:light-dark(oklch(0.55 0.18 39.8),oklch(0.62 0.17 39.8));
+--vibeui-dropdown-003-accent:light-dark(oklch(0.287 0 0),oklch(0.881 0 0));
 --vibeui-dropdown-003-danger:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.16 25));
 --vibeui-dropdown-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-dropdown-003-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
@@ -59,7 +59,7 @@ appearance:none;cursor:pointer;
 display:inline-flex;align-items:center;gap:0.5rem;
 height:2.125rem;padding:0 0.875rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-dropdown-003-accent);color:oklch(0.99 0 0);
+background:var(--vibeui-dropdown-003-accent);color:oklch(from var(--vibeui-dropdown-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.8125rem;font-weight:600;
 anchor-name:--vibeui-dropdown-003-anchor;
 transition:filter .16s ease;

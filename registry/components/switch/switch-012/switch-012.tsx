@@ -33,7 +33,7 @@ const STYLES = `
 --vibeui-switch-012-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-switch-012-track:light-dark(oklch(0.88 0 265),oklch(0.43 0 265));
 --vibeui-switch-012-thumb:light-dark(oklch(1 0 0),oklch(0.93 0 265));
---vibeui-switch-012-accent:light-dark(oklch(0.55 0.19 39.8),oklch(0.73 0.16 39.8));
+--vibeui-switch-012-accent:light-dark(oklch(0.287 0 0),oklch(0.901 0 0));
 --vibeui-switch-012-hover:light-dark(oklch(0.55 0 265 / 6%),oklch(0.88 0 265 / 10%));
 --vibeui-switch-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -78,7 +78,7 @@ background:var(--vibeui-switch-012-track);cursor:inherit;
 transition:background-color .18s ease;
 }
 [data-vibeui-block="switch-012"] input:checked,
-[data-vibeui-block="switch-012"] input:indeterminate{background:var(--vibeui-switch-012-accent)}
+[data-vibeui-block="switch-012"] input:indeterminate{background:var(--vibeui-switch-012-accent);color:oklch(from var(--vibeui-switch-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="switch-012"] input:focus-visible{outline:2px solid var(--vibeui-switch-012-accent);outline-offset:2px}
 [data-vibeui-block="switch-012"] [data-part="thumb"]{
 position:absolute;left:0.1875rem;top:0.1875rem;
@@ -91,6 +91,8 @@ transition:transform .18s cubic-bezier(.32,.72,0,1);
 /* Бегунок общего тумблера в промежуточном положении — по центру дорожки:
    ни «включено», ни «выключено», а честное «частично». */
 [data-vibeui-block="switch-012"] input:indeterminate + [data-part="thumb"]{transform:translateX(0.625rem)}
+/* Ползунок на включённом треке: контраст к чернильному акценту, а не белый на белом. */
+[data-vibeui-block="switch-012"] input:checked + [data-part="thumb"],[data-vibeui-block="switch-012"] input:checked ~ [data-part="thumb"]{background:oklch(from var(--vibeui-switch-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="switch-012"] *{animation:none!important;transition:none!important}}
 `
 

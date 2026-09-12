@@ -27,6 +27,8 @@ export type Hero002Props = {
   accentForeground?: string
   /** Пусто — подложки нет, секция ложится на фон страницы. */
   background?: string
+  /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
+  tone?: "auto" | "light" | "dark"
   className?: string
 }
 
@@ -47,9 +49,9 @@ const STYLES = `
 --vibeui-hero-002-fg:light-dark(oklch(0.21 0 260),oklch(0.96 0 260));
 --vibeui-hero-002-muted:light-dark(oklch(0.52 0 260),oklch(0.72 0 260));
 --vibeui-hero-002-border:light-dark(oklch(0.9 0 260),oklch(0.37 0 260));
---vibeui-hero-002-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.73 0.155 39.8));
---vibeui-hero-002-accent-fg:oklch(0.15 0.02 39.8);
---vibeui-hero-002-positive:light-dark(oklch(0.45 0.12 155),oklch(0.78 0.14 155));
+--vibeui-hero-002-accent:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
+--vibeui-hero-002-accent-fg:oklch(from var(--vibeui-hero-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
+--vibeui-hero-002-positive:var(--vibeui-hero-002-accent);
 --vibeui-hero-002-ring:color-mix(in oklab, var(--vibeui-hero-002-accent) 70%, transparent);
 --vibeui-hero-002-shadow:light-dark(oklch(0.21 0 260 / 16%),oklch(0 0 0 / 46%));
 --vibeui-hero-002-dot:light-dark(oklch(0.21 0 260 / 7%),oklch(1 0 0 / 8%));
@@ -58,6 +60,8 @@ const STYLES = `
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="hero-002"]{color-scheme:dark}
+:where([data-vibeui-block="hero-002"][data-tone="light"]){color-scheme:light}
+:where([data-vibeui-block="hero-002"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="hero-002"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -87,7 +91,17 @@ container-type:inline-size;
 @keyframes vibeui-hero-002-fade-up{from{opacity:0;transform:translate3d(0,14px,0)}to{opacity:1;transform:none}}
 @keyframes vibeui-hero-002-fade-in{from{opacity:0;transform:translate3d(16px,0,0) scale(0.985)}to{opacity:1;transform:none}}
 @keyframes vibeui-hero-002-draw{from{stroke-dashoffset:420}to{stroke-dashoffset:0}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="hero-002"] *{animation:none!important;transition:none!important}}
+/* Линия прочерчивается один раз при загрузке: график читается как живой,
+   но сам путь фиксирован — это иллюстрация, а не данные. */
+[data-vibeui-block="hero-002"] [data-part="chart-line"]{
+stroke-dasharray:1000;stroke-dashoffset:1000;
+animation:vibeui-hero-002-draw 1.6s cubic-bezier(.32,.72,0,1) .25s forwards;
+}
+@keyframes vibeui-hero-002-draw{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="hero-002"] *{animation:none!important;transition:none!important}
+[data-vibeui-block="hero-002"] [data-part="chart-line"]{stroke-dashoffset:0}
+}
 `
 
 const ENTER =
@@ -106,9 +120,9 @@ const FILL = "bg-[var(--vibeui-hero-002-border)]"
 // Декоративные аватары: без имён и лиц, только градиентные заливки.
 const AVATARS = [
   "linear-gradient(140deg,color-mix(in oklab,var(--vibeui-hero-002-accent) 55%,white),var(--vibeui-hero-002-accent))",
-  "linear-gradient(140deg,oklch(0.76 0.1 39.8),oklch(0.56 0.12 39.8))",
+  "linear-gradient(140deg,light-dark(oklch(0.2 0 0),oklch(0.92 0 0)),light-dark(oklch(0.2 0 0),oklch(0.92 0 0)))",
   "linear-gradient(140deg,oklch(0.8 0.09 80),oklch(0.63 0.12 55))",
-  "linear-gradient(140deg,oklch(0.77 0.09 39.8),oklch(0.57 0.14 39.8))",
+  "linear-gradient(140deg,light-dark(oklch(0.2 0 0),oklch(0.92 0 0)),light-dark(oklch(0.2 0 0),oklch(0.92 0 0)))",
 ]
 
 const ACTIVITY_ROWS = [
@@ -205,6 +219,7 @@ function Sparkline() {
         fill="url(#vibeui-hero-002-fill)"
       />
       <path
+        data-part="chart-line"
         d={CHART_LINE}
         fill="none"
         stroke="var(--vibeui-hero-002-accent)"
@@ -310,6 +325,7 @@ export function Hero002({
   accent,
   accentForeground,
   background = "",
+  tone = "auto",
   className,
 }: Hero002Props) {
   const style = {
@@ -328,6 +344,7 @@ export function Hero002({
   return (
     <section
       data-vibeui-block="hero-002"
+      data-tone={tone === "auto" ? undefined : tone}
       style={style}
       className={cx(
         "relative isolate overflow-hidden bg-[var(--vibeui-hero-002-bg)] font-[family-name:var(--vibeui-hero-002-font)] text-[var(--vibeui-hero-002-fg)] antialiased",
@@ -406,7 +423,7 @@ export function Hero002({
                   data-part="cta-primary"
                   className={cx(
                     ACTION_BASE,
-                    "bg-[var(--vibeui-hero-002-accent)] text-[var(--vibeui-hero-002-accent-fg)] transition-[filter,transform] duration-150 hover:-translate-y-px hover:brightness-110",
+                    "bg-[var(--vibeui-hero-002-accent)] text-[var(--vibeui-hero-002-accent-fg)] shadow-[0_0.375rem_1.25rem_color-mix(in_oklab,var(--vibeui-hero-002-accent)_40%,transparent),inset_0_1px_0_color-mix(in_oklab,#ffffff_42%,transparent)] hover:shadow-[0_0.625rem_1.75rem_color-mix(in_oklab,var(--vibeui-hero-002-accent)_50%,transparent),inset_0_1px_0_color-mix(in_oklab,#ffffff_52%,transparent)] transition-[box-shadow,transform] duration-200 hover:-translate-y-px",
                   )}
                 >
                   {primaryAction.label}

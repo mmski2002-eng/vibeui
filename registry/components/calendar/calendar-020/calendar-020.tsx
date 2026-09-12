@@ -35,7 +35,7 @@ const STYLES = `
 --vibeui-calendar-020-muted:color-mix(in oklab,var(--vibeui-calendar-020-fg) 68%,transparent);
 --vibeui-calendar-020-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
 --vibeui-calendar-020-track:light-dark(oklch(0.94 0 265),oklch(0.3 0 265));
---vibeui-calendar-020-accent:light-dark(oklch(0.55 0.16 39.8),oklch(0.73 0.14 39.8));
+--vibeui-calendar-020-accent:light-dark(oklch(0.287 0 0),oklch(0.901 0 0));
 --vibeui-calendar-020-warn:light-dark(oklch(0.65 0.16 70),oklch(0.78 0.14 70));
 --vibeui-calendar-020-late:light-dark(oklch(0.55 0.18 25),oklch(0.74 0.15 25));
 --vibeui-calendar-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -89,8 +89,7 @@ background:var(--vibeui-calendar-020-track);
 display:block;height:100%;border-radius:inherit;
 width:calc(var(--vibeui-calendar-020-progress,0) * 1%);
 background:var(--vibeui-calendar-020-accent);
-transition:width .3s ease;
-}
+transition:width .3s ease;color:oklch(from var(--vibeui-calendar-020-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="calendar-020"] *{animation:none!important;transition:none!important}}
 `
 

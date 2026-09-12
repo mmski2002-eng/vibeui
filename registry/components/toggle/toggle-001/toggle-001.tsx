@@ -65,7 +65,7 @@ outline:2px solid var(--vibeui-toggle-001-accent);outline-offset:2px;
 [data-vibeui-block="toggle-001"] button[aria-pressed="true"]{
 background:var(--vibeui-toggle-001-accent);
 border-color:var(--vibeui-toggle-001-accent);
-color:var(--vibeui-toggle-001-on);
+color:oklch(from var(--vibeui-toggle-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="toggle-001"] [data-part="hint"]{
 margin:0;font-size:0.75rem;color:var(--vibeui-toggle-001-muted);

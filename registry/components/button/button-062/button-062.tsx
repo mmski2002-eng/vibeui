@@ -36,7 +36,7 @@ const STYLES = `
 --vibeui-button-062-on-fg:light-dark(oklch(0.99 0 265),oklch(0.17 0.01 265));
 --vibeui-button-062-muted:color-mix(in oklab,var(--vibeui-button-062-fg) 62%,transparent);
 --vibeui-button-062-border:light-dark(oklch(0 0 0 / 14%),oklch(1 0 0 / 16%));
---vibeui-button-062-accent:light-dark(oklch(0.58 0.19 39.8),oklch(0.76 0.15 39.8));
+--vibeui-button-062-accent:light-dark(oklch(0.295 0 0),oklch(0.906 0 0));
 --vibeui-button-062-radius:0.75rem;
 --vibeui-button-062-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -86,8 +86,7 @@ border-radius:0.1875rem;background:currentColor;
 [data-vibeui-block="button-062"] [data-part="stream"]{
 position:absolute;left:0;bottom:0;height:2px;width:35%;
 background:var(--vibeui-button-062-accent);
-opacity:0;translate:-100% 0;
-}
+opacity:0;translate:-100% 0;color:oklch(from var(--vibeui-button-062-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="button-062"][data-running="true"] [data-part="stream"]{
 opacity:1;animation:vibeui-button-062-run 1.1s linear infinite;
 }

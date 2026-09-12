@@ -13,6 +13,8 @@ export type Hero013Props = {
   /** Пусто — подложки нет, секция ложится на фон страницы. */
   background?: string
   accent?: string
+  /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
+  tone?: "auto" | "light" | "dark"
   className?: string
   style?: CSSProperties
 }
@@ -33,14 +35,16 @@ const STYLES = `
 --vibeui-hero-013-muted:light-dark(oklch(0.5 0 220),oklch(0.7 0 220));
 --vibeui-hero-013-card:light-dark(oklch(1 0 0),oklch(0.26 0 220));
 --vibeui-hero-013-line:light-dark(oklch(0.88 0 220),oklch(0.37 0 220));
---vibeui-hero-013-accent:light-dark(oklch(0.52 0.14 39.8),oklch(0.74 0.13 39.8));
---vibeui-hero-013-accent-fg:oklch(0.15 0.02 39.8);
+--vibeui-hero-013-accent:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
+--vibeui-hero-013-accent-fg:oklch(from var(--vibeui-hero-013-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-013-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="hero-013"]{color-scheme:dark}
+:where([data-vibeui-block="hero-013"][data-tone="light"]){color-scheme:light}
+:where([data-vibeui-block="hero-013"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="hero-013"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -75,7 +79,7 @@ flex:1 1 auto;min-width:0;height:2.5rem;border:0;background:none;font:inherit;fo
 [data-vibeui-block="hero-013"] input:focus{outline:none}
 [data-vibeui-block="hero-013"] button{
 appearance:none;cursor:pointer;flex:0 0 auto;height:2.5rem;padding:0 1.125rem;border:0;border-radius:9999px;
-background:var(--vibeui-hero-013-accent);color:var(--vibeui-hero-013-accent-fg);
+background:var(--vibeui-hero-013-accent);color:oklch(from var(--vibeui-hero-013-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.875rem;font-weight:650;transition:background-color .16s ease;
 }
 [data-vibeui-block="hero-013"] button:hover{background:color-mix(in oklab,var(--vibeui-hero-013-accent) 86%,black)}
@@ -144,6 +148,7 @@ export function Hero013({
   counter = "1 080 секций · обновлено сегодня",
   background = "",
   accent,
+  tone = "auto",
   className,
   style,
 }: Hero013Props) {
@@ -165,6 +170,7 @@ export function Hero013({
       </style>
       <section
         data-vibeui-block="hero-013"
+        data-tone={tone === "auto" ? undefined : tone}
         className={className}
         style={palette}
       >

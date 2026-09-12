@@ -40,9 +40,9 @@ const STYLES = `
 --vibeui-faq-006-ink:light-dark(oklch(0.21 0.016 200),oklch(0.95 0.006 200));
 --vibeui-faq-006-muted:light-dark(oklch(0.49 0.016 200),oklch(0.72 0.013 200));
 --vibeui-faq-006-border:light-dark(oklch(0.9 0.008 200),oklch(0.35 0.014 200));
---vibeui-faq-006-accent:light-dark(oklch(0.52 0.13 39.8),oklch(0.74 0.12 39.8));
---vibeui-faq-006-accent-fg:oklch(0.15 0.02 39.8);
---vibeui-faq-006-shadow:light-dark(oklch(0.2 0.04 39.8 / 70%),oklch(0 0 0 / 55%));
+--vibeui-faq-006-accent:light-dark(oklch(0.28 0 0),oklch(0.903 0 0));
+--vibeui-faq-006-accent-fg:oklch(from var(--vibeui-faq-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
+--vibeui-faq-006-shadow:light-dark(oklch(0.2 0 0 / 70%),oklch(0 0 0 / 55%));
 --vibeui-faq-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

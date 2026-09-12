@@ -40,9 +40,9 @@ const STYLES = `
 --vibeui-eventcalendar-003-muted:color-mix(in oklab,var(--vibeui-eventcalendar-003-fg) 68%,transparent);
 --vibeui-eventcalendar-003-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
 --vibeui-eventcalendar-003-line:light-dark(oklch(0.95 0 265),oklch(0.31 0 265));
---vibeui-eventcalendar-003-accent:light-dark(oklch(0.55 0.16 39.8),oklch(0.74 0.15 39.8));
---vibeui-eventcalendar-003-focus:light-dark(oklch(0.6 0.13 39.8),oklch(0.76 0.12 39.8));
---vibeui-eventcalendar-003-hold:light-dark(oklch(0.65 0.13 39.8),oklch(0.79 0.13 39.8));
+--vibeui-eventcalendar-003-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
+--vibeui-eventcalendar-003-focus:light-dark(oklch(0.3 0 0),oklch(0.906 0 0));
+--vibeui-eventcalendar-003-hold:light-dark(oklch(0.312 0 0),oklch(0.912 0 0));
 --vibeui-eventcalendar-003-hour:3.25rem;
 --vibeui-eventcalendar-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

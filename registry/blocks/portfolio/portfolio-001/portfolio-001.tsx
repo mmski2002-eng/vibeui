@@ -30,7 +30,7 @@ const STYLES = `
 --vibeui-portfolio-001-muted:light-dark(oklch(0.5 0 0),oklch(0.72 0 0));
 --vibeui-portfolio-001-border:light-dark(oklch(0.9 0 0),oklch(0.3 0 0));
 --vibeui-portfolio-001-tile-ink:oklch(0.98 0 0);
---vibeui-portfolio-001-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
+--vibeui-portfolio-001-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-portfolio-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -58,8 +58,8 @@ position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 [data-vibeui-block="portfolio-001"] [data-part="tile"]:hover{transform:translateY(-3px)}
 [data-vibeui-block="portfolio-001"] [data-part="tile"]:focus-visible{outline:2px solid var(--vibeui-portfolio-001-accent);outline-offset:3px}
 /* Обложка — тёплый градиент, оттенок сдвигается по индексу через nth-child. */
-[data-vibeui-block="portfolio-001"] [data-part="tile"]{background:linear-gradient(150deg,oklch(0.62 0.19 39.8),oklch(0.4 0.14 30))}
-[data-vibeui-block="portfolio-001"] [data-part="tile"]:nth-child(3n+2){background:linear-gradient(150deg,oklch(0.58 0.17 55),oklch(0.36 0.12 40))}
+[data-vibeui-block="portfolio-001"] [data-part="tile"]{background:linear-gradient(150deg,light-dark(oklch(0.2 0 0),oklch(0.92 0 0)),oklch(0.4 0.14 30))}
+[data-vibeui-block="portfolio-001"] [data-part="tile"]:nth-child(3n+2){background:linear-gradient(150deg,oklch(0.58 0.17 55),oklch(0.36 0 0))}
 [data-vibeui-block="portfolio-001"] [data-part="tile"]:nth-child(3n+3){background:linear-gradient(150deg,oklch(0.5 0.16 25),oklch(0.3 0.1 20))}
 [data-vibeui-block="portfolio-001"] [data-part="tile"]::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,oklch(0 0 0 / 45%));}
 [data-vibeui-block="portfolio-001"] [data-part="cat"]{position:relative;font-size:0.6875rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;opacity:.9}

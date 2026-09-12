@@ -34,9 +34,9 @@ const STYLES = `
 --vibeui-button-072-muted:color-mix(in oklab,var(--vibeui-button-072-fg) 62%,transparent);
 --vibeui-button-072-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 14%));
 --vibeui-button-072-card:light-dark(oklch(0.955 0 0),oklch(0.2178 0 0));
---vibeui-button-072-accent:light-dark(oklch(0.64 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-button-072-ring:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-button-072-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-button-072-accent:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
+--vibeui-button-072-ring:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
+--vibeui-button-072-on-accent:oklch(0.15 0 0);
 --vibeui-button-072-radius:9999px;
 --vibeui-button-072-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -58,7 +58,7 @@ appearance:none;border:0;cursor:pointer;
 display:inline-flex;align-items:center;justify-content:center;
 min-height:2.5rem;padding:0.5rem 1.25rem;
 border-radius:var(--vibeui-button-072-radius);
-background:var(--vibeui-button-072-accent);color:var(--vibeui-button-072-on-accent);
+background:var(--vibeui-button-072-accent);color:oklch(from var(--vibeui-button-072-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.875rem;font-weight:650;line-height:1;letter-spacing:-0.01em;
 transition:filter .16s ease;
 }
@@ -94,8 +94,7 @@ transition-delay:0s;
 }
 [data-vibeui-block="button-072"] [data-part="dot"]{
 width:0.4375rem;height:0.4375rem;flex:none;border-radius:50%;
-background:var(--vibeui-button-072-accent);
-}
+background:var(--vibeui-button-072-accent);color:oklch(from var(--vibeui-button-072-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="button-072"] [data-part="message"]{
 min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }

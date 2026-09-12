@@ -32,8 +32,8 @@ const STYLES = `
 --vibeui-pres-002-muted:light-dark(oklch(0.5 0 0),oklch(0.72 0 0));
 --vibeui-pres-002-border:light-dark(oklch(0.9 0 0),oklch(0.3 0 0));
 --vibeui-pres-002-card:light-dark(oklch(0.99 0 0),oklch(0.2 0 0));
---vibeui-pres-002-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-pres-002-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-pres-002-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
+--vibeui-pres-002-on-accent:oklch(from var(--vibeui-pres-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-pres-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -59,11 +59,11 @@ color:oklch(0.98 0 0);font-size:1.75rem;font-weight:800;overflow:hidden;
 }
 /* Подложка — только когда фотографии нет: компонент обязан
    оставаться полноценным без единого внешнего файла. */
-[data-vibeui-block="pres-002"] [data-part="thumb"][data-empty="true"]{background:linear-gradient(140deg,oklch(0.6 0.18 39.8),oklch(0.38 0.13 28));}
+[data-vibeui-block="pres-002"] [data-part="thumb"][data-empty="true"]{background:linear-gradient(140deg,light-dark(oklch(0.2 0 0),oklch(0.92 0 0)),oklch(0.38 0.13 28));}
 [data-vibeui-block="pres-002"] [data-part="thumb"] img{
 position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
-[data-vibeui-block="pres-002"] [data-part="asset"]:nth-child(3n+2) [data-part="thumb"]{background:linear-gradient(140deg,oklch(0.58 0.16 55),oklch(0.36 0.11 42))}
+[data-vibeui-block="pres-002"] [data-part="asset"]:nth-child(3n+2) [data-part="thumb"]{background:linear-gradient(140deg,oklch(0.58 0.16 55),oklch(0.36 0 0))}
 [data-vibeui-block="pres-002"] [data-part="asset"]:nth-child(3n+3) [data-part="thumb"]{background:linear-gradient(140deg,oklch(0.5 0.15 25),oklch(0.3 0.1 18))}
 [data-vibeui-block="pres-002"] [data-part="asset-title"]{margin:0;font-size:1rem;font-weight:700}
 [data-vibeui-block="pres-002"] [data-part="asset-note"]{margin:0.125rem 0 0;font-size:0.8125rem;line-height:1.45;color:var(--vibeui-pres-002-muted)}

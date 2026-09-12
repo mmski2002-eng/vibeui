@@ -59,8 +59,8 @@ const STYLES = `
 --vibeui-pricing-002-muted:light-dark(oklch(0.52 0 265),oklch(0.72 0 265));
 --vibeui-pricing-002-card:light-dark(oklch(1 0 0),oklch(0.22 0 265));
 --vibeui-pricing-002-line:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
---vibeui-pricing-002-accent:light-dark(oklch(0.52 0.18 39.8),oklch(0.73 0.15 39.8));
---vibeui-pricing-002-accent-fg:oklch(0.15 0.02 39.8);
+--vibeui-pricing-002-accent:light-dark(oklch(0.28 0 0),oklch(0.901 0 0));
+--vibeui-pricing-002-accent-fg:oklch(from var(--vibeui-pricing-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-pricing-002-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -101,7 +101,7 @@ box-shadow:0 12px 40px color-mix(in oklab,var(--vibeui-pricing-002-accent) 16%,t
 }
 [data-vibeui-block="pricing-002"] [data-part="badge"]{
 position:absolute;top:-0.75rem;left:1.75rem;padding:0.25rem 0.625rem;border-radius:9999px;
-background:var(--vibeui-pricing-002-accent);color:var(--vibeui-pricing-002-accent-fg);
+background:var(--vibeui-pricing-002-accent);color:oklch(from var(--vibeui-pricing-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.6875rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
 }
 [data-vibeui-block="pricing-002"] h3{margin:0;font-size:1.0625rem;font-weight:700;letter-spacing:-0.01em}
@@ -123,7 +123,7 @@ transition:background-color .16s ease,border-color .16s ease,color .16s ease;
 [data-vibeui-block="pricing-002"] [data-part="cta"]{margin-top:1.5rem}
 [data-vibeui-block="pricing-002"] a:hover{border-color:var(--vibeui-pricing-002-fg)}
 [data-vibeui-block="pricing-002"] [data-featured="true"] a{
-background:var(--vibeui-pricing-002-accent);color:var(--vibeui-pricing-002-accent-fg);border-color:transparent;
+background:var(--vibeui-pricing-002-accent);color:oklch(from var(--vibeui-pricing-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border-color:transparent;
 }
 [data-vibeui-block="pricing-002"] [data-featured="true"] a:hover{background:color-mix(in oklab,var(--vibeui-pricing-002-accent) 86%,black)}
 [data-vibeui-block="pricing-002"] a:focus-visible{outline:2px solid var(--vibeui-pricing-002-accent);outline-offset:3px}

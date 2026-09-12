@@ -37,7 +37,7 @@ const STYLES = `
 --vibeui-alertdialog-012-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-alertdialog-012-muted:color-mix(in oklab,var(--vibeui-alertdialog-012-fg) 68%,transparent);
 --vibeui-alertdialog-012-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-alertdialog-012-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8));
+--vibeui-alertdialog-012-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-alertdialog-012-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0 262));
 --vibeui-alertdialog-012-shadow:light-dark(oklch(0.2 0 265 / 55%),oklch(0.02 0 265 / 70%));
 --vibeui-alertdialog-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -52,7 +52,7 @@ font-family:var(--vibeui-alertdialog-012-font);color:var(--vibeui-alertdialog-01
 [data-vibeui-block="alertdialog-012"] [data-part="open"]{
 appearance:none;cursor:pointer;height:2.25rem;padding:0 0.875rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-alertdialog-012-accent);color:var(--vibeui-alertdialog-012-on-accent);
+background:var(--vibeui-alertdialog-012-accent);color:oklch(from var(--vibeui-alertdialog-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="alertdialog-012"] [data-part="open"]:focus-visible{outline:2px solid var(--vibeui-alertdialog-012-accent);outline-offset:2px}
@@ -98,7 +98,7 @@ margin:0 0 0.875rem;font-size:0.6875rem;line-height:1.45;color:var(--vibeui-aler
 flex:1 1 0;appearance:none;cursor:pointer;height:2.5rem;border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;font-weight:650;font-variant-numeric:tabular-nums;
 }
-[data-vibeui-block="alertdialog-012"] [data-part="confirm"]{border:0;background:var(--vibeui-alertdialog-012-accent);color:var(--vibeui-alertdialog-012-on-accent)}
+[data-vibeui-block="alertdialog-012"] [data-part="confirm"]{border:0;background:var(--vibeui-alertdialog-012-accent);color:oklch(from var(--vibeui-alertdialog-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="alertdialog-012"] [data-part="cancel"]{
 border:1px solid var(--vibeui-alertdialog-012-border);background:var(--vibeui-alertdialog-012-bg);color:inherit;
 }

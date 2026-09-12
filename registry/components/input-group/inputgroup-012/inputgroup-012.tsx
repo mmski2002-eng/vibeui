@@ -41,7 +41,7 @@ const STYLES = `
 --vibeui-inputgroup-012-field:light-dark(oklch(0.99 0 265),oklch(0.27 0 265));
 --vibeui-inputgroup-012-fixed:light-dark(oklch(0.96 0 265),oklch(0.32 0 265));
 --vibeui-inputgroup-012-border:light-dark(oklch(0.86 0 265),oklch(0.44 0 265));
---vibeui-inputgroup-012-accent:light-dark(oklch(0.53 0.18 39.8),oklch(0.7 0.16 39.8));
+--vibeui-inputgroup-012-accent:light-dark(oklch(0.282 0 0),oklch(0.895 0 0));
 --vibeui-inputgroup-012-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0 255));
 --vibeui-inputgroup-012-radius:0.75rem;
 --vibeui-inputgroup-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -86,7 +86,7 @@ transition:background-color .16s ease,color .16s ease;
 /* Включённый фильтр красится акцентом — состояние видно без чтения aria. */
 [data-vibeui-block="inputgroup-012"] [data-part="filter"][aria-pressed="true"]{
 background:var(--vibeui-inputgroup-012-accent);
-color:var(--vibeui-inputgroup-012-on-accent);
+color:oklch(from var(--vibeui-inputgroup-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="inputgroup-012"] [data-part="filter"]:hover:not([aria-pressed="true"]){
 background:color-mix(in oklab,var(--vibeui-inputgroup-012-accent) 14%,var(--vibeui-inputgroup-012-fixed));

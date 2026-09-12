@@ -46,7 +46,7 @@ const STYLES = `
 --vibeui-breadcrumb-013-hover:light-dark(oklch(0.96 0 265),oklch(0.32 0 265));
 --vibeui-breadcrumb-013-menu:light-dark(oklch(1 0 0),oklch(0.26 0 265));
 --vibeui-breadcrumb-013-shadow:light-dark(oklch(0.2 0 265 / 60%),oklch(0 0 0 / 70%));
---vibeui-breadcrumb-013-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-breadcrumb-013-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-breadcrumb-013-bg:transparent;
 --vibeui-breadcrumb-013-pad:0;
 --vibeui-breadcrumb-013-radius:0;
@@ -122,8 +122,7 @@ position:relative;background:var(--vibeui-breadcrumb-013-hover);
 }
 [data-vibeui-block="breadcrumb-013"] [data-part="menu"] [aria-current="page"]::before{
 content:"";position:absolute;left:0;top:0.4375rem;bottom:0.4375rem;width:2px;
-border-radius:2px;background:var(--vibeui-breadcrumb-013-accent);
-}
+border-radius:2px;background:var(--vibeui-breadcrumb-013-accent);color:oklch(from var(--vibeui-breadcrumb-013-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @supports (anchor-name:--vibeui-breadcrumb-013-a){
 [data-vibeui-block="breadcrumb-013"] [data-part="menu"]{
 position:fixed;margin:0.375rem 0 0;

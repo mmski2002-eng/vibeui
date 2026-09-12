@@ -37,9 +37,9 @@ const STYLES = `
 --vibeui-checkbox-012-muted:color-mix(in oklab,var(--vibeui-checkbox-012-fg) 68%,transparent);
 --vibeui-checkbox-012-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
 --vibeui-checkbox-012-hover:light-dark(oklch(0.975 0 265),oklch(0.32 0 265));
---vibeui-checkbox-012-accent:light-dark(oklch(0.58 0.16 39.8),oklch(0.76 0.15 39.8));
+--vibeui-checkbox-012-accent:light-dark(oklch(0.295 0 0),oklch(0.906 0 0));
 --vibeui-checkbox-012-track:light-dark(oklch(0.93 0 265),oklch(0.36 0 265));
---vibeui-checkbox-012-mark:light-dark(oklch(0.99 0.01 35),oklch(0.2 0.03 45));
+--vibeui-checkbox-012-mark:light-dark(oklch(0.99 0 0),oklch(0.2 0 0));
 --vibeui-checkbox-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -67,8 +67,7 @@ background:var(--vibeui-checkbox-012-track);
 [data-vibeui-block="checkbox-012"] [data-part="fill"]{
 display:block;height:100%;border-radius:9999px;
 background:var(--vibeui-checkbox-012-accent);
-transition:width .2s ease;
-}
+transition:width .2s ease;color:oklch(from var(--vibeui-checkbox-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="checkbox-012"] label{
 display:flex;align-items:center;gap:0.625rem;
 min-height:2.125rem;padding:0 0.5rem;margin:0 -0.5rem;border-radius:0.5rem;
@@ -89,7 +88,7 @@ border:1.5px solid var(--vibeui-checkbox-012-border);border-radius:0.3125rem;
 background:var(--vibeui-checkbox-012-bg);
 transition:background-color .15s ease,border-color .15s ease;
 }
-[data-vibeui-block="checkbox-012"] input:checked{border-color:transparent;background:var(--vibeui-checkbox-012-accent)}
+[data-vibeui-block="checkbox-012"] input:checked{border-color:transparent;background:var(--vibeui-checkbox-012-accent);color:oklch(from var(--vibeui-checkbox-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="checkbox-012"] input:checked::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.25rem;height:0.4375rem;margin:-0.3125rem 0 0 -0.125rem;

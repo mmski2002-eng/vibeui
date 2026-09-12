@@ -28,7 +28,7 @@ const STYLES = `
 --vibeui-slider-003-muted:color-mix(in oklab,var(--vibeui-slider-003-fg) 68%,transparent);
 --vibeui-slider-003-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-slider-003-track:light-dark(oklch(0.91 0 265),oklch(0.44 0 265));
---vibeui-slider-003-accent:light-dark(oklch(0.52 0.14 39.8),oklch(0.74 0.13 39.8));
+--vibeui-slider-003-accent:light-dark(oklch(0.28 0 0),oklch(0.903 0 0));
 --vibeui-slider-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-slider-003-steps:3;
 --vibeui-slider-003-marks:4;
@@ -64,12 +64,10 @@ width:100%;height:1.25rem;margin:0;background:none;cursor:pointer;
 appearance:none;margin-top:-0.34375rem;
 width:1.0625rem;height:1.0625rem;border-radius:9999px;
 background:var(--vibeui-slider-003-accent);border:3px solid var(--vibeui-slider-003-surface);
-box-shadow:0 1px 4px oklch(0.2 0 265 / 32%);
-}
+box-shadow:0 1px 4px oklch(0.2 0 265 / 32%);color:oklch(from var(--vibeui-slider-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="slider-003"] input::-moz-range-thumb{
 width:1.0625rem;height:1.0625rem;border-radius:9999px;box-sizing:border-box;
-background:var(--vibeui-slider-003-accent);border:3px solid var(--vibeui-slider-003-surface);
-}
+background:var(--vibeui-slider-003-accent);border:3px solid var(--vibeui-slider-003-surface);color:oklch(from var(--vibeui-slider-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="slider-003"] input:focus-visible{outline:2px solid var(--vibeui-slider-003-accent);outline-offset:4px;border-radius:0.5rem}
 /* Подписи: крайние прижаты к краям, средние центрированы под своими
    делениями — поэтому это grid с равными колонками, а не space-between. */

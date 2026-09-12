@@ -43,8 +43,8 @@ const STYLES = `
 --vibeui-blog-003-fg:light-dark(oklch(0.2 0 265),oklch(0.95 0 265));
 --vibeui-blog-003-muted:light-dark(oklch(0.51 0 265),oklch(0.72 0 265));
 --vibeui-blog-003-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 300));
---vibeui-blog-003-accent:light-dark(oklch(0.52 0.18 39.8),oklch(0.76 0.15 39.8));
---vibeui-blog-003-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-blog-003-accent:light-dark(oklch(0.28 0 0),oklch(0.906 0 0));
+--vibeui-blog-003-on-accent:oklch(from var(--vibeui-blog-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 /* Плашка лежит на цветной обложке, а не на фоне блока: у неё своя пара. */
 --vibeui-blog-003-chip:light-dark(oklch(1 0 0 / 88%),oklch(0.22 0 300 / 88%));
 --vibeui-blog-003-chip-fg:light-dark(oklch(0.2 0 265),oklch(0.95 0 265));
@@ -98,7 +98,7 @@ position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 [data-vibeui-block="blog-003"] [data-part="tags"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.4375rem}
 [data-vibeui-block="blog-003"] [data-part="badge"]{
 padding:0.1875rem 0.5625rem;border-radius:9999px;
-background:var(--vibeui-blog-003-accent);color:var(--vibeui-blog-003-on-accent);
+background:var(--vibeui-blog-003-accent);color:oklch(from var(--vibeui-blog-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.625rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;
 }
 [data-vibeui-block="blog-003"] [data-part="topic"]{
@@ -145,7 +145,7 @@ font-size:0.75rem;font-variant-numeric:tabular-nums;
 [data-vibeui-block="blog-003"] [data-part="cta"]{
 justify-self:start;display:inline-flex;align-items:center;gap:0.4375rem;
 height:2.5rem;padding:0 1.125rem;border-radius:0.75rem;
-background:var(--vibeui-blog-003-accent);color:var(--vibeui-blog-003-on-accent);
+background:var(--vibeui-blog-003-accent);color:oklch(from var(--vibeui-blog-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="blog-003"] [data-part="arrow"]{

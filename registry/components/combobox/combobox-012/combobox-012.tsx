@@ -44,8 +44,8 @@ const STYLES = `
 --vibeui-combobox-012-muted:color-mix(in oklab,var(--vibeui-combobox-012-fg) 68%,transparent);
 --vibeui-combobox-012-border:light-dark(oklch(0.9 0.01 130),oklch(0.38 0.016 130));
 --vibeui-combobox-012-field:light-dark(oklch(0.985 0.005 130),oklch(0.3 0.014 130));
---vibeui-combobox-012-active:light-dark(oklch(0.95 0.04 39.8),oklch(0.37 0.045 39.8));
---vibeui-combobox-012-accent:light-dark(oklch(0.48 0.12 39.8),oklch(0.75 0.14 39.8));
+--vibeui-combobox-012-active:light-dark(oklch(0.95 0 0),oklch(0.37 0 0));
+--vibeui-combobox-012-accent:light-dark(oklch(0.27 0 0),oklch(0.905 0 0));
 --vibeui-combobox-012-onaccent:light-dark(oklch(1 0 0),oklch(0.2 0.03 130));
 --vibeui-combobox-012-radius:0.625rem;
 --vibeui-combobox-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -92,7 +92,7 @@ color:var(--vibeui-combobox-012-muted);
 [data-vibeui-block="combobox-012"] [data-part="submit"]{
 appearance:none;border:0;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
 min-height:2.25rem;padding:0.25rem 1rem;border-radius:var(--vibeui-combobox-012-radius);
-background:var(--vibeui-combobox-012-accent);color:var(--vibeui-combobox-012-onaccent);
+background:var(--vibeui-combobox-012-accent);color:oklch(from var(--vibeui-combobox-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.8125rem;font-weight:650;
 transition:filter .16s ease;
 }

@@ -50,7 +50,7 @@ const STYLES = `
 --vibeui-cascader-009-fg:light-dark(oklch(0.23 0 250),oklch(0.94 0 250));
 --vibeui-cascader-009-muted:color-mix(in oklab,var(--vibeui-cascader-009-fg) 68%,transparent);
 --vibeui-cascader-009-border:light-dark(oklch(0.9 0 250),oklch(0.38 0 250));
---vibeui-cascader-009-accent:light-dark(oklch(0.55 0.18 39.8),oklch(0.75 0.15 39.8));
+--vibeui-cascader-009-accent:light-dark(oklch(0.287 0 0),oklch(0.905 0 0));
 --vibeui-cascader-009-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 255));
 --vibeui-cascader-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -136,7 +136,7 @@ background:var(--vibeui-cascader-009-panel);color:var(--vibeui-cascader-009-mute
 }
 [data-vibeui-block="cascader-009"] [data-part="move"]{
 flex:1 1 auto;min-width:0;border:0;font-weight:600;
-background:var(--vibeui-cascader-009-accent);color:var(--vibeui-cascader-009-on-accent);
+background:var(--vibeui-cascader-009-accent);color:oklch(from var(--vibeui-cascader-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
 [data-vibeui-block="cascader-009"] [data-part="move"]:disabled{opacity:.45;cursor:not-allowed}

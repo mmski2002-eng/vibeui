@@ -31,8 +31,8 @@ const STYLES = `
 --vibeui-video-002-muted:light-dark(oklch(0.5 0 0),oklch(0.72 0 0));
 --vibeui-video-002-border:light-dark(oklch(0.9 0 0),oklch(0.3 0 0));
 --vibeui-video-002-item:light-dark(oklch(0.98 0 0),oklch(0.2 0 0));
---vibeui-video-002-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-video-002-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-video-002-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
+--vibeui-video-002-on-accent:oklch(from var(--vibeui-video-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-video-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -49,13 +49,13 @@ font-family:var(--vibeui-video-002-font);
 [data-vibeui-block="video-002"] [data-part="title"]{margin:0 0 1.75rem;font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700}
 [data-vibeui-block="video-002"] [data-part="layout"]{display:grid;gap:1.25rem;grid-template-columns:minmax(0,1fr)}
 [data-vibeui-block="video-002"] [data-part="stage"]{
-position:relative;display:flex;align-items:flex-end;aspect-ratio:16 / 9;border-radius:1.125rem;overflow:hidden;padding:1rem;color:oklch(0.98 0 0);background:linear-gradient(140deg,oklch(0.5 0.16 39.8),oklch(0.3 0.1 25))
+position:relative;display:flex;align-items:flex-end;aspect-ratio:16 / 9;border-radius:1.125rem;overflow:hidden;padding:1rem;color:oklch(0.98 0 0);background:linear-gradient(140deg,light-dark(oklch(0.2 0 0),oklch(0.92 0 0)),oklch(0.3 0.1 25))
 }
 [data-vibeui-block="video-002"] [data-part="stage"] img{
 position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="video-002"] [data-part="play"]{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:4rem;height:4rem;border-radius:999px;display:grid;place-items:center;background:oklch(1 0 0 / 92%)}
-[data-vibeui-block="video-002"] [data-part="play"]::before{content:"";margin-left:0.25rem;border-style:solid;border-width:0.6875rem 0 0.6875rem 1.125rem;border-color:transparent transparent transparent oklch(0.2 0.05 39.8)}
+[data-vibeui-block="video-002"] [data-part="play"]::before{content:"";margin-left:0.25rem;border-style:solid;border-width:0.6875rem 0 0.6875rem 1.125rem;border-color:transparent transparent transparent oklch(0.2 0 0)}
 [data-vibeui-block="video-002"] [data-part="stage-title"]{position:relative;font-size:1rem;font-weight:640}
 [data-vibeui-block="video-002"] [data-part="list"]{list-style:none;margin:0;padding:0;display:grid;gap:0.5rem}
 [data-vibeui-block="video-002"] [data-part="clip"]{

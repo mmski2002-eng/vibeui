@@ -195,7 +195,7 @@ color:var(--vibeui-icontile-015-muted);white-space:nowrap;overflow:hidden;text-o
 position:absolute;top:0.5rem;right:0.5rem;display:none;place-items:center;
 width:1.125rem;height:1.125rem;border-radius:50%;
 background:var(--vibeui-icontile-015-accent);
-color:var(--vibeui-icontile-015-on-accent);
+color:oklch(from var(--vibeui-icontile-015-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="icontile-015"] [data-part="check"] > svg{width:65%;height:65%}
 [data-vibeui-block="icontile-015"] [data-part="option"][aria-checked="true"]{

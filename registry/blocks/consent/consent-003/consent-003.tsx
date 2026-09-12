@@ -32,9 +32,9 @@ const STYLES = `
 --vibeui-consent-003-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
 --vibeui-consent-003-muted:light-dark(oklch(0.5 0 0),oklch(0.72 0 0));
 --vibeui-consent-003-border:light-dark(oklch(0.82 0 0),oklch(0.4 0 0));
---vibeui-consent-003-req:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-consent-003-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-consent-003-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-consent-003-req:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
+--vibeui-consent-003-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
+--vibeui-consent-003-on-accent:oklch(from var(--vibeui-consent-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-consent-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -57,14 +57,14 @@ appearance:none;width:1.375rem;height:1.375rem;margin:0;flex:none;cursor:pointer
 border:1px solid var(--vibeui-consent-003-border);border-radius:0.375rem;background:transparent;
 transition:background-color .16s ease,border-color .16s ease;
 }
-[data-vibeui-block="consent-003"] [data-part="box"]:checked{background:var(--vibeui-consent-003-accent);border-color:transparent}
+[data-vibeui-block="consent-003"] [data-part="box"]:checked{background:var(--vibeui-consent-003-accent);border-color:transparent;color:oklch(from var(--vibeui-consent-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="consent-003"] [data-part="box"]:checked::after{content:"";position:absolute;left:0.4375rem;top:0.1875rem;width:0.3125rem;height:0.625rem;border:solid var(--vibeui-consent-003-on-accent);border-width:0 2px 2px 0;transform:rotate(45deg)}
 [data-vibeui-block="consent-003"] [data-part="box"]:focus-visible{outline:2px solid var(--vibeui-consent-003-accent);outline-offset:2px}
 [data-vibeui-block="consent-003"] [data-part="label"]{font-size:0.9375rem;line-height:1.5;cursor:pointer}
 [data-vibeui-block="consent-003"] [data-part="req"]{color:var(--vibeui-consent-003-req);font-weight:700}
 [data-vibeui-block="consent-003"] [data-part="submit"]{
 height:2.875rem;padding:0 1.5rem;border:0;border-radius:0.75rem;cursor:pointer;
-background:var(--vibeui-consent-003-accent);color:var(--vibeui-consent-003-on-accent);
+background:var(--vibeui-consent-003-accent);color:oklch(from var(--vibeui-consent-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.9375rem;font-weight:650;transition:opacity .16s ease;
 }
 [data-vibeui-block="consent-003"] [data-part="submit"]:hover:not(:disabled){opacity:.9}

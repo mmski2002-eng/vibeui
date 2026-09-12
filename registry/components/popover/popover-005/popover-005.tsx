@@ -31,8 +31,8 @@ const STYLES = `
 --vibeui-popover-005-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-popover-005-muted:color-mix(in oklab,var(--vibeui-popover-005-fg) 68%,transparent);
 --vibeui-popover-005-border:light-dark(oklch(0.89 0 265),oklch(0.36 0 265));
---vibeui-popover-005-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.73 0.15 39.8));
---vibeui-popover-005-swatch:oklch(0.6 0.17 39.8);
+--vibeui-popover-005-accent:light-dark(oklch(0.287 0 0),oklch(0.901 0 0));
+--vibeui-popover-005-swatch:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
 --vibeui-popover-005-edge:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 18%));
 --vibeui-popover-005-shadow:light-dark(oklch(0.2 0 265 / 60%),oklch(0.02 0 265 / 72%));
 --vibeui-popover-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

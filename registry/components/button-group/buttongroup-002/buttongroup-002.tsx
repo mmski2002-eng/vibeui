@@ -22,7 +22,7 @@ const STYLES = `
 --vibeui-buttongroup-002-border:light-dark(oklch(0.88 0 265),oklch(0.37 0 265));
 --vibeui-buttongroup-002-hover:light-dark(oklch(0.965 0 265),oklch(0.3 0 265));
 --vibeui-buttongroup-002-press:light-dark(oklch(0.93 0 265),oklch(0.35 0 265));
---vibeui-buttongroup-002-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.72 0.15 39.8));
+--vibeui-buttongroup-002-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-buttongroup-002-radius:0.625rem;
 --vibeui-buttongroup-002-height:2.25rem;
 --vibeui-buttongroup-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

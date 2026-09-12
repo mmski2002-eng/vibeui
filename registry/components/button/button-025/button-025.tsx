@@ -33,7 +33,7 @@ appearance:none;border:0;cursor:pointer;
 display:inline-flex;align-items:center;gap:0.75rem;
 height:2.5rem;padding:0 0.5rem 0 1rem;box-sizing:border-box;
 border-radius:var(--vibeui-button-025-radius);
-background:var(--vibeui-button-025-accent);color:var(--vibeui-button-025-fg);
+background:var(--vibeui-button-025-accent);color:oklch(from var(--vibeui-button-025-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-family:var(--vibeui-button-025-font);font-size:0.875rem;font-weight:650;line-height:1;
 transition:filter .16s ease,box-shadow .24s ease;
 }

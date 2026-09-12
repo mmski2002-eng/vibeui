@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-stepper-005-muted:color-mix(in oklab,var(--vibeui-stepper-005-fg) 68%,transparent);
 --vibeui-stepper-005-border:light-dark(oklch(0.92 0 265),oklch(0.32 0 265));
 --vibeui-stepper-005-line:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
---vibeui-stepper-005-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.16 39.8));
+--vibeui-stepper-005-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-stepper-005-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0 262));
 --vibeui-stepper-005-size:1.75rem;
 --vibeui-stepper-005-fill:0;
@@ -70,8 +70,7 @@ width:100%;background:var(--vibeui-stepper-005-line);
 [data-vibeui-block="stepper-005"] li:not(:first-child)::after{
 width:calc(100% * var(--vibeui-stepper-005-fill));
 background:var(--vibeui-stepper-005-accent);
-transition:width .25s ease;
-}
+transition:width .25s ease;color:oklch(from var(--vibeui-stepper-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="stepper-005"] [data-part="mark"]{
 position:relative;z-index:1;
 display:flex;align-items:center;justify-content:center;
@@ -82,7 +81,7 @@ font-size:0.75rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="stepper-005"] li[data-state="done"] [data-part="mark"]{
 background:var(--vibeui-stepper-005-accent);border-color:var(--vibeui-stepper-005-accent);
-color:var(--vibeui-stepper-005-accent-fg);
+color:oklch(from var(--vibeui-stepper-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="stepper-005"] li[data-state="current"] [data-part="mark"]{
 border-color:var(--vibeui-stepper-005-accent);color:var(--vibeui-stepper-005-accent);

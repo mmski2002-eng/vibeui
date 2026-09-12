@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-input-003-border:light-dark(oklch(0.9 0 265),oklch(0.4 0 265));
 --vibeui-input-003-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
 --vibeui-input-003-track:light-dark(oklch(0.92 0 265),oklch(0.34 0 265));
---vibeui-input-003-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-input-003-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-input-003-weak:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.16 25));
 --vibeui-input-003-fair:light-dark(oklch(0.72 0.16 75),oklch(0.8 0.14 75));
 --vibeui-input-003-good:light-dark(oklch(0.58 0.15 152),oklch(0.76 0.14 152));

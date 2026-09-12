@@ -53,7 +53,7 @@ const STYLES = `
 --vibeui-command-011-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-command-011-muted:color-mix(in oklab,var(--vibeui-command-011-fg) 68%,transparent);
 --vibeui-command-011-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
---vibeui-command-011-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.76 0.14 39.8));
+--vibeui-command-011-accent:light-dark(oklch(0.287 0 0),oklch(0.906 0 0));
 --vibeui-command-011-active:light-dark(oklch(0.55 0 265 / 10%),oklch(0.86 0 265 / 14%));
 --vibeui-command-011-danger:light-dark(oklch(0.52 0.19 25),oklch(0.76 0.16 25));
 --vibeui-command-011-danger-bg:color-mix(in oklab,var(--vibeui-command-011-danger) 12%,transparent);

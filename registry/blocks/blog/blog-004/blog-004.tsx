@@ -32,11 +32,11 @@ export type Blog004Props = {
 const STYLES = `
 :where([data-vibeui-block="blog-004"]){
 --vibeui-blog-004-bg:light-dark(oklch(0.985 0 265),oklch(0.21 0 265));
---vibeui-blog-004-panel:light-dark(oklch(0.96 0.014 39.8),oklch(0.26 0.032 39.8));
+--vibeui-blog-004-panel:light-dark(oklch(0.96 0 0),oklch(0.26 0 0));
 --vibeui-blog-004-fg:light-dark(oklch(0.22 0 265),oklch(0.97 0 265));
 --vibeui-blog-004-muted:light-dark(oklch(0.5 0 265),oklch(0.76 0 265));
 --vibeui-blog-004-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-blog-004-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.72 0.16 39.8));
+--vibeui-blog-004-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-blog-004-alarm:light-dark(oklch(0.55 0.16 25),oklch(0.72 0.15 25));
 --vibeui-blog-004-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -99,7 +99,7 @@ position:static;width:auto;height:auto;clip-path:none;
 [data-vibeui-block="blog-004"] button{
 appearance:none;cursor:pointer;border:0;width:100%;
 height:2.75rem;padding:0 1.25rem;border-radius:0.75rem;
-background:var(--vibeui-blog-004-accent);color:oklch(0.19 0.03 155);
+background:var(--vibeui-blog-004-accent);color:oklch(from var(--vibeui-blog-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="blog-004"] [data-part="consent"]{

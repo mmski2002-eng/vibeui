@@ -720,7 +720,7 @@
       "name": "stack-006",
       "type": "registry:component",
       "title": "Марки дугой",
-      "description": "Пять карточек-марок с перфорированным краем разлетаются широкой дугой; без фото каждая марка берёт свой тинт бренда — от полного оранжевого до 20 %.",
+      "description": "Пять карточек-марок с перфорированным краем разлетаются широкой дугой; без фото каждая марка берёт свой тинт бренда — от полного акцентного до 20 %.",
       "categories": ["stacks"],
       "dependencies": [],
       "registryDependencies": [],
@@ -826,7 +826,7 @@
         "i18n": {
           "en": {
             "title": "Stamp arc",
-            "description": "Five stamp cards with a perforated edge fly out into a wide arc; without photos each stamp takes its own brand tint, from full orange down to 20%.",
+            "description": "Five stamp cards with a perforated edge fly out into a wide arc; without photos each stamp takes its own brand tint, from full accent down to 20%.",
             "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-stack-006-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Card poses are computed from props into CSS variables, and :hover / :focus-visible / data-open switch the transform — there is no JS state. Photos are <img> elements inside each card with object-fit:cover; without photos a card is a branded plate with a number. The curve is a linear() spring with a slight overshoot, and the transition is removed under prefers-reduced-motion. The perforation is a dashed border; tints are a color-mix of the accent with the percentage in --vibeui-stack-006-tint. Arc parameters are angle, gap, lift.",
             "ai": {
               "summary": "A stack of five perforated stamps flying into an arc; brand tints without photos. Zero dependencies, one file, no JS state.",

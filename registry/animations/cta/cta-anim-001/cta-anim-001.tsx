@@ -83,7 +83,7 @@ animation:vibeui-cta-anim-001-rise .6s cubic-bezier(.16,1,.3,1) both;animation-d
 [data-vibeui-block="cta-anim-001"] [data-part="primary"]{
 display:inline-flex;align-items:center;justify-content:center;
 min-height:2.75rem;padding:0.25rem 1.5rem;border-radius:0.625rem;
-background:var(--vibeui-cta-anim-001-accent);color:var(--vibeui-cta-anim-001-accent-fg);
+background:var(--vibeui-cta-anim-001-accent);color:oklch(from var(--vibeui-cta-anim-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 text-decoration:none;font-size:0.9375rem;font-weight:650;
 box-shadow:0 12px 32px -14px color-mix(in oklab,var(--vibeui-cta-anim-001-accent) 65%,transparent);
 transition:transform .16s ease,filter .16s ease;

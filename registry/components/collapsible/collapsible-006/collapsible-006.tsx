@@ -33,7 +33,7 @@ const STYLES = `
 --vibeui-collapsible-006-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-collapsible-006-muted:color-mix(in oklab,var(--vibeui-collapsible-006-fg) 68%,transparent);
 --vibeui-collapsible-006-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
---vibeui-collapsible-006-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.14 39.8));
+--vibeui-collapsible-006-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-collapsible-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -65,7 +65,7 @@ font-size:0.625rem;font-weight:750;letter-spacing:0.01em;
 }
 /* Счётчик скрытых — это и есть ответ на вопрос «разворачивать ли». */
 [data-vibeui-block="collapsible-006"] [data-part="chip"][data-rest="true"]{
-background:var(--vibeui-collapsible-006-accent);color:var(--vibeui-collapsible-006-on-accent);
+background:var(--vibeui-collapsible-006-accent);color:oklch(from var(--vibeui-collapsible-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="collapsible-006"][open] [data-part="chip"][data-rest="true"]{
 background:var(--vibeui-collapsible-006-fg);

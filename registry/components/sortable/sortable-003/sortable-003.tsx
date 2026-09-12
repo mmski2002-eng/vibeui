@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useLayoutEffect, useRef, useState } from "react"
 import type {
   ComponentProps,
   CSSProperties,
@@ -47,7 +47,7 @@ const STYLES = `
 --vibeui-sortable-003-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-sortable-003-muted:color-mix(in oklab,var(--vibeui-sortable-003-fg) 68%,transparent);
 --vibeui-sortable-003-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
---vibeui-sortable-003-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.73 0.16 39.8));
+--vibeui-sortable-003-accent:light-dark(oklch(0.287 0 0),oklch(0.901 0 0));
 --vibeui-sortable-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -73,7 +73,7 @@ border-bottom:1px solid var(--vibeui-sortable-003-border);
 }
 [data-vibeui-block="sortable-003"] th:first-child{border-top-left-radius:0.5rem}
 [data-vibeui-block="sortable-003"] th:last-child{border-top-right-radius:0.5rem}
-[data-vibeui-block="sortable-003"] th[data-dragging="true"]{opacity:.45}
+[data-vibeui-block="sortable-003"] th[data-dragging="true"]{opacity:.45;outline:1px dashed var(--vibeui-sortable-003-accent);outline-offset:-1px}
 /* Место вставки — вертикальная линия у края колонки, а не заливка ячейки. */
 [data-vibeui-block="sortable-003"] th[data-over="true"]{box-shadow:inset 2px 0 0 var(--vibeui-sortable-003-accent)}
 [data-vibeui-block="sortable-003"] [data-part="grip"]{
@@ -163,6 +163,45 @@ export function Sortable003({
   const [order, setOrder] = useState(columns)
   const [dragged, setDragged] = useState<string | null>(null)
   const [over, setOver] = useState<string | null>(null)
+  const cells = useRef(new Map<string, HTMLTableCellElement>())
+  const rects = useRef(new Map<string, DOMRect>())
+
+  // FLIP: после каждого рендера сравниваем прежнее и новое положение элементов
+  // и проигрываем сдвиг с прежнего места. Перестановка видна как движение,
+  // а не как мгновенная подмена.
+  useLayoutEffect(() => {
+    const next = new Map<string, DOMRect>()
+    cells.current.forEach((node, key) => next.set(key, node.getBoundingClientRect()))
+    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (!calm) {
+      cells.current.forEach((node, key) => {
+        const before = rects.current.get(key)
+        const after = next.get(key)
+        if (!before || !after) return
+        const dx = before.left - after.left
+        const dy = before.top - after.top
+        if (!dx && !dy) return
+        node.animate(
+          [{ transform: `translate(${dx}px,${dy}px)` }, { transform: "none" }],
+          { duration: 220, easing: "cubic-bezier(.2,.8,.2,1)" },
+        )
+      })
+    }
+    rects.current = next
+  })
+
+  // Живая перестановка: элемент встаёт на место того, над которым висит
+  // курсор, ещё до отпускания — остальные раздвигаются, а не накладываются.
+  const hover = (target: string) => {
+    if (!dragged || dragged === target) return
+    const from = order.findIndex((column) => column.key === dragged)
+    const to = order.findIndex((column) => column.key === target)
+    if (from < 0 || to < 0 || from === to) return
+    const next = [...order]
+    next.splice(from, 1)
+    next.splice(to, 0, order[from])
+    setOrder(next)
+  }
   const [announcement, setAnnouncement] = useState("")
 
   const say = (
@@ -202,15 +241,14 @@ export function Sortable003({
     move(index, to)
   }
 
-  const drop = (event: DragEvent<HTMLTableCellElement>, key: string) => {
+  const drop = (event: DragEvent<HTMLTableCellElement>) => {
     event.preventDefault()
     setOver(null)
-    if (!dragged || dragged === key) return
-
-    move(
-      order.findIndex((column) => column.key === dragged),
-      order.findIndex((column) => column.key === key),
-    )
+    if (dragged) {
+      const index = order.findIndex((column) => column.key === dragged)
+      onChange?.(order)
+      setAnnouncement(say("moved", order[index]?.label ?? "", index + 1, order.length))
+    }
     setDragged(null)
   }
 
@@ -244,6 +282,10 @@ export function Sortable003({
               {order.map((column, index) => (
                 <th
                   key={column.key}
+                  ref={(node) => {
+                    if (node) cells.current.set(column.key, node)
+                    else cells.current.delete(column.key)
+                  }}
                   scope="col"
                   draggable
                   data-dragging={column.key === dragged}
@@ -256,8 +298,9 @@ export function Sortable003({
                   onDragOver={(event) => {
                     event.preventDefault()
                     setOver(column.key)
+                    hover(column.key)
                   }}
-                  onDrop={(event) => drop(event, column.key)}
+                  onDrop={drop}
                 >
                   <button
                     type="button"
@@ -286,7 +329,15 @@ export function Sortable003({
             {rows.map((row) => (
               <tr key={row.sku}>
                 {order.map((column) => (
-                  <td key={column.key} data-numeric={Boolean(column.numeric)}>
+                  <td
+                    key={column.key}
+                    ref={(node) => {
+                      const cell = `${column.key}:${row.sku}`
+                      if (node) cells.current.set(cell, node)
+                      else cells.current.delete(cell)
+                    }}
+                    data-numeric={Boolean(column.numeric)}
+                  >
                     {row[column.key]}
                   </td>
                 ))}

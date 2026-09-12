@@ -49,9 +49,9 @@ const STYLES = `
 --vibeui-icontile-008-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-icontile-008-surface:transparent;
 --vibeui-icontile-008-hover-surface:light-dark(oklch(0.97 0 262),oklch(0.3 0 262));
---vibeui-icontile-008-hover-border:light-dark(oklch(0.78 0 262),oklch(0.52 0.05 39.8));
---vibeui-icontile-008-shadow:light-dark(oklch(0.3 0.05 39.8 / 55%),oklch(0.05 0 262 / 75%));
---vibeui-icontile-008-ring:light-dark(oklch(0.55 0.15 39.8),oklch(0.74 0.14 39.8));
+--vibeui-icontile-008-hover-border:light-dark(oklch(0.78 0 262),oklch(0.52 0 0));
+--vibeui-icontile-008-shadow:light-dark(oklch(0.3 0 0 / 55%),oklch(0.05 0 262 / 75%));
+--vibeui-icontile-008-ring:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-icontile-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

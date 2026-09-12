@@ -63,14 +63,6 @@ export const SCENARIOS: Scenario[] = [
     summaryEn: "A one-pager that sells a service and collects requests",
     steps: [
       {
-        category: "layout",
-        role: "Каркас страницы",
-        roleEn: "Page skeleton",
-        why: "Слоты шапки и футера, ширина колонки и ритм секций",
-        whyEn: "Header and footer slots, column width and section rhythm",
-        optional: true,
-      },
-      {
         category: "navbar",
         role: "Шапка",
         roleEn: "Header",
@@ -83,13 +75,6 @@ export const SCENARIOS: Scenario[] = [
         roleEn: "Hero",
         why: "Что вы делаете и главное действие",
         whyEn: "What you do and the main action",
-      },
-      {
-        category: "features",
-        role: "Что входит в услугу",
-        roleEn: "What the service includes",
-        why: "Состав работы, разложенный по пунктам",
-        whyEn: "The work itself, broken into points",
       },
       {
         category: "cases",
@@ -149,7 +134,7 @@ export const SCENARIOS: Scenario[] = [
         whyEn: "Contacts, documents, social links",
       },
     ],
-    cover: "features",
+    cover: "hero",
     parts: ["button", "input", "field", "toast"],
   },
   {
@@ -342,13 +327,6 @@ export const SCENARIOS: Scenario[] = [
         roleEn: "Hero",
         why: "Приложение в деле: экран телефона и обещание",
         whyEn: "The app in action: a phone screen and the promise",
-      },
-      {
-        category: "features",
-        role: "Возможности",
-        roleEn: "Features",
-        why: "Что умеет приложение, по пунктам",
-        whyEn: "What the app can do, point by point",
       },
       {
         category: "video",

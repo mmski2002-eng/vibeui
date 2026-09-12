@@ -32,9 +32,9 @@ font-family:var(--vibeui-badge-019-font);font-size:0.6875rem;font-weight:700;lin
 letter-spacing:0.07em;text-transform:uppercase;vertical-align:middle;
 }
 [data-vibeui-block="badge-019"][data-plan="pro"]{
---vibeui-badge-019-fg:light-dark(oklch(0.36 0.07 39.8),oklch(0.93 0.05 39.8));
---vibeui-badge-019-border:light-dark(oklch(0.82 0.09 39.8),oklch(0.52 0.09 39.8));
---vibeui-badge-019-mark:light-dark(oklch(0.66 0.14 39.8),oklch(0.82 0.13 39.8));
+--vibeui-badge-019-fg:light-dark(oklch(0.36 0 0),oklch(0.93 0 0));
+--vibeui-badge-019-border:light-dark(oklch(0.82 0 0),oklch(0.863 0 0));
+--vibeui-badge-019-mark:light-dark(oklch(0.315 0 0),oklch(0.917 0 0));
 background:linear-gradient(135deg,light-dark(oklch(0.96 0.05 85),oklch(0.36 0.05 85)),light-dark(oklch(0.91 0.09 78),oklch(0.29 0.06 72)));
 }
 /* Тёмный градиент старшего тарифа держится в обеих темах намеренно: план
@@ -42,8 +42,8 @@ background:linear-gradient(135deg,light-dark(oklch(0.96 0.05 85),oklch(0.36 0.05
    теме тоже обязан читаться как «дороже». */
 [data-vibeui-block="badge-019"][data-plan="business"]{
 --vibeui-badge-019-fg:oklch(0.97 0 265);
---vibeui-badge-019-border:oklch(0.42 0.05 39.8);
---vibeui-badge-019-mark:oklch(0.86 0.09 39.8);
+--vibeui-badge-019-border:oklch(0.42 0 0);
+--vibeui-badge-019-mark:oklch(0.86 0 0);
 background:linear-gradient(135deg,oklch(0.32 0 265),oklch(0.24 0 275));
 }
 [data-vibeui-block="badge-019"] [data-part="marks"]{

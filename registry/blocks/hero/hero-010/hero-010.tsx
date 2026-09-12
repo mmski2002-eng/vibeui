@@ -13,6 +13,8 @@ export type Hero010Props = {
   accent?: string
   /** Пусто — подложки нет, секция ложится на фон страницы. */
   background?: string
+  /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
+  tone?: "auto" | "light" | "dark"
   className?: string
   style?: CSSProperties
 }
@@ -28,14 +30,16 @@ const STYLES = `
 --vibeui-hero-010-fg:light-dark(oklch(0.2 0 240),oklch(0.95 0 240));
 --vibeui-hero-010-muted:light-dark(oklch(0.5 0 240),oklch(0.73 0 240));
 --vibeui-hero-010-line:light-dark(oklch(0.89 0 240),oklch(0.37 0 240));
---vibeui-hero-010-accent:light-dark(oklch(0.55 0.16 39.8),oklch(0.74 0.14 39.8));
---vibeui-hero-010-accent-fg:oklch(0.15 0.02 39.8);
+--vibeui-hero-010-accent:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
+--vibeui-hero-010-accent-fg:oklch(from var(--vibeui-hero-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-010-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="hero-010"]{color-scheme:dark}
+:where([data-vibeui-block="hero-010"][data-tone="light"]){color-scheme:light}
+:where([data-vibeui-block="hero-010"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="hero-010"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -69,8 +73,8 @@ background:color-mix(in oklab,var(--vibeui-hero-010-accent) 18%,transparent);col
 display:inline-flex;align-items:center;justify-content:center;height:2.75rem;padding:0 1.375rem;border-radius:0.5rem;
 font-size:0.9375rem;font-weight:600;text-decoration:none;transition:background-color .16s ease,border-color .16s ease;
 }
-[data-vibeui-block="hero-010"] [data-part="primary"]{background:var(--vibeui-hero-010-accent);color:var(--vibeui-hero-010-accent-fg);border:1px solid transparent}
-[data-vibeui-block="hero-010"] [data-part="primary"]:hover{background:color-mix(in oklab,var(--vibeui-hero-010-accent) 86%,black)}
+[data-vibeui-block="hero-010"] [data-part="primary"]{background:var(--vibeui-hero-010-accent);color:oklch(from var(--vibeui-hero-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border:1px solid transparent;box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-hero-010-accent) 40%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);transition:transform .2s cubic-bezier(.32,.72,0,1),box-shadow .25s ease,background-color .2s ease}
+[data-vibeui-block="hero-010"] [data-part="primary"]:hover{transform:translateY(-1px);box-shadow:0 0.625rem 1.75rem color-mix(in oklab,var(--vibeui-hero-010-accent) 50%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 52%,transparent)}
 [data-vibeui-block="hero-010"] [data-part="secondary"]{border:1px solid var(--vibeui-hero-010-line);color:var(--vibeui-hero-010-fg)}
 [data-vibeui-block="hero-010"] [data-part="secondary"]:hover{border-color:var(--vibeui-hero-010-fg)}
 [data-vibeui-block="hero-010"] a:focus-visible{outline:2px solid var(--vibeui-hero-010-accent);outline-offset:3px}
@@ -79,7 +83,7 @@ position:relative;margin:0;min-height:16rem;overflow:hidden;
 background:
 radial-gradient(70% 60% at 20% 20%,color-mix(in oklab,var(--vibeui-hero-010-accent) 70%,white),transparent 70%),
 radial-gradient(80% 70% at 85% 90%,oklch(0.82 0.11 55),transparent 72%),
-linear-gradient(160deg,oklch(0.72 0.13 39.8),oklch(0.5 0.16 39.8));
+linear-gradient(160deg,light-dark(oklch(0.2 0 0),oklch(0.92 0 0)),light-dark(oklch(0.2 0 0),oklch(0.92 0 0)));
 }
 [data-vibeui-block="hero-010"] [data-part="cut"]{
 position:absolute;inset:0;background:oklch(1 0 0 / 16%);
@@ -91,7 +95,9 @@ border-radius:9999px;border:1px solid oklch(1 0 0 / 45%);overflow:hidden;
 }
 [data-vibeui-block="hero-010"] [data-part="ring"] img{
 position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+transition:transform .7s cubic-bezier(.32,.72,0,1);
 }
+[data-vibeui-block="hero-010"] [data-part="ring"]:hover img{transform:scale(1.05)}
 [data-vibeui-block="hero-010"] [data-part="ring"]::after{
 content:"";position:absolute;inset:18%;border-radius:9999px;border:1px solid oklch(1 0 0 / 30%);
 }
@@ -151,6 +157,7 @@ export function Hero010({
   imageCaption = "Место под ваш кадр",
   accent,
   background = "",
+  tone = "auto",
   className,
   style,
 }: Hero010Props) {
@@ -172,6 +179,7 @@ export function Hero010({
       </style>
       <section
         data-vibeui-block="hero-010"
+        data-tone={tone === "auto" ? undefined : tone}
         className={className}
         style={palette}
       >

@@ -97,7 +97,7 @@ margin:0.25rem 0 0;color:var(--vibeui-avatar-039-muted);font-size:0.8125rem;line
 appearance:none;border:0;cursor:pointer;align-self:flex-start;
 display:inline-flex;align-items:center;justify-content:center;
 min-height:2.375rem;padding:0.375rem 1.125rem;border-radius:9999px;
-background:var(--vibeui-avatar-039-accent);color:var(--vibeui-avatar-039-on-accent);
+background:var(--vibeui-avatar-039-accent);color:oklch(from var(--vibeui-avatar-039-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-family:inherit;font-size:0.8125rem;font-weight:600;letter-spacing:-0.01em;line-height:1;
 box-shadow:0 1px 2px var(--vibeui-avatar-039-shadow),0 10px 20px -12px var(--vibeui-avatar-039-shadow);
 transition:transform .16s ease,box-shadow .16s ease;

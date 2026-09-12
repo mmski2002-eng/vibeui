@@ -36,8 +36,8 @@ const STYLES = `
 --vibeui-codeblock-016-muted:color-mix(in oklab,var(--vibeui-codeblock-016-fg) 68%,transparent);
 --vibeui-codeblock-016-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 12%));
 --vibeui-codeblock-016-track:light-dark(oklch(0 0 0 / 8%),oklch(0 0 0 / 30%));
---vibeui-codeblock-016-thumb:light-dark(oklch(0.87 0.05 39.8),oklch(0.42 0.09 39.8));
---vibeui-codeblock-016-accent:light-dark(oklch(0.52 0.16 39.8),oklch(0.84 0.13 39.8));
+--vibeui-codeblock-016-thumb:light-dark(oklch(0.87 0 0),oklch(0.42 0 0));
+--vibeui-codeblock-016-accent:light-dark(oklch(0.28 0 0),oklch(0.921 0 0));
 --vibeui-codeblock-016-keyword:light-dark(oklch(0.5 0.19 320),oklch(0.8 0.13 320));
 --vibeui-codeblock-016-string:light-dark(oklch(0.45 0.14 145),oklch(0.83 0.12 145));
 --vibeui-codeblock-016-comment:light-dark(oklch(0.58 0 285),oklch(0.61 0 285));

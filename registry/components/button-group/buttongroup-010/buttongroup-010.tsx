@@ -39,8 +39,8 @@ const STYLES = `
 --vibeui-buttongroup-010-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-010-muted:color-mix(in oklab,var(--vibeui-buttongroup-010-fg) 68%,transparent);
 --vibeui-buttongroup-010-border:light-dark(oklch(0.89 0 265),oklch(0.37 0 265));
---vibeui-buttongroup-010-accent:light-dark(oklch(0.53 0.17 39.8),oklch(0.62 0.17 39.8));
---vibeui-buttongroup-010-on-accent:oklch(0.99 0 265);
+--vibeui-buttongroup-010-accent:light-dark(oklch(0.282 0 0),oklch(0.881 0 0));
+--vibeui-buttongroup-010-on-accent:oklch(from var(--vibeui-buttongroup-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-buttongroup-010-radius:0.5rem;
 --vibeui-buttongroup-010-count:4;
 --vibeui-buttongroup-010-index:0;
@@ -72,8 +72,7 @@ width:calc((100% - 0.375rem) / var(--vibeui-buttongroup-010-count));
 border-radius:var(--vibeui-buttongroup-010-radius);
 background:var(--vibeui-buttongroup-010-accent);
 transform:translateX(calc(var(--vibeui-buttongroup-010-index) * 100%));
-transition:transform .22s cubic-bezier(.2,.7,.3,1);
-}
+transition:transform .22s cubic-bezier(.2,.7,.3,1);color:oklch(from var(--vibeui-buttongroup-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="buttongroup-010"] button{
 appearance:none;cursor:pointer;font:inherit;
 position:relative;z-index:1;

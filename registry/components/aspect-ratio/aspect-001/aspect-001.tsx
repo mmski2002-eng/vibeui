@@ -40,8 +40,10 @@ position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 /* Нарисованная подложка нужна, только пока снимка нет. */
 [data-vibeui-block="aspect-001"][data-empty="false"] [data-part="hill"],
-[data-vibeui-block="aspect-001"][data-empty="false"] [data-part="sun"],
-[data-vibeui-block="aspect-001"][data-empty="false"] [data-part="ratio"]{display:none}
+[data-vibeui-block="aspect-001"][data-empty="false"] [data-part="sun"]{display:none}
+/* Со снимком подпись пропорции остаётся: без неё рамка выглядит просто фото. */
+[data-vibeui-block="aspect-001"][data-empty="false"] [data-part="label"]{background:none}
+[data-vibeui-block="aspect-001"][data-empty="false"] [data-part="ratio"]{color:oklch(0.98 0 0);background:oklch(0 0 0 / 0.55);backdrop-filter:blur(4px)}
 [data-vibeui-block="aspect-001"]{
 position:relative;display:block;width:100%;box-sizing:border-box;overflow:hidden;
 aspect-ratio:var(--vibeui-aspect-001-ratio);

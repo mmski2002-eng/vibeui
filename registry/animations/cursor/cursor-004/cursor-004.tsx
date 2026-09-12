@@ -102,8 +102,7 @@ transform:translate(-50%,-50%) scale(1.04);
 }
 [data-vibeui-block="cursor-004"] [data-part="node"][data-hot="true"] [data-part="port"]{
 background:var(--vibeui-cursor-004-accent);
-box-shadow:0 0 0 0.25rem color-mix(in oklab,var(--vibeui-cursor-004-accent) 22%,transparent);
-}
+box-shadow:0 0 0 0.25rem color-mix(in oklab,var(--vibeui-cursor-004-accent) 22%,transparent);color:oklch(from var(--vibeui-cursor-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 /* Пробник цвета: канве нужна строка, а в переменной стоит light-dark() —
    разрешённый цвет снимается с этого пустого узла. */
 [data-vibeui-block="cursor-004"] [data-part="probe"]{

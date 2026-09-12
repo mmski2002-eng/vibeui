@@ -30,7 +30,7 @@ const STYLES = `
 --vibeui-button-012-hover:light-dark(oklch(0.96 0 265),oklch(0.35 0 265));
 --vibeui-button-012-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
 --vibeui-button-012-hover-filter:light-dark(brightness(1.45),brightness(0.9));
---vibeui-button-012-accent-fg:light-dark(oklch(0.99 0 39.8),oklch(0.2 0.04 39.8));
+--vibeui-button-012-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.2 0 0));
 --vibeui-button-012-radius:0.625rem;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -50,10 +50,10 @@ transition:background-color .16s ease,border-color .16s ease;
 [data-vibeui-block="button-012"][data-size="sm"]{--vibeui-button-012-size:1.875rem;--vibeui-button-012-radius:0.5rem}
 [data-vibeui-block="button-012"][data-size="lg"]{--vibeui-button-012-size:2.75rem;--vibeui-button-012-radius:0.75rem}
 [data-vibeui-block="button-012"][data-tone="accent"]{
-border-color:transparent;background:var(--vibeui-button-012-accent);color:var(--vibeui-button-012-accent-fg);
+border-color:transparent;background:var(--vibeui-button-012-accent);color:oklch(from var(--vibeui-button-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="button-012"]:hover{background:var(--vibeui-button-012-hover)}
-[data-vibeui-block="button-012"][data-tone="accent"]:hover{filter:var(--vibeui-button-012-hover-filter);background:var(--vibeui-button-012-accent)}
+[data-vibeui-block="button-012"][data-tone="accent"]:hover{filter:var(--vibeui-button-012-hover-filter);background:var(--vibeui-button-012-accent);color:oklch(from var(--vibeui-button-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="button-012"]:focus-visible{outline:2px solid var(--vibeui-button-012-accent);outline-offset:2px}
 [data-vibeui-block="button-012"]:disabled{cursor:not-allowed;opacity:.5}
 /* Значки на бордюрах: ради четырёх фигур пакет иконок не подключают. */

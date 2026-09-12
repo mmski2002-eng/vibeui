@@ -37,11 +37,11 @@ const STYLES = `
 --vibeui-subscribe-002-border:light-dark(oklch(0.89 0 0),oklch(0.36 0 0));
 --vibeui-subscribe-002-field:light-dark(oklch(1 0 0),oklch(0.22 0 0));
 --vibeui-subscribe-002-card:light-dark(oklch(1 0 0),oklch(0.24 0 0));
---vibeui-subscribe-002-accent:light-dark(oklch(0.64 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-subscribe-002-accent-ink:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-subscribe-002-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-subscribe-002-accent:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
+--vibeui-subscribe-002-accent-ink:oklch(from var(--vibeui-subscribe-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
+--vibeui-subscribe-002-on-accent:oklch(from var(--vibeui-subscribe-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-subscribe-002-ok:light-dark(oklch(0.52 0.14 150),oklch(0.76 0.14 150));
---vibeui-subscribe-002-shadow:light-dark(oklch(0.2 0.02 40 / 55%),oklch(0.05 0 0 / 85%));
+--vibeui-subscribe-002-shadow:light-dark(oklch(0.2 0 0 / 55%),oklch(0.05 0 0 / 85%));
 --vibeui-subscribe-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -92,7 +92,7 @@ outline:2px solid var(--vibeui-subscribe-002-accent);outline-offset:1px;
 }
 [data-vibeui-block="subscribe-002"] [data-part="button"]{
 height:2.75rem;padding:0 1.375rem;border:0;border-radius:0.625rem;
-background:var(--vibeui-subscribe-002-accent);color:var(--vibeui-subscribe-002-on-accent);
+background:var(--vibeui-subscribe-002-accent);color:oklch(from var(--vibeui-subscribe-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.9375rem;font-weight:650;cursor:pointer;
 transition:background .15s ease,transform .15s ease;
 }

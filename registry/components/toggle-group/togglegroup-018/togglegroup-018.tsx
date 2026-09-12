@@ -31,8 +31,8 @@ const STYLES = `
 --vibeui-togglegroup-018-muted:color-mix(in oklab,var(--vibeui-togglegroup-018-fg) 62%,transparent);
 --vibeui-togglegroup-018-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 14%));
 --vibeui-togglegroup-018-surface:light-dark(oklch(0.955 0 0),oklch(0.2178 0 0));
---vibeui-togglegroup-018-accent:light-dark(oklch(0.64 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-togglegroup-018-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-togglegroup-018-accent:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
+--vibeui-togglegroup-018-on-accent:oklch(0.15 0 0);
 --vibeui-togglegroup-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -85,7 +85,7 @@ outline:2px solid var(--vibeui-togglegroup-018-accent);outline-offset:2px;
 transform:scale(1.06);
 background:var(--vibeui-togglegroup-018-accent);
 border-color:var(--vibeui-togglegroup-018-accent);
-color:var(--vibeui-togglegroup-018-on-accent);
+color:oklch(from var(--vibeui-togglegroup-018-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="togglegroup-018"] [data-part="chip"]:active{transform:scale(0.97)}
 /* Галочка вырастает из нулевой ширины, поэтому фишка раздаётся вместе с

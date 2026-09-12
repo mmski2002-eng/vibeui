@@ -120,8 +120,7 @@ opacity:0;transition:opacity 0.25s ease,border-radius 0.25s ease;
 position:absolute;left:0;top:0;z-index:5;pointer-events:none;
 width:0.375rem;height:0.375rem;margin:-0.1875rem 0 0 -0.1875rem;
 border-radius:9999px;background:var(--vibeui-cursor-002-accent);
-opacity:0;transition:opacity 0.25s ease;
-}
+opacity:0;transition:opacity 0.25s ease;color:oklch(from var(--vibeui-cursor-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="cursor-002"][data-pointer="true"] [data-part="ring"],
 [data-vibeui-block="cursor-002"][data-pointer="true"] [data-part="dot"]{opacity:1}
 [data-vibeui-block="cursor-002"] [data-part="hint"]{

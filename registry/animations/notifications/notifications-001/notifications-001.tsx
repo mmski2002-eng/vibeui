@@ -59,7 +59,7 @@ animation:vibeui-notifications-001-ring 4.5s ease-in-out infinite;
 position:absolute;top:-0.25rem;right:-0.25rem;min-width:1.125rem;height:1.125rem;
 padding:0 0.25rem;border-radius:9999px;display:inline-flex;align-items:center;justify-content:center;
 font-size:0.5625rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1;
-color:var(--vibeui-notifications-001-accent-fg);background:var(--vibeui-notifications-001-accent);
+color:oklch(from var(--vibeui-notifications-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);background:var(--vibeui-notifications-001-accent);
 border:2px solid var(--vibeui-notifications-001-card);
 animation:vibeui-notifications-001-pop 4.5s ease-in-out infinite;
 }

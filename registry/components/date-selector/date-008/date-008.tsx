@@ -40,7 +40,7 @@ const STYLES = `
 --vibeui-date-008-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-date-008-muted:color-mix(in oklab,var(--vibeui-date-008-fg) 68%,transparent);
 --vibeui-date-008-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
---vibeui-date-008-accent:light-dark(oklch(0.5 0.15 39.8),oklch(0.76 0.14 39.8));
+--vibeui-date-008-accent:light-dark(oklch(0.275 0 0),oklch(0.906 0 0));
 --vibeui-date-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

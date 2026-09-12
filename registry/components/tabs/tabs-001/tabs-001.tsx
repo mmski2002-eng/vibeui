@@ -29,7 +29,7 @@ const STYLES = `
 --vibeui-tabs-001-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-tabs-001-muted:color-mix(in oklab,var(--vibeui-tabs-001-fg) 68%,transparent);
 --vibeui-tabs-001-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
---vibeui-tabs-001-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8));
+--vibeui-tabs-001-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-tabs-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -67,8 +67,7 @@ outline:2px solid var(--vibeui-tabs-001-accent);outline-offset:-2px;border-radiu
 content:"";position:absolute;left:0.75rem;right:0.75rem;bottom:0;height:2px;
 border-radius:2px 2px 0 0;background:var(--vibeui-tabs-001-accent);
 transform:scaleX(0);transform-origin:center;
-transition:transform .18s cubic-bezier(.32,.72,0,1);
-}
+transition:transform .18s cubic-bezier(.32,.72,0,1);color:oklch(from var(--vibeui-tabs-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="tabs-001"] [data-part="tab"][aria-selected="true"]::after{transform:scaleX(1)}
 [data-vibeui-block="tabs-001"] [data-part="panel"]{
 padding:1rem 0.125rem;font-size:0.9375rem;line-height:1.6;color:var(--vibeui-tabs-001-muted);

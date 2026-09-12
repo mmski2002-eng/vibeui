@@ -36,9 +36,9 @@ const STYLES = `
 --vibeui-alertdialog-011-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-alertdialog-011-muted:color-mix(in oklab,var(--vibeui-alertdialog-011-fg) 68%,transparent);
 --vibeui-alertdialog-011-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-alertdialog-011-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8));
+--vibeui-alertdialog-011-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-alertdialog-011-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0 262));
---vibeui-alertdialog-011-pick-bg:light-dark(oklch(0.55 0.2 39.8 / 6%),oklch(0.72 0.18 39.8 / 12%));
+--vibeui-alertdialog-011-pick-bg:light-dark(oklch(0.287 0 0 / 6%),oklch(0.899 0 0 / 12%));
 --vibeui-alertdialog-011-warn:light-dark(oklch(0.66 0.15 70),oklch(0.82 0.14 78));
 --vibeui-alertdialog-011-warn-bg:light-dark(oklch(0.72 0.15 75 / 18%),oklch(0.82 0.14 78 / 20%));
 --vibeui-alertdialog-011-shadow:light-dark(oklch(0.2 0 265 / 55%),oklch(0.02 0 265 / 70%));
@@ -99,7 +99,7 @@ border:1.5px solid var(--vibeui-alertdialog-011-muted);background:var(--vibeui-a
 flex:1 1 0;appearance:none;cursor:pointer;height:2.375rem;border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
-[data-vibeui-block="alertdialog-011"] [data-part="confirm"]{border:0;background:var(--vibeui-alertdialog-011-accent);color:var(--vibeui-alertdialog-011-on-accent)}
+[data-vibeui-block="alertdialog-011"] [data-part="confirm"]{border:0;background:var(--vibeui-alertdialog-011-accent);color:oklch(from var(--vibeui-alertdialog-011-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 /* Кнопка ждёт выбора: заранее отмеченный вариант стирает чужую работу. */
 [data-vibeui-block="alertdialog-011"] [data-part="confirm"]:disabled{opacity:.45;cursor:default}
 [data-vibeui-block="alertdialog-011"] [data-part="cancel"]{

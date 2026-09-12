@@ -42,7 +42,7 @@ const STYLES = `
 --vibeui-phoneinput-009-muted:color-mix(in oklab,var(--vibeui-phoneinput-009-fg) 68%,transparent);
 --vibeui-phoneinput-009-border:light-dark(oklch(0.87 0 265),oklch(0.38 0 265));
 --vibeui-phoneinput-009-hover:light-dark(oklch(0.55 0 265 / 9%),oklch(0.92 0 265 / 12%));
---vibeui-phoneinput-009-accent:light-dark(oklch(0.52 0.18 39.8),oklch(0.76 0.14 39.8));
+--vibeui-phoneinput-009-accent:light-dark(oklch(0.28 0 0),oklch(0.906 0 0));
 --vibeui-phoneinput-009-on-accent:oklch(from var(--vibeui-phoneinput-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-phoneinput-009-shadow:light-dark(oklch(0.2 0 265 / 34%),oklch(0 0 0 / 68%));
 --vibeui-phoneinput-009-radius:0.625rem;

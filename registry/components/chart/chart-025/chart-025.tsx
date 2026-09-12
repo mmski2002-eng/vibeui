@@ -35,7 +35,7 @@ const STYLES = `
 --vibeui-chart-025-muted:color-mix(in oklab,var(--vibeui-chart-025-fg) 68%,transparent);
 --vibeui-chart-025-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-chart-025-empty:light-dark(oklch(0.9 0 265),oklch(0.4 0 265));
---vibeui-chart-025-accent:light-dark(oklch(0.52 0.17 39.8),oklch(0.71 0.16 39.8));
+--vibeui-chart-025-accent:light-dark(oklch(0.28 0 0),oklch(0.897 0 0));
 --vibeui-chart-025-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -60,7 +60,7 @@ fill:var(--vibeui-chart-025-muted);font-size:7px;text-anchor:middle;font-variant
 [data-vibeui-block="chart-025"] [data-part="scale"]{
 display:flex;align-items:center;gap:0.3125rem;font-size:0.6875rem;color:var(--vibeui-chart-025-muted);
 }
-[data-vibeui-block="chart-025"] [data-part="step"]{border-radius:9999px;background:var(--vibeui-chart-025-accent)}
+[data-vibeui-block="chart-025"] [data-part="step"]{border-radius:9999px;background:var(--vibeui-chart-025-accent);color:oklch(from var(--vibeui-chart-025-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="chart-025"] [data-part="unit"]{margin:0;font-size:0.75rem;color:var(--vibeui-chart-025-muted)}
 [data-vibeui-block="chart-025"] [data-part="data"]{
 position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;

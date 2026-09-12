@@ -38,7 +38,7 @@ const STYLES = `
 --vibeui-toast-022-muted:color-mix(in oklab,var(--vibeui-toast-022-fg) 64%,transparent);
 --vibeui-toast-022-border:light-dark(oklch(0.89 0 265),oklch(0.36 0 265));
 --vibeui-toast-022-hover:light-dark(oklch(0 0 0 / 5%),oklch(1 0 0 / 7%));
---vibeui-toast-022-tone:light-dark(oklch(0.5 0.16 39.8),oklch(0.78 0.12 39.8));
+--vibeui-toast-022-tone:light-dark(oklch(0.275 0 0),oklch(0.91 0 0));
 --vibeui-toast-022-on-tone:oklch(from var(--vibeui-toast-022-tone) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-toast-022-shadow:light-dark(oklch(0.2 0 265 / 22%),oklch(0 0 0 / 58%));
 --vibeui-toast-022-radius:0.875rem;

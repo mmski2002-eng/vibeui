@@ -39,7 +39,8 @@ const STYLES = `
 --vibeui-tabs-006-muted:color-mix(in oklab,var(--vibeui-tabs-006-fg) 68%,transparent);
 --vibeui-tabs-006-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-tabs-006-chip:light-dark(oklch(0.94 0 265),oklch(0.32 0 265));
---vibeui-tabs-006-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8));
+--vibeui-tabs-006-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
+--vibeui-tabs-006-count:light-dark(oklch(0.58 0.2 25),oklch(0.72 0.19 25));
 --vibeui-tabs-006-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0 265));
 --vibeui-tabs-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -68,8 +69,7 @@ font:inherit;font-size:0.8125rem;font-weight:500;color:var(--vibeui-tabs-006-mut
 [data-vibeui-block="tabs-006"] [data-part="tab"][aria-selected="true"]{color:var(--vibeui-tabs-006-fg);font-weight:650}
 [data-vibeui-block="tabs-006"] [data-part="tab"][aria-selected="true"]::after{
 content:"";position:absolute;left:0.375rem;right:0.375rem;bottom:0;height:2px;
-border-radius:2px 2px 0 0;background:var(--vibeui-tabs-006-accent);
-}
+border-radius:2px 2px 0 0;background:var(--vibeui-tabs-006-accent);color:oklch(from var(--vibeui-tabs-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 /* Значки собраны из бордюров: набор иконок сюда не тянется. */
 [data-vibeui-block="tabs-006"] [data-part="glyph"]{
 width:0.875rem;height:0.875rem;flex:none;position:relative;
@@ -90,12 +90,9 @@ content:"";position:absolute;left:50%;top:25%;width:1.5px;height:32%;background:
 [data-vibeui-block="tabs-006"] [data-part="glyph"][data-glyph="trash"]{border-radius:0 0 0.1875rem 0.1875rem;border-top-width:3px}
 [data-vibeui-block="tabs-006"] [data-part="count"]{
 min-width:1.125rem;padding:0 0.25rem;box-sizing:border-box;
-border-radius:999px;background:var(--vibeui-tabs-006-chip);
+border-radius:999px;background:var(--vibeui-tabs-006-count);
 font-size:0.6875rem;line-height:1.125rem;text-align:center;
-font-variant-numeric:tabular-nums;color:var(--vibeui-tabs-006-fg);
-}
-[data-vibeui-block="tabs-006"] [data-part="tab"][aria-selected="true"] [data-part="count"]{
-background:var(--vibeui-tabs-006-accent);color:var(--vibeui-tabs-006-on-accent);
+font-variant-numeric:tabular-nums;color:oklch(1 0 0);
 }
 [data-vibeui-block="tabs-006"] [data-part="panel"]{
 padding-top:0.875rem;font-size:0.875rem;line-height:1.6;color:var(--vibeui-tabs-006-muted);

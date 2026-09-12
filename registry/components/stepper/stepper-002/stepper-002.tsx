@@ -30,7 +30,7 @@ const STYLES = `
 --vibeui-stepper-002-muted:color-mix(in oklab,var(--vibeui-stepper-002-fg) 68%,transparent);
 --vibeui-stepper-002-border:light-dark(oklch(0.92 0 265),oklch(0.32 0 265));
 --vibeui-stepper-002-step:light-dark(oklch(0.968 0 265),oklch(0.26 0 265));
---vibeui-stepper-002-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.16 39.8));
+--vibeui-stepper-002-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-stepper-002-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0 262));
 --vibeui-stepper-002-done:light-dark(oklch(0.55 0.14 155),oklch(0.74 0.14 155));
 --vibeui-stepper-002-notch:0.75rem;
@@ -95,8 +95,7 @@ background:var(--vibeui-stepper-002-done);color:var(--vibeui-stepper-002-accent-
 border-color:var(--vibeui-stepper-002-done);
 }
 [data-vibeui-block="stepper-002"] li[data-state="current"]{
-background:var(--vibeui-stepper-002-accent);
-}
+background:var(--vibeui-stepper-002-accent);color:oklch(from var(--vibeui-stepper-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="stepper-002"] li[data-state="current"] [data-part="label"]{
 color:var(--vibeui-stepper-002-accent-fg);font-weight:650;
 }

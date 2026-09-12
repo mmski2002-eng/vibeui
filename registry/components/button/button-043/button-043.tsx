@@ -18,7 +18,7 @@ const STYLES = `
 --vibeui-button-043-surface:light-dark(oklch(1 0 0),oklch(0.25 0 265));
 --vibeui-button-043-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
 --vibeui-button-043-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
---vibeui-button-043-accent:light-dark(oklch(0.58 0.16 39.8),oklch(0.74 0.16 39.8));
+--vibeui-button-043-accent:light-dark(oklch(0.295 0 0),oklch(0.903 0 0));
 --vibeui-button-043-shadow:light-dark(oklch(0.3 0 265 / 22%),oklch(0 0 0 / 55%));
 --vibeui-button-043-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -60,8 +60,7 @@ position:relative;
 [data-vibeui-block="button-043"] [data-part="chip"]::after{
 content:"";position:absolute;left:50%;top:50%;width:0.5rem;height:0.5rem;
 margin:-0.25rem 0 0 -0.25rem;border-radius:2px;
-background:var(--vibeui-button-043-accent);
-}
+background:var(--vibeui-button-043-accent);color:oklch(from var(--vibeui-button-043-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="button-043"]{transition:none!important}}
 `
 

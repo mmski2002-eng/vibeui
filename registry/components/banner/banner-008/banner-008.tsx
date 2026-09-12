@@ -25,10 +25,10 @@ export type Banner008Props = Omit<ComponentProps<"div">, "children"> & {
 // и в тёмной ветке light-dark() они светлее.
 const STYLES = `
 :where([data-vibeui-block="banner-008"]){
---vibeui-banner-008-from:light-dark(oklch(0.42 0.15 39.8),oklch(0.5 0.16 39.8));
---vibeui-banner-008-to:light-dark(oklch(0.46 0.16 39.8),oklch(0.55 0.16 39.8));
+--vibeui-banner-008-from:light-dark(oklch(0.255 0 0),oklch(0.859 0 0));
+--vibeui-banner-008-to:light-dark(oklch(0.265 0 0),oklch(0.868 0 0));
 --vibeui-banner-008-bg:linear-gradient(100deg,var(--vibeui-banner-008-from),var(--vibeui-banner-008-to));
---vibeui-banner-008-fg:oklch(0.98 0.01 315);
+--vibeui-banner-008-fg:oklch(from var(--vibeui-banner-008-to) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-banner-008-muted:color-mix(in oklab,var(--vibeui-banner-008-fg) 68%,transparent);
 --vibeui-banner-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-banner-008-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -66,7 +66,7 @@ font-family:var(--vibeui-banner-008-mono);font-size:0.75rem;font-weight:700;lett
 }
 [data-vibeui-block="banner-008"] [data-part="action"]{
 flex:none;display:inline-flex;align-items:center;justify-content:center;min-height:1.9375rem;padding:0.25rem 0.8125rem;
-border-radius:0.5rem;background:oklch(1 0 0);color:var(--vibeui-banner-008-from);
+border-radius:0.5rem;background:var(--vibeui-banner-008-fg);color:var(--vibeui-banner-008-to);
 font-size:0.875rem;font-weight:700;text-decoration:none;
 transition:transform .16s ease;
 }

@@ -70,7 +70,7 @@ content:"";position:absolute;left:0;top:0.625rem;bottom:0.625rem;
 width:0.1875rem;border-radius:9999px;background:transparent;
 }
 [data-vibeui-block="radio-004"] [data-part="option"]:has(input:checked){background:var(--vibeui-radio-004-tint)}
-[data-vibeui-block="radio-004"] [data-part="option"]:has(input:checked)::before{background:var(--vibeui-radio-004-accent)}
+[data-vibeui-block="radio-004"] [data-part="option"]:has(input:checked)::before{background:var(--vibeui-radio-004-accent);color:oklch(from var(--vibeui-radio-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="radio-004"] input{
 appearance:none;-webkit-appearance:none;flex:none;margin:0.125rem 0 0;cursor:pointer;
 width:1.125rem;height:1.125rem;border-radius:9999px;

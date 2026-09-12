@@ -40,8 +40,8 @@ const STYLES = `
 --vibeui-number-001-muted:color-mix(in oklab,var(--vibeui-number-001-fg) 68%,transparent);
 --vibeui-number-001-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
 --vibeui-number-001-hover:light-dark(oklch(0.55 0 265 / 8%),oklch(0.85 0 265 / 12%));
---vibeui-number-001-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.74 0.17 39.8));
---vibeui-number-001-ring:light-dark(oklch(0.55 0.2 39.8 / 22%),oklch(0.74 0.17 39.8 / 32%));
+--vibeui-number-001-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
+--vibeui-number-001-ring:light-dark(oklch(0.287 0 0 / 22%),oklch(0.903 0 0 / 32%));
 --vibeui-number-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

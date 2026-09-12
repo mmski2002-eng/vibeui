@@ -54,8 +54,7 @@ transition:background-color .16s ease,border-color .16s ease;
 }
 [data-vibeui-block="button-024"][aria-pressed="true"] [data-part="box"],
 [data-vibeui-block="button-024"][aria-pressed="mixed"] [data-part="box"]{
-background:var(--vibeui-button-024-accent);border-color:var(--vibeui-button-024-accent);
-}
+background:var(--vibeui-button-024-accent);border-color:var(--vibeui-button-024-accent);color:oklch(from var(--vibeui-button-024-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 /* Галочка и тире — второй канал состояния помимо заливки. */
 [data-vibeui-block="button-024"] [data-part="tick"]{
 position:absolute;left:0.3125rem;top:0.0625rem;width:0.25rem;height:0.5rem;

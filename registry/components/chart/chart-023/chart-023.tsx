@@ -36,8 +36,8 @@ const STYLES = `
 --vibeui-chart-023-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-chart-023-lead:light-dark(oklch(0.82 0 265),oklch(0.44 0 265));
 --vibeui-chart-023-blend:light-dark(oklch(1 0 0),oklch(0.19 0 265));
---vibeui-chart-023-accent:light-dark(oklch(0.52 0.18 39.8),oklch(0.64 0.17 39.8));
---vibeui-chart-023-drop:light-dark(oklch(0.58 0.16 39.8),oklch(0.74 0.15 39.8));
+--vibeui-chart-023-accent:light-dark(oklch(0.28 0 0),oklch(0.885 0 0));
+--vibeui-chart-023-drop:light-dark(oklch(0.295 0 0),oklch(0.903 0 0));
 --vibeui-chart-023-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-alert-013-muted:color-mix(in oklab,var(--vibeui-alert-013-fg) 68%,transparent);
 --vibeui-alert-013-bg:transparent;
 --vibeui-alert-013-border:light-dark(oklch(0.89 0 265),oklch(0.34 0 265));
---vibeui-alert-013-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.74 0.16 39.8));
+--vibeui-alert-013-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-alert-013-accent-fg:light-dark(oklch(1 0 0),oklch(0.18 0 265));
 --vibeui-alert-013-shadow:light-dark(oklch(0.2 0 265 / 45%),oklch(0.05 0 265 / 70%));
 --vibeui-alert-013-radius:1rem;
@@ -73,7 +73,7 @@ font-size:0.8125rem;font-weight:600;
 transition:background-color .16s ease,border-color .16s ease;
 }
 [data-vibeui-block="alert-013"] [data-part="accept"]{
-background:var(--vibeui-alert-013-accent);color:var(--vibeui-alert-013-accent-fg);
+background:var(--vibeui-alert-013-accent);color:oklch(from var(--vibeui-alert-013-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="alert-013"] [data-part="accept"]:hover{filter:brightness(0.94)}
 [data-vibeui-block="alert-013"] [data-part="reject"]{

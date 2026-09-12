@@ -40,7 +40,7 @@ const STYLES = `
 --vibeui-autocomplete-013-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
 --vibeui-autocomplete-013-panel:light-dark(oklch(1 0 0),oklch(0.24 0 265));
 --vibeui-autocomplete-013-active:light-dark(oklch(0.95 0 265),oklch(0.33 0 265));
---vibeui-autocomplete-013-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-autocomplete-013-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-autocomplete-013-danger:light-dark(oklch(0.52 0.19 25),oklch(0.75 0.16 25));
 --vibeui-autocomplete-013-radius:0.625rem;
 --vibeui-autocomplete-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

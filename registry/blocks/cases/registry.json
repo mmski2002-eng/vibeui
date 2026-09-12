@@ -28,7 +28,7 @@
           "results"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Case001",
@@ -215,7 +215,7 @@
           "cta"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Case002",
@@ -387,7 +387,7 @@
           "growth"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Case003",
@@ -561,7 +561,7 @@
           "cards"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Case004",
@@ -752,7 +752,7 @@
           "list"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Case005",
@@ -962,7 +962,7 @@
           "numbers"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Case006",

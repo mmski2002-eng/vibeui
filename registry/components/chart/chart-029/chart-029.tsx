@@ -39,7 +39,7 @@ const STYLES = `
 --vibeui-chart-029-muted:color-mix(in oklab,var(--vibeui-chart-029-fg) 64%,transparent);
 --vibeui-chart-029-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-chart-029-empty:light-dark(oklch(0.94 0 265),oklch(0.29 0 265));
---vibeui-chart-029-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.72 0.15 39.8));
+--vibeui-chart-029-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-chart-029-cell:0.75rem;
 --vibeui-chart-029-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -92,7 +92,7 @@ border-radius:0.1875rem;background:var(--vibeui-chart-029-empty);
 [data-vibeui-block="chart-029"] [data-part="cell"][data-level="1"]{background:color-mix(in oklab,var(--vibeui-chart-029-accent) 28%,transparent)}
 [data-vibeui-block="chart-029"] [data-part="cell"][data-level="2"]{background:color-mix(in oklab,var(--vibeui-chart-029-accent) 52%,transparent)}
 [data-vibeui-block="chart-029"] [data-part="cell"][data-level="3"]{background:color-mix(in oklab,var(--vibeui-chart-029-accent) 76%,transparent)}
-[data-vibeui-block="chart-029"] [data-part="cell"][data-level="4"]{background:var(--vibeui-chart-029-accent)}
+[data-vibeui-block="chart-029"] [data-part="cell"][data-level="4"]{background:var(--vibeui-chart-029-accent);color:oklch(from var(--vibeui-chart-029-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="chart-029"] [data-part="foot"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.75rem;
 flex-wrap:wrap;

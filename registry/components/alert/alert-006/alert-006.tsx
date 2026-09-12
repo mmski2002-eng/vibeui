@@ -29,7 +29,7 @@ const STYLES = `
 --vibeui-alert-006-muted:color-mix(in oklab,var(--vibeui-alert-006-fg) 68%,transparent);
 --vibeui-alert-006-bg:transparent;
 --vibeui-alert-006-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
---vibeui-alert-006-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.17 39.8));
+--vibeui-alert-006-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-alert-006-accent-fg:light-dark(oklch(1 0 0),oklch(0.18 0 265));
 --vibeui-alert-006-art:light-dark(oklch(0.98 0 265),oklch(0.27 0 265));
 --vibeui-alert-006-radius:1rem;
@@ -66,7 +66,7 @@ background:var(--vibeui-alert-006-art);
 [data-vibeui-block="alert-006"] [data-part="art"] span{position:absolute;border-radius:0.1875rem;background:color-mix(in oklab,var(--vibeui-alert-006-accent) 22%,transparent)}
 [data-vibeui-block="alert-006"] [data-part="art"] span:nth-child(1){left:0.4375rem;top:0.4375rem;width:1.25rem;height:0.375rem}
 [data-vibeui-block="alert-006"] [data-part="art"] span:nth-child(2){left:0.4375rem;top:1.125rem;right:0.4375rem;height:0.375rem;opacity:.55}
-[data-vibeui-block="alert-006"] [data-part="art"] span:nth-child(3){left:0.4375rem;bottom:0.4375rem;width:1.75rem;height:0.75rem;background:var(--vibeui-alert-006-accent)}
+[data-vibeui-block="alert-006"] [data-part="art"] span:nth-child(3){left:0.4375rem;bottom:0.4375rem;width:1.75rem;height:0.75rem;background:var(--vibeui-alert-006-accent);color:oklch(from var(--vibeui-alert-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="alert-006"] [data-part="text"]{display:flex;flex-direction:column;gap:0.25rem;flex:1 1 auto;min-width:0}
 [data-vibeui-block="alert-006"] [data-part="badge"]{
 align-self:flex-start;padding:0.125rem 0.4375rem;border-radius:0.3125rem;
@@ -81,7 +81,7 @@ font-size:0.6875rem;font-weight:650;letter-spacing:0.02em;
 display:inline-flex;align-items:center;justify-content:center;
 min-height:2rem;padding:0.25rem 0.875rem;
 border-radius:0.5rem;text-decoration:none;
-background:var(--vibeui-alert-006-accent);color:var(--vibeui-alert-006-accent-fg);
+background:var(--vibeui-alert-006-accent);color:oklch(from var(--vibeui-alert-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.8125rem;font-weight:600;
 transition:filter .16s ease;
 }

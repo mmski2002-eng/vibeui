@@ -68,8 +68,8 @@ const STYLES = `
 --vibeui-pricing-003-card:light-dark(oklch(1 0 0),oklch(0.22 0.014 160));
 --vibeui-pricing-003-line:light-dark(oklch(0.89 0.008 160),oklch(0.34 0.014 160));
 --vibeui-pricing-003-soft:light-dark(oklch(0.95 0.012 160),oklch(0.27 0.016 160));
---vibeui-pricing-003-accent:light-dark(oklch(0.55 0.12 39.8),oklch(0.76 0.13 39.8));
---vibeui-pricing-003-accent-fg:oklch(0.15 0.02 39.8);
+--vibeui-pricing-003-accent:light-dark(oklch(0.287 0 0),oklch(0.906 0 0));
+--vibeui-pricing-003-accent-fg:oklch(from var(--vibeui-pricing-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-pricing-003-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -103,7 +103,7 @@ transition:background-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="pricing-003"] [data-part="save"]{
 padding:0.125rem 0.375rem;border-radius:0.375rem;background:var(--vibeui-pricing-003-accent);
-color:var(--vibeui-pricing-003-accent-fg);font-size:0.6875rem;font-weight:700;
+color:oklch(from var(--vibeui-pricing-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);font-size:0.6875rem;font-weight:700;
 }
 [data-vibeui-block="pricing-003"] [data-part="plans"]{
 list-style:none;margin:2rem 0 0;padding:0;display:grid;grid-template-columns:1fr;gap:1rem;text-align:left;
@@ -128,7 +128,7 @@ display:inline-flex;align-items:center;justify-content:center;margin-top:1.5rem;
 border:1px solid var(--vibeui-pricing-003-line);color:var(--vibeui-pricing-003-fg);
 font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color .16s ease,border-color .16s ease;
 }
-[data-vibeui-block="pricing-003"] [data-featured="true"] a{background:var(--vibeui-pricing-003-accent);color:var(--vibeui-pricing-003-accent-fg);border-color:transparent}
+[data-vibeui-block="pricing-003"] [data-featured="true"] a{background:var(--vibeui-pricing-003-accent);color:oklch(from var(--vibeui-pricing-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border-color:transparent}
 [data-vibeui-block="pricing-003"] a:focus-visible{outline:2px solid var(--vibeui-pricing-003-accent);outline-offset:3px}
 [data-vibeui-block="pricing-003"] [data-part="year"]{display:none}
 [data-vibeui-block="pricing-003"]:has([data-part="periodyear"]:checked) [data-part="month"]{display:none}

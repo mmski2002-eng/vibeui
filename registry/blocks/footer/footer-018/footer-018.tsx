@@ -35,7 +35,7 @@ const STYLES = `
 :where([data-vibeui-block="footer-018"]){
 --vibeui-footer-018-ink:#ffffff;
 --vibeui-footer-018-muted:color-mix(in oklab,#ffffff 66%,#1a1a1a);
---vibeui-footer-018-accent:#ff5900;
+--vibeui-footer-018-accent:#f2f2f2;
 --vibeui-footer-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -78,7 +78,7 @@ display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;
 }
 [data-vibeui-block="footer-018"] [data-part="action"]{
 display:inline-flex;align-items:center;min-height:2.875rem;padding:0.375rem 1.5rem;
-background:var(--vibeui-footer-018-accent);color:#000000;
+background:var(--vibeui-footer-018-accent);color:oklch(from var(--vibeui-footer-018-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 text-decoration:none;font-size:1rem;font-weight:660;
 transition:filter .16s ease;
 }

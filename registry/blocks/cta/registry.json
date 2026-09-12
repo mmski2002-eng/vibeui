@@ -145,7 +145,7 @@
           "accent"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         }
       }
     },
@@ -175,7 +175,7 @@
           "landing"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Cta002",
@@ -341,7 +341,7 @@
           "form"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Cta003",
@@ -519,7 +519,7 @@
           "gradient"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Cta004",
@@ -668,7 +668,7 @@
           "service"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "imageSrc": "/demo/scenes/scene-05.webp"
           }
@@ -839,7 +839,7 @@
           "legal"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Cta006",
@@ -993,7 +993,7 @@
       "name": "cta-007",
       "type": "registry:block",
       "title": "Призыв с формой в строку",
-      "description": "Компактный призыв с формой почты в одну строку: поле и оранжевая кнопка стоят рядом капсулами, а под ними одна фраза, снимающая страх спама.",
+      "description": "Компактный призыв с формой почты в одну строку: поле и акцентная кнопка стоят рядом капсулами, а под ними одна фраза, снимающая страх спама.",
       "categories": [
         "cta"
       ],
@@ -1016,12 +1016,12 @@
           "conversion"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Cta007",
           "usage": "<Cta007\n  title=\"Оставьте почту — пришлём доступ к каталогу\"\n  submitLabel=\"Получить доступ\"\n  note=\"Никакого спама: одно письмо, отписка не понадобится.\"\n/>",
-          "summary": "Центрированный призыв с формой почты в одну строку: надзаголовок, заголовок, короткое объяснение, поле с оранжевой кнопкой рядом и строка против страха спама. Форма настоящая и работает без клиентского кода. Ноль зависимостей, один файл, своя палитра.",
+          "summary": "Центрированный призыв с формой почты в одну строку: надзаголовок, заголовок, короткое объяснение, поле с акцентной кнопкой рядом и строка против страха спама. Форма настоящая и работает без клиентского кода. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-cta-007-* и не подменять её токенами вашей темы (bg-input, ring-ring и подобными)",
             "скрытую подпись поля со связью htmlFor: капсула в одну строку не оставляет места видимой подписи, но скринридер обязан слышать, что это за поле",
@@ -1081,10 +1081,10 @@
         "i18n": {
           "en": {
             "title": "Inline Email CTA",
-            "description": "A compact CTA with a one-line email form: the field and the orange button stand side by side as capsules, with one phrase beneath that removes the fear of spam.",
+            "description": "A compact CTA with a one-line email form: the field and the accent button stand side by side as capsules, with one phrase beneath that removes the fear of spam.",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-007-* variables. A server component: the field is uncontrolled, the form is submitted by a plain POST and works before hydration. The field label is visually hidden but tied through htmlFor — a one-line form leaves no room for a visible label, yet a screen reader has to hear it. From 34rem the field and the button stand in one row through grid-template-columns:1fr auto; below that they run as a column.",
             "ai": {
-              "summary": "A centred CTA with a one-line email form: an eyebrow, a heading, a short explanation, a field with an orange button beside it and a line against the fear of spam. The form is real and works without client code. Zero dependencies, one file, its own palette.",
+              "summary": "A centred CTA with a one-line email form: an eyebrow, a heading, a short explanation, a field with an accent button beside it and a line against the fear of spam. The form is real and works without client code. Zero dependencies, one file, its own palette.",
               "preserve": [
                 "the local --vibeui-cta-007-* palette — do not swap it for your theme tokens (bg-input, ring-ring and the like)",
                 "the hidden field label tied through htmlFor: a one-line capsule leaves no room for a visible label, yet a screen reader has to hear what the field is",
@@ -1178,7 +1178,7 @@
           "launch"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Cta008",
@@ -1320,8 +1320,8 @@
     {
       "name": "cta-009",
       "type": "registry:block",
-      "title": "Оранжевая полоса",
-      "description": "Полоса фирменного оранжевого во всю ширину: чёрная типографика, одна белая кнопка и ни одного лишнего элемента.",
+      "title": "Акцентная полоса",
+      "description": "Полоса фирменного акцентного во всю ширину: чёрная типографика, одна белая кнопка и ни одного лишнего элемента.",
       "categories": [
         "cta"
       ],
@@ -1334,7 +1334,7 @@
           "target": "@components/vibeui/cta-009.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-009-*. Серверный компонент. Собственный оранжевый фон — осознанное исключение из правила «прозрачной подложки»: контраст полосы с остальной страницей и есть дизайн блока. Текст фиксированно тёмный в обеих темах — полоса не темнеет вместе со страницей, иначе она перестаёт быть полосой. От 44rem текст и кнопка встают в один ряд через grid-template-columns:1fr auto, до этого кнопка уходит под текст.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-009-*. Серверный компонент. Собственный акцентный фон — осознанное исключение из правила «прозрачной подложки»: контраст полосы с остальной страницей и есть дизайн блока. Текст фиксированно тёмный в обеих темах — полоса не темнеет вместе со страницей, иначе она перестаёт быть полосой. От 44rem текст и кнопка встают в один ряд через grid-template-columns:1fr auto, до этого кнопка уходит под текст.",
       "meta": {
         "tags": [
           "cta",
@@ -1344,16 +1344,16 @@
           "conversion"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Cta009",
           "usage": "<Cta009\n  title=\"Хватит листать — соберите свою страницу\"\n  actionLabel=\"Открыть каталог\"\n  actionHref=\"/components\"\n/>",
-          "summary": "Полоса призыва во всю ширину на сплошной оранжевой заливке: заголовок с коротким объяснением слева, одна белая кнопка справа. Тёмная типографика фиксирована в обеих темах. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "summary": "Полоса призыва во всю ширину на сплошной акцентной заливке: заголовок с коротким объяснением слева, одна белая кнопка справа. Тёмная типографика фиксирована в обеих темах. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
-            "локальную палитру --vibeui-cta-009-* — полоса остаётся оранжевой в обеих ветках light-dark(): собственный фон здесь осознанное исключение из правила прозрачной подложки, контраст полосы со страницей и есть дизайн блока",
+            "локальную палитру --vibeui-cta-009-* — полоса остаётся акцентной в обеих ветках light-dark(): собственный фон здесь осознанное исключение из правила прозрачной подложки, контраст полосы со страницей и есть дизайн блока",
             "фиксированно тёмный текст: полоса не темнеет вместе с темой, иначе перестаёт быть полосой",
-            "белую кнопку — оранжевая кнопка на оранжевой полосе исчезает",
+            "белую кнопку — акцентная кнопка на акцентной полосе исчезает",
             "один заголовок и одну кнопку: полоса не место для выбора из нескольких действий",
             "кегль заголовка в cqi от собственной ширины блока и ограничение строк в ch",
             "переход кнопки под текст на узкой раскладке — кнопка справа от переносящегося заголовка ломает чтение",
@@ -1404,15 +1404,15 @@
         ],
         "i18n": {
           "en": {
-            "title": "Orange Band CTA",
-            "description": "A full-width band of the brand orange: black typography, one white button and not a single extra element.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-009-* variables. A server component. The own orange background is a deliberate exception to the transparent-background rule: the contrast between the band and the rest of the page is the design of this block. The text is fixed dark in both themes — the band does not darken with the page, otherwise it stops being a band. From 44rem the text and the button stand in one row through grid-template-columns:1fr auto; below that the button drops under the text.",
+            "title": "Accent Band CTA",
+            "description": "A full-width band of the brand accent: black typography, one white button and not a single extra element.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-009-* variables. A server component. The own accent background is a deliberate exception to the transparent-background rule: the contrast between the band and the rest of the page is the design of this block. The text is fixed dark in both themes — the band does not darken with the page, otherwise it stops being a band. From 44rem the text and the button stand in one row through grid-template-columns:1fr auto; below that the button drops under the text.",
             "ai": {
-              "summary": "A full-width CTA band on a solid orange fill: a heading with a short explanation on the left, one white button on the right. The dark typography is fixed in both themes. Zero dependencies, one file, its own palette, no client JS.",
+              "summary": "A full-width CTA band on a solid accent fill: a heading with a short explanation on the left, one white button on the right. The dark typography is fixed in both themes. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
-                "the local --vibeui-cta-009-* palette — the band stays orange in both light-dark() branches: the own background is a deliberate exception to the transparent-background rule here, the contrast between the band and the page is the design of this block",
+                "the local --vibeui-cta-009-* palette — the band stays accent in both light-dark() branches: the own background is a deliberate exception to the transparent-background rule here, the contrast between the band and the page is the design of this block",
                 "the fixed dark text: the band does not darken with the theme, otherwise it stops being a band",
-                "the white button — an orange button on an orange band disappears",
+                "the white button — an accent button on an accent band disappears",
                 "the single heading and single button: a band is no place for a choice between several actions",
                 "the heading size in cqi from the block's own width and the line limits in ch",
                 "the button dropping under the text on the narrow layout — a button beside a wrapping heading breaks the reading",
@@ -1494,16 +1494,16 @@
           "conversion"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Cta010",
           "usage": "<Cta010\n  title=\"Всё, что нужно для первой страницы\"\n  actionLabel=\"Начать бесплатно\"\n  items={[\"Готовые секции\", \"Один файл на блок\", \"Инструкция для AI\", \"Тёмная тема\"]}\n/>",
-          "summary": "Двухколоночный призыв: слева надзаголовок, заголовок, объяснение, кнопка и приметка, справа список из четырёх выгод с оранжевыми галочками. Галочки нарисованы CSS, клиентского JS нет. Ноль зависимостей, один файл, своя палитра.",
+          "summary": "Двухколоночный призыв: слева надзаголовок, заголовок, объяснение, кнопка и приметка, справа список из четырёх выгод с акцентными галочками. Галочки нарисованы CSS, клиентского JS нет. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-cta-010-* и не подменять её токенами вашей темы",
             "галочку CSS-уголком на тинтованном круге, а не иконку из библиотеки: блок обязан оставаться одним файлом и переживать смену акцента вместе с палитрой",
-            "тёплый тинт круга через color-mix от акцента — сплошная оранжевая заливка под каждой галочкой превратила бы список в светофор",
+            "тёплый тинт круга через color-mix от акцента — сплошная акцентная заливка под каждой галочкой превратила бы список в светофор",
             "разметку списком <ul>/<li>: скринридер объявляет число пунктов, и это часть смысла чек-листа",
             "четыре пункта: столько читают рядом с кнопкой, дальше начинается страница «возможности»",
             "приметку под кнопкой — она снимает возражение в момент решения",
@@ -1562,11 +1562,11 @@
             "description": "A two-column CTA: a promise with a button on the left, four benefit checkmarks on the right. The checks are drawn with a CSS corner — no icon library.",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-010-* variables. A server component. The checkmark is a pseudo-element with two borders rotated 42 degrees, sitting on a circle of warm tint made with color-mix: an icon library for four checkmarks would break the one-file rule. The layout is driven by the block's own width: below 46rem one column, beyond that the text and the checklist stand side by side in a 1.2:1 ratio.",
             "ai": {
-              "summary": "A two-column CTA: on the left an eyebrow, a heading, an explanation, a button and a note; on the right a list of four benefits with orange checkmarks. The checks are drawn in CSS, there is no client JS. Zero dependencies, one file, its own palette.",
+              "summary": "A two-column CTA: on the left an eyebrow, a heading, an explanation, a button and a note; on the right a list of four benefits with accent checkmarks. The checks are drawn in CSS, there is no client JS. Zero dependencies, one file, its own palette.",
               "preserve": [
                 "the local --vibeui-cta-010-* palette — do not swap it for your theme tokens",
                 "the checkmark as a CSS corner on a tinted circle rather than a library icon: the block has to stay a single file and survive an accent change together with the palette",
-                "the warm circle tint through color-mix from the accent — a solid orange fill under every check would turn the list into a traffic light",
+                "the warm circle tint through color-mix from the accent — a solid accent fill under every check would turn the list into a traffic light",
                 "the <ul>/<li> list markup: a screen reader announces the number of items, and that is part of a checklist's meaning",
                 "four items: that is how many get read next to a button, beyond that a features page begins",
                 "the note under the button — it removes the objection at the moment of decision",
@@ -1660,7 +1660,7 @@
           "split"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Cta011",
@@ -1823,7 +1823,7 @@
           "conversion"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "avatarImage": "/demo/avatars/sofia-256.webp"
           }
@@ -1994,12 +1994,12 @@
           "bar"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Cta013",
           "usage": "<Cta013\n  message=\"В каталоге девять новых секций призыва.\"\n  actionLabel=\"Смотреть\"\n  className=\"sticky top-0 z-50\"\n/>",
-          "summary": "Тонкая полоса-анонс: жирное сообщение, приглушённое пояснение и маленькая оранжевая кнопка в одной строке. Позиция статическая, прилипание добавляется снаружи. Клиентского JS нет. Ноль зависимостей, один файл, своя палитра.",
+          "summary": "Тонкая полоса-анонс: жирное сообщение, приглушённое пояснение и маленькая акцентная кнопка в одной строке. Позиция статическая, прилипание добавляется снаружи. Клиентского JS нет. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-cta-013-* и не подменять её токенами вашей темы",
             "статическое позиционирование: где полосе липнуть, решает страница — прилипание задаётся снаружи через className, а зашитый в блок position:fixed воевал бы с любым макетом",
@@ -2060,7 +2060,7 @@
             "description": "A thin announcement bar with one message and one button. The positioning is static: where the bar sticks — top, bottom, above the footer — is the page's decision.",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-013-* variables. A server component marked up as <aside>: the bar is an addition to the page, not a section of it. The positioning is deliberately static — sticking is applied from outside through className (position:sticky with top, z-index to the project's taste). The bar background is a warm accent tint through color-mix over transparency, so the bar stays visible on any page colour without hiding it.",
             "ai": {
-              "summary": "A thin announcement bar: a bold message, a muted detail and a small orange button in one line. The position is static; sticking is added from outside. No client JS. Zero dependencies, one file, its own palette.",
+              "summary": "A thin announcement bar: a bold message, a muted detail and a small accent button in one line. The position is static; sticking is added from outside. No client JS. Zero dependencies, one file, its own palette.",
               "preserve": [
                 "the local --vibeui-cta-013-* palette — do not swap it for your theme tokens",
                 "the static positioning: where the bar sticks is the page's decision — sticking is applied from outside through className, while a position:fixed baked into the block would fight any layout",
@@ -2148,7 +2148,7 @@
           "install"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Cta014",
@@ -2310,7 +2310,7 @@
           "download"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Cta015",

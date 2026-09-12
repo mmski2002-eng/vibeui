@@ -28,7 +28,7 @@ const STYLES = `
 --vibeui-waitlist-003-border:light-dark(oklch(0.86 0 0),oklch(0.36 0 0));
 --vibeui-waitlist-003-track:light-dark(oklch(0.92 0 0),oklch(0.28 0 0));
 --vibeui-waitlist-003-code:light-dark(oklch(0.97 0 0),oklch(0.2 0 0));
---vibeui-waitlist-003-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
+--vibeui-waitlist-003-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-waitlist-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-waitlist-003-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;
@@ -47,7 +47,7 @@ font-family:var(--vibeui-waitlist-003-font);
 [data-vibeui-block="waitlist-003"] [data-part="pos"]{font-family:var(--vibeui-waitlist-003-mono);font-size:clamp(3rem,12cqi,4.5rem);font-weight:750;line-height:1;color:var(--vibeui-waitlist-003-accent);font-variant-numeric:tabular-nums}
 [data-vibeui-block="waitlist-003"] [data-part="ahead"]{margin:0.5rem 0 1.75rem;color:var(--vibeui-waitlist-003-muted);font-size:0.9375rem}
 [data-vibeui-block="waitlist-003"] [data-part="track"]{height:0.625rem;border-radius:999px;background:var(--vibeui-waitlist-003-track);overflow:hidden;margin-bottom:2rem}
-[data-vibeui-block="waitlist-003"] [data-part="fill"]{height:100%;border-radius:999px;background:var(--vibeui-waitlist-003-accent)}
+[data-vibeui-block="waitlist-003"] [data-part="fill"]{height:100%;border-radius:999px;background:var(--vibeui-waitlist-003-accent);color:oklch(from var(--vibeui-waitlist-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="waitlist-003"] [data-part="ref-note"]{margin:0 0 0.75rem;font-size:0.9375rem;line-height:1.5}
 [data-vibeui-block="waitlist-003"] [data-part="code"]{
 display:flex;align-items:center;gap:0.75rem;justify-content:space-between;
@@ -56,7 +56,7 @@ background:var(--vibeui-waitlist-003-code);
 }
 [data-vibeui-block="waitlist-003"] [data-part="code-value"]{font-family:var(--vibeui-waitlist-003-mono);font-size:0.9375rem;font-weight:650;letter-spacing:0.02em}
 [data-vibeui-block="waitlist-003"] [data-part="code-btn"]{
-border:0;background:var(--vibeui-waitlist-003-accent);color:oklch(0.15 0.02 39.8);
+border:0;background:var(--vibeui-waitlist-003-accent);color:oklch(from var(--vibeui-waitlist-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 padding:0.375rem 0.875rem;border-radius:0.5rem;cursor:pointer;font:inherit;font-size:0.8125rem;font-weight:650;
 }
 @container (min-width: 36rem){[data-vibeui-block="waitlist-003"] [data-part="shell"]{padding:4.5rem 2rem}}

@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-timeline-004-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-timeline-004-muted:color-mix(in oklab,var(--vibeui-timeline-004-fg) 68%,transparent);
 --vibeui-timeline-004-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
---vibeui-timeline-004-accent:light-dark(oklch(0.55 0.19 39.8),oklch(0.76 0.16 39.8));
+--vibeui-timeline-004-accent:light-dark(oklch(0.287 0 0),oklch(0.906 0 0));
 --vibeui-timeline-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -72,8 +72,7 @@ background:var(--vibeui-timeline-004-border);
 /* Ромб вместо точки: веха отличается формой, а не только цветом. */
 [data-vibeui-block="timeline-004"] li[data-kind="milestone"] [data-part="mark"]{
 width:0.625rem;height:0.625rem;margin-top:0.25rem;border-radius:0.0625rem;
-transform:rotate(45deg);background:var(--vibeui-timeline-004-accent);
-}
+transform:rotate(45deg);background:var(--vibeui-timeline-004-accent);color:oklch(from var(--vibeui-timeline-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="timeline-004"] [data-part="date"]{
 font-size:0.6875rem;letter-spacing:0.02em;color:var(--vibeui-timeline-004-muted);
 font-variant-numeric:tabular-nums;

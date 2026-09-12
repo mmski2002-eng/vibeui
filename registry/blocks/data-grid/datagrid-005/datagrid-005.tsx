@@ -54,9 +54,9 @@ const STYLES = `
 --vibeui-datagrid-005-border:light-dark(oklch(0.92 0.006 60),oklch(0.34 0.012 60));
 --vibeui-datagrid-005-head:light-dark(oklch(0.975 0.004 60),oklch(0.27 0.012 60));
 --vibeui-datagrid-005-field:light-dark(oklch(1 0 0),oklch(0.23 0.012 60));
---vibeui-datagrid-005-accent:light-dark(oklch(0.58 0.15 39.8),oklch(0.78 0.13 39.8));
---vibeui-datagrid-005-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.02 55));
---vibeui-datagrid-005-dirty:light-dark(oklch(0.58 0.15 39.8 / 12%),oklch(0.78 0.13 39.8 / 18%));
+--vibeui-datagrid-005-accent:light-dark(oklch(0.295 0 0),oklch(0.91 0 0));
+--vibeui-datagrid-005-on-accent:oklch(from var(--vibeui-datagrid-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
+--vibeui-datagrid-005-dirty:light-dark(oklch(0.295 0 0 / 12%),oklch(0.91 0 0 / 18%));
 --vibeui-datagrid-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -88,7 +88,7 @@ border:1px solid var(--vibeui-datagrid-005-border);
 background:var(--vibeui-datagrid-005-field);color:var(--vibeui-datagrid-005-fg);
 }
 [data-vibeui-block="datagrid-005"] [data-part="bar"] button[data-tone="primary"]{
-border-color:transparent;background:var(--vibeui-datagrid-005-accent);color:var(--vibeui-datagrid-005-on-accent);
+border-color:transparent;background:var(--vibeui-datagrid-005-accent);color:oklch(from var(--vibeui-datagrid-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="datagrid-005"] [data-part="bar"] button:disabled{opacity:.45;cursor:not-allowed}
 [data-vibeui-block="datagrid-005"] [data-part="bar"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-005-accent);outline-offset:2px}
@@ -130,8 +130,7 @@ color:var(--vibeui-datagrid-005-muted);font-size:0.6875rem;opacity:0;
 [data-vibeui-block="datagrid-005"] td[data-dirty="true"]{background:var(--vibeui-datagrid-005-dirty)}
 [data-vibeui-block="datagrid-005"] [data-part="dot"]{
 width:0.375rem;height:0.375rem;border-radius:999px;
-background:var(--vibeui-datagrid-005-accent);flex:none;
-}
+background:var(--vibeui-datagrid-005-accent);flex:none;color:oklch(from var(--vibeui-datagrid-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="datagrid-005"] input{
 width:100%;font:inherit;font-size:0.8125rem;color:inherit;
 padding:0.375rem 0.8125rem;margin:0;

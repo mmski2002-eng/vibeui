@@ -35,7 +35,7 @@ const STYLES = `
 --vibeui-footer-016-muted:color-mix(in oklab,#000000 56%,#ffffff);
 --vibeui-footer-016-line:color-mix(in oklab,#000000 11%,transparent);
 --vibeui-footer-016-panel:#f2f2f2;
---vibeui-footer-016-accent:#ff5900;
+--vibeui-footer-016-accent:#1a1a1a;
 --vibeui-footer-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

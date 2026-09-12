@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-scrollspy-001-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-scrollspy-001-muted:color-mix(in oklab,var(--vibeui-scrollspy-001-fg) 68%,transparent);
 --vibeui-scrollspy-001-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
---vibeui-scrollspy-001-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.74 0.16 39.8));
+--vibeui-scrollspy-001-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-scrollspy-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -63,8 +63,7 @@ font-size:0.8125rem;line-height:1.3;
 [data-vibeui-block="scrollspy-001"] [data-part="link"][aria-current="true"]{color:var(--vibeui-scrollspy-001-fg);font-weight:650}
 [data-vibeui-block="scrollspy-001"] [data-part="link"][aria-current="true"]::before{
 content:"";position:absolute;left:-2px;top:0.25rem;bottom:0.25rem;
-width:2px;background:var(--vibeui-scrollspy-001-accent);
-}
+width:2px;background:var(--vibeui-scrollspy-001-accent);color:oklch(from var(--vibeui-scrollspy-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="scrollspy-001"] [data-part="link"]:focus-visible{outline:2px solid var(--vibeui-scrollspy-001-accent);outline-offset:-2px;border-radius:0.25rem}
 [data-vibeui-block="scrollspy-001"] [data-part="body"]{
 height:13rem;overflow-y:auto;overscroll-behavior:contain;

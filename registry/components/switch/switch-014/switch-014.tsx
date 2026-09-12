@@ -20,7 +20,7 @@ const STYLES = `
 --vibeui-switch-014-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-switch-014-track:light-dark(oklch(0.72 0 265),oklch(0.46 0 265));
 --vibeui-switch-014-thumb:light-dark(oklch(1 0 0),oklch(0.93 0 265));
---vibeui-switch-014-accent:light-dark(oklch(0.55 0.16 39.8),oklch(0.62 0.15 39.8));
+--vibeui-switch-014-accent:light-dark(oklch(0.287 0 0),oklch(0.881 0 0));
 --vibeui-switch-014-mark:light-dark(oklch(1 0 0 / 55%),oklch(1 0 0 / 45%));
 --vibeui-switch-014-mark-active:light-dark(oklch(1 0 0 / 95%),oklch(1 0 0 / 90%));
 --vibeui-switch-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -46,7 +46,7 @@ width:3.5rem;height:1.875rem;border-radius:9999px;
 background:var(--vibeui-switch-014-track);cursor:inherit;
 transition:background-color .2s ease;
 }
-[data-vibeui-block="switch-014"] input:checked{background:var(--vibeui-switch-014-accent)}
+[data-vibeui-block="switch-014"] input:checked{background:var(--vibeui-switch-014-accent);color:oklch(from var(--vibeui-switch-014-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="switch-014"] input:focus-visible{outline:2px solid var(--vibeui-switch-014-accent);outline-offset:2px}
 /* Знаки закреплены в торцах дорожки и никуда не едут — сдвигается только
    бегунок поверх них. */
@@ -78,6 +78,8 @@ box-shadow:0 1px 3px oklch(0.2 0 265 / 30%);
 transition:transform .2s cubic-bezier(.32,.72,0,1);
 }
 [data-vibeui-block="switch-014"] input:checked + [data-part="off-mark"] + [data-part="on-mark"] + [data-part="thumb"]{transform:translateX(1.625rem)}
+/* Ползунок на включённом треке: контраст к чернильному акценту, а не белый на белом. */
+[data-vibeui-block="switch-014"] input:checked + [data-part="thumb"],[data-vibeui-block="switch-014"] input:checked ~ [data-part="thumb"]{background:oklch(from var(--vibeui-switch-014-accent) clamp(0,(0.62 - l) * 100,1) 0 0)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="switch-014"] *{animation:none!important;transition:none!important}}
 `
 

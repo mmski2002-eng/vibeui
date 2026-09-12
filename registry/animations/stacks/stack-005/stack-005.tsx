@@ -23,7 +23,7 @@ const STYLES = `
 --vibeui-stack-005-card:light-dark(oklch(0.955 0 0),oklch(0.2178 0 0));
 --vibeui-stack-005-fg:light-dark(oklch(0.205 0 0),oklch(0.95 0 0));
 --vibeui-stack-005-border:light-dark(oklch(0 0 0 / 10%),oklch(1 0 0 / 16%));
---vibeui-stack-005-accent:light-dark(oklch(0.64 0.2144 39.8),oklch(0.6803 0.2144 39.8));
+--vibeui-stack-005-accent:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
 --vibeui-stack-005-shadow:0 4px 10px -2px oklch(0 0 0 / 0.15),0 2px 6px -2px oklch(0 0 0 / 0.1);
 --vibeui-stack-005-ease:linear(0,0.138,0.389,0.621,0.792,0.901,0.963,0.994,1.006,1.009,1.008,1.006,1.003,1.002,1.001,1);
 --vibeui-stack-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

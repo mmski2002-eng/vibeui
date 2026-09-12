@@ -28,9 +28,9 @@ const STYLES = `
 --vibeui-errorpage-002-muted:light-dark(oklch(0.48 0 0),oklch(0.7 0 0));
 --vibeui-errorpage-002-border:light-dark(oklch(0.9 0 0),oklch(0.32 0 0));
 --vibeui-errorpage-002-card:light-dark(oklch(1 0 0),oklch(0.22 0 0));
---vibeui-errorpage-002-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-errorpage-002-accent-fill:light-dark(oklch(0.64 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-errorpage-002-accent-ink:oklch(0.15 0.02 39.8);
+--vibeui-errorpage-002-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
+--vibeui-errorpage-002-accent-fill:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
+--vibeui-errorpage-002-accent-ink:oklch(from var(--vibeui-errorpage-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-errorpage-002-mono:ui-monospace,"Cascadia Code","SF Mono",Menlo,Consolas,monospace;
 --vibeui-errorpage-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

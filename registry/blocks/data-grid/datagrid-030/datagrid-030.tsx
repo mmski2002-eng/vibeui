@@ -44,7 +44,7 @@ const STYLES = `
 --vibeui-datagrid-030-muted:color-mix(in oklab,var(--vibeui-datagrid-030-fg) 68%,transparent);
 --vibeui-datagrid-030-border:light-dark(oklch(0.92 0 250),oklch(0.35 0 250));
 --vibeui-datagrid-030-head:light-dark(oklch(0.975 0 250),oklch(0.27 0 250));
---vibeui-datagrid-030-accent:light-dark(oklch(0.52 0.14 39.8),oklch(0.75 0.13 39.8));
+--vibeui-datagrid-030-accent:light-dark(oklch(0.28 0 0),oklch(0.905 0 0));
 --vibeui-datagrid-030-day:light-dark(oklch(0.58 0.14 235),oklch(0.6 0.14 235));
 --vibeui-datagrid-030-night:light-dark(oklch(0.46 0.09 280),oklch(0.53 0.1 280));
 --vibeui-datagrid-030-off:light-dark(oklch(0.85 0 250),oklch(0.4 0 250));

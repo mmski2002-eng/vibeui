@@ -69,8 +69,8 @@ const STYLES = `
 --vibeui-pricing-008-darkfg:light-dark(oklch(0.98 0 285),oklch(0.2 0 285));
 --vibeui-pricing-008-darkmuted:light-dark(oklch(0.74 0 285),oklch(0.46 0 285));
 --vibeui-pricing-008-darkline:light-dark(oklch(1 0 0 / 16%),oklch(0 0 0 / 14%));
---vibeui-pricing-008-accent:light-dark(oklch(0.7 0.17 39.8),oklch(0.55 0.19 39.8));
---vibeui-pricing-008-accent-fg:light-dark(oklch(0.18 0.04 39.8),oklch(0.99 0 300));
+--vibeui-pricing-008-accent:light-dark(oklch(0.325 0 0),oklch(0.868 0 0));
+--vibeui-pricing-008-accent-fg:oklch(from var(--vibeui-pricing-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-pricing-008-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -123,7 +123,7 @@ font-size:0.9375rem;font-weight:650;text-decoration:none;transition:opacity .16s
 }
 [data-vibeui-block="pricing-008"] [data-part="cta"]{margin-top:1.5rem}
 [data-vibeui-block="pricing-008"] [data-part="card"] a{border:1px solid var(--vibeui-pricing-008-line);color:var(--vibeui-pricing-008-fg)}
-[data-vibeui-block="pricing-008"] [data-paid="true"] a{border:0;background:var(--vibeui-pricing-008-accent);color:var(--vibeui-pricing-008-accent-fg)}
+[data-vibeui-block="pricing-008"] [data-paid="true"] a{border:0;background:var(--vibeui-pricing-008-accent);color:oklch(from var(--vibeui-pricing-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="pricing-008"] a:hover{opacity:.88}
 [data-vibeui-block="pricing-008"] a:focus-visible{outline:2px solid var(--vibeui-pricing-008-accent);outline-offset:3px}
 [data-vibeui-block="pricing-008"] [data-part="note"]{margin:1.5rem 0 0;text-align:center;font-size:0.8125rem;color:var(--vibeui-pricing-008-muted)}

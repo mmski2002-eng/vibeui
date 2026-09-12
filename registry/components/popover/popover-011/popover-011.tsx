@@ -85,7 +85,7 @@ const STYLES = `
 --vibeui-popover-011-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-popover-011-muted:color-mix(in oklab,var(--vibeui-popover-011-fg) 68%,transparent);
 --vibeui-popover-011-border:light-dark(oklch(0.89 0 265),oklch(0.36 0 265));
---vibeui-popover-011-accent:light-dark(oklch(0.53 0.18 39.8),oklch(0.73 0.16 39.8));
+--vibeui-popover-011-accent:light-dark(oklch(0.282 0 0),oklch(0.901 0 0));
 --vibeui-popover-011-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0 268));
 --vibeui-popover-011-shadow:light-dark(oklch(0.2 0 265 / 60%),oklch(0.02 0 265 / 72%));
 --vibeui-popover-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -157,7 +157,7 @@ transition:background-color .16s ease,border-color .16s ease,color .16s ease;
 [data-vibeui-block="popover-011"] [data-part="day"]:focus-visible{outline:2px solid var(--vibeui-popover-011-accent);outline-offset:2px}
 [data-vibeui-block="popover-011"] [data-part="day"][data-today="true"]{border-color:var(--vibeui-popover-011-border)}
 [data-vibeui-block="popover-011"] [data-part="day"][aria-pressed="true"]{
-background:var(--vibeui-popover-011-accent);border-color:var(--vibeui-popover-011-accent);color:var(--vibeui-popover-011-on-accent);
+background:var(--vibeui-popover-011-accent);border-color:var(--vibeui-popover-011-accent);color:oklch(from var(--vibeui-popover-011-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 /* Раскрытая панель на месте: атрибут popover прячет её правилом браузера,
    а это правило той же специфичности его переопределяет и возвращает панель

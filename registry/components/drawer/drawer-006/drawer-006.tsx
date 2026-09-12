@@ -37,7 +37,7 @@ const STYLES = `
 --vibeui-drawer-006-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
 --vibeui-drawer-006-muted:color-mix(in oklab,var(--vibeui-drawer-006-fg) 68%,transparent);
 --vibeui-drawer-006-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
---vibeui-drawer-006-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.73 0.15 39.8));
+--vibeui-drawer-006-accent:light-dark(oklch(0.287 0 0),oklch(0.901 0 0));
 --vibeui-drawer-006-on-accent:light-dark(oklch(0.99 0 265),oklch(0.17 0 265));
 --vibeui-drawer-006-warn:light-dark(oklch(0.62 0.15 65),oklch(0.81 0.13 75));
 --vibeui-drawer-006-warn-bg:light-dark(oklch(0.96 0.04 85),oklch(0.32 0.05 75));
@@ -121,7 +121,7 @@ border:1px solid var(--vibeui-drawer-006-border);background:transparent;color:in
 font:inherit;font-size:0.875rem;font-weight:600;
 }
 [data-vibeui-block="drawer-006"] [data-part="foot"] button[data-primary="true"]{
-border-color:transparent;background:var(--vibeui-drawer-006-accent);color:var(--vibeui-drawer-006-on-accent);
+border-color:transparent;background:var(--vibeui-drawer-006-accent);color:oklch(from var(--vibeui-drawer-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="drawer-006"] [data-part="foot"] button:focus-visible{outline:2px solid var(--vibeui-drawer-006-accent);outline-offset:2px}
 /* Немодальный показ: шторка остаётся внутри блока, а не уходит в верхний

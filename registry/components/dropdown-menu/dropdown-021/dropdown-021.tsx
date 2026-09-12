@@ -52,7 +52,7 @@ const STYLES = `
 --vibeui-dropdown-021-bg:light-dark(oklch(1 0 0),oklch(0.25 0 265));
 --vibeui-dropdown-021-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-dropdown-021-hover:light-dark(oklch(0.55 0 265 / 8%),oklch(0.86 0 265 / 12%));
---vibeui-dropdown-021-accent:light-dark(oklch(0.52 0.19 39.8),oklch(0.72 0.16 39.8));
+--vibeui-dropdown-021-accent:light-dark(oklch(0.28 0 0),oklch(0.899 0 0));
 --vibeui-dropdown-021-radius:0.75rem;
 --vibeui-dropdown-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -149,7 +149,7 @@ background:var(--vibeui-dropdown-021-hover,light-dark(oklch(0.55 0 265 / 8%),okl
 position:absolute;inline-size:1px;block-size:1px;opacity:0;pointer-events:none;
 }
 [data-vibeui-dropdown-021-menu] [data-part="option"]:has(input:focus-visible){
-outline:2px solid var(--vibeui-dropdown-021-accent,light-dark(oklch(0.52 0.19 39.8),oklch(0.72 0.16 39.8)));
+outline:2px solid var(--vibeui-dropdown-021-accent,light-dark(oklch(0.28 0 0),oklch(0.899 0 0)));
 outline-offset:-2px;
 }
 [data-vibeui-dropdown-021-menu] [data-part="mark"]{
@@ -166,8 +166,8 @@ font-size:0.75rem;line-height:1.35;
 [data-vibeui-dropdown-021-menu] [data-part="tick"]{
 margin-inline-start:auto;align-self:center;flex:none;
 inline-size:0.4375rem;block-size:0.75rem;
-border-right:2px solid var(--vibeui-dropdown-021-accent,light-dark(oklch(0.52 0.19 39.8),oklch(0.72 0.16 39.8)));
-border-bottom:2px solid var(--vibeui-dropdown-021-accent,light-dark(oklch(0.52 0.19 39.8),oklch(0.72 0.16 39.8)));
+border-right:2px solid var(--vibeui-dropdown-021-accent,light-dark(oklch(0.28 0 0),oklch(0.899 0 0)));
+border-bottom:2px solid var(--vibeui-dropdown-021-accent,light-dark(oklch(0.28 0 0),oklch(0.899 0 0)));
 transform:rotate(45deg);
 opacity:0;
 }

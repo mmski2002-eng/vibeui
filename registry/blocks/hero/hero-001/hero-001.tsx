@@ -17,6 +17,8 @@ export type Hero001Props = {
   accentForeground?: string
   /** Пусто — подложки нет, секция ложится на фон страницы. */
   background?: string
+  /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
+  tone?: "auto" | "light" | "dark"
   className?: string
 }
 
@@ -36,8 +38,8 @@ const STYLES = `
 --vibeui-hero-fg:light-dark(oklch(0.19 0 266),oklch(0.98 0 266));
 --vibeui-hero-muted:light-dark(oklch(0.5 0 266),oklch(0.75 0 266));
 --vibeui-hero-border:light-dark(oklch(0.16 0 266 / 14%),oklch(1 0 0 / 18%));
---vibeui-hero-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-hero-accent-fg:light-dark(oklch(0.15 0.02 39.8),oklch(0.15 0.02 39.8));
+--vibeui-hero-accent:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
+--vibeui-hero-accent-fg:oklch(from var(--vibeui-hero-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-ring:color-mix(in oklab, var(--vibeui-hero-accent) 75%, transparent);
 --vibeui-hero-glow:color-mix(in oklab, var(--vibeui-hero-accent) 38%, transparent);
 --vibeui-hero-grid:light-dark(oklch(0.16 0 266 / 7%),oklch(1 0 0 / 6%));
@@ -46,6 +48,8 @@ const STYLES = `
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="hero-001"]{color-scheme:dark}
+:where([data-vibeui-block="hero-001"][data-tone="light"]){color-scheme:light}
+:where([data-vibeui-block="hero-001"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="hero-001"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -107,6 +111,7 @@ export function Hero001({
   accent,
   accentForeground,
   background = "",
+  tone = "auto",
   className,
 }: Hero001Props) {
   const style = {
@@ -125,6 +130,7 @@ export function Hero001({
   return (
     <section
       data-vibeui-block="hero-001"
+      data-tone={tone === "auto" ? undefined : tone}
       style={style}
       className={cx(
         "relative isolate overflow-hidden bg-[var(--vibeui-hero-bg)] font-[family-name:var(--vibeui-hero-font)] text-[var(--vibeui-hero-fg)] antialiased",
@@ -219,7 +225,7 @@ export function Hero001({
                 href={primaryAction.href}
                 className={cx(
                   ACTION_BASE,
-                  "bg-[var(--vibeui-hero-accent)] text-[var(--vibeui-hero-accent-fg)] transition-[filter,transform] duration-150 hover:-translate-y-px hover:brightness-110",
+                  "bg-[var(--vibeui-hero-accent)] text-[var(--vibeui-hero-accent-fg)] shadow-[0_0.375rem_1.25rem_color-mix(in_oklab,var(--vibeui-hero-accent)_40%,transparent),inset_0_1px_0_color-mix(in_oklab,#ffffff_42%,transparent)] hover:shadow-[0_0.625rem_1.75rem_color-mix(in_oklab,var(--vibeui-hero-accent)_50%,transparent),inset_0_1px_0_color-mix(in_oklab,#ffffff_52%,transparent)] transition-[box-shadow,transform] duration-200 hover:-translate-y-px",
                 )}
                 style={{
                   boxShadow:

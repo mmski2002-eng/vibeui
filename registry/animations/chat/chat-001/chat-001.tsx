@@ -85,7 +85,7 @@ max-width:85%;min-width:0;padding:0.5rem 0.75rem;border-radius:0.875rem;
 font-size:0.75rem;line-height:1.45;
 }
 [data-vibeui-block="chat-001"] [data-row="user"] [data-part="bubble"]{
-background:var(--vibeui-chat-001-accent);color:var(--vibeui-chat-001-accent-fg);
+background:var(--vibeui-chat-001-accent);color:oklch(from var(--vibeui-chat-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 border-bottom-right-radius:0.25rem;
 }
 [data-vibeui-block="chat-001"] [data-row="assistant"] [data-part="bubble"]{
@@ -115,7 +115,7 @@ font-size:0.75rem;color:var(--vibeui-chat-001-muted);
 [data-vibeui-block="chat-001"] [data-part="send"]{
 display:flex;align-items:center;justify-content:center;flex:none;
 width:1.5rem;height:1.5rem;border-radius:9999px;
-background:var(--vibeui-chat-001-accent);color:var(--vibeui-chat-001-accent-fg);
+background:var(--vibeui-chat-001-accent);color:oklch(from var(--vibeui-chat-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="chat-001"] [data-part="send"] svg{width:0.75rem;height:0.75rem}
 @keyframes vibeui-chat-001-type{to{width:calc(var(--vibeui-chat-001-chars,20) * 0.6em + 0.2rem)}}

@@ -39,8 +39,8 @@ const STYLES = `
 --vibeui-checkbox-016-muted:color-mix(in oklab,var(--vibeui-checkbox-016-fg) 68%,transparent);
 --vibeui-checkbox-016-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-checkbox-016-field:light-dark(oklch(0.975 0 265),oklch(0.27 0 265));
---vibeui-checkbox-016-accent:light-dark(oklch(0.54 0.16 39.8),oklch(0.66 0.16 39.8));
---vibeui-checkbox-016-on-accent:oklch(0.99 0 245);
+--vibeui-checkbox-016-accent:light-dark(oklch(0.285 0 0),oklch(0.888 0 0));
+--vibeui-checkbox-016-on-accent:oklch(from var(--vibeui-checkbox-016-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-checkbox-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -89,7 +89,7 @@ border:1.5px solid var(--vibeui-checkbox-016-border);border-radius:0.3125rem;
 background:var(--vibeui-checkbox-016-bg);
 transition:background-color .15s ease,border-color .15s ease;
 }
-[data-vibeui-block="checkbox-016"] input[type="checkbox"]:checked{border-color:transparent;background:var(--vibeui-checkbox-016-accent)}
+[data-vibeui-block="checkbox-016"] input[type="checkbox"]:checked{border-color:transparent;background:var(--vibeui-checkbox-016-accent);color:oklch(from var(--vibeui-checkbox-016-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="checkbox-016"] input[type="checkbox"]:checked::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.25rem;height:0.4375rem;margin:-0.3125rem 0 0 -0.125rem;

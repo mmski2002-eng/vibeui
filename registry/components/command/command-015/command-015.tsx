@@ -38,8 +38,8 @@ const STYLES = `
 --vibeui-command-015-muted:color-mix(in oklab,var(--vibeui-command-015-fg) 62%,transparent);
 --vibeui-command-015-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 14%));
 --vibeui-command-015-card:light-dark(oklch(0.955 0 0),oklch(0.2178 0 0));
---vibeui-command-015-accent:light-dark(oklch(0.64 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-command-015-accent-text:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
+--vibeui-command-015-accent:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
+--vibeui-command-015-accent-text:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-command-015-hover:color-mix(in oklab,var(--vibeui-command-015-fg) 8%,transparent);
 --vibeui-command-015-ease:linear(0,0.138,0.389,0.621,0.792,0.901,0.963,0.994,1.006,1.009,1.008,1.006,1.003,1.002,1.001,1);
 --vibeui-command-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

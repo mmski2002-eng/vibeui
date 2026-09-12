@@ -44,9 +44,9 @@ const STYLES = `
 --vibeui-auth-006-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-auth-006-muted:light-dark(oklch(0.55 0 265),oklch(0.69 0 265));
 --vibeui-auth-006-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
---vibeui-auth-006-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.74 0.16 39.8));
---vibeui-auth-006-accent-soft:light-dark(oklch(0.55 0.2 39.8 / 10%),oklch(0.74 0.16 39.8 / 18%));
---vibeui-auth-006-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-auth-006-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
+--vibeui-auth-006-accent-soft:light-dark(oklch(0.287 0 0 / 10%),oklch(0.903 0 0 / 18%));
+--vibeui-auth-006-on-accent:oklch(from var(--vibeui-auth-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-auth-006-ok:light-dark(oklch(0.58 0.14 152),oklch(0.74 0.13 152));
 --vibeui-auth-006-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -113,7 +113,7 @@ appearance:none;cursor:pointer;height:2.5rem;padding:0 1rem;border-radius:0.625r
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="auth-006"] [data-part="accept"]{
-flex:1 1 10rem;border:0;background:var(--vibeui-auth-006-accent);color:var(--vibeui-auth-006-on-accent);
+flex:1 1 10rem;border:0;background:var(--vibeui-auth-006-accent);color:oklch(from var(--vibeui-auth-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 /* Отказ — обычная кнопка рядом: это такой же законный исход. */
 [data-vibeui-block="auth-006"] [data-part="decline"]{

@@ -21,10 +21,10 @@ const STYLES = `
 :where([data-vibeui-block="text-001"]){
 --vibeui-text-001-fg:light-dark(oklch(0.18 0 0),oklch(0.96 0 0));
 --vibeui-text-001-muted:color-mix(in oklab,var(--vibeui-text-001-fg) 52%,transparent);
---vibeui-text-001-accent:#ff5900;
+--vibeui-text-001-accent:light-dark(#1a1a1a,#f2f2f2);
 /* Надпись под курсором берёт акцент. В тёмной теме он высветлен: чистый
    оранжевый на тёмном фоне читается тускло. */
---vibeui-text-001-accent-text:light-dark(var(--vibeui-text-001-accent),oklch(0.82 0.15 48));
+--vibeui-text-001-accent-text:light-dark(var(--vibeui-text-001-accent),oklch(0.82 0 0));
 --vibeui-text-001-line:light-dark(oklch(0 0 0 / 14%),oklch(1 0 0 / 16%));
 --vibeui-text-001-align:center;
 --vibeui-text-001-shift:115%;

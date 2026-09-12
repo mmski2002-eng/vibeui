@@ -13,9 +13,9 @@ export type Button045Props = ComponentProps<"button"> & {
 const STYLES = `
 :where([data-vibeui-block="button-045"]){
 --vibeui-button-045-depth:5px;
---vibeui-button-045-accent:light-dark(oklch(0.62 0.19 39.8),oklch(0.7 0.18 39.8));
---vibeui-button-045-edge:light-dark(oklch(0.44 0.15 39.8),oklch(0.5 0.15 39.8));
---vibeui-button-045-fg:light-dark(oklch(0.99 0.02 39.8),oklch(0.98 0.022 39.8));
+--vibeui-button-045-accent:light-dark(oklch(0.305 0 0),oklch(0.895 0 0));
+--vibeui-button-045-edge:light-dark(oklch(0.26 0 0),oklch(0.859 0 0));
+--vibeui-button-045-fg:light-dark(oklch(0.99 0 0),oklch(0.98 0 0));
 --vibeui-button-045-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -25,7 +25,7 @@ const STYLES = `
 appearance:none;border:0;cursor:pointer;box-sizing:border-box;
 display:inline-flex;align-items:center;gap:0.5rem;
 height:2.75rem;padding:0 1.25rem;border-radius:0.75rem;
-background:var(--vibeui-button-045-accent);color:var(--vibeui-button-045-fg);
+background:var(--vibeui-button-045-accent);color:oklch(from var(--vibeui-button-045-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-family:var(--vibeui-button-045-font);font-size:0.9375rem;font-weight:700;line-height:1;
 box-shadow:
 0 var(--vibeui-button-045-depth) 0 0 var(--vibeui-button-045-edge),

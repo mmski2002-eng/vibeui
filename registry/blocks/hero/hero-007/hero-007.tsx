@@ -13,6 +13,8 @@ export type Hero007Props = {
   accent?: string
   /** Пусто — подложки нет, секция ложится на фон страницы. */
   background?: string
+  /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
+  tone?: "auto" | "light" | "dark"
   className?: string
   style?: CSSProperties
 }
@@ -28,8 +30,8 @@ const STYLES = `
 --vibeui-hero-007-fg:light-dark(oklch(0.19 0 300),oklch(0.97 0 300));
 --vibeui-hero-007-muted:light-dark(oklch(0.5 0 300),oklch(0.7 0 300));
 --vibeui-hero-007-line:light-dark(oklch(0.19 0 300 / 15%),oklch(1 0 0 / 16%));
---vibeui-hero-007-accent:light-dark(oklch(0.52 0.2 39.8),oklch(0.7 0.19 39.8));
---vibeui-hero-007-accent-fg:oklch(0.15 0.02 39.8);
+--vibeui-hero-007-accent:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
+--vibeui-hero-007-accent-fg:oklch(from var(--vibeui-hero-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 /* Постер всегда тёмный — это кадр, а не подложка; текст на нём светлый в обеих темах. */
 --vibeui-hero-007-on-poster:oklch(0.97 0 300);
 --vibeui-hero-007-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -38,6 +40,8 @@ container-type:inline-size;
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="hero-007"]{color-scheme:dark}
+:where([data-vibeui-block="hero-007"][data-tone="light"]){color-scheme:light}
+:where([data-vibeui-block="hero-007"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="hero-007"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -67,7 +71,7 @@ transition:transform .2s ease,border-color .2s ease;
    оставаться полноценным без единого внешнего файла. */
 [data-vibeui-block="hero-007"] [data-part="player"][data-empty="true"]{background:
 radial-gradient(60% 80% at 22% 18%,color-mix(in oklab,var(--vibeui-hero-007-accent) 55%,transparent),transparent 70%),
-conic-gradient(from 210deg at 70% 80%,oklch(0.35 0.13 39.8),oklch(0.28 0.1 25),oklch(0.22 0.06 45),oklch(0.35 0.13 39.8));}
+conic-gradient(from 210deg at 70% 80%,oklch(0.35 0 0),oklch(0.28 0.1 25),oklch(0.22 0 0),oklch(0.35 0 0));}
 [data-vibeui-block="hero-007"] [data-part="player"] img{
 position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
@@ -79,7 +83,7 @@ position:absolute;inset:0;background:linear-gradient(to top,oklch(0 0 0 / 55%),t
 [data-vibeui-block="hero-007"] [data-part="play"]{
 position:absolute;inset:0;margin:auto;width:4.5rem;height:4.5rem;border-radius:9999px;
 display:flex;align-items:center;justify-content:center;
-background:var(--vibeui-hero-007-accent);color:var(--vibeui-hero-007-accent-fg);
+background:var(--vibeui-hero-007-accent);color:oklch(from var(--vibeui-hero-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 box-shadow:0 0 0 0.75rem color-mix(in oklab,var(--vibeui-hero-007-accent) 22%,transparent);
 transition:box-shadow .2s ease;
 }
@@ -150,6 +154,7 @@ export function Hero007({
   chapters = DEFAULT_CHAPTERS,
   accent,
   background = "",
+  tone = "auto",
   className,
   style,
 }: Hero007Props) {
@@ -171,6 +176,7 @@ export function Hero007({
       </style>
       <section
         data-vibeui-block="hero-007"
+        data-tone={tone === "auto" ? undefined : tone}
         className={className}
         style={palette}
       >

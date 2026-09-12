@@ -49,7 +49,7 @@ const STYLES = `
 --vibeui-datagrid-025-muted:color-mix(in oklab,var(--vibeui-datagrid-025-fg) 68%,transparent);
 --vibeui-datagrid-025-border:light-dark(oklch(0.92 0 285),oklch(0.35 0 285));
 --vibeui-datagrid-025-head:light-dark(oklch(0.975 0 285),oklch(0.27 0 285));
---vibeui-datagrid-025-accent:light-dark(oklch(0.52 0.16 39.8),oklch(0.74 0.14 39.8));
+--vibeui-datagrid-025-accent:light-dark(oklch(0.28 0 0),oklch(0.903 0 0));
 --vibeui-datagrid-025-height:17rem;
 --vibeui-datagrid-025-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -76,8 +76,7 @@ background:var(--vibeui-datagrid-025-border);overflow:hidden;
 [data-vibeui-block="datagrid-025"] [data-part="fill"]{
 display:block;height:100%;border-radius:999px;
 width:var(--vibeui-datagrid-025-progress,0%);background:var(--vibeui-datagrid-025-accent);
-transition:width .2s ease;
-}
+transition:width .2s ease;color:oklch(from var(--vibeui-datagrid-025-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="datagrid-025"] [data-part="scroll"]{
 overflow:auto;max-height:var(--vibeui-datagrid-025-height);
 }

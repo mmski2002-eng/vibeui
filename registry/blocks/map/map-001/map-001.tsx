@@ -82,7 +82,7 @@ const STYLES = `
 --vibeui-map-001-muted:light-dark(oklch(0.52 0 265),oklch(0.72 0 265));
 --vibeui-map-001-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-map-001-accent:light-dark(oklch(0.58 0.21 25),oklch(0.7 0.19 25));
---vibeui-map-001-on-accent:oklch(0.99 0 0);
+--vibeui-map-001-on-accent:oklch(from var(--vibeui-map-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-map-001-canvas:light-dark(oklch(0.945 0.005 100),oklch(0.19 0.008 265));
 --vibeui-map-001-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -142,8 +142,7 @@ padding-left:0.875rem;position:relative;
 [data-vibeui-block="map-001"] li::before{
 content:"";position:absolute;left:0;top:0.5rem;
 width:0.3125rem;height:0.3125rem;border-radius:50%;
-background:var(--vibeui-map-001-accent);
-}
+background:var(--vibeui-map-001-accent);color:oklch(from var(--vibeui-map-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="map-001"] [data-part="actions"]{
 margin-top:0.875rem;display:flex;flex-wrap:wrap;gap:0.5rem;
 }
@@ -151,7 +150,7 @@ margin-top:0.875rem;display:flex;flex-wrap:wrap;gap:0.5rem;
 display:inline-flex;align-items:center;height:2.375rem;padding:0 0.9375rem;
 border-radius:0.6875rem;text-decoration:none;
 font-size:0.8125rem;font-weight:640;
-background:var(--vibeui-map-001-accent);color:var(--vibeui-map-001-on-accent);
+background:var(--vibeui-map-001-accent);color:oklch(from var(--vibeui-map-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="map-001"] a[data-variant="ghost"]{
 background:transparent;color:var(--vibeui-map-001-fg);
@@ -168,8 +167,7 @@ position:absolute;left:50%;top:44%;z-index:1;
 width:1.375rem;height:1.375rem;margin:-1.375rem 0 0 -0.6875rem;
 border-radius:50% 50% 50% 0;transform:rotate(-45deg);
 background:var(--vibeui-map-001-accent);
-box-shadow:0 0.5rem 1rem -0.375rem rgb(0 0 0 / 0.5);
-}
+box-shadow:0 0.5rem 1rem -0.375rem rgb(0 0 0 / 0.5);color:oklch(from var(--vibeui-map-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="map-001"] [data-part="pin"]::after{
 content:"";position:absolute;inset:0.375rem;border-radius:50%;
 background:var(--vibeui-map-001-card);

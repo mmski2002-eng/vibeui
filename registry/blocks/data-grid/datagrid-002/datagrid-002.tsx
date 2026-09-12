@@ -58,9 +58,9 @@ const STYLES = `
 --vibeui-datagrid-002-border:light-dark(oklch(0.92 0 275),oklch(0.34 0 275));
 --vibeui-datagrid-002-head:light-dark(oklch(0.975 0 275),oklch(0.27 0 275));
 --vibeui-datagrid-002-btn:light-dark(oklch(1 0 0 / 80%),oklch(0.32 0 275 / 80%));
---vibeui-datagrid-002-accent:light-dark(oklch(0.5 0.17 39.8),oklch(0.74 0.14 39.8));
---vibeui-datagrid-002-accent-soft:light-dark(oklch(0.5 0.17 39.8 / 9%),oklch(0.74 0.14 39.8 / 16%));
---vibeui-datagrid-002-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0 300));
+--vibeui-datagrid-002-accent:light-dark(oklch(0.275 0 0),oklch(0.903 0 0));
+--vibeui-datagrid-002-accent-soft:light-dark(oklch(0.275 0 0 / 9%),oklch(0.903 0 0 / 16%));
+--vibeui-datagrid-002-on-accent:oklch(from var(--vibeui-datagrid-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-datagrid-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -98,7 +98,7 @@ border:1px solid var(--vibeui-datagrid-002-border);
 background:var(--vibeui-datagrid-002-btn);color:var(--vibeui-datagrid-002-fg);
 }
 [data-vibeui-block="datagrid-002"] [data-part="actions"] button[data-tone="primary"]{
-border-color:transparent;background:var(--vibeui-datagrid-002-accent);color:var(--vibeui-datagrid-002-on-accent);
+border-color:transparent;background:var(--vibeui-datagrid-002-accent);color:oklch(from var(--vibeui-datagrid-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="datagrid-002"] [data-part="actions"] button:focus-visible{
 outline:2px solid var(--vibeui-datagrid-002-accent);outline-offset:2px;

@@ -62,8 +62,7 @@ position:absolute;left:0.1875rem;top:0.1875rem;bottom:0.1875rem;
 width:calc((100% - 0.375rem) / var(--vibeui-radio-005-count));
 border-radius:0.5rem;background:var(--vibeui-radio-005-accent);
 box-shadow:0 1px 3px var(--vibeui-radio-005-shadow);
-transition:transform .2s cubic-bezier(.32,.72,0,1);
-}
+transition:transform .2s cubic-bezier(.32,.72,0,1);color:oklch(from var(--vibeui-radio-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="radio-005"] [data-part="group"]:has(label:nth-of-type(1) input:checked) [data-part="indicator"]{transform:translateX(0)}
 [data-vibeui-block="radio-005"] [data-part="group"]:has(label:nth-of-type(2) input:checked) [data-part="indicator"]{transform:translateX(100%)}
 [data-vibeui-block="radio-005"] [data-part="group"]:has(label:nth-of-type(3) input:checked) [data-part="indicator"]{transform:translateX(200%)}

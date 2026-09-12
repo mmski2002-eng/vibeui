@@ -41,7 +41,7 @@ const STYLES = `
 --vibeui-file-007-border:light-dark(oklch(0.89 0 265),oklch(0.4 0 265));
 --vibeui-file-007-shell:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-file-007-track:light-dark(oklch(0.93 0 265),oklch(0.32 0 265));
---vibeui-file-007-accent:light-dark(oklch(0.54 0.17 39.8),oklch(0.74 0.16 39.8));
+--vibeui-file-007-accent:light-dark(oklch(0.285 0 0),oklch(0.903 0 0));
 --vibeui-file-007-ok:light-dark(oklch(0.52 0.13 155),oklch(0.76 0.14 155));
 --vibeui-file-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -71,8 +71,8 @@ appearance:none;width:100%;height:0.4375rem;border:0;
 background:var(--vibeui-file-007-track);border-radius:9999px;overflow:hidden;
 }
 [data-vibeui-block="file-007"] progress::-webkit-progress-bar{background:var(--vibeui-file-007-track);border-radius:9999px}
-[data-vibeui-block="file-007"] progress::-webkit-progress-value{background:var(--vibeui-file-007-accent);border-radius:9999px}
-[data-vibeui-block="file-007"] progress::-moz-progress-bar{background:var(--vibeui-file-007-accent);border-radius:9999px}
+[data-vibeui-block="file-007"] progress::-webkit-progress-value{background:var(--vibeui-file-007-accent);border-radius:9999px;color:oklch(from var(--vibeui-file-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
+[data-vibeui-block="file-007"] progress::-moz-progress-bar{background:var(--vibeui-file-007-accent);border-radius:9999px;color:oklch(from var(--vibeui-file-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="file-007"] [data-part="count"]{
 margin:0;font-size:0.75rem;color:var(--vibeui-file-007-muted);
 font-variant-numeric:tabular-nums;

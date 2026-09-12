@@ -92,7 +92,7 @@ outline:2px solid var(--vibeui-empty-011-accent);outline-offset:2px;
 appearance:none;border:0;cursor:pointer;margin-top:0.5rem;width:100%;
 display:inline-flex;align-items:center;justify-content:center;
 min-height:2.5rem;padding:0.375rem 1.125rem;border-radius:0.75rem;
-background:var(--vibeui-empty-011-accent);color:var(--vibeui-empty-011-accent-fg);
+background:var(--vibeui-empty-011-accent);color:oklch(from var(--vibeui-empty-011-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="empty-011"] [data-part="action"]:focus-visible{

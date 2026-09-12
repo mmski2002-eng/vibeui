@@ -39,7 +39,7 @@ const STYLES = `
 --vibeui-toast-021-key:light-dark(oklch(1 0 0 / 14%),oklch(0.2 0 265 / 12%));
 --vibeui-toast-021-key-hover:light-dark(oklch(1 0 0 / 22%),oklch(0.2 0 265 / 20%));
 --vibeui-toast-021-shadow:light-dark(oklch(0.15 0 265 / 70%),oklch(0.03 0 265 / 78%));
---vibeui-toast-021-tone:light-dark(oklch(0.58 0.16 39.8),oklch(0.6 0.15 39.8));
+--vibeui-toast-021-tone:light-dark(oklch(0.295 0 0),oklch(0.877 0 0));
 --vibeui-toast-021-offset:0.75rem;
 --vibeui-toast-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

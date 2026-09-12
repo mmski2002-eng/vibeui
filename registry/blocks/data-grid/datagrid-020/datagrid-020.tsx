@@ -70,8 +70,8 @@ const STYLES = `
 --vibeui-datagrid-020-border:light-dark(oklch(0.92 0 285),oklch(0.35 0 285));
 --vibeui-datagrid-020-head:light-dark(oklch(0.975 0 285),oklch(0.27 0 285));
 --vibeui-datagrid-020-panel:light-dark(oklch(0.985 0 285),oklch(0.26 0 285));
---vibeui-datagrid-020-accent:light-dark(oklch(0.48 0.15 39.8),oklch(0.78 0.13 39.8));
---vibeui-datagrid-020-chip:light-dark(oklch(0.97 0.025 320),oklch(0.31 0.045 39.8));
+--vibeui-datagrid-020-accent:light-dark(oklch(0.27 0 0),oklch(0.91 0 0));
+--vibeui-datagrid-020-chip:light-dark(oklch(0.97 0.025 320),oklch(0.31 0 0));
 --vibeui-datagrid-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

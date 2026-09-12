@@ -39,8 +39,8 @@ const STYLES = `
 --vibeui-toast-012-track:light-dark(oklch(0.2 0 265 / 10%),oklch(1 0 0 / 16%));
 --vibeui-toast-012-hover:light-dark(oklch(0.2 0 265 / 8%),oklch(1 0 0 / 10%));
 --vibeui-toast-012-shadow:light-dark(oklch(0.55 0 265 / 20%),oklch(0.15 0 265 / 65%));
---vibeui-toast-012-tone:light-dark(oklch(0.52 0.13 39.8),oklch(0.72 0.15 39.8));
---vibeui-toast-012-tone-end:light-dark(oklch(0.7 0.12 39.8),oklch(0.85 0.13 39.8));
+--vibeui-toast-012-tone:light-dark(oklch(0.28 0 0),oklch(0.899 0 0));
+--vibeui-toast-012-tone-end:light-dark(oklch(0.325 0 0),oklch(0.923 0 0));
 --vibeui-toast-012-on-done:light-dark(oklch(0.99 0 265),oklch(0.2 0 265));
 --vibeui-toast-012-done:light-dark(oklch(0.55 0.14 152),oklch(0.72 0.15 152));
 --vibeui-toast-012-value:0;

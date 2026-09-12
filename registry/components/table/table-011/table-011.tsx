@@ -41,7 +41,7 @@ const STYLES = `
 --vibeui-table-011-muted:color-mix(in oklab,var(--vibeui-table-011-fg) 68%,transparent);
 --vibeui-table-011-border:light-dark(oklch(0.92 0 265),oklch(0.36 0 265));
 --vibeui-table-011-head:light-dark(oklch(0.5 0 265 / 5%),oklch(0.85 0 265 / 7%));
---vibeui-table-011-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.75 0.16 39.8));
+--vibeui-table-011-accent:light-dark(oklch(0.287 0 0),oklch(0.905 0 0));
 --vibeui-table-011-accent-soft:color-mix(in oklab,var(--vibeui-table-011-accent) 8%,transparent);
 --vibeui-table-011-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0 265));
 --vibeui-table-011-yes:light-dark(oklch(0.52 0.15 155),oklch(0.76 0.14 155));
@@ -118,7 +118,7 @@ font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="table-011"] [data-part="badge"]{
 margin-bottom:0.25rem;padding:0.0625rem 0.375rem;border-radius:9999px;
-background:var(--vibeui-table-011-accent);color:var(--vibeui-table-011-on-accent);
+background:var(--vibeui-table-011-accent);color:oklch(from var(--vibeui-table-011-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.625rem;font-weight:650;letter-spacing:0.02em;text-transform:uppercase;
 }
 [data-vibeui-block="table-011"] [data-featured="true"]{background:var(--vibeui-table-011-accent-soft)}

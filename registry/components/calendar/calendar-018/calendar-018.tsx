@@ -35,8 +35,8 @@ const STYLES = `
 --vibeui-calendar-018-muted:color-mix(in oklab,var(--vibeui-calendar-018-fg) 68%,transparent);
 --vibeui-calendar-018-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
 --vibeui-calendar-018-hover:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
---vibeui-calendar-018-accent:light-dark(oklch(0.52 0.16 39.8),oklch(0.74 0.14 39.8));
---vibeui-calendar-018-on-accent:light-dark(oklch(0.99 0 300),oklch(0.2 0.04 39.8));
+--vibeui-calendar-018-accent:light-dark(oklch(0.28 0 0),oklch(0.903 0 0));
+--vibeui-calendar-018-on-accent:light-dark(oklch(0.99 0 300),oklch(0.2 0 0));
 --vibeui-calendar-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -80,7 +80,7 @@ transition:background-color .14s ease;
 [data-vibeui-block="calendar-018"] [data-part="grid"] button:hover:not([aria-disabled="true"]){background:var(--vibeui-calendar-018-hover)}
 [data-vibeui-block="calendar-018"] [data-part="grid"] button:focus-visible{outline:2px solid var(--vibeui-calendar-018-accent);outline-offset:-2px}
 [data-vibeui-block="calendar-018"] [data-part="grid"] button[aria-pressed="true"]{
-background:var(--vibeui-calendar-018-accent);color:var(--vibeui-calendar-018-on-accent);font-weight:700;
+background:var(--vibeui-calendar-018-accent);color:oklch(from var(--vibeui-calendar-018-accent) clamp(0,(0.62 - l) * 100,1) 0 0);font-weight:700;
 }
 /* Лимит не прячет кнопку: она остаётся видимой и приглушённой, иначе
    исчезающие клетки читаются как ошибка вёрстки. */

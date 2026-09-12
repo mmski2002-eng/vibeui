@@ -1,3 +1,6 @@
+"use client"
+
+import { useEffect, useRef } from "react"
 import type { CSSProperties } from "react"
 
 export type Hero014Props = {
@@ -10,10 +13,14 @@ export type Hero014Props = {
   countdown?: { value: string; label: string }[]
   /** Подпись списка отсчёта для скринридера: без неё это набор голых чисел. */
   countdownLabel?: string
+  /** Пересчитывать отсчёт от dateTime в браузере, раз в секунду. */
+  live?: boolean
   primary?: { label: string; href: string }
   secondary?: { label: string; href: string }
   seats?: string
   accent?: string
+  /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
+  tone?: "auto" | "light" | "dark"
   className?: string
   style?: CSSProperties
 }
@@ -22,22 +29,27 @@ export type Hero014Props = {
 // понимает не только человек, но и парсер; счётчик — четыре плитки, набранные
 // tabular-nums, чтобы цифры не прыгали при смене значения. Числа приходят
 // пропсом и на сервере не тикают: живой отсчёт — это отдельный клиентский
-// слой, а секция обязана быть статичной и попадать в кэш страницы.
+// слой, а секция обязана быть статичной и попадать в кэш страницы. Проп live
+// включает этот слой поверх: сервер по-прежнему отдаёт переданные значения,
+// поэтому кэш и разметка без JS остаются верными, а браузер уточняет их от
+// dateTime — и останавливается, когда событие началось.
 const STYLES = `
 :where([data-vibeui-block="hero-014"]){
---vibeui-hero-014-bg:light-dark(oklch(0.975 0.014 39.8),oklch(0.18 0.04 39.8));
---vibeui-hero-014-fg:light-dark(oklch(0.22 0.02 39.8),oklch(0.97 0 285));
---vibeui-hero-014-muted:light-dark(oklch(0.5 0.012 39.8),oklch(0.74 0 285));
---vibeui-hero-014-tile:light-dark(oklch(1 0 0),oklch(0.24 0.045 39.8));
+--vibeui-hero-014-bg:light-dark(oklch(0.975 0 0),oklch(0.18 0 0));
+--vibeui-hero-014-fg:light-dark(oklch(0.22 0 0),oklch(0.97 0 285));
+--vibeui-hero-014-muted:light-dark(oklch(0.5 0 0),oklch(0.74 0 285));
+--vibeui-hero-014-tile:light-dark(oklch(1 0 0),oklch(0.24 0 0));
 --vibeui-hero-014-line:light-dark(oklch(0 0 0 / 10%),oklch(1 0 0 / 14%));
---vibeui-hero-014-accent:light-dark(oklch(0.55 0.18 39.8),oklch(0.8 0.17 39.8));
---vibeui-hero-014-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.2 0.05 39.8));
+--vibeui-hero-014-accent:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
+--vibeui-hero-014-accent-fg:oklch(from var(--vibeui-hero-014-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-014-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="hero-014"]{color-scheme:dark}
+:where([data-vibeui-block="hero-014"][data-tone="light"]){color-scheme:light}
+:where([data-vibeui-block="hero-014"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="hero-014"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -52,7 +64,7 @@ color:var(--vibeui-hero-014-fg);font-family:var(--vibeui-hero-014-sans);
 [data-vibeui-block="hero-014"] [data-part="shell"]{max-width:64rem;width:100%;margin:0 auto;padding:3.5rem 1.25rem}
 [data-vibeui-block="hero-014"] [data-part="kind"]{
 display:inline-block;margin:0 0 1.125rem;padding:0.25rem 0.625rem;border-radius:0.375rem;
-background:var(--vibeui-hero-014-accent);color:var(--vibeui-hero-014-accent-fg);
+background:var(--vibeui-hero-014-accent);color:oklch(from var(--vibeui-hero-014-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.6875rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
 }
 [data-vibeui-block="hero-014"] h1{
@@ -88,7 +100,7 @@ color:var(--vibeui-hero-014-muted);
 display:inline-flex;align-items:center;justify-content:center;height:2.875rem;padding:0 1.5rem;border-radius:0.625rem;
 font-size:0.9375rem;font-weight:650;text-decoration:none;transition:opacity .16s ease,border-color .16s ease;
 }
-[data-vibeui-block="hero-014"] [data-part="primary"]{background:var(--vibeui-hero-014-accent);color:var(--vibeui-hero-014-accent-fg);border:1px solid transparent}
+[data-vibeui-block="hero-014"] [data-part="primary"]{background:var(--vibeui-hero-014-accent);color:oklch(from var(--vibeui-hero-014-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border:1px solid transparent;box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-hero-014-accent) 40%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);transition:transform .2s cubic-bezier(.32,.72,0,1),box-shadow .25s ease,background-color .2s ease}
 [data-vibeui-block="hero-014"] [data-part="secondary"]{border:1px solid var(--vibeui-hero-014-line);color:var(--vibeui-hero-014-fg)}
 [data-vibeui-block="hero-014"] a:hover{opacity:.88}
 [data-vibeui-block="hero-014"] a:focus-visible{outline:2px solid var(--vibeui-hero-014-accent);outline-offset:3px}
@@ -121,13 +133,56 @@ export function Hero014({
   place = "Онлайн, запись остаётся",
   countdown = DEFAULT_COUNTDOWN,
   countdownLabel = "До начала осталось",
+  live = false,
   primary = { label: "Забрать место", href: "#" },
   secondary = { label: "Программа дня", href: "#" },
   seats = "Осталось 128 мест из 500",
   accent,
+  tone = "auto",
   className,
   style,
 }: Hero014Props) {
+  const listRef = useRef<HTMLUListElement>(null)
+
+  useEffect(() => {
+    const list = listRef.current
+
+    if (!live || !dateTime || !list) return
+
+    const target = new Date(dateTime).getTime()
+
+    if (Number.isNaN(target)) return
+
+    const cells = [...list.querySelectorAll<HTMLElement>("[data-part='num']")]
+
+    const tick = () => {
+      const left = Math.max(0, target - Date.now())
+      const total = Math.floor(left / 1000)
+      const parts = [
+        Math.floor(total / 86400),
+        Math.floor((total % 86400) / 3600),
+        Math.floor((total % 3600) / 60),
+        total % 60,
+      ]
+
+      cells.forEach((cell, index) => {
+        const value = parts[index]
+        if (value === undefined) return
+        cell.textContent = index === 0 ? String(value) : String(value).padStart(2, "0")
+      })
+
+      return left
+    }
+
+    if (tick() === 0) return
+
+    const timer = window.setInterval(() => {
+      if (tick() === 0) window.clearInterval(timer)
+    }, 1000)
+
+    return () => window.clearInterval(timer)
+  }, [live, dateTime, countdown])
+
   const palette = {
     ...(accent ? { "--vibeui-hero-014-accent": accent } : null),
     ...style,
@@ -140,6 +195,7 @@ export function Hero014({
       </style>
       <section
         data-vibeui-block="hero-014"
+        data-tone={tone === "auto" ? undefined : tone}
         className={className}
         style={palette}
       >
@@ -163,7 +219,7 @@ export function Hero014({
             {seats ? <p data-part="seats">{seats}</p> : null}
           </div>
 
-          <ul data-part="countdown" aria-label={countdownLabel}>
+          <ul ref={listRef} data-part="countdown" aria-label={countdownLabel}>
             {countdown.slice(0, 4).map((cell) => (
               <li key={cell.label}>
                 <span data-part="num">{cell.value}</span>

@@ -32,8 +32,8 @@ const STYLES = `
 --vibeui-testimonials-003-ink:light-dark(oklch(0.2 0.02 70),oklch(0.95 0.008 80));
 --vibeui-testimonials-003-muted:light-dark(oklch(0.47 0.02 70),oklch(0.73 0.014 80));
 --vibeui-testimonials-003-border:light-dark(oklch(0.87 0.016 80),oklch(0.36 0.018 75));
---vibeui-testimonials-003-accent:light-dark(oklch(0.55 0.13 39.8),oklch(0.74 0.13 39.8));
---vibeui-testimonials-003-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-testimonials-003-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
+--vibeui-testimonials-003-on-accent:oklch(from var(--vibeui-testimonials-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-testimonials-003-serif:ui-serif,Georgia,"Times New Roman",serif;
 --vibeui-testimonials-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -76,7 +76,7 @@ font-size:0.9375rem;font-weight:700;overflow:hidden;
 }
 /* Подложка — только когда фотографии нет: компонент обязан
    оставаться полноценным без единого внешнего файла. */
-[data-vibeui-block="testimonials-003"] [data-part="avatar"][data-empty="true"]{background:var(--vibeui-testimonials-003-accent);}
+[data-vibeui-block="testimonials-003"] [data-part="avatar"][data-empty="true"]{background:var(--vibeui-testimonials-003-accent);color:oklch(from var(--vibeui-testimonials-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="testimonials-003"] [data-part="avatar"] img{
 position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }

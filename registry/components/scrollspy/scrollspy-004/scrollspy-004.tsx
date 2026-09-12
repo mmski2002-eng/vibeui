@@ -35,7 +35,7 @@ const STYLES = `
 --vibeui-scrollspy-004-fg:light-dark(oklch(0.23 0 265),oklch(0.93 0 265));
 --vibeui-scrollspy-004-muted:color-mix(in oklab,var(--vibeui-scrollspy-004-fg) 68%,transparent);
 --vibeui-scrollspy-004-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
---vibeui-scrollspy-004-accent:light-dark(oklch(0.55 0.19 39.8),oklch(0.76 0.15 39.8));
+--vibeui-scrollspy-004-accent:light-dark(oklch(0.287 0 0),oklch(0.906 0 0));
 --vibeui-scrollspy-004-progress:0%;
 --vibeui-scrollspy-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -70,8 +70,7 @@ position:relative;border-radius:2px;background:var(--vibeui-scrollspy-004-border
 [data-vibeui-block="scrollspy-004"] [data-part="fill"]{
 position:absolute;inset:0 0 auto 0;height:var(--vibeui-scrollspy-004-progress);
 border-radius:2px;background:var(--vibeui-scrollspy-004-accent);
-transition:height .12s linear;
-}
+transition:height .12s linear;color:oklch(from var(--vibeui-scrollspy-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="scrollspy-004"] ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:0.0625rem}
 [data-vibeui-block="scrollspy-004"] [data-part="link"]{
 display:block;padding:0.25rem 0.375rem;border-radius:0.375rem;

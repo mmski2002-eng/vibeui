@@ -14,7 +14,7 @@ export type Button034Props = ComponentProps<"button"> & {
 const STYLES = `
 :where([data-vibeui-block="button-034"]){
 --vibeui-button-034-paper:light-dark(oklch(1 0 0),oklch(0.24 0 265));
---vibeui-button-034-accent:light-dark(oklch(0.52 0.14 39.8),oklch(0.74 0.12 39.8));
+--vibeui-button-034-accent:light-dark(oklch(0.28 0 0),oklch(0.903 0 0));
 --vibeui-button-034-accent-fg:light-dark(oklch(0.99 0.01 196),oklch(0.19 0.03 196));
 --vibeui-button-034-line:1.5px;
 --vibeui-button-034-radius:0.5rem;
@@ -35,7 +35,7 @@ transition:background-color .16s ease,color .16s ease,border-color .16s ease;
 [data-vibeui-block="button-034"][data-emphasis="hairline"]{--vibeui-button-034-line:1px;font-weight:550}
 [data-vibeui-block="button-034"][data-emphasis="heavy"]{--vibeui-button-034-line:2.5px;font-weight:700;letter-spacing:0.01em}
 [data-vibeui-block="button-034"]:hover:not(:disabled){
-background:var(--vibeui-button-034-accent);color:var(--vibeui-button-034-accent-fg);
+background:var(--vibeui-button-034-accent);color:oklch(from var(--vibeui-button-034-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="button-034"]:active:not(:disabled){
 background:color-mix(in oklab,var(--vibeui-button-034-accent) 85%,black);

@@ -43,7 +43,7 @@ const STYLES = `
 --vibeui-togglegroup-004-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
 --vibeui-togglegroup-004-surface:light-dark(oklch(0.97 0 265),oklch(0.26 0 265));
 --vibeui-togglegroup-004-raised:light-dark(oklch(1 0 0),oklch(0.29 0 265));
---vibeui-togglegroup-004-accent:light-dark(oklch(0.52 0.16 39.8),oklch(0.72 0.15 39.8));
+--vibeui-togglegroup-004-accent:light-dark(oklch(0.28 0 0),oklch(0.899 0 0));
 --vibeui-togglegroup-004-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.02 145));
 --vibeui-togglegroup-004-weekend:light-dark(oklch(0.6 0.16 25),oklch(0.72 0.15 25));
 --vibeui-togglegroup-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -90,7 +90,7 @@ outline:2px solid var(--vibeui-togglegroup-004-accent);outline-offset:2px;
 [data-vibeui-block="togglegroup-004"] [data-part="day"][aria-pressed="true"]{
 background:var(--vibeui-togglegroup-004-accent);
 border-color:var(--vibeui-togglegroup-004-accent);
-color:var(--vibeui-togglegroup-004-accent-fg);
+color:oklch(from var(--vibeui-togglegroup-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 /* Выходные красятся своим цветом только в нажатом виде: в спокойном
    состоянии семь разноцветных кружков читались бы как семь разных сущностей. */

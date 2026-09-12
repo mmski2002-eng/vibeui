@@ -50,9 +50,9 @@ const STYLES = `
 --vibeui-checkbox-017-muted:color-mix(in oklab,var(--vibeui-checkbox-017-fg) 68%,transparent);
 --vibeui-checkbox-017-border:light-dark(oklch(0.91 0 265),oklch(0.37 0 265));
 --vibeui-checkbox-017-head:light-dark(oklch(0.975 0 265),oklch(0.27 0 265));
---vibeui-checkbox-017-accent:light-dark(oklch(0.52 0.16 39.8),oklch(0.66 0.16 39.8));
---vibeui-checkbox-017-picked:light-dark(oklch(0.96 0 275),oklch(0.31 0.045 39.8));
---vibeui-checkbox-017-on-accent:oklch(0.99 0 275);
+--vibeui-checkbox-017-accent:light-dark(oklch(0.28 0 0),oklch(0.888 0 0));
+--vibeui-checkbox-017-picked:light-dark(oklch(0.96 0 275),oklch(0.31 0 0));
+--vibeui-checkbox-017-on-accent:oklch(from var(--vibeui-checkbox-017-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-checkbox-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -94,8 +94,7 @@ transition:background-color .15s ease,border-color .15s ease;
 }
 [data-vibeui-block="checkbox-017"] input:checked,
 [data-vibeui-block="checkbox-017"] input:indeterminate{
-border-color:transparent;background:var(--vibeui-checkbox-017-accent);
-}
+border-color:transparent;background:var(--vibeui-checkbox-017-accent);color:oklch(from var(--vibeui-checkbox-017-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="checkbox-017"] input:checked::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.25rem;height:0.4375rem;margin:-0.3125rem 0 0 -0.125rem;
@@ -105,8 +104,7 @@ transform:rotate(45deg);
 [data-vibeui-block="checkbox-017"] input:indeterminate::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.5rem;height:2px;margin:-1px 0 0 -0.25rem;border-radius:1px;
-background:var(--vibeui-checkbox-017-on-accent);
-}
+background:var(--vibeui-checkbox-017-on-accent);color:oklch(from var(--vibeui-checkbox-017-on-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="checkbox-017"] input:focus-visible{outline:2px solid var(--vibeui-checkbox-017-accent);outline-offset:2px}
 [data-vibeui-block="checkbox-017"] [data-part="foot"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;

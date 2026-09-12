@@ -40,7 +40,7 @@ const STYLES = `
 --vibeui-dialog-010-bg:light-dark(oklch(1 0 0),oklch(0.24 0 265));
 --vibeui-dialog-010-key:light-dark(oklch(0.98 0 265),oklch(0.3 0 265));
 --vibeui-dialog-010-border:light-dark(oklch(0.88 0 265),oklch(0.38 0 265));
---vibeui-dialog-010-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8));
+--vibeui-dialog-010-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-dialog-010-radius:1rem;
 --vibeui-dialog-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -97,7 +97,7 @@ display:inline-flex;align-items:center;height:2.25rem;padding:0 1rem;
 border-radius:0.5rem;background:transparent;color:inherit;
 border:1px solid var(--vibeui-dialog-010-border,light-dark(oklch(0.88 0 265),oklch(0.38 0 265)));
 }
-[data-vibeui-dialog-010-window] :focus-visible{outline:2px solid var(--vibeui-dialog-010-accent,light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8)));outline-offset:2px}
+[data-vibeui-dialog-010-window] :focus-visible{outline:2px solid var(--vibeui-dialog-010-accent,light-dark(oklch(0.287 0 0),oklch(0.899 0 0)));outline-offset:2px}
 /* Popover страницу не блокирует: фон под окном иначе продолжает прокручиваться. */
 html:has([data-vibeui-dialog-010-window]:popover-open){overflow:hidden}
 /* Развёрнутый режим: окно стоит в потоке вместо кнопки, а не в верхнем слое.

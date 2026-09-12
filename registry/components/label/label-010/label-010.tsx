@@ -23,7 +23,7 @@ const STYLES = `
 --vibeui-label-010-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-label-010-muted:color-mix(in oklab,var(--vibeui-label-010-fg) 68%,transparent);
 --vibeui-label-010-field-border:light-dark(oklch(0.85 0 265),oklch(0.4 0 265));
---vibeui-label-010-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.74 0.16 39.8));
+--vibeui-label-010-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-label-010-answer-bg:light-dark(oklch(0.97 0 265),oklch(0.28 0 265));
 /* Наведение уводит акцент в сторону подложки темы: к чёрному в светлой,
    к белому в тёмной — иначе в темноте ссылка гаснет вместо подсветки. */

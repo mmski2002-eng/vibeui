@@ -25,7 +25,7 @@ const STYLES = `
 --vibeui-about-001-bg:transparent;
 --vibeui-about-001-ink:light-dark(oklch(0.17 0 0),oklch(0.97 0 0));
 --vibeui-about-001-muted:light-dark(oklch(0.45 0 0),oklch(0.72 0 0));
---vibeui-about-001-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
+--vibeui-about-001-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-about-001-mark:color-mix(in oklab,var(--vibeui-about-001-accent) 12%,transparent);
 --vibeui-about-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -65,8 +65,7 @@ font-size:0.9375rem;line-height:1.55;
 }
 [data-vibeui-block="about-001"] [data-part="footnote"]::before{
 content:"";flex:none;width:2rem;height:2px;border-radius:999px;
-background:var(--vibeui-about-001-accent);
-}
+background:var(--vibeui-about-001-accent);color:oklch(from var(--vibeui-about-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @container (min-width: 48rem){
 [data-vibeui-block="about-001"] [data-part="shell"]{padding:5.5rem 2rem}
 [data-vibeui-block="about-001"] [data-part="footnote"]{margin-top:2.5rem}

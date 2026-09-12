@@ -64,7 +64,7 @@ const STYLES = `
 --vibeui-inputgroup-032-field:light-dark(oklch(0.99 0 265),oklch(0.26 0 265));
 --vibeui-inputgroup-032-fixed:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
 --vibeui-inputgroup-032-border:light-dark(oklch(0.86 0 265),oklch(0.42 0 265));
---vibeui-inputgroup-032-accent:light-dark(oklch(0.55 0.14 39.8),oklch(0.76 0.13 39.8));
+--vibeui-inputgroup-032-accent:light-dark(oklch(0.287 0 0),oklch(0.906 0 0));
 --vibeui-inputgroup-032-online:light-dark(oklch(0.56 0.14 155),oklch(0.75 0.13 155));
 --vibeui-inputgroup-032-offline:light-dark(oklch(0.56 0.19 25),oklch(0.75 0.16 25));
 --vibeui-inputgroup-032-radius:0.75rem;

@@ -36,7 +36,7 @@ const STYLES = `
 --vibeui-otp-008-muted:color-mix(in oklab,var(--vibeui-otp-008-fg) 62%,transparent);
 --vibeui-otp-008-border:light-dark(oklch(0 0 0 / 16%),oklch(1 0 0 / 18%));
 --vibeui-otp-008-cell:light-dark(oklch(1 0 0),oklch(1 0 0 / 6%));
---vibeui-otp-008-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.78 0.12 39.8));
+--vibeui-otp-008-accent:light-dark(oklch(0.275 0 0),oklch(0.91 0 0));
 --vibeui-otp-008-ok:light-dark(oklch(0.48 0.14 152),oklch(0.8 0.14 152));
 --vibeui-otp-008-error:light-dark(oklch(0.55 0.19 25),oklch(0.79 0.15 25));
 --vibeui-otp-008-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;

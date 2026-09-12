@@ -6,20 +6,8 @@ import dynamic from "next/dynamic"
 import type { PreviewMap } from "@/registry/preview-types"
 
 export const PREVIEWS = {
-  "footer-001": dynamic(() =>
-    import("@/registry/blocks/footer/footer-001/footer-001").then((module) => module.Footer001),
-  ),
   "footer-002": dynamic(() =>
     import("@/registry/blocks/footer/footer-002/footer-002").then((module) => module.Footer002),
-  ),
-  "footer-003": dynamic(() =>
-    import("@/registry/blocks/footer/footer-003/footer-003").then((module) => module.Footer003),
-  ),
-  "footer-004": dynamic(() =>
-    import("@/registry/blocks/footer/footer-004/footer-004").then((module) => module.Footer004),
-  ),
-  "footer-005": dynamic(() =>
-    import("@/registry/blocks/footer/footer-005/footer-005").then((module) => module.Footer005),
   ),
   "footer-006": dynamic(() =>
     import("@/registry/blocks/footer/footer-006/footer-006").then((module) => module.Footer006),
@@ -35,12 +23,6 @@ export const PREVIEWS = {
   ),
   "footer-010": dynamic(() =>
     import("@/registry/blocks/footer/footer-010/footer-010").then((module) => module.Footer010),
-  ),
-  "footer-011": dynamic(() =>
-    import("@/registry/blocks/footer/footer-011/footer-011").then((module) => module.Footer011),
-  ),
-  "footer-012": dynamic(() =>
-    import("@/registry/blocks/footer/footer-012/footer-012").then((module) => module.Footer012),
   ),
   "footer-013": dynamic(() =>
     import("@/registry/blocks/footer/footer-013/footer-013").then((module) => module.Footer013),

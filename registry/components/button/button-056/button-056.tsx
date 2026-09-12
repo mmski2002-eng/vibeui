@@ -58,8 +58,7 @@ border:1.5px solid var(--vibeui-button-056-accent);border-radius:50%;
 }
 [data-vibeui-block="button-056"] [data-part="globe"]::after{
 content:"";position:absolute;left:-1.5px;right:-1.5px;top:50%;height:1.5px;
-margin-top:-0.75px;background:var(--vibeui-button-056-accent);
-}
+margin-top:-0.75px;background:var(--vibeui-button-056-accent);color:oklch(from var(--vibeui-button-056-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="button-056"] [data-part="chevron"]{
 position:absolute;right:0.75rem;top:50%;width:0.4375rem;height:0.4375rem;
 margin-top:-0.3125rem;box-sizing:border-box;pointer-events:none;

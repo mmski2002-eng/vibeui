@@ -34,7 +34,7 @@ const STYLES = `
 --vibeui-download-002-border:light-dark(oklch(0.88 0 0),oklch(0.34 0 0));
 --vibeui-download-002-qr-bg:oklch(1 0 0);
 --vibeui-download-002-qr-ink:oklch(0.15 0 0);
---vibeui-download-002-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
+--vibeui-download-002-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-download-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

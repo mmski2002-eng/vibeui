@@ -97,8 +97,7 @@ background:var(--vibeui-button-067-track);
 display:block;height:100%;border-radius:inherit;
 width:calc(var(--vibeui-button-067-share) * 1%);
 background:var(--vibeui-button-067-accent);
-transition:width .25s ease;
-}
+transition:width .25s ease;color:oklch(from var(--vibeui-button-067-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="button-067"] *{animation:none!important;transition:none!important}}
 `
 

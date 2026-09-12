@@ -21,8 +21,8 @@ const STYLES = `
 --vibeui-codeblock-004-fg:light-dark(oklch(0.29 0.025 160),oklch(0.93 0.02 160));
 --vibeui-codeblock-004-muted:color-mix(in oklab,var(--vibeui-codeblock-004-fg) 68%,transparent);
 --vibeui-codeblock-004-prompt:light-dark(oklch(0.5 0.14 148),oklch(0.82 0.16 148));
---vibeui-codeblock-004-branch:light-dark(oklch(0.55 0.11 39.8),oklch(0.82 0.12 39.8));
---vibeui-codeblock-004-border:light-dark(oklch(0.5 0.14 39.8 / 34%),oklch(0.82 0.16 39.8 / 26%));
+--vibeui-codeblock-004-branch:light-dark(oklch(0.287 0 0),oklch(0.917 0 0));
+--vibeui-codeblock-004-border:light-dark(oklch(0.275 0 0 / 34%),oklch(0.917 0 0 / 26%));
 --vibeui-codeblock-004-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

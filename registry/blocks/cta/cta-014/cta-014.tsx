@@ -27,7 +27,7 @@ const STYLES = `
 --vibeui-cta-014-bg:transparent;
 --vibeui-cta-014-ink:light-dark(oklch(0.2 0 0),oklch(0.95 0 0));
 --vibeui-cta-014-muted:light-dark(oklch(0.45 0 0),oklch(0.7 0 0));
---vibeui-cta-014-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
+--vibeui-cta-014-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-cta-014-term-bg:oklch(0.2 0 0);
 --vibeui-cta-014-term-head:oklch(0.26 0 0);
 --vibeui-cta-014-term-ink:oklch(0.93 0 0);

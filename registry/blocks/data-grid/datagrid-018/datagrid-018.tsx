@@ -51,8 +51,8 @@ const STYLES = `
 --vibeui-datagrid-018-muted:color-mix(in oklab,var(--vibeui-datagrid-018-fg) 68%,transparent);
 --vibeui-datagrid-018-border:light-dark(oklch(0.92 0 285),oklch(0.35 0 285));
 --vibeui-datagrid-018-head:light-dark(oklch(0.975 0 285),oklch(0.27 0 285));
---vibeui-datagrid-018-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.78 0.15 39.8));
---vibeui-datagrid-018-mark:light-dark(oklch(0.92 0.13 39.8),oklch(0.52 0.11 39.8));
+--vibeui-datagrid-018-accent:light-dark(oklch(0.287 0 0),oklch(0.91 0 0));
+--vibeui-datagrid-018-mark:light-dark(oklch(0.92 0 0),oklch(0.863 0 0));
 --vibeui-datagrid-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

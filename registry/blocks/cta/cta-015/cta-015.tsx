@@ -30,7 +30,7 @@ const STYLES = `
 --vibeui-cta-015-ink:light-dark(oklch(0.2 0 0),oklch(0.95 0 0));
 --vibeui-cta-015-muted:light-dark(oklch(0.45 0 0),oklch(0.7 0 0));
 --vibeui-cta-015-border:light-dark(oklch(0.88 0 0),oklch(0.34 0 0));
---vibeui-cta-015-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
+--vibeui-cta-015-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-cta-015-badge-bg:oklch(0.2 0 0);
 --vibeui-cta-015-badge-ink:oklch(0.97 0 0);
 --vibeui-cta-015-qr-plate:oklch(1 0 0);

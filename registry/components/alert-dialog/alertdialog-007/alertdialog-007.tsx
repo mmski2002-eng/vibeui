@@ -36,7 +36,7 @@ const STYLES = `
 --vibeui-alertdialog-007-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-alertdialog-007-muted:color-mix(in oklab,var(--vibeui-alertdialog-007-fg) 68%,transparent);
 --vibeui-alertdialog-007-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-alertdialog-007-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8));
+--vibeui-alertdialog-007-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-alertdialog-007-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0 262));
 --vibeui-alertdialog-007-shadow:light-dark(oklch(0.2 0 265 / 55%),oklch(0.02 0 265 / 70%));
 --vibeui-alertdialog-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -79,8 +79,7 @@ border:1.5px solid var(--vibeui-alertdialog-007-muted);
 background:var(--vibeui-alertdialog-007-bg);
 }
 [data-vibeui-block="alertdialog-007"] input:checked{
-background:var(--vibeui-alertdialog-007-accent);border-color:var(--vibeui-alertdialog-007-accent);
-}
+background:var(--vibeui-alertdialog-007-accent);border-color:var(--vibeui-alertdialog-007-accent);color:oklch(from var(--vibeui-alertdialog-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="alertdialog-007"] input:checked::after{
 content:"";position:absolute;left:0.3rem;top:0.1rem;
 width:0.2rem;height:0.45rem;
@@ -94,7 +93,7 @@ border:solid var(--vibeui-alertdialog-007-on-accent);border-width:0 2px 2px 0;tr
 flex:1 1 0;appearance:none;cursor:pointer;height:2.375rem;border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
-[data-vibeui-block="alertdialog-007"] [data-part="confirm"]{border:0;background:var(--vibeui-alertdialog-007-accent);color:var(--vibeui-alertdialog-007-on-accent)}
+[data-vibeui-block="alertdialog-007"] [data-part="confirm"]{border:0;background:var(--vibeui-alertdialog-007-accent);color:oklch(from var(--vibeui-alertdialog-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="alertdialog-007"] [data-part="cancel"]{
 border:1px solid var(--vibeui-alertdialog-007-border);background:var(--vibeui-alertdialog-007-bg);color:inherit;
 }

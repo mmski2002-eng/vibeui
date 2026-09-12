@@ -25,7 +25,7 @@ const STYLES = `
 --vibeui-switch-007-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-switch-007-track:light-dark(oklch(0.88 0 265),oklch(0.43 0 265));
 --vibeui-switch-007-thumb:light-dark(oklch(1 0 0),oklch(0.93 0 265));
---vibeui-switch-007-accent:light-dark(oklch(0.55 0.19 39.8),oklch(0.74 0.16 39.8));
+--vibeui-switch-007-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-switch-007-unit:1.5rem;
 --vibeui-switch-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -67,7 +67,7 @@ width:calc(var(--vibeui-switch-007-unit) * 1.85);
 border-radius:9999px;background:var(--vibeui-switch-007-track);cursor:inherit;
 transition:background-color .18s ease;
 }
-[data-vibeui-block="switch-007"] input:checked{background:var(--vibeui-switch-007-accent)}
+[data-vibeui-block="switch-007"] input:checked{background:var(--vibeui-switch-007-accent);color:oklch(from var(--vibeui-switch-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="switch-007"] input:focus-visible{outline:2px solid var(--vibeui-switch-007-accent);outline-offset:2px}
 [data-vibeui-block="switch-007"] [data-part="thumb"]{
 position:absolute;left:0.125rem;top:0.125rem;
@@ -81,6 +81,8 @@ transition:transform .18s cubic-bezier(.32,.72,0,1);
 [data-vibeui-block="switch-007"] input:checked + [data-part="thumb"]{
 transform:translateX(calc(var(--vibeui-switch-007-unit) * 0.85));
 }
+/* Ползунок на включённом треке: контраст к чернильному акценту, а не белый на белом. */
+[data-vibeui-block="switch-007"] input:checked + [data-part="thumb"],[data-vibeui-block="switch-007"] input:checked ~ [data-part="thumb"]{background:oklch(from var(--vibeui-switch-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="switch-007"] *{animation:none!important;transition:none!important}}
 `
 

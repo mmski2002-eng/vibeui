@@ -30,7 +30,7 @@ const STYLES = `
 --vibeui-alert-004-muted:color-mix(in oklab,var(--vibeui-alert-004-fg) 68%,transparent);
 --vibeui-alert-004-bg:transparent;
 --vibeui-alert-004-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
---vibeui-alert-004-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.17 39.8));
+--vibeui-alert-004-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-alert-004-accent-fg:light-dark(oklch(1 0 0),oklch(0.18 0 265));
 --vibeui-alert-004-danger:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.17 25));
 --vibeui-alert-004-radius:0.75rem;
@@ -80,7 +80,7 @@ font-size:0.8125rem;font-weight:600;
 transition:background-color .16s ease,border-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="alert-004"] [data-part="confirm"]{
-background:var(--vibeui-alert-004-accent);color:var(--vibeui-alert-004-accent-fg);
+background:var(--vibeui-alert-004-accent);color:oklch(from var(--vibeui-alert-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="alert-004"][data-destructive="true"] [data-part="confirm"]{background:var(--vibeui-alert-004-danger)}
 [data-vibeui-block="alert-004"] [data-part="confirm"]:hover{filter:brightness(0.94)}

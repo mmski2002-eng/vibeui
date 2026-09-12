@@ -107,8 +107,7 @@ top:var(--vibeui-cursor-003-y);left:0;right:0;height:1px;
 --vibeui-cursor-003-angle:90deg;
 }
 [data-vibeui-block="cursor-003"] [data-part="guide"][data-snapped="true"]{
-background:var(--vibeui-cursor-003-accent);
-}
+background:var(--vibeui-cursor-003-accent);color:oklch(from var(--vibeui-cursor-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="cursor-003"][data-pointer="true"] [data-part="guide"]{opacity:1}
 /* Замер: расстояние до грани, к которой прилип прицел. */
 [data-vibeui-block="cursor-003"] [data-part="measure"]{
@@ -125,7 +124,7 @@ opacity:0;
 position:absolute;left:0;top:0;margin:0.75rem 0 0 0.75rem;
 z-index:5;pointer-events:none;
 padding:0.125rem 0.4375rem;border-radius:0.375rem;
-background:var(--vibeui-cursor-003-accent);color:#fff;
+background:var(--vibeui-cursor-003-accent);color:oklch(from var(--vibeui-cursor-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-family:var(--vibeui-cursor-003-mono);font-size:0.625rem;font-weight:620;
 white-space:nowrap;opacity:0;transition:opacity 0.15s ease;
 }

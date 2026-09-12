@@ -13,8 +13,8 @@ export type Button042Props = ComponentProps<"button"> & {
 const STYLES = `
 :where([data-vibeui-block="button-042"]){
 --vibeui-button-042-cut:12px;
---vibeui-button-042-accent:light-dark(oklch(0.64 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-button-042-fg:light-dark(oklch(0.98 0.02 39.8),oklch(0.97 0.022 39.8));
+--vibeui-button-042-accent:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
+--vibeui-button-042-fg:light-dark(oklch(0.98 0 0),oklch(0.97 0 0));
 --vibeui-button-042-notch:oklch(0.22 0 0);
 --vibeui-button-042-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -25,7 +25,7 @@ const STYLES = `
 position:relative;appearance:none;border:0;cursor:pointer;box-sizing:border-box;
 display:inline-flex;align-items:center;gap:0.5rem;
 height:2.5rem;padding:0 1.25rem;
-background:var(--vibeui-button-042-accent);color:var(--vibeui-button-042-fg);
+background:var(--vibeui-button-042-accent);color:oklch(from var(--vibeui-button-042-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-family:var(--vibeui-button-042-font);font-size:0.875rem;font-weight:700;line-height:1;
 letter-spacing:0.04em;text-transform:uppercase;
 clip-path:polygon(0 0,100% 0,100% calc(100% - var(--vibeui-button-042-cut)),calc(100% - var(--vibeui-button-042-cut)) 100%,0 100%);

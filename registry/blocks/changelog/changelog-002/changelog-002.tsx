@@ -29,7 +29,7 @@ const STYLES = `
 --vibeui-changelog-002-muted:light-dark(oklch(0.5 0 0),oklch(0.72 0 0));
 --vibeui-changelog-002-border:light-dark(oklch(0.9 0 0),oklch(0.3 0 0));
 --vibeui-changelog-002-panel:light-dark(oklch(0.98 0 0),oklch(0.19 0 0));
---vibeui-changelog-002-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
+--vibeui-changelog-002-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-changelog-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-changelog-002-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;

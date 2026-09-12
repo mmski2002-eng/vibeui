@@ -36,9 +36,9 @@ const STYLES = `
 --vibeui-alertdialog-008-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-alertdialog-008-muted:color-mix(in oklab,var(--vibeui-alertdialog-008-fg) 68%,transparent);
 --vibeui-alertdialog-008-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-alertdialog-008-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8));
+--vibeui-alertdialog-008-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-alertdialog-008-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0 262));
---vibeui-alertdialog-008-mark-bg:light-dark(oklch(0.55 0.2 39.8 / 12%),oklch(0.72 0.18 39.8 / 18%));
+--vibeui-alertdialog-008-mark-bg:light-dark(oklch(0.287 0 0 / 12%),oklch(0.899 0 0 / 18%));
 --vibeui-alertdialog-008-shadow:light-dark(oklch(0.2 0 265 / 55%),oklch(0.02 0 265 / 70%));
 --vibeui-alertdialog-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -83,14 +83,13 @@ font-size:0.75rem;line-height:1.45;
 [data-vibeui-block="alertdialog-008"] li{display:flex;gap:0.4375rem}
 [data-vibeui-block="alertdialog-008"] [data-part="dot"]{
 flex:none;width:0.375rem;height:0.375rem;margin-top:0.4375rem;
-border-radius:9999px;background:var(--vibeui-alertdialog-008-accent);
-}
+border-radius:9999px;background:var(--vibeui-alertdialog-008-accent);color:oklch(from var(--vibeui-alertdialog-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="alertdialog-008"] [data-part="actions"]{display:flex;flex-direction:column;gap:0.5rem}
 [data-vibeui-block="alertdialog-008"] [data-part="actions"] button{
 width:100%;appearance:none;cursor:pointer;height:2.375rem;border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
-[data-vibeui-block="alertdialog-008"] [data-part="allow"]{border:0;background:var(--vibeui-alertdialog-008-accent);color:var(--vibeui-alertdialog-008-on-accent)}
+[data-vibeui-block="alertdialog-008"] [data-part="allow"]{border:0;background:var(--vibeui-alertdialog-008-accent);color:oklch(from var(--vibeui-alertdialog-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 /* Отказ — полноценная кнопка: тяжёлый отказ приводит к запрету навсегда. */
 [data-vibeui-block="alertdialog-008"] [data-part="later"]{
 border:1px solid var(--vibeui-alertdialog-008-border);background:var(--vibeui-alertdialog-008-bg);color:inherit;

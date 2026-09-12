@@ -1,4 +1,6 @@
-import type { CSSProperties } from "react"
+"use client"
+
+import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react"
 
 export type Hero011Props = {
   kicker?: string
@@ -11,6 +13,8 @@ export type Hero011Props = {
   accent?: string
   /** Пусто — подложки нет, секция ложится на фон страницы. */
   background?: string
+  /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
+  tone?: "auto" | "light" | "dark"
   className?: string
   style?: CSSProperties
 }
@@ -28,15 +32,17 @@ const STYLES = `
 --vibeui-hero-011-line:light-dark(oklch(0.19 0 275 / 9%),oklch(1 0 0 / 8%));
 --vibeui-hero-011-edge:light-dark(oklch(0.19 0 275 / 18%),oklch(1 0 0 / 18%));
 --vibeui-hero-011-veil:light-dark(oklch(0.19 0 275 / 4%),oklch(1 0 0 / 5%));
---vibeui-hero-011-accent:light-dark(oklch(0.58 0.19 39.8),oklch(0.72 0.18 39.8));
---vibeui-hero-011-accent-fg:oklch(0.15 0.02 39.8);
---vibeui-hero-011-cool:light-dark(oklch(0.55 0.2 39.8),oklch(0.64 0.19 39.8));
+--vibeui-hero-011-accent:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
+--vibeui-hero-011-accent-fg:oklch(from var(--vibeui-hero-011-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
+--vibeui-hero-011-cool:light-dark(oklch(0.287 0 0),oklch(0.885 0 0));
 --vibeui-hero-011-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="hero-011"]{color-scheme:dark}
+:where([data-vibeui-block="hero-011"][data-tone="light"]){color-scheme:light}
+:where([data-vibeui-block="hero-011"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="hero-011"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -59,6 +65,15 @@ background:
 radial-gradient(45% 45% at 22% 8%,color-mix(in oklab,var(--vibeui-hero-011-accent) 34%,transparent),transparent 70%),
 radial-gradient(50% 50% at 84% 26%,color-mix(in oklab,var(--vibeui-hero-011-cool) 40%,transparent),transparent 72%);
 }
+/* Третий слой света идёт за курсором: фон перестаёт быть картинкой и
+   реагирует на присутствие. Без указателя слой просто не появляется. */
+[data-vibeui-block="hero-011"] [data-part="spot"]{
+position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:0;
+background:radial-gradient(28% 34% at var(--vibeui-hero-011-mx,50%) var(--vibeui-hero-011-my,30%),
+color-mix(in oklab,var(--vibeui-hero-011-accent) 30%,transparent),transparent 70%);
+transition:opacity .5s ease;
+}
+[data-vibeui-block="hero-011"]:hover [data-part="spot"]{opacity:1}
 [data-vibeui-block="hero-011"] [data-part="shell"]{
 position:relative;max-width:54rem;width:100%;margin:0 auto;padding:4rem 1.25rem;text-align:center;
 }
@@ -84,8 +99,15 @@ display:inline-flex;align-items:center;justify-content:center;height:2.875rem;pa
 font-size:0.9375rem;font-weight:650;text-decoration:none;transition:opacity .16s ease,border-color .16s ease;
 }
 [data-vibeui-block="hero-011"] [data-part="primary"]{
-background:var(--vibeui-hero-011-accent);color:var(--vibeui-hero-011-accent-fg);border:1px solid transparent;
-box-shadow:0 0 2.5rem color-mix(in oklab,var(--vibeui-hero-011-accent) 30%,transparent);
+background:var(--vibeui-hero-011-accent);color:oklch(from var(--vibeui-hero-011-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border:1px solid transparent;
+box-shadow:0 0 2.5rem color-mix(in oklab,var(--vibeui-hero-011-accent) 34%,transparent),
+inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);
+transition:transform .2s cubic-bezier(.32,.72,0,1),box-shadow .25s ease;
+}
+[data-vibeui-block="hero-011"] [data-part="primary"]:hover{
+transform:translateY(-1px);
+box-shadow:0 0 3.25rem color-mix(in oklab,var(--vibeui-hero-011-accent) 46%,transparent),
+inset 0 1px 0 color-mix(in oklab,#ffffff 52%,transparent);
 }
 [data-vibeui-block="hero-011"] [data-part="secondary"]{border:1px solid var(--vibeui-hero-011-edge);color:var(--vibeui-hero-011-fg);background:var(--vibeui-hero-011-veil)}
 [data-vibeui-block="hero-011"] a:hover{opacity:.88}
@@ -95,12 +117,13 @@ list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem 1.
 font-size:0.75rem;color:var(--vibeui-hero-011-muted);
 }
 [data-vibeui-block="hero-011"] [data-part="meta"] li{display:flex;align-items:center;gap:0.4375rem}
-[data-vibeui-block="hero-011"] [data-part="dot"]{width:0.3125rem;height:0.3125rem;border-radius:9999px;background:var(--vibeui-hero-011-accent)}
+[data-vibeui-block="hero-011"] [data-part="dot"]{width:0.3125rem;height:0.3125rem;border-radius:9999px;background:var(--vibeui-hero-011-accent);color:oklch(from var(--vibeui-hero-011-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @container (min-width: 34rem){
 [data-vibeui-block="hero-011"] [data-part="actions"]{flex-direction:row;justify-content:center;max-width:none}
 [data-vibeui-block="hero-011"] [data-part="shell"]{padding:6.5rem 2rem}
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="hero-011"] *{animation:none!important;transition:none!important}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="hero-011"] [data-part="spot"]{display:none}[data-vibeui-block="hero-011"] *{animation:none!important;transition:none!important}}
 `
 
 const DEFAULT_META = [
@@ -143,6 +166,7 @@ export function Hero011({
   meta = DEFAULT_META,
   accent,
   background = "",
+  tone = "auto",
   className,
   style,
 }: Hero011Props) {
@@ -157,16 +181,28 @@ export function Hero011({
     ...style,
   } as CSSProperties
 
+  const trackPointer = (event: ReactPointerEvent<HTMLElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect()
+    const x = ((event.clientX - rect.left) / rect.width) * 100
+    const y = ((event.clientY - rect.top) / rect.height) * 100
+
+    event.currentTarget.style.setProperty("--vibeui-hero-011-mx", `${x}%`)
+    event.currentTarget.style.setProperty("--vibeui-hero-011-my", `${y}%`)
+  }
+
   return (
     <>
       <style href="vibeui-hero-011" precedence="medium">
         {STYLES}
       </style>
       <section
+        onPointerMove={trackPointer}
         data-vibeui-block="hero-011"
+        data-tone={tone === "auto" ? undefined : tone}
         className={className}
         style={palette}
       >
+        <div data-part="spot" aria-hidden="true" />
         <div data-part="shell">
           {kicker ? <p data-part="kicker">{kicker}</p> : null}
           <h1>

@@ -50,8 +50,8 @@ const STYLES = `
 --vibeui-contact-002-fg:light-dark(oklch(0.2 0 265),oklch(0.94 0 265));
 --vibeui-contact-002-muted:light-dark(oklch(0.52 0 265),oklch(0.72 0 265));
 --vibeui-contact-002-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
---vibeui-contact-002-accent:light-dark(oklch(0.53 0.18 39.8),oklch(0.75 0.15 39.8));
---vibeui-contact-002-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-contact-002-accent:light-dark(oklch(0.282 0 0),oklch(0.905 0 0));
+--vibeui-contact-002-on-accent:oklch(from var(--vibeui-contact-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-contact-002-chip:light-dark(oklch(1 0 0 / 92%),oklch(0.26 0 265 / 92%));
 --vibeui-contact-002-shade:light-dark(oklch(0.2 0 265 / 28%),oklch(0 0 0 / 50%));
 --vibeui-contact-002-land:light-dark(oklch(0.94 0.014 140),oklch(0.31 0.022 150));
@@ -155,8 +155,7 @@ display:grid;justify-items:center;gap:0.25rem;
 [data-vibeui-block="contact-002"] [data-part="needle"]{
 width:1.375rem;height:1.375rem;border-radius:9999px 9999px 9999px 0;
 background:var(--vibeui-contact-002-accent);transform:rotate(-45deg);
-box-shadow:0 2px 6px var(--vibeui-contact-002-shade);
-}
+box-shadow:0 2px 6px var(--vibeui-contact-002-shade);color:oklch(from var(--vibeui-contact-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="contact-002"] [data-part="pin-label"]{
 padding:0.125rem 0.5rem;border-radius:9999px;white-space:nowrap;
 background:var(--vibeui-contact-002-chip);border:1px solid var(--vibeui-contact-002-border);
@@ -169,7 +168,7 @@ font-size:0.75rem;line-height:1.5;color:var(--vibeui-contact-002-muted);
 [data-vibeui-block="contact-002"] [data-part="map-link"]{
 display:inline-flex;align-items:center;gap:0.4375rem;flex:none;
 height:2.375rem;padding:0 1rem;border-radius:0.6875rem;text-decoration:none;
-background:var(--vibeui-contact-002-accent);color:var(--vibeui-contact-002-on-accent);
+background:var(--vibeui-contact-002-accent);color:oklch(from var(--vibeui-contact-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="contact-002"] a:focus-visible{outline:2px solid var(--vibeui-contact-002-accent);outline-offset:2px;border-radius:0.25rem}

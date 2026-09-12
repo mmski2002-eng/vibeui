@@ -27,7 +27,7 @@ const STYLES = `:where([data-vibeui-block="avatar-033"]){
 --vibeui-avatar-033-muted:color-mix(in oklab,var(--vibeui-avatar-033-fg) 68%,transparent);
 --vibeui-avatar-033-border:light-dark(oklch(0.91 0 265),oklch(0.31 0 265));
 --vibeui-avatar-033-live:oklch(0.62 0.15 152);
---vibeui-avatar-033-off:oklch(0.6 0.19 39.8);
+--vibeui-avatar-033-off:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
 --vibeui-avatar-033-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Своя светлая подложка: тёмный текст обязан читаться на любом фоне. */

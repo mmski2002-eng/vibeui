@@ -26,7 +26,7 @@ const STYLES = `
 --vibeui-buttongroup-007-muted:color-mix(in oklab,var(--vibeui-buttongroup-007-fg) 68%,transparent);
 --vibeui-buttongroup-007-border:light-dark(oklch(0.89 0 265),oklch(0.37 0 265));
 --vibeui-buttongroup-007-hover:light-dark(oklch(0.965 0 265),oklch(0.3 0 265));
---vibeui-buttongroup-007-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.72 0.15 39.8));
+--vibeui-buttongroup-007-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-buttongroup-007-radius:0.75rem;
 --vibeui-buttongroup-007-width:16rem;
 --vibeui-buttongroup-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -69,8 +69,7 @@ outline:2px solid var(--vibeui-buttongroup-007-accent);outline-offset:1px;
 }
 [data-vibeui-block="buttongroup-007"] [data-part="dot"]{
 width:0.375rem;height:0.375rem;flex:none;border-radius:9999px;
-background:var(--vibeui-buttongroup-007-accent);opacity:.35;
-}
+background:var(--vibeui-buttongroup-007-accent);opacity:.35;color:oklch(from var(--vibeui-buttongroup-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="buttongroup-007"] button:hover [data-part="dot"]{opacity:1}
 [data-vibeui-block="buttongroup-007"] [data-part="name"]{flex:1 1 auto;min-width:0}
 [data-vibeui-block="buttongroup-007"] [data-part="hint"]{

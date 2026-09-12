@@ -39,7 +39,7 @@ const STYLES = `
 --vibeui-dropdown-004-muted:color-mix(in oklab,var(--vibeui-dropdown-004-fg) 68%,transparent);
 --vibeui-dropdown-004-border:light-dark(oklch(0.9 0 250),oklch(0.37 0 250));
 --vibeui-dropdown-004-hover:light-dark(oklch(0.96 0 250),oklch(0.32 0 250));
---vibeui-dropdown-004-accent:light-dark(oklch(0.58 0.15 39.8),oklch(0.72 0.13 39.8));
+--vibeui-dropdown-004-accent:light-dark(oklch(0.295 0 0),oklch(0.899 0 0));
 --vibeui-dropdown-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -72,8 +72,8 @@ transition:background-color .16s ease;
 display:inline-flex;align-items:center;justify-content:center;
 min-width:1.25rem;height:1.25rem;padding:0 0.3125rem;box-sizing:border-box;
 border-radius:9999px;font-size:0.6875rem;font-weight:700;
-background:color-mix(in oklab,var(--vibeui-dropdown-004-accent) 16%,transparent);
-color:var(--vibeui-dropdown-004-accent);
+background:color-mix(in oklab,var(--vibeui-dropdown-004-fg) 12%,transparent);
+color:var(--vibeui-dropdown-004-fg);
 }
 [data-vibeui-block="dropdown-004"] [data-part="menu"]{
 position:fixed;padding:0.3125rem;min-width:13.5rem;box-sizing:border-box;
@@ -111,8 +111,7 @@ border:1.5px solid var(--vibeui-dropdown-004-border);border-radius:0.3125rem;
 transition:background-color .14s ease,border-color .14s ease;
 }
 [data-vibeui-block="dropdown-004"] [data-part="item"][aria-checked="true"] [data-part="box"]{
-background:var(--vibeui-dropdown-004-accent);border-color:var(--vibeui-dropdown-004-accent);
-}
+background:var(--vibeui-dropdown-004-accent);border-color:var(--vibeui-dropdown-004-accent);color:oklch(from var(--vibeui-dropdown-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="dropdown-004"] [data-part="box"] svg{width:0.75rem;height:0.75rem;opacity:0}
 [data-vibeui-block="dropdown-004"] [data-part="item"][aria-checked="true"] [data-part="box"] svg{opacity:1;color:light-dark(oklch(1 0 0),oklch(0.2 0 250))}
 [data-vibeui-block="dropdown-004"][data-mark="dot"] [data-part="box"]{border-radius:9999px}

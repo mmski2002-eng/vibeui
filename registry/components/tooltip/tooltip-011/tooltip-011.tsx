@@ -27,7 +27,7 @@ const STYLES = `
 --vibeui-tooltip-011-muted:color-mix(in oklab,var(--vibeui-tooltip-011-fg) 68%,transparent);
 --vibeui-tooltip-011-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
 --vibeui-tooltip-011-tip:light-dark(oklch(0.22 0 265),oklch(0.34 0 265));
---vibeui-tooltip-011-accent:light-dark(oklch(0.57 0.17 39.8),oklch(0.72 0.16 39.8));
+--vibeui-tooltip-011-accent:light-dark(oklch(0.292 0 0),oklch(0.899 0 0));
 --vibeui-tooltip-011-ok:light-dark(oklch(0.72 0.17 152),oklch(0.78 0.16 152));
 --vibeui-tooltip-011-warn:light-dark(oklch(0.8 0.17 85),oklch(0.85 0.16 85));
 --vibeui-tooltip-011-down:light-dark(oklch(0.62 0.21 25),oklch(0.7 0.19 25));

@@ -35,7 +35,7 @@ const STYLES = `
 --vibeui-chart-004-muted:color-mix(in oklab,var(--vibeui-chart-004-fg) 68%,transparent);
 --vibeui-chart-004-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-chart-004-track:light-dark(oklch(0.95 0 265),oklch(0.3 0 265));
---vibeui-chart-004-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-chart-004-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-chart-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -64,10 +64,9 @@ background:var(--vibeui-chart-004-track);overflow:hidden;
 }
 [data-vibeui-block="chart-004"] [data-part="fill"]{
 display:block;height:100%;border-radius:inherit;
-background:var(--vibeui-chart-004-accent);
-}
+background:var(--vibeui-chart-004-accent);color:oklch(from var(--vibeui-chart-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 /* Первая строка ярче: лидер должен читаться сразу. */
-[data-vibeui-block="chart-004"] li:first-child [data-part="fill"]{background:var(--vibeui-chart-004-accent)}
+[data-vibeui-block="chart-004"] li:first-child [data-part="fill"]{background:var(--vibeui-chart-004-accent);color:oklch(from var(--vibeui-chart-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="chart-004"] li:not(:first-child) [data-part="fill"]{
 background:color-mix(in oklab,var(--vibeui-chart-004-accent) 55%,var(--vibeui-chart-004-track));
 }

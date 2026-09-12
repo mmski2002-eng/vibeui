@@ -159,9 +159,6 @@ export const PREVIEWS = {
   "button-051": dynamic(() =>
     import("@/registry/components/button/button-051/button-051").then((module) => module.Button051),
   ),
-  "button-052": dynamic(() =>
-    import("@/registry/components/button/button-052/button-052").then((module) => module.Button052),
-  ),
   "button-053": dynamic(() =>
     import("@/registry/components/button/button-053/button-053").then((module) => module.Button053),
   ),

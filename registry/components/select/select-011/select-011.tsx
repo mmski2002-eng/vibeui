@@ -39,10 +39,10 @@ const STYLES = `
 --vibeui-select-011-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-select-011-muted:color-mix(in oklab,var(--vibeui-select-011-fg) 68%,transparent);
 --vibeui-select-011-border:light-dark(oklch(0.87 0 265),oklch(0.42 0 265));
---vibeui-select-011-accent:light-dark(oklch(0.55 0.19 39.8),oklch(0.75 0.15 39.8));
---vibeui-select-011-tone-open:light-dark(oklch(0.62 0.19 39.8),oklch(0.72 0.16 39.8));
---vibeui-select-011-tone-progress:light-dark(oklch(0.75 0.16 39.8),oklch(0.82 0.14 39.8));
---vibeui-select-011-tone-review:light-dark(oklch(0.64 0.19 39.8),oklch(0.74 0.16 39.8));
+--vibeui-select-011-accent:light-dark(oklch(0.287 0 0),oklch(0.905 0 0));
+--vibeui-select-011-tone-open:light-dark(oklch(0.58 0.14 250),oklch(0.74 0.13 250));
+--vibeui-select-011-tone-progress:light-dark(oklch(0.7 0.15 75),oklch(0.8 0.14 78));
+--vibeui-select-011-tone-review:light-dark(oklch(0.58 0.15 300),oklch(0.74 0.13 300));
 --vibeui-select-011-tone-done:light-dark(oklch(0.62 0.17 155),oklch(0.74 0.15 155));
 --vibeui-select-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

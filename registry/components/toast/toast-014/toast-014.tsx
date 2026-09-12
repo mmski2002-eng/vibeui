@@ -39,7 +39,7 @@ const STYLES = `
 --vibeui-toast-014-card:light-dark(oklch(1 0 0),oklch(0.28 0 265));
 --vibeui-toast-014-hover:light-dark(oklch(0.2 0 265 / 7%),oklch(1 0 0 / 12%));
 --vibeui-toast-014-shadow:light-dark(oklch(0.2 0 265 / 55%),oklch(0.05 0 265 / 72%));
---vibeui-toast-014-tone:light-dark(oklch(0.55 0.16 39.8),oklch(0.74 0.15 39.8));
+--vibeui-toast-014-tone:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-toast-014-offset:0.875rem;
 --vibeui-toast-014-radius:0.875rem;
 --vibeui-toast-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

@@ -25,10 +25,10 @@ const STYLES = `
 --vibeui-progress-006-muted:color-mix(in oklab,var(--vibeui-progress-006-fg) 68%,transparent);
 --vibeui-progress-006-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-progress-006-track:light-dark(oklch(0.93 0 265),oklch(0.3 0 265));
---vibeui-progress-006-accent:light-dark(oklch(0.58 0.16 39.8),oklch(0.74 0.15 39.8));
+--vibeui-progress-006-accent:light-dark(oklch(0.295 0 0),oklch(0.903 0 0));
 --vibeui-progress-006-alarm:light-dark(oklch(0.58 0.19 28),oklch(0.7 0.17 28));
---vibeui-progress-006-alert-bg:light-dark(oklch(0.96 0.03 28),oklch(0.31 0.06 39.8));
---vibeui-progress-006-alert-fg:light-dark(oklch(0.44 0.16 39.8),oklch(0.9 0.05 39.8));
+--vibeui-progress-006-alert-bg:light-dark(oklch(0.96 0.03 28),oklch(0.31 0 0));
+--vibeui-progress-006-alert-fg:light-dark(oklch(0.26 0 0),oklch(0.9 0 0));
 --vibeui-progress-006-on-alarm:light-dark(oklch(1 0 0),oklch(0.18 0.03 28));
 --vibeui-progress-006-value:0;
 --vibeui-progress-006-mark:0;
@@ -59,8 +59,7 @@ background:var(--vibeui-progress-006-track);
 height:100%;border-radius:inherit;
 width:calc(var(--vibeui-progress-006-value) * 1%);
 background:var(--vibeui-progress-006-accent);
-transition:width .3s cubic-bezier(.32,.72,0,1),background-color .2s ease;
-}
+transition:width .3s cubic-bezier(.32,.72,0,1),background-color .2s ease;color:oklch(from var(--vibeui-progress-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 /* Превышение читается и без цвета: заливка получает штриховку. */
 [data-vibeui-block="progress-006"][data-over="true"] [data-part="bar"]{
 background-color:var(--vibeui-progress-006-alarm);

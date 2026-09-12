@@ -5,13 +5,11 @@ import type { ItemKind } from "@/registry/categories"
 
 import heroRegistry from "@/registry/blocks/hero/registry.json"
 import navbarRegistry from "@/registry/blocks/navbar/registry.json"
-import featuresRegistry from "@/registry/blocks/features/registry.json"
 import pricingRegistry from "@/registry/blocks/pricing/registry.json"
 import testimonialsRegistry from "@/registry/blocks/testimonials/registry.json"
 import faqRegistry from "@/registry/blocks/faq/registry.json"
 import ctaRegistry from "@/registry/blocks/cta/registry.json"
 import footerRegistry from "@/registry/blocks/footer/registry.json"
-import layoutRegistry from "@/registry/blocks/layout/registry.json"
 import authRegistry from "@/registry/blocks/auth/registry.json"
 import blogRegistry from "@/registry/blocks/blog/registry.json"
 import contactRegistry from "@/registry/blocks/contact/registry.json"
@@ -20,7 +18,6 @@ import errorsRegistry from "@/registry/blocks/errors/registry.json"
 import aboutRegistry from "@/registry/blocks/about/registry.json"
 import casesRegistry from "@/registry/blocks/cases/registry.json"
 import changelogRegistry from "@/registry/blocks/changelog/registry.json"
-import roadmapRegistry from "@/registry/blocks/roadmap/registry.json"
 import careersRegistry from "@/registry/blocks/careers/registry.json"
 import comparisonRegistry from "@/registry/blocks/comparison/registry.json"
 import waitlistRegistry from "@/registry/blocks/waitlist/registry.json"
@@ -77,6 +74,7 @@ import inputOtpRegistry from "@/registry/components/input-otp/registry.json"
 import itemRegistry from "@/registry/components/item/registry.json"
 import kbdRegistry from "@/registry/components/kbd/registry.json"
 import labelRegistry from "@/registry/components/label/registry.json"
+import mockupRegistry from "@/registry/components/mockup/registry.json"
 import nativeSelectRegistry from "@/registry/components/native-select/registry.json"
 import navigationMenuRegistry from "@/registry/components/navigation-menu/registry.json"
 import numberFieldRegistry from "@/registry/components/number-field/registry.json"
@@ -147,11 +145,6 @@ export const SOURCES = [
     items: navbarRegistry.items,
   },
   {
-    directory: "registry/blocks/features",
-    kind: "block",
-    items: featuresRegistry.items,
-  },
-  {
     directory: "registry/blocks/pricing",
     kind: "block",
     items: pricingRegistry.items,
@@ -175,11 +168,6 @@ export const SOURCES = [
     directory: "registry/blocks/footer",
     kind: "block",
     items: footerRegistry.items,
-  },
-  {
-    directory: "registry/blocks/layout",
-    kind: "block",
-    items: layoutRegistry.items,
   },
   {
     directory: "registry/blocks/auth",
@@ -220,11 +208,6 @@ export const SOURCES = [
     directory: "registry/blocks/changelog",
     kind: "block",
     items: changelogRegistry.items,
-  },
-  {
-    directory: "registry/blocks/roadmap",
-    kind: "block",
-    items: roadmapRegistry.items,
   },
   {
     directory: "registry/blocks/careers",
@@ -505,6 +488,11 @@ export const SOURCES = [
     directory: "registry/components/label",
     kind: "component",
     items: labelRegistry.items,
+  },
+  {
+    directory: "registry/components/mockup",
+    kind: "component",
+    items: mockupRegistry.items,
   },
   {
     directory: "registry/components/native-select",

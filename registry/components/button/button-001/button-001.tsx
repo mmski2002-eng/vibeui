@@ -28,11 +28,11 @@ export type Button001Props = ComponentProps<"button"> & {
 // не выжигала строку.
 const STYLES = `
 :where([data-vibeui-block="button-001"]){
-/* Светлая ветка глубже брендового #FF5900: accent здесь и текст (soft,
+/* Светлая ветка глубже брендового light-dark(#1a1a1a,#f2f2f2): accent здесь и текст (soft,
    outline), и заливка — на L 0.55 оба сочетания дают ≥4.5:1. В тёмной ветке
-   чистый #FF5900 с почти чёрной подписью. */
---vibeui-button-001-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-button-001-accent-fg:light-dark(oklch(0.99 0.01 39.8),oklch(0.15 0.02 39.8));
+   чистый light-dark(#1a1a1a,#f2f2f2) с почти чёрной подписью. */
+--vibeui-button-001-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
+--vibeui-button-001-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.15 0 0));
 --vibeui-button-001-soft-bg:color-mix(in oklab, var(--vibeui-button-001-accent) 14%, transparent);
 --vibeui-button-001-soft-bg-hover:color-mix(in oklab, var(--vibeui-button-001-accent) 22%, transparent);
 --vibeui-button-001-border:color-mix(in oklab, var(--vibeui-button-001-accent) 45%, transparent);
@@ -57,7 +57,7 @@ transition:background-color .18s ease,border-color .18s ease,color .18s ease,opa
 [data-vibeui-block="button-001"][data-size="md"]{height:2.5rem;padding:0 1.125rem;font-size:0.875rem}
 [data-vibeui-block="button-001"][data-size="lg"]{height:3rem;padding:0 1.5rem;font-size:1rem}
 
-[data-vibeui-block="button-001"][data-tone="solid"]{background:var(--vibeui-button-001-accent);color:var(--vibeui-button-001-accent-fg)}
+[data-vibeui-block="button-001"][data-tone="solid"]{background:var(--vibeui-button-001-accent);color:oklch(from var(--vibeui-button-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="button-001"][data-tone="solid"]:hover:not(:disabled){background:color-mix(in oklab, var(--vibeui-button-001-accent) 88%, black)}
 [data-vibeui-block="button-001"][data-tone="soft"]{background:var(--vibeui-button-001-soft-bg);color:var(--vibeui-button-001-accent)}
 [data-vibeui-block="button-001"][data-tone="soft"]:hover:not(:disabled){background:var(--vibeui-button-001-soft-bg-hover)}

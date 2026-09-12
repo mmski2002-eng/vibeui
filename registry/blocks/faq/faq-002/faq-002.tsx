@@ -30,7 +30,7 @@ const STYLES = `
 --vibeui-faq-002-ink:light-dark(oklch(0.22 0 255),oklch(0.95 0 255));
 --vibeui-faq-002-muted:light-dark(oklch(0.5 0 255),oklch(0.72 0 255));
 --vibeui-faq-002-border:light-dark(oklch(0.91 0 255),oklch(0.35 0 255));
---vibeui-faq-002-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.14 39.8));
+--vibeui-faq-002-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-faq-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

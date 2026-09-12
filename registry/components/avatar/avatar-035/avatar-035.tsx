@@ -29,9 +29,9 @@ const STYLES = `
 --vibeui-avatar-035-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-avatar-035-muted:color-mix(in oklab,var(--vibeui-avatar-035-fg) 68%,transparent);
 --vibeui-avatar-035-border:light-dark(oklch(0.91 0 265),oklch(0.31 0 265));
---vibeui-avatar-035-person:oklch(0.55 0.2 39.8);
---vibeui-avatar-035-org:oklch(0.55 0.13 39.8);
---vibeui-avatar-035-creator:oklch(0.62 0.17 39.8);
+--vibeui-avatar-035-person:oklch(0.6 0.17 250);
+--vibeui-avatar-035-org:oklch(0.58 0.13 200);
+--vibeui-avatar-035-creator:oklch(0.6 0.17 300);
 --vibeui-avatar-035-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Своя светлая подложка: тёмный текст обязан читаться на любом фоне. */

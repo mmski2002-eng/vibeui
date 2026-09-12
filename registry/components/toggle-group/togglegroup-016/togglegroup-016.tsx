@@ -37,7 +37,7 @@ const STYLES = `
 --vibeui-togglegroup-016-muted:color-mix(in oklab,var(--vibeui-togglegroup-016-fg) 68%,transparent);
 --vibeui-togglegroup-016-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-togglegroup-016-surface:light-dark(oklch(0.97 0 265),oklch(0.28 0 265));
---vibeui-togglegroup-016-accent:light-dark(oklch(0.55 0.16 39.8),oklch(0.76 0.13 39.8));
+--vibeui-togglegroup-016-accent:light-dark(oklch(0.287 0 0),oklch(0.906 0 0));
 --vibeui-togglegroup-016-on-accent:light-dark(oklch(0.99 0 0),oklch(0.18 0 300));
 --vibeui-togglegroup-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -81,7 +81,7 @@ outline:2px solid var(--vibeui-togglegroup-016-accent);outline-offset:2px;
 }
 [data-vibeui-block="togglegroup-016"] [data-part="group"] button[aria-pressed="true"]{
 background:var(--vibeui-togglegroup-016-accent);border-color:var(--vibeui-togglegroup-016-accent);
-color:var(--vibeui-togglegroup-016-on-accent);
+color:oklch(from var(--vibeui-togglegroup-016-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="togglegroup-016"] [data-part="summary"]{
 margin:0;font-size:0.8125rem;line-height:1.4;

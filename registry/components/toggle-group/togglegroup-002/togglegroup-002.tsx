@@ -73,7 +73,7 @@ outline:2px solid var(--vibeui-togglegroup-002-accent);outline-offset:2px;
 [data-vibeui-block="togglegroup-002"] button[aria-pressed="true"]{
 background:var(--vibeui-togglegroup-002-accent);
 border-color:var(--vibeui-togglegroup-002-accent);
-color:var(--vibeui-togglegroup-002-accent-fg);
+color:oklch(from var(--vibeui-togglegroup-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="togglegroup-002"] [data-part="count"]{
 margin:0;font-size:0.75rem;color:var(--vibeui-togglegroup-002-muted);

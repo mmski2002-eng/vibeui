@@ -28,7 +28,7 @@
           "people"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "members": [
               {
@@ -443,7 +443,7 @@
           "target": "@components/vibeui/people-002.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в --vibeui-people-002-*. Серверный компонент: фильтр работает без JS — чипы это скрытые radio-инпуты внутри <fieldset>, а правило с :has() прячет карточки, чей слот не совпадает с выбранным значением. Отделы получают слоты d1…d6 по порядку появления в массиве людей, поэтому CSS остаётся статичным при любых названиях отделов (до шести). Выбранный чип заливается фирменным оранжевым, каждая карточка несёт бейдж своего отдела.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в --vibeui-people-002-*. Серверный компонент: фильтр работает без JS — чипы это скрытые radio-инпуты внутри <fieldset>, а правило с :has() прячет карточки, чей слот не совпадает с выбранным значением. Отделы получают слоты d1…d6 по порядку появления в массиве людей, поэтому CSS остаётся статичным при любых названиях отделов (до шести). Выбранный чип заливается фирменным акцентным, каждая карточка несёт бейдж своего отдела.",
       "meta": {
         "tags": [
           "team",
@@ -453,7 +453,7 @@
           "people"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "members": [
               {
@@ -573,7 +573,7 @@
           "en": {
             "title": "Team With Department Filter",
             "description": "A team section with a pure-CSS department filter: radio chips and the :has() selector hide other departments' cards without a line of JS. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its palette in --vibeui-people-002-*. A server component: the filter works without JS — the chips are hidden radio inputs inside a <fieldset>, and a :has() rule hides the cards whose slot does not match the chosen value. Departments get slots d1…d6 in order of appearance in the members array, so the CSS stays static for any department names (up to six). The selected chip is filled with the brand orange, and every card carries its department badge.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in --vibeui-people-002-*. A server component: the filter works without JS — the chips are hidden radio inputs inside a <fieldset>, and a :has() rule hides the cards whose slot does not match the chosen value. Departments get slots d1…d6 in order of appearance in the members array, so the CSS stays static for any department names (up to six). The selected chip is filled with the brand accent, and every card carries its department badge.",
             "ai": {
               "summary": "A Team section with a department filter and no client JS: the chips are hidden radio inputs, cards are hidden by the CSS :has() selector. The chip list is assembled from the departments in the data automatically. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -716,7 +716,7 @@
           "founders"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "leaders": [
               {
@@ -901,7 +901,7 @@
           "people"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "members": [
               {
@@ -1198,7 +1198,7 @@
       "name": "people-005",
       "type": "registry:block",
       "title": "Мы нанимаем",
-      "description": "Сетка команды с карточкой-приглашением в конце: пунктирная рамка «твоё место», тёплая подложка и оранжевая кнопка вакансий прямо среди будущих коллег. Самодостаточен: один файл, без зависимостей.",
+      "description": "Сетка команды с карточкой-приглашением в конце: пунктирная рамка «твоё место», тёплая подложка и акцентная кнопка вакансий прямо среди будущих коллег. Самодостаточен: один файл, без зависимостей.",
       "categories": [
         "team"
       ],
@@ -1211,7 +1211,7 @@
           "target": "@components/vibeui/people-005.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в --vibeui-people-005-*. Серверный компонент. Обычные карточки — инициалы, имя, роль; последняя ячейка сетки — приглашение: пунктирная рамка читается как «место не занято», тёплая подложка — color-mix от акцента, кнопка залита фирменным оранжевым с почти чёрным текстом. Приглашение живёт в общей сетке, а не отдельным баннером: кандидат видит свою будущую карточку рядом с будущими коллегами. Колонки 1 → 2 → 3 → 4 от собственной ширины блока.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в --vibeui-people-005-*. Серверный компонент. Обычные карточки — инициалы, имя, роль; последняя ячейка сетки — приглашение: пунктирная рамка читается как «место не занято», тёплая подложка — color-mix от акцента, кнопка залита фирменным акцентным с почти чёрным текстом. Приглашение живёт в общей сетке, а не отдельным баннером: кандидат видит свою будущую карточку рядом с будущими коллегами. Колонки 1 → 2 → 3 → 4 от собственной ширины блока.",
       "meta": {
         "tags": [
           "team",
@@ -1221,7 +1221,7 @@
           "grid"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "members": [
               {
@@ -1265,12 +1265,12 @@
         "ai": {
           "export": "People005",
           "usage": "<People005\n  title=\"Команда растёт\"\n  ctaLabel=\"Открытые вакансии\"\n  ctaHref=\"/careers\"\n  members={[{ name: \"Анна Ковалёва\", role: \"Дизайн-система\" }]}\n/>",
-          "summary": "Сетка команды с нанимающей карточкой в конце: пунктирная рамка «твоё место», пустой аватар с плюсом, текст приглашения и оранжевая кнопка вакансий. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "summary": "Сетка команды с нанимающей карточкой в конце: пунктирная рамка «твоё место», пустой аватар с плюсом, текст приглашения и акцентная кнопка вакансий. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-people-005-* (включая accent-fill) и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
             "карточку-приглашение внутри общей сетки, а не отдельным баннером: кандидат видит своё место рядом с будущими коллегами",
             "пунктирную рамку и пустой аватар с плюсом — именно они означают «место ещё не занято»",
-            "заливку кнопки фирменным оранжевым с почти чёрным текстом: контраст кнопки — часть бренда, а не случайный цвет",
+            "заливку кнопки фирменным акцентным с почти чёрным текстом: контраст кнопки — часть бренда, а не случайный цвет",
             "тёплую подложку приглашения через color-mix от акцента, а не отдельный ручной цвет",
             "инициалы вместо фотографий: стоковые лица в разделе «Команда» подрывают доверие",
             "container-запросы на число колонок: сетка складывается от собственной ширины блока"
@@ -1321,15 +1321,15 @@
         "i18n": {
           "en": {
             "title": "We're Hiring",
-            "description": "A team grid with an invitation card at the end: a dashed \"your seat\" frame, a warm tint and an orange vacancies button right among the future colleagues. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its palette in --vibeui-people-005-*. A server component. Regular cards hold initials, a name and a role; the last grid cell is the invitation: the dashed border reads as an unoccupied seat, the warm tint is a color-mix of the accent, and the button is filled with the brand orange and near-black text. The invitation lives inside the shared grid rather than as a separate banner: the candidate sees their future card next to their future colleagues. Columns go 1 → 2 → 3 → 4 from the block's own width.",
+            "description": "A team grid with an invitation card at the end: a dashed \"your seat\" frame, a warm tint and an accent vacancies button right among the future colleagues. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in --vibeui-people-005-*. A server component. Regular cards hold initials, a name and a role; the last grid cell is the invitation: the dashed border reads as an unoccupied seat, the warm tint is a color-mix of the accent, and the button is filled with the brand accent and near-black text. The invitation lives inside the shared grid rather than as a separate banner: the candidate sees their future card next to their future colleagues. Columns go 1 → 2 → 3 → 4 from the block's own width.",
             "ai": {
-              "summary": "A team grid with a hiring card at the end: a dashed \"your seat\" frame, an empty avatar with a plus, invitation copy and an orange vacancies button. Zero dependencies, one file, its own palette, no client JS.",
+              "summary": "A team grid with a hiring card at the end: a dashed \"your seat\" frame, an empty avatar with a plus, invitation copy and an accent vacancies button. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
                 "the local --vibeui-people-005-* palette (including accent-fill) — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the invitation card inside the shared grid, not as a separate banner: the candidate sees their seat next to their future colleagues",
                 "the dashed border and the empty avatar with a plus — they are what says the seat is not taken yet",
-                "the brand-orange button fill with near-black text: the button contrast is part of the brand, not an accidental colour",
+                "the brand-accent button fill with near-black text: the button contrast is part of the brand, not an accidental colour",
                 "the warm invitation tint via a color-mix of the accent, not a separate hand-picked colour",
                 "initials instead of photographs: stock faces in a Team section destroy trust",
                 "the container queries on the column count: the grid folds based on the block's own width"
@@ -1449,7 +1449,7 @@
           "about"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "People006",

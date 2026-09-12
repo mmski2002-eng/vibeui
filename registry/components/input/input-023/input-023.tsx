@@ -39,7 +39,7 @@ const STYLES = `
 --vibeui-input-023-muted:color-mix(in oklab,var(--vibeui-input-023-fg) 68%,transparent);
 --vibeui-input-023-field:light-dark(oklch(0.985 0 265),oklch(0.27 0 265));
 --vibeui-input-023-border:light-dark(oklch(0.88 0 265),oklch(0.41 0 265));
---vibeui-input-023-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-input-023-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-input-023-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

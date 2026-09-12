@@ -49,7 +49,7 @@ min-width:min(100%,16rem);max-width:20rem;box-sizing:border-box;overflow:hidden;
 aspect-ratio:3 / 4;border-radius:var(--vibeui-aspect-004-radius);
 background:
 radial-gradient(90% 70% at 70% 15%,oklch(0.62 0.09 60),transparent 65%),
-linear-gradient(165deg,oklch(0.5 0.07 40),oklch(0.28 0.04 285));
+linear-gradient(165deg,oklch(0.5 0 0),oklch(0.28 0.04 285));
 color:var(--vibeui-aspect-004-fg);font-family:var(--vibeui-aspect-004-font);
 text-decoration:none;
 }

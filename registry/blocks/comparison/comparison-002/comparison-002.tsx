@@ -29,7 +29,7 @@ const STYLES = `
 --vibeui-comparison-002-muted:light-dark(oklch(0.5 0 0),oklch(0.72 0 0));
 --vibeui-comparison-002-border:light-dark(oklch(0.9 0 0),oklch(0.3 0 0));
 --vibeui-comparison-002-card:light-dark(oklch(0.98 0 0),oklch(0.2 0 0));
---vibeui-comparison-002-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
+--vibeui-comparison-002-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-comparison-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -59,7 +59,7 @@ box-shadow:0 0 0 1px var(--vibeui-comparison-002-accent);
 [data-vibeui-block="comparison-002"] [data-part="tagline"]{margin:0;color:var(--vibeui-comparison-002-muted);font-size:0.875rem;line-height:1.45}
 [data-vibeui-block="comparison-002"] [data-part="points"]{list-style:none;margin:0.5rem 0 0;padding:0;display:grid;gap:0.5rem}
 [data-vibeui-block="comparison-002"] [data-part="point"]{position:relative;padding-left:1.25rem;font-size:0.9375rem;line-height:1.5}
-[data-vibeui-block="comparison-002"] [data-part="point"]::before{content:"";position:absolute;left:0.1875rem;top:0.5rem;width:0.5rem;height:0.5rem;border-radius:999px;background:var(--vibeui-comparison-002-accent)}
+[data-vibeui-block="comparison-002"] [data-part="point"]::before{content:"";position:absolute;left:0.1875rem;top:0.5rem;width:0.5rem;height:0.5rem;border-radius:999px;background:var(--vibeui-comparison-002-accent);color:oklch(from var(--vibeui-comparison-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @container (min-width: 48rem){
 [data-vibeui-block="comparison-002"] [data-part="shell"]{padding:4rem 2rem}
 [data-vibeui-block="comparison-002"] [data-part="grid"]{grid-template-columns:repeat(3,minmax(0,1fr))}

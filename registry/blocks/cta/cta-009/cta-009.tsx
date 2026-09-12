@@ -12,18 +12,18 @@ export type Cta009Props = {
   style?: CSSProperties
 }
 
-// Оранжевая полоса во всю ширину: чёрная типографика на фирменном #FF5900
+// Оранжевая полоса во всю ширину: чёрная типографика на фирменном light-dark(#1a1a1a,#f2f2f2)
 // и одна белая кнопка. Собственный фон — осознанное исключение из правила
 // «прозрачной подложки»: контраст полосы с остальной страницей и есть
 // дизайн блока. Текст фиксированно тёмный в обеих темах: полоса не темнеет
 // вместе со страницей, иначе она перестаёт быть полосой.
 const STYLES = `
 :where([data-vibeui-block="cta-009"]){
---vibeui-cta-009-bg:light-dark(oklch(0.64 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-cta-009-ink:oklch(0.15 0.02 39.8);
---vibeui-cta-009-muted:oklch(0.15 0.02 39.8 / 78%);
+--vibeui-cta-009-bg:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
+--vibeui-cta-009-ink:oklch(0.15 0 0);
+--vibeui-cta-009-muted:oklch(0.15 0 0 / 78%);
 --vibeui-cta-009-button:oklch(1 0 0);
---vibeui-cta-009-button-ink:oklch(0.15 0.02 39.8);
+--vibeui-cta-009-button-ink:oklch(0.15 0 0);
 --vibeui-cta-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -57,7 +57,7 @@ transition:transform .15s ease,box-shadow .15s ease;
 }
 [data-vibeui-block="cta-009"] [data-part="action"]:hover{
 transform:translateY(-1px);
-box-shadow:0 10px 24px -14px oklch(0.15 0.02 39.8 / 60%);
+box-shadow:0 10px 24px -14px oklch(0.15 0 0 / 60%);
 }
 [data-vibeui-block="cta-009"] [data-part="action"]:focus-visible{
 outline:2px solid var(--vibeui-cta-009-ink);outline-offset:3px;

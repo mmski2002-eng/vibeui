@@ -33,7 +33,7 @@ const STYLES = `
 --vibeui-slider-001-muted:color-mix(in oklab,var(--vibeui-slider-001-fg) 68%,transparent);
 --vibeui-slider-001-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-slider-001-track:light-dark(oklch(0.92 0 265),oklch(0.41 0 265));
---vibeui-slider-001-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.16 39.8));
+--vibeui-slider-001-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-slider-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-slider-001-fill:50%;
 }

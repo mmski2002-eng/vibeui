@@ -73,7 +73,7 @@ const STYLES = `
 --vibeui-datagrid-019-muted:color-mix(in oklab,var(--vibeui-datagrid-019-fg) 68%,transparent);
 --vibeui-datagrid-019-border:light-dark(oklch(0.92 0 285),oklch(0.35 0 285));
 --vibeui-datagrid-019-head:light-dark(oklch(0.975 0 285),oklch(0.27 0 285));
---vibeui-datagrid-019-accent:light-dark(oklch(0.5 0.14 39.8),oklch(0.76 0.13 39.8));
+--vibeui-datagrid-019-accent:light-dark(oklch(0.275 0 0),oklch(0.906 0 0));
 --vibeui-datagrid-019-danger:light-dark(oklch(0.55 0.17 28),oklch(0.76 0.15 28));
 --vibeui-datagrid-019-panel:light-dark(oklch(0.985 0 285),oklch(0.26 0 285));
 --vibeui-datagrid-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

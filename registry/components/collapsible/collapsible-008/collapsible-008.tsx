@@ -35,7 +35,7 @@ const STYLES = `
 --vibeui-collapsible-008-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-collapsible-008-muted:color-mix(in oklab,var(--vibeui-collapsible-008-fg) 68%,transparent);
 --vibeui-collapsible-008-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
---vibeui-collapsible-008-accent:light-dark(oklch(0.62 0.16 39.8),oklch(0.79 0.14 39.8));
+--vibeui-collapsible-008-accent:light-dark(oklch(0.305 0 0),oklch(0.912 0 0));
 --vibeui-collapsible-008-quiet:light-dark(oklch(0.55 0 265 / 10%),oklch(0.85 0 265 / 12%));
 --vibeui-collapsible-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-collapsible-008-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
@@ -94,8 +94,7 @@ content:"";flex:none;width:0.375rem;height:0.375rem;border-radius:9999px;
 background:transparent;
 }
 [data-vibeui-block="collapsible-008"] [data-part="row"][data-changed="true"] dt::before{
-background:var(--vibeui-collapsible-008-accent);
-}
+background:var(--vibeui-collapsible-008-accent);color:oklch(from var(--vibeui-collapsible-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="collapsible-008"] dd{
 margin:0 0 0 auto;
 font-family:var(--vibeui-collapsible-008-mono);font-size:0.75rem;

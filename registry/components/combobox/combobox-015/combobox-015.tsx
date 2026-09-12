@@ -38,9 +38,9 @@ const STYLES = `
 --vibeui-combobox-015-border:light-dark(oklch(0.9 0.008 195),oklch(0.35 0.012 195));
 --vibeui-combobox-015-field:light-dark(oklch(0.985 0.004 195),oklch(0.27 0.012 195));
 --vibeui-combobox-015-soft:light-dark(oklch(0.96 0.008 195),oklch(0.31 0.014 195));
---vibeui-combobox-015-accent:light-dark(oklch(0.48 0.11 39.8),oklch(0.74 0.11 39.8));
---vibeui-combobox-015-accentsoft:light-dark(oklch(0.93 0.05 39.8),oklch(0.35 0.05 39.8));
---vibeui-combobox-015-mark:light-dark(oklch(0.9 0.11 39.8),oklch(0.55 0.11 39.8));
+--vibeui-combobox-015-accent:light-dark(oklch(0.27 0 0),oklch(0.903 0 0));
+--vibeui-combobox-015-accentsoft:light-dark(oklch(0.93 0 0),oklch(0.35 0 0));
+--vibeui-combobox-015-mark:light-dark(oklch(0.9 0 0),oklch(0.868 0 0));
 --vibeui-combobox-015-radius:0.625rem;
 --vibeui-combobox-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

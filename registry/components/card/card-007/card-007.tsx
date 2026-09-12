@@ -37,7 +37,7 @@ const STYLES = `
 --vibeui-card-007-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-card-007-muted:color-mix(in oklab,var(--vibeui-card-007-fg) 68%,transparent);
 --vibeui-card-007-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
---vibeui-card-007-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-card-007-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-card-007-on-accent:light-dark(oklch(0.99 0 265),oklch(0.18 0 265));
 --vibeui-card-007-done:light-dark(oklch(0.55 0.15 152),oklch(0.76 0.14 152));
 --vibeui-card-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -83,7 +83,7 @@ border:1px solid var(--vibeui-card-007-border);border-radius:0.5rem;
 background:transparent;color:inherit;font:inherit;font-size:0.8125rem;font-weight:600;
 }
 [data-vibeui-block="card-007"] button[data-primary="true"]{
-border-color:transparent;background:var(--vibeui-card-007-accent);color:var(--vibeui-card-007-on-accent);
+border-color:transparent;background:var(--vibeui-card-007-accent);color:oklch(from var(--vibeui-card-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="card-007"] button:focus-visible{outline:2px solid var(--vibeui-card-007-accent);outline-offset:2px}
 /* После ответа карточка остаётся на месте с отчётом: исчезнувшая строка
@@ -99,8 +99,7 @@ transform:rotate(45deg);
 }
 [data-vibeui-block="card-007"] [data-part="unread"]{
 position:absolute;right:0.75rem;top:0.75rem;
-width:0.4375rem;height:0.4375rem;border-radius:9999px;background:var(--vibeui-card-007-accent);
-}
+width:0.4375rem;height:0.4375rem;border-radius:9999px;background:var(--vibeui-card-007-accent);color:oklch(from var(--vibeui-card-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="card-007"] *{animation:none!important;transition:none!important}}
 `
 

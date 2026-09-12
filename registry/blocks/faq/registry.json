@@ -154,7 +154,7 @@
         ],
         "cardControls": ["title", "accent", "background"],
         "preview": {
-          "width": "full"
+          "width": "natural"
         }
       }
     },
@@ -177,7 +177,7 @@
       "meta": {
         "tags": ["faq", "columns", "details", "no-js"],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Faq002",
@@ -345,7 +345,7 @@
       "meta": {
         "tags": ["faq", "tabs", "categories", "no-js"],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Faq003",
@@ -554,7 +554,7 @@
       "meta": {
         "tags": ["faq", "accordion", "details", "exclusive"],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Faq004",
@@ -720,7 +720,7 @@
       "meta": {
         "tags": ["faq", "search", "filter", "client"],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Faq005",
@@ -910,7 +910,7 @@
       "meta": {
         "tags": ["faq", "support", "contact", "sticky"],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Faq006",
@@ -1099,7 +1099,7 @@
       "meta": {
         "tags": ["faq", "filter", "chips", "categories", "no-js"],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Faq007",
@@ -1270,7 +1270,7 @@
       "name": "faq-008",
       "type": "registry:block",
       "title": "Вопросы и поддержка рядом",
-      "description": "Аккордеон вопросов и липкая карточка «не нашли — напишите» с оранжевой кнопкой в соседней колонке: выход в поддержку виден в любой точке списка.",
+      "description": "Аккордеон вопросов и липкая карточка «не нашли — напишите» с акцентной кнопкой в соседней колонке: выход в поддержку виден в любой точке списка.",
       "categories": ["faq"],
       "dependencies": [],
       "registryDependencies": [],
@@ -1285,7 +1285,7 @@
       "meta": {
         "tags": ["faq", "support", "cta", "sticky", "no-js"],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Faq008",
@@ -1296,7 +1296,7 @@
             "карточку помощи рядом со списком, а не под ним: кто не нашёл вопрос, бросает чтение посередине",
             "sticky у карточки только на широкой раскладке — в одной колонке залипший блок перекрывает вопросы",
             "одну кнопку в карточке, а не меню каналов: у блока ровно один следующий шаг",
-            "тёплую подложку карточки через color-mix от акцента — заливать её сплошным оранжевым нельзя, текст перестанет читаться",
+            "тёплую подложку карточки через color-mix от акцента — заливать её сплошным акцентным нельзя, текст перестанет читаться",
             "строку о времени ответа под кнопкой: она снимает главное сомнение до нажатия",
             "нативные details: поиск по странице сам раскрывает найденный вопрос, всё работает до гидратации",
             "container-запрос вместо медиазапроса: в узком контейнере колонки обязаны складываться сами",
@@ -1358,7 +1358,7 @@
         "i18n": {
           "en": {
             "title": "FAQ with Support Card",
-            "description": "A question accordion with a sticky \"didn't find it — write to us\" card and an orange button in the next column: the way to support stays in view at any point of the list.",
+            "description": "A question accordion with a sticky \"didn't find it — write to us\" card and an accent button in the next column: the way to support stays in view at any point of the list.",
             "ai": {
               "summary": "A two-column FAQ section: an accordion on native details on the left, a \"didn't find your question\" card on a warm accent-tinted panel with a single filled button and a promised response time on the right. On the wide layout the card sticks while the list scrolls. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
@@ -1366,7 +1366,7 @@
                 "the help card beside the list rather than under it: people who do not find their question abandon the reading halfway",
                 "sticky on the card only on the wide layout — in a single column a stuck block covers the questions",
                 "one button in the card, not a menu of channels: the block has exactly one next step",
-                "the card's warm panel via color-mix from the accent — do not fill it with solid orange, the text stops being readable",
+                "the card's warm panel via color-mix from the accent — do not fill it with solid accent, the text stops being readable",
                 "the response-time line under the button: it removes the main doubt before the click",
                 "the native details: find-on-page opens the matching question by itself, everything works before hydration",
                 "the container query instead of a media query: in a narrow container the columns have to fold on their own",
@@ -1465,7 +1465,7 @@
       "meta": {
         "tags": ["faq", "numbered", "anchors", "details", "no-js"],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Faq009",
@@ -1631,7 +1631,7 @@
       "meta": {
         "tags": ["faq", "popular", "badge", "details", "no-js"],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Faq010",
@@ -1818,7 +1818,7 @@
       "meta": {
         "tags": ["faq", "sections", "grouped", "details", "no-js"],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Faq011",
@@ -2008,7 +2008,7 @@
       "meta": {
         "tags": ["faq", "grid", "open", "seo", "schema"],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Faq012",
@@ -2174,7 +2174,7 @@
       "meta": {
         "tags": ["faq", "form", "ask", "details", "no-js"],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Faq013",
@@ -2350,7 +2350,7 @@
       "meta": {
         "tags": ["faq", "compact", "landing", "details", "no-js"],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Faq014",
@@ -2506,7 +2506,7 @@
       "meta": {
         "tags": ["faq", "screenshots", "media", "details", "no-js"],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Faq015",

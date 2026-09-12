@@ -20,7 +20,7 @@ const STYLES = `
 --vibeui-tooltip-008-bg:transparent;
 --vibeui-tooltip-008-fg:light-dark(oklch(0.28 0 265),oklch(0.92 0 265));
 --vibeui-tooltip-008-border:light-dark(oklch(0.9 0.008 90),oklch(0.37 0.01 90));
---vibeui-tooltip-008-mark:light-dark(oklch(0.52 0.13 39.8),oklch(0.76 0.12 39.8));
+--vibeui-tooltip-008-mark:light-dark(oklch(0.28 0 0),oklch(0.906 0 0));
 --vibeui-tooltip-008-tip:light-dark(oklch(0.25 0 265),oklch(0.35 0 265));
 --vibeui-tooltip-008-font:ui-serif,Georgia,"Times New Roman",serif;
 }

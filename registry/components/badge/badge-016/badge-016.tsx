@@ -17,9 +17,9 @@ const STYLES = `
 :where([data-vibeui-block="badge-016"]){
 --vibeui-badge-016-bg:light-dark(oklch(0.97 0 265),oklch(0.27 0 265));
 --vibeui-badge-016-bg-hover:light-dark(oklch(0.94 0 265),oklch(0.33 0 265));
---vibeui-badge-016-fg:light-dark(oklch(0.42 0.11 39.8),oklch(0.86 0.07 39.8));
+--vibeui-badge-016-fg:light-dark(oklch(0.255 0 0),oklch(0.86 0 0));
 --vibeui-badge-016-border:light-dark(oklch(0.9 0 265),oklch(0.42 0 265));
---vibeui-badge-016-ring:light-dark(oklch(0.55 0.16 39.8),oklch(0.74 0.14 39.8));
+--vibeui-badge-016-ring:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-badge-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

@@ -24,9 +24,9 @@ const STYLES = `
 --vibeui-button-009-bg:light-dark(oklch(0.96 0 265),oklch(0.27 0 265));
 --vibeui-button-009-fg:light-dark(oklch(0.42 0 265),oklch(0.86 0 265));
 --vibeui-button-009-border:light-dark(oklch(0.55 0 265 / 24%),oklch(0.82 0 265 / 28%));
---vibeui-button-009-on-bg:light-dark(oklch(0.94 0.045 39.8),oklch(0.34 0.055 39.8));
---vibeui-button-009-on-fg:light-dark(oklch(0.36 0.08 39.8),oklch(0.9 0.07 39.8));
---vibeui-button-009-accent:light-dark(oklch(0.62 0.15 39.8),oklch(0.7 0.14 39.8));
+--vibeui-button-009-on-bg:light-dark(oklch(0.94 0 0),oklch(0.34 0 0));
+--vibeui-button-009-on-fg:light-dark(oklch(0.36 0 0),oklch(0.9 0 0));
+--vibeui-button-009-accent:light-dark(oklch(0.305 0 0),oklch(0.895 0 0));
 --vibeui-button-009-track:light-dark(oklch(0.55 0 265 / 26%),oklch(0.85 0 265 / 26%));
 --vibeui-button-009-ring:light-dark(oklch(0.55 0 265 / 60%),oklch(0.82 0 265 / 60%));
 --vibeui-button-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -51,7 +51,7 @@ border-color:color-mix(in oklab, var(--vibeui-button-009-accent) 40%, transparen
 position:relative;width:2rem;height:1.125rem;flex:none;border-radius:9999px;
 background:var(--vibeui-button-009-track);transition:background-color .2s ease;
 }
-[data-vibeui-block="button-009"][aria-pressed="true"] [data-part="track"]{background:var(--vibeui-button-009-accent)}
+[data-vibeui-block="button-009"][aria-pressed="true"] [data-part="track"]{background:var(--vibeui-button-009-accent);color:oklch(from var(--vibeui-button-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="button-009"] [data-part="thumb"]{
 position:absolute;top:0.1875rem;left:0.1875rem;width:0.75rem;height:0.75rem;border-radius:9999px;
 /* Бегунок белый в обеих темах: он ездит по дорожке переключателя, а не по странице. */

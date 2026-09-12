@@ -38,7 +38,7 @@ const STYLES = `
 --vibeui-date-005-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-date-005-muted:color-mix(in oklab,var(--vibeui-date-005-fg) 68%,transparent);
 --vibeui-date-005-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
---vibeui-date-005-accent:light-dark(oklch(0.54 0.15 39.8),oklch(0.78 0.13 39.8));
+--vibeui-date-005-accent:light-dark(oklch(0.285 0 0),oklch(0.91 0 0));
 --vibeui-date-005-soft:color-mix(in oklch,var(--vibeui-date-005-accent) 14%,transparent);
 --vibeui-date-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

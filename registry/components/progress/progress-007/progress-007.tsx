@@ -26,7 +26,7 @@ const STYLES = `
 --vibeui-progress-007-muted:color-mix(in oklab,var(--vibeui-progress-007-fg) 68%,transparent);
 --vibeui-progress-007-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-progress-007-track:light-dark(oklch(0.93 0 265),oklch(0.3 0 265));
---vibeui-progress-007-accent:light-dark(oklch(0.6 0.15 39.8),oklch(0.72 0.14 39.8));
+--vibeui-progress-007-accent:light-dark(oklch(0.3 0 0),oklch(0.899 0 0));
 --vibeui-progress-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -46,8 +46,7 @@ display:flex;align-items:center;gap:0.5rem;font-size:0.9375rem;font-weight:650;
 [data-vibeui-block="progress-007"] [data-part="pip"]{
 flex:none;width:0.4375rem;height:0.4375rem;border-radius:9999px;
 background:var(--vibeui-progress-007-accent);
-animation:vibeui-progress-007-pulse 1.6s ease-in-out infinite;
-}
+animation:vibeui-progress-007-pulse 1.6s ease-in-out infinite;color:oklch(from var(--vibeui-progress-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 /* Штриховка едет по всей дорожке: конца у неё нет, и это честно. */
 [data-vibeui-block="progress-007"] [data-part="track"]{
 height:0.5rem;border-radius:9999px;overflow:hidden;

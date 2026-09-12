@@ -40,7 +40,7 @@ const STYLES = `
 --vibeui-phoneinput-004-muted:color-mix(in oklab,var(--vibeui-phoneinput-004-fg) 68%,transparent);
 --vibeui-phoneinput-004-field-border:light-dark(oklch(0.85 0 265),oklch(0.4 0 265));
 --vibeui-phoneinput-004-chip-bg:light-dark(oklch(0.96 0 265),oklch(0.3 0 265));
---vibeui-phoneinput-004-accent:light-dark(oklch(0.58 0.16 39.8),oklch(0.76 0.14 39.8));
+--vibeui-phoneinput-004-accent:light-dark(oklch(0.295 0 0),oklch(0.906 0 0));
 --vibeui-phoneinput-004-radius:0.625rem;
 --vibeui-phoneinput-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

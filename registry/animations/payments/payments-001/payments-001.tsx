@@ -63,8 +63,7 @@ position:absolute;left:0.3125rem;right:0.3125rem;bottom:0;height:4.5rem;z-index:
 border-radius:9999px 9999px 0.75rem 0.75rem;
 background:var(--vibeui-payments-001-accent);
 filter:blur(9px);opacity:0.5;transform-origin:center bottom;
-animation:vibeui-payments-001-breathe 4.5s ease-in-out infinite;
-}
+animation:vibeui-payments-001-breathe 4.5s ease-in-out infinite;color:oklch(from var(--vibeui-payments-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="payments-001"][data-flat="true"] [data-part="glow"]{display:none}
 [data-vibeui-block="payments-001"] [data-part="card"]{
 position:relative;z-index:1;
@@ -127,7 +126,7 @@ font-variant-numeric:tabular-nums;letter-spacing:-0.01em;
 appearance:none;border:0;cursor:pointer;width:100%;
 display:inline-flex;align-items:center;justify-content:center;gap:0.375rem;
 min-height:2.375rem;border-radius:0.75rem;
-background:var(--vibeui-payments-001-accent);color:var(--vibeui-payments-001-accent-fg);
+background:var(--vibeui-payments-001-accent);color:oklch(from var(--vibeui-payments-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.8125rem;font-weight:650;
 animation:vibeui-payments-001-pulse 2.6s ease-in-out infinite;
 animation-delay:0.9s;

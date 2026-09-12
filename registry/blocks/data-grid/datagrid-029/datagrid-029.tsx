@@ -54,10 +54,10 @@ const STYLES = `
 --vibeui-datagrid-029-muted:color-mix(in oklab,var(--vibeui-datagrid-029-fg) 68%,transparent);
 --vibeui-datagrid-029-border:light-dark(oklch(0.92 0 285),oklch(0.35 0 285));
 --vibeui-datagrid-029-head:light-dark(oklch(0.975 0 285),oklch(0.27 0 285));
---vibeui-datagrid-029-accent:light-dark(oklch(0.5 0.15 39.8),oklch(0.74 0.14 39.8));
---vibeui-datagrid-029-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0 250));
+--vibeui-datagrid-029-accent:light-dark(oklch(0.275 0 0),oklch(0.903 0 0));
+--vibeui-datagrid-029-on-accent:oklch(from var(--vibeui-datagrid-029-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-datagrid-029-bad:light-dark(oklch(0.53 0.19 27),oklch(0.76 0.16 27));
---vibeui-datagrid-029-badbg:light-dark(oklch(0.975 0.025 27),oklch(0.28 0.05 39.8));
+--vibeui-datagrid-029-badbg:light-dark(oklch(0.975 0.025 27),oklch(0.28 0 0));
 --vibeui-datagrid-029-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -126,7 +126,7 @@ border:1px solid var(--vibeui-datagrid-029-bad);color:var(--vibeui-datagrid-029-
 [data-vibeui-block="datagrid-029"] [data-part="retry"]{
 appearance:none;cursor:pointer;font:inherit;font-size:0.8125rem;font-weight:600;margin-top:0.1875rem;
 padding:0.4375rem 0.9375rem;border-radius:0.5rem;border:1px solid transparent;
-background:var(--vibeui-datagrid-029-accent);color:var(--vibeui-datagrid-029-on-accent);
+background:var(--vibeui-datagrid-029-accent);color:oklch(from var(--vibeui-datagrid-029-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="datagrid-029"] [data-part="retry"]:focus-visible{outline:2px solid var(--vibeui-datagrid-029-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-029"] [data-part="tries"]{font-size:0.6875rem!important}

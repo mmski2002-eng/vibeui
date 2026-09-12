@@ -31,7 +31,7 @@ const STYLES = `
 --vibeui-tags-007-muted:color-mix(in oklab,var(--vibeui-tags-007-fg) 68%,transparent);
 --vibeui-tags-007-border:light-dark(oklch(0.88 0 265),oklch(0.38 0 265));
 --vibeui-tags-007-chip:light-dark(oklch(0.96 0 265),oklch(0.3 0 265));
---vibeui-tags-007-accent:light-dark(oklch(0.5 0.15 39.8),oklch(0.78 0.13 39.8));
+--vibeui-tags-007-accent:light-dark(oklch(0.275 0 0),oklch(0.91 0 0));
 --vibeui-tags-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

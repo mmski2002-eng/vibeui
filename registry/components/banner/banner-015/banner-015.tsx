@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-banner-015-muted:color-mix(in oklab,var(--vibeui-banner-015-fg) 68%,transparent);
 --vibeui-banner-015-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-banner-015-tile:light-dark(oklch(0.94 0 265),oklch(0.32 0 265));
---vibeui-banner-015-accent:light-dark(oklch(0.55 0.16 39.8),oklch(0.74 0.14 39.8));
+--vibeui-banner-015-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-banner-015-on-accent:oklch(from var(--vibeui-banner-015-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-banner-015-hover:light-dark(oklch(0.2 0 265 / 7%),oklch(1 0 0 / 10%));
 --vibeui-banner-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -76,7 +76,7 @@ overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 [data-vibeui-block="banner-015"] [data-part="install"]{
 appearance:none;cursor:pointer;border:0;border-radius:0.625rem;
 min-height:2.125rem;padding:0.25rem 0.9375rem;display:inline-flex;align-items:center;justify-content:center;
-background:var(--vibeui-banner-015-accent);color:var(--vibeui-banner-015-on-accent);
+background:var(--vibeui-banner-015-accent);color:oklch(from var(--vibeui-banner-015-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.875rem;font-weight:650;white-space:nowrap;
 transition:filter .16s ease;
 }

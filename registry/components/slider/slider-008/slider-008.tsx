@@ -39,7 +39,7 @@ const STYLES = `
 --vibeui-slider-008-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
 --vibeui-slider-008-field:light-dark(oklch(0.985 0 265),oklch(0.32 0 265));
 --vibeui-slider-008-track:light-dark(oklch(0.92 0 265),oklch(0.42 0 265));
---vibeui-slider-008-accent:light-dark(oklch(0.52 0.16 39.8),oklch(0.74 0.14 39.8));
+--vibeui-slider-008-accent:light-dark(oklch(0.28 0 0),oklch(0.903 0 0));
 --vibeui-slider-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-slider-008-fill:50%;
 }
@@ -71,12 +71,10 @@ background:linear-gradient(to right,var(--vibeui-slider-008-accent) var(--vibeui
 appearance:none;margin-top:-0.3125rem;
 width:1rem;height:1rem;border-radius:9999px;
 background:var(--vibeui-slider-008-accent);border:3px solid var(--vibeui-slider-008-surface);
-box-shadow:0 1px 4px oklch(0.2 0 265 / 30%);
-}
+box-shadow:0 1px 4px oklch(0.2 0 265 / 30%);color:oklch(from var(--vibeui-slider-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="slider-008"] [data-part="range"]::-moz-range-thumb{
 width:1rem;height:1rem;border-radius:9999px;box-sizing:border-box;
-background:var(--vibeui-slider-008-accent);border:3px solid var(--vibeui-slider-008-surface);
-}
+background:var(--vibeui-slider-008-accent);border:3px solid var(--vibeui-slider-008-surface);color:oklch(from var(--vibeui-slider-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="slider-008"] [data-part="range"]:focus-visible{outline:2px solid var(--vibeui-slider-008-accent);outline-offset:4px;border-radius:0.5rem}
 /* Поле числа: стрелки убраны, ширина фиксирована и цифры моноширинные —
    иначе поле дёргается на каждом разряде. */

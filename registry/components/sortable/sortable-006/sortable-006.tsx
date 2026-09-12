@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useLayoutEffect, useRef, useState } from "react"
 import type { ComponentProps, CSSProperties, DragEvent } from "react"
 
 export type Sortable006Announcement = "moved" | "blocked" | "last"
@@ -42,9 +42,9 @@ const STYLES = `
 --vibeui-sortable-006-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-sortable-006-muted:color-mix(in oklab,var(--vibeui-sortable-006-fg) 68%,transparent);
 --vibeui-sortable-006-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-sortable-006-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.73 0.16 39.8));
---vibeui-sortable-006-pin:light-dark(oklch(0.62 0.13 39.8),oklch(0.76 0.12 39.8));
---vibeui-sortable-006-pin-ink:light-dark(oklch(0.48 0.11 39.8),oklch(0.86 0.09 39.8));
+--vibeui-sortable-006-accent:light-dark(oklch(0.287 0 0),oklch(0.901 0 0));
+--vibeui-sortable-006-pin:light-dark(oklch(0.305 0 0),oklch(0.906 0 0));
+--vibeui-sortable-006-pin-ink:light-dark(oklch(0.27 0 0),oklch(0.925 0 0));
 --vibeui-sortable-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -73,7 +73,7 @@ border-color:color-mix(in oklab,var(--vibeui-sortable-006-pin) 45%,transparent);
 background:color-mix(in oklab,var(--vibeui-sortable-006-pin) 9%,var(--vibeui-sortable-006-row));
 box-shadow:0 1px 0 var(--vibeui-sortable-006-border);
 }
-[data-vibeui-block="sortable-006"] li[data-dragging="true"]{opacity:.45}
+[data-vibeui-block="sortable-006"] li[data-dragging="true"]{opacity:.45;border-style:dashed}
 [data-vibeui-block="sortable-006"] li[data-over="true"]{box-shadow:inset 0 2px 0 var(--vibeui-sortable-006-accent)}
 [data-vibeui-block="sortable-006"] [data-part="grip"]{
 flex:none;display:grid;gap:2.5px;padding:0.25rem;cursor:grab;
@@ -171,6 +171,45 @@ export function Sortable006({
   const [order, setOrder] = useState(items)
   const [dragged, setDragged] = useState<string | null>(null)
   const [over, setOver] = useState<string | null>(null)
+  const rows = useRef(new Map<string, HTMLLIElement>())
+  const rects = useRef(new Map<string, DOMRect>())
+
+  // FLIP: после каждого рендера сравниваем прежнее и новое положение элементов
+  // и проигрываем сдвиг с прежнего места. Перестановка видна как движение,
+  // а не как мгновенная подмена.
+  useLayoutEffect(() => {
+    const next = new Map<string, DOMRect>()
+    rows.current.forEach((node, key) => next.set(key, node.getBoundingClientRect()))
+    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (!calm) {
+      rows.current.forEach((node, key) => {
+        const before = rects.current.get(key)
+        const after = next.get(key)
+        if (!before || !after) return
+        const dx = before.left - after.left
+        const dy = before.top - after.top
+        if (!dx && !dy) return
+        node.animate(
+          [{ transform: `translate(${dx}px,${dy}px)` }, { transform: "none" }],
+          { duration: 220, easing: "cubic-bezier(.2,.8,.2,1)" },
+        )
+      })
+    }
+    rects.current = next
+  })
+
+  // Живая перестановка: элемент встаёт на место того, над которым висит
+  // курсор, ещё до отпускания — остальные раздвигаются, а не накладываются.
+  const hover = (target: string) => {
+    if (!dragged || dragged === target) return
+    const from = order.indexOf(dragged)
+    const to = order.indexOf(target)
+    if (from < 0 || to < 0 || from === to) return
+    const next = [...order]
+    next.splice(from, 1)
+    next.splice(to, 0, dragged)
+    setOrder(next)
+  }
   const [announcement, setAnnouncement] = useState("")
 
   const say = (
@@ -206,11 +245,13 @@ export function Sortable006({
     setAnnouncement(say("moved", row, to + 2, next.length + 1))
   }
 
-  const drop = (event: DragEvent<HTMLLIElement>, target: string) => {
+  const drop = (event: DragEvent<HTMLLIElement>) => {
     event.preventDefault()
     setOver(null)
-    if (!dragged || dragged === target) return
-    move(order.indexOf(dragged), order.indexOf(target))
+    if (dragged) {
+      onChange?.(order)
+      setAnnouncement(say("moved", dragged, order.indexOf(dragged) + 2, order.length + 1))
+    }
     setDragged(null)
   }
 
@@ -251,6 +292,10 @@ export function Sortable006({
           {order.map((row, index) => (
             <li
               key={row}
+              ref={(node) => {
+                if (node) rows.current.set(row, node)
+                else rows.current.delete(row)
+              }}
               draggable
               data-dragging={row === dragged}
               data-over={row === over}
@@ -262,8 +307,9 @@ export function Sortable006({
               onDragOver={(event) => {
                 event.preventDefault()
                 setOver(row)
+                hover(row)
               }}
-              onDrop={(event) => drop(event, row)}
+              onDrop={drop}
             >
               <span data-part="grip" aria-hidden="true">
                 <span />

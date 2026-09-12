@@ -40,8 +40,8 @@ const STYLES = `
 --vibeui-range-007-muted:color-mix(in oklab,var(--vibeui-range-007-fg) 68%,transparent);
 --vibeui-range-007-border:light-dark(oklch(0.88 0 265),oklch(0.39 0 265));
 --vibeui-range-007-track:light-dark(oklch(0.93 0 265),oklch(0.33 0 265));
---vibeui-range-007-accent:light-dark(oklch(0.55 0.18 39.8),oklch(0.79 0.14 39.8));
---vibeui-range-007-soft:light-dark(oklch(0.55 0.18 39.8 / 12%),oklch(0.79 0.14 39.8 / 20%));
+--vibeui-range-007-accent:light-dark(oklch(0.287 0 0),oklch(0.912 0 0));
+--vibeui-range-007-soft:light-dark(oklch(0.287 0 0 / 12%),oklch(0.912 0 0 / 20%));
 --vibeui-range-007-shadow:light-dark(oklch(0.2 0 265 / 25%),oklch(0 0 0 / 45%));
 --vibeui-range-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-range-007-from:0%;

@@ -12,6 +12,8 @@ export type Hero012Props = {
   accent?: string
   /** Пусто — подложки нет, секция ложится на фон страницы. */
   background?: string
+  /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
+  tone?: "auto" | "light" | "dark"
   className?: string
   style?: CSSProperties
 }
@@ -28,8 +30,8 @@ const STYLES = `
 --vibeui-hero-012-muted:light-dark(oklch(0.51 0 265),oklch(0.72 0 265));
 --vibeui-hero-012-card:light-dark(oklch(1 0 0),oklch(0.235 0 265));
 --vibeui-hero-012-line:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
---vibeui-hero-012-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.73 0.17 39.8));
---vibeui-hero-012-accent-fg:oklch(0.15 0.02 39.8);
+--vibeui-hero-012-accent:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
+--vibeui-hero-012-accent-fg:oklch(from var(--vibeui-hero-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-012-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-hero-012-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 container-type:inline-size;
@@ -37,6 +39,8 @@ container-type:inline-size;
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="hero-012"]{color-scheme:dark}
+:where([data-vibeui-block="hero-012"][data-tone="light"]){color-scheme:light}
+:where([data-vibeui-block="hero-012"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="hero-012"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -57,7 +61,7 @@ transition:border-color .16s ease,box-shadow .16s ease;
 [data-vibeui-block="hero-012"] [data-part="announce"]:focus-visible{outline:2px solid var(--vibeui-hero-012-accent);outline-offset:3px}
 [data-vibeui-block="hero-012"] [data-part="badge"]{
 padding:0.1875rem 0.5rem;border-radius:9999px;background:var(--vibeui-hero-012-accent);
-color:var(--vibeui-hero-012-accent-fg);font-size:0.6875rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
+color:oklch(from var(--vibeui-hero-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);font-size:0.6875rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
 }
 [data-vibeui-block="hero-012"] [data-part="announcetext"]{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 [data-vibeui-block="hero-012"] [data-part="arrow"]{flex:0 0 auto;transition:transform .16s ease}
@@ -74,8 +78,8 @@ color:var(--vibeui-hero-012-muted);text-wrap:pretty;
 display:inline-flex;align-items:center;justify-content:center;height:2.75rem;padding:0 1.375rem;border-radius:0.625rem;
 font-size:0.9375rem;font-weight:600;text-decoration:none;transition:background-color .16s ease,border-color .16s ease;
 }
-[data-vibeui-block="hero-012"] [data-part="primary"]{background:var(--vibeui-hero-012-accent);color:var(--vibeui-hero-012-accent-fg);border:1px solid transparent}
-[data-vibeui-block="hero-012"] [data-part="primary"]:hover{background:color-mix(in oklab,var(--vibeui-hero-012-accent) 86%,black)}
+[data-vibeui-block="hero-012"] [data-part="primary"]{background:var(--vibeui-hero-012-accent);color:oklch(from var(--vibeui-hero-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border:1px solid transparent;box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-hero-012-accent) 40%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);transition:transform .2s cubic-bezier(.32,.72,0,1),box-shadow .25s ease,background-color .2s ease}
+[data-vibeui-block="hero-012"] [data-part="primary"]:hover{transform:translateY(-1px);box-shadow:0 0.625rem 1.75rem color-mix(in oklab,var(--vibeui-hero-012-accent) 50%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 52%,transparent)}
 [data-vibeui-block="hero-012"] [data-part="secondary"]{border:1px solid var(--vibeui-hero-012-line);color:var(--vibeui-hero-012-fg);background:var(--vibeui-hero-012-card)}
 [data-vibeui-block="hero-012"] [data-part="secondary"]:hover{border-color:var(--vibeui-hero-012-fg)}
 [data-vibeui-block="hero-012"] [data-part="actions"] a:focus-visible{outline:2px solid var(--vibeui-hero-012-accent);outline-offset:3px}
@@ -148,6 +152,7 @@ export function Hero012({
   release = DEFAULT_RELEASE,
   accent,
   background = "",
+  tone = "auto",
   className,
   style,
 }: Hero012Props) {
@@ -169,6 +174,7 @@ export function Hero012({
       </style>
       <section
         data-vibeui-block="hero-012"
+        data-tone={tone === "auto" ? undefined : tone}
         className={className}
         style={palette}
       >

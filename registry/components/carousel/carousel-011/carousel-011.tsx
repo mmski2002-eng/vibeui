@@ -40,7 +40,7 @@ const STYLES = `
 --vibeui-carousel-011-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-carousel-011-muted:color-mix(in oklab,var(--vibeui-carousel-011-fg) 68%,transparent);
 --vibeui-carousel-011-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
---vibeui-carousel-011-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-carousel-011-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-carousel-011-step:6s;
 --vibeui-carousel-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -85,8 +85,7 @@ background:var(--vibeui-carousel-011-bg);color:var(--vibeui-carousel-011-fg);
    переключение выглядит внезапным. */
 [data-vibeui-block="carousel-011"] [data-part="fill"]{
 display:block;height:100%;width:100%;transform-origin:left;transform:scaleX(0);
-background:var(--vibeui-carousel-011-accent);
-}
+background:var(--vibeui-carousel-011-accent);color:oklch(from var(--vibeui-carousel-011-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="carousel-011"] li[data-state="done"] [data-part="fill"]{transform:scaleX(1)}
 [data-vibeui-block="carousel-011"] li[data-state="live"] [data-part="fill"]{
 animation:vibeui-carousel-011-run var(--vibeui-carousel-011-step) linear forwards;

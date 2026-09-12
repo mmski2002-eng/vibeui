@@ -42,7 +42,7 @@ const STYLES = `
 --vibeui-carousel-017-fg:light-dark(oklch(0.24 0 265),oklch(0.95 0 265));
 --vibeui-carousel-017-muted:color-mix(in oklab,var(--vibeui-carousel-017-fg) 68%,transparent);
 --vibeui-carousel-017-border:light-dark(oklch(0.89 0 265),oklch(0.37 0 265));
---vibeui-carousel-017-accent:light-dark(oklch(0.53 0.17 39.8),oklch(0.77 0.13 39.8));
+--vibeui-carousel-017-accent:light-dark(oklch(0.282 0 0),oklch(0.908 0 0));
 --vibeui-carousel-017-shadow:light-dark(oklch(0.2 0 265 / 42%),oklch(0 0 0 / 70%));
 --vibeui-carousel-017-radius:0.75rem;
 --vibeui-carousel-017-hue:268;

@@ -73,13 +73,12 @@ display:flex;align-items:center;justify-content:center;
 [data-vibeui-block="avatar-anim-003"] [data-part="ring"]{
 position:absolute;inset:-0.375rem;border-radius:9999px;
 background:var(--vibeui-avatar-anim-003-accent);opacity:.4;filter:blur(3px);
-animation:vibeui-avatar-anim-003-pulse 2.4s ease-out infinite;
-}
+animation:vibeui-avatar-anim-003-pulse 2.4s ease-out infinite;color:oklch(from var(--vibeui-avatar-anim-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="avatar-anim-003"][data-pulse="false"] [data-part="ring"]{display:none}
 [data-vibeui-block="avatar-anim-003"] [data-part="avatar"]{
 position:relative;z-index:1;width:100%;height:100%;border-radius:9999px;
 display:flex;align-items:center;justify-content:center;
-font-size:1.0625rem;font-weight:700;color:#fff;
+font-size:1.0625rem;font-weight:700;color:oklch(from var(--vibeui-avatar-anim-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 background:var(--vibeui-avatar-anim-003-accent);
 box-shadow:0 2px 6px oklch(0 0 0 / 0.16);
 }

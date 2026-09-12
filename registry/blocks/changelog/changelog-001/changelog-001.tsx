@@ -30,7 +30,7 @@ const STYLES = `
 --vibeui-changelog-001-muted:light-dark(oklch(0.5 0 0),oklch(0.72 0 0));
 --vibeui-changelog-001-border:light-dark(oklch(0.9 0 0),oklch(0.32 0 0));
 --vibeui-changelog-001-card:light-dark(oklch(1 0 0),oklch(0.2 0 0));
---vibeui-changelog-001-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
+--vibeui-changelog-001-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-changelog-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-changelog-001-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;
@@ -63,8 +63,7 @@ border-left:2px solid var(--vibeui-changelog-001-border);
 content:"";position:absolute;left:-0.4375rem;top:0.25rem;
 width:0.75rem;height:0.75rem;border-radius:999px;
 background:var(--vibeui-changelog-001-accent);
-box-shadow:0 0 0 4px var(--vibeui-changelog-001-bg);
-}
+box-shadow:0 0 0 4px var(--vibeui-changelog-001-bg);color:oklch(from var(--vibeui-changelog-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="changelog-001"] [data-part="meta"]{
 display:flex;flex-wrap:wrap;align-items:center;gap:0.625rem;
 }
@@ -87,8 +86,7 @@ position:relative;padding-left:1rem;font-size:0.9375rem;line-height:1.5;color:va
 }
 [data-vibeui-block="changelog-001"] [data-part="point"]::before{
 content:"";position:absolute;left:0;top:0.5625rem;width:0.375rem;height:0.375rem;border-radius:999px;
-background:var(--vibeui-changelog-001-accent);
-}
+background:var(--vibeui-changelog-001-accent);color:oklch(from var(--vibeui-changelog-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @container (min-width: 40rem){
 [data-vibeui-block="changelog-001"] [data-part="shell"]{padding:4rem 2rem}
 }

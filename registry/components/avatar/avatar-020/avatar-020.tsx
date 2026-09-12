@@ -18,7 +18,7 @@ const STYLES = `
 :where([data-vibeui-block="avatar-020"]){
 --vibeui-avatar-020-size:2.5rem;
 --vibeui-avatar-020-badge:1.125rem;
---vibeui-avatar-020-color:light-dark(oklch(0.56 0.19 39.8),oklch(0.70 0.19 39.8));
+--vibeui-avatar-020-color:light-dark(oklch(0.58 0.2 25),oklch(0.72 0.19 25));
 --vibeui-avatar-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-020"]{

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useLayoutEffect, useRef, useState } from "react"
 import type { ComponentProps, CSSProperties, DragEvent } from "react"
 
 export type Sortable004Props = Omit<
@@ -41,7 +41,7 @@ const STYLES = `
 --vibeui-sortable-004-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-sortable-004-muted:color-mix(in oklab,var(--vibeui-sortable-004-fg) 68%,transparent);
 --vibeui-sortable-004-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
---vibeui-sortable-004-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.73 0.16 39.8));
+--vibeui-sortable-004-accent:light-dark(oklch(0.287 0 0),oklch(0.901 0 0));
 --vibeui-sortable-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -81,7 +81,7 @@ background:var(--vibeui-sortable-004-row);
 border:1px solid var(--vibeui-sortable-004-border);
 font-size:0.75rem;line-height:1.3;
 }
-[data-vibeui-block="sortable-004"] li[data-dragging="true"]{opacity:.45}
+[data-vibeui-block="sortable-004"] li[data-dragging="true"]{opacity:.45;border-style:dashed}
 [data-vibeui-block="sortable-004"] [data-part="text"]{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 /* Кнопка переноса — единственный путь с клавиатуры, drag с неё недоступен. */
 [data-vibeui-block="sortable-004"] [data-part="send"]{
@@ -158,6 +158,32 @@ export function Sortable004({
   const [right, setRight] = useState(target)
   const [dragged, setDragged] = useState<string | null>(null)
   const [over, setOver] = useState<"left" | "right" | null>(null)
+  const rows = useRef(new Map<string, HTMLLIElement>())
+  const rects = useRef(new Map<string, DOMRect>())
+
+  // FLIP: после каждого рендера сравниваем прежнее и новое положение элементов
+  // и проигрываем сдвиг с прежнего места. Перестановка видна как движение,
+  // а не как мгновенная подмена.
+  useLayoutEffect(() => {
+    const next = new Map<string, DOMRect>()
+    rows.current.forEach((node, key) => next.set(key, node.getBoundingClientRect()))
+    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (!calm) {
+      rows.current.forEach((node, key) => {
+        const before = rects.current.get(key)
+        const after = next.get(key)
+        if (!before || !after) return
+        const dx = before.left - after.left
+        const dy = before.top - after.top
+        if (!dx && !dy) return
+        node.animate(
+          [{ transform: `translate(${dx}px,${dy}px)` }, { transform: "none" }],
+          { duration: 220, easing: "cubic-bezier(.2,.8,.2,1)" },
+        )
+      })
+    }
+    rects.current = next
+  })
   const [announcement, setAnnouncement] = useState("")
 
   const send = (row: string, to: "left" | "right") => {
@@ -236,6 +262,7 @@ export function Sortable004({
             onDragOver={(event) => {
               event.preventDefault()
               setOver(panel.side)
+              if (dragged) send(dragged, panel.side)
             }}
             onDragLeave={() => setOver(null)}
             onDrop={(event) => drop(event, panel.side)}
@@ -251,6 +278,10 @@ export function Sortable004({
                 {panel.rows.map((row) => (
                   <li
                     key={row}
+                    ref={(node) => {
+                      if (node) rows.current.set(row, node)
+                      else rows.current.delete(row)
+                    }}
                     draggable
                     data-dragging={row === dragged}
                     onDragStart={() => setDragged(row)}

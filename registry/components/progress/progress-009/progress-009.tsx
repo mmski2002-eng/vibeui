@@ -20,7 +20,7 @@ const STYLES = `
 --vibeui-progress-009-muted:color-mix(in oklab,var(--vibeui-progress-009-fg) 68%,transparent);
 --vibeui-progress-009-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-progress-009-track:light-dark(oklch(0.93 0 265),oklch(0.3 0 265));
---vibeui-progress-009-accent:light-dark(oklch(0.52 0.2 39.8),oklch(0.7 0.17 39.8));
+--vibeui-progress-009-accent:light-dark(oklch(0.28 0 0),oklch(0.895 0 0));
 --vibeui-progress-009-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0 292));
 --vibeui-progress-009-fade:light-dark(oklch(1 0 0),oklch(0.24 0 292));
 --vibeui-progress-009-value:0;
@@ -48,7 +48,7 @@ position:absolute;top:0;
 left:clamp(1.5rem,calc(var(--vibeui-progress-009-value) * 1%),calc(100% - 1.5rem));
 transform:translateX(-50%);
 padding:0.1875rem 0.4375rem;border-radius:0.375rem;
-background:var(--vibeui-progress-009-accent);color:var(--vibeui-progress-009-on-accent);
+background:var(--vibeui-progress-009-accent);color:oklch(from var(--vibeui-progress-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.75rem;font-weight:700;line-height:1.2;
 font-variant-numeric:tabular-nums;white-space:nowrap;
 transition:left .3s cubic-bezier(.32,.72,0,1);

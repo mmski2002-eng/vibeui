@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-codeblock-013-gutter:light-dark(oklch(0.63 0 265),oklch(0.55 0 265));
 --vibeui-codeblock-013-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 13%));
 --vibeui-codeblock-013-row:light-dark(oklch(0 0 0 / 5%),oklch(1 0 0 / 6%));
---vibeui-codeblock-013-mark:light-dark(oklch(0.72 0.14 39.8 / 24%),oklch(0.6 0.14 39.8 / 18%));
+--vibeui-codeblock-013-mark:light-dark(oklch(0.33 0 0 / 24%),oklch(0.877 0 0 / 18%));
 --vibeui-codeblock-013-key:light-dark(oklch(0 0 0 / 6%),oklch(1 0 0 / 10%));
 --vibeui-codeblock-013-ok:light-dark(oklch(0.48 0.15 152),oklch(0.84 0.14 152));
 --vibeui-codeblock-013-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;

@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-combobox-007-border:light-dark(oklch(0.9 0 250),oklch(0.37 0 250));
 --vibeui-combobox-007-field:light-dark(oklch(0.98 0 250),oklch(0.3 0 250));
 --vibeui-combobox-007-active:light-dark(oklch(0.95 0 250),oklch(0.36 0 250));
---vibeui-combobox-007-accent:light-dark(oklch(0.52 0.13 39.8),oklch(0.76 0.13 39.8));
+--vibeui-combobox-007-accent:light-dark(oklch(0.28 0 0),oklch(0.906 0 0));
 --vibeui-combobox-007-radius:0.625rem;
 --vibeui-combobox-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-combobox-007-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -84,8 +84,7 @@ background:var(--vibeui-combobox-007-active);
 }
 [data-vibeui-block="combobox-007"] [data-part="bar"] span{
 display:block;height:100%;border-radius:999px;
-background:var(--vibeui-combobox-007-accent);transition:width .2s ease;
-}
+background:var(--vibeui-combobox-007-accent);transition:width .2s ease;color:oklch(from var(--vibeui-combobox-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="combobox-007"] *{animation:none!important;transition:none!important}}
 /* Скрытый список: у ul браузерный display перебивает hidden, если
    компонент задаёт ему свой. */

@@ -44,7 +44,7 @@ const STYLES = `
 --vibeui-drawer-011-head:light-dark(oklch(0 0 0 / 3%),oklch(1 0 0 / 4%));
 --vibeui-drawer-011-hover:light-dark(oklch(0 0 0 / 5%),oklch(1 0 0 / 7%));
 --vibeui-drawer-011-grip:light-dark(oklch(0 0 0 / 16%),oklch(1 0 0 / 22%));
---vibeui-drawer-011-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.78 0.12 39.8));
+--vibeui-drawer-011-accent:light-dark(oklch(0.275 0 0),oklch(0.91 0 0));
 --vibeui-drawer-011-soft:color-mix(in oklab,var(--vibeui-drawer-011-accent) 14%,transparent);
 --vibeui-drawer-011-scrim:light-dark(oklch(0.2 0 265 / 42%),oklch(0 0 0 / 62%));
 --vibeui-drawer-011-shadow:light-dark(oklch(0.2 0 265 / 40%),oklch(0 0 0 / 70%));
@@ -98,7 +98,7 @@ content:"";width:0.1875rem;height:2.5rem;border-radius:999px;
 background:var(--vibeui-drawer-011-grip);
 transition:background-color .16s ease;
 }
-[data-vibeui-block="drawer-011"] [data-part="grabber"]:hover::before{background:var(--vibeui-drawer-011-accent)}
+[data-vibeui-block="drawer-011"] [data-part="grabber"]:hover::before{background:var(--vibeui-drawer-011-accent);color:oklch(from var(--vibeui-drawer-011-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="drawer-011"] [data-part="grabber"]:focus-visible{outline:2px solid var(--vibeui-drawer-011-accent);outline-offset:-2px}
 [data-vibeui-block="drawer-011"] [data-part="body"]{
 flex:1;min-width:0;display:flex;flex-direction:column;

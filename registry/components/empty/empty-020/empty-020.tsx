@@ -78,7 +78,7 @@ outline:2px solid var(--vibeui-empty-020-accent);outline-offset:1px;
 appearance:none;border:0;cursor:pointer;flex:none;
 display:inline-flex;align-items:center;justify-content:center;
 min-height:2.625rem;padding:0.375rem 1.125rem;border-radius:0.75rem;
-background:var(--vibeui-empty-020-accent);color:var(--vibeui-empty-020-on-accent);
+background:var(--vibeui-empty-020-accent);color:oklch(from var(--vibeui-empty-020-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="empty-020"] [data-part="submit"]:focus-visible{

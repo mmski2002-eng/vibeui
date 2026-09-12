@@ -111,7 +111,7 @@ font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="banner-013"] [data-part="accept"],
 [data-vibeui-block="banner-013"] [data-part="save"]{
-background:var(--vibeui-banner-013-accent);color:var(--vibeui-banner-013-on-accent);
+background:var(--vibeui-banner-013-accent);color:oklch(from var(--vibeui-banner-013-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="banner-013"] [data-part="reject"]{
 background:transparent;color:var(--vibeui-banner-013-fg);

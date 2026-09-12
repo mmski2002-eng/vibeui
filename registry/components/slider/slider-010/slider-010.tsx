@@ -49,7 +49,7 @@ const STYLES = `
 --vibeui-slider-010-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-slider-010-track:light-dark(oklch(0.92 0 265),oklch(0.42 0 265));
 --vibeui-slider-010-mark:light-dark(oklch(0.75 0 265),oklch(0.58 0 265));
---vibeui-slider-010-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-slider-010-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-slider-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-slider-010-fill:40%;
 }
@@ -84,12 +84,10 @@ background:linear-gradient(to right,var(--vibeui-slider-010-accent) var(--vibeui
 appearance:none;margin-top:-0.34375rem;
 width:1.0625rem;height:1.0625rem;border-radius:9999px;
 background:var(--vibeui-slider-010-accent);border:3px solid var(--vibeui-slider-010-surface);
-box-shadow:0 1px 4px oklch(0.2 0 265 / 30%);
-}
+box-shadow:0 1px 4px oklch(0.2 0 265 / 30%);color:oklch(from var(--vibeui-slider-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="slider-010"] input::-moz-range-thumb{
 width:1.0625rem;height:1.0625rem;border-radius:9999px;box-sizing:border-box;
-background:var(--vibeui-slider-010-accent);border:3px solid var(--vibeui-slider-010-surface);
-}
+background:var(--vibeui-slider-010-accent);border:3px solid var(--vibeui-slider-010-surface);color:oklch(from var(--vibeui-slider-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="slider-010"] input:focus-visible{outline:2px solid var(--vibeui-slider-010-accent);outline-offset:4px;border-radius:0.5rem}
 /* Деления рисуются отдельным слоем поверх дорожки, на своём проценте от
    ширины каждый: input остаётся кликабельным, слой лишь визуальный. */

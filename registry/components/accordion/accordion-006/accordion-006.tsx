@@ -44,7 +44,7 @@ const STYLES = `
 --vibeui-accordion-006-bg:transparent;
 --vibeui-accordion-006-border:light-dark(oklch(0.91 0 265),oklch(0.31 0 265));
 --vibeui-accordion-006-track:light-dark(oklch(0.93 0 265),oklch(0.28 0 265));
---vibeui-accordion-006-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.75 0.16 39.8));
+--vibeui-accordion-006-accent:light-dark(oklch(0.287 0 0),oklch(0.905 0 0));
 --vibeui-accordion-006-accent-fg:light-dark(oklch(1 0 0),oklch(0.17 0 265));
 --vibeui-accordion-006-done:light-dark(oklch(0.58 0.15 152),oklch(0.75 0.15 155));
 --vibeui-accordion-006-radius:1rem;

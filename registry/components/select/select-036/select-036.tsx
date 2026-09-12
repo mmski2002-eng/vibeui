@@ -43,7 +43,7 @@ const STYLES = `
 --vibeui-select-036-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-select-036-muted:color-mix(in oklab,var(--vibeui-select-036-fg) 68%,transparent);
 --vibeui-select-036-border:light-dark(oklch(0.87 0 265),oklch(0.4 0 265));
---vibeui-select-036-accent:light-dark(oklch(0.52 0.18 39.8),oklch(0.76 0.15 39.8));
+--vibeui-select-036-accent:light-dark(oklch(0.28 0 0),oklch(0.906 0 0));
 --vibeui-select-036-on-accent:oklch(from var(--vibeui-select-036-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-select-036-tint:color-mix(in oklab,var(--vibeui-select-036-accent) 14%,transparent);
 --vibeui-select-036-mark:color-mix(in oklab,var(--vibeui-select-036-accent) 26%,transparent);
@@ -162,7 +162,7 @@ flex:1;min-inline-size:0;overflow:hidden;text-overflow:ellipsis;white-space:nowr
 [data-vibeui-block="select-036"] [data-part="plus"]{
 flex:none;display:grid;place-items:center;width:1.125rem;height:1.125rem;
 border-radius:9999px;background:var(--vibeui-select-036-accent);
-color:var(--vibeui-select-036-on-accent);font-size:0.8125rem;font-weight:700;line-height:1;
+color:oklch(from var(--vibeui-select-036-accent) clamp(0,(0.62 - l) * 100,1) 0 0);font-size:0.8125rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="select-036"] [data-part="kbd"]{
 flex:none;padding:0.0625rem 0.3125rem;border-radius:0.25rem;

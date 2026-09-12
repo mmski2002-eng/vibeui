@@ -30,7 +30,7 @@ const STYLES = `
 --vibeui-rating-009-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-rating-009-muted:color-mix(in oklab,var(--vibeui-rating-009-fg) 68%,transparent);
 --vibeui-rating-009-track:light-dark(oklch(0.94 0 265),oklch(0.31 0 265));
---vibeui-rating-009-accent:light-dark(oklch(0.58 0.19 39.8),oklch(0.72 0.16 39.8));
+--vibeui-rating-009-accent:light-dark(oklch(0.7 0.16 85),oklch(0.85 0.16 88));
 --vibeui-rating-009-on:light-dark(oklch(1 0 0),oklch(0.18 0 265));
 --vibeui-rating-009-shadow:light-dark(oklch(0.2 0 265 / 22%),oklch(0 0 0 / 45%));
 --vibeui-rating-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -55,7 +55,7 @@ background:var(--vibeui-rating-009-track);
 position:absolute;top:50%;translate:-50% -50%;
 display:inline-flex;align-items:center;justify-content:center;
 min-width:1.875rem;height:1.375rem;padding:0 0.375rem;border-radius:9999px;
-background:var(--vibeui-rating-009-accent);color:var(--vibeui-rating-009-on);
+background:var(--vibeui-rating-009-accent);color:oklch(from var(--vibeui-rating-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.6875rem;font-weight:750;font-variant-numeric:tabular-nums;
 box-shadow:0 1px 3px var(--vibeui-rating-009-shadow);
 }
@@ -74,7 +74,7 @@ font-size:0.6875rem;color:var(--vibeui-rating-009-muted);font-variant-numeric:ta
 [data-vibeui-block="rating-009"] [data-part="bar"]{
 height:0.4375rem;border-radius:9999px;background:var(--vibeui-rating-009-track);overflow:hidden;
 }
-[data-vibeui-block="rating-009"] [data-part="bar"] span{display:block;height:100%;background:var(--vibeui-rating-009-accent)}
+[data-vibeui-block="rating-009"] [data-part="bar"] span{display:block;height:100%;background:var(--vibeui-rating-009-accent);color:oklch(from var(--vibeui-rating-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="rating-009"] [data-part="tally"]{text-align:right;white-space:nowrap}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="rating-009"] *{animation:none!important;transition:none!important}}
 `

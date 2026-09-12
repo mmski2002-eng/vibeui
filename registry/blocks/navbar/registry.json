@@ -5,7 +5,7 @@
       "name": "navbar-002",
       "type": "registry:block",
       "title": "Шапка с пилюлями",
-      "description": "Тёмная шапка, в которой меню собрано в одну пилюлю: разделы читаются как единый объект, а в узкой колонке пилюля не прячется в бургер, а превращается в ленту с горизонтальной прокруткой.",
+      "description": "Шапка, в которой меню собрано в одну пилюлю: разделы читаются как единый объект. Пилюля — вдавленный жёлоб, активный раздел лежит на выпуклой каретке, которая переезжает под курсором. В узкой колонке пилюля не прячется в бургер, а превращается в ленту с горизонтальной прокруткой.",
       "categories": ["navbar"],
       "dependencies": [],
       "registryDependencies": [],
@@ -16,45 +16,45 @@
           "target": "@components/vibeui/navbar-002.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-002-*. Серверный компонент, клиентского JS нет. Раскладка считается container-запросом от собственной ширины блока: до 54rem пилюля переносится на вторую строку и прокручивается по горизонтали, дальше встаёт в один ряд по центру шапки. Текущий раздел помечается атрибутом aria-current=\"page\" и подсвечивается селектором по этому атрибуту, а не отдельным классом, поэтому подсветка и доступность не расходятся.",
+      "docs": "Один файл, ноль зависимостей, клиентский компонент. Поверхности следуют теме страницы через light-dark(), поэтому шапка светлеет и темнеет вместе с сайтом; акцент и текст на нём фиксированы брендом. Пилюля навигации получает внутреннюю тень — жёлоб, — а каретка активного пункта лежит поверх с собственной тенью и подсветкой сверху: разница глубин отделяет выбранный раздел от остальных. Положение каретки считается по offsetLeft/offsetWidth и едет за курсором и фокусом; до готовности JS активный пункт подсвечен обычным фоном, поэтому подсветка не пропадает без гидратации. У кнопки действия — свечение, следующее за курсором, у ссылки входа — подчёркивание, растущее из центра. Раскладка — container-запрос от собственной ширины блока. Палитра --vibeui-navbar-002-*.",
       "meta": {
         "tags": ["navbar", "header", "navigation", "dark"],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "aspect": "1280 / 121"
         },
         "ai": {
           "export": "Navbar002",
           "usage": "<Navbar002\n  brand=\"Контур\"\n  links={[{ label: \"Продукт\", href: \"/product\", current: true }]}\n  actionLabel=\"Демо\"\n  actionHref=\"/demo\"\n/>",
-          "summary": "Тёмная шапка сайта: логотип со знаком, меню в виде одной пилюли, текстовая ссылка входа и закрашенная кнопка действия. В узкой раскладке пилюля уезжает на вторую строку и прокручивается пальцем, поэтому разделы остаются видимыми там, где обычно появляется бургер. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "summary": "Шапка с меню-пилюлей: вдавленный жёлоб, выпуклая каретка активного раздела, переезжающая под курсором. Тема следует за страницей через light-dark(), акцент фиксирован. В узкой колонке пилюля превращается в ленту с прокруткой.",
           "preserve": [
-            "локальную палитру --vibeui-navbar-002-* и не подменять её токенами вашей темы (bg-background, border-border и подобными): блок обязан выглядеть одинаково в любом проекте",
-            "меню одной пилюлей: рамка вокруг ссылок и есть основная идея блока, без неё это обычная строка ссылок",
-            "горизонтальную прокрутку пилюли на узкой ширине вместо бургера — разделы контентного сайта должны оставаться на виду",
-            "скрытие полосы прокрутки вместе с сохранением самой прокрутки: полоса поверх пилюли ломает её форму",
-            "container-запрос вместо медиазапроса: раскладка считается от ширины блока, иначе в узкой колонке появится десктопный ряд",
-            "подсветку текущего раздела через aria-current=\"page\", а не через отдельный класс: разметка и доступность обязаны совпадать",
-            "одну закрашенную кнопку рядом с текстовой ссылкой входа — два одинаковых действия раздваивают выбор",
-            "блок <style> внутри компонента: в нём вся палитра, раскладка и состояния",
-            "тёмную подложку: это идея блока, а не тёмная тема — шапка остаётся тёмной и на светлой странице, поэтому палитра намеренно одноцветная и light-dark() ей не нужен"
+            "локальную палитру --vibeui-navbar-002-* и не подменять её токенами вашей темы",
+            "меню одной пилюлей: рассыпать разделы по шапке значит потерять идею блока",
+            "разницу глубин: вдавленный жёлоб пилюли и выпуклую каретку поверх него",
+            "каретку отдельным слоем под ссылками и фон-подсветку у aria-current до готовности JS",
+            "ленту с горизонтальной прокруткой в узкой колонке вместо бургера",
+            "container-запрос вместо медиазапроса: раскладка считается от ширины блока"
           ],
           "adapt": [
-            "brand — название и буква в знаке; знак можно заменить на свой <svg>",
-            "массив links — пункты меню и флаг current у текущего раздела",
-            "loginLabel и loginHref — второстепенное действие входа",
-            "actionLabel и actionHref — главное действие шапки",
-            "акцент через проп accent — цвет знака, кнопки и фокуса",
-            "position:sticky и внешние отступы задавайте снаружи через className",
-            "markLabel и navLabel — буква в знаке и подпись навигации для скринридера"
+            "links, brand, loginLabel, actionLabel — контент шапки",
+            "accent — фирменный цвет знака и действия; текст на акценте остаётся тёмным",
+            "markLabel — буква или инициал в знаке",
+            "закрепление шапки (sticky/fixed) задаёт принимающий проект снаружи",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
-            "Больше шести пунктов в пилюле на широкой раскладке начинают жать: лишнее уводите в подвал.",
-            "Пилюля прокручивается без видимой полосы — оставьте у крайних пунктов отступ, иначе не видно, что список продолжается.",
-            "Не делайте вход второй закрашенной кнопкой: он намеренно оформлен как ссылка.",
-            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+            "Блок клиентский: каретке нужен JS. Разметка приходит с сервера и работает без гидратации.",
+            "Тёмную тему включает класс .dark или атрибут data-theme=\"dark\" на предке — light-dark() смотрит на color-scheme, который блок объявляет сам."
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "brand",
             "label": "Название",
@@ -85,38 +85,32 @@
         ],
         "i18n": {
           "en": {
-            "description": "A dark header whose menu is gathered into a single pill: the sections read as one object, and in a narrow column the pill turns into a horizontally scrollable rail instead of collapsing into a burger.",
+            "description": "A header whose menu is gathered into a single pill, so the sections read as one object. The pill is a sunken well, the active section rides a raised glider that follows the cursor. In a narrow column the pill does not collapse into a burger — it becomes a horizontally scrollable strip.",
             "ai": {
-              "summary": "A dark site header: a logo with a mark, a menu inside one pill, a text sign-in link and a filled action button. On a narrow layout the pill moves to a second row and scrolls by finger, so the sections stay visible where a burger usually appears. Zero dependencies, one file, its own palette, no client JS.",
+              "summary": "A header with a menu pill: a sunken well, a raised glider for the active section that follows the cursor. The theme follows the page through light-dark(), the accent stays fixed. In a narrow column the pill becomes a scrollable strip.",
               "preserve": [
-                "the local --vibeui-navbar-002-* palette — do not swap it for your theme tokens (bg-background, border-border and the like): the block must look the same in any project",
-                "the menu as a single pill: the frame around the links is the idea of the block, without it this is a plain row of links",
-                "the horizontal scrolling pill on narrow widths instead of a burger — the sections of a content site should stay visible",
-                "hiding the scrollbar while keeping the scrolling itself: a bar over the pill breaks its shape",
-                "the container query instead of a media query: the layout measures the block, otherwise a narrow column gets the desktop row",
-                "the current section highlighted through aria-current=\"page\" rather than a separate class: markup and accessibility have to agree",
-                "one filled button next to the text sign-in link — two identical actions split the choice",
-                "the <style> block inside the component: it holds the palette, the layout and the states",
-                "the dark ground: it is the idea of the block rather than a dark theme — the header stays dark on a light page too, so the palette is deliberately single-tone and needs no light-dark()"
+                "the local --vibeui-navbar-002-* palette — do not swap it for your theme tokens",
+                "the menu as one pill: scattering the sections across the header loses the idea",
+                "the depth difference: the sunken well of the pill and the raised glider on top of it",
+                "the glider as a separate layer under the links, and the background highlight on aria-current until the JS is ready",
+                "the horizontally scrollable strip in a narrow column instead of a burger",
+                "the container query instead of a media query: the layout measures the block"
               ],
               "adapt": [
-                "brand — the name and the letter in the mark; the mark can be replaced with your own <svg>",
-                "the links array — menu items and the current flag on the active section",
-                "loginLabel and loginHref — the secondary sign-in action",
-                "actionLabel and actionHref — the header's primary action",
-                "the accent through the accent prop — it colours the mark, the button and focus",
-                "position:sticky and outer spacing belong outside through className",
-                "markLabel and navLabel — the letter in the mark and the screen-reader label for the navigation"
+                "links, brand, loginLabel, actionLabel — the content of the header",
+                "accent — the brand color of the mark and the action; the text on the accent stays dark",
+                "markLabel — the letter or initial in the mark",
+                "pinning the header (sticky/fixed) is set by the host project from outside",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
-                "More than six items start to crowd the pill on the wide layout: move the rest to the footer.",
-                "The pill scrolls without a visible bar — keep padding on the edge items so it is clear the list continues.",
-                "Do not turn sign-in into a second filled button: it is deliberately a link.",
-                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+                "The block is a client component: the glider needs JS. The markup is server-rendered and works without hydration.",
+                "Dark mode is switched by a .dark class or data-theme=\"dark\" on an ancestor — light-dark() looks at color-scheme, which the block declares itself."
               ],
               "usage": "<Navbar002\n  brand=\"Contour\"\n  links={[{ label: \"Product\", href: \"/product\", current: true }]}\n  actionLabel=\"Demo\"\n  actionHref=\"/demo\"\n/>"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "brand": {
                 "label": "Brand",
                 "default": "Contour"
@@ -166,17 +160,17 @@
                 "actionLabel": "Demo"
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navbar-002-*. A server component, no client JS. The layout is computed by a container query from the block's own width: below 54rem the pill moves to a second row and scrolls horizontally, beyond it it stands in a single row in the centre of the header. The current section is marked with the aria-current=\"page\" attribute and highlighted by a selector on that attribute rather than by a separate class, so the highlight and the accessibility never drift apart."
+            "docs": "One file, zero dependencies, a client component. The surfaces follow the page theme through light-dark(), so the header lightens and darkens with the site; the accent and the text on it are fixed by the brand. The navigation pill gets an inner shadow — a well — and the active-item glider sits on top with its own shadow and top highlight: the difference in depth separates the chosen section from the rest. The glider is positioned from offsetLeft/offsetWidth and follows cursor and focus; until the JS is ready the active item keeps a plain background, so the highlight never disappears before hydration. The action button carries a glow that tracks the cursor, and the sign-in link an underline growing from its centre. The layout is a container query on the block's own width. Palette --vibeui-navbar-002-*."
           }
         },
-        "cardControls": ["brand", "loginLabel", "actionLabel", "accent"]
+        "cardControls": ["tone", "brand", "loginLabel", "actionLabel"]
       }
     },
     {
       "name": "navbar-003",
       "type": "registry:block",
       "title": "Чистая шапка с главным действием",
-      "description": "Универсальная шапка сайта: логотип слева, короткий ряд разделов, одно оранжевое действие справа и тонкая нижняя линия. Текущий раздел отмечен линией; в узкой колонке навигация уходит в доступную панель без клиентского JS.",
+      "description": "Универсальная шапка сайта: логотип слева, короткий ряд разделов, одно акцентное действие справа и волосяная линия снизу. Под ссылками едет тонкая линия-каретка, у кнопки стрелка уезжает вперёд. В узкой колонке разделы уходят в панель.",
       "categories": ["navbar"],
       "dependencies": [],
       "registryDependencies": [],
@@ -187,39 +181,43 @@
           "target": "@components/vibeui/navbar-003.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, клиентского JS нет. Узкая раскладка — disclosure на <details>/<summary>: панель с полным списком разделов раскрывается кнопкой «Меню» и работает с клавиатуры нативно. Порог раскладки считает container-запрос от ширины блока (52rem). Текущий раздел — aria-current=\"page\", подсветка селектором по этому атрибуту. Светлая и графитовая поверхности — атрибут data-tone с двумя наборами переменных --vibeui-navbar-003-*.",
+      "docs": "Один файл, ноль зависимостей, клиентский компонент. Сдержанность здесь замысел, поэтому работа уходит в детали: линия-каретка под ссылками считается по offsetLeft/offsetWidth и едет за курсором и фокусом, знак поворачивается на наведении, у кнопки стрелка сдвигается вперёд. До готовности JS активный раздел подчёркнут статической линией, поэтому подсветка не пропадает без гидратации. Мобильная панель закрывается по Escape и по нажатию снаружи. Светлая и графитовая поверхности — data-tone. Раскладка — container-запрос от собственной ширины блока. Палитра --vibeui-navbar-003-*.",
       "meta": {
         "tags": ["navbar", "header", "navigation", "cta", "universal"],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "aspect": "1280 / 128"
         },
         "ai": {
           "usage": "<Navbar003\n  brand=\"Вершина\"\n  links={[{ label: \"Возможности\", href: \"/features\", current: true }]}\n  actionLabel=\"Начать\"\n  actionHref=\"/start\"\n/>",
-          "summary": "Чистая шапка с одним главным действием: логотип, 4–6 разделов, оранжевая кнопка и тонкая нижняя линия. В узкой колонке разделы уходят в доступную панель на <details> — без клиентского JS. Текущий раздел отмечен оранжевой линией через aria-current. Один файл, своя палитра, светлая и графитовая версии.",
+          "summary": "Чистая универсальная шапка: знак, короткий ряд разделов, одно действие со стрелкой. Под ссылками едет линия-каретка. Светлая и графитовая версии, мобильная панель с Escape и закрытием по клику снаружи.",
           "preserve": [
-            "локальную палитру --vibeui-navbar-003-* и не подменять её токенами вашей темы: шапка обязана выглядеть одинаково в любом проекте",
-            "одно закрашенное действие: второе равноправное действие раздваивает выбор — второстепенное делайте текстовой ссылкой",
-            "подсветку текущего раздела через aria-current=\"page\" и линию ::after — разметка и доступность обязаны совпадать",
-            "мобильную панель на <details>/<summary>: это доступный disclosure-паттерн, не заменять его div с onClick",
-            "container-запрос вместо медиазапроса: раскладка считается от ширины блока, иначе в узкой колонке появится десктопный ряд",
-            "тонкую нижнюю линию как границу шапки — тень вместо линии меняет характер на другой"
+            "локальную палитру --vibeui-navbar-003-* и не подменять её токенами вашей темы",
+            "одно главное действие: вторая кнопка того же веса ломает замысел блока",
+            "линию-каретку отдельным слоем и статическое подчёркивание у aria-current до готовности JS",
+            "волосяную линию снизу вместо тени: шапка не должна отрываться от страницы",
+            "container-запрос вместо медиазапроса: раскладка считается от ширины блока"
           ],
           "adapt": [
-            "brand и markLabel — название и буква в знаке; знак можно заменить своим <svg>",
-            "массив links — разделы и флаг current у текущего",
-            "actionLabel и actionHref — главное действие",
-            "tone — светлая или графитовая поверхность",
-            "accent — цвет знака, кнопки, линии и фокуса",
-            "position:sticky и отступы задавайте снаружи через className; при закреплении учтите высоту шапки в якорях (scroll-margin-top)"
+            "links, brand, actionLabel — контент; tone — белая или графитовая поверхность",
+            "accent — фирменный цвет знака, действия и каретки",
+            "menuLabel и closeLabel — подписи кнопки меню в узкой колонке",
+            "закрепление шапки (sticky/fixed) задаёт принимающий проект снаружи",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
-            "Больше шести разделов не помещаются достойно — лишнее уводите в подвал или мега-меню.",
-            "Панель <details> остаётся открытой при прокрутке: если шапка sticky, закрывайте её в проекте по переходу.",
-            "На оранжевой кнопке текст чёрный: белая мелкая подпись на #FF5900 не проходит контраст."
+            "Блок клиентский: каретка и мобильная панель требуют JS. Без гидратации шапка приходит рабочей.",
+            "Ряд рассчитан на 3–6 разделов; для большего числа берите шапку с мега-меню."
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "brand",
             "label": "Название",
@@ -235,51 +233,42 @@
             "maxLength": 20
           },
           {
-            "prop": "tone",
-            "label": "Поверхность",
-            "type": "select",
-            "options": ["light", "dark"],
-            "default": "light"
-          },
-          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
             "default": ""
           }
         ],
-        "cardControls": ["brand", "actionLabel", "tone", "accent"],
+        "cardControls": ["tone", "brand", "actionLabel", "accent"],
         "i18n": {
           "en": {
             "title": "Clean Navbar with Primary Action",
-            "description": "A universal site header: the logo on the left, a short row of sections, one orange action on the right and a thin bottom rule. The current section is marked with a line; in a narrow column the navigation folds into an accessible panel with no client JS.",
-            "docs": "One file, zero dependencies, no client JS. The narrow layout is a disclosure on <details>/<summary>: a panel with the full list of sections opens from the Menu button and works with the keyboard natively. The layout threshold is a container query on the block's width (52rem). The current section is aria-current=\"page\", highlighted by a selector on that attribute. The light and graphite surfaces are a data-tone attribute with two sets of --vibeui-navbar-003-* variables.",
+            "description": "A universal site header: the logo on the left, a short row of sections, one accent action on the right and a hairline below. A thin glider line travels under the links and the button's arrow slides forward. In a narrow column the sections move into a panel.",
+            "docs": "One file, zero dependencies, a client component. The restraint is the point here, so the work goes into the details: the underline glider is positioned from offsetLeft/offsetWidth and follows cursor and focus, the mark tilts on hover, the button's arrow slides forward. Until the JS is ready the active section keeps a static underline, so the highlight never disappears before hydration. The mobile panel closes on Escape and on an outside click. Light and graphite surfaces via data-tone. The layout is a container query on the block's own width. Palette --vibeui-navbar-003-*.",
             "ai": {
-              "summary": "A clean header with one primary action: a logo, 4–6 sections, an orange button and a thin bottom rule. In a narrow column the sections fold into an accessible <details> panel — no client JS. The current section is marked with an orange line through aria-current. One file, its own palette, light and graphite versions.",
+              "summary": "A clean universal header: the mark, a short row of sections, one action with an arrow. A glider line travels under the links. Light and graphite versions, a mobile panel with Escape and outside-click dismissal.",
               "preserve": [
-                "the local --vibeui-navbar-003-* palette — do not swap it for your theme tokens: the header must look the same in any project",
-                "a single filled action: a second equal action splits the choice — make the secondary one a text link",
-                "the current section highlighted through aria-current=\"page\" and the ::after line — markup and accessibility must agree",
-                "the mobile panel on <details>/<summary>: it is an accessible disclosure pattern, do not replace it with a div and onClick",
-                "the container query instead of a media query: the layout measures the block, otherwise a narrow column gets the desktop row",
-                "the thin bottom rule as the header boundary — a shadow instead of the rule changes the character into another one"
+                "the local --vibeui-navbar-003-* palette — do not swap it for your theme tokens",
+                "one primary action: a second button of the same weight breaks the idea of the block",
+                "the glider line as a separate layer, and the static underline on aria-current until the JS is ready",
+                "the hairline instead of a shadow: the header should not detach from the page",
+                "the container query instead of a media query: the layout measures the block"
               ],
               "adapt": [
-                "brand and markLabel — the name and the letter in the mark; the mark can be replaced with your own <svg>",
-                "the links array — sections and the current flag",
-                "actionLabel and actionHref — the primary action",
-                "tone — the light or graphite surface",
-                "accent — the color of the mark, button, line and focus",
-                "position:sticky and outer spacing belong outside through className; with a stuck header account for its height in anchors (scroll-margin-top)"
+                "links, brand, actionLabel — the content; tone — a white or graphite surface",
+                "accent — the brand color of the mark, the action and the glider",
+                "menuLabel and closeLabel — the menu button captions in a narrow column",
+                "pinning the header (sticky/fixed) is set by the host project from outside",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
-                "More than six sections will not fit with dignity — move the rest to the footer or a mega menu.",
-                "The <details> panel stays open on scroll: with a sticky header close it on navigation in your project.",
-                "On the orange button the text is black: small white type on #FF5900 fails contrast."
+                "The block is a client component: the glider and the mobile panel need JS. Without hydration the header still arrives working.",
+                "The row is meant for 3–6 sections; for more, take the mega-menu header."
               ],
               "usage": "<Navbar003\n  brand=\"Summit\"\n  links={[{ label: \"Features\", href: \"/features\", current: true }]}\n  actionLabel=\"Get started\"\n  actionHref=\"/start\"\n/>"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "brand": {
                 "label": "Brand",
                 "default": "Summit"
@@ -287,9 +276,6 @@
               "actionLabel": {
                 "label": "Button",
                 "default": "Get started"
-              },
-              "tone": {
-                "label": "Surface"
               },
               "accent": {
                 "label": "Accent"
@@ -331,7 +317,7 @@
       "name": "navbar-004",
       "type": "registry:block",
       "title": "Продуктовая шапка с мега-меню",
-      "description": "Шапка SaaS-платформы: группы верхнего уровня раскрываются в колонки ссылок с пояснениями и одну промокарточку. Раскрытие нажатием и клавиатурой, группы взаимоисключающие — всё без клиентского JS, на <details name>.",
+      "description": "Шапка SaaS-платформы: группы верхнего уровня раскрываются панелью с колонками ссылок и промокарточкой. На широкой раскладке панель открывается ещё и по наведению с задержкой намерения, на узкой те же группы складываются в аккордеон.",
       "categories": ["navbar"],
       "dependencies": [],
       "registryDependencies": [],
@@ -342,39 +328,44 @@
           "target": "@components/vibeui/navbar-004.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, клиентского JS нет. Мега-меню — доступный disclosure на <details>/<summary>; общий атрибут name закрывает соседнюю группу при открытии следующей (нативный эксклюзив, поддержан текущими браузерами). На широкой раскладке панель absolute во всю ширину шапки; в узкой те же <details> складываются в вертикальный аккордеон с тем же содержимым — контент один. Колонки, пояснения и промокарточка задаются данными groups. CTA вне раскрываемой области. Палитра --vibeui-navbar-004-*, поверхность data-tone.",
+      "docs": "Один файл, ноль зависимостей, клиентский компонент. Раскрытие — кнопка с aria-expanded и aria-controls, а не ссылка: клавиатура и скринридер получают правильный disclosure. Группы взаимоисключающие; закрытие по Escape и по нажатию снаружи. Наведение открывает панель с задержкой 120 мс, уход из шапки закрывает её через 180 мс — курсор, проезжающий мимо, ничего не распахивает. На широкой раскладке лист позиционируется от самой шапки и выезжает панелью со скруглением и тенью; на узкой тот же лист разворачивается аккордеоном через grid-template-rows 0fr→1fr. Ссылки вне раскрытия получают tabindex=-1, поэтому фокус не проваливается в закрытую панель. Палитра --vibeui-navbar-004-*.",
       "meta": {
         "tags": ["navbar", "header", "mega-menu", "saas", "navigation"],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "aspect": "1280 / 128"
         },
         "ai": {
           "usage": "<Navbar004\n  brand=\"Платформа\"\n  groups={[{ label: \"Продукт\", columns: [{ title: \"Платформа\", links: [{ label: \"Аналитика\", href: \"/analytics\", note: \"Отчёты в реальном времени\" }] }] }]}\n  links={[{ label: \"Тарифы\", href: \"/pricing\" }]}\n  actionLabel=\"Запросить демо\"\n/>",
-          "summary": "Продуктовая шапка с мега-меню: 3–5 групп, внутри — колонки ссылок с короткими пояснениями и необязательная промокарточка с оранжевой линией. Раскрытие на <details name> — нажатием и клавиатурой, группы закрывают друг друга без JS. В узкой колонке то же меню становится аккордеоном. Один файл, ноль зависимостей.",
+          "summary": "Продуктовая шапка с мега-меню: группы раскрываются панелью с колонками ссылок, пояснениями и промокарточкой. Открытие нажатием, клавиатурой и наведением с задержкой намерения; в узкой колонке — аккордеон. Главное действие живёт вне раскрытия.",
           "preserve": [
-            "локальную палитру --vibeui-navbar-004-* и не подменять её токенами вашей темы: шапка обязана выглядеть одинаково в любом проекте",
-            "раскрытие на <details>/<summary> с общим name: это доступный disclosure и нативная взаимоисключаемость — не переписывать на hover",
-            "одинаковое содержимое меню на всех ширинах: узкий аккордеон и широкая панель — одни и те же элементы, а не два меню",
-            "CTA вне раскрываемой области — главное действие не должно прятаться в меню",
-            "промокарточку с оранжевой верхней линией как единственный акцент панели: вторая цветная карточка превращает меню в витрину",
-            "container-запрос вместо медиазапроса: раскладка считается от ширины блока"
+            "локальную палитру --vibeui-navbar-004-* и не подменять её токенами вашей темы",
+            "кнопку с aria-expanded и aria-controls в роли триггера вместо ссылки",
+            "взаимоисключающие группы: две открытые панели одновременно ломают ориентацию",
+            "задержку намерения на наведении — без неё панель распахивается от случайного движения курсора",
+            "tabindex=-1 у ссылок закрытой панели, чтобы фокус не проваливался внутрь",
+            "главное действие вне раскрываемой области"
           ],
           "adapt": [
-            "groups — группы, колонки, ссылки с note и промокарточка; всё задаётся данными",
-            "links — прямые ссылки без раскрытия, например «Тарифы»",
-            "brand, markLabel — знак; actionLabel, actionHref — главное действие",
-            "tone — светлая или графитовая поверхность; accent — фирменный цвет",
-            "при sticky-закреплении открытая панель прижмётся к шапке автоматически (absolute от блока), но закрытие по переходу делайте в проекте"
+            "groups — состав колонок и пояснений; links — прямые ссылки без раскрытия",
+            "promo — карточка релиза или предложения; её можно убрать у любой группы",
+            "brand, actionLabel — контент; tone — белая или графитовая поверхность",
+            "accent — фирменный цвет знака, действия и рамки промокарточки",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
-            "Держите 3–5 групп: от шести summary-кнопок ряд перестаёт читаться.",
-            "Пояснение note — одна строка о пользе, не маркетинговый абзац.",
-            "Это навигация сайта, а не меню настольного приложения: роли menu/menuitem сюда не добавлять.",
-            "Escape нативно панель не закрывает — повторное нажатие или клик по соседней группе закрывает; если нужен Escape, добавьте маленький обработчик в проекте."
+            "Блок клиентский: раскрытие требует JS. Разметка приходит с сервера, до гидратации панели закрыты.",
+            "3–5 групп верхнего уровня — предел читаемости; шестая группа обычно означает, что нужен отдельный раздел."
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "brand",
             "label": "Название",
@@ -390,51 +381,43 @@
             "maxLength": 24
           },
           {
-            "prop": "tone",
-            "label": "Поверхность",
-            "type": "select",
-            "options": ["light", "dark"],
-            "default": "light"
-          },
-          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
             "default": ""
           }
         ],
-        "cardControls": ["brand", "actionLabel", "tone", "accent"],
+        "cardControls": ["tone", "brand", "actionLabel", "accent"],
         "i18n": {
           "en": {
             "title": "Product Navbar with Mega Menu",
-            "description": "A SaaS platform header: top-level groups open into columns of annotated links and a single promo card. Opens by click and keyboard, groups are mutually exclusive — all without client JS, on <details name>.",
-            "docs": "One file, zero dependencies, no client JS. The mega menu is an accessible disclosure on <details>/<summary>; a shared name attribute closes the neighboring group when the next one opens (native exclusivity, supported by current browsers). On the wide layout the panel is absolute across the full header width; on the narrow one the same <details> stack into a vertical accordion with the same content. Columns, annotations and the promo card are driven by the groups data. The CTA lives outside the disclosure. Palette --vibeui-navbar-004-*, surface via data-tone.",
+            "description": "A SaaS platform header: top-level groups open into a panel of link columns and a promo card. On a wide layout the panel also opens on hover after an intent delay; on a narrow one the same groups fold into an accordion.",
+            "docs": "One file, zero dependencies, a client component. The trigger is a button with aria-expanded and aria-controls, not a link: keyboard and screen reader get a proper disclosure. Groups are mutually exclusive; closing happens on Escape and on an outside click. Hover opens a panel after a 120 ms intent delay and leaving the header closes it after 180 ms — a cursor passing by opens nothing. On a wide layout the sheet is positioned from the header itself and slides out as a rounded, shadowed panel; on a narrow one the same sheet unfolds as an accordion via grid-template-rows 0fr→1fr. Links in a closed panel get tabindex=-1, so focus never falls into it. Palette --vibeui-navbar-004-*.",
             "ai": {
-              "summary": "A product header with a mega menu: 3–5 groups, inside — columns of links with short annotations and an optional promo card with an orange rule. Disclosure on <details name> — click and keyboard, groups close each other without JS. In a narrow column the same menu becomes an accordion. One file, zero dependencies.",
+              "summary": "A product header with a mega menu: groups open into a panel of link columns, notes and a promo card. Opens on click, keyboard and hover with an intent delay; in a narrow column it becomes an accordion. The primary action lives outside the disclosure.",
               "preserve": [
-                "the local --vibeui-navbar-004-* palette — do not swap it for your theme tokens: the header must look the same in any project",
-                "the disclosure on <details>/<summary> with a shared name: it is accessible and natively exclusive — do not rewrite it onto hover",
-                "the same menu content at every width: the narrow accordion and the wide panel are the same elements, not two menus",
-                "the CTA outside the disclosure — the primary action must not hide inside the menu",
-                "the promo card with the orange top rule as the panel's only accent: a second colored card turns the menu into a storefront",
-                "the container query instead of a media query: the layout measures the block"
+                "the local --vibeui-navbar-004-* palette — do not swap it for your theme tokens",
+                "a button with aria-expanded and aria-controls as the trigger instead of a link",
+                "mutually exclusive groups: two open panels at once destroy orientation",
+                "the hover intent delay — without it the panel flies open on an accidental cursor move",
+                "tabindex=-1 on the links of a closed panel so focus cannot fall inside",
+                "the primary action outside the disclosure area"
               ],
               "adapt": [
-                "groups — groups, columns, links with note and the promo card; everything is data-driven",
-                "links — direct links without disclosure, e.g. Pricing",
-                "brand, markLabel — the mark; actionLabel, actionHref — the primary action",
-                "tone — the light or graphite surface; accent — the brand color",
-                "with a sticky header the open panel docks to it automatically (absolute from the block), but close it on navigation in your project"
+                "groups — the columns and their notes; links — direct links without a disclosure",
+                "promo — a release or offer card; it can be dropped from any group",
+                "brand, actionLabel — the content; tone — a white or graphite surface",
+                "accent — the brand color of the mark, the action and the promo card border",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
-                "Keep 3–5 groups: from six summary buttons on, the row stops reading.",
-                "The note is one line about the benefit, not a marketing paragraph.",
-                "This is site navigation, not a desktop application menu: do not add menu/menuitem roles.",
-                "Escape does not close the panel natively — a repeated press or a click on a neighboring group does; if you need Escape, add a tiny handler in your project."
+                "The block is a client component: the disclosure needs JS. The markup is server-rendered and the panels start closed.",
+                "3–5 top-level groups is the readability limit; a sixth group usually means you need a separate section."
               ],
               "usage": "<Navbar004\n  brand=\"Platform\"\n  groups={[{ label: \"Product\", columns: [{ title: \"Platform\", links: [{ label: \"Analytics\", href: \"/analytics\", note: \"Real-time reports\" }] }] }]}\n  links={[{ label: \"Pricing\", href: \"/pricing\" }]}\n  actionLabel=\"Request a demo\"\n/>"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "brand": {
                 "label": "Brand",
                 "default": "Platform"
@@ -442,9 +425,6 @@
               "actionLabel": {
                 "label": "Button",
                 "default": "Request a demo"
-              },
-              "tone": {
-                "label": "Surface"
               },
               "accent": {
                 "label": "Accent"
@@ -566,7 +546,7 @@
       "name": "navbar-005",
       "type": "registry:block",
       "title": "Шапка магазина с поиском",
-      "description": "Шапка e-commerce: поиск в центре, оранжевая кнопка каталога с группами, избранное и корзина со счётчиком, тихая служебная строка о доставке. Поиск и корзину обслуживает ваш проект — здесь доступная разметка без JS.",
+      "description": "Шапка e-commerce: капсула поиска в центре с иконкой и акцентной кнопкой внутри, кнопка каталога с группами, избранное и корзина со счётчиком, тихая служебная строка о доставке.",
       "categories": ["navbar"],
       "dependencies": [],
       "registryDependencies": [],
@@ -577,39 +557,43 @@
           "target": "@components/vibeui/navbar-005.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, клиентского JS нет. Поиск — настоящая <form role=\"search\"> с input type=\"search\": обработчик задаётся через searchAction, состояния выдачи реализует принимающий проект. Каталог — disclosure на <details> с панелью групп. Иконки — собственные inline-SVG, без пакетов. Счётчик корзины приходит пропом cartCount и озвучивается aria-label. В узкой колонке поиск переезжает на отдельную строку (container-запрос, 56rem). Палитра --vibeui-navbar-005-*.",
+      "docs": "Один файл, ноль зависимостей, клиентский компонент. Поле поиска — главный объект шапки, поэтому на фокусе оно меняет фон и получает кольцо, а не тонкую рамку: в момент ввода видно, куда идёт текст. Кнопка каталога морфит полоски в крестик, панель групп закрывается по Escape и по нажатию снаружи, её ссылки вне раскрытия получают tabindex=-1. Счётчик корзины отделён от фона кольцом, поэтому читается и поверх изображения. Форму поиска и состояние корзины обслуживает принимающий проект — здесь только доступная разметка: настоящая <form role=\"search\"> с submit-кнопкой. Палитра --vibeui-navbar-005-*.",
       "meta": {
         "tags": ["navbar", "header", "shop", "ecommerce", "search", "cart"],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "aspect": "1280 / 160"
         },
         "ai": {
           "usage": "<Navbar005\n  brand=\"Лавка\"\n  notice=\"Доставка от 2 дней\"\n  searchAction=\"/search\"\n  catalogLinks={[{ label: \"Новинки\", href: \"/new\" }]}\n  cartCount={2}\n  cartHref=\"/cart\"\n/>",
-          "summary": "Шапка магазина: центральный поиск настоящей формой, оранжевая кнопка каталога с раскрытием групп на <details>, избранное и корзина с бейджем-счётчиком, служебная строка о доставке графитовой полосой. Никакого JS: поиск, корзину и избранное подключает принимающий проект. Один файл, свои SVG-иконки.",
+          "summary": "Шапка магазина: капсула поиска с кольцом на фокусе, кнопка каталога с раскрытием, избранное и корзина со счётчиком, служебная строка о доставке. Форму и корзину обслуживает проект.",
           "preserve": [
-            "локальную палитру --vibeui-navbar-005-* и не подменять её токенами вашей темы: шапка обязана выглядеть одинаково в любом проекте",
-            "поиск как настоящую <form role=\"search\"> с submit-кнопкой — не превращать в div с иконкой, иначе Enter и скринридеры теряют форму",
-            "служебную строку визуально тише основной навигации: графитовая полоса мелким текстом, не баннер",
-            "подписи под иконками избранного и корзины — иконка без слова на магазине читается хуже",
-            "счётчик корзины с aria-label: число должно озвучиваться, а не быть немым бейджем",
+            "локальную палитру --vibeui-navbar-005-* и не подменять её токенами вашей темы",
+            "поиск в центре как главный объект шапки, а не иконку в углу",
+            "настоящую <form role=\"search\"> с submit-кнопкой — Enter обязан отправлять запрос",
+            "кольцо вокруг счётчика корзины: без него число теряется на пёстром фоне",
             "container-запрос вместо медиазапроса: раскладка считается от ширины блока"
           ],
           "adapt": [
-            "searchAction — адрес обработчика поиска вашего проекта; подсказки и состояния выдачи тоже ваши",
-            "catalogLinks и catalogLabel — группы каталога",
-            "cartCount, cartHref, favoritesHref — состояние и маршруты передаёт проект",
-            "notice — текст о доставке; пустая строка убирает полосу",
-            "brand, markLabel, accent — знак и фирменный цвет",
-            "при sticky-закреплении корзина остаётся доступной — закрепляйте снаружи через className"
+            "brand и catalogLinks — название магазина и группы каталога; notice=\"\" убирает служебную строку",
+            "searchAction — обработчик поиска проекта; имя поля q читайте на сервере",
+            "cartCount — число товаров; ноль скрывает счётчик",
+            "accent — цвет знака, кнопки каталога, кнопки поиска и счётчика",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
-            "Локальная демонстрация не выдаёт себя за подключённый магазин: счётчик и поиск — пропсы, не логика.",
-            "При открытой экранной клавиатуре фиксированные элементы не должны перекрывать поле — проверяйте на телефоне.",
-            "Состояния поиска «ввод, загрузка, есть результаты, ничего» показывает выдача проекта, не шапка."
+            "Блок клиентский: панель каталога требует JS. Форма поиска работает и без гидратации.",
+            "Подсказки поиска, корзина и избранное — состояние проекта; шапка их не хранит."
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "brand",
             "label": "Название",
@@ -639,38 +623,36 @@
             "default": ""
           }
         ],
-        "cardControls": ["brand", "notice", "cartCount", "accent"],
+        "cardControls": ["tone", "brand", "notice", "cartCount"],
         "i18n": {
           "en": {
             "title": "Shop Navbar with Search",
-            "description": "An e-commerce header: search in the center, an orange catalog button with groups, favorites and a cart with a counter, a quiet service line about delivery. Search and cart are served by your project — this is accessible markup without JS.",
-            "docs": "One file, zero dependencies, no client JS. The search is a real <form role=\"search\"> with input type=\"search\": the handler is set through searchAction, result states are implemented by the host project. The catalog is a disclosure on <details> with a group panel. Icons are own inline SVGs, no packages. The cart counter comes through the cartCount prop and is voiced by aria-label. In a narrow column the search moves to its own row (container query, 56rem). Palette --vibeui-navbar-005-*.",
+            "description": "An e-commerce header: a search capsule in the centre with an icon and an accent button inside, a catalog button with groups, favourites and a cart with a counter, and a quiet delivery notice.",
+            "docs": "One file, zero dependencies, a client component. The search field is the main object of the header, so on focus it changes its fill and gains a ring rather than a thin border: while typing you can see where the text goes. The catalog button morphs its bars into a cross, the group panel closes on Escape and on an outside click, and its links get tabindex=-1 while closed. The cart counter is separated from the background by a ring, so it stays readable over imagery. The search form and cart state are the host project's job — this is only accessible markup: a real <form role=\"search\"> with a submit button. Palette --vibeui-navbar-005-*.",
             "ai": {
-              "summary": "A shop header: central search as a real form, an orange catalog button with a <details> group disclosure, favorites and a cart with a badge counter, a graphite delivery line. No JS: search, cart and favorites are wired by the host project. One file, own SVG icons.",
+              "summary": "A shop header: a search capsule with a focus ring, a catalog button with a disclosure, favourites and a cart with a counter, a delivery notice. The form and the cart are the project's job.",
               "preserve": [
-                "the local --vibeui-navbar-005-* palette — do not swap it for your theme tokens: the header must look the same in any project",
-                "the search as a real <form role=\"search\"> with a submit button — do not turn it into a div with an icon, or Enter and screen readers lose the form",
-                "the service line visually quieter than the main navigation: a graphite strip in small type, not a banner",
-                "the labels under the favorites and cart icons — an icon without a word reads worse in a shop",
-                "the cart counter with aria-label: the number must be voiced, not a mute badge",
+                "the local --vibeui-navbar-005-* palette — do not swap it for your theme tokens",
+                "the centred search as the main object of the header, not an icon in a corner",
+                "the real <form role=\"search\"> with a submit button — Enter must send the query",
+                "the ring around the cart counter: without it the number is lost on busy backgrounds",
                 "the container query instead of a media query: the layout measures the block"
               ],
               "adapt": [
-                "searchAction — your project's search handler; suggestions and result states are yours too",
-                "catalogLinks and catalogLabel — the catalog groups",
-                "cartCount, cartHref, favoritesHref — state and routes come from the project",
-                "notice — the delivery text; an empty string removes the strip",
-                "brand, markLabel, accent — the mark and the brand color",
-                "with sticky the cart stays reachable — stick it from outside through className"
+                "brand and catalogLinks — the shop name and the catalog groups; notice=\"\" removes the service line",
+                "searchAction — the project's search handler; read the q field on the server",
+                "cartCount — the number of items; zero hides the counter",
+                "accent — the color of the mark, the catalog button, the search button and the counter",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
-                "The local demo does not pretend to be a wired shop: the counter and the search are props, not logic.",
-                "With the on-screen keyboard open, fixed elements must not cover the field — check on a phone.",
-                "The search states — typing, loading, results, nothing — are shown by the project's results page, not the header."
+                "The block is a client component: the catalog panel needs JS. The search form works without hydration.",
+                "Suggestions, cart and favourites are the project's state; the header does not hold them."
               ],
               "usage": "<Navbar005\n  brand=\"Store\"\n  notice=\"Delivery from 2 days\"\n  searchAction=\"/search\"\n  catalogLinks={[{ label: \"New in\", href: \"/new\" }]}\n  cartCount={2}\n  cartHref=\"/cart\"\n/>"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "brand": {
                 "label": "Brand",
                 "default": "Store"
@@ -729,7 +711,7 @@
       "name": "navbar-006",
       "type": "registry:block",
       "title": "Шапка документации с поиском",
-      "description": "Шапка для документации и базы знаний: компактный бренд с названием раздела, версия с раскрытием прошлых, заметное поле поиска и ссылка обратно к продукту. Нейтральная плоскость, оранжевые активные состояния, без клиентского JS.",
+      "description": "Шапка документации: компактный бренд с названием раздела, версия раскрытием, поиск капсулой с горячей клавишей и переключатель светлой и тёмной поверхности. Работают «/» и Cmd/Ctrl+K, подпись клавиши подставляется под платформу читателя.",
       "categories": ["navbar"],
       "dependencies": [],
       "registryDependencies": [],
@@ -740,7 +722,7 @@
           "target": "@components/vibeui/navbar-006.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, клиентского JS нет. Поиск — настоящая <form role=\"search\">, всегда видимая кнопкой-полем: сочетание клавиш (подсказка «/») — дополнительное удобство, которое подключает принимающий проект, а не условие доступа. Версия — disclosure на <details> со списком версий моноширинным начертанием. Текущий раздел — aria-current=\"page\" с оранжевым цветом. В узкой колонке поиск переезжает на отдельную строку (container-запрос, 58rem). Палитра --vibeui-navbar-006-*.",
+      "docs": "Один файл, ноль зависимостей, клиентский компонент. Поиск открыт всегда, а сочетание клавиш — ускорение, а не условие доступа: «/» перехватывается только вне полей ввода, Cmd/Ctrl+K работает везде. Подпись клавиши известна лишь на клиенте, поэтому до гидратации показывается нейтральное «/», а затем «⌘K» или «Ctrl K». Переключатель поверхности меняет тему самого блока через data-tone — в проекте его обработчик подключают к своему провайдеру темы. Раскрытие версий закрывается по Escape и по нажатию снаружи. Палитра --vibeui-navbar-006-*.",
       "meta": {
         "tags": [
           "navbar",
@@ -751,35 +733,39 @@
           "version"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "aspect": "1280 / 120"
         },
         "ai": {
           "usage": "<Navbar006\n  brand=\"Прибор\"\n  section=\"Документация\"\n  version=\"v3.2\"\n  searchAction=\"/docs/search\"\n  links={[{ label: \"Руководство\", href: \"/guide\", current: true }]}\n/>",
-          "summary": "Шапка документации: бренд с подписью раздела, моноширинный переключатель версий на <details>, всегда видимый поиск настоящей формой с декоративной подсказкой «/» и рамочная ссылка «К продукту». Активный раздел — оранжевым через aria-current. Один файл, без JS.",
+          "summary": "Шапка документации: бренд с разделом, версия раскрытием, поиск капсулой с «/» и Cmd/Ctrl+K, переключатель темы и ссылка к продукту. Светлая и тёмная поверхности.",
           "preserve": [
-            "локальную палитру --vibeui-navbar-006-* и не подменять её токенами вашей темы: шапка обязана выглядеть одинаково в любом проекте",
-            "поиск, открытый постоянной формой: сочетание клавиш — дополнение, а не единственный вход в поиск",
-            "версию моноширинным начертанием рядом с брендом — читатель документации всегда должен видеть, какую версию читает",
-            "активный раздел через aria-current=\"page\" — разметка и доступность обязаны совпадать",
-            "рамочную ссылку «К продукту» отдельно от разделов: выход из документации не должен теряться среди вкладок",
-            "container-запрос вместо медиазапроса: раскладка считается от ширины блока"
+            "локальную палитру --vibeui-navbar-006-* и не подменять её токенами вашей темы",
+            "открытое поле поиска: горячая клавиша ускоряет доступ, но не заменяет его",
+            "перехват «/» только вне полей ввода — иначе читатель не сможет набрать слэш",
+            "подпись клавиши по платформе, а не «⌘K» для всех",
+            "моноширинный шрифт у номера версии и подписи клавиши"
           ],
           "adapt": [
-            "searchAction — адрес поиска вашей документации; подсказки и горячую клавишу подключает проект",
-            "version и versions — реальные версии и ссылки на них",
-            "brand и markLabel — знак; links — разделы; section — подпись рядом с брендом",
-            "productLabel и productHref — куда ведёт выход из документации",
-            "accent — фирменный цвет активных состояний",
-            "при sticky-закреплении задавайте position снаружи через className и учитывайте высоту в якорях статей"
+            "brand, section, links, version, versions — контент документации",
+            "tone — начальная поверхность; themeToggle={false} убирает переключатель, если темой управляет ваш провайдер",
+            "searchAction — обработчик поиска проекта; имя поля q читайте на сервере",
+            "accent — цвет знака, активного раздела и фокус-кольца",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
-            "Дерево документации и оглавление статьи — это каркас документации, не шапка.",
-            "Подсказка «/» в поле — декоративный kbd: без обработчика в проекте она ничего не нажимает.",
-            "Версия и текущий раздел не должны пропадать при переходах — их передаёт каждая страница."
+            "Блок клиентский: горячие клавиши, версии и переключатель темы требуют JS.",
+            "Переключатель меняет тему блока, а не сайта: подключите его к своему провайдеру темы."
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "brand",
             "label": "Название",
@@ -808,38 +794,36 @@
             "default": ""
           }
         ],
-        "cardControls": ["brand", "section", "version", "accent"],
+        "cardControls": ["tone", "brand", "section", "version"],
         "i18n": {
           "en": {
             "title": "Docs Navbar with Search",
-            "description": "A header for documentation and knowledge bases: a compact brand with a section label, a version with a disclosure of past ones, a prominent search field and a link back to the product. A neutral surface, orange active states, no client JS.",
-            "docs": "One file, zero dependencies, no client JS. The search is a real <form role=\"search\">, always visible as a field: the keyboard shortcut (the “/” hint) is an extra convenience wired by the host project, not a condition of access. The version is a <details> disclosure with a monospaced list. The current section is aria-current=\"page\" in orange. In a narrow column the search moves to its own row (container query, 58rem). Palette --vibeui-navbar-006-*.",
+            "description": "A documentation header: a compact brand with the section name, a version disclosure, a search capsule with a shortcut and a light/dark surface toggle. Both \"/\" and Cmd/Ctrl+K work, and the key caption matches the reader's platform.",
+            "docs": "One file, zero dependencies, a client component. Search stays open and the shortcut is an accelerator, not a gate: \"/\" is captured only outside input fields, Cmd/Ctrl+K works everywhere. The key caption is known only on the client, so a neutral \"/\" is shown until hydration and then \"⌘K\" or \"Ctrl K\". The surface toggle switches the block's own theme through data-tone — in a project you wire its handler to your theme provider. The version disclosure closes on Escape and on an outside click. Palette --vibeui-navbar-006-*.",
             "ai": {
-              "summary": "A documentation header: a brand with a section label, a monospaced version switcher on <details>, an always-visible search as a real form with a decorative “/” hint and an outlined To Product link. The active section is orange through aria-current. One file, no JS.",
+              "summary": "A documentation header: brand with section, a version disclosure, a search capsule with \"/\" and Cmd/Ctrl+K, a theme toggle and a link back to the product. Light and dark surfaces.",
               "preserve": [
-                "the local --vibeui-navbar-006-* palette — do not swap it for your theme tokens: the header must look the same in any project",
-                "the search open as a permanent form: the keyboard shortcut is an addition, not the only way into search",
-                "the version in monospace next to the brand — a docs reader must always see which version they read",
-                "the active section through aria-current=\"page\" — markup and accessibility must agree",
-                "the outlined To Product link separate from the sections: the way out of the docs must not get lost among tabs",
-                "the container query instead of a media query: the layout measures the block"
+                "the local --vibeui-navbar-006-* palette — do not swap it for your theme tokens",
+                "the open search field: the shortcut speeds access up, it does not replace it",
+                "capturing \"/\" only outside input fields — otherwise the reader cannot type a slash",
+                "the platform-aware key caption instead of \"⌘K\" for everyone",
+                "the monospace font on the version number and the key caption"
               ],
               "adapt": [
-                "searchAction — your docs search endpoint; suggestions and the hotkey are wired by the project",
-                "version and versions — real versions and their links",
-                "brand and markLabel — the mark; links — the sections; section — the label next to the brand",
-                "productLabel and productHref — where the exit from the docs leads",
-                "accent — the brand color of active states",
-                "with sticky set position from outside through className and account for the height in article anchors"
+                "brand, section, links, version, versions — the documentation content",
+                "tone — the starting surface; themeToggle={false} removes the toggle if your provider owns the theme",
+                "searchAction — the project's search handler; read the q field on the server",
+                "accent — the color of the mark, the active section and the focus ring",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
-                "The docs tree and the article TOC belong to the docs skeleton, not the header.",
-                "The “/” hint in the field is a decorative kbd: without a handler in the project it presses nothing.",
-                "The version and the current section must not vanish on navigation — every page passes them."
+                "The block is a client component: shortcuts, versions and the theme toggle need JS.",
+                "The toggle switches the block's theme, not the site's: wire it to your own theme provider."
               ],
               "usage": "<Navbar006\n  brand=\"Device\"\n  section=\"Docs\"\n  version=\"v3.2\"\n  searchAction=\"/docs/search\"\n  links={[{ label: \"Guide\", href: \"/guide\", current: true }]}\n/>"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "brand": {
                 "label": "Brand",
                 "default": "Device"
@@ -905,7 +889,7 @@
       "name": "navbar-007",
       "type": "registry:block",
       "title": "Шапка рабочего пространства",
-      "description": "Шапка кабинета или CRM: переключатель организации, хлебные крошки контекста, глобальный поиск, уведомления с точкой и меню пользователя. Состояния аккаунта передаются пропсами — авторизацию реализует ваше приложение.",
+      "description": "Шапка кабинета или CRM: переключатель пространства с галочкой у текущего, хлебные крошки контекста, глобальный поиск с Cmd/Ctrl+K, уведомления с точкой и меню пользователя с карточкой аккаунта.",
       "categories": ["navbar"],
       "dependencies": [],
       "registryDependencies": [],
@@ -916,7 +900,7 @@
           "target": "@components/vibeui/navbar-007.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, клиентского JS нет. Переключатель пространства и меню пользователя — доступные disclosure на <details>; меню пользователя прижато к правому краю. Крошки — семантический <nav> с <ol>, последняя — aria-current=\"page\"; длинные названия сокращаются text-overflow с доступом к полному через title страницы. На узкой ширине крошки скрываются, поиск переезжает на отдельную строку (container-запрос, 62rem). Светлая и графитовая поверхности — data-tone. Палитра --vibeui-navbar-007-*.",
+      "docs": "Один файл, ноль зависимостей, клиентский компонент. Плотность здесь важнее воздуха — это рабочий инструмент, и путь помещается в шапку целиком. Текущее пространство помечено галочкой, а не только цветом. Оба раскрытия взаимно закрывают друг друга, закрываются по Escape и по нажатию снаружи, их ссылки вне раскрытия получают tabindex=-1. Cmd/Ctrl+K ставит фокус в поле поиска. Точка непрочитанного отделена от фона кольцом. Состояния аккаунта и проекта передаются снаружи; авторизацию и настоящее переключение реализует принимающее приложение. Палитра --vibeui-navbar-007-*.",
       "meta": {
         "tags": [
           "navbar",
@@ -927,35 +911,39 @@
           "breadcrumbs"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "aspect": "1280 / 110"
         },
         "ai": {
           "usage": "<Navbar007\n  workspace=\"Контур Лаб\"\n  crumbs={[{ label: \"Проекты\", href: \"/projects\" }, { label: \"Аналитика\" }]}\n  userInitials=\"АК\"\n  unread\n/>",
-          "summary": "Шапка рабочего пространства: переключатель организации с оранжевым знаком, крошки текущего контекста, глобальный поиск формой, звонок уведомлений с точкой непрочитанного и аватар с меню. Раскрытия — <details> без JS. Все состояния приходят пропсами от приложения.",
+          "summary": "Шапка кабинета: переключатель пространства с галочкой, крошки контекста, поиск с Cmd/Ctrl+K, уведомления с точкой и меню пользователя. Светлая и графитовая версии.",
           "preserve": [
-            "локальную палитру --vibeui-navbar-007-* и не подменять её токенами вашей темы: шапка обязана выглядеть одинаково в любом проекте",
-            "разделение: переключатель пространства слева, контекст в крошках, личные действия справа — не сваливать всё в один ряд иконок",
-            "сокращение длинных названий text-overflow, а не переносом — шапка приложения держит одну строку",
-            "крошки как <nav>+<ol> с aria-current на последней — это семантика, которую читают скринридеры",
-            "точку непрочитанного как состояние из данных (unread), а не как декоративный элемент",
-            "container-запрос вместо медиазапроса: раскладка считается от ширины блока"
+            "локальную палитру --vibeui-navbar-007-* и не подменять её токенами вашей темы",
+            "плотность рабочей шапки: воздух маркетингового хедера здесь съедает контекст",
+            "галочку у текущего пространства: цвета мало, чтобы понять, где находишься",
+            "сокращение длинных названий многоточием вместо переноса строки",
+            "tabindex=-1 у ссылок закрытых меню, чтобы фокус не проваливался внутрь"
           ],
           "adapt": [
-            "workspace и workspaces — текущее пространство и список для переключения; реальную смену делает приложение",
-            "crumbs — контекст текущего экрана; последняя крошка без href",
-            "searchAction — обработчик глобального поиска",
-            "unread, notificationsHref — состояние и маршрут уведомлений",
-            "userInitials, userName, userMenu — пользователь и его меню",
-            "tone — светлая или графитовая поверхность; accent — фирменный цвет"
+            "workspace, workspaces, crumbs — контекст приложения",
+            "userInitials, userName, userEmail, userMenu — карточка и меню аккаунта",
+            "unread — есть ли непрочитанные уведомления; tone — светлая или графитовая версия; accent — фирменный цвет знака и активных состояний",
+            "searchAction — обработчик глобального поиска проекта",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
-            "Общие действия шапки не смешиваются с действиями конкретной таблицы или редактора — тем место в рабочей области.",
-            "В шапке не должно оставаться десять конкурирующих иконок: всё второстепенное — в меню пользователя.",
-            "Боковая навигация приложения — это каркас кабинета, не шапка."
+            "Блок клиентский: меню и горячая клавиша требуют JS.",
+            "Настоящее переключение пространства, авторизацию и уведомления реализует приложение."
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "workspace",
             "label": "Пространство",
@@ -970,60 +958,48 @@
             "default": true
           },
           {
-            "prop": "tone",
-            "label": "Поверхность",
-            "type": "select",
-            "options": ["light", "dark"],
-            "default": "light"
-          },
-          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
             "default": ""
           }
         ],
-        "cardControls": ["workspace", "unread", "tone", "accent"],
+        "cardControls": ["tone", "workspace", "unread", "accent"],
         "i18n": {
           "en": {
             "title": "Workspace Navbar",
-            "description": "A dashboard or CRM header: an organization switcher, context breadcrumbs, global search, notifications with a dot and a user menu. Account state comes through props — authentication is your application's job.",
-            "docs": "One file, zero dependencies, no client JS. The workspace switcher and the user menu are accessible <details> disclosures; the user menu docks to the right edge. Breadcrumbs are a semantic <nav> with an <ol>, the last one is aria-current=\"page\"; long names truncate with text-overflow. On narrow widths the crumbs hide and the search moves to its own row (container query, 62rem). Light and graphite surfaces via data-tone. Palette --vibeui-navbar-007-*.",
+            "description": "A workspace or CRM header: a workspace switcher with a check on the current one, context breadcrumbs, global search with Cmd/Ctrl+K, notifications with a dot and a user menu with an account card.",
+            "docs": "One file, zero dependencies, a client component. Density matters more than air here — this is a working tool, and the whole path fits in the header. The current workspace is marked with a check, not only with color. The two disclosures close each other, close on Escape and on an outside click, and their links get tabindex=-1 while closed. Cmd/Ctrl+K focuses the search field. The unread dot is separated from the background by a ring. Account and project state come from outside; authentication and real switching are implemented by the host application. Palette --vibeui-navbar-007-*.",
             "ai": {
-              "summary": "A workspace header: an organization switcher with an orange mark, context breadcrumbs, global search as a form, a notification bell with an unread dot and an avatar with a menu. Disclosures are <details> without JS. All state arrives through props from the application.",
+              "summary": "A workspace header: a workspace switcher with a check, context breadcrumbs, search with Cmd/Ctrl+K, notifications with a dot and a user menu. Light and graphite versions.",
               "preserve": [
-                "the local --vibeui-navbar-007-* palette — do not swap it for your theme tokens: the header must look the same in any project",
-                "the separation: the workspace switcher on the left, context in the crumbs, personal actions on the right — do not pile everything into one icon row",
-                "truncating long names with text-overflow, not wrapping — an app header keeps one line",
-                "breadcrumbs as <nav>+<ol> with aria-current on the last one — semantics screen readers rely on",
-                "the unread dot as state from data (unread), not a decorative element",
-                "the container query instead of a media query: the layout measures the block"
+                "the local --vibeui-navbar-007-* palette — do not swap it for your theme tokens",
+                "the density of a working header: marketing-header air eats the context here",
+                "the check on the current workspace: color alone does not tell you where you are",
+                "truncating long names with an ellipsis instead of wrapping",
+                "tabindex=-1 on the links of closed menus so focus cannot fall inside"
               ],
               "adapt": [
-                "workspace and workspaces — the current space and the switch list; the real switch is done by the app",
-                "crumbs — the current screen's context; the last crumb has no href",
-                "searchAction — the global search handler",
-                "unread, notificationsHref — the notifications state and route",
-                "userInitials, userName, userMenu — the user and their menu",
-                "tone — the light or graphite surface; accent — the brand color"
+                "workspace, workspaces, crumbs — the application context",
+                "userInitials, userName, userEmail, userMenu — the account card and menu",
+                "unread — whether there are unread notifications; tone — light or graphite; accent — the brand color of the mark and the active states",
+                "searchAction — the project's global search handler",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
-                "Global header actions do not mix with actions of a specific table or editor — those live in the work area.",
-                "The header must not end up with ten competing icons: everything secondary goes into the user menu.",
-                "The app's side navigation belongs to the workspace skeleton, not the header."
+                "The block is a client component: the menus and the shortcut need JS.",
+                "Real workspace switching, authentication and notifications are the application's job."
               ],
               "usage": "<Navbar007\n  workspace=\"Contour Lab\"\n  crumbs={[{ label: \"Projects\", href: \"/projects\" }, { label: \"Analytics\" }]}\n  userInitials=\"AK\"\n  unread\n/>"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "workspace": {
                 "label": "Workspace",
                 "default": "Contour Lab"
               },
               "unread": {
                 "label": "Unread"
-              },
-              "tone": {
-                "label": "Surface"
               },
               "accent": {
                 "label": "Accent"
@@ -1088,7 +1064,7 @@
       "name": "navbar-008",
       "type": "registry:block",
       "title": "Шапка поверх фотографии",
-      "description": "Прозрачная шапка для наложения на большой первый кадр: логотип и ссылки без подложки, оранжевое действие сохраняет узнаваемость. Контрастная версия для тёмного или светлого кадра выбирается заранее, не вычисляется по пикселям.",
+      "description": "Шапка поверх фотографии или видео: на первом кадре ничем не подложена, а после прокрутки садится на плотную панель с размытием. Контрастная версия выбирается заранее — для тёмного кадра или для светлого.",
       "categories": ["navbar"],
       "dependencies": [],
       "registryDependencies": [],
@@ -1099,35 +1075,32 @@
           "target": "@components/vibeui/navbar-008.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, клиентского JS нет. Тема — data-theme=\"on-dark\"/\"on-light\": два заранее выбранных набора контраста, лёгкая тень текста только на тёмной версии. Узкое меню открывается на непрозрачной графитовой панели (<details>), а не поверх фото. Проп demo рисует демонстрационный кадр под шапкой — в проекте его выключают и кладут шапку поверх своего hero (absolute/грид-наложение делает проект). Состояние «после hero» — сплошную панель — включает проект своей логикой. Палитра --vibeui-navbar-008-*.",
+      "docs": "Один файл, ноль зависимостей, клиентский компонент. Два состояния различает атрибут data-scrolled на доке: сверху шапка прозрачна, текст держится тенью, после 24 px прокрутки появляется полупрозрачная панель с backdrop-filter, нижней линией и внутренней подсветкой, а тени у текста снимаются. Читаемость не вычисляется смешиванием с пикселями кадра: контрастную версию задаёт проп theme. Каретка активного раздела — отдельный слой под ссылками; до готовности JS раздел подчёркнут статической линией. Мобильная панель закрывается по Escape и по нажатию снаружи. В витрине состояние считается по прокрутке собственной сцены блока, в проекте — по прокрутке окна. Палитра --vibeui-navbar-008-*.",
       "meta": {
         "tags": ["navbar", "header", "overlay", "photo", "hero", "transparent"],
         "preview": {
-          "width": "full",
-          "aspect": "1280 / 240"
+          "width": "natural",
+          "aspect": "1280 / 520"
         },
         "ai": {
           "usage": "<Navbar008\n  theme=\"on-dark\"\n  demo={false}\n  brand=\"Перевал\"\n  links={[{ label: \"Номера\", href: \"/rooms\", current: true }]}\n  actionLabel=\"Забронировать\"\n/>",
-          "summary": "Шапка для наложения на фото или видео: без собственной подложки, с заранее выбранной контрастной версией on-dark/on-light, оранжевым действием и графитовой непрозрачной панелью мобильного меню. Демо-кадр встроен для превью и выключается пропом. Без JS.",
+          "summary": "Прозрачная шапка поверх кадра, садящаяся на плотную панель с размытием при прокрутке. Контрастная версия для тёмного или светлого кадра, каретка активного раздела, мобильная панель с Escape.",
           "preserve": [
             "локальную палитру --vibeui-navbar-008-* и не подменять её токенами вашей темы",
-            "заранее выбранную контрастную версию (theme) — не вычислять читаемость смешиванием с пикселями кадра",
-            "непрозрачную графитовую панель мобильного меню: список ссылок поверх фотографии нечитаем",
-            "оранжевое действие как единственную плашку — оно держит узнаваемость на любом кадре",
-            "тень текста только в версии on-dark — на светлом кадре она грязнит"
+            "два состояния по data-scrolled: прозрачная сверху и плотная после прокрутки — в этой смене вся идея блока",
+            "выбор контрастной версии пропом theme вместо вычисления по пикселям кадра",
+            "тени у текста в прозрачном состоянии и их снятие в плотном",
+            "каретку отдельным слоем и статическое подчёркивание у aria-current до готовности JS"
           ],
           "adapt": [
-            "demo={false} в проекте — шапка ложится поверх вашего hero; наложение (absolute или общий грид) делает проект",
-            "theme — под тон вашего кадра; на страницах без фото возьмите обычную шапку, а не эту с подложкой",
-            "links, brand, actionLabel — контент",
-            "состояние после hero — сплошная светлая или графитовая панель — включайте своей логикой (IntersectionObserver проекта)",
-            "заголовок hero должен учитывать высоту шапки — оставьте отступ сверху",
-            "accent — фирменный цвет"
+            "demo={false} в проекте — шапка ложится на ваш кадр; sticky={false} снимает закрепление",
+            "theme — версия под тёмный или светлый кадр; links, brand, actionLabel — контент",
+            "accent — фирменный цвет знака, действия и каретки",
+            "порог смены состояния под ваш первый экран задаётся в коде блока"
           ],
           "notes": [
-            "Поверх фотографии остаются только короткие действия — длинные меню уводите в панель.",
-            "Проверяйте обе версии на реальном кадре: и на самом светлом, и на самом тёмном участке.",
-            "Демо-кадр — CSS-градиент для витрины, он не выдаёт себя за фотографию."
+            "Блок клиентский: состояние прокрутки, каретка и меню требуют JS. Без гидратации шапка остаётся прозрачной и работает.",
+            "Прозрачная шапка живёт только над кадром: над текстом контента она нечитаема, поэтому плотное состояние обязательно."
           ]
         },
         "controls": [
@@ -1163,29 +1136,26 @@
         "i18n": {
           "en": {
             "title": "Navbar over a Photo",
-            "description": "A transparent header to overlay a large first frame: the logo and links without a backing, an orange action keeps the brand recognizable. The contrast version for a dark or light frame is chosen in advance, not computed per pixel.",
-            "docs": "One file, zero dependencies, no client JS. The theme is data-theme=\"on-dark\"/\"on-light\": two pre-chosen contrast sets, a light text shadow only on the dark version. The narrow menu opens on an opaque graphite panel (<details>), not over the photo. The demo prop draws a demo frame under the header — in a project it is turned off and the header is laid over your hero (absolute/grid overlay is the project's job). The after-hero state — a solid panel — is enabled by the project's own logic. Palette --vibeui-navbar-008-*.",
+            "description": "A header over a photo or video: unbacked on the first frame, settling onto a dense blurred panel once you scroll. The contrast version is chosen up front — for a dark frame or a light one.",
+            "docs": "One file, zero dependencies, a client component. The two states are told apart by the data-scrolled attribute on the dock: at the top the header is transparent and the text is held by a shadow; after 24 px of scrolling a translucent panel appears with a backdrop filter, a bottom line and an inner highlight, and the text shadows are dropped. Readability is not computed by blending with the frame's pixels: the contrast version is set by the theme prop. The active-section glider is a separate layer under the links; until the JS is ready the section keeps a static underline. The mobile panel closes on Escape and on an outside click. In the showcase the state is read from the block's own stage, in a project from the window. Palette --vibeui-navbar-008-*.",
             "ai": {
-              "summary": "A header to overlay photos or video: no backing of its own, a pre-chosen on-dark/on-light contrast version, an orange action and an opaque graphite mobile menu panel. The demo frame is built in for the showcase and turned off by a prop. No JS.",
+              "summary": "A transparent header over a frame that settles onto a dense blurred panel on scroll. A contrast version for dark or light frames, an active-section glider, a mobile panel with Escape.",
               "preserve": [
                 "the local --vibeui-navbar-008-* palette — do not swap it for your theme tokens",
-                "the pre-chosen contrast version (theme) — do not compute readability by mixing with frame pixels",
-                "the opaque graphite mobile menu panel: a link list over a photo is unreadable",
-                "the orange action as the only plate — it keeps the brand recognizable on any frame",
-                "the text shadow only in the on-dark version — on a light frame it smears"
+                "the two data-scrolled states: transparent at the top and dense after scrolling — that switch is the whole idea",
+                "choosing the contrast version with the theme prop instead of computing it from the frame's pixels",
+                "the text shadows in the transparent state and dropping them in the dense one",
+                "the glider as a separate layer, and the static underline on aria-current until the JS is ready"
               ],
               "adapt": [
-                "demo={false} in a project — the header lays over your hero; the overlay (absolute or a shared grid) is the project's job",
-                "theme — to match your frame's tone; on pages without a photo take a regular header instead",
-                "links, brand, actionLabel — the content",
-                "the after-hero state — a solid light or graphite panel — enable with your own logic (the project's IntersectionObserver)",
-                "the hero heading must account for the header height — leave a top offset",
-                "accent — the brand color"
+                "demo={false} in a project — the header sits on your frame; sticky={false} drops the pinning",
+                "theme — the version for a dark or light frame; links, brand, actionLabel — the content",
+                "accent — the brand color of the mark, the action and the glider",
+                "the state threshold for your own hero is set in the block's code"
               ],
               "notes": [
-                "Only short actions stay over the photo — long menus go into the panel.",
-                "Check both versions on the real frame: on its lightest and darkest areas.",
-                "The demo frame is a CSS gradient for the showcase, it does not pretend to be a photo."
+                "The block is a client component: scroll state, glider and menu need JS. Without hydration the header stays transparent and works.",
+                "A transparent header only lives over a frame: over body text it is unreadable, so the dense state is mandatory."
               ],
               "usage": "<Navbar008\n  theme=\"on-dark\"\n  demo={false}\n  brand=\"Summit\"\n  links={[{ label: \"Rooms\", href: \"/rooms\", current: true }]}\n  actionLabel=\"Book now\"\n/>"
             },
@@ -1241,7 +1211,7 @@
       "name": "navbar-009",
       "type": "registry:block",
       "title": "Шапка бизнеса с записью",
-      "description": "Шапка клиники, салона, ресторана или мастерской: название с описанием услуги, телефон настоящей ссылкой, часы работы, выбор филиала и оранжевая кнопка записи. На телефоне — крупные действия «Позвонить» и «Записаться».",
+      "description": "Шапка клиники, салона, ресторана или мастерской: название с описанием услуги, телефон крупной ссылкой tel:, честное состояние «открыто / закрыто» рядом с часами, выбор филиала с адресом и акцентная кнопка записи.",
       "categories": ["navbar"],
       "dependencies": [],
       "registryDependencies": [],
@@ -1252,7 +1222,7 @@
           "target": "@components/vibeui/navbar-009.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, клиентского JS нет. Телефон — семантическая ссылка tel:; филиалы — disclosure на <details> с адресами; онлайн-запись не изображается подключённой — кнопка ведёт по переданной ссылке. В узкой колонке контактный столбец скрывается, вместо него две крупные кнопки во всю ширину: рамочная «Позвонить» и оранжевая «Записаться» (container-запрос, порог 48rem). Палитра --vibeui-navbar-009-*.",
+      "docs": "Один файл, ноль зависимостей, клиентский компонент. Человек приходит сюда за тремя вещами — позвонить, узнать часы и записаться, — поэтому телефон набран крупно моноширинными цифрами настоящей ссылкой tel:, состояние подсвечено точкой (акцент с кольцом, когда открыто), а запись вынесена в единственную заметную кнопку. Филиал выбирается раскрытием с адресом, потому что «Филиал 2» ни о чём не говорит; панель закрывается по Escape и по нажатию снаружи. В узкой колонке телефонная строка уступает место паре кнопок «Позвонить» и «Записаться». Онлайн-запись не изображается подключённой: кнопка ведёт по переданной ссылке. Палитра --vibeui-navbar-009-*.",
       "meta": {
         "tags": [
           "navbar",
@@ -1263,33 +1233,39 @@
           "clinic"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "aspect": "1280 / 150"
         },
         "ai": {
           "usage": "<Navbar009\n  name=\"Клиника «Ясно»\"\n  phone=\"+7 343 222-14-08\"\n  phoneHref=\"tel:+73432221408\"\n  branches={[{ label: \"На Ленина\", address: \"пр. Ленина, 52\", href: \"/lenina\" }]}\n  actionHref=\"/appointment\"\n/>",
-          "summary": "Шапка локального бизнеса: название и описание услуги, кликабельный телефон, часы, выбор филиала раскрытием и оранжевая запись. На узкой ширине контакты складываются в две крупные кнопки «Позвонить» и «Записаться». Спокойная белая поверхность, без JS.",
+          "summary": "Шапка локального бизнеса: название с услугой, крупный телефон tel:, состояние «открыто» с часами, выбор филиала с адресом и кнопка записи. На телефоне — две кнопки: позвонить и записаться.",
           "preserve": [
             "локальную палитру --vibeui-navbar-009-* и не подменять её токенами вашей темы",
-            "телефон как ссылку tel: — на телефоне это главное действие, а не текст",
-            "крупные мобильные кнопки «Позвонить» и «Записаться» во всю ширину — им звонят на ходу",
-            "явный выбор филиала раскрытием, а не автоопределение — геолокация только по отдельному действию проекта",
-            "container-запрос вместо медиазапроса: раскладка считается от ширины блока"
+            "телефон настоящей ссылкой tel: и крупным кеглем — это главное действие такой шапки",
+            "честное состояние работы: точка и подпись отражают реальные часы, а не украшают шапку",
+            "адрес рядом с названием филиала в раскрытии",
+            "пару кнопок «позвонить» и «записаться» в узкой колонке вместо одной"
           ],
           "adapt": [
-            "name, tagline, phone, phoneHref, hours — данные бизнеса",
+            "name, tagline, phone, hours — контент заведения; markLabel — буква в знаке",
             "branches — филиалы с адресами; пустой массив убирает выбор",
-            "actionHref — ссылка на вашу систему записи; сама запись не входит в компонент",
-            "часы работы — строка; статус «открыто сейчас» показывайте только при реальном расчёте в проекте",
-            "accent — фирменный цвет записи и маркеров"
+            "open и status — состояние работы; их считает проект по своему расписанию",
+            "accent — фирменный цвет знака, точки состояния и кнопки записи",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
-            "Не изображайте онлайн-запись готовой, если передана только ссылка.",
-            "Телефон в тексте — с пробелами и дефисами, в href — в машинном формате.",
-            "Совместима с каркасом «описание + детали» и контактным футером."
+            "Блок клиентский: панель филиалов требует JS. Телефон и запись работают без гидратации.",
+            "Состояние «открыто» не вычисляется блоком: передавайте его из расписания, иначе шапка соврёт ночью."
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "name",
             "label": "Название",
@@ -1318,36 +1294,36 @@
             "default": ""
           }
         ],
-        "cardControls": ["name", "tagline", "phone", "accent"],
+        "cardControls": ["tone", "name", "tagline", "phone"],
         "i18n": {
           "en": {
             "title": "Local Business Navbar with Booking",
-            "description": "A header for a clinic, salon, restaurant or workshop: the name with a service line, a real phone link, working hours, a branch picker and an orange booking button. On phones — large Call and Book actions.",
-            "docs": "One file, zero dependencies, no client JS. The phone is a semantic tel: link; branches are a <details> disclosure with addresses; online booking is not portrayed as wired — the button follows the given link. In a narrow column the contact column hides and two large full-width buttons appear instead: an outlined Call and an orange Book (container query, 48rem threshold). Palette --vibeui-navbar-009-*.",
+            "description": "A header for a clinic, salon, restaurant or workshop: the name with a service line, the phone as a large tel: link, an honest open/closed state next to the hours, a branch picker with addresses and an accent booking button.",
+            "docs": "One file, zero dependencies, a client component. People come here for three things — to call, to check the hours and to book — so the phone number is set large in tabular figures as a real tel: link, the state is marked with a dot (accent with a ring when open), and booking is the single prominent button. The branch is chosen through a disclosure that shows the address, because \"Branch 2\" tells you nothing; the panel closes on Escape and on an outside click. In a narrow column the phone line gives way to a pair of buttons, Call and Book. Online booking is not pretended to be wired: the button follows the given link. Palette --vibeui-navbar-009-*.",
             "ai": {
-              "summary": "A local business header: the name and service line, a clickable phone, hours, a branch disclosure and an orange booking action. On narrow widths the contacts fold into two large Call and Book buttons. A calm white surface, no JS.",
+              "summary": "A local business header: the name with a service line, a large tel: phone number, an open state with hours, a branch picker with addresses and a booking button. On a phone — two buttons: call and book.",
               "preserve": [
                 "the local --vibeui-navbar-009-* palette — do not swap it for your theme tokens",
-                "the phone as a tel: link — on a phone it is the primary action, not text",
-                "the large full-width mobile Call and Book buttons — people tap them on the go",
-                "the explicit branch choice via disclosure, not auto-detection — geolocation only by the project's separate action",
-                "the container query instead of a media query: the layout measures the block"
+                "the phone as a real tel: link set large — it is the primary action of such a header",
+                "the honest opening state: the dot and caption reflect real hours, they are not decoration",
+                "the address next to each branch name in the disclosure",
+                "the pair of Call and Book buttons in a narrow column instead of a single one"
               ],
               "adapt": [
-                "name, tagline, phone, phoneHref, hours — the business data",
-                "branches — branches with addresses; an empty array removes the picker",
-                "actionHref — the link to your booking system; booking itself is not part of the component",
-                "the hours are a string; show an open-now status only with real computation in the project",
-                "accent — the brand color of booking and markers"
+                "name, tagline, phone, hours — the venue's content; markLabel — the letter in the mark",
+                "branches — the branches with addresses; an empty array removes the picker",
+                "open and status — the working state; the project computes them from its schedule",
+                "accent — the brand color of the mark, the state dot and the booking button",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
-                "Do not portray online booking as ready when only a link is passed.",
-                "The phone in text — with spaces and dashes; in href — machine format.",
-                "Pairs with the summary-and-details skeleton and the contact footer."
+                "The block is a client component: the branch panel needs JS. The phone and booking work without hydration.",
+                "The open state is not computed by the block: pass it from your schedule, otherwise the header lies at night."
               ],
               "usage": "<Navbar009\n  name=\"Clarity Clinic\"\n  phone=\"+1 212 555-0184\"\n  phoneHref=\"tel:+12125550184\"\n  branches={[{ label: \"Lenina branch\", address: \"52 Lenina Ave\", href: \"/lenina\" }]}\n  actionHref=\"/appointment\"\n/>"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "name": {
                 "label": "Name",
                 "default": "Clarity Clinic"
@@ -1396,7 +1372,7 @@
       "name": "navbar-010",
       "type": "registry:block",
       "title": "Плавающая шапка из островков",
-      "description": "Шапка из трёх парящих островков: капсула логотипа, капсула меню по центру и компактное оранжевое действие с зазорами между ними. Для AI-продукта, студии и технологичной презентации. В узкой колонке — одна капсула с раскрытием.",
+      "description": "Шапка на матовом стекле: у начала прокрутки три островка стоят раздельно и широко, после прокрутки зазоры схлопываются и они собираются в одну узкую пилюлю. Активный раздел помечает каретка, переезжающая под курсором. Для AI-продукта, студии и технологичной презентации.",
       "categories": ["navbar"],
       "dependencies": [],
       "registryDependencies": [],
@@ -1407,47 +1383,51 @@
           "target": "@components/vibeui/navbar-010.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, без клиентского JS. Островки — скруглённые капсулы с тонкой границей и мягкой тенью; светлая и графитовая версии — data-tone, отступ от краёв — data-inset. Блок не фиксирует себя: закрепление (sticky/fixed в пределах страницы) задаёт принимающий проект снаружи; под открытым мобильным меню — непрозрачная панель. Проп demo рисует фон-подложку для витрины. Палитра --vibeui-navbar-010-*.",
+      "docs": "Один файл, ноль зависимостей, клиентский компонент. Островки — стеклянные капсулы: полупрозрачный фон, backdrop-filter, внутренняя подсветка сверху и мягкая тень. Два состояния шапки различает атрибут data-scrolled на доке: в верхнем островки самостоятельны и бар шире, в прокрученном фоны островков гаснут, а общий бар получает стекло, тень и меньшую ширину. Каретка активного пункта — отдельный слой под ссылками, её положение считается по offsetLeft/offsetWidth и едет за курсором и фокусом; до готовности JS активный пункт подсвечен обычным фоном, поэтому без гидратации подсветка не пропадает. У кнопки действия — свечение, следующее за курсором. Мобильное меню закрывается по Escape и клику снаружи. Раскладка — container-запрос от собственной ширины блока. Всё движение снимается через prefers-reduced-motion. Палитра --vibeui-navbar-010-*.",
       "meta": {
         "tags": ["navbar", "header", "floating", "islands", "pill", "ai"],
         "preview": {
-          "width": "full",
-          "aspect": "1280 / 190"
+          "width": "natural",
+          "aspect": "1280 / 480"
         },
         "ai": {
           "usage": "<Navbar010 demo={false} brand=\"Ново\" links={[{ label: \"Продукт\", href: \"/p\", current: true }]} actionLabel=\"Попробовать\" />",
-          "summary": "Три парящих островка: капсула бренда, капсула меню и оранжевое действие с зазорами. Светлая и графитовая версии, отступ настройкой, мобильное меню — <details> на непрозрачной капсуле. Закрепление задаёт проект. Без JS.",
+          "summary": "Плавающая шапка из трёх стеклянных островков, которые при прокрутке собираются в одну пилюлю. Каретка активного пункта едет за курсором, у действия — свечение под курсором. Светлая и графитовая версии, отступ настройкой, мобильное меню с Escape и закрытием по клику снаружи.",
           "preserve": [
             "локальную палитру --vibeui-navbar-010-* и не подменять её токенами вашей темы",
-            "три самостоятельных островка с зазорами — слить их в одну полосу значит убить идею",
-            "непрозрачную поверхность мобильной панели: список ссылок не должен висеть на прозрачном",
-            "container-запрос вместо медиазапроса: раскладка считается от ширины блока"
+            "два состояния по data-scrolled: раздельные островки сверху и собранная пилюля после прокрутки — в этой смене вся идея блока",
+            "стекло: полупрозрачный фон вместе с backdrop-filter и внутренней подсветкой сверху, иначе капсулы становятся плоскими плашками",
+            "каретку активного пункта отдельным слоем под ссылками и фон-подсветку у aria-current до готовности JS",
+            "container-запрос вместо медиазапроса: раскладка считается от ширины блока",
+            "снятие движения в prefers-reduced-motion"
           ],
           "adapt": [
-            "demo={false} в проекте — шапка ложится на ваш фон; закрепление position:fixed/sticky с отступом задавайте снаружи",
+            "demo={false} в проекте — шапка ложится на ваш контент; sticky={false} снимает закрепление, если страница крепит шапку сама",
             "links, brand, actionLabel — контент; tone — светлые или графитовые капсулы",
-            "inset — воздух вокруг островков",
-            "accent — фирменный цвет знака, действия и активного пункта"
+            "inset — воздух вокруг островков в верхнем состоянии",
+            "accent — фирменный цвет знака, действия и активного пункта",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
-            "При фиксации подложите достаточный зазор: парящие капсулы у самого края теряют смысл.",
-            "Геометрия не морфится при прокрутке — «собирание в полосу» добавляет проект отдельно, с reduced-motion."
+            "Блок клиентский: прокрутка, каретка и меню требуют JS. Разметка и стекло приходят с сервера, без гидратации шапка остаётся в верхнем состоянии и остаётся рабочей.",
+            "Порог смены состояния — 8px прокрутки; при demo={false} слушается прокрутка окна, в витрине — собственной сцены блока.",
+            "Стекло читается только поверх контента: под шапкой должно что-то проезжать, иначе backdrop-filter не виден."
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "brand",
             "label": "Название",
             "type": "text",
             "default": "Ново",
             "maxLength": 20
-          },
-          {
-            "prop": "tone",
-            "label": "Капсулы",
-            "type": "select",
-            "options": ["light", "dark"],
-            "default": "light"
           },
           {
             "prop": "inset",
@@ -1463,35 +1443,39 @@
             "default": ""
           }
         ],
-        "cardControls": ["brand", "tone", "inset", "accent"],
+        "cardControls": ["tone", "brand", "inset", "accent"],
         "i18n": {
           "en": {
             "title": "Floating Island Navbar",
-            "description": "A header of three floating islands: a logo capsule, a centered menu capsule and a compact orange action with gaps between them. For AI products, studios and tech presentations. In a narrow column — one capsule with a disclosure.",
-            "docs": "One file, zero dependencies, no client JS. The islands are rounded capsules with a thin border and a soft shadow; light and graphite versions via data-tone, the edge inset via data-inset. The block does not pin itself: pinning (sticky/fixed within the page) is set by the host project from outside; the mobile menu opens on an opaque panel. The demo prop draws a backdrop for the showcase. Palette --vibeui-navbar-010-*.",
+            "description": "A frosted-glass header: at the top of the page three islands stand apart and wide, once you scroll the gaps collapse and they gather into a single narrow pill. The active section is marked by a glider that follows the cursor. For AI products, studios and tech presentations.",
+            "docs": "One file, zero dependencies, a client component. The islands are glass capsules: a translucent fill, a backdrop filter, an inner top highlight and a soft shadow. The two header states are told apart by the data-scrolled attribute on the dock: at the top the islands stand on their own and the bar is wider, once scrolled the island fills fade while the shared bar takes the glass, the shadow and a narrower width. The active-item glider is a separate layer under the links, positioned from offsetLeft/offsetWidth and following cursor and focus; until the JS is ready the active item keeps a plain background, so the highlight never disappears before hydration. The action button carries a glow that tracks the cursor. The mobile menu closes on Escape and on an outside click. The layout is a container query on the block's own width. All motion is removed under prefers-reduced-motion. Palette --vibeui-navbar-010-*.",
             "ai": {
-              "summary": "Three floating islands: a brand capsule, a menu capsule and an orange action with gaps. Light and graphite versions, adjustable inset, the mobile menu is a <details> on an opaque capsule. Pinning is the project's job. No JS.",
+              "summary": "A floating header of three glass islands that gather into one pill on scroll. The active-item glider follows the cursor, the action glows under it. Light and graphite versions, adjustable inset, a mobile menu with Escape and outside-click dismissal.",
               "preserve": [
                 "the local --vibeui-navbar-010-* palette — do not swap it for your theme tokens",
-                "three standalone islands with gaps — merging them into one bar kills the idea",
-                "the opaque mobile panel surface: a link list must not float on transparency",
-                "the container query instead of a media query: the layout measures the block"
+                "the two data-scrolled states: separate islands at the top, a gathered pill after scrolling — that switch is the whole idea of the block",
+                "the glass: a translucent fill together with the backdrop filter and the inner top highlight, otherwise the capsules turn into flat plates",
+                "the active-item glider as a separate layer under the links, and the background highlight on aria-current until the JS is ready",
+                "the container query instead of a media query: the layout measures the block",
+                "the motion removal under prefers-reduced-motion"
               ],
               "adapt": [
-                "demo={false} in a project — the header sits on your background; set fixed/sticky pinning with an offset from outside",
+                "demo={false} in a project — the header sits on your content; sticky={false} drops the pinning if the page pins the header itself",
                 "links, brand, actionLabel — the content; tone — light or graphite capsules",
-                "inset — the air around the islands",
-                "accent — the brand color of the mark, action and active item"
+                "inset — the air around the islands in the top state",
+                "accent — the brand color of the mark, action and active item",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
-                "When pinning, keep a sufficient gap: floating capsules flush to the edge lose their meaning.",
-                "The geometry does not morph on scroll — collapsing into a bar is added by the project separately, with reduced motion."
+                "The block is a client component: scroll state, glider and menu need JS. The markup and the glass are server-rendered, and without hydration the header stays in its top state and keeps working.",
+                "The state switches after 8px of scrolling; with demo={false} it listens to the window, in the showcase to the block's own stage.",
+                "Glass only reads over content: something has to pass under the header, otherwise the backdrop filter is invisible."
               ],
               "usage": "<Navbar010 demo={false} brand=\"Nova\" links={[{ label: \"Product\", href: \"/p\", current: true }]} actionLabel=\"Try it\" />"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "brand": { "label": "Brand", "default": "Nova" },
-              "tone": { "label": "Capsules" },
               "inset": { "label": "Inset" },
               "accent": { "label": "Accent" }
             },
@@ -1518,7 +1502,7 @@
       "name": "navbar-011",
       "type": "registry:block",
       "title": "Шапка каталога «что, где, когда»",
-      "description": "Шапка маркетплейса и каталога с крупным объединённым поиском: поля «что», «где» и необязательное «когда» в одной капсуле с оранжевой кнопкой. Для недвижимости, аренды, специалистов, путешествий и событий.",
+      "description": "Шапка маркетплейса и каталога: ряд разделов с кареткой и крупная капсула поиска «что / где / когда» с акцентной кнопкой. Активное поле подсвечивается, капсула приподнята тенью. Для недвижимости, услуг, событий.",
       "categories": ["navbar"],
       "dependencies": [],
       "registryDependencies": [],
@@ -1529,34 +1513,43 @@
           "target": "@components/vibeui/navbar-011.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, без клиентского JS. Поиск — настоящая <form role=\"search\"> с полями-лейблами в одной капсуле; активное поле подсвечивается :focus-within. Пустой whenLabel убирает третье поле — каталогу специалистов даты не нужны. Состояние параметров, подсказки и календарь подключает принимающий проект. В узкой колонке капсула складывается в столбик с кнопкой снизу. Палитра --vibeui-navbar-011-*.",
+      "docs": "Один файл, ноль зависимостей, клиентский компонент. Капсула поиска — главный объект страницы, поэтому она приподнята тенью, а активное поле не просто красится: под ним вырастает линия акцента, и в момент ввода видно, какое из трёх полей принимает текст. Настоящая <form role=\"search\"> с submit-кнопкой: Enter отправляет запрос. Каретка разделов считается по offsetLeft/offsetWidth и едет за курсором и фокусом; до готовности JS активный раздел подсвечен обычным фоном. Поле «когда» необязательно — каталогу специалистов даты не нужны. В узкой колонке поля складываются в столбик. Палитра --vibeui-navbar-011-*.",
       "meta": {
         "tags": ["navbar", "header", "marketplace", "search", "travel", "booking"],
         "preview": {
-          "width": "full",
-          "aspect": "1280 / 200"
+          "width": "natural",
+          "aspect": "1280 / 340"
         },
         "ai": {
           "usage": "<Navbar011\n  brand=\"Простор\"\n  searchAction=\"/search\"\n  whatPlaceholder=\"Жильё или специалист\"\n  whenLabel=\"\"\n/>",
-          "summary": "Шапка каталога: бренд, вход и крупная капсула поиска из полей «что», «где», «когда» с оранжевой кнопкой. Настоящая форма без JS; поле дат необязательно. Активное поле подсвечивается тёплым фоном. Календарь и подсказки — забота проекта.",
+          "summary": "Шапка каталога: разделы с кареткой и объединённый поиск «что / где / когда» одной приподнятой капсулой с подсветкой активного поля. Состояние и выдачу обслуживает проект.",
           "preserve": [
             "локальную палитру --vibeui-navbar-011-* и не подменять её токенами вашей темы",
             "поиск одной капсулой с разделителями — рассыпать поля по шапке значит потерять идею",
             "настоящую <form role=\"search\"> с submit-кнопкой — Enter обязан отправлять запрос",
+            "подсветку активного поля: без неё в трёх полях не видно, куда идёт ввод",
             "container-запрос вместо медиазапроса: раскладка считается от ширины блока"
           ],
           "adapt": [
-            "brand — название; searchAction — обработчик поиска проекта; имена полей q/place/dates читайте на сервере",
+            "brand и tabs — название и разделы каталога; пустой массив убирает ряд; accent — цвет знака, кнопки поиска и каретки",
             "whenLabel=\"\" убирает даты для каталогов без календаря",
             "подписи и подсказки полей (whatPlaceholder и другие) — под вашу нишу",
-            "accent — цвет кнопки и подсветки; свёрнутое резюме запроса при прокрутке добавляет проект"
+            "searchAction — обработчик поиска проекта; имена полей q/place/dates читайте на сервере",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
-            "Геолокация — только по отдельному действию проекта, не автоматически.",
-            "Календарь дат не входит: поле принимает текст, а видж-выбор подключается снаружи."
+            "Блок клиентский: каретка разделов требует JS. Форма поиска работает и без гидратации.",
+            "Календарь дат не входит: поле принимает текст, а виджет выбора подключается снаружи."
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "brand",
             "label": "Название",
@@ -1585,33 +1578,36 @@
             "default": ""
           }
         ],
-        "cardControls": ["brand", "whatPlaceholder", "whenLabel", "accent"],
+        "cardControls": ["tone", "brand", "whatPlaceholder", "whenLabel"],
         "i18n": {
           "en": {
             "title": "What–Where–When Catalog Navbar",
-            "description": "A marketplace and catalog header with a large unified search: the What, Where and optional When fields in one capsule with an orange button. For real estate, rentals, specialists, travel and events.",
-            "docs": "One file, zero dependencies, no client JS. The search is a real <form role=\"search\"> with label fields in one capsule; the active field is highlighted by :focus-within. An empty whenLabel removes the third field — a specialist catalog needs no dates. Parameter state, suggestions and the calendar are wired by the host project. In a narrow column the capsule stacks with the button below. Palette --vibeui-navbar-011-*.",
+            "description": "A marketplace and catalog header: a row of sections with a glider and a large What / Where / When search capsule with an accent button. The active field lights up and the capsule is lifted by a shadow. For real estate, services and events.",
+            "docs": "One file, zero dependencies, a client component. The search capsule is the main object of the page, so it is lifted by a shadow, and the active field does more than change color: an accent line grows under it, so while typing you can see which of the three fields takes the text. A real <form role=\"search\"> with a submit button: Enter sends the query. The section glider is positioned from offsetLeft/offsetWidth and follows cursor and focus; until the JS is ready the active section keeps a plain background. The When field is optional — a directory of professionals needs no dates. In a narrow column the fields stack. Palette --vibeui-navbar-011-*.",
             "ai": {
-              "summary": "A catalog header: the brand, sign-in and a large search capsule of What, Where, When fields with an orange button. A real form without JS; the dates field is optional. The active field glows warm. The calendar and suggestions are the project's job.",
+              "summary": "A catalog header: sections with a glider and a combined What / Where / When search in one lifted capsule with active-field highlighting. State and results are the project's job.",
               "preserve": [
                 "the local --vibeui-navbar-011-* palette — do not swap it for your theme tokens",
                 "the search as one capsule with separators — scattering the fields loses the idea",
                 "the real <form role=\"search\"> with a submit button — Enter must send the query",
+                "the active-field highlight: without it three fields hide where the input goes",
                 "the container query instead of a media query: the layout measures the block"
               ],
               "adapt": [
-                "searchAction — your project's search handler; read the q/place/dates names on the server",
-                "whenLabel=\"\" removes the dates for catalogs without a calendar",
-                "the field labels and hints (whatPlaceholder and others) — for your niche",
-                "accent — the button and highlight color; the collapsed query summary on scroll is added by the project"
+                "brand and tabs — the name and the catalog sections; an empty array removes the row; accent — the color of the mark, the search button and the glider",
+                "whenLabel=\"\" removes dates for catalogs without a calendar",
+                "the field captions and placeholders (whatPlaceholder and the rest) — for your niche",
+                "searchAction — the project's search handler; read q/place/dates on the server",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
-                "Geolocation — only by the project's separate action, never automatic.",
-                "A date picker is not included: the field takes text, the widget is wired outside."
+                "The block is a client component: the section glider needs JS. The search form works without hydration.",
+                "No date picker is included: the field takes text, and a picker widget is wired from outside."
               ],
               "usage": "<Navbar011\n  brand=\"Expanse\"\n  searchAction=\"/search\"\n  whatPlaceholder=\"A stay or a specialist\"\n  whenLabel=\"\"\n/>"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "brand": { "label": "Brand", "default": "Expanse" },
               "whatPlaceholder": {
                 "label": "What hint",
@@ -1642,7 +1638,7 @@
       "name": "navbar-012",
       "type": "registry:block",
       "title": "Редакционная шапка с крупным названием",
-      "description": "Газетная шапка: крупный текстовый знак по центру, тихая строка с датой и подпиской сверху, строка рубрик между тонкими линейками снизу. Белая бумажная композиция; оранжевый — у подписки и активной рубрики.",
+      "description": "Газетная шапка: крупный засечный знак по центру, тихая строка с датой, выпуском и подпиской сверху, строка рубрик между линейками снизу. Под рубриками едет каретка. Белая бумажная композиция.",
       "categories": ["navbar"],
       "dependencies": [],
       "registryDependencies": [],
@@ -1653,34 +1649,43 @@
           "target": "@components/vibeui/navbar-012.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, без клиентского JS. Знак масштабируется clamp от ширины блока и не обрезается. Рубрики — горизонтальный ряд с нативной прокруткой без видимой полосы на узкой ширине; активная — aria-current с оранжевой линией. Поиск — ссылка-иконка на страницу поиска проекта. Компактная версия после прокрутки (без крупного знака) — забота принимающего проекта. Палитра --vibeui-navbar-012-*.",
+      "docs": "Один файл, ноль зависимостей, клиентский компонент. Знак набран засечным шрифтом не для красоты: газетная шапка узнаётся именно контрастом засечного названия с сухим интерфейсным гротеском рубрик. Знак масштабируется от ширины блока через clamp с cqi и не обрезается. Каретка активной рубрики считается по offsetLeft/offsetWidth и едет за курсором и фокусом; до готовности JS рубрика подчёркнута статической линией. Акцентный работает дозой: подписка и каретка, остальное — чёрное на белом. Палитра --vibeui-navbar-012-*.",
       "meta": {
         "tags": ["navbar", "header", "editorial", "magazine", "masthead", "newspaper"],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "aspect": "1280 / 240"
         },
         "ai": {
           "usage": "<Navbar012\n  brand=\"Сетка\"\n  dateline=\"Среда, 10 сентября 2026\"\n  sections={[{ label: \"Главное\", href: \"/main\", current: true }]}\n/>",
-          "summary": "Редакционная шапка: служебная строка с датой и подпиской, крупный центральный текстовый знак и строка рубрик между чёрными линейками. Знак масштабируется от ширины и не обрезается; рубрики прокручиваются на узкой ширине. Без JS.",
+          "summary": "Редакционная шапка: крупный засечный знак по центру, служебная строка с датой и выпуском, кнопка подписки и строка рубрик с кареткой между линейками.",
           "preserve": [
             "локальную палитру --vibeui-navbar-012-* и не подменять её токенами вашей темы",
-            "крупный текстовый знак как идею: заменить его маленьким логотипом значит взять другую шапку",
-            "тонкие линейки и бумажную белизну — газетный характер держится на них",
-            "прокрутку рубрик на узкой ширине вместо бургера: рубрики издания должны оставаться на виду"
+            "засечный шрифт знака против гротеска рубрик — этот контраст и делает шапку газетной",
+            "центральное положение и масштабирование знака от ширины блока",
+            "дозу акцентного: подписка и каретка, остальное чёрно-белое",
+            "каретку отдельным слоем и статическое подчёркивание у aria-current до готовности JS"
           ],
           "adapt": [
-            "brand — название издания; dateline — дата или девиз",
-            "sections — рубрики с current у активной",
-            "subscribeHref и searchAction — маршруты проекта",
-            "accent — цвет подписки и активной рубрики"
+            "brand — название издания; dateline и issue — служебная строка",
+            "sections — рубрики; subscribeLabel и subscribeHref — подписка",
+            "accent — цвет подписки и активной рубрики",
+            "searchAction — адрес страницы поиска по изданию",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
-            "Уход крупного знака при прокрутке делайте в проекте: липкой остаётся строка рубрик.",
-            "Дата — строка от проекта, не вычисление внутри блока."
+            "Блок клиентский: каретка рубрик требует JS. Шапка приходит с сервера рабочей.",
+            "Дату подставляет проект: захардкоженная строка устареет на следующий день."
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "brand",
             "label": "Издание",
@@ -1709,33 +1714,36 @@
             "default": ""
           }
         ],
-        "cardControls": ["brand", "dateline", "subscribeLabel", "accent"],
+        "cardControls": ["tone", "brand", "dateline", "subscribeLabel"],
         "i18n": {
           "en": {
             "title": "Editorial Masthead Navbar",
-            "description": "A newspaper header: a large centered wordmark, a quiet line with the date and subscription above, a section row between thin rules below. A white paper composition; orange marks the subscription and the active section.",
-            "docs": "One file, zero dependencies, no client JS. The wordmark scales with clamp from the block width and never clips. Sections are a horizontal row with native scrolling and no visible bar on narrow widths; the active one is aria-current with an orange line. Search is an icon link to the project's search page. The compact after-scroll version (without the large mark) is the host project's job. Palette --vibeui-navbar-012-*.",
+            "description": "A newspaper masthead: a large serif wordmark in the centre, a quiet line with the date, issue and subscription above, a row of sections between rules below. A glider travels under the sections. A white paper composition.",
+            "docs": "One file, zero dependencies, a client component. The wordmark is set in a serif not for looks: a newspaper masthead is recognised precisely by that contrast between a serif name and the dry interface sans of the sections. The mark scales from the block's width via clamp with cqi and is never clipped. The active-section glider is positioned from offsetLeft/offsetWidth and follows cursor and focus; until the JS is ready the section keeps a static underline. Accent works as a dose: the subscribe button and the glider, everything else is black on white. Palette --vibeui-navbar-012-*.",
             "ai": {
-              "summary": "An editorial masthead: a service line with the date and subscription, a large central wordmark and a section row between black rules. The mark scales with width and never clips; sections scroll on narrow widths. No JS.",
+              "summary": "An editorial header: a large serif wordmark in the centre, a service line with the date and issue, a subscribe button and a row of sections with a glider between rules.",
               "preserve": [
                 "the local --vibeui-navbar-012-* palette — do not swap it for your theme tokens",
-                "the large wordmark as the idea: replacing it with a small logo means taking another header",
-                "the thin rules and paper white — the newspaper character rests on them",
-                "the scrolling section row on narrow widths instead of a burger: an outlet's sections must stay visible"
+                "the serif wordmark against the sans sections — that contrast is what makes the masthead",
+                "the centred wordmark and its scaling from the block's width",
+                "the dose of accent: the subscribe button and the glider, everything else black and white",
+                "the glider as a separate layer, and the static underline on aria-current until the JS is ready"
               ],
               "adapt": [
-                "brand — the outlet name; dateline — the date or motto",
-                "sections — the sections with current on the active one",
-                "subscribeHref and searchAction — the project's routes",
-                "accent — the subscription and active section color"
+                "brand — the publication name; dateline and issue — the service line",
+                "sections — the sections; subscribeLabel and subscribeHref — the subscription",
+                "accent — the color of the subscribe button and the active section",
+                "searchAction — the address of the publication's search page",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
-                "Hide the large mark on scroll in your project: the section row is what stays sticky.",
-                "The date is a string from the project, not computed inside the block."
+                "The block is a client component: the section glider needs JS. The header arrives working from the server.",
+                "The date comes from the project: a hardcoded string is stale the next day."
               ],
               "usage": "<Navbar012\n  brand=\"Grid\"\n  dateline=\"Wednesday, September 10, 2026\"\n  sections={[{ label: \"Featured\", href: \"/main\", current: true }]}\n/>"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "brand": { "label": "Outlet", "default": "Grid" },
               "dateline": { "label": "Date", "default": "Wednesday, September 10, 2026" },
               "subscribeLabel": { "label": "Subscribe", "default": "Subscribe" },
@@ -1766,7 +1774,7 @@
       "name": "navbar-013",
       "type": "registry:block",
       "title": "Полноэкранное типографическое меню",
-      "description": "Минимальная шапка агентства или студии: знак и кнопка «Меню», открывающая полноэкранную чёрную или оранжевую плоскость с крупными названиями разделов, номерами и контактом. Открытие — Popover API, без единой строки JS.",
+      "description": "Минимальная шапка агентства или студии: знак и кнопка «Меню», открывающая полноэкранную чёрную или акцентную плоскость с крупными названиями разделов, номерами и контактом. Плоскость проявляется, строки въезжают каскадом.",
       "categories": ["navbar"],
       "dependencies": [],
       "registryDependencies": [],
@@ -1777,34 +1785,44 @@
           "target": "@components/vibeui/navbar-013.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, клиентского JS нет. Меню — элемент с атрибутом popover=\"auto\" и кнопки popovertarget: нативный top layer, Escape, light-dismiss и возврат фокуса даёт браузер. Панель растянута на окно (position:fixed в top layer — законное исключение) и прокручивается при нехватке высоты. Крупные пункты с номерами, подписями и контактом внизу. Каскадного въезда строк нет. Плоскость — data-surface: чёрная или оранжевая с чёрным текстом. Палитра --vibeui-navbar-013-*.",
+      "docs": "Один файл, ноль зависимостей, без клиентского JS. Открытие — Popover API (атрибуты popover/popovertarget): нативный top layer, Escape, light-dismiss и возврат фокуса достаются бесплатно. Проявление плоскости и каскад строк тоже без JS — на @starting-style, transition-behavior: allow-discrete и задержках анимации по nth-child; там, где эти возможности не поддержаны, меню просто появляется, и ничего не ломается. Название раздела сдвигается на наведении, номер набран моноширинными цифрами. Всё движение снимается в prefers-reduced-motion. Палитра --vibeui-navbar-013-*.",
       "meta": {
         "tags": ["navbar", "header", "fullscreen", "menu", "typographic", "studio", "popover"],
         "preview": {
-          "width": "full",
-          "aspect": "1280 / 130"
+          "props": { "demo": true },
+          "width": "natural",
+          "aspect": "1280 / 520"
         },
         "ai": {
           "usage": "<Navbar013\n  brand=\"Бюро Тон\"\n  surface=\"black\"\n  links={[{ label: \"Работы\", href: \"/works\", note: \"24 проекта\" }]}\n/>",
-          "summary": "Минимальная шапка с полноэкранным типографическим меню на Popover API: знак, кнопка, а после открытия — чёрная или оранжевая плоскость с крупными пунктами, номерами и контактом. Escape, light-dismiss и возврат фокуса — нативные. Без JS.",
+          "summary": "Минимальная шапка с полноэкранным типографическим меню на Popover API: крупные названия разделов с номерами, каскад строк и контакт. Чёрная или акцентная плоскость. Без JS.",
           "preserve": [
             "локальную палитру --vibeui-navbar-013-* и не подменять её токенами вашей темы",
-            "Popover API (popover/popovertarget) как механизм открытия — не переписывать на div с классами: Escape и фокус даёт браузер",
-            "крупную типографику пунктов с номерами — это и есть меню, картинки декоративны",
-            "закрытие никогда не зависит от анимации: движения нет вовсе"
+            "Popover API вместо самодельного модала: Escape, light-dismiss и фокус достаются бесплатно",
+            "минимум в закрытом виде: знак и кнопка, ничего больше",
+            "крупный кегль названий разделов — ради него меню и делается полноэкранным",
+            "снятие движения в prefers-reduced-motion"
           ],
           "adapt": [
-            "links — разделы с note; contactLabel/contactHref — контакт внизу",
-            "surface — чёрная или оранжевая плоскость; на оранжевой текст чёрный",
-            "brand — знак; accent — цвет наведения и фокуса на чёрной версии",
-            "если нужен уникальный id (несколько шапок на странице) — переименуйте popovertarget и id панели парой"
+            "brand и links с подписями note — знак, разделы и короткие пояснения",
+            "surface — чёрная или акцентная плоскость меню; demo={true} разворачивает её под шапкой для витрины и скриншотов",
+            "contactLabel и contactHref — контакт внизу меню",
+            "accent — цвет фокус-кольца и наведения на чёрной плоскости",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
-            "Проверьте поддержку Popover API в целевых браузерах: он в базовой поставке современных, но не архаичных.",
-            "Медиа у пунктов сознательно нет — hover-картинки добавляйте в проекте декоративно, не как условие навигации."
+            "Блок серверный: клиентского JS нет, всё держится на Popover API и CSS.",
+            "Там, где @starting-style не поддержан, меню появляется без проявления — это ожидаемая деградация."
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "brand",
             "label": "Название",
@@ -1816,7 +1834,7 @@
             "prop": "surface",
             "label": "Плоскость",
             "type": "select",
-            "options": ["black", "orange"],
+            "options": ["black", "accent"],
             "default": "black"
           },
           {
@@ -1833,33 +1851,36 @@
             "default": ""
           }
         ],
-        "cardControls": ["brand", "surface", "menuLabel", "accent"],
+        "cardControls": ["tone", "brand", "surface", "menuLabel"],
         "i18n": {
           "en": {
             "title": "Fullscreen Typographic Menu",
-            "description": "A minimal agency or studio header: a mark and a Menu button opening a fullscreen black or orange plane with large section names, numbers and a contact. Opening is the Popover API, without a single line of JS.",
-            "docs": "One file, zero dependencies, no client JS. The menu is an element with popover=\"auto\" and popovertarget buttons: the native top layer, Escape, light dismiss and focus return come from the browser. The panel stretches to the window (position:fixed in the top layer — a legitimate exception) and scrolls when short of height. Large items with numbers, notes and a contact below. No cascading line entrances. The plane is data-surface: black, or orange with black text. Palette --vibeui-navbar-013-*.",
+            "description": "A minimal agency or studio header: a wordmark and a Menu button that opens a full-screen black or accent plane with large section names, numbers and a contact. The plane fades in and the rows cascade.",
+            "docs": "One file, zero dependencies, no client JS. Opening uses the Popover API (the popover/popovertarget attributes): the native top layer, Escape, light dismiss and focus return come for free. The plane's fade-in and the cascade of rows are also JS-free — built on @starting-style, transition-behavior: allow-discrete and per-nth-child animation delays; where those are unsupported the menu simply appears and nothing breaks. Each section name slides on hover and its number is set in tabular figures. All motion is removed under prefers-reduced-motion. Palette --vibeui-navbar-013-*.",
             "ai": {
-              "summary": "A minimal header with a fullscreen typographic menu on the Popover API: a mark, a button, and after opening — a black or orange plane with large items, numbers and a contact. Escape, light dismiss and focus return are native. No JS.",
+              "summary": "A minimal header with a full-screen typographic menu on the Popover API: large section names with numbers, cascading rows and a contact. A black or accent plane. No JS.",
               "preserve": [
                 "the local --vibeui-navbar-013-* palette — do not swap it for your theme tokens",
-                "the Popover API (popover/popovertarget) as the opening mechanism — do not rewrite onto divs with classes: Escape and focus come from the browser",
-                "the large item typography with numbers — that is the menu, images are decorative",
-                "closing never depends on animation: there is no motion at all"
+                "the Popover API instead of a hand-rolled modal: Escape, light dismiss and focus come free",
+                "the minimum in the closed state: a wordmark and a button, nothing more",
+                "the large type of the section names — it is the reason the menu is full-screen",
+                "the motion removal under prefers-reduced-motion"
               ],
               "adapt": [
-                "links — the sections with note; contactLabel/contactHref — the contact below",
-                "surface — the black or orange plane; on orange the text is black",
-                "brand — the mark; accent — the hover and focus color on the black version",
-                "if you need a unique id (several headers per page) — rename the popovertarget and panel id as a pair"
+                "brand and links with note captions — the mark, the sections and their short explanations",
+                "surface — the black or accent plane of the menu; demo={true} unfolds it under the header for showcases and screenshots",
+                "contactLabel and contactHref — the contact at the bottom of the menu",
+                "accent — the color of the focus ring and of hover on the black plane",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
-                "Check Popover API support in your target browsers: it ships in modern ones, not archaic.",
-                "Item media is deliberately absent — add hover images in your project decoratively, never as a navigation requirement."
+                "The block is server-rendered: there is no client JS, everything rests on the Popover API and CSS.",
+                "Where @starting-style is unsupported the menu appears without a fade — that is the expected degradation."
               ],
               "usage": "<Navbar013\n  brand=\"Tone Bureau\"\n  surface=\"black\"\n  links={[{ label: \"Works\", href: \"/works\", note: \"24 projects\" }]}\n/>"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "brand": { "label": "Brand", "default": "Tone Bureau" },
               "surface": { "label": "Plane" },
               "menuLabel": { "label": "Button", "default": "Menu" },
@@ -1867,6 +1888,7 @@
             },
             "preview": {
               "props": {
+                "demo": true,
                 "brand": "Tone Bureau",
                 "menuLabel": "Menu",
                 "closeLabel": "Close",
@@ -1889,7 +1911,7 @@
       "name": "navbar-014",
       "type": "registry:block",
       "title": "Вертикальная навигация студии",
-      "description": "Узкая боковая полоса со знаком, короткими пунктами и контактом; большая часть экрана отдана работам. Для фотографа, архитектора, дизайн-студии. На телефоне полоса превращается в обычную верхнюю шапку.",
+      "description": "Узкая боковая полоса со знаком, подписью студии, короткими пунктами и контактом; большая часть ширины отдана работам. Для фотографа, архитектора, дизайн-студии. На телефоне полоса становится обычной верхней шапкой.",
       "categories": ["navbar"],
       "dependencies": [],
       "registryDependencies": [],
@@ -1900,34 +1922,43 @@
           "target": "@components/vibeui/navbar-014.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, без клиентского JS. Полоса sticky в пределах блока; работы рядом прокручиваются документом — второй scroll-root не создаётся. Активный пункт — aria-current с оранжевой боковой линией; вертикально повёрнутого текста нет. children заменяет демонстрационную сетку работ собственным контентом. Это альтернатива верхней шапке, а не вторая навигация. Палитра --vibeui-navbar-014-*.",
+      "docs": "Один файл, ноль зависимостей, без клиентского JS. Вертикаль здесь не поза: горизонт экрана широкий, а список разделов у портфолио короткий — боковая полоса отдаёт работам всю ширину и держит навигацию в поле зрения при прокрутке. Полоса sticky и остаётся на месте, пока контент прокручивается документом; активный пункт помечен вертикальной линией акцента и фоном. Демонстрационные кадры собраны из градиентов и inline-SVG, поэтому блок не тянет ни одной картинки. В узкой колонке полоса превращается в верхнюю шапку с горизонтальным рядом пунктов. Палитра --vibeui-navbar-014-*.",
       "meta": {
         "tags": ["navbar", "sidebar", "vertical", "studio", "portfolio", "photographer"],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "aspect": "1280 / 560"
         },
         "ai": {
           "usage": "<Navbar014 brand=\"Тень\" links={[{ label: \"Работы\", href: \"/works\", current: true }]}>\n  {/* ваши работы */}\n</Navbar014>",
-          "summary": "Вертикальная навигация студии: боковая полоса со знаком, короткими пунктами, оранжевым маркером активного и контактом внизу; работы рядом идут обычной прокруткой. На узкой ширине — верхняя шапка с горизонтальным рядом. Без JS.",
+          "summary": "Вертикальная навигация студии: боковая sticky-полоса со знаком, подписью, пунктами и контактом; работы занимают всю оставшуюся ширину. На телефоне превращается в верхнюю шапку.",
           "preserve": [
             "локальную палитру --vibeui-navbar-014-* и не подменять её токенами вашей темы",
-            "документ как владельца прокрутки: полоса sticky, работы не заворачиваются во внутренний overflow",
-            "горизонтальный текст пунктов — вертикально повёрнутые ссылки читаются плохо",
-            "единственность навигации: не сочетать с другой верхней шапкой"
+            "вертикальную полосу как единственную навигацию: дублировать её верхней шапкой бессмысленно",
+            "sticky-поведение полосы при прокрутке контента",
+            "превращение полосы в верхнюю шапку в узкой колонке",
+            "container-запрос вместо медиазапроса: раскладка считается от ширины блока"
           ],
           "adapt": [
-            "children — ваши работы вместо демонстрационной сетки",
-            "links, brand, contactLabel — контент студии",
-            "ширину полосы меняйте селектором data-part=\"rail\" в своём проекте",
-            "accent — цвет знака и активного маркера"
+            "children — ваш контент вместо демонстрационных работ",
+            "brand, caption, links, contactLabel — содержимое полосы",
+            "markLabel — буква в знаке; accent — цвет знака, активного пункта и наведения",
+            "ширину полосы и сетку работ подгоняйте под свой материал",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
-            "Текущая работа обозначается маркером, список не переупорядочивается.",
-            "Демо-кадры — заглушки; замените реальными изображениями с фиксированной пропорцией."
+            "Блок серверный: клиентского JS нет.",
+            "Демонстрационные кадры — заглушки: в проекте передайте свой контент через children."
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "brand",
             "label": "Название",
@@ -1949,33 +1980,36 @@
             "default": ""
           }
         ],
-        "cardControls": ["brand", "contactLabel", "accent"],
+        "cardControls": ["tone", "brand", "contactLabel", "accent"],
         "i18n": {
           "en": {
             "title": "Vertical Studio Navigation",
-            "description": "A narrow side rail with a mark, short items and a contact; most of the screen belongs to the works. For photographers, architects, design studios. On phones the rail becomes a regular top header.",
-            "docs": "One file, zero dependencies, no client JS. The rail is sticky within the block; the works beside it scroll with the document — no second scroll root. The active item is aria-current with an orange side line; there is no vertically rotated text. children replaces the demo work grid with your own content. This is an alternative to a top header, not a second navigation. Palette --vibeui-navbar-014-*.",
+            "description": "A narrow side rail with the mark, a studio descriptor, short items and a contact; most of the width goes to the work. For photographers, architects and design studios. On a phone the rail becomes an ordinary top header.",
+            "docs": "One file, zero dependencies, no client JS. The vertical is not a pose here: screens are wide and a portfolio's section list is short — a side rail gives the work all the width and keeps navigation in view while scrolling. The rail is sticky and stays put while the content scrolls with the document; the active item is marked with a vertical accent line and a fill. The demo shots are built from gradients and inline SVG, so the block pulls in no images at all. In a narrow column the rail turns into a top header with a horizontal row of items. Palette --vibeui-navbar-014-*.",
             "ai": {
-              "summary": "Vertical studio navigation: a side rail with a mark, short items, an orange active marker and a contact below; the works beside scroll normally. On narrow widths — a top header with a horizontal row. No JS.",
+              "summary": "A studio's vertical navigation: a sticky side rail with the mark, a descriptor, items and a contact; the work takes all the remaining width. On a phone it becomes a top header.",
               "preserve": [
                 "the local --vibeui-navbar-014-* palette — do not swap it for your theme tokens",
-                "the document as the scroll owner: the rail is sticky, the works are not wrapped in an inner overflow",
-                "horizontal item text — vertically rotated links read poorly",
-                "navigation singularity: do not combine with another top header"
+                "the vertical rail as the only navigation: duplicating it with a top header is pointless",
+                "the sticky behaviour of the rail while the content scrolls",
+                "the rail turning into a top header in a narrow column",
+                "the container query instead of a media query: the layout measures the block"
               ],
               "adapt": [
-                "children — your works instead of the demo grid",
-                "links, brand, contactLabel — the studio content",
-                "change the rail width with the data-part=\"rail\" selector in your project",
-                "accent — the mark and active marker color"
+                "children — your content instead of the demo work",
+                "brand, caption, links, contactLabel — the contents of the rail",
+                "markLabel — the letter in the mark; accent — the color of the mark, active item and hover",
+                "tune the rail width and the work grid to your own material",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
-                "The current work is marked, the list is never reordered.",
-                "The demo frames are placeholders; replace them with real fixed-ratio images."
+                "The block is server-rendered: there is no client JS.",
+                "The demo shots are placeholders: in a project pass your own content through children."
               ],
               "usage": "<Navbar014 brand=\"Shade\" links={[{ label: \"Works\", href: \"/works\", current: true }]}>\n  {/* your works */}\n</Navbar014>"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "brand": { "label": "Brand", "default": "Shade Photo" },
               "contactLabel": { "label": "Contact", "default": "hello@shade.photo" },
               "accent": { "label": "Accent" }
@@ -2002,7 +2036,7 @@
       "name": "navbar-015",
       "type": "registry:block",
       "title": "Симметричная шапка с центральным брендом",
-      "description": "Шапка fashion и предметного дизайна: разреженный текстовый знак строго по центру, две группы ссылок капсом по краям, щедрые интервалы. Светлая и чёрная версии. Премиальность создают пропорции, а не декор.",
+      "description": "Шапка fashion и предметного дизайна: разреженный текстовый знак строго по центру, две группы ссылок капсом по краям, корзина со счётчиком. Разрядка знака раскрывается на наведении, у ссылок волосяная линия растёт из центра. Светлая и чёрная версии.",
       "categories": ["navbar"],
       "dependencies": [],
       "registryDependencies": [],
@@ -2013,47 +2047,49 @@
           "target": "@components/vibeui/navbar-015.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, без клиентского JS. Grid 1fr/auto/1fr держит знак в геометрическом центре независимо от длины боковых групп; letter-spacing 0.34em с компенсирующим text-indent. В узкой колонке боковые группы уходят в раскрытие слева, знак остаётся по центру, сервисная ссылка справа. Знак масштабируется clamp и не обрезается. Палитра --vibeui-navbar-015-*.",
+      "docs": "Один файл, ноль зависимостей, клиентский компонент. Премиальность создают пропорции и сдержанность, а не декор: у ссылок нет ни фонов, ни рамок — только волосяная линия, растущая из центра на наведении, а у знака разрядка, которая чуть раскрывается. Сетка из трёх колонок держит знак строго по центру независимо от длины боковых групп. В узкой колонке знак остаётся по центру, ссылки уходят в лист на непрозрачной поверхности; лист закрывается по Escape и по нажатию снаружи. Палитра --vibeui-navbar-015-*.",
       "meta": {
         "tags": ["navbar", "header", "fashion", "centered", "symmetric", "luxury"],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "aspect": "1280 / 140"
         },
         "ai": {
           "usage": "<Navbar015\n  brand=\"Мера\"\n  leftLinks={[{ label: \"Коллекции\", href: \"/c\", current: true }]}\n  rightLinks={[{ label: \"Ателье\", href: \"/a\" }]}\n/>",
-          "summary": "Симметричная шапка: знак с большим трекингом строго по центру grid-раскладки, слева и справа — группы ссылок капсом, справа сервисная ссылка. Светлая и чёрная версии; активный пункт — тонкая оранжевая линия. Без JS.",
+          "summary": "Симметричная шапка: центральный знак в разрядку, две группы ссылок капсом по краям и корзина со счётчиком. Светлая и чёрная версии, мобильный лист с Escape.",
           "preserve": [
             "локальную палитру --vibeui-navbar-015-* и не подменять её токенами вашей темы",
-            "геометрический центр знака через grid 1fr/auto/1fr — flex со space-between собьёт его при неравных группах",
-            "разреженный каповый набор ссылок и знака — это и есть характер; не сжимать трекинг",
-            "сдержанность: никакого золота и градиентов, премиальность в пропорциях"
+            "строгую симметрию: знак по центру, равные группы по краям — в этом весь блок",
+            "разрядку знака и капс ссылок: это код категории, а не украшение",
+            "отсутствие фонов и рамок у ссылок — только волосяная линия на наведении",
+            "щедрые вертикальные интервалы: сжатая версия теряет премиальность"
           ],
           "adapt": [
-            "brand — текстовый знак; длинное имя уменьшится clamp, но не обрежется",
-            "leftLinks и rightLinks — держите группы короткими, 2–3 пункта",
-            "bagLabel/bagHref — сервисная ссылка (корзина, контакт)",
-            "tone — светлая или чёрная; accent — цвет активной линии"
+            "leftLinks и rightLinks — две группы разделов; их длины лучше держать близкими",
+            "brand — текстовый знак; tone — светлая или чёрная версия",
+            "bagCount — число в корзине; ноль убирает счётчик",
+            "accent — цвет активного раздела и счётчика",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
-            "Не более нескольких главных разделов — эта шапка не для порталов.",
-            "Переход в компактную строку при прокрутке делает проект, знак не должен прыгать."
+            "Блок клиентский: мобильный лист требует JS. Десктопная раскладка работает без гидратации.",
+            "Знак текстовый: под графический логотип замените содержимое ссылки, сохранив центрирование."
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "brand",
             "label": "Знак",
             "type": "text",
             "default": "Мера",
             "maxLength": 16
-          },
-          {
-            "prop": "tone",
-            "label": "Поверхность",
-            "type": "select",
-            "options": ["light", "dark"],
-            "default": "light"
           },
           {
             "prop": "bagLabel",
@@ -2069,35 +2105,37 @@
             "default": ""
           }
         ],
-        "cardControls": ["brand", "tone", "bagLabel", "accent"],
+        "cardControls": ["tone", "brand", "bagLabel", "accent"],
         "i18n": {
           "en": {
             "title": "Symmetric Centered-Brand Navbar",
-            "description": "A fashion and object design header: a letterspaced wordmark strictly centered, two uppercase link groups at the edges, generous intervals. Light and black versions. Proportions, not decor, create the premium feel.",
-            "docs": "One file, zero dependencies, no client JS. A 1fr/auto/1fr grid keeps the mark in the geometric center regardless of side group lengths; 0.34em letter-spacing with compensating text-indent. In a narrow column the side groups fold into a left disclosure, the mark stays centered, the service link on the right. The mark scales with clamp and never clips. Palette --vibeui-navbar-015-*.",
+            "description": "A fashion and product-design header: a widely tracked wordmark strictly centred, two groups of uppercase links at the edges, a cart with a counter. The tracking opens on hover and a hairline grows from the centre of each link. Light and black versions.",
+            "docs": "One file, zero dependencies, a client component. Premium here comes from proportion and restraint, not decoration: the links have neither fills nor borders — only a hairline growing from the centre on hover — and the wordmark's tracking opens slightly. A three-column grid keeps the mark strictly centred regardless of how long the side groups are. In a narrow column the mark stays centred and the links move into a sheet on an opaque surface; the sheet closes on Escape and on an outside click. Palette --vibeui-navbar-015-*.",
             "ai": {
-              "summary": "A symmetric header: a widely tracked wordmark strictly centered in a grid, uppercase link groups left and right, a service link on the right. Light and black versions; the active item is a thin orange line. No JS.",
+              "summary": "A symmetric header: a centred wordmark in wide tracking, two groups of uppercase links at the edges and a cart with a counter. Light and black versions, a mobile sheet with Escape.",
               "preserve": [
                 "the local --vibeui-navbar-015-* palette — do not swap it for your theme tokens",
-                "the mark's geometric center through the 1fr/auto/1fr grid — flex with space-between drifts with unequal groups",
-                "the letterspaced uppercase of links and mark — that is the character; do not tighten the tracking",
-                "restraint: no gold or gradients, the premium lives in proportions"
+                "the strict symmetry: the mark centred, equal groups at the edges — that is the whole block",
+                "the wordmark tracking and the uppercase links: it is the category's code, not decoration",
+                "the absence of fills and borders on links — only the hairline on hover",
+                "the generous vertical spacing: a compressed version loses the premium feel"
               ],
               "adapt": [
-                "brand — the wordmark; a long name shrinks with clamp but never clips",
-                "leftLinks and rightLinks — keep the groups short, 2–3 items",
-                "bagLabel/bagHref — the service link (bag, contact)",
-                "tone — light or black; accent — the active line color"
+                "leftLinks and rightLinks — the two groups; keep their lengths close to each other",
+                "brand — the wordmark; tone — the light or black version",
+                "bagCount — the number in the cart; zero removes the counter",
+                "accent — the color of the active section and the counter",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
-                "No more than a few main sections — this header is not for portals.",
-                "The compact scroll state is the project's job; the mark must not jump."
+                "The block is a client component: the mobile sheet needs JS. The desktop layout works without hydration.",
+                "The mark is text: for a graphic logo replace the link's contents and keep the centring."
               ],
               "usage": "<Navbar015\n  brand=\"Mera\"\n  leftLinks={[{ label: \"Collections\", href: \"/c\", current: true }]}\n  rightLinks={[{ label: \"Atelier\", href: \"/a\" }]}\n/>"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "brand": { "label": "Mark", "default": "Mera" },
-              "tone": { "label": "Surface" },
               "bagLabel": { "label": "Service", "default": "Bag" },
               "accent": { "label": "Accent" }
             },
@@ -2125,7 +2163,7 @@
       "name": "navbar-016",
       "type": "registry:block",
       "title": "Двухуровневая корпоративная шапка",
-      "description": "Шапка крупного бизнеса, университета или фонда: верхняя серая строка с телефоном, служебными ссылками и языком; основная — с брендом, подписью, направлениями и действием. Служебное переносится в меню на узкой ширине.",
+      "description": "Шапка крупного бизнеса, университета или фонда: тёмная служебная строка с телефоном, пресс-центром и языком; белая основная — с брендом, подписью, направлениями и действием. Под направлениями едет каретка.",
       "categories": ["navbar"],
       "dependencies": [],
       "registryDependencies": [],
@@ -2136,34 +2174,43 @@
           "target": "@components/vibeui/navbar-016.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, без клиентского JS. Верхняя строка — обычный поток: при закреплении проектом sticky вешается на основную строку, служебная уезжает штатно. Телефон — ссылка tel:. В узкой колонке служебная строка сжимается до телефона и языка, направления и служебные ссылки — в раскрытии с разделителем групп. Палитра --vibeui-navbar-016-*.",
+      "docs": "Один файл, ноль зависимостей, клиентский компонент. Строки разделены цветом, а не одним лишь кеглем: у крупной организации в шапке живут две разные аудитории — посетитель и подрядчик, — и тёмная полоса честно отделяет служебное от основного. Язык показан переключателем RU|EN, где текущий вариант залит акцентом. Каретка направления считается по offsetLeft/offsetWidth и едет за курсором и фокусом; до готовности JS направление подчёркнуто статической линией. В узкой колонке служебная строка сжимается до телефона и языка, направления уходят в панель, которая закрывается по Escape и по нажатию снаружи. Палитра --vibeui-navbar-016-*.",
       "meta": {
         "tags": ["navbar", "header", "corporate", "two-level", "enterprise", "university"],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "aspect": "1280 / 150"
         },
         "ai": {
           "usage": "<Navbar016\n  brand=\"Группа «Атлас»\"\n  phone=\"+7 495 120-33-70\"\n  phoneHref=\"tel:+74951203370\"\n  links={[{ label: \"О компании\", href: \"/about\", current: true }]}\n/>",
-          "summary": "Двухуровневая корпоративная шапка: серая служебная строка (телефон, пресс-центр, язык) и основная с крупным знаком, подписью организации, направлениями и оранжевым действием. Мобильное меню объединяет обе группы с разделителем. Без JS.",
+          "summary": "Двухуровневая корпоративная шапка: тёмная служебная строка с телефоном, разделами и языком; белая основная с брендом, направлениями и кареткой. В узкой колонке направления уходят в панель.",
           "preserve": [
             "локальную палитру --vibeui-navbar-016-* и не подменять её токенами вашей темы",
-            "иерархию строк: служебная тише и меньше, основная несёт направления — не смешивать их в один ряд",
-            "телефон как ссылку tel: в служебной строке",
-            "разделение групп в мобильном меню: направления сверху, служебное ниже линии"
+            "разделение уровней цветом: служебная строка не должна выглядеть как основная",
+            "подпись организации под названием — она отвечает на вопрос, чем компания занимается",
+            "телефон настоящей ссылкой tel: и моноширинными цифрами",
+            "каретку отдельным слоем и статическое подчёркивание у aria-current до готовности JS"
           ],
           "adapt": [
-            "brand, tagline, markLabel — организация; phone/phoneHref — реальный контакт",
-            "serviceLinks и links — две группы ссылок; langLabel/langHref — версия на другом языке",
-            "actionLabel — главное действие; accent — фирменный цвет",
-            "при закреплении вешайте sticky на основную строку селектором data-part=\"main\""
+            "links — направления; serviceLinks — служебные разделы верхней строки",
+            "brand, tagline, phone — контент организации; markLabel — буква в знаке",
+            "langCurrent и langLabel — текущий язык и вторая версия сайта",
+            "accent — цвет знака, действия, каретки и текущего языка",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
-            "Не копируйте готовые юридические формулировки между нишами — состав служебных ссылок определяет организация.",
-            "Смена языка не должна терять текущую страницу — маршрут задаёт проект."
+            "Блок клиентский: каретка и панель требуют JS.",
+            "При закреплении проектом оставляйте только основную строку: верхняя не sticky, это обычный поток."
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "brand",
             "label": "Организация",
@@ -2192,33 +2239,36 @@
             "default": ""
           }
         ],
-        "cardControls": ["brand", "tagline", "actionLabel", "accent"],
+        "cardControls": ["tone", "brand", "tagline", "actionLabel"],
         "i18n": {
           "en": {
             "title": "Two-Level Corporate Navbar",
-            "description": "A header for a large business, university or foundation: a grey top line with the phone, service links and language; the main one with the brand, tagline, directions and an action. Service items move into the menu on narrow widths.",
-            "docs": "One file, zero dependencies, no client JS. The top line is normal flow: when the project pins the header, sticky goes on the main line and the service one scrolls away by design. The phone is a tel: link. In a narrow column the service line shrinks to the phone and language, directions and service links go into a disclosure with a group divider. Palette --vibeui-navbar-016-*.",
+            "description": "A header for a large business, university or foundation: a dark service row with the phone, press centre and language; a white main row with the brand, its descriptor, directions and an action. A glider travels under the directions.",
+            "docs": "One file, zero dependencies, a client component. The two rows are separated by color, not by type size alone: a large organisation hosts two different audiences in its header — a visitor and a contractor — and the dark bar honestly separates the service row from the main one. The language is a RU|EN switch with the current option filled with the accent. The direction glider is positioned from offsetLeft/offsetWidth and follows cursor and focus; until the JS is ready the direction keeps a static underline. In a narrow column the service row shrinks to the phone and the language, and the directions move into a panel that closes on Escape and on an outside click. Palette --vibeui-navbar-016-*.",
             "ai": {
-              "summary": "A two-level corporate header: a grey service line (phone, press, language) and the main one with a large mark, the organization tagline, directions and an orange action. The mobile menu joins both groups with a divider. No JS.",
+              "summary": "A two-level corporate header: a dark service row with the phone, sections and language; a white main row with the brand, directions and a glider. In a narrow column the directions move into a panel.",
               "preserve": [
                 "the local --vibeui-navbar-016-* palette — do not swap it for your theme tokens",
-                "the line hierarchy: the service one is quieter and smaller, the main one carries directions — do not merge them into one row",
-                "the phone as a tel: link in the service line",
-                "the group separation in the mobile menu: directions above, service below the line"
+                "separating the levels by color: the service row must not look like the main one",
+                "the descriptor under the name — it answers what the organisation actually does",
+                "the phone as a real tel: link in tabular figures",
+                "the glider as a separate layer, and the static underline on aria-current until the JS is ready"
               ],
               "adapt": [
-                "brand, tagline, markLabel — the organization; phone/phoneHref — a real contact",
-                "serviceLinks and links — the two link groups; langLabel/langHref — the other-language version",
-                "actionLabel — the primary action; accent — the brand color",
-                "when pinning, put sticky on the main line via the data-part=\"main\" selector"
+                "links — the directions; serviceLinks — the service sections of the top row",
+                "brand, tagline, phone — the organisation's content; markLabel — the letter in the mark",
+                "langCurrent and langLabel — the current language and the second version of the site",
+                "accent — the color of the mark, the action, the glider and the current language",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
-                "Do not copy legal wording between niches — the organization defines its service links.",
-                "Switching the language must not lose the current page — the project sets the route."
+                "The block is a client component: the glider and the panel need JS.",
+                "When pinning from the project, keep only the main row: the top one is not sticky, it is normal flow."
               ],
               "usage": "<Navbar016\n  brand=\"Atlas Group\"\n  phone=\"+1 495 120-33-70\"\n  phoneHref=\"tel:+14951203370\"\n  links={[{ label: \"About\", href: \"/about\", current: true }]}\n/>"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "brand": { "label": "Organization", "default": "Atlas Group" },
               "tagline": { "label": "Tagline", "default": "Industry and infrastructure" },
               "actionLabel": { "label": "Action", "default": "Contact us" },
@@ -2256,7 +2306,7 @@
       "name": "navbar-017",
       "type": "registry:block",
       "title": "Шапка события с билетами",
-      "description": "Шапка конференции или фестиваля: знак события с оранжевой частью, дата и город, программа и заметная кнопка билетов. Состояние продаж честное: «скоро» и «событие завершено» показываются вместо кнопки. Есть плакатная чёрная версия.",
+      "description": "Шапка конференции или фестиваля: знак с акцентной частью, дата и город капсулой, программа с кареткой и кнопка-билет с вырезами по краям. Состояние продаж честное: «скоро» и «событие завершено» показываются вместо кнопки.",
       "categories": ["navbar"],
       "dependencies": [],
       "registryDependencies": [],
@@ -2267,34 +2317,43 @@
           "target": "@components/vibeui/navbar-017.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, без клиентского JS. Часть знака после «·» подкрашивается оранжевым автоматически. Состояние продаж — проп sales: open показывает кнопку, soon и closed — пунктирную плашку-статус с role=\"status\"; таймеров и искусственного дефицита нет. Билеты продаёт внешняя система по ticketHref. Плакатная версия — data-poster: чёрная плоскость. Палитра --vibeui-navbar-017-*.",
+      "docs": "Один файл, ноль зависимостей, клиентский компонент. Кнопка билета сделана билетом буквально: вырезы по краям через mask из двух радиальных градиентов и пунктирная линия отрыва внутри — на странице фестиваля она должна читаться как объект, а не как очередная акцентная плашка. Дата и город вынесены в капсулу с точкой акцента. Плакатная версия делает фон чёрным и добавляет акцентное свечение сверху. Каретка раздела считается по offsetLeft/offsetWidth и едет за курсором и фокусом; до готовности JS раздел подчёркнут статической линией. Состояние продаж функционально: при sales=\"soon\" и \"closed\" вместо кнопки выводится статус с role=\"status\", без таймеров и искусственного дефицита. Палитра --vibeui-navbar-017-*.",
       "meta": {
         "tags": ["navbar", "header", "event", "conference", "festival", "tickets"],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "aspect": "1280 / 140"
         },
         "ai": {
           "usage": "<Navbar017\n  brand=\"Сетка·Фест\"\n  dateline=\"12–14 октября · Екатеринбург\"\n  sales=\"open\"\n  ticketHref=\"https://tickets.example\"\n/>",
-          "summary": "Шапка события: знак с оранжевой частью после «·», дата и город второй строкой, разделы программы и каповая кнопка билетов. Проп sales переключает кнопку на честные состояния «скоро» и «завершено». Белая и плакатная чёрная версии. Без JS.",
+          "summary": "Шапка события: знак, дата и город капсулой, программа с кареткой и кнопка-билет с вырезами. Плакатная чёрная версия со свечением. «Скоро» и «завершено» выводятся вместо кнопки.",
           "preserve": [
             "локальную палитру --vibeui-navbar-017-* и не подменять её токенами вашей темы",
-            "честные состояния продаж: завершённое событие показывает статус, а не мёртвую кнопку",
-            "отсутствие таймеров и искусственного дефицита — срочность только из реальных данных проекта",
-            "дату и город при знаке — событие без даты в шапке теряет смысл"
+            "форму билета у кнопки: вырезы и линия отрыва — узнаваемый знак категории",
+            "честное состояние продаж вместо таймеров и надписей об исчезающих местах",
+            "дату и город рядом со знаком: событие без даты бесполезно",
+            "каретку отдельным слоем и статическое подчёркивание у aria-current до готовности JS"
           ],
           "adapt": [
-            "brand — знак; часть после «·» станет оранжевой, без точки знак одноцветный",
-            "dateline — дата и город строкой; sales — open/soon/closed из реальных данных продаж",
-            "ticketHref — внешняя билетная система; links — разделы события",
-            "poster — плакатная чёрная версия; accent — фирменный цвет"
+            "brand с точкой-разделителем — вторая часть подсвечивается акцентом",
+            "dateline — дата и город; links — разделы события",
+            "sales — состояние продаж; soonLabel и closedLabel — подписи статусов",
+            "poster — плакатная чёрная версия; accent — цвет знака, билета и каретки",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
-            "Фиксированную нижнюю покупку на телефоне согласуйте с нижней навигацией — не дублируйте панели.",
-            "Дата — готовая строка от проекта, блок её не форматирует."
+            "Блок клиентский: каретка и мобильная панель требуют JS.",
+            "Продажу билетов ведёт внешняя система по переданной ссылке; шапка не хранит состояние заказа."
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "brand",
             "label": "Событие",
@@ -2329,33 +2388,36 @@
             "default": ""
           }
         ],
-        "cardControls": ["brand", "dateline", "sales", "poster", "accent"],
+        "cardControls": ["tone", "brand", "dateline", "sales"],
         "i18n": {
           "en": {
             "title": "Event Navbar with Tickets",
-            "description": "A conference or festival header: the event mark with an orange part, the date and city, the program and a prominent tickets button. Sales state is honest: Soon and Event Over replace the button. A poster black version included.",
-            "docs": "One file, zero dependencies, no client JS. The part of the mark after the \"·\" is tinted orange automatically. Sales state is the sales prop: open shows the button, soon and closed show a dashed status plate with role=\"status\"; no timers or artificial scarcity. Tickets are sold by an external system via ticketHref. The poster version is data-poster: a black plane. Palette --vibeui-navbar-017-*.",
+            "description": "A conference or festival header: a wordmark with an accent part, the date and city in a chip, the programme with a glider and a ticket button with notched edges. The sales state is honest: \"soon\" and \"event finished\" replace the button.",
+            "docs": "One file, zero dependencies, a client component. The ticket button is literally made a ticket: notches at its edges via a mask of two radial gradients and a dashed tear line inside — on a festival page it has to read as an object, not as yet another accent slab. The date and city sit in a chip with an accent dot. The poster version turns the background black and adds an accent glow at the top. The section glider is positioned from offsetLeft/offsetWidth and follows cursor and focus; until the JS is ready the section keeps a static underline. The sales state is functional: with sales=\"soon\" and \"closed\" a status with role=\"status\" replaces the button, with no timers and no artificial scarcity. Palette --vibeui-navbar-017-*.",
             "ai": {
-              "summary": "An event header: a mark with an orange part after the \"·\", the date and city on a second line, program sections and an uppercase tickets button. The sales prop switches the button to honest Soon and Over states. White and poster-black versions. No JS.",
+              "summary": "An event header: the wordmark, the date and city in a chip, the programme with a glider and a notched ticket button. A black poster version with a glow. \"Soon\" and \"finished\" replace the button.",
               "preserve": [
                 "the local --vibeui-navbar-017-* palette — do not swap it for your theme tokens",
-                "honest sales states: a finished event shows a status, not a dead button",
-                "no timers or artificial scarcity — urgency only from the project's real data",
-                "the date and city by the mark — an event header without a date loses its point"
+                "the ticket shape of the button: the notches and tear line are a recognisable category sign",
+                "the honest sales state instead of timers and vanishing-seats copy",
+                "the date and city next to the wordmark: an event without a date is useless",
+                "the glider as a separate layer, and the static underline on aria-current until the JS is ready"
               ],
               "adapt": [
-                "brand — the mark; the part after \"·\" turns orange, without the dot the mark is single-color",
-                "dateline — the date and city string; sales — open/soon/closed from real sales data",
-                "ticketHref — the external ticketing system; links — the event sections",
-                "poster — the poster black version; accent — the brand color"
+                "brand with a middle dot — the second part is highlighted with the accent",
+                "dateline — the date and city; links — the event's sections",
+                "sales — the sales state; soonLabel and closedLabel — the status captions",
+                "poster — the black poster version; accent — the color of the mark, ticket and glider",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
-                "Align a fixed bottom purchase bar on phones with the bottom navigation — do not stack panels.",
-                "The date is a ready string from the project, the block does not format it."
+                "The block is a client component: the glider and the mobile panel need JS.",
+                "Ticketing is run by an external system through the given link; the header holds no order state."
               ],
               "usage": "<Navbar017\n  brand=\"Grid·Fest\"\n  dateline=\"October 12–14 · Berlin\"\n  sales=\"open\"\n  ticketHref=\"https://tickets.example\"\n/>"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "brand": { "label": "Event", "default": "Grid·Fest" },
               "dateline": { "label": "Date & city", "default": "October 12–14 · Berlin" },
               "sales": { "label": "Sales" },
@@ -2387,7 +2449,7 @@
       "name": "navbar-018",
       "type": "registry:block",
       "title": "Контекстная шапка статьи",
-      "description": "Шапка чтения и обучения: возврат в раздел, сокращённое название материала, содержание раскрытием, действие «следующий урок» и тонкая полоса прогресса. Прогресс — значение от scrollspy проекта, шапка ничего не измеряет.",
+      "description": "Шапка чтения и обучения: возврат в раздел, сокращённое название материала, содержание раскрытием, действие «следующий урок» и полоса прогресса со свечением. Прогресс приходит от проекта либо считается блоком.",
       "categories": ["navbar"],
       "dependencies": [],
       "registryDependencies": [],
@@ -2398,34 +2460,43 @@
           "target": "@components/vibeui/navbar-018.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, без клиентского JS. Панель одной строки min-height 3.25rem — высоту чтения не съедает. Название сокращается text-overflow. Содержание — <details> с панелью, активная глава — aria-current с оранжевой линией. Прогресс — переменная --vibeui-navbar-018-progress из пропа progress (0–100); null убирает полосу. Один владелец прогресса — scrollspy принимающего проекта. Палитра --vibeui-navbar-018-*.",
+      "docs": "Один файл, ноль зависимостей, клиентский компонент. Полоса прогресса по умолчанию — представление значения, переданного владельцем прокрутки: одна страница не должна мерить прокрутку дважды. Если считать некому, autoProgress включает собственный замер документа через passive-слушатель scroll. Содержание закрывается по Escape и по нажатию снаружи, его ссылки вне раскрытия получают tabindex=-1, активная глава помечена вертикальной линией акцента. Панель ниже одной строки не растёт и не съедает высоту чтения; в узкой колонке действие скрывается, потому что возврат и содержание важнее. Палитра --vibeui-navbar-018-*.",
       "meta": {
         "tags": ["navbar", "header", "article", "reading", "lesson", "progress"],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "aspect": "1280 / 104"
         },
         "ai": {
           "usage": "<Navbar018\n  backLabel=\"Курс\"\n  title=\"Как читается длинный текст\"\n  chapters={[{ label: \"Глава\", href: \"#ch\", current: true }]}\n  progress={34}\n/>",
-          "summary": "Контекстная шапка статьи: стрелка возврата, сокращаемое название, содержание раскрытием с активной главой, кнопка «следующий урок» и двухпиксельная полоса прогресса снизу. Прогресс приходит пропом от scrollspy проекта. Без JS.",
+          "summary": "Контекстная шапка статьи: возврат, сокращённое название, содержание раскрытием, действие со стрелкой и полоса прогресса. Прогресс передаётся проектом или считается блоком через autoProgress.",
           "preserve": [
             "локальную палитру --vibeui-navbar-018-* и не подменять её токенами вашей темы",
-            "одну строку высоты: панель не растёт и не съедает чтение",
-            "прогресс как представление внешнего значения — шапка не измеряет прокрутку и ничего не перелистывает",
-            "сокращение названия text-overflow, а не переносом"
+            "одну строку высоты: шапка чтения не должна съедать экран текста",
+            "прогресс как представление значения одного владельца прокрутки",
+            "вертикальную линию у активной главы в содержании",
+            "tabindex=-1 у ссылок закрытого содержания, чтобы фокус не проваливался внутрь"
           ],
           "adapt": [
-            "progress — число 0–100 от одного владельца прокрутки (scrollspy проекта); null убирает полосу",
-            "title — сокращённое название материала; chapters и current — содержание и активная глава от навигации проекта",
-            "backLabel/backHref — возврат; actionLabel — «сохранить» или «следующий урок»",
-            "accent — цвет полосы, маркера и действия"
+            "title и backLabel — материал и раздел возврата; chapters — содержание",
+            "progress — значение 0–100 от вашего scrollspy; null убирает полосу",
+            "autoProgress — блок меряет прокрутку документа сам, когда считать некому",
+            "actionLabel и actionHref — «следующий урок», «сохранить» или ваше действие; accent — цвет действия и полосы прогресса",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
-            "Появление названия после ухода большого заголовка делает проект: шапка всегда показывает переданное.",
-            "Не дублируйте здесь общий поиск продукта — это контекст материала."
+            "Блок клиентский: содержание и autoProgress требуют JS.",
+            "Не включайте autoProgress, если прогресс уже считает страница: два замера разойдутся."
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "title",
             "label": "Название",
@@ -2455,33 +2526,36 @@
             "default": ""
           }
         ],
-        "cardControls": ["title", "actionLabel", "progress", "accent"],
+        "cardControls": ["tone", "title", "actionLabel", "progress"],
         "i18n": {
           "en": {
             "title": "Contextual Article Navbar",
-            "description": "A reading and learning header: a back link, the shortened piece title, a TOC disclosure, a Next Lesson action and a thin progress bar. Progress is a value from the project's scrollspy; the header measures nothing.",
-            "docs": "One file, zero dependencies, no client JS. A single-line panel of min-height 3.25rem — it does not eat reading height. The title truncates with text-overflow. The TOC is a <details> panel, the active chapter is aria-current with an orange line. Progress is the --vibeui-navbar-018-progress variable from the progress prop (0–100); null removes the bar. One progress owner — the host project's scrollspy. Palette --vibeui-navbar-018-*.",
+            "description": "A reading and learning header: back to the section, a shortened title, a table of contents, a Next lesson action and a glowing progress bar. Progress comes from the project or is measured by the block.",
+            "docs": "One file, zero dependencies, a client component. By default the progress bar renders a value passed by whoever owns the scroll: one page should not measure scrolling twice. If there is no one to measure, autoProgress turns on the block's own measurement of the document through a passive scroll listener. The table of contents closes on Escape and on an outside click, its links get tabindex=-1 while closed, and the current chapter is marked with a vertical accent line. The bar never grows beyond one line and never eats reading height; in a narrow column the action is hidden, because going back and the contents matter more. Palette --vibeui-navbar-018-*.",
             "ai": {
-              "summary": "A contextual article header: a back arrow, a truncating title, a TOC disclosure with the active chapter, a Next Lesson button and a two-pixel progress bar below. Progress arrives as a prop from the project's scrollspy. No JS.",
+              "summary": "A contextual article header: back, a shortened title, a table of contents, an action with an arrow and a progress bar. Progress is passed by the project or measured by the block via autoProgress.",
               "preserve": [
                 "the local --vibeui-navbar-018-* palette — do not swap it for your theme tokens",
-                "the single-line height: the panel never grows into the reading",
-                "progress as a view of an external value — the header measures no scrolling and turns no pages",
-                "the title truncating with text-overflow, not wrapping"
+                "the single-line height: a reading header must not eat the screen of text",
+                "progress as a rendering of one scroll owner's value",
+                "the vertical line on the current chapter in the contents",
+                "tabindex=-1 on the links of a closed table of contents so focus cannot fall inside"
               ],
               "adapt": [
-                "progress — a 0–100 number from one scroll owner (the project's scrollspy); null removes the bar",
-                "title — the shortened piece title; chapters and current — the TOC and active chapter from the project's navigation",
-                "backLabel/backHref — the return; actionLabel — Save or Next Lesson",
-                "accent — the bar, marker and action color"
+                "title and backLabel — the material and the section to return to; chapters — the contents",
+                "progress — a 0–100 value from your scrollspy; null removes the bar",
+                "autoProgress — the block measures the document itself when no one else does",
+                "actionLabel and actionHref — Next lesson, Save, or your own action; accent — the color of the action and the progress bar",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
-                "Showing the title after the big heading leaves is the project's job: the header always renders what it is given.",
-                "Do not duplicate the product-wide search here — this is the piece's context."
+                "The block is a client component: the contents and autoProgress need JS.",
+                "Do not enable autoProgress if the page already measures progress: the two will diverge."
               ],
               "usage": "<Navbar018\n  backLabel=\"Course\"\n  title=\"How long text reads\"\n  chapters={[{ label: \"Chapter\", href: \"#ch\", current: true }]}\n  progress={34}\n/>"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "title": { "label": "Title", "default": "How long text reads" },
               "actionLabel": { "label": "Action", "default": "Next lesson" },
               "progress": { "label": "Progress" },
@@ -2509,7 +2583,7 @@
       "name": "navbar-019",
       "type": "registry:block",
       "title": "Нижняя мобильная навигация",
-      "description": "Панель у нижнего края телефона: 3–5 подписанных направлений с иконками, оранжевая линия у выбранного и бейдж-счётчик. Для магазина, сообщества, кабинета. Учитывает safe-area; закрепление задаёт принимающий проект.",
+      "description": "Панель у нижнего края телефона: 3–5 подписанных направлений с иконками, выбранное лежит на пилюле акцента, бейдж-счётчик отделён кольцом. Плотная поверхность или матовое стекло. Для магазина, сообщества, кабинета.",
       "categories": ["navbar"],
       "dependencies": [],
       "registryDependencies": [],
@@ -2520,40 +2594,42 @@
           "target": "@components/vibeui/navbar-019.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, без клиентского JS. Набор встроенных иконок: home, search, heart, cart, user, grid — собственные SVG. Активный пункт — aria-current с оранжевой верхней линией; бейдж озвучивается aria-label. Нижний отступ — env(safe-area-inset-bottom). Блок не фиксирует себя: в проекте position:fixed снизу задаётся снаружи, а контенту оставляется резерв высоты. Это навигация, не футер и не рекламная панель. Палитра --vibeui-navbar-019-*.",
+      "docs": "Один файл, ноль зависимостей, без клиентского JS. Выбранное направление лежит на пилюле, а не помечено одной полоской сверху: на маленьком экране цель пальца должна быть видна как объект. Иконка выбранного чуть увеличена и окрашена акцентом, при нажатии сжимается — обратная связь без JS. Проп glass делает поверхность матовым стеклом, если панели предстоит висеть поверх ленты. Учитывается safe-area-inset-bottom. Блок не фиксирует себя сам: закрепление (position:fixed + резерв высоты у контента) задаёт принимающий проект. Палитра --vibeui-navbar-019-*.",
       "meta": {
         "tags": ["navbar", "bottom", "tabbar", "mobile", "navigation", "app"],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "aspect": "1280 / 210"
         },
         "ai": {
           "usage": "<Navbar019\n  items={[{ label: \"Главная\", href: \"/\", icon: \"home\", current: true }, { label: \"Корзина\", href: \"/cart\", icon: \"cart\", badge: 2 }]}\n/>",
-          "summary": "Нижний таббар: до пяти подписанных направлений со встроенными SVG-иконками, оранжевой линией активного и бейджем-счётчиком. Safe-area учтена, светлая и графитовая версии. Закрепление и маршруты — от проекта. Без JS.",
+          "summary": "Нижняя мобильная панель: 3–5 подписанных направлений, выбранное на пилюле акцента, бейдж с кольцом. Плотная или стеклянная поверхность, светлая и графитовая версии. Без JS.",
           "preserve": [
             "локальную палитру --vibeui-navbar-019-* и не подменять её токенами вашей темы",
-            "подписи под иконками — таббар без слов заставляет угадывать",
-            "навигационное назначение: не ставить сюда рекламное действие",
-            "safe-area отступ и озвучиваемый бейдж (aria-label)"
+            "подписи под иконками: иконка без слова угадывается неверно",
+            "пилюлю под выбранным направлением — на телефоне цель пальца должна быть объектом",
+            "учёт safe-area-inset-bottom, иначе панель уедет под жест-бар",
+            "3–5 направлений: шестое делает цели меньше пальца"
           ],
           "adapt": [
-            "items — направления: label, href, icon из набора, current и badge от состояния проекта",
-            "закрепление position:fixed внизу задавайте снаружи и оставьте контенту резерв высоты панели",
-            "tone — светлая или графитовая; accent — цвет активного и бейджа",
-            "на десктопе показывайте верхнюю или боковую навигацию — таббар скрывается вашим медиазапросом раскладки страницы"
+            "items — направления, иконки и бейджи; current отмечает открытый раздел",
+            "tone — светлая или графитовая версия; glass — матовое стекло поверх ленты",
+            "accent — цвет выбранного направления и бейджа",
+            "закрепление у нижнего края и резерв высоты у контента задаёт проект",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
-            "Не совмещайте с другой постоянной нижней панелью без общего владельца расположения.",
-            "3–5 пунктов: от шести подписи перестают помещаться."
+            "Блок серверный: клиентского JS нет, активное состояние приходит от маршрутизации проекта.",
+            "Стеклянная версия читается только поверх контента: на сплошном фоне размытию нечего размывать."
           ]
         },
         "controls": [
           {
             "prop": "tone",
-            "label": "Поверхность",
+            "label": "Тема",
             "type": "select",
-            "options": ["light", "dark"],
-            "default": "light"
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
           },
           {
             "prop": "accent",
@@ -2566,30 +2642,32 @@
         "i18n": {
           "en": {
             "title": "Bottom Mobile Navigation",
-            "description": "A panel at the phone's bottom edge: 3–5 labeled destinations with icons, an orange line on the active one and a badge counter. For shops, communities, dashboards. Safe-area aware; pinning is the host project's job.",
-            "docs": "One file, zero dependencies, no client JS. The built-in icon set: home, search, heart, cart, user, grid — own SVGs. The active item is aria-current with an orange top line; the badge is voiced by aria-label. The bottom inset is env(safe-area-inset-bottom). The block does not pin itself: in a project position:fixed at the bottom is set from outside and the content keeps a height reserve. This is navigation, not a footer or an ad bar. Palette --vibeui-navbar-019-*.",
+            "description": "A panel at the bottom edge of a phone: 3–5 labelled destinations with icons, the chosen one on an accent pill, a badge counter separated by a ring. A dense surface or frosted glass. For shops, communities and accounts.",
+            "docs": "One file, zero dependencies, no client JS. The chosen destination sits on a pill rather than being marked by a single top line: on a small screen the finger's target has to be visible as an object. The chosen icon is slightly enlarged and tinted with the accent, and it shrinks on press — feedback without JS. The glass prop turns the surface into frosted glass for panels that float over a feed. safe-area-inset-bottom is respected. The block does not pin itself: pinning (position:fixed plus a height reserve in the content) is the host project's job. Palette --vibeui-navbar-019-*.",
             "ai": {
-              "summary": "A bottom tab bar: up to five labeled destinations with built-in SVG icons, an orange active line and a badge counter. Safe-area handled, light and graphite versions. Pinning and routes come from the project. No JS.",
+              "summary": "A bottom mobile bar: 3–5 labelled destinations, the chosen one on an accent pill, a badge with a ring. Dense or glass surface, light and graphite versions. No JS.",
               "preserve": [
                 "the local --vibeui-navbar-019-* palette — do not swap it for your theme tokens",
-                "the labels under the icons — a wordless tab bar makes people guess",
-                "the navigational purpose: do not put an ad action here",
-                "the safe-area inset and the voiced badge (aria-label)"
+                "the labels under the icons: an icon without a word is guessed wrong",
+                "the pill under the chosen destination — on a phone the finger's target must be an object",
+                "respecting safe-area-inset-bottom, otherwise the bar slides under the gesture bar",
+                "3–5 destinations: a sixth makes the targets smaller than a finger"
               ],
               "adapt": [
-                "items — the destinations: label, href, an icon from the set, current and badge from the project state",
-                "set position:fixed at the bottom from outside and keep a panel-height reserve on the content",
-                "tone — light or graphite; accent — the active and badge color",
-                "on desktop show a top or side navigation — hide the tab bar with your page layout's media query"
+                "items — destinations, icons and badges; current marks the open section",
+                "tone — the light or graphite version; glass — frosted glass over a feed",
+                "accent — the color of the chosen destination and the badge",
+                "pinning to the bottom edge and reserving height in the content is the project's job",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
-                "Do not combine with another persistent bottom panel without one layout owner.",
-                "3–5 items: labels stop fitting from six on."
+                "The block is server-rendered: there is no client JS, and the active state comes from the project's routing.",
+                "The glass version only reads over content: on a solid background the blur has nothing to blur."
               ],
               "usage": "<Navbar019\n  items={[{ label: \"Home\", href: \"/\", icon: \"home\", current: true }, { label: \"Cart\", href: \"/cart\", icon: \"cart\", badge: 2 }]}\n/>"
             },
             "controls": {
-              "tone": { "label": "Surface" },
+              "tone": { "label": "Theme" },
               "accent": { "label": "Accent" }
             },
             "preview": {

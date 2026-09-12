@@ -39,9 +39,9 @@ const STYLES = `
 --vibeui-hovercard-006-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-hovercard-006-muted:color-mix(in oklab,var(--vibeui-hovercard-006-fg) 68%,transparent);
 --vibeui-hovercard-006-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-hovercard-006-accent:light-dark(oklch(0.55 0.18 39.8),oklch(0.66 0.17 39.8));
---vibeui-hovercard-006-face:light-dark(oklch(0.92 0.04 39.8),oklch(0.38 0.05 39.8));
---vibeui-hovercard-006-face-fg:light-dark(oklch(0.36 0.07 39.8),oklch(0.92 0.04 39.8));
+--vibeui-hovercard-006-accent:light-dark(oklch(0.287 0 0),oklch(0.888 0 0));
+--vibeui-hovercard-006-face:light-dark(oklch(0.92 0 0),oklch(0.38 0 0));
+--vibeui-hovercard-006-face-fg:light-dark(oklch(0.36 0 0),oklch(0.92 0 0));
 --vibeui-hovercard-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -97,7 +97,7 @@ border:1px solid var(--vibeui-hovercard-006-border);
 }
 [data-vibeui-block="hovercard-006"] [data-part="month"]{
 width:100%;padding:0.1875rem 0;text-align:center;
-background:var(--vibeui-hovercard-006-accent);color:oklch(0.99 0.01 20);
+background:var(--vibeui-hovercard-006-accent);color:oklch(from var(--vibeui-hovercard-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.625rem;font-weight:750;letter-spacing:0.06em;text-transform:uppercase;
 }
 [data-vibeui-block="hovercard-006"] [data-part="day"]{

@@ -177,7 +177,7 @@
           "background"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         }
       }
     },
@@ -207,7 +207,7 @@
           "reviews"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "items": [
               {
@@ -451,7 +451,7 @@
           "metrics"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "avatarImage": "/demo/avatars/pavel-256.webp"
           }
@@ -629,7 +629,7 @@
           "social proof"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Testimonials004",
@@ -809,7 +809,7 @@
           "reviews"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Testimonials005",
@@ -1014,7 +1014,7 @@
           "dark"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "items": [
               {
@@ -1259,7 +1259,7 @@
           "scroll"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "items": [
               {
@@ -1514,7 +1514,7 @@
           "numbers"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Testimonials008",
@@ -1690,7 +1690,7 @@
           "wall"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "items": [
               {
@@ -1938,7 +1938,7 @@
       "name": "testimonials-010",
       "type": "registry:block",
       "title": "Цитата на весь экран",
-      "description": "Одна цитата гигантской засечной типографикой с оранжевыми кавычками и автором внизу. Заявление: у нас есть отзыв, который стоит целой секции. Самодостаточен: один файл, без зависимостей.",
+      "description": "Одна цитата гигантской засечной типографикой с акцентными кавычками и автором внизу. Заявление: у нас есть отзыв, который стоит целой секции. Самодостаточен: один файл, без зависимостей.",
       "categories": [
         "testimonials"
       ],
@@ -1961,12 +1961,12 @@
           "statement"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Testimonials010",
           "usage": "<Testimonials010\n  quote=\"Мы перестали спорить о вёрстке.\"\n  name=\"Анна Ковалёва\"\n  role=\"Арт-директор, студия «Полёт»\"\n/>",
-          "summary": "Одна цитата на всю секцию: гигантская засечная типографика, оранжевые кавычки-псевдоэлементы, автор внизу за короткой акцентной чертой. Кегль считается от собственной ширины блока, ноль зависимостей, один файл, своя палитра.",
+          "summary": "Одна цитата на всю секцию: гигантская засечная типографика, акцентные кавычки-псевдоэлементы, автор внизу за короткой акцентной чертой. Кегль считается от собственной ширины блока, ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-testimonials-010-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
             "гигантский кегль цитаты: это блок-заявление, уменьшенный до «обычного» размера он теряет причину существовать",
@@ -2024,10 +2024,10 @@
         "i18n": {
           "en": {
             "title": "Full-Screen Quote",
-            "description": "A single quote in giant serif typography with orange quotation marks and the author below. A statement: we have a testimonial worth a whole section. Self-contained: one file, no dependencies.",
+            "description": "A single quote in giant serif typography with accent quotation marks and the author below. A statement: we have a testimonial worth a whole section. Self-contained: one file, no dependencies.",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-010-*. A server component. The quote is set in the system serif at clamp(1.75rem…4.25rem) computed from the block's own width, with text-wrap:balance evening out the lines. The quotation marks are ::before and ::after pseudo-elements in the accent colour: the opening one is enlarged and hung into the left margin, the closing one stays in the line. The author is set off by a short accent dash drawn with a ::before on the figcaption.",
             "ai": {
-              "summary": "One quote filling the section: giant serif typography, orange pseudo-element quotation marks, the author below behind a short accent dash. The size is computed from the block's own width; zero dependencies, one file, its own palette.",
+              "summary": "One quote filling the section: giant serif typography, accent pseudo-element quotation marks, the author below behind a short accent dash. The size is computed from the block's own width; zero dependencies, one file, its own palette.",
               "preserve": [
                 "the local --vibeui-testimonials-010-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the giant quote size: this is a statement block, and shrunk to a \"normal\" size it loses its reason to exist",
@@ -2115,7 +2115,7 @@
           "platforms"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Testimonials011",
@@ -2290,7 +2290,7 @@
           "css-only"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "segments": [
               {
@@ -2354,7 +2354,7 @@
             "разбиение отзывов по сегментам — посетитель ищет отзыв «про таких, как я», общая куча отнимает у него этот шанс",
             "инпут внутри label: связь работает без id, и блок не создаёт конфликтов идентификаторов",
             "видимое кольцо фокуса через :has(input:focus-visible) — клавиатурному пользователю нужно видеть, на каком он табе",
-            "акцентную заливку активного таба с почти чёрным текстом — контраст на оранжевом держит только тёмный текст",
+            "акцентную заливку активного таба с почти чёрным текстом — контраст на акцентном держит только тёмный текст",
             "семантику figure / blockquote / figcaption у цитат — это цитаты с авторами, а не карточки",
             "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
             "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
@@ -2415,7 +2415,7 @@
                 "the split of testimonials into segments — a visitor looks for a quote \"from someone like me\", and one common pile takes that chance away",
                 "the input inside the label: the pairing works without ids, so the block creates no identifier conflicts",
                 "the visible focus ring via :has(input:focus-visible) — a keyboard user needs to see which tab they are on",
-                "the accent fill of the active tab with near-black text — only dark text holds contrast on orange",
+                "the accent fill of the active tab with near-black text — only dark text holds contrast on accent",
                 "the figure / blockquote / figcaption semantics of the quotes — these are quotes with authors, not cards",
                 "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
                 "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
@@ -2545,7 +2545,7 @@
           "story"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Testimonials013",
@@ -2705,7 +2705,7 @@
           "target": "@components/vibeui/testimonials-014.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-014-*. Серверный компонент. Постер — панель 16:9 с градиентом из тёплых тёмных тонов акцента, оранжевой кнопкой play и подписью с длительностью; вся панель декоративна и скрыта aria-hidden, потому что неработающий настоящий button обманул бы клавиатуру и скринридер. Рядом — расшифровка: figure с цитатой и автором под подписью «Расшифровка». На широкой ширине постер и текст стоят в две колонки 7:5, на узкой складываются.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-014-*. Серверный компонент. Постер — панель 16:9 с градиентом из тёплых тёмных тонов акцента, акцентной кнопкой play и подписью с длительностью; вся панель декоративна и скрыта aria-hidden, потому что неработающий настоящий button обманул бы клавиатуру и скринридер. Рядом — расшифровка: figure с цитатой и автором под подписью «Расшифровка». На широкой ширине постер и текст стоят в две колонки 7:5, на узкой складываются.",
       "meta": {
         "tags": [
           "testimonials",
@@ -2715,7 +2715,7 @@
           "poster"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "image": "/demo/posters/poster-03.webp"
           }
@@ -2723,7 +2723,7 @@
         "ai": {
           "export": "Testimonials014",
           "usage": "<Testimonials014\n  title=\"Две минуты о том, как это работает\"\n  posterLabel=\"Анна Ковалёва — о переходе\"\n  duration=\"2:14\"\n  quote=\"Неделю вёрстки мы превратили в один вечер.\"\n  name=\"Анна Ковалёва\"\n  role=\"Руководитель маркетинга\"\n/>",
-          "summary": "Секция видео-отзыва: слева постер 16:9 с оранжевой кнопкой play и длительностью, справа текстовая расшифровка цитаты с автором. Постер — декорация без плеера и видеофайла, реальное видео подключается на месте. Ноль зависимостей, один файл, своя палитра.",
+          "summary": "Секция видео-отзыва: слева постер 16:9 с акцентной кнопкой play и длительностью, справа текстовая расшифровка цитаты с автором. Постер — декорация без плеера и видеофайла, реальное видео подключается на месте. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-testimonials-014-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
             "расшифровку рядом с постером — большинство посетителей не нажмёт play, и суть отзыва обязана дойти и до них",
@@ -2783,9 +2783,9 @@
           "en": {
             "title": "Video Testimonial",
             "description": "A video testimonial poster with a play button (decorative, no player) and the text transcript of the quote beside it. Most people will not press play — the point has to reach them too. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-014-*. A server component. The poster is a 16:9 panel with a gradient of warm dark accent tones, an orange play button and a caption with the duration; the whole panel is decorative and aria-hidden, because a non-working real button would betray the keyboard and the screen reader. Beside it is the transcript: a figure with the quote and the author under a \"Transcript\" label. At wide widths the poster and the text sit in 7:5 columns; at narrow ones they stack.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-014-*. A server component. The poster is a 16:9 panel with a gradient of warm dark accent tones, an accent play button and a caption with the duration; the whole panel is decorative and aria-hidden, because a non-working real button would betray the keyboard and the screen reader. Beside it is the transcript: a figure with the quote and the author under a \"Transcript\" label. At wide widths the poster and the text sit in 7:5 columns; at narrow ones they stack.",
             "ai": {
-              "summary": "A video testimonial section: a 16:9 poster with an orange play button and a duration on the left, the text transcript of the quote with its author on the right. The poster is decoration without a player or video file; the real video is wired up on site. Zero dependencies, one file, its own palette.",
+              "summary": "A video testimonial section: a 16:9 poster with an accent play button and a duration on the left, the text transcript of the quote with its author on the right. The poster is decoration without a player or video file; the real video is wired up on site. Zero dependencies, one file, its own palette.",
               "preserve": [
                 "the local --vibeui-testimonials-014-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the transcript beside the poster — most visitors will not press play, and the point of the testimonial has to reach them too",
@@ -2880,7 +2880,7 @@
           "social proof"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Testimonials015",

@@ -28,7 +28,7 @@ const STYLES = `
 --vibeui-toggle-012-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-toggle-012-muted:color-mix(in oklab,var(--vibeui-toggle-012-fg) 68%,transparent);
 --vibeui-toggle-012-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-toggle-012-accent:light-dark(oklch(0.58 0.17 39.8),oklch(0.72 0.15 39.8));
+--vibeui-toggle-012-accent:light-dark(oklch(0.295 0 0),oklch(0.899 0 0));
 --vibeui-toggle-012-track-off:light-dark(oklch(0.88 0 265),oklch(0.38 0 265));
 --vibeui-toggle-012-thumb:light-dark(oklch(1 0 0),oklch(0.96 0 265));
 --vibeui-toggle-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -71,8 +71,7 @@ background:var(--vibeui-toggle-012-track-off);
 transition:background-color .18s ease,border-color .18s ease;
 }
 [data-vibeui-block="toggle-012"] button[aria-checked="true"]{
-background:var(--vibeui-toggle-012-accent);border-color:var(--vibeui-toggle-012-accent);
-}
+background:var(--vibeui-toggle-012-accent);border-color:var(--vibeui-toggle-012-accent);color:oklch(from var(--vibeui-toggle-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="toggle-012"] button[aria-busy="true"]{cursor:progress}
 [data-vibeui-block="toggle-012"] button:focus-visible{
 outline:2px solid var(--vibeui-toggle-012-accent);outline-offset:2px;

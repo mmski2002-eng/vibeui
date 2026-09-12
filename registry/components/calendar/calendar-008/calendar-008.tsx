@@ -33,7 +33,7 @@ const STYLES = `
 --vibeui-calendar-008-muted:color-mix(in oklab,var(--vibeui-calendar-008-fg) 68%,transparent);
 --vibeui-calendar-008-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-calendar-008-hover:light-dark(oklch(0.96 0 265),oklch(0.29 0 265));
---vibeui-calendar-008-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.72 0.15 39.8));
+--vibeui-calendar-008-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-calendar-008-on-accent:light-dark(oklch(0.99 0 265),oklch(0.19 0 265));
 --vibeui-calendar-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -79,7 +79,7 @@ font:inherit;font-size:0.8125rem;text-transform:capitalize;
 [data-vibeui-block="calendar-008"] [data-part="grid"] button:focus-visible{outline:2px solid var(--vibeui-calendar-008-accent);outline-offset:-2px}
 [data-vibeui-block="calendar-008"] [data-part="grid"] button[data-current="true"]{border-color:var(--vibeui-calendar-008-border);font-weight:650}
 [data-vibeui-block="calendar-008"] [data-part="grid"] button[aria-pressed="true"]{
-border-color:transparent;background:var(--vibeui-calendar-008-accent);color:var(--vibeui-calendar-008-on-accent);font-weight:650;
+border-color:transparent;background:var(--vibeui-calendar-008-accent);color:oklch(from var(--vibeui-calendar-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);font-weight:650;
 }
 [data-vibeui-block="calendar-008"] [data-part="picked"]{font-size:0.875rem;color:var(--vibeui-calendar-008-muted)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="calendar-008"] *{animation:none!important;transition:none!important}}

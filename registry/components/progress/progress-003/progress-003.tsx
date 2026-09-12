@@ -31,7 +31,7 @@ const STYLES = `
 --vibeui-progress-003-muted:color-mix(in oklab,var(--vibeui-progress-003-fg) 68%,transparent);
 --vibeui-progress-003-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-progress-003-track:light-dark(oklch(0.93 0 265),oklch(0.31 0 265));
---vibeui-progress-003-accent:light-dark(oklch(0.58 0.16 39.8),oklch(0.74 0.15 39.8));
+--vibeui-progress-003-accent:light-dark(oklch(0.295 0 0),oklch(0.903 0 0));
 --vibeui-progress-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

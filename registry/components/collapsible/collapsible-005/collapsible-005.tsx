@@ -28,7 +28,7 @@ const STYLES = `
 --vibeui-collapsible-005-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-collapsible-005-muted:color-mix(in oklab,var(--vibeui-collapsible-005-fg) 68%,transparent);
 --vibeui-collapsible-005-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
---vibeui-collapsible-005-accent:light-dark(oklch(0.54 0.19 39.8),oklch(0.75 0.15 39.8));
+--vibeui-collapsible-005-accent:light-dark(oklch(0.285 0 0),oklch(0.905 0 0));
 --vibeui-collapsible-005-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0 285));
 --vibeui-collapsible-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -61,7 +61,7 @@ font-size:0.6875rem;font-weight:700;color:var(--vibeui-collapsible-005-muted);
 transition:background-color .18s ease,color .18s ease,border-color .18s ease;
 }
 [data-vibeui-block="collapsible-005"] details[open] summary::before{
-background:var(--vibeui-collapsible-005-accent);border-color:transparent;color:var(--vibeui-collapsible-005-on-accent);
+background:var(--vibeui-collapsible-005-accent);border-color:transparent;color:oklch(from var(--vibeui-collapsible-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="collapsible-005"] [data-part="mark"]{
 flex:none;margin-left:auto;width:0.4375rem;height:0.4375rem;

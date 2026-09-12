@@ -28,7 +28,7 @@ const STYLES = `
 --vibeui-avatar-006-shape:light-dark(oklch(0.92 0.05 var(--vibeui-avatar-006-hue)),oklch(0.34 0.065 var(--vibeui-avatar-006-hue)));
 --vibeui-avatar-006-initials:light-dark(oklch(0.38 0.09 var(--vibeui-avatar-006-hue)),oklch(0.88 0.063 var(--vibeui-avatar-006-hue)));
 --vibeui-avatar-006-veil:oklch(0.2 0 265 / 62%);
---vibeui-avatar-006-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.69 0.17 39.8));
+--vibeui-avatar-006-accent:light-dark(oklch(0.287 0 0),oklch(0.894 0 0));
 --vibeui-avatar-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-006"]{

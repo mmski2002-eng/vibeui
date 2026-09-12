@@ -31,9 +31,9 @@ const STYLES = `
 --vibeui-calendar-003-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-calendar-003-muted:color-mix(in oklab,var(--vibeui-calendar-003-fg) 68%,transparent);
 --vibeui-calendar-003-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
---vibeui-calendar-003-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.72 0.15 39.8));
+--vibeui-calendar-003-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-calendar-003-on-accent:light-dark(oklch(0.99 0 265),oklch(0.19 0 265));
---vibeui-calendar-003-on-accent-muted:light-dark(oklch(0.95 0 265),oklch(0.34 0.05 39.8));
+--vibeui-calendar-003-on-accent-muted:light-dark(oklch(0.95 0 265),oklch(0.34 0 0));
 --vibeui-calendar-003-weekend:light-dark(oklch(0.55 0.16 25),oklch(0.75 0.14 25));
 --vibeui-calendar-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -72,13 +72,12 @@ background:transparent;color:inherit;font:inherit;
 [data-vibeui-block="calendar-003"] [data-part="day"]{font-size:1rem;font-weight:650;font-variant-numeric:tabular-nums;line-height:1.1}
 /* Точка под числом отмечает сегодня: в ленте без неё день теряется. */
 [data-vibeui-block="calendar-003"] [data-part="dot"]{
-width:0.25rem;height:0.25rem;border-radius:9999px;background:var(--vibeui-calendar-003-accent);
-}
+width:0.25rem;height:0.25rem;border-radius:9999px;background:var(--vibeui-calendar-003-accent);color:oklch(from var(--vibeui-calendar-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="calendar-003"] button[aria-pressed="true"]{
-border-color:transparent;background:var(--vibeui-calendar-003-accent);color:var(--vibeui-calendar-003-on-accent);
+border-color:transparent;background:var(--vibeui-calendar-003-accent);color:oklch(from var(--vibeui-calendar-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="calendar-003"] button[aria-pressed="true"] [data-part="weekday"]{color:var(--vibeui-calendar-003-on-accent-muted)}
-[data-vibeui-block="calendar-003"] button[aria-pressed="true"] [data-part="dot"]{background:var(--vibeui-calendar-003-on-accent)}
+[data-vibeui-block="calendar-003"] button[aria-pressed="true"] [data-part="dot"]{background:var(--vibeui-calendar-003-on-accent);color:oklch(from var(--vibeui-calendar-003-on-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="calendar-003"] button[data-weekend="true"] [data-part="day"]{color:var(--vibeui-calendar-003-weekend)}
 [data-vibeui-block="calendar-003"] button[aria-pressed="true"][data-weekend="true"] [data-part="day"]{color:var(--vibeui-calendar-003-on-accent)}
 [data-vibeui-block="calendar-003"] [data-part="picked"]{font-size:0.875rem;color:var(--vibeui-calendar-003-muted)}

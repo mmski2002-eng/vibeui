@@ -58,8 +58,7 @@ display:flex;align-items:center;justify-content:center;
 width:3.5rem;height:3.5rem;border-radius:9999px;
 background:var(--vibeui-aspect-002-accent);
 box-shadow:0 10px 30px -12px oklch(0.15 0 265 / 70%);
-transition:transform .18s cubic-bezier(.32,.72,0,1);
-}
+transition:transform .18s cubic-bezier(.32,.72,0,1);color:oklch(from var(--vibeui-aspect-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="aspect-002"]:hover [data-part="play"]{transform:translate(-50%,-50%) scale(1.06)}
 [data-vibeui-block="aspect-002"] [data-part="play"]::before{
 content:"";margin-left:0.25rem;

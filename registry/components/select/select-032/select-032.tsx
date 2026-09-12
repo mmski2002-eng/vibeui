@@ -43,9 +43,9 @@ const STYLES = `
 --vibeui-select-032-muted:color-mix(in oklab,var(--vibeui-select-032-fg) 68%,transparent);
 --vibeui-select-032-field:light-dark(oklch(0.985 0 265),oklch(0.27 0 265));
 --vibeui-select-032-border:light-dark(oklch(0.87 0 265),oklch(0.42 0 265));
---vibeui-select-032-accent:light-dark(oklch(0.55 0.19 39.8),oklch(0.73 0.17 39.8));
+--vibeui-select-032-accent:light-dark(oklch(0.287 0 0),oklch(0.901 0 0));
 --vibeui-select-032-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 265));
---vibeui-select-032-warn:light-dark(oklch(0.6 0.19 45),oklch(0.79 0.15 58));
+--vibeui-select-032-warn:light-dark(oklch(0.68 0.15 75),oklch(0.8 0.15 78));
 --vibeui-select-032-warn-tint:color-mix(in oklab,var(--vibeui-select-032-warn) 10%,transparent);
 --vibeui-select-032-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -113,7 +113,7 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-select-032-accent) 22%,tran
 }
 [data-vibeui-block="select-032"] [data-part="confirm-actions"] [data-action="apply"]{
 background:var(--vibeui-select-032-accent);border-color:var(--vibeui-select-032-accent);
-color:var(--vibeui-select-032-on-accent);
+color:oklch(from var(--vibeui-select-032-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 /* Узкая колонка: две кнопки подтверждения в строку сжимаются до нечитаемых
    огрызков, поэтому ниже 15rem они встают друг под друга. */

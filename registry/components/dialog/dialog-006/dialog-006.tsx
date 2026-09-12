@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-dialog-006-bg:light-dark(oklch(1 0 0),oklch(0.24 0 265));
 --vibeui-dialog-006-border:light-dark(oklch(0.89 0 265),oklch(0.38 0 265));
 --vibeui-dialog-006-track:light-dark(oklch(0.93 0 265),oklch(0.33 0 265));
---vibeui-dialog-006-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8));
+--vibeui-dialog-006-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-dialog-006-radius:1rem;
 --vibeui-dialog-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -66,8 +66,8 @@ transition:opacity .18s ease,transform .18s ease,display .18s allow-discrete,ove
 [data-vibeui-dialog-006-window] [data-part="head"]{display:flex;align-items:center;gap:0.75rem}
 [data-vibeui-dialog-006-window] [data-part="spinner"]{
 flex:none;width:1.25rem;height:1.25rem;border-radius:9999px;
-border:2px solid color-mix(in oklab,var(--vibeui-dialog-006-accent,light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8))) 25%,transparent);
-border-top-color:var(--vibeui-dialog-006-accent,light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8)));
+border:2px solid color-mix(in oklab,var(--vibeui-dialog-006-accent,light-dark(oklch(0.287 0 0),oklch(0.899 0 0))) 25%,transparent);
+border-top-color:var(--vibeui-dialog-006-accent,light-dark(oklch(0.287 0 0),oklch(0.899 0 0)));
 animation:vibeui-dialog-006-spin .9s linear infinite;
 }
 @keyframes vibeui-dialog-006-spin{to{transform:rotate(360deg)}}
@@ -82,7 +82,7 @@ background:var(--vibeui-dialog-006-track,light-dark(oklch(0.93 0 265),oklch(0.33
 }
 [data-vibeui-dialog-006-window] [data-part="bar"]{
 display:block;height:100%;border-radius:inherit;
-background:var(--vibeui-dialog-006-accent,light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8)));
+background:var(--vibeui-dialog-006-accent,light-dark(oklch(0.287 0 0),oklch(0.899 0 0)));
 width:calc(var(--vibeui-dialog-006-value,0) * 1%);
 transition:width .3s cubic-bezier(.32,.72,0,1);
 }
@@ -102,7 +102,7 @@ border-radius:0.5rem;background:transparent;color:inherit;
 border:1px solid var(--vibeui-dialog-006-border,light-dark(oklch(0.89 0 265),oklch(0.38 0 265)));
 }
 [data-vibeui-dialog-006-window] button:hover{background:color-mix(in oklab,var(--vibeui-dialog-006-border,light-dark(oklch(0.89 0 265),oklch(0.38 0 265))) 40%,transparent)}
-[data-vibeui-dialog-006-window] button:focus-visible{outline:2px solid var(--vibeui-dialog-006-accent,light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8)));outline-offset:2px}
+[data-vibeui-dialog-006-window] button:focus-visible{outline:2px solid var(--vibeui-dialog-006-accent,light-dark(oklch(0.287 0 0),oklch(0.899 0 0)));outline-offset:2px}
 /* Popover страницу не блокирует: фон под окном иначе продолжает прокручиваться. */
 html:has([data-vibeui-dialog-006-window]:popover-open){overflow:hidden}
 /* Развёрнутый режим: окно стоит в потоке вместо кнопки, а не в верхнем слое.

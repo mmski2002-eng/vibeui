@@ -53,8 +53,8 @@ const STYLES = `
 --vibeui-datagrid-001-border:light-dark(oklch(0.92 0 265),oklch(0.34 0 265));
 --vibeui-datagrid-001-head:light-dark(oklch(0.975 0 265),oklch(0.27 0 265));
 --vibeui-datagrid-001-hover:light-dark(oklch(0.55 0 265 / 6%),oklch(0.78 0 265 / 10%));
---vibeui-datagrid-001-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.74 0.16 39.8));
---vibeui-datagrid-001-accent-soft:light-dark(oklch(0.55 0.2 39.8 / 10%),oklch(0.74 0.16 39.8 / 20%));
+--vibeui-datagrid-001-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
+--vibeui-datagrid-001-accent-soft:light-dark(oklch(0.287 0 0 / 10%),oklch(0.903 0 0 / 20%));
 --vibeui-datagrid-001-rank-fg:light-dark(oklch(1 0 0),oklch(0.21 0 265));
 --vibeui-datagrid-001-radius:0.875rem;
 --vibeui-datagrid-001-pad:0.625rem;
@@ -140,7 +140,7 @@ font-size:0.6875rem;color:var(--vibeui-datagrid-001-accent);
 min-width:1rem;height:1rem;border-radius:999px;
 display:inline-flex;align-items:center;justify-content:center;
 font-size:0.625rem;font-weight:700;
-color:var(--vibeui-datagrid-001-rank-fg);background:var(--vibeui-datagrid-001-accent);
+color:oklch(from var(--vibeui-datagrid-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);background:var(--vibeui-datagrid-001-accent);
 }
 [data-vibeui-block="datagrid-001"] [data-align="end"]{text-align:right;font-variant-numeric:tabular-nums}
 [data-vibeui-block="datagrid-001"] tbody tr:hover{background:var(--vibeui-datagrid-001-hover)}

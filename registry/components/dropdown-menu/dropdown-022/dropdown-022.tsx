@@ -31,8 +31,8 @@ const STYLES = `
 --vibeui-dropdown-022-muted:color-mix(in oklab,var(--vibeui-dropdown-022-fg) 62%,transparent);
 --vibeui-dropdown-022-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 14%));
 --vibeui-dropdown-022-card:light-dark(oklch(0.955 0 0),oklch(0.2178 0 0));
---vibeui-dropdown-022-accent:light-dark(oklch(0.64 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-dropdown-022-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-dropdown-022-accent:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
+--vibeui-dropdown-022-on-accent:oklch(0.15 0 0);
 --vibeui-dropdown-022-ease:linear(0,0.138,0.389,0.621,0.792,0.901,0.963,0.994,1.006,1.009,1.008,1.006,1.003,1.002,1.001,1);
 --vibeui-dropdown-022-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -82,7 +82,7 @@ transition-delay:calc(var(--vibeui-dropdown-022-index) * 40ms);
 position:absolute;left:50%;bottom:0.25rem;margin-left:-1.5rem;z-index:2;
 width:3rem;height:3rem;display:grid;place-items:center;
 appearance:none;border:0;border-radius:50%;cursor:pointer;
-background:var(--vibeui-dropdown-022-accent);color:var(--vibeui-dropdown-022-on-accent);
+background:var(--vibeui-dropdown-022-accent);color:oklch(from var(--vibeui-dropdown-022-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 transition:transform .42s cubic-bezier(.22,1.2,.36,1);
 transition:transform .42s var(--vibeui-dropdown-022-ease);
 }

@@ -38,7 +38,7 @@ const STYLES = `
 --vibeui-stepper-009-muted:color-mix(in oklab,var(--vibeui-stepper-009-fg) 68%,transparent);
 --vibeui-stepper-009-border:light-dark(oklch(0.92 0 265),oklch(0.32 0 265));
 --vibeui-stepper-009-line:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
---vibeui-stepper-009-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.16 39.8));
+--vibeui-stepper-009-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-stepper-009-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0 262));
 --vibeui-stepper-009-code-bg:light-dark(oklch(0.22 0 265),oklch(0.15 0 265));
 --vibeui-stepper-009-code-fg:light-dark(oklch(0.93 0 265),oklch(0.9 0 265));
@@ -68,7 +68,7 @@ content:"";position:absolute;left:calc(var(--vibeui-stepper-009-dot) / 2 - 1px);
 top:var(--vibeui-stepper-009-dot);bottom:0.25rem;width:2px;
 background:var(--vibeui-stepper-009-line);
 }
-[data-vibeui-block="stepper-009"] li[data-state="done"]::before{background:var(--vibeui-stepper-009-accent)}
+[data-vibeui-block="stepper-009"] li[data-state="done"]::before{background:var(--vibeui-stepper-009-accent);color:oklch(from var(--vibeui-stepper-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="stepper-009"] [data-part="mark"]{
 position:absolute;left:0;top:0;
 display:flex;align-items:center;justify-content:center;
@@ -79,7 +79,7 @@ font-size:0.6875rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="stepper-009"] li[data-state="done"] [data-part="mark"]{
 background:var(--vibeui-stepper-009-accent);border-color:var(--vibeui-stepper-009-accent);
-color:var(--vibeui-stepper-009-accent-fg);
+color:oklch(from var(--vibeui-stepper-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="stepper-009"] li[data-state="current"] [data-part="mark"]{
 border-color:var(--vibeui-stepper-009-accent);color:var(--vibeui-stepper-009-accent);

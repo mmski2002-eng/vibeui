@@ -44,7 +44,7 @@ const STYLES = `
 --vibeui-command-012-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-command-012-muted:color-mix(in oklab,var(--vibeui-command-012-fg) 68%,transparent);
 --vibeui-command-012-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
---vibeui-command-012-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.76 0.14 39.8));
+--vibeui-command-012-accent:light-dark(oklch(0.287 0 0),oklch(0.906 0 0));
 --vibeui-command-012-active:light-dark(oklch(0.55 0 265 / 10%),oklch(0.86 0 265 / 14%));
 --vibeui-command-012-on-accent:oklch(from var(--vibeui-command-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-command-012-shadow:light-dark(oklch(0.2 0 265 / 60%),oklch(0.04 0 265 / 70%));
@@ -87,8 +87,7 @@ border:1.5px solid var(--vibeui-command-012-border);border-radius:0.3125rem;
 font-size:0.6875rem;line-height:1;color:var(--vibeui-command-012-on-accent);
 }
 [data-vibeui-block="command-012"] [data-part="row"][aria-selected="true"] [data-part="check"]{
-background:var(--vibeui-command-012-accent);border-color:var(--vibeui-command-012-accent);
-}
+background:var(--vibeui-command-012-accent);border-color:var(--vibeui-command-012-accent);color:oklch(from var(--vibeui-command-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="command-012"] [data-part="empty"]{
 margin:0;padding:1.125rem 0.875rem;font-size:0.875rem;color:var(--vibeui-command-012-muted);
 }
@@ -103,7 +102,7 @@ padding:0.5rem 0.875rem;border-top:1px solid var(--vibeui-command-012-border);
 appearance:none;border:0;cursor:pointer;
 display:inline-flex;align-items:center;justify-content:center;
 min-height:2rem;padding:0.3125rem 0.875rem;border-radius:0.5rem;
-background:var(--vibeui-command-012-accent);color:var(--vibeui-command-012-on-accent);
+background:var(--vibeui-command-012-accent);color:oklch(from var(--vibeui-command-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="command-012"] [data-part="apply"]:disabled{opacity:0.45;cursor:not-allowed}

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useLayoutEffect, useRef, useState } from "react"
 import type { ComponentProps, CSSProperties, DragEvent } from "react"
 
 export type Sortable008Task = {
@@ -41,7 +41,7 @@ const STYLES = `
 --vibeui-sortable-008-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-sortable-008-muted:color-mix(in oklab,var(--vibeui-sortable-008-fg) 68%,transparent);
 --vibeui-sortable-008-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-sortable-008-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.73 0.16 39.8));
+--vibeui-sortable-008-accent:light-dark(oklch(0.287 0 0),oklch(0.901 0 0));
 --vibeui-sortable-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -62,7 +62,7 @@ padding:0.4375rem 0.5rem;border-radius:0.625rem;
 border:1px solid var(--vibeui-sortable-008-border);
 background:var(--vibeui-sortable-008-row);font-size:0.8125rem;
 }
-[data-vibeui-block="sortable-008"] li[data-dragging="true"]{opacity:.45}
+[data-vibeui-block="sortable-008"] li[data-dragging="true"]{opacity:.45;border-style:dashed}
 [data-vibeui-block="sortable-008"] li[data-over="true"]{box-shadow:inset 0 2px 0 var(--vibeui-sortable-008-accent)}
 [data-vibeui-block="sortable-008"] [data-part="grip"]{flex:none;display:grid;gap:2.5px;padding:0.25rem;cursor:grab}
 [data-vibeui-block="sortable-008"] [data-part="grip"] span{
@@ -145,6 +145,45 @@ export function Sortable008({
   const [order, setOrder] = useState(tasks)
   const [dragged, setDragged] = useState<string | null>(null)
   const [over, setOver] = useState<string | null>(null)
+  const rows = useRef(new Map<string, HTMLLIElement>())
+  const rects = useRef(new Map<string, DOMRect>())
+
+  // FLIP: после каждого рендера сравниваем прежнее и новое положение элементов
+  // и проигрываем сдвиг с прежнего места. Перестановка видна как движение,
+  // а не как мгновенная подмена.
+  useLayoutEffect(() => {
+    const next = new Map<string, DOMRect>()
+    rows.current.forEach((node, key) => next.set(key, node.getBoundingClientRect()))
+    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (!calm) {
+      rows.current.forEach((node, key) => {
+        const before = rects.current.get(key)
+        const after = next.get(key)
+        if (!before || !after) return
+        const dx = before.left - after.left
+        const dy = before.top - after.top
+        if (!dx && !dy) return
+        node.animate(
+          [{ transform: `translate(${dx}px,${dy}px)` }, { transform: "none" }],
+          { duration: 220, easing: "cubic-bezier(.2,.8,.2,1)" },
+        )
+      })
+    }
+    rects.current = next
+  })
+
+  // Живая перестановка: элемент встаёт на место того, над которым висит
+  // курсор, ещё до отпускания — остальные раздвигаются, а не накладываются.
+  const hover = (target: string) => {
+    if (!dragged || dragged === target) return
+    const from = order.findIndex((task) => task.id === dragged)
+    const to = order.findIndex((task) => task.id === target)
+    if (from < 0 || to < 0 || from === to) return
+    const next = [...order]
+    next.splice(from, 1)
+    next.splice(to, 0, order[from])
+    setOrder(next)
+  }
   const [announcement, setAnnouncement] = useState("")
 
   const apply = (next: Sortable008Task[], announceOrder: boolean) => {
@@ -174,14 +213,10 @@ export function Sortable008({
     )
   }
 
-  const drop = (event: DragEvent<HTMLLIElement>, targetId: string) => {
+  const drop = (event: DragEvent<HTMLLIElement>) => {
     event.preventDefault()
     setOver(null)
-    if (!dragged || dragged === targetId) return
-    move(
-      order.findIndex((task) => task.id === dragged),
-      order.findIndex((task) => task.id === targetId),
-    )
+    if (dragged) apply(order, true)
     setDragged(null)
   }
 
@@ -213,6 +248,10 @@ export function Sortable008({
           {order.map((task, index) => (
             <li
               key={task.id}
+              ref={(node) => {
+                if (node) rows.current.set(task.id, node)
+                else rows.current.delete(task.id)
+              }}
               draggable
               data-dragging={task.id === dragged}
               data-over={task.id === over}
@@ -225,8 +264,9 @@ export function Sortable008({
               onDragOver={(event) => {
                 event.preventDefault()
                 setOver(task.id)
+                hover(task.id)
               }}
-              onDrop={(event) => drop(event, task.id)}
+              onDrop={drop}
             >
               <span data-part="grip" aria-hidden="true">
                 <span />

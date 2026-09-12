@@ -35,7 +35,7 @@ const STYLES = `
 --vibeui-card-022-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-card-022-muted:color-mix(in oklab,var(--vibeui-card-022-fg) 68%,transparent);
 --vibeui-card-022-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
---vibeui-card-022-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-card-022-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-card-022-on-accent:light-dark(oklch(0.99 0 265),oklch(0.18 0 265));
 --vibeui-card-022-date-bg:color-mix(in oklab,var(--vibeui-card-022-accent) 12%,transparent);
 --vibeui-card-022-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

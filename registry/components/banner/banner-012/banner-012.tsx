@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-banner-012-muted:color-mix(in oklab,var(--vibeui-banner-012-fg) 66%,transparent);
 --vibeui-banner-012-surface:light-dark(oklch(0.98 0 300),oklch(0.26 0 300));
 --vibeui-banner-012-border:light-dark(oklch(0.9 0 300),oklch(0.38 0 300));
---vibeui-banner-012-accent:light-dark(oklch(0.5 0.19 39.8),oklch(0.8 0.14 39.8));
+--vibeui-banner-012-accent:light-dark(oklch(0.275 0 0),oklch(0.914 0 0));
 /* Текст на акценте считается из его светлоты: проект передаёт один цвет на
    обе ветки темы, и фиксированный однажды окажется тёмным на тёмном. */
 --vibeui-banner-012-on-accent:oklch(from var(--vibeui-banner-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
@@ -88,7 +88,7 @@ color:var(--vibeui-banner-012-muted);
 flex:none;display:inline-flex;align-items:center;
 min-height:2.125rem;padding:0.25rem 0.875rem;justify-content:center;border-radius:0.5rem;
 border:1px solid color-mix(in oklab,var(--vibeui-banner-012-accent) 65%,var(--vibeui-banner-012-fg) 35%);
-background:var(--vibeui-banner-012-accent);color:var(--vibeui-banner-012-on-accent);
+background:var(--vibeui-banner-012-accent);color:oklch(from var(--vibeui-banner-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.8125rem;font-weight:650;text-decoration:none;
 }
 [data-vibeui-block="banner-012"] [data-part="action"]:focus-visible{

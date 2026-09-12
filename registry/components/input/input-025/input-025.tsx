@@ -35,7 +35,7 @@ const STYLES = `
 --vibeui-input-025-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
 --vibeui-input-025-border:light-dark(oklch(0.88 0 265),oklch(0.38 0 265));
 --vibeui-input-025-chip:light-dark(oklch(0.95 0 265),oklch(0.3 0 265));
---vibeui-input-025-accent:light-dark(oklch(0.5 0.14 39.8),oklch(0.72 0.13 39.8));
+--vibeui-input-025-accent:light-dark(oklch(0.275 0 0),oklch(0.899 0 0));
 --vibeui-input-025-bad:light-dark(oklch(0.55 0.2 25),oklch(0.72 0.16 25));
 --vibeui-input-025-ok:light-dark(oklch(0.5 0.13 155),oklch(0.74 0.14 155));
 --vibeui-input-025-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

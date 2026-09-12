@@ -39,7 +39,7 @@ const STYLES = `
 --vibeui-dropdown-019-bg:light-dark(oklch(1 0 0),oklch(0.25 0 265));
 --vibeui-dropdown-019-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-dropdown-019-hover:light-dark(oklch(0.55 0 265 / 8%),oklch(0.86 0 265 / 12%));
---vibeui-dropdown-019-accent:light-dark(oklch(0.52 0.19 39.8),oklch(0.72 0.16 39.8));
+--vibeui-dropdown-019-accent:light-dark(oklch(0.28 0 0),oklch(0.899 0 0));
 --vibeui-dropdown-019-on-accent:oklch(from var(--vibeui-dropdown-019-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-dropdown-019-radius:0.625rem;
 --vibeui-dropdown-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -54,7 +54,7 @@ display:inline-flex;font-family:var(--vibeui-dropdown-019-font);
 [data-vibeui-block="dropdown-019"] [data-part="split"]{
 display:inline-flex;align-items:stretch;
 border-radius:0.5rem;background:var(--vibeui-dropdown-019-accent);
-color:var(--vibeui-dropdown-019-on-accent);
+color:oklch(from var(--vibeui-dropdown-019-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 box-shadow:0 1px 2px oklch(0.2 0 265 / 22%);
 }
 /* Подпись действия переводится и настраивается, поэтому высоту набирает
@@ -128,7 +128,7 @@ transition:background-color .14s ease;
 background:var(--vibeui-dropdown-019-hover,light-dark(oklch(0.55 0 265 / 8%),oklch(0.86 0 265 / 12%)));
 }
 [data-vibeui-dropdown-019-menu] [data-part="item"]:focus-visible{
-outline:2px solid var(--vibeui-dropdown-019-accent,light-dark(oklch(0.52 0.19 39.8),oklch(0.72 0.16 39.8)));
+outline:2px solid var(--vibeui-dropdown-019-accent,light-dark(oklch(0.28 0 0),oklch(0.899 0 0)));
 outline-offset:-2px;
 }
 [data-vibeui-dropdown-019-menu] [data-part="keys"]{

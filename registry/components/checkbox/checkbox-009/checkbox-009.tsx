@@ -43,8 +43,8 @@ const STYLES = `
 --vibeui-checkbox-009-muted:color-mix(in oklab,var(--vibeui-checkbox-009-fg) 68%,transparent);
 --vibeui-checkbox-009-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
 --vibeui-checkbox-009-hover:light-dark(oklch(0.975 0 265),oklch(0.32 0 265));
---vibeui-checkbox-009-accent:light-dark(oklch(0.56 0.16 39.8),oklch(0.74 0.14 39.8));
---vibeui-checkbox-009-badge:light-dark(oklch(0.95 0 39.8),oklch(0.34 0.05 39.8));
+--vibeui-checkbox-009-accent:light-dark(oklch(0.29 0 0),oklch(0.903 0 0));
+--vibeui-checkbox-009-badge:light-dark(oklch(0.95 0 0),oklch(0.34 0 0));
 --vibeui-checkbox-009-mark:light-dark(oklch(0.99 0 265),oklch(0.2 0 265));
 --vibeui-checkbox-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -79,7 +79,7 @@ border:1.5px solid var(--vibeui-checkbox-009-border);border-radius:0.3125rem;
 background:var(--vibeui-checkbox-009-bg);
 transition:background-color .15s ease,border-color .15s ease;
 }
-[data-vibeui-block="checkbox-009"] input:checked{border-color:transparent;background:var(--vibeui-checkbox-009-accent)}
+[data-vibeui-block="checkbox-009"] input:checked{border-color:transparent;background:var(--vibeui-checkbox-009-accent);color:oklch(from var(--vibeui-checkbox-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="checkbox-009"] input:checked::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.25rem;height:0.4375rem;margin:-0.3125rem 0 0 -0.125rem;
@@ -100,8 +100,7 @@ font-size:0.625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04e
    «Сохранить» непонятно к чему относится. */
 [data-vibeui-block="checkbox-009"] [data-part="dot"]{
 width:0.375rem;height:0.375rem;border-radius:9999px;
-background:var(--vibeui-checkbox-009-accent);
-}
+background:var(--vibeui-checkbox-009-accent);color:oklch(from var(--vibeui-checkbox-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="checkbox-009"] [data-part="hint"]{
 font-size:0.75rem;line-height:1.45;color:var(--vibeui-checkbox-009-muted);
 }
@@ -114,7 +113,7 @@ font-size:0.75rem;color:var(--vibeui-checkbox-009-muted);
 [data-vibeui-block="checkbox-009"] button{
 appearance:none;cursor:pointer;border:0;border-radius:0.5rem;
 padding:0.375rem 0.75rem;font:inherit;font-size:0.75rem;font-weight:650;
-background:var(--vibeui-checkbox-009-accent);color:var(--vibeui-checkbox-009-mark);
+background:var(--vibeui-checkbox-009-accent);color:oklch(from var(--vibeui-checkbox-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 transition:opacity .15s ease;
 }
 [data-vibeui-block="checkbox-009"] button:disabled{cursor:not-allowed;opacity:.45}

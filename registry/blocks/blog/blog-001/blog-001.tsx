@@ -45,7 +45,7 @@ const STYLES = `
 --vibeui-blog-001-fg:light-dark(oklch(0.2 0 265),oklch(0.95 0 265));
 --vibeui-blog-001-muted:light-dark(oklch(0.52 0 265),oklch(0.72 0 265));
 --vibeui-blog-001-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
---vibeui-blog-001-accent:light-dark(oklch(0.52 0.17 39.8),oklch(0.75 0.14 39.8));
+--vibeui-blog-001-accent:light-dark(oklch(0.28 0 0),oklch(0.905 0 0));
 --vibeui-blog-001-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -75,7 +75,10 @@ font-size:clamp(1.5rem,3.6cqi,2.375rem);line-height:1.12;
 [data-vibeui-block="blog-001"] [data-part="lede"]{
 margin:0;max-width:52ch;font-size:0.9375rem;line-height:1.65;color:var(--vibeui-blog-001-muted);
 }
-[data-vibeui-block="blog-001"] [data-part="grid"]{display:grid;gap:1.125rem}
+/* Сетка сама набирает максимум колонок под ширину: чем уже карточка, тем
+   больше статей в ряд. Ступенчатых брейкпоинтов нет — обложка мельче,
+   колонок больше. */
+[data-vibeui-block="blog-001"] [data-part="grid"]{display:grid;gap:1.125rem;grid-template-columns:repeat(auto-fill,minmax(11rem,1fr))}
 [data-vibeui-block="blog-001"] article{
 position:relative;display:grid;gap:0;overflow:hidden;
 border:1px solid var(--vibeui-blog-001-border);border-radius:1.125rem;
@@ -89,7 +92,7 @@ border-color:color-mix(in oklab,var(--vibeui-blog-001-accent) 40%,var(--vibeui-b
 /* Обложка — градиент от оттенка рубрики: ноль ассетов, ноль баннеров. */
 [data-vibeui-block="blog-001"] [data-part="cover"]{
 position:relative;overflow:hidden;
-aspect-ratio:16 / 9;
+aspect-ratio:16 / 10;
 }
 [data-vibeui-block="blog-001"] [data-part="cover"]::after{
 content:"";position:absolute;inset:0;
@@ -132,10 +135,6 @@ font-size:0.875rem;font-weight:640;
 [data-vibeui-block="blog-001"] [data-part="more"]:focus-visible{outline:2px solid var(--vibeui-blog-001-accent);outline-offset:2px}
 @container (min-width: 40rem){
 [data-vibeui-block="blog-001"] [data-part="frame"]{padding:3.75rem 2rem}
-[data-vibeui-block="blog-001"] [data-part="grid"]{grid-template-columns:1fr 1fr}
-}
-@container (min-width: 64rem){
-[data-vibeui-block="blog-001"] [data-part="grid"]{grid-template-columns:repeat(3,1fr)}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="blog-001"] *{animation:none!important;transition:none!important}}
 `

@@ -48,7 +48,7 @@ const STYLES = `
 --vibeui-filters-011-muted:color-mix(in oklab,var(--vibeui-filters-011-fg) 68%,transparent);
 --vibeui-filters-011-border:light-dark(oklch(0.89 0 265),oklch(0.4 0 265));
 --vibeui-filters-011-shell:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
---vibeui-filters-011-accent:light-dark(oklch(0.53 0.15 39.8),oklch(0.76 0.13 39.8));
+--vibeui-filters-011-accent:light-dark(oklch(0.282 0 0),oklch(0.906 0 0));
 --vibeui-filters-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

@@ -29,7 +29,7 @@ const STYLES = `
 --vibeui-pagination-010-border:light-dark(oklch(0.91 0 265),oklch(0.38 0 265));
 --vibeui-pagination-010-track:light-dark(oklch(0.9 0 265),oklch(0.4 0 265));
 --vibeui-pagination-010-hover:light-dark(oklch(0.55 0 265 / 8%),oklch(0.82 0 265 / 14%));
---vibeui-pagination-010-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.16 39.8));
+--vibeui-pagination-010-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-pagination-010-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0 262));
 --vibeui-pagination-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -56,7 +56,7 @@ transition:background-color .14s ease;
 [data-vibeui-block="pagination-010"] [data-part="cell"]:focus-visible{outline:2px solid var(--vibeui-pagination-010-accent);outline-offset:1px}
 [data-vibeui-block="pagination-010"] [data-part="cell"]:disabled{color:var(--vibeui-pagination-010-muted);cursor:default;opacity:.55}
 [data-vibeui-block="pagination-010"] [data-part="cell"][aria-current="page"]{
-background:var(--vibeui-pagination-010-accent);color:var(--vibeui-pagination-010-accent-fg);font-weight:650;
+background:var(--vibeui-pagination-010-accent);color:oklch(from var(--vibeui-pagination-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);font-weight:650;
 }
 [data-vibeui-block="pagination-010"] [data-part="gap"]{
 color:var(--vibeui-pagination-010-muted);letter-spacing:0.05em;
@@ -74,7 +74,7 @@ font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="pagination-010"] [data-part="go"]{
 appearance:none;cursor:pointer;height:1.75rem;padding:0 0.625rem;box-sizing:border-box;
-border:0;border-radius:0.5rem;background:var(--vibeui-pagination-010-accent);color:var(--vibeui-pagination-010-accent-fg);
+border:0;border-radius:0.5rem;background:var(--vibeui-pagination-010-accent);color:oklch(from var(--vibeui-pagination-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.75rem;font-weight:600;
 }
 [data-vibeui-block="pagination-010"] [data-part="go"]:focus-visible{outline:2px solid var(--vibeui-pagination-010-accent);outline-offset:2px}

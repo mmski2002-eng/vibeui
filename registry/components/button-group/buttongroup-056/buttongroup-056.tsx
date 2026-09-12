@@ -35,8 +35,8 @@ const STYLES = `
 --vibeui-buttongroup-056-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-056-muted:color-mix(in oklab,var(--vibeui-buttongroup-056-fg) 68%,transparent);
 --vibeui-buttongroup-056-border:light-dark(oklch(0.89 0 265),oklch(0.41 0 265));
---vibeui-buttongroup-056-on:light-dark(oklch(0.96 0 265),oklch(0.32 0.045 39.8));
---vibeui-buttongroup-056-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.76 0.14 39.8));
+--vibeui-buttongroup-056-on:light-dark(oklch(0.96 0 265),oklch(0.32 0 0));
+--vibeui-buttongroup-056-accent:light-dark(oklch(0.275 0 0),oklch(0.906 0 0));
 /* Подсказка контрастна к сцепке, а не к теме: в светлой она тёмная,
    в тёмной — светлая, иначе плашка сливается с панелью. */
 --vibeui-buttongroup-056-tip:light-dark(oklch(0.26 0 265),oklch(0.92 0 265));

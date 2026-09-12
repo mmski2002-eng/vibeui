@@ -24,6 +24,8 @@ export type Hero003Props = {
   accentForeground?: string
   /** Пусто — подложки нет, секция ложится на фон страницы. */
   background?: string
+  /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
+  tone?: "auto" | "light" | "dark"
   className?: string
 }
 
@@ -49,8 +51,8 @@ const STYLES = `
 --vibeui-hero-003-ink:light-dark(oklch(0.21 0.012 55),oklch(0.95 0.006 70));
 --vibeui-hero-003-muted:light-dark(oklch(0.5 0.012 55),oklch(0.73 0.01 70));
 --vibeui-hero-003-border:light-dark(oklch(0.881 0 250),oklch(0.38 0 250));
---vibeui-hero-003-accent:light-dark(oklch(0.55 0.145 39.8),oklch(0.68 0.145 39.8));
---vibeui-hero-003-accent-fg:oklch(0.15 0.02 39.8);
+--vibeui-hero-003-accent:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
+--vibeui-hero-003-accent-fg:oklch(from var(--vibeui-hero-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-003-ring:color-mix(in oklab, var(--vibeui-hero-003-accent) 70%, transparent);
 --vibeui-hero-003-serif:ui-serif,Georgia,"Times New Roman",Times,serif;
 --vibeui-hero-003-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -58,6 +60,8 @@ const STYLES = `
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="hero-003"]{color-scheme:dark}
+:where([data-vibeui-block="hero-003"][data-tone="light"]){color-scheme:light}
+:where([data-vibeui-block="hero-003"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="hero-003"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -66,6 +70,30 @@ container-type:inline-size;
 }
 [data-vibeui-block="hero-003"] [data-part="hatch"]{position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(135deg,var(--vibeui-hero-003-border) 0 1px,transparent 1px 11px);opacity:.32;-webkit-mask-image:radial-gradient(70% 60% at 50% 45%,transparent,black);mask-image:radial-gradient(70% 60% at 50% 45%,transparent,black)}
 [data-vibeui-block="hero-003"] [data-part="pattern"]{background-image:repeating-linear-gradient(135deg,var(--vibeui-hero-003-border) 0 1px,transparent 1px 10px)}
+[data-vibeui-block="hero-003"] [data-part="cells"]{
+display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;width:min(100%,7rem);aspect-ratio:1;
+}
+[data-vibeui-block="hero-003"] [data-part="cells"] span{
+border-radius:0.25rem;background:color-mix(in oklab,var(--vibeui-hero-003-ink) 12%,transparent);
+}
+[data-vibeui-block="hero-003"] [data-part="cells"] span:nth-child(3n+2){
+background:color-mix(in oklab,var(--vibeui-hero-003-accent) 55%,transparent);
+}
+[data-vibeui-block="hero-003"] [data-part="cells"] span:nth-child(5){
+background:var(--vibeui-hero-003-accent);color:oklch(from var(--vibeui-hero-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
+[data-vibeui-block="hero-003"] [data-part="stat"],
+[data-vibeui-block="hero-003"] [data-part="accent"],
+[data-vibeui-block="hero-003"] [data-part="panel"],
+[data-vibeui-block="hero-003"] [data-part="pattern"]{
+transition:transform .35s cubic-bezier(.32,.72,0,1),box-shadow .3s ease;
+}
+[data-vibeui-block="hero-003"] [data-part="stat"]:hover,
+[data-vibeui-block="hero-003"] [data-part="accent"]:hover,
+[data-vibeui-block="hero-003"] [data-part="panel"]:hover,
+[data-vibeui-block="hero-003"] [data-part="pattern"]:hover{
+transform:translateY(-0.25rem);
+box-shadow:0 1rem 2.25rem color-mix(in oklab,#000000 22%,transparent);
+}
 [data-vibeui-block="hero-003"] [data-part="lead"]{grid-area:lead}
 [data-vibeui-block="hero-003"] [data-part="stat"]{grid-area:stat}
 [data-vibeui-block="hero-003"] [data-part="accent"]{grid-area:accent}
@@ -161,6 +189,7 @@ export function Hero003({
   accent,
   accentForeground,
   background = "",
+  tone = "auto",
   className,
 }: Hero003Props) {
   const style = {
@@ -179,6 +208,7 @@ export function Hero003({
   return (
     <section
       data-vibeui-block="hero-003"
+      data-tone={tone === "auto" ? undefined : tone}
       style={style}
       className={cx(
         "relative isolate overflow-hidden bg-[var(--vibeui-hero-003-bg)] font-[family-name:var(--vibeui-hero-003-sans)] text-[var(--vibeui-hero-003-ink)] antialiased",
@@ -236,7 +266,7 @@ export function Hero003({
                   href={primaryAction.href}
                   className={cx(
                     ACTION_BASE,
-                    "bg-[var(--vibeui-hero-003-ink)] text-[var(--vibeui-hero-003-card)] transition-opacity duration-150 hover:opacity-90",
+                    "bg-[var(--vibeui-hero-003-accent)] text-[var(--vibeui-hero-003-accent-fg)] shadow-[0_0.375rem_1.25rem_color-mix(in_oklab,var(--vibeui-hero-003-accent)_42%,transparent),inset_0_1px_0_color-mix(in_oklab,#ffffff_42%,transparent)] transition-[transform,box-shadow] duration-200 hover:-translate-y-px hover:shadow-[0_0.625rem_1.75rem_color-mix(in_oklab,var(--vibeui-hero-003-accent)_52%,transparent),inset_0_1px_0_color-mix(in_oklab,#ffffff_52%,transparent)]",
                   )}
                 >
                   {primaryAction.label}
@@ -279,7 +309,22 @@ export function Hero003({
                 "flex flex-col justify-end rounded-md border border-[var(--vibeui-hero-003-border)] bg-[var(--vibeui-hero-003-card-alt)] p-6 [animation-delay:70ms]",
               )}
             >
-              <p className="font-[family-name:var(--vibeui-hero-003-serif)] text-[clamp(2rem,3.4cqi,2.75rem)] leading-none font-semibold tabular-nums">
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 124 36"
+                fill="none"
+                preserveAspectRatio="none"
+                className="mb-auto h-9 w-full text-[var(--vibeui-hero-003-accent)]"
+              >
+                <path
+                  d="M2 30 L19 23 L35 26 L53 15 L71 19 L89 9 L105 12 L122 4"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              <p className="mt-5 font-[family-name:var(--vibeui-hero-003-serif)] text-[clamp(2rem,3.4cqi,2.75rem)] leading-none font-semibold tabular-nums">
                 {stat.value}
               </p>
               <p className="mt-3 text-[0.8125rem] text-[var(--vibeui-hero-003-muted)]">
@@ -339,9 +384,17 @@ export function Hero003({
             data-part="pattern"
             className={cx(
               TILE_IN,
-              "rounded-md border border-[var(--vibeui-hero-003-border)] bg-[var(--vibeui-hero-003-card-alt)] [animation-delay:280ms]",
+              "flex items-center justify-center rounded-md border border-[var(--vibeui-hero-003-border)] bg-[var(--vibeui-hero-003-card-alt)] p-6 [animation-delay:280ms]",
             )}
-          />
+          >
+            {/* Сетка квадратов — знак самой библиотеки: плитка перестаёт быть
+                дырой в мозаике и продолжает её же мысль. */}
+            <div data-part="cells">
+              {Array.from({ length: 9 }).map((_, index) => (
+                <span key={index} />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

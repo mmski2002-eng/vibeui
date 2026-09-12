@@ -34,7 +34,7 @@ const STYLES = `
 --vibeui-calendar-004-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-calendar-004-muted:color-mix(in oklab,var(--vibeui-calendar-004-fg) 68%,transparent);
 --vibeui-calendar-004-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
---vibeui-calendar-004-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.72 0.15 39.8));
+--vibeui-calendar-004-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-calendar-004-on-accent:light-dark(oklch(0.99 0 265),oklch(0.19 0 265));
 --vibeui-calendar-004-hatch-a:light-dark(oklch(0.97 0 265),oklch(0.27 0 265));
 --vibeui-calendar-004-hatch-b:light-dark(oklch(0.94 0 265),oklch(0.31 0 265));
@@ -74,7 +74,7 @@ cursor:pointer;
 }
 [data-vibeui-block="calendar-004"] input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
 [data-vibeui-block="calendar-004"] label:has(input:checked){
-border-color:transparent;background:var(--vibeui-calendar-004-accent);color:var(--vibeui-calendar-004-on-accent);
+border-color:transparent;background:var(--vibeui-calendar-004-accent);color:oklch(from var(--vibeui-calendar-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="calendar-004"] label:has(input:focus-visible){outline:2px solid var(--vibeui-calendar-004-accent);outline-offset:2px}
 /* Занятый слот остаётся на месте: исчезнувший создаёт ложное ощущение

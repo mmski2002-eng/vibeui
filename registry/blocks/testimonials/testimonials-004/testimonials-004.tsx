@@ -28,7 +28,7 @@ const STYLES = `
 --vibeui-testimonials-004-ink:light-dark(oklch(0.21 0 250),oklch(0.95 0 250));
 --vibeui-testimonials-004-muted:light-dark(oklch(0.5 0 250),oklch(0.72 0 250));
 --vibeui-testimonials-004-border:light-dark(oklch(0.91 0 250),oklch(0.34 0 250));
---vibeui-testimonials-004-accent:light-dark(oklch(0.55 0.15 39.8),oklch(0.75 0.14 39.8));
+--vibeui-testimonials-004-accent:light-dark(oklch(0.287 0 0),oklch(0.905 0 0));
 --vibeui-testimonials-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -70,8 +70,7 @@ font-size:1.125rem;font-weight:760;letter-spacing:-0.035em;
 width:1.625rem;height:1.625rem;flex:none;border-radius:0.5rem;
 background:var(--vibeui-testimonials-004-accent);
 mask-image:conic-gradient(from 0deg at 50% 50%,black 0 25%,transparent 0 50%,black 0 75%,transparent 0);
-mask-size:0.8125rem 0.8125rem;
-}
+mask-size:0.8125rem 0.8125rem;color:oklch(from var(--vibeui-testimonials-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="testimonials-004"] [data-part="industry"]{
 color:var(--vibeui-testimonials-004-muted);
 font-size:0.6875rem;font-weight:640;letter-spacing:0.1em;text-transform:uppercase;

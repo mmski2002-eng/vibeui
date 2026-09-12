@@ -40,7 +40,7 @@ const STYLES = `
 --vibeui-card-015-muted:color-mix(in oklab,var(--vibeui-card-015-fg) 68%,transparent);
 --vibeui-card-015-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-card-015-track:light-dark(oklch(0.93 0 265),oklch(0.33 0 265));
---vibeui-card-015-accent:light-dark(oklch(0.56 0.15 39.8),oklch(0.74 0.14 39.8));
+--vibeui-card-015-accent:light-dark(oklch(0.29 0 0),oklch(0.903 0 0));
 --vibeui-card-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -71,7 +71,7 @@ display:flex;gap:0.1875rem;
 [data-vibeui-block="card-015"] [data-part="seg"]{
 flex:1;height:0.3125rem;border-radius:9999px;background:var(--vibeui-card-015-track);
 }
-[data-vibeui-block="card-015"] [data-part="seg"][data-filled="true"]{background:var(--vibeui-card-015-accent)}
+[data-vibeui-block="card-015"] [data-part="seg"][data-filled="true"]{background:var(--vibeui-card-015-accent);color:oklch(from var(--vibeui-card-015-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="card-015"] [data-part="list"]{
 display:flex;flex-direction:column;gap:0.4375rem;margin:0;padding:0;list-style:none;
 }
@@ -90,8 +90,7 @@ border:1.5px solid var(--vibeui-card-015-border);background:var(--vibeui-card-01
 color:var(--vibeui-card-015-tick);
 }
 [data-vibeui-block="card-015"] [data-part="row"][data-done="true"] [data-part="box"]{
-border-color:var(--vibeui-card-015-accent);background:var(--vibeui-card-015-accent);
-}
+border-color:var(--vibeui-card-015-accent);background:var(--vibeui-card-015-accent);color:oklch(from var(--vibeui-card-015-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="card-015"] [data-part="tick"]{width:0.625rem;height:0.625rem}
 [data-vibeui-block="card-015"] [data-part="row"][data-done="false"] [data-part="tick"]{visibility:hidden}
 /* Выполненное приглушено, но не вычеркнуто в ноль: список остаётся историей. */

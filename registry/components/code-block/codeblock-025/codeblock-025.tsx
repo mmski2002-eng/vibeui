@@ -29,7 +29,7 @@ const STYLES = `
 --vibeui-codeblock-025-muted:color-mix(in oklab,var(--vibeui-codeblock-025-fg) 68%,transparent);
 --vibeui-codeblock-025-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 14%));
 --vibeui-codeblock-025-hover:light-dark(oklch(0 0 0 / 6%),oklch(1 0 0 / 8%));
---vibeui-codeblock-025-accent:light-dark(oklch(0.48 0.16 39.8),oklch(0.82 0.13 39.8));
+--vibeui-codeblock-025-accent:light-dark(oklch(0.27 0 0),oklch(0.917 0 0));
 --vibeui-codeblock-025-collapsed:9rem;
 --vibeui-codeblock-025-expanded:32rem;
 --vibeui-codeblock-025-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;

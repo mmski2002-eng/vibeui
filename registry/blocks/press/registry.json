@@ -28,7 +28,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Pres001",
@@ -159,7 +159,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "assets": [
               {
@@ -170,7 +170,7 @@
               },
               {
                 "title": "Палитра",
-                "note": "Фирменный оранжевый и нейтрали в HEX и OKLCH.",
+                "note": "Фирменный акцентный и нейтрали в HEX и OKLCH.",
                 "format": "PDF",
                 "image": "/demo/scenes/scene-04.webp"
               },
@@ -312,7 +312,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Pres003",

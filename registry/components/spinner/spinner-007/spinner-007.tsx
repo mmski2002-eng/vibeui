@@ -24,7 +24,7 @@ const STYLES = `
 --vibeui-spinner-007-track:light-dark(oklch(0.95 0 265),oklch(0.3 0 265));
 --vibeui-spinner-007-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-spinner-007-muted:color-mix(in oklab,var(--vibeui-spinner-007-fg) 68%,transparent);
---vibeui-spinner-007-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-spinner-007-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-spinner-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -55,8 +55,7 @@ transform:rotate(45deg);
 width:var(--vibeui-spinner-007-dot);height:var(--vibeui-spinner-007-dot);
 border-radius:9999px;background:var(--vibeui-spinner-007-accent);
 opacity:.25;
-animation:vibeui-spinner-007-chase var(--vibeui-spinner-007-speed) steps(1,end) infinite;
-}
+animation:vibeui-spinner-007-chase var(--vibeui-spinner-007-speed) steps(1,end) infinite;color:oklch(from var(--vibeui-spinner-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 /* Точки перескакивают по очереди: подсвечена ровно одна из трёх. */
 [data-vibeui-block="spinner-007"] [data-part="dot"]:nth-child(2){
 animation-delay:calc(var(--vibeui-spinner-007-speed) / 3);

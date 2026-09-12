@@ -20,7 +20,7 @@ const STYLES = `
 --vibeui-button-007-bg:light-dark(oklch(0.22 0 265),oklch(0.33 0 265));
 --vibeui-button-007-fg:oklch(0.98 0 265);
 --vibeui-button-007-hint:light-dark(oklch(0.72 0 265),oklch(0.78 0 265));
---vibeui-button-007-avatar:light-dark(oklch(0.62 0.13 39.8),oklch(0.68 0.125 39.8));
+--vibeui-button-007-avatar:light-dark(oklch(0.305 0 0),oklch(0.892 0 0));
 --vibeui-button-007-avatar-fg:oklch(0.99 0 250);
 --vibeui-button-007-ring:light-dark(oklch(0.72 0 265),oklch(0.84 0 265));
 --vibeui-button-007-radius:9999px;

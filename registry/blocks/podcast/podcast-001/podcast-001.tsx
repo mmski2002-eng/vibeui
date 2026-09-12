@@ -30,8 +30,8 @@ const STYLES = `
 --vibeui-podcast-001-muted:light-dark(oklch(0.5 0 0),oklch(0.72 0 0));
 --vibeui-podcast-001-border:light-dark(oklch(0.9 0 0),oklch(0.3 0 0));
 --vibeui-podcast-001-card:light-dark(oklch(0.99 0 0),oklch(0.2 0 0));
---vibeui-podcast-001-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-podcast-001-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-podcast-001-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
+--vibeui-podcast-001-on-accent:oklch(from var(--vibeui-podcast-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-podcast-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -57,8 +57,7 @@ transition:border-color .16s ease,transform .16s ease;
 [data-vibeui-block="podcast-001"] [data-part="row"]:focus-visible{outline:2px solid var(--vibeui-podcast-001-accent);outline-offset:2px}
 [data-vibeui-block="podcast-001"] [data-part="play"]{
 width:2.75rem;height:2.75rem;flex:none;border-radius:999px;display:grid;place-items:center;
-background:var(--vibeui-podcast-001-accent);
-}
+background:var(--vibeui-podcast-001-accent);color:oklch(from var(--vibeui-podcast-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="podcast-001"] [data-part="play"]::before{content:"";margin-left:0.1875rem;border-style:solid;border-width:0.4375rem 0 0.4375rem 0.75rem;border-color:transparent transparent transparent var(--vibeui-podcast-001-on-accent)}
 [data-vibeui-block="podcast-001"] [data-part="num"]{font-size:0.8125rem;font-weight:700;color:var(--vibeui-podcast-001-muted);font-variant-numeric:tabular-nums}
 [data-vibeui-block="podcast-001"] [data-part="info"]{min-width:0}

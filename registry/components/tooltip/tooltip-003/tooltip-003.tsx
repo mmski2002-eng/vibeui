@@ -22,7 +22,7 @@ const STYLES = `
 --vibeui-tooltip-003-fg:light-dark(oklch(0.24 0 265),oklch(0.97 0 265));
 --vibeui-tooltip-003-key:light-dark(oklch(0 0 0 / 10%),oklch(1 0 0 / 14%));
 --vibeui-tooltip-003-keyfg:light-dark(oklch(0.32 0 265),oklch(0.88 0 265));
---vibeui-tooltip-003-accent:light-dark(oklch(0.6 0.16 39.8),oklch(0.74 0.15 39.8));
+--vibeui-tooltip-003-accent:light-dark(oklch(0.3 0 0),oklch(0.903 0 0));
 --vibeui-tooltip-003-face:light-dark(oklch(1 0 0),oklch(0.25 0 265));
 --vibeui-tooltip-003-facehover:light-dark(oklch(0.97 0 265),oklch(0.3 0 265));
 --vibeui-tooltip-003-line:light-dark(oklch(0.89 0 265),oklch(0.38 0 265));

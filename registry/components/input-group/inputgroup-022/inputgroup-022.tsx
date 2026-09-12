@@ -41,7 +41,7 @@ const STYLES = `
 --vibeui-inputgroup-022-fixed:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
 --vibeui-inputgroup-022-panel:light-dark(oklch(0.97 0 275),oklch(0.3 0 275));
 --vibeui-inputgroup-022-border:light-dark(oklch(0.86 0 265),oklch(0.4 0 265));
---vibeui-inputgroup-022-accent:light-dark(oklch(0.5 0.14 39.8),oklch(0.72 0.13 39.8));
+--vibeui-inputgroup-022-accent:light-dark(oklch(0.275 0 0),oklch(0.899 0 0));
 --vibeui-inputgroup-022-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 275));
 --vibeui-inputgroup-022-radius:0.75rem;
 --vibeui-inputgroup-022-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -88,7 +88,7 @@ font-size:0.8125rem;font-weight:700;
 transition:background-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="inputgroup-022"] [data-part="toggle"][aria-expanded="true"]{
-background:var(--vibeui-inputgroup-022-accent);color:var(--vibeui-inputgroup-022-on-accent);
+background:var(--vibeui-inputgroup-022-accent);color:oklch(from var(--vibeui-inputgroup-022-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="inputgroup-022"] [data-part="toggle"]:hover:not([aria-expanded="true"]){
 background:color-mix(in oklab,var(--vibeui-inputgroup-022-accent) 14%,var(--vibeui-inputgroup-022-fixed));

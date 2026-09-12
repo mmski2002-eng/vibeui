@@ -22,8 +22,8 @@ const STYLES = `
 --vibeui-switch-002-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-switch-002-track:light-dark(oklch(0.88 0 265),oklch(0.43 0 265));
 --vibeui-switch-002-thumb:light-dark(oklch(1 0 0),oklch(0.93 0 265));
---vibeui-switch-002-accent:light-dark(oklch(0.56 0.16 39.8),oklch(0.76 0.15 39.8));
---vibeui-switch-002-tint:light-dark(oklch(0.56 0.16 39.8 / 8%),oklch(0.76 0.15 39.8 / 14%));
+--vibeui-switch-002-accent:light-dark(oklch(0.29 0 0),oklch(0.906 0 0));
+--vibeui-switch-002-tint:light-dark(oklch(0.29 0 0 / 8%),oklch(0.906 0 0 / 14%));
 --vibeui-switch-002-badge-ink:light-dark(oklch(1 0 0),oklch(0.2 0.03 155));
 --vibeui-switch-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -61,7 +61,7 @@ width:2.75rem;height:1.5rem;border-radius:9999px;
 background:var(--vibeui-switch-002-track);cursor:inherit;
 transition:background-color .18s ease;
 }
-[data-vibeui-block="switch-002"] input:checked{background:var(--vibeui-switch-002-accent)}
+[data-vibeui-block="switch-002"] input:checked{background:var(--vibeui-switch-002-accent);color:oklch(from var(--vibeui-switch-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="switch-002"] [data-part="thumb"]{
 position:absolute;left:0.1875rem;top:0.1875rem;
 width:1.125rem;height:1.125rem;border-radius:9999px;pointer-events:none;
@@ -74,10 +74,12 @@ transition:transform .18s cubic-bezier(.32,.72,0,1);
 [data-vibeui-block="switch-002"] [data-part="badge"]{
 display:none;align-self:flex-start;
 padding:0.125rem 0.5rem;border-radius:9999px;
-background:var(--vibeui-switch-002-accent);color:var(--vibeui-switch-002-badge-ink);
+background:var(--vibeui-switch-002-accent);color:oklch(from var(--vibeui-switch-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.6875rem;font-weight:650;letter-spacing:0.02em;
 }
 [data-vibeui-block="switch-002"]:has(input:checked) [data-part="badge"]{display:inline-block}
+/* Ползунок на включённом треке: контраст к чернильному акценту, а не белый на белом. */
+[data-vibeui-block="switch-002"] input:checked + [data-part="thumb"],[data-vibeui-block="switch-002"] input:checked ~ [data-part="thumb"]{background:oklch(from var(--vibeui-switch-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="switch-002"] *{animation:none!important;transition:none!important}}
 `
 

@@ -20,10 +20,10 @@ export type Banner002Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="banner-002"]){
 --vibeui-banner-002-bg:light-dark(oklch(0.97 0 220),oklch(0.27 0 245));
---vibeui-banner-002-fg:light-dark(oklch(0.27 0.05 39.8),oklch(0.93 0 240));
+--vibeui-banner-002-fg:light-dark(oklch(0.27 0 0),oklch(0.93 0 240));
 --vibeui-banner-002-muted:color-mix(in oklab,var(--vibeui-banner-002-fg) 68%,transparent);
---vibeui-banner-002-border:light-dark(oklch(0.86 0.05 39.8),oklch(0.41 0.04 39.8));
---vibeui-banner-002-accent:light-dark(oklch(0.52 0.16 39.8),oklch(0.72 0.15 39.8));
+--vibeui-banner-002-border:light-dark(oklch(0.86 0 0),oklch(0.41 0 0));
+--vibeui-banner-002-accent:light-dark(oklch(0.28 0 0),oklch(0.899 0 0));
 --vibeui-banner-002-chip:light-dark(oklch(1 0 0 / 65%),oklch(1 0 0 / 10%));
 --vibeui-banner-002-on-accent:oklch(from var(--vibeui-banner-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-banner-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -48,8 +48,7 @@ background:var(--vibeui-banner-002-bg);
 }
 [data-vibeui-block="banner-002"] [data-part="pulse"]{
 position:relative;flex:none;width:0.5rem;height:0.5rem;border-radius:9999px;
-background:var(--vibeui-banner-002-accent);
-}
+background:var(--vibeui-banner-002-accent);color:oklch(from var(--vibeui-banner-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 /* Медленный пульс: обновление можно отложить, тревожить не нужно. */
 [data-vibeui-block="banner-002"] [data-part="pulse"]::after{
 content:"";position:absolute;inset:-0.25rem;border-radius:9999px;
@@ -71,7 +70,7 @@ background:var(--vibeui-banner-002-chip);color:var(--vibeui-banner-002-muted);
 [data-vibeui-block="banner-002"] [data-part="action"]{
 appearance:none;cursor:pointer;border:0;flex:none;
 min-height:1.9375rem;padding:0.25rem 0.8125rem;display:inline-flex;align-items:center;justify-content:center;border-radius:0.5rem;
-background:var(--vibeui-banner-002-accent);color:var(--vibeui-banner-002-on-accent);
+background:var(--vibeui-banner-002-accent);color:oklch(from var(--vibeui-banner-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.875rem;font-weight:650;
 transition:filter .16s ease;
 }

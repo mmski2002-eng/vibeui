@@ -30,8 +30,8 @@ const STYLES = `
 --vibeui-cta-002-ink:light-dark(oklch(0.21 0 250),oklch(0.95 0 250));
 --vibeui-cta-002-muted:light-dark(oklch(0.5 0 250),oklch(0.72 0 250));
 --vibeui-cta-002-border:light-dark(oklch(0.9 0 250),oklch(0.35 0 250));
---vibeui-cta-002-accent:light-dark(oklch(0.52 0.19 39.8),oklch(0.72 0.16 39.8));
---vibeui-cta-002-accent-fg:oklch(0.15 0.02 39.8);
+--vibeui-cta-002-accent:light-dark(oklch(0.28 0 0),oklch(0.899 0 0));
+--vibeui-cta-002-accent-fg:oklch(from var(--vibeui-cta-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-cta-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -78,7 +78,7 @@ text-decoration:none;font-size:1rem;font-weight:640;
 transition:background-color .18s ease,border-color .18s ease,transform .18s ease;
 }
 [data-vibeui-block="cta-002"] [data-part="primary"]{
-background:var(--vibeui-cta-002-accent);color:var(--vibeui-cta-002-accent-fg);
+background:var(--vibeui-cta-002-accent);color:oklch(from var(--vibeui-cta-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 box-shadow:0 14px 30px -18px color-mix(in oklab,var(--vibeui-cta-002-accent) 92%,black);
 }
 [data-vibeui-block="cta-002"] [data-part="primary"]:hover{background:color-mix(in oklab,var(--vibeui-cta-002-accent) 88%,black);transform:translateY(-1px)}
@@ -94,8 +94,7 @@ color:var(--vibeui-cta-002-muted);font-size:0.8125rem;
 [data-vibeui-block="cta-002"] [data-part="proof"] li{display:inline-flex;align-items:center;gap:0.4375rem}
 [data-vibeui-block="cta-002"] [data-part="proof"] li::before{
 content:"";width:0.375rem;height:0.375rem;border-radius:999px;flex:none;
-background:var(--vibeui-cta-002-accent);
-}
+background:var(--vibeui-cta-002-accent);color:oklch(from var(--vibeui-cta-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="cta-002"] a:focus-visible{outline:2px solid var(--vibeui-cta-002-accent);outline-offset:3px}
 @container (min-width: 40rem){
 [data-vibeui-block="cta-002"] [data-part="shell"]{padding:5rem 2rem}

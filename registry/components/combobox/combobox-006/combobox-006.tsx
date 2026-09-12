@@ -34,8 +34,8 @@ const STYLES = `
 --vibeui-combobox-006-muted:color-mix(in oklab,var(--vibeui-combobox-006-fg) 68%,transparent);
 --vibeui-combobox-006-border:light-dark(oklch(0.9 0.012 70),oklch(0.38 0.016 70));
 --vibeui-combobox-006-field:light-dark(oklch(0.985 0.006 70),oklch(0.3 0.014 70));
---vibeui-combobox-006-active:light-dark(oklch(0.95 0.045 39.8),oklch(0.37 0.045 39.8));
---vibeui-combobox-006-accent:light-dark(oklch(0.58 0.14 39.8),oklch(0.8 0.13 39.8));
+--vibeui-combobox-006-active:light-dark(oklch(0.95 0 0),oklch(0.37 0 0));
+--vibeui-combobox-006-accent:light-dark(oklch(0.295 0 0),oklch(0.914 0 0));
 --vibeui-combobox-006-radius:0.625rem;
 --vibeui-combobox-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -91,12 +91,10 @@ border:1.5px solid var(--vibeui-combobox-006-accent);position:relative;
 }
 [data-vibeui-block="combobox-006"] [data-part="clock"]::before{
 content:"";position:absolute;left:50%;top:50%;width:0.28rem;height:1.5px;
-background:var(--vibeui-combobox-006-accent);transform-origin:left center;transform:translate(0,-50%);
-}
+background:var(--vibeui-combobox-006-accent);transform-origin:left center;transform:translate(0,-50%);color:oklch(from var(--vibeui-combobox-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="combobox-006"] [data-part="clock"]::after{
 content:"";position:absolute;left:50%;top:50%;width:1.5px;height:0.22rem;
-background:var(--vibeui-combobox-006-accent);transform-origin:top center;transform:translate(-50%,-100%);
-}
+background:var(--vibeui-combobox-006-accent);transform-origin:top center;transform:translate(-50%,-100%);color:oklch(from var(--vibeui-combobox-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="combobox-006"] [data-part="empty"]{padding:0.5rem;font-size:0.8125rem;color:var(--vibeui-combobox-006-muted)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="combobox-006"] *{animation:none!important;transition:none!important}}
 /* Скрытый список: у ul браузерный display перебивает hidden, если

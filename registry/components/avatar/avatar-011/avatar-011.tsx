@@ -14,7 +14,7 @@ export type Avatar011Props = Omit<ComponentProps<"span">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="avatar-011"]){
 --vibeui-avatar-011-size:2.5rem;
---vibeui-avatar-011-accent:light-dark(oklch(0.55 0.13 39.8),oklch(0.69 0.13 39.8));
+--vibeui-avatar-011-accent:light-dark(oklch(0.287 0 0),oklch(0.894 0 0));
 --vibeui-avatar-011-surface:light-dark(oklch(1 0 0),oklch(0.2 0 265));
 --vibeui-avatar-011-bg:color-mix(in oklab,var(--vibeui-avatar-011-accent) 16%,var(--vibeui-avatar-011-surface));
 --vibeui-avatar-011-fg:color-mix(in oklab,var(--vibeui-avatar-011-accent) 75%,light-dark(oklch(0.2 0 265),oklch(0.96 0 265)));

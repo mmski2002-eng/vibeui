@@ -22,7 +22,7 @@ const STYLES = `
 --vibeui-buttongroup-038-muted:color-mix(in oklab,var(--vibeui-buttongroup-038-fg) 68%,transparent);
 --vibeui-buttongroup-038-border:light-dark(oklch(0.88 0 265),oklch(0.41 0 265));
 --vibeui-buttongroup-038-kbd:light-dark(oklch(0.98 0 265),oklch(0.31 0 265));
---vibeui-buttongroup-038-accent:light-dark(oklch(0.48 0.15 39.8),oklch(0.62 0.16 39.8));
+--vibeui-buttongroup-038-accent:light-dark(oklch(0.27 0 0),oklch(0.881 0 0));
 --vibeui-buttongroup-038-on-accent:light-dark(oklch(0.99 0 265),oklch(0.98 0 265));
 --vibeui-buttongroup-038-shadow:light-dark(oklch(0.2 0 265 / 14%),oklch(0 0 0 / 34%));
 --vibeui-buttongroup-038-radius:0.625rem;
@@ -48,7 +48,7 @@ display:inline-flex;align-items:center;gap:0.4375rem;
 height:2.25rem;padding:0 0.875rem;
 border:1px solid var(--vibeui-buttongroup-038-accent);
 background:var(--vibeui-buttongroup-038-accent);
-color:var(--vibeui-buttongroup-038-on-accent);
+color:oklch(from var(--vibeui-buttongroup-038-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.8125rem;font-weight:650;line-height:1;white-space:nowrap;
 transition:background-color .16s ease;
 }

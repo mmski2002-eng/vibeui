@@ -25,7 +25,7 @@ const STYLES = `
 --vibeui-avatar-022-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-avatar-022-muted:color-mix(in oklab,var(--vibeui-avatar-022-fg) 68%,transparent);
 --vibeui-avatar-022-border:light-dark(oklch(0.91 0 265),oklch(0.31 0 265));
---vibeui-avatar-022-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.69 0.2 39.8));
+--vibeui-avatar-022-accent:light-dark(oklch(0.287 0 0),oklch(0.894 0 0));
 --vibeui-avatar-022-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Своя светлая подложка: тёмный текст обязан читаться на любом фоне. */
@@ -52,11 +52,10 @@ position:absolute;right:-0.25rem;bottom:-0.1875rem;
 display:flex;align-items:center;gap:0.125rem;
 height:1.0625rem;padding:0 0.3125rem;border-radius:9999px;
 background:var(--vibeui-avatar-022-accent);
-box-shadow:0 0 0 0.125rem var(--vibeui-avatar-022-bg);
-}
+box-shadow:0 0 0 0.125rem var(--vibeui-avatar-022-bg);color:oklch(from var(--vibeui-avatar-022-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="avatar-022"] [data-part="dot"]{
 /* Точки белые в обеих темах: они лежат на акцентном пузырьке, а не на странице. */
-width:0.1875rem;height:0.1875rem;border-radius:9999px;background:oklch(1 0 0);
+width:0.1875rem;height:0.1875rem;border-radius:9999px;background:oklch(from var(--vibeui-avatar-022-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 animation:vibeui-avatar-022-blink 1.2s infinite ease-in-out;
 }
 [data-vibeui-block="avatar-022"] [data-part="dot"]:nth-child(2){animation-delay:.15s}

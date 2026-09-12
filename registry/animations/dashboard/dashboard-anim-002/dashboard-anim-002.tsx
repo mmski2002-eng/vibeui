@@ -100,8 +100,7 @@ height:var(--vibeui-dashboard-anim-002-bar-h,20%);
 background:color-mix(in oklab,var(--vibeui-dashboard-anim-002-fg) 16%,transparent);
 }
 [data-vibeui-block="dashboard-anim-002"] [data-part="bar"][data-current="true"]{
-background:var(--vibeui-dashboard-anim-002-accent);
-}
+background:var(--vibeui-dashboard-anim-002-accent);color:oklch(from var(--vibeui-dashboard-anim-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @keyframes vibeui-dashboard-anim-002-pop{from{opacity:0;transform:scale(0.86)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="dashboard-anim-002"] [data-part="widget"]{animation:none}

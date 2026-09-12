@@ -39,7 +39,7 @@ const STYLES = `
    системный цвет страницы, он сам следует color-scheme. */
 --vibeui-accordion-009-dot-fill:Canvas;
 --vibeui-accordion-009-line:light-dark(oklch(0.9 0 265),oklch(0.31 0 265));
---vibeui-accordion-009-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.75 0.16 39.8));
+--vibeui-accordion-009-accent:light-dark(oklch(0.287 0 0),oklch(0.905 0 0));
 --vibeui-accordion-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -77,10 +77,9 @@ background:var(--vibeui-accordion-009-line);
 [data-vibeui-block="accordion-009"][data-marker="none"] details::before{display:none}
 [data-vibeui-block="accordion-009"] details:first-child::after{
 border-color:var(--vibeui-accordion-009-accent);
-background:var(--vibeui-accordion-009-accent);
-}
+background:var(--vibeui-accordion-009-accent);color:oklch(from var(--vibeui-accordion-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="accordion-009"][data-marker="ring"] details[open]::after{background:var(--vibeui-accordion-009-dot-fill)}
-[data-vibeui-block="accordion-009"][data-marker="ring"] details:first-child::after{background:var(--vibeui-accordion-009-accent)}
+[data-vibeui-block="accordion-009"][data-marker="ring"] details:first-child::after{background:var(--vibeui-accordion-009-accent);color:oklch(from var(--vibeui-accordion-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="accordion-009"] details[open]::after{border-color:var(--vibeui-accordion-009-accent)}
 [data-vibeui-block="accordion-009"] summary{
 display:flex;align-items:baseline;gap:0.625rem;flex-wrap:wrap;

@@ -36,7 +36,7 @@ const STYLES = `
 --vibeui-tree-002-muted:color-mix(in oklab,var(--vibeui-tree-002-fg) 68%,transparent);
 --vibeui-tree-002-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-tree-002-hover:light-dark(oklch(0.97 0 265),oklch(0.29 0 265));
---vibeui-tree-002-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-tree-002-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-tree-002-hue:265;
 --vibeui-tree-002-level:1;
 --vibeui-tree-002-indent:0.875rem;

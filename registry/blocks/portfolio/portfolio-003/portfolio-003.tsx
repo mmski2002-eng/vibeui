@@ -29,7 +29,7 @@ const STYLES = `
 --vibeui-portfolio-003-muted:light-dark(oklch(0.5 0 0),oklch(0.72 0 0));
 --vibeui-portfolio-003-border:light-dark(oklch(0.9 0 0),oklch(0.3 0 0));
 --vibeui-portfolio-003-card:light-dark(oklch(0.99 0 0),oklch(0.2 0 0));
---vibeui-portfolio-003-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
+--vibeui-portfolio-003-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-portfolio-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -52,7 +52,7 @@ transition:transform .18s ease,border-color .18s ease;
 }
 [data-vibeui-block="portfolio-003"] [data-part="case"]:hover{transform:translateY(-3px);border-color:var(--vibeui-portfolio-003-accent)}
 [data-vibeui-block="portfolio-003"] [data-part="case"]:focus-visible{outline:2px solid var(--vibeui-portfolio-003-accent);outline-offset:2px}
-[data-vibeui-block="portfolio-003"] [data-part="bar"]{height:0.375rem;background:linear-gradient(90deg,oklch(0.62 0.19 39.8),oklch(0.5 0.15 25))}
+[data-vibeui-block="portfolio-003"] [data-part="bar"]{height:0.375rem;background:linear-gradient(90deg,light-dark(oklch(0.2 0 0),oklch(0.92 0 0)),oklch(0.5 0.15 25))}
 [data-vibeui-block="portfolio-003"] [data-part="body"]{display:flex;flex-direction:column;gap:0.625rem;padding:0 1.5rem 1.5rem}
 [data-vibeui-block="portfolio-003"] [data-part="client"]{font-size:0.75rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--vibeui-portfolio-003-muted)}
 [data-vibeui-block="portfolio-003"] [data-part="case-title"]{margin:0;font-size:1.1875rem;font-weight:700;line-height:1.25}

@@ -36,7 +36,7 @@ const STYLES = `
 --vibeui-dialog-012-code-fg:light-dark(oklch(0.95 0 265),oklch(0.93 0 265));
 --vibeui-dialog-012-border:light-dark(oklch(0.89 0 265),oklch(0.38 0 265));
 --vibeui-dialog-012-warn:light-dark(oklch(0.68 0.15 70),oklch(0.78 0.14 70));
---vibeui-dialog-012-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8));
+--vibeui-dialog-012-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-dialog-012-radius:1rem;
 --vibeui-dialog-012-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-dialog-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -99,9 +99,9 @@ display:inline-flex;align-items:center;height:2.25rem;padding:0 1rem;
 border-radius:0.5rem;border:1px solid transparent;
 }
 [data-vibeui-dialog-012-window] [data-part="done"]{background:transparent;color:inherit;border-color:var(--vibeui-dialog-012-border,light-dark(oklch(0.89 0 265),oklch(0.38 0 265)))}
-[data-vibeui-dialog-012-window] [data-part="copy"]{background:var(--vibeui-dialog-012-accent,light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8)));color:light-dark(oklch(1 0 0),oklch(0.17 0 265))}
+[data-vibeui-dialog-012-window] [data-part="copy"]{background:var(--vibeui-dialog-012-accent,light-dark(oklch(0.287 0 0),oklch(0.899 0 0)));color:light-dark(oklch(1 0 0),oklch(0.17 0 265))}
 [data-vibeui-dialog-012-window] [data-part="copy"]:hover{filter:brightness(0.94)}
-[data-vibeui-dialog-012-window] :focus-visible{outline:2px solid var(--vibeui-dialog-012-accent,light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8)));outline-offset:2px}
+[data-vibeui-dialog-012-window] :focus-visible{outline:2px solid var(--vibeui-dialog-012-accent,light-dark(oklch(0.287 0 0),oklch(0.899 0 0)));outline-offset:2px}
 /* Popover страницу не блокирует: фон под окном иначе продолжает прокручиваться. */
 html:has([data-vibeui-dialog-012-window]:popover-open){overflow:hidden}
 /* Развёрнутый режим: окно стоит в потоке вместо кнопки, а не в верхнем слое.

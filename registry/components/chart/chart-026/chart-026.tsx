@@ -38,7 +38,7 @@ const STYLES = `
 --vibeui-chart-026-muted:color-mix(in oklab,var(--vibeui-chart-026-fg) 64%,transparent);
 --vibeui-chart-026-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-chart-026-rule:light-dark(oklch(0.94 0 265),oklch(0.3 0 265));
---vibeui-chart-026-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-chart-026-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-chart-026-good:light-dark(oklch(0.52 0.15 152),oklch(0.75 0.14 152));
 --vibeui-chart-026-bad:light-dark(oklch(0.55 0.19 25),oklch(0.74 0.16 25));
 --vibeui-chart-026-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

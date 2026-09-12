@@ -66,8 +66,8 @@ const STYLES = `
 --vibeui-pricing-007-muted:light-dark(oklch(0.51 0 240),oklch(0.72 0 240));
 --vibeui-pricing-007-card:light-dark(oklch(1 0 0),oklch(0.22 0 240));
 --vibeui-pricing-007-line:light-dark(oklch(0.89 0 240),oklch(0.35 0 240));
---vibeui-pricing-007-accent:light-dark(oklch(0.55 0.13 39.8),oklch(0.73 0.14 39.8));
---vibeui-pricing-007-accent-fg:oklch(0.15 0.02 39.8);
+--vibeui-pricing-007-accent:light-dark(oklch(0.287 0 0),oklch(0.901 0 0));
+--vibeui-pricing-007-accent-fg:oklch(from var(--vibeui-pricing-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-pricing-007-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -102,8 +102,7 @@ margin:0.875rem 0 0;max-width:32rem;font-size:0.9375rem;line-height:1.6;color:va
 [data-vibeui-block="pricing-007"] [data-part="points"] li{display:flex;gap:0.75rem}
 [data-vibeui-block="pricing-007"] [data-part="bullet"]{
 flex:0 0 auto;margin-top:0.375rem;width:0.5rem;height:0.5rem;border-radius:0.1875rem;
-background:var(--vibeui-pricing-007-accent);
-}
+background:var(--vibeui-pricing-007-accent);color:oklch(from var(--vibeui-pricing-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="pricing-007"] [data-part="contact"]{
 margin:1.75rem 0 0;padding-top:1.25rem;border-top:1px solid var(--vibeui-pricing-007-line);font-size:0.8125rem;color:var(--vibeui-pricing-007-muted);
 }
@@ -132,7 +131,7 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-pricing-007-accent) 20%,tra
 }
 [data-vibeui-block="pricing-007"] button{
 appearance:none;cursor:pointer;width:100%;height:2.75rem;border:0;border-radius:0.625rem;margin-top:0.375rem;
-background:var(--vibeui-pricing-007-accent);color:var(--vibeui-pricing-007-accent-fg);
+background:var(--vibeui-pricing-007-accent);color:oklch(from var(--vibeui-pricing-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.9375rem;font-weight:650;transition:background-color .16s ease;
 }
 [data-vibeui-block="pricing-007"] button:hover{background:color-mix(in oklab,var(--vibeui-pricing-007-accent) 86%,black)}

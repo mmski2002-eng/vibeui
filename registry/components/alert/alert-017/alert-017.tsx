@@ -31,7 +31,7 @@ const STYLES = `
 --vibeui-alert-017-bg:transparent;
 --vibeui-alert-017-panel:light-dark(oklch(0.97 0 265),oklch(0.28 0 265));
 --vibeui-alert-017-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
---vibeui-alert-017-accent:light-dark(oklch(0.55 0.09 39.8),oklch(0.78 0.08 39.8));
+--vibeui-alert-017-accent:light-dark(oklch(0.287 0 0),oklch(0.78 0 0));
 --vibeui-alert-017-radius:0.875rem;
 --vibeui-alert-017-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-alert-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -59,14 +59,12 @@ border:1.5px solid var(--vibeui-alert-017-accent);border-radius:0.5rem;
 }
 [data-vibeui-block="alert-017"] [data-part="mark"]::before{
 content:"";position:absolute;left:0;right:0;top:0.4375rem;height:1.5px;
-background:var(--vibeui-alert-017-accent);
-}
+background:var(--vibeui-alert-017-accent);color:oklch(from var(--vibeui-alert-017-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="alert-017"] [data-part="mark"]::after{
 content:"";position:absolute;left:0.4375rem;top:-0.25rem;
 width:1.5px;height:0.5rem;border-radius:1px;
 background:var(--vibeui-alert-017-accent);
-box-shadow:0.625rem 0 0 var(--vibeui-alert-017-accent);
-}
+box-shadow:0.625rem 0 0 var(--vibeui-alert-017-accent);color:oklch(from var(--vibeui-alert-017-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="alert-017"] [data-part="text"]{display:flex;flex-direction:column;gap:0.375rem;flex:1 1 auto;min-width:0}
 [data-vibeui-block="alert-017"] [data-part="title"]{font-size:0.9375rem;font-weight:600;line-height:1.35}
 /* Время в отдельной плашке моноширинными: его переписывают в календарь. */

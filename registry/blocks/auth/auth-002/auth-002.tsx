@@ -48,8 +48,8 @@ const STYLES = `
 --vibeui-auth-002-muted:light-dark(oklch(0.55 0 265),oklch(0.69 0 265));
 --vibeui-auth-002-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-auth-002-track:light-dark(oklch(0.93 0 265),oklch(0.3 0 265));
---vibeui-auth-002-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.74 0.16 39.8));
---vibeui-auth-002-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-auth-002-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
+--vibeui-auth-002-on-accent:oklch(from var(--vibeui-auth-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-auth-002-weak:light-dark(oklch(0.6 0.19 25),oklch(0.71 0.16 25));
 --vibeui-auth-002-mid:light-dark(oklch(0.72 0.15 75),oklch(0.79 0.13 75));
 --vibeui-auth-002-good:light-dark(oklch(0.58 0.14 152),oklch(0.72 0.13 152));
@@ -125,7 +125,7 @@ width:100%;margin-top:0.875rem;appearance:none;cursor:pointer;
 display:inline-flex;align-items:center;justify-content:center;
 min-height:2.625rem;padding:0.375rem 1rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-auth-002-accent);color:var(--vibeui-auth-002-on-accent);
+background:var(--vibeui-auth-002-accent);color:oklch(from var(--vibeui-auth-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="auth-002"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-auth-002-accent);outline-offset:2px}

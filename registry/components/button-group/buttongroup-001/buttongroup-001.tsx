@@ -28,9 +28,9 @@ const STYLES = `
 --vibeui-buttongroup-001-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-buttongroup-001-muted:color-mix(in oklab,var(--vibeui-buttongroup-001-fg) 68%,transparent);
 --vibeui-buttongroup-001-border:light-dark(oklch(0.88 0 265),oklch(0.37 0 265));
---vibeui-buttongroup-001-on:light-dark(oklch(0.96 0.035 39.8),oklch(0.32 0.06 39.8));
---vibeui-buttongroup-001-on-fg:light-dark(oklch(0.44 0.16 39.8),oklch(0.86 0.09 39.8));
---vibeui-buttongroup-001-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.72 0.15 39.8));
+--vibeui-buttongroup-001-on:light-dark(oklch(0.96 0 0),oklch(0.32 0 0));
+--vibeui-buttongroup-001-on-fg:light-dark(oklch(0.26 0 0),oklch(0.925 0 0));
+--vibeui-buttongroup-001-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-buttongroup-001-radius:0.625rem;
 --vibeui-buttongroup-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

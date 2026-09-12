@@ -42,7 +42,7 @@ const STYLES = `
 --vibeui-download-004-border:light-dark(oklch(0.9 0 0),oklch(0.3 0 0));
 --vibeui-download-004-card:light-dark(oklch(0.98 0 0),oklch(0.2 0 0));
 --vibeui-download-004-device:light-dark(oklch(0.16 0 0),oklch(0.1 0 0));
---vibeui-download-004-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
+--vibeui-download-004-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-download-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

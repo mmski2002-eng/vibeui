@@ -32,8 +32,8 @@ const STYLES = `
 --vibeui-buttongroup-017-fg:light-dark(oklch(0.25 0 265),oklch(0.94 0 265));
 --vibeui-buttongroup-017-muted:color-mix(in oklab,var(--vibeui-buttongroup-017-fg) 68%,transparent);
 --vibeui-buttongroup-017-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
---vibeui-buttongroup-017-accent:light-dark(oklch(0.55 0.15 39.8),oklch(0.62 0.15 39.8));
---vibeui-buttongroup-017-deny:light-dark(oklch(0.6 0.15 39.8),oklch(0.63 0.16 39.8));
+--vibeui-buttongroup-017-accent:light-dark(oklch(0.287 0 0),oklch(0.881 0 0));
+--vibeui-buttongroup-017-deny:light-dark(oklch(0.3 0 0),oklch(0.883 0 0));
 --vibeui-buttongroup-017-on-thumb:oklch(0.99 0 265);
 --vibeui-buttongroup-017-thumb:var(--vibeui-buttongroup-017-accent);
 --vibeui-buttongroup-017-radius:0.5rem;

@@ -33,9 +33,9 @@ const STYLES = `
 --vibeui-field-003-muted:color-mix(in oklab,var(--vibeui-field-003-fg) 68%,transparent);
 --vibeui-field-003-border:light-dark(oklch(0.88 0 265),oklch(0.4 0 265));
 --vibeui-field-003-shell:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
---vibeui-field-003-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.74 0.16 39.8));
+--vibeui-field-003-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-field-003-danger:light-dark(oklch(0.55 0.19 25),oklch(0.73 0.16 25));
---vibeui-field-003-edge:light-dark(oklch(0.79 0.09 39.8),oklch(0.52 0.12 39.8));
+--vibeui-field-003-edge:light-dark(oklch(0.348 0 0),oklch(0.863 0 0));
 --vibeui-field-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

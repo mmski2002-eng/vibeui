@@ -48,7 +48,8 @@
             "href у CTA",
             "акцентный цвет — проп accent (и accentForeground для контраста текста на кнопке)",
             "внешние отступы через className",
-            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -79,7 +80,8 @@
                 "the CTA hrefs",
                 "the accent colour through the accent prop (and accentForeground for text contrast on the button)",
                 "outer spacing through className",
-                "background — the component backdrop; empty means no backdrop, taking the page colour"
+                "background — the component backdrop; empty means no backdrop, taking the page colour",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -90,6 +92,7 @@
             },
             "title": "Aurora Hero",
             "controls": {
+              "tone": { "label": "Theme" },
               "accent": {
                 "label": "Accent"
               },
@@ -126,6 +129,13 @@
         },
         "controls": [
           {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -145,12 +155,13 @@
           }
         ],
         "cardControls": [
+          "tone",
           "accent",
           "accentForeground",
           "background"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         }
       }
     },
@@ -206,7 +217,8 @@
             "href у CTA",
             "label, value и delta у двух метрик",
             "акцентный цвет — проп accent (и accentForeground для контраста текста на кнопке)",
-            "внешние отступы через className"
+            "внешние отступы через className",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -245,7 +257,8 @@
                 "the CTA hrefs",
                 "the label, value and delta of the two metrics",
                 "the accent colour through the accent prop (and accentForeground for text contrast on the button)",
-                "outer spacing through className"
+                "outer spacing through className",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -259,6 +272,7 @@
             },
             "title": "Console Hero",
             "controls": {
+              "tone": { "label": "Theme" },
               "accent": {
                 "label": "Accent"
               },
@@ -305,6 +319,13 @@
         },
         "controls": [
           {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -324,12 +345,13 @@
           }
         ],
         "cardControls": [
+          "tone",
           "accent",
           "accentForeground",
           "background"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         }
       }
     },
@@ -387,7 +409,8 @@
             "до трёх пунктов чеклиста",
             "акцентный цвет — проп accent (и accentForeground для контраста текста на акцентной плитке)",
             "внешние отступы через className",
-            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -429,7 +452,8 @@
                 "up to three checklist items",
                 "the accent colour through the accent prop (and accentForeground for text contrast on the accent tile)",
                 "outer spacing through className",
-                "background — the component backdrop; empty means no backdrop, taking the page colour"
+                "background — the component backdrop; empty means no backdrop, taking the page colour",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -444,6 +468,7 @@
             },
             "title": "Mosaic Hero",
             "controls": {
+              "tone": { "label": "Theme" },
               "accent": {
                 "label": "Accent"
               },
@@ -485,6 +510,13 @@
         },
         "controls": [
           {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -504,12 +536,13 @@
           }
         ],
         "cardControls": [
+          "tone",
           "accent",
           "accentForeground",
           "background"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         }
       }
     },
@@ -539,7 +572,7 @@
           "typographic"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Hero004",
@@ -560,7 +593,8 @@
             "подписи и адреса кнопок primary и secondary",
             "акцентный цвет через проп accent",
             "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
-            "внешние отступы через className и точечные переменные через style"
+            "внешние отступы через className и точечные переменные через style",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -571,6 +605,13 @@
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "title",
             "label": "Заголовок",
@@ -618,7 +659,8 @@
                 "the labels and hrefs of the primary and secondary buttons",
                 "the accent colour through the accent prop",
                 "background — the component backdrop; empty means no backdrop, taking the page colour",
-                "outer spacing through className and single variables through style"
+                "outer spacing through className and single variables through style",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -630,6 +672,7 @@
               "usage": "<Hero004 title=\"Ship a landing page tonight\" primary={{ label: \"Get started\", href: \"/signup\" }} />"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "title": {
                 "label": "Headline",
                 "default": "Ship a landing page tonight"
@@ -666,10 +709,10 @@
           }
         },
         "cardControls": [
+          "tone",
           "title",
           "eyebrow",
-          "accent",
-          "background"
+          "accent"
         ]
       }
     },
@@ -699,7 +742,7 @@
           "mockup"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "image": "/demo/hero/hero-01.webp"
           }
@@ -723,7 +766,8 @@
             "appName — подпись в шапке нарисованного окна",
             "содержимое metrics и rows: подписи, значения и строки ленты",
             "акцентный цвет через проп accent и внешние отступы через className",
-            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -734,6 +778,13 @@
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "title",
             "label": "Заголовок",
@@ -781,7 +832,8 @@
                 "appName — the caption in the drawn window's title bar",
                 "the contents of metrics and rows: labels, values and feed lines",
                 "the accent colour through the accent prop and outer spacing through className",
-                "background — the component backdrop; empty means no backdrop, taking the page colour"
+                "background — the component backdrop; empty means no backdrop, taking the page colour",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -793,6 +845,7 @@
               "usage": "<Hero005 title=\"Show the product, not a promise\" appName=\"acme — workspace\" />"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "title": {
                 "label": "Headline",
                 "default": "Show the product, not a promise"
@@ -849,10 +902,10 @@
           }
         },
         "cardControls": [
+          "tone",
           "title",
           "appName",
-          "accent",
-          "background"
+          "accent"
         ]
       }
     },
@@ -882,7 +935,7 @@
           "email"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "avatarImage": "/demo/avatars/nina-256.webp"
           }
@@ -907,7 +960,8 @@
             "до четырёх пунктов facts под формой",
             "formLabel и emailLabel — подписи формы и поля для скринридера",
             "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
-            "акцентный цвет через проп accent и внешние отступы через className"
+            "акцентный цвет через проп accent и внешние отступы через className",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -918,6 +972,13 @@
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "title",
             "label": "Заголовок",
@@ -966,7 +1027,8 @@
                 "up to four facts items under the form",
                 "formLabel and emailLabel — the form and field captions for screen readers",
                 "background — the component backdrop; empty means no backdrop, taking the page colour",
-                "the accent colour through the accent prop and outer spacing through className"
+                "the accent colour through the accent prop and outer spacing through className",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -978,6 +1040,7 @@
               "usage": "<Hero006 title=\"One section pulled apart every Friday\" submitLabel=\"Subscribe\" />"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "title": {
                 "label": "Headline",
                 "default": "One section pulled apart every Friday"
@@ -1017,10 +1080,10 @@
           }
         },
         "cardControls": [
+          "tone",
           "title",
           "submitLabel",
-          "accent",
-          "background"
+          "accent"
         ]
       }
     },
@@ -1050,7 +1113,7 @@
           "media"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "poster": "/demo/scenes/scene-16.webp"
           }
@@ -1075,7 +1138,8 @@
             "watchLabel и watchHref — подпись и адрес ссылки на ролик",
             "duration и список chapters с таймкодами",
             "акцентный цвет через проп accent и внешние отступы через className",
-            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -1086,6 +1150,13 @@
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "title",
             "label": "Заголовок",
@@ -1134,7 +1205,8 @@
                 "watchLabel and watchHref — the caption and the address of the film link",
                 "duration and the chapters list with its timecodes",
                 "the accent colour through the accent prop and outer spacing through className",
-                "background — the component backdrop; empty means no backdrop, taking the page colour"
+                "background — the component backdrop; empty means no backdrop, taking the page colour",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -1146,6 +1218,7 @@
               "usage": "<Hero007 title=\"Watch a page come together\" watchHref=\"/demo\" duration=\"6:24\" />"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "title": {
                 "label": "Headline",
                 "default": "Watch a page come together"
@@ -1194,10 +1267,10 @@
           }
         },
         "cardControls": [
+          "tone",
           "title",
           "duration",
-          "accent",
-          "background"
+          "accent"
         ]
       }
     },
@@ -1227,7 +1300,7 @@
           "wordmark"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Hero008",
@@ -1248,7 +1321,8 @@
             "logosTitle — подпись над полосой клиентов",
             "список logos: до шести названий",
             "акцентный цвет через проп accent и внешние отступы через className",
-            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -1259,6 +1333,13 @@
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "title",
             "label": "Заголовок",
@@ -1306,7 +1387,8 @@
                 "logosTitle — the caption above the client strip",
                 "the logos list: up to six names",
                 "the accent colour through the accent prop and outer spacing through className",
-                "background — the component backdrop; empty means no backdrop, taking the page colour"
+                "background — the component backdrop; empty means no backdrop, taking the page colour",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -1318,6 +1400,7 @@
               "usage": "<Hero008 logosTitle=\"Trusted by\" logos={[\"Kontur\", \"Litera\", \"Optika\"]} />"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "title": {
                 "label": "Headline",
                 "default": "Pages marketing teams actually trust"
@@ -1361,10 +1444,10 @@
           }
         },
         "cardControls": [
+          "tone",
           "title",
           "logosTitle",
-          "accent",
-          "background"
+          "accent"
         ]
       }
     },
@@ -1394,7 +1477,7 @@
           "numbers"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Hero009",
@@ -1415,17 +1498,27 @@
             "массив stats: value, unit и label каждого показателя",
             "текст footnote под цифрами",
             "акцентный цвет через проп accent и внешние отступы через className",
-            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её",
+            "countUp={false} выключает набегание чисел, если значения меняются на лету"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Показателей выводится не больше четырёх: пятая цифра ломает ритм колонки.",
             "Не пишите в value длинные фразы — это место под число, подпись живёт в label.",
             "Цифры статичны: блок ничего не считает и не анимирует, подставляйте готовые значения.",
-            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом.",
+            "Блок клиентский: числа набегают один раз при появлении секции в кадре; в разметке с сервера стоит конечное значение, поэтому без JS и в поиске цифра верная."
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "title",
             "label": "Заголовок",
@@ -1473,18 +1566,22 @@
                 "the stats array: value, unit and label of every metric",
                 "the footnote copy under the figures",
                 "the accent colour through the accent prop and outer spacing through className",
-                "background — the component backdrop; empty means no backdrop, taking the page colour"
+                "background — the component backdrop; empty means no backdrop, taking the page colour",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it",
+                "countUp={false} turns off the count-up when the values change on the fly"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "At most four metrics are rendered: a fifth figure breaks the rhythm of the column.",
                 "Do not put long phrases into value — it is the slot for a number, the wording belongs in label.",
                 "The figures are static: the block counts and animates nothing, feed it finished values.",
-                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file.",
+                "The block is a client component: the numbers count up once when the section enters the viewport; the server markup already holds the final value, so it is correct without JS and in search."
               ],
               "usage": "<Hero009 eyebrow=\"This year\" stats={[{ value: \"6\", unit: \"min\", label: \"To a finished page\" }]} />"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "title": {
                 "label": "Headline",
                 "default": "Less markup, more launches"
@@ -1533,10 +1630,10 @@
           }
         },
         "cardControls": [
+          "tone",
           "title",
           "eyebrow",
-          "accent",
-          "background"
+          "accent"
         ]
       }
     },
@@ -1566,7 +1663,7 @@
           "figure"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "image": "/demo/hero/hero-06.webp"
           }
@@ -1591,7 +1688,8 @@
             "до четырёх пунктов bullets в чеклисте",
             "текст подписи imageCaption в углу изображения",
             "акцентный цвет через проп accent и внешние отступы через className",
-            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -1602,6 +1700,13 @@
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "title",
             "label": "Заголовок",
@@ -1650,7 +1755,8 @@
                 "up to four bullets in the checklist",
                 "the imageCaption text in the corner of the picture",
                 "the accent colour through the accent prop and outer spacing through className",
-                "background — the component backdrop; empty means no backdrop, taking the page colour"
+                "background — the component backdrop; empty means no backdrop, taking the page colour",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -1662,6 +1768,7 @@
               "usage": "<Hero010 title=\"Half the page is the picture\" imageCaption=\"Product photo\" />"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "title": {
                 "label": "Headline",
                 "default": "Half the page is the picture"
@@ -1704,10 +1811,10 @@
           }
         },
         "cardControls": [
+          "tone",
           "title",
           "imageCaption",
-          "accent",
-          "background"
+          "accent"
         ]
       }
     },
@@ -1737,7 +1844,7 @@
           "grid"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Hero011",
@@ -1758,17 +1865,27 @@
             "подписи и адреса CTA primary и secondary",
             "до четырёх пунктов meta в нижней строке",
             "акцентный цвет через проп accent и внешние отступы через className",
-            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её",
+            "третий слой света следует за курсором; на устройствах без указателя он просто не появляется"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Шаг сетки задан в самих градиентах: меняйте значение 4rem в обоих repeating-linear-gradient сразу, иначе клетка перестанет быть квадратной.",
             "Градиентный текст не наследует цвет: если заменяете accent, проверьте, что вторая часть заголовка осталась читаемой.",
             "Не добавляйте поверх фона ещё один слой затемнения — контраст уже посчитан.",
-            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом.",
+            "Блок клиентский из-за слоя света под курсором. Сетка и оба неподвижных пятна — чистый CSS и работают без JS."
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "title",
             "label": "Заголовок",
@@ -1816,18 +1933,22 @@
                 "the labels and hrefs of the primary and secondary CTAs",
                 "up to four meta items in the bottom row",
                 "the accent colour through the accent prop and outer spacing through className",
-                "background — the component backdrop; empty means no backdrop, taking the page colour"
+                "background — the component backdrop; empty means no backdrop, taking the page colour",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it",
+                "the third light layer follows the cursor; on pointerless devices it simply never appears"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The grid step lives in the gradients themselves: change the 4rem value in both repeating-linear-gradients at once, or the cell stops being square.",
                 "Gradient text does not inherit colour: if you swap accent, check that the second half of the headline stays readable.",
                 "Do not stack another dimming layer over the background — the contrast is already balanced.",
-                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file.",
+                "The block is a client component because of the cursor-lit layer. The grid and both static glows are pure CSS and work without JS."
               ],
               "usage": "<Hero011 title=\"A background that does\" titleAccent=\"half the work\" />"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "title": {
                 "label": "Headline",
                 "default": "A background that does"
@@ -1870,10 +1991,10 @@
           }
         },
         "cardControls": [
+          "tone",
           "title",
           "titleAccent",
-          "accent",
-          "background"
+          "accent"
         ]
       }
     },
@@ -1903,7 +2024,7 @@
           "release"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Hero012",
@@ -1924,7 +2045,8 @@
             "тексты title и lede, подписи и адреса CTA primary и secondary",
             "объект release: version, date и до четырёх пунктов items",
             "акцентный цвет через проп accent и внешние отступы через className",
-            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -1935,6 +2057,13 @@
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "announcement",
             "label": "Текст анонса",
@@ -1982,7 +2111,8 @@
                 "the title and lede copy, the labels and hrefs of the primary and secondary CTAs",
                 "the release object: version, date and up to four items",
                 "the accent colour through the accent prop and outer spacing through className",
-                "background — the component backdrop; empty means no backdrop, taking the page colour"
+                "background — the component backdrop; empty means no backdrop, taking the page colour",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -1994,6 +2124,7 @@
               "usage": "<Hero012 badge=\"New\" announcement=\"Version 2.4 is out\" announcementHref=\"/changelog\" />"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "announcement": {
                 "label": "Announcement",
                 "default": "Version 2.4 is out — 45 sections and a new Copy for AI"
@@ -2039,10 +2170,10 @@
           }
         },
         "cardControls": [
+          "tone",
           "announcement",
           "badge",
-          "accent",
-          "background"
+          "accent"
         ]
       }
     },
@@ -2072,7 +2203,7 @@
           "light"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Hero013",
@@ -2094,7 +2225,8 @@
             "popularTitle и до шести запросов в списке popular",
             "акцентный цвет через проп accent и внешние отступы через className",
             "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
-            "подпись скрытого лейбла поля через searchLabel — её читает скринридер"
+            "подпись скрытого лейбла поля через searchLabel — её читает скринридер",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -2105,6 +2237,13 @@
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "title",
             "label": "Заголовок",
@@ -2160,7 +2299,8 @@
                 "popularTitle and up to six queries in the popular list",
                 "the accent colour through the accent prop and outer spacing through className",
                 "background — the component background; empty means no background, taking the page colour",
-                "the hidden field label through searchLabel — a screen reader reads it out"
+                "the hidden field label through searchLabel — a screen reader reads it out",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -2172,6 +2312,7 @@
               "usage": "<Hero013 placeholder=\"Try: pricing with a toggle\" popular={[\"hero\", \"pricing\"]} />"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "title": {
                 "label": "Headline",
                 "default": "Search the catalog instead of scrolling it"
@@ -2215,11 +2356,10 @@
           }
         },
         "cardControls": [
+          "tone",
           "title",
           "placeholder",
-          "submitLabel",
-          "accent",
-          "background"
+          "submitLabel"
         ]
       }
     },
@@ -2249,7 +2389,7 @@
           "dark"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Hero014",
@@ -2269,17 +2409,27 @@
             "date и dateTime — человеческую и машиночитаемую формы даты",
             "значения и подписи в массиве countdown",
             "подписи и адреса CTA primary и secondary, акцентный цвет через проп accent",
-            "подпись списка отсчёта countdownLabel — её читает скринридер"
+            "подпись списка отсчёта countdownLabel — её читает скринридер",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её",
+            "live={true} пересчитывает отсчёт от dateTime в браузере раз в секунду"
           ],
           "notes": [
             "Блок намеренно одноцветный: light-dark() в палитре нет, и color-scheme страницы на него не влияет. Тёмная сцена со свечением — часть замысла, а не отсутствие светлой темы.",
             "Чтобы отсчёт шёл, оберните блок клиентским компонентом и передавайте пересчитанный countdown пропом.",
             "dateTime обязан быть валидным ISO-значением с таймзоной, иначе машиночитаемая дата бесполезна.",
             "Плиток ровно четыре: пятая ломает сетку и не помещается в две колонки на широкой ширине.",
-            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом.",
+            "Сервер всегда отдаёт переданные значения, поэтому кэш страницы и разметка без JS остаются верными; live лишь уточняет их в браузере и останавливается, когда событие началось."
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "title",
             "label": "Заголовок",
@@ -2320,18 +2470,22 @@
                 "date and dateTime — the human and machine-readable forms of the date",
                 "the values and labels in the countdown array",
                 "the labels and hrefs of the primary and secondary CTAs, and the accent colour through the accent prop",
-                "the countdownLabel caption on the countdown list — a screen reader reads it out"
+                "the countdownLabel caption on the countdown list — a screen reader reads it out",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it",
+                "live={true} recomputes the countdown from dateTime in the browser once a second"
               ],
               "notes": [
                 "The block is deliberately single-toned: there is no light-dark() in the palette and the page color-scheme does not affect it. The dark stage with its glow is the point, not a missing light theme.",
                 "To make the countdown run, wrap the block in a client component and feed a recalculated countdown prop.",
                 "dateTime must be a valid ISO value with a timezone, otherwise the machine-readable date is useless.",
                 "There are exactly four tiles: a fifth breaks the grid and does not fit the two-column layout on a wide block.",
-                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file.",
+                "The server always renders the passed values, so the page cache and the no-JS markup stay correct; live only refines them in the browser and stops once the event has started."
               ],
               "usage": "<Hero014 kind=\"Online conference\" date=\"26 September, 11:00\" dateTime=\"2026-09-26T11:00:00+03:00\" />"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "title": {
                 "label": "Headline",
                 "default": "Vibecoding day: a product in eight hours"
@@ -2387,6 +2541,7 @@
           }
         },
         "cardControls": [
+          "tone",
           "title",
           "kind",
           "accent"
@@ -2419,7 +2574,7 @@
           "minimal"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Hero015",
@@ -2441,7 +2596,8 @@
             "до трёх пар index в выходных данных",
             "акцентный цвет через проп accent и внешние отступы через className",
             "курсивную часть заголовка через titleAccent — пустая строка убирает единственное цветное пятно",
-            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -2452,6 +2608,13 @@
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "title",
             "label": "Заголовок",
@@ -2507,7 +2670,8 @@
                 "up to three index pairs in the colophon",
                 "the accent colour through the accent prop and outer spacing through className",
                 "the italic half of the headline through titleAccent — an empty string drops the only spot of colour",
-                "background — the component background; empty means no background, taking the page colour"
+                "background — the component background; empty means no background, taking the page colour",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -2519,6 +2683,7 @@
               "usage": "<Hero015 studio=\"Versta Studio\" link={{ label: \"See the work\", href: \"/works\" }} />"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "title": {
                 "label": "Headline",
                 "default": "We build interfaces that"
@@ -2569,11 +2734,10 @@
           }
         },
         "cardControls": [
+          "tone",
           "title",
           "titleAccent",
-          "studio",
-          "accent",
-          "background"
+          "studio"
         ]
       }
     },
@@ -2603,7 +2767,7 @@
           "light"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Hero016",
@@ -2624,7 +2788,8 @@
             "содержимое обоих путей paths: title, description, points и адрес href",
             "подпись действия action в каждой карточке",
             "акцентный цвет через проп accent и внешние отступы через className",
-            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -2635,6 +2800,13 @@
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "title",
             "label": "Заголовок",
@@ -2682,7 +2854,8 @@
                 "the contents of both paths: title, description, points and the href",
                 "the action caption in each card",
                 "the accent colour through the accent prop and outer spacing through className",
-                "background — the component background; empty means no background, taking the page colour"
+                "background — the component background; empty means no background, taking the page colour",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -2694,6 +2867,7 @@
               "usage": "<Hero016 title=\"Build it yourself or hand it over?\" eyebrow=\"Two ways to start\" />"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "title": {
                 "label": "Headline",
                 "default": "Build it yourself or hand it over?"
@@ -2746,10 +2920,10 @@
           }
         },
         "cardControls": [
+          "tone",
           "title",
           "eyebrow",
-          "accent",
-          "background"
+          "accent"
         ]
       }
     },
@@ -2781,7 +2955,7 @@
           "animated"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Hero017",
@@ -2801,7 +2975,8 @@
             "массив words — список сменяемых слов, от двух до шести",
             "lede, подписи и адреса кнопок primary и secondary",
             "акцентный цвет через проп accent и внешние отступы через className",
-            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -2812,6 +2987,13 @@
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "eyebrow",
             "label": "Надзаголовок",
@@ -2865,7 +3047,8 @@
                 "the words array — the list of swapping words, from two to six",
                 "the lede, and the labels and hrefs of the primary and secondary buttons",
                 "the accent colour through the accent prop and outer spacing through className",
-                "background — the component backdrop; empty means no backdrop, taking the page colour"
+                "background — the component backdrop; empty means no backdrop, taking the page colour",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -2877,6 +3060,7 @@
               "usage": "<Hero017 prefix=\"We build\" words={[\"landing pages\", \"catalogues\", \"dashboards\"]} suffix=\"with no markup from scratch\" />"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "eyebrow": {
                 "label": "Eyebrow",
                 "default": "New sections every week"
@@ -2923,11 +3107,10 @@
           }
         },
         "cardControls": [
+          "tone",
           "eyebrow",
           "prefix",
-          "suffix",
-          "accent",
-          "background"
+          "suffix"
         ]
       }
     },
@@ -2959,7 +3142,7 @@
           "landing"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "image": "/demo/hero/hero-03.webp"
           }
@@ -2983,7 +3166,8 @@
             "подписи и адреса кнопок: primaryLabel, primaryHref, secondaryLabel, secondaryHref",
             "акцентный цвет через проп accent — от него зависят пятно, подчёркивание и заливка кнопки",
             "внешние отступы через className и точечные переопределения через style",
-            "шаг сетки и размер пятна, если блок стоит в узкой колонке"
+            "шаг сетки и размер пятна, если блок стоит в узкой колонке",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
             "Пустой titleAccent оставляет заголовок цельным: подчёркивание рисуется только у хвоста.",
@@ -2994,6 +3178,13 @@
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "title",
             "label": "Заголовок",
@@ -3044,7 +3235,8 @@
                 "the button captions and destinations: primaryLabel, primaryHref, secondaryLabel, secondaryHref",
                 "the accent colour through the accent prop — the glow, the underline and the button fill all derive from it",
                 "outer spacing through className and pinpoint overrides through style",
-                "the grid step and the size of the glow when the block sits in a narrow column"
+                "the grid step and the size of the glow when the block sits in a narrow column",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
                 "An empty titleAccent leaves the headline whole: the underline is drawn on the tail only.",
@@ -3056,6 +3248,7 @@
               "usage": "<Hero018 title=\"Ship a landing page that\" titleAccent=\"looks expensive\" />"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "title": {
                 "label": "Headline",
                 "default": "Ship a landing page that"
@@ -3087,10 +3280,10 @@
           }
         },
         "cardControls": [
+          "tone",
           "title",
           "titleAccent",
-          "primaryLabel",
-          "accent"
+          "primaryLabel"
         ]
       }
     },
@@ -3122,7 +3315,7 @@
           "landing"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Hero019",
@@ -3143,7 +3336,8 @@
             "содержимое карточки: formTitle, formLede, emailLabel, emailPlaceholder, submitLabel и terms",
             "ссылку на вход: signinPrompt, signinLabel и адрес signinHref",
             "акцентный цвет через проп accent — от него зависят кнопка, галочки и фокусное кольцо",
-            "внешние отступы через className и точечные переопределения через style"
+            "внешние отступы через className и точечные переопределения через style",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
           ],
           "notes": [
             "У формы нет action и обработчика: подключите свой submit или серверное действие.",
@@ -3154,6 +3348,13 @@
           ]
         },
         "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": ["auto", "light", "dark"],
+            "default": "auto"
+          },
           {
             "prop": "title",
             "label": "Заголовок",
@@ -3204,7 +3405,8 @@
                 "the contents of the card: formTitle, formLede, emailLabel, emailPlaceholder, submitLabel and terms",
                 "the sign-in link: signinPrompt, signinLabel and the signinHref destination",
                 "the accent colour through the accent prop — the button, the ticks and the focus ring all derive from it",
-                "outer spacing through className and pinpoint overrides through style"
+                "outer spacing through className and pinpoint overrides through style",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
               ],
               "notes": [
                 "The form has no action and no handler: wire up your own submit or server action.",
@@ -3216,6 +3418,7 @@
               "usage": "<Hero019 title=\"Ship your first page tonight\" submitLabel=\"Create account\" />"
             },
             "controls": {
+              "tone": { "label": "Theme" },
               "title": {
                 "label": "Headline",
                 "default": "Ship your first page tonight"
@@ -3256,10 +3459,10 @@
           }
         },
         "cardControls": [
+          "tone",
           "title",
           "eyebrow",
-          "submitLabel",
-          "accent"
+          "submitLabel"
         ]
       }
     }

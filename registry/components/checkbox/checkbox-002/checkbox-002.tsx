@@ -39,7 +39,7 @@ const STYLES = `
 --vibeui-checkbox-002-fg:light-dark(oklch(0.22 0 265),oklch(0.95 0 265));
 --vibeui-checkbox-002-muted:color-mix(in oklab,var(--vibeui-checkbox-002-fg) 68%,transparent);
 --vibeui-checkbox-002-border:light-dark(oklch(0.91 0 265),oklch(0.38 0 265));
---vibeui-checkbox-002-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.72 0.15 39.8));
+--vibeui-checkbox-002-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-checkbox-002-mark:light-dark(oklch(0.99 0 265),oklch(0.2 0 265));
 --vibeui-checkbox-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -83,8 +83,7 @@ border-color:var(--vibeui-checkbox-002-accent);
 box-shadow:inset 0 0 0 1px var(--vibeui-checkbox-002-accent);
 }
 [data-vibeui-block="checkbox-002"] label:has(input:checked) [data-part="box"]{
-border-color:transparent;background:var(--vibeui-checkbox-002-accent);
-}
+border-color:transparent;background:var(--vibeui-checkbox-002-accent);color:oklch(from var(--vibeui-checkbox-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="checkbox-002"] label:has(input:checked) [data-part="tick"]{opacity:1}
 [data-vibeui-block="checkbox-002"] label:has(input:focus-visible){outline:2px solid var(--vibeui-checkbox-002-accent);outline-offset:2px}
 [data-vibeui-block="checkbox-002"] [data-part="title"]{font-size:0.875rem;font-weight:650;line-height:1.3}

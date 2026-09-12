@@ -42,9 +42,9 @@ const STYLES = `
 --vibeui-button-075-muted:color-mix(in oklab,var(--vibeui-button-075-fg) 62%,transparent);
 --vibeui-button-075-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 14%));
 --vibeui-button-075-card:light-dark(oklch(0.955 0 0),oklch(0.2178 0 0));
---vibeui-button-075-accent:light-dark(oklch(0.64 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-button-075-ring:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-button-075-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-button-075-accent:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
+--vibeui-button-075-ring:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
+--vibeui-button-075-on-accent:oklch(0.15 0 0);
 --vibeui-button-075-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -65,7 +65,7 @@ position:relative;z-index:1;flex:none;
 appearance:none;border:0;cursor:pointer;
 display:grid;place-items:center;
 width:3.25rem;height:3.25rem;padding:0;border-radius:50%;
-background:var(--vibeui-button-075-accent);color:var(--vibeui-button-075-on-accent);
+background:var(--vibeui-button-075-accent);color:oklch(from var(--vibeui-button-075-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 box-shadow:0 12px 26px -14px var(--vibeui-button-075-accent);
 }
 [data-vibeui-block="button-075"] [data-part="main"] svg{

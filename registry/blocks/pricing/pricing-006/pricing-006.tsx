@@ -54,8 +54,8 @@ const STYLES = `
 --vibeui-pricing-006-card:light-dark(oklch(1 0 0),oklch(0.22 0 250));
 --vibeui-pricing-006-line:light-dark(oklch(0.89 0 250),oklch(0.34 0 250));
 --vibeui-pricing-006-track:light-dark(oklch(0.91 0 250),oklch(0.33 0 250));
---vibeui-pricing-006-accent:light-dark(oklch(0.52 0.17 39.8),oklch(0.75 0.15 39.8));
---vibeui-pricing-006-accent-fg:oklch(0.15 0.02 39.8);
+--vibeui-pricing-006-accent:light-dark(oklch(0.28 0 0),oklch(0.905 0 0));
+--vibeui-pricing-006-accent-fg:oklch(from var(--vibeui-pricing-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-pricing-006-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -96,12 +96,10 @@ appearance:none;width:100%;height:1.5rem;background:none;cursor:pointer;
 [data-vibeui-block="pricing-006"] input::-webkit-slider-thumb{
 appearance:none;margin-top:-0.4375rem;width:1.25rem;height:1.25rem;border-radius:9999px;
 background:var(--vibeui-pricing-006-accent);border:3px solid var(--vibeui-pricing-006-card);
-box-shadow:0 1px 4px oklch(0 0 0 / 22%);
-}
+box-shadow:0 1px 4px oklch(0 0 0 / 22%);color:oklch(from var(--vibeui-pricing-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="pricing-006"] input::-moz-range-thumb{
 width:1.25rem;height:1.25rem;border-radius:9999px;
-background:var(--vibeui-pricing-006-accent);border:3px solid var(--vibeui-pricing-006-card);
-}
+background:var(--vibeui-pricing-006-accent);border:3px solid var(--vibeui-pricing-006-card);color:oklch(from var(--vibeui-pricing-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="pricing-006"] input:focus-visible{outline:2px solid var(--vibeui-pricing-006-accent);outline-offset:4px;border-radius:9999px}
 [data-vibeui-block="pricing-006"] [data-part="range"]{display:flex;justify-content:space-between;margin-top:0.375rem;font-size:0.75rem;color:var(--vibeui-pricing-006-muted);font-variant-numeric:tabular-nums}
 [data-vibeui-block="pricing-006"] [data-part="tiers"]{list-style:none;margin:1.5rem 0 0;padding:0;display:grid;gap:0.375rem}
@@ -121,7 +119,7 @@ color:var(--vibeui-pricing-006-accent);font-variant-numeric:tabular-nums;
 [data-vibeui-block="pricing-006"] [data-part="sumnote"]{margin:0.5rem 0 0;font-size:0.8125rem;color:var(--vibeui-pricing-006-muted)}
 [data-vibeui-block="pricing-006"] a{
 display:inline-flex;align-items:center;justify-content:center;margin-top:1.25rem;height:2.75rem;border-radius:0.625rem;
-background:var(--vibeui-pricing-006-accent);color:var(--vibeui-pricing-006-accent-fg);
+background:var(--vibeui-pricing-006-accent);color:oklch(from var(--vibeui-pricing-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color .16s ease;
 }
 [data-vibeui-block="pricing-006"] a:hover{background:color-mix(in oklab,var(--vibeui-pricing-006-accent) 86%,black)}

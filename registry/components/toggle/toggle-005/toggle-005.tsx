@@ -29,7 +29,7 @@ const STYLES = `
 --vibeui-toggle-005-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-toggle-005-muted:color-mix(in oklab,var(--vibeui-toggle-005-fg) 68%,transparent);
 --vibeui-toggle-005-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-toggle-005-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.75 0.14 39.8));
+--vibeui-toggle-005-accent:light-dark(oklch(0.287 0 0),oklch(0.905 0 0));
 --vibeui-toggle-005-track:light-dark(oklch(0.93 0 265),oklch(0.33 0 265));
 --vibeui-toggle-005-on:light-dark(oklch(0.99 0 0),oklch(0.18 0 265));
 --vibeui-toggle-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -74,8 +74,7 @@ background:var(--vibeui-toggle-005-track);overflow:hidden;
 [data-vibeui-block="toggle-005"] [data-part="fill"]{
 display:block;height:100%;border-radius:9999px;
 background:var(--vibeui-toggle-005-accent);
-transition:width .2s ease,background-color .2s ease;
-}
+transition:width .2s ease,background-color .2s ease;color:oklch(from var(--vibeui-toggle-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 /* Выключенный звук гасит и полосу: состояние обязано читаться не только по
    значку — иначе на беглом взгляде громкость выглядит рабочей. */
 [data-vibeui-block="toggle-005"][data-muted="true"] [data-part="fill"]{

@@ -36,7 +36,7 @@ const STYLES = `
 --vibeui-carousel-005-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-carousel-005-muted:color-mix(in oklab,var(--vibeui-carousel-005-fg) 68%,transparent);
 --vibeui-carousel-005-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
---vibeui-carousel-005-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-carousel-005-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-carousel-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -75,7 +75,7 @@ appearance:none;cursor:pointer;padding:0;
 width:0.5rem;height:0.5rem;border:0;border-radius:9999px;
 background:var(--vibeui-carousel-005-border);
 }
-[data-vibeui-block="carousel-005"] [data-part="dot"][aria-current="true"]{background:var(--vibeui-carousel-005-accent);width:1.25rem}
+[data-vibeui-block="carousel-005"] [data-part="dot"][aria-current="true"]{background:var(--vibeui-carousel-005-accent);width:1.25rem;color:oklch(from var(--vibeui-carousel-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="carousel-005"] [data-part="dot"]:focus-visible{outline:2px solid var(--vibeui-carousel-005-accent);outline-offset:3px}
 [data-vibeui-block="carousel-005"] [data-part="nav"]{display:flex;gap:0.375rem}
 [data-vibeui-block="carousel-005"] [data-part="nav"] button{

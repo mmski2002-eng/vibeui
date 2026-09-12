@@ -36,9 +36,9 @@ const STYLES = `
 --vibeui-button-073-muted:color-mix(in oklab,var(--vibeui-button-073-fg) 62%,transparent);
 --vibeui-button-073-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 14%));
 --vibeui-button-073-card:light-dark(oklch(0.955 0 0),oklch(0.2178 0 0));
---vibeui-button-073-accent:light-dark(oklch(0.64 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-button-073-ring:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-button-073-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-button-073-accent:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
+--vibeui-button-073-ring:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
+--vibeui-button-073-on-accent:oklch(0.15 0 0);
 --vibeui-button-073-hold:800ms;
 --vibeui-button-073-radius:0.75rem;
 --vibeui-button-073-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -83,7 +83,7 @@ transition:scale .35s linear(0,0.138,0.389,0.621,0.792,0.901,0.963,0.994,1.006,1
 scale:1 1;transition:scale var(--vibeui-button-073-hold) linear;
 }
 [data-vibeui-block="button-073"] [data-part="action"][data-state="done"]{
-background:var(--vibeui-button-073-accent);color:var(--vibeui-button-073-on-accent);
+background:var(--vibeui-button-073-accent);color:oklch(from var(--vibeui-button-073-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 border-color:var(--vibeui-button-073-accent);
 }
 [data-vibeui-block="button-073"] [data-part="action"][data-state="done"] [data-part="fill"]{

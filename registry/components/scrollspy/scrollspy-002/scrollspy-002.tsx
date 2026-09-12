@@ -34,7 +34,7 @@ const STYLES = `
 --vibeui-scrollspy-002-fg:light-dark(oklch(0.23 0 265),oklch(0.93 0 265));
 --vibeui-scrollspy-002-muted:color-mix(in oklab,var(--vibeui-scrollspy-002-fg) 68%,transparent);
 --vibeui-scrollspy-002-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
---vibeui-scrollspy-002-accent:light-dark(oklch(0.55 0.19 39.8),oklch(0.74 0.16 39.8));
+--vibeui-scrollspy-002-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-scrollspy-002-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0 265));
 --vibeui-scrollspy-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -76,7 +76,7 @@ color:var(--vibeui-scrollspy-002-fg);border-color:var(--vibeui-scrollspy-002-acc
 font-weight:600;
 }
 [data-vibeui-block="scrollspy-002"] [data-part="link"][aria-current="true"] [data-part="num"]{
-background:var(--vibeui-scrollspy-002-accent);color:var(--vibeui-scrollspy-002-on-accent);
+background:var(--vibeui-scrollspy-002-accent);color:oklch(from var(--vibeui-scrollspy-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="scrollspy-002"] [data-part="link"]:focus-visible{outline:2px solid var(--vibeui-scrollspy-002-accent);outline-offset:2px}
 [data-vibeui-block="scrollspy-002"] [data-part="body"]{

@@ -22,7 +22,7 @@ const STYLES = `
 --vibeui-autocomplete-001-muted:color-mix(in oklab,var(--vibeui-autocomplete-001-fg) 68%,transparent);
 --vibeui-autocomplete-001-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-autocomplete-001-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
---vibeui-autocomplete-001-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-autocomplete-001-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-autocomplete-001-radius:0.625rem;
 --vibeui-autocomplete-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

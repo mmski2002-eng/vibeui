@@ -44,7 +44,7 @@ const STYLES = `
 --vibeui-stepper-015-muted:color-mix(in oklab,var(--vibeui-stepper-015-fg) 68%,transparent);
 --vibeui-stepper-015-border:light-dark(oklch(0.92 0 265),oklch(0.35 0 265));
 --vibeui-stepper-015-line:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
---vibeui-stepper-015-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.74 0.16 39.8));
+--vibeui-stepper-015-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-stepper-015-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0 265));
 --vibeui-stepper-015-panel:light-dark(oklch(0.97 0 265),oklch(0.26 0 265));
 --vibeui-stepper-015-size:1.75rem;
@@ -73,7 +73,7 @@ display:flex;flex-direction:column;align-items:center;text-align:center;gap:0.31
 content:"";position:absolute;top:calc(var(--vibeui-stepper-015-size) / 2 - 1px);
 right:50%;left:-50%;height:2px;background:var(--vibeui-stepper-015-line);
 }
-[data-vibeui-block="stepper-015"] [data-part="ribbon"] li[data-state="done"]::before{background:var(--vibeui-stepper-015-accent)}
+[data-vibeui-block="stepper-015"] [data-part="ribbon"] li[data-state="done"]::before{background:var(--vibeui-stepper-015-accent);color:oklch(from var(--vibeui-stepper-015-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="stepper-015"] [data-part="mark"]{
 position:relative;z-index:1;
 display:flex;align-items:center;justify-content:center;
@@ -84,7 +84,7 @@ font-size:0.6875rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="stepper-015"] li[data-state="done"] [data-part="mark"]{
 background:var(--vibeui-stepper-015-accent);border-color:var(--vibeui-stepper-015-accent);
-color:var(--vibeui-stepper-015-accent-fg);
+color:oklch(from var(--vibeui-stepper-015-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="stepper-015"] li[data-state="current"] [data-part="mark"]{
 border-color:var(--vibeui-stepper-015-accent);color:var(--vibeui-stepper-015-accent);
@@ -141,7 +141,7 @@ outline:2px solid var(--vibeui-stepper-015-accent);outline-offset:2px;
 [data-vibeui-block="stepper-015"] [data-part="confirm"]{
 display:inline-flex;align-items:center;
 padding:0.5rem 0.9375rem;border-radius:0.625rem;
-background:var(--vibeui-stepper-015-accent);color:var(--vibeui-stepper-015-accent-fg);
+background:var(--vibeui-stepper-015-accent);color:oklch(from var(--vibeui-stepper-015-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.8125rem;font-weight:650;text-decoration:none;
 }
 [data-vibeui-block="stepper-015"] [data-part="pending"]{

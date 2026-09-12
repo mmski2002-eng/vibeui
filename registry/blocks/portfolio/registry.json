@@ -28,7 +28,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "works": [
               {
@@ -195,7 +195,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "works": [
               {
@@ -366,7 +366,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Portfolio003",
@@ -497,7 +497,7 @@
           "freelance"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "works": [
               {
@@ -698,7 +698,7 @@
           "works"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Portfolio005",
@@ -840,7 +840,7 @@
           "works"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "feature": {
               "title": "Ребрендинг сети пекарен",

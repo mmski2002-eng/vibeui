@@ -35,7 +35,7 @@ const STYLES = `
 --vibeui-tree-009-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-tree-009-rail:light-dark(oklch(0.92 0 265),oklch(0.32 0 265));
 --vibeui-tree-009-hover:light-dark(oklch(0.97 0 265),oklch(0.29 0 265));
---vibeui-tree-009-accent:light-dark(oklch(0.52 0.19 39.8),oklch(0.75 0.15 39.8));
+--vibeui-tree-009-accent:light-dark(oklch(0.28 0 0),oklch(0.905 0 0));
 --vibeui-tree-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -98,8 +98,7 @@ background:color-mix(in oklab,var(--vibeui-tree-009-accent) 10%,transparent);
 content:"";position:absolute;inset-block:0.125rem;
 inset-inline-start:-0.5625rem;
 inline-size:2px;border-radius:999px;
-background:var(--vibeui-tree-009-accent);
-}
+background:var(--vibeui-tree-009-accent);color:oklch(from var(--vibeui-tree-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 /* Предки текущего раздела подсвечены слабее: путь виден, но не спорит с
    самим разделом. */
 [data-vibeui-block="tree-009"] summary[data-onpath="true"] [data-part="name"]{

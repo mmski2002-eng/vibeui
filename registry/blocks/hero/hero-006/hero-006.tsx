@@ -18,6 +18,8 @@ export type Hero006Props = {
   accent?: string
   /** Пусто — подложки нет, секция ложится на фон страницы. */
   background?: string
+  /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
+  tone?: "auto" | "light" | "dark"
   className?: string
   style?: CSSProperties
 }
@@ -34,14 +36,16 @@ const STYLES = `
 --vibeui-hero-006-muted:light-dark(oklch(0.48 0.02 155),oklch(0.73 0.018 155));
 --vibeui-hero-006-field:light-dark(oklch(1 0 0),oklch(0.24 0.018 155));
 --vibeui-hero-006-line:light-dark(oklch(0.87 0.02 155),oklch(0.38 0.02 155));
---vibeui-hero-006-accent:light-dark(oklch(0.52 0.13 39.8),oklch(0.72 0.15 39.8));
---vibeui-hero-006-accent-fg:oklch(0.15 0.02 39.8);
+--vibeui-hero-006-accent:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
+--vibeui-hero-006-accent-fg:oklch(from var(--vibeui-hero-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-006-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="hero-006"]{color-scheme:dark}
+:where([data-vibeui-block="hero-006"][data-tone="light"]){color-scheme:light}
+:where([data-vibeui-block="hero-006"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="hero-006"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -59,7 +63,7 @@ display:inline-flex;align-items:center;gap:0.4375rem;margin:0 0 1.125rem;padding
 border-radius:9999px;border:1px solid var(--vibeui-hero-006-line);background:var(--vibeui-hero-006-field);
 font-size:0.75rem;font-weight:600;color:var(--vibeui-hero-006-muted);
 }
-[data-vibeui-block="hero-006"] [data-part="pip"]{width:0.4375rem;height:0.4375rem;border-radius:9999px;background:var(--vibeui-hero-006-accent)}
+[data-vibeui-block="hero-006"] [data-part="pip"]{width:0.4375rem;height:0.4375rem;border-radius:9999px;background:var(--vibeui-hero-006-accent);color:oklch(from var(--vibeui-hero-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="hero-006"] h1{
 margin:0;font-size:clamp(1.875rem,5.8cqi,3.25rem);line-height:1.08;letter-spacing:-0.03em;font-weight:700;text-wrap:balance;
 }
@@ -84,7 +88,7 @@ font:inherit;font-size:0.9375rem;color:inherit;
 [data-vibeui-block="hero-006"] input:focus{outline:none}
 [data-vibeui-block="hero-006"] button{
 appearance:none;cursor:pointer;height:2.625rem;padding:0 1.25rem;border:0;border-radius:0.625rem;
-background:var(--vibeui-hero-006-accent);color:var(--vibeui-hero-006-accent-fg);
+background:var(--vibeui-hero-006-accent);color:oklch(from var(--vibeui-hero-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.9375rem;font-weight:650;transition:background-color .16s ease;
 }
 [data-vibeui-block="hero-006"] button:hover{background:color-mix(in oklab,var(--vibeui-hero-006-accent) 86%,black)}
@@ -160,6 +164,7 @@ export function Hero006({
   emailLabel = "Электронная почта",
   accent,
   background = "",
+  tone = "auto",
   className,
   style,
 }: Hero006Props) {
@@ -181,6 +186,7 @@ export function Hero006({
       </style>
       <section
         data-vibeui-block="hero-006"
+        data-tone={tone === "auto" ? undefined : tone}
         className={className}
         style={palette}
       >

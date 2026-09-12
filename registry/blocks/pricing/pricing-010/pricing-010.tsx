@@ -56,8 +56,8 @@ const STYLES = `
 --vibeui-pricing-010-muted:light-dark(oklch(0.5 0.016 145),oklch(0.71 0.014 145));
 --vibeui-pricing-010-card:light-dark(oklch(1 0 0),oklch(0.22 0.016 145));
 --vibeui-pricing-010-line:light-dark(oklch(0.88 0.01 145),oklch(0.34 0.016 145));
---vibeui-pricing-010-accent:light-dark(oklch(0.55 0.13 39.8),oklch(0.75 0.13 39.8));
---vibeui-pricing-010-accent-fg:oklch(0.15 0.02 39.8);
+--vibeui-pricing-010-accent:light-dark(oklch(0.287 0 0),oklch(0.905 0 0));
+--vibeui-pricing-010-accent-fg:oklch(from var(--vibeui-pricing-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-pricing-010-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -86,7 +86,7 @@ margin:0;max-width:20ch;font-size:clamp(1.5rem,4.2cqi,2.25rem);line-height:1.14;
 [data-vibeui-block="pricing-010"] [data-part="lede"]{margin:0.875rem 0 0;max-width:32rem;font-size:0.9375rem;line-height:1.6;color:var(--vibeui-pricing-010-muted);text-wrap:pretty}
 [data-vibeui-block="pricing-010"] [data-part="days"]{
 display:inline-flex;align-items:baseline;gap:0.5rem;margin:1.5rem 0 0;padding:0.75rem 1.125rem;border-radius:0.875rem;
-background:var(--vibeui-pricing-010-accent);color:var(--vibeui-pricing-010-accent-fg);
+background:var(--vibeui-pricing-010-accent);color:oklch(from var(--vibeui-pricing-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="pricing-010"] [data-part="daysnum"]{font-size:2rem;font-weight:700;letter-spacing:-0.04em;line-height:1;font-variant-numeric:tabular-nums}
 [data-vibeui-block="pricing-010"] [data-part="dayslabel"]{font-size:0.875rem;font-weight:600}
@@ -94,7 +94,7 @@ background:var(--vibeui-pricing-010-accent);color:var(--vibeui-pricing-010-accen
 [data-vibeui-block="pricing-010"] [data-part="after"] b{color:var(--vibeui-pricing-010-fg);font-variant-numeric:tabular-nums}
 [data-vibeui-block="pricing-010"] a{
 display:inline-flex;align-items:center;justify-content:center;margin-top:1.5rem;height:2.875rem;padding:0 1.5rem;
-border-radius:0.75rem;background:var(--vibeui-pricing-010-accent);color:var(--vibeui-pricing-010-accent-fg);
+border-radius:0.75rem;background:var(--vibeui-pricing-010-accent);color:oklch(from var(--vibeui-pricing-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color .16s ease;
 }
 [data-vibeui-block="pricing-010"] a:hover{background:color-mix(in oklab,var(--vibeui-pricing-010-accent) 86%,black)}

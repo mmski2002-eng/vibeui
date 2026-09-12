@@ -20,7 +20,7 @@
       "meta": {
         "tags": ["comparison", "table", "features", "versus", "marketing"],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Comparison001",
@@ -138,7 +138,7 @@
       "meta": {
         "tags": ["comparison", "approaches", "columns", "versus", "marketing"],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Comparison002",
@@ -262,7 +262,7 @@
           "service"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Comparison003",
@@ -413,7 +413,7 @@
           "plans"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Comparison004",
@@ -535,7 +535,7 @@
       "meta": {
         "tags": ["comparison", "objections", "faq", "marketing", "pairs"],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Comparison005",

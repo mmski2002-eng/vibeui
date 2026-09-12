@@ -113,8 +113,7 @@ font-size:0.6875rem;line-height:1.4;color:var(--vibeui-notifications-002-muted);
 }
 [data-vibeui-block="notifications-002"] [data-part="dot"]{
 flex:none;align-self:center;width:0.375rem;height:0.375rem;border-radius:9999px;
-background:var(--vibeui-notifications-002-accent);
-}
+background:var(--vibeui-notifications-002-accent);color:oklch(from var(--vibeui-notifications-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @keyframes vibeui-notifications-002-cycle{
 0%{opacity:0;transform:translateY(10px)}
 10%,78%{opacity:1;transform:translateY(0)}

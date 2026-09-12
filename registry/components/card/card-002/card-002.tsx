@@ -34,7 +34,7 @@ const STYLES = `
 --vibeui-card-002-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-card-002-muted:color-mix(in oklab,var(--vibeui-card-002-fg) 68%,transparent);
 --vibeui-card-002-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
---vibeui-card-002-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-card-002-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 /* Зелёный светлой ветки притемнён до 0.525: на 0.55 «+12.4%» давало 4.1:1. */
 --vibeui-card-002-good:light-dark(oklch(0.525 0.15 152),oklch(0.76 0.14 152));
 --vibeui-card-002-bad:light-dark(oklch(0.55 0.18 25),oklch(0.72 0.16 25));
@@ -81,7 +81,7 @@ display:flex;align-items:flex-end;gap:0.1875rem;height:2.25rem;margin-top:0.125r
 flex:1;border-radius:0.125rem 0.125rem 0 0;
 background:color-mix(in oklab,var(--vibeui-card-002-accent) 22%,var(--vibeui-card-002-bar-base));
 }
-[data-vibeui-block="card-002"] [data-part="bar"]:last-child{background:var(--vibeui-card-002-accent)}
+[data-vibeui-block="card-002"] [data-part="bar"]:last-child{background:var(--vibeui-card-002-accent);color:oklch(from var(--vibeui-card-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="card-002"] [data-part="period"]{font-size:0.75rem;color:var(--vibeui-card-002-muted)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="card-002"] *{animation:none!important;transition:none!important}}
 `

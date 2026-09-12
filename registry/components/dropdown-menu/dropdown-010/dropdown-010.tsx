@@ -38,7 +38,7 @@ const STYLES = `
 --vibeui-dropdown-010-muted:color-mix(in oklab,var(--vibeui-dropdown-010-fg) 68%,transparent);
 --vibeui-dropdown-010-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-dropdown-010-hover:light-dark(oklch(0.96 0 265),oklch(0.32 0 265));
---vibeui-dropdown-010-accent:light-dark(oklch(0.55 0.16 39.8),oklch(0.74 0.13 39.8));
+--vibeui-dropdown-010-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-dropdown-010-on-accent:light-dark(oklch(0.99 0 0),oklch(0.19 0.03 190));
 --vibeui-dropdown-010-width:18rem;
 --vibeui-dropdown-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -57,7 +57,7 @@ appearance:none;cursor:pointer;
 display:inline-flex;align-items:center;gap:0.4375rem;
 height:2.125rem;padding:0 0.875rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-dropdown-010-accent);color:var(--vibeui-dropdown-010-on-accent);
+background:var(--vibeui-dropdown-010-accent);color:oklch(from var(--vibeui-dropdown-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.8125rem;font-weight:650;
 anchor-name:--vibeui-dropdown-010-anchor;
 transition:filter .16s ease;

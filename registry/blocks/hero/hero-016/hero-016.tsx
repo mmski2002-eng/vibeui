@@ -17,6 +17,8 @@ export type Hero016Props = {
   /** Пусто — подложки нет, секция ложится на фон страницы. */
   background?: string
   accent?: string
+  /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
+  tone?: "auto" | "light" | "dark"
   className?: string
   style?: CSSProperties
 }
@@ -38,13 +40,15 @@ const STYLES = `
 --vibeui-hero-016-muted:light-dark(oklch(0.51 0 260),oklch(0.71 0 260));
 --vibeui-hero-016-card:light-dark(oklch(1 0 0),oklch(0.25 0 260));
 --vibeui-hero-016-line:light-dark(oklch(0.89 0 260),oklch(0.36 0 260));
---vibeui-hero-016-accent:light-dark(oklch(0.52 0.15 39.8),oklch(0.75 0.14 39.8));
+--vibeui-hero-016-accent:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
 --vibeui-hero-016-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="hero-016"]{color-scheme:dark}
+:where([data-vibeui-block="hero-016"][data-tone="light"]){color-scheme:light}
+:where([data-vibeui-block="hero-016"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="hero-016"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -161,6 +165,7 @@ export function Hero016({
   footnote = "Передумать можно в любой момент: секции остаются вашими в обоих случаях.",
   background = "",
   accent,
+  tone = "auto",
   className,
   style,
 }: Hero016Props) {
@@ -182,6 +187,7 @@ export function Hero016({
       </style>
       <section
         data-vibeui-block="hero-016"
+        data-tone={tone === "auto" ? undefined : tone}
         className={className}
         style={palette}
       >

@@ -30,7 +30,7 @@ const STYLES = `
 --vibeui-about-003-ink:light-dark(oklch(0.17 0 0),oklch(0.97 0 0));
 --vibeui-about-003-muted:light-dark(oklch(0.45 0 0),oklch(0.72 0 0));
 --vibeui-about-003-border:light-dark(oklch(0.9 0 0),oklch(0.32 0 0));
---vibeui-about-003-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
+--vibeui-about-003-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-about-003-tint:color-mix(in oklab,var(--vibeui-about-003-accent) 12%,var(--vibeui-about-003-card));
 --vibeui-about-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -85,26 +85,22 @@ transform:translate(3px,3px);opacity:0.45;
 }
 [data-vibeui-block="about-003"] [data-icon="spark"]::before{
 width:0.9375rem;height:0.9375rem;background:var(--vibeui-about-003-accent);
-border-radius:0.125rem;transform:rotate(45deg);
-}
+border-radius:0.125rem;transform:rotate(45deg);color:oklch(from var(--vibeui-about-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="about-003"] [data-icon="spark"]::after{
 width:1.625rem;height:1.625rem;border:2px solid var(--vibeui-about-003-accent);
 border-radius:0.375rem;transform:rotate(45deg);opacity:0.35;
 }
 [data-vibeui-block="about-003"] [data-icon="bolt"]::before{
 width:0.875rem;height:0.4375rem;background:var(--vibeui-about-003-accent);
-border-radius:0.125rem;transform:translate(-3px,-4px) skewX(-24deg);
-}
+border-radius:0.125rem;transform:translate(-3px,-4px) skewX(-24deg);color:oklch(from var(--vibeui-about-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="about-003"] [data-icon="bolt"]::after{
 width:0.875rem;height:0.4375rem;background:var(--vibeui-about-003-accent);
-border-radius:0.125rem;transform:translate(3px,4px) skewX(-24deg);
-}
+border-radius:0.125rem;transform:translate(3px,4px) skewX(-24deg);color:oklch(from var(--vibeui-about-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="about-003"] [data-icon="ring"]::before{
 width:1.375rem;height:1.375rem;border:2.5px solid var(--vibeui-about-003-accent);border-radius:999px;
 }
 [data-vibeui-block="about-003"] [data-icon="ring"]::after{
-width:0.375rem;height:0.375rem;background:var(--vibeui-about-003-accent);border-radius:999px;
-}
+width:0.375rem;height:0.375rem;background:var(--vibeui-about-003-accent);border-radius:999px;color:oklch(from var(--vibeui-about-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="about-003"] [data-part="value-title"]{
 margin:0 0 0.5rem;font-size:1.0625rem;line-height:1.3;font-weight:650;letter-spacing:-0.01em;
 }

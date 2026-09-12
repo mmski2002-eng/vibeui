@@ -34,7 +34,7 @@ const STYLES = `
 --vibeui-toast-008-card:light-dark(oklch(1 0 0),oklch(0.28 0 265));
 --vibeui-toast-008-grid:light-dark(oklch(0.88 0 265 / 45%),oklch(0.5 0 265 / 35%));
 --vibeui-toast-008-shadow:light-dark(oklch(0.2 0 265 / 55%),oklch(0.08 0 265 / 75%));
---vibeui-toast-008-tone:light-dark(oklch(0.58 0.16 39.8),oklch(0.74 0.14 39.8));
+--vibeui-toast-008-tone:light-dark(oklch(0.295 0 0),oklch(0.903 0 0));
 --vibeui-toast-008-offset:1rem;
 --vibeui-toast-008-radius:0.875rem;
 --vibeui-toast-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

@@ -22,13 +22,13 @@ export type Text002Props = Omit<ComponentProps<"p">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="text-002"]){
 --vibeui-text-002-fg:light-dark(oklch(0.18 0 0),oklch(0.96 0 0));
---vibeui-text-002-accent:#ff5900;
+--vibeui-text-002-accent:light-dark(#1a1a1a,#f2f2f2);
 /* Подсветка непрозрачная: у соседних слов кромки заходят друг на
    друга, и на полупрозрачной краске стык проявился бы полосой. */
 --vibeui-text-002-mark:light-dark(color-mix(in oklab,var(--vibeui-text-002-accent) 22%,#fff),color-mix(in oklab,var(--vibeui-text-002-accent) 26%,#000));
 /* Слово под маркером берёт акцент. В тёмной теме он высветлен: чистый
    оранжевый на тёмной подложке того же тона не читается. */
---vibeui-text-002-accent-text:light-dark(var(--vibeui-text-002-accent),oklch(0.82 0.15 48));
+--vibeui-text-002-accent-text:light-dark(var(--vibeui-text-002-accent),oklch(0.82 0 0));
 --vibeui-text-002-rise:30%;
 --vibeui-text-002-blur:10px;
 --vibeui-text-002-stagger:45ms;

@@ -66,7 +66,7 @@ color:var(--vibeui-radio-010-muted);
 transition:background-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="radio-010"] [data-part="seg"]:has(input:checked){
-background:var(--vibeui-radio-010-accent);color:var(--vibeui-radio-010-on-accent);
+background:var(--vibeui-radio-010-accent);color:oklch(from var(--vibeui-radio-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="radio-010"] [data-part="seg"]:has(input:focus-visible){
 outline:2px solid var(--vibeui-radio-010-accent);outline-offset:2px;

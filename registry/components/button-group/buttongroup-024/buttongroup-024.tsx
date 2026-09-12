@@ -91,7 +91,7 @@ font-weight:600;text-decoration:underline;text-underline-offset:0.1875rem;
 z-index:1;
 background:var(--vibeui-buttongroup-024-accent);
 border-color:var(--vibeui-buttongroup-024-accent);
-color:var(--vibeui-buttongroup-024-on-accent);
+color:oklch(from var(--vibeui-buttongroup-024-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="buttongroup-024"] [data-part="toggle"]:has(input:focus-visible){
 z-index:2;

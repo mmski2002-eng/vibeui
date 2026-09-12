@@ -245,7 +245,7 @@ const STYLES = `
 /* Тёмная ветка — чистый чёрный: лента светится, и любая подмешанная
    тёплая серость под ней читается как грязь на стекле. */
 --vibeui-background-001-bg:light-dark(oklch(0.99 0.002 60),oklch(0 0 0));
---vibeui-background-001-fallback:light-dark(oklch(0.72 0.2 39.8 / 45%),oklch(0.72 0.2 39.8 / 35%));
+--vibeui-background-001-fallback:light-dark(oklch(0.33 0 0 / 45%),oklch(0.899 0 0 / 35%));
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */

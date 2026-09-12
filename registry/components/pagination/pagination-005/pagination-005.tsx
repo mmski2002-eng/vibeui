@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-pagination-005-border:light-dark(oklch(0.91 0 265),oklch(0.38 0 265));
 --vibeui-pagination-005-track:light-dark(oklch(0.94 0 265),oklch(0.31 0 265));
 --vibeui-pagination-005-hover:light-dark(oklch(0.55 0 265 / 8%),oklch(0.82 0 265 / 14%));
---vibeui-pagination-005-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.16 39.8));
+--vibeui-pagination-005-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-pagination-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -54,8 +54,7 @@ background:var(--vibeui-pagination-005-track);
 display:block;height:100%;border-radius:999px;
 width:var(--vibeui-pagination-005-progress);
 background:var(--vibeui-pagination-005-accent);
-transition:width .28s cubic-bezier(.32,.72,0,1);
-}
+transition:width .28s cubic-bezier(.32,.72,0,1);color:oklch(from var(--vibeui-pagination-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="pagination-005"] [data-part="count"]{
 margin:0;font-size:0.8125rem;color:var(--vibeui-pagination-005-muted);
 font-variant-numeric:tabular-nums;

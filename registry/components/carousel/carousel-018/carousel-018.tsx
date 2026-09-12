@@ -36,7 +36,7 @@ const STYLES = `
 --vibeui-carousel-018-fg:light-dark(oklch(0.24 0 265),oklch(0.95 0 265));
 --vibeui-carousel-018-muted:color-mix(in oklab,var(--vibeui-carousel-018-fg) 68%,transparent);
 --vibeui-carousel-018-border:light-dark(oklch(0.89 0 265),oklch(0.37 0 265));
---vibeui-carousel-018-accent:light-dark(oklch(0.53 0.17 39.8),oklch(0.78 0.13 39.8));
+--vibeui-carousel-018-accent:light-dark(oklch(0.282 0 0),oklch(0.91 0 0));
 --vibeui-carousel-018-dot:light-dark(oklch(0.55 0 265 / 32%),oklch(0.92 0 265 / 34%));
 --vibeui-carousel-018-radius:0.875rem;
 --vibeui-carousel-018-hue:22;
@@ -117,8 +117,7 @@ background:var(--vibeui-carousel-018-dot);
 transition:width var(--vibeui-carousel-018-fade) ease,background-color var(--vibeui-carousel-018-fade) ease;
 }
 [data-vibeui-block="carousel-018"] [data-part="dot"][aria-current="true"]::before{
-width:1.125rem;background:var(--vibeui-carousel-018-accent);
-}
+width:1.125rem;background:var(--vibeui-carousel-018-accent);color:oklch(from var(--vibeui-carousel-018-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="carousel-018"] [data-part="dot"]:focus-visible{outline:2px solid var(--vibeui-carousel-018-accent);outline-offset:1px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="carousel-018"] *{animation:none!important;transition:none!important}}
 `

@@ -38,8 +38,8 @@ const STYLES = `
 --vibeui-buttongroup-027-muted:color-mix(in oklab,var(--vibeui-buttongroup-027-fg) 68%,transparent);
 --vibeui-buttongroup-027-border:light-dark(oklch(0.89 0 265),oklch(0.4 0 265));
 --vibeui-buttongroup-027-rule:light-dark(oklch(0.94 0 265),oklch(0.35 0 265));
---vibeui-buttongroup-027-on:light-dark(oklch(0.96 0 215),oklch(0.36 0.05 39.8));
---vibeui-buttongroup-027-accent:light-dark(oklch(0.48 0.13 39.8),oklch(0.8 0.11 39.8));
+--vibeui-buttongroup-027-on:light-dark(oklch(0.96 0 215),oklch(0.36 0 0));
+--vibeui-buttongroup-027-accent:light-dark(oklch(0.27 0 0),oklch(0.914 0 0));
 --vibeui-buttongroup-027-radius:0.625rem;
 --vibeui-buttongroup-027-row:1.75rem;
 --vibeui-buttongroup-027-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

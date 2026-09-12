@@ -29,7 +29,7 @@ const STYLES = `
 --vibeui-blog-013-ink:light-dark(oklch(0.17 0 0),oklch(0.95 0 0));
 --vibeui-blog-013-muted:light-dark(oklch(0.46 0 0),oklch(0.71 0 0));
 --vibeui-blog-013-border:light-dark(oklch(0.9 0 0),oklch(0.33 0 0));
---vibeui-blog-013-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
+--vibeui-blog-013-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-blog-013-tint:color-mix(in oklab,var(--vibeui-blog-013-accent) 12%,light-dark(oklch(1 0 0),oklch(0.22 0 0)));
 --vibeui-blog-013-track:color-mix(in oklab,var(--vibeui-blog-013-accent) 14%,transparent);
 --vibeui-blog-013-progress:24%;
@@ -50,8 +50,7 @@ height:0.25rem;background:var(--vibeui-blog-013-track);
 [data-vibeui-block="blog-013"] [data-part="bar"]::before{
 content:"";display:block;height:100%;
 width:var(--vibeui-blog-013-progress);
-background:var(--vibeui-blog-013-accent);
-}
+background:var(--vibeui-blog-013-accent);color:oklch(from var(--vibeui-blog-013-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="blog-013"] [data-part="shell"]{
 max-width:52rem;margin:0 auto;padding:3rem 1.25rem;
 }

@@ -89,7 +89,7 @@ const STYLES = `
 --vibeui-map-002-muted:light-dark(oklch(0.52 0.01 265),oklch(0.73 0 265));
 --vibeui-map-002-border:light-dark(oklch(0.9 0.005 265),oklch(0.33 0.01 265));
 --vibeui-map-002-accent:light-dark(oklch(0.55 0.17 255),oklch(0.72 0.14 255));
---vibeui-map-002-on-accent:oklch(0.99 0 0);
+--vibeui-map-002-on-accent:oklch(from var(--vibeui-map-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-map-002-canvas:light-dark(oklch(0.945 0.004 250),oklch(0.185 0.01 265));
 --vibeui-map-002-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -156,7 +156,7 @@ margin-top:auto;display:flex;flex-wrap:wrap;gap:0.5rem;
 [data-vibeui-block="map-002"] a{
 display:inline-flex;align-items:center;height:2.375rem;padding:0 0.9375rem;
 border-radius:0.6875rem;text-decoration:none;font-size:0.8125rem;font-weight:640;
-background:var(--vibeui-map-002-accent);color:var(--vibeui-map-002-on-accent);
+background:var(--vibeui-map-002-accent);color:oklch(from var(--vibeui-map-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="map-002"] a[data-variant="ghost"]{
 background:transparent;color:var(--vibeui-map-002-fg);

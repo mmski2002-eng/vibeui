@@ -30,7 +30,7 @@ const STYLES = `:where([data-vibeui-block="avatar-028"]){
 --vibeui-avatar-028-muted:color-mix(in oklab,var(--vibeui-avatar-028-fg) 68%,transparent);
 --vibeui-avatar-028-border:light-dark(oklch(0.91 0 265),oklch(0.31 0 265));
 --vibeui-avatar-028-hover:oklch(0.55 0 265 / 9%);
---vibeui-avatar-028-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.69 0.2 39.8));
+--vibeui-avatar-028-accent:light-dark(oklch(0.287 0 0),oklch(0.894 0 0));
 --vibeui-avatar-028-danger:light-dark(oklch(0.56 0.19 25),oklch(0.70 0.19 25));
 --vibeui-avatar-028-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

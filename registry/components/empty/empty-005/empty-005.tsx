@@ -70,7 +70,7 @@ background:var(--vibeui-empty-005-bg);
 font-size:0.75rem;font-weight:700;color:var(--vibeui-empty-005-muted);
 }
 [data-vibeui-block="empty-005"] [data-part="step"][data-current="true"] [data-part="number"]{
-border-color:transparent;background:var(--vibeui-empty-005-accent);color:var(--vibeui-empty-005-accent-fg);
+border-color:transparent;background:var(--vibeui-empty-005-accent);color:oklch(from var(--vibeui-empty-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="empty-005"] [data-part="body"]{display:flex;flex-direction:column;gap:0.125rem;padding-top:0.125rem}
 [data-vibeui-block="empty-005"] [data-part="name"]{font-size:0.875rem;font-weight:650;line-height:1.3}
@@ -80,7 +80,7 @@ border-color:transparent;background:var(--vibeui-empty-005-accent);color:var(--v
 appearance:none;border:0;cursor:pointer;width:100%;
 display:inline-flex;align-items:center;justify-content:center;
 min-height:2.625rem;padding:0.375rem 1rem;border-radius:0.75rem;
-background:var(--vibeui-empty-005-accent);color:var(--vibeui-empty-005-accent-fg);
+background:var(--vibeui-empty-005-accent);color:oklch(from var(--vibeui-empty-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="empty-005"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-empty-005-accent);outline-offset:2px}

@@ -41,7 +41,7 @@ const STYLES = `
 --vibeui-inputgroup-011-field:light-dark(oklch(0.99 0 265),oklch(0.27 0 265));
 --vibeui-inputgroup-011-fixed:light-dark(oklch(0.96 0 265),oklch(0.32 0 265));
 --vibeui-inputgroup-011-border:light-dark(oklch(0.86 0 265),oklch(0.44 0 265));
---vibeui-inputgroup-011-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.76 0.14 39.8));
+--vibeui-inputgroup-011-accent:light-dark(oklch(0.275 0 0),oklch(0.906 0 0));
 --vibeui-inputgroup-011-radius:0.75rem;
 --vibeui-inputgroup-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

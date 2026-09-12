@@ -41,8 +41,8 @@ const STYLES = `
 --vibeui-table-005-muted:color-mix(in oklab,var(--vibeui-table-005-fg) 68%,transparent);
 --vibeui-table-005-border:light-dark(oklch(0.92 0 265),oklch(0.36 0 265));
 --vibeui-table-005-head:light-dark(oklch(0.5 0 265 / 5%),oklch(0.85 0 265 / 7%));
---vibeui-table-005-picked:light-dark(oklch(0.55 0.2 39.8 / 7%),oklch(0.75 0.16 39.8 / 14%));
---vibeui-table-005-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.75 0.16 39.8));
+--vibeui-table-005-picked:light-dark(oklch(0.287 0 0 / 7%),oklch(0.905 0 0 / 14%));
+--vibeui-table-005-accent:light-dark(oklch(0.287 0 0),oklch(0.905 0 0));
 --vibeui-table-005-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0 265));
 --vibeui-table-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -83,8 +83,7 @@ border:1.5px solid var(--vibeui-table-005-muted);background:var(--vibeui-table-0
 }
 [data-vibeui-block="table-005"] input:checked,
 [data-vibeui-block="table-005"] input:indeterminate{
-background:var(--vibeui-table-005-accent);border-color:var(--vibeui-table-005-accent);
-}
+background:var(--vibeui-table-005-accent);border-color:var(--vibeui-table-005-accent);color:oklch(from var(--vibeui-table-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 /* Галочка и черта различают выбранное и частично выбранное не одним цветом. */
 [data-vibeui-block="table-005"] input:checked::after{
 content:"";position:absolute;left:0.28rem;top:0.08rem;
@@ -93,8 +92,7 @@ border:solid var(--vibeui-table-005-on-accent);border-width:0 2px 2px 0;transfor
 }
 [data-vibeui-block="table-005"] input:indeterminate::after{
 content:"";position:absolute;left:0.19rem;top:0.4rem;
-width:0.5rem;height:2px;background:var(--vibeui-table-005-on-accent);
-}
+width:0.5rem;height:2px;background:var(--vibeui-table-005-on-accent);color:oklch(from var(--vibeui-table-005-on-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="table-005"] input:focus-visible{outline:2px solid var(--vibeui-table-005-accent);outline-offset:2px}
 /* Выбранная строка отмечена заливкой: один флажок в ряду легко потерять. */
 [data-vibeui-block="table-005"] tbody tr:has(input:checked){background:var(--vibeui-table-005-picked)}

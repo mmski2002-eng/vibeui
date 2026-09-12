@@ -30,8 +30,11 @@ const STYLES = `
 --vibeui-video-001-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
 --vibeui-video-001-muted:light-dark(oklch(0.5 0 0),oklch(0.72 0 0));
 --vibeui-video-001-border:light-dark(oklch(0.9 0 0),oklch(0.3 0 0));
---vibeui-video-001-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-video-001-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-video-001-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
+--vibeui-video-001-on-accent:oklch(from var(--vibeui-video-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
+/* Фирменный красный YouTube: кнопка «Смотреть на YouTube» узнаётся по нему. */
+--vibeui-video-001-youtube:#ff0000;
+--vibeui-video-001-youtube-hover:#cc0000;
 --vibeui-video-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -48,16 +51,19 @@ font-family:var(--vibeui-video-001-font);
 [data-vibeui-block="video-001"] [data-part="title"]{margin:0 0 0.75rem;font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700}
 [data-vibeui-block="video-001"] [data-part="summary"]{margin:0 0 1.5rem;color:var(--vibeui-video-001-muted);font-size:1.0625rem;line-height:1.6}
 [data-vibeui-block="video-001"] [data-part="cta"]{
-display:inline-flex;align-items:center;gap:0.5rem;height:2.75rem;padding:0 1.25rem;border-radius:999px;
-background:var(--vibeui-video-001-accent);color:var(--vibeui-video-001-on-accent);
-font-size:0.9375rem;font-weight:650;text-decoration:none;transition:opacity .16s ease;
+display:inline-flex;align-items:center;gap:0.625rem;height:2.75rem;padding:0 1.375rem;border-radius:999px;
+background:var(--vibeui-video-001-youtube);color:oklch(1 0 0);
+font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color .16s ease;
 }
-[data-vibeui-block="video-001"] [data-part="cta"]:hover{opacity:.9}
-[data-vibeui-block="video-001"] [data-part="cta"]:focus-visible{outline:2px solid var(--vibeui-video-001-accent);outline-offset:3px}
+[data-vibeui-block="video-001"] [data-part="cta"]:hover{background:var(--vibeui-video-001-youtube-hover)}
+[data-vibeui-block="video-001"] [data-part="cta"]:focus-visible{outline:2px solid var(--vibeui-video-001-youtube);outline-offset:3px}
+/* Значок YouTube на кнопке: белый скруглённый прямоугольник с треугольником
+   в цвет кнопки — узнаваемая марка прямо в подписи. */
+[data-vibeui-block="video-001"] [data-part="cta"] svg{width:1.375rem;height:auto;flex:none}
 [data-vibeui-block="video-001"] [data-part="player"]{
 position:relative;display:flex;align-items:flex-end;aspect-ratio:16 / 9;border-radius:1.125rem;overflow:hidden;
 padding:1rem;text-decoration:none;color:oklch(0.98 0 0);
-background:linear-gradient(140deg,oklch(0.5 0.16 39.8),oklch(0.3 0.1 25));
+background:linear-gradient(140deg,light-dark(oklch(0.2 0 0),oklch(0.92 0 0)),oklch(0.3 0.1 25));
 transition:transform .18s ease;
 }
 [data-vibeui-block="video-001"] [data-part="player"]:hover{transform:translateY(-2px)}
@@ -68,7 +74,7 @@ position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="video-001"] [data-part="scrim"]{
 position:absolute;inset:0;z-index:1;
-background:linear-gradient(to top,oklch(0.14 0.03 39.8 / 78%) 0,oklch(0.14 0.03 39.8 / 22%) 45%,oklch(0.14 0.03 39.8 / 34%) 100%);
+background:linear-gradient(to top,oklch(0.14 0 0 / 78%) 0,oklch(0.14 0 0 / 22%) 45%,oklch(0.14 0 0 / 34%) 100%);
 }
 [data-vibeui-block="video-001"] [data-part="player"]:focus-visible{outline:2px solid var(--vibeui-video-001-accent);outline-offset:3px}
 /* Кнопка play: круг с треугольником из бордюров по центру кадра. */
@@ -80,10 +86,10 @@ background:oklch(1 0 0 / 92%);
 [data-vibeui-block="video-001"] [data-part="play"]::before{
 content:"";margin-left:0.25rem;
 border-style:solid;border-width:0.6875rem 0 0.6875rem 1.125rem;
-border-color:transparent transparent transparent oklch(0.2 0.05 39.8);
+border-color:transparent transparent transparent oklch(0.2 0 0);
 }
 [data-vibeui-block="video-001"] [data-part="poster-title"]{position:relative;z-index:2;font-size:1rem;font-weight:640}
-[data-vibeui-block="video-001"] [data-part="duration"]{position:absolute;z-index:2;right:1rem;top:1rem;padding:0.1875rem 0.5rem;border-radius:0.375rem;background:oklch(0.15 0.02 39.8 / 55%);font-size:0.75rem;font-weight:600}
+[data-vibeui-block="video-001"] [data-part="duration"]{position:absolute;z-index:2;right:1rem;top:1rem;padding:0.1875rem 0.5rem;border-radius:0.375rem;background:oklch(0.15 0 0 / 55%);font-size:0.75rem;font-weight:600}
 @container (min-width: 48rem){
 [data-vibeui-block="video-001"] [data-part="shell"]{padding:4rem 2rem;grid-template-columns:1fr 1.15fr;gap:3rem}
 }
@@ -155,6 +161,13 @@ export function Video001({
             <h2 data-part="title">{title}</h2>
             <p data-part="summary">{summary}</p>
             <a href={ctaHref} data-part="cta">
+              <svg viewBox="0 0 28 20" aria-hidden="true">
+                <path
+                  d="M27.4 3.12A3.52 3.52 0 0 0 24.94.64C22.77.06 14 .06 14 .06S5.23.06 3.06.64A3.52 3.52 0 0 0 .6 3.12 36.67 36.67 0 0 0 0 10a36.67 36.67 0 0 0 .6 6.88 3.52 3.52 0 0 0 2.46 2.48C5.23 19.94 14 19.94 14 19.94s8.77 0 10.94-.58a3.52 3.52 0 0 0 2.46-2.48A36.67 36.67 0 0 0 28 10a36.67 36.67 0 0 0-.6-6.88Z"
+                  fill="#fff"
+                />
+                <path d="M11.2 14.29 18.5 10l-7.3-4.29Z" fill="#ff0000" />
+              </svg>
               {ctaLabel}
             </a>
           </div>

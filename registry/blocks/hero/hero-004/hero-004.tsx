@@ -10,6 +10,8 @@ export type Hero004Props = {
   accent?: string
   /** Пусто — подложки нет, секция ложится на фон страницы. */
   background?: string
+  /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
+  tone?: "auto" | "light" | "dark"
   className?: string
   style?: CSSProperties
 }
@@ -24,14 +26,16 @@ const STYLES = `
 --vibeui-hero-004-fg:light-dark(oklch(0.21 0.012 95),oklch(0.95 0.006 95));
 --vibeui-hero-004-muted:light-dark(oklch(0.52 0.012 95),oklch(0.73 0.01 95));
 --vibeui-hero-004-line:light-dark(oklch(0.89 0.008 95),oklch(0.37 0.01 95));
---vibeui-hero-004-accent:light-dark(oklch(0.55 0.14 39.8),oklch(0.7 0.15 39.8));
---vibeui-hero-004-accent-fg:oklch(0.15 0.02 39.8);
+--vibeui-hero-004-accent:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
+--vibeui-hero-004-accent-fg:oklch(from var(--vibeui-hero-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-004-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="hero-004"]{color-scheme:dark}
+:where([data-vibeui-block="hero-004"][data-tone="light"]){color-scheme:light}
+:where([data-vibeui-block="hero-004"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="hero-004"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -64,8 +68,8 @@ height:2.875rem;padding:0 1.5rem;border-radius:0.625rem;
 font-size:0.9375rem;font-weight:600;text-decoration:none;
 transition:background-color .16s ease,border-color .16s ease,color .16s ease;
 }
-[data-vibeui-block="hero-004"] [data-part="primary"]{background:var(--vibeui-hero-004-accent);color:var(--vibeui-hero-004-accent-fg);border:1px solid transparent}
-[data-vibeui-block="hero-004"] [data-part="primary"]:hover{background:color-mix(in oklab,var(--vibeui-hero-004-accent) 86%,black)}
+[data-vibeui-block="hero-004"] [data-part="primary"]{background:var(--vibeui-hero-004-accent);color:oklch(from var(--vibeui-hero-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border:1px solid transparent;box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-hero-004-accent) 40%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);transition:transform .2s cubic-bezier(.32,.72,0,1),box-shadow .25s ease,background-color .2s ease}
+[data-vibeui-block="hero-004"] [data-part="primary"]:hover{transform:translateY(-1px);box-shadow:0 0.625rem 1.75rem color-mix(in oklab,var(--vibeui-hero-004-accent) 50%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 52%,transparent)}
 [data-vibeui-block="hero-004"] [data-part="secondary"]{border:1px solid var(--vibeui-hero-004-line);color:var(--vibeui-hero-004-fg);background:transparent}
 [data-vibeui-block="hero-004"] [data-part="secondary"]:hover{border-color:var(--vibeui-hero-004-fg)}
 [data-vibeui-block="hero-004"] a:focus-visible{outline:2px solid var(--vibeui-hero-004-accent);outline-offset:3px}
@@ -115,6 +119,7 @@ export function Hero004({
   note = "Без карты. Первые десять секций — навсегда бесплатно.",
   accent,
   background = "",
+  tone = "auto",
   className,
   style,
 }: Hero004Props) {
@@ -136,6 +141,7 @@ export function Hero004({
       </style>
       <section
         data-vibeui-block="hero-004"
+        data-tone={tone === "auto" ? undefined : tone}
         className={className}
         style={palette}
       >

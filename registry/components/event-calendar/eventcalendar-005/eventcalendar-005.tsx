@@ -47,8 +47,8 @@ const STYLES = `
 --vibeui-eventcalendar-005-muted:color-mix(in oklab,var(--vibeui-eventcalendar-005-fg) 68%,transparent);
 --vibeui-eventcalendar-005-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
 --vibeui-eventcalendar-005-line:light-dark(oklch(0.95 0 265),oklch(0.31 0 265));
---vibeui-eventcalendar-005-accent:light-dark(oklch(0.55 0.16 39.8),oklch(0.74 0.15 39.8));
---vibeui-eventcalendar-005-mark:light-dark(oklch(0.55 0.16 39.8),oklch(0.74 0.15 39.8));
+--vibeui-eventcalendar-005-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
+--vibeui-eventcalendar-005-mark:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-eventcalendar-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -163,7 +163,7 @@ const DAY = 86400000
 const DEFAULT_SOURCES: Eventcalendar005Source[] = [
   { label: "Работа", color: "oklch(0.55 0.16 262)", shape: "square" },
   { label: "Личное", color: "oklch(0.6 0.13 165)", shape: "dot" },
-  { label: "Семья", color: "oklch(0.65 0.15 45)", shape: "diamond" },
+  { label: "Семья", color: "light-dark(oklch(0.2 0 0),oklch(0.92 0 0))", shape: "diamond" },
   { label: "Праздники", color: "oklch(0.58 0.17 15)", shape: "triangle" },
 ]
 

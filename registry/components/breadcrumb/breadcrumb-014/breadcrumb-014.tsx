@@ -38,12 +38,12 @@ const STYLES = `
 --vibeui-breadcrumb-014-faint:light-dark(oklch(0.78 0 265),oklch(0.5 0 265));
 --vibeui-breadcrumb-014-chip:light-dark(oklch(0.97 0 265),oklch(0.32 0 265));
 --vibeui-breadcrumb-014-chip-border:light-dark(oklch(0.92 0 265),oklch(0.42 0 265));
---vibeui-breadcrumb-014-space:light-dark(oklch(0.55 0.15 39.8),oklch(0.76 0.13 39.8));
---vibeui-breadcrumb-014-folder:light-dark(oklch(0.6 0.13 39.8),oklch(0.8 0.12 39.8));
---vibeui-breadcrumb-014-database:light-dark(oklch(0.55 0.12 39.8),oklch(0.77 0.11 39.8));
---vibeui-breadcrumb-014-table:light-dark(oklch(0.52 0.13 39.8),oklch(0.76 0.12 39.8));
+--vibeui-breadcrumb-014-space:light-dark(oklch(0.287 0 0),oklch(0.906 0 0));
+--vibeui-breadcrumb-014-folder:light-dark(oklch(0.3 0 0),oklch(0.914 0 0));
+--vibeui-breadcrumb-014-database:light-dark(oklch(0.287 0 0),oklch(0.908 0 0));
+--vibeui-breadcrumb-014-table:light-dark(oklch(0.28 0 0),oklch(0.906 0 0));
 --vibeui-breadcrumb-014-record:light-dark(oklch(0.52 0 265),oklch(0.76 0 265));
---vibeui-breadcrumb-014-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-breadcrumb-014-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-breadcrumb-014-bg:transparent;
 --vibeui-breadcrumb-014-pad:0;
 --vibeui-breadcrumb-014-radius:0;

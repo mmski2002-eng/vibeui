@@ -31,7 +31,7 @@ const STYLES = `
 --vibeui-collapsible-004-border:oklch(1 0 0 / 14%);
 --vibeui-collapsible-004-warn:oklch(0.82 0.14 85);
 --vibeui-collapsible-004-error:oklch(0.7 0.18 22);
---vibeui-collapsible-004-accent:oklch(0.8 0.14 39.8);
+--vibeui-collapsible-004-accent:oklch(0.8 0 0);
 --vibeui-collapsible-004-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-collapsible-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

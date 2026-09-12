@@ -40,7 +40,7 @@ const STYLES = `
 --vibeui-drawer-008-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
 --vibeui-drawer-008-muted:color-mix(in oklab,var(--vibeui-drawer-008-fg) 68%,transparent);
 --vibeui-drawer-008-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
---vibeui-drawer-008-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.73 0.15 39.8));
+--vibeui-drawer-008-accent:light-dark(oklch(0.287 0 0),oklch(0.901 0 0));
 --vibeui-drawer-008-on-accent:light-dark(oklch(0.99 0 265),oklch(0.17 0 265));
 --vibeui-drawer-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -77,7 +77,7 @@ translate:100% 0;transition:translate .22s ease,overlay .22s allow-discrete,disp
 flex:1;height:0.25rem;border-radius:9999px;background:var(--vibeui-drawer-008-border);
 transition:background-color .2s ease;
 }
-[data-vibeui-block="drawer-008"] [data-part="segment"][data-done="true"]{background:var(--vibeui-drawer-008-accent)}
+[data-vibeui-block="drawer-008"] [data-part="segment"][data-done="true"]{background:var(--vibeui-drawer-008-accent);color:oklch(from var(--vibeui-drawer-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="drawer-008"] [data-part="head"]{padding:0.75rem 1rem 0.5rem}
 [data-vibeui-block="drawer-008"] [data-part="counter"]{
 display:block;margin-bottom:0.25rem;
@@ -103,8 +103,7 @@ border:1.5px solid var(--vibeui-drawer-008-border);border-radius:9999px;cursor:p
 }
 [data-vibeui-block="drawer-008"] [data-part="option"] input:checked{border-color:var(--vibeui-drawer-008-accent)}
 [data-vibeui-block="drawer-008"] [data-part="option"] input:checked::after{
-content:"";position:absolute;inset:0.1875rem;border-radius:9999px;background:var(--vibeui-drawer-008-accent);
-}
+content:"";position:absolute;inset:0.1875rem;border-radius:9999px;background:var(--vibeui-drawer-008-accent);color:oklch(from var(--vibeui-drawer-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="drawer-008"] [data-part="option"] input:focus-visible{outline:2px solid var(--vibeui-drawer-008-accent);outline-offset:2px}
 [data-vibeui-block="drawer-008"] [data-part="foot"]{
 display:flex;gap:0.5rem;
@@ -117,7 +116,7 @@ border:1px solid var(--vibeui-drawer-008-border);background:transparent;color:in
 font:inherit;font-size:0.875rem;font-weight:600;padding:0 1rem;
 }
 [data-vibeui-block="drawer-008"] [data-part="foot"] button[data-primary="true"]{
-flex:1;border-color:transparent;background:var(--vibeui-drawer-008-accent);color:var(--vibeui-drawer-008-on-accent);
+flex:1;border-color:transparent;background:var(--vibeui-drawer-008-accent);color:oklch(from var(--vibeui-drawer-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="drawer-008"] [data-part="foot"] button:focus-visible{outline:2px solid var(--vibeui-drawer-008-accent);outline-offset:2px}
 /* Немодальный показ: шторка остаётся внутри блока, а не уходит в верхний

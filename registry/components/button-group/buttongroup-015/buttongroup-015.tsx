@@ -34,8 +34,8 @@ const STYLES = `
 --vibeui-buttongroup-015-muted:color-mix(in oklab,var(--vibeui-buttongroup-015-fg) 68%,transparent);
 --vibeui-buttongroup-015-border:light-dark(oklch(0.89 0 265),oklch(0.37 0 265));
 --vibeui-buttongroup-015-badge:light-dark(oklch(0.95 0 265),oklch(0.33 0 265));
---vibeui-buttongroup-015-accent:light-dark(oklch(0.5 0.15 39.8),oklch(0.74 0.13 39.8));
---vibeui-buttongroup-015-on:light-dark(oklch(0.96 0.04 39.8),oklch(0.29 0.045 39.8));
+--vibeui-buttongroup-015-accent:light-dark(oklch(0.275 0 0),oklch(0.903 0 0));
+--vibeui-buttongroup-015-on:light-dark(oklch(0.96 0 0),oklch(0.29 0 0));
 --vibeui-buttongroup-015-on-accent:light-dark(oklch(0.99 0.004 165),oklch(0.19 0.03 165));
 --vibeui-buttongroup-015-radius:0.625rem;
 --vibeui-buttongroup-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -100,7 +100,7 @@ color:var(--vibeui-buttongroup-015-accent);
 }
 [data-vibeui-block="buttongroup-015"] [data-part="segment"]:has(input:checked) [data-part="count"]{
 background:var(--vibeui-buttongroup-015-accent);
-color:var(--vibeui-buttongroup-015-on-accent);
+color:oklch(from var(--vibeui-buttongroup-015-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="buttongroup-015"] [data-part="segment"]:has(input:focus-visible){
 z-index:2;

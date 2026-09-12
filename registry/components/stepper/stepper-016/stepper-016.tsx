@@ -30,8 +30,8 @@ const STYLES = `
 --vibeui-stepper-016-muted:color-mix(in oklab,var(--vibeui-stepper-016-fg) 58%,transparent);
 --vibeui-stepper-016-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 14%));
 --vibeui-stepper-016-card:light-dark(oklch(0.955 0 0),oklch(0.2178 0 0));
---vibeui-stepper-016-accent:light-dark(oklch(0.64 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-stepper-016-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-stepper-016-accent:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
+--vibeui-stepper-016-on-accent:oklch(0.15 0 0);
 --vibeui-stepper-016-ease:linear(0,0.138,0.389,0.621,0.792,0.901,0.963,0.994,1.006,1.009,1.008,1.006,1.003,1.002,1.001,1);
 --vibeui-stepper-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -65,8 +65,7 @@ display:block;height:100%;border-radius:9999px;
 background:var(--vibeui-stepper-016-accent);
 transform:scaleX(var(--vibeui-stepper-016-progress));transform-origin:left center;
 transition:transform .5s cubic-bezier(.22,1.2,.36,1);
-transition:transform .5s var(--vibeui-stepper-016-ease);
-}
+transition:transform .5s var(--vibeui-stepper-016-ease);color:oklch(from var(--vibeui-stepper-016-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="stepper-016"] [data-part="step"]{
 position:relative;z-index:1;flex:1 1 0;min-width:0;
 display:flex;flex-direction:column;align-items:center;gap:0.4375rem;
@@ -84,7 +83,7 @@ transition:transform .4s var(--vibeui-stepper-016-ease),background-color .3s eas
 [data-vibeui-block="stepper-016"] [data-part="step"][data-state="done"] [data-part="node"],
 [data-vibeui-block="stepper-016"] [data-part="step"][data-state="current"] [data-part="node"]{
 background:var(--vibeui-stepper-016-accent);border-color:var(--vibeui-stepper-016-accent);
-color:var(--vibeui-stepper-016-on-accent);
+color:oklch(from var(--vibeui-stepper-016-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 /* Хлопок достаётся только текущему узлу: если увеличивать все пройденные,
    взгляд теряет точку, до которой дошли. */
@@ -109,7 +108,7 @@ background:var(--vibeui-stepper-016-card);color:var(--vibeui-stepper-016-fg);
 [data-vibeui-block="stepper-016"] [data-part="back"]:hover:not(:disabled){border-color:var(--vibeui-stepper-016-accent)}
 [data-vibeui-block="stepper-016"] [data-part="next"]{
 border:1px solid var(--vibeui-stepper-016-accent);
-background:var(--vibeui-stepper-016-accent);color:var(--vibeui-stepper-016-on-accent);
+background:var(--vibeui-stepper-016-accent);color:oklch(from var(--vibeui-stepper-016-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="stepper-016"] [data-part="back"]:disabled,
 [data-vibeui-block="stepper-016"] [data-part="next"]:disabled{cursor:not-allowed;opacity:.45}

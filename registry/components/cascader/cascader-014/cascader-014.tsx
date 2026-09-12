@@ -45,8 +45,8 @@ const STYLES = `
 --vibeui-cascader-014-faint:light-dark(oklch(0.76 0 250),oklch(0.55 0 250));
 --vibeui-cascader-014-border:light-dark(oklch(0.9 0 250),oklch(0.35 0 250));
 --vibeui-cascader-014-soft:light-dark(oklch(0.965 0 250),oklch(0.28 0 250));
---vibeui-cascader-014-accent:light-dark(oklch(0.48 0.12 39.8),oklch(0.76 0.13 39.8));
---vibeui-cascader-014-accentsoft:light-dark(oklch(0.94 0.04 39.8),oklch(0.34 0.055 39.8));
+--vibeui-cascader-014-accent:light-dark(oklch(0.27 0 0),oklch(0.906 0 0));
+--vibeui-cascader-014-accentsoft:light-dark(oklch(0.94 0 0),oklch(0.34 0 0));
 --vibeui-cascader-014-radius:0.625rem;
 --vibeui-cascader-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-cascader-014-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;

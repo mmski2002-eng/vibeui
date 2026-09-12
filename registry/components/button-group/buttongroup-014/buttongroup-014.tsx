@@ -34,8 +34,8 @@ const STYLES = `
 --vibeui-buttongroup-014-muted:color-mix(in oklab,var(--vibeui-buttongroup-014-fg) 68%,transparent);
 --vibeui-buttongroup-014-border:light-dark(oklch(0.89 0 265),oklch(0.37 0 265));
 --vibeui-buttongroup-014-hover:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
---vibeui-buttongroup-014-accent:light-dark(oklch(0.52 0.16 39.8),oklch(0.63 0.17 39.8));
---vibeui-buttongroup-014-on-accent:oklch(0.99 0 265);
+--vibeui-buttongroup-014-accent:light-dark(oklch(0.28 0 0),oklch(0.883 0 0));
+--vibeui-buttongroup-014-on-accent:oklch(from var(--vibeui-buttongroup-014-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-buttongroup-014-tip:light-dark(oklch(0.26 0 265),oklch(0.9 0 265));
 --vibeui-buttongroup-014-on-tip:light-dark(oklch(0.99 0 0),oklch(0.21 0 265));
 --vibeui-buttongroup-014-radius:0.625rem;
@@ -87,7 +87,7 @@ background:var(--vibeui-buttongroup-014-hover);color:var(--vibeui-buttongroup-01
 [data-vibeui-block="buttongroup-014"] [data-part="segment"]:has(input:checked){
 z-index:1;
 background:var(--vibeui-buttongroup-014-accent);
-color:var(--vibeui-buttongroup-014-on-accent);
+color:oklch(from var(--vibeui-buttongroup-014-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="buttongroup-014"] [data-part="segment"]:has(input:focus-visible){
 z-index:2;

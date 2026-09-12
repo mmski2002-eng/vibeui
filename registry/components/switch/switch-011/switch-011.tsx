@@ -36,8 +36,8 @@ const STYLES = `
 --vibeui-switch-011-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-switch-011-track:light-dark(oklch(0.88 0 265),oklch(0.43 0 265));
 --vibeui-switch-011-thumb:light-dark(oklch(1 0 0),oklch(0.93 0 265));
---vibeui-switch-011-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.68 0.18 39.8));
---vibeui-switch-011-accent-ink:light-dark(oklch(1 0 0),oklch(0.18 0.04 39.8));
+--vibeui-switch-011-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
+--vibeui-switch-011-accent-ink:light-dark(oklch(1 0 0),oklch(0.18 0 0));
 --vibeui-switch-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -61,7 +61,7 @@ width:2.75rem;height:1.5rem;border-radius:9999px;
 background:var(--vibeui-switch-011-track);cursor:inherit;
 transition:background-color .18s ease;
 }
-[data-vibeui-block="switch-011"] input:checked{background:var(--vibeui-switch-011-accent)}
+[data-vibeui-block="switch-011"] input:checked{background:var(--vibeui-switch-011-accent);color:oklch(from var(--vibeui-switch-011-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="switch-011"] input:focus-visible{outline:2px solid var(--vibeui-switch-011-accent);outline-offset:2px}
 [data-vibeui-block="switch-011"] [data-part="thumb"]{
 position:absolute;left:0.1875rem;top:0.1875rem;
@@ -98,7 +98,7 @@ font:inherit;font-size:0.8125rem;font-weight:600;
 transition:filter .16s ease;
 }
 [data-vibeui-block="switch-011"] [data-part="confirm"]{
-border:0;background:var(--vibeui-switch-011-accent);color:var(--vibeui-switch-011-accent-ink);
+border:0;background:var(--vibeui-switch-011-accent);color:oklch(from var(--vibeui-switch-011-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="switch-011"] [data-part="cancel"]{
 border:1px solid var(--vibeui-switch-011-border);
@@ -113,6 +113,8 @@ display:block;position:relative;width:100%;min-height:22rem;
 }
 [data-vibeui-block="switch-011"] dialog:not(:modal){position:absolute;max-width:100%;max-height:100%;z-index:1}
 [data-vibeui-block="switch-011"]:has(dialog:not(:modal)[open]) [data-part="row"]{display:none}
+/* Ползунок на включённом треке: контраст к чернильному акценту, а не белый на белом. */
+[data-vibeui-block="switch-011"] input:checked + [data-part="thumb"],[data-vibeui-block="switch-011"] input:checked ~ [data-part="thumb"]{background:oklch(from var(--vibeui-switch-011-accent) clamp(0,(0.62 - l) * 100,1) 0 0)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="switch-011"] *{animation:none!important;transition:none!important}}
 `
 

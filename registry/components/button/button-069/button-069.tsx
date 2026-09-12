@@ -35,7 +35,7 @@ const STYLES = `
 --vibeui-button-069-muted:color-mix(in oklab,var(--vibeui-button-069-fg) 60%,transparent);
 --vibeui-button-069-border:light-dark(oklch(0.88 0 265),oklch(0.36 0 265));
 --vibeui-button-069-surface:light-dark(oklch(1 0 0),oklch(0.24 0.01 265));
---vibeui-button-069-accent:light-dark(oklch(0.55 0.16 39.8),oklch(0.78 0.14 39.8));
+--vibeui-button-069-accent:light-dark(oklch(0.287 0 0),oklch(0.91 0 0));
 --vibeui-button-069-radius:9999px;
 --vibeui-button-069-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

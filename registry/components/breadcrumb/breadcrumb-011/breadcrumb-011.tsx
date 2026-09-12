@@ -31,7 +31,7 @@ const STYLES = `
 --vibeui-breadcrumb-011-sep:light-dark(oklch(0.78 0 265),oklch(0.5 0 265));
 --vibeui-breadcrumb-011-border:light-dark(oklch(0.9 0 265),oklch(0.4 0 265));
 --vibeui-breadcrumb-011-field:light-dark(oklch(0.98 0 265),oklch(0.29 0 265));
---vibeui-breadcrumb-011-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-breadcrumb-011-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-breadcrumb-011-bg:transparent;
 --vibeui-breadcrumb-011-pad:0;
 --vibeui-breadcrumb-011-radius:0;

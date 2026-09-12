@@ -28,7 +28,7 @@ const STYLES = `
 --vibeui-toggle-010-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-toggle-010-muted:color-mix(in oklab,var(--vibeui-toggle-010-fg) 68%,transparent);
 --vibeui-toggle-010-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-toggle-010-accent:light-dark(oklch(0.58 0.17 39.8),oklch(0.76 0.14 39.8));
+--vibeui-toggle-010-accent:light-dark(oklch(0.295 0 0),oklch(0.906 0 0));
 --vibeui-toggle-010-off:light-dark(oklch(0.7 0 265),oklch(0.48 0 265));
 --vibeui-toggle-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -63,8 +63,7 @@ transition:background-color .16s ease,height .16s ease;
    тишина — это неподвижные столбики одной высоты, а не пустой значок. */
 [data-vibeui-block="toggle-010"] button[aria-pressed="false"] [data-part="bar"]{
 background:var(--vibeui-toggle-010-accent);
-animation:vibeui-toggle-010-wave 0.9s ease-in-out infinite;
-}
+animation:vibeui-toggle-010-wave 0.9s ease-in-out infinite;color:oklch(from var(--vibeui-toggle-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="toggle-010"] button[aria-pressed="false"] [data-part="bar"]:nth-child(1){animation-delay:0s}
 [data-vibeui-block="toggle-010"] button[aria-pressed="false"] [data-part="bar"]:nth-child(2){animation-delay:.18s}
 [data-vibeui-block="toggle-010"] button[aria-pressed="false"] [data-part="bar"]:nth-child(3){animation-delay:.36s}

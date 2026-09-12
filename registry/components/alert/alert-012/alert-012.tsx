@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-alert-012-muted:color-mix(in oklab,var(--vibeui-alert-012-fg) 68%,transparent);
 --vibeui-alert-012-bg:transparent;
 --vibeui-alert-012-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
---vibeui-alert-012-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.74 0.16 39.8));
+--vibeui-alert-012-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-alert-012-accent-fg:light-dark(oklch(1 0 0),oklch(0.18 0 265));
 --vibeui-alert-012-radius:0.875rem;
 --vibeui-alert-012-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
@@ -80,7 +80,7 @@ background:color-mix(in oklab,var(--vibeui-alert-012-accent) 60%,transparent);
 appearance:none;cursor:pointer;border:0;font:inherit;
 display:inline-flex;align-items:center;height:2rem;padding:0 0.9375rem;
 border-radius:0.5rem;
-background:var(--vibeui-alert-012-accent);color:var(--vibeui-alert-012-accent-fg);
+background:var(--vibeui-alert-012-accent);color:oklch(from var(--vibeui-alert-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.8125rem;font-weight:600;
 transition:filter .16s ease;
 }

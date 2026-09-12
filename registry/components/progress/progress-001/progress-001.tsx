@@ -25,7 +25,7 @@ const STYLES = `
 --vibeui-progress-001-fg:light-dark(oklch(0.28 0 265),oklch(0.94 0 265));
 --vibeui-progress-001-muted:color-mix(in oklab,var(--vibeui-progress-001-fg) 68%,transparent);
 --vibeui-progress-001-track:light-dark(oklch(0.92 0 265),oklch(0.31 0 265));
---vibeui-progress-001-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.7 0.17 39.8));
+--vibeui-progress-001-accent:light-dark(oklch(0.287 0 0),oklch(0.895 0 0));
 --vibeui-progress-001-bg:transparent;
 --vibeui-progress-001-pad:0;
 --vibeui-progress-001-radius:0;
@@ -59,8 +59,7 @@ border-radius:9999px;background:var(--vibeui-progress-001-track);
 height:100%;border-radius:inherit;
 background:var(--vibeui-progress-001-accent);
 width:calc(var(--vibeui-progress-001-value,0) * 1%);
-transition:width .3s cubic-bezier(.32,.72,0,1);
-}
+transition:width .3s cubic-bezier(.32,.72,0,1);color:oklch(from var(--vibeui-progress-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 /* Неизвестная длительность: отрезок ходит по дорожке, процент не выдумываем. */
 [data-vibeui-block="progress-001"][data-indeterminate="true"] [data-part="bar"]{
 width:35%;transition:none;

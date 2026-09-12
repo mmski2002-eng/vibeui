@@ -37,7 +37,7 @@ const STYLES = `
 --vibeui-card-018-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-card-018-muted:color-mix(in oklab,var(--vibeui-card-018-fg) 68%,transparent);
 --vibeui-card-018-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
---vibeui-card-018-accent:light-dark(oklch(0.55 0.19 39.8),oklch(0.72 0.16 39.8));
+--vibeui-card-018-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-card-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -62,7 +62,7 @@ box-shadow:0 14px 32px -22px color-mix(in oklab,var(--vibeui-card-018-accent) 70
 [data-vibeui-block="card-018"] [data-part="ribbon"]{
 position:absolute;inset-block-start:-0.6875rem;inset-inline-start:1.25rem;
 display:inline-flex;align-items:center;height:1.375rem;padding:0 0.5625rem;
-border-radius:9999px;background:var(--vibeui-card-018-accent);color:var(--vibeui-card-018-on-accent);
+border-radius:9999px;background:var(--vibeui-card-018-accent);color:oklch(from var(--vibeui-card-018-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.6875rem;font-weight:700;letter-spacing:0.02em;
 }
 [data-vibeui-block="card-018"] [data-part="name"]{
@@ -104,7 +104,7 @@ font:inherit;font-size:0.875rem;font-weight:650;
 transition:background-color .16s ease,border-color .16s ease;
 }
 [data-vibeui-block="card-018"][data-featured="true"] [data-part="action"]{
-border-color:transparent;background:var(--vibeui-card-018-accent);color:var(--vibeui-card-018-on-accent);
+border-color:transparent;background:var(--vibeui-card-018-accent);color:oklch(from var(--vibeui-card-018-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="card-018"] [data-part="action"]:hover{
 border-color:color-mix(in oklab,var(--vibeui-card-018-accent) 45%,var(--vibeui-card-018-border));

@@ -31,7 +31,7 @@ const STYLES = `
 --vibeui-pagination-008-field:light-dark(oklch(0.97 0 265),oklch(0.29 0 265));
 --vibeui-pagination-008-hover:light-dark(oklch(0.55 0 265 / 8%),oklch(0.82 0 265 / 14%));
 --vibeui-pagination-008-bad:light-dark(oklch(0.58 0.19 26),oklch(0.72 0.16 26));
---vibeui-pagination-008-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.16 39.8));
+--vibeui-pagination-008-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-pagination-008-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0 262));
 --vibeui-pagination-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -78,7 +78,7 @@ font:inherit;font-size:0.8125rem;font-variant-numeric:tabular-nums;
 [data-vibeui-block="pagination-008"] [data-part="go"]{
 appearance:none;cursor:pointer;height:2rem;padding:0 0.875rem;box-sizing:border-box;
 border:0;border-radius:0.5rem;
-background:var(--vibeui-pagination-008-accent);color:var(--vibeui-pagination-008-accent-fg);
+background:var(--vibeui-pagination-008-accent);color:oklch(from var(--vibeui-pagination-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.8125rem;font-weight:600;
 }
 [data-vibeui-block="pagination-008"] [data-part="go"]:focus-visible{outline:2px solid var(--vibeui-pagination-008-accent);outline-offset:2px}

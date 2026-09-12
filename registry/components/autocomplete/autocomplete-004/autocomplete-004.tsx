@@ -35,7 +35,7 @@ const STYLES = `
 --vibeui-autocomplete-004-muted:color-mix(in oklab,var(--vibeui-autocomplete-004-fg) 68%,transparent);
 --vibeui-autocomplete-004-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-autocomplete-004-active:light-dark(oklch(0.95 0 265),oklch(0.33 0 265));
---vibeui-autocomplete-004-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-autocomplete-004-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-autocomplete-004-shadow:light-dark(oklch(0.2 0 265 / 45%),oklch(0.02 0 265 / 70%));
 --vibeui-autocomplete-004-radius:0.75rem;
 --vibeui-autocomplete-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

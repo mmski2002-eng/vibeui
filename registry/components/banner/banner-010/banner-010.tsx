@@ -25,7 +25,7 @@ export type Banner010Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="banner-010"]){
 --vibeui-banner-010-bg:transparent;
---vibeui-banner-010-accent:light-dark(oklch(0.52 0.19 39.8),oklch(0.75 0.16 39.8));
+--vibeui-banner-010-accent:light-dark(oklch(0.28 0 0),oklch(0.905 0 0));
 /* Полоса живёт поверх интерфейса и всегда тёмная: текст на ней выводится из
    акцента, а не задаётся токеном — проект передаёт один цвет на обе ветки. */
 --vibeui-banner-010-ink:oklch(from var(--vibeui-banner-010-accent) max(l,0.78) c h);

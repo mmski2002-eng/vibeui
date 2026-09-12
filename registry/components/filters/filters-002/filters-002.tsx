@@ -38,7 +38,7 @@ const STYLES = `
 --vibeui-filters-002-muted:color-mix(in oklab,var(--vibeui-filters-002-fg) 68%,transparent);
 --vibeui-filters-002-border:light-dark(oklch(0.89 0 265),oklch(0.4 0 265));
 --vibeui-filters-002-shell:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
---vibeui-filters-002-accent:light-dark(oklch(0.53 0.18 39.8),oklch(0.74 0.15 39.8));
+--vibeui-filters-002-accent:light-dark(oklch(0.282 0 0),oklch(0.903 0 0));
 --vibeui-filters-002-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 268));
 --vibeui-filters-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -84,7 +84,7 @@ font:inherit;font-size:0.75rem;line-height:1;
 transition:background-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="filters-002"] [data-part="chip"] button:hover{
-background:var(--vibeui-filters-002-accent);color:var(--vibeui-filters-002-on-accent);
+background:var(--vibeui-filters-002-accent);color:oklch(from var(--vibeui-filters-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="filters-002"] [data-part="chip"] button:focus-visible{
 outline:2px solid var(--vibeui-filters-002-accent);outline-offset:2px;

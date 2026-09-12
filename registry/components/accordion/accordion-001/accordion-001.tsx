@@ -40,7 +40,7 @@ const STYLES = `
 --vibeui-accordion-001-fg:light-dark(oklch(0.2 0 255),oklch(0.94 0 255));
 --vibeui-accordion-001-muted:color-mix(in oklab,var(--vibeui-accordion-001-fg) 68%,transparent);
 --vibeui-accordion-001-rule:light-dark(oklch(0.9 0 250),oklch(0.31 0 250));
---vibeui-accordion-001-accent:light-dark(oklch(0.5 0.095 39.8),oklch(0.75 0.11 39.8));
+--vibeui-accordion-001-accent:light-dark(oklch(0.275 0 0),oklch(0.905 0 0));
 --vibeui-accordion-001-bg:transparent;
 --vibeui-accordion-001-pad:0.5rem 0 0.75rem;
 --vibeui-accordion-001-radius:0;
@@ -108,8 +108,7 @@ transform:translate(-50%,-70%) rotate(45deg);
 }
 [data-vibeui-block="accordion-001"][data-marker="triangle"] [data-part="marker"]{
 background:var(--vibeui-accordion-001-accent);
-clip-path:polygon(15% 0,100% 50%,15% 100%);
-}
+clip-path:polygon(15% 0,100% 50%,15% 100%);color:oklch(from var(--vibeui-accordion-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="accordion-001"][data-marker="triangle"] details[open] [data-part="marker"]{
 transform:rotate(90deg);
 }
@@ -118,8 +117,7 @@ border-radius:1px;
 box-shadow:inset 0 0 0 1.5px var(--vibeui-accordion-001-accent);
 }
 [data-vibeui-block="accordion-001"][data-marker="square"] details[open] [data-part="marker"]{
-background:var(--vibeui-accordion-001-accent);transform:rotate(45deg);
-}
+background:var(--vibeui-accordion-001-accent);transform:rotate(45deg);color:oklch(from var(--vibeui-accordion-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="accordion-001"][data-marker="plus"] [data-part="marker"]{
 position:relative;
 }
@@ -127,8 +125,7 @@ position:relative;
 [data-vibeui-block="accordion-001"][data-marker="plus"] [data-part="marker"]::after{
 content:"";position:absolute;inset:calc(50% - 0.75px) 0 auto;height:1.5px;
 background:var(--vibeui-accordion-001-accent);
-transition:transform .18s ease;
-}
+transition:transform .18s ease;color:oklch(from var(--vibeui-accordion-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="accordion-001"][data-marker="plus"] [data-part="marker"]::after{
 transform:rotate(90deg);
 }

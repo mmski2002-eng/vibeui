@@ -51,7 +51,7 @@ const STYLES = `
 --vibeui-date-012-panel:light-dark(oklch(1 0 0),oklch(0.24 0 265));
 --vibeui-date-012-hover:light-dark(oklch(0.96 0 265),oklch(0.3 0 265));
 --vibeui-date-012-shadow:light-dark(oklch(0.2 0 265 / 55%),oklch(0 0 0 / 70%));
---vibeui-date-012-accent:light-dark(oklch(0.55 0.18 39.8),oklch(0.76 0.15 39.8));
+--vibeui-date-012-accent:light-dark(oklch(0.287 0 0),oklch(0.906 0 0));
 /* Текст на заливке выводится из светлоты акцента: пользовательский цвет
    приходит один на обе ветки темы, и фиксированный белый однажды окажется
    белым на жёлтом. */
@@ -147,7 +147,7 @@ font:inherit;font-size:0.8125rem;font-variant-numeric:tabular-nums;
 [data-vibeui-block="date-012"] [data-part="day"][data-outside="true"]{color:var(--vibeui-date-012-muted);opacity:.6}
 [data-vibeui-block="date-012"] [data-part="day"][data-today="true"]{box-shadow:inset 0 0 0 1px var(--vibeui-date-012-accent);font-weight:650}
 [data-vibeui-block="date-012"] [data-part="day"][aria-pressed="true"]{
-background:var(--vibeui-date-012-accent);color:var(--vibeui-date-012-on-accent);font-weight:650;opacity:1;
+background:var(--vibeui-date-012-accent);color:oklch(from var(--vibeui-date-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);font-weight:650;opacity:1;
 }
 [data-vibeui-block="date-012"] [data-part="foot"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.5rem;

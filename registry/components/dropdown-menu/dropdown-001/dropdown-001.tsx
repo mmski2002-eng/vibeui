@@ -41,7 +41,7 @@ const STYLES = `
 --vibeui-dropdown-001-bg:light-dark(oklch(1 0 0),oklch(0.25 0 265));
 --vibeui-dropdown-001-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-dropdown-001-hover:light-dark(oklch(0.55 0 265 / 8%),oklch(0.86 0 265 / 12%));
---vibeui-dropdown-001-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.74 0.16 39.8));
+--vibeui-dropdown-001-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-dropdown-001-danger:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.16 25));
 --vibeui-dropdown-001-radius:0.625rem;
 --vibeui-dropdown-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -98,7 +98,7 @@ color:inherit;text-decoration:none;font-size:0.8125rem;line-height:1.3;
 transition:background-color .14s ease;
 }
 [data-vibeui-dropdown-001-menu] [data-part="item"]:hover{background:var(--vibeui-dropdown-001-hover,light-dark(oklch(0.55 0 265 / 8%),oklch(0.86 0 265 / 12%)))}
-[data-vibeui-dropdown-001-menu] [data-part="item"]:focus-visible{outline:2px solid var(--vibeui-dropdown-001-accent,light-dark(oklch(0.55 0.2 39.8),oklch(0.74 0.16 39.8)));outline-offset:-2px}
+[data-vibeui-dropdown-001-menu] [data-part="item"]:focus-visible{outline:2px solid var(--vibeui-dropdown-001-accent,light-dark(oklch(0.287 0 0),oklch(0.903 0 0)));outline-offset:-2px}
 [data-vibeui-dropdown-001-menu] [data-part="item"][data-danger="true"]{color:var(--vibeui-dropdown-001-danger,light-dark(oklch(0.56 0.19 25),oklch(0.72 0.16 25)))}
 [data-vibeui-dropdown-001-menu] [data-part="item"][data-separated="true"]{
 margin-top:0.3125rem;padding-top:0.5625rem;

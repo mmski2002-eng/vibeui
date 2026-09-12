@@ -28,7 +28,7 @@ const STYLES = `
 --vibeui-buttongroup-054-muted:color-mix(in oklab,var(--vibeui-buttongroup-054-fg) 68%,transparent);
 --vibeui-buttongroup-054-border:light-dark(oklch(0.9 0 265),oklch(0.4 0 265));
 --vibeui-buttongroup-054-hover:light-dark(oklch(0.955 0 265),oklch(0.34 0 265));
---vibeui-buttongroup-054-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.76 0.14 39.8));
+--vibeui-buttongroup-054-accent:light-dark(oklch(0.275 0 0),oklch(0.906 0 0));
 --vibeui-buttongroup-054-radius:0.375rem;
 --vibeui-buttongroup-054-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

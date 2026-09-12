@@ -14,6 +14,8 @@ export type Hero018Props = {
   secondaryHref?: string
   note?: string
   accent?: string
+  /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
+  tone?: "auto" | "light" | "dark"
   className?: string
   style?: CSSProperties
 }
@@ -36,7 +38,7 @@ const STYLES = `
 --vibeui-hero-018-muted:light-dark(oklch(0.51 0.019 62),oklch(0.73 0.012 85));
 --vibeui-hero-018-line:light-dark(oklch(0.9 0.013 80),oklch(1 0 0 / 12%));
 --vibeui-hero-018-surface:light-dark(oklch(1 0 0),oklch(0.22 0.006 85));
---vibeui-hero-018-accent:light-dark(oklch(0.62 0.16 39.8),oklch(0.78 0.15 39.8));
+--vibeui-hero-018-accent:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
 --vibeui-hero-018-accent-fg:oklch(from var(--vibeui-hero-018-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -44,6 +46,8 @@ container-type:inline-size;
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="hero-018"]{color-scheme:dark}
+:where([data-vibeui-block="hero-018"][data-tone="light"]){color-scheme:light}
+:where([data-vibeui-block="hero-018"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="hero-018"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -58,7 +62,9 @@ position:relative;overflow:hidden;padding:3.5rem 1.25rem;
 }
 [data-vibeui-block="hero-018"] [data-part="frame"] img{
 position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+transition:transform .7s cubic-bezier(.32,.72,0,1);
 }
+[data-vibeui-block="hero-018"] [data-part="frame"]:hover img{transform:scale(1.03)}
 /* Вуаль между фотографией и текстом. Снимок приносит свои тона — от почти
    белой бумаги до чёрного рукава, — и заголовок на нём то читался, то тонул.
    Слой берёт цвет фона секции, поэтому в светлой теме он высветляет кадр, а
@@ -93,8 +99,7 @@ background:var(--vibeui-hero-018-surface);color:var(--vibeui-hero-018-fg);
 font-size:0.8125rem;font-weight:600;letter-spacing:0.01em;
 }
 [data-vibeui-block="hero-018"] [data-part="dot"]{
-width:0.4375rem;height:0.4375rem;border-radius:999px;background:var(--vibeui-hero-018-accent);flex:0 0 auto;
-}
+width:0.4375rem;height:0.4375rem;border-radius:999px;background:var(--vibeui-hero-018-accent);flex:0 0 auto;color:oklch(from var(--vibeui-hero-018-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="hero-018"] h1{
 margin:0;font-size:clamp(2rem,7cqi,4.25rem);line-height:1.02;letter-spacing:-0.035em;font-weight:700;text-wrap:balance;
 }
@@ -117,9 +122,16 @@ font-size:1rem;font-weight:650;text-decoration:none;
 transition:transform .16s ease,box-shadow .16s ease,background-color .16s ease;
 }
 [data-vibeui-block="hero-018"] [data-part="primary"]{
-background:var(--vibeui-hero-018-accent);color:var(--vibeui-hero-018-accent-fg);
+background:var(--vibeui-hero-018-accent);color:oklch(from var(--vibeui-hero-018-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 border:1px solid transparent;
-box-shadow:0 8px 20px color-mix(in oklab,var(--vibeui-hero-018-accent) 24%,transparent);
+box-shadow:0 0.5rem 1.5rem color-mix(in oklab,var(--vibeui-hero-018-accent) 34%,transparent),
+inset 0 1px 0 color-mix(in oklab,#ffffff 45%,transparent);
+transition:transform .2s cubic-bezier(.32,.72,0,1),box-shadow .25s ease;
+}
+[data-vibeui-block="hero-018"] [data-part="primary"]:hover{
+transform:translateY(-1px);
+box-shadow:0 0.75rem 2rem color-mix(in oklab,var(--vibeui-hero-018-accent) 44%,transparent),
+inset 0 1px 0 color-mix(in oklab,#ffffff 55%,transparent);
 }
 [data-vibeui-block="hero-018"] [data-part="secondary"]{
 background:var(--vibeui-hero-018-surface);color:var(--vibeui-hero-018-fg);
@@ -158,6 +170,7 @@ export function Hero018({
   secondaryHref = "#",
   note = "Без карты. Четырнадцать дней полного доступа.",
   accent,
+  tone = "auto",
   className,
   style,
 }: Hero018Props) {
@@ -173,6 +186,7 @@ export function Hero018({
       </style>
       <section
         data-vibeui-block="hero-018"
+        data-tone={tone === "auto" ? undefined : tone}
         className={className}
         style={palette}
       >

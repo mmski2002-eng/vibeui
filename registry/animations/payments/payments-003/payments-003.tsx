@@ -92,8 +92,7 @@ background:var(--vibeui-payments-003-track);
 position:absolute;inset:0;width:var(--vibeui-payments-003-v,0%);height:100%;border-radius:9999px;
 background:var(--vibeui-payments-003-accent);transform-origin:left;transform:scaleX(0);
 animation:vibeui-payments-003-grow 0.8s cubic-bezier(0.16,1,0.3,1) both;
-animation-delay:0.1s;
-}
+animation-delay:0.1s;color:oklch(from var(--vibeui-payments-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="payments-003"] [data-part="primary"][data-level="warn"] [data-part="fill"]{background:var(--vibeui-payments-003-warn)}
 [data-vibeui-block="payments-003"] [data-part="primary"][data-level="danger"] [data-part="fill"]{background:var(--vibeui-payments-003-danger)}
 [data-vibeui-block="payments-003"] [data-part="meters"]{

@@ -5,7 +5,7 @@
       "name": "errorpage-001",
       "type": "registry:block",
       "title": "Плакат 404 с поиском",
-      "description": "Страница 404 с гигантскими контурными цифрами и оранжевым штрихом: под ними поиск по каталогу и ссылки на главные разделы, чтобы тупик стал развилкой.",
+      "description": "Страница 404 с гигантскими контурными цифрами и акцентным штрихом: под ними поиск по каталогу и ссылки на главные разделы, чтобы тупик стал развилкой.",
       "categories": [
         "errors"
       ],
@@ -28,12 +28,12 @@
           "typography"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Errorpage001",
           "usage": "<Errorpage001\n  title=\"Такой страницы нет\"\n  searchAction=\"/search\"\n  links={[{ label: \"Каталог\", href: \"/components\" }]}\n/>",
-          "summary": "Страница 404: контурные цифры-плакат с оранжевым штрихом, поисковая строка и чипы главных разделов. Серверный компонент, поиск работает обычным GET-submit. Один файл, своя палитра, ноль зависимостей и клиентского JS.",
+          "summary": "Страница 404: контурные цифры-плакат с акцентным штрихом, поисковая строка и чипы главных разделов. Серверный компонент, поиск работает обычным GET-submit. Один файл, своя палитра, ноль зависимостей и клиентского JS.",
           "preserve": [
             "локальную палитру --vibeui-errorpage-001-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
             "штрих вместо заливки на цифрах: залитые цифры такого размера давят на текст, а фолбэк @supports сам вернёт заливку там, где штриха нет",
@@ -86,10 +86,10 @@
         "i18n": {
           "en": {
             "title": "404 Poster with Search",
-            "description": "A 404 page with giant outlined digits in an orange stroke: below them a catalog search and links to the main sections, turning a dead end into a fork.",
+            "description": "A 404 page with giant outlined digits in an accent stroke: below them a catalog search and links to the main sections, turning a dead end into a fork.",
             "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-errorpage-001-* variables. A server component; the search form is a plain GET submit without JS. The code digits are drawn as a stroke via -webkit-text-stroke with an @supports fallback: where the stroke is unavailable the digits stay filled with the accent. The layout is a centered column and the digit size is computed from the block's own width (cqi). Section links are a nav of chips, the form carries role=search.",
             "ai": {
-              "summary": "A 404 page: outlined poster digits with an orange stroke, a search bar and chips for the main sections. A server component, the search works as a plain GET submit. One file, its own palette, zero dependencies and zero client JS.",
+              "summary": "A 404 page: outlined poster digits with an accent stroke, a search bar and chips for the main sections. A server component, the search works as a plain GET submit. One file, its own palette, zero dependencies and zero client JS.",
               "preserve": [
                 "the local --vibeui-errorpage-001-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the stroke instead of a fill on the digits: filled digits this large crush the text, and the @supports fallback restores the fill where the stroke is unavailable",
@@ -192,7 +192,7 @@
           "server"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Errorpage002",
@@ -339,7 +339,7 @@
           "status"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "usage": "<Errorpage003\n  finishTime=\"сегодня к 14:00 МСК\"\n  progress={68}\n  notifyAction=\"/notify\"\n/>",
@@ -479,7 +479,7 @@
           "target": "@components/vibeui/errorpage-004.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-errorpage-004-*. Серверный компонент без JS. Замок собран из двух элементов: дужка — рамка со скруглением без нижней стороны, корпус — оранжевая плита, скважина — два псевдоэлемента (круг и ножка). Иллюстрация помечена aria-hidden — смысл несут заголовок и текст. Два действия: заливная кнопка «сменить аккаунт» и контурная «запросить доступ», под ними подсказка о сроке ответа.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-errorpage-004-*. Серверный компонент без JS. Замок собран из двух элементов: дужка — рамка со скруглением без нижней стороны, корпус — акцентная плита, скважина — два псевдоэлемента (круг и ножка). Иллюстрация помечена aria-hidden — смысл несут заголовок и текст. Два действия: заливная кнопка «сменить аккаунт» и контурная «запросить доступ», под ними подсказка о сроке ответа.",
       "meta": {
         "tags": [
           "403",
@@ -489,7 +489,7 @@
           "permissions"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Errorpage004",
@@ -548,7 +548,7 @@
           "en": {
             "title": "403 with a CSS Lock",
             "description": "An access-denied page with a padlock drawn in pure CSS: a calm explanation and two ways out — switch the account or request access from the owner.",
-            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-errorpage-004-* variables. A server component with no JS. The padlock is built from two elements: the shackle is a rounded border with no bottom side, the body is an orange slab, the keyhole is two pseudo-elements (a circle and a stem). The illustration is marked aria-hidden — the heading and the text carry the meaning. Two actions: a filled \"switch account\" button and an outlined \"request access\" one, with a response-time hint below.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-errorpage-004-* variables. A server component with no JS. The padlock is built from two elements: the shackle is a rounded border with no bottom side, the body is an accent slab, the keyhole is two pseudo-elements (a circle and a stem). The illustration is marked aria-hidden — the heading and the text carry the meaning. Two actions: a filled \"switch account\" button and an outlined \"request access\" one, with a response-time hint below.",
             "ai": {
               "summary": "A 403 page: a padlock in pure CSS, a calm explanation of the cause and two ways out — switch the account (filled button) or request access (outlined). A server component, one file, its own palette, zero dependencies and zero client JS.",
               "preserve": [
@@ -636,7 +636,7 @@
           "retry"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Errorpage005",
@@ -764,7 +764,7 @@
       "name": "errorpage-006",
       "type": "registry:block",
       "title": "Пустая выдача поиска",
-      "description": "Страница «ничего не найдено»: запрос крупно в оранжевых кавычках, CSS-лупа, советы, как переформулировать, и чипы популярных разделов — из пустоты всегда есть ссылка дальше.",
+      "description": "Страница «ничего не найдено»: запрос крупно в акцентных кавычках, CSS-лупа, советы, как переформулировать, и чипы популярных разделов — из пустоты всегда есть ссылка дальше.",
       "categories": [
         "errors"
       ],
@@ -787,7 +787,7 @@
           "suggestions"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Errorpage006",
@@ -845,7 +845,7 @@
         "i18n": {
           "en": {
             "title": "Empty Search Results",
-            "description": "A no-results page: the query set large in orange quotation marks, a CSS magnifier, tips on rephrasing and chips of popular sections — an empty result always links onward.",
+            "description": "A no-results page: the query set large in accent quotation marks, a CSS magnifier, tips on rephrasing and chips of popular sections — an empty result always links onward.",
             "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-errorpage-006-* variables. A server component with no JS. The query is set larger than the heading and wrapped in pseudo-element quotation marks: the person immediately sees what exactly was searched and spots a typo; overflow-wrap guards against long queries. The magnifier is a ring border with a rotated pseudo-element handle. Two levels of help: tips (a ul on a warm tinted panel) and popular sections (a nav of chips).",
             "ai": {
               "summary": "Empty search results: the query set large in accent quotation marks, a CSS magnifier, rephrasing tips and chips of popular sections. A server component, one file, its own palette, zero dependencies and zero client JS.",

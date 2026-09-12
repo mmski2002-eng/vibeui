@@ -38,8 +38,8 @@ const STYLES = `
 --vibeui-toast-020-track:light-dark(oklch(0.92 0 265),oklch(0.33 0 265));
 --vibeui-toast-020-hover:light-dark(oklch(0.2 0 265 / 7%),oklch(1 0 0 / 12%));
 --vibeui-toast-020-shadow:light-dark(oklch(0.18 0 265 / 55%),oklch(0.05 0 265 / 70%));
---vibeui-toast-020-tone:light-dark(oklch(0.58 0.19 39.8),oklch(0.76 0.16 39.8));
---vibeui-toast-020-on-tone:light-dark(oklch(0.99 0 265),oklch(0.2 0.04 39.8));
+--vibeui-toast-020-tone:light-dark(oklch(0.295 0 0),oklch(0.906 0 0));
+--vibeui-toast-020-on-tone:light-dark(oklch(0.99 0 265),oklch(0.2 0 0));
 --vibeui-toast-020-paused-text:" · пауза";
 --vibeui-toast-020-percent:100;
 --vibeui-toast-020-radius:0.875rem;

@@ -39,7 +39,7 @@ const STYLES = `
 --vibeui-date-011-muted:color-mix(in oklab,var(--vibeui-date-011-fg) 62%,transparent);
 --vibeui-date-011-border:light-dark(oklch(0.86 0 265),oklch(0.38 0 265));
 --vibeui-date-011-field:light-dark(oklch(1 0 0),oklch(1 0 0 / 6%));
---vibeui-date-011-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.78 0.12 39.8));
+--vibeui-date-011-accent:light-dark(oklch(0.275 0 0),oklch(0.91 0 0));
 --vibeui-date-011-ok:light-dark(oklch(0.45 0.13 152),oklch(0.82 0.13 152));
 --vibeui-date-011-busy:light-dark(oklch(0.53 0.19 25),oklch(0.79 0.15 25));
 --vibeui-date-011-busy-soft:color-mix(in oklab,var(--vibeui-date-011-busy) 12%,transparent);

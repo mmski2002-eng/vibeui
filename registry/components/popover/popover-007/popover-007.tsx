@@ -38,7 +38,8 @@ const STYLES = `
 --vibeui-popover-007-muted:color-mix(in oklab,var(--vibeui-popover-007-fg) 68%,transparent);
 --vibeui-popover-007-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-popover-007-hover:light-dark(oklch(0.965 0 265),oklch(0.27 0 265));
---vibeui-popover-007-accent:light-dark(oklch(0.58 0.19 39.8),oklch(0.72 0.17 39.8));
+--vibeui-popover-007-accent:light-dark(oklch(0.295 0 0),oklch(0.899 0 0));
+--vibeui-popover-007-unread:light-dark(oklch(0.58 0.2 25),oklch(0.72 0.19 25));
 --vibeui-popover-007-on-accent:light-dark(oklch(0.99 0.01 25),oklch(0.18 0.03 25));
 --vibeui-popover-007-shadow:light-dark(oklch(0.2 0 265 / 62%),oklch(0.02 0 265 / 74%));
 --vibeui-popover-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -66,7 +67,7 @@ position:absolute;top:-0.3125rem;right:-0.3125rem;
 display:flex;align-items:center;justify-content:center;
 min-width:1.125rem;height:1.125rem;padding:0 0.25rem;box-sizing:border-box;
 border-radius:9999px;border:2px solid var(--vibeui-popover-007-bg);
-background:var(--vibeui-popover-007-accent);color:var(--vibeui-popover-007-on-accent);
+background:var(--vibeui-popover-007-unread);color:oklch(1 0 0);
 font-size:0.625rem;font-weight:750;line-height:1;font-variant-numeric:tabular-nums;
 }
 /* Раскладка панели только в :popover-open, иначе display перебьёт
@@ -104,7 +105,7 @@ transition:background-color .14s ease;
 [data-vibeui-block="popover-007"] [data-part="link"]:focus-visible{outline:2px solid var(--vibeui-popover-007-accent);outline-offset:-2px}
 [data-vibeui-block="popover-007"] [data-part="dot"]{
 width:0.4375rem;height:0.4375rem;margin-top:0.375rem;border-radius:9999px;
-background:var(--vibeui-popover-007-accent);
+background:var(--vibeui-popover-007-unread);
 }
 [data-vibeui-block="popover-007"] [data-part="link"][data-read="true"] [data-part="dot"]{background:transparent}
 [data-vibeui-block="popover-007"] [data-part="itemTitle"]{font-size:0.8125rem;line-height:1.35;font-weight:600}

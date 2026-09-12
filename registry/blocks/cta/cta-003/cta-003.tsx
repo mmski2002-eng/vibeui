@@ -31,8 +31,8 @@ const STYLES = `
 --vibeui-cta-003-muted:light-dark(oklch(0.5 0.025 70),oklch(0.74 0.018 80));
 --vibeui-cta-003-border:light-dark(oklch(0.87 0.02 90),oklch(0.37 0.018 80));
 --vibeui-cta-003-field:light-dark(oklch(1 0 0),oklch(0.25 0.014 80));
---vibeui-cta-003-accent:light-dark(oklch(0.55 0.13 39.8),oklch(0.76 0.13 39.8));
---vibeui-cta-003-accent-fg:oklch(0.15 0.02 39.8);
+--vibeui-cta-003-accent:light-dark(oklch(0.287 0 0),oklch(0.906 0 0));
+--vibeui-cta-003-accent-fg:oklch(from var(--vibeui-cta-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-cta-003-serif:ui-serif,Georgia,"Times New Roman",serif;
 --vibeui-cta-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -84,7 +84,7 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-cta-003-accent) 20%,transpa
 appearance:none;cursor:pointer;border:0;
 display:inline-flex;align-items:center;justify-content:center;
 min-height:3rem;padding:0.25rem 1.5rem;border-radius:0.75rem;
-background:var(--vibeui-cta-003-accent);color:var(--vibeui-cta-003-accent-fg);
+background:var(--vibeui-cta-003-accent);color:oklch(from var(--vibeui-cta-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:1rem;font-weight:640;white-space:nowrap;
 transition:background-color .18s ease;
 }

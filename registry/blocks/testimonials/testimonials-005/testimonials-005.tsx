@@ -35,7 +35,7 @@ const STYLES = `
 --vibeui-testimonials-005-ink:light-dark(oklch(0.21 0.016 80),oklch(0.95 0.008 85));
 --vibeui-testimonials-005-muted:light-dark(oklch(0.49 0.016 80),oklch(0.72 0.014 85));
 --vibeui-testimonials-005-border:light-dark(oklch(0.9 0.01 85),oklch(0.35 0.014 85));
---vibeui-testimonials-005-accent:light-dark(oklch(0.74 0.16 39.8),oklch(0.8 0.15 39.8));
+--vibeui-testimonials-005-accent:light-dark(oklch(0.335 0 0),oklch(0.914 0 0));
 --vibeui-testimonials-005-empty:light-dark(oklch(0.88 0.01 85),oklch(0.4 0.014 85));
 --vibeui-testimonials-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -74,7 +74,7 @@ width:1rem;height:1rem;flex:none;
 clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
 background:var(--vibeui-testimonials-005-empty);
 }
-[data-vibeui-block="testimonials-005"] [data-part="star"][data-filled="full"]{background:var(--vibeui-testimonials-005-accent)}
+[data-vibeui-block="testimonials-005"] [data-part="star"][data-filled="full"]{background:var(--vibeui-testimonials-005-accent);color:oklch(from var(--vibeui-testimonials-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="testimonials-005"] [data-part="star"][data-filled="half"]{
 background:linear-gradient(90deg,var(--vibeui-testimonials-005-accent) 50%,var(--vibeui-testimonials-005-empty) 50%);
 }

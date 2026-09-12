@@ -41,7 +41,7 @@ const STYLES = `
 --vibeui-input-013-muted:color-mix(in oklab,var(--vibeui-input-013-fg) 68%,transparent);
 --vibeui-input-013-field:light-dark(oklch(0.985 0 265),oklch(0.27 0 265));
 --vibeui-input-013-border:light-dark(oklch(0.88 0 265),oklch(0.41 0 265));
---vibeui-input-013-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.72 0.15 39.8));
+--vibeui-input-013-accent:light-dark(oklch(0.275 0 0),oklch(0.899 0 0));
 --vibeui-input-013-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 300));
 --vibeui-input-013-bad:light-dark(oklch(0.55 0.2 25),oklch(0.73 0.16 25));
 --vibeui-input-013-ok:light-dark(oklch(0.48 0.13 155),oklch(0.76 0.13 155));
@@ -82,7 +82,7 @@ text-transform:uppercase;
 [data-vibeui-block="input-013"] [data-part="apply"]{
 appearance:none;flex:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
 min-height:2.5rem;padding:0.25rem 0.875rem;border:0;border-radius:0.75rem;
-background:var(--vibeui-input-013-accent);color:var(--vibeui-input-013-on-accent);
+background:var(--vibeui-input-013-accent);color:oklch(from var(--vibeui-input-013-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.8125rem;font-weight:650;
 transition:opacity .16s ease,filter .16s ease;
 }

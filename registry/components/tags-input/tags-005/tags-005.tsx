@@ -44,9 +44,9 @@ const STYLES = `
 --vibeui-tags-005-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-tags-005-muted:color-mix(in oklab,var(--vibeui-tags-005-fg) 68%,transparent);
 --vibeui-tags-005-border:light-dark(oklch(0.88 0 265),oklch(0.38 0 265));
---vibeui-tags-005-chip:light-dark(oklch(0.55 0.15 39.8 / 14%),oklch(0.75 0.15 39.8 / 22%));
---vibeui-tags-005-accent:light-dark(oklch(0.48 0.15 39.8),oklch(0.78 0.14 39.8));
---vibeui-tags-005-ring:light-dark(oklch(0.48 0.15 39.8 / 18%),oklch(0.78 0.14 39.8 / 28%));
+--vibeui-tags-005-chip:light-dark(oklch(0 0 0 / 7%),oklch(1 0 0 / 10%));
+--vibeui-tags-005-accent:light-dark(oklch(0.27 0 0),oklch(0.91 0 0));
+--vibeui-tags-005-ring:light-dark(oklch(0.27 0 0 / 18%),oklch(0.91 0 0 / 28%));
 --vibeui-tags-005-key:light-dark(oklch(0.96 0 265),oklch(0.3 0 265));
 --vibeui-tags-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-tags-005-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -76,7 +76,7 @@ box-shadow:0 0 0 2px var(--vibeui-tags-005-ring);
 [data-vibeui-block="tags-005"] [data-part="chip"]{
 display:inline-flex;align-items:center;gap:0.25rem;
 max-width:100%;height:1.75rem;padding:0 0.25rem 0 0.5rem;border-radius:0.4375rem;
-background:var(--vibeui-tags-005-chip);color:var(--vibeui-tags-005-accent);
+background:var(--vibeui-tags-005-chip);color:var(--vibeui-tags-005-fg);
 font-size:0.8125rem;font-weight:600;
 }
 /* Длинный адрес обрезается, а не растягивает поле в одну строку. */

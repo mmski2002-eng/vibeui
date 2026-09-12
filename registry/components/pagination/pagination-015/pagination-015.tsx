@@ -42,7 +42,7 @@ const STYLES = `
 --vibeui-pagination-015-field:light-dark(oklch(0.97 0 265),oklch(0.29 0 265));
 --vibeui-pagination-015-hover:light-dark(oklch(0.55 0 265 / 8%),oklch(0.86 0 265 / 14%));
 --vibeui-pagination-015-bad:light-dark(oklch(0.58 0.19 26),oklch(0.74 0.16 26));
---vibeui-pagination-015-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.17 39.8));
+--vibeui-pagination-015-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-pagination-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

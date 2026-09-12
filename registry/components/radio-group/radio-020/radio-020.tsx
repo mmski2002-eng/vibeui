@@ -29,7 +29,7 @@ const STYLES = `
 --vibeui-radio-020-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-radio-020-muted:color-mix(in oklab,var(--vibeui-radio-020-fg) 62%,transparent);
 --vibeui-radio-020-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 14%));
---vibeui-radio-020-accent:light-dark(oklch(0.64 0.2144 39.8),oklch(0.6803 0.2144 39.8));
+--vibeui-radio-020-accent:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
 --vibeui-radio-020-size:34px;
 --vibeui-radio-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -113,7 +113,7 @@ opacity:1;transform:scale(1);
 `
 
 const SWATCHES = [
-  { id: "amber", color: "#FF5900" },
+  { id: "amber", color: "light-dark(#1a1a1a,#f2f2f2)" },
   { id: "graphite", color: "#17181A" },
   { id: "paper", color: "#FFFFFF" },
   { id: "stone", color: "#9A9A96" },

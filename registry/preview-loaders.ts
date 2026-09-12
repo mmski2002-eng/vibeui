@@ -13,8 +13,6 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/block/hero")).PREVIEWS
     case "block/navbar":
       return (await import("@/registry/previews/block/navbar")).PREVIEWS
-    case "block/features":
-      return (await import("@/registry/previews/block/features")).PREVIEWS
     case "block/pricing":
       return (await import("@/registry/previews/block/pricing")).PREVIEWS
     case "block/testimonials":
@@ -25,8 +23,6 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/block/cta")).PREVIEWS
     case "block/footer":
       return (await import("@/registry/previews/block/footer")).PREVIEWS
-    case "block/layout":
-      return (await import("@/registry/previews/block/layout")).PREVIEWS
     case "block/auth":
       return (await import("@/registry/previews/block/auth")).PREVIEWS
     case "block/blog":
@@ -43,8 +39,6 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/block/cases")).PREVIEWS
     case "block/changelog":
       return (await import("@/registry/previews/block/changelog")).PREVIEWS
-    case "block/roadmap":
-      return (await import("@/registry/previews/block/roadmap")).PREVIEWS
     case "block/careers":
       return (await import("@/registry/previews/block/careers")).PREVIEWS
     case "block/comparison":
@@ -157,6 +151,8 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/component/kbd")).PREVIEWS
     case "component/label":
       return (await import("@/registry/previews/component/label")).PREVIEWS
+    case "component/mockup":
+      return (await import("@/registry/previews/component/mockup")).PREVIEWS
     case "component/native-select":
       return (await import("@/registry/previews/component/native-select")).PREVIEWS
     case "component/navigation-menu":

@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-nativeselect-006-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-nativeselect-006-muted:color-mix(in oklab,var(--vibeui-nativeselect-006-fg) 68%,transparent);
 --vibeui-nativeselect-006-field-border:light-dark(oklch(0.85 0 265),oklch(0.42 0 265));
---vibeui-nativeselect-006-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.17 39.8));
+--vibeui-nativeselect-006-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-nativeselect-006-error:light-dark(oklch(0.55 0.2 25),oklch(0.74 0.16 25));
 --vibeui-nativeselect-006-radius:0.625rem;
 --vibeui-nativeselect-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

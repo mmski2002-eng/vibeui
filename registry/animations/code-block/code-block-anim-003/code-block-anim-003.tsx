@@ -90,8 +90,7 @@ animation:vibeui-code-block-anim-003-type 5.5s linear infinite;
 [data-vibeui-block="code-block-anim-003"] [data-part="caret"]{
 display:inline-block;width:0.5em;height:1em;margin-left:1px;vertical-align:-0.12em;flex:none;
 background:var(--vibeui-code-block-anim-003-accent);
-animation:vibeui-code-block-anim-003-blink 1s steps(1,end) infinite;
-}
+animation:vibeui-code-block-anim-003-blink 1s steps(1,end) infinite;color:oklch(from var(--vibeui-code-block-anim-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="code-block-anim-003"] [data-part="output"]{margin-top:0.5rem;display:flex;flex-direction:column;gap:0.1875rem}
 [data-vibeui-block="code-block-anim-003"] [data-part="line"]{
 color:var(--vibeui-code-block-anim-003-muted);opacity:0;transform:translateY(4px);

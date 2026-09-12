@@ -39,7 +39,7 @@ const STYLES = `
 --vibeui-togglegroup-010-muted:color-mix(in oklab,var(--vibeui-togglegroup-010-fg) 68%,transparent);
 --vibeui-togglegroup-010-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
 --vibeui-togglegroup-010-surface:light-dark(oklch(0.97 0 265),oklch(0.26 0 265));
---vibeui-togglegroup-010-accent:light-dark(oklch(0.56 0.19 39.8),oklch(0.74 0.16 39.8));
+--vibeui-togglegroup-010-accent:light-dark(oklch(0.29 0 0),oklch(0.903 0 0));
 --vibeui-togglegroup-010-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.02 320));
 --vibeui-togglegroup-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-togglegroup-010-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -75,7 +75,7 @@ transition:background-color .15s ease,color .15s ease;
 outline:2px solid var(--vibeui-togglegroup-010-accent);outline-offset:2px;
 }
 [data-vibeui-block="togglegroup-010"] button[aria-pressed="true"]{
-background:var(--vibeui-togglegroup-010-accent);color:var(--vibeui-togglegroup-010-accent-fg);
+background:var(--vibeui-togglegroup-010-accent);color:oklch(from var(--vibeui-togglegroup-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="togglegroup-010"] [data-part="count"]{
 margin:0;font-size:0.75rem;color:var(--vibeui-togglegroup-010-muted);

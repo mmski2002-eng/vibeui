@@ -28,7 +28,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "image": "/demo/people/person-01.webp"
           }
@@ -167,7 +167,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Career002",
@@ -298,7 +298,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "image": "/demo/places/place-04.webp"
           }

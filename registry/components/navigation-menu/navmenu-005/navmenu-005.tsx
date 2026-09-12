@@ -45,7 +45,7 @@ const STYLES = `
 --vibeui-navmenu-005-muted:color-mix(in oklab,var(--vibeui-navmenu-005-fg) 68%,transparent);
 --vibeui-navmenu-005-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-navmenu-005-hover:light-dark(oklch(0.55 0 265 / 8%),oklch(0.85 0 265 / 12%));
---vibeui-navmenu-005-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.74 0.16 39.8));
+--vibeui-navmenu-005-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-navmenu-005-sheen:light-dark(oklch(1 0 0 / 70%),oklch(1 0 0 / 12%));
 --vibeui-navmenu-005-shot-fg:light-dark(oklch(0.24 0 265),oklch(0.22 0 265));
 --vibeui-navmenu-005-shot-text:light-dark(oklch(0.45 0 265),oklch(0.4 0 265));

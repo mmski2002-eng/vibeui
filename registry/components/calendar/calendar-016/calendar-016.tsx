@@ -39,8 +39,8 @@ const STYLES = `
 --vibeui-calendar-016-muted:color-mix(in oklab,var(--vibeui-calendar-016-fg) 68%,transparent);
 --vibeui-calendar-016-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-calendar-016-track:light-dark(oklch(0.95 0 265),oklch(0.3 0 265));
---vibeui-calendar-016-accent:light-dark(oklch(0.55 0.15 39.8),oklch(0.72 0.13 39.8));
---vibeui-calendar-016-full:light-dark(oklch(0.56 0.16 39.8),oklch(0.74 0.14 39.8));
+--vibeui-calendar-016-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
+--vibeui-calendar-016-full:light-dark(oklch(0.29 0 0),oklch(0.903 0 0));
 --vibeui-calendar-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -90,8 +90,7 @@ background:var(--vibeui-calendar-016-track);
 [data-vibeui-block="calendar-016"] [data-part="bar"] i{
 display:block;height:100%;border-radius:inherit;
 width:calc(var(--vibeui-calendar-016-fill,0) * 1%);
-background:var(--vibeui-calendar-016-accent);
-}
+background:var(--vibeui-calendar-016-accent);color:oklch(from var(--vibeui-calendar-016-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 /* Перегруз красится отдельным тоном: «занят на 100%» и «занят сверх нормы»
    — разные новости для того, кто раздаёт задачи. */
 [data-vibeui-block="calendar-016"] [data-part="cell"][data-state="full"] [data-part="bar"] i{background:var(--vibeui-calendar-016-full)}
@@ -110,7 +109,7 @@ font-size:0.75rem;color:var(--vibeui-calendar-016-muted);
 [data-vibeui-block="calendar-016"] [data-part="legend"] i{
 width:0.75rem;height:0.4375rem;border-radius:0.25rem;background:var(--vibeui-calendar-016-track);
 }
-[data-vibeui-block="calendar-016"] [data-part="legend"] i[data-tone="busy"]{background:var(--vibeui-calendar-016-accent)}
+[data-vibeui-block="calendar-016"] [data-part="legend"] i[data-tone="busy"]{background:var(--vibeui-calendar-016-accent);color:oklch(from var(--vibeui-calendar-016-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="calendar-016"] [data-part="legend"] i[data-tone="full"]{background:var(--vibeui-calendar-016-full)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="calendar-016"] *{animation:none!important;transition:none!important}}
 `

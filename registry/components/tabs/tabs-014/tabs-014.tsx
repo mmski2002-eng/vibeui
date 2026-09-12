@@ -35,7 +35,7 @@ const STYLES = `
 --vibeui-tabs-014-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-tabs-014-muted:color-mix(in oklab,var(--vibeui-tabs-014-fg) 68%,transparent);
 --vibeui-tabs-014-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
---vibeui-tabs-014-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.74 0.17 39.8));
+--vibeui-tabs-014-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-tabs-014-badge:light-dark(oklch(0.56 0.19 25),oklch(0.62 0.19 25));
 --vibeui-tabs-014-badge-fg:oklch(1 0 0);
 --vibeui-tabs-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -64,8 +64,7 @@ font-size:0.6875rem;line-height:1.1;
 [data-vibeui-block="tabs-014"] [data-part="item"][aria-current="page"]::before{
 content:"";position:absolute;top:0.375rem;
 width:0.25rem;height:0.25rem;border-radius:9999px;
-background:var(--vibeui-tabs-014-accent);
-}
+background:var(--vibeui-tabs-014-accent);color:oklch(from var(--vibeui-tabs-014-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="tabs-014"] [data-part="glyph"]{
 position:relative;
 width:1.25rem;height:1.25rem;border-radius:0.4375rem;

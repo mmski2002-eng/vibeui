@@ -45,7 +45,7 @@ const STYLES = `
 --vibeui-command-010-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-command-010-muted:color-mix(in oklab,var(--vibeui-command-010-fg) 68%,transparent);
 --vibeui-command-010-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
---vibeui-command-010-accent:light-dark(oklch(0.58 0.16 39.8),oklch(0.78 0.12 39.8));
+--vibeui-command-010-accent:light-dark(oklch(0.295 0 0),oklch(0.91 0 0));
 --vibeui-command-010-ghost:light-dark(oklch(0.55 0 265 / 10%),oklch(0.88 0 265 / 12%));
 --vibeui-command-010-ghost-lit:light-dark(oklch(0.55 0 265 / 20%),oklch(0.88 0 265 / 24%));
 --vibeui-command-010-shadow:light-dark(oklch(0.2 0 265 / 60%),oklch(0.04 0 265 / 70%));
@@ -76,8 +76,7 @@ background:color-mix(in oklab,var(--vibeui-command-010-accent) 18%,transparent);
 [data-vibeui-block="command-010"] [data-part="bar"]::after{
 content:"";position:absolute;inset:0 auto 0 0;width:40%;
 background:var(--vibeui-command-010-accent);
-animation:vibeui-command-010-slide 1s linear infinite;
-}
+animation:vibeui-command-010-slide 1s linear infinite;color:oklch(from var(--vibeui-command-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @keyframes vibeui-command-010-slide{
 from{transform:translateX(-100%)}
 to{transform:translateX(350%)}

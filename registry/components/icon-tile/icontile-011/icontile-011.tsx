@@ -38,7 +38,7 @@ container-type:inline-size;
 --vibeui-icontile-011-muted:color-mix(in oklab,var(--vibeui-icontile-011-fg) 68%,transparent);
 --vibeui-icontile-011-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-icontile-011-surface:transparent;
---vibeui-icontile-011-dot:light-dark(oklch(0.6 0.16 39.8),oklch(0.74 0.16 39.8));
+--vibeui-icontile-011-dot:light-dark(oklch(0.3 0 0),oklch(0.903 0 0));
 --vibeui-icontile-011-fill:light-dark(oklch(0.93 var(--vibeui-icontile-011-chroma) var(--vibeui-icontile-011-hue)),oklch(0.34 calc(var(--vibeui-icontile-011-chroma) * 1.2) var(--vibeui-icontile-011-hue)));
 --vibeui-icontile-011-mark:light-dark(oklch(0.4 calc(var(--vibeui-icontile-011-chroma) * 4) var(--vibeui-icontile-011-hue)),oklch(0.88 calc(var(--vibeui-icontile-011-chroma) * 2.2) var(--vibeui-icontile-011-hue)));
 --vibeui-icontile-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

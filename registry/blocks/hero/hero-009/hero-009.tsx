@@ -1,3 +1,6 @@
+"use client"
+
+import { useEffect, useRef } from "react"
 import type { CSSProperties } from "react"
 
 export type Hero009Stat = {
@@ -16,6 +19,10 @@ export type Hero009Props = {
   accent?: string
   /** Пусто — подложки нет, секция ложится на фон страницы. */
   background?: string
+  /** Числа набегают от нуля, когда секция попадает в кадр. */
+  countUp?: boolean
+  /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
+  tone?: "auto" | "light" | "dark"
   className?: string
   style?: CSSProperties
 }
@@ -31,14 +38,16 @@ const STYLES = `
 --vibeui-hero-009-fg:light-dark(oklch(0.2 0.014 85),oklch(0.95 0.006 85));
 --vibeui-hero-009-muted:light-dark(oklch(0.5 0.014 85),oklch(0.73 0.012 85));
 --vibeui-hero-009-line:light-dark(oklch(0.88 0.01 85),oklch(0.37 0.011 85));
---vibeui-hero-009-accent:light-dark(oklch(0.55 0.11 39.8),oklch(0.72 0.13 39.8));
---vibeui-hero-009-accent-fg:oklch(0.15 0.02 39.8);
+--vibeui-hero-009-accent:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
+--vibeui-hero-009-accent-fg:oklch(from var(--vibeui-hero-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-009-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="hero-009"]{color-scheme:dark}
+:where([data-vibeui-block="hero-009"][data-tone="light"]){color-scheme:light}
+:where([data-vibeui-block="hero-009"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="hero-009"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -64,7 +73,7 @@ color:var(--vibeui-hero-009-muted);text-wrap:pretty;
 }
 [data-vibeui-block="hero-009"] a{
 display:inline-flex;align-items:center;justify-content:center;margin-top:1.75rem;height:2.75rem;padding:0 1.5rem;
-border-radius:0.5rem;background:var(--vibeui-hero-009-accent);color:var(--vibeui-hero-009-accent-fg);
+border-radius:0.5rem;background:var(--vibeui-hero-009-accent);color:oklch(from var(--vibeui-hero-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.9375rem;font-weight:600;text-decoration:none;transition:background-color .16s ease;
 }
 [data-vibeui-block="hero-009"] a:hover{background:color-mix(in oklab,var(--vibeui-hero-009-accent) 86%,black)}
@@ -124,6 +133,13 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
+/** Число внутри строки значения: «1 080» → 1080, «12,4k» → null (не считаем). */
+function countValue(value: string): number | undefined {
+  const digits = value.replace(/[\s  ]/g, "")
+
+  return /^\d+$/.test(digits) ? Number(digits) : undefined
+}
+
 /** Hero со счётчиками: узкая колонка текста и три крупные цифры на линиях. */
 export function Hero009({
   eyebrow = "Цифры за год",
@@ -132,11 +148,71 @@ export function Hero009({
   primary = { label: "Посмотреть каталог", href: "#" },
   stats = DEFAULT_STATS,
   footnote = "Данные за период с января по декабрь, по проектам с включённой телеметрией.",
+  countUp = true,
   accent,
   background = "",
+  tone = "auto",
   className,
   style,
 }: Hero009Props) {
+  const sectionRef = useRef<HTMLElement>(null)
+
+  // Числа набегают один раз, когда секция попадает в кадр: до этого в разметке
+  // стоит конечное значение, поэтому без JS и в поиске цифра сразу верная.
+  useEffect(() => {
+    const section = sectionRef.current
+
+    if (!countUp || !section) return
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+    const cells = [...section.querySelectorAll<HTMLElement>("[data-count]")]
+    if (cells.length === 0) return
+
+    let frame = 0
+
+    const run = () => {
+      const started = performance.now()
+      const targets = cells.map((cell) => ({
+        cell,
+        to: Number(cell.dataset.count),
+        text: cell.textContent ?? "",
+      }))
+
+      const step = (now: number) => {
+        const t = Math.min(1, (now - started) / 1100)
+        // easeOutExpo: быстрый разгон и мягкая остановка на итоговом числе
+        const eased = t === 1 ? 1 : 1 - Math.pow(2, -10 * t)
+
+        for (const item of targets) {
+          const current = Math.round(item.to * eased)
+          item.cell.textContent =
+            t === 1 ? item.text : current.toLocaleString("ru-RU")
+        }
+
+        if (t < 1) frame = requestAnimationFrame(step)
+      }
+
+      for (const item of targets) item.cell.textContent = "0"
+      frame = requestAnimationFrame(step)
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return
+        observer.disconnect()
+        run()
+      },
+      { threshold: 0.35 },
+    )
+
+    observer.observe(section)
+
+    return () => {
+      observer.disconnect()
+      cancelAnimationFrame(frame)
+    }
+  }, [countUp, stats])
+
   const palette = {
     ...(accent ? { "--vibeui-hero-009-accent": accent } : null),
     ...(background
@@ -154,7 +230,9 @@ export function Hero009({
         {STYLES}
       </style>
       <section
+        ref={sectionRef}
         data-vibeui-block="hero-009"
+        data-tone={tone === "auto" ? undefined : tone}
         className={className}
         style={palette}
       >
@@ -171,7 +249,7 @@ export function Hero009({
               {stats.slice(0, 4).map((stat) => (
                 <div key={stat.label} data-part="stat">
                   <dd>
-                    {stat.value}
+                    <span data-count={countValue(stat.value)}>{stat.value}</span>
                     {stat.unit ? (
                       <span data-part="unit">{stat.unit}</span>
                     ) : null}

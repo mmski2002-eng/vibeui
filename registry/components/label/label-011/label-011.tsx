@@ -31,7 +31,7 @@ const STYLES = `
 --vibeui-label-011-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-label-011-muted:color-mix(in oklab,var(--vibeui-label-011-fg) 68%,transparent);
 --vibeui-label-011-item-border:light-dark(oklch(0.88 0 265),oklch(0.38 0 265));
---vibeui-label-011-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.74 0.16 39.8));
+--vibeui-label-011-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-label-011-radius:0.625rem;
 --vibeui-label-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -91,8 +91,7 @@ background:var(--vibeui-label-011-surface);cursor:inherit;
 transition:border-color .16s ease,background-color .16s ease;
 }
 [data-vibeui-block="label-011"] input:checked{
-border-color:var(--vibeui-label-011-accent);background:var(--vibeui-label-011-accent);
-}
+border-color:var(--vibeui-label-011-accent);background:var(--vibeui-label-011-accent);color:oklch(from var(--vibeui-label-011-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="label-011"] *{animation:none!important;transition:none!important}}
 `
 

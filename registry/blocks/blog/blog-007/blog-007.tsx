@@ -35,9 +35,9 @@ const STYLES = `
 --vibeui-blog-007-ink:light-dark(oklch(0.17 0 0),oklch(0.95 0 0));
 --vibeui-blog-007-muted:light-dark(oklch(0.46 0 0),oklch(0.71 0 0));
 --vibeui-blog-007-border:light-dark(oklch(0.9 0 0),oklch(0.33 0 0));
---vibeui-blog-007-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-blog-007-fill:light-dark(oklch(0.64 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-blog-007-fill-ink:oklch(0.15 0.02 39.8);
+--vibeui-blog-007-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
+--vibeui-blog-007-fill:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
+--vibeui-blog-007-fill-ink:oklch(0.15 0 0);
 --vibeui-blog-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -60,7 +60,9 @@ font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase
 margin:0 0 2rem;max-width:22ch;
 font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
 }
-[data-vibeui-block="blog-007"] [data-part="grid"]{display:grid;gap:1rem}
+/* Сетка сама набирает максимум колонок под ширину: чем уже карточка, тем
+   больше выпусков в ряд. */
+[data-vibeui-block="blog-007"] [data-part="grid"]{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(11rem,1fr))}
 [data-vibeui-block="blog-007"] [data-part="card"]{
 position:relative;min-inline-size:0;
 display:flex;flex-direction:column;
@@ -77,7 +79,7 @@ outline:2px solid var(--vibeui-blog-007-accent);outline-offset:2px;
 }
 [data-vibeui-block="blog-007"] [data-part="cover"]{
 position:relative;display:flex;align-items:flex-end;justify-content:space-between;gap:0.75rem;
-aspect-ratio:16/9;padding:1rem 1.25rem;
+aspect-ratio:16/10;padding:1rem 1.25rem;
 color:var(--vibeui-blog-007-fill-ink);overflow:hidden;
 }
 /* Подложка — только когда фотографии нет: компонент обязан
@@ -85,7 +87,7 @@ color:var(--vibeui-blog-007-fill-ink);overflow:hidden;
 [data-vibeui-block="blog-007"] [data-part="cover"][data-empty="true"]{background:linear-gradient(135deg,
 color-mix(in oklab,var(--vibeui-blog-007-fill) 72%,oklch(1 0 0)) 0%,
 var(--vibeui-blog-007-fill) 55%,
-color-mix(in oklab,var(--vibeui-blog-007-fill) 74%,oklch(0.15 0.02 39.8)) 100%);}
+color-mix(in oklab,var(--vibeui-blog-007-fill) 74%,oklch(0.15 0 0)) 100%);}
 [data-vibeui-block="blog-007"] [data-part="cover"] img{
 position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
@@ -123,10 +125,7 @@ color:var(--vibeui-blog-007-muted);font-size:0.75rem;font-weight:600;
 }
 @container (min-width: 40rem){
 [data-vibeui-block="blog-007"] [data-part="shell"]{padding:4.5rem 2rem}
-[data-vibeui-block="blog-007"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}
-}
-@container (min-width: 64rem){
-[data-vibeui-block="blog-007"] [data-part="grid"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+[data-vibeui-block="blog-007"] [data-part="grid"]{gap:1.25rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="blog-007"] *{animation:none!important;transition:none!important}}
 `

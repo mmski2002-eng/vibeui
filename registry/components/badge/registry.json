@@ -1342,7 +1342,7 @@
           "summary": "Плашка приоритета: столбик из четырёх полосок и подпись словом. Степень читается формой, а не цветом. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-badge-010-* и не подменять её токенами вашей темы",
-            "полоски как основной признак: красный от оранжевого в длинном списке не отличить",
+            "полоски как основной признак: красный от акцентного в длинном списке не отличить",
             "подпись словом рядом — полоски уточняют степень, но не называют её",
             "правило «первый уровень — самый высокий»: обратный порядок сбивает читателя",
             "aria-label с уровнем и общим числом ступеней",
@@ -1405,7 +1405,7 @@
               "summary": "A priority badge: a column of four bars plus a word. The level reads from shape rather than colour. Zero dependencies, one file, no client JS.",
               "preserve": [
                 "the local --vibeui-badge-010-* palette — do not swap it for your theme tokens",
-                "the bars as the primary cue: red and orange are indistinguishable down a long list",
+                "the bars as the primary cue: red and accent are indistinguishable down a long list",
                 "the word next to them — bars qualify the level, they do not name it",
                 "the rule that level one is the highest: reversing it confuses readers",
                 "the aria-label carrying the level and the total number of steps",

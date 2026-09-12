@@ -27,7 +27,7 @@ const STYLES = `
 appearance:none;border:0;cursor:pointer;box-sizing:border-box;
 display:inline-flex;align-items:center;gap:0.5rem;
 height:2.5rem;padding:0 0.75rem 0 0.6875rem;border-radius:var(--vibeui-button-036-radius);
-background:var(--vibeui-button-036-accent);color:var(--vibeui-button-036-fg);
+background:var(--vibeui-button-036-accent);color:oklch(from var(--vibeui-button-036-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-family:var(--vibeui-button-036-font);font-size:0.875rem;font-weight:600;line-height:1;
 transition:filter .16s ease;
 }

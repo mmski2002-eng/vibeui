@@ -29,7 +29,7 @@ export type Button037Props = Omit<
 // свой transition-delay, поэтому стопка читается как раскрытие, а не рывок.
 const STYLES = `
 :where([data-vibeui-block="button-037"]){
---vibeui-button-037-accent:light-dark(oklch(0.56 0.2 39.8),oklch(0.66 0.19 39.8));
+--vibeui-button-037-accent:light-dark(oklch(0.29 0 0),oklch(0.888 0 0));
 --vibeui-button-037-fg:light-dark(oklch(0.99 0.01 25),oklch(0.98 0.014 25));
 --vibeui-button-037-surface:light-dark(oklch(1 0 0),oklch(0.25 0 265));
 --vibeui-button-037-ink:light-dark(oklch(0.26 0 265),oklch(0.93 0 265));
@@ -48,7 +48,7 @@ font-family:var(--vibeui-button-037-font);
 appearance:none;border:0;cursor:pointer;
 display:inline-flex;align-items:center;justify-content:center;
 width:var(--vibeui-button-037-size);height:var(--vibeui-button-037-size);
-border-radius:50%;background:var(--vibeui-button-037-accent);color:var(--vibeui-button-037-fg);
+border-radius:50%;background:var(--vibeui-button-037-accent);color:oklch(from var(--vibeui-button-037-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 box-shadow:0 14px 28px -14px color-mix(in oklab,var(--vibeui-button-037-accent) 75%,transparent);
 transition:filter .16s ease;
 }
@@ -115,8 +115,7 @@ transition:border-color .16s ease,color .16s ease;
 [data-vibeui-dial="button-037"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-button-037-accent);outline-offset:2px}
 [data-vibeui-dial="button-037"] [data-part="bullet"]{
 flex:none;width:0.4375rem;height:0.4375rem;border-radius:50%;
-background:var(--vibeui-button-037-accent);
-}
+background:var(--vibeui-button-037-accent);color:oklch(from var(--vibeui-button-037-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="button-037"] *{animation:none!important;transition:none!important}}
 `
 

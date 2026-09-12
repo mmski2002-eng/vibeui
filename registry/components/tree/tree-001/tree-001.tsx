@@ -29,7 +29,7 @@ const STYLES = `
 --vibeui-tree-001-muted:color-mix(in oklab,var(--vibeui-tree-001-fg) 68%,transparent);
 --vibeui-tree-001-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-tree-001-hover:light-dark(oklch(0.97 0 265),oklch(0.29 0 265));
---vibeui-tree-001-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-tree-001-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-tree-001-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

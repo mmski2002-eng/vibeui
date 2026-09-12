@@ -25,7 +25,7 @@ const STYLES = `
 --vibeui-calendar-011-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-calendar-011-muted:color-mix(in oklab,var(--vibeui-calendar-011-fg) 68%,transparent);
 --vibeui-calendar-011-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
---vibeui-calendar-011-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.72 0.15 39.8));
+--vibeui-calendar-011-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-calendar-011-on-accent:light-dark(oklch(0.99 0 265),oklch(0.19 0 265));
 --vibeui-calendar-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -80,7 +80,7 @@ color:var(--vibeui-calendar-011-muted);
 /* Отметка — заливка целой клетки, а не точка: на миниатюре точка в шесть
    пикселей теряется, а плотность месяца перестаёт читаться. */
 [data-vibeui-block="calendar-011"] [data-part="day"][data-mark="true"]{
-background:var(--vibeui-calendar-011-accent);color:var(--vibeui-calendar-011-on-accent);font-weight:650;
+background:var(--vibeui-calendar-011-accent);color:oklch(from var(--vibeui-calendar-011-accent) clamp(0,(0.62 - l) * 100,1) 0 0);font-weight:650;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="calendar-011"] *{animation:none!important;transition:none!important}}
 `

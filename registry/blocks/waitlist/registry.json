@@ -19,7 +19,7 @@
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-waitlist-001-*. Клиентский компонент: отправка формы — заглушка, по submit поле сменяется сообщением об успехе через состояние. Счётчик под формой подтверждает живость списка. Сообщение выводится с role=\"status\".",
       "meta": {
         "tags": ["waitlist", "signup", "early-access", "email", "marketing"],
-        "preview": { "width": "full", "surface": "light" },
+        "preview": { "width": "natural", "surface": "light" },
         "ai": {
           "export": "Waitlist001",
           "usage": "<Waitlist001\n  title=\"Список ожидания\"\n  count={2400}\n  countNote=\"уже в очереди\"\n/>",
@@ -103,7 +103,7 @@
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-waitlist-002-*. Клиентский компонент (форма гасит submit). Отсчёт — статичные плитки из пропса units, без JS-тикания: реальный таймер подключает приложение. Цифры моноширинные, единицы подписаны.",
       "meta": {
         "tags": ["waitlist", "countdown", "coming-soon", "launch", "marketing"],
-        "preview": { "width": "full", "surface": "light" },
+        "preview": { "width": "natural", "surface": "light" },
         "ai": {
           "export": "Waitlist002",
           "usage": "<Waitlist002\n  title=\"Мы почти готовы\"\n  units={[{ value: \"12\", label: \"дней\" }]}\n/>",
@@ -187,7 +187,7 @@
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-waitlist-003-*. Серверный компонент. Прогресс считается от (total - position) / total и выражается шириной заливки, у полосы role=\"progressbar\" с aria-valuenow. Ниже — реферальный код в пунктирной рамке с кнопкой копирования.",
       "meta": {
         "tags": ["waitlist", "queue", "referral", "position", "marketing"],
-        "preview": { "width": "full", "surface": "light" },
+        "preview": { "width": "natural", "surface": "light" },
         "ai": {
           "export": "Waitlist003",
           "usage": "<Waitlist003\n  position={1284}\n  total={5000}\n  referralCode=\"VIBE-1284\"\n/>",

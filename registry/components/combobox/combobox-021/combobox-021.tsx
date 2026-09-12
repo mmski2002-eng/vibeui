@@ -38,8 +38,8 @@ const STYLES = `
 --vibeui-combobox-021-muted:color-mix(in oklab,var(--vibeui-combobox-021-fg) 68%,transparent);
 --vibeui-combobox-021-border:light-dark(oklch(0.9 0.01 20),oklch(0.35 0.014 20));
 --vibeui-combobox-021-field:light-dark(oklch(0.985 0.004 20),oklch(0.27 0.012 20));
---vibeui-combobox-021-active:light-dark(oklch(0.95 0.035 39.8),oklch(0.33 0.045 39.8));
---vibeui-combobox-021-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.76 0.15 39.8));
+--vibeui-combobox-021-active:light-dark(oklch(0.95 0 0),oklch(0.33 0 0));
+--vibeui-combobox-021-accent:light-dark(oklch(0.287 0 0),oklch(0.906 0 0));
 --vibeui-combobox-021-radius:0.625rem;
 --vibeui-combobox-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

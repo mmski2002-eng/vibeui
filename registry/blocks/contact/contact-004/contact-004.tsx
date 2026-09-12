@@ -45,8 +45,8 @@ const STYLES = `
 --vibeui-contact-004-fg:light-dark(oklch(0.2 0 265),oklch(0.94 0 265));
 --vibeui-contact-004-muted:light-dark(oklch(0.52 0 265),oklch(0.72 0 265));
 --vibeui-contact-004-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
---vibeui-contact-004-accent:light-dark(oklch(0.55 0.15 39.8),oklch(0.76 0.12 39.8));
---vibeui-contact-004-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-contact-004-accent:light-dark(oklch(0.287 0 0),oklch(0.906 0 0));
+--vibeui-contact-004-on-accent:oklch(from var(--vibeui-contact-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-contact-004-alarm:light-dark(oklch(0.55 0.19 25),oklch(0.73 0.16 25));
 --vibeui-contact-004-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -100,7 +100,7 @@ transition:transform .18s ease,opacity .18s ease;
 }
 [data-vibeui-block="contact-004"] [data-part="sign"]::after{transform:rotate(90deg)}
 [data-vibeui-block="contact-004"] details[open] [data-part="sign"]::after{opacity:0}
-[data-vibeui-block="contact-004"] details[open] [data-part="sign"]::before{background:var(--vibeui-contact-004-accent)}
+[data-vibeui-block="contact-004"] details[open] [data-part="sign"]::before{background:var(--vibeui-contact-004-accent);color:oklch(from var(--vibeui-contact-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="contact-004"] [data-part="answer"]{
 margin:0;padding:0 1rem 1rem;max-width:60ch;
 font-size:0.875rem;line-height:1.65;color:var(--vibeui-contact-004-muted);
@@ -136,7 +136,7 @@ position:static;width:auto;height:auto;clip-path:none;
 [data-vibeui-block="contact-004"] button{
 appearance:none;cursor:pointer;border:0;
 height:2.625rem;padding:0 1.125rem;border-radius:0.6875rem;
-background:var(--vibeui-contact-004-accent);color:var(--vibeui-contact-004-on-accent);
+background:var(--vibeui-contact-004-accent);color:oklch(from var(--vibeui-contact-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="contact-004"] [data-part="response"]{

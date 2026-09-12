@@ -15,10 +15,10 @@ export type Button038Props = ComponentProps<"button"> & {
 // уезжает в вертикальный центр двухстрочного текста.
 const STYLES = `
 :where([data-vibeui-block="button-038"]){
---vibeui-button-038-bg:light-dark(oklch(0.95 0.04 39.8),oklch(0.27 0.035 39.8));
---vibeui-button-038-border:light-dark(oklch(0.85 0.07 39.8),oklch(0.44 0.06 39.8));
---vibeui-button-038-fg:light-dark(oklch(0.32 0.07 39.8),oklch(0.93 0.03 39.8));
---vibeui-button-038-accent:light-dark(oklch(0.5 0.13 39.8),oklch(0.75 0.15 39.8));
+--vibeui-button-038-bg:light-dark(oklch(0.95 0 0),oklch(0.27 0 0));
+--vibeui-button-038-border:light-dark(oklch(0.85 0 0),oklch(0.44 0 0));
+--vibeui-button-038-fg:light-dark(oklch(0.32 0 0),oklch(0.93 0 0));
+--vibeui-button-038-accent:light-dark(oklch(0.275 0 0),oklch(0.905 0 0));
 --vibeui-button-038-width:18rem;
 --vibeui-button-038-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

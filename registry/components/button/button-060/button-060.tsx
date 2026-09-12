@@ -45,7 +45,7 @@ font-family:var(--vibeui-button-060-font);
 transition:border-color .16s ease,background-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="button-060"][data-active="true"]{
-background:var(--vibeui-button-060-accent);color:var(--vibeui-button-060-accent-fg);
+background:var(--vibeui-button-060-accent);color:oklch(from var(--vibeui-button-060-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 border-color:var(--vibeui-button-060-accent);
 }
 [data-vibeui-block="button-060"] button{

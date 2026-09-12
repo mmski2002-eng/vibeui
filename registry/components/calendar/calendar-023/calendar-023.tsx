@@ -42,8 +42,8 @@ const STYLES = `
 --vibeui-calendar-023-muted:color-mix(in oklab,var(--vibeui-calendar-023-fg) 68%,transparent);
 --vibeui-calendar-023-border:light-dark(oklch(0.91 0 285),oklch(0.35 0 285));
 --vibeui-calendar-023-soft:light-dark(oklch(0.97 0 285),oklch(0.29 0 285));
---vibeui-calendar-023-accent:light-dark(oklch(0.5 0.14 39.8),oklch(0.72 0.13 39.8));
---vibeui-calendar-023-accentsoft:light-dark(oklch(0.95 0.04 39.8),oklch(0.34 0.05 39.8));
+--vibeui-calendar-023-accent:light-dark(oklch(0.275 0 0),oklch(0.899 0 0));
+--vibeui-calendar-023-accentsoft:light-dark(oklch(0.95 0 0),oklch(0.34 0 0));
 --vibeui-calendar-023-warn:light-dark(oklch(0.58 0.13 55),oklch(0.78 0.12 55));
 --vibeui-calendar-023-offhours:" вне часов";
 --vibeui-calendar-023-radius:0.75rem;

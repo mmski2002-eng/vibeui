@@ -115,7 +115,7 @@ background:var(--vibeui-chat-002-bubble);color:var(--vibeui-chat-002-fg);
 border-bottom-left-radius:0.25rem;
 }
 [data-vibeui-block="chat-002"] [data-author="me"] [data-part="bubble"]{
-background:var(--vibeui-chat-002-accent);color:var(--vibeui-chat-002-accent-fg);
+background:var(--vibeui-chat-002-accent);color:oklch(from var(--vibeui-chat-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 border-bottom-right-radius:0.25rem;
 }
 [data-vibeui-block="chat-002"] [data-part="typing"]{

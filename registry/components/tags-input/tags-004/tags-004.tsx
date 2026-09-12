@@ -41,10 +41,10 @@ const STYLES = `
 --vibeui-tags-004-muted:color-mix(in oklab,var(--vibeui-tags-004-fg) 68%,transparent);
 --vibeui-tags-004-border:light-dark(oklch(0.88 0 265),oklch(0.38 0 265));
 --vibeui-tags-004-chip:light-dark(oklch(0.96 0 265),oklch(0.3 0 265));
---vibeui-tags-004-accent:light-dark(oklch(0.52 0.15 39.8),oklch(0.76 0.13 39.8));
---vibeui-tags-004-ring:light-dark(oklch(0.52 0.15 39.8 / 18%),oklch(0.76 0.13 39.8 / 28%));
+--vibeui-tags-004-accent:light-dark(oklch(0.28 0 0),oklch(0.906 0 0));
+--vibeui-tags-004-ring:light-dark(oklch(0.28 0 0 / 18%),oklch(0.906 0 0 / 28%));
 --vibeui-tags-004-warn:light-dark(oklch(0.58 0.18 30),oklch(0.78 0.16 30));
---vibeui-tags-004-flash:light-dark(oklch(0.58 0.18 39.8 / 18%),oklch(0.78 0.16 39.8 / 24%));
+--vibeui-tags-004-flash:light-dark(oklch(0.295 0 0 / 18%),oklch(0.91 0 0 / 24%));
 --vibeui-tags-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

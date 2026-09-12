@@ -49,7 +49,7 @@ const STYLES = `
 --vibeui-inputgroup-021-field:light-dark(oklch(0.99 0 265),oklch(0.26 0 265));
 --vibeui-inputgroup-021-fixed:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
 --vibeui-inputgroup-021-border:light-dark(oklch(0.86 0 265),oklch(0.4 0 265));
---vibeui-inputgroup-021-accent:light-dark(oklch(0.62 0.15 39.8),oklch(0.8 0.14 39.8));
+--vibeui-inputgroup-021-accent:light-dark(oklch(0.305 0 0),oklch(0.914 0 0));
 --vibeui-inputgroup-021-radius:0.75rem;
 --vibeui-inputgroup-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

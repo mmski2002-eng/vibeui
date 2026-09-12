@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-popover-002-muted:color-mix(in oklab,var(--vibeui-popover-002-fg) 68%,transparent);
 --vibeui-popover-002-border:light-dark(oklch(0.89 0 265),oklch(0.36 0 265));
 --vibeui-popover-002-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
---vibeui-popover-002-accent:light-dark(oklch(0.53 0.16 39.8),oklch(0.75 0.15 39.8));
+--vibeui-popover-002-accent:light-dark(oklch(0.282 0 0),oklch(0.905 0 0));
 --vibeui-popover-002-on-accent:light-dark(oklch(0.99 0.01 155),oklch(0.18 0.03 155));
 --vibeui-popover-002-shadow:light-dark(oklch(0.2 0 265 / 60%),oklch(0.02 0 265 / 72%));
 --vibeui-popover-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -48,7 +48,7 @@ font-family:var(--vibeui-popover-002-font);color:var(--vibeui-popover-002-fg);
 appearance:none;cursor:pointer;
 display:inline-flex;align-items:center;gap:0.4375rem;
 height:2.375rem;padding:0 1rem;border:0;border-radius:0.625rem;
-background:var(--vibeui-popover-002-accent);color:var(--vibeui-popover-002-on-accent);
+background:var(--vibeui-popover-002-accent);color:oklch(from var(--vibeui-popover-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.8125rem;font-weight:650;
 box-shadow:0 1px 2px color-mix(in oklab,var(--vibeui-popover-002-shadow) 40%,transparent);
 anchor-name:--vibeui-popover-002-anchor;
@@ -120,7 +120,7 @@ background:transparent;color:var(--vibeui-popover-002-muted);
 }
 [data-vibeui-block="popover-002"] [data-part="cancel"]:hover{color:var(--vibeui-popover-002-fg);background:var(--vibeui-popover-002-field)}
 [data-vibeui-block="popover-002"] [data-part="submit"]{
-border:0;background:var(--vibeui-popover-002-accent);color:var(--vibeui-popover-002-on-accent);
+border:0;background:var(--vibeui-popover-002-accent);color:oklch(from var(--vibeui-popover-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 box-shadow:0 1px 2px color-mix(in oklab,var(--vibeui-popover-002-shadow) 45%,transparent);
 }
 [data-vibeui-block="popover-002"] [data-part="submit"]:hover{filter:brightness(1.06)}

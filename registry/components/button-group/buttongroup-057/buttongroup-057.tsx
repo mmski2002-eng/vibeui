@@ -40,7 +40,7 @@ const STYLES = `
 --vibeui-buttongroup-057-on:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-buttongroup-057-on-fg:light-dark(oklch(0.99 0 265),oklch(0.21 0 265));
 --vibeui-buttongroup-057-code:light-dark(oklch(0.96 0 265),oklch(0.32 0 265));
---vibeui-buttongroup-057-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.76 0.14 39.8));
+--vibeui-buttongroup-057-accent:light-dark(oklch(0.275 0 0),oklch(0.906 0 0));
 --vibeui-buttongroup-057-radius:0.625rem;
 --vibeui-buttongroup-057-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

@@ -35,7 +35,7 @@ const STYLES = `
 --vibeui-chart-009-muted:color-mix(in oklab,var(--vibeui-chart-009-fg) 68%,transparent);
 --vibeui-chart-009-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-chart-009-track:light-dark(oklch(0.93 0 265),oklch(0.32 0 265));
---vibeui-chart-009-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-chart-009-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-chart-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -52,7 +52,7 @@ color:var(--vibeui-chart-009-fg);font-family:var(--vibeui-chart-009-font);
 [data-vibeui-block="chart-009"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
 [data-vibeui-block="chart-009"] [data-part="legend"]{display:flex;gap:0.75rem;font-size:0.75rem;color:var(--vibeui-chart-009-muted)}
 [data-vibeui-block="chart-009"] [data-part="key"]{display:inline-flex;align-items:center;gap:0.375rem}
-[data-vibeui-block="chart-009"] [data-part="swatch"]{width:0.625rem;height:0.625rem;border-radius:0.1875rem;background:var(--vibeui-chart-009-accent)}
+[data-vibeui-block="chart-009"] [data-part="swatch"]{width:0.625rem;height:0.625rem;border-radius:0.1875rem;background:var(--vibeui-chart-009-accent);color:oklch(from var(--vibeui-chart-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="chart-009"] [data-part="swatch"][data-before="true"]{background:color-mix(in oklab,var(--vibeui-chart-009-accent) 30%,var(--vibeui-chart-009-track))}
 /* Пары вплотную, группы с зазором: сравнение идёт внутри пары. */
 [data-vibeui-block="chart-009"] [data-part="plot"]{
@@ -60,8 +60,7 @@ display:flex;align-items:flex-end;gap:0.875rem;height:7rem;
 }
 [data-vibeui-block="chart-009"] [data-part="group"]{display:flex;align-items:flex-end;gap:0.1875rem;flex:1;height:100%}
 [data-vibeui-block="chart-009"] [data-part="bar"]{
-flex:1;border-radius:0.25rem 0.25rem 0 0;background:var(--vibeui-chart-009-accent);
-}
+flex:1;border-radius:0.25rem 0.25rem 0 0;background:var(--vibeui-chart-009-accent);color:oklch(from var(--vibeui-chart-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="chart-009"] [data-part="bar"][data-before="true"]{
 background:color-mix(in oklab,var(--vibeui-chart-009-accent) 30%,var(--vibeui-chart-009-track));
 }

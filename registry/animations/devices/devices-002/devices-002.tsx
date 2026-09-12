@@ -124,7 +124,7 @@ font-size:0.5rem;font-weight:700;overflow:hidden;
 }
 /* Подложка — только когда фотографии нет: компонент обязан
    оставаться полноценным без единого внешнего файла. */
-[data-vibeui-block="devices-002"] [data-part="avatar"][data-empty="true"]{background:var(--vibeui-devices-002-accent);}
+[data-vibeui-block="devices-002"] [data-part="avatar"][data-empty="true"]{background:var(--vibeui-devices-002-accent);color:oklch(from var(--vibeui-devices-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="devices-002"] [data-part="avatar"] img{
 position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }

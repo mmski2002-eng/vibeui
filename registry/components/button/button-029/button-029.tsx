@@ -52,7 +52,7 @@ font:inherit;font-size:0.875rem;font-weight:650;line-height:1;
 transition:filter .16s ease,border-color .16s ease,background-color .16s ease;
 }
 [data-vibeui-block="button-029"] [data-part="primary"]{
-background:var(--vibeui-button-029-accent);color:var(--vibeui-button-029-accent-fg);
+background:var(--vibeui-button-029-accent);color:oklch(from var(--vibeui-button-029-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="button-029"] [data-part="primary"]:hover{filter:var(--vibeui-button-029-hover-filter)}
 [data-vibeui-block="button-029"] [data-part="secondary"]{

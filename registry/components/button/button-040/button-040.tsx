@@ -27,7 +27,7 @@ appearance:none;border:0;cursor:pointer;box-sizing:border-box;
 display:flex;align-items:center;gap:0.75rem;
 width:100%;max-width:26rem;min-height:3.25rem;
 padding:0.625rem 1.125rem;border-radius:0.875rem;
-background:var(--vibeui-button-040-accent);color:var(--vibeui-button-040-fg);
+background:var(--vibeui-button-040-accent);color:oklch(from var(--vibeui-button-040-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-family:var(--vibeui-button-040-font);font-size:0.9375rem;font-weight:650;line-height:1.25;
 text-align:left;
 transition:filter .16s ease,transform .12s ease;

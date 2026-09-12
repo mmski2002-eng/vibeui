@@ -39,7 +39,7 @@ const STYLES = `
 --vibeui-hovercard-007-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-hovercard-007-muted:color-mix(in oklab,var(--vibeui-hovercard-007-fg) 68%,transparent);
 --vibeui-hovercard-007-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-hovercard-007-accent:light-dark(oklch(0.55 0.16 39.8),oklch(0.76 0.13 39.8));
+--vibeui-hovercard-007-accent:light-dark(oklch(0.287 0 0),oklch(0.906 0 0));
 --vibeui-hovercard-007-delay:0.45s;
 --vibeui-hovercard-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -67,8 +67,7 @@ border-bottom:1px solid color-mix(in oklab,var(--vibeui-hovercard-007-accent) 40
 content:"";position:absolute;left:0;bottom:-1px;height:2px;width:100%;
 transform-origin:left center;transform:scaleX(0);
 background:var(--vibeui-hovercard-007-accent);
-transition:transform var(--vibeui-hovercard-007-delay) linear;
-}
+transition:transform var(--vibeui-hovercard-007-delay) linear;color:oklch(from var(--vibeui-hovercard-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="hovercard-007"] [data-part="host"]:hover [data-part="link"]::after,
 [data-vibeui-block="hovercard-007"] [data-part="host"]:focus-within [data-part="link"]::after{transform:scaleX(1)}
 [data-vibeui-block="hovercard-007"] [data-part="card"]{

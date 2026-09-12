@@ -35,8 +35,9 @@ const STYLES = `
 --vibeui-stepper-010-muted:color-mix(in oklab,var(--vibeui-stepper-010-fg) 68%,transparent);
 --vibeui-stepper-010-border:light-dark(oklch(0.92 0 265),oklch(0.32 0 265));
 --vibeui-stepper-010-line:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
---vibeui-stepper-010-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.16 39.8));
+--vibeui-stepper-010-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-stepper-010-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0 262));
+--vibeui-stepper-010-done:light-dark(oklch(0.55 0.15 150),oklch(0.75 0.17 150));
 --vibeui-stepper-010-panel:light-dark(oklch(0.97 0 262),oklch(0.26 0 262));
 --vibeui-stepper-010-dot:1.5rem;
 --vibeui-stepper-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -65,7 +66,7 @@ content:"";position:absolute;left:calc(var(--vibeui-stepper-010-dot) / 2 - 1px);
 top:var(--vibeui-stepper-010-dot);bottom:0.25rem;width:2px;
 background:var(--vibeui-stepper-010-line);
 }
-[data-vibeui-block="stepper-010"] li[data-state="done"]::before{background:var(--vibeui-stepper-010-accent)}
+[data-vibeui-block="stepper-010"] li[data-state="done"]::before{background:var(--vibeui-stepper-010-done)}
 /* grid-row:1 / span 3, а не 1 / -1: у пункта нет явных строк, и -1 указывает
    на первую же линию — кружок занимал одну строку, а сводка и панель
    сваливались в колонку кружка и переносились по слову. */
@@ -78,7 +79,7 @@ background:var(--vibeui-stepper-010-surface);color:var(--vibeui-stepper-010-mute
 font-size:0.6875rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="stepper-010"] li[data-state="done"] [data-part="mark"]{
-background:var(--vibeui-stepper-010-accent);border-color:var(--vibeui-stepper-010-accent);
+background:var(--vibeui-stepper-010-done);border-color:var(--vibeui-stepper-010-done);
 color:var(--vibeui-stepper-010-accent-fg);
 }
 [data-vibeui-block="stepper-010"] li[data-state="current"] [data-part="mark"]{
@@ -100,12 +101,12 @@ font-size:0.625rem;font-weight:650;letter-spacing:0.02em;text-transform:uppercas
 color:var(--vibeui-stepper-010-muted);
 }
 [data-vibeui-block="stepper-010"] li[data-state="done"] [data-part="state"]{
-color:var(--vibeui-stepper-010-accent);
-border-color:color-mix(in oklab,var(--vibeui-stepper-010-accent) 40%,transparent);
+color:var(--vibeui-stepper-010-done);
+border-color:color-mix(in oklab,var(--vibeui-stepper-010-done) 40%,transparent);
 }
 [data-vibeui-block="stepper-010"] li[data-state="current"] [data-part="state"]{
 background:var(--vibeui-stepper-010-accent);border-color:transparent;
-color:var(--vibeui-stepper-010-accent-fg);
+color:oklch(from var(--vibeui-stepper-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="stepper-010"] [data-part="summary"]{
 margin:0.25rem 0 0;font-size:0.8125rem;line-height:1.5;color:var(--vibeui-stepper-010-muted);

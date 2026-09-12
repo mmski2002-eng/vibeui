@@ -33,7 +33,7 @@ const STYLES = `
 --vibeui-phoneinput-003-muted:color-mix(in oklab,var(--vibeui-phoneinput-003-fg) 68%,transparent);
 --vibeui-phoneinput-003-field-border:light-dark(oklch(0.85 0 265),oklch(0.4 0 265));
 --vibeui-phoneinput-003-track:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-phoneinput-003-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.17 39.8));
+--vibeui-phoneinput-003-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-phoneinput-003-done:light-dark(oklch(0.55 0.15 155),oklch(0.74 0.14 155));
 --vibeui-phoneinput-003-radius:0.625rem;
 --vibeui-phoneinput-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -87,8 +87,7 @@ background:var(--vibeui-phoneinput-003-track);
 transition:background-color .16s ease;
 }
 [data-vibeui-block="phoneinput-003"] [data-part="dot"][data-filled="true"]{
-background:var(--vibeui-phoneinput-003-accent);
-}
+background:var(--vibeui-phoneinput-003-accent);color:oklch(from var(--vibeui-phoneinput-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="phoneinput-003"] [data-part="dots"][data-state="done"] [data-part="dot"]{
 background:var(--vibeui-phoneinput-003-done);
 }

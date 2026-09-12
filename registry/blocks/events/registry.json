@@ -28,7 +28,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Event001",
@@ -159,7 +159,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "image": "/demo/scenes/scene-08.webp"
           }
@@ -298,7 +298,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Event003",

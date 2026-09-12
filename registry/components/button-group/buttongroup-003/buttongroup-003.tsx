@@ -32,9 +32,9 @@ const STYLES = `
 --vibeui-buttongroup-003-hover:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
 /* Подпись на заливке почти белая, поэтому в тёмной ветке акцент не светлее
    светлой: выше L≈0.57 контраст текста падает ниже 4.5:1. */
---vibeui-buttongroup-003-accent:light-dark(oklch(0.52 0.17 39.8),oklch(0.56 0.17 39.8));
---vibeui-buttongroup-003-accent-dark:light-dark(oklch(0.45 0.16 39.8),oklch(0.5 0.17 39.8));
---vibeui-buttongroup-003-on-accent:oklch(0.99 0 265);
+--vibeui-buttongroup-003-accent:light-dark(oklch(0.28 0 0),oklch(0.87 0 0));
+--vibeui-buttongroup-003-accent-dark:light-dark(oklch(0.263 0 0),oklch(0.859 0 0));
+--vibeui-buttongroup-003-on-accent:oklch(from var(--vibeui-buttongroup-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-buttongroup-003-radius:0.625rem;
 --vibeui-buttongroup-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -53,7 +53,7 @@ appearance:none;cursor:pointer;font:inherit;position:relative;z-index:0;
 display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;
 height:2.25rem;border:0;
 background:var(--vibeui-buttongroup-003-accent);
-color:var(--vibeui-buttongroup-003-on-accent);
+color:oklch(from var(--vibeui-buttongroup-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.8125rem;font-weight:650;line-height:1;
 transition:background-color .16s ease;
 }

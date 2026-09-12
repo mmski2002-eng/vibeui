@@ -36,7 +36,7 @@ display:inline-flex;align-items:center;justify-content:center;gap:0.4375rem;
 /* Ширина по самой длинной подписи: смена текста не дёргает раскладку. */
 min-width:10.5rem;height:2.5rem;padding:0 1rem;box-sizing:border-box;
 border-radius:0.625rem;
-background:var(--vibeui-button-017-accent);color:var(--vibeui-button-017-fg);
+background:var(--vibeui-button-017-accent);color:oklch(from var(--vibeui-button-017-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-family:var(--vibeui-button-017-font);font-size:0.875rem;font-weight:650;line-height:1;
 }
 [data-vibeui-block="button-017"]:hover:not(:disabled){filter:var(--vibeui-button-017-hover-filter)}

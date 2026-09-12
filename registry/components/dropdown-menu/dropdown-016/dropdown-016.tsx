@@ -47,7 +47,7 @@ const STYLES = `
 --vibeui-dropdown-016-muted:color-mix(in oklab,var(--vibeui-dropdown-016-fg) 68%,transparent);
 --vibeui-dropdown-016-border:light-dark(oklch(0.9 0.006 150),oklch(0.37 0.012 150));
 --vibeui-dropdown-016-hover:light-dark(oklch(0.96 0.004 150),oklch(0.32 0.014 150));
---vibeui-dropdown-016-accent:light-dark(oklch(0.58 0.15 39.8),oklch(0.76 0.13 39.8));
+--vibeui-dropdown-016-accent:light-dark(oklch(0.295 0 0),oklch(0.906 0 0));
 --vibeui-dropdown-016-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.03 150));
 --vibeui-dropdown-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -123,8 +123,7 @@ border:1.5px solid var(--vibeui-dropdown-016-border);border-radius:0.3125rem;
 transition:background-color .14s ease,border-color .14s ease;
 }
 [data-vibeui-block="dropdown-016"] [data-part="item"][aria-checked="true"] [data-part="box"]{
-background:var(--vibeui-dropdown-016-accent);border-color:var(--vibeui-dropdown-016-accent);
-}
+background:var(--vibeui-dropdown-016-accent);border-color:var(--vibeui-dropdown-016-accent);color:oklch(from var(--vibeui-dropdown-016-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="dropdown-016"] [data-part="box"] svg{width:0.75rem;height:0.75rem;opacity:0}
 [data-vibeui-block="dropdown-016"] [data-part="item"][aria-checked="true"] [data-part="box"] svg{opacity:1;color:var(--vibeui-dropdown-016-on-accent)}
 /* Цвет кружка — сама метка, а не оформление: он одинаков в обеих темах,

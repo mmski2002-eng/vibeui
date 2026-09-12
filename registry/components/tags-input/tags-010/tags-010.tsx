@@ -34,7 +34,7 @@ const STYLES = `
 --vibeui-tags-010-border:light-dark(oklch(0 0 0 / 14%),oklch(1 0 0 / 16%));
 --vibeui-tags-010-field:light-dark(oklch(1 0 0),oklch(1 0 0 / 5%));
 --vibeui-tags-010-chip:light-dark(oklch(0 0 0 / 6%),oklch(1 0 0 / 9%));
---vibeui-tags-010-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.78 0.12 39.8));
+--vibeui-tags-010-accent:light-dark(oklch(0.4 0 265),oklch(0.72 0 265));
 --vibeui-tags-010-on-accent:oklch(from var(--vibeui-tags-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-tags-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -70,7 +70,7 @@ background:var(--vibeui-tags-010-chip);font-size:0.8125rem;max-width:100%;
 flex:none;display:inline-flex;align-items:center;justify-content:center;
 min-width:1.125rem;height:1.125rem;padding:0 0.25rem;margin-inline-end:0.125rem;
 border-radius:0.3125rem;
-background:var(--vibeui-tags-010-accent);color:var(--vibeui-tags-010-on-accent);
+background:var(--vibeui-tags-010-accent);color:oklch(from var(--vibeui-tags-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.6875rem;font-weight:700;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="tags-010"] [data-part="name"]{

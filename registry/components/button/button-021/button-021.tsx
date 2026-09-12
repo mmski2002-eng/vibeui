@@ -39,7 +39,7 @@ appearance:none;border:0;cursor:pointer;
 display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;
 height:2.5rem;padding:0 1.125rem;box-sizing:border-box;
 border-radius:var(--vibeui-button-021-radius);
-background:var(--vibeui-button-021-accent);color:var(--vibeui-button-021-fg);
+background:var(--vibeui-button-021-accent);color:oklch(from var(--vibeui-button-021-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-family:var(--vibeui-button-021-font);font-size:0.875rem;font-weight:650;line-height:1;
 transition:background-color .18s ease,filter .18s ease;
 }

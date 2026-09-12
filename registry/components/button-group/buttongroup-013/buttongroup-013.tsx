@@ -33,8 +33,8 @@ const STYLES = `
 --vibeui-buttongroup-013-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-buttongroup-013-muted:color-mix(in oklab,var(--vibeui-buttongroup-013-fg) 68%,transparent);
 --vibeui-buttongroup-013-border:light-dark(oklch(0.89 0 265),oklch(0.37 0 265));
---vibeui-buttongroup-013-on:light-dark(oklch(0.965 0 265),oklch(0.31 0.045 39.8));
---vibeui-buttongroup-013-accent:light-dark(oklch(0.53 0.17 39.8),oklch(0.74 0.14 39.8));
+--vibeui-buttongroup-013-on:light-dark(oklch(0.965 0 265),oklch(0.31 0 0));
+--vibeui-buttongroup-013-accent:light-dark(oklch(0.282 0 0),oklch(0.903 0 0));
 --vibeui-buttongroup-013-radius:0.75rem;
 --vibeui-buttongroup-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

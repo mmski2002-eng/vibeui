@@ -48,7 +48,7 @@ const STYLES = `
 --vibeui-drawer-010-field:light-dark(oklch(1 0 0),oklch(1 0 0 / 6%));
 --vibeui-drawer-010-head:light-dark(oklch(0 0 0 / 3%),oklch(1 0 0 / 4%));
 --vibeui-drawer-010-hover:light-dark(oklch(0 0 0 / 5%),oklch(1 0 0 / 7%));
---vibeui-drawer-010-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.78 0.12 39.8));
+--vibeui-drawer-010-accent:light-dark(oklch(0.275 0 0),oklch(0.91 0 0));
 --vibeui-drawer-010-on-accent:oklch(from var(--vibeui-drawer-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-drawer-010-chosen:color-mix(in oklab,var(--vibeui-drawer-010-accent) 14%,transparent);
 --vibeui-drawer-010-scrim:light-dark(oklch(0.2 0 265 / 42%),oklch(0 0 0 / 62%));
@@ -152,7 +152,7 @@ background:var(--vibeui-drawer-010-head);
 appearance:none;border:0;cursor:pointer;width:100%;
 display:inline-flex;align-items:center;justify-content:center;
 min-height:2.375rem;padding:0.375rem 0.875rem;border-radius:0.625rem;
-background:var(--vibeui-drawer-010-accent);color:var(--vibeui-drawer-010-on-accent);
+background:var(--vibeui-drawer-010-accent);color:oklch(from var(--vibeui-drawer-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="drawer-010"] [data-part="confirm"]:disabled{opacity:.55;cursor:default}

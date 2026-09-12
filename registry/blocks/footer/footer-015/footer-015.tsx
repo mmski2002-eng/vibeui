@@ -38,9 +38,9 @@ const STYLES = `
 --vibeui-footer-015-muted:light-dark(oklch(0.5 0 0),oklch(0.72 0 0));
 --vibeui-footer-015-border:light-dark(oklch(0.91 0 0),oklch(0.32 0 0));
 --vibeui-footer-015-panel:light-dark(oklch(1 0 0),oklch(0.24 0 0));
---vibeui-footer-015-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-footer-015-accent-fill:light-dark(oklch(0.64 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-footer-015-accent-fg:oklch(0.15 0.02 39.8);
+--vibeui-footer-015-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
+--vibeui-footer-015-accent-fill:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
+--vibeui-footer-015-accent-fg:oklch(from var(--vibeui-footer-015-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-footer-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

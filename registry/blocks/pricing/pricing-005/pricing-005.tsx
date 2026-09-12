@@ -28,10 +28,10 @@ const STYLES = `
 --vibeui-pricing-005-bg:light-dark(oklch(0.985 0 275),oklch(0.21 0 275));
 --vibeui-pricing-005-fg:light-dark(oklch(0.22 0 275),oklch(0.98 0 275));
 --vibeui-pricing-005-muted:light-dark(oklch(0.5 0 275),oklch(0.75 0 275));
---vibeui-pricing-005-panel:light-dark(oklch(0.965 0.012 39.8),oklch(0.26 0.035 39.8));
+--vibeui-pricing-005-panel:light-dark(oklch(0.965 0 0),oklch(0.26 0 0));
 --vibeui-pricing-005-line:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 14%));
---vibeui-pricing-005-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.82 0.15 39.8));
---vibeui-pricing-005-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.2 0.04 39.8));
+--vibeui-pricing-005-accent:light-dark(oklch(0.287 0 0),oklch(0.917 0 0));
+--vibeui-pricing-005-accent-fg:oklch(from var(--vibeui-pricing-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-pricing-005-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -70,7 +70,7 @@ font-size:clamp(2.5rem,7cqi,3.5rem);line-height:1;font-weight:700;letter-spacing
 display:inline-flex;align-items:center;justify-content:center;height:2.875rem;padding:0 1.5rem;border-radius:0.75rem;
 font-size:0.9375rem;font-weight:650;text-decoration:none;transition:opacity .16s ease,border-color .16s ease;
 }
-[data-vibeui-block="pricing-005"] [data-part="primary"]{background:var(--vibeui-pricing-005-accent);color:var(--vibeui-pricing-005-accent-fg);border:1px solid transparent}
+[data-vibeui-block="pricing-005"] [data-part="primary"]{background:var(--vibeui-pricing-005-accent);color:oklch(from var(--vibeui-pricing-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border:1px solid transparent}
 [data-vibeui-block="pricing-005"] [data-part="secondary"]{border:1px solid var(--vibeui-pricing-005-line);color:var(--vibeui-pricing-005-fg)}
 [data-vibeui-block="pricing-005"] a:hover{opacity:.88}
 [data-vibeui-block="pricing-005"] a:focus-visible{outline:2px solid var(--vibeui-pricing-005-accent);outline-offset:3px}

@@ -19,7 +19,7 @@
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-consent-001-*. Клиентский компонент: по любому нажатию полоса скрывается через состояние (демо без записи выбора). В превью бар в потоке страницы, а не position:fixed, чтобы не перекрывать каталог — в проекте прижмите его к низу окна. Обёртка role=\"region\" с aria-label.",
       "meta": {
         "tags": ["consent", "cookie", "gdpr", "banner", "application"],
-        "preview": { "width": "full" },
+        "preview": { "width": "natural" },
         "ai": {
           "export": "Consent001",
           "usage": "<Consent001\n  title=\"Мы используем cookie\"\n  policyHref=\"/privacy\"\n/>",
@@ -103,7 +103,7 @@
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-consent-002-*. Клиентский компонент. Тумблеры — настоящие checkbox с визуальной дорожкой на смежном span (input:checked+track). Обязательная категория с required приходит checked и disabled. Обёртка role=\"region\".",
       "meta": {
         "tags": ["consent", "cookie", "settings", "toggles", "application"],
-        "preview": { "width": "full" },
+        "preview": { "width": "natural" },
         "ai": {
           "export": "Consent002",
           "usage": "<Consent002\n  categories={[{ id: \"analytics\", title: \"Аналитика\", note: \"Помогают понять поведение\" }]}\n/>",
@@ -187,7 +187,7 @@
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-consent-003-*. Клиентский компонент. Чекбоксы стилизованы через appearance:none и псевдоэлемент-галочку. Кнопка disabled, пока не отмечены все обязательные согласия; по submit форма сменяется сообщением с role=\"status\". Метка связана с чекбоксом через htmlFor.",
       "meta": {
         "tags": ["consent", "gdpr", "checkbox", "privacy", "application"],
-        "preview": { "width": "full" },
+        "preview": { "width": "natural" },
         "ai": {
           "export": "Consent003",
           "usage": "<Consent003\n  items={[{ id: \"terms\", label: \"Согласен с условиями\", required: true }]}\n/>",

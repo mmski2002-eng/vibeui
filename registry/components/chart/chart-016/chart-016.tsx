@@ -41,8 +41,8 @@ const STYLES = `
 --vibeui-chart-016-band:light-dark(oklch(0.96 0 265),oklch(0.25 0 265));
 --vibeui-chart-016-band-2:light-dark(oklch(0.93 0 265),oklch(0.29 0 265));
 --vibeui-chart-016-band-3:light-dark(oklch(0.89 0 265),oklch(0.33 0 265));
---vibeui-chart-016-accent:light-dark(oklch(0.45 0.15 39.8),oklch(0.74 0.14 39.8));
---vibeui-chart-016-over:light-dark(oklch(0.55 0.15 39.8),oklch(0.76 0.14 39.8));
+--vibeui-chart-016-accent:light-dark(oklch(0.263 0 0),oklch(0.903 0 0));
+--vibeui-chart-016-over:light-dark(oklch(0.287 0 0),oklch(0.906 0 0));
 --vibeui-chart-016-plan:light-dark(oklch(0.3 0 265),oklch(0.9 0 265));
 --vibeui-chart-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -77,8 +77,7 @@ var(--vibeui-chart-016-band) 85% 100%);
 }
 [data-vibeui-block="chart-016"] [data-part="fact"]{
 position:absolute;top:50%;left:0;height:0.4375rem;transform:translateY(-50%);
-border-radius:0 0.125rem 0.125rem 0;background:var(--vibeui-chart-016-accent);
-}
+border-radius:0 0.125rem 0.125rem 0;background:var(--vibeui-chart-016-accent);color:oklch(from var(--vibeui-chart-016-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="chart-016"] [data-part="fact"][data-over="true"]{background:var(--vibeui-chart-016-over)}
 [data-vibeui-block="chart-016"] [data-part="plan"]{
 position:absolute;top:0.125rem;bottom:0.125rem;width:2px;border-radius:1px;
@@ -91,8 +90,7 @@ font-size:0.6875rem;color:var(--vibeui-chart-016-muted);
 }
 [data-vibeui-block="chart-016"] [data-part="key"] li{display:flex;align-items:center;gap:0.375rem}
 [data-vibeui-block="chart-016"] [data-part="swatch"]{
-width:0.75rem;height:0.375rem;border-radius:1px;background:var(--vibeui-chart-016-accent);
-}
+width:0.75rem;height:0.375rem;border-radius:1px;background:var(--vibeui-chart-016-accent);color:oklch(from var(--vibeui-chart-016-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="chart-016"] [data-part="swatch"][data-kind="plan"]{
 width:2px;height:0.75rem;background:var(--vibeui-chart-016-plan);
 }

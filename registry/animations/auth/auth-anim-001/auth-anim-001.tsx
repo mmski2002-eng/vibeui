@@ -90,11 +90,10 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-auth-anim-001-accent) 22%,t
 position:absolute;inset:-0.375rem;z-index:0;border-radius:1rem;
 background:var(--vibeui-auth-anim-001-accent);filter:blur(11px);opacity:0.35;
 animation:vibeui-auth-anim-001-pulse 2.6s ease-in-out infinite;
-animation-delay:calc(var(--vibeui-auth-anim-001-i,0) * 90ms + .7s);
-}
+animation-delay:calc(var(--vibeui-auth-anim-001-i,0) * 90ms + .7s);color:oklch(from var(--vibeui-auth-anim-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="auth-anim-001"] [data-part="submit"]{
 position:relative;z-index:1;width:100%;height:2.5rem;border:none;border-radius:0.8125rem;
-background:var(--vibeui-auth-anim-001-accent);color:var(--vibeui-auth-anim-001-accent-fg);
+background:var(--vibeui-auth-anim-001-accent);color:oklch(from var(--vibeui-auth-anim-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.875rem;font-weight:650;cursor:pointer;
 transition:filter .15s ease,transform .15s ease;
 }

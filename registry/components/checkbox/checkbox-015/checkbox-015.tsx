@@ -32,10 +32,10 @@ const STYLES = `
 --vibeui-checkbox-015-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-checkbox-015-muted:color-mix(in oklab,var(--vibeui-checkbox-015-fg) 68%,transparent);
 --vibeui-checkbox-015-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
---vibeui-checkbox-015-accent:light-dark(oklch(0.53 0.16 39.8),oklch(0.66 0.16 39.8));
+--vibeui-checkbox-015-accent:light-dark(oklch(0.282 0 0),oklch(0.888 0 0));
 --vibeui-checkbox-015-danger:light-dark(oklch(0.55 0.2 25),oklch(0.7 0.17 25));
 --vibeui-checkbox-015-danger-soft:light-dark(oklch(0.96 0.03 25),oklch(0.29 0.05 25));
---vibeui-checkbox-015-on-accent:oklch(0.99 0 265);
+--vibeui-checkbox-015-on-accent:oklch(from var(--vibeui-checkbox-015-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-checkbox-015-on-danger:light-dark(oklch(0.99 0.01 25),oklch(0.21 0.04 25));
 --vibeui-checkbox-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -74,7 +74,7 @@ background:var(--vibeui-checkbox-015-bg);
 transition:background-color .15s ease,border-color .15s ease;
 }
 [data-vibeui-block="checkbox-015"] fieldset[data-invalid="true"] input{border-color:var(--vibeui-checkbox-015-danger)}
-[data-vibeui-block="checkbox-015"] input:checked{border-color:transparent;background:var(--vibeui-checkbox-015-accent)}
+[data-vibeui-block="checkbox-015"] input:checked{border-color:transparent;background:var(--vibeui-checkbox-015-accent);color:oklch(from var(--vibeui-checkbox-015-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="checkbox-015"] input:checked::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.25rem;height:0.4375rem;margin:-0.3125rem 0 0 -0.125rem;
@@ -101,7 +101,7 @@ display:block;margin-top:0.125rem;color:var(--vibeui-checkbox-015-muted);font-si
 appearance:none;border:0;cursor:pointer;margin-top:0.75rem;
 height:2.25rem;padding:0 0.875rem;border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;font-weight:650;
-background:var(--vibeui-checkbox-015-accent);color:var(--vibeui-checkbox-015-on-accent);
+background:var(--vibeui-checkbox-015-accent);color:oklch(from var(--vibeui-checkbox-015-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="checkbox-015"] button:focus-visible{outline:2px solid var(--vibeui-checkbox-015-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="checkbox-015"] *{animation:none!important;transition:none!important}}

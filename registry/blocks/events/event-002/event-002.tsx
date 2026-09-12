@@ -32,8 +32,8 @@ const STYLES = `
 --vibeui-event-002-muted:light-dark(oklch(0.5 0 0),oklch(0.72 0 0));
 --vibeui-event-002-border:light-dark(oklch(0.9 0 0),oklch(0.3 0 0));
 --vibeui-event-002-card:light-dark(oklch(0.99 0 0),oklch(0.2 0 0));
---vibeui-event-002-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-event-002-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-event-002-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
+--vibeui-event-002-on-accent:oklch(from var(--vibeui-event-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-event-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -52,13 +52,13 @@ position:relative;aspect-ratio:21 / 9;display:flex;align-items:flex-start;paddin
 }
 /* Подложка — только когда фотографии нет: компонент обязан
    оставаться полноценным без единого внешнего файла. */
-[data-vibeui-block="event-002"] [data-part="cover"][data-empty="true"]{background:linear-gradient(140deg,oklch(0.62 0.19 39.8),oklch(0.42 0.14 28));}
+[data-vibeui-block="event-002"] [data-part="cover"][data-empty="true"]{background:linear-gradient(140deg,light-dark(oklch(0.2 0 0),oklch(0.92 0 0)),oklch(0.42 0.14 28));}
 [data-vibeui-block="event-002"] [data-part="cover"] img{
 position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="event-002"] [data-part="badge"]{
 padding:0.25rem 0.75rem;border-radius:999px;font-size:0.6875rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
-background:oklch(0.15 0.02 39.8 / 55%);color:oklch(0.98 0 0);
+background:oklch(0.15 0 0 / 55%);color:oklch(0.98 0 0);
 }
 [data-vibeui-block="event-002"] [data-part="body"]{padding:1.5rem}
 [data-vibeui-block="event-002"] [data-part="eyebrow"]{margin:0 0 0.375rem;color:var(--vibeui-event-002-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase}
@@ -79,7 +79,7 @@ margin-left:-0.5rem;box-shadow:0 0 0 2px var(--vibeui-event-002-card);
 [data-vibeui-block="event-002"] [data-part="speakers-note"]{font-size:0.8125rem;color:var(--vibeui-event-002-muted)}
 [data-vibeui-block="event-002"] [data-part="cta"]{
 display:inline-flex;align-items:center;justify-content:center;width:100%;height:2.875rem;border-radius:0.75rem;
-background:var(--vibeui-event-002-accent);color:var(--vibeui-event-002-on-accent);
+background:var(--vibeui-event-002-accent);color:oklch(from var(--vibeui-event-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.9375rem;font-weight:650;text-decoration:none;transition:opacity .16s ease;
 }
 [data-vibeui-block="event-002"] [data-part="cta"]:hover{opacity:.9}

@@ -65,7 +65,7 @@ transition:background-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="banner-003"] [data-part="accept"]{
 border:1px solid var(--vibeui-banner-003-outline);
-background:var(--vibeui-banner-003-accent);color:var(--vibeui-banner-003-on-accent);
+background:var(--vibeui-banner-003-accent);color:oklch(from var(--vibeui-banner-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="banner-003"] [data-part="reject"]{
 border:1px solid var(--vibeui-banner-003-outline);

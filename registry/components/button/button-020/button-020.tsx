@@ -43,7 +43,7 @@ appearance:none;border:0;cursor:pointer;
 display:flex;align-items:center;justify-content:space-between;gap:0.75rem;
 width:100%;height:3rem;padding:0 1rem;box-sizing:border-box;
 border-radius:0.75rem;
-background:var(--vibeui-button-020-accent);color:var(--vibeui-button-020-fg);
+background:var(--vibeui-button-020-accent);color:oklch(from var(--vibeui-button-020-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.9375rem;font-weight:650;line-height:1;
 }
 [data-vibeui-block="button-020"] button:hover{filter:var(--vibeui-button-020-hover-filter)}

@@ -31,9 +31,9 @@ const STYLES = `
 --vibeui-label-006-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-label-006-muted:color-mix(in oklab,var(--vibeui-label-006-fg) 68%,transparent);
 --vibeui-label-006-field-border:light-dark(oklch(0.85 0 265),oklch(0.4 0 265));
---vibeui-label-006-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.16 39.8));
+--vibeui-label-006-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-label-006-warn:light-dark(oklch(0.62 0.15 65),oklch(0.79 0.13 65));
---vibeui-label-006-over:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.16 39.8));
+--vibeui-label-006-over:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-label-006-radius:0.625rem;
 --vibeui-label-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

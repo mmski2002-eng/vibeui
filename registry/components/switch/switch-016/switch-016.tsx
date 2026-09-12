@@ -27,8 +27,8 @@ const STYLES = `
 --vibeui-switch-016-card:light-dark(oklch(0.955 0 0),oklch(0.2178 0 0));
 --vibeui-switch-016-track:light-dark(oklch(0.88 0 265),oklch(0.38 0 265));
 --vibeui-switch-016-thumb:light-dark(oklch(1 0 0),oklch(0.96 0 265));
---vibeui-switch-016-accent:light-dark(oklch(0.64 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-switch-016-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-switch-016-accent:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
+--vibeui-switch-016-on-accent:oklch(0.15 0 0);
 --vibeui-switch-016-ease:linear(0,0.138,0.389,0.621,0.792,0.901,0.963,0.994,1.006,1.009,1.008,1.006,1.003,1.002,1.001,1);
 --vibeui-switch-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -58,8 +58,7 @@ background:var(--vibeui-switch-016-track);
 transition:background-color .3s ease,border-color .3s ease;
 }
 [data-vibeui-block="switch-016"] input:checked{
-background:var(--vibeui-switch-016-accent);border-color:var(--vibeui-switch-016-accent);
-}
+background:var(--vibeui-switch-016-accent);border-color:var(--vibeui-switch-016-accent);color:oklch(from var(--vibeui-switch-016-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="switch-016"] input:focus-visible{outline:2px solid var(--vibeui-switch-016-accent);outline-offset:2px}
 /* Кноб держится за оба края дорожки. Выключенное состояние: передний край
    слева трогается сразу, задний догоняет через 70 мс — кноб вытягивается
@@ -76,8 +75,9 @@ transition:left .38s var(--vibeui-switch-016-ease) 0s,right .38s var(--vibeui-sw
 left:1.5625rem;right:0.1875rem;
 background:var(--vibeui-switch-016-on-accent);
 transition:left .38s cubic-bezier(.22,1.2,.36,1) 70ms,right .38s cubic-bezier(.22,1.2,.36,1) 0s,background-color .3s ease;
-transition:left .38s var(--vibeui-switch-016-ease) 70ms,right .38s var(--vibeui-switch-016-ease) 0s,background-color .3s ease;
-}
+transition:left .38s var(--vibeui-switch-016-ease) 70ms,right .38s var(--vibeui-switch-016-ease) 0s,background-color .3s ease;color:oklch(from var(--vibeui-switch-016-on-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
+/* Ползунок на включённом треке: контраст к чернильному акценту, а не белый на белом. */
+[data-vibeui-block="switch-016"] input:checked + [data-part="thumb"],[data-vibeui-block="switch-016"] input:checked ~ [data-part="thumb"]{background:oklch(from var(--vibeui-switch-016-accent) clamp(0,(0.62 - l) * 100,1) 0 0)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="switch-016"],[data-vibeui-block="switch-016"] *{animation:none!important;transition:none!important}}
 `
 

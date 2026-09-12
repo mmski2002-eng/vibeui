@@ -16,6 +16,8 @@ export type Hero019Props = {
   signinLabel?: string
   signinHref?: string
   accent?: string
+  /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
+  tone?: "auto" | "light" | "dark"
   className?: string
   style?: CSSProperties
 }
@@ -40,7 +42,7 @@ const STYLES = `
 --vibeui-hero-019-card:light-dark(oklch(1 0 0),oklch(0.25 0 258));
 --vibeui-hero-019-field:light-dark(oklch(0.985 0 258),oklch(0.22 0 258));
 --vibeui-hero-019-line:light-dark(oklch(0.89 0 258),oklch(0.36 0 258));
---vibeui-hero-019-accent:light-dark(oklch(0.53 0.17 39.8),oklch(0.72 0.15 39.8));
+--vibeui-hero-019-accent:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
 --vibeui-hero-019-accent-fg:oklch(from var(--vibeui-hero-019-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -48,6 +50,8 @@ container-type:inline-size;
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="hero-019"]{color-scheme:dark}
+:where([data-vibeui-block="hero-019"][data-tone="light"]){color-scheme:light}
+:where([data-vibeui-block="hero-019"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="hero-019"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -110,9 +114,16 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-hero-019-accent) 24%,transp
 [data-vibeui-block="hero-019"] [data-part="submit"]{
 margin-top:0.875rem;display:flex;align-items:center;justify-content:center;
 width:100%;min-height:3rem;padding:0.75rem 1.25rem;border:1px solid transparent;border-radius:0.75rem;
-background:var(--vibeui-hero-019-accent);color:var(--vibeui-hero-019-accent-fg);
+background:var(--vibeui-hero-019-accent);color:oklch(from var(--vibeui-hero-019-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:1rem;font-weight:650;cursor:pointer;
-transition:transform .16s ease,filter .16s ease;
+box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-hero-019-accent) 38%,transparent),
+inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);
+transition:transform .2s cubic-bezier(.32,.72,0,1),box-shadow .25s ease;
+}
+[data-vibeui-block="hero-019"] [data-part="submit"]:hover{
+transform:translateY(-1px);
+box-shadow:0 0.625rem 1.75rem color-mix(in oklab,var(--vibeui-hero-019-accent) 48%,transparent),
+inset 0 1px 0 color-mix(in oklab,#ffffff 52%,transparent);
 }
 [data-vibeui-block="hero-019"] [data-part="submit"]:hover{transform:translateY(-1px)}
 [data-vibeui-block="hero-019"] [data-part="submit"]:focus-visible{
@@ -164,6 +175,7 @@ export function Hero019({
   signinLabel = "Войти",
   signinHref = "#",
   accent,
+  tone = "auto",
   className,
   style,
 }: Hero019Props) {
@@ -179,6 +191,7 @@ export function Hero019({
       </style>
       <section
         data-vibeui-block="hero-019"
+        data-tone={tone === "auto" ? undefined : tone}
         className={className}
         style={palette}
       >

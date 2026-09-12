@@ -36,7 +36,7 @@ const STYLES = `
 --vibeui-input-011-muted:color-mix(in oklab,var(--vibeui-input-011-fg) 68%,transparent);
 --vibeui-input-011-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
 --vibeui-input-011-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
---vibeui-input-011-accent:light-dark(oklch(0.52 0.18 39.8),oklch(0.76 0.15 39.8));
+--vibeui-input-011-accent:light-dark(oklch(0.28 0 0),oklch(0.906 0 0));
 --vibeui-input-011-track:light-dark(oklch(0.92 0 265),oklch(0.34 0 265));
 --vibeui-input-011-weak:light-dark(oklch(0.6 0.2 25),oklch(0.74 0.17 25));
 --vibeui-input-011-fair:light-dark(oklch(0.72 0.15 75),oklch(0.8 0.14 75));

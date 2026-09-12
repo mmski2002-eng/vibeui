@@ -38,7 +38,7 @@ const STYLES = `
 --vibeui-drawer-003-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
 --vibeui-drawer-003-muted:color-mix(in oklab,var(--vibeui-drawer-003-fg) 68%,transparent);
 --vibeui-drawer-003-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
---vibeui-drawer-003-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.73 0.15 39.8));
+--vibeui-drawer-003-accent:light-dark(oklch(0.287 0 0),oklch(0.901 0 0));
 --vibeui-drawer-003-on-accent:light-dark(oklch(0.99 0 265),oklch(0.17 0 265));
 --vibeui-drawer-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -60,7 +60,7 @@ font:inherit;font-size:0.8125rem;font-weight:600;
 [data-vibeui-block="drawer-003"] [data-part="badge"]{
 display:inline-flex;align-items:center;justify-content:center;
 min-width:1.25rem;height:1.25rem;padding:0 0.375rem;border-radius:9999px;
-background:var(--vibeui-drawer-003-accent);color:var(--vibeui-drawer-003-on-accent);
+background:var(--vibeui-drawer-003-accent);color:oklch(from var(--vibeui-drawer-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.6875rem;font-weight:700;
 }
 /* Ящик справа: как и остальные шторки категории — фильтры выезжают с той
@@ -111,8 +111,7 @@ border:1.5px solid var(--vibeui-drawer-003-border);border-radius:0.375rem;
 background:var(--vibeui-drawer-003-surface);cursor:pointer;position:relative;
 }
 [data-vibeui-block="drawer-003"] [data-part="option"] input:checked{
-background:var(--vibeui-drawer-003-accent);border-color:var(--vibeui-drawer-003-accent);
-}
+background:var(--vibeui-drawer-003-accent);border-color:var(--vibeui-drawer-003-accent);color:oklch(from var(--vibeui-drawer-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="drawer-003"] [data-part="option"] input:checked::after{
 content:"";position:absolute;left:0.3125rem;top:0.125rem;
 width:0.25rem;height:0.5rem;border:solid var(--vibeui-drawer-003-on-accent);
@@ -128,7 +127,7 @@ border-top:1px solid var(--vibeui-drawer-003-border);
 appearance:none;border:0;cursor:pointer;width:100%;
 display:inline-flex;align-items:center;justify-content:center;
 min-height:2.75rem;padding:0.25rem 0.875rem;border-radius:0.75rem;
-background:var(--vibeui-drawer-003-accent);color:var(--vibeui-drawer-003-on-accent);
+background:var(--vibeui-drawer-003-accent);color:oklch(from var(--vibeui-drawer-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="drawer-003"] [data-part="apply"]:focus-visible{outline:2px solid var(--vibeui-drawer-003-accent);outline-offset:2px}

@@ -29,7 +29,7 @@ const STYLES = `
 --vibeui-breadcrumb-015-faint:light-dark(oklch(0.78 0 265),oklch(0.5 0 265));
 --vibeui-breadcrumb-015-bone:light-dark(oklch(0.93 0 265),oklch(0.34 0 265));
 --vibeui-breadcrumb-015-sheen:light-dark(oklch(0.975 0 265),oklch(0.44 0 265));
---vibeui-breadcrumb-015-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-breadcrumb-015-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-breadcrumb-015-bg:transparent;
 --vibeui-breadcrumb-015-pad:0;
 --vibeui-breadcrumb-015-radius:0;
@@ -76,8 +76,7 @@ animation:vibeui-breadcrumb-015-sweep 1.4s linear infinite;
 [data-vibeui-block="breadcrumb-015"] [data-part="dot"]{
 width:0.375rem;height:0.375rem;border-radius:50%;
 background:var(--vibeui-breadcrumb-015-accent);
-animation:vibeui-breadcrumb-015-pulse 1.4s ease-in-out infinite;
-}
+animation:vibeui-breadcrumb-015-pulse 1.4s ease-in-out infinite;color:oklch(from var(--vibeui-breadcrumb-015-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="breadcrumb-015"] [data-part="status"]{
 position:absolute;width:1px;height:1px;overflow:hidden;
 clip-path:inset(50%);white-space:nowrap;

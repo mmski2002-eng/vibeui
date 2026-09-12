@@ -905,7 +905,7 @@
             "photos": [
               {
                 "src": "/demo/posters/poster-05.webp",
-                "alt": "Оранжевая неоновая волна на чёрном"
+                "alt": "Акцентная неоновая волна на чёрном"
               },
               {
                 "src": "/demo/cards/portrait-07.webp",
@@ -913,11 +913,11 @@
               },
               {
                 "src": "/demo/features/feature-05.webp",
-                "alt": "Пучок оптоволокна с оранжевым свечением"
+                "alt": "Пучок оптоволокна с акцентным свечением"
               },
               {
                 "src": "/demo/cards/wide-03.webp",
-                "alt": "Маяк в оранжевом тумане"
+                "alt": "Маяк в акцентном тумане"
               },
               {
                 "src": "/demo/posters/poster-03.webp",
@@ -929,7 +929,7 @@
               },
               {
                 "src": "/demo/cards/portrait-01.webp",
-                "alt": "Портрет с оранжевым контровым светом"
+                "alt": "Портрет с акцентным контровым светом"
               },
               {
                 "src": "/demo/cards/wide-01.webp",
@@ -1094,7 +1094,7 @@
                 "photos": [
                   {
                     "src": "/demo/posters/poster-05.webp",
-                    "alt": "An orange neon wave on black"
+                    "alt": "An accent neon wave on black"
                   },
                   {
                     "src": "/demo/cards/portrait-07.webp",
@@ -1102,11 +1102,11 @@
                   },
                   {
                     "src": "/demo/features/feature-05.webp",
-                    "alt": "A bundle of fibre optics glowing orange"
+                    "alt": "A bundle of fibre optics glowing accent"
                   },
                   {
                     "src": "/demo/cards/wide-03.webp",
-                    "alt": "A lighthouse in orange fog"
+                    "alt": "A lighthouse in accent fog"
                   },
                   {
                     "src": "/demo/posters/poster-03.webp",
@@ -1118,7 +1118,7 @@
                   },
                   {
                     "src": "/demo/cards/portrait-01.webp",
-                    "alt": "A portrait lit by orange rim light"
+                    "alt": "A portrait lit by accent rim light"
                   },
                   {
                     "src": "/demo/cards/wide-01.webp",

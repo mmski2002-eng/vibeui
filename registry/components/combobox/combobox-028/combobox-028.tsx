@@ -44,8 +44,8 @@ const STYLES = `
 --vibeui-combobox-028-muted:color-mix(in oklab,var(--vibeui-combobox-028-fg) 68%,transparent);
 --vibeui-combobox-028-border:light-dark(oklch(0.9 0.008 80),oklch(0.36 0.014 80));
 --vibeui-combobox-028-field:light-dark(oklch(0.985 0.004 80),oklch(0.27 0.012 80));
---vibeui-combobox-028-active:light-dark(oklch(0.95 0.03 80),oklch(0.34 0.04 39.8));
---vibeui-combobox-028-accent:light-dark(oklch(0.55 0.14 39.8),oklch(0.79 0.14 39.8));
+--vibeui-combobox-028-active:light-dark(oklch(0.95 0.03 80),oklch(0.34 0 0));
+--vibeui-combobox-028-accent:light-dark(oklch(0.287 0 0),oklch(0.912 0 0));
 --vibeui-combobox-028-radius:0.625rem;
 --vibeui-combobox-028-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

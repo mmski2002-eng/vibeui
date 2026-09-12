@@ -38,7 +38,7 @@ const STYLES = `
 --vibeui-file-010-border:light-dark(oklch(0.89 0 265),oklch(0.4 0 265));
 --vibeui-file-010-shell:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-file-010-track:light-dark(oklch(0.93 0 265),oklch(0.32 0 265));
---vibeui-file-010-accent:light-dark(oklch(0.54 0.17 39.8),oklch(0.74 0.16 39.8));
+--vibeui-file-010-accent:light-dark(oklch(0.285 0 0),oklch(0.903 0 0));
 --vibeui-file-010-danger:light-dark(oklch(0.55 0.19 25),oklch(0.72 0.17 25));
 --vibeui-file-010-ok:light-dark(oklch(0.52 0.13 155),oklch(0.76 0.14 155));
 --vibeui-file-010-on-solid:light-dark(oklch(1 0 0),oklch(0.19 0 265));

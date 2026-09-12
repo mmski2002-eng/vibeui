@@ -21,8 +21,8 @@ const STYLES = `
 --vibeui-switch-010-muted:color-mix(in oklab,var(--vibeui-switch-010-fg) 68%,transparent);
 --vibeui-switch-010-track:light-dark(oklch(0.88 0 265),oklch(0.43 0 265));
 --vibeui-switch-010-thumb:light-dark(oklch(1 0 0),oklch(0.93 0 265));
---vibeui-switch-010-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.17 39.8));
---vibeui-switch-010-tint:light-dark(oklch(0.55 0.2 39.8 / 12%),oklch(0.72 0.17 39.8 / 20%));
+--vibeui-switch-010-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
+--vibeui-switch-010-tint:light-dark(oklch(0.287 0 0 / 12%),oklch(0.899 0 0 / 20%));
 --vibeui-switch-010-hover:light-dark(oklch(0.55 0 265 / 7%),oklch(0.88 0 265 / 10%));
 --vibeui-switch-010-radius:0.625rem;
 --vibeui-switch-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -51,8 +51,7 @@ background:var(--vibeui-switch-010-tint);
 [data-vibeui-block="switch-010"] [data-part="mark"]::before{
 content:"";width:0.5rem;height:0.5rem;border-radius:9999px;
 background:var(--vibeui-switch-010-accent);
-box-shadow:0 0 0 0.1875rem color-mix(in oklab,var(--vibeui-switch-010-accent) 25%,transparent);
-}
+box-shadow:0 0 0 0.1875rem color-mix(in oklab,var(--vibeui-switch-010-accent) 25%,transparent);color:oklch(from var(--vibeui-switch-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="switch-010"] [data-part="text"]{display:flex;flex-direction:column;gap:0.125rem;flex:1 1 auto;min-width:0}
 [data-vibeui-block="switch-010"] [data-part="title"]{font-size:0.875rem;line-height:1.35}
 [data-vibeui-block="switch-010"] [data-part="description"]{font-size:0.8125rem;line-height:1.4;color:var(--vibeui-switch-010-muted)}
@@ -63,7 +62,7 @@ width:2.75rem;height:1.5rem;border-radius:9999px;
 background:var(--vibeui-switch-010-track);cursor:inherit;
 transition:background-color .18s ease;
 }
-[data-vibeui-block="switch-010"] input:checked{background:var(--vibeui-switch-010-accent)}
+[data-vibeui-block="switch-010"] input:checked{background:var(--vibeui-switch-010-accent);color:oklch(from var(--vibeui-switch-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="switch-010"] input:focus-visible{outline:2px solid var(--vibeui-switch-010-accent);outline-offset:2px}
 [data-vibeui-block="switch-010"] [data-part="thumb"]{
 position:absolute;left:0.1875rem;top:0.1875rem;
@@ -73,6 +72,8 @@ box-shadow:0 1px 2px oklch(0.2 0 265 / 25%);
 transition:transform .18s cubic-bezier(.32,.72,0,1);
 }
 [data-vibeui-block="switch-010"] input:checked + [data-part="thumb"]{transform:translateX(1.25rem)}
+/* Ползунок на включённом треке: контраст к чернильному акценту, а не белый на белом. */
+[data-vibeui-block="switch-010"] input:checked + [data-part="thumb"],[data-vibeui-block="switch-010"] input:checked ~ [data-part="thumb"]{background:oklch(from var(--vibeui-switch-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="switch-010"] *{animation:none!important;transition:none!important}}
 `
 

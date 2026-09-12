@@ -43,8 +43,8 @@ const STYLES = `
 --vibeui-tabs-009-muted:color-mix(in oklab,var(--vibeui-tabs-009-fg) 68%,transparent);
 --vibeui-tabs-009-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-tabs-009-hover:light-dark(oklch(0.55 0 265 / 9%),oklch(0.85 0 265 / 14%));
---vibeui-tabs-009-dirty:light-dark(oklch(0.72 0.15 39.8),oklch(0.79 0.15 39.8));
---vibeui-tabs-009-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8));
+--vibeui-tabs-009-dirty:light-dark(oklch(0.33 0 0),oklch(0.912 0 0));
+--vibeui-tabs-009-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-tabs-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-tabs-009-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }

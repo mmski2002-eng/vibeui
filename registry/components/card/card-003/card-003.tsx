@@ -31,7 +31,7 @@ const STYLES = `
 --vibeui-card-003-muted:color-mix(in oklab,var(--vibeui-card-003-fg) 68%,transparent);
 --vibeui-card-003-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-card-003-hue:250;
---vibeui-card-003-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-card-003-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-card-003-on-accent:light-dark(oklch(0.99 0 265),oklch(0.18 0 265));
 --vibeui-card-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -81,7 +81,7 @@ border:1px solid var(--vibeui-card-003-border);border-radius:0.5rem;
 background:transparent;color:inherit;font:inherit;font-size:0.8125rem;font-weight:600;
 }
 [data-vibeui-block="card-003"] button[data-primary="true"]{
-border-color:transparent;background:var(--vibeui-card-003-accent);color:var(--vibeui-card-003-on-accent);
+border-color:transparent;background:var(--vibeui-card-003-accent);color:oklch(from var(--vibeui-card-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="card-003"] button:focus-visible{outline:2px solid var(--vibeui-card-003-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="card-003"] *{animation:none!important;transition:none!important}}

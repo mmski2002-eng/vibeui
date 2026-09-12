@@ -59,7 +59,7 @@ const STYLES = `
 --vibeui-date-013-panel:light-dark(oklch(1 0 0),oklch(0.24 0 265));
 --vibeui-date-013-hover:light-dark(oklch(0.96 0 265),oklch(0.3 0 265));
 --vibeui-date-013-shadow:light-dark(oklch(0.2 0 265 / 55%),oklch(0 0 0 / 70%));
---vibeui-date-013-accent:light-dark(oklch(0.52 0.15 39.8),oklch(0.76 0.13 39.8));
+--vibeui-date-013-accent:light-dark(oklch(0.28 0 0),oklch(0.906 0 0));
 /* Текст на заливке выводится из светлоты акцента: пользовательский цвет
    приходит один на обе ветки темы, и фиксированный белый однажды окажется
    белым на жёлтом. */
@@ -168,7 +168,7 @@ background:var(--vibeui-date-013-soft);border-radius:0;opacity:1;
 [data-vibeui-block="date-013"] [data-part="day"][data-range="start"],
 [data-vibeui-block="date-013"] [data-part="day"][data-range="end"],
 [data-vibeui-block="date-013"] [data-part="day"][data-range="only"]{
-background:var(--vibeui-date-013-accent);color:var(--vibeui-date-013-on-accent);
+background:var(--vibeui-date-013-accent);color:oklch(from var(--vibeui-date-013-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-weight:650;opacity:1;
 }
 [data-vibeui-block="date-013"] [data-part="day"][data-range="start"]{border-radius:0.5rem 0 0 0.5rem}

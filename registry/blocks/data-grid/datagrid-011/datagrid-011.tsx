@@ -56,9 +56,9 @@ const STYLES = `
 --vibeui-datagrid-011-border:light-dark(oklch(0.92 0.006 210),oklch(0.34 0.012 210));
 --vibeui-datagrid-011-head:light-dark(oklch(0.975 0.003 210),oklch(0.27 0.012 210));
 --vibeui-datagrid-011-field:light-dark(oklch(1 0 0),oklch(0.22 0.012 210));
---vibeui-datagrid-011-accent:light-dark(oklch(0.52 0.13 39.8),oklch(0.78 0.12 39.8));
---vibeui-datagrid-011-accent-soft:light-dark(oklch(0.52 0.13 39.8 / 10%),oklch(0.78 0.12 39.8 / 18%));
---vibeui-datagrid-011-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.02 210));
+--vibeui-datagrid-011-accent:light-dark(oklch(0.28 0 0),oklch(0.91 0 0));
+--vibeui-datagrid-011-accent-soft:light-dark(oklch(0.28 0 0 / 10%),oklch(0.91 0 0 / 18%));
+--vibeui-datagrid-011-on-accent:oklch(from var(--vibeui-datagrid-011-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-datagrid-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -140,7 +140,7 @@ border:1px solid var(--vibeui-datagrid-011-border);
 background:var(--vibeui-datagrid-011-field);color:var(--vibeui-datagrid-011-fg);
 }
 [data-vibeui-block="datagrid-011"] [data-part="empty-actions"] button[data-tone="primary"]{
-border-color:transparent;background:var(--vibeui-datagrid-011-accent);color:var(--vibeui-datagrid-011-on-accent);
+border-color:transparent;background:var(--vibeui-datagrid-011-accent);color:oklch(from var(--vibeui-datagrid-011-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="datagrid-011"] [data-part="empty-actions"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-011-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-011"] *{animation:none!important;transition:none!important}}

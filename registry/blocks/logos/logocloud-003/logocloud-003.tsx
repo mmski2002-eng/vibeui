@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-logocloud-003-muted:light-dark(oklch(0.52 0 0),oklch(0.68 0 0));
 --vibeui-logocloud-003-logo:light-dark(oklch(0.45 0 0),oklch(0.64 0 0));
 --vibeui-logocloud-003-border:light-dark(oklch(0.9 0 0),oklch(0.32 0 0));
---vibeui-logocloud-003-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
+--vibeui-logocloud-003-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-logocloud-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

@@ -6,6 +6,8 @@ import type { ComponentProps, CSSProperties } from "react"
 export type Carousel006Story = {
   title: string
   hue?: number
+  /** Фото кадра. Без него кадр — цветной градиент. */
+  image?: string
 }
 
 export type Carousel006Props = Omit<ComponentProps<"section">, "children"> & {
@@ -61,7 +63,20 @@ transition:width .2s linear;
 }
 [data-vibeui-block="carousel-006"] [data-part="title"]{margin:0;font-size:1rem;font-weight:680;line-height:1.25}
 [data-vibeui-block="carousel-006"] [data-part="hint"]{font-size:0.75rem;color:var(--vibeui-carousel-006-muted)}
-[data-vibeui-block="carousel-006"] [data-part="taps"]{position:absolute;inset:0;display:flex}
+/* Фото кадра лежит под всем: полоски, текст и зоны нажатия остаются сверху.
+   Затемнение снизу держит белый текст читаемым на любом снимке. */
+[data-vibeui-block="carousel-006"] [data-part="photo"]{
+position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;
+}
+[data-vibeui-block="carousel-006"] [data-part="shade"]{
+position:absolute;inset:0;z-index:0;pointer-events:none;
+background:linear-gradient(180deg,oklch(0 0 0 / 0.35),transparent 30%,transparent 55%,oklch(0 0 0 / 0.7));
+}
+[data-vibeui-block="carousel-006"] [data-part="bars"],
+[data-vibeui-block="carousel-006"] [data-part="title"],
+[data-vibeui-block="carousel-006"] [data-part="hint"]{position:relative;z-index:1}
+[data-vibeui-block="carousel-006"] [data-part="bars"]{position:absolute}
+[data-vibeui-block="carousel-006"] [data-part="taps"]{position:absolute;inset:0;z-index:2;display:flex}
 [data-vibeui-block="carousel-006"] [data-part="taps"] button{
 flex:1;appearance:none;border:0;background:transparent;cursor:pointer;
 }
@@ -182,6 +197,18 @@ export function Carousel006({
           paused.current = false
         }}
       >
+        {stories[index]?.image ? (
+          <>
+            <img
+              data-part="photo"
+              src={stories[index].image}
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+            <span data-part="shade" aria-hidden="true" />
+          </>
+        ) : null}
         <ul data-part="bars">
           {stories.map((story, position) => (
             <li key={story.title} data-part="bar">

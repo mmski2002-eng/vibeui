@@ -34,8 +34,8 @@ const STYLES = `
 --vibeui-calendar-014-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-calendar-014-muted:color-mix(in oklab,var(--vibeui-calendar-014-fg) 68%,transparent);
 --vibeui-calendar-014-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
---vibeui-calendar-014-accent:light-dark(oklch(0.56 0.16 39.8),oklch(0.74 0.14 39.8));
---vibeui-calendar-014-on-accent:light-dark(oklch(0.99 0.01 25),oklch(0.2 0.04 39.8));
+--vibeui-calendar-014-accent:light-dark(oklch(0.29 0 0),oklch(0.903 0 0));
+--vibeui-calendar-014-on-accent:light-dark(oklch(0.99 0.01 25),oklch(0.2 0 0));
 --vibeui-calendar-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -74,7 +74,7 @@ font-size:0.8125rem;line-height:1;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="calendar-014"] [data-part="cell"][data-weekend="true"]{color:var(--vibeui-calendar-014-muted)}
 [data-vibeui-block="calendar-014"] [data-part="cell"][data-today="true"]{
-background:var(--vibeui-calendar-014-accent);color:var(--vibeui-calendar-014-on-accent);font-weight:700;
+background:var(--vibeui-calendar-014-accent);color:oklch(from var(--vibeui-calendar-014-accent) clamp(0,(0.62 - l) * 100,1) 0 0);font-weight:700;
 }
 /* Заливка «сегодня» — только цвет; слово рядом произносит скринридер. */
 [data-vibeui-block="calendar-014"] [data-part="sr"]{
@@ -86,9 +86,8 @@ display:flex;align-items:center;gap:0.125rem;height:0.25rem;
 }
 [data-vibeui-block="calendar-014"] [data-part="dots"] i{
 width:0.1875rem;height:0.1875rem;border-radius:50%;
-background:var(--vibeui-calendar-014-accent);
-}
-[data-vibeui-block="calendar-014"] [data-part="cell"][data-today="true"] [data-part="dots"] i{background:var(--vibeui-calendar-014-on-accent)}
+background:var(--vibeui-calendar-014-accent);color:oklch(from var(--vibeui-calendar-014-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
+[data-vibeui-block="calendar-014"] [data-part="cell"][data-today="true"] [data-part="dots"] i{background:var(--vibeui-calendar-014-on-accent);color:oklch(from var(--vibeui-calendar-014-on-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="calendar-014"] [data-part="more"]{
 font-size:0.5rem;line-height:0.25rem;font-weight:700;
 color:var(--vibeui-calendar-014-accent);

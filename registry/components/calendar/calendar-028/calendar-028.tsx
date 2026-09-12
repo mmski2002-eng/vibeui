@@ -38,8 +38,8 @@ const STYLES = `
 --vibeui-calendar-028-soft:light-dark(oklch(0.97 0.006 200),oklch(0.27 0.01 200));
 --vibeui-calendar-028-busy:light-dark(oklch(0.94 0.02 25),oklch(0.36 0.05 25));
 --vibeui-calendar-028-busyfg:light-dark(oklch(0.48 0.1 25),oklch(0.86 0.08 25));
---vibeui-calendar-028-accent:light-dark(oklch(0.5 0.11 39.8),oklch(0.73 0.11 39.8));
---vibeui-calendar-028-accentsoft:light-dark(oklch(0.93 0.05 39.8),oklch(0.32 0.05 39.8));
+--vibeui-calendar-028-accent:light-dark(oklch(0.275 0 0),oklch(0.901 0 0));
+--vibeui-calendar-028-accentsoft:light-dark(oklch(0.93 0 0),oklch(0.32 0 0));
 --vibeui-calendar-028-onaccent:light-dark(oklch(0.99 0 0),oklch(0.17 0.02 200));
 --vibeui-calendar-028-radius:0.6875rem;
 --vibeui-calendar-028-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -90,6 +90,9 @@ color:var(--vibeui-calendar-028-busyfg);
 background:var(--vibeui-calendar-028-accentsoft);
 border-color:var(--vibeui-calendar-028-accent);
 }
+/* «Свободно» в выбранном диапазоне — обычным цветом: оранжевая подпись
+   читалась как статус, а не как выбор. */
+[data-vibeui-block="calendar-028"] [data-part="hour"][data-picked="true"] [data-part="who"]{color:var(--vibeui-calendar-028-fg)}
 [data-vibeui-block="calendar-028"] [data-part="clock"]{font-weight:700}
 [data-vibeui-block="calendar-028"] [data-part="who"]{
 overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
@@ -108,7 +111,7 @@ margin:0;font-size:0.875rem;color:var(--vibeui-calendar-028-muted);
 [data-vibeui-block="calendar-028"] [data-part="book"]{
 appearance:none;cursor:pointer;font:inherit;flex:none;
 padding:0.4375rem 0.875rem;border:0;border-radius:0.5625rem;
-background:var(--vibeui-calendar-028-accent);color:var(--vibeui-calendar-028-onaccent);
+background:var(--vibeui-calendar-028-accent);color:oklch(from var(--vibeui-calendar-028-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.875rem;font-weight:600;
 transition:opacity .16s ease;
 }

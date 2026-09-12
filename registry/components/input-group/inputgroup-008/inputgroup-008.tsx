@@ -31,7 +31,7 @@ const STYLES = `
 --vibeui-inputgroup-008-muted:color-mix(in oklab,var(--vibeui-inputgroup-008-fg) 68%,transparent);
 --vibeui-inputgroup-008-field:light-dark(oklch(0.99 0 265),oklch(0.27 0 265));
 --vibeui-inputgroup-008-border:light-dark(oklch(0.86 0 265),oklch(0.44 0 265));
---vibeui-inputgroup-008-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.72 0.15 39.8));
+--vibeui-inputgroup-008-accent:light-dark(oklch(0.275 0 0),oklch(0.899 0 0));
 --vibeui-inputgroup-008-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.02 25));
 --vibeui-inputgroup-008-radius:0.75rem;
 --vibeui-inputgroup-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -85,7 +85,7 @@ padding:0 0.875rem;background:var(--vibeui-inputgroup-008-field);
 appearance:none;cursor:pointer;
 background:var(--vibeui-inputgroup-008-accent);
 border-color:var(--vibeui-inputgroup-008-accent);
-color:var(--vibeui-inputgroup-008-on-accent);font-weight:650;
+color:oklch(from var(--vibeui-inputgroup-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);font-weight:650;
 transition:filter .16s ease;
 }
 [data-vibeui-block="inputgroup-008"] button:hover{filter:brightness(1.08)}
@@ -109,6 +109,8 @@ border-radius:0 var(--vibeui-inputgroup-008-radius) var(--vibeui-inputgroup-008-
 [data-vibeui-block="inputgroup-008"] [data-part="zip"]{flex:1 1 0;min-width:7rem}
 [data-vibeui-block="inputgroup-008"] button{flex:none;padding:0 1.5rem}
 }
+/* Специфичнее общего color:inherit у детей группы: кнопка на акценте держит свой контраст. */
+[data-vibeui-block="inputgroup-008"] [data-part="group"] > button{color:oklch(from var(--vibeui-inputgroup-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="inputgroup-008"] *{animation:none!important;transition:none!important}}
 `
 

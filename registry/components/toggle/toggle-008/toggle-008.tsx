@@ -29,7 +29,7 @@ const STYLES = `
 --vibeui-toggle-008-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-toggle-008-muted:color-mix(in oklab,var(--vibeui-toggle-008-fg) 68%,transparent);
 --vibeui-toggle-008-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-toggle-008-accent:light-dark(oklch(0.55 0.16 39.8),oklch(0.72 0.15 39.8));
+--vibeui-toggle-008-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-toggle-008-on:light-dark(oklch(0.99 0 0),oklch(0.18 0 265));
 --vibeui-toggle-008-tip:light-dark(oklch(0.24 0 265),oklch(0.9 0 265));
 --vibeui-toggle-008-tip-fg:light-dark(oklch(0.98 0 0),oklch(0.2 0 265));
@@ -61,7 +61,7 @@ outline:2px solid var(--vibeui-toggle-008-accent);outline-offset:2px;
 }
 [data-vibeui-block="toggle-008"] button[aria-pressed="true"]{
 background:var(--vibeui-toggle-008-accent);border-color:var(--vibeui-toggle-008-accent);
-color:var(--vibeui-toggle-008-on);
+color:oklch(from var(--vibeui-toggle-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="toggle-008"] [data-part="dot"]{
 width:0.5rem;height:0.5rem;border-radius:50%;flex:none;

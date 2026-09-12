@@ -83,7 +83,7 @@ outline:2px solid var(--vibeui-togglegroup-005-accent);outline-offset:2px;
 [data-vibeui-block="togglegroup-005"] button[aria-pressed="true"]{
 background:var(--vibeui-togglegroup-005-accent);
 border-color:var(--vibeui-togglegroup-005-accent);
-color:var(--vibeui-togglegroup-005-accent-fg);
+color:oklch(from var(--vibeui-togglegroup-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 /* Закончившийся размер гасится и перечёркивается: цвет один — слишком слабый
    признак, а перечёркивание читается и в чёрно-белой печати. */

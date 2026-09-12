@@ -41,9 +41,9 @@ const STYLES = `
 --vibeui-checkbox-013-muted:color-mix(in oklab,var(--vibeui-checkbox-013-fg) 68%,transparent);
 --vibeui-checkbox-013-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-checkbox-013-surface:light-dark(oklch(0.98 0 265),oklch(0.26 0 265));
---vibeui-checkbox-013-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.64 0.16 39.8));
+--vibeui-checkbox-013-accent:light-dark(oklch(0.275 0 0),oklch(0.885 0 0));
 --vibeui-checkbox-013-required:light-dark(oklch(0.55 0.2 25),oklch(0.72 0.17 25));
---vibeui-checkbox-013-on-accent:oklch(0.99 0 255);
+--vibeui-checkbox-013-on-accent:oklch(from var(--vibeui-checkbox-013-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-checkbox-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -72,7 +72,7 @@ border:1.5px solid var(--vibeui-checkbox-013-border);border-radius:0.3125rem;
 background:var(--vibeui-checkbox-013-bg);
 transition:background-color .15s ease,border-color .15s ease;
 }
-[data-vibeui-block="checkbox-013"] input:checked{border-color:transparent;background:var(--vibeui-checkbox-013-accent)}
+[data-vibeui-block="checkbox-013"] input:checked{border-color:transparent;background:var(--vibeui-checkbox-013-accent);color:oklch(from var(--vibeui-checkbox-013-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="checkbox-013"] input:checked::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.25rem;height:0.4375rem;margin:-0.3125rem 0 0 -0.125rem;
@@ -92,7 +92,7 @@ display:block;margin-top:0.125rem;font-size:0.75rem;color:var(--vibeui-checkbox-
 appearance:none;border:0;cursor:pointer;
 height:2.375rem;border-radius:0.625rem;padding:0 1rem;
 font:inherit;font-size:0.875rem;font-weight:650;
-background:var(--vibeui-checkbox-013-accent);color:var(--vibeui-checkbox-013-on-accent);
+background:var(--vibeui-checkbox-013-accent);color:oklch(from var(--vibeui-checkbox-013-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 transition:opacity .15s ease;
 }
 [data-vibeui-block="checkbox-013"] button:disabled{cursor:not-allowed;opacity:.4}

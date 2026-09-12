@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useLayoutEffect, useRef, useState } from "react"
 import type {
   ComponentProps,
   CSSProperties,
@@ -45,7 +45,7 @@ const STYLES = `
 --vibeui-sortable-002-muted:color-mix(in oklab,var(--vibeui-sortable-002-fg) 68%,transparent);
 --vibeui-sortable-002-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-sortable-002-shadow:light-dark(oklch(0.2 0 265 / 16%),oklch(0 0 0 / 46%));
---vibeui-sortable-002-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.73 0.16 39.8));
+--vibeui-sortable-002-accent:light-dark(oklch(0.287 0 0),oklch(0.901 0 0));
 --vibeui-sortable-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -75,7 +75,7 @@ border-color:var(--vibeui-sortable-002-accent);
 box-shadow:0 8px 18px var(--vibeui-sortable-002-shadow);
 transform:translateY(-1px);
 }
-[data-vibeui-block="sortable-002"] li[data-dragging="true"]{opacity:.45}
+[data-vibeui-block="sortable-002"] li[data-dragging="true"]{opacity:.45;border-style:dashed}
 [data-vibeui-block="sortable-002"] li[data-over="true"]{box-shadow:inset 0 2px 0 var(--vibeui-sortable-002-accent)}
 /* Ручка — кнопка: только так стрелки достаются с клавиатуры. */
 [data-vibeui-block="sortable-002"] [data-part="grip"]{
@@ -165,6 +165,45 @@ export function Sortable002({
   const [snapshot, setSnapshot] = useState(items)
   const [dragged, setDragged] = useState<string | null>(null)
   const [over, setOver] = useState<string | null>(null)
+  const rows = useRef(new Map<string, HTMLLIElement>())
+  const rects = useRef(new Map<string, DOMRect>())
+
+  // FLIP: после каждого рендера сравниваем прежнее и новое положение элементов
+  // и проигрываем сдвиг с прежнего места. Перестановка видна как движение,
+  // а не как мгновенная подмена.
+  useLayoutEffect(() => {
+    const next = new Map<string, DOMRect>()
+    rows.current.forEach((node, key) => next.set(key, node.getBoundingClientRect()))
+    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (!calm) {
+      rows.current.forEach((node, key) => {
+        const before = rects.current.get(key)
+        const after = next.get(key)
+        if (!before || !after) return
+        const dx = before.left - after.left
+        const dy = before.top - after.top
+        if (!dx && !dy) return
+        node.animate(
+          [{ transform: `translate(${dx}px,${dy}px)` }, { transform: "none" }],
+          { duration: 220, easing: "cubic-bezier(.2,.8,.2,1)" },
+        )
+      })
+    }
+    rects.current = next
+  })
+
+  // Живая перестановка: элемент встаёт на место того, над которым висит
+  // курсор, ещё до отпускания — остальные раздвигаются, а не накладываются.
+  const hover = (target: string) => {
+    if (!dragged || dragged === target) return
+    const from = order.indexOf(dragged)
+    const to = order.indexOf(target)
+    if (from < 0 || to < 0 || from === to) return
+    const next = [...order]
+    next.splice(from, 1)
+    next.splice(to, 0, dragged)
+    setOrder(next)
+  }
   const [announcement, setAnnouncement] = useState("")
 
   const apply = (next: string[]) => {
@@ -235,15 +274,15 @@ export function Sortable002({
     }
   }
 
-  const drop = (event: DragEvent<HTMLLIElement>, target: string) => {
+  const drop = (event: DragEvent<HTMLLIElement>) => {
     event.preventDefault()
     setOver(null)
-    if (!dragged || dragged === target) return
-
-    const next = move(order.indexOf(dragged), order.indexOf(target))
-    setAnnouncement(
-      say("dragged", dragged, next.indexOf(dragged) + 1, next.length),
-    )
+    if (dragged) {
+      onChange?.(order)
+      setAnnouncement(
+        say("dragged", dragged, order.indexOf(dragged) + 1, order.length),
+      )
+    }
     setDragged(null)
   }
 
@@ -276,6 +315,10 @@ export function Sortable002({
           {order.map((row, index) => (
             <li
               key={row}
+              ref={(node) => {
+                if (node) rows.current.set(row, node)
+                else rows.current.delete(row)
+              }}
               draggable
               data-held={row === held}
               data-dragging={row === dragged}
@@ -288,8 +331,9 @@ export function Sortable002({
               onDragOver={(event) => {
                 event.preventDefault()
                 setOver(row)
+                hover(row)
               }}
-              onDrop={(event) => drop(event, row)}
+              onDrop={drop}
             >
               <button
                 type="button"

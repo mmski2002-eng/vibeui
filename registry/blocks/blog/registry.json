@@ -27,7 +27,7 @@
           "articles"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "posts": [
               {
@@ -239,7 +239,7 @@
           "longread"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "avatarImage": "/demo/avatars/anna-256.webp"
           }
@@ -426,7 +426,7 @@
           "author"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "coverImage": "/demo/scenes/scene-17.webp",
             "avatarImage": "/demo/avatars/maria-256.webp"
@@ -591,7 +591,7 @@
           "form"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Blog004",
@@ -739,7 +739,7 @@
           "list"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Blog005",
@@ -937,7 +937,7 @@
           "cards"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Blog006",
@@ -1088,7 +1088,7 @@
       "name": "blog-007",
       "type": "registry:block",
       "title": "Карточки выпусков",
-      "description": "Сетка выпусков журнала с обложками из фирменного оранжевого градиента: вместо иллюстраций — крупный номер выпуска, поэтому публикация не ждёт дизайнера.",
+      "description": "Сетка выпусков журнала с обложками из фирменного акцентного градиента: вместо иллюстраций — крупный номер выпуска, поэтому публикация не ждёт дизайнера.",
       "categories": [
         "blog"
       ],
@@ -1111,7 +1111,7 @@
           "grid"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "posts": [
               {
@@ -1125,7 +1125,7 @@
               {
                 "issue": "№13",
                 "title": "Один акцент на всю библиотеку",
-                "excerpt": "Почему бренд держится на одном оранжевом и десяти нейтралях — и что это даёт полутора тысячам блоков.",
+                "excerpt": "Почему бренд держится на одном акцентном и десяти нейтралях — и что это даёт полутора тысячам блоков.",
                 "date": "7 марта 2026",
                 "readingTime": "8 мин",
                 "image": "/demo/scenes/scene-02.webp"
@@ -1200,7 +1200,7 @@
         "i18n": {
           "en": {
             "title": "Issue Cards",
-            "description": "A grid of journal issues with covers made of the brand orange gradient: a large issue number instead of illustrations, so publishing never waits for a designer.",
+            "description": "A grid of journal issues with covers made of the brand accent gradient: a large issue number instead of illustrations, so publishing never waits for a designer.",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-007-*. A server component: there are no hooks. The cover is a linear gradient of three accent stops, the issue number is pressed in with translucent dark ink, and there are no assets or images at all. The heading link is stretched over the whole card with ::after, and :focus-within holds the ring. Two and three columns are turned on by a container query.",
             "ai": {
               "summary": "A grid of journal issues: cards with a gradient cover, issue number, excerpt, date and reading time. Zero dependencies, one file, no client JS.",
@@ -1262,7 +1262,7 @@
                   {
                     "issue": "№13",
                     "title": "One accent for the whole library",
-                    "excerpt": "Why the brand rests on a single orange and ten neutrals — and what that gives fifteen hundred blocks.",
+                    "excerpt": "Why the brand rests on a single accent and ten neutrals — and what that gives fifteen hundred blocks.",
                     "date": "7 March 2026",
                     "readingTime": "8 min",
                     "image": "/demo/scenes/scene-02.webp"
@@ -1292,7 +1292,7 @@
       "name": "blog-008",
       "type": "registry:block",
       "title": "Главная и лента",
-      "description": "Главная журнала: слева крупный featured-материал на тёплой оранжевой плашке, справа плотная лента из четырёх строк — один текст получает всё внимание, остальные перечислены.",
+      "description": "Главная журнала: слева крупный featured-материал на тёплой акцентной плашке, справа плотная лента из четырёх строк — один текст получает всё внимание, остальные перечислены.",
       "categories": [
         "blog"
       ],
@@ -1315,7 +1315,7 @@
           "magazine"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Blog008",
@@ -1376,7 +1376,7 @@
         "i18n": {
           "en": {
             "title": "Front Page Feed",
-            "description": "A journal front page: a large featured piece on a warm orange panel on the left, a dense four-row feed on the right — one text gets all the attention, the rest are listed.",
+            "description": "A journal front page: a large featured piece on a warm accent panel on the left, a dense four-row feed on the right — one text gets all the attention, the rest are listed.",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-008-*. A server component: there are no hooks. The featured card sits on a warm color-mix tint of the accent, and the feed on the right is rows without covers: a row costs less than a card and does not compete with the lead piece. Both zones are clickable through stretched ::after links, and :focus-within holds the ring. Two columns are turned on by a container query at 56rem; below that the feed stacks under the card.",
             "ai": {
               "summary": "A blog front page: one large announcement with an author and a feed of four compact rows. Zero dependencies, one file, no client JS.",
@@ -1488,7 +1488,7 @@
           "target": "@components/vibeui/blog-009.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-009-*. Серверный: хуков нет. Аватар — инициалы на тёплой оранжевой заливке color-mix, картинок и ассетов нет. Соцссылки — настоящие <a> пилюлями с видимым фокус-кольцом, список последних статей — отдельная колонка, которую container query уводит вправо на широком блоке.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-009-*. Серверный: хуков нет. Аватар — инициалы на тёплой акцентной заливке color-mix, картинок и ассетов нет. Соцссылки — настоящие <a> пилюлями с видимым фокус-кольцом, список последних статей — отдельная колонка, которую container query уводит вправо на широком блоке.",
       "meta": {
         "tags": [
           "blog",
@@ -1498,7 +1498,7 @@
           "links"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "avatarImage": "/demo/avatars/oleg-256.webp"
           }
@@ -1563,7 +1563,7 @@
           "en": {
             "title": "Author Card",
             "description": "A blog author card: an initials avatar, role, bio and social links on the left, the three latest articles on the right — trust in an author is checked by their texts.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-009-*. A server component: there are no hooks. The avatar is initials on a warm orange color-mix fill; there are no images or assets. The social links are real <a> pills with a visible focus ring, and the latest-articles list is a separate column that a container query moves to the right on a wide block.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-009-*. A server component: there are no hooks. The avatar is initials on a warm accent color-mix fill; there are no images or assets. The social links are real <a> pills with a visible focus ring, and the latest-articles list is a separate column that a container query moves to the right on a wide block.",
             "ai": {
               "summary": "An author card: initials avatar, role, bio, social links and the three latest articles. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1637,7 +1637,7 @@
                     "readingTime": "7 min"
                   },
                   {
-                    "title": "One orange for fifteen hundred blocks",
+                    "title": "One accent for fifteen hundred blocks",
                     "date": "7 March 2026",
                     "readingTime": "6 min"
                   }
@@ -1659,7 +1659,7 @@
       "name": "blog-010",
       "type": "registry:block",
       "title": "Липкое оглавление",
-      "description": "Макет статьи с липким оглавлением сбоку: активный пункт отмечен оранжевой полосой и цветом, на узком блоке колонка становится обычным списком перед текстом.",
+      "description": "Макет статьи с липким оглавлением сбоку: активный пункт отмечен акцентной полосой и цветом, на узком блоке колонка становится обычным списком перед текстом.",
       "categories": [
         "blog"
       ],
@@ -1672,7 +1672,7 @@
           "target": "@components/vibeui/blog-010.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-010-*. Серверный: активный пункт задаётся пропом activeId и помечается aria-current — наблюдателя пересечений нет намеренно. Оглавление — nav с aria-label, пункты сидят на общей левой линии, активный перекрывает её оранжевой полосой. Липкость включает container query на 56rem, заголовки несут id и scroll-margin-top, ширина текста ограничена в ch.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-010-*. Серверный: активный пункт задаётся пропом activeId и помечается aria-current — наблюдателя пересечений нет намеренно. Оглавление — nav с aria-label, пункты сидят на общей левой линии, активный перекрывает её акцентной полосой. Липкость включает container query на 56rem, заголовки несут id и scroll-margin-top, ширина текста ограничена в ch.",
       "meta": {
         "tags": [
           "blog",
@@ -1682,12 +1682,12 @@
           "navigation"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Blog010",
           "usage": "<Blog010 title=\"Путь блока\" activeId=\"copy\" sections={[{ id: \"copy\", heading: \"Что копирует Copy for AI\", paragraphs: [\"…\"] }]} />",
-          "summary": "Макет статьи с липким оглавлением: nav-колонка едет с прокруткой, активный пункт оранжевый, текст собран из тех же секций. Ноль зависимостей, один файл, клиентского JS нет.",
+          "summary": "Макет статьи с липким оглавлением: nav-колонка едет с прокруткой, активный пункт акцентный, текст собран из тех же секций. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-blog-010-* и не подменять её токенами вашей темы",
             "оглавление из тех же секций, что и текст: руками собранный список разойдётся с содержанием",
@@ -1744,10 +1744,10 @@
         "i18n": {
           "en": {
             "title": "Sticky Contents",
-            "description": "An article layout with a sticky table of contents: the active item is marked with an orange bar and colour, and on a narrow block the column becomes a plain list before the text.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-010-*. A server component: the active item is set by the activeId prop and marked with aria-current — there is deliberately no intersection observer. The contents are a nav with aria-label, the items sit on a shared left line, and the active one overlays it with an orange bar. Stickiness is turned on by a container query at 56rem, the headings carry an id and scroll-margin-top, and the text measure is limited in ch.",
+            "description": "An article layout with a sticky table of contents: the active item is marked with an accent bar and colour, and on a narrow block the column becomes a plain list before the text.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-010-*. A server component: the active item is set by the activeId prop and marked with aria-current — there is deliberately no intersection observer. The contents are a nav with aria-label, the items sit on a shared left line, and the active one overlays it with an accent bar. Stickiness is turned on by a container query at 56rem, the headings carry an id and scroll-margin-top, and the text measure is limited in ch.",
             "ai": {
-              "summary": "An article layout with sticky contents: the nav column travels with the scroll, the active item is orange, and the text is built from the same sections. Zero dependencies, one file, no client JS.",
+              "summary": "An article layout with sticky contents: the nav column travels with the scroll, the active item is accent, and the text is built from the same sections. Zero dependencies, one file, no client JS.",
               "preserve": [
                 "the local --vibeui-blog-010-* palette — do not swap it for your theme tokens",
                 "the contents built from the same sections as the text: a hand-written list drifts from the content",
@@ -1845,7 +1845,7 @@
       "name": "blog-011",
       "type": "registry:block",
       "title": "Архив по месяцам",
-      "description": "Архив-таймлайн: статьи сгруппированы по месяцам вдоль вертикальной оси с оранжевыми точками — паузы и плотные месяцы видны без чтения дат.",
+      "description": "Архив-таймлайн: статьи сгруппированы по месяцам вдоль вертикальной оси с акцентными точками — паузы и плотные месяцы видны без чтения дат.",
       "categories": [
         "blog"
       ],
@@ -1868,12 +1868,12 @@
           "list"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Blog011",
           "usage": "<Blog011 title=\"Журнал по месяцам\" groups={[{ month: \"Март 2026\", posts: [{ title: \"…\", date: \"26 марта\", readingTime: \"9 мин\" }] }]} />",
-          "summary": "Архив статей таймлайном: месяцы с оранжевыми точками на вертикальной оси, под каждым — список статей с датой и временем чтения. Ноль зависимостей, один файл, клиентского JS нет.",
+          "summary": "Архив статей таймлайном: месяцы с акцентными точками на вертикальной оси, под каждым — список статей с датой и временем чтения. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-blog-011-* и не подменять её токенами вашей темы",
             "ось с точками месяцев: ритм публикаций виден без чтения дат",
@@ -1928,10 +1928,10 @@
         "i18n": {
           "en": {
             "title": "Monthly Archive",
-            "description": "A timeline archive: articles grouped by month along a vertical axis with orange dots — pauses and busy months are visible without reading the dates.",
+            "description": "A timeline archive: articles grouped by month along a vertical axis with accent dots — pauses and busy months are visible without reading the dates.",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-011-*. A server component: there are no hooks. The axis is the list's left border, and each month's dot sits on it as a pseudo-element, separated from the line by a ring in the page colour. The groups are an ol of months with a ul of articles inside. On a wide block a container query moves the date and reading time to the right edge of the row.",
             "ai": {
-              "summary": "An article archive as a timeline: months with orange dots on a vertical axis, each followed by a list of articles with date and reading time. Zero dependencies, one file, no client JS.",
+              "summary": "An article archive as a timeline: months with accent dots on a vertical axis, each followed by a list of articles with date and reading time. Zero dependencies, one file, no client JS.",
               "preserve": [
                 "the local --vibeui-blog-011-* palette — do not swap it for your theme tokens",
                 "the axis with month dots: the publishing rhythm is visible without reading the dates",
@@ -1991,7 +1991,7 @@
                         "readingTime": "7 min"
                       },
                       {
-                        "title": "One orange for fifteen hundred blocks",
+                        "title": "One accent for fifteen hundred blocks",
                         "date": "7 March",
                         "readingTime": "6 min"
                       }
@@ -2044,7 +2044,7 @@
       "name": "blog-012",
       "type": "registry:block",
       "title": "Плитки рубрик",
-      "description": "Сетка рубрик блога плитками: имя темы, крупный оранжевый счётчик статей и строка о содержимом — честный ответ на вопрос, есть ли там что читать.",
+      "description": "Сетка рубрик блога плитками: имя темы, крупный акцентный счётчик статей и строка о содержимом — честный ответ на вопрос, есть ли там что читать.",
       "categories": [
         "blog"
       ],
@@ -2067,7 +2067,7 @@
           "tiles"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Blog012",
@@ -2127,7 +2127,7 @@
         "i18n": {
           "en": {
             "title": "Topic Tiles",
-            "description": "A grid of blog topics as tiles: the topic name, a large orange article counter and one line on the contents — an honest answer to whether there is anything to read.",
+            "description": "A grid of blog topics as tiles: the topic name, a large accent article counter and one line on the contents — an honest answer to whether there is anything to read.",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-012-*. A server component: there are no hooks. The counter is set large in the accent colour, and the caption under the number comes from the countLabel prop. The tile is clickable through a stretched ::after link on the topic name, and hover lays a warm color-mix tint of the accent underneath. Two and three columns are turned on by a container query.",
             "ai": {
               "summary": "A grid of topic tiles: the name, a large article counter and a one-line description. Zero dependencies, one file, no client JS.",
@@ -2224,7 +2224,7 @@
       "name": "blog-013",
       "type": "registry:block",
       "title": "Шапка статьи",
-      "description": "Шапка поста: тег рубрики, крупный заголовок, лид и строка автора с датой и временем чтения; сверху — декоративная оранжевая полоса прогресса чтения.",
+      "description": "Шапка поста: тег рубрики, крупный заголовок, лид и строка автора с датой и временем чтения; сверху — декоративная акцентная полоса прогресса чтения.",
       "categories": [
         "blog"
       ],
@@ -2247,7 +2247,7 @@
           "progress"
         ],
         "preview": {
-          "width": "full",
+          "width": "natural",
           "props": {
             "avatarImage": "/demo/avatars/petr-256.webp"
           }
@@ -2311,7 +2311,7 @@
         "i18n": {
           "en": {
             "title": "Article Hero",
-            "description": "A post hero: a topic tag, a large heading, a lede and an author line with date and reading time; on top — a decorative orange reading-progress bar.",
+            "description": "A post hero: a topic tag, a large heading, a lede and an author line with date and reading time; on top — a decorative accent reading-progress bar.",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-013-*. A server component: the progress bar is static and decorative — its width is set by the progress prop in percent, and live progress needs a scroll listener, which stays with the caller. The root is a <header> with an h1: the block is meant for the top of an article page. The avatar is initials on a warm fill, and the bar is hidden with aria-hidden.",
             "ai": {
               "summary": "An article hero: tag, h1 heading, lede, author with an initials avatar, date, reading time and a decorative progress bar on top. Zero dependencies, one file, no client JS.",
@@ -2406,7 +2406,7 @@
           "recirculation"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Blog014",
@@ -2547,7 +2547,7 @@
       "name": "blog-015",
       "type": "registry:block",
       "title": "Дайджест недели",
-      "description": "Нумерованный дайджест: пять ссылок с комментарием и источником, номера рисует CSS-счётчик, снизу — плашка подписки с оранжевой кнопкой.",
+      "description": "Нумерованный дайджест: пять ссылок с комментарием и источником, номера рисует CSS-счётчик, снизу — плашка подписки с акцентной кнопкой.",
       "categories": [
         "blog"
       ],
@@ -2570,7 +2570,7 @@
           "list"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Blog015",
@@ -2581,7 +2581,7 @@
             "комментарий у каждой ссылки: ссылка без объяснения, зачем её открывать, в дайджесте не живёт",
             "номера CSS-счётчиком — порядок нельзя рассинхронизировать с разметкой",
             "табличные цифры и ведущий ноль в номерах: колонка номеров не пляшет",
-            "почти чёрный текст на акцентной кнопке — белый на оранжевом не проходит по контрасту",
+            "почти чёрный текст на акцентной кнопке — белый на акцентном не проходит по контрасту",
             "источник у каждой ссылки: дайджест без источников читается как реклама",
             "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
             "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
@@ -2631,7 +2631,7 @@
         "i18n": {
           "en": {
             "title": "Weekly Digest",
-            "description": "A numbered digest: five links with a comment and a source, numbers drawn by a CSS counter, and a subscribe strip with an orange button at the bottom.",
+            "description": "A numbered digest: five links with a comment and a source, numbers drawn by a CSS counter, and a subscribe strip with an accent button at the bottom.",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-015-*. A server component: there are no hooks. The numbers are set by a CSS counter with decimal-leading-zero — the on-screen order cannot drift from the markup. Every entry is a «number plus text» grid with the number spanning three rows. The subscribe strip is a button-styled link with the accent fill and near-black text; there is deliberately no form or submission in the block.",
             "ai": {
               "summary": "A digest: a numbered list of five links with comments and a source, plus a subscribe strip with a button below. Zero dependencies, one file, no client JS.",
@@ -2640,7 +2640,7 @@
                 "the comment on every link: a link without a reason to open it does not belong in a digest",
                 "the CSS-counter numbers — the order cannot drift from the markup",
                 "the tabular digits and leading zero in the numbers: the number column does not dance",
-                "the near-black text on the accent button — white on orange fails the contrast check",
+                "the near-black text on the accent button — white on accent fails the contrast check",
                 "the source on every link: a digest without sources reads as advertising",
                 "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
                 "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
@@ -2695,7 +2695,7 @@
                     "source": "VibeUI journal"
                   },
                   {
-                    "title": "One orange for the whole library",
+                    "title": "One accent for the whole library",
                     "note": "Why the brand rests on a single accent and how the neutrals keep fifteen hundred blocks from arguing.",
                     "source": "VibeUI journal"
                   },

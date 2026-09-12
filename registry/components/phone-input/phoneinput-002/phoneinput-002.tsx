@@ -38,7 +38,7 @@ const STYLES = `
 --vibeui-phoneinput-002-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-phoneinput-002-muted:color-mix(in oklab,var(--vibeui-phoneinput-002-fg) 68%,transparent);
 --vibeui-phoneinput-002-field-border:light-dark(oklch(0.85 0 265),oklch(0.4 0 265));
---vibeui-phoneinput-002-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.74 0.14 39.8));
+--vibeui-phoneinput-002-accent:light-dark(oklch(0.275 0 0),oklch(0.903 0 0));
 --vibeui-phoneinput-002-radius:0.625rem;
 --vibeui-phoneinput-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

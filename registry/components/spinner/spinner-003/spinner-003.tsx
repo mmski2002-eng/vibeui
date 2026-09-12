@@ -25,7 +25,7 @@ const STYLES = `
 --vibeui-spinner-003-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-spinner-003-muted:color-mix(in oklab,var(--vibeui-spinner-003-fg) 68%,transparent);
 --vibeui-spinner-003-track:light-dark(oklch(0.93 0 265),oklch(0.36 0 265));
---vibeui-spinner-003-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.72 0.16 39.8));
+--vibeui-spinner-003-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-spinner-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -56,8 +56,7 @@ border-radius:9999px;background:var(--vibeui-spinner-003-track);
 position:absolute;inset:0 auto 0 0;
 width:40%;border-radius:9999px;
 background:var(--vibeui-spinner-003-accent);
-animation:vibeui-spinner-003-run 1.4s cubic-bezier(.65,0,.35,1) infinite;
-}
+animation:vibeui-spinner-003-run 1.4s cubic-bezier(.65,0,.35,1) infinite;color:oklch(from var(--vibeui-spinner-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @keyframes vibeui-spinner-003-run{
 0%{transform:translateX(-100%)}
 100%{transform:translateX(250%)}

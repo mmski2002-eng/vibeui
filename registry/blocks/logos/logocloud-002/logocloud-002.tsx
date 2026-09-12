@@ -27,7 +27,7 @@ const STYLES = `
 --vibeui-logocloud-002-ink:light-dark(oklch(0.2 0 0),oklch(0.95 0 0));
 --vibeui-logocloud-002-muted:light-dark(oklch(0.52 0 0),oklch(0.68 0 0));
 --vibeui-logocloud-002-logo:light-dark(oklch(0.45 0 0),oklch(0.64 0 0));
---vibeui-logocloud-002-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
+--vibeui-logocloud-002-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-logocloud-002-speed:36s;
 --vibeui-logocloud-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

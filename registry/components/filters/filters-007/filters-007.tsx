@@ -39,7 +39,7 @@ const STYLES = `
 --vibeui-filters-007-muted:color-mix(in oklab,var(--vibeui-filters-007-fg) 68%,transparent);
 --vibeui-filters-007-border:light-dark(oklch(0.89 0 265),oklch(0.4 0 265));
 --vibeui-filters-007-shell:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
---vibeui-filters-007-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.76 0.13 39.8));
+--vibeui-filters-007-accent:light-dark(oklch(0.275 0 0),oklch(0.906 0 0));
 --vibeui-filters-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -81,7 +81,7 @@ font-size:0.8125rem;font-weight:650;
 flex:none;width:0.4375rem;height:0.4375rem;border-radius:9999px;
 background:var(--vibeui-filters-007-border);
 }
-[data-vibeui-block="filters-007"] [data-part="view"][aria-pressed="true"] [data-part="dot"]{background:var(--vibeui-filters-007-accent)}
+[data-vibeui-block="filters-007"] [data-part="view"][aria-pressed="true"] [data-part="dot"]{background:var(--vibeui-filters-007-accent);color:oklch(from var(--vibeui-filters-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 /* Расшифровка условий: по одному имени через неделю не вспомнить, что внутри. */
 [data-vibeui-block="filters-007"] [data-part="summary"]{
 font-size:0.6875rem;line-height:1.4;color:var(--vibeui-filters-007-muted);

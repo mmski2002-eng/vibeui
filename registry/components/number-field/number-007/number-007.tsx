@@ -89,7 +89,7 @@ color:var(--vibeui-number-007-accent);
 flex:1 1 0;height:0.375rem;border-radius:9999px;background:var(--vibeui-number-007-track);
 transition:background-color .16s ease;
 }
-[data-vibeui-block="number-007"] [data-part="tick"][data-on="true"]{background:var(--vibeui-number-007-accent)}
+[data-vibeui-block="number-007"] [data-part="tick"][data-on="true"]{background:var(--vibeui-number-007-accent);color:oklch(from var(--vibeui-number-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="number-007"] [data-part="hint"]{
 margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-number-007-muted);
 }

@@ -17,7 +17,7 @@ export type Badge004Props = Omit<ComponentProps<"span">, "children"> & {
 // отделённой. Смысл маркера идёт текстом: точка вслух не читается.
 const STYLES = `
 :where([data-vibeui-block="badge-004"]){
---vibeui-badge-004-dot:light-dark(oklch(0.58 0.2 39.8),oklch(0.68 0.2 39.8));
+--vibeui-badge-004-dot:light-dark(oklch(0.58 0.2 25),oklch(0.72 0.19 25));
 --vibeui-badge-004-cut:light-dark(oklch(1 0 0),oklch(0.19 0 265));
 --vibeui-badge-004-size:0.5rem;
 }

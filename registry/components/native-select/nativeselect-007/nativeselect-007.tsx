@@ -29,7 +29,7 @@ const STYLES = `
 --vibeui-nativeselect-007-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-nativeselect-007-muted:color-mix(in oklab,var(--vibeui-nativeselect-007-fg) 68%,transparent);
 --vibeui-nativeselect-007-field-border:light-dark(oklch(0.85 0 265),oklch(0.42 0 265));
---vibeui-nativeselect-007-accent:light-dark(oklch(0.58 0.16 39.8),oklch(0.76 0.14 39.8));
+--vibeui-nativeselect-007-accent:light-dark(oklch(0.295 0 0),oklch(0.906 0 0));
 --vibeui-nativeselect-007-height:2.25rem;
 --vibeui-nativeselect-007-text:0.875rem;
 --vibeui-nativeselect-007-pad:0.75rem;

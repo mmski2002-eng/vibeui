@@ -22,7 +22,7 @@ const STYLES = `
 --vibeui-tooltip-010-hover:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
 --vibeui-tooltip-010-tip:light-dark(oklch(0.22 0 265),oklch(0.34 0 265));
 --vibeui-tooltip-010-chip:oklch(1 0 0 / 16%);
---vibeui-tooltip-010-accent:light-dark(oklch(0.6 0.16 39.8),oklch(0.74 0.15 39.8));
+--vibeui-tooltip-010-accent:light-dark(oklch(0.3 0 0),oklch(0.903 0 0));
 --vibeui-tooltip-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

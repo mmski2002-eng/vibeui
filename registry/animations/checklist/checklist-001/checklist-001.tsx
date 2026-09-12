@@ -121,8 +121,8 @@ animation:vibeui-checklist-001-strike var(--vibeui-checklist-001-duration) ease-
 }
 @keyframes vibeui-checklist-001-box{
 0%,4%{background:transparent;border-color:var(--vibeui-checklist-001-border);transform:scale(1)}
-8%{background:var(--vibeui-checklist-001-accent);border-color:var(--vibeui-checklist-001-accent);transform:scale(1.12)}
-14%,88%{background:var(--vibeui-checklist-001-accent);border-color:var(--vibeui-checklist-001-accent);transform:scale(1)}
+8%{background:var(--vibeui-checklist-001-accent);border-color:var(--vibeui-checklist-001-accent);transform:scale(1.12);color:oklch(from var(--vibeui-checklist-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
+14%,88%{background:var(--vibeui-checklist-001-accent);border-color:var(--vibeui-checklist-001-accent);transform:scale(1);color:oklch(from var(--vibeui-checklist-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 94%,100%{background:transparent;border-color:var(--vibeui-checklist-001-border);transform:scale(1)}
 }
 @keyframes vibeui-checklist-001-check{

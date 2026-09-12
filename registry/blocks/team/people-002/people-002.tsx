@@ -33,9 +33,9 @@ const STYLES = `
 --vibeui-people-002-ink:light-dark(oklch(0.2 0 0),oklch(0.96 0 0));
 --vibeui-people-002-muted:light-dark(oklch(0.51 0 0),oklch(0.72 0 0));
 --vibeui-people-002-border:light-dark(oklch(0.9 0 0),oklch(0.33 0 0));
---vibeui-people-002-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-people-002-accent-fill:light-dark(oklch(0.64 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-people-002-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-people-002-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
+--vibeui-people-002-accent-fill:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
+--vibeui-people-002-on-accent:oklch(from var(--vibeui-people-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-people-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -119,8 +119,7 @@ color:var(--vibeui-people-002-muted);font-size:0.6875rem;font-weight:600;white-s
 }
 [data-vibeui-block="people-002"] [data-part="dept"]::before{
 content:"";width:0.375rem;height:0.375rem;border-radius:999px;
-background:var(--vibeui-people-002-accent);
-}
+background:var(--vibeui-people-002-accent);color:oklch(from var(--vibeui-people-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="people-002"]:has([data-part="chip"] input[value="d1"]:checked) [data-part="card"]:not([data-dep="d1"]),
 [data-vibeui-block="people-002"]:has([data-part="chip"] input[value="d2"]:checked) [data-part="card"]:not([data-dep="d2"]),
 [data-vibeui-block="people-002"]:has([data-part="chip"] input[value="d3"]:checked) [data-part="card"]:not([data-dep="d3"]),

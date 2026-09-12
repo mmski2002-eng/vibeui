@@ -40,7 +40,7 @@ const STYLES = `
 --vibeui-faq-005-ink:light-dark(oklch(0.22 0 240),oklch(0.95 0 240));
 --vibeui-faq-005-muted:light-dark(oklch(0.5 0 240),oklch(0.72 0 240));
 --vibeui-faq-005-border:light-dark(oklch(0.9 0 240),oklch(0.36 0 240));
---vibeui-faq-005-accent:light-dark(oklch(0.52 0.16 39.8),oklch(0.74 0.13 39.8));
+--vibeui-faq-005-accent:light-dark(oklch(0.28 0 0),oklch(0.903 0 0));
 --vibeui-faq-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

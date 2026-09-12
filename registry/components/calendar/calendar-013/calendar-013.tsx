@@ -37,8 +37,8 @@ const STYLES = `
 --vibeui-calendar-013-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-calendar-013-hover:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
 --vibeui-calendar-013-note:light-dark(oklch(0.97 0 265),oklch(0.28 0 265));
---vibeui-calendar-013-accent:light-dark(oklch(0.53 0.15 39.8),oklch(0.76 0.13 39.8));
---vibeui-calendar-013-on-accent:light-dark(oklch(0.99 0.01 165),oklch(0.2 0.04 39.8));
+--vibeui-calendar-013-accent:light-dark(oklch(0.282 0 0),oklch(0.906 0 0));
+--vibeui-calendar-013-on-accent:light-dark(oklch(0.99 0.01 165),oklch(0.2 0 0));
 --vibeui-calendar-013-locked:light-dark(oklch(0.55 0.16 25),oklch(0.74 0.14 25));
 --vibeui-calendar-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -82,7 +82,7 @@ text-decoration:line-through;text-decoration-color:var(--vibeui-calendar-013-loc
 [data-vibeui-block="calendar-013"] td button[aria-disabled="true"]:hover{background:transparent}
 [data-vibeui-block="calendar-013"] td button[data-today="true"]{box-shadow:inset 0 0 0 1px var(--vibeui-calendar-013-accent);font-weight:650}
 [data-vibeui-block="calendar-013"] td button[aria-pressed="true"]{
-background:var(--vibeui-calendar-013-accent);color:var(--vibeui-calendar-013-on-accent);font-weight:650;
+background:var(--vibeui-calendar-013-accent);color:oklch(from var(--vibeui-calendar-013-accent) clamp(0,(0.62 - l) * 100,1) 0 0);font-weight:650;
 }
 [data-vibeui-block="calendar-013"] [data-part="status"]{
 display:flex;align-items:flex-start;gap:0.4375rem;min-height:2.25rem;

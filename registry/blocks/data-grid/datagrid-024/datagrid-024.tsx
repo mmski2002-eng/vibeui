@@ -49,7 +49,7 @@ const STYLES = `
 --vibeui-datagrid-024-muted:color-mix(in oklab,var(--vibeui-datagrid-024-fg) 68%,transparent);
 --vibeui-datagrid-024-border:light-dark(oklch(0.92 0 285),oklch(0.35 0 285));
 --vibeui-datagrid-024-head:light-dark(oklch(0.975 0 285),oklch(0.27 0 285));
---vibeui-datagrid-024-accent:light-dark(oklch(0.48 0.14 39.8),oklch(0.76 0.12 39.8));
+--vibeui-datagrid-024-accent:light-dark(oklch(0.27 0 0),oklch(0.906 0 0));
 --vibeui-datagrid-024-step:1.25rem;
 --vibeui-datagrid-024-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

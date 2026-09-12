@@ -35,7 +35,7 @@ const STYLES = `
 --vibeui-stepper-014-muted:color-mix(in oklab,var(--vibeui-stepper-014-fg) 68%,transparent);
 --vibeui-stepper-014-border:light-dark(oklch(0.92 0 265),oklch(0.35 0 265));
 --vibeui-stepper-014-line:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
---vibeui-stepper-014-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.74 0.16 39.8));
+--vibeui-stepper-014-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-stepper-014-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0 265));
 --vibeui-stepper-014-dot:1.5rem;
 --vibeui-stepper-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -64,7 +64,7 @@ content:"";position:absolute;left:calc(var(--vibeui-stepper-014-dot) / 2 - 1px);
 top:var(--vibeui-stepper-014-dot);bottom:0.25rem;width:2px;
 background:var(--vibeui-stepper-014-line);
 }
-[data-vibeui-block="stepper-014"] li[data-state="done"]::before{background:var(--vibeui-stepper-014-accent)}
+[data-vibeui-block="stepper-014"] li[data-state="done"]::before{background:var(--vibeui-stepper-014-accent);color:oklch(from var(--vibeui-stepper-014-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 /* grid-row:1 / span 3, а не 1 / -1: у пункта нет явных строк, и -1 указывает
    на первую же линию — кружок занимал одну строку, а описание и ссылка
    сваливались в колонку кружка и переносились по слову. */
@@ -79,7 +79,7 @@ font-size:0.6875rem;font-weight:700;line-height:1;
 [data-vibeui-block="stepper-014"] li[data-optional="true"] [data-part="mark"]{border-style:dashed}
 [data-vibeui-block="stepper-014"] li[data-state="done"] [data-part="mark"]{
 background:var(--vibeui-stepper-014-accent);border-color:var(--vibeui-stepper-014-accent);
-color:var(--vibeui-stepper-014-accent-fg);
+color:oklch(from var(--vibeui-stepper-014-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="stepper-014"] li[data-state="current"] [data-part="mark"]{
 border-color:var(--vibeui-stepper-014-accent);color:var(--vibeui-stepper-014-accent);
@@ -105,7 +105,7 @@ border-color:color-mix(in oklab,var(--vibeui-stepper-014-accent) 40%,transparent
 }
 [data-vibeui-block="stepper-014"] li[data-state="current"] [data-part="state"]{
 background:var(--vibeui-stepper-014-accent);border-color:transparent;
-color:var(--vibeui-stepper-014-accent-fg);
+color:oklch(from var(--vibeui-stepper-014-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="stepper-014"] [data-part="tag"]{
 padding:0.0625rem 0.4375rem;border-radius:9999px;border:1px dashed var(--vibeui-stepper-014-border);

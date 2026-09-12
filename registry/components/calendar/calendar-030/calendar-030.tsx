@@ -42,8 +42,8 @@ const STYLES = `
 --vibeui-calendar-030-faint:light-dark(oklch(0.82 0.01 165),oklch(0.43 0.012 165));
 --vibeui-calendar-030-border:light-dark(oklch(0.91 0.008 165),oklch(0.34 0.014 165));
 --vibeui-calendar-030-soft:light-dark(oklch(0.97 0.008 165),oklch(0.27 0.012 165));
---vibeui-calendar-030-accent:light-dark(oklch(0.48 0.11 39.8),oklch(0.72 0.12 39.8));
---vibeui-calendar-030-accentsoft:light-dark(oklch(0.94 0.05 39.8),oklch(0.31 0.05 39.8));
+--vibeui-calendar-030-accent:light-dark(oklch(0.27 0 0),oklch(0.899 0 0));
+--vibeui-calendar-030-accentsoft:light-dark(oklch(0.94 0 0),oklch(0.31 0 0));
 --vibeui-calendar-030-onaccent:light-dark(oklch(0.99 0 0),oklch(0.17 0.02 165));
 --vibeui-calendar-030-radius:0.75rem;
 --vibeui-calendar-030-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -93,7 +93,7 @@ cursor:not-allowed;background:transparent;color:var(--vibeui-calendar-030-faint)
 background:var(--vibeui-calendar-030-accentsoft);
 }
 [data-vibeui-block="calendar-030"] [data-part="day"][data-edge="true"]{
-background:var(--vibeui-calendar-030-accent);color:var(--vibeui-calendar-030-onaccent);font-weight:700;
+background:var(--vibeui-calendar-030-accent);color:oklch(from var(--vibeui-calendar-030-accent) clamp(0,(0.62 - l) * 100,1) 0 0);font-weight:700;
 }
 [data-vibeui-block="calendar-030"] [data-part="foot"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
@@ -122,8 +122,7 @@ height:0.3125rem;border-radius:999px;overflow:hidden;background:var(--vibeui-cal
 display:block;height:100%;border-radius:inherit;
 width:calc(var(--vibeui-calendar-030-fill,0) * 1%);
 background:var(--vibeui-calendar-030-accent);
-transition:width .2s ease;
-}
+transition:width .2s ease;color:oklch(from var(--vibeui-calendar-030-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="calendar-030"] *{animation:none!important;transition:none!important}}
 `
 

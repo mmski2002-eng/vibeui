@@ -86,7 +86,7 @@ const STYLES = `
 --vibeui-map-003-muted:light-dark(oklch(0.51 0.01 160),oklch(0.72 0 160));
 --vibeui-map-003-border:light-dark(oklch(0.9 0.006 160),oklch(0.32 0.01 160));
 --vibeui-map-003-accent:light-dark(oklch(0.58 0.16 150),oklch(0.72 0.15 150));
---vibeui-map-003-on-accent:oklch(0.16 0.03 150);
+--vibeui-map-003-on-accent:oklch(from var(--vibeui-map-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-map-003-canvas:light-dark(oklch(0.945 0.006 140),oklch(0.18 0.008 160));
 --vibeui-map-003-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -152,7 +152,7 @@ display:flex;flex-wrap:wrap;gap:0.375rem;font-size:0.8125rem;line-height:1.5;
 display:inline-flex;align-items:center;justify-content:center;
 height:2.5rem;padding:0 1.125rem;border-radius:0.75rem;text-decoration:none;
 font-size:0.8125rem;font-weight:640;
-background:var(--vibeui-map-003-accent);color:var(--vibeui-map-003-on-accent);
+background:var(--vibeui-map-003-accent);color:oklch(from var(--vibeui-map-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="map-003"] :focus-visible{outline:2px solid var(--vibeui-map-003-accent);outline-offset:2px}
 @container (min-width: 46rem){

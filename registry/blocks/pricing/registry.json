@@ -166,7 +166,7 @@
           "badgeLabel"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         }
       }
     },
@@ -196,7 +196,7 @@
           "cards"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Pricing002",
@@ -399,7 +399,7 @@
           "annual"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Pricing003",
@@ -617,7 +617,7 @@
           "grouped"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Pricing004",
@@ -897,7 +897,7 @@
           "included"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Pricing005",
@@ -1057,7 +1057,7 @@
           "client"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Pricing006",
@@ -1240,7 +1240,7 @@
           "form"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Pricing007",
@@ -1445,7 +1445,7 @@
           "contrast"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Pricing008",
@@ -1645,7 +1645,7 @@
           "international"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Pricing009",
@@ -1869,7 +1869,7 @@
           "light"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Pricing010",
@@ -2068,7 +2068,7 @@
           "no-js"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Pricing011",
@@ -2247,7 +2247,7 @@
           "trust"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Pricing012",
@@ -2434,7 +2434,7 @@
           "client"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Pricing013",
@@ -2622,7 +2622,7 @@
           "client"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Pricing014",
@@ -2812,7 +2812,7 @@
           "mono"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Pricing015",
@@ -2993,7 +2993,7 @@
           "client"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Pricing016",
@@ -3173,7 +3173,7 @@
           "sticky"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Pricing018",
@@ -3398,7 +3398,7 @@
           "usage"
         ],
         "preview": {
-          "width": "full"
+          "width": "natural"
         },
         "ai": {
           "export": "Pricing019",

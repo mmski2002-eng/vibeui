@@ -41,8 +41,8 @@ const STYLES = `
 --vibeui-checkbox-014-muted:color-mix(in oklab,var(--vibeui-checkbox-014-fg) 68%,transparent);
 --vibeui-checkbox-014-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-checkbox-014-track:light-dark(oklch(0.94 0 265),oklch(0.3 0 265));
---vibeui-checkbox-014-accent:light-dark(oklch(0.56 0.14 39.8),oklch(0.68 0.15 39.8));
---vibeui-checkbox-014-on-accent:oklch(0.99 0.01 150);
+--vibeui-checkbox-014-accent:light-dark(oklch(0.29 0 0),oklch(0.892 0 0));
+--vibeui-checkbox-014-on-accent:oklch(from var(--vibeui-checkbox-014-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-checkbox-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -68,8 +68,7 @@ background:var(--vibeui-checkbox-014-track);
 [data-vibeui-block="checkbox-014"] [data-part="fill"]{
 display:block;height:100%;border-radius:9999px;
 background:var(--vibeui-checkbox-014-accent);
-transition:width .25s ease;
-}
+transition:width .25s ease;color:oklch(from var(--vibeui-checkbox-014-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="checkbox-014"] ul{margin:0;padding:0;list-style:none}
 [data-vibeui-block="checkbox-014"] label{
 display:flex;align-items:center;gap:0.625rem;
@@ -82,7 +81,7 @@ border:1.5px solid var(--vibeui-checkbox-014-border);border-radius:0.375rem;
 background:var(--vibeui-checkbox-014-bg);
 transition:background-color .15s ease,border-color .15s ease;
 }
-[data-vibeui-block="checkbox-014"] input:checked{border-color:transparent;background:var(--vibeui-checkbox-014-accent)}
+[data-vibeui-block="checkbox-014"] input:checked{border-color:transparent;background:var(--vibeui-checkbox-014-accent);color:oklch(from var(--vibeui-checkbox-014-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="checkbox-014"] input:checked::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.25rem;height:0.4375rem;margin:-0.3125rem 0 0 -0.125rem;

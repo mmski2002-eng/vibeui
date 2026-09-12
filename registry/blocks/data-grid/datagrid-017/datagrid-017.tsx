@@ -64,9 +64,9 @@ const STYLES = `
 --vibeui-datagrid-017-border:light-dark(oklch(0.92 0 285),oklch(0.35 0 285));
 --vibeui-datagrid-017-head:light-dark(oklch(0.975 0 285),oklch(0.27 0 285));
 --vibeui-datagrid-017-panel:light-dark(oklch(1 0 0),oklch(0.24 0 285));
---vibeui-datagrid-017-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.72 0.15 39.8));
---vibeui-datagrid-017-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 285));
---vibeui-datagrid-017-pick:light-dark(oklch(0.97 0 255),oklch(0.3 0.04 39.8));
+--vibeui-datagrid-017-accent:light-dark(oklch(0.275 0 0),oklch(0.899 0 0));
+--vibeui-datagrid-017-on-accent:oklch(from var(--vibeui-datagrid-017-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
+--vibeui-datagrid-017-pick:light-dark(oklch(0.97 0 255),oklch(0.3 0 0));
 --vibeui-datagrid-017-shadow:light-dark(oklch(0.23 0 285 / 24%),oklch(0 0 0 / 60%));
 --vibeui-datagrid-017-veil:light-dark(oklch(0.23 0 285 / 45%),oklch(0.1 0 285 / 65%));
 --vibeui-datagrid-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -90,7 +90,7 @@ padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-017-borde
 [data-vibeui-block="datagrid-017"] [data-part="go"]{
 appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:600;
 padding:0.375rem 0.75rem;border-radius:0.5rem;border:1px solid transparent;
-background:var(--vibeui-datagrid-017-accent);color:var(--vibeui-datagrid-017-on-accent);
+background:var(--vibeui-datagrid-017-accent);color:oklch(from var(--vibeui-datagrid-017-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="datagrid-017"] [data-part="go"]:disabled{opacity:.4;cursor:not-allowed}
 [data-vibeui-block="datagrid-017"] [data-part="go"]:focus-visible{outline:2px solid var(--vibeui-datagrid-017-accent);outline-offset:2px}
@@ -140,7 +140,7 @@ padding:0.4375rem 0.875rem;border-radius:0.5rem;border:1px solid var(--vibeui-da
 background:transparent;color:var(--vibeui-datagrid-017-fg);
 }
 [data-vibeui-block="datagrid-017"] [data-part="confirm"]{
-border-color:transparent;background:var(--vibeui-datagrid-017-accent);color:var(--vibeui-datagrid-017-on-accent);
+border-color:transparent;background:var(--vibeui-datagrid-017-accent);color:oklch(from var(--vibeui-datagrid-017-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="datagrid-017"] [data-part="cancel"]:focus-visible,
 [data-vibeui-block="datagrid-017"] [data-part="confirm"]:focus-visible{outline:2px solid var(--vibeui-datagrid-017-accent);outline-offset:2px}

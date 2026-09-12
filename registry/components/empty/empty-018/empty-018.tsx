@@ -56,8 +56,7 @@ background:color-mix(in oklab,var(--vibeui-empty-018-accent) 10%,transparent);
 color:var(--vibeui-empty-018-fg);font-size:0.75rem;font-weight:650;
 }
 [data-vibeui-block="empty-018"] [data-part="status"] span{
-width:0.4375rem;height:0.4375rem;border-radius:9999px;background:var(--vibeui-empty-018-accent);
-}
+width:0.4375rem;height:0.4375rem;border-radius:9999px;background:var(--vibeui-empty-018-accent);color:oklch(from var(--vibeui-empty-018-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="empty-018"] [data-part="action"]{
 appearance:none;border:1px solid var(--vibeui-empty-018-border);cursor:pointer;
 margin-top:0.375rem;

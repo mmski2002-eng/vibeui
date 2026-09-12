@@ -45,15 +45,15 @@ export type Button002Props = ComponentProps<"button"> & {
 // зонами меняет знак — светлая на светлом акценте не видна.
 const STYLES = `
 :where([data-vibeui-block="button-002"]){
-/* Светлая ветка глубже брендового #FF5900: на L 0.55 белая подпись
-   держит ≥4.5:1. Тёмная — чистый #FF5900 с почти чёрной подписью. */
---vibeui-button-002-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-button-002-accent-fg:light-dark(oklch(0.99 0.01 39.8),oklch(0.15 0.02 39.8));
---vibeui-button-002-divider:light-dark(oklch(1 0 0 / 28%),oklch(0.18 0 39.8 / 30%));
+/* Светлая ветка глубже брендового light-dark(#1a1a1a,#f2f2f2): на L 0.55 белая подпись
+   держит ≥4.5:1. Тёмная — чистый light-dark(#1a1a1a,#f2f2f2) с почти чёрной подписью. */
+--vibeui-button-002-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
+--vibeui-button-002-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.15 0 0));
+--vibeui-button-002-divider:light-dark(oklch(1 0 0 / 28%),oklch(0.18 0 0 / 30%));
 --vibeui-button-002-ring:color-mix(in oklab, var(--vibeui-button-002-accent) 70%, transparent);
---vibeui-button-002-menu-bg:light-dark(oklch(1 0 0),oklch(0.24 0.005 39.8));
---vibeui-button-002-menu-fg:light-dark(oklch(0.26 0.01 39.8),oklch(0.94 0.005 39.8));
---vibeui-button-002-menu-border:light-dark(oklch(0.9 0.01 39.8),oklch(0.36 0.01 39.8));
+--vibeui-button-002-menu-bg:light-dark(oklch(1 0 0),oklch(0.24 0 0));
+--vibeui-button-002-menu-fg:light-dark(oklch(0.26 0 0),oklch(0.94 0 0));
+--vibeui-button-002-menu-border:light-dark(oklch(0.9 0 0),oklch(0.36 0 0));
 --vibeui-button-002-radius:0.625rem;
 --vibeui-button-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -71,7 +71,7 @@ border-radius:var(--vibeui-button-002-radius);overflow:hidden;
 [data-vibeui-block="button-002"] [data-part="action"],
 [data-vibeui-block="button-002"] [data-part="more"]{
 appearance:none;border:0;cursor:pointer;background:var(--vibeui-button-002-accent);
-color:var(--vibeui-button-002-accent-fg);font:inherit;font-weight:500;font-size:0.875rem;
+color:oklch(from var(--vibeui-button-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);font:inherit;font-weight:500;font-size:0.875rem;
 line-height:1;height:2.5rem;display:inline-flex;align-items:center;justify-content:center;
 transition:background-color .18s ease,opacity .18s ease;
 }

@@ -49,9 +49,9 @@ const STYLES = `
 --vibeui-auth-010-fg:light-dark(oklch(0.24 0.016 60),oklch(0.94 0.006 60));
 --vibeui-auth-010-muted:light-dark(oklch(0.54 0.014 60),oklch(0.7 0.013 60));
 --vibeui-auth-010-border:light-dark(oklch(0.89 0.01 80),oklch(0.35 0.012 70));
---vibeui-auth-010-accent:light-dark(oklch(0.56 0.15 39.8),oklch(0.77 0.13 39.8));
---vibeui-auth-010-on-accent:oklch(0.15 0.02 39.8);
---vibeui-auth-010-accent-wash:light-dark(oklch(0.56 0.15 39.8 / 9%),oklch(0.77 0.13 39.8 / 16%));
+--vibeui-auth-010-accent:light-dark(oklch(0.29 0 0),oklch(0.908 0 0));
+--vibeui-auth-010-on-accent:oklch(from var(--vibeui-auth-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
+--vibeui-auth-010-accent-wash:light-dark(oklch(0.29 0 0 / 9%),oklch(0.908 0 0 / 16%));
 --vibeui-auth-010-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -96,7 +96,7 @@ width:100%;appearance:none;cursor:pointer;
 display:inline-flex;align-items:center;justify-content:center;
 min-height:2.75rem;padding:0.375rem 1rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-auth-010-accent);color:var(--vibeui-auth-010-on-accent);
+background:var(--vibeui-auth-010-accent);color:oklch(from var(--vibeui-auth-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.875rem;font-weight:650;
 transition:opacity .16s ease;
 }

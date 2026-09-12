@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-footer-017-ink:#000000;
 --vibeui-footer-017-muted:color-mix(in oklab,#000000 56%,#ffffff);
 --vibeui-footer-017-line:color-mix(in oklab,#000000 11%,transparent);
---vibeui-footer-017-accent:#ff5900;
+--vibeui-footer-017-accent:#1a1a1a;
 --vibeui-footer-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

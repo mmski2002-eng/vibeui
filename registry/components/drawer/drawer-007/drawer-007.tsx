@@ -37,7 +37,7 @@ const STYLES = `
 --vibeui-drawer-007-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
 --vibeui-drawer-007-muted:color-mix(in oklab,var(--vibeui-drawer-007-fg) 68%,transparent);
 --vibeui-drawer-007-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
---vibeui-drawer-007-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.73 0.15 39.8));
+--vibeui-drawer-007-accent:light-dark(oklch(0.287 0 0),oklch(0.901 0 0));
 --vibeui-drawer-007-on-accent:light-dark(oklch(0.99 0 265),oklch(0.17 0 265));
 --vibeui-drawer-007-hover:light-dark(oklch(0.96 0 265),oklch(0.29 0 265));
 --vibeui-drawer-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -118,8 +118,7 @@ border:1.5px solid var(--vibeui-drawer-007-border);border-radius:0.375rem;
 background:var(--vibeui-drawer-007-surface);cursor:pointer;position:relative;
 }
 [data-vibeui-block="drawer-007"] [data-part="agree"] input:checked{
-background:var(--vibeui-drawer-007-accent);border-color:var(--vibeui-drawer-007-accent);
-}
+background:var(--vibeui-drawer-007-accent);border-color:var(--vibeui-drawer-007-accent);color:oklch(from var(--vibeui-drawer-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="drawer-007"] [data-part="agree"] input:checked::after{
 content:"";position:absolute;left:0.3125rem;top:0.125rem;
 width:0.25rem;height:0.5rem;border:solid var(--vibeui-drawer-007-on-accent);
@@ -128,7 +127,7 @@ border-width:0 2px 2px 0;transform:rotate(45deg);
 [data-vibeui-block="drawer-007"] [data-part="agree"] input:focus-visible{outline:2px solid var(--vibeui-drawer-007-accent);outline-offset:2px}
 [data-vibeui-block="drawer-007"] [data-part="accept"]{
 appearance:none;border:0;cursor:pointer;width:100%;height:2.75rem;border-radius:0.75rem;
-background:var(--vibeui-drawer-007-accent);color:var(--vibeui-drawer-007-on-accent);
+background:var(--vibeui-drawer-007-accent);color:oklch(from var(--vibeui-drawer-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="drawer-007"] [data-part="accept"]:disabled{cursor:not-allowed;opacity:.45}

@@ -58,10 +58,10 @@ const STYLES = `
 --vibeui-datagrid-021-border:light-dark(oklch(0.92 0 285),oklch(0.35 0 285));
 --vibeui-datagrid-021-head:light-dark(oklch(0.975 0 285),oklch(0.27 0 285));
 --vibeui-datagrid-021-panel:light-dark(oklch(0.985 0 285),oklch(0.26 0 285));
---vibeui-datagrid-021-accent:light-dark(oklch(0.5 0.15 39.8),oklch(0.74 0.14 39.8));
---vibeui-datagrid-021-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 285));
---vibeui-datagrid-021-dirty:light-dark(oklch(0.96 0.05 39.8),oklch(0.33 0.05 39.8));
---vibeui-datagrid-021-dirty-line:light-dark(oklch(0.62 0.14 39.8),oklch(0.72 0.13 39.8));
+--vibeui-datagrid-021-accent:light-dark(oklch(0.275 0 0),oklch(0.903 0 0));
+--vibeui-datagrid-021-on-accent:oklch(from var(--vibeui-datagrid-021-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
+--vibeui-datagrid-021-dirty:light-dark(oklch(0.96 0 0),oklch(0.33 0 0));
+--vibeui-datagrid-021-dirty-line:light-dark(oklch(0.305 0 0),oklch(0.899 0 0));
 --vibeui-datagrid-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -86,7 +86,7 @@ padding:0.375rem 0.75rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-datagrid-021-border);
 background:transparent;color:var(--vibeui-datagrid-021-fg);
 }
-[data-vibeui-block="datagrid-021"] [data-part="primary"]{border-color:transparent;background:var(--vibeui-datagrid-021-accent);color:var(--vibeui-datagrid-021-on-accent)}
+[data-vibeui-block="datagrid-021"] [data-part="primary"]{border-color:transparent;background:var(--vibeui-datagrid-021-accent);color:oklch(from var(--vibeui-datagrid-021-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="datagrid-021"] button:disabled{opacity:.4;cursor:not-allowed}
 [data-vibeui-block="datagrid-021"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-021-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-021"] [data-part="scroll"]{overflow-x:auto}

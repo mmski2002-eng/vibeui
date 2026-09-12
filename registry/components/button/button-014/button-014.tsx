@@ -31,7 +31,7 @@ height:var(--vibeui-button-014-size);
    поверх соседей. */
 padding:0 calc((var(--vibeui-button-014-size) - 1rem) / 2);
 border-radius:9999px;
-background:var(--vibeui-button-014-accent);color:var(--vibeui-button-014-fg);
+background:var(--vibeui-button-014-accent);color:oklch(from var(--vibeui-button-014-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-family:var(--vibeui-button-014-font);font-size:0.875rem;font-weight:650;line-height:1;
 box-shadow:0 12px 24px -12px color-mix(in oklab,var(--vibeui-button-014-accent) 70%,transparent);
 transition:padding .18s ease,gap .18s ease,filter .16s ease;

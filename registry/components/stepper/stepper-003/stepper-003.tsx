@@ -33,8 +33,9 @@ const STYLES = `
 --vibeui-stepper-003-muted:color-mix(in oklab,var(--vibeui-stepper-003-fg) 68%,transparent);
 --vibeui-stepper-003-border:light-dark(oklch(0.92 0 265),oklch(0.32 0 265));
 --vibeui-stepper-003-line:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
---vibeui-stepper-003-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.16 39.8));
+--vibeui-stepper-003-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-stepper-003-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0 262));
+--vibeui-stepper-003-done:light-dark(oklch(0.55 0.15 150),oklch(0.75 0.17 150));
 --vibeui-stepper-003-dot:1.5rem;
 --vibeui-stepper-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -63,7 +64,7 @@ content:"";position:absolute;left:calc(var(--vibeui-stepper-003-dot) / 2 - 1px);
 top:var(--vibeui-stepper-003-dot);bottom:0.25rem;width:2px;
 background:var(--vibeui-stepper-003-line);
 }
-[data-vibeui-block="stepper-003"] li[data-state="done"]::before{background:var(--vibeui-stepper-003-accent)}
+[data-vibeui-block="stepper-003"] li[data-state="done"]::before{background:var(--vibeui-stepper-003-done)}
 [data-vibeui-block="stepper-003"] [data-part="mark"]{
 grid-column:1;grid-row:1 / span 3;
 display:flex;align-items:center;justify-content:center;
@@ -73,7 +74,7 @@ background:var(--vibeui-stepper-003-surface);color:var(--vibeui-stepper-003-mute
 font-size:0.6875rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="stepper-003"] li[data-state="done"] [data-part="mark"]{
-background:var(--vibeui-stepper-003-accent);border-color:var(--vibeui-stepper-003-accent);
+background:var(--vibeui-stepper-003-done);border-color:var(--vibeui-stepper-003-done);
 color:var(--vibeui-stepper-003-accent-fg);
 }
 [data-vibeui-block="stepper-003"] li[data-state="current"] [data-part="mark"]{
@@ -95,12 +96,12 @@ font-size:0.625rem;font-weight:650;letter-spacing:0.02em;text-transform:uppercas
 color:var(--vibeui-stepper-003-muted);
 }
 [data-vibeui-block="stepper-003"] li[data-state="done"] [data-part="state"]{
-color:var(--vibeui-stepper-003-accent);
-border-color:color-mix(in oklab,var(--vibeui-stepper-003-accent) 40%,transparent);
+color:var(--vibeui-stepper-003-done);
+border-color:color-mix(in oklab,var(--vibeui-stepper-003-done) 40%,transparent);
 }
 [data-vibeui-block="stepper-003"] li[data-state="current"] [data-part="state"]{
 background:var(--vibeui-stepper-003-accent);border-color:transparent;
-color:var(--vibeui-stepper-003-accent-fg);
+color:oklch(from var(--vibeui-stepper-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="stepper-003"] [data-part="description"]{
 margin:0.25rem 0 0;font-size:0.8125rem;line-height:1.5;color:var(--vibeui-stepper-003-muted);

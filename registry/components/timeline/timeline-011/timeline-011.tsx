@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-timeline-011-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-timeline-011-muted:color-mix(in oklab,var(--vibeui-timeline-011-fg) 68%,transparent);
 --vibeui-timeline-011-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
---vibeui-timeline-011-accent:light-dark(oklch(0.55 0.18 39.8),oklch(0.74 0.16 39.8));
+--vibeui-timeline-011-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-timeline-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -67,8 +67,7 @@ display:grid;grid-template-rows:1fr auto 1fr;justify-items:center;
 grid-row:2;position:relative;z-index:1;
 width:0.75rem;height:0.75rem;border-radius:9999px;
 background:var(--vibeui-timeline-011-accent);
-box-shadow:0 0 0 3px var(--vibeui-timeline-011-surface);
-}
+box-shadow:0 0 0 3px var(--vibeui-timeline-011-surface);color:oklch(from var(--vibeui-timeline-011-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="timeline-011"] [data-part="card"]{
 position:relative;display:flex;flex-direction:column;gap:0.125rem;
 max-width:10rem;text-align:center;

@@ -104,7 +104,7 @@ display:block;margin-top:0.125rem;color:var(--vibeui-radio-018-muted);font-size:
 appearance:none;border:0;cursor:pointer;margin-top:0.75rem;
 min-height:2.25rem;padding:0 0.875rem;border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;font-weight:650;
-background:var(--vibeui-radio-018-accent);color:var(--vibeui-radio-018-on-accent);
+background:var(--vibeui-radio-018-accent);color:oklch(from var(--vibeui-radio-018-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 [data-vibeui-block="radio-018"] button:focus-visible{outline:2px solid var(--vibeui-radio-018-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="radio-018"] *{animation:none!important;transition:none!important}}

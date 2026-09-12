@@ -129,8 +129,7 @@ background:color-mix(in oklab,white 30%,transparent);overflow:hidden;
 [data-vibeui-block="media-002"] [data-part="fill"]{
 position:absolute;left:0;top:0;bottom:0;border-radius:9999px;
 background:var(--vibeui-media-002-accent);
-animation:vibeui-media-002-fill 4s ease-in-out infinite alternate;
-}
+animation:vibeui-media-002-fill 4s ease-in-out infinite alternate;color:oklch(from var(--vibeui-media-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="media-002"] [data-part="time"]{
 flex:none;font-size:0.5625rem;font-weight:600;font-variant-numeric:tabular-nums;
 color:color-mix(in oklab,white 88%,transparent);white-space:nowrap;

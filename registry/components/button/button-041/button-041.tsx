@@ -16,7 +16,7 @@ export type Button041Props = ComponentProps<"button"> & {
 const STYLES = `
 :where([data-vibeui-block="button-041"]){
 --vibeui-button-041-paper:light-dark(oklch(1 0 0),oklch(0.23 0 285));
---vibeui-button-041-accent:light-dark(oklch(0.6 0.2 39.8),oklch(0.7 0.19 39.8));
+--vibeui-button-041-accent:light-dark(oklch(0.3 0 0),oklch(0.895 0 0));
 --vibeui-button-041-accent-end:light-dark(oklch(0.55 0.2 25),oklch(0.7 0.18 25));
 --vibeui-button-041-ink:light-dark(oklch(0.26 0 285),oklch(0.93 0 285));
 --vibeui-button-041-radius:0.75rem;

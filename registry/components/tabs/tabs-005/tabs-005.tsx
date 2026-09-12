@@ -36,7 +36,7 @@ const STYLES = `
 --vibeui-tabs-005-muted:color-mix(in oklab,var(--vibeui-tabs-005-fg) 68%,transparent);
 --vibeui-tabs-005-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-tabs-005-hover:light-dark(oklch(0.55 0 265 / 7%),oklch(0.85 0 265 / 12%));
---vibeui-tabs-005-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8));
+--vibeui-tabs-005-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-tabs-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -74,8 +74,7 @@ transition:background-color .14s ease,color .14s ease;
 /* Полоса у края активной вкладки: заливки мало, когда рядом наведение. */
 [data-vibeui-block="tabs-005"] [data-part="tab"][aria-selected="true"]::before{
 content:"";position:absolute;left:0;top:0.375rem;bottom:0.375rem;width:2px;
-border-radius:0 2px 2px 0;background:var(--vibeui-tabs-005-accent);
-}
+border-radius:0 2px 2px 0;background:var(--vibeui-tabs-005-accent);color:oklch(from var(--vibeui-tabs-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="tabs-005"] [data-part="name"]{display:block;font-size:0.875rem;font-weight:550}
 [data-vibeui-block="tabs-005"] [data-part="hint"]{display:block;margin-top:0.0625rem;font-size:0.75rem;color:var(--vibeui-tabs-005-muted)}
 [data-vibeui-block="tabs-005"] [data-part="panel"]{

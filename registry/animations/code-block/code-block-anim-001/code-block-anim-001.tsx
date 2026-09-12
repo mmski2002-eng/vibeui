@@ -101,8 +101,7 @@ background:color-mix(in oklab,var(--vibeui-code-block-anim-001-fg) 8%,transparen
 [data-vibeui-block="code-block-anim-001"] [data-part="tab"] svg{width:0.6875rem;height:0.6875rem;color:var(--vibeui-code-block-anim-001-accent);flex:none}
 [data-vibeui-block="code-block-anim-001"] [data-part="dirty"]{
 width:0.375rem;height:0.375rem;border-radius:9999px;flex:none;
-background:var(--vibeui-code-block-anim-001-accent);
-}
+background:var(--vibeui-code-block-anim-001-accent);color:oklch(from var(--vibeui-code-block-anim-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="code-block-anim-001"] [data-part="body"]{
 display:flex;gap:0.75rem;padding:0.75rem;
 font-family:var(--vibeui-code-block-anim-001-mono);font-size:0.6875rem;line-height:1.45;
@@ -156,8 +155,7 @@ animation:vibeui-code-block-anim-001-type 6.2s linear infinite;
 [data-vibeui-block="code-block-anim-001"] [data-part="caret"]{
 display:inline-block;width:0.5em;height:1.05em;margin-left:1px;vertical-align:-0.15em;
 background:var(--vibeui-code-block-anim-001-accent);
-animation:vibeui-code-block-anim-001-blink 1s steps(1,end) infinite;
-}
+animation:vibeui-code-block-anim-001-blink 1s steps(1,end) infinite;color:oklch(from var(--vibeui-code-block-anim-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="code-block-anim-001"][data-cursor="false"] [data-part="caret"]{display:none}
 @keyframes vibeui-code-block-anim-001-breathe{0%,100%{transform:scaleX(0.82)}50%{transform:scaleX(1)}}
 @keyframes vibeui-code-block-anim-001-type{

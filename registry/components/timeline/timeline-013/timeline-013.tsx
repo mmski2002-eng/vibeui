@@ -34,7 +34,7 @@ const STYLES = `
 --vibeui-timeline-013-muted:color-mix(in oklab,var(--vibeui-timeline-013-fg) 68%,transparent);
 --vibeui-timeline-013-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-timeline-013-line:light-dark(oklch(0.88 0 265),oklch(0.4 0 265));
---vibeui-timeline-013-accent:light-dark(oklch(0.55 0.18 39.8),oklch(0.74 0.16 39.8));
+--vibeui-timeline-013-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-timeline-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -73,8 +73,7 @@ grid-column:1;justify-self:center;margin-top:0.1875rem;
 width:0.6875rem;height:0.6875rem;border-radius:9999px;
 background:var(--vibeui-timeline-013-accent);
 box-shadow:0 0 0 3px var(--vibeui-timeline-013-surface);
-position:relative;z-index:1;
-}
+position:relative;z-index:1;color:oklch(from var(--vibeui-timeline-013-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="timeline-013"] [data-part="card"]{
 grid-column:2;display:flex;flex-direction:column;gap:0.1875rem;min-width:0;
 }

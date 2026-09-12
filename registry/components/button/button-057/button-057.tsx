@@ -26,7 +26,7 @@ const STYLES = `
 --vibeui-button-057-border:light-dark(oklch(0.9 0 265),oklch(0.41 0 265));
 --vibeui-button-057-fg:light-dark(oklch(0.25 0 265),oklch(0.94 0 265));
 --vibeui-button-057-muted:color-mix(in oklab,var(--vibeui-button-057-fg) 68%,transparent);
---vibeui-button-057-accent:light-dark(oklch(0.55 0.16 39.8),oklch(0.76 0.13 39.8));
+--vibeui-button-057-accent:light-dark(oklch(0.287 0 0),oklch(0.906 0 0));
 --vibeui-button-057-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -57,8 +57,7 @@ border:1.5px solid var(--vibeui-button-057-accent);border-radius:0.5625rem 0.562
 [data-vibeui-block="button-057"] [data-part="eye"]::after{
 content:"";position:absolute;left:50%;top:50%;width:0.375rem;height:0.375rem;
 margin:-0.1875rem 0 0 -0.1875rem;border-radius:50%;
-background:var(--vibeui-button-057-accent);
-}
+background:var(--vibeui-button-057-accent);color:oklch(from var(--vibeui-button-057-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="button-057"] [data-part="count"]{
 font-size:0.9375rem;font-weight:700;font-variant-numeric:tabular-nums;
 }
@@ -74,8 +73,8 @@ display:block;width:3px;border-radius:1.5px;
 background:color-mix(in oklab,var(--vibeui-button-057-accent) 45%,transparent);
 transition:background-color .16s ease;
 }
-[data-vibeui-block="button-057"] [data-part="spark"] i:last-child{background:var(--vibeui-button-057-accent)}
-[data-vibeui-block="button-057"]:hover [data-part="spark"] i{background:var(--vibeui-button-057-accent)}
+[data-vibeui-block="button-057"] [data-part="spark"] i:last-child{background:var(--vibeui-button-057-accent);color:oklch(from var(--vibeui-button-057-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
+[data-vibeui-block="button-057"]:hover [data-part="spark"] i{background:var(--vibeui-button-057-accent);color:oklch(from var(--vibeui-button-057-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="button-057"] *{animation:none!important;transition:none!important}}
 `
 

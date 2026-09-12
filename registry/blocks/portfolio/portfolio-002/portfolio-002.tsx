@@ -34,8 +34,8 @@ const STYLES = `
 --vibeui-portfolio-002-border:light-dark(oklch(0.9 0 0),oklch(0.3 0 0));
 --vibeui-portfolio-002-chip:light-dark(oklch(0.97 0 0),oklch(0.24 0 0));
 --vibeui-portfolio-002-card:light-dark(oklch(1 0 0),oklch(0.2 0 0));
---vibeui-portfolio-002-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
---vibeui-portfolio-002-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-portfolio-002-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
+--vibeui-portfolio-002-on-accent:oklch(from var(--vibeui-portfolio-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-portfolio-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -58,7 +58,7 @@ padding:0.375rem 0.875rem;border-radius:999px;font:inherit;font-size:0.8125rem;f
 transition:background-color .16s ease,color .16s ease,border-color .16s ease;
 }
 [data-vibeui-block="portfolio-002"] [data-part="chip"]:hover{border-color:var(--vibeui-portfolio-002-accent)}
-[data-vibeui-block="portfolio-002"] [data-part="chip"][aria-pressed="true"]{background:var(--vibeui-portfolio-002-accent);color:var(--vibeui-portfolio-002-on-accent);border-color:transparent}
+[data-vibeui-block="portfolio-002"] [data-part="chip"][aria-pressed="true"]{background:var(--vibeui-portfolio-002-accent);color:oklch(from var(--vibeui-portfolio-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border-color:transparent}
 [data-vibeui-block="portfolio-002"] [data-part="chip"]:focus-visible{outline:2px solid var(--vibeui-portfolio-002-accent);outline-offset:2px}
 [data-vibeui-block="portfolio-002"] [data-part="grid"]{display:grid;gap:1rem;grid-template-columns:minmax(0,1fr)}
 [data-vibeui-block="portfolio-002"] [data-part="card"]{
@@ -70,12 +70,12 @@ transition:transform .18s ease,border-color .18s ease;
 [data-vibeui-block="portfolio-002"] [data-part="card"]:focus-visible{outline:2px solid var(--vibeui-portfolio-002-accent);outline-offset:2px}
 [data-vibeui-block="portfolio-002"] [data-part="card"][hidden]{display:none}
 [data-vibeui-block="portfolio-002"] [data-part="cover"]{
-position:relative;aspect-ratio:3 / 2;background:linear-gradient(150deg,oklch(0.62 0.19 39.8),oklch(0.4 0.14 28));overflow:hidden;
+position:relative;aspect-ratio:3 / 2;background:linear-gradient(150deg,light-dark(oklch(0.2 0 0),oklch(0.92 0 0)),oklch(0.4 0.14 28));overflow:hidden;
 }
 [data-vibeui-block="portfolio-002"] [data-part="cover"] img{
 position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
-[data-vibeui-block="portfolio-002"] [data-part="card"]:nth-child(3n+2) [data-part="cover"]{background:linear-gradient(150deg,oklch(0.58 0.17 55),oklch(0.36 0.12 42))}
+[data-vibeui-block="portfolio-002"] [data-part="card"]:nth-child(3n+2) [data-part="cover"]{background:linear-gradient(150deg,oklch(0.58 0.17 55),oklch(0.36 0 0))}
 [data-vibeui-block="portfolio-002"] [data-part="card"]:nth-child(3n+3) [data-part="cover"]{background:linear-gradient(150deg,oklch(0.5 0.16 25),oklch(0.3 0.1 20))}
 [data-vibeui-block="portfolio-002"] [data-part="body"]{display:flex;flex-direction:column;padding:1rem 1.125rem}
 [data-vibeui-block="portfolio-002"] [data-part="client"]{font-size:0.75rem;font-weight:600;color:var(--vibeui-portfolio-002-accent);letter-spacing:0.02em}
