@@ -15,6 +15,13 @@ import type { PreviewProps } from "@/registry/preview-types"
 
 const SECTION_WIDTH = 1280
 
+// Высота поля natural-карточки: не от пропорции (иначе зависела бы от ширины
+// колонки), а адаптивная в пикселях. Контент влезает — поле 380 (нижняя
+// граница, чтобы мелкий блок не схлопывался). Контент выше — поле растёт под
+// него до 620. Дальше — вертикальный скролл внутри поля.
+const NATURAL_MIN_HEIGHT = 380
+const NATURAL_MAX_HEIGHT = 620
+
 /**
  * Сколько высоты экрана отдаём кадру блока. Высокие секции (шесть экранов
  * возможностей, длинный прайс) в натуральном масштабе не помещались в окно:
@@ -55,6 +62,7 @@ export function LazyThumbnail({
   compact,
   full,
   half,
+  natural,
   props,
   states,
   aspect,
@@ -66,6 +74,8 @@ export function LazyThumbnail({
   full: boolean
   /** Рисовать вдвое крупнее кадра: масштаб ровно 0.5. */
   half?: boolean
+  /** Блок в натуральную величину: во всю ширину кадра, без полей и масштаба. */
+  natural?: boolean
   props?: Record<string, unknown>
   states?: Record<string, unknown>[]
   aspect?: string
@@ -202,6 +212,33 @@ export function LazyThumbnail({
         <Preview {...(props ?? {})} />
       )
     ) : null
+
+  // Натуральный блок: кадр фиксированной высоты (пропорция от ширины, как у
+  // остальных секций — ряд ровный), а сам блок рисуется в натуральную величину
+  // по ширине кадра. Container query внутри блока сам сворачивает его в узкую
+  // раскладку, поэтому масштаб не нужен. Что не влезло по высоте — уходит во
+  // внутренний вертикальный скролл, а не ужимается в нечитаемую мелочь.
+  if (natural) {
+    return (
+      <div
+        ref={frameRef}
+        data-part="frame"
+        data-frame="section"
+        className="preview-frame bg-preview-surface flex w-full flex-1"
+        onClick={holdPreviewLink}
+      >
+        <div
+          className="w-full overflow-x-hidden overflow-y-auto pt-[5px] [scrollbar-gutter:stable]"
+          style={{
+            minHeight: NATURAL_MIN_HEIGHT,
+            maxHeight: NATURAL_MAX_HEIGHT,
+          }}
+        >
+          <div className="preview-fade w-full">{content}</div>
+        </div>
+      </div>
+    )
+  }
 
   if (compact) {
     return (

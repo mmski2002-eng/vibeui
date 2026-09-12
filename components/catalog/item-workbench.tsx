@@ -156,7 +156,11 @@ export function ItemWorkbench({
                 slug={item.name}
                 kind={kind}
                 category={category}
-                full={item.meta?.preview?.width === "full"}
+                full={
+                  item.meta?.preview?.width === "full" ||
+                  item.meta?.preview?.width === "natural"
+                }
+                natural={item.meta?.preview?.width === "natural"}
                 controls={controls}
                 values={values}
                 previewProps={item.meta?.preview?.props}

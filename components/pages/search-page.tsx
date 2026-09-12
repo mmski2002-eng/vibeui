@@ -8,7 +8,11 @@ import { rememberQuery } from "@/lib/search-log"
 import { searchCatalog, type SearchHit } from "@/lib/search/engine"
 import { KINDS, type ItemKind } from "@/registry/categories"
 import type { CatalogItem } from "@/registry/meta"
-import { catalogBasePath, getCatalogItem } from "@/registry/index"
+import {
+  catalogBasePath,
+  getCatalogItem,
+  getCategoryLabel,
+} from "@/registry/index"
 
 /**
  * Страница результатов поиска по всему ассортименту.
@@ -22,6 +26,21 @@ import { catalogBasePath, getCatalogItem } from "@/registry/index"
  * различает глазами, и одна общая лента его прячет.
  */
 export const SEARCH_LIMIT = 48
+
+/**
+ * Разделы-подсказки для запроса «по теме сайта»: человек написал «герои» или
+ * «рецепты», словарь ничего не узнал, точных попаданий почти нет. Список
+ * статический — это не выдача, а примеры того, как каталог называет вещи.
+ * Все слаги — компоненты.
+ */
+const TOPIC_STARTER_CATEGORIES = [
+  "card",
+  "avatar",
+  "carousel",
+  "table",
+  "tabs",
+  "filters",
+]
 
 function groupByKind(hits: SearchHit[]) {
   return KINDS.map((kind) => ({
@@ -105,6 +124,32 @@ export async function SearchPage({
             </div>
           ) : null}
         </div>
+
+        {/* Запрос похож на тему сайта («герои», «рецепты»): словарь ничего
+            не узнал, точных попаданий почти нет. Выдача остаётся — плашка
+            только объясняет, каким словом искать, и даёт с чего начать. */}
+        {needle !== "" &&
+        outcome.terms.length > 0 &&
+        !outcome.recognized &&
+        outcome.exact < 3 ? (
+          <div className="border-shell-border bg-shell mb-6 rounded-xl border p-4">
+            <p className="text-shell-fg text-sm">{t.search.topicHint}</p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {TOPIC_STARTER_CATEGORIES.map((slug) => (
+                <Link
+                  key={slug}
+                  href={localePath(
+                    locale,
+                    `${catalogBasePath("component")}/${slug}`,
+                  )}
+                  className="border-shell-border text-shell-fg hover:border-shell-border-strong inline-flex items-center rounded-full border px-3.5 py-1.5 text-sm transition-colors"
+                >
+                  {getCategoryLabel(slug, locale)}
+                </Link>
+              ))}
+            </div>
+          </div>
+        ) : null}
 
         {needle !== "" && outcome.approximate && outcome.hits.length > 0 ? (
           <p className="text-shell-muted mb-6 text-sm">{t.search.near}</p>

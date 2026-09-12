@@ -6,6 +6,10 @@ import { localePath, type Locale } from "@/lib/i18n"
 import { localizeItem } from "@/lib/localize"
 import { getCatalogItem, getItemKind, itemBasePath } from "@/registry/index"
 
+/** Витрина красится фирменным оранжевым из BREND.jfif: в каталоге те же
+ * блоки чернильные, чтобы не навязывать бренд чужому проекту. */
+const BRAND_ACCENT = "#ff5900"
+
 const PICKS = [
   {
     slug: "hero-001",
@@ -106,6 +110,7 @@ export function DesignShowcase({ locale }: { locale: Locale }) {
                   props={{
                     ...item.meta?.preview?.props,
                     ...(pick.slug === "stack-001" ? { open: true } : {}),
+                    accent: BRAND_ACCENT,
                   }}
                 />
               </div>

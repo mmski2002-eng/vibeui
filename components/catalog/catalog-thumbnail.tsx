@@ -41,6 +41,10 @@ export function CatalogThumbnail({
     return null
   }
 
+  // Блок в натуральную величину: не масштабируется в 1280px, а рендерится в
+  // ширину карточки, где container query сворачивает его в узкую раскладку.
+  const natural = preview?.width === "natural"
+
   return (
     <LazyThumbnail
       slug={slug}
@@ -48,12 +52,14 @@ export function CatalogThumbnail({
       category={category}
       // Фон — не «компонент в кадре», а подложка целого экрана: ему нужен
       // тот же режим, что у секций, иначе он рисуется мелким прямоугольником
-      // посреди пустой карточки.
-      compact={kind !== "block" && preview?.width !== "section"}
+      // посреди пустой карточки. Натуральный блок идёт тем же не-масштабным
+      // путём, что и мелкие компоненты.
+      compact={natural || (kind !== "block" && preview?.width !== "section")}
       // Компоненту, которому нужна настоящая ширина строки, её надо дать:
       // во flex-кадре он иначе схлопывается по содержимому и врёт про дизайн.
       full={preview?.width === "full"}
       half={preview?.width === "section"}
+      natural={natural}
       props={preview?.props}
       states={preview?.states}
       aspect={preview?.aspect}

@@ -80,6 +80,8 @@ type Dictionary = {
     near: string
     /** Совет, когда в запросе одни оценки: «красивое», «удобное». */
     tooVague: string
+    /** Запрос про тему сайта, а не про элемент интерфейса: совет и примеры. */
+    topicHint: string
     sections: string
     showAll: string
     inSection: Record<"block" | "component" | "animation" | "template", string>
@@ -99,6 +101,14 @@ type Dictionary = {
     toLight: string
     toDark: string
     reset: string
+    accent: string
+    accentPresets: {
+      ink: string
+      brand: string
+      blue: string
+      green: string
+      violet: string
+    }
     themeColor: string
     getCode: string
     install: string
@@ -287,6 +297,8 @@ const RU: Dictionary = {
     nothing: "Ничего не нашлось даже среди близкого",
     near: "Точных совпадений нет. Похожее:",
     tooVague: "В запросе только оценки — добавьте, что именно нужно найти",
+    topicHint:
+      "Похоже, вы ищете по теме сайта. Каталог ищут по типу элемента — попробуйте:",
     sections: "Подходящие разделы",
     showAll: "Показать все результаты",
     inSection: {
@@ -311,6 +323,14 @@ const RU: Dictionary = {
     toLight: "Светлая подложка превью",
     toDark: "Тёмная подложка превью",
     reset: "Сбросить настройки",
+    accent: "Акцентный цвет",
+    accentPresets: {
+      ink: "Чернильный",
+      brand: "Фирменный оранжевый",
+      blue: "Синий",
+      green: "Зелёный",
+      violet: "Фиолетовый",
+    },
     themeColor: "Цвет темы",
     getCode: "Показать код",
     install: "Установка",
@@ -477,6 +497,8 @@ const EN: Dictionary = {
     nothing: "Nothing matched, not even loosely",
     near: "No exact matches. Close ones:",
     tooVague: "The query is all adjectives — add what you are looking for",
+    topicHint:
+      "Looks like a site-topic query. The catalog is searched by element type — try:",
     sections: "Matching sections",
     showAll: "Show all results",
     inSection: {
@@ -502,6 +524,14 @@ const EN: Dictionary = {
     toLight: "Switch preview to a light surface",
     toDark: "Switch preview to a dark surface",
     reset: "Reset settings",
+    accent: "Accent colour",
+    accentPresets: {
+      ink: "Ink",
+      brand: "Brand orange",
+      blue: "Blue",
+      green: "Green",
+      violet: "Violet",
+    },
     themeColor: "Theme colour",
     getCode: "Get Code",
     install: "Installation",

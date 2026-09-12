@@ -50,6 +50,12 @@ export type SearchOutcome = {
   hits: SearchHit[]
   /** Точных совпадений не нашлось совсем, показано только близкое. */
   approximate: boolean
+  /**
+   * Словарь узнал в запросе хотя бы одну категорию каталога. Когда не узнал
+   * и точных попаданий мало — человек, скорее всего, ищет по теме своего
+   * сайта, а не по типу элемента, и ему стоит это подсказать.
+   */
+  recognized: boolean
   /** Сколько результатов пришло из строгого прохода. */
   exact: number
   /** Всего найдено — выдача может быть обрезана до `limit`. */
@@ -221,6 +227,7 @@ export function searchCatalog(
     categories: [],
     hits: [],
     approximate: false,
+    recognized: false,
     exact: 0,
     total: 0,
   }
@@ -348,6 +355,7 @@ export function searchCatalog(
       description: result.description as string,
     })),
     approximate,
+    recognized: query.categories.length > 0,
     exact: strict.length,
     total: found.length,
   }

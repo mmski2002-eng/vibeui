@@ -44,6 +44,19 @@ const CodeSheet = dynamic(() =>
   import("@/components/catalog/code-sheet").then((module) => module.CodeSheet),
 )
 
+/**
+ * Готовые акценты для блоков. Чернильный — значение по умолчанию, поэтому
+ * его кнопка возвращает серверную миниатюру; остальные — hex, как требует
+ * контрол цвета. Фирменный — оранжевый из BREND.jfif.
+ */
+const ACCENT_PRESETS = [
+  { key: "ink", value: "" },
+  { key: "brand", value: "#ff5900" },
+  { key: "blue", value: "#2563eb" },
+  { key: "green", value: "#059669" },
+  { key: "violet", value: "#7c3aed" },
+] as const
+
 const TOGGLE =
   "border-shell-border text-shell-muted hover:text-shell-accent hover:border-shell-border-strong hover:bg-shell-panel focus-visible:ring-shell-ring inline-flex size-7 shrink-0 items-center justify-center rounded-md border transition-colors focus-visible:ring-2 focus-visible:outline-none"
 
@@ -61,6 +74,7 @@ export function CardInteractive({
   controls,
   cardControls,
   full,
+  natural,
   locale,
   docUrl,
   itemUrl,
@@ -80,6 +94,9 @@ export function CardInteractive({
   /** Подмножество controls, вынесенное значками в шапку кадра. */
   cardControls: ItemControl[]
   full: boolean
+  /** Блок natural-режима: настраиваемое превью тоже рисуется в том же
+      полноширинном поле, что и статичная миниатюра, а не узким по центру. */
+  natural: boolean
   locale: Locale
   docUrl: string | null
   itemUrl: string
@@ -141,9 +158,20 @@ export function CardInteractive({
       frame?.removeEventListener("theme-change", onBlockTheme)
     }
   }, [])
-  const [values, setValues] = useState<ControlValues>(() =>
+  const [values, setValuesState] = useState<ControlValues>(() =>
     defaultValues(controls),
   )
+  // Кадр переключается на клиентское превью с первого же изменения и назад
+  // не возвращается: подмена поддерева при возврате к дефолтам
+  // перемонтировала бы блок, и он мигал бы при каждом «туда-обратно».
+  const [touched, setTouched] = useState(false)
+
+  const setValues = (
+    update: ControlValues | ((current: ControlValues) => ControlValues),
+  ) => {
+    setTouched(true)
+    setValuesState(update)
+  }
   const [sheet, setSheet] = useState(false)
   const [sheetMounted, setSheetMounted] = useState(false)
   // Какая панель настройки раскрыта: одновременно открыта максимум одна.
@@ -205,10 +233,19 @@ export function CardInteractive({
   }, [])
 
   const params = toSearchParams(controls, values)
+  const dirty = params.toString() !== ""
   // Пока настройки не трогали, в кадре живёт серверная миниатюра, и JS
-  // конфигуратора на витрину не едет. Первое нажатие значка переводит кадр
-  // на настраиваемое превью; возврат к дефолтам возвращает миниатюру.
-  const configured = params.toString() !== ""
+  // конфигуратора на витрину не едет.
+  const configured = touched || dirty
+
+  // Ряд готовых акцентов показывается только блокам с контролом цвета:
+  // кнопка без эффекта хуже отсутствующей кнопки.
+  const accentControl =
+    kind === "block"
+      ? controls.find(
+          (control) => control.prop === "accent" && control.type === "color",
+        )
+      : undefined
 
   // Язык уезжает в ссылку вместе с настройкой: агент должен получить
   // инструкцию на том языке, на котором человек смотрел витрину.
@@ -247,7 +284,7 @@ export function CardInteractive({
           data-part="toolbar"
           className="border-shell-border bg-shell shrink-0 items-center justify-between gap-2 border-b px-1.5 py-1.5"
         >
-          <div className="flex min-w-0 items-center gap-1">
+          <div className="flex min-w-0 flex-1 basis-0 items-center gap-1">
             {cardControls.map((control) => {
               const value = values[control.prop]
               const Icon = cardControlIcon(control, value)
@@ -301,7 +338,7 @@ export function CardInteractive({
                       </span>
                     </button>
                     {open ? (
-                      <span className="border-shell-border bg-shell-panel absolute top-full left-0 z-20 mt-1 flex w-56 max-w-[calc(100vw-2rem)] flex-col gap-1.5 rounded-md border p-2 shadow-lg shadow-black/20">
+                      <span className="border-shell-border bg-shell-panel absolute top-full left-0 z-40 mt-1 flex w-56 max-w-[calc(100vw-2rem)] flex-col gap-1.5 rounded-md border p-2 shadow-lg shadow-black/20">
                         <span className="text-shell-muted text-[0.6875rem]">
                           {control.label}
                         </span>
@@ -395,8 +432,41 @@ export function CardInteractive({
             })}
           </div>
 
-          <div className="flex shrink-0 items-center gap-1">
-            {configured ? (
+            {accentControl ? (
+              <span
+                role="group"
+                aria-label={t.card.accent}
+                className="flex shrink-0 items-center gap-1"
+              >
+                {ACCENT_PRESETS.map((preset) => {
+                  const active =
+                    String(values[accentControl.prop] ?? "") === preset.value
+
+                  return (
+                    <button
+                      key={preset.key}
+                      type="button"
+                      aria-pressed={active}
+                      title={t.card.accentPresets[preset.key]}
+                      onClick={() =>
+                        setValues((current) => ({
+                          ...current,
+                          [accentControl.prop]: preset.value,
+                        }))
+                      }
+                      style={preset.value ? { background: preset.value } : undefined}
+                      className={`border-shell-border focus-visible:ring-shell-ring inline-flex size-5 shrink-0 items-center justify-center rounded-full border transition-[box-shadow] focus-visible:ring-2 focus-visible:outline-none ${preset.value ? "" : "bg-shell-fg"} ${active ? "ring-shell-fg ring-offset-shell ring-2 ring-offset-1" : "hover:ring-shell-border-strong hover:ring-2 hover:ring-offset-1"}`}
+                    >
+                      <span className="sr-only">
+                        {t.card.accentPresets[preset.key]}
+                      </span>
+                    </button>
+                  )
+                })}
+              </span>
+            ) : null}
+          <div className="flex flex-1 basis-0 shrink-0 items-center justify-end gap-1">
+            {dirty ? (
               <button
                 type="button"
                 onClick={() => setValues(defaultValues(controls))}
@@ -543,17 +613,44 @@ export function CardInteractive({
         </div>
 
         {configured ? (
-          <div className="preview-frame bg-preview-surface flex min-h-32 flex-1 items-center justify-center p-6">
-            <ConfigurablePreview
-              slug={name}
-              kind={kind}
-              category={category}
-              full={full}
-              controls={controls}
-              values={values}
-              previewProps={previewProps}
-            />
-          </div>
+          natural ? (
+            // Natural: то же поле, что у статичной миниатюры (полная ширина,
+            // фикс-высота 380→620 со скроллом), иначе смена контрола ужимала
+            // блок в узкий центрированный прямоугольник.
+            <div
+              data-part="frame"
+              data-frame="section"
+              className="preview-frame bg-preview-surface flex w-full flex-1"
+            >
+              <div
+                className="w-full overflow-x-hidden overflow-y-auto pt-[5px] [scrollbar-gutter:stable]"
+                style={{ minHeight: 380, maxHeight: 620 }}
+              >
+                <ConfigurablePreview
+                  slug={name}
+                  kind={kind}
+                  category={category}
+                  full={full}
+                  natural
+                  controls={controls}
+                  values={values}
+                  previewProps={previewProps}
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="preview-frame bg-preview-surface flex min-h-32 flex-1 items-center justify-center p-6">
+              <ConfigurablePreview
+                slug={name}
+                kind={kind}
+                category={category}
+                full={full}
+                controls={controls}
+                values={values}
+                previewProps={previewProps}
+              />
+            </div>
+          )
         ) : (
           children
         )}

@@ -46,7 +46,11 @@ export function CatalogCard({
           getControls(localized),
           localized.meta?.cardControls,
         )}
-        full={localized.meta?.preview?.width === "full"}
+        full={
+          localized.meta?.preview?.width === "full" ||
+          localized.meta?.preview?.width === "natural"
+        }
+        natural={localized.meta?.preview?.width === "natural"}
         previewProps={localized.meta?.preview?.props}
         locale={locale}
         docUrl={getItemDocUrl(localized.name)}

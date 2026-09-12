@@ -135,6 +135,7 @@ export function ConfigurablePreview({
   kind,
   category,
   full,
+  natural,
   controls,
   values,
   previewProps,
@@ -144,6 +145,8 @@ export function ConfigurablePreview({
   category: string
   // Та же оговорка, что и в миниатюре: ширину объявляет сам item.
   full: boolean
+  /** Natural-блок: рисуется во всю ширину поля, без кап-а 30rem. */
+  natural?: boolean
   controls: ItemControl[]
   values: ControlValues
   /** Демо-содержимое витрины: под ним лежат дефолты компонента, поверх — контролы. */
@@ -175,7 +178,7 @@ export function ConfigurablePreview({
     // Демо-ссылки компонентов ведут в "#": без перехвата клик по превью
     // прокручивает страницу к началу и меняет адрес.
     <div
-      className={full ? "w-full max-w-[30rem]" : undefined}
+      className={natural ? "w-full" : full ? "w-full max-w-[30rem]" : undefined}
       onClick={holdPreviewLink}
     >
       <Preview {...previewProps} {...toProps(controls, values)} />
