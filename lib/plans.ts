@@ -27,5 +27,3 @@ export function isPlanId(value: string): value is PlanId {
   return value in PLANS
 }
 
-/** Дни, которые начисляются за приглашение: обоим, но по-разному. */
-export const REFERRAL_DAYS = { inviter: 14, invited: 7 }

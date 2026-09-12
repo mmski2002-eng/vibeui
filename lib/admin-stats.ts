@@ -1,11 +1,22 @@
 import "server-only"
 
-import { and, count, countDistinct, desc, eq, gt, gte, isNotNull, lt, sql, sum } from "drizzle-orm"
+import {
+  and,
+  count,
+  countDistinct,
+  desc,
+  eq,
+  gt,
+  gte,
+  isNotNull,
+  lt,
+  sql,
+  sum,
+} from "drizzle-orm"
 
 import { db } from "@/lib/db"
 import {
   payment,
-  referralReward,
   referralVisit,
   searchQuery,
   subscription,
@@ -178,13 +189,12 @@ export type DiscoveryStats = {
   visits: number
   invited: number
   invitedPaid: number
-  rewardDays: number
 }
 
 export async function discoveryStats(days: Period, now = new Date()) {
   const from = periodStart(days, now)
 
-  const [top, empty, visits, invited, rewards] = await Promise.all([
+  const [top, empty, visits, invited, invitedPaid] = await Promise.all([
     db
       .select({ query: searchQuery.query, value: count() })
       .from(searchQuery)
@@ -208,9 +218,16 @@ export async function discoveryStats(days: Period, now = new Date()) {
       .from(user)
       .where(and(gte(user.createdAt, from), isNotNull(user.invitedBy))),
     db
-      .select({ value: count(), days: sum(referralReward.daysGranted) })
-      .from(referralReward)
-      .where(gte(referralReward.grantedAt, from)),
+      .select({ value: sql<number>`count(distinct ${payment.userId})` })
+      .from(payment)
+      .innerJoin(user, eq(user.id, payment.userId))
+      .where(
+        and(
+          gte(payment.paidAt, from),
+          eq(payment.status, "succeeded"),
+          isNotNull(user.invitedBy),
+        ),
+      ),
   ])
 
   return {
@@ -218,7 +235,6 @@ export async function discoveryStats(days: Period, now = new Date()) {
     empty,
     visits: visits[0]?.value ?? 0,
     invited: invited[0]?.value ?? 0,
-    invitedPaid: rewards[0]?.value ?? 0,
-    rewardDays: Number(rewards[0]?.days ?? 0),
+    invitedPaid: Number(invitedPaid[0]?.value ?? 0),
   } satisfies DiscoveryStats
 }

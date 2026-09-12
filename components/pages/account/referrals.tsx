@@ -1,47 +1,55 @@
-import { count, desc, eq, sum } from "drizzle-orm"
+import Link from "next/link"
+import { notFound } from "next/navigation"
 
 import { CopyLink } from "@/components/account/copy-link"
 import { ACCOUNT_TEXTS } from "@/components/account/texts"
-import { ensureReferralCode } from "@/lib/account-actions"
-import { db } from "@/lib/db"
-import { referralReward, referralVisit } from "@/lib/db/schema"
-import type { Locale } from "@/lib/i18n"
-import { REFERRAL_DAYS } from "@/lib/plans"
+import { localePath, type Locale } from "@/lib/i18n"
+import {
+  maskEmail,
+  partnerCode,
+  referralsOf,
+  referralTotals,
+  visitsByCode,
+} from "@/lib/partners"
 import { SITE_URL } from "@/lib/seo"
 import { requireUser } from "@/lib/session"
 
-/**
- * Приглашения: ссылка на видном месте, счётчики компактной строкой.
- *
- * «Дней Pro» переименовано в «Начислено за приглашения»: формула считает
- * накопленную награду, а не оставшийся срок доступа, и старая подпись
- * обещала не то.
- */
-export async function AccountReferrals({ locale }: { locale: Locale }) {
-  const user = await requireUser(locale)
-  const t = ACCOUNT_TEXTS[locale].referrals
-  const code = await ensureReferralCode()
+const PAGE = 50
 
-  const [visits, rewards, granted] = await Promise.all([
-    db
-      .select({ value: count() })
-      .from(referralVisit)
-      .where(eq(referralVisit.code, code)),
-    db
-      .select()
-      .from(referralReward)
-      .where(eq(referralReward.inviterId, user.id))
-      .orderBy(desc(referralReward.grantedAt))
-      .limit(20),
-    db
-      .select({ value: sum(referralReward.daysGranted) })
-      .from(referralReward)
-      .where(eq(referralReward.inviterId, user.id)),
+/**
+ * Кабинет партнёра: ссылка, счётчики и список приведённых людей.
+ *
+ * Не партнёру — 404, а не «раздел недоступен»: программа закрытая, и
+ * объяснять, как в неё попасть, страница не должна.
+ */
+export async function AccountReferrals({
+  locale,
+  before,
+}: {
+  locale: Locale
+  before?: string
+}) {
+  const user = await requireUser(locale)
+  const code = await partnerCode(user.id)
+
+  if (!code) {
+    notFound()
+  }
+
+  const t = ACCOUNT_TEXTS[locale].referrals
+  const cursor = before ? new Date(before) : undefined
+  const validCursor =
+    cursor && !Number.isNaN(cursor.getTime()) ? cursor : undefined
+
+  const [clicks, totals, rows] = await Promise.all([
+    visitsByCode(code),
+    referralTotals(user.id),
+    referralsOf(user.id, { before: validCursor, limit: PAGE + 1 }),
   ])
 
-  const clicks = visits[0]?.value ?? 0
-  const paid = rewards.length
-  const days = Number(granted[0]?.value ?? 0)
+  const page = rows.slice(0, PAGE)
+  const next = rows.length > PAGE ? page[page.length - 1]?.createdAt : null
+  const dates = locale === "en" ? "en-GB" : "ru-RU"
 
   return (
     <>
@@ -49,45 +57,71 @@ export async function AccountReferrals({ locale }: { locale: Locale }) {
         {t.title}
       </h1>
       <p className="text-shell-muted mt-1.5 max-w-2xl text-sm leading-relaxed">
-        {t.lead(REFERRAL_DAYS.inviter, REFERRAL_DAYS.invited)}
+        {t.lead}
       </p>
 
       <section className="border-shell-border bg-shell-panel mt-6 rounded-2xl border p-5 sm:p-6">
         <CopyLink url={`${SITE_URL}/i/${code}`} locale={locale} />
 
-        {/* Счётчики строкой: три большие карточки с нулями занимали экран,
-            ничего о нём не сообщая. */}
         <dl className="border-shell-border mt-5 grid grid-cols-3 gap-4 border-t pt-5 text-sm">
           <Stat label={t.clicks} value={String(clicks)} />
-          <Stat label={t.paid} value={String(paid)} />
-          <Stat label={t.earned} value={t.days(days)} accent={days > 0} />
+          <Stat label={t.signedUp} value={String(totals.total)} />
+          <Stat
+            label={t.paid}
+            value={String(totals.paid)}
+            accent={totals.paid > 0}
+          />
         </dl>
       </section>
 
-      {rewards.length > 0 ? (
-        <section className="mt-8">
-          <h2 className="text-shell-fg text-sm font-medium">
-            {t.rewardsTitle}
-          </h2>
+      <section className="mt-8">
+        <h2 className="text-shell-fg text-sm font-medium">{t.listTitle}</h2>
+        {page.length === 0 ? (
+          <p className="text-shell-muted mt-3 text-sm">{t.listEmpty}</p>
+        ) : (
           <ul className="border-shell-border mt-3 divide-y divide-[var(--shell-divider)] rounded-2xl border">
-            {rewards.map((reward) => (
+            {page.map((referral) => (
               <li
-                key={reward.id}
-                className="flex items-baseline justify-between gap-4 px-4 py-3 text-sm"
+                key={referral.id}
+                className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 px-4 py-3 text-sm"
               >
-                <span className="text-shell-muted tabular-nums">
-                  {reward.grantedAt.toLocaleDateString(
-                    locale === "en" ? "en-GB" : "ru-RU",
-                  )}
+                <span className="min-w-0 flex-1">
+                  <span className="text-shell-fg block truncate">
+                    {maskEmail(referral.email)}
+                  </span>
+                  <span className="text-shell-muted block truncate text-xs">
+                    {referral.name}
+                  </span>
                 </span>
-                <span className="text-shell-fg font-medium tabular-nums">
-                  + {t.days(reward.daysGranted)}
+                <span
+                  className={`shrink-0 rounded-md px-2 py-0.5 text-xs font-medium ${
+                    referral.firstPaidAt
+                      ? "bg-shell-accent text-shell-accent-fg"
+                      : "border-shell-border text-shell-muted border"
+                  }`}
+                >
+                  {referral.firstPaidAt ? t.paidLabel : t.notPaid}
+                </span>
+                <span className="text-shell-muted w-24 shrink-0 text-right text-xs tabular-nums">
+                  {referral.createdAt.toLocaleDateString(dates)}
                 </span>
               </li>
             ))}
           </ul>
-        </section>
-      ) : null}
+        )}
+
+        {next ? (
+          <Link
+            href={localePath(
+              locale,
+              `/account/referrals?before=${next.toISOString()}`,
+            )}
+            className="border-shell-border text-shell-fg hover:border-shell-accent mt-4 inline-flex h-10 items-center rounded-lg border px-4 text-sm transition-colors"
+          >
+            {t.more}
+          </Link>
+        ) : null}
+      </section>
 
       <section className="border-shell-border mt-8 rounded-2xl border p-5 sm:p-6">
         <h2 className="text-shell-fg text-sm font-medium">{t.howTitle}</h2>

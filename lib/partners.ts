@@ -1,0 +1,285 @@
+import "server-only"
+
+import { randomBytes, randomUUID } from "node:crypto"
+import { and, count, desc, eq, isNull, sql } from "drizzle-orm"
+
+import { db } from "@/lib/db"
+import {
+  partnerInvite,
+  payment,
+  referral,
+  referralVisit,
+  subscription,
+  user,
+} from "@/lib/db/schema"
+
+/**
+ * Партнёрская программа.
+ *
+ * Партнёр — блогер, зарегистрировавшийся по приглашению администратора.
+ * Только у него есть реферальный код; обычный пользователь ссылку не
+ * получает. Признак партнёра не хранится в `user`: он выводится из
+ * `partner_invite.claimed_by`, и второго источника правды нет.
+ */
+
+/** Восемь символов base64url: 48 бит, столкновение практически невозможно. */
+export function newCode() {
+  return randomBytes(6).toString("base64url").slice(0, 8)
+}
+
+export async function isPartner(userId: string) {
+  const [row] = await db
+    .select({ id: partnerInvite.id })
+    .from(partnerInvite)
+    .where(eq(partnerInvite.claimedBy, userId))
+    .limit(1)
+
+  return Boolean(row)
+}
+
+export type ResolvedCode =
+  | { kind: "invite"; inviteId: string }
+  | { kind: "referral"; partnerId: string }
+  | null
+
+/**
+ * Что стоит за кодом из ссылки `/i/<код>`: незанятое приглашение блогера,
+ * код партнёра — или ничего. Занятое приглашение и код бывшего «общего»
+ * реферала возвращают null: ссылка блогера одноразовая, а старую программу
+ * закрыли.
+ */
+export async function resolveCode(code: string): Promise<ResolvedCode> {
+  const [invite] = await db
+    .select({ id: partnerInvite.id })
+    .from(partnerInvite)
+    .where(and(eq(partnerInvite.code, code), isNull(partnerInvite.claimedBy)))
+    .limit(1)
+
+  if (invite) {
+    return { kind: "invite", inviteId: invite.id }
+  }
+
+  const [own] = await db
+    .select({ partnerId: referral.userId })
+    .from(referral)
+    .innerJoin(partnerInvite, eq(partnerInvite.claimedBy, referral.userId))
+    .where(eq(referral.code, code))
+    .limit(1)
+
+  return own ? { kind: "referral", partnerId: own.partnerId } : null
+}
+
+/**
+ * Блогер зарегистрировался: приглашение занято, ему заведён свой код.
+ * Условие `claimed_by IS NULL` в update — защита от гонки двух регистраций
+ * по одной ссылке: вторая ничего не обновит и партнёром не станет.
+ */
+export async function claimInvite(inviteId: string, userId: string) {
+  const claimed = await db
+    .update(partnerInvite)
+    .set({ claimedBy: userId, claimedAt: new Date() })
+    .where(and(eq(partnerInvite.id, inviteId), isNull(partnerInvite.claimedBy)))
+    .returning({ id: partnerInvite.id })
+
+  if (claimed.length === 0) {
+    return
+  }
+
+  await db
+    .insert(referral)
+    .values({ code: newCode(), userId })
+    .onConflictDoNothing()
+}
+
+/** Код партнёра. Партнёру он заведён при регистрации; остальным — null. */
+export async function partnerCode(userId: string) {
+  if (!(await isPartner(userId))) {
+    return null
+  }
+
+  const [existing] = await db
+    .select({ code: referral.code })
+    .from(referral)
+    .where(eq(referral.userId, userId))
+    .limit(1)
+
+  if (existing) {
+    return existing.code
+  }
+
+  const code = newCode()
+
+  await db.insert(referral).values({ code, userId })
+
+  return code
+}
+
+export async function visitsByCode(code: string) {
+  const [row] = await db
+    .select({ value: count() })
+    .from(referralVisit)
+    .where(eq(referralVisit.code, code))
+
+  return row?.value ?? 0
+}
+
+export type ReferralRow = {
+  id: string
+  name: string
+  email: string
+  createdAt: Date
+  subscription: typeof subscription.$inferSelect | null
+  /** Дата первого успешного платежа: «оплатил» значит именно это. */
+  firstPaidAt: Date | null
+  /** Сумма успешных платежей в рублях. */
+  paidTotal: number
+}
+
+/** Рефералы партнёра с подпиской и платежами, новые сверху. */
+export async function referralsOf(
+  partnerId: string,
+  { before, limit }: { before?: Date; limit: number },
+): Promise<ReferralRow[]> {
+  const paid = db
+    .select({
+      userId: payment.userId,
+      firstPaidAt: sql<Date | null>`min(${payment.paidAt})`.as("first_paid_at"),
+      paidTotal: sql<string>`coalesce(sum(${payment.amount}::numeric), 0)`.as(
+        "paid_total",
+      ),
+    })
+    .from(payment)
+    .where(eq(payment.status, "succeeded"))
+    .groupBy(payment.userId)
+    .as("paid")
+
+  const rows = await db
+    .select({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      createdAt: user.createdAt,
+      subscription,
+      firstPaidAt: paid.firstPaidAt,
+      paidTotal: paid.paidTotal,
+    })
+    .from(user)
+    .leftJoin(subscription, eq(subscription.userId, user.id))
+    .leftJoin(paid, eq(paid.userId, user.id))
+    .where(
+      and(
+        eq(user.invitedBy, partnerId),
+        before ? sql`${user.createdAt} < ${before}` : undefined,
+      ),
+    )
+    .orderBy(desc(user.createdAt))
+    .limit(limit)
+
+  return rows.map((row) => ({
+    ...row,
+    firstPaidAt: row.firstPaidAt ? new Date(row.firstPaidAt) : null,
+    paidTotal: Number(row.paidTotal ?? 0),
+  }))
+}
+
+/** Счётчики по партнёру: сколько привёл, сколько из них платили. */
+export async function referralTotals(partnerId: string) {
+  const [row] = await db
+    .select({
+      total: sql<number>`count(distinct ${user.id})`,
+      paid: sql<number>`count(distinct ${payment.userId})`,
+    })
+    .from(user)
+    .leftJoin(
+      payment,
+      and(eq(payment.userId, user.id), eq(payment.status, "succeeded")),
+    )
+    .where(eq(user.invitedBy, partnerId))
+
+  return { total: Number(row?.total ?? 0), paid: Number(row?.paid ?? 0) }
+}
+
+/**
+ * Почта для кабинета партнёра: первые два символа и домен. Блогер должен
+ * узнать своего подписчика, но не получить базу адресов.
+ */
+export function maskEmail(email: string) {
+  const [local = "", domain = ""] = email.split("@")
+
+  return `${local.slice(0, 2)}***@${domain}`
+}
+
+export type PartnerInviteRow = typeof partnerInvite.$inferSelect & {
+  partnerEmail: string | null
+  partnerName: string | null
+  referrals: number
+  referralsPaid: number
+}
+
+/** Все приглашения с итогами по каждому: страница списка у админа. */
+export async function listInvites(): Promise<PartnerInviteRow[]> {
+  const rows = await db
+    .select({
+      invite: partnerInvite,
+      partnerEmail: user.email,
+      partnerName: user.name,
+    })
+    .from(partnerInvite)
+    .leftJoin(user, eq(user.id, partnerInvite.claimedBy))
+    .orderBy(desc(partnerInvite.createdAt))
+
+  const totals = await Promise.all(
+    rows.map((row) =>
+      row.invite.claimedBy
+        ? referralTotals(row.invite.claimedBy)
+        : Promise.resolve({ total: 0, paid: 0 }),
+    ),
+  )
+
+  return rows.map((row, index) => ({
+    ...row.invite,
+    partnerEmail: row.partnerEmail,
+    partnerName: row.partnerName,
+    referrals: totals[index]?.total ?? 0,
+    referralsPaid: totals[index]?.paid ?? 0,
+  }))
+}
+
+export async function getInvite(id: string) {
+  const [row] = await db
+    .select({
+      invite: partnerInvite,
+      partnerEmail: user.email,
+      partnerName: user.name,
+      partnerCreatedAt: user.createdAt,
+    })
+    .from(partnerInvite)
+    .leftJoin(user, eq(user.id, partnerInvite.claimedBy))
+    .where(eq(partnerInvite.id, id))
+    .limit(1)
+
+  return row ?? null
+}
+
+export async function createInvite(name: string, createdBy: string) {
+  const row = {
+    id: randomUUID(),
+    code: newCode(),
+    name,
+    createdBy,
+  }
+
+  await db.insert(partnerInvite).values(row)
+
+  return row
+}
+
+/** Удалить можно только незанятое приглашение: за занятым стоит аккаунт. */
+export async function deleteInvite(id: string) {
+  const deleted = await db
+    .delete(partnerInvite)
+    .where(and(eq(partnerInvite.id, id), isNull(partnerInvite.claimedBy)))
+    .returning({ id: partnerInvite.id })
+
+  return deleted.length > 0
+}

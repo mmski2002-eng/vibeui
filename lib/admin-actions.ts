@@ -15,6 +15,7 @@ import {
   user,
 } from "@/lib/db/schema"
 import { currentPeriod } from "@/lib/entitlements"
+import { createInvite, deleteInvite } from "@/lib/partners"
 import { applyPaymentEvent, grantDays } from "@/lib/payment-apply"
 import { fetchPayment } from "@/lib/yookassa"
 
@@ -390,4 +391,47 @@ export async function markRefunded(input: {
   })
 
   refresh(row.userId)
+}
+
+/** Ссылка для блогера. Имя — единственное, что о нём известно до регистрации. */
+export async function createPartnerInvite(input: { name: string }) {
+  const admin = await requireAdmin()
+  const name = input.name.trim().slice(0, 120)
+
+  if (name.length < 2) {
+    throw new Error("Имя обязательно")
+  }
+
+  const invite = await createInvite(name, admin.email)
+
+  await logAdminAction({
+    adminEmail: admin.email,
+    action: "partner.create",
+    targetType: "partner",
+    targetId: invite.id,
+    details: { name, code: invite.code },
+  })
+
+  revalidatePath("/account/admin/partners")
+
+  return invite
+}
+
+/** Удалить незанятое приглашение: занятое хранит аккаунт и его рефералов. */
+export async function deletePartnerInvite(input: { id: string }) {
+  const admin = await requireAdmin()
+  const deleted = await deleteInvite(input.id)
+
+  if (!deleted) {
+    throw new Error("Приглашение уже использовано")
+  }
+
+  await logAdminAction({
+    adminEmail: admin.email,
+    action: "partner.delete",
+    targetType: "partner",
+    targetId: input.id,
+  })
+
+  revalidatePath("/account/admin/partners")
 }

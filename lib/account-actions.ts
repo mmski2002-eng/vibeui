@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache"
 import { and, eq, isNull } from "drizzle-orm"
 
 import { db } from "@/lib/db"
-import { favorite, referral, registryToken, user } from "@/lib/db/schema"
+import { favorite, registryToken, user } from "@/lib/db/schema"
 import { isPro } from "@/lib/entitlements"
 import { requireUser } from "@/lib/session"
 import { hashToken } from "@/lib/token"
@@ -149,28 +149,3 @@ export async function updateProfile(input: {
   refreshAccount("/account")
 }
 
-/**
- * Код приглашения. Заводится при первом заходе в раздел, а не при
- * регистрации: большинству он не нужен, а таблица чище.
- */
-export async function ensureReferralCode() {
-  const user = await requireUser()
-
-  const [existing] = await db
-    .select()
-    .from(referral)
-    .where(eq(referral.userId, user.id))
-    .limit(1)
-
-  if (existing) {
-    return existing.code
-  }
-
-  // Восемь символов из base64url: 48 бит — столкновение практически
-  // невозможно, а вставка всё равно защищена первичным ключом.
-  const code = randomBytes(6).toString("base64url").slice(0, 8)
-
-  await db.insert(referral).values({ code, userId: user.id })
-
-  return code
-}

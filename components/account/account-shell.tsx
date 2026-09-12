@@ -7,6 +7,7 @@ import { SignOutButton } from "@/components/auth/sign-out-button"
 import { CatalogShell } from "@/components/catalog/catalog-shell"
 import { isAdmin } from "@/lib/admin"
 import { localePath, type Locale } from "@/lib/i18n"
+import { isPartner } from "@/lib/partners"
 import { getSubscriptionState, isProState } from "@/lib/subscription-state"
 import { requireUser } from "@/lib/session"
 
@@ -25,9 +26,10 @@ export async function AccountShell({
   children: ReactNode
 }) {
   const user = await requireUser(locale)
-  const [state, admin] = await Promise.all([
+  const [state, admin, partner] = await Promise.all([
     getSubscriptionState(user.id),
     isAdmin(),
+    isPartner(user.id),
   ])
   const t = ACCOUNT_TEXTS[locale]
 
@@ -69,7 +71,7 @@ export async function AccountShell({
               <SignOutButton locale={locale} compact />
             </div>
 
-            <AccountNav locale={locale} admin={admin} />
+            <AccountNav locale={locale} admin={admin} partner={partner} />
 
             <Link
               href={localePath(locale, "/components")}

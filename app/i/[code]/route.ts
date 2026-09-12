@@ -1,9 +1,9 @@
 import { randomUUID } from "node:crypto"
 import { cookies } from "next/headers"
-import { eq } from "drizzle-orm"
 
 import { db } from "@/lib/db"
-import { referral, referralVisit } from "@/lib/db/schema"
+import { referralVisit } from "@/lib/db/schema"
+import { resolveCode } from "@/lib/partners"
 
 /** Сколько живёт привязка к пригласившему: два месяца на раздумья. */
 const REF_COOKIE_DAYS = 60
@@ -11,8 +11,10 @@ const REF_COOKIE_DAYS = 60
 export const REF_COOKIE = "vibeui_ref"
 
 /**
- * Реферальная ссылка. Кладёт код в куку и уводит на витрину: посадочной
- * страницы у приглашения нет, человек должен увидеть сам продукт.
+ * Ссылка партнёрской программы: приглашение блогера или код партнёра.
+ * Кладёт код в куку и уводит на витрину: посадочной страницы у
+ * приглашения нет, человек должен увидеть сам продукт. Занятое
+ * приглашение и чужой код ведут на главную без куки.
  */
 export async function GET(
   request: Request,
@@ -21,13 +23,7 @@ export async function GET(
   const { code } = await params
   const home = new URL("/", request.url)
 
-  const [owner] = await db
-    .select({ userId: referral.userId })
-    .from(referral)
-    .where(eq(referral.code, code))
-    .limit(1)
-
-  if (!owner) {
+  if (!(await resolveCode(code))) {
     return Response.redirect(home, 302)
   }
 

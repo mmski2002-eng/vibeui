@@ -9,9 +9,9 @@ import { cookies } from "next/headers"
 import { CONSENT_VERSION } from "@/lib/consent"
 import { db } from "@/lib/db"
 import * as schema from "@/lib/db/schema"
-import { referral } from "@/lib/db/schema"
 import type { Locale } from "@/lib/i18n"
 import { letterWithLink, sendMail } from "@/lib/mail"
+import { claimInvite, resolveCode } from "@/lib/partners"
 
 export { CONSENT_VERSION }
 
@@ -194,9 +194,9 @@ export const auth = betterAuth({
     user: {
       create: {
         /**
-         * Привязка к пригласившему ставится один раз, в момент создания
+         * Привязка к партнёру ставится один раз, в момент создания
          * аккаунта: позже её нельзя ни задать, ни переписать — иначе
-         * приглашение превращается в способ дарить себе дни задним числом.
+         * реферала можно переписать на другого блогера задним числом.
          * Здесь же фиксируется согласие: его нужно уметь доказать.
          */
         before: async (data) => {
@@ -209,19 +209,13 @@ export const auth = betterAuth({
 
           const store = await cookies()
           const code = store.get("vibeui_ref")?.value
-
-          const inviter = code
-            ? await db
-                .select({ userId: referral.userId })
-                .from(referral)
-                .where(eq(referral.code, code))
-                .limit(1)
-            : []
+          const resolved = code ? await resolveCode(code) : null
 
           return {
             data: {
               ...data,
-              invitedBy: inviter[0]?.userId ?? null,
+              invitedBy:
+                resolved?.kind === "referral" ? resolved.partnerId : null,
               consentAt: new Date(),
               consentVersion: CONSENT_VERSION,
               // Форма присылает язык сама; кука — запасной источник для
@@ -233,6 +227,20 @@ export const auth = betterAuth({
                     ? "en"
                     : "ru",
             },
+          }
+        },
+        /**
+         * Регистрация по приглашению блогера: приглашение занимается, а
+         * новому партнёру заводится свой код. Кука читается второй раз,
+         * потому что между before и after данные не передаются.
+         */
+        after: async (created) => {
+          const store = await cookies()
+          const code = store.get("vibeui_ref")?.value
+          const resolved = code ? await resolveCode(code) : null
+
+          if (resolved?.kind === "invite") {
+            await claimInvite(resolved.inviteId, created.id)
           }
         },
       },

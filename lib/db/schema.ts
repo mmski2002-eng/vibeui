@@ -13,7 +13,7 @@ import {
 /**
  * Схема базы. Первые четыре таблицы — контракт Better Auth, их состав задан
  * библиотекой; остальные наши. Держим всё в одном файле: таблиц немного, а
- * связи между подпиской, платежами и рефералами читаются только рядом.
+ * связи между подпиской, платежами и партнёрами читаются только рядом.
  */
 
 export const user = pgTable("user", {
@@ -209,7 +209,30 @@ export const favorite = pgTable(
   (table) => [primaryKey({ columns: [table.userId, table.itemName] })],
 )
 
-/** Реферальный код пользователя: один на аккаунт, живёт вечно. */
+/**
+ * Приглашение блогера. Создаёт администратор под имя; ссылка одноразовая:
+ * кто по ней зарегистрировался, тот и партнёр, второго не бывает.
+ */
+export const partnerInvite = pgTable(
+  "partner_invite",
+  {
+    id: text("id").primaryKey(),
+    code: text("code").notNull().unique(),
+    name: text("name").notNull(),
+    createdBy: text("created_by").notNull(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    claimedBy: text("claimed_by")
+      .unique()
+      .references(() => user.id, { onDelete: "set null" }),
+    claimedAt: timestamp("claimed_at"),
+  },
+  (table) => [index("partner_invite_created_idx").on(table.createdAt)],
+)
+
+/**
+ * Реферальный код партнёра: один на аккаунт, живёт вечно. Заводится в
+ * момент, когда блогер регистрируется по приглашению; у остальных его нет.
+ */
 export const referral = pgTable("referral", {
   code: text("code").primaryKey(),
   userId: text("user_id")
@@ -229,27 +252,6 @@ export const referralVisit = pgTable(
     landedAt: timestamp("landed_at").notNull().defaultNow(),
   },
   (table) => [index("referral_visit_code_idx").on(table.code)],
-)
-
-/**
- * Начисленные дни Pro. Одна строка на платёж: повторная обработка того же
- * платежа не начислит дни дважды.
- */
-export const referralReward = pgTable(
-  "referral_reward",
-  {
-    id: text("id").primaryKey(),
-    inviterId: text("inviter_id")
-      .notNull()
-      .references(() => user.id, { onDelete: "cascade" }),
-    invitedId: text("invited_id")
-      .notNull()
-      .references(() => user.id, { onDelete: "cascade" }),
-    paymentId: text("payment_id").notNull().unique(),
-    daysGranted: integer("days_granted").notNull(),
-    grantedAt: timestamp("granted_at").notNull().defaultNow(),
-  },
-  (table) => [index("referral_reward_inviter_idx").on(table.inviterId)],
 )
 
 /**

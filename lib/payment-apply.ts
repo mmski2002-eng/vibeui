@@ -4,18 +4,11 @@ import { randomUUID } from "node:crypto"
 import { eq } from "drizzle-orm"
 
 import { db } from "@/lib/db"
-import {
-  payment,
-  referralReward,
-  subscription,
-  user,
-  webhookEvent,
-} from "@/lib/db/schema"
-import { PLANS, REFERRAL_DAYS, isPlanId } from "@/lib/plans"
+import { payment, subscription, webhookEvent } from "@/lib/db/schema"
+import { PLANS, isPlanId } from "@/lib/plans"
 
 /**
- * Применение успешного платежа: запись платежа, продление подписки,
- * начисление за приглашение.
+ * Применение успешного платежа: запись платежа и продление подписки.
  *
  * Живёт отдельно от маршрута вебхука, потому что тот же путь нужен
  * администратору: когда уведомление ЮKassa не дошло, он прогоняет
@@ -60,46 +53,6 @@ export async function grantDays(userId: string, days: number) {
     status: "active",
     currentPeriodEnd: periodEnd,
   })
-}
-
-/**
- * Начисление за приглашение. Только за первый платёж приглашённого: строка
- * в `referral_reward` уникальна по приглашённому, повторная обработка ничего
- * не добавит.
- */
-async function rewardInviter(invitedId: string, paymentId: string) {
-  const [invited] = await db
-    .select({ invitedBy: user.invitedBy })
-    .from(user)
-    .where(eq(user.id, invitedId))
-    .limit(1)
-
-  const inviterId = invited?.invitedBy
-
-  if (!inviterId || inviterId === invitedId) {
-    return
-  }
-
-  const [already] = await db
-    .select({ id: referralReward.id })
-    .from(referralReward)
-    .where(eq(referralReward.invitedId, invitedId))
-    .limit(1)
-
-  if (already) {
-    return
-  }
-
-  await db.insert(referralReward).values({
-    id: randomUUID(),
-    inviterId,
-    invitedId,
-    paymentId,
-    daysGranted: REFERRAL_DAYS.inviter,
-  })
-
-  await grantDays(inviterId, REFERRAL_DAYS.inviter)
-  await grantDays(invitedId, REFERRAL_DAYS.invited)
 }
 
 export type ApplyResult =
@@ -206,7 +159,6 @@ export async function applyPaymentEvent(
     })
   }
 
-  await rewardInviter(userId, object.id)
 
   await db
     .update(webhookEvent)

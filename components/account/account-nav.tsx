@@ -8,6 +8,7 @@ import {
   ChevronDown,
   Clock,
   CreditCard,
+  Handshake,
   Heart,
   LayoutGrid,
   LifeBuoy,
@@ -39,11 +40,14 @@ type Section = { href: string; label: string; icon: LucideIcon }
 export function AccountNav({
   locale,
   admin,
+  partner,
 }: {
   locale: Locale
   /** Право проверено на сервере. Вкладка — удобство, а не защита: каждая
    *  страница админки и каждое её действие спрашивают право заново. */
   admin?: boolean
+  /** Партнёр программы: только у него есть раздел с рефералами. */
+  partner?: boolean
 }) {
   const t = ACCOUNT_TEXTS[locale]
   const pathname = stripLocale(usePathname())
@@ -68,7 +72,9 @@ export function AccountNav({
           icon: CreditCard,
         },
         { href: "/account/token", label: t.nav.connect, icon: Plug },
-        { href: "/account/referrals", label: t.nav.referrals, icon: UserPlus },
+        ...(partner
+          ? [{ href: "/account/referrals", label: t.nav.referrals, icon: UserPlus }]
+          : []),
         { href: "/account/security", label: t.nav.profile, icon: Shield },
         { href: "/account/support", label: t.nav.support, icon: LifeBuoy },
       ],
@@ -98,6 +104,11 @@ export function AccountNav({
           href: "/account/admin/users",
           label: ADMIN_TEXTS.nav.users,
           icon: Users,
+        },
+        {
+          href: "/account/admin/partners",
+          label: ADMIN_TEXTS.nav.partners,
+          icon: Handshake,
         },
         {
           href: "/account/admin/log",

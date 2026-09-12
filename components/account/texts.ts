@@ -17,7 +17,7 @@ export const ACCOUNT_TEXTS = {
       history: "История",
       billing: "Тариф и оплата",
       connect: "Подключение к проекту",
-      referrals: "Приглашения",
+      referrals: "Рефералы",
       profile: "Профиль и безопасность",
       support: "Поддержка",
       catalog: "Открыть каталог",
@@ -98,7 +98,7 @@ export const ACCOUNT_TEXTS = {
       cancelledNote: (date: string) =>
         `Продление отключено. Доступ сохраняется до ${date}, потом тариф станет бесплатным.`,
       bonusNote:
-        "Бонусные дни за приглашения. Списаний по ним не бывает: когда дни закончатся, тариф станет бесплатным.",
+        "Бонусные дни. Списаний по ним не бывает: когда дни закончатся, тариф станет бесплатным.",
       pastDueTitle: "Оплата не прошла",
       pastDueNote: (attempts: number, date: string) =>
         `Неудачных попыток списания: ${attempts}. Доступ сохраняется до ${date}. Проверьте карту или оплатите заново.`,
@@ -167,22 +167,23 @@ export const ACCOUNT_TEXTS = {
       upgrade: "Смотреть тарифы",
     },
     referrals: {
-      title: "Приглашения",
-      lead: (inviter: number, invited: number) =>
-        `Отправьте ссылку тому, кому библиотека пригодится. Когда он оплатит подписку, вы получите ${inviter} дней Pro, а он — ${invited} дней сверх оплаченного периода.`,
+      title: "Рефералы",
+      lead: "Ваша партнёрская ссылка. Кто зарегистрируется по ней, закрепляется за вами; оплатившие отмечены в списке.",
       copy: "Скопировать",
       copied: "Скопировано",
       clicks: "Переходов",
+      signedUp: "Зарегистрировались",
       paid: "Оплатили",
-      earned: "Начислено за приглашения",
-      days: (n: number) => `${n} дн.`,
-      rewardsTitle: "Начисления",
-      rewardsEmpty: "Начислений пока не было.",
+      listTitle: "Мои рефералы",
+      listEmpty: "Пока никто не зарегистрировался по вашей ссылке.",
+      paidLabel: "Оплатил",
+      notPaid: "Не оплачивал",
+      more: "Показать ещё",
       howTitle: "Как это считается",
       how: [
         "Переход по ссылке запоминается на 60 дней — регистрироваться сразу необязательно.",
-        "Дни начисляются после оплаты, а не после регистрации: приглашать самого себя бессмысленно.",
-        "Дни складываются с текущей подпиской, а не заменяют её.",
+        "Человек закрепляется за вами в момент регистрации, навсегда.",
+        "«Оплатил» — у него был хотя бы один успешный платёж за подписку.",
       ],
     },
     profile: {
@@ -240,7 +241,7 @@ export const ACCOUNT_TEXTS = {
       history: "History",
       billing: "Plan and billing",
       connect: "Connect your project",
-      referrals: "Invites",
+      referrals: "Referrals",
       profile: "Profile and security",
       support: "Support",
       catalog: "Open the catalogue",
@@ -321,7 +322,7 @@ export const ACCOUNT_TEXTS = {
       cancelledNote: (date: string) =>
         `Renewal is off. Access stays until ${date}, then the plan becomes free.`,
       bonusNote:
-        "Bonus days from invites. They are never charged: when the days run out, the plan becomes free.",
+        "Bonus days. They are never charged: when the days run out, the plan becomes free.",
       pastDueTitle: "Payment failed",
       pastDueNote: (attempts: number, date: string) =>
         `Failed charge attempts: ${attempts}. Access stays until ${date}. Check the card or pay again.`,
@@ -390,22 +391,23 @@ export const ACCOUNT_TEXTS = {
       upgrade: "See plans",
     },
     referrals: {
-      title: "Invites",
-      lead: (inviter: number, invited: number) =>
-        `Send the link to someone who needs the library. When they pay for a subscription you get ${inviter} days of Pro, and they get ${invited} days on top of the paid period.`,
+      title: "Referrals",
+      lead: "Your partner link. Whoever signs up through it is attributed to you; paying members are marked in the list.",
       copy: "Copy",
       copied: "Copied",
       clicks: "Visits",
+      signedUp: "Signed up",
       paid: "Paid",
-      earned: "Earned from invites",
-      days: (n: number) => `${n} days`,
-      rewardsTitle: "Rewards",
-      rewardsEmpty: "No rewards yet.",
+      listTitle: "My referrals",
+      listEmpty: "Nobody has signed up through your link yet.",
+      paidLabel: "Paid",
+      notPaid: "Not paid",
+      more: "Show more",
       howTitle: "How it adds up",
       how: [
         "A visit through the link is remembered for 60 days — signing up right away is not required.",
-        "Days are granted after payment, not after signup: inviting yourself makes no sense.",
-        "Days add to the current subscription instead of replacing it.",
+        "A person is attributed to you at signup, permanently.",
+        "“Paid” means at least one successful subscription payment.",
       ],
     },
     profile: {

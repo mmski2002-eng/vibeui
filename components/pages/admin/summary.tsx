@@ -119,7 +119,6 @@ export async function AdminSummary({ period }: { period: Period }) {
           <Metric label={t.visits} value={String(discovery.visits)} />
           <Metric label={t.invited} value={String(discovery.invited)} />
           <Metric label={t.invitedPaid} value={String(discovery.invitedPaid)} />
-          <Metric label={t.rewardDays} value={String(discovery.rewardDays)} />
         </div>
 
         <div className="mt-4 grid gap-4 lg:grid-cols-2">

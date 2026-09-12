@@ -19,7 +19,7 @@ export type SubscriptionState =
   | { kind: "free" }
   /** Оплаченный Pro, продление включено. */
   | { kind: "pro"; plan: PlanId | null; until: Date; renews: true }
-  /** Бонусные дни за приглашения: списаний по ним не бывает. */
+  /** Дни, выданные вручную из админки: списаний по ним не бывает. */
   | { kind: "bonus"; until: Date }
   /** Продление отключено: доступ есть, следующего списания не будет. */
   | { kind: "cancelled"; plan: PlanId | null; until: Date }
