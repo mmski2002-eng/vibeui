@@ -37,6 +37,7 @@ export async function AdminPayment({ id }: { id: string }) {
       status: payment.status,
       createdAt: payment.createdAt,
       paidAt: payment.paidAt,
+      receiptUrl: payment.receiptUrl,
       payload: payment.payload,
       userId: payment.userId,
       email: user.email,
@@ -87,6 +88,20 @@ export async function AdminPayment({ id }: { id: string }) {
             {row.paidAt?.toLocaleString("ru-RU") ?? ADMIN_TEXTS.common.nothing}
           </span>
         </Row>
+        <Row label={t.receipt}>
+          {row.receiptUrl ? (
+            <a
+              href={row.receiptUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="text-shell-accent-text max-w-full truncate hover:underline"
+            >
+              {row.receiptUrl}
+            </a>
+          ) : (
+            <span className="text-shell-muted">{t.receiptMissing}</span>
+          )}
+        </Row>
         <Row label={t.subscription}>
           <Link
             href={`/account/admin/users/${row.userId}`}
@@ -97,7 +112,7 @@ export async function AdminPayment({ id }: { id: string }) {
         </Row>
       </div>
 
-      <PaymentActions paymentId={row.id} />
+      <PaymentActions paymentId={row.id} receiptUrl={row.receiptUrl} />
 
       {row.payload ? (
         <details className="border-shell-border mt-6 rounded-2xl border">

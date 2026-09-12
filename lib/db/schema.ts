@@ -136,6 +136,8 @@ export const payment = pgTable(
     status: text("status").notNull(),
     paidAt: timestamp("paid_at"),
     receiptStatus: text("receipt_status"),
+    /** Ссылка на чек из «Мой налог»: администратор вносит руками. */
+    receiptUrl: text("receipt_url"),
     payload: jsonb("payload"),
     createdAt: timestamp("created_at").notNull().defaultNow(),
   },

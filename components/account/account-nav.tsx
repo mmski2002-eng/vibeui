@@ -13,6 +13,7 @@ import {
   LayoutGrid,
   LifeBuoy,
   Plug,
+  Receipt,
   ScrollText,
   Shield,
   Users,
@@ -71,6 +72,7 @@ export function AccountNav({
           label: t.nav.billing,
           icon: CreditCard,
         },
+        { href: "/account/payments", label: t.nav.payments, icon: Receipt },
         { href: "/account/token", label: t.nav.connect, icon: Plug },
         ...(partner
           ? [{ href: "/account/referrals", label: t.nav.referrals, icon: UserPlus }]

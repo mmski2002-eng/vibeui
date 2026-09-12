@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-import { Loader2, RotateCw } from "lucide-react"
+import { Loader2, Receipt, RotateCw } from "lucide-react"
 
 import { ACCOUNT_TEXTS } from "@/components/account/texts"
 import type { Locale } from "@/lib/i18n"
@@ -13,6 +13,8 @@ export type PaymentRow = {
   date: string
   amount: string
   status: keyof (typeof ACCOUNT_TEXTS)["ru"]["billing"]["status"]
+  /** Ссылка на чек; null — ещё не внесена. */
+  receiptUrl: string | null
 }
 
 const PAGE = 8
@@ -106,6 +108,7 @@ export function PaymentsList({
   rows: PaymentRow[]
 }) {
   const t = ACCOUNT_TEXTS[locale].billing
+  const p = ACCOUNT_TEXTS[locale].payments
   const [shown, setShown] = useState(PAGE)
 
   if (rows.length === 0) {
@@ -134,6 +137,19 @@ export function PaymentsList({
               <span className="text-shell-fg font-medium tabular-nums">
                 {row.amount}
               </span>
+              {row.receiptUrl ? (
+                <a
+                  href={row.receiptUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-shell-accent-text inline-flex items-center gap-1 text-xs font-medium hover:underline"
+                >
+                  <Receipt className="size-3.5" aria-hidden="true" />
+                  {p.receipt}
+                </a>
+              ) : row.status === "succeeded" ? (
+                <span className="text-shell-muted text-xs">{p.receiptSoon}</span>
+              ) : null}
             </span>
           </li>
         ))}

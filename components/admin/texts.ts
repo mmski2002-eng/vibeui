@@ -21,6 +21,7 @@ const LOG_ACTIONS: Record<string, string> = {
   "payment.sync": "Сверил платёж",
   "payment.replay": "Применил событие заново",
   "payment.mark_refunded": "Пометил возвращённым",
+  "payment.receipt": "Внёс ссылку на чек",
   "partner.create": "Создал ссылку для блогера",
   "partner.delete": "Удалил ссылку для блогера",
 }
@@ -147,6 +148,13 @@ export const ADMIN_TEXTS = {
     done: "Готово",
     failed: "Не получилось. Попробуйте ещё раз.",
     subscription: "Подписка",
+    receipt: "Чек",
+    receiptNote:
+      "Ссылка на чек из «Мой налог». Пользователь увидит её в кабинете в разделе «Оплата». Пустое поле убирает ссылку.",
+    receiptPlaceholder: "https://lknpd.nalog.ru/api/v1/receipt/…",
+    receiptSave: "Сохранить ссылку",
+    receiptSaving: "Сохраняем…",
+    receiptMissing: "не внесён",
   },
   reports: {
     title: "Жалобы",

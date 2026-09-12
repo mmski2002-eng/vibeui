@@ -1,11 +1,9 @@
 import Link from "next/link"
-import { desc, eq } from "drizzle-orm"
+import { and, eq } from "drizzle-orm"
 
 import {
-  PaymentsList,
   PendingPayment,
   RenewalButton,
-  type PaymentRow,
 } from "@/components/account/billing-parts"
 import { ACCOUNT_TEXTS } from "@/components/account/texts"
 import { db } from "@/lib/db"
@@ -30,15 +28,6 @@ function day(value: Date, locale: Locale) {
   return value.toLocaleDateString(locale === "en" ? "en-GB" : "ru-RU")
 }
 
-/** Статусы ЮKassa приводим к четырём понятным: остальное — «неизвестен». */
-function paymentStatus(value: string): PaymentRow["status"] {
-  if (value === "succeeded" || value === "pending" || value === "canceled") {
-    return value
-  }
-
-  return value === "refunded" ? "refunded" : "unknown"
-}
-
 /**
  * Тариф и оплата одним экраном.
  *
@@ -52,25 +41,16 @@ export async function AccountBilling({ locale }: { locale: Locale }) {
 
   const [row, history] = await Promise.all([
     getSubscriptionRow(user.id),
+    // Только «ожидает»: история целиком живёт на странице оплаты.
     db
-      .select()
+      .select({ status: payment.status })
       .from(payment)
-      .where(eq(payment.userId, user.id))
-      .orderBy(desc(payment.createdAt))
-      .limit(50),
+      .where(and(eq(payment.userId, user.id), eq(payment.status, "pending")))
+      .limit(1),
   ])
 
   const state = resolveSubscription(row)
   const waiting = history.some((entry) => entry.status === "pending")
-
-  const payments: PaymentRow[] = history.map((entry) => ({
-    id: entry.id,
-    // Неоплаченный платёж не имеет paidAt: показываем дату создания, иначе
-    // строка выглядит сломанной.
-    date: day(entry.paidAt ?? entry.createdAt, locale),
-    amount: money(entry.amount, locale),
-    status: paymentStatus(entry.status),
-  }))
 
   return (
     <>
@@ -177,10 +157,12 @@ export async function AccountBilling({ locale }: { locale: Locale }) {
         )}
       </section>
 
-      <section className="mt-10">
-        <h2 className="text-shell-fg text-sm font-medium">{t.payments}</h2>
-        <PaymentsList locale={locale} rows={payments} />
-      </section>
+      <Link
+        href={localePath(locale, "/account/payments")}
+        className="text-shell-muted hover:text-shell-fg mt-8 inline-flex items-center gap-1.5 text-sm transition-colors"
+      >
+        {t.payments} →
+      </Link>
     </>
   )
 }

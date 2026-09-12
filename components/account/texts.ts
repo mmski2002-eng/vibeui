@@ -20,9 +20,18 @@ export const ACCOUNT_TEXTS = {
       referrals: "Рефералы",
       profile: "Профиль и безопасность",
       support: "Поддержка",
+      payments: "Оплата",
       catalog: "Открыть каталог",
     },
     plan: { free: "Бесплатный", pro: "Pro", bonus: "Бонусный Pro" },
+    payments: {
+      title: "Оплата",
+      lead: "История платежей и чеки. Чек формируется в «Мой налог» после оплаты и появляется здесь ссылкой.",
+      receipt: "Чек",
+      receiptSoon: "Чек готовится",
+      empty: "Платежей пока не было.",
+      more: "Показать ещё",
+    },
     overview: {
       title: "Моя библиотека",
       lead: "Вернитесь к выбранному дизайну.",
@@ -113,8 +122,8 @@ export const ACCOUNT_TEXTS = {
       pendingNote:
         "ЮKassa подтверждает платёж в течение нескольких минут. Обновите страницу — статус появится здесь.",
       refresh: "Обновить",
-      payments: "Платежи",
-      paymentsNote: "Чек на каждый платёж приходит на почту от ЮKassa.",
+      payments: "История оплат и чеки",
+      paymentsNote: "Чек появляется здесь после формирования в «Мой налог».",
       paymentsEmpty: "Платежей пока не было.",
       status: {
         succeeded: "Оплачен",
@@ -244,9 +253,18 @@ export const ACCOUNT_TEXTS = {
       referrals: "Referrals",
       profile: "Profile and security",
       support: "Support",
+      payments: "Payments",
       catalog: "Open the catalogue",
     },
     plan: { free: "Free", pro: "Pro", bonus: "Bonus Pro" },
+    payments: {
+      title: "Payments",
+      lead: "Payment history and receipts. A receipt is issued through the tax service after payment and appears here as a link.",
+      receipt: "Receipt",
+      receiptSoon: "Receipt pending",
+      empty: "No payments yet.",
+      more: "Show more",
+    },
     overview: {
       title: "My library",
       lead: "Pick up where you left off.",
@@ -337,8 +355,8 @@ export const ACCOUNT_TEXTS = {
       pendingNote:
         "YooKassa confirms a payment within a few minutes. Refresh the page — the status will show up here.",
       refresh: "Refresh",
-      payments: "Payments",
-      paymentsNote: "YooKassa emails a receipt for every payment.",
+      payments: "Payment history and receipts",
+      paymentsNote: "A receipt appears here once it is issued through the tax service.",
       paymentsEmpty: "No payments yet.",
       status: {
         succeeded: "Paid",

@@ -393,6 +393,42 @@ export async function markRefunded(input: {
   refresh(row.userId)
 }
 
+/**
+ * Ссылка на чек из «Мой налог». Пустая строка стирает ссылку. Только https:
+ * ссылку откроет человек из своего кабинета, и вести она должна на сайт
+ * налоговой, а не куда попало.
+ */
+export async function setReceiptUrl(input: { paymentId: string; url: string }) {
+  const admin = await requireAdmin()
+  const url = input.url.trim().slice(0, 500)
+
+  if (url !== "" && !/^https:\/\/[^\s]+$/i.test(url)) {
+    throw new Error("Ссылка должна начинаться с https://")
+  }
+
+  const updated = await db
+    .update(payment)
+    .set({ receiptUrl: url || null })
+    .where(eq(payment.id, input.paymentId))
+    .returning({ userId: payment.userId })
+
+  if (updated.length === 0) {
+    throw new Error("Платёж не найден")
+  }
+
+  await logAdminAction({
+    adminEmail: admin.email,
+    action: "payment.receipt",
+    targetType: "payment",
+    targetId: input.paymentId,
+    details: { url: url || null },
+  })
+
+  refresh(updated[0]?.userId)
+  revalidatePath(`/account/admin/payments/${input.paymentId}`)
+  revalidatePath("/account/payments")
+}
+
 /** Ссылка для блогера. Имя — единственное, что о нём известно до регистрации. */
 export async function createPartnerInvite(input: { name: string }) {
   const admin = await requireAdmin()
