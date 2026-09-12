@@ -1,26 +1,18 @@
 import "server-only"
 
-import { cookies, headers } from "next/headers"
+import { headers } from "next/headers"
 import { and, eq, isNull } from "drizzle-orm"
 
 import { hashToken } from "@/lib/token"
 import { db } from "@/lib/db"
 import { registryToken } from "@/lib/db/schema"
-import {
-  ANON_MONTHLY_LIMIT,
-  currentPeriod,
-  isPro,
-  spendItem,
-} from "@/lib/entitlements"
+import { isPro, spendItem } from "@/lib/entitlements"
 import { auth } from "@/lib/auth"
 import { isProItem } from "@/registry/index"
 
 export type Access =
   | { allowed: true; pro: boolean; remaining: number }
-  | { allowed: false; reason: "pro" | "limit" }
-
-/** Кука мягкого лимита анонима: месяц и сколько уже взято. */
-const ANON_COOKIE = "vibeui_free"
+  | { allowed: false; reason: "pro" | "limit" | "signin" }
 
 /**
  * Кто просит исходник. Сессия — для браузера, Bearer — для shadcn CLI:
@@ -59,36 +51,6 @@ async function identify() {
 }
 
 /**
- * Мягкий счёт для анонима. Обходится очисткой куки — и это нормально:
- * задача не поймать, а довести до бесплатной регистрации.
- */
-async function spendAnonymous() {
-  const store = await cookies()
-  const period = currentPeriod()
-  const raw = store.get(ANON_COOKIE)?.value ?? ""
-  const [savedPeriod, savedCount] = raw.split(":")
-  const used = savedPeriod === period ? Number(savedCount) || 0 : 0
-
-  if (used >= ANON_MONTHLY_LIMIT) {
-    return { allowed: false as const, reason: "limit" as const }
-  }
-
-  store.set(ANON_COOKIE, `${period}:${used + 1}`, {
-    maxAge: 60 * 60 * 24 * 62,
-    httpOnly: true,
-    sameSite: "lax",
-    secure: true,
-    path: "/",
-  })
-
-  return {
-    allowed: true as const,
-    pro: false,
-    remaining: ANON_MONTHLY_LIMIT - used - 1,
-  }
-}
-
-/**
  * Можно ли отдать исходник этого item'а и что после этого осталось.
  * Единая точка для всех трёх каналов раздачи: registry, файл и промпт для
  * агента. Иначе лимит обходится соседней дверью.
@@ -97,12 +59,10 @@ export async function resolveAccess(itemName: string): Promise<Access> {
   const userId = await identify()
   const closed = isProItem(itemName)
 
+  // Без аккаунта исходники не отдаются: бесплатный лимит считается на
+  // человека, а не на браузер, иначе он обходится очисткой куки.
   if (!userId) {
-    if (closed) {
-      return { allowed: false, reason: "pro" }
-    }
-
-    return spendAnonymous()
+    return { allowed: false, reason: "signin" }
   }
 
   const pro = await isPro(userId)
@@ -121,9 +81,13 @@ export async function resolveAccess(itemName: string): Promise<Access> {
 }
 
 /** Текст отказа: его читает человек в терминале, поэтому без жаргона. */
-export function denialText(reason: "pro" | "limit" | "blocked") {
+export function denialText(reason: "pro" | "limit" | "blocked" | "signin") {
   if (reason === "blocked") {
     return "Доступ к аккаунту закрыт. Напишите нам: https://vibeui.ru/report\n"
+  }
+
+  if (reason === "signin") {
+    return "Нужен аккаунт: бесплатно и без карты.\nСоздать: https://vibeui.ru/signup\n"
   }
 
   return reason === "pro"
