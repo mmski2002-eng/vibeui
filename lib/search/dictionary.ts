@@ -167,27 +167,6 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: [
-      "структура страницы",
-      "структура сайта",
-      "каркас",
-      "каркас страницы",
-      "каркас сайта",
-      "скелет страницы",
-      "макет страницы",
-      "раскладка страницы",
-      "лейаут",
-      "layout",
-      "секция прилипает",
-      "прилипающая секция",
-      "закреплённая колонка",
-      "горизонтальная прокрутка",
-      "горизонтальная галерея",
-    ],
-    categories: ["layout"],
-    terms: ["layout", "page", "structure", "shell", "sticky", "horizontal"],
-  },
-  {
-    say: [
       "форма обратной связи",
       "обратная связь",
       "форма заявки",
@@ -350,11 +329,6 @@ export const SYNONYMS: Synonym[] = [
     say: ["призыв к действию", "цта", "блок с кнопкой"],
     categories: ["cta"],
     terms: ["cta"],
-  },
-  {
-    say: ["возможности", "фичи", "преимущества", "что умеет"],
-    categories: ["features", "bento"],
-    terms: ["features"],
   },
   {
     say: ["команда", "сотрудники", "наши люди"],
@@ -532,6 +506,20 @@ export const SYNONYMS: Synonym[] = [
     terms: ["downloads", "app"],
   },
   {
+    say: [
+      "мокап",
+      "макет устройства",
+      "ноутбук",
+      "макбук",
+      "рамка ноутбука",
+      "рамка устройства",
+      "скриншот в ноутбуке",
+      "экран ноутбука",
+    ],
+    categories: ["mockup"],
+    terms: ["mockup", "laptop", "macbook", "device"],
+  },
+  {
     say: ["безопасность", "приватность", "защита данных"],
     categories: ["security", "consent"],
     terms: ["security"],
@@ -555,11 +543,6 @@ export const SYNONYMS: Synonym[] = [
     say: ["пресс кит", "для прессы", "медиа материалы"],
     categories: ["press", "branding"],
     terms: ["press"],
-  },
-  {
-    say: ["планы развития", "роадмап", "дорожная карта"],
-    categories: ["roadmap"],
-    terms: ["roadmap"],
   },
   {
     say: ["фильтры", "отбор", "уточнение выдачи"],
@@ -619,6 +602,44 @@ export const SYNONYMS: Synonym[] = [
     ],
     categories: ["background"],
     terms: ["background", "gradient", "ribbon", "ambient", "webgl", "shader"],
+  },
+  // Мостики от темы сайта к типу элемента. Человек ищет предмет своего
+  // сайта («герои игры», «рецепты»), а каталог называет вещи по элементам
+  // интерфейса — без моста такой запрос давал уверенно нерелевантную
+  // выдачу: «герои» → кейс-герой, «игра» → аудиоплеер.
+  {
+    say: [
+      "персонаж",
+      "персонажи",
+      "герой",
+      "герои",
+      "карточка героя",
+      "карточка персонажа",
+      "character",
+      "characters",
+    ],
+    categories: ["card", "avatar"],
+    terms: ["card", "avatar", "profile"],
+  },
+  {
+    say: ["игра", "игры", "игровой сайт", "гейминг", "game", "games", "gaming"],
+    categories: ["card", "rating", "comparison"],
+    terms: ["card", "rating", "comparison"],
+  },
+  {
+    say: ["фильм", "фильмы", "кино", "сериал", "сериалы", "movie", "movies"],
+    categories: ["video", "carousel", "card"],
+    terms: ["video", "card"],
+  },
+  {
+    say: ["рецепт", "рецепты", "еда", "блюдо", "блюда", "recipe", "food"],
+    categories: ["card", "carousel"],
+    terms: ["card"],
+  },
+  {
+    say: ["коллекция", "энциклопедия", "справочник", "collection"],
+    categories: ["card", "filters", "pagination"],
+    terms: ["card", "filters"],
   },
 ]
 

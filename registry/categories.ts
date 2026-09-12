@@ -44,12 +44,6 @@ export const CATEGORIES = [
     group: "navigation",
   },
   {
-    slug: "features",
-    label: "Возможности",
-    en: "Features",
-    group: "marketing",
-  },
-  {
     slug: "pricing",
     label: "Тарифы",
     en: "Pricing",
@@ -78,15 +72,6 @@ export const CATEGORIES = [
     label: "Подвал",
     en: "Footer",
     group: "navigation",
-  },
-  {
-    slug: "layout",
-    label: "Каркас страницы",
-    en: "Layout",
-    group: "navigation",
-    // Каркас — целая страница: в половинном кадре колонки и закрепления
-    // не читаются.
-    wide: true,
   },
   {
     slug: "ai",
@@ -158,12 +143,6 @@ export const CATEGORIES = [
     slug: "changelog",
     label: "История изменений",
     en: "Changelog",
-    group: "marketing",
-  },
-  {
-    slug: "roadmap",
-    label: "Планы развития",
-    en: "Roadmap",
     group: "marketing",
   },
   {
@@ -492,6 +471,12 @@ export const CATEGORIES = [
     label: "Подпись поля",
     en: "Label",
     group: "application",
+  },
+  {
+    slug: "mockup",
+    label: "Мокап устройства",
+    en: "Device Mockup",
+    group: "marketing",
   },
   {
     slug: "native-select",
@@ -936,7 +921,6 @@ export type CategorySlug = (typeof CATEGORIES)[number]["slug"]
 export const POPULAR_CATEGORIES: Record<ItemKind, readonly CategorySlug[]> = {
   block: [
     "hero",
-    "features",
     "pricing",
     "cta",
     "testimonials",

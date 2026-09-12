@@ -1,0 +1,1317 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "mockup-001",
+      "type": "registry:component",
+      "title": "Ноутбук",
+      "description": "Мокап ноутбука с фото-корпусом: настоящий свет и металл из фото, а экран — живой слой под прозрачным вырезом. Скриншот или разметка подставляются пропом, корпус не перерисовывается.",
+      "categories": [
+        "mockup"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "mockup-001/mockup-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/mockup-001.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Корпус — WebP 1580×897 с прозрачным вырезом экрана, лежит верхним слоем (pointer-events: none). Экран — абсолютный слой под ним по четырём переменным выреза в процентах от кадра фото; на него идёт src (object-fit: cover по верху), иначе children, иначе заглушка с обоями и окном. Поверх содержимого — блик градиентом. Тень — размытый эллипс под корпусом. Пропорция device задана aspect-ratio кадра фото, размеры заглушки — в cqw.",
+      "meta": {
+        "tags": [
+          "laptop",
+          "macbook",
+          "device",
+          "mockup",
+          "frame",
+          "screenshot"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "src": "/demo/screens/site-16x10.webp",
+            "alt": "Сайт VibeUI на экране ноутбука"
+          }
+        },
+        "ai": {
+          "export": "Mockup001",
+          "usage": "<Mockup001 src=\"/screens/app.png\" alt=\"Интерфейс приложения\" />",
+          "summary": "Ноутбук с фото-корпусом: кадр или живая разметка под вырезом экрана, блик и тень. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-mockup-001-* и не подменять её токенами вашей темы",
+            "корпус — фото с прозрачным вырезом экрана верхним слоем, кадр лежит под ним; переменные --vibeui-mockup-001-screen-* описывают вырез в долях кадра фото",
+            "порядок слоёв: экран под корпусом, блик над экраном, корпус сверху с pointer-events:none",
+            "object-fit: cover по верху — кадр не должен деформироваться",
+            "data-slot=\"mockup\" — точка стилизации в проекте пользователя"
+          ],
+          "adapt": [
+            "src и alt — свой скриншот",
+            "children — живой интерфейс на экране",
+            "frame — своё фото корпуса и четыре переменные выреза",
+            "glare и shadow — блик и тень",
+            "caption — подпись",
+            "max-width корня через className или style"
+          ],
+          "notes": [
+            "Кадр лучше готовить в 16:10 (например 1600×1000): при другой пропорции он кроется по верху.",
+            "Заглушка на экране декоративна и скрыта от скринридера; смысл кадра несёт alt.",
+            "Фото корпуса грузится с /demo/devices/ сайта VibeUI: в своём проекте скопируйте файл в public и передайте путь пропом frame."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "glare",
+            "label": "Блик",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "shadow",
+            "label": "Тень",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "",
+            "maxLength": 60
+          }
+        ],
+        "cardControls": [
+          "glare",
+          "shadow"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Laptop",
+            "description": "A laptop mockup with a photo body: real light and metal from the photo, and the screen is a live layer under a transparent cutout. A screenshot or markup goes in via props; the body is never redrawn.",
+            "docs": "Server component, no hooks. The body is a 1580×897 WebP with a transparent screen cutout, on top (pointer-events: none). The screen is an absolute layer under it, placed by four cutout variables in percent of the photo; it takes src (top-aligned object-fit: cover), otherwise children, otherwise a placeholder with a wallpaper and a window. A gradient glare sits above the content. The shadow is a blurred ellipse under the body. The device ratio is the photo's aspect-ratio; placeholder sizes are in cqw.",
+            "ai": {
+              "summary": "A photo-body laptop: a frame or live markup under the screen cutout, glare and shadow. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-mockup-001-* palette — do not swap it for your theme tokens",
+                "the body is a photo with a transparent screen cutout on top and the frame underneath; the --vibeui-mockup-001-screen-* variables describe the cutout as fractions of the photo",
+                "the layer order: screen under the body, glare above the screen, body on top with pointer-events:none",
+                "top-aligned object-fit: cover — the frame must not distort",
+                "data-slot=\"mockup\" — the styling hook in the user's project"
+              ],
+              "adapt": [
+                "src and alt — your screenshot",
+                "children — a live interface on the screen",
+                "frame — your own body photo and the four cutout variables",
+                "glare and shadow — the glare and the shadow",
+                "caption — a caption",
+                "the root max-width via className or style"
+              ],
+              "notes": [
+                "Prepare the frame at 16:10 (e.g. 1600×1000): any other ratio is cropped from the top.",
+                "The screen placeholder is decorative and hidden from screen readers; the alt carries the meaning.",
+                "The body photo loads from /demo/devices/ on the VibeUI site: in your project copy the file into public and pass its path via the frame prop."
+              ],
+              "usage": "<Mockup001 src=\"/screens/app.png\" alt=\"Application interface\" />"
+            },
+            "controls": {
+              "glare": {
+                "label": "Glare"
+              },
+              "shadow": {
+                "label": "Shadow"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": ""
+              }
+            },
+            "preview": {
+              "props": {
+                "alt": "The VibeUI site on a laptop screen"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "mockup-002",
+      "type": "registry:component",
+      "title": "Смартфон",
+      "description": "Мокап смартфона с фото-корпусом: рамка, клавиши и стекло из фото, экран — живой слой под прозрачным вырезом. Вертикальный скриншот 9/19.5 или разметка подставляются пропом.",
+      "categories": [
+        "mockup"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "mockup-002/mockup-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/mockup-002.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Корпус — WebP 853×1738 с прозрачным вырезом экрана верхним слоем. Экран — абсолютный слой под ним по четырём переменным выреза; src (object-fit: cover по верху), иначе children, иначе заглушка с часами, сеткой приложений и доком. Блик градиентом поверх содержимого, тень — размытый эллипс. Корпус центрирован margin: 0 auto, ширина до 18rem.",
+      "meta": {
+        "tags": [
+          "phone",
+          "smartphone",
+          "iphone",
+          "device",
+          "mockup",
+          "frame",
+          "screenshot"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "src": "/demo/screens/site-9x19.webp",
+            "alt": "Сайт VibeUI на экране смартфона"
+          }
+        },
+        "ai": {
+          "export": "Mockup002",
+          "usage": "<Mockup002 src=\"/screens/mobile.png\" alt=\"Мобильный интерфейс\" />",
+          "summary": "Смартфон с фото-корпусом: вертикальный кадр или живая разметка под стеклом, блик и тень. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-mockup-002-* и не подменять её токенами вашей темы",
+            "корпус — фото с прозрачным вырезом экрана верхним слоем, кадр лежит под ним; переменные --vibeui-mockup-002-screen-* описывают вырез в долях кадра фото",
+            "порядок слоёв: экран под корпусом, блик над экраном, корпус сверху с pointer-events:none",
+            "object-fit: cover по верху — кадр не должен деформироваться",
+            "data-slot=\"mockup\" — точка стилизации в проекте пользователя"
+          ],
+          "adapt": [
+            "src и alt — свой скриншот",
+            "children — живой интерфейс на экране",
+            "frame — своё фото корпуса и четыре переменные выреза",
+            "glare и shadow — блик и тень",
+            "caption — подпись",
+            "max-width корня через className или style"
+          ],
+          "notes": [
+            "Кадр лучше готовить в 9:19.5 (например 1170×2532): при другой пропорции он кроется по верху.",
+            "Заглушка на экране декоративна и скрыта от скринридера; смысл кадра несёт alt.",
+            "Фото корпуса грузится с /demo/devices/ сайта VibeUI: в своём проекте скопируйте файл в public и передайте путь пропом frame."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "glare",
+            "label": "Блик",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "shadow",
+            "label": "Тень",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "",
+            "maxLength": 60
+          }
+        ],
+        "cardControls": [
+          "glare",
+          "shadow"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Phone",
+            "description": "A phone mockup with a photo body: frame, keys and glass from the photo, the screen a live layer under a transparent cutout. A 9/19.5 screenshot or markup goes in via props.",
+            "docs": "Server component, no hooks. The body is an 853×1738 WebP with a transparent screen cutout on top. The screen is an absolute layer under it, placed by four cutout variables; src (top-aligned object-fit: cover), otherwise children, otherwise a placeholder with a clock, an app grid and a dock. A gradient glare above the content, a blurred ellipse shadow. The body is centred with margin: 0 auto, up to 18rem wide.",
+            "ai": {
+              "summary": "A photo-body phone: a portrait frame or live markup under the glass, glare and shadow. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-mockup-002-* palette — do not swap it for your theme tokens",
+                "the body is a photo with a transparent screen cutout on top and the frame underneath; the --vibeui-mockup-002-screen-* variables describe the cutout as fractions of the photo",
+                "the layer order: screen under the body, glare above the screen, body on top with pointer-events:none",
+                "top-aligned object-fit: cover — the frame must not distort",
+                "data-slot=\"mockup\" — the styling hook in the user's project"
+              ],
+              "adapt": [
+                "src and alt — your screenshot",
+                "children — a live interface on the screen",
+                "frame — your own body photo and the four cutout variables",
+                "glare and shadow — the glare and the shadow",
+                "caption — a caption",
+                "the root max-width via className or style"
+              ],
+              "notes": [
+                "Prepare the frame at 9:19.5 (e.g. 1170×2532): any other ratio is cropped from the top.",
+                "The screen placeholder is decorative and hidden from screen readers; the alt carries the meaning.",
+                "The body photo loads from /demo/devices/ on the VibeUI site: in your project copy the file into public and pass its path via the frame prop."
+              ],
+              "usage": "<Mockup002 src=\"/screens/mobile.png\" alt=\"Mobile interface\" />"
+            },
+            "controls": {
+              "glare": {
+                "label": "Glare"
+              },
+              "shadow": {
+                "label": "Shadow"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": ""
+              }
+            },
+            "preview": {
+              "props": {
+                "alt": "The VibeUI site on a phone screen"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "mockup-003",
+      "type": "registry:component",
+      "title": "Планшет",
+      "description": "Мокап планшета с фото-корпусом в портретной и альбомной ориентации: у каждой своё фото и свой вырез экрана. Кадр 3/4 или 4/3 или разметка подставляются пропом.",
+      "categories": [
+        "mockup"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "mockup-003/mockup-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/mockup-003.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Два корпуса WebP: портрет 1029×1363 и альбом 1416×993, выбор по data-orientation, у каждого свои четыре переменные выреза и aspect-ratio. Экран — абсолютный слой под корпусом: src (object-fit: cover по верху), иначе children, иначе заглушка с окном. Блик и тень как у остальных мокапов. Ширина до 26rem в портрете и 40rem в альбоме.",
+      "meta": {
+        "tags": [
+          "tablet",
+          "ipad",
+          "device",
+          "mockup",
+          "frame",
+          "screenshot",
+          "landscape",
+          "portrait"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "src": "/demo/screens/site-4x3.webp",
+            "alt": "Сайт VibeUI на экране планшета",
+            "orientation": "landscape"
+          }
+        },
+        "ai": {
+          "export": "Mockup003",
+          "usage": "<Mockup003 src=\"/screens/tablet.png\" alt=\"Интерфейс приложения\" orientation=\"landscape\" />",
+          "summary": "Планшет с фото-корпусом: портрет или альбом, кадр или живая разметка под стеклом. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-mockup-003-* и не подменять её токенами вашей темы",
+            "корпус — фото с прозрачным вырезом экрана верхним слоем, кадр лежит под ним; переменные --vibeui-mockup-003-screen-* описывают вырез в долях кадра фото",
+            "порядок слоёв: экран под корпусом, блик над экраном, корпус сверху с pointer-events:none",
+            "object-fit: cover по верху — кадр не должен деформироваться",
+            "data-slot=\"mockup\" — точка стилизации в проекте пользователя",
+            "два фото по ориентации: портрет и альбом — разные корпуса с разными вырезами, а не поворот одного"
+          ],
+          "adapt": [
+            "src и alt — свой скриншот",
+            "children — живой интерфейс на экране",
+            "frame — своё фото корпуса и четыре переменные выреза",
+            "orientation — портрет или альбом",
+            "glare и shadow — блик и тень",
+            "caption — подпись",
+            "max-width корня через className или style"
+          ],
+          "notes": [
+            "Кадр готовьте под ориентацию: 3:4 для портрета, 4:3 для альбома; иначе кроется по верху.",
+            "Заглушка на экране декоративна и скрыта от скринридера; смысл кадра несёт alt.",
+            "Фото корпуса грузится с /demo/devices/ сайта VibeUI: в своём проекте скопируйте файл в public и передайте путь пропом frame."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "orientation",
+            "label": "Ориентация",
+            "type": "select",
+            "default": "portrait",
+            "options": [
+              "portrait",
+              "landscape"
+            ]
+          },
+          {
+            "prop": "glare",
+            "label": "Блик",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "shadow",
+            "label": "Тень",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "",
+            "maxLength": 60
+          }
+        ],
+        "cardControls": [
+          "orientation",
+          "glare"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Tablet",
+            "description": "A tablet mockup with a photo body in portrait and landscape: each has its own photo and screen cutout. A 3/4 or 4/3 frame or markup goes in via props.",
+            "docs": "Server component, no hooks. Two WebP bodies: portrait 1029×1363 and landscape 1416×993, chosen by data-orientation, each with its own four cutout variables and aspect-ratio. The screen is an absolute layer under the body: src (top-aligned object-fit: cover), otherwise children, otherwise a placeholder with a window. Glare and shadow as in the other mockups. Up to 26rem wide in portrait and 40rem in landscape.",
+            "ai": {
+              "summary": "A photo-body tablet: portrait or landscape, a frame or live markup under the glass. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-mockup-003-* palette — do not swap it for your theme tokens",
+                "the body is a photo with a transparent screen cutout on top and the frame underneath; the --vibeui-mockup-003-screen-* variables describe the cutout as fractions of the photo",
+                "the layer order: screen under the body, glare above the screen, body on top with pointer-events:none",
+                "top-aligned object-fit: cover — the frame must not distort",
+                "data-slot=\"mockup\" — the styling hook in the user's project",
+                "two photos by orientation: portrait and landscape are different bodies with different cutouts, not one rotated"
+              ],
+              "adapt": [
+                "src and alt — your screenshot",
+                "children — a live interface on the screen",
+                "frame — your own body photo and the four cutout variables",
+                "orientation — portrait or landscape",
+                "glare and shadow — the glare and the shadow",
+                "caption — a caption",
+                "the root max-width via className or style"
+              ],
+              "notes": [
+                "Prepare the frame for the orientation: 3:4 for portrait, 4:3 for landscape; otherwise it is cropped from the top.",
+                "The screen placeholder is decorative and hidden from screen readers; the alt carries the meaning.",
+                "The body photo loads from /demo/devices/ on the VibeUI site: in your project copy the file into public and pass its path via the frame prop."
+              ],
+              "usage": "<Mockup003 src=\"/screens/tablet.png\" alt=\"Application interface\" orientation=\"landscape\" />"
+            },
+            "controls": {
+              "orientation": {
+                "label": "Orientation"
+              },
+              "glare": {
+                "label": "Glare"
+              },
+              "shadow": {
+                "label": "Shadow"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": ""
+              }
+            },
+            "preview": {
+              "props": {
+                "alt": "The VibeUI site on a tablet screen"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "mockup-004",
+      "type": "registry:component",
+      "title": "Окно браузера",
+      "description": "Окно браузера на чистом CSS под скриншот сайта: светофор, вкладка с заголовком, адресная строка с замком, светлый или тёмный хром и тень. Адрес и заголовок меняются пропами, а не в редакторе.",
+      "categories": [
+        "mockup"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "mockup-004/mockup-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/mockup-004.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Хром окна — две полосы: вкладки (светофор, активная вкладка с фавиконом и заголовком, кнопка «+») и панель адреса (стрелки истории, поле с замком-SVG и адресом, меню). Кегли и отступы в clamp() от cqw, поэтому хром не расползается на широком кадре и не слипается на узком. Тема хрома задаётся data-chrome и не следует за темой страницы: окно — часть кадра. Область страницы 16/10: src (object-fit: cover по верху), иначе children, иначе заглушка-каркас лендинга. Тень — box-shadow на окне, включается data-shadow.",
+      "meta": {
+        "tags": [
+          "browser",
+          "window",
+          "chrome",
+          "safari",
+          "mockup",
+          "frame",
+          "screenshot",
+          "website"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "src": "/demo/screens/catalog-16x10.webp",
+            "alt": "Каталог VibeUI в окне браузера",
+            "url": "vibeui.dev/components",
+            "title": "Компоненты — VibeUI"
+          }
+        },
+        "ai": {
+          "export": "Mockup004",
+          "usage": "<Mockup004 src=\"/screens/site.png\" alt=\"Главная страница\" url=\"example.com\" title=\"Главная\" theme=\"light\" />",
+          "summary": "Окно браузера на чистом CSS: вкладка, адресная строка, кадр или живая разметка внутри, светлый или тёмный хром. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-mockup-004-* и не подменять её токенами вашей темы",
+            "кегли хрома в clamp() от cqw — на широком кадре хром не должен вырастать, на узком — слипаться",
+            "две полосы хрома: вкладки и адрес — по ним окно узнаётся как браузер",
+            "тему хрома из пропа, а не из темы страницы — окно часть кадра",
+            "пропорцию 16/10 и object-fit: cover по верху — кадр не должен деформироваться",
+            "data-slot=\"mockup\" — точка стилизации в проекте пользователя"
+          ],
+          "adapt": [
+            "src и alt — свой скриншот",
+            "children — живая страница внутри окна",
+            "url и title — адрес и заголовок вкладки",
+            "theme — светлый или тёмный хром",
+            "shadow — тень",
+            "caption — подпись",
+            "max-width корня через className или style"
+          ],
+          "notes": [
+            "Кадр лучше готовить в 16:10 (например 1600×1000): при другой пропорции он кроется по верху.",
+            "Хром окна декоративен и скрыт от скринридера; смысл кадра несёт alt.",
+            "Заглушка — каркас лендинга, чтобы окно читалось и без картинки.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "theme",
+            "label": "Хром",
+            "type": "select",
+            "default": "light",
+            "options": [
+              "light",
+              "dark"
+            ]
+          },
+          {
+            "prop": "shadow",
+            "label": "Тень",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "url",
+            "label": "Адрес",
+            "type": "text",
+            "default": "vibeui.dev",
+            "maxLength": 40
+          },
+          {
+            "prop": "title",
+            "label": "Вкладка",
+            "type": "text",
+            "default": "Главная",
+            "maxLength": 40
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "",
+            "maxLength": 60
+          }
+        ],
+        "cardControls": [
+          "theme",
+          "shadow"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Browser Window",
+            "description": "A pure-CSS browser window for a site screenshot: traffic lights, a titled tab, an address bar with a lock, light or dark chrome and a shadow. The URL and title change via props, not in an editor.",
+            "docs": "Server component, no hooks. The chrome is two rows: tabs (traffic lights, an active tab with a favicon and title, a “+” button) and the address row (history arrows, a field with an SVG lock and the URL, a menu). Font sizes and paddings are clamp() over cqw, so the chrome neither sprawls on a wide frame nor collapses on a narrow one. The chrome theme is set via data-chrome and does not follow the page theme: the window is part of the frame. The page area is 16/10: src (top-aligned object-fit: cover), otherwise children, otherwise a landing skeleton placeholder. The shadow is a box-shadow on the window, enabled by data-shadow.",
+            "ai": {
+              "summary": "A pure-CSS browser window: a tab, an address bar, a frame or live markup inside, light or dark chrome. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-mockup-004-* palette — do not swap it for your theme tokens",
+                "chrome font sizes as clamp() over cqw — the chrome must not grow on a wide frame or collapse on a narrow one",
+                "the two chrome rows, tabs and address — they are what makes the window read as a browser",
+                "the chrome theme from the prop, not the page theme — the window is part of the frame",
+                "the 16/10 ratio and top-aligned object-fit: cover — the frame must not distort",
+                "data-slot=\"mockup\" — the styling hook in the user's project"
+              ],
+              "adapt": [
+                "src and alt — your screenshot",
+                "children — a live page inside the window",
+                "url and title — the address and the tab title",
+                "theme — light or dark chrome",
+                "shadow — the shadow",
+                "caption — a caption",
+                "the root max-width via className or style"
+              ],
+              "notes": [
+                "Prepare the frame at 16:10 (e.g. 1600×1000): any other ratio is cropped from the top.",
+                "The window chrome is decorative and hidden from screen readers; the alt carries the meaning.",
+                "The placeholder is a landing skeleton so the window reads even without an image.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Mockup004 src=\"/screens/site.png\" alt=\"Home page\" url=\"example.com\" title=\"Home\" theme=\"light\" />"
+            },
+            "controls": {
+              "theme": {
+                "label": "Chrome"
+              },
+              "shadow": {
+                "label": "Shadow"
+              },
+              "url": {
+                "label": "URL",
+                "default": "vibeui.dev"
+              },
+              "title": {
+                "label": "Tab",
+                "default": "Home"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": ""
+              }
+            },
+            "preview": {
+              "props": {
+                "alt": "The VibeUI catalog in a browser window",
+                "title": "Components — VibeUI"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "mockup-005",
+      "type": "registry:component",
+      "title": "Монитор",
+      "description": "Мокап настольного монитора с фото-корпусом: тонкая рамка, ножка и подставка из фото, экран — живой слой под прозрачным вырезом. Широкий кадр 16/9 или разметка подставляются пропом.",
+      "categories": [
+        "mockup"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "mockup-005/mockup-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/mockup-005.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Корпус — WebP 1562×941 с прозрачным вырезом экрана верхним слоем. Экран — абсолютный слой под ним по четырём переменным выреза; src (object-fit: cover по верху), иначе children, иначе заглушка с окном. Блик градиентом, тень — эллипс под подставкой, а не под всем корпусом.",
+      "meta": {
+        "tags": [
+          "monitor",
+          "display",
+          "desktop",
+          "imac",
+          "device",
+          "mockup",
+          "frame",
+          "screenshot"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "src": "/demo/screens/site-16x9.webp",
+            "alt": "Сайт VibeUI на экране монитора"
+          }
+        },
+        "ai": {
+          "export": "Mockup005",
+          "usage": "<Mockup005 src=\"/screens/dashboard.png\" alt=\"Панель показателей\" />",
+          "summary": "Монитор с фото-корпусом: кадр 16/9 или живая разметка под вырезом экрана, блик и тень. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-mockup-005-* и не подменять её токенами вашей темы",
+            "корпус — фото с прозрачным вырезом экрана верхним слоем, кадр лежит под ним; переменные --vibeui-mockup-005-screen-* описывают вырез в долях кадра фото",
+            "порядок слоёв: экран под корпусом, блик над экраном, корпус сверху с pointer-events:none",
+            "object-fit: cover по верху — кадр не должен деформироваться",
+            "data-slot=\"mockup\" — точка стилизации в проекте пользователя"
+          ],
+          "adapt": [
+            "src и alt — свой скриншот",
+            "children — живой интерфейс на экране",
+            "frame — своё фото корпуса и четыре переменные выреза",
+            "glare и shadow — блик и тень",
+            "caption — подпись",
+            "max-width корня через className или style"
+          ],
+          "notes": [
+            "Кадр лучше готовить в 16:9 (например 1920×1080): при другой пропорции он кроется по верху.",
+            "Заглушка на экране декоративна и скрыта от скринридера; смысл кадра несёт alt.",
+            "Фото корпуса грузится с /demo/devices/ сайта VibeUI: в своём проекте скопируйте файл в public и передайте путь пропом frame."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "glare",
+            "label": "Блик",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "shadow",
+            "label": "Тень",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "",
+            "maxLength": 60
+          }
+        ],
+        "cardControls": [
+          "glare",
+          "shadow"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Monitor",
+            "description": "A desktop monitor mockup with a photo body: thin bezel, neck and stand from the photo, the screen a live layer under a transparent cutout. A wide 16/9 frame or markup goes in via props.",
+            "docs": "Server component, no hooks. The body is a 1562×941 WebP with a transparent screen cutout on top. The screen is an absolute layer under it, placed by four cutout variables; src (top-aligned object-fit: cover), otherwise children, otherwise a placeholder with a window. A gradient glare; the shadow is an ellipse under the stand, not the whole body.",
+            "ai": {
+              "summary": "A photo-body monitor: a 16/9 frame or live markup under the screen cutout, glare and shadow. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-mockup-005-* palette — do not swap it for your theme tokens",
+                "the body is a photo with a transparent screen cutout on top and the frame underneath; the --vibeui-mockup-005-screen-* variables describe the cutout as fractions of the photo",
+                "the layer order: screen under the body, glare above the screen, body on top with pointer-events:none",
+                "top-aligned object-fit: cover — the frame must not distort",
+                "data-slot=\"mockup\" — the styling hook in the user's project"
+              ],
+              "adapt": [
+                "src and alt — your screenshot",
+                "children — a live interface on the screen",
+                "frame — your own body photo and the four cutout variables",
+                "glare and shadow — the glare and the shadow",
+                "caption — a caption",
+                "the root max-width via className or style"
+              ],
+              "notes": [
+                "Prepare the frame at 16:9 (e.g. 1920×1080): any other ratio is cropped from the top.",
+                "The screen placeholder is decorative and hidden from screen readers; the alt carries the meaning.",
+                "The body photo loads from /demo/devices/ on the VibeUI site: in your project copy the file into public and pass its path via the frame prop."
+              ],
+              "usage": "<Mockup005 src=\"/screens/dashboard.png\" alt=\"Dashboard\" />"
+            },
+            "controls": {
+              "glare": {
+                "label": "Glare"
+              },
+              "shadow": {
+                "label": "Shadow"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": ""
+              }
+            },
+            "preview": {
+              "props": {
+                "alt": "The VibeUI site on a monitor screen"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "mockup-006",
+      "type": "registry:component",
+      "title": "Умные часы",
+      "description": "Мокап умных часов с фото-корпусом: корпус, колёсико и ремешок из фото, экран — живой слой под прозрачным вырезом. Без кадра показывает циферблат с кольцами активности.",
+      "categories": [
+        "mockup"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "mockup-006/mockup-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/mockup-006.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Корпус — WebP 791×1236 с прозрачным вырезом экрана верхним слоем. Экран — абсолютный слой под ним по четырём переменным выреза; src (object-fit: cover), иначе children, иначе циферблат: дата, время и три кольца активности на conic-gradient с mask. Блик — радиальный градиент, тень — размытый эллипс под ремешком.",
+      "meta": {
+        "tags": [
+          "watch",
+          "smartwatch",
+          "wearable",
+          "fitness",
+          "device",
+          "mockup",
+          "frame"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Mockup006",
+          "usage": "<Mockup006 src=\"/screens/watch.png\" alt=\"Тренировка\" />",
+          "summary": "Умные часы с фото-корпусом: кадр или живая разметка под стеклом, циферблат-заглушка с кольцами. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-mockup-006-* и не подменять её токенами вашей темы",
+            "корпус — фото с прозрачным вырезом экрана верхним слоем, кадр лежит под ним; переменные --vibeui-mockup-006-screen-* описывают вырез в долях кадра фото",
+            "порядок слоёв: экран под корпусом, блик над экраном, корпус сверху с pointer-events:none",
+            "object-fit: cover по верху — кадр не должен деформироваться",
+            "data-slot=\"mockup\" — точка стилизации в проекте пользователя",
+            "циферблат-заглушку с кольцами-соседями: mask родителя срезала бы вложенные"
+          ],
+          "adapt": [
+            "src и alt — свой скриншот",
+            "children — живой интерфейс на экране",
+            "frame — своё фото корпуса и четыре переменные выреза",
+            "glare и shadow — блик и тень",
+            "caption — подпись",
+            "max-width корня через className или style"
+          ],
+          "notes": [
+            "Кадр готовьте почти квадратным (например 396×484): он кроется по верху.",
+            "Циферблат-заглушка декоративен и скрыт от скринридера; смысл кадра несёт alt.",
+            "Фото корпуса грузится с /demo/devices/ сайта VibeUI: в своём проекте скопируйте файл в public и передайте путь пропом frame."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "glare",
+            "label": "Блик",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "shadow",
+            "label": "Тень",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "",
+            "maxLength": 60
+          }
+        ],
+        "cardControls": [
+          "glare",
+          "shadow"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Smart Watch",
+            "description": "A smart watch mockup with a photo body: case, crown and band from the photo, the screen a live layer under a transparent cutout. Without a frame it shows a watch face with activity rings.",
+            "docs": "Server component, no hooks. The body is a 791×1236 WebP with a transparent screen cutout on top. The screen is an absolute layer under it, placed by four cutout variables; src (object-fit: cover), otherwise children, otherwise a watch face: date, time and three activity rings on conic-gradient with mask. The glare is a radial gradient, the shadow a blurred ellipse under the band.",
+            "ai": {
+              "summary": "A photo-body smart watch: a frame or live markup under the glass, a placeholder face with rings. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-mockup-006-* palette — do not swap it for your theme tokens",
+                "the body is a photo with a transparent screen cutout on top and the frame underneath; the --vibeui-mockup-006-screen-* variables describe the cutout as fractions of the photo",
+                "the layer order: screen under the body, glare above the screen, body on top with pointer-events:none",
+                "top-aligned object-fit: cover — the frame must not distort",
+                "data-slot=\"mockup\" — the styling hook in the user's project",
+                "the placeholder face with sibling rings: a parent mask would clip nested ones"
+              ],
+              "adapt": [
+                "src and alt — your screenshot",
+                "children — a live interface on the screen",
+                "frame — your own body photo and the four cutout variables",
+                "glare and shadow — the glare and the shadow",
+                "caption — a caption",
+                "the root max-width via className or style"
+              ],
+              "notes": [
+                "Prepare the frame nearly square (e.g. 396×484): it is cropped from the top.",
+                "The placeholder face is decorative and hidden from screen readers; the alt carries the meaning.",
+                "The body photo loads from /demo/devices/ on the VibeUI site: in your project copy the file into public and pass its path via the frame prop."
+              ],
+              "usage": "<Mockup006 src=\"/screens/watch.png\" alt=\"Workout\" />"
+            },
+            "controls": {
+              "glare": {
+                "label": "Glare"
+              },
+              "shadow": {
+                "label": "Shadow"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "mockup-007",
+      "type": "registry:component",
+      "title": "Ноутбук в перспективе",
+      "description": "Мокап ноутбука под углом с фото-корпусом: кадр укладывается в четырёхугольник выреза гомографией, крышка, клавиатура и трекпад из фото. Два разворота — для первых экранов рядом с заголовком.",
+      "categories": [
+        "mockup"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "mockup-007/mockup-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/mockup-007.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Корпус — WebP 1385×1024 под углом. Экран в фото — четырёхугольник, поэтому кадр переводится в него matrix3d; матрица считана в пикселях фото, и сцена рисуется в этих пикселях, а масштабируется целиком через scale(tan(atan2(100cqw, 1385px))) — число из отношения длин без деления в calc(). Разворот вправо — scaleX(-1) сцены, содержимое экрана зеркалится обратно. src (object-fit: cover по верху), иначе children, иначе заглушка с окном в пикселях сцены.",
+      "meta": {
+        "tags": [
+          "laptop",
+          "macbook",
+          "perspective",
+          "3d",
+          "angle",
+          "device",
+          "mockup",
+          "hero"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "src": "/demo/screens/site-16x10.webp",
+            "alt": "Сайт VibeUI на экране ноутбука"
+          }
+        },
+        "ai": {
+          "export": "Mockup007",
+          "usage": "<Mockup007 src=\"/screens/app.png\" alt=\"Интерфейс приложения\" angle=\"left\" />",
+          "summary": "Ноутбук под углом с фото-корпусом: кадр укладывается гомографией в вырез, два разворота. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-mockup-007-* и не подменять её токенами вашей темы",
+            "корпус — фото с прозрачным вырезом экрана верхним слоем, кадр лежит под ним; переменные --vibeui-mockup-007-screen-* описывают вырез в долях кадра фото",
+            "порядок слоёв: экран под корпусом, блик над экраном, корпус сверху с pointer-events:none",
+            "object-fit: cover по верху — кадр не должен деформироваться",
+            "data-slot=\"mockup\" — точка стилизации в проекте пользователя",
+            "сцену в пикселях фото и масштаб через tan(atan2()) — иначе матрица гомографии ломается при другой ширине",
+            "matrix3d по четырём углам выреза — только так кадр ложится в четырёхугольник без искажений",
+            "обратное зеркалирование содержимого экрана при angle=\"right\""
+          ],
+          "adapt": [
+            "src и alt — свой скриншот",
+            "children — живой интерфейс на экране",
+            "frame — своё фото корпуса и четыре переменные выреза",
+            "angle — разворот влево или вправо",
+            "glare и shadow — блик и тень",
+            "caption — подпись",
+            "max-width корня через className или style"
+          ],
+          "notes": [
+            "Кадр лучше готовить в 16:10: при другой пропорции он кроется по верху.",
+            "tan(atan2()) в CSS есть в Chrome 111+, Safari 15.4+, Firefox 108+.",
+            "Заглушка на экране декоративна и скрыта от скринридера; смысл кадра несёт alt.",
+            "Фото корпуса грузится с /demo/devices/ сайта VibeUI: в своём проекте скопируйте файл в public и передайте путь пропом frame."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "angle",
+            "label": "Разворот",
+            "type": "select",
+            "default": "left",
+            "options": [
+              "left",
+              "right"
+            ]
+          },
+          {
+            "prop": "glare",
+            "label": "Блик",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "shadow",
+            "label": "Тень",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "",
+            "maxLength": 60
+          }
+        ],
+        "cardControls": [
+          "angle",
+          "glare"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Laptop in Perspective",
+            "description": "An angled laptop mockup with a photo body: the frame fits the cutout quadrilateral via a homography; lid, keyboard and trackpad come from the photo. Two turns — for hero sections next to the headline.",
+            "docs": "Server component, no hooks. The body is a 1385×1024 WebP at an angle. The screen in the photo is a quadrilateral, so the frame is mapped into it with matrix3d; the matrix is computed in photo pixels, the scene is drawn in those pixels and scaled as a whole via scale(tan(atan2(100cqw, 1385px))) — a number from a ratio of lengths without calc() division. The right turn is scaleX(-1) of the scene with the screen content mirrored back. src (top-aligned object-fit: cover), otherwise children, otherwise a placeholder with a window in scene pixels.",
+            "ai": {
+              "summary": "A photo-body angled laptop: the frame fits the cutout via a homography, two turns. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-mockup-007-* palette — do not swap it for your theme tokens",
+                "the body is a photo with a transparent screen cutout on top and the frame underneath; the --vibeui-mockup-007-screen-* variables describe the cutout as fractions of the photo",
+                "the layer order: screen under the body, glare above the screen, body on top with pointer-events:none",
+                "top-aligned object-fit: cover — the frame must not distort",
+                "data-slot=\"mockup\" — the styling hook in the user's project",
+                "the scene in photo pixels scaled via tan(atan2()) — otherwise the homography matrix breaks at any other width",
+                "matrix3d over the four cutout corners — the only way the frame fits the quadrilateral without distortion",
+                "the counter-mirroring of the screen content when angle=\"right\""
+              ],
+              "adapt": [
+                "src and alt — your screenshot",
+                "children — a live interface on the screen",
+                "frame — your own body photo and the four cutout variables",
+                "angle — turn left or right",
+                "glare and shadow — the glare and the shadow",
+                "caption — a caption",
+                "the root max-width via className or style"
+              ],
+              "notes": [
+                "Prepare the frame at 16:10: any other ratio is cropped from the top.",
+                "CSS tan(atan2()) is available in Chrome 111+, Safari 15.4+, Firefox 108+.",
+                "The screen placeholder is decorative and hidden from screen readers; the alt carries the meaning.",
+                "The body photo loads from /demo/devices/ on the VibeUI site: in your project copy the file into public and pass its path via the frame prop."
+              ],
+              "usage": "<Mockup007 src=\"/screens/app.png\" alt=\"Application interface\" angle=\"left\" />"
+            },
+            "controls": {
+              "angle": {
+                "label": "Turn"
+              },
+              "glare": {
+                "label": "Glare"
+              },
+              "shadow": {
+                "label": "Shadow"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": ""
+              }
+            },
+            "preview": {
+              "props": {
+                "alt": "The VibeUI site on a laptop screen"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "mockup-008",
+      "type": "registry:component",
+      "title": "Ноутбук и телефон",
+      "description": "Пара «ноутбук + телефон» из фото-корпусов: телефон перекрывает угол крышки и стоит ближе к зрителю с собственной тенью. Два кадра в одном блоке — для секции «работает на любом экране».",
+      "categories": [
+        "mockup"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "mockup-008/mockup-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/mockup-008.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Два корпуса WebP: ноутбук 1580×897 на всю ширину и телефон 853×1738 абсолютно в правом нижнем углу сцены шириной 22cqw с drop-shadow. У каждого свои четыре переменные выреза, экраны — абсолютные слои под корпусами: src и phoneSrc (object-fit: cover по верху), у ноутбука ещё children, без кадров — цветные заглушки.",
+      "meta": {
+        "tags": [
+          "laptop",
+          "phone",
+          "responsive",
+          "devices",
+          "pair",
+          "mockup",
+          "frame",
+          "screenshot"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "src": "/demo/screens/site-16x10.webp",
+            "alt": "Сайт VibeUI на ноутбуке",
+            "phoneSrc": "/demo/screens/site-9x19.webp",
+            "phoneAlt": "Тот же сайт на телефоне"
+          }
+        },
+        "ai": {
+          "export": "Mockup008",
+          "usage": "<Mockup008 src=\"/screens/desktop.png\" alt=\"Десктоп\" phoneSrc=\"/screens/mobile.png\" phoneAlt=\"Мобильная версия\" />",
+          "summary": "Пара ноутбук + телефон из фото-корпусов: два кадра в одном блоке, телефон перекрывает угол крышки. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-mockup-008-* и не подменять её токенами вашей темы",
+            "корпус — фото с прозрачным вырезом экрана верхним слоем, кадр лежит под ним; переменные --vibeui-mockup-008-screen-* описывают вырез в долях кадра фото",
+            "порядок слоёв: экран под корпусом, блик над экраном, корпус сверху с pointer-events:none",
+            "object-fit: cover по верху — кадр не должен деформироваться",
+            "data-slot=\"mockup\" — точка стилизации в проекте пользователя",
+            "перекрытие телефоном угла крышки и его drop-shadow на неё — пара читается одной сценой"
+          ],
+          "adapt": [
+            "src и alt — кадр ноутбука",
+            "phoneSrc и phoneAlt — кадр телефона",
+            "children — живой интерфейс на ноутбуке",
+            "frame и phoneFrame — свои фото корпусов и переменные вырезов",
+            "shadow — тень",
+            "caption — подпись",
+            "max-width корня через className или style"
+          ],
+          "notes": [
+            "Кадры готовьте в 16:10 для ноутбука и 9:19.5 для телефона: иначе кроются по верху.",
+            "Заглушки экранов декоративны и скрыты от скринридера; смысл кадров несут alt и phoneAlt.",
+            "Фото корпуса грузится с /demo/devices/ сайта VibeUI: в своём проекте скопируйте файл в public и передайте путь пропом frame."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "shadow",
+            "label": "Тень",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "",
+            "maxLength": 60
+          }
+        ],
+        "cardControls": [
+          "shadow"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Laptop and Phone",
+            "description": "A laptop + phone pair from photo bodies: the phone overlaps the lid corner and stands closer to the viewer with its own shadow. Two frames in one block — for a “works on every screen” section.",
+            "docs": "Server component, no hooks. Two WebP bodies: a 1580×897 laptop across the full width and an 853×1738 phone absolutely placed in the bottom-right of the scene, 22cqw wide, with a drop-shadow. Each has its own four cutout variables; the screens are absolute layers under the bodies: src and phoneSrc (top-aligned object-fit: cover), the laptop also takes children, without frames — colour placeholders.",
+            "ai": {
+              "summary": "A laptop + phone pair from photo bodies: two frames in one block, the phone overlapping the lid corner. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-mockup-008-* palette — do not swap it for your theme tokens",
+                "the body is a photo with a transparent screen cutout on top and the frame underneath; the --vibeui-mockup-008-screen-* variables describe the cutout as fractions of the photo",
+                "the layer order: screen under the body, glare above the screen, body on top with pointer-events:none",
+                "top-aligned object-fit: cover — the frame must not distort",
+                "data-slot=\"mockup\" — the styling hook in the user's project",
+                "the phone overlapping the lid corner with its drop-shadow onto it — the pair reads as one scene"
+              ],
+              "adapt": [
+                "src and alt — the laptop frame",
+                "phoneSrc and phoneAlt — the phone frame",
+                "children — a live interface on the laptop",
+                "frame and phoneFrame — your own body photos and cutout variables",
+                "shadow — the shadow",
+                "caption — a caption",
+                "the root max-width via className or style"
+              ],
+              "notes": [
+                "Prepare the frames at 16:10 for the laptop and 9:19.5 for the phone: otherwise they are cropped from the top.",
+                "The screen placeholders are decorative and hidden from screen readers; the alt and phoneAlt carry the meaning.",
+                "The body photo loads from /demo/devices/ on the VibeUI site: in your project copy the file into public and pass its path via the frame prop."
+              ],
+              "usage": "<Mockup008 src=\"/screens/desktop.png\" alt=\"Desktop\" phoneSrc=\"/screens/mobile.png\" phoneAlt=\"Mobile version\" />"
+            },
+            "controls": {
+              "shadow": {
+                "label": "Shadow"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": ""
+              }
+            },
+            "preview": {
+              "props": {
+                "alt": "The VibeUI site on a laptop",
+                "phoneAlt": "The same site on a phone"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "mockup-009",
+      "type": "registry:component",
+      "title": "Стопка окон",
+      "description": "Три окна браузера каскадом на чистом CSS: переднее в полный размер, два задних выглядывают из-за него, уменьшены и приглушены. Показать несколько экранов продукта одним кадром без 3D.",
+      "categories": [
+        "mockup"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "mockup-009/mockup-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/mockup-009.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Стопка — переднее окно в потоке и два абсолютных за ним со сдвигом вверх-влево; сдвиг, ширина и отступы сцены считаются от одной переменной --vibeui-mockup-009-spread, которую задаёт data-spread. Задние окна приглушены opacity и brightness, чтобы глубина читалась без перспективы. Хром окон минимальный: светофор и поле адреса. Область 16/10: src (object-fit: cover по верху), иначе children, иначе заглушка; у задних окон свои кадры backSrc и farSrc и заглушки с другой раскладкой. Тема хрома — data-chrome, тень — data-shadow.",
+      "meta": {
+        "tags": [
+          "browser",
+          "windows",
+          "stack",
+          "cascade",
+          "screens",
+          "mockup",
+          "frame",
+          "screenshot"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "src": "/demo/screens/site-16x10.webp",
+            "alt": "Главная VibeUI",
+            "backSrc": "/demo/screens/catalog-16x10.webp",
+            "farSrc": "/demo/screens/blocks-16x10.webp"
+          }
+        },
+        "ai": {
+          "export": "Mockup009",
+          "usage": "<Mockup009 src=\"/screens/one.png\" alt=\"Главный экран\" backSrc=\"/screens/two.png\" farSrc=\"/screens/three.png\" spread=\"normal\" />",
+          "summary": "Стопка из трёх окон браузера на чистом CSS: три кадра одним блоком, задние выглядывают из-за переднего, разлёт одной переменной. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-mockup-009-* и не подменять её токенами вашей темы",
+            "вывод сдвига, ширины и отступов из одной переменной spread — разведённые вручную значения ломают каскад",
+            "приглушение задних окон opacity и brightness — без него стопка читается тремя равными окнами",
+            "порядок слоёв: переднее окно в потоке, задние абсолютные с отрицательным z-index",
+            "пропорцию 16/10 и object-fit: cover по верху — кадры не должны деформироваться",
+            "data-slot=\"mockup\" — точка стилизации в проекте пользователя"
+          ],
+          "adapt": [
+            "src и alt — кадр переднего окна",
+            "backSrc и farSrc — кадры задних окон",
+            "children — живая страница в переднем окне",
+            "theme — светлый или тёмный хром",
+            "spread — разлёт стопки",
+            "shadow — тень",
+            "caption — подпись"
+          ],
+          "notes": [
+            "Кадры лучше готовить в 16:10: при другой пропорции они кроются по верху.",
+            "Задние окна декоративны и скрыты от скринридера; смысл несёт alt переднего.",
+            "Заглушки задних окон намеренно другой раскладки — стопка не должна выглядеть копиями.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "spread",
+            "label": "Разлёт",
+            "type": "select",
+            "default": "normal",
+            "options": [
+              "tight",
+              "normal",
+              "wide"
+            ]
+          },
+          {
+            "prop": "theme",
+            "label": "Хром",
+            "type": "select",
+            "default": "light",
+            "options": [
+              "light",
+              "dark"
+            ]
+          },
+          {
+            "prop": "shadow",
+            "label": "Тень",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "",
+            "maxLength": 60
+          }
+        ],
+        "cardControls": [
+          "spread",
+          "theme"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Window Stack",
+            "description": "Three cascading browser windows in pure CSS: the front one full size, two behind peeking out, smaller and dimmed. Show several product screens in one frame without 3D.",
+            "docs": "Server component, no hooks. The stack is a front window in flow and two absolute ones behind it shifted up-left; the shift, width and stage paddings derive from one variable --vibeui-mockup-009-spread set by data-spread. The back windows are dimmed with opacity and brightness so depth reads without perspective. The window chrome is minimal: traffic lights and an address field. The 16/10 area takes src (top-aligned object-fit: cover), otherwise children, otherwise a placeholder; the back windows take backSrc and farSrc and have placeholders with a different layout. Chrome theme via data-chrome, shadow via data-shadow.",
+            "ai": {
+              "summary": "A pure-CSS stack of three browser windows: three frames in one block, the back ones peeking out from behind the front, the spread in one variable. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-mockup-009-* palette — do not swap it for your theme tokens",
+                "deriving the shift, width and paddings from the one spread variable — hand-tuned values break the cascade",
+                "dimming the back windows with opacity and brightness — without it the stack reads as three equal windows",
+                "the layer order: the front window in flow, the back ones absolute with a negative z-index",
+                "the 16/10 ratio and top-aligned object-fit: cover — the frames must not distort",
+                "data-slot=\"mockup\" — the styling hook in the user's project"
+              ],
+              "adapt": [
+                "src and alt — the front window frame",
+                "backSrc and farSrc — the back window frames",
+                "children — a live page in the front window",
+                "theme — light or dark chrome",
+                "spread — the stack spread",
+                "shadow — the shadow",
+                "caption — a caption"
+              ],
+              "notes": [
+                "Prepare the frames at 16:10: any other ratio is cropped from the top.",
+                "The back windows are decorative and hidden from screen readers; the front alt carries the meaning.",
+                "The back placeholders deliberately use a different layout — the stack must not look like copies.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Mockup009 src=\"/screens/one.png\" alt=\"Main screen\" backSrc=\"/screens/two.png\" farSrc=\"/screens/three.png\" spread=\"normal\" />"
+            },
+            "controls": {
+              "spread": {
+                "label": "Spread"
+              },
+              "theme": {
+                "label": "Chrome"
+              },
+              "shadow": {
+                "label": "Shadow"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": ""
+              }
+            },
+            "preview": {
+              "props": {
+                "alt": "VibeUI home"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

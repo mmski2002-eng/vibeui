@@ -1,0 +1,91 @@
+{
+  "laptop-front": {
+    "file": "laptop-front.webp",
+    "width": 1580,
+    "height": 897,
+    "screen": {
+      "left": 9.11,
+      "top": 6.8,
+      "width": 81.77,
+      "height": 77.26
+    }
+  },
+  "laptop-angle": {
+    "file": "laptop-angle.webp",
+    "width": 1385,
+    "height": 1024,
+    "quad": [
+      [
+        3.47,
+        11.72
+      ],
+      [
+        60.14,
+        3.71
+      ],
+      [
+        66.14,
+        52.05
+      ],
+      [
+        9.82,
+        65.04
+      ]
+    ]
+  },
+  "phone-front": {
+    "file": "phone-front.webp",
+    "width": 853,
+    "height": 1738,
+    "screen": {
+      "left": 7.85,
+      "top": 3.62,
+      "width": 84.29,
+      "height": 92.75
+    }
+  },
+  "tablet-portrait": {
+    "file": "tablet-portrait.webp",
+    "width": 1029,
+    "height": 1363,
+    "screen": {
+      "left": 7.77,
+      "top": 5.94,
+      "width": 84.45,
+      "height": 88.19
+    }
+  },
+  "tablet-landscape": {
+    "file": "tablet-landscape.webp",
+    "width": 1416,
+    "height": 993,
+    "screen": {
+      "left": 5.93,
+      "top": 8.36,
+      "width": 88.21,
+      "height": 83.28
+    }
+  },
+  "monitor-front": {
+    "file": "monitor-front.webp",
+    "width": 1562,
+    "height": 941,
+    "screen": {
+      "left": 2.94,
+      "top": 4.25,
+      "width": 94.11,
+      "height": 67.06
+    }
+  },
+  "watch-front": {
+    "file": "watch-front.webp",
+    "width": 791,
+    "height": 1236,
+    "screen": {
+      "left": 11.38,
+      "top": 21.2,
+      "width": 72.57,
+      "height": 52.75
+    }
+  }
+}
