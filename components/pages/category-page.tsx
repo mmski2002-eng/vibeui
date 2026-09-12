@@ -1,19 +1,15 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
-import { CatalogChrome } from "@/components/catalog/catalog-chrome"
 import { CatalogGrid } from "@/components/catalog/catalog-grid"
-import { CatalogShell } from "@/components/catalog/catalog-shell"
 import { JsonLd } from "@/components/json-ld"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
 import { breadcrumbs } from "@/lib/seo"
 import type { ItemKind } from "@/registry/categories"
 import {
   catalogBasePath,
-  getCategoryCards,
   getCategoryLabel,
   getItemsByCategory,
-  getItemsByKind,
   isWideCategory,
 } from "@/registry/index"
 
@@ -37,7 +33,6 @@ export function CategoryPage({
   }
 
   const t = getDictionary(locale)
-  const categories = getCategoryCards(kind, locale)
   const base = catalogBasePath(kind)
   const rootLabel =
     kind === "block"
@@ -73,28 +68,24 @@ export function CategoryPage({
     </div>
   )
 
+  // Оболочка и меню живут в layout раздела: страница отдаёт только
+  // заголовок и сетку. order-2 ставит сетку после мобильной ленты категорий.
   return (
-    <CatalogShell locale={locale}>
+    <>
       <JsonLd
         data={breadcrumbs(locale, [
           { name: rootLabel, path: base },
           { name: label, path: `${base}/${category}` },
         ])}
       />
-      <CatalogChrome
-        locale={locale}
-        kind={kind}
-        categories={categories}
-        total={getItemsByKind(kind).length}
-        active={category}
-        heading={heading}
-      >
+      {heading}
+      <div className="order-2">
         <CatalogGrid
           items={items}
           locale={locale}
           single={kind === "block" || isWideCategory(category)}
         />
-      </CatalogChrome>
-    </CatalogShell>
+      </div>
+    </>
   )
 }

@@ -1,8 +1,6 @@
 import Link from "next/link"
 
-import { CatalogChrome } from "@/components/catalog/catalog-chrome"
 import { CategoryGrid } from "@/components/catalog/catalog-grid"
-import { CatalogShell } from "@/components/catalog/catalog-shell"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
 import {
   catalogBasePath,
@@ -68,22 +66,18 @@ export function CatalogPage({
       </div>
     )
 
+  // Оболочка и меню живут в layout раздела: страница отдаёт только
+  // заголовок и сетку. order-2 ставит сетку после мобильной ленты категорий.
   return (
-    <CatalogShell locale={locale}>
-      <CatalogChrome
-        locale={locale}
-        kind={kind}
-        categories={categories}
-        total={items.length}
-        active={null}
-        heading={heading}
-      >
+    <>
+      {heading}
+      <div className="order-2">
         <CategoryGrid
           categories={categories}
           locale={locale}
           base={catalogBasePath(kind)}
         />
-      </CatalogChrome>
-    </CatalogShell>
+      </div>
+    </>
   )
 }

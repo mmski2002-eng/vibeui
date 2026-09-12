@@ -2,7 +2,6 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 
 import { CatalogItemNav } from "@/components/catalog/catalog-item-nav"
-import { CatalogShell } from "@/components/catalog/catalog-shell"
 import { CatalogColumns } from "@/components/catalog/catalog-columns"
 import { CatalogSidebar } from "@/components/catalog/catalog-sidebar"
 import { ItemWorkbench } from "@/components/catalog/item-workbench"
@@ -85,7 +84,7 @@ export async function ItemPage({
   const path = `${catalogBasePath(kind)}/${block.name}`
 
   return (
-    <CatalogShell locale={locale}>
+    <>
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -301,6 +300,6 @@ export async function ItemPage({
           </section>
         </main>
       </CatalogColumns>
-    </CatalogShell>
+    </>
   )
 }

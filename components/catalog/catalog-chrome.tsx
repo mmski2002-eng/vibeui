@@ -53,7 +53,6 @@ export function CatalogChrome({
   categories,
   total,
   active,
-  heading,
   children,
 }: {
   locale: Locale
@@ -62,7 +61,6 @@ export function CatalogChrome({
   total: number
   /** slug открытой категории; `null` — витрина целиком */
   active: string | null
-  heading: ReactNode
   children: ReactNode
 }) {
   const t = getDictionary(locale)
@@ -132,9 +130,12 @@ export function CatalogChrome({
     : popularSlugs
         .map((slug) => visible.find((category) => category.slug === slug))
         .filter((category): category is NavCategory => category !== undefined)
-  const rest = popular.length
-    ? visible.filter((category) => !popularSlugs.includes(category.slug))
-    : visible
+  // Свёрнутое «Популярное» не должно прятать категории: они возвращаются в
+  // общий список, иначе пункт пропадает из меню целиком.
+  const rest =
+    popular.length && popularOpen
+      ? visible.filter((category) => !popularSlugs.includes(category.slug))
+      : visible
 
   function togglePopular() {
     const next = !popularOpen
@@ -389,12 +390,16 @@ export function CatalogChrome({
           </ScrollArea>
         </div>
 
-        <main className="min-w-0 flex-1 py-6 lg:py-8">
-          {heading}
-
+        {/* Заголовок и сетку отдаёт страница, лента категорий — обвязка.
+            Колонка flex с order: заголовок страницы идёт первым, лента — за
+            ним, сетка страницы (order-2) — последней. */}
+        <main
+          data-grid-view={overview ? "overview" : "large"}
+          className="flex min-w-0 flex-1 flex-col py-6 lg:py-8"
+        >
           {/* Мобильная лента категорий: колонки на телефоне нет, а переходить
               между категориями надо. */}
-          <div className="-mx-4 mb-6 flex gap-2 overflow-x-auto px-4 pb-1 lg:hidden [&::-webkit-scrollbar]:hidden">
+          <div className="order-1 -mx-4 mb-6 flex gap-2 overflow-x-auto px-4 pb-1 lg:hidden [&::-webkit-scrollbar]:hidden">
             <Link
               href={localePath(locale, base)}
               className={
@@ -451,7 +456,7 @@ export function CatalogChrome({
             ))}
           </div>
 
-          <div data-grid-view={overview ? "overview" : "large"}>{children}</div>
+          {children}
         </main>
       </div>
     </>
