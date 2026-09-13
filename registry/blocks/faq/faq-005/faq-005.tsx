@@ -42,6 +42,7 @@ const STYLES = `
 --vibeui-faq-005-border:light-dark(oklch(0.9 0 240),oklch(0.36 0 240));
 --vibeui-faq-005-accent:light-dark(oklch(0.28 0 0),oklch(0.903 0 0));
 --vibeui-faq-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-faq-005-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -66,7 +67,7 @@ font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;fo
 width:100%;height:3rem;padding:0 1rem;
 border:1px solid var(--vibeui-faq-005-border);border-radius:0.875rem;
 background:var(--vibeui-faq-005-field);color:inherit;font:inherit;font-size:1rem;
-transition:border-color .16s ease,box-shadow .16s ease,background-color .16s ease;
+transition:border-color var(--vibeui-faq-005-dur-2) ease,box-shadow var(--vibeui-faq-005-dur-2) ease,background-color var(--vibeui-faq-005-dur-2) ease;
 }
 [data-vibeui-block="faq-005"] [data-part="input"]::placeholder{color:color-mix(in oklab,var(--vibeui-faq-005-muted) 75%,transparent)}
 [data-vibeui-block="faq-005"] [data-part="input"]:focus{
@@ -91,7 +92,7 @@ font-size:1rem;font-weight:600;line-height:1.4;
 content:"";position:absolute;right:0.375rem;top:1.3125rem;width:0.5rem;height:0.5rem;
 border-right:2px solid var(--vibeui-faq-005-accent);border-bottom:2px solid var(--vibeui-faq-005-accent);
 transform:rotate(45deg);
-transition:transform .18s ease;
+transition:transform var(--vibeui-faq-005-dur-2) ease;
 }
 [data-vibeui-block="faq-005"] [data-part="item"][open] summary::after{transform:rotate(-135deg)}
 [data-vibeui-block="faq-005"] [data-part="item"] summary:focus-visible{outline:2px solid var(--vibeui-faq-005-accent);outline-offset:-2px}

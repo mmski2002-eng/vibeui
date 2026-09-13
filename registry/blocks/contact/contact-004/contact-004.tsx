@@ -49,6 +49,7 @@ const STYLES = `
 --vibeui-contact-004-on-accent:oklch(from var(--vibeui-contact-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-contact-004-alarm:light-dark(oklch(0.55 0.19 25),oklch(0.73 0.16 25));
 --vibeui-contact-004-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-contact-004-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -80,7 +81,7 @@ margin:0.5rem 0 1.25rem;max-width:46ch;font-size:0.9375rem;line-height:1.65;colo
 [data-vibeui-block="contact-004"] details{
 border:1px solid var(--vibeui-contact-004-border);border-radius:0.875rem;
 background:var(--vibeui-contact-004-card);
-transition:border-color .16s ease;
+transition:border-color var(--vibeui-contact-004-dur-2) ease;
 }
 [data-vibeui-block="contact-004"] details[open]{border-color:color-mix(in oklab,var(--vibeui-contact-004-accent) 40%,var(--vibeui-contact-004-border))}
 [data-vibeui-block="contact-004"] summary{
@@ -96,7 +97,7 @@ position:relative;flex:none;width:0.8125rem;height:0.8125rem;margin-top:0.3125re
 [data-vibeui-block="contact-004"] [data-part="sign"]::after{
 content:"";position:absolute;left:0;top:50%;width:100%;height:1.5px;margin-top:-0.75px;
 background:var(--vibeui-contact-004-muted);
-transition:transform .18s ease,opacity .18s ease;
+transition:transform var(--vibeui-contact-004-dur-2) ease,opacity var(--vibeui-contact-004-dur-2) ease;
 }
 [data-vibeui-block="contact-004"] [data-part="sign"]::after{transform:rotate(90deg)}
 [data-vibeui-block="contact-004"] details[open] [data-part="sign"]::after{opacity:0}

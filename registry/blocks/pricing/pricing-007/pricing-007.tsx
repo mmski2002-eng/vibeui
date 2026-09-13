@@ -69,6 +69,7 @@ const STYLES = `
 --vibeui-pricing-007-accent:light-dark(oklch(0.287 0 0),oklch(0.901 0 0));
 --vibeui-pricing-007-accent-fg:oklch(from var(--vibeui-pricing-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-pricing-007-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-pricing-007-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -120,7 +121,7 @@ padding:1.5rem;border-radius:1.125rem;border:1px solid var(--vibeui-pricing-007-
 width:100%;padding:0.625rem 0.75rem;border-radius:0.625rem;
 border:1px solid var(--vibeui-pricing-007-line);background:var(--vibeui-pricing-007-card);
 font:inherit;font-size:0.875rem;color:inherit;
-transition:border-color .16s ease,box-shadow .16s ease;
+transition:border-color var(--vibeui-pricing-007-dur-2) ease,box-shadow var(--vibeui-pricing-007-dur-2) ease;
 }
 [data-vibeui-block="pricing-007"] textarea{min-height:5.5rem;resize:vertical}
 [data-vibeui-block="pricing-007"] input:focus-visible,
@@ -132,7 +133,7 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-pricing-007-accent) 20%,tra
 [data-vibeui-block="pricing-007"] button{
 appearance:none;cursor:pointer;width:100%;height:2.75rem;border:0;border-radius:0.625rem;margin-top:0.375rem;
 background:var(--vibeui-pricing-007-accent);color:oklch(from var(--vibeui-pricing-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font:inherit;font-size:0.9375rem;font-weight:650;transition:background-color .16s ease;
+font:inherit;font-size:0.9375rem;font-weight:650;transition:background-color var(--vibeui-pricing-007-dur-2) ease;
 }
 [data-vibeui-block="pricing-007"] button:hover{background:color-mix(in oklab,var(--vibeui-pricing-007-accent) 86%,black)}
 [data-vibeui-block="pricing-007"] button:focus-visible{outline:2px solid var(--vibeui-pricing-007-accent);outline-offset:3px}

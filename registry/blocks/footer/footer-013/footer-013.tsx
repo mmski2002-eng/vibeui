@@ -31,6 +31,7 @@ const STYLES = `
 --vibeui-footer-013-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-footer-013-accent-fill:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
 --vibeui-footer-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-footer-013-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -63,7 +64,7 @@ display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem 1.5rem;
 }
 [data-vibeui-block="footer-013"] [data-part="links"] a{
 color:var(--vibeui-footer-013-muted);text-decoration:none;font-size:0.9375rem;
-transition:color .16s ease;
+transition:color var(--vibeui-footer-013-dur-2) ease;
 }
 [data-vibeui-block="footer-013"] [data-part="links"] a:hover{color:var(--vibeui-footer-013-accent)}
 [data-vibeui-block="footer-013"] [data-part="social"]{
@@ -75,7 +76,7 @@ display:inline-block;padding:0.3125rem 0.75rem;border-radius:999px;
 border:1px solid var(--vibeui-footer-013-border);
 color:var(--vibeui-footer-013-muted);text-decoration:none;
 font-size:0.8125rem;font-weight:600;
-transition:color .16s ease,border-color .16s ease;
+transition:color var(--vibeui-footer-013-dur-2) ease,border-color var(--vibeui-footer-013-dur-2) ease;
 }
 [data-vibeui-block="footer-013"] [data-part="social"] a:hover{
 color:var(--vibeui-footer-013-accent);

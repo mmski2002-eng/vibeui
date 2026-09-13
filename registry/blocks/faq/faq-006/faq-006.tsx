@@ -44,6 +44,7 @@ const STYLES = `
 --vibeui-faq-006-accent-fg:oklch(from var(--vibeui-faq-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-faq-006-shadow:light-dark(oklch(0.2 0 0 / 70%),oklch(0 0 0 / 55%));
 --vibeui-faq-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-faq-006-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -76,7 +77,7 @@ font-size:1rem;font-weight:600;line-height:1.4;
 content:"";position:absolute;right:0.375rem;top:1.3125rem;width:0.5rem;height:0.5rem;
 border-right:2px solid var(--vibeui-faq-006-accent);border-bottom:2px solid var(--vibeui-faq-006-accent);
 transform:rotate(45deg);
-transition:transform .18s ease;
+transition:transform var(--vibeui-faq-006-dur-2) ease;
 }
 [data-vibeui-block="faq-006"] [data-part="item"][open] summary::after{transform:rotate(-135deg)}
 [data-vibeui-block="faq-006"] [data-part="item"] summary:focus-visible{outline:2px solid var(--vibeui-faq-006-accent);outline-offset:-2px}
@@ -101,7 +102,7 @@ margin:0.5rem 0 1.25rem;color:var(--vibeui-faq-006-muted);font-size:0.9375rem;li
 display:block;padding:0.75rem 0.875rem;border-radius:0.875rem;
 border:1px solid var(--vibeui-faq-006-border);
 color:inherit;text-decoration:none;
-transition:border-color .16s ease,background-color .16s ease;
+transition:border-color var(--vibeui-faq-006-dur-2) ease,background-color var(--vibeui-faq-006-dur-2) ease;
 }
 [data-vibeui-block="faq-006"] [data-part="channel"]:hover{
 border-color:var(--vibeui-faq-006-accent);

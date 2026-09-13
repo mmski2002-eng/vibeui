@@ -47,6 +47,11 @@ const STYLES = `
 --vibeui-navbar-014-on-accent:oklch(from var(--vibeui-navbar-014-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-navbar-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-navbar-014-ease:cubic-bezier(.32,.72,0,1);
+--vibeui-navbar-014-dur-1:130ms;
+--vibeui-navbar-014-dur-2:180ms;
+--vibeui-navbar-014-dur-3:240ms;
+--vibeui-navbar-014-dur-4:340ms;
+--vibeui-navbar-014-dur-5:460ms;
 container-type:inline-size;
 }
 /* Тема идёт за страницей: color-scheme наследуется от неё, а классовую
@@ -80,7 +85,7 @@ background:var(--vibeui-navbar-014-accent);color:oklch(from var(--vibeui-navbar-
 font-size:0.75rem;font-weight:800;
 box-shadow:0 0.1875rem 0.625rem color-mix(in oklab,var(--vibeui-navbar-014-accent) 44%,transparent),
 inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);
-transition:transform .22s var(--vibeui-navbar-014-ease);
+transition:transform var(--vibeui-navbar-014-dur-3) var(--vibeui-navbar-014-ease);
 }
 [data-vibeui-block="navbar-014"] [data-part="brand"]:hover [data-part="mark"]{transform:rotate(-6deg) scale(1.06)}
 [data-vibeui-block="navbar-014"] [data-part="caption"]{
@@ -97,7 +102,7 @@ margin-left:auto;
 position:relative;flex:none;padding:0.4375rem 0.6875rem;border-radius:0.5rem;
 color:var(--vibeui-navbar-014-muted);text-decoration:none;
 font-size:0.9375rem;font-weight:540;white-space:nowrap;
-transition:color .13s ease,background-color .16s ease;
+transition:color var(--vibeui-navbar-014-dur-1) ease,background-color var(--vibeui-navbar-014-dur-2) ease;
 }
 [data-vibeui-block="navbar-014"] [data-part="nav"] a:hover{
 color:var(--vibeui-navbar-014-ink);background:var(--vibeui-navbar-014-hover);
@@ -109,7 +114,7 @@ box-shadow:inset 0 -2px 0 var(--vibeui-navbar-014-accent);
 [data-vibeui-block="navbar-014"] [data-part="contact"]{
 display:none;color:var(--vibeui-navbar-014-muted);text-decoration:none;
 font-size:0.8125rem;
-transition:color .13s ease;
+transition:color var(--vibeui-navbar-014-dur-1) ease;
 }
 [data-vibeui-block="navbar-014"] [data-part="contact"]:hover{color:var(--vibeui-navbar-014-accent)}
 
@@ -123,7 +128,7 @@ display:flex;flex-direction:column;gap:0.5625rem;color:inherit;text-decoration:n
 [data-vibeui-block="navbar-014"] [data-part="shot"]{
 position:relative;aspect-ratio:4/3;display:block;overflow:hidden;border-radius:0.875rem;
 background:linear-gradient(158deg,#2a2a2a 0%,#000000 88%);
-transition:transform .4s var(--vibeui-navbar-014-ease),box-shadow .3s ease;
+transition:transform var(--vibeui-navbar-014-dur-5) var(--vibeui-navbar-014-ease),box-shadow var(--vibeui-navbar-014-dur-4) ease;
 }
 [data-vibeui-block="navbar-014"] [data-part="shot"]::after{
 content:"";position:absolute;inset:0;
@@ -167,7 +172,7 @@ display:flex;align-items:baseline;gap:0.5rem;
 }
 [data-vibeui-block="navbar-014"] [data-part="title"]{
 font-size:0.9375rem;font-weight:600;letter-spacing:-0.01em;
-transition:color .13s ease;
+transition:color var(--vibeui-navbar-014-dur-1) ease;
 }
 [data-vibeui-block="navbar-014"] [data-part="year"]{
 margin-left:auto;font-size:0.75rem;color:var(--vibeui-navbar-014-muted);

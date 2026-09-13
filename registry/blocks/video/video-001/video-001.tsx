@@ -36,6 +36,7 @@ const STYLES = `
 --vibeui-video-001-youtube:#ff0000;
 --vibeui-video-001-youtube-hover:#cc0000;
 --vibeui-video-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-video-001-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -53,7 +54,7 @@ font-family:var(--vibeui-video-001-font);
 [data-vibeui-block="video-001"] [data-part="cta"]{
 display:inline-flex;align-items:center;gap:0.625rem;height:2.75rem;padding:0 1.375rem;border-radius:999px;
 background:var(--vibeui-video-001-youtube);color:oklch(1 0 0);
-font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color .16s ease;
+font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color var(--vibeui-video-001-dur-2) ease;
 }
 [data-vibeui-block="video-001"] [data-part="cta"]:hover{background:var(--vibeui-video-001-youtube-hover)}
 [data-vibeui-block="video-001"] [data-part="cta"]:focus-visible{outline:2px solid var(--vibeui-video-001-youtube);outline-offset:3px}
@@ -64,7 +65,7 @@ font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-c
 position:relative;display:flex;align-items:flex-end;aspect-ratio:16 / 9;border-radius:1.125rem;overflow:hidden;
 padding:1rem;text-decoration:none;color:oklch(0.98 0 0);
 background:linear-gradient(140deg,light-dark(oklch(0.2 0 0),oklch(0.92 0 0)),oklch(0.3 0.1 25));
-transition:transform .18s ease;
+transition:transform var(--vibeui-video-001-dur-2) ease;
 }
 [data-vibeui-block="video-001"] [data-part="player"]:hover{transform:translateY(-2px)}
 /* Кадр и затемнение под подписями: без затемнения белый текст теряется на

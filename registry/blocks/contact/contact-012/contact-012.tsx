@@ -42,6 +42,7 @@ const STYLES = `
 --vibeui-contact-012-on-accent:oklch(from var(--vibeui-contact-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-contact-012-error:light-dark(oklch(0.55 0.19 27),oklch(0.7 0.17 27));
 --vibeui-contact-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-contact-012-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -95,7 +96,7 @@ border-color:var(--vibeui-contact-012-error);
 display:grid;justify-items:center;gap:0.5rem;text-align:center;
 padding:1.75rem 1.25rem;border:1.5px dashed var(--vibeui-contact-012-border);border-radius:1rem;
 background:var(--vibeui-contact-012-card);cursor:pointer;
-transition:border-color 0.18s ease,background 0.18s ease;
+transition:border-color var(--vibeui-contact-012-dur-2) ease,background var(--vibeui-contact-012-dur-2) ease;
 }
 [data-vibeui-block="contact-012"] [data-part="drop"]:hover{
 border-color:color-mix(in oklab,var(--vibeui-contact-012-accent) 55%,var(--vibeui-contact-012-border));
@@ -123,7 +124,7 @@ margin-right:0.75rem;padding:0.5rem 0.875rem;cursor:pointer;
 border:1px solid var(--vibeui-contact-012-border);border-radius:0.625rem;
 background:var(--vibeui-contact-012-card);color:var(--vibeui-contact-012-ink);
 font:inherit;font-size:0.8125rem;font-weight:650;
-transition:border-color 0.18s ease;
+transition:border-color var(--vibeui-contact-012-dur-2) ease;
 }
 [data-vibeui-block="contact-012"] [data-part="file"]::file-selector-button:hover{
 border-color:color-mix(in oklab,var(--vibeui-contact-012-accent) 55%,var(--vibeui-contact-012-border));
@@ -132,7 +133,7 @@ border-color:color-mix(in oklab,var(--vibeui-contact-012-accent) 55%,var(--vibeu
 padding:0.8125rem 1.5rem;border:0;border-radius:0.75rem;cursor:pointer;
 background:var(--vibeui-contact-012-accent-fill);color:var(--vibeui-contact-012-on-accent);
 font:inherit;font-size:0.9375rem;font-weight:700;letter-spacing:0.01em;
-transition:filter 0.18s ease,transform 0.18s ease;
+transition:filter var(--vibeui-contact-012-dur-2) ease,transform var(--vibeui-contact-012-dur-2) ease;
 }
 [data-vibeui-block="contact-012"] [data-part="submit"]:hover{filter:brightness(1.06)}
 [data-vibeui-block="contact-012"] [data-part="submit"]:active{transform:translateY(1px)}

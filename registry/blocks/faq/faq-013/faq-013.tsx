@@ -37,6 +37,7 @@ const STYLES = `
 --vibeui-faq-013-accent-fill:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
 --vibeui-faq-013-on-accent:oklch(from var(--vibeui-faq-013-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-faq-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-faq-013-dur-2:180ms;
 container-type:inline-size;
 }
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="faq-013"]{color-scheme:dark}
@@ -66,7 +67,7 @@ outline:2px solid var(--vibeui-faq-013-accent);outline-offset:2px;border-radius:
 [data-vibeui-block="faq-013"] [data-part="sign"]{
 margin-left:auto;flex:none;align-self:center;width:0.875rem;height:0.875rem;position:relative;
 color:var(--vibeui-faq-013-accent);
-transition:transform .18s ease;
+transition:transform var(--vibeui-faq-013-dur-2) ease;
 }
 [data-vibeui-block="faq-013"] [data-part="sign"]::before,
 [data-vibeui-block="faq-013"] [data-part="sign"]::after{
@@ -103,7 +104,7 @@ flex:none;cursor:pointer;border:none;
 padding:0.6875rem 1.375rem;border-radius:0.625rem;
 background:var(--vibeui-faq-013-accent-fill);color:var(--vibeui-faq-013-on-accent);
 font:inherit;font-size:0.9375rem;font-weight:700;
-transition:filter .18s ease;
+transition:filter var(--vibeui-faq-013-dur-2) ease;
 }
 [data-vibeui-block="faq-013"] [data-part="submit"]:hover{filter:brightness(1.06)}
 [data-vibeui-block="faq-013"] [data-part="submit"]:focus-visible{

@@ -41,6 +41,7 @@ const STYLES = `
 --vibeui-logocloud-005-fill:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
 --vibeui-logocloud-005-on-fill:oklch(0.15 0 0);
 --vibeui-logocloud-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-logocloud-005-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -75,7 +76,7 @@ display:inline-flex;align-items:center;
 padding:0.5rem 1.125rem;border:1px solid var(--vibeui-logocloud-005-border);border-radius:999px;
 color:var(--vibeui-logocloud-005-muted);
 font-size:0.875rem;font-weight:600;line-height:1;cursor:pointer;user-select:none;
-transition:color .18s ease,border-color .18s ease,background-color .18s ease;
+transition:color var(--vibeui-logocloud-005-dur-2) ease,border-color var(--vibeui-logocloud-005-dur-2) ease,background-color var(--vibeui-logocloud-005-dur-2) ease;
 }
 [data-vibeui-block="logocloud-005"] [data-part="tab"]:hover{
 color:var(--vibeui-logocloud-005-ink);
@@ -102,7 +103,7 @@ display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1.25re
 [data-vibeui-block="logocloud-005"] [data-part="logo"]{
 color:var(--vibeui-logocloud-005-logo);
 font-size:1.25rem;line-height:1;white-space:nowrap;
-transition:color .18s ease;
+transition:color var(--vibeui-logocloud-005-dur-2) ease;
 font-weight:750;letter-spacing:-0.035em;
 }
 [data-vibeui-block="logocloud-005"] [data-part="logo"][data-style="serif"]{

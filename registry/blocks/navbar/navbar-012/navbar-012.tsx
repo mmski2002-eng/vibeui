@@ -51,6 +51,10 @@ const STYLES = `
 --vibeui-navbar-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-navbar-012-display:ui-serif,Georgia,"Times New Roman",Times,serif;
 --vibeui-navbar-012-ease:cubic-bezier(.32,.72,0,1);
+--vibeui-navbar-012-dur-1:130ms;
+--vibeui-navbar-012-dur-2:180ms;
+--vibeui-navbar-012-dur-3:240ms;
+--vibeui-navbar-012-dur-4:340ms;
 container-type:inline-size;
 }
 /* Тема идёт за страницей: color-scheme наследуется от неё, а классовую
@@ -89,7 +93,7 @@ text-decoration:none;
 font-size:0.6875rem;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;
 box-shadow:0 0.1875rem 0.625rem color-mix(in oklab,var(--vibeui-navbar-012-accent) 40%,transparent),
 inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);
-transition:transform .18s var(--vibeui-navbar-012-ease),box-shadow .25s ease;
+transition:transform var(--vibeui-navbar-012-dur-2) var(--vibeui-navbar-012-ease),box-shadow var(--vibeui-navbar-012-dur-3) ease;
 }
 [data-vibeui-block="navbar-012"] [data-part="subscribe"]:hover{
 transform:translateY(-1px);
@@ -116,7 +120,7 @@ position:relative;z-index:1;flex:none;padding:0.75rem 0.8125rem;
 color:var(--vibeui-navbar-012-muted);text-decoration:none;
 font-size:0.8125rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
 white-space:nowrap;
-transition:color .13s ease;
+transition:color var(--vibeui-navbar-012-dur-1) ease;
 }
 [data-vibeui-block="navbar-012"] [data-part="rubrics"] a:hover,
 [data-vibeui-block="navbar-012"] [data-part="rubrics"] a[aria-current="page"]{
@@ -133,13 +137,13 @@ background:var(--vibeui-navbar-012-accent);
 opacity:0;pointer-events:none;color:oklch(from var(--vibeui-navbar-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="navbar-012"] [data-part="rubrics"][data-ready] [data-part="glider"]{
 opacity:1;
-transition:transform .3s var(--vibeui-navbar-012-ease),width .3s var(--vibeui-navbar-012-ease),opacity .18s ease;
+transition:transform var(--vibeui-navbar-012-dur-4) var(--vibeui-navbar-012-ease),width var(--vibeui-navbar-012-dur-4) var(--vibeui-navbar-012-ease),opacity var(--vibeui-navbar-012-dur-2) ease;
 }
 
 [data-vibeui-block="navbar-012"] [data-part="rubrics"] a[data-part="search"]{
 flex:none;margin-left:auto;position:relative;display:inline-flex;align-items:center;justify-content:center;
 width:2.5rem;height:2.5rem;color:var(--vibeui-navbar-012-ink);
-transition:color .13s ease,transform .2s var(--vibeui-navbar-012-ease);
+transition:color var(--vibeui-navbar-012-dur-1) ease,transform var(--vibeui-navbar-012-dur-2) var(--vibeui-navbar-012-ease);
 }
 [data-vibeui-block="navbar-012"] a[data-part="search"]:hover{
 color:var(--vibeui-navbar-012-accent);transform:scale(1.08);

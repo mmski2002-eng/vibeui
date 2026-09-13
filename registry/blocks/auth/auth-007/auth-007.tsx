@@ -55,6 +55,7 @@ const STYLES = `
 --vibeui-auth-007-danger-line:light-dark(oklch(0.55 0.19 25 / 30%),oklch(0.75 0.15 25 / 38%));
 --vibeui-auth-007-danger-soft:light-dark(oklch(0.55 0.19 25 / 8%),oklch(0.75 0.15 25 / 14%));
 --vibeui-auth-007-warn:light-dark(oklch(0.62 0.15 75),oklch(0.8 0.13 75));
+--vibeui-auth-007-dur-2:180ms;
 --vibeui-auth-007-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -117,7 +118,7 @@ min-height:2.625rem;padding:0.375rem 1rem;
 border:0;border-radius:0.625rem;
 background:var(--vibeui-auth-007-accent);color:oklch(from var(--vibeui-auth-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.875rem;font-weight:650;
-transition:filter .16s ease;
+transition:filter var(--vibeui-auth-007-dur-2) ease;
 }
 [data-vibeui-block="auth-007"] [data-part="submit"]:hover{filter:brightness(1.08)}
 [data-vibeui-block="auth-007"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-auth-007-accent);outline-offset:2px}

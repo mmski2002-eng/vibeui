@@ -58,6 +58,7 @@ const STYLES = `
 --vibeui-datagrid-005-on-accent:oklch(from var(--vibeui-datagrid-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-datagrid-005-dirty:light-dark(oklch(0.295 0 0 / 12%),oklch(0.91 0 0 / 18%));
 --vibeui-datagrid-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-datagrid-005-dur-1:130ms;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
@@ -117,7 +118,7 @@ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:0.75r
 display:flex;align-items:center;gap:0.375rem;width:100%;
 appearance:none;border:0;background:none;cursor:text;font:inherit;
 padding:0.4375rem 0.875rem;color:inherit;text-align:left;
-border-radius:0;transition:background-color .14s ease;
+border-radius:0;transition:background-color var(--vibeui-datagrid-005-dur-1) ease;
 }
 [data-vibeui-block="datagrid-005"] td[data-align="end"] [data-part="cell"]{justify-content:flex-end}
 [data-vibeui-block="datagrid-005"] [data-part="cell"]:hover{background:var(--vibeui-datagrid-005-head)}

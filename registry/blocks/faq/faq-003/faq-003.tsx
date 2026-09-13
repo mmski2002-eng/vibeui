@@ -46,6 +46,7 @@ const STYLES = `
 --vibeui-faq-003-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
 --vibeui-faq-003-accent-fg:oklch(from var(--vibeui-faq-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-faq-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-faq-003-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -83,7 +84,7 @@ cursor:pointer;flex:none;white-space:nowrap;
 padding:0.4375rem 0.875rem;border-radius:999px;
 border:1px solid var(--vibeui-faq-003-border);background:var(--vibeui-faq-003-card);
 color:var(--vibeui-faq-003-muted);font-size:0.875rem;font-weight:560;
-transition:color .16s ease,background-color .16s ease,border-color .16s ease;
+transition:color var(--vibeui-faq-003-dur-2) ease,background-color var(--vibeui-faq-003-dur-2) ease,border-color var(--vibeui-faq-003-dur-2) ease;
 }
 [data-vibeui-block="faq-003"] [data-part="tab"]:hover{color:var(--vibeui-faq-003-ink)}
 [data-vibeui-block="faq-003"] [data-part="panel"]{display:none;padding-top:1.25rem}
@@ -103,7 +104,7 @@ box-shadow:0 0 0 0 transparent;color:oklch(from var(--vibeui-faq-003-accent) cla
 [data-vibeui-block="faq-003"] [data-part="row"] summary::before{
 content:"";position:absolute;right:0.5625rem;top:0.875rem;width:2px;height:0.75rem;border-radius:2px;
 background:var(--vibeui-faq-003-accent);
-transition:transform .18s ease,opacity .18s ease;color:oklch(from var(--vibeui-faq-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
+transition:transform var(--vibeui-faq-003-dur-2) ease,opacity var(--vibeui-faq-003-dur-2) ease;color:oklch(from var(--vibeui-faq-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="faq-003"] [data-part="row"][open] summary::before{transform:scaleY(0);opacity:0}
 [data-vibeui-block="faq-003"] [data-part="row"] summary:focus-visible{outline:2px solid var(--vibeui-faq-003-accent);outline-offset:2px}
 [data-vibeui-block="faq-003"] [data-part="answer"]{

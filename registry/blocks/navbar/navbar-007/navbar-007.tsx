@@ -62,6 +62,9 @@ const STYLES = `
 --vibeui-navbar-007-on-accent:oklch(from var(--vibeui-navbar-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-navbar-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-navbar-007-ease:cubic-bezier(.32,.72,0,1);
+--vibeui-navbar-007-dur-1:130ms;
+--vibeui-navbar-007-dur-2:180ms;
+--vibeui-navbar-007-dur-3:240ms;
 --vibeui-navbar-007-avatar:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-navbar-007-avatar-ink:light-dark(#ffffff,#000000);
 --vibeui-navbar-007-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -93,7 +96,7 @@ min-height:2.375rem;padding:0.25rem 0.625rem;border-radius:0.625rem;
 border:1px solid transparent;
 font:inherit;font-size:0.9375rem;font-weight:620;letter-spacing:-0.015em;
 color:var(--vibeui-navbar-007-ink);
-transition:background-color .16s ease,border-color .2s ease;
+transition:background-color var(--vibeui-navbar-007-dur-2) ease,border-color var(--vibeui-navbar-007-dur-2) ease;
 }
 [data-vibeui-block="navbar-007"] [data-part="ws-button"]:hover,
 [data-vibeui-block="navbar-007"] [data-part="ws-button"][aria-expanded="true"]{
@@ -119,7 +122,7 @@ border:1px solid var(--vibeui-navbar-007-line);border-radius:0.875rem;
 box-shadow:var(--vibeui-navbar-007-shadow);
 display:flex;flex-direction:column;padding:0.3125rem;
 transform-origin:top left;
-transition:opacity .18s ease,transform .24s var(--vibeui-navbar-007-ease);
+transition:opacity var(--vibeui-navbar-007-dur-2) ease,transform var(--vibeui-navbar-007-dur-3) var(--vibeui-navbar-007-ease);
 }
 [data-vibeui-block="navbar-007"] [data-part="menu"][data-open="false"]{
 opacity:0;transform:translateY(-0.375rem) scale(.98);pointer-events:none;
@@ -130,7 +133,7 @@ padding:0.5rem 0.625rem;border-radius:0.5rem;
 color:var(--vibeui-navbar-007-ink);text-decoration:none;
 font-size:0.875rem;font-weight:530;
 white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-transition:background-color .14s ease;
+transition:background-color var(--vibeui-navbar-007-dur-1) ease;
 }
 [data-vibeui-block="navbar-007"] [data-part="menu"] a:hover{background:var(--vibeui-navbar-007-hover)}
 [data-vibeui-block="navbar-007"] [data-part="menu"] a svg{
@@ -160,7 +163,7 @@ transform:rotate(45deg);opacity:.6;
 padding:0.25rem 0.4375rem;border-radius:0.4375rem;
 color:inherit;text-decoration:none;
 overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:12rem;
-transition:background-color .14s ease,color .13s ease;
+transition:background-color var(--vibeui-navbar-007-dur-1) ease,color var(--vibeui-navbar-007-dur-1) ease;
 }
 [data-vibeui-block="navbar-007"] [data-part="crumbs"] a:hover{
 color:var(--vibeui-navbar-007-ink);background:var(--vibeui-navbar-007-hover);
@@ -176,7 +179,7 @@ order:3;flex:1 1 100%;display:flex;align-items:center;gap:0.4375rem;min-width:0;
 padding:0.1875rem 0.375rem 0.1875rem 0.6875rem;border-radius:0.625rem;
 background:var(--vibeui-navbar-007-field);
 border:1px solid transparent;
-transition:border-color .2s ease,box-shadow .2s ease,background-color .2s ease;
+transition:border-color var(--vibeui-navbar-007-dur-2) ease,box-shadow var(--vibeui-navbar-007-dur-2) ease,background-color var(--vibeui-navbar-007-dur-2) ease;
 }
 [data-vibeui-block="navbar-007"] [data-part="search"]:focus-within{
 background:var(--vibeui-navbar-007-bg);
@@ -209,7 +212,7 @@ display:flex;align-items:center;gap:0.25rem;margin-left:auto;flex:none;
 position:relative;display:inline-flex;align-items:center;justify-content:center;
 width:2.375rem;height:2.375rem;border-radius:0.625rem;
 color:var(--vibeui-navbar-007-ink);
-transition:background-color .16s ease,color .13s ease;
+transition:background-color var(--vibeui-navbar-007-dur-2) ease,color var(--vibeui-navbar-007-dur-1) ease;
 }
 [data-vibeui-block="navbar-007"] [data-part="bell"] svg{width:1.25rem;height:1.25rem}
 [data-vibeui-block="navbar-007"] [data-part="bell"]:hover{
@@ -224,7 +227,7 @@ box-shadow:0 0 0 2px var(--vibeui-navbar-007-bg);color:oklch(from var(--vibeui-n
 [data-vibeui-block="navbar-007"] [data-part="user-button"]{
 cursor:pointer;background:transparent;border:0;padding:0.125rem;border-radius:999px;
 display:inline-flex;
-transition:box-shadow .2s ease;
+transition:box-shadow var(--vibeui-navbar-007-dur-2) ease;
 }
 [data-vibeui-block="navbar-007"] [data-part="user-button"]:hover,
 [data-vibeui-block="navbar-007"] [data-part="user-button"][aria-expanded="true"]{

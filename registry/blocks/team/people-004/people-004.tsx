@@ -36,6 +36,7 @@ const STYLES = `
 --vibeui-people-004-border:light-dark(oklch(0.9 0 0),oklch(0.33 0 0));
 --vibeui-people-004-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-people-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-people-004-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -70,7 +71,7 @@ min-inline-size:0;display:grid;grid-template-columns:auto minmax(0,1fr) auto;
 align-items:center;gap:0.875rem;
 padding:0.75rem 0.5rem;border-top:1px solid var(--vibeui-people-004-border);
 border-radius:0.5rem;
-transition:background .15s ease;
+transition:background var(--vibeui-people-004-dur-2) ease;
 }
 [data-vibeui-block="people-004"] [data-part="row"]:last-child{border-bottom:1px solid var(--vibeui-people-004-border)}
 [data-vibeui-block="people-004"] [data-part="row"]:hover{

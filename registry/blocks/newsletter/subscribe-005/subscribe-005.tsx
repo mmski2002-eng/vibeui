@@ -40,6 +40,7 @@ const STYLES = `
 --vibeui-subscribe-005-ok:light-dark(oklch(0.52 0.14 150),oklch(0.76 0.14 150));
 --vibeui-subscribe-005-ring:light-dark(oklch(1 0 0),oklch(0.2 0 0));
 --vibeui-subscribe-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-subscribe-005-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -103,7 +104,7 @@ outline:2px solid var(--vibeui-subscribe-005-accent);outline-offset:1px;
 height:2.75rem;padding:0 1.375rem;border:0;border-radius:0.625rem;
 background:var(--vibeui-subscribe-005-accent);color:oklch(from var(--vibeui-subscribe-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.9375rem;font-weight:650;cursor:pointer;
-transition:background .15s ease,transform .15s ease;
+transition:background var(--vibeui-subscribe-005-dur-2) ease,transform var(--vibeui-subscribe-005-dur-2) ease;
 }
 [data-vibeui-block="subscribe-005"] [data-part="button"]:hover{
 background:color-mix(in oklab,var(--vibeui-subscribe-005-accent) 90%,black);

@@ -50,6 +50,9 @@ const STYLES = `
 --vibeui-navbar-015-on-accent:oklch(from var(--vibeui-navbar-015-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-navbar-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-navbar-015-ease:cubic-bezier(.32,.72,0,1);
+--vibeui-navbar-015-dur-2:180ms;
+--vibeui-navbar-015-dur-4:340ms;
+--vibeui-navbar-015-dur-5:460ms;
 container-type:inline-size;
 }
 /* Тема идёт за страницей: color-scheme наследуется от неё, а классовую
@@ -81,13 +84,13 @@ position:relative;padding:0.4375rem 0.6875rem;
 color:var(--vibeui-navbar-015-muted);text-decoration:none;
 font-size:0.75rem;font-weight:580;letter-spacing:0.16em;text-transform:uppercase;
 white-space:nowrap;
-transition:color .16s ease;
+transition:color var(--vibeui-navbar-015-dur-2) ease;
 }
 [data-vibeui-block="navbar-015"] [data-part="link"]::after{
 content:"";position:absolute;left:0.6875rem;right:0.6875rem;bottom:0.125rem;height:1px;
 background:currentColor;
 transform:scaleX(0);transform-origin:center;
-transition:transform .32s var(--vibeui-navbar-015-ease);
+transition:transform var(--vibeui-navbar-015-dur-4) var(--vibeui-navbar-015-ease);
 }
 [data-vibeui-block="navbar-015"] [data-part="link"]:hover{color:var(--vibeui-navbar-015-ink)}
 [data-vibeui-block="navbar-015"] [data-part="link"]:hover::after{transform:scaleX(1)}
@@ -106,7 +109,7 @@ font-size:0.75rem;font-weight:620;letter-spacing:0.16em;text-transform:uppercase
 [data-vibeui-block="navbar-015"] [data-part="bars"]::before,
 [data-vibeui-block="navbar-015"] [data-part="bars"]::after{
 content:"";position:absolute;left:0;right:0;height:1px;background:currentColor;
-transition:transform .32s var(--vibeui-navbar-015-ease);
+transition:transform var(--vibeui-navbar-015-dur-4) var(--vibeui-navbar-015-ease);
 }
 [data-vibeui-block="navbar-015"] [data-part="bars"]::before{top:0}
 [data-vibeui-block="navbar-015"] [data-part="bars"]::after{bottom:0}
@@ -119,7 +122,7 @@ color:inherit;text-decoration:none;text-align:center;
 font-size:clamp(1.125rem,3.2cqi,1.75rem);font-weight:740;
 letter-spacing:0.34em;text-transform:uppercase;text-indent:0.34em;
 white-space:nowrap;
-transition:letter-spacing .45s var(--vibeui-navbar-015-ease),text-indent .45s var(--vibeui-navbar-015-ease);
+transition:letter-spacing var(--vibeui-navbar-015-dur-5) var(--vibeui-navbar-015-ease),text-indent var(--vibeui-navbar-015-dur-5) var(--vibeui-navbar-015-ease);
 }
 [data-vibeui-block="navbar-015"] [data-part="brand"]:hover{letter-spacing:0.42em;text-indent:0.42em}
 
@@ -129,7 +132,7 @@ position:relative;
 display:inline-flex;align-items:center;gap:0.4375rem;padding:0.4375rem 0;
 color:var(--vibeui-navbar-015-muted);text-decoration:none;
 font-size:0.75rem;font-weight:580;letter-spacing:0.16em;text-transform:uppercase;
-transition:color .16s ease;
+transition:color var(--vibeui-navbar-015-dur-2) ease;
 }
 [data-vibeui-block="navbar-015"] [data-part="bag"]:hover,
 [data-vibeui-block="navbar-015"] [data-part="bag-mobile"]:hover{color:var(--vibeui-navbar-015-ink)}
@@ -147,7 +150,7 @@ background:var(--vibeui-navbar-015-bg);
 border-bottom:1px solid var(--vibeui-navbar-015-line);
 box-shadow:var(--vibeui-navbar-015-shadow);
 padding:0.5rem 1rem 1.25rem;display:flex;flex-direction:column;
-transition:opacity .2s ease,transform .3s var(--vibeui-navbar-015-ease);
+transition:opacity var(--vibeui-navbar-015-dur-2) ease,transform var(--vibeui-navbar-015-dur-4) var(--vibeui-navbar-015-ease);
 }
 [data-vibeui-block="navbar-015"] [data-part="sheet"][data-open="false"]{
 opacity:0;transform:translateY(-0.625rem);pointer-events:none;

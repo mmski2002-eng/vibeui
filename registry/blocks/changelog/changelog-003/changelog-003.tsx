@@ -35,6 +35,7 @@ const STYLES = `
 --vibeui-changelog-003-on-accent:oklch(from var(--vibeui-changelog-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-changelog-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-changelog-003-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+--vibeui-changelog-003-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -56,7 +57,7 @@ font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase
 appearance:none;cursor:pointer;border:1px solid var(--vibeui-changelog-003-border);
 background:var(--vibeui-changelog-003-chip);color:var(--vibeui-changelog-003-ink);
 padding:0.375rem 0.875rem;border-radius:999px;font:inherit;font-size:0.8125rem;font-weight:600;
-transition:background-color .16s ease,color .16s ease,border-color .16s ease;
+transition:background-color var(--vibeui-changelog-003-dur-2) ease,color var(--vibeui-changelog-003-dur-2) ease,border-color var(--vibeui-changelog-003-dur-2) ease;
 }
 [data-vibeui-block="changelog-003"] [data-part="chip"]:hover{border-color:var(--vibeui-changelog-003-accent)}
 [data-vibeui-block="changelog-003"] [data-part="chip"][aria-pressed="true"]{

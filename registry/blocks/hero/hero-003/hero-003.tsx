@@ -56,6 +56,7 @@ const STYLES = `
 --vibeui-hero-003-ring:color-mix(in oklab, var(--vibeui-hero-003-accent) 70%, transparent);
 --vibeui-hero-003-serif:ui-serif,Georgia,"Times New Roman",Times,serif;
 --vibeui-hero-003-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-hero-003-dur-4:340ms;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
@@ -85,7 +86,7 @@ background:var(--vibeui-hero-003-accent);color:oklch(from var(--vibeui-hero-003-
 [data-vibeui-block="hero-003"] [data-part="accent"],
 [data-vibeui-block="hero-003"] [data-part="panel"],
 [data-vibeui-block="hero-003"] [data-part="pattern"]{
-transition:transform .35s cubic-bezier(.32,.72,0,1),box-shadow .3s ease;
+transition:transform var(--vibeui-hero-003-dur-4) cubic-bezier(.32,.72,0,1),box-shadow var(--vibeui-hero-003-dur-4) ease;
 }
 [data-vibeui-block="hero-003"] [data-part="stat"]:hover,
 [data-vibeui-block="hero-003"] [data-part="accent"]:hover,

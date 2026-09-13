@@ -28,6 +28,7 @@ const STYLES = `
 --vibeui-logocloud-001-logo:light-dark(oklch(0.45 0 0),oklch(0.64 0 0));
 --vibeui-logocloud-001-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-logocloud-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-logocloud-001-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -53,7 +54,7 @@ display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1.25re
 [data-vibeui-block="logocloud-001"] [data-part="logo"]{
 color:var(--vibeui-logocloud-001-logo);
 font-size:1.25rem;line-height:1;white-space:nowrap;
-transition:color .18s ease;
+transition:color var(--vibeui-logocloud-001-dur-2) ease;
 font-weight:750;letter-spacing:-0.035em;
 }
 [data-vibeui-block="logocloud-001"] [data-part="logo"][data-style="serif"]{

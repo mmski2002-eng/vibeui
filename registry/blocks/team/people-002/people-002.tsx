@@ -37,6 +37,7 @@ const STYLES = `
 --vibeui-people-002-accent-fill:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
 --vibeui-people-002-on-accent:oklch(from var(--vibeui-people-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-people-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-people-002-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -69,7 +70,7 @@ padding:0.4375rem 0.875rem;border-radius:999px;
 border:1px solid var(--vibeui-people-002-border);
 color:var(--vibeui-people-002-muted);font-size:0.8125rem;font-weight:600;line-height:1;
 cursor:pointer;
-transition:color .15s ease,border-color .15s ease,background .15s ease;
+transition:color var(--vibeui-people-002-dur-2) ease,border-color var(--vibeui-people-002-dur-2) ease,background var(--vibeui-people-002-dur-2) ease;
 }
 [data-vibeui-block="people-002"] [data-part="chip"]:hover{
 color:var(--vibeui-people-002-ink);
@@ -91,7 +92,7 @@ outline:2px solid var(--vibeui-people-002-accent);outline-offset:2px;
 min-inline-size:0;display:flex;align-items:center;gap:0.875rem;
 padding:1rem 1.125rem;border:1px solid var(--vibeui-people-002-border);border-radius:1rem;
 background:var(--vibeui-people-002-card);
-transition:border-color .18s ease;
+transition:border-color var(--vibeui-people-002-dur-2) ease;
 }
 [data-vibeui-block="people-002"] [data-part="card"]:hover{
 border-color:color-mix(in oklab,var(--vibeui-people-002-accent) 40%,var(--vibeui-people-002-border));

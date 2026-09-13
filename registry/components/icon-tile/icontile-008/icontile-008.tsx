@@ -53,6 +53,7 @@ const STYLES = `
 --vibeui-icontile-008-shadow:light-dark(oklch(0.3 0 0 / 55%),oklch(0.05 0 262 / 75%));
 --vibeui-icontile-008-ring:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-icontile-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-icontile-008-dur-2:180ms;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
@@ -78,7 +79,7 @@ box-sizing:border-box;width:100%;padding:1rem;
 background:var(--vibeui-icontile-008-surface);
 border:1px solid var(--vibeui-icontile-008-border);border-radius:1rem;
 font:inherit;color:inherit;
-transition:transform 0.16s ease,box-shadow 0.16s ease,background-color 0.16s ease,border-color 0.16s ease;
+transition:transform var(--vibeui-icontile-008-dur-2) ease,box-shadow var(--vibeui-icontile-008-dur-2) ease,background-color var(--vibeui-icontile-008-dur-2) ease,border-color var(--vibeui-icontile-008-dur-2) ease;
 }
 [data-vibeui-block="icontile-008"] [data-part="item"]:hover{
 transform:translateY(-2px);

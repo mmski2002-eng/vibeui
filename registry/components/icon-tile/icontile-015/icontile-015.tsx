@@ -141,6 +141,7 @@ const STYLES = `
 --vibeui-icontile-015-pad:0;
 --vibeui-icontile-015-radius:0;
 --vibeui-icontile-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-icontile-015-dur-2:180ms;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
@@ -172,7 +173,7 @@ box-sizing:border-box;min-width:0;padding:0.75rem;text-align:left;
 background:var(--vibeui-icontile-015-surface);
 border:1px solid var(--vibeui-icontile-015-border);border-radius:0.75rem;
 font:inherit;color:inherit;cursor:pointer;
-transition:border-color 0.15s ease, background 0.15s ease;
+transition:border-color var(--vibeui-icontile-015-dur-2) ease, background var(--vibeui-icontile-015-dur-2) ease;
 }
 [data-vibeui-block="icontile-015"] [data-part="option"]:focus-visible{
 outline:2px solid var(--vibeui-icontile-015-accent);outline-offset:2px;

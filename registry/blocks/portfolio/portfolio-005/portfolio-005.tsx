@@ -36,6 +36,7 @@ const STYLES = `
 --vibeui-portfolio-005-hover:light-dark(oklch(0.97 0 0),oklch(0.22 0 0));
 --vibeui-portfolio-005-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-portfolio-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-portfolio-005-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -56,7 +57,7 @@ font-family:var(--vibeui-portfolio-005-font);
 display:grid;gap:0.25rem 1.5rem;align-items:baseline;
 grid-template-columns:minmax(0,1fr) auto;
 padding:1rem 0.75rem;margin:0 -0.75rem;border-radius:0.75rem;
-color:inherit;text-decoration:none;transition:background-color .18s ease,color .18s ease;
+color:inherit;text-decoration:none;transition:background-color var(--vibeui-portfolio-005-dur-2) ease,color var(--vibeui-portfolio-005-dur-2) ease;
 }
 [data-vibeui-block="portfolio-005"] [data-part="link"]:hover,
 [data-vibeui-block="portfolio-005"] [data-part="link"]:focus-visible{background:var(--vibeui-portfolio-005-hover)}

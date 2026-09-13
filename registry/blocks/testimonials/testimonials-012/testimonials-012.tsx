@@ -39,6 +39,7 @@ const STYLES = `
 --vibeui-testimonials-012-accent-fill:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
 --vibeui-testimonials-012-accent-ink:oklch(from var(--vibeui-testimonials-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-testimonials-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-testimonials-012-dur-2:180ms;
 container-type:inline-size;
 }
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="testimonials-012"]{color-scheme:dark}
@@ -68,7 +69,7 @@ position:relative;display:inline-flex;align-items:center;
 padding:0.4375rem 1rem;border-radius:999px;cursor:pointer;
 color:var(--vibeui-testimonials-012-muted);
 font-size:0.875rem;font-weight:640;line-height:1;white-space:nowrap;
-transition:color .15s ease,background-color .15s ease;
+transition:color var(--vibeui-testimonials-012-dur-2) ease,background-color var(--vibeui-testimonials-012-dur-2) ease;
 }
 [data-vibeui-block="testimonials-012"] [data-part="tab"] input{
 position:absolute;inset:0;margin:0;opacity:0;cursor:inherit;

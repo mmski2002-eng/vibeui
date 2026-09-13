@@ -69,6 +69,7 @@ const STYLES = `
 --vibeui-pricing-009-accent:light-dark(oklch(0.287 0 0),oklch(0.906 0 0));
 --vibeui-pricing-009-accent-fg:oklch(from var(--vibeui-pricing-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-pricing-009-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-pricing-009-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -98,7 +99,7 @@ border:1px solid var(--vibeui-pricing-009-line);background:var(--vibeui-pricing-
 [data-vibeui-block="pricing-009"] [data-part="opt"]{
 display:inline-flex;align-items:center;cursor:pointer;height:2rem;padding:0 0.875rem;border-radius:0.5rem;
 font-size:0.8125rem;font-weight:650;color:var(--vibeui-pricing-009-muted);
-transition:background-color .16s ease,color .16s ease;
+transition:background-color var(--vibeui-pricing-009-dur-2) ease,color var(--vibeui-pricing-009-dur-2) ease;
 }
 [data-vibeui-block="pricing-009"] [data-part="plans"]{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:1rem}
 [data-vibeui-block="pricing-009"] [data-part="plan"]{
@@ -120,7 +121,7 @@ font-size:2rem;font-weight:700;letter-spacing:-0.04em;font-variant-numeric:tabul
 [data-vibeui-block="pricing-009"] a{
 display:inline-flex;align-items:center;justify-content:center;margin-top:auto;height:2.625rem;border-radius:0.625rem;
 border:1px solid var(--vibeui-pricing-009-line);color:var(--vibeui-pricing-009-fg);
-font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color .16s ease,border-color .16s ease;
+font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color var(--vibeui-pricing-009-dur-2) ease,border-color var(--vibeui-pricing-009-dur-2) ease;
 }
 [data-vibeui-block="pricing-009"] [data-part="cta"]{margin-top:1.375rem}
 [data-vibeui-block="pricing-009"] [data-featured="true"] a{background:var(--vibeui-pricing-009-accent);color:oklch(from var(--vibeui-pricing-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border-color:transparent}

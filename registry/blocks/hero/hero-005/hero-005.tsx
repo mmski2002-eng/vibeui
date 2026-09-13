@@ -35,6 +35,8 @@ const STYLES = `
 --vibeui-hero-005-accent:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
 --vibeui-hero-005-accent-fg:oklch(from var(--vibeui-hero-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-005-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-hero-005-dur-2:180ms;
+--vibeui-hero-005-dur-3:240ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -61,9 +63,9 @@ margin:1rem 0 0;font-size:clamp(0.9375rem,1.5cqi,1.0625rem);line-height:1.6;colo
 [data-vibeui-block="hero-005"] [data-part="actions"]{display:flex;flex-direction:column;gap:0.625rem;margin:1.75rem 0 0}
 [data-vibeui-block="hero-005"] a{
 display:inline-flex;align-items:center;justify-content:center;height:2.75rem;padding:0 1.375rem;border-radius:0.625rem;
-font-size:0.9375rem;font-weight:600;text-decoration:none;transition:opacity .16s ease,border-color .16s ease;
+font-size:0.9375rem;font-weight:600;text-decoration:none;transition:opacity var(--vibeui-hero-005-dur-2) ease,border-color var(--vibeui-hero-005-dur-2) ease;
 }
-[data-vibeui-block="hero-005"] [data-part="primary"]{background:var(--vibeui-hero-005-accent);color:oklch(from var(--vibeui-hero-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border:1px solid transparent;box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-hero-005-accent) 40%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);transition:transform .2s cubic-bezier(.32,.72,0,1),box-shadow .25s ease,background-color .2s ease}
+[data-vibeui-block="hero-005"] [data-part="primary"]{background:var(--vibeui-hero-005-accent);color:oklch(from var(--vibeui-hero-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border:1px solid transparent;box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-hero-005-accent) 40%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);transition:transform var(--vibeui-hero-005-dur-2) cubic-bezier(.32,.72,0,1),box-shadow var(--vibeui-hero-005-dur-3) ease,background-color var(--vibeui-hero-005-dur-2) ease}
 [data-vibeui-block="hero-005"] [data-part="secondary"]{border:1px solid var(--vibeui-hero-005-line);color:var(--vibeui-hero-005-fg)}
 [data-vibeui-block="hero-005"] a:hover{opacity:.88}
 [data-vibeui-block="hero-005"] a:focus-visible{outline:2px solid var(--vibeui-hero-005-accent);outline-offset:3px}

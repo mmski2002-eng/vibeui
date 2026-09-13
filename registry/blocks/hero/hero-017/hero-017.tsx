@@ -40,6 +40,8 @@ const STYLES = `
 --vibeui-hero-017-accent-fg:oklch(from var(--vibeui-hero-017-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-017-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-hero-017-step:2.2s;
+--vibeui-hero-017-dur-2:180ms;
+--vibeui-hero-017-dur-3:240ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -92,9 +94,9 @@ display:flex;flex-direction:column;align-items:stretch;gap:0.625rem;margin:2rem 
 display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;
 height:2.875rem;padding:0 1.5rem;border-radius:0.625rem;
 font-size:0.9375rem;font-weight:600;text-decoration:none;
-transition:background-color .16s ease,border-color .16s ease,color .16s ease;
+transition:background-color var(--vibeui-hero-017-dur-2) ease,border-color var(--vibeui-hero-017-dur-2) ease,color var(--vibeui-hero-017-dur-2) ease;
 }
-[data-vibeui-block="hero-017"] [data-part="primary"]{background:var(--vibeui-hero-017-accent);color:oklch(from var(--vibeui-hero-017-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border:1px solid transparent;box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-hero-017-accent) 40%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);transition:transform .2s cubic-bezier(.32,.72,0,1),box-shadow .25s ease,background-color .2s ease}
+[data-vibeui-block="hero-017"] [data-part="primary"]{background:var(--vibeui-hero-017-accent);color:oklch(from var(--vibeui-hero-017-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border:1px solid transparent;box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-hero-017-accent) 40%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);transition:transform var(--vibeui-hero-017-dur-2) cubic-bezier(.32,.72,0,1),box-shadow var(--vibeui-hero-017-dur-3) ease,background-color var(--vibeui-hero-017-dur-2) ease}
 [data-vibeui-block="hero-017"] [data-part="primary"]:hover{transform:translateY(-1px);box-shadow:0 0.625rem 1.75rem color-mix(in oklab,var(--vibeui-hero-017-accent) 50%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 52%,transparent)}
 [data-vibeui-block="hero-017"] [data-part="secondary"]{border:1px solid var(--vibeui-hero-017-line);color:var(--vibeui-hero-017-fg);background:transparent}
 [data-vibeui-block="hero-017"] [data-part="secondary"]:hover{border-color:var(--vibeui-hero-017-fg)}

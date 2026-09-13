@@ -51,6 +51,10 @@ const STYLES = `
 --vibeui-navbar-002-accent-fg:oklch(from var(--vibeui-navbar-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-navbar-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-navbar-002-ease:cubic-bezier(.32,.72,0,1);
+--vibeui-navbar-002-dur-1:130ms;
+--vibeui-navbar-002-dur-2:180ms;
+--vibeui-navbar-002-dur-3:240ms;
+--vibeui-navbar-002-dur-4:340ms;
 container-type:inline-size;
 }
 /* Тема идёт за страницей: color-scheme наследуется от неё, а классовую
@@ -83,7 +87,7 @@ background:var(--vibeui-navbar-002-accent);color:oklch(from var(--vibeui-navbar-
 font-size:0.8125rem;font-weight:800;
 box-shadow:0 0.25rem 0.75rem color-mix(in oklab,var(--vibeui-navbar-002-accent) 46%,transparent),
 inset 0 1px 0 rgb(255 255 255 / 40%);
-transition:transform .22s var(--vibeui-navbar-002-ease);
+transition:transform var(--vibeui-navbar-002-dur-3) var(--vibeui-navbar-002-ease);
 }
 [data-vibeui-block="navbar-002"] [data-part="brand"]:hover [data-part="mark"]{transform:rotate(-6deg) scale(1.06)}
 
@@ -100,7 +104,7 @@ overflow-x:auto;scrollbar-width:none;
 position:relative;z-index:1;flex:none;padding:0.4375rem 0.9375rem;border-radius:999px;
 color:var(--vibeui-navbar-002-muted);text-decoration:none;
 font-size:0.875rem;font-weight:530;white-space:nowrap;
-transition:color .13s ease;
+transition:color var(--vibeui-navbar-002-dur-1) ease;
 }
 [data-vibeui-block="navbar-002"] [data-part="rail"] a:hover,
 [data-vibeui-block="navbar-002"] [data-part="rail"] a[aria-current="page"]{
@@ -119,7 +123,7 @@ opacity:0;pointer-events:none;
 }
 [data-vibeui-block="navbar-002"] [data-part="rail"][data-ready] [data-part="glider"]{
 opacity:1;
-transition:transform .34s var(--vibeui-navbar-002-ease),width .34s var(--vibeui-navbar-002-ease),opacity .18s ease;
+transition:transform var(--vibeui-navbar-002-dur-4) var(--vibeui-navbar-002-ease),width var(--vibeui-navbar-002-dur-4) var(--vibeui-navbar-002-ease),opacity var(--vibeui-navbar-002-dur-2) ease;
 }
 
 [data-vibeui-block="navbar-002"] [data-part="actions"]{
@@ -128,13 +132,13 @@ display:flex;align-items:center;gap:0.375rem;margin-left:auto;flex:none;
 [data-vibeui-block="navbar-002"] [data-part="login"]{
 position:relative;padding:0.4375rem 0.75rem;border-radius:0.6875rem;
 color:var(--vibeui-navbar-002-muted);text-decoration:none;font-size:0.875rem;font-weight:530;
-transition:color .13s ease;
+transition:color var(--vibeui-navbar-002-dur-1) ease;
 }
 [data-vibeui-block="navbar-002"] [data-part="login"]::after{
 content:"";position:absolute;left:0.75rem;right:0.75rem;bottom:0.25rem;height:1.5px;
 background:currentColor;border-radius:2px;
 transform:scaleX(0);transform-origin:center;
-transition:transform .24s var(--vibeui-navbar-002-ease);
+transition:transform var(--vibeui-navbar-002-dur-3) var(--vibeui-navbar-002-ease);
 }
 [data-vibeui-block="navbar-002"] [data-part="login"]:hover{color:var(--vibeui-navbar-002-ink)}
 [data-vibeui-block="navbar-002"] [data-part="login"]:hover::after{transform:scaleX(1)}
@@ -146,13 +150,13 @@ background:var(--vibeui-navbar-002-accent);color:oklch(from var(--vibeui-navbar-
 text-decoration:none;font-size:0.875rem;font-weight:650;white-space:nowrap;letter-spacing:-0.01em;
 box-shadow:0 0.3125rem 1rem color-mix(in oklab,var(--vibeui-navbar-002-accent) 40%,transparent),
 inset 0 1px 0 rgb(255 255 255 / 40%);
-transition:transform .18s var(--vibeui-navbar-002-ease),box-shadow .25s ease;
+transition:transform var(--vibeui-navbar-002-dur-2) var(--vibeui-navbar-002-ease),box-shadow var(--vibeui-navbar-002-dur-3) ease;
 }
 [data-vibeui-block="navbar-002"] [data-part="action"]::before{
 content:"";position:absolute;inset:0;pointer-events:none;
 background:radial-gradient(5rem 5rem at var(--vibeui-navbar-002-mx,50%) var(--vibeui-navbar-002-my,50%),
 rgb(255 255 255 / 50%),transparent 70%);
-opacity:0;transition:opacity .2s ease;
+opacity:0;transition:opacity var(--vibeui-navbar-002-dur-2) ease;
 }
 [data-vibeui-block="navbar-002"] [data-part="action"]:hover{
 transform:translateY(-1px);

@@ -44,6 +44,7 @@ const STYLES = `
 --vibeui-footer-006-accent:light-dark(oklch(0.28 0 0),oklch(0.91 0 0));
 --vibeui-footer-006-accent-fg:oklch(from var(--vibeui-footer-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-footer-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-footer-006-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -87,7 +88,7 @@ font-size:0.6875rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercas
 color:var(--vibeui-footer-006-ink);text-decoration:none;
 font-size:1.0625rem;font-weight:620;letter-spacing:-0.015em;
 border-bottom:1px solid transparent;
-transition:border-color .16s ease,color .16s ease;
+transition:border-color var(--vibeui-footer-006-dur-2) ease,color var(--vibeui-footer-006-dur-2) ease;
 }
 [data-vibeui-block="footer-006"] [data-part="contacts"] a:hover{
 color:var(--vibeui-footer-006-accent);border-bottom-color:currentColor;
@@ -98,7 +99,7 @@ display:grid;place-items:center;width:2.5rem;height:2.5rem;border-radius:0.75rem
 border:1px solid var(--vibeui-footer-006-border);
 color:var(--vibeui-footer-006-muted);text-decoration:none;
 font-size:0.75rem;font-weight:750;letter-spacing:0.02em;
-transition:background-color .16s ease,color .16s ease,border-color .16s ease;
+transition:background-color var(--vibeui-footer-006-dur-2) ease,color var(--vibeui-footer-006-dur-2) ease,border-color var(--vibeui-footer-006-dur-2) ease;
 }
 [data-vibeui-block="footer-006"] [data-part="social"]:hover{
 background:var(--vibeui-footer-006-accent);border-color:var(--vibeui-footer-006-accent);

@@ -37,6 +37,7 @@ const STYLES = `
 --vibeui-portfolio-002-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-portfolio-002-on-accent:oklch(from var(--vibeui-portfolio-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-portfolio-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-portfolio-002-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -55,7 +56,7 @@ font-family:var(--vibeui-portfolio-002-font);
 appearance:none;cursor:pointer;border:1px solid var(--vibeui-portfolio-002-border);
 background:var(--vibeui-portfolio-002-chip);color:inherit;
 padding:0.375rem 0.875rem;border-radius:999px;font:inherit;font-size:0.8125rem;font-weight:600;
-transition:background-color .16s ease,color .16s ease,border-color .16s ease;
+transition:background-color var(--vibeui-portfolio-002-dur-2) ease,color var(--vibeui-portfolio-002-dur-2) ease,border-color var(--vibeui-portfolio-002-dur-2) ease;
 }
 [data-vibeui-block="portfolio-002"] [data-part="chip"]:hover{border-color:var(--vibeui-portfolio-002-accent)}
 [data-vibeui-block="portfolio-002"] [data-part="chip"][aria-pressed="true"]{background:var(--vibeui-portfolio-002-accent);color:oklch(from var(--vibeui-portfolio-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border-color:transparent}
@@ -64,7 +65,7 @@ transition:background-color .16s ease,color .16s ease,border-color .16s ease;
 [data-vibeui-block="portfolio-002"] [data-part="card"]{
 min-inline-size:0;display:flex;flex-direction:column;overflow:hidden;text-decoration:none;color:inherit;
 border:1px solid var(--vibeui-portfolio-002-border);border-radius:1rem;background:var(--vibeui-portfolio-002-card);
-transition:transform .18s ease,border-color .18s ease;
+transition:transform var(--vibeui-portfolio-002-dur-2) ease,border-color var(--vibeui-portfolio-002-dur-2) ease;
 }
 [data-vibeui-block="portfolio-002"] [data-part="card"]:hover{transform:translateY(-3px);border-color:var(--vibeui-portfolio-002-accent)}
 [data-vibeui-block="portfolio-002"] [data-part="card"]:focus-visible{outline:2px solid var(--vibeui-portfolio-002-accent);outline-offset:2px}

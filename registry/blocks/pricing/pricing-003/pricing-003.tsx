@@ -71,6 +71,7 @@ const STYLES = `
 --vibeui-pricing-003-accent:light-dark(oklch(0.287 0 0),oklch(0.906 0 0));
 --vibeui-pricing-003-accent-fg:oklch(from var(--vibeui-pricing-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-pricing-003-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-pricing-003-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -99,7 +100,7 @@ border:1px solid var(--vibeui-pricing-003-line);background:var(--vibeui-pricing-
 [data-vibeui-block="pricing-003"] [data-part="opt"]{
 display:inline-flex;align-items:center;gap:0.375rem;cursor:pointer;height:2.25rem;padding:0 1rem;border-radius:9999px;
 font-size:0.875rem;font-weight:650;color:var(--vibeui-pricing-003-muted);
-transition:background-color .16s ease,color .16s ease;
+transition:background-color var(--vibeui-pricing-003-dur-2) ease,color var(--vibeui-pricing-003-dur-2) ease;
 }
 [data-vibeui-block="pricing-003"] [data-part="save"]{
 padding:0.125rem 0.375rem;border-radius:0.375rem;background:var(--vibeui-pricing-003-accent);
@@ -126,7 +127,7 @@ font-size:2.125rem;font-weight:700;letter-spacing:-0.04em;font-variant-numeric:t
 [data-vibeui-block="pricing-003"] a{
 display:inline-flex;align-items:center;justify-content:center;margin-top:1.5rem;height:2.75rem;border-radius:0.625rem;
 border:1px solid var(--vibeui-pricing-003-line);color:var(--vibeui-pricing-003-fg);
-font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color .16s ease,border-color .16s ease;
+font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color var(--vibeui-pricing-003-dur-2) ease,border-color var(--vibeui-pricing-003-dur-2) ease;
 }
 [data-vibeui-block="pricing-003"] [data-featured="true"] a{background:var(--vibeui-pricing-003-accent);color:oklch(from var(--vibeui-pricing-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border-color:transparent}
 [data-vibeui-block="pricing-003"] a:focus-visible{outline:2px solid var(--vibeui-pricing-003-accent);outline-offset:3px}

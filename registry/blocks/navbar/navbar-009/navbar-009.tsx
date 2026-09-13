@@ -57,6 +57,9 @@ const STYLES = `
 --vibeui-navbar-009-on-accent:oklch(from var(--vibeui-navbar-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-navbar-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-navbar-009-ease:cubic-bezier(.32,.72,0,1);
+--vibeui-navbar-009-dur-1:130ms;
+--vibeui-navbar-009-dur-2:180ms;
+--vibeui-navbar-009-dur-3:240ms;
 container-type:inline-size;
 }
 /* Тема идёт за страницей: color-scheme наследуется от неё, а классовую
@@ -87,7 +90,7 @@ background:var(--vibeui-navbar-009-accent);color:oklch(from var(--vibeui-navbar-
 font-size:1.0625rem;font-weight:800;
 box-shadow:0 0.375rem 1rem color-mix(in oklab,var(--vibeui-navbar-009-accent) 44%,transparent),
 inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);
-transition:transform .22s var(--vibeui-navbar-009-ease);
+transition:transform var(--vibeui-navbar-009-dur-3) var(--vibeui-navbar-009-ease);
 }
 [data-vibeui-block="navbar-009"] [data-part="ident"]:hover [data-part="mark"]{transform:rotate(-6deg) scale(1.05)}
 [data-vibeui-block="navbar-009"] [data-part="titles"]{
@@ -109,7 +112,7 @@ display:inline-flex;align-items:center;gap:0.4375rem;max-width:17rem;
 padding:0.4375rem 0.75rem;border-radius:999px;
 border:1px solid var(--vibeui-navbar-009-line);
 font:inherit;font-size:0.8125rem;color:var(--vibeui-navbar-009-muted);
-transition:background-color .16s ease,border-color .2s ease,color .13s ease;
+transition:background-color var(--vibeui-navbar-009-dur-2) ease,border-color var(--vibeui-navbar-009-dur-2) ease,color var(--vibeui-navbar-009-dur-1) ease;
 }
 [data-vibeui-block="navbar-009"] [data-part="branch-button"]:hover,
 [data-vibeui-block="navbar-009"] [data-part="branch-button"][aria-expanded="true"]{
@@ -129,7 +132,7 @@ border:1px solid var(--vibeui-navbar-009-line);border-radius:1rem;
 box-shadow:var(--vibeui-navbar-009-shadow);
 display:flex;flex-direction:column;padding:0.3125rem;
 transform-origin:top left;
-transition:opacity .18s ease,transform .24s var(--vibeui-navbar-009-ease);
+transition:opacity var(--vibeui-navbar-009-dur-2) ease,transform var(--vibeui-navbar-009-dur-3) var(--vibeui-navbar-009-ease);
 }
 [data-vibeui-block="navbar-009"] [data-part="branch-panel"][data-open="false"]{
 opacity:0;transform:translateY(-0.375rem) scale(.98);pointer-events:none;
@@ -138,7 +141,7 @@ opacity:0;transform:translateY(-0.375rem) scale(.98);pointer-events:none;
 display:flex;flex-direction:column;gap:0.0625rem;
 padding:0.625rem 0.75rem;border-radius:0.75rem;
 color:var(--vibeui-navbar-009-ink);text-decoration:none;
-transition:background-color .14s ease;
+transition:background-color var(--vibeui-navbar-009-dur-1) ease;
 }
 [data-vibeui-block="navbar-009"] [data-part="branch-panel"] a:hover{background:var(--vibeui-navbar-009-hover)}
 [data-vibeui-block="navbar-009"] [data-part="branch-panel"] strong{font-size:0.875rem;font-weight:620}
@@ -154,7 +157,7 @@ margin-left:auto;flex:none;
 color:inherit;text-decoration:none;
 font-size:1.125rem;font-weight:700;letter-spacing:-0.02em;white-space:nowrap;
 font-variant-numeric:tabular-nums;
-transition:color .13s ease;
+transition:color var(--vibeui-navbar-009-dur-1) ease;
 }
 [data-vibeui-block="navbar-009"] [data-part="phone"]:hover{color:var(--vibeui-navbar-009-accent)}
 [data-vibeui-block="navbar-009"] [data-part="hours"]{
@@ -180,7 +183,7 @@ background:var(--vibeui-navbar-009-accent);color:oklch(from var(--vibeui-navbar-
 text-decoration:none;font-size:1rem;font-weight:660;white-space:nowrap;letter-spacing:-0.01em;
 box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-navbar-009-accent) 40%,transparent),
 inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);
-transition:transform .18s var(--vibeui-navbar-009-ease),box-shadow .25s ease;
+transition:transform var(--vibeui-navbar-009-dur-2) var(--vibeui-navbar-009-ease),box-shadow var(--vibeui-navbar-009-dur-3) ease;
 }
 [data-vibeui-block="navbar-009"] [data-part="book"] svg{width:1.0625rem;height:1.0625rem}
 [data-vibeui-block="navbar-009"] [data-part="book"]:hover{

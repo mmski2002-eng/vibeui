@@ -31,6 +31,7 @@ const STYLES = `
 --vibeui-portfolio-003-card:light-dark(oklch(0.99 0 0),oklch(0.2 0 0));
 --vibeui-portfolio-003-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-portfolio-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-portfolio-003-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -48,7 +49,7 @@ font-family:var(--vibeui-portfolio-003-font);
 [data-vibeui-block="portfolio-003"] [data-part="case"]{
 min-inline-size:0;display:flex;flex-direction:column;gap:0.75rem;overflow:hidden;text-decoration:none;color:inherit;
 border:1px solid var(--vibeui-portfolio-003-border);border-radius:1.125rem;background:var(--vibeui-portfolio-003-card);
-transition:transform .18s ease,border-color .18s ease;
+transition:transform var(--vibeui-portfolio-003-dur-2) ease,border-color var(--vibeui-portfolio-003-dur-2) ease;
 }
 [data-vibeui-block="portfolio-003"] [data-part="case"]:hover{transform:translateY(-3px);border-color:var(--vibeui-portfolio-003-accent)}
 [data-vibeui-block="portfolio-003"] [data-part="case"]:focus-visible{outline:2px solid var(--vibeui-portfolio-003-accent);outline-offset:2px}
@@ -60,7 +61,7 @@ transition:transform .18s ease,border-color .18s ease;
 [data-vibeui-block="portfolio-003"] [data-part="link"]{
 display:inline-flex;align-items:center;gap:0.375rem;margin-top:0.25rem;
 font-size:0.875rem;font-weight:650;color:var(--vibeui-portfolio-003-accent);
-opacity:0;transform:translateX(-4px);transition:opacity .18s ease,transform .18s ease;
+opacity:0;transform:translateX(-4px);transition:opacity var(--vibeui-portfolio-003-dur-2) ease,transform var(--vibeui-portfolio-003-dur-2) ease;
 }
 [data-vibeui-block="portfolio-003"] [data-part="case"]:hover [data-part="link"],
 [data-vibeui-block="portfolio-003"] [data-part="case"]:focus-visible [data-part="link"]{opacity:1;transform:translateX(0)}

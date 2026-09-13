@@ -32,6 +32,7 @@ const STYLES = `
 --vibeui-portfolio-001-tile-ink:oklch(0.98 0 0);
 --vibeui-portfolio-001-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-portfolio-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-portfolio-001-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -50,7 +51,7 @@ font-family:var(--vibeui-portfolio-001-font);
 position:relative;display:flex;flex-direction:column;justify-content:flex-end;
 padding:1.25rem;border-radius:1rem;overflow:hidden;text-decoration:none;
 color:var(--vibeui-portfolio-001-tile-ink);min-inline-size:0;
-transition:transform .18s ease;
+transition:transform var(--vibeui-portfolio-001-dur-2) ease;
 }
 [data-vibeui-block="portfolio-001"] [data-part="tile"] img{
 position:absolute;inset:0;width:100%;height:100%;object-fit:cover;

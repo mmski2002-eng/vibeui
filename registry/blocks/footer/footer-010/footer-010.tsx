@@ -36,6 +36,7 @@ const STYLES = `
 --vibeui-footer-010-border:light-dark(oklch(0.91 0 0),oklch(0.32 0 0));
 --vibeui-footer-010-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-footer-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-footer-010-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -69,7 +70,7 @@ font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
 [data-vibeui-block="footer-010"] [data-part="column"] ul{margin:0;padding:0;list-style:none;display:grid;gap:0.5rem}
 [data-vibeui-block="footer-010"] [data-part="column"] a{
 color:var(--vibeui-footer-010-muted);text-decoration:none;font-size:0.875rem;
-transition:color .16s ease;
+transition:color var(--vibeui-footer-010-dur-2) ease;
 }
 [data-vibeui-block="footer-010"] [data-part="column"] a:hover{color:var(--vibeui-footer-010-accent)}
 [data-vibeui-block="footer-010"] [data-part="bottom"]{

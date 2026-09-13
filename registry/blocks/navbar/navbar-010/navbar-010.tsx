@@ -58,6 +58,11 @@ const STYLES = `
 --vibeui-navbar-010-inset:1.25rem;
 --vibeui-navbar-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-navbar-010-ease:cubic-bezier(.32,.72,0,1);
+--vibeui-navbar-010-dur-1:130ms;
+--vibeui-navbar-010-dur-2:180ms;
+--vibeui-navbar-010-dur-3:240ms;
+--vibeui-navbar-010-dur-4:340ms;
+--vibeui-navbar-010-dur-5:460ms;
 container-type:inline-size;
 }
 /* Тема идёт за страницей: color-scheme наследуется от неё, а классовую
@@ -86,7 +91,7 @@ background:linear-gradient(158deg,#000000 0%,#120f0e 54%,#1e1712 100%);
 [data-vibeui-block="navbar-010"] [data-part="dock"]{
 position:relative;z-index:50;
 padding:var(--vibeui-navbar-010-inset);
-transition:padding .5s var(--vibeui-navbar-010-ease);
+transition:padding var(--vibeui-navbar-010-dur-5) var(--vibeui-navbar-010-ease);
 }
 [data-vibeui-block="navbar-010"] [data-part="dock"][data-sticky]{position:sticky;top:0}
 [data-vibeui-block="navbar-010"] [data-part="dock"][data-scrolled]{
@@ -97,9 +102,9 @@ padding-top:0.625rem;padding-bottom:0.625rem;
 display:flex;align-items:center;gap:0.5rem;
 max-width:78rem;margin:0 auto;padding:0;
 border:1px solid transparent;border-radius:999px;
-transition:max-width .5s var(--vibeui-navbar-010-ease),gap .5s var(--vibeui-navbar-010-ease),
-padding .5s var(--vibeui-navbar-010-ease),background-color .35s ease,
-border-color .35s ease,box-shadow .35s ease;
+transition:max-width var(--vibeui-navbar-010-dur-5) var(--vibeui-navbar-010-ease),gap var(--vibeui-navbar-010-dur-5) var(--vibeui-navbar-010-ease),
+padding var(--vibeui-navbar-010-dur-5) var(--vibeui-navbar-010-ease),background-color var(--vibeui-navbar-010-dur-4) ease,
+border-color var(--vibeui-navbar-010-dur-4) ease,box-shadow var(--vibeui-navbar-010-dur-4) ease;
 }
 [data-vibeui-block="navbar-010"] [data-part="dock"][data-scrolled] [data-part="bar"]{
 max-width:52rem;gap:0.25rem;padding:0.3125rem;
@@ -119,7 +124,7 @@ border-radius:999px;
 box-shadow:var(--vibeui-navbar-010-lift),inset 0 1px 0 var(--vibeui-navbar-010-sheen);
 -webkit-backdrop-filter:blur(1.125rem) saturate(170%);
 backdrop-filter:blur(1.125rem) saturate(170%);
-transition:background-color .35s ease,border-color .35s ease,box-shadow .35s ease;
+transition:background-color var(--vibeui-navbar-010-dur-4) ease,border-color var(--vibeui-navbar-010-dur-4) ease,box-shadow var(--vibeui-navbar-010-dur-4) ease;
 }
 [data-vibeui-block="navbar-010"] [data-part="dock"][data-scrolled] [data-part="brand"],
 [data-vibeui-block="navbar-010"] [data-part="dock"][data-scrolled] [data-part="nav"],
@@ -150,7 +155,7 @@ position:relative;z-index:1;
 padding:0.4375rem 0.9375rem;border-radius:999px;
 color:var(--vibeui-navbar-010-muted);text-decoration:none;
 font-size:0.875rem;font-weight:540;white-space:nowrap;
-transition:color .12s ease;
+transition:color var(--vibeui-navbar-010-dur-1) ease;
 }
 [data-vibeui-block="navbar-010"] [data-part="nav"] a:hover,
 [data-vibeui-block="navbar-010"] [data-part="nav"] a[aria-current="page"]{
@@ -168,7 +173,7 @@ opacity:0;pointer-events:none;
 }
 [data-vibeui-block="navbar-010"] [data-part="nav"][data-ready] [data-part="glider"]{
 opacity:1;
-transition:transform .34s var(--vibeui-navbar-010-ease),width .34s var(--vibeui-navbar-010-ease),opacity .18s ease;
+transition:transform var(--vibeui-navbar-010-dur-4) var(--vibeui-navbar-010-ease),width var(--vibeui-navbar-010-dur-4) var(--vibeui-navbar-010-ease),opacity var(--vibeui-navbar-010-dur-2) ease;
 }
 
 [data-vibeui-block="navbar-010"] [data-part="action"]{
@@ -179,13 +184,13 @@ background:var(--vibeui-navbar-010-accent);color:oklch(from var(--vibeui-navbar-
 text-decoration:none;font-size:0.875rem;font-weight:650;white-space:nowrap;letter-spacing:-0.01em;
 box-shadow:0 0.375rem 1.125rem color-mix(in oklab,var(--vibeui-navbar-010-accent) 42%,transparent),
 inset 0 1px 0 color-mix(in oklab,#ffffff 45%,transparent);
-transition:transform .18s var(--vibeui-navbar-010-ease),box-shadow .25s ease;
+transition:transform var(--vibeui-navbar-010-dur-2) var(--vibeui-navbar-010-ease),box-shadow var(--vibeui-navbar-010-dur-3) ease;
 }
 [data-vibeui-block="navbar-010"] [data-part="action"]::before{
 content:"";position:absolute;inset:0;pointer-events:none;
 background:radial-gradient(6rem 6rem at var(--vibeui-navbar-010-mx,50%) var(--vibeui-navbar-010-my,50%),
 color-mix(in oklab,#ffffff 55%,transparent),transparent 70%);
-opacity:0;transition:opacity .2s ease;
+opacity:0;transition:opacity var(--vibeui-navbar-010-dur-2) ease;
 }
 [data-vibeui-block="navbar-010"] [data-part="action"]:hover{
 transform:translateY(-1px);
@@ -208,7 +213,7 @@ position:relative;width:0.9375rem;height:0.625rem;flex:none;
 [data-vibeui-block="navbar-010"] [data-part="bars"]::after{
 content:"";position:absolute;left:0;right:0;height:1.5px;border-radius:2px;
 background:currentColor;
-transition:transform .3s var(--vibeui-navbar-010-ease);
+transition:transform var(--vibeui-navbar-010-dur-4) var(--vibeui-navbar-010-ease);
 }
 [data-vibeui-block="navbar-010"] [data-part="bars"]::before{top:0}
 [data-vibeui-block="navbar-010"] [data-part="bars"]::after{bottom:0}
@@ -230,7 +235,7 @@ box-shadow:var(--vibeui-navbar-010-lift-strong),inset 0 1px 0 var(--vibeui-navba
 backdrop-filter:blur(1.5rem) saturate(180%);
 display:flex;flex-direction:column;gap:0.125rem;
 transform-origin:top center;
-transition:opacity .18s ease,transform .26s var(--vibeui-navbar-010-ease);
+transition:opacity var(--vibeui-navbar-010-dur-2) ease,transform var(--vibeui-navbar-010-dur-3) var(--vibeui-navbar-010-ease);
 }
 [data-vibeui-block="navbar-010"] [data-part="panel"][data-open="false"]{
 opacity:0;transform:translateY(-0.5rem) scale(.98);pointer-events:none;
@@ -239,7 +244,7 @@ opacity:0;transform:translateY(-0.5rem) scale(.98);pointer-events:none;
 padding:0.6875rem 0.875rem;border-radius:0.875rem;
 color:var(--vibeui-navbar-010-ink);text-decoration:none;
 font-size:0.9375rem;font-weight:540;
-transition:background-color .14s ease;
+transition:background-color var(--vibeui-navbar-010-dur-1) ease;
 }
 [data-vibeui-block="navbar-010"] [data-part="panel"] a:hover{background:var(--vibeui-navbar-010-glide)}
 [data-vibeui-block="navbar-010"] [data-part="panel"] a[aria-current="page"]{

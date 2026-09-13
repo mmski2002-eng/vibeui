@@ -34,6 +34,7 @@ const STYLES = `
 --vibeui-testimonials-002-accent:light-dark(oklch(0.287 0 0),oklch(0.906 0 0));
 --vibeui-testimonials-002-shadow:light-dark(oklch(0.2 0 0 / 70%),oklch(0.05 0 260 / 85%));
 --vibeui-testimonials-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-testimonials-002-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -65,7 +66,7 @@ min-inline-size:0;
 display:flex;flex-direction:column;gap:1.25rem;margin:0;
 padding:1.5rem;border:1px solid var(--vibeui-testimonials-002-border);border-radius:1.125rem;
 background:var(--vibeui-testimonials-002-card);
-transition:border-color .18s ease,transform .18s ease,box-shadow .18s ease;
+transition:border-color var(--vibeui-testimonials-002-dur-2) ease,transform var(--vibeui-testimonials-002-dur-2) ease,box-shadow var(--vibeui-testimonials-002-dur-2) ease;
 }
 [data-vibeui-block="testimonials-002"] [data-part="card"]:hover{
 border-color:color-mix(in oklab,var(--vibeui-testimonials-002-accent) 40%,var(--vibeui-testimonials-002-border));

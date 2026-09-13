@@ -41,6 +41,7 @@ const STYLES = `
 --vibeui-footer-009-accent-fill:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
 --vibeui-footer-009-accent-fg:oklch(from var(--vibeui-footer-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-footer-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-footer-009-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -83,7 +84,7 @@ flex:none;cursor:pointer;
 padding:0.625rem 1.125rem;border:0;border-radius:0.625rem;
 background:var(--vibeui-footer-009-accent-fill);color:var(--vibeui-footer-009-accent-fg);
 font:inherit;font-size:0.9375rem;font-weight:650;
-transition:filter .16s ease;
+transition:filter var(--vibeui-footer-009-dur-2) ease;
 }
 [data-vibeui-block="footer-009"] [data-part="submit"]:hover{filter:brightness(1.06)}
 [data-vibeui-block="footer-009"] [data-part="columns"]{
@@ -97,7 +98,7 @@ font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
 [data-vibeui-block="footer-009"] [data-part="column"] ul{margin:0;padding:0;list-style:none;display:grid;gap:0.5rem}
 [data-vibeui-block="footer-009"] [data-part="column"] a{
 color:var(--vibeui-footer-009-muted);text-decoration:none;font-size:0.875rem;
-transition:color .16s ease;
+transition:color var(--vibeui-footer-009-dur-2) ease;
 }
 [data-vibeui-block="footer-009"] [data-part="column"] a:hover{color:var(--vibeui-footer-009-accent)}
 [data-vibeui-block="footer-009"] [data-part="bottom"]{
@@ -117,7 +118,7 @@ padding:0.3125rem 0.75rem;border-radius:999px;
 border:1px solid var(--vibeui-footer-009-border);
 color:var(--vibeui-footer-009-muted);text-decoration:none;
 font-size:0.8125rem;font-weight:600;
-transition:color .16s ease,border-color .16s ease;
+transition:color var(--vibeui-footer-009-dur-2) ease,border-color var(--vibeui-footer-009-dur-2) ease;
 }
 [data-vibeui-block="footer-009"] [data-part="social"] a svg{width:1rem;height:1rem;flex:none}
 [data-vibeui-block="footer-009"] [data-part="social"] a:hover{

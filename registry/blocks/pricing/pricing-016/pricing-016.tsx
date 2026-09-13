@@ -54,6 +54,7 @@ const STYLES = `
 --vibeui-pricing-016-bad:light-dark(oklch(0.53 0.16 25),oklch(0.75 0.15 25));
 --vibeui-pricing-016-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-pricing-016-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+--vibeui-pricing-016-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -95,7 +96,7 @@ font-size:2.25rem;font-weight:700;letter-spacing:-0.045em;font-variant-numeric:t
 flex:1 1 auto;min-width:0;height:2.625rem;padding:0 0.875rem;border-radius:0.625rem;
 border:1px solid var(--vibeui-pricing-016-line);background:var(--vibeui-pricing-016-card);
 font-family:var(--vibeui-pricing-016-mono);font-size:0.875rem;letter-spacing:0.08em;text-transform:uppercase;color:inherit;
-transition:border-color .16s ease,box-shadow .16s ease;
+transition:border-color var(--vibeui-pricing-016-dur-2) ease,box-shadow var(--vibeui-pricing-016-dur-2) ease;
 }
 [data-vibeui-block="pricing-016"] input:focus-visible{
 outline:none;border-color:var(--vibeui-pricing-016-accent);
@@ -104,7 +105,7 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-pricing-016-accent) 20%,tra
 [data-vibeui-block="pricing-016"] button{
 appearance:none;cursor:pointer;flex:0 0 auto;height:2.625rem;padding:0 1.125rem;border:0;border-radius:0.625rem;
 background:var(--vibeui-pricing-016-fg);color:var(--vibeui-pricing-016-card);
-font:inherit;font-size:0.875rem;font-weight:650;transition:opacity .16s ease;
+font:inherit;font-size:0.875rem;font-weight:650;transition:opacity var(--vibeui-pricing-016-dur-2) ease;
 }
 [data-vibeui-block="pricing-016"] button:hover{opacity:.88}
 [data-vibeui-block="pricing-016"] button:focus-visible{outline:2px solid var(--vibeui-pricing-016-accent);outline-offset:2px}
@@ -118,7 +119,7 @@ font-size:0.8125rem;font-weight:600;
 [data-vibeui-block="pricing-016"] a{
 display:flex;align-items:center;justify-content:center;margin-top:1.5rem;height:2.75rem;border-radius:0.625rem;
 background:var(--vibeui-pricing-016-accent);color:oklch(from var(--vibeui-pricing-016-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color .16s ease;
+font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color var(--vibeui-pricing-016-dur-2) ease;
 }
 [data-vibeui-block="pricing-016"] a:hover{background:color-mix(in oklab,var(--vibeui-pricing-016-accent) 86%,black)}
 [data-vibeui-block="pricing-016"] a:focus-visible{outline:2px solid var(--vibeui-pricing-016-accent);outline-offset:3px}

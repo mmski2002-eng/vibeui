@@ -33,6 +33,7 @@ const STYLES = `
 --vibeui-contact-007-border:light-dark(oklch(0.91 0 0),oklch(0.32 0 0));
 --vibeui-contact-007-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-contact-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-contact-007-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -89,7 +90,7 @@ margin-top:0.25rem;padding-top:0.875rem;border-top:1px solid var(--vibeui-contac
 display:flex;align-items:center;gap:0.375rem;
 color:var(--vibeui-contact-007-accent);font-size:0.9375rem;font-weight:650;text-decoration:none;
 }
-[data-vibeui-block="contact-007"] [data-part="link"]::after{content:"→";transition:translate 0.18s ease}
+[data-vibeui-block="contact-007"] [data-part="link"]::after{content:"→";transition:translate var(--vibeui-contact-007-dur-2) ease}
 [data-vibeui-block="contact-007"] [data-part="link"]:hover{text-decoration:underline;text-underline-offset:0.25em}
 [data-vibeui-block="contact-007"] [data-part="link"]:hover::after{translate:0.25rem 0}
 [data-vibeui-block="contact-007"] [data-part="link"]:focus-visible{

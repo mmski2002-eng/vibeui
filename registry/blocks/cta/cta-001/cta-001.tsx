@@ -40,6 +40,7 @@ const STYLES = `
 --vibeui-cta-001-accent-fg:oklch(from var(--vibeui-cta-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-cta-001-border:light-dark(oklch(1 0 0 / 14%),oklch(1 0 0 / 22%));
 --vibeui-cta-001-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-cta-001-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -89,7 +90,7 @@ min-height:2.75rem;padding:0.25rem 1.375rem;
 border-radius:0.625rem;
 background:var(--vibeui-cta-001-accent);color:oklch(from var(--vibeui-cta-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 text-decoration:none;font-size:0.9375rem;font-weight:650;
-transition:transform .16s ease,background-color .16s ease;
+transition:transform var(--vibeui-cta-001-dur-2) ease,background-color var(--vibeui-cta-001-dur-2) ease;
 }
 [data-vibeui-block="cta-001"] [data-part="primary"]:hover{transform:translateY(-1px);background:color-mix(in oklab,var(--vibeui-cta-001-accent) 88%,white)}
 /* Второе действие — ссылка, а не вторая кнопка: выбор не должен раздваиваться. */
@@ -97,7 +98,7 @@ transition:transform .16s ease,background-color .16s ease;
 color:var(--vibeui-cta-001-ink);text-decoration:none;
 font-size:0.9375rem;font-weight:500;
 border-bottom:1px solid var(--vibeui-cta-001-border);
-transition:border-color .16s ease;
+transition:border-color var(--vibeui-cta-001-dur-2) ease;
 }
 [data-vibeui-block="cta-001"] [data-part="secondary"]:hover{border-bottom-color:currentColor}
 [data-vibeui-block="cta-001"] [data-part="note"]{

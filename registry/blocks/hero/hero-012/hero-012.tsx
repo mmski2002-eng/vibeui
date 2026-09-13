@@ -34,6 +34,8 @@ const STYLES = `
 --vibeui-hero-012-accent-fg:oklch(from var(--vibeui-hero-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-012-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-hero-012-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+--vibeui-hero-012-dur-2:180ms;
+--vibeui-hero-012-dur-3:240ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -55,7 +57,7 @@ display:inline-flex;align-items:center;gap:0.625rem;max-width:100%;margin:0 0 1.
 padding:0.3125rem 0.75rem 0.3125rem 0.375rem;border-radius:9999px;
 border:1px solid var(--vibeui-hero-012-line);background:var(--vibeui-hero-012-card);
 font-size:0.8125rem;color:var(--vibeui-hero-012-muted);text-decoration:none;
-transition:border-color .16s ease,box-shadow .16s ease;
+transition:border-color var(--vibeui-hero-012-dur-2) ease,box-shadow var(--vibeui-hero-012-dur-2) ease;
 }
 [data-vibeui-block="hero-012"] [data-part="announce"]:hover{border-color:var(--vibeui-hero-012-accent);box-shadow:0 1px 10px color-mix(in oklab,var(--vibeui-hero-012-accent) 18%,transparent)}
 [data-vibeui-block="hero-012"] [data-part="announce"]:focus-visible{outline:2px solid var(--vibeui-hero-012-accent);outline-offset:3px}
@@ -64,7 +66,7 @@ padding:0.1875rem 0.5rem;border-radius:9999px;background:var(--vibeui-hero-012-a
 color:oklch(from var(--vibeui-hero-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);font-size:0.6875rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
 }
 [data-vibeui-block="hero-012"] [data-part="announcetext"]{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-[data-vibeui-block="hero-012"] [data-part="arrow"]{flex:0 0 auto;transition:transform .16s ease}
+[data-vibeui-block="hero-012"] [data-part="arrow"]{flex:0 0 auto;transition:transform var(--vibeui-hero-012-dur-2) ease}
 [data-vibeui-block="hero-012"] [data-part="announce"]:hover [data-part="arrow"]{transform:translateX(2px)}
 [data-vibeui-block="hero-012"] h1{
 margin:0;font-size:clamp(1.875rem,6.2cqi,3.5rem);line-height:1.06;letter-spacing:-0.03em;font-weight:700;text-wrap:balance;
@@ -76,9 +78,9 @@ color:var(--vibeui-hero-012-muted);text-wrap:pretty;
 [data-vibeui-block="hero-012"] [data-part="actions"]{display:flex;flex-direction:column;gap:0.625rem;margin:1.875rem auto 0;max-width:20rem}
 [data-vibeui-block="hero-012"] [data-part="actions"] a{
 display:inline-flex;align-items:center;justify-content:center;height:2.75rem;padding:0 1.375rem;border-radius:0.625rem;
-font-size:0.9375rem;font-weight:600;text-decoration:none;transition:background-color .16s ease,border-color .16s ease;
+font-size:0.9375rem;font-weight:600;text-decoration:none;transition:background-color var(--vibeui-hero-012-dur-2) ease,border-color var(--vibeui-hero-012-dur-2) ease;
 }
-[data-vibeui-block="hero-012"] [data-part="primary"]{background:var(--vibeui-hero-012-accent);color:oklch(from var(--vibeui-hero-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border:1px solid transparent;box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-hero-012-accent) 40%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);transition:transform .2s cubic-bezier(.32,.72,0,1),box-shadow .25s ease,background-color .2s ease}
+[data-vibeui-block="hero-012"] [data-part="primary"]{background:var(--vibeui-hero-012-accent);color:oklch(from var(--vibeui-hero-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border:1px solid transparent;box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-hero-012-accent) 40%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);transition:transform var(--vibeui-hero-012-dur-2) cubic-bezier(.32,.72,0,1),box-shadow var(--vibeui-hero-012-dur-3) ease,background-color var(--vibeui-hero-012-dur-2) ease}
 [data-vibeui-block="hero-012"] [data-part="primary"]:hover{transform:translateY(-1px);box-shadow:0 0.625rem 1.75rem color-mix(in oklab,var(--vibeui-hero-012-accent) 50%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 52%,transparent)}
 [data-vibeui-block="hero-012"] [data-part="secondary"]{border:1px solid var(--vibeui-hero-012-line);color:var(--vibeui-hero-012-fg);background:var(--vibeui-hero-012-card)}
 [data-vibeui-block="hero-012"] [data-part="secondary"]:hover{border-color:var(--vibeui-hero-012-fg)}

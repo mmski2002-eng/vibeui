@@ -59,6 +59,10 @@ const STYLES = `
 --vibeui-navbar-006-on-accent:oklch(from var(--vibeui-navbar-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-navbar-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-navbar-006-ease:cubic-bezier(.32,.72,0,1);
+--vibeui-navbar-006-dur-1:130ms;
+--vibeui-navbar-006-dur-2:180ms;
+--vibeui-navbar-006-dur-3:240ms;
+--vibeui-navbar-006-dur-4:340ms;
 --vibeui-navbar-006-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;
 }
@@ -73,7 +77,7 @@ background:var(--vibeui-navbar-006-bg);color:var(--vibeui-navbar-006-ink);
 border-bottom:1px solid var(--vibeui-navbar-006-line);
 font-family:var(--vibeui-navbar-006-font);
 font-feature-settings:"cv11","ss01";
-transition:background-color .3s ease,color .3s ease;
+transition:background-color var(--vibeui-navbar-006-dur-4) ease,color var(--vibeui-navbar-006-dur-4) ease;
 }
 [data-vibeui-block="navbar-006"] *{box-sizing:border-box}
 [data-vibeui-block="navbar-006"] [data-part="shell"]{
@@ -91,7 +95,7 @@ background:var(--vibeui-navbar-006-accent);color:oklch(from var(--vibeui-navbar-
 font-size:0.75rem;font-weight:800;
 box-shadow:0 0.1875rem 0.625rem color-mix(in oklab,var(--vibeui-navbar-006-accent) 44%,transparent),
 inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);
-transition:transform .22s var(--vibeui-navbar-006-ease);
+transition:transform var(--vibeui-navbar-006-dur-3) var(--vibeui-navbar-006-ease);
 }
 [data-vibeui-block="navbar-006"] [data-part="brand"]:hover [data-part="mark"]{transform:rotate(-6deg) scale(1.06)}
 [data-vibeui-block="navbar-006"] [data-part="section"]{
@@ -107,7 +111,7 @@ padding:0.3125rem 0.625rem;border-radius:999px;
 background:var(--vibeui-navbar-006-field);border:1px solid var(--vibeui-navbar-006-line);
 font-family:var(--vibeui-navbar-006-mono);font-size:0.75rem;
 color:var(--vibeui-navbar-006-muted);
-transition:color .13s ease,border-color .2s ease;
+transition:color var(--vibeui-navbar-006-dur-1) ease,border-color var(--vibeui-navbar-006-dur-2) ease;
 }
 [data-vibeui-block="navbar-006"] [data-part="version-button"]:hover{
 color:var(--vibeui-navbar-006-ink);border-color:var(--vibeui-navbar-006-accent);
@@ -116,7 +120,7 @@ color:var(--vibeui-navbar-006-ink);border-color:var(--vibeui-navbar-006-accent);
 width:0.3125rem;height:0.3125rem;flex:none;
 border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
 transform:rotate(45deg) translateY(-0.0625rem);
-transition:transform .26s var(--vibeui-navbar-006-ease);
+transition:transform var(--vibeui-navbar-006-dur-3) var(--vibeui-navbar-006-ease);
 }
 [data-vibeui-block="navbar-006"] [data-part="version-button"][aria-expanded="true"] span{
 transform:rotate(225deg) translateY(-0.0625rem);
@@ -128,7 +132,7 @@ border:1px solid var(--vibeui-navbar-006-line);border-radius:0.875rem;
 box-shadow:var(--vibeui-navbar-006-shadow);
 display:flex;flex-direction:column;padding:0.3125rem;
 transform-origin:top left;
-transition:opacity .18s ease,transform .24s var(--vibeui-navbar-006-ease);
+transition:opacity var(--vibeui-navbar-006-dur-2) ease,transform var(--vibeui-navbar-006-dur-3) var(--vibeui-navbar-006-ease);
 }
 [data-vibeui-block="navbar-006"] [data-part="versions"][data-open="false"]{
 opacity:0;transform:translateY(-0.375rem) scale(.98);pointer-events:none;
@@ -137,7 +141,7 @@ opacity:0;transform:translateY(-0.375rem) scale(.98);pointer-events:none;
 padding:0.4375rem 0.625rem;border-radius:0.5rem;
 color:var(--vibeui-navbar-006-ink);text-decoration:none;
 font-family:var(--vibeui-navbar-006-mono);font-size:0.75rem;
-transition:background-color .14s ease,color .13s ease;
+transition:background-color var(--vibeui-navbar-006-dur-1) ease,color var(--vibeui-navbar-006-dur-1) ease;
 }
 [data-vibeui-block="navbar-006"] [data-part="versions"] a:hover{
 background:var(--vibeui-navbar-006-hover);color:var(--vibeui-navbar-006-accent);
@@ -148,7 +152,7 @@ order:3;flex:1 1 100%;display:flex;align-items:center;gap:0.5rem;min-width:0;
 padding:0.25rem 0.4375rem 0.25rem 0.8125rem;border-radius:999px;
 background:var(--vibeui-navbar-006-field);
 border:1px solid var(--vibeui-navbar-006-line);
-transition:border-color .2s ease,box-shadow .2s ease,background-color .2s ease;
+transition:border-color var(--vibeui-navbar-006-dur-2) ease,box-shadow var(--vibeui-navbar-006-dur-2) ease,background-color var(--vibeui-navbar-006-dur-2) ease;
 }
 [data-vibeui-block="navbar-006"] [data-part="search"]:focus-within{
 background:var(--vibeui-navbar-006-bg);
@@ -181,7 +185,7 @@ display:flex;align-items:center;gap:0.125rem;margin-left:auto;flex:none;
 padding:0.4375rem 0.6875rem;border-radius:0.5rem;
 color:var(--vibeui-navbar-006-muted);text-decoration:none;
 font-size:0.875rem;font-weight:530;white-space:nowrap;
-transition:color .13s ease,background-color .16s ease;
+transition:color var(--vibeui-navbar-006-dur-1) ease,background-color var(--vibeui-navbar-006-dur-2) ease;
 }
 [data-vibeui-block="navbar-006"] [data-part="nav"] a:hover{
 color:var(--vibeui-navbar-006-ink);background:var(--vibeui-navbar-006-hover);
@@ -196,7 +200,7 @@ flex:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:
 width:2.25rem;height:2.25rem;border-radius:0.625rem;
 background:transparent;border:1px solid var(--vibeui-navbar-006-line);
 color:var(--vibeui-navbar-006-muted);
-transition:color .13s ease,background-color .16s ease;
+transition:color var(--vibeui-navbar-006-dur-1) ease,background-color var(--vibeui-navbar-006-dur-2) ease;
 }
 [data-vibeui-block="navbar-006"] [data-part="theme"]:hover{
 color:var(--vibeui-navbar-006-ink);background:var(--vibeui-navbar-006-hover);
@@ -208,10 +212,10 @@ flex:none;display:inline-flex;align-items:center;gap:0.375rem;
 min-height:2.25rem;padding:0.25rem 0.875rem;border-radius:0.625rem;
 background:var(--vibeui-navbar-006-ink);color:var(--vibeui-navbar-006-bg);
 text-decoration:none;font-size:0.875rem;font-weight:580;white-space:nowrap;
-transition:transform .18s var(--vibeui-navbar-006-ease),box-shadow .25s ease;
+transition:transform var(--vibeui-navbar-006-dur-2) var(--vibeui-navbar-006-ease),box-shadow var(--vibeui-navbar-006-dur-3) ease;
 }
 [data-vibeui-block="navbar-006"] [data-part="product"] svg{
-width:0.8125rem;height:0.8125rem;transition:transform .24s var(--vibeui-navbar-006-ease);
+width:0.8125rem;height:0.8125rem;transition:transform var(--vibeui-navbar-006-dur-3) var(--vibeui-navbar-006-ease);
 }
 [data-vibeui-block="navbar-006"] [data-part="product"]:hover{transform:translateY(-1px)}
 [data-vibeui-block="navbar-006"] [data-part="product"]:hover svg{transform:translateX(0.1875rem)}

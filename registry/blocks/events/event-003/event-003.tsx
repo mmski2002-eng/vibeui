@@ -31,6 +31,7 @@ const STYLES = `
 --vibeui-event-003-card:light-dark(oklch(0.99 0 0),oklch(0.2 0 0));
 --vibeui-event-003-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-event-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-event-003-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -48,7 +49,7 @@ font-family:var(--vibeui-event-003-font);
 [data-vibeui-block="event-003"] [data-part="card"]{
 min-inline-size:0;display:flex;flex-direction:column;overflow:hidden;text-decoration:none;color:inherit;
 border:1px solid var(--vibeui-event-003-border);border-radius:1rem;background:var(--vibeui-event-003-card);
-transition:transform .18s ease,border-color .18s ease;
+transition:transform var(--vibeui-event-003-dur-2) ease,border-color var(--vibeui-event-003-dur-2) ease;
 }
 [data-vibeui-block="event-003"] [data-part="card"]:hover{transform:translateY(-3px);border-color:var(--vibeui-event-003-accent)}
 [data-vibeui-block="event-003"] [data-part="card"]:focus-visible{outline:2px solid var(--vibeui-event-003-accent);outline-offset:2px}

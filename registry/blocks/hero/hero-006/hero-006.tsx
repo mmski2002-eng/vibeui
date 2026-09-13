@@ -39,6 +39,7 @@ const STYLES = `
 --vibeui-hero-006-accent:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
 --vibeui-hero-006-accent-fg:oklch(from var(--vibeui-hero-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-006-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-hero-006-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -75,7 +76,7 @@ color:var(--vibeui-hero-006-muted);text-wrap:pretty;
 [data-vibeui-block="hero-006"] [data-part="field"]{
 display:flex;flex-direction:column;gap:0.5rem;padding:0.4375rem;border-radius:0.875rem;
 border:1px solid var(--vibeui-hero-006-line);background:var(--vibeui-hero-006-field);
-transition:border-color .16s ease,box-shadow .16s ease;
+transition:border-color var(--vibeui-hero-006-dur-2) ease,box-shadow var(--vibeui-hero-006-dur-2) ease;
 }
 [data-vibeui-block="hero-006"] [data-part="field"]:focus-within{
 border-color:var(--vibeui-hero-006-accent);
@@ -89,7 +90,7 @@ font:inherit;font-size:0.9375rem;color:inherit;
 [data-vibeui-block="hero-006"] button{
 appearance:none;cursor:pointer;height:2.625rem;padding:0 1.25rem;border:0;border-radius:0.625rem;
 background:var(--vibeui-hero-006-accent);color:oklch(from var(--vibeui-hero-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font:inherit;font-size:0.9375rem;font-weight:650;transition:background-color .16s ease;
+font:inherit;font-size:0.9375rem;font-weight:650;transition:background-color var(--vibeui-hero-006-dur-2) ease;
 }
 [data-vibeui-block="hero-006"] button:hover{background:color-mix(in oklab,var(--vibeui-hero-006-accent) 86%,black)}
 [data-vibeui-block="hero-006"] button:focus-visible{outline:2px solid var(--vibeui-hero-006-accent);outline-offset:3px}

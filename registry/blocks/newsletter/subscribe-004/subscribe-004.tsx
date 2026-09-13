@@ -42,6 +42,7 @@ const STYLES = `
 --vibeui-subscribe-004-on-accent:oklch(from var(--vibeui-subscribe-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-subscribe-004-ok:light-dark(oklch(0.52 0.14 150),oklch(0.76 0.14 150));
 --vibeui-subscribe-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-subscribe-004-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -83,7 +84,7 @@ padding:0.5rem 0.875rem;border-radius:999px;
 border:1px solid var(--vibeui-subscribe-004-border);
 background:var(--vibeui-subscribe-004-field);
 font-size:0.875rem;font-weight:500;cursor:pointer;user-select:none;
-transition:background .15s ease,border-color .15s ease,color .15s ease;
+transition:background var(--vibeui-subscribe-004-dur-2) ease,border-color var(--vibeui-subscribe-004-dur-2) ease,color var(--vibeui-subscribe-004-dur-2) ease;
 }
 [data-vibeui-block="subscribe-004"] [data-part="chip"]:hover{
 border-color:color-mix(in oklab,var(--vibeui-subscribe-004-accent) 40%,var(--vibeui-subscribe-004-border));
@@ -98,7 +99,7 @@ outline:2px solid var(--vibeui-subscribe-004-accent);outline-offset:2px;
 }
 [data-vibeui-block="subscribe-004"] [data-part="tick"]{
 width:1em;text-align:center;opacity:0;transform:scale(0.5);
-transition:opacity .15s ease,transform .15s ease;
+transition:opacity var(--vibeui-subscribe-004-dur-2) ease,transform var(--vibeui-subscribe-004-dur-2) ease;
 }
 [data-vibeui-block="subscribe-004"] [data-part="chip"]:has(input:checked) [data-part="tick"]{
 opacity:1;transform:none;
@@ -125,7 +126,7 @@ outline:2px solid var(--vibeui-subscribe-004-accent);outline-offset:1px;
 height:2.75rem;padding:0 1.375rem;border:0;border-radius:0.625rem;
 background:var(--vibeui-subscribe-004-accent);color:oklch(from var(--vibeui-subscribe-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font:inherit;font-size:0.9375rem;font-weight:650;cursor:pointer;
-transition:background .15s ease,transform .15s ease;
+transition:background var(--vibeui-subscribe-004-dur-2) ease,transform var(--vibeui-subscribe-004-dur-2) ease;
 }
 [data-vibeui-block="subscribe-004"] [data-part="button"]:hover{
 background:color-mix(in oklab,var(--vibeui-subscribe-004-accent) 90%,black);

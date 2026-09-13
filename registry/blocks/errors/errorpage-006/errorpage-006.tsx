@@ -36,6 +36,7 @@ const STYLES = `
 --vibeui-errorpage-006-accent-fill:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
 --vibeui-errorpage-006-accent-ink:oklch(from var(--vibeui-errorpage-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-errorpage-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-errorpage-006-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -114,7 +115,7 @@ display:inline-block;text-decoration:none;
 padding:0.4375rem 0.875rem;border:1px solid var(--vibeui-errorpage-006-border);border-radius:999px;
 color:inherit;font-size:0.875rem;font-weight:550;
 background:var(--vibeui-errorpage-006-card);
-transition:border-color .15s ease,color .15s ease;
+transition:border-color var(--vibeui-errorpage-006-dur-2) ease,color var(--vibeui-errorpage-006-dur-2) ease;
 }
 [data-vibeui-block="errorpage-006"] [data-part="chip"]:hover{
 border-color:color-mix(in oklab,var(--vibeui-errorpage-006-accent) 50%,var(--vibeui-errorpage-006-border));

@@ -36,6 +36,7 @@ const STYLES = `
 --vibeui-logocloud-006-border:light-dark(oklch(0.9 0 0),oklch(0.32 0 0));
 --vibeui-logocloud-006-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-logocloud-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-logocloud-006-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -70,7 +71,7 @@ display:grid;place-items:center;align-content:center;gap:0.375rem;padding:1rem;
 border:1px solid var(--vibeui-logocloud-006-border);border-radius:1rem;
 background:var(--vibeui-logocloud-006-card);
 text-decoration:none;color:inherit;
-transition:border-color .18s ease,background-color .18s ease;
+transition:border-color var(--vibeui-logocloud-006-dur-2) ease,background-color var(--vibeui-logocloud-006-dur-2) ease;
 }
 [data-vibeui-block="logocloud-006"] [data-part="tile"]:hover,
 [data-vibeui-block="logocloud-006"] [data-part="tile"]:focus-visible{
@@ -83,7 +84,7 @@ outline:2px solid var(--vibeui-logocloud-006-accent);outline-offset:2px;
 [data-vibeui-block="logocloud-006"] [data-part="logo"]{
 color:var(--vibeui-logocloud-006-logo);
 font-size:1.25rem;line-height:1;white-space:nowrap;
-transition:color .18s ease,transform .18s ease;
+transition:color var(--vibeui-logocloud-006-dur-2) ease,transform var(--vibeui-logocloud-006-dur-2) ease;
 font-weight:750;letter-spacing:-0.035em;
 }
 [data-vibeui-block="logocloud-006"] [data-part="logo"][data-style="serif"]{
@@ -102,7 +103,7 @@ font-weight:850;letter-spacing:-0.01em;text-transform:uppercase;
 color:var(--vibeui-logocloud-006-accent);
 font-size:0.8125rem;font-weight:650;line-height:1;white-space:nowrap;
 opacity:0;transform:translateY(0.25rem);
-transition:opacity .18s ease,transform .18s ease;
+transition:opacity var(--vibeui-logocloud-006-dur-2) ease,transform var(--vibeui-logocloud-006-dur-2) ease;
 }
 [data-vibeui-block="logocloud-006"] [data-part="tile"]:hover [data-part="cta"],
 [data-vibeui-block="logocloud-006"] [data-part="tile"]:focus-visible [data-part="cta"]{

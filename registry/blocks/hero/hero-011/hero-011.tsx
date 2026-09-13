@@ -36,6 +36,9 @@ const STYLES = `
 --vibeui-hero-011-accent-fg:oklch(from var(--vibeui-hero-011-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-011-cool:light-dark(oklch(0.287 0 0),oklch(0.885 0 0));
 --vibeui-hero-011-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-hero-011-dur-2:180ms;
+--vibeui-hero-011-dur-3:240ms;
+--vibeui-hero-011-dur-5:460ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -71,7 +74,7 @@ radial-gradient(50% 50% at 84% 26%,color-mix(in oklab,var(--vibeui-hero-011-cool
 position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:0;
 background:radial-gradient(28% 34% at var(--vibeui-hero-011-mx,50%) var(--vibeui-hero-011-my,30%),
 color-mix(in oklab,var(--vibeui-hero-011-accent) 30%,transparent),transparent 70%);
-transition:opacity .5s ease;
+transition:opacity var(--vibeui-hero-011-dur-5) ease;
 }
 [data-vibeui-block="hero-011"]:hover [data-part="spot"]{opacity:1}
 [data-vibeui-block="hero-011"] [data-part="shell"]{
@@ -96,13 +99,13 @@ color:var(--vibeui-hero-011-muted);text-wrap:pretty;
 [data-vibeui-block="hero-011"] [data-part="actions"]{display:flex;flex-direction:column;gap:0.625rem;margin:2rem auto 0;max-width:20rem}
 [data-vibeui-block="hero-011"] a{
 display:inline-flex;align-items:center;justify-content:center;height:2.875rem;padding:0 1.5rem;border-radius:0.75rem;
-font-size:0.9375rem;font-weight:650;text-decoration:none;transition:opacity .16s ease,border-color .16s ease;
+font-size:0.9375rem;font-weight:650;text-decoration:none;transition:opacity var(--vibeui-hero-011-dur-2) ease,border-color var(--vibeui-hero-011-dur-2) ease;
 }
 [data-vibeui-block="hero-011"] [data-part="primary"]{
 background:var(--vibeui-hero-011-accent);color:oklch(from var(--vibeui-hero-011-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border:1px solid transparent;
 box-shadow:0 0 2.5rem color-mix(in oklab,var(--vibeui-hero-011-accent) 34%,transparent),
 inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);
-transition:transform .2s cubic-bezier(.32,.72,0,1),box-shadow .25s ease;
+transition:transform var(--vibeui-hero-011-dur-2) cubic-bezier(.32,.72,0,1),box-shadow var(--vibeui-hero-011-dur-3) ease;
 }
 [data-vibeui-block="hero-011"] [data-part="primary"]:hover{
 transform:translateY(-1px);

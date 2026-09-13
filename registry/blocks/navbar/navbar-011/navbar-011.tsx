@@ -62,6 +62,10 @@ const STYLES = `
 --vibeui-navbar-011-on-accent:oklch(from var(--vibeui-navbar-011-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-navbar-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-navbar-011-ease:cubic-bezier(.32,.72,0,1);
+--vibeui-navbar-011-dur-1:130ms;
+--vibeui-navbar-011-dur-2:180ms;
+--vibeui-navbar-011-dur-3:240ms;
+--vibeui-navbar-011-dur-4:340ms;
 container-type:inline-size;
 }
 /* Тема идёт за страницей: color-scheme наследуется от неё, а классовую
@@ -92,7 +96,7 @@ background:var(--vibeui-navbar-011-accent);color:oklch(from var(--vibeui-navbar-
 font-size:0.8125rem;font-weight:800;
 box-shadow:0 0.25rem 0.75rem color-mix(in oklab,var(--vibeui-navbar-011-accent) 44%,transparent),
 inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);
-transition:transform .22s var(--vibeui-navbar-011-ease);
+transition:transform var(--vibeui-navbar-011-dur-3) var(--vibeui-navbar-011-ease);
 }
 [data-vibeui-block="navbar-011"] [data-part="brand"]:hover [data-part="mark"]{transform:rotate(-8deg) scale(1.06)}
 
@@ -103,7 +107,7 @@ order:1;position:relative;display:none;align-items:center;gap:0.125rem;margin:0 
 position:relative;z-index:1;padding:0.4375rem 0.875rem;border-radius:999px;
 color:var(--vibeui-navbar-011-muted);text-decoration:none;
 font-size:0.9375rem;font-weight:540;white-space:nowrap;
-transition:color .13s ease;
+transition:color var(--vibeui-navbar-011-dur-1) ease;
 }
 [data-vibeui-block="navbar-011"] [data-part="tabs"] a:hover,
 [data-vibeui-block="navbar-011"] [data-part="tabs"] a[aria-current="page"]{
@@ -121,7 +125,7 @@ opacity:0;pointer-events:none;
 }
 [data-vibeui-block="navbar-011"] [data-part="tabs"][data-ready] [data-part="glider"]{
 opacity:1;
-transition:transform .32s var(--vibeui-navbar-011-ease),width .32s var(--vibeui-navbar-011-ease),opacity .18s ease;
+transition:transform var(--vibeui-navbar-011-dur-4) var(--vibeui-navbar-011-ease),width var(--vibeui-navbar-011-dur-4) var(--vibeui-navbar-011-ease),opacity var(--vibeui-navbar-011-dur-2) ease;
 }
 
 [data-vibeui-block="navbar-011"] [data-part="account"]{
@@ -135,7 +139,7 @@ border:1px solid var(--vibeui-navbar-011-line);border-radius:999px;
 color:var(--vibeui-navbar-011-ink);text-decoration:none;
 font-size:0.875rem;font-weight:560;
 box-shadow:0 0.125rem 0.5rem color-mix(in oklab,#000000 6%,transparent);
-transition:box-shadow .25s ease,border-color .2s ease;
+transition:box-shadow var(--vibeui-navbar-011-dur-3) ease,border-color var(--vibeui-navbar-011-dur-2) ease;
 }
 [data-vibeui-block="navbar-011"] [data-part="login"]:hover{
 border-color:color-mix(in oklab,#000000 18%,transparent);
@@ -153,7 +157,7 @@ border:1px solid var(--vibeui-navbar-011-line);border-radius:1rem;
 box-shadow:var(--vibeui-navbar-011-shadow);
 padding:0.375rem;display:flex;flex-direction:column;
 transform-origin:top right;
-transition:opacity .18s ease,transform .24s var(--vibeui-navbar-011-ease);
+transition:opacity var(--vibeui-navbar-011-dur-2) ease,transform var(--vibeui-navbar-011-dur-3) var(--vibeui-navbar-011-ease);
 }
 [data-vibeui-block="navbar-011"] [data-part="account-menu"][data-open="false"]{
 opacity:0;transform:translateY(-0.375rem) scale(.98);pointer-events:none;
@@ -162,7 +166,7 @@ opacity:0;transform:translateY(-0.375rem) scale(.98);pointer-events:none;
 padding:0.625rem 0.75rem;border-radius:0.625rem;
 color:var(--vibeui-navbar-011-ink);text-decoration:none;
 font-size:0.9375rem;font-weight:540;
-transition:background-color .14s ease;
+transition:background-color var(--vibeui-navbar-011-dur-1) ease;
 }
 [data-vibeui-block="navbar-011"] [data-part="account-menu"] a:hover{background:var(--vibeui-navbar-011-hover)}
 [data-vibeui-block="navbar-011"] [data-part="account-menu"] a:first-child{font-weight:620}
@@ -175,7 +179,7 @@ background:var(--vibeui-navbar-011-bg);
 box-shadow:0 0.75rem 2rem color-mix(in oklab,#000000 11%,transparent),
 inset 0 1px 0 var(--vibeui-navbar-011-sheen);
 overflow:hidden;
-transition:box-shadow .3s ease;
+transition:box-shadow var(--vibeui-navbar-011-dur-4) ease;
 }
 [data-vibeui-block="navbar-011"] [data-part="search"]:focus-within{
 box-shadow:0 1rem 2.5rem color-mix(in oklab,#000000 16%,transparent),
@@ -185,7 +189,7 @@ inset 0 1px 0 var(--vibeui-navbar-011-sheen);
 position:relative;display:flex;flex-direction:column;gap:0.125rem;
 padding:0.6875rem 1.125rem;min-width:0;
 border-bottom:1px solid var(--vibeui-navbar-011-line);
-transition:background-color .2s ease;
+transition:background-color var(--vibeui-navbar-011-dur-2) ease;
 }
 [data-vibeui-block="navbar-011"] [data-part="field"]:hover{background:var(--vibeui-navbar-011-hover)}
 [data-vibeui-block="navbar-011"] [data-part="field"]:focus-within{
@@ -195,7 +199,7 @@ background:color-mix(in oklab,var(--vibeui-navbar-011-accent) 8%,transparent);
 content:"";position:absolute;left:1.125rem;right:1.125rem;bottom:0;height:2px;border-radius:2px;
 background:var(--vibeui-navbar-011-accent);
 transform:scaleX(0);transform-origin:left;
-transition:transform .3s var(--vibeui-navbar-011-ease);color:oklch(from var(--vibeui-navbar-011-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
+transition:transform var(--vibeui-navbar-011-dur-4) var(--vibeui-navbar-011-ease);color:oklch(from var(--vibeui-navbar-011-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="navbar-011"] [data-part="field"]:focus-within::after{transform:scaleX(1)}
 [data-vibeui-block="navbar-011"] [data-part="field"] span{
 font-size:0.6875rem;font-weight:680;letter-spacing:0.07em;text-transform:uppercase;
@@ -215,7 +219,7 @@ background:var(--vibeui-navbar-011-accent);color:oklch(from var(--vibeui-navbar-
 font:inherit;font-size:0.9375rem;font-weight:670;letter-spacing:-0.01em;
 box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-navbar-011-accent) 42%,transparent),
 inset 0 1px 0 color-mix(in oklab,#ffffff 45%,transparent);
-transition:transform .18s var(--vibeui-navbar-011-ease),box-shadow .25s ease;
+transition:transform var(--vibeui-navbar-011-dur-2) var(--vibeui-navbar-011-ease),box-shadow var(--vibeui-navbar-011-dur-3) ease;
 }
 [data-vibeui-block="navbar-011"] [data-part="submit"]:hover{
 transform:translateY(-1px);

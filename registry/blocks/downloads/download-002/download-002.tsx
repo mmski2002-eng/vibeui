@@ -36,6 +36,7 @@ const STYLES = `
 --vibeui-download-002-qr-ink:oklch(0.15 0 0);
 --vibeui-download-002-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-download-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-download-002-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -56,7 +57,7 @@ display:inline-flex;align-items:center;gap:0.5rem;box-sizing:border-box;
 height:2.5rem;min-width:9.5rem;padding:0 0.75rem 0 0.625rem;
 border:1px solid var(--vibeui-download-002-badge-line);border-radius:0.375rem;text-decoration:none;
 background:var(--vibeui-download-002-badge);color:var(--vibeui-download-002-badge-ink);
-transition:transform .16s ease;
+transition:transform var(--vibeui-download-002-dur-2) ease;
 }
 [data-vibeui-block="download-002"] [data-part="badge"]:hover{transform:translateY(-2px)}
 [data-vibeui-block="download-002"] [data-part="badge"]:focus-visible{outline:2px solid var(--vibeui-download-002-accent);outline-offset:3px}

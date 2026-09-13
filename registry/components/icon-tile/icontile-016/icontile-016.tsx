@@ -95,6 +95,7 @@ container-type:inline-size;
 --vibeui-icontile-016-hover:light-dark(oklch(0.75 0.05 var(--vibeui-icontile-016-hue)),oklch(0.52 0.07 var(--vibeui-icontile-016-hue)));
 --vibeui-icontile-016-surface:transparent;
 --vibeui-icontile-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-icontile-016-dur-2:180ms;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
@@ -108,7 +109,7 @@ min-width:min(100%,16rem);padding:0.875rem 1rem;
 background:var(--vibeui-icontile-016-surface);
 border:1px solid var(--vibeui-icontile-016-border);border-radius:0.875rem;
 font:inherit;font-family:var(--vibeui-icontile-016-font);color:inherit;text-align:left;cursor:pointer;
-transition:border-color 0.15s ease;
+transition:border-color var(--vibeui-icontile-016-dur-2) ease;
 }
 [data-vibeui-block="icontile-016"]:hover{
 border-color:var(--vibeui-icontile-016-hover);

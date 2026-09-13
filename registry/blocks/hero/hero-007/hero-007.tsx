@@ -35,6 +35,7 @@ const STYLES = `
 /* Постер всегда тёмный — это кадр, а не подложка; текст на нём светлый в обеих темах. */
 --vibeui-hero-007-on-poster:oklch(0.97 0 300);
 --vibeui-hero-007-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-hero-007-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -65,7 +66,7 @@ color:var(--vibeui-hero-007-muted);text-wrap:pretty;
 [data-vibeui-block="hero-007"] [data-part="player"]{
 position:relative;display:block;margin:2.25rem 0 0;aspect-ratio:16 / 9;border-radius:1rem;overflow:hidden;
 border:1px solid var(--vibeui-hero-007-line);text-decoration:none;color:var(--vibeui-hero-007-on-poster);
-transition:transform .2s ease,border-color .2s ease;
+transition:transform var(--vibeui-hero-007-dur-2) ease,border-color var(--vibeui-hero-007-dur-2) ease;
 }
 /* Подложка — только когда фотографии нет: компонент обязан
    оставаться полноценным без единого внешнего файла. */
@@ -85,7 +86,7 @@ position:absolute;inset:0;margin:auto;width:4.5rem;height:4.5rem;border-radius:9
 display:flex;align-items:center;justify-content:center;
 background:var(--vibeui-hero-007-accent);color:oklch(from var(--vibeui-hero-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 box-shadow:0 0 0 0.75rem color-mix(in oklab,var(--vibeui-hero-007-accent) 22%,transparent);
-transition:box-shadow .2s ease;
+transition:box-shadow var(--vibeui-hero-007-dur-2) ease;
 }
 [data-vibeui-block="hero-007"] [data-part="player"]:hover [data-part="play"]{box-shadow:0 0 0 1.125rem color-mix(in oklab,var(--vibeui-hero-007-accent) 22%,transparent)}
 [data-vibeui-block="hero-007"] [data-part="caption"]{

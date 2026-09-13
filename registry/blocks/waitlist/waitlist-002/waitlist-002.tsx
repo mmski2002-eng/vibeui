@@ -37,6 +37,7 @@ const STYLES = `
 --vibeui-waitlist-002-on-accent:oklch(from var(--vibeui-waitlist-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-waitlist-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-waitlist-002-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+--vibeui-waitlist-002-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -70,7 +71,7 @@ background:var(--vibeui-waitlist-002-field);color:inherit;font:inherit;font-size
 [data-vibeui-block="waitlist-002"] [data-part="submit"]{
 height:2.875rem;padding:0 1.5rem;border:0;border-radius:0.75rem;cursor:pointer;
 background:var(--vibeui-waitlist-002-accent);color:oklch(from var(--vibeui-waitlist-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font:inherit;font-size:0.9375rem;font-weight:650;transition:opacity .16s ease;
+font:inherit;font-size:0.9375rem;font-weight:650;transition:opacity var(--vibeui-waitlist-002-dur-2) ease;
 }
 [data-vibeui-block="waitlist-002"] [data-part="submit"]:hover{opacity:.9}
 [data-vibeui-block="waitlist-002"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-waitlist-002-accent);outline-offset:2px}

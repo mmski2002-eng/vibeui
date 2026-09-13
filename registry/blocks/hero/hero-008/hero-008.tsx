@@ -31,6 +31,8 @@ const STYLES = `
 --vibeui-hero-008-accent:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
 --vibeui-hero-008-accent-fg:oklch(from var(--vibeui-hero-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-008-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-hero-008-dur-2:180ms;
+--vibeui-hero-008-dur-3:240ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -57,9 +59,9 @@ color:var(--vibeui-hero-008-muted);text-wrap:pretty;
 [data-vibeui-block="hero-008"] [data-part="actions"]{display:flex;flex-direction:column;gap:0.625rem;margin:1.875rem auto 0;max-width:20rem}
 [data-vibeui-block="hero-008"] a{
 display:inline-flex;align-items:center;justify-content:center;height:2.75rem;padding:0 1.375rem;border-radius:9999px;
-font-size:0.9375rem;font-weight:600;text-decoration:none;transition:background-color .16s ease,border-color .16s ease;
+font-size:0.9375rem;font-weight:600;text-decoration:none;transition:background-color var(--vibeui-hero-008-dur-2) ease,border-color var(--vibeui-hero-008-dur-2) ease;
 }
-[data-vibeui-block="hero-008"] [data-part="primary"]{background:var(--vibeui-hero-008-accent);color:oklch(from var(--vibeui-hero-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border:1px solid transparent;box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-hero-008-accent) 40%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);transition:transform .2s cubic-bezier(.32,.72,0,1),box-shadow .25s ease,background-color .2s ease}
+[data-vibeui-block="hero-008"] [data-part="primary"]{background:var(--vibeui-hero-008-accent);color:oklch(from var(--vibeui-hero-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border:1px solid transparent;box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-hero-008-accent) 40%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);transition:transform var(--vibeui-hero-008-dur-2) cubic-bezier(.32,.72,0,1),box-shadow var(--vibeui-hero-008-dur-3) ease,background-color var(--vibeui-hero-008-dur-2) ease}
 [data-vibeui-block="hero-008"] [data-part="primary"]:hover{transform:translateY(-1px);box-shadow:0 0.625rem 1.75rem color-mix(in oklab,var(--vibeui-hero-008-accent) 50%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 52%,transparent)}
 [data-vibeui-block="hero-008"] [data-part="secondary"]{border:1px solid var(--vibeui-hero-008-line);color:var(--vibeui-hero-008-fg)}
 [data-vibeui-block="hero-008"] [data-part="secondary"]:hover{border-color:var(--vibeui-hero-008-fg)}
@@ -76,7 +78,7 @@ list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,m
 [data-vibeui-block="hero-008"] [data-part="logos"] li{
 display:flex;align-items:center;justify-content:center;gap:0.4375rem;
 font-size:0.9375rem;font-weight:700;letter-spacing:-0.01em;color:var(--vibeui-hero-008-fg);opacity:.62;
-transition:opacity .16s ease;
+transition:opacity var(--vibeui-hero-008-dur-2) ease;
 }
 [data-vibeui-block="hero-008"] [data-part="logos"] li:hover{opacity:1}
 [data-vibeui-block="hero-008"] [data-part="mark"]{

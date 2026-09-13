@@ -50,6 +50,9 @@ const STYLES = `
 --vibeui-navbar-013-menu-muted:color-mix(in oklab,#ffffff 52%,#000000);
 --vibeui-navbar-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-navbar-013-ease:cubic-bezier(.32,.72,0,1);
+--vibeui-navbar-013-dur-2:180ms;
+--vibeui-navbar-013-dur-3:240ms;
+--vibeui-navbar-013-dur-4:340ms;
 container-type:inline-size;
 }
 /* Тема идёт за страницей: color-scheme наследуется от неё, а классовую
@@ -86,7 +89,7 @@ min-height:2.625rem;padding:0.25rem 1.25rem;border-radius:999px;
 background:var(--vibeui-navbar-013-button);color:var(--vibeui-navbar-013-button-ink);
 font:inherit;font-size:0.9375rem;font-weight:620;letter-spacing:-0.01em;
 box-shadow:0 0.375rem 1.25rem color-mix(in oklab,#000000 22%,transparent);
-transition:background-color .22s ease,color .22s ease,transform .18s var(--vibeui-navbar-013-ease);
+transition:background-color var(--vibeui-navbar-013-dur-3) ease,color var(--vibeui-navbar-013-dur-3) ease,transform var(--vibeui-navbar-013-dur-2) var(--vibeui-navbar-013-ease);
 }
 [data-vibeui-block="navbar-013"] [data-part="open"]:hover{
 background:var(--vibeui-navbar-013-accent);color:oklch(from var(--vibeui-navbar-013-accent) clamp(0,(0.62 - l) * 100,1) 0 0);transform:translateY(-1px);
@@ -104,7 +107,7 @@ position:relative;width:1.0625rem;height:0.6875rem;flex:none;
 [data-vibeui-block="navbar-013"] [data-part="bars"]::before,
 [data-vibeui-block="navbar-013"] [data-part="bars"]::after{
 content:"";position:absolute;left:0;height:1.75px;border-radius:2px;background:currentColor;
-transition:width .28s var(--vibeui-navbar-013-ease);
+transition:width var(--vibeui-navbar-013-dur-3) var(--vibeui-navbar-013-ease);
 }
 [data-vibeui-block="navbar-013"] [data-part="bars"]::before{top:0;width:100%}
 [data-vibeui-block="navbar-013"] [data-part="bars"]::after{bottom:0;width:62%}
@@ -117,7 +120,7 @@ background:var(--vibeui-navbar-013-menu-bg);color:var(--vibeui-navbar-013-menu-i
 font-family:var(--vibeui-navbar-013-font);
 overflow:auto;
 opacity:0;
-transition:opacity .32s ease,overlay .32s allow-discrete,display .32s allow-discrete;
+transition:opacity var(--vibeui-navbar-013-dur-4) ease,overlay var(--vibeui-navbar-013-dur-4) allow-discrete,display var(--vibeui-navbar-013-dur-4) allow-discrete;
 }
 [data-vibeui-block="navbar-013"] [data-part="sheet"]:popover-open{opacity:1}
 @starting-style{
@@ -141,7 +144,7 @@ min-height:2.625rem;padding:0.25rem 1.25rem;border-radius:999px;
 background:transparent;color:inherit;
 border:1.5px solid color-mix(in oklab,currentColor 36%,transparent);
 font:inherit;font-size:0.9375rem;font-weight:620;
-transition:border-color .2s ease,background-color .2s ease;
+transition:border-color var(--vibeui-navbar-013-dur-2) ease,background-color var(--vibeui-navbar-013-dur-2) ease;
 }
 [data-vibeui-block="navbar-013"] [data-part="close"]:hover{
 border-color:currentColor;background:color-mix(in oklab,currentColor 10%,transparent);
@@ -166,7 +169,7 @@ padding:2.5rem 0;
 position:relative;display:flex;align-items:baseline;gap:1.25rem;
 padding:0.625rem 0;color:inherit;text-decoration:none;
 border-bottom:1px solid color-mix(in oklab,currentColor 16%,transparent);
-transition:color .18s ease;
+transition:color var(--vibeui-navbar-013-dur-2) ease;
 }
 [data-vibeui-block="navbar-013"] [data-part="sheet"]:popover-open [data-part="list"] a{
 animation:vibeui-navbar-013-rise .55s var(--vibeui-navbar-013-ease) both;
@@ -193,7 +196,7 @@ font-variant-numeric:tabular-nums;
 [data-vibeui-block="navbar-013"] [data-part="word"]{
 font-size:clamp(2rem,7cqi,4.5rem);line-height:1.06;
 letter-spacing:-0.035em;font-weight:740;
-transition:transform .34s var(--vibeui-navbar-013-ease);
+transition:transform var(--vibeui-navbar-013-dur-4) var(--vibeui-navbar-013-ease);
 }
 [data-vibeui-block="navbar-013"] [data-part="list"] a:hover [data-part="word"]{transform:translateX(0.75rem)}
 [data-vibeui-block="navbar-013"] [data-part="note"]{
@@ -205,7 +208,7 @@ align-self:flex-start;color:inherit;text-decoration:none;
 font-size:1.0625rem;font-weight:620;
 border-bottom:2px solid currentColor;padding-bottom:0.125rem;
 margin-bottom:1rem;
-transition:opacity .2s ease;
+transition:opacity var(--vibeui-navbar-013-dur-2) ease;
 }
 [data-vibeui-block="navbar-013"] [data-part="contact"]:hover{opacity:.66}
 

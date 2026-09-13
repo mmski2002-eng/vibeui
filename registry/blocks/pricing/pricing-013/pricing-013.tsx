@@ -45,6 +45,7 @@ const STYLES = `
 --vibeui-pricing-013-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-pricing-013-accent-fg:oklch(from var(--vibeui-pricing-013-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-pricing-013-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-pricing-013-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -79,7 +80,7 @@ border:1px solid var(--vibeui-pricing-013-line);
 [data-vibeui-block="pricing-013"] button{
 appearance:none;cursor:pointer;width:2.5rem;height:2.5rem;border-radius:0.625rem;border:0;
 background:color-mix(in oklab,var(--vibeui-pricing-013-accent) 10%,transparent);color:var(--vibeui-pricing-013-accent);
-font:inherit;font-size:1.25rem;line-height:1;transition:background-color .16s ease;
+font:inherit;font-size:1.25rem;line-height:1;transition:background-color var(--vibeui-pricing-013-dur-2) ease;
 }
 [data-vibeui-block="pricing-013"] button:hover:not(:disabled){background:color-mix(in oklab,var(--vibeui-pricing-013-accent) 20%,transparent)}
 [data-vibeui-block="pricing-013"] button:disabled{cursor:not-allowed;opacity:.4}
@@ -109,7 +110,7 @@ font-size:2rem;font-weight:700;letter-spacing:-0.04em;color:var(--vibeui-pricing
 [data-vibeui-block="pricing-013"] a{
 display:inline-flex;align-items:center;justify-content:center;margin-top:1.25rem;height:2.75rem;border-radius:0.625rem;
 background:var(--vibeui-pricing-013-accent);color:oklch(from var(--vibeui-pricing-013-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color .16s ease;
+font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color var(--vibeui-pricing-013-dur-2) ease;
 }
 [data-vibeui-block="pricing-013"] a:hover{background:color-mix(in oklab,var(--vibeui-pricing-013-accent) 86%,black)}
 [data-vibeui-block="pricing-013"] a:focus-visible{outline:2px solid var(--vibeui-pricing-013-accent);outline-offset:3px}

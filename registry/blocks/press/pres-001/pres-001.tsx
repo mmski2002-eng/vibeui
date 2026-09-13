@@ -30,6 +30,7 @@ const STYLES = `
 --vibeui-pres-001-card:light-dark(oklch(0.99 0 0),oklch(0.2 0 0));
 --vibeui-pres-001-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-pres-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-pres-001-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -48,7 +49,7 @@ font-family:var(--vibeui-pres-001-font);
 min-inline-size:0;display:flex;flex-direction:column;gap:1rem;
 padding:1.5rem;border:1px solid var(--vibeui-pres-001-border);border-radius:1.125rem;
 background:var(--vibeui-pres-001-card);color:inherit;text-decoration:none;
-transition:transform .18s ease,border-color .18s ease}
+transition:transform var(--vibeui-pres-001-dur-2) ease,border-color var(--vibeui-pres-001-dur-2) ease}
 [data-vibeui-block="pres-001"] [data-part="card"]:hover{transform:translateY(-3px);border-color:var(--vibeui-pres-001-accent)}
 [data-vibeui-block="pres-001"] [data-part="card"]:focus-visible{outline:2px solid var(--vibeui-pres-001-accent);outline-offset:2px}
 [data-vibeui-block="pres-001"] [data-part="outlet"]{font-size:1.0625rem;font-weight:750;letter-spacing:-0.01em}

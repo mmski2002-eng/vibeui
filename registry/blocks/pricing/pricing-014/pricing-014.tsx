@@ -45,6 +45,7 @@ const STYLES = `
 --vibeui-pricing-014-accent:light-dark(oklch(0.287 0 0),oklch(0.905 0 0));
 --vibeui-pricing-014-accent-fg:oklch(from var(--vibeui-pricing-014-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-pricing-014-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-pricing-014-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -82,7 +83,7 @@ margin-bottom:0.75rem;
 [data-vibeui-block="pricing-014"] [data-part="option"]{
 position:relative;display:flex;gap:0.75rem;padding:1rem 1.125rem;cursor:pointer;
 border-radius:0.875rem;border:1px solid var(--vibeui-pricing-014-line);background:var(--vibeui-pricing-014-card);
-transition:border-color .16s ease,background-color .16s ease;
+transition:border-color var(--vibeui-pricing-014-dur-2) ease,background-color var(--vibeui-pricing-014-dur-2) ease;
 }
 [data-vibeui-block="pricing-014"] [data-part="option"] + [data-part="option"]{margin-top:0.625rem}
 [data-vibeui-block="pricing-014"] [data-part="option"]:hover{border-color:var(--vibeui-pricing-014-accent)}
@@ -97,7 +98,7 @@ outline:2px solid var(--vibeui-pricing-014-accent);outline-offset:2px;
 [data-vibeui-block="pricing-014"] [data-part="box"]{
 flex:0 0 auto;position:relative;margin-top:0.0625rem;width:1.125rem;height:1.125rem;border-radius:0.3125rem;
 border:1.5px solid var(--vibeui-pricing-014-line);background:var(--vibeui-pricing-014-card);
-transition:background-color .16s ease,border-color .16s ease;
+transition:background-color var(--vibeui-pricing-014-dur-2) ease,border-color var(--vibeui-pricing-014-dur-2) ease;
 }
 [data-vibeui-block="pricing-014"] [data-part="option"]:has(input:checked) [data-part="box"]{
 background:var(--vibeui-pricing-014-accent);border-color:var(--vibeui-pricing-014-accent);color:oklch(from var(--vibeui-pricing-014-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
@@ -126,7 +127,7 @@ border-top:1px solid var(--vibeui-pricing-014-line);font-size:0.8125rem;color:va
 [data-vibeui-block="pricing-014"] a{
 display:inline-flex;align-items:center;justify-content:center;margin-top:1.25rem;width:100%;height:2.75rem;border-radius:0.625rem;
 background:var(--vibeui-pricing-014-accent);color:oklch(from var(--vibeui-pricing-014-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color .16s ease;
+font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color var(--vibeui-pricing-014-dur-2) ease;
 }
 [data-vibeui-block="pricing-014"] a:hover{background:color-mix(in oklab,var(--vibeui-pricing-014-accent) 86%,black)}
 [data-vibeui-block="pricing-014"] a:focus-visible{outline:2px solid var(--vibeui-pricing-014-accent);outline-offset:3px}

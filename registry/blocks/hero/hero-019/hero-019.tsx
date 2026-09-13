@@ -45,6 +45,8 @@ const STYLES = `
 --vibeui-hero-019-accent:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
 --vibeui-hero-019-accent-fg:oklch(from var(--vibeui-hero-019-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-hero-019-dur-2:180ms;
+--vibeui-hero-019-dur-3:240ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -104,7 +106,7 @@ display:block;width:100%;min-width:0;min-height:3rem;padding:0.75rem 0.9375rem;
 border:1px solid var(--vibeui-hero-019-line);border-radius:0.75rem;
 background:var(--vibeui-hero-019-field);color:var(--vibeui-hero-019-fg);
 font:inherit;font-size:1rem;
-transition:border-color .16s ease,box-shadow .16s ease;
+transition:border-color var(--vibeui-hero-019-dur-2) ease,box-shadow var(--vibeui-hero-019-dur-2) ease;
 }
 [data-vibeui-block="hero-019"] input::placeholder{color:color-mix(in oklab,var(--vibeui-hero-019-muted) 80%,transparent)}
 [data-vibeui-block="hero-019"] input:focus-visible{
@@ -118,7 +120,7 @@ background:var(--vibeui-hero-019-accent);color:oklch(from var(--vibeui-hero-019-
 font:inherit;font-size:1rem;font-weight:650;cursor:pointer;
 box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-hero-019-accent) 38%,transparent),
 inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);
-transition:transform .2s cubic-bezier(.32,.72,0,1),box-shadow .25s ease;
+transition:transform var(--vibeui-hero-019-dur-2) cubic-bezier(.32,.72,0,1),box-shadow var(--vibeui-hero-019-dur-3) ease;
 }
 [data-vibeui-block="hero-019"] [data-part="submit"]:hover{
 transform:translateY(-1px);

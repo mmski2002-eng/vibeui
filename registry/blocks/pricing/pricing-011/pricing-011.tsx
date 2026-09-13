@@ -50,6 +50,7 @@ const STYLES = `
 --vibeui-pricing-011-line:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-pricing-011-accent:light-dark(oklch(0.287 0 0),oklch(0.906 0 0));
 --vibeui-pricing-011-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-pricing-011-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -100,7 +101,7 @@ color:var(--vibeui-pricing-011-accent);
 [data-vibeui-block="pricing-011"] [data-part="sign"]::before,
 [data-vibeui-block="pricing-011"] [data-part="sign"]::after{
 content:"";position:absolute;left:50%;top:50%;background:currentColor;border-radius:1px;
-transform:translate(-50%,-50%);transition:opacity .16s ease,transform .16s ease;
+transform:translate(-50%,-50%);transition:opacity var(--vibeui-pricing-011-dur-2) ease,transform var(--vibeui-pricing-011-dur-2) ease;
 }
 [data-vibeui-block="pricing-011"] [data-part="sign"]::before{width:0.875rem;height:2px}
 [data-vibeui-block="pricing-011"] [data-part="sign"]::after{width:2px;height:0.875rem}

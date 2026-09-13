@@ -32,6 +32,7 @@ const STYLES = `
 --vibeui-video-003-card:light-dark(oklch(0.99 0 0),oklch(0.2 0 0));
 --vibeui-video-003-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-video-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-video-003-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -49,7 +50,7 @@ font-family:var(--vibeui-video-003-font);
 [data-vibeui-block="video-003"] [data-part="card"]{min-inline-size:0;display:flex;flex-direction:column;gap:0.625rem;text-decoration:none;color:inherit}
 [data-vibeui-block="video-003"] [data-part="poster"]{
 position:relative;display:block;aspect-ratio:16 / 9;border-radius:0.875rem;overflow:hidden;
-transition:transform .18s ease;
+transition:transform var(--vibeui-video-003-dur-2) ease;
 }
 /* Подложка — только когда фотографии нет: компонент обязан
    оставаться полноценным без единого внешнего файла. */

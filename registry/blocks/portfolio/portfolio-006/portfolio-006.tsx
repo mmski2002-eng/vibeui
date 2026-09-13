@@ -39,6 +39,7 @@ const STYLES = `
 --vibeui-portfolio-006-card:light-dark(oklch(0.97 0 0),oklch(0.2 0 0));
 --vibeui-portfolio-006-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-portfolio-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-portfolio-006-dur-4:340ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -70,7 +71,7 @@ position:relative;overflow:hidden;border-radius:1rem;aspect-ratio:4/3;
 border:1px solid var(--vibeui-portfolio-006-border);background:var(--vibeui-portfolio-006-card);
 }
 [data-vibeui-block="portfolio-006"] [data-part="tile"][data-feature="true"] [data-part="frame"]{aspect-ratio:4/3}
-[data-vibeui-block="portfolio-006"] [data-part="frame"] img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .3s ease}
+[data-vibeui-block="portfolio-006"] [data-part="frame"] img{display:block;width:100%;height:100%;object-fit:cover;transition:transform var(--vibeui-portfolio-006-dur-4) ease}
 [data-vibeui-block="portfolio-006"] [data-part="link"]:hover [data-part="frame"] img{transform:scale(1.03)}
 /* Заглушка обложки: работа без картинки не должна оставлять дыру. */
 [data-vibeui-block="portfolio-006"] [data-part="frame"][data-empty="true"]::after{

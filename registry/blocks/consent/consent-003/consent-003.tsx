@@ -36,6 +36,7 @@ const STYLES = `
 --vibeui-consent-003-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-consent-003-on-accent:oklch(from var(--vibeui-consent-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-consent-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-consent-003-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -55,7 +56,7 @@ font-family:var(--vibeui-consent-003-font);
 [data-vibeui-block="consent-003"] [data-part="box"]{
 appearance:none;width:1.375rem;height:1.375rem;margin:0;flex:none;cursor:pointer;position:relative;
 border:1px solid var(--vibeui-consent-003-border);border-radius:0.375rem;background:transparent;
-transition:background-color .16s ease,border-color .16s ease;
+transition:background-color var(--vibeui-consent-003-dur-2) ease,border-color var(--vibeui-consent-003-dur-2) ease;
 }
 [data-vibeui-block="consent-003"] [data-part="box"]:checked{background:var(--vibeui-consent-003-accent);border-color:transparent;color:oklch(from var(--vibeui-consent-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="consent-003"] [data-part="box"]:checked::after{content:"";position:absolute;left:0.4375rem;top:0.1875rem;width:0.3125rem;height:0.625rem;border:solid var(--vibeui-consent-003-on-accent);border-width:0 2px 2px 0;transform:rotate(45deg)}
@@ -65,7 +66,7 @@ transition:background-color .16s ease,border-color .16s ease;
 [data-vibeui-block="consent-003"] [data-part="submit"]{
 height:2.875rem;padding:0 1.5rem;border:0;border-radius:0.75rem;cursor:pointer;
 background:var(--vibeui-consent-003-accent);color:oklch(from var(--vibeui-consent-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font:inherit;font-size:0.9375rem;font-weight:650;transition:opacity .16s ease;
+font:inherit;font-size:0.9375rem;font-weight:650;transition:opacity var(--vibeui-consent-003-dur-2) ease;
 }
 [data-vibeui-block="consent-003"] [data-part="submit"]:hover:not(:disabled){opacity:.9}
 [data-vibeui-block="consent-003"] [data-part="submit"]:disabled{opacity:.5;cursor:not-allowed}

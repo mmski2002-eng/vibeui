@@ -38,6 +38,7 @@ const STYLES = `
 --vibeui-hero-013-accent:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
 --vibeui-hero-013-accent-fg:oklch(from var(--vibeui-hero-013-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-013-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-hero-013-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -66,7 +67,7 @@ color:var(--vibeui-hero-013-muted);text-wrap:pretty;
 [data-vibeui-block="hero-013"] [data-part="search"]{
 display:flex;align-items:center;gap:0.5rem;padding:0.4375rem 0.4375rem 0.4375rem 0.875rem;
 border-radius:9999px;border:1px solid var(--vibeui-hero-013-line);background:var(--vibeui-hero-013-card);
-box-shadow:0 1px 2px oklch(0 0 0 / 5%);transition:border-color .16s ease,box-shadow .16s ease;
+box-shadow:0 1px 2px oklch(0 0 0 / 5%);transition:border-color var(--vibeui-hero-013-dur-2) ease,box-shadow var(--vibeui-hero-013-dur-2) ease;
 }
 [data-vibeui-block="hero-013"] [data-part="search"]:focus-within{
 border-color:var(--vibeui-hero-013-accent);
@@ -80,7 +81,7 @@ flex:1 1 auto;min-width:0;height:2.5rem;border:0;background:none;font:inherit;fo
 [data-vibeui-block="hero-013"] button{
 appearance:none;cursor:pointer;flex:0 0 auto;height:2.5rem;padding:0 1.125rem;border:0;border-radius:9999px;
 background:var(--vibeui-hero-013-accent);color:oklch(from var(--vibeui-hero-013-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font:inherit;font-size:0.875rem;font-weight:650;transition:background-color .16s ease;
+font:inherit;font-size:0.875rem;font-weight:650;transition:background-color var(--vibeui-hero-013-dur-2) ease;
 }
 [data-vibeui-block="hero-013"] button:hover{background:color-mix(in oklab,var(--vibeui-hero-013-accent) 86%,black)}
 [data-vibeui-block="hero-013"] button:focus-visible{outline:2px solid var(--vibeui-hero-013-accent);outline-offset:3px}
@@ -95,7 +96,7 @@ color:var(--vibeui-hero-013-muted);
 display:inline-flex;align-items:center;height:2rem;padding:0 0.875rem;border-radius:9999px;
 border:1px solid var(--vibeui-hero-013-line);background:var(--vibeui-hero-013-card);
 font-size:0.8125rem;color:var(--vibeui-hero-013-fg);text-decoration:none;
-transition:border-color .16s ease,color .16s ease;
+transition:border-color var(--vibeui-hero-013-dur-2) ease,color var(--vibeui-hero-013-dur-2) ease;
 }
 [data-vibeui-block="hero-013"] [data-part="tags"] a:hover{border-color:var(--vibeui-hero-013-accent);color:var(--vibeui-hero-013-accent)}
 [data-vibeui-block="hero-013"] [data-part="tags"] a:focus-visible{outline:2px solid var(--vibeui-hero-013-accent);outline-offset:2px}

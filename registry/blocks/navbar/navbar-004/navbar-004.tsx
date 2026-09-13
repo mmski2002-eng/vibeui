@@ -68,6 +68,10 @@ const STYLES = `
 --vibeui-navbar-004-on-accent:oklch(from var(--vibeui-navbar-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-navbar-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-navbar-004-ease:cubic-bezier(.32,.72,0,1);
+--vibeui-navbar-004-dur-1:130ms;
+--vibeui-navbar-004-dur-2:180ms;
+--vibeui-navbar-004-dur-3:240ms;
+--vibeui-navbar-004-dur-4:340ms;
 --vibeui-navbar-004-panel:light-dark(#ffffff,#1a1a1a);
 --vibeui-navbar-004-promo:light-dark(#f2f2f2,#000000);
 container-type:inline-size;
@@ -100,7 +104,7 @@ background:var(--vibeui-navbar-004-accent);color:oklch(from var(--vibeui-navbar-
 font-size:0.8125rem;font-weight:800;
 box-shadow:0 0.25rem 0.75rem color-mix(in oklab,var(--vibeui-navbar-004-accent) 44%,transparent),
 inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);
-transition:transform .22s var(--vibeui-navbar-004-ease);
+transition:transform var(--vibeui-navbar-004-dur-3) var(--vibeui-navbar-004-ease);
 }
 [data-vibeui-block="navbar-004"] [data-part="brand"]:hover [data-part="mark"]{transform:rotate(-6deg) scale(1.06)}
 
@@ -111,7 +115,7 @@ background:var(--vibeui-navbar-004-accent);color:oklch(from var(--vibeui-navbar-
 text-decoration:none;font-size:0.9375rem;font-weight:650;white-space:nowrap;letter-spacing:-0.01em;
 box-shadow:0 0.3125rem 1rem color-mix(in oklab,var(--vibeui-navbar-004-accent) 38%,transparent),
 inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);
-transition:transform .18s var(--vibeui-navbar-004-ease),box-shadow .25s ease;
+transition:transform var(--vibeui-navbar-004-dur-2) var(--vibeui-navbar-004-ease),box-shadow var(--vibeui-navbar-004-dur-3) ease;
 }
 [data-vibeui-block="navbar-004"] [data-part="action"]:hover{
 transform:translateY(-1px);
@@ -128,13 +132,13 @@ width:100%;cursor:pointer;background:transparent;border:0;
 display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
 padding:0.875rem 0.25rem;border-radius:0.625rem;
 font:inherit;font-size:0.9375rem;font-weight:560;color:var(--vibeui-navbar-004-ink);
-transition:color .13s ease,background-color .18s ease;
+transition:color var(--vibeui-navbar-004-dur-1) ease,background-color var(--vibeui-navbar-004-dur-2) ease;
 }
 [data-vibeui-block="navbar-004"] [data-part="chevron"]{
 width:0.5rem;height:0.5rem;flex:none;
 border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
 transform:rotate(45deg) translateY(-0.0625rem);
-transition:transform .28s var(--vibeui-navbar-004-ease);
+transition:transform var(--vibeui-navbar-004-dur-3) var(--vibeui-navbar-004-ease);
 }
 [data-vibeui-block="navbar-004"] [data-part="trigger"][aria-expanded="true"] [data-part="chevron"]{
 transform:rotate(225deg) translateY(-0.0625rem);
@@ -142,7 +146,7 @@ transform:rotate(225deg) translateY(-0.0625rem);
 
 [data-vibeui-block="navbar-004"] [data-part="drawer"]{
 display:grid;grid-template-rows:0fr;
-transition:grid-template-rows .34s var(--vibeui-navbar-004-ease);
+transition:grid-template-rows var(--vibeui-navbar-004-dur-4) var(--vibeui-navbar-004-ease);
 }
 [data-vibeui-block="navbar-004"] [data-part="drawer"][data-open="true"]{grid-template-rows:1fr}
 [data-vibeui-block="navbar-004"] [data-part="clip"]{overflow:hidden;min-height:0}
@@ -157,7 +161,7 @@ text-transform:uppercase;color:var(--vibeui-navbar-004-muted);
 [data-vibeui-block="navbar-004"] [data-part="column"] a{
 display:block;padding:0.5rem 0.625rem;margin:0 -0.625rem;border-radius:0.625rem;
 color:var(--vibeui-navbar-004-ink);text-decoration:none;font-size:0.9375rem;font-weight:560;
-transition:background-color .16s ease,color .13s ease;
+transition:background-color var(--vibeui-navbar-004-dur-2) ease,color var(--vibeui-navbar-004-dur-1) ease;
 }
 [data-vibeui-block="navbar-004"] [data-part="column"] a:hover{background:var(--vibeui-navbar-004-hover)}
 [data-vibeui-block="navbar-004"] [data-part="column"] a span{
@@ -185,7 +189,7 @@ margin-top:0.375rem;display:inline-flex;align-items:center;gap:0.3125rem;
 color:var(--vibeui-navbar-004-accent);text-decoration:none;font-size:0.875rem;font-weight:640;
 }
 [data-vibeui-block="navbar-004"] [data-part="promo"] a svg{
-width:0.75rem;height:0.75rem;transition:transform .24s var(--vibeui-navbar-004-ease);
+width:0.75rem;height:0.75rem;transition:transform var(--vibeui-navbar-004-dur-3) var(--vibeui-navbar-004-ease);
 }
 [data-vibeui-block="navbar-004"] [data-part="promo"] a:hover svg{transform:translateX(0.1875rem)}
 
@@ -193,7 +197,7 @@ width:0.75rem;height:0.75rem;transition:transform .24s var(--vibeui-navbar-004-e
 display:block;padding:0.875rem 0.25rem;border-top:1px solid var(--vibeui-navbar-004-line);
 color:var(--vibeui-navbar-004-ink);text-decoration:none;
 font-size:0.9375rem;font-weight:560;
-transition:color .13s ease;
+transition:color var(--vibeui-navbar-004-dur-1) ease;
 }
 [data-vibeui-block="navbar-004"] [data-part="plain"]:hover{color:var(--vibeui-navbar-004-accent)}
 
@@ -219,7 +223,7 @@ color:var(--vibeui-navbar-004-ink);background:var(--vibeui-navbar-004-hover);
 position:absolute;left:0;right:0;top:calc(100% + 0.5rem);z-index:60;
 display:block;grid-template-rows:none;padding-inline:2rem;
 transform-origin:top center;
-transition:opacity .2s ease,transform .3s var(--vibeui-navbar-004-ease);
+transition:opacity var(--vibeui-navbar-004-dur-2) ease,transform var(--vibeui-navbar-004-dur-4) var(--vibeui-navbar-004-ease);
 }
 [data-vibeui-block="navbar-004"] [data-part="drawer"][data-open="false"]{
 opacity:0;transform:translateY(-0.5rem) scale(.99);pointer-events:none;
@@ -237,7 +241,7 @@ box-shadow:var(--vibeui-navbar-004-shadow),inset 0 1px 0 var(--vibeui-navbar-004
 [data-vibeui-block="navbar-004"] [data-part="plain"]{
 border-top:0;padding:0.5rem 0.8125rem;border-radius:0.625rem;
 color:var(--vibeui-navbar-004-muted);
-transition:color .13s ease,background-color .18s ease;
+transition:color var(--vibeui-navbar-004-dur-1) ease,background-color var(--vibeui-navbar-004-dur-2) ease;
 }
 [data-vibeui-block="navbar-004"] [data-part="plain"]:hover{
 color:var(--vibeui-navbar-004-ink);background:var(--vibeui-navbar-004-hover);

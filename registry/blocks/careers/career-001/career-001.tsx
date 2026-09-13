@@ -36,6 +36,7 @@ const STYLES = `
 --vibeui-career-001-row:light-dark(oklch(0.98 0 0),oklch(0.2 0 0));
 --vibeui-career-001-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-career-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-career-001-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -66,7 +67,7 @@ color:var(--vibeui-career-001-muted);
 display:flex;align-items:center;gap:1rem;
 padding:0.875rem 1.125rem;border:1px solid var(--vibeui-career-001-border);border-radius:0.875rem;
 background:var(--vibeui-career-001-row);color:inherit;text-decoration:none;
-transition:border-color .16s ease,transform .16s ease;
+transition:border-color var(--vibeui-career-001-dur-2) ease,transform var(--vibeui-career-001-dur-2) ease;
 }
 [data-vibeui-block="career-001"] [data-part="role"]:hover{border-color:var(--vibeui-career-001-accent);transform:translateX(2px)}
 [data-vibeui-block="career-001"] [data-part="role"]:focus-visible{outline:2px solid var(--vibeui-career-001-accent);outline-offset:2px}

@@ -59,6 +59,7 @@ const STYLES = `
 --vibeui-datagrid-001-radius:0.875rem;
 --vibeui-datagrid-001-pad:0.625rem;
 --vibeui-datagrid-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-datagrid-001-dur-2:180ms;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
@@ -90,7 +91,7 @@ padding:0.25rem 0.5rem;border-radius:999px;
 color:var(--vibeui-datagrid-001-accent);
 background:var(--vibeui-datagrid-001-accent-soft);
 border:1px solid transparent;
-transition:border-color .16s ease;
+transition:border-color var(--vibeui-datagrid-001-dur-2) ease;
 }
 [data-vibeui-block="datagrid-001"] [data-part="chip"]:hover{border-color:var(--vibeui-datagrid-001-accent)}
 [data-vibeui-block="datagrid-001"] [data-part="chip"]:focus-visible{outline:2px solid var(--vibeui-datagrid-001-accent);outline-offset:2px}

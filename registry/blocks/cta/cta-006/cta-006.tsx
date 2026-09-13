@@ -39,6 +39,7 @@ const STYLES = `
 --vibeui-cta-006-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
 --vibeui-cta-006-accent-fg:oklch(from var(--vibeui-cta-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-cta-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-cta-006-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -89,7 +90,7 @@ display:inline-flex;align-items:center;justify-content:center;
 min-height:3rem;padding:0.25rem 1.5rem;border-radius:0.875rem;
 background:var(--vibeui-cta-006-accent);color:oklch(from var(--vibeui-cta-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 text-decoration:none;font-size:1rem;font-weight:650;
-transition:background-color .18s ease;
+transition:background-color var(--vibeui-cta-006-dur-2) ease;
 }
 [data-vibeui-block="cta-006"] [data-part="action"]:hover{background:color-mix(in oklab,var(--vibeui-cta-006-accent) 86%,black)}
 [data-vibeui-block="cta-006"] [data-part="secondary"]{

@@ -34,6 +34,7 @@ const STYLES = `
 --vibeui-logocloud-003-border:light-dark(oklch(0.9 0 0),oklch(0.32 0 0));
 --vibeui-logocloud-003-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-logocloud-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-logocloud-003-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -66,7 +67,7 @@ min-inline-size:0;min-height:5.5rem;
 display:grid;place-items:center;padding:1rem;
 border:1px solid var(--vibeui-logocloud-003-border);border-radius:1rem;
 background:var(--vibeui-logocloud-003-card);
-transition:border-color .18s ease,background-color .18s ease;
+transition:border-color var(--vibeui-logocloud-003-dur-2) ease,background-color var(--vibeui-logocloud-003-dur-2) ease;
 }
 [data-vibeui-block="logocloud-003"] [data-part="tile"]:hover{
 border-color:color-mix(in oklab,var(--vibeui-logocloud-003-accent) 45%,var(--vibeui-logocloud-003-border));
@@ -75,7 +76,7 @@ background:color-mix(in oklab,var(--vibeui-logocloud-003-accent) 8%,var(--vibeui
 [data-vibeui-block="logocloud-003"] [data-part="logo"]{
 color:var(--vibeui-logocloud-003-logo);
 font-size:1.25rem;line-height:1;white-space:nowrap;
-transition:color .18s ease;
+transition:color var(--vibeui-logocloud-003-dur-2) ease;
 font-weight:750;letter-spacing:-0.035em;
 }
 [data-vibeui-block="logocloud-003"] [data-part="tile"]:hover [data-part="logo"]{

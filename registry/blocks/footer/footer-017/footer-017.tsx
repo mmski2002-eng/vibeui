@@ -34,6 +34,7 @@ const STYLES = `
 --vibeui-footer-017-line:color-mix(in oklab,#000000 11%,transparent);
 --vibeui-footer-017-accent:#1a1a1a;
 --vibeui-footer-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-footer-017-dur-2:180ms;
 container-type:inline-size;
 }
 [data-vibeui-block="footer-017"]{
@@ -82,7 +83,7 @@ display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;
 }
 [data-vibeui-block="footer-017"] [data-part="caption"] strong{
 font-size:clamp(1.5rem,3.6cqi,2.375rem);letter-spacing:-0.02em;font-weight:690;
-transition:color .16s ease;
+transition:color var(--vibeui-footer-017-dur-2) ease;
 }
 [data-vibeui-block="footer-017"] [data-part="next"]:hover strong{color:var(--vibeui-footer-017-accent)}
 [data-vibeui-block="footer-017"] [data-part="caption"] span{
@@ -98,7 +99,7 @@ font-size:0.9375rem;
 color:var(--vibeui-footer-017-ink);text-decoration:none;
 border-bottom:2px solid var(--vibeui-footer-017-accent);padding-bottom:0.0625rem;
 font-weight:580;
-transition:color .16s ease;
+transition:color var(--vibeui-footer-017-dur-2) ease;
 }
 [data-vibeui-block="footer-017"] [data-part="contact"]:hover{color:var(--vibeui-footer-017-accent)}
 [data-vibeui-block="footer-017"] [data-part="legal"]{

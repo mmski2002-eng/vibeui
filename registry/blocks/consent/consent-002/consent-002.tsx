@@ -37,6 +37,7 @@ const STYLES = `
 --vibeui-consent-002-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-consent-002-on-accent:oklch(from var(--vibeui-consent-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-consent-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-consent-002-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -65,8 +66,8 @@ padding:0.875rem 0;border-bottom:1px solid var(--vibeui-consent-002-border);
 [data-vibeui-block="consent-002"] [data-part="switch"]{position:relative;display:inline-flex;flex:none;width:2.75rem;height:1.625rem;cursor:pointer}
 [data-vibeui-block="consent-002"] [data-part="switch"] input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}
 [data-vibeui-block="consent-002"] [data-part="switch"] input:disabled{cursor:not-allowed}
-[data-vibeui-block="consent-002"] [data-part="track"]{position:absolute;inset:0;border-radius:999px;background:var(--vibeui-consent-002-track);transition:background-color .16s ease}
-[data-vibeui-block="consent-002"] [data-part="track"]::after{content:"";position:absolute;left:0.1875rem;top:0.1875rem;width:1.25rem;height:1.25rem;border-radius:999px;background:oklch(1 0 0);transition:transform .16s ease}
+[data-vibeui-block="consent-002"] [data-part="track"]{position:absolute;inset:0;border-radius:999px;background:var(--vibeui-consent-002-track);transition:background-color var(--vibeui-consent-002-dur-2) ease}
+[data-vibeui-block="consent-002"] [data-part="track"]::after{content:"";position:absolute;left:0.1875rem;top:0.1875rem;width:1.25rem;height:1.25rem;border-radius:999px;background:oklch(1 0 0);transition:transform var(--vibeui-consent-002-dur-2) ease}
 [data-vibeui-block="consent-002"] [data-part="switch"] input:checked+[data-part="track"]{background:var(--vibeui-consent-002-accent);color:oklch(from var(--vibeui-consent-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="consent-002"] [data-part="switch"] input:checked+[data-part="track"]::after{transform:translateX(1.125rem)}
 [data-vibeui-block="consent-002"] [data-part="switch"] input:focus-visible+[data-part="track"]{outline:2px solid var(--vibeui-consent-002-accent);outline-offset:2px}
@@ -74,7 +75,7 @@ padding:0.875rem 0;border-bottom:1px solid var(--vibeui-consent-002-border);
 [data-vibeui-block="consent-002"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:flex-end}
 [data-vibeui-block="consent-002"] [data-part="btn"]{
 height:2.625rem;padding:0 1.25rem;border-radius:0.75rem;cursor:pointer;font:inherit;font-size:0.875rem;font-weight:640;
-border:1px solid var(--vibeui-consent-002-border);background:transparent;color:inherit;transition:border-color .16s ease;
+border:1px solid var(--vibeui-consent-002-border);background:transparent;color:inherit;transition:border-color var(--vibeui-consent-002-dur-2) ease;
 }
 [data-vibeui-block="consent-002"] [data-part="btn"]:hover{border-color:var(--vibeui-consent-002-accent)}
 [data-vibeui-block="consent-002"] [data-part="btn"]:focus-visible{outline:2px solid var(--vibeui-consent-002-accent);outline-offset:2px}

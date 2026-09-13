@@ -51,6 +51,11 @@ const STYLES = `
 --vibeui-navbar-008-on-accent:oklch(from var(--vibeui-navbar-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-navbar-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-navbar-008-ease:cubic-bezier(.32,.72,0,1);
+--vibeui-navbar-008-dur-1:130ms;
+--vibeui-navbar-008-dur-2:180ms;
+--vibeui-navbar-008-dur-3:240ms;
+--vibeui-navbar-008-dur-4:340ms;
+--vibeui-navbar-008-dur-5:460ms;
 container-type:inline-size;
 }
 :where([data-vibeui-block="navbar-008"][data-theme="on-light"]){
@@ -119,7 +124,7 @@ border-color:color-mix(in oklab,#000000 8%,transparent);
 
 [data-vibeui-block="navbar-008"] [data-part="dock"]{
 position:relative;z-index:50;
-transition:background-color .34s ease,box-shadow .34s ease,border-color .34s ease;
+transition:background-color var(--vibeui-navbar-008-dur-4) ease,box-shadow var(--vibeui-navbar-008-dur-4) ease,border-color var(--vibeui-navbar-008-dur-4) ease;
 border-bottom:1px solid transparent;
 }
 [data-vibeui-block="navbar-008"] [data-part="dock"][data-sticky]{position:sticky;top:0}
@@ -134,7 +139,7 @@ backdrop-filter:blur(1.25rem) saturate(170%);
 [data-vibeui-block="navbar-008"] [data-part="shell"]{
 position:relative;display:flex;align-items:center;gap:1rem;
 max-width:82rem;margin:0 auto;padding:1.125rem 1rem;
-transition:padding .4s var(--vibeui-navbar-008-ease);
+transition:padding var(--vibeui-navbar-008-dur-5) var(--vibeui-navbar-008-ease);
 }
 [data-vibeui-block="navbar-008"] [data-part="dock"][data-scrolled] [data-part="shell"]{padding-block:0.75rem}
 
@@ -142,7 +147,7 @@ transition:padding .4s var(--vibeui-navbar-008-ease);
 display:inline-flex;align-items:center;gap:0.625rem;flex:none;
 color:inherit;text-decoration:none;font-size:1.125rem;font-weight:700;letter-spacing:-0.025em;
 text-shadow:0 1px 14px rgb(0 0 0 / 26%);
-transition:text-shadow .34s ease;
+transition:text-shadow var(--vibeui-navbar-008-dur-4) ease;
 }
 [data-vibeui-block="navbar-008"][data-theme="on-light"] [data-part="brand"],
 [data-vibeui-block="navbar-008"] [data-part="dock"][data-scrolled] [data-part="brand"]{text-shadow:none}
@@ -151,7 +156,7 @@ width:1.875rem;height:1.875rem;flex:none;display:grid;place-items:center;border-
 background:var(--vibeui-navbar-008-accent);color:oklch(from var(--vibeui-navbar-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 font-size:0.8125rem;font-weight:800;text-shadow:none;
 box-shadow:0 0.25rem 0.75rem color-mix(in oklab,var(--vibeui-navbar-008-accent) 50%,transparent);
-transition:transform .22s var(--vibeui-navbar-008-ease);
+transition:transform var(--vibeui-navbar-008-dur-3) var(--vibeui-navbar-008-ease);
 }
 [data-vibeui-block="navbar-008"] [data-part="brand"]:hover [data-part="mark"]{transform:rotate(-6deg) scale(1.06)}
 
@@ -163,7 +168,7 @@ position:relative;z-index:1;padding:0.5rem 0.8125rem;
 color:var(--vibeui-navbar-008-muted);text-decoration:none;
 font-size:0.9375rem;font-weight:540;white-space:nowrap;
 text-shadow:0 1px 12px rgb(0 0 0 / 22%);
-transition:color .13s ease,text-shadow .34s ease;
+transition:color var(--vibeui-navbar-008-dur-1) ease,text-shadow var(--vibeui-navbar-008-dur-4) ease;
 }
 [data-vibeui-block="navbar-008"][data-theme="on-light"] [data-part="nav"] a,
 [data-vibeui-block="navbar-008"] [data-part="dock"][data-scrolled] [data-part="nav"] a{text-shadow:none}
@@ -180,7 +185,7 @@ background:var(--vibeui-navbar-008-accent);
 opacity:0;pointer-events:none;color:oklch(from var(--vibeui-navbar-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="navbar-008"] [data-part="nav"][data-ready] [data-part="glider"]{
 opacity:1;
-transition:transform .32s var(--vibeui-navbar-008-ease),width .32s var(--vibeui-navbar-008-ease),opacity .18s ease;
+transition:transform var(--vibeui-navbar-008-dur-4) var(--vibeui-navbar-008-ease),width var(--vibeui-navbar-008-dur-4) var(--vibeui-navbar-008-ease),opacity var(--vibeui-navbar-008-dur-2) ease;
 }
 
 [data-vibeui-block="navbar-008"] [data-part="action"]{
@@ -190,7 +195,7 @@ background:var(--vibeui-navbar-008-accent);color:oklch(from var(--vibeui-navbar-
 text-decoration:none;font-size:0.9375rem;font-weight:650;white-space:nowrap;letter-spacing:-0.01em;
 box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-navbar-008-accent) 46%,transparent),
 inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);
-transition:transform .18s var(--vibeui-navbar-008-ease),box-shadow .25s ease;
+transition:transform var(--vibeui-navbar-008-dur-2) var(--vibeui-navbar-008-ease),box-shadow var(--vibeui-navbar-008-dur-3) ease;
 }
 [data-vibeui-block="navbar-008"] [data-part="action"]:hover{
 transform:translateY(-1px);
@@ -208,7 +213,7 @@ color:var(--vibeui-navbar-008-ink);font:inherit;font-size:0.9375rem;font-weight:
 [data-vibeui-block="navbar-008"] [data-part="bars"]::before,
 [data-vibeui-block="navbar-008"] [data-part="bars"]::after{
 content:"";position:absolute;left:0;right:0;height:1.5px;border-radius:2px;background:currentColor;
-transition:transform .3s var(--vibeui-navbar-008-ease);
+transition:transform var(--vibeui-navbar-008-dur-4) var(--vibeui-navbar-008-ease);
 }
 [data-vibeui-block="navbar-008"] [data-part="bars"]::before{top:0}
 [data-vibeui-block="navbar-008"] [data-part="bars"]::after{bottom:0}
@@ -222,7 +227,7 @@ border:1px solid var(--vibeui-navbar-008-edge);border-radius:1.125rem;
 box-shadow:0 0.75rem 2rem rgb(0 0 0 / 34%);
 padding:0.5rem;display:flex;flex-direction:column;
 transform-origin:top right;
-transition:opacity .18s ease,transform .26s var(--vibeui-navbar-008-ease);
+transition:opacity var(--vibeui-navbar-008-dur-2) ease,transform var(--vibeui-navbar-008-dur-3) var(--vibeui-navbar-008-ease);
 }
 [data-vibeui-block="navbar-008"] [data-part="panel"][data-open="false"]{
 opacity:0;transform:translateY(-0.5rem) scale(.98);pointer-events:none;
@@ -231,7 +236,7 @@ opacity:0;transform:translateY(-0.5rem) scale(.98);pointer-events:none;
 padding:0.6875rem 0.75rem;border-radius:0.75rem;
 color:var(--vibeui-navbar-008-ink);text-decoration:none;
 font-size:0.9375rem;font-weight:540;text-shadow:none;
-transition:background-color .14s ease;
+transition:background-color var(--vibeui-navbar-008-dur-1) ease;
 }
 [data-vibeui-block="navbar-008"] [data-part="panel"] a:hover{background:color-mix(in oklab,var(--vibeui-navbar-008-accent) 16%,transparent)}
 [data-vibeui-block="navbar-008"] [data-part="panel"] a[aria-current="page"]{color:var(--vibeui-navbar-008-accent)}

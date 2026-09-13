@@ -35,6 +35,7 @@ const STYLES = `
 --vibeui-download-003-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-download-003-on-accent:oklch(from var(--vibeui-download-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-download-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-download-003-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -54,7 +55,7 @@ font-family:var(--vibeui-download-003-font);
 min-inline-size:0;display:flex;flex-direction:column;gap:0.75rem;
 padding:1.25rem;border:1px solid var(--vibeui-download-003-border);border-radius:1rem;
 background:var(--vibeui-download-003-card);
-transition:border-color .16s ease,transform .16s ease;
+transition:border-color var(--vibeui-download-003-dur-2) ease,transform var(--vibeui-download-003-dur-2) ease;
 }
 [data-vibeui-block="download-003"] [data-part="card"]:hover{transform:translateY(-2px)}
 [data-vibeui-block="download-003"] [data-part="card"][data-primary="true"]{border-color:var(--vibeui-download-003-accent);box-shadow:0 0 0 1px var(--vibeui-download-003-accent)}
@@ -71,7 +72,7 @@ color:var(--vibeui-download-003-accent);
 margin-top:auto;display:inline-flex;align-items:center;justify-content:center;
 height:2.75rem;border-radius:0.75rem;text-decoration:none;
 border:1px solid var(--vibeui-download-003-border);color:inherit;
-font-size:0.9375rem;font-weight:650;transition:border-color .16s ease,background-color .16s ease;
+font-size:0.9375rem;font-weight:650;transition:border-color var(--vibeui-download-003-dur-2) ease,background-color var(--vibeui-download-003-dur-2) ease;
 }
 [data-vibeui-block="download-003"] [data-part="btn"]:hover{border-color:var(--vibeui-download-003-accent)}
 [data-vibeui-block="download-003"] [data-part="btn"]:focus-visible{outline:2px solid var(--vibeui-download-003-accent);outline-offset:2px}

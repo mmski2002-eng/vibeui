@@ -34,6 +34,7 @@ const STYLES = `
 --vibeui-podcast-003-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-podcast-003-on-accent:oklch(from var(--vibeui-podcast-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-podcast-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-podcast-003-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -53,7 +54,7 @@ font-family:var(--vibeui-podcast-003-font);
 [data-vibeui-block="podcast-003"] [data-part="platform"]{
 display:inline-flex;align-items:center;gap:0.375rem;
 padding:0.5rem 1rem;border-radius:999px;font-size:0.875rem;font-weight:640;text-decoration:none;
-transition:opacity .16s ease,border-color .16s ease}
+transition:opacity var(--vibeui-podcast-003-dur-2) ease,border-color var(--vibeui-podcast-003-dur-2) ease}
 [data-vibeui-block="podcast-003"] [data-part="platform"]:first-child{background:var(--vibeui-podcast-003-accent);color:oklch(from var(--vibeui-podcast-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="podcast-003"] [data-part="platform"]:not(:first-child){border:1px solid var(--vibeui-podcast-003-border);color:inherit}
 [data-vibeui-block="podcast-003"] [data-part="platform"]:first-child:hover{opacity:.9}
@@ -63,7 +64,7 @@ transition:opacity .16s ease,border-color .16s ease}
 [data-vibeui-block="podcast-003"] [data-part="ep"]{
 display:grid;grid-template-columns:auto 1fr auto;gap:0.75rem;align-items:center;
 padding:0.875rem 1rem;border:1px solid var(--vibeui-podcast-003-border);border-radius:0.875rem;
-background:var(--vibeui-podcast-003-card);color:inherit;text-decoration:none;transition:border-color .16s ease}
+background:var(--vibeui-podcast-003-card);color:inherit;text-decoration:none;transition:border-color var(--vibeui-podcast-003-dur-2) ease}
 [data-vibeui-block="podcast-003"] [data-part="ep"]:hover{border-color:var(--vibeui-podcast-003-accent)}
 [data-vibeui-block="podcast-003"] [data-part="ep"]:focus-visible{outline:2px solid var(--vibeui-podcast-003-accent);outline-offset:2px}
 [data-vibeui-block="podcast-003"] [data-part="ep-num"]{font-size:0.75rem;font-weight:700;color:var(--vibeui-podcast-003-accent);font-variant-numeric:tabular-nums}

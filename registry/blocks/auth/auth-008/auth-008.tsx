@@ -52,6 +52,7 @@ const STYLES = `
 --vibeui-auth-008-accent-wash:light-dark(oklch(0.28 0 0 / 5%),oklch(0.903 0 0 / 12%));
 --vibeui-auth-008-accent-chip:light-dark(oklch(0.28 0 0 / 12%),oklch(0.903 0 0 / 20%));
 --vibeui-auth-008-chip:light-dark(oklch(0.55 0 265 / 10%),oklch(0.85 0 265 / 14%));
+--vibeui-auth-008-dur-2:180ms;
 --vibeui-auth-008-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -86,7 +87,7 @@ appearance:none;cursor:pointer;
 border:1px solid var(--vibeui-auth-008-border);border-radius:0.75rem;
 background:var(--vibeui-auth-008-card);color:inherit;
 font:inherit;font-size:0.875rem;font-weight:600;text-align:left;
-transition:border-color .16s ease,background-color .16s ease;
+transition:border-color var(--vibeui-auth-008-dur-2) ease,background-color var(--vibeui-auth-008-dur-2) ease;
 }
 [data-vibeui-block="auth-008"] [data-part="provider"]:hover{border-color:var(--vibeui-auth-008-accent);background:var(--vibeui-auth-008-accent-wash)}
 [data-vibeui-block="auth-008"] [data-part="provider"]:focus-visible{outline:2px solid var(--vibeui-auth-008-accent);outline-offset:2px}
