@@ -12,7 +12,58 @@ export const PREVIEWS = {
   "surface-002": dynamic(() =>
     import("@/registry/blocks/background/surface-002/surface-002").then((module) => module.Surface002),
   ),
-  "surface-003": dynamic(() =>
-    import("@/registry/blocks/background/surface-003/surface-003").then((module) => module.Surface003),
+  "surface-004": dynamic(() =>
+    import("@/registry/blocks/background/surface-004/surface-004").then((module) => module.Surface004),
+  ),
+  "surface-005": dynamic(() =>
+    import("@/registry/blocks/background/surface-005/surface-005").then((module) => module.Surface005),
+  ),
+  "surface-006": dynamic(() =>
+    import("@/registry/blocks/background/surface-006/surface-006").then((module) => module.Surface006),
+  ),
+  "surface-007": dynamic(() =>
+    import("@/registry/blocks/background/surface-007/surface-007").then((module) => module.Surface007),
+  ),
+  "surface-008": dynamic(() =>
+    import("@/registry/blocks/background/surface-008/surface-008").then((module) => module.Surface008),
+  ),
+  "surface-009": dynamic(() =>
+    import("@/registry/blocks/background/surface-009/surface-009").then((module) => module.Surface009),
+  ),
+  "surface-010": dynamic(() =>
+    import("@/registry/blocks/background/surface-010/surface-010").then((module) => module.Surface010),
+  ),
+  "surface-011": dynamic(() =>
+    import("@/registry/blocks/background/surface-011/surface-011").then((module) => module.Surface011),
+  ),
+  "surface-013": dynamic(() =>
+    import("@/registry/blocks/background/surface-013/surface-013").then((module) => module.Surface013),
+  ),
+  "surface-014": dynamic(() =>
+    import("@/registry/blocks/background/surface-014/surface-014").then((module) => module.Surface014),
+  ),
+  "surface-015": dynamic(() =>
+    import("@/registry/blocks/background/surface-015/surface-015").then((module) => module.Surface015),
+  ),
+  "surface-016": dynamic(() =>
+    import("@/registry/blocks/background/surface-016/surface-016").then((module) => module.Surface016),
+  ),
+  "surface-017": dynamic(() =>
+    import("@/registry/blocks/background/surface-017/surface-017").then((module) => module.Surface017),
+  ),
+  "surface-018": dynamic(() =>
+    import("@/registry/blocks/background/surface-018/surface-018").then((module) => module.Surface018),
+  ),
+  "surface-019": dynamic(() =>
+    import("@/registry/blocks/background/surface-019/surface-019").then((module) => module.Surface019),
+  ),
+  "surface-020": dynamic(() =>
+    import("@/registry/blocks/background/surface-020/surface-020").then((module) => module.Surface020),
+  ),
+  "surface-021": dynamic(() =>
+    import("@/registry/blocks/background/surface-021/surface-021").then((module) => module.Surface021),
+  ),
+  "surface-024": dynamic(() =>
+    import("@/registry/blocks/background/surface-024/surface-024").then((module) => module.Surface024),
   ),
 } satisfies PreviewMap

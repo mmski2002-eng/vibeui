@@ -205,30 +205,30 @@ export function CardInteractive({
       return
     }
 
+    // Планка привязана к ширине карточки, а не окна: переключение в обзор
+    // сужает колонку при той же ширине окна, и старая планка из крупного
+    // режима держала бы карточку вдвое выше её кадра.
+    let width = 0
+
     const observer = new ResizeObserver(() => {
-      const height = frame.getBoundingClientRect().height
+      const box = frame.getBoundingClientRect()
+
+      if (box.width !== width) {
+        width = box.width
+        setFloor(undefined)
+
+        return
+      }
 
       setFloor((current) =>
-        current === undefined || height > current ? height : current,
+        current === undefined || box.height > current ? box.height : current,
       )
     })
 
     observer.observe(frame)
 
-    let width = window.innerWidth
-
-    const onResize = () => {
-      if (window.innerWidth !== width) {
-        width = window.innerWidth
-        setFloor(undefined)
-      }
-    }
-
-    window.addEventListener("resize", onResize)
-
     return () => {
       observer.disconnect()
-      window.removeEventListener("resize", onResize)
     }
   }, [])
 
@@ -623,7 +623,7 @@ export function CardInteractive({
               className="preview-frame bg-preview-surface flex w-full flex-1"
             >
               <div
-                className="w-full overflow-x-hidden overflow-y-auto pt-[5px] [scrollbar-gutter:stable]"
+                className="w-full overflow-x-hidden overflow-y-auto"
                 style={{ minHeight: 380, maxHeight: 620 }}
               >
                 <ConfigurablePreview

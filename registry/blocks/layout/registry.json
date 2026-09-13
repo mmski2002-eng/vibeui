@@ -1,0 +1,1933 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "layout-001",
+      "type": "registry:block",
+      "title": "Bento-витрина",
+      "description": "Bento-сетка из шести плиток разного веса: ведущая 2×2 с живым свечением, высокий список, широкое доказательство, показатель, иконка и график. Иерархия размером, а не цветом. Для витрины возможностей, «о нас», обзора сервиса и кейсов. Появление по прокрутке, свет за курсором, номера плиток для наполнения. Ноль зависимостей.",
+      "categories": [
+        "layout"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-001/layout-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-001.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, JS только для света за курсором. CSS Grid с grid-template-areas по container-запросам: одна колонка, с 40rem две, с 64rem четыре (4×3, области lead/stat/list/icon/proof/chart); data-side=right зеркалит области. Порядок DOM = порядок чтения на любой ширине. Ведущая плитка — два radial-gradient, координаты которых анимированы @keyframes через @property (без JS). Появление — по прокрутке (animation-timeline: view(), диапазон entry 0–35%), без поддержки — каскад при загрузке. Наведение: подъём, свет за курсором и подсветка кромки в точке указателя (координаты в CSS-переменных плитки через rAF, только мышь), отклик иконки, аватаров и графика. Номера 01–06 (numbers) — подсказка для наполнения. Слоты: items[0..5] с title/text/value/media; без них — призрак. Палитра --vibeui-layout-001-* с light-dark, accent — цвет иконок, кнопки и свечения.",
+      "meta": {
+        "tags": [
+          "layout",
+          "bento",
+          "grid",
+          "tiles",
+          "features",
+          "showcase",
+          "apple",
+          "cards"
+        ],
+        "ai": {
+          "usage": "<Layout001\n  heading=\"Всё, что нужно команде\"\n  lead=\"Шесть причин выбрать нас — в одной сетке.\"\n  items={[\n    { title: \"Ведущая возможность\", text: \"Коротко о главном.\" },\n    { value: \"84%\", text: \"команд остаются через год\" },\n    { title: \"Что внутри\", text: \"Список возможностей.\" },\n    { title: \"Быстрый старт\", text: \"Первый проект за час.\" },\n    { title: \"Нам доверяют\", text: \"12 000 команд.\" },\n    { title: \"Рост\", text: \"Метрика за квартал.\" },\n  ]}\n/>",
+          "summary": "Bento-сетка 4×3 на CSS Grid с областями: ведущая плитка 2×2 с живым свечением, высокий список на три ряда, широкое доказательство, показатель, иконка и график-спарклайн. Плитки принимают title/text/value/media через items, без них — призрак. Container-запросы сворачивают сетку в 2 и 1 колонку с сохранением порядка чтения. Без JS.",
+          "preserve": [
+            "локальную палитру --vibeui-layout-001-* и не подменять её токенами вашей темы",
+            "асимметрию: ведущая 2×2, список на три ряда, доказательство на две колонки — равные карточки убивают bento",
+            "grid-template-areas и container-запросы — сетка сворачивается по своей ширине, порядок DOM остаётся порядком чтения",
+            "появление по прокрутке через animation-timeline: view() с каскадом при загрузке как фолбэком, свет за курсором на CSS-переменных — не заменять на IntersectionObserver и не на JS-анимации",
+            "каскадное появление и подъём на hover как transform/border — без box-shadow-анимаций и layout-сдвигов",
+            "статику при prefers-reduced-motion"
+          ],
+          "adapt": [
+            "heading и lead — заголовок и подзаголовок над сеткой; без них — призрак",
+            "items — до шести плиток по порядку: ведущая, показатель (value), список, иконка, доказательство, график; title/text/value/media",
+            "media — свой кадр, видео или фон из категории «Фон» (surface-*) внутри плитки, ложится под текст",
+            "side — ведущая плитка слева или справа",
+            "radius — soft или sharp: скругление плиток",
+            "numbers — номера 01–06 в углах плиток: подсказка, какой items[i] куда ложится; для продакшена выключите",
+            "accent — цвет иконок, кнопки, точек списка и свечения ведущей плитки",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Заполняйте все шесть слотов: пустая плитка остаётся призраком и выдаёт заглушку.",
+            "Живой фон (surface-*) ставьте только в ведущую плитку: шесть WebGL-контекстов в одной секции — лишнее.",
+            "Bento — витрина, не длинное чтение: абзацы длиннее двух строк переносите в отдельную секцию."
+          ]
+        },
+        "i18n": {
+          "en": {
+            "title": "Bento Showcase",
+            "description": "A bento grid of six tiles of different weight: a 2×2 lead with a live glow, a tall list, a wide proof tile, a stat, an icon and a chart. Hierarchy by size, not color. For feature showcases, about sections, service overviews and case studies. Scroll-driven entrance, cursor light, tile numbers for filling. Zero dependencies.",
+            "docs": "One file, zero dependencies, JS only for the cursor light. CSS Grid with grid-template-areas by container queries: one column, two from 40rem, four from 64rem (4×3, areas lead/stat/list/icon/proof/chart); data-side=right mirrors the areas. DOM order = reading order at any width. The lead tile is two radial-gradients whose coordinates are animated with @keyframes via @property (no JS). Entrance is scroll-driven (animation-timeline: view(), range entry 0–35%), without support — a load cascade. Hover: lift, cursor light and edge highlight at the pointer (coordinates in the tile CSS variables via rAF, mouse only), icon, avatar and chart responses. Numbers 01–06 (numbers) are a hint for filling. Slots: items[0..5] with title/text/value/media; without them — a ghost. Palette --vibeui-layout-001-* with light-dark, accent colors icons, the button and the glow.",
+            "ai": {
+              "summary": "A 4×3 bento grid on CSS Grid with areas: a 2×2 lead tile with a live glow, a tall three-row list, a wide proof tile, a stat, an icon and a sparkline chart. Tiles take title/text/value/media via items, without them — a ghost. Container queries collapse the grid to 2 and 1 columns keeping the reading order. No JS.",
+              "preserve": [
+                "the local --vibeui-layout-001-* palette — do not swap it for your theme tokens",
+                "the asymmetry: a 2×2 lead, a three-row list, a two-column proof — equal cards kill bento",
+                "grid-template-areas and container queries — the grid collapses by its own width, DOM order stays the reading order",
+                "the scroll-driven entrance via animation-timeline: view() with the load cascade as fallback, the cursor light on CSS variables — do not replace with IntersectionObserver or JS animation",
+                "the cascade entrance and hover lift as transform/border — no box-shadow animations and no layout shifts",
+                "the static state under prefers-reduced-motion"
+              ],
+              "adapt": [
+                "heading and lead — the title and subtitle above the grid; without them — a ghost",
+                "items — up to six tiles in order: lead, stat (value), list, icon, proof, chart; title/text/value/media",
+                "media — your own frame, video or a background from the Background category (surface-*) inside a tile, under the text",
+                "side — the lead tile on the left or the right",
+                "radius — soft or sharp: tile rounding",
+                "numbers — 01–06 in the tile corners: a hint which items[i] goes where; turn off for production",
+                "accent — the color of icons, the button, list dots and the lead glow",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Fill all six slots: an empty tile stays a ghost and gives away the placeholder.",
+                "Put a live background (surface-*) only in the lead tile: six WebGL contexts in one section is too much.",
+                "Bento is a showcase, not long reading: paragraphs longer than two lines belong in a separate section."
+              ],
+              "usage": "<Layout001\n  heading=\"Everything a team needs\"\n  lead=\"Six reasons to choose us — in one grid.\"\n  items={[\n    { title: \"Lead feature\", text: \"The main thing, briefly.\" },\n    { value: \"84%\", text: \"of teams stay after a year\" },\n    { title: \"What is inside\", text: \"A list of features.\" },\n    { title: \"Quick start\", text: \"First project in an hour.\" },\n    { title: \"Trusted by\", text: \"12,000 teams.\" },\n    { title: \"Growth\", text: \"A metric for the quarter.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "side": {
+                "label": "Lead"
+              },
+              "radius": {
+                "label": "Radius"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "numbers": {
+                "label": "Numbers"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "natural",
+          "aspect": "1280 / 800"
+        },
+        "controls": [
+          {
+            "prop": "side",
+            "label": "Ведущая",
+            "type": "select",
+            "options": [
+              "left",
+              "right"
+            ],
+            "default": "left"
+          },
+          {
+            "prop": "radius",
+            "label": "Скругление",
+            "type": "select",
+            "options": [
+              "soft",
+              "sharp"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "numbers",
+            "label": "Номера",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "side",
+          "numbers",
+          "accent"
+        ]
+      }
+    },
+    {
+      "name": "layout-002",
+      "type": "registry:block",
+      "title": "Bento-hero",
+      "description": "Первый экран, собранный из плиток: заголовок и действие в большой плитке, окно продукта, два доказательства. Без картинки во весь экран — иерархию держит сетка. Для SaaS, приложения и инструмента.",
+      "categories": [
+        "layout"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-002/layout-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-002.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, JS только для света за курсором. CSS Grid с областями: title 2×2, product 2×1, proofA/proofB 1×1 с 64rem; две колонки с 40rem; data-side=right зеркалит. Окно продукта — призрак браузерного окна из градиентов, media ложится в него. Слоты: 01 заголовок и действие, 02 окно продукта, 03 показатель, 04 доказательство — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление по прокрутке через animation-timeline: view(), без поддержки — каскад при загрузке; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-002-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "meta": {
+        "tags": [
+          "layout",
+          "hero",
+          "bento",
+          "grid",
+          "first screen",
+          "landing"
+        ],
+        "preview": {
+          "width": "natural",
+          "aspect": "1280 / 720"
+        },
+        "ai": {
+          "usage": "<Layout002\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Заголовок и действие\", text: \"Коротко о главном.\" },\n    { title: \"Окно продукта\", text: \"Коротко о главном.\" },\n    { title: \"Показатель\", text: \"Коротко о главном.\" },\n    { title: \"Доказательство\", text: \"Коротко о главном.\" },\n  ]}\n/>",
+          "summary": "Первый экран как bento на CSS Grid: заголовок с действием в плитке 2×2, окно продукта 2×1, показатель и доказательство 1×1. Слоты через items, призрак без них, container-запросы до одной колонки.",
+          "preserve": [
+            "локальную палитру --vibeui-layout-002-* и не подменять её токенами вашей темы",
+            "крупную плитку заголовка 2×2 и окно продукта — hero без них превращается в обычную сетку карточек",
+            "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
+            "призрак окна с тремя точками в шапке — это подсказка, что там живёт скриншот продукта",
+            "движение только через transform/opacity, свет за курсором на CSS-переменных, статику при prefers-reduced-motion",
+            "призрак вместо демонстрационного текста: категория продаёт композицию, показывать надо композицию"
+          ],
+          "adapt": [
+            "heading и lead — заголовок и подзаголовок над раскладкой; без них — призрак",
+            "items — слоты по порядку: 01 заголовок и действие, 02 окно продукта, 03 показатель, 04 доказательство; title/text/value/media",
+            "media — свой кадр, видео или фон из категории «Фон» (surface-*) внутри слота, ложится под текст",
+            "side — плитка с заголовком слева или справа",
+            "numbers — номера слотов для наполнения; для продакшена выключите",
+            "accent — цвет иконок, кнопок, точек и свечения",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Заполняйте все слоты: пустой остаётся призраком и выдаёт заглушку.",
+            "В слот product кладите media — скриншот или видео; заголовок плитки там не нужен.",
+            "Живой фон (surface-*) — только в один слот: несколько WebGL-контекстов в одной секции лишние."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "side",
+            "label": "Заголовок",
+            "type": "select",
+            "options": [
+              "left",
+              "right"
+            ],
+            "default": "left"
+          },
+          {
+            "prop": "numbers",
+            "label": "Номера",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "side",
+          "numbers",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Bento Hero",
+            "description": "A first screen assembled from tiles: the title and action in a large tile, a product window, two proofs. No full-screen image — the grid holds the hierarchy. For SaaS, apps and tools.",
+            "docs": "One file, zero dependencies, JS only for the cursor light. CSS Grid with areas: title 2×2, product 2×1, proofA/proofB 1×1 from 64rem; two columns from 40rem; data-side=right mirrors. The product window is a browser-window ghost of gradients, media drops into it. Slots: 01 title and action, 02 product window, 03 stat, 04 proof — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is scroll-driven via animation-timeline: view(), without support — a load cascade; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-002-* with light-dark, container queries, DOM order = reading order.",
+            "ai": {
+              "summary": "A first screen as bento on CSS Grid: a title with an action in a 2×2 tile, a 2×1 product window, a 1×1 stat and proof. Slots via items, a ghost without them, container queries down to one column.",
+              "preserve": [
+                "the local --vibeui-layout-002-* palette — do not swap it for your theme tokens",
+                "the large 2×2 title tile and the product window — without them the hero becomes a plain card grid",
+                "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
+                "the window ghost with three dots in the header — it hints that a product screenshot lives there",
+                "motion only via transform/opacity, the cursor light on CSS variables, the static state under prefers-reduced-motion",
+                "the ghost instead of demo text: the category sells composition, so composition must be shown"
+              ],
+              "adapt": [
+                "heading and lead — the title and subtitle above the layout; without them — a ghost",
+                "items — slots in order: 01 title and action, 02 product window, 03 stat, 04 proof; title/text/value/media",
+                "media — your own frame, video or a background from the Background category (surface-*) inside a slot, under the text",
+                "side — the title tile on the left or the right",
+                "numbers — slot numbers for filling; turn off for production",
+                "accent — the color of icons, buttons, dots and glows",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Fill every slot: an empty one stays a ghost and gives away the placeholder.",
+                "Put media — a screenshot or video — in the product slot; a tile title is not needed there.",
+                "A live background (surface-*) — only in one slot: several WebGL contexts in one section are too much."
+              ],
+              "usage": "<Layout002\n  heading=\"Layout heading\"\n  lead=\"A one-line subtitle.\"\n  items={[\n    { title: \"title and action\", text: \"The main thing, briefly.\" },\n    { title: \"product window\", text: \"The main thing, briefly.\" },\n    { title: \"stat\", text: \"The main thing, briefly.\" },\n    { title: \"proof\", text: \"The main thing, briefly.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "side": {
+                "label": "Title"
+              },
+              "numbers": {
+                "label": "Numbers"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-003",
+      "type": "registry:block",
+      "title": "Редакционная сетка",
+      "description": "Редакционная сетка на двенадцать колонок: ведущий материал на восемь, две заметки на полях, ряд из трёх коротких с номерами и линейками. Ритм размером и линейками, без карточек. Для медиа, журнала, исследования и подборок.",
+      "categories": [
+        "layout"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-003/layout-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-003.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, JS только для света за курсором. Grid на 12 колонок: lead span 8 на два ряда, две заметки span 4, три коротких span 4; на узкой ширине всё в одну колонку. Плитки без фона и рамки, линейки — border-top/left (data-rules), номера — типографские индексы над материалом. Слоты: 01 ведущий материал, 02 заметка, 03 заметка, 04 короткий материал, 05 короткий материал, 06 короткий материал — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление по прокрутке через animation-timeline: view(), без поддержки — каскад при загрузке; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-003-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "meta": {
+        "tags": [
+          "layout",
+          "editorial",
+          "magazine",
+          "grid",
+          "columns",
+          "media",
+          "swiss"
+        ],
+        "preview": {
+          "width": "natural",
+          "aspect": "1280 / 820"
+        },
+        "ai": {
+          "usage": "<Layout003\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Ведущий материал\", text: \"Коротко о главном.\" },\n    { title: \"Заметка\", text: \"Коротко о главном.\" },\n    { title: \"Заметка\", text: \"Коротко о главном.\" },\n    { title: \"Короткий материал\", text: \"Коротко о главном.\" },\n    { title: \"Короткий материал\", text: \"Коротко о главном.\" },\n    { title: \"Короткий материал\", text: \"Коротко о главном.\" },\n  ]}\n/>",
+          "summary": "Редакционная сетка 12 колонок на CSS Grid: ведущий материал 8/12 с кадром, две заметки 4/12, ряд из трёх коротких. Без карточек: тонкие линейки, номера-индексы, hover только на кадре. Слоты через items, призрак без них.",
+          "preserve": [
+            "локальную палитру --vibeui-layout-003-* и не подменять её токенами вашей темы",
+            "отсутствие карточек: материалы разделяют линейки и воздух, фон и рамки плиток здесь выключены намеренно",
+            "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
+            "пропорцию 8/4: ведущий материал должен быть вдвое шире заметок",
+            "движение только через transform/opacity, свет за курсором на CSS-переменных, статику при prefers-reduced-motion",
+            "призрак вместо демонстрационного текста: категория продаёт композицию, показывать надо композицию"
+          ],
+          "adapt": [
+            "heading и lead — заголовок и подзаголовок над раскладкой; без них — призрак",
+            "items — слоты по порядку: 01 ведущий материал, 02 заметка, 03 заметка, 04 короткий материал, 05 короткий материал, 06 короткий материал; title/text/value/media",
+            "media — свой кадр, видео или фон из категории «Фон» (surface-*) внутри слота, ложится под текст",
+            "rules — линейки между материалами; без них сетка чище, но менее «журнальная»",
+            "numbers — номера слотов для наполнения; для продакшена выключите",
+            "accent — цвет иконок, кнопок, точек и свечения",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Заполняйте все слоты: пустой остаётся призраком и выдаёт заглушку.",
+            "Ведущему материалу нужен media — кадр на 16rem; без него слот выглядит пустым.",
+            "Живой фон (surface-*) — только в один слот: несколько WebGL-контекстов в одной секции лишние."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "rules",
+            "label": "Линейки",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "numbers",
+            "label": "Номера",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "rules",
+          "numbers",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Editorial Grid",
+            "description": "A twelve-column editorial grid: a lead story on eight, two margin notes, a row of three short pieces with numbers and rules. Rhythm by size and rules, no cards. For media, magazines, research and collections.",
+            "docs": "One file, zero dependencies, JS only for the cursor light. A 12-column grid: lead spans 8 over two rows, two notes span 4, three short pieces span 4; on narrow widths everything is one column. Tiles without background or border, rules are border-top/left (data-rules), numbers are typographic indices above the piece. Slots: 01 lead story, 02 note, 03 note, 04 short piece, 05 short piece, 06 short piece — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is scroll-driven via animation-timeline: view(), without support — a load cascade; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-003-* with light-dark, container queries, DOM order = reading order.",
+            "ai": {
+              "summary": "A 12-column editorial grid on CSS Grid: a lead story 8/12 with a frame, two 4/12 notes, a row of three short pieces. No cards: thin rules, index numbers, hover only on the frame. Slots via items, a ghost without them.",
+              "preserve": [
+                "the local --vibeui-layout-003-* palette — do not swap it for your theme tokens",
+                "the absence of cards: pieces are separated by rules and air, tile backgrounds and borders are off on purpose",
+                "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
+                "the 8/4 proportion: the lead story must be twice as wide as the notes",
+                "motion only via transform/opacity, the cursor light on CSS variables, the static state under prefers-reduced-motion",
+                "the ghost instead of demo text: the category sells composition, so composition must be shown"
+              ],
+              "adapt": [
+                "heading and lead — the title and subtitle above the layout; without them — a ghost",
+                "items — slots in order: 01 lead story, 02 note, 03 note, 04 short piece, 05 short piece, 06 short piece; title/text/value/media",
+                "media — your own frame, video or a background from the Background category (surface-*) inside a slot, under the text",
+                "rules — rules between pieces; without them the grid is cleaner but less magazine-like",
+                "numbers — slot numbers for filling; turn off for production",
+                "accent — the color of icons, buttons, dots and glows",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Fill every slot: an empty one stays a ghost and gives away the placeholder.",
+                "The lead story needs media — a 16rem frame; without it the slot looks empty.",
+                "A live background (surface-*) — only in one slot: several WebGL contexts in one section are too much."
+              ],
+              "usage": "<Layout003\n  heading=\"Layout heading\"\n  lead=\"A one-line subtitle.\"\n  items={[\n    { title: \"lead story\", text: \"The main thing, briefly.\" },\n    { title: \"note\", text: \"The main thing, briefly.\" },\n    { title: \"note\", text: \"The main thing, briefly.\" },\n    { title: \"short piece\", text: \"The main thing, briefly.\" },\n    { title: \"short piece\", text: \"The main thing, briefly.\" },\n    { title: \"short piece\", text: \"The main thing, briefly.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "rules": {
+                "label": "Rules"
+              },
+              "numbers": {
+                "label": "Numbers"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-004",
+      "type": "registry:block",
+      "title": "Стопка карточек",
+      "description": "Стопка карточек: секции закреплены на одной высоте и наезжают одна на другую при прокрутке, уходящая уменьшается и темнеет. Чистый CSS: sticky и scroll-driven animation. Для истории продукта, этапов и кейсов.",
+      "categories": [
+        "layout"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-004/layout-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-004.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, JS только для света за курсором. Каждая карточка position: sticky с общим top (data-offset=header — 5rem под шапку), следующая накрывает предыдущую; в @supports (animation-timeline: view()) уходящая карточка слушает именованный view-timeline следующей (timeline-scope на body) и по её entry уменьшается (scale .92, brightness .7) — data-shrink; свой таймлайн у прилипшей карточки не двигается. Без поддержки — обычная стопка. Каскад плиток выключен. Слоты: 01 карточка, 02 карточка, 03 карточка, 04 карточка — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление своё, см. выше; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-004-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "meta": {
+        "tags": [
+          "layout",
+          "stack",
+          "sticky",
+          "scroll",
+          "cards",
+          "scrollytelling",
+          "sections"
+        ],
+        "preview": {
+          "width": "natural",
+          "aspect": "1280 / 900"
+        },
+        "ai": {
+          "usage": "<Layout004\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Карточка\", text: \"Коротко о главном.\" },\n    { title: \"Карточка\", text: \"Коротко о главном.\" },\n    { title: \"Карточка\", text: \"Коротко о главном.\" },\n    { title: \"Карточка\", text: \"Коротко о главном.\" },\n  ]}\n/>",
+          "summary": "Стопка карточек на CSS: четыре sticky-карточки с общим top наезжают друг на друга при прокрутке, уходящая уменьшается и темнеет по view-timeline следующей карточки (timeline-scope, диапазон entry). Без поддержки — просто стопка. Слоты через items.",
+          "preserve": [
+            "локальную палитру --vibeui-layout-004-* и не подменять её токенами вашей темы",
+            "position: sticky с одинаковым top у всех карточек — иначе стопка не соберётся; не заменять на JS-скролл-хайджек",
+            "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
+            "анимацию ухода по view-timeline следующей карточки, а не по времени — она привязана к прокрутке и обратима",
+            "движение только через transform/opacity, свет за курсором на CSS-переменных, статику при prefers-reduced-motion",
+            "призрак вместо демонстрационного текста: категория продаёт композицию, показывать надо композицию"
+          ],
+          "adapt": [
+            "heading и lead — заголовок и подзаголовок над раскладкой; без них — призрак",
+            "items — слоты по порядку: 01 карточка, 02 карточка, 03 карточка, 04 карточка; title/text/value/media",
+            "media — свой кадр, видео или фон из категории «Фон» (surface-*) внутри слота, ложится под текст",
+            "shrink — уменьшение и затемнение уходящей карточки (нужен animation-timeline: view())",
+            "offset — none или header: отступ закрепления под фиксированную шапку 4rem",
+            "numbers — номера слотов для наполнения; для продакшена выключите",
+            "accent — цвет иконок, кнопок, точек и свечения",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Заполняйте все слоты: пустой остаётся призраком и выдаёт заглушку.",
+            "Секция должна быть выше вьюпорта: стопка живёт прокруткой, в коротком кадре она не разворачивается.",
+            "Живой фон (surface-*) — только в один слот: несколько WebGL-контекстов в одной секции лишние."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "shrink",
+            "label": "Сжатие",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "offset",
+            "label": "Отступ",
+            "type": "select",
+            "options": [
+              "none",
+              "header"
+            ],
+            "default": "none"
+          },
+          {
+            "prop": "numbers",
+            "label": "Номера",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "shrink",
+          "numbers",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Card Stack",
+            "description": "A card stack: sections stick at the same height and slide over each other on scroll, the departing one shrinks and dims. Pure CSS: sticky and scroll-driven animation. For product stories, stages and case studies.",
+            "docs": "One file, zero dependencies, JS only for the cursor light. Each card is position: sticky with a shared top (data-offset=header — 5rem under a header), the next covers the previous; inside @supports (animation-timeline: view()) the departing card listens to the next card's named view-timeline (timeline-scope on body) and shrinks on its entry (scale .92, brightness .7) — data-shrink; a stuck card's own timeline does not move. Without support — a plain stack. The tile cascade is off. Slots: 01 card, 02 card, 03 card, 04 card — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is its own, see above; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-004-* with light-dark, container queries, DOM order = reading order.",
+            "ai": {
+              "summary": "A CSS card stack: four sticky cards with a shared top slide over each other on scroll, the departing one shrinks and dims on the next card's view-timeline (timeline-scope, entry range). Without support — a plain stack. Slots via items.",
+              "preserve": [
+                "the local --vibeui-layout-004-* palette — do not swap it for your theme tokens",
+                "position: sticky with the same top on every card — otherwise the stack will not assemble; do not replace with JS scroll hijacking",
+                "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
+                "the exit animation on the next card's view-timeline, not on time — it is bound to scroll and reversible",
+                "motion only via transform/opacity, the cursor light on CSS variables, the static state under prefers-reduced-motion",
+                "the ghost instead of demo text: the category sells composition, so composition must be shown"
+              ],
+              "adapt": [
+                "heading and lead — the title and subtitle above the layout; without them — a ghost",
+                "items — slots in order: 01 card, 02 card, 03 card, 04 card; title/text/value/media",
+                "media — your own frame, video or a background from the Background category (surface-*) inside a slot, under the text",
+                "shrink — shrinking and dimming of the departing card (needs animation-timeline: view())",
+                "offset — none or header: sticky offset under a fixed 4rem header",
+                "numbers — slot numbers for filling; turn off for production",
+                "accent — the color of icons, buttons, dots and glows",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Fill every slot: an empty one stays a ghost and gives away the placeholder.",
+                "The section must be taller than the viewport: the stack lives on scroll, it does not unfold in a short frame.",
+                "A live background (surface-*) — only in one slot: several WebGL contexts in one section are too much."
+              ],
+              "usage": "<Layout004\n  heading=\"Layout heading\"\n  lead=\"A one-line subtitle.\"\n  items={[\n    { title: \"card\", text: \"The main thing, briefly.\" },\n    { title: \"card\", text: \"The main thing, briefly.\" },\n    { title: \"card\", text: \"The main thing, briefly.\" },\n    { title: \"card\", text: \"The main thing, briefly.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "shrink": {
+                "label": "Shrink"
+              },
+              "offset": {
+                "label": "Offset"
+              },
+              "numbers": {
+                "label": "Numbers"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-005",
+      "type": "registry:block",
+      "title": "Горизонтальная лента",
+      "description": "Горизонтальная лента: панели едут вбок, пока страница крутится вниз, — без перехвата колеса и touch. Где нет scroll-driven анимаций — обычная горизонтальная прокрутка со snap. Для этапов, кейсов, тура по продукту.",
+      "categories": [
+        "layout"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-005/layout-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-005.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, JS только для света за курсором. Фолбэк-основа: body с overflow-x: auto и scroll-snap (data-snap), трек — flex-ряд панелей по 34rem. В @supports (animation-timeline: view()) body становится треком высотой 3 × 22rem (с 64rem — 2.4 × 26rem: ровно на проезд ленты, без пустой прокрутки), окно — sticky, трек едет по view()-таймлайну в диапазоне contain на translateX(-100% + 100cqi). Каскад плиток выключен. Слоты: 01 панель, 02 панель, 03 панель, 04 панель — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление своё, см. выше; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-005-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "meta": {
+        "tags": [
+          "layout",
+          "horizontal",
+          "scroll",
+          "sticky",
+          "panels",
+          "slider",
+          "storytelling"
+        ],
+        "preview": {
+          "width": "natural",
+          "aspect": "1280 / 900"
+        },
+        "ai": {
+          "usage": "<Layout005\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Панель\", text: \"Коротко о главном.\" },\n    { title: \"Панель\", text: \"Коротко о главном.\" },\n    { title: \"Панель\", text: \"Коротко о главном.\" },\n    { title: \"Панель\", text: \"Коротко о главном.\" },\n  ]}\n/>",
+          "summary": "Горизонтальная лента на CSS: высокий трек, sticky-окно и ряд панелей, едущий по animation-timeline: view() в диапазоне contain. Прокрутка остаётся вертикальной. Без поддержки — горизонтальный скролл со snap. Слоты через items.",
+          "preserve": [
+            "локальную палитру --vibeui-layout-005-* и не подменять её токенами вашей темы",
+            "родную вертикальную прокрутку — никакого wheel-хайджека и JS-скролла, лента едет от view()-таймлайна",
+            "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
+            "фолбэк с горизонтальным overflow и snap: без него в Firefox панели исчезнут",
+            "движение только через transform/opacity, свет за курсором на CSS-переменных, статику при prefers-reduced-motion",
+            "призрак вместо демонстрационного текста: категория продаёт композицию, показывать надо композицию"
+          ],
+          "adapt": [
+            "heading и lead — заголовок и подзаголовок над раскладкой; без них — призрак",
+            "items — слоты по порядку: 01 панель, 02 панель, 03 панель, 04 панель; title/text/value/media",
+            "media — свой кадр, видео или фон из категории «Фон» (surface-*) внутри слота, ложится под текст",
+            "snap — привязка к панелям в горизонтальном фолбэке без view()",
+            "numbers — номера слотов для наполнения; для продакшена выключите",
+            "accent — цвет иконок, кнопок, точек и свечения",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Заполняйте все слоты: пустой остаётся призраком и выдаёт заглушку.",
+            "Высота трека задаёт длину проезда: добавили панели — увеличьте множитель в calc, иначе лента поедет слишком быстро.",
+            "Живой фон (surface-*) — только в один слот: несколько WebGL-контекстов в одной секции лишние."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "snap",
+            "label": "Snap",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "numbers",
+            "label": "Номера",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "snap",
+          "numbers",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Horizontal Scroll",
+            "description": "A horizontal strip: panels ride sideways while the page scrolls down — no wheel or touch hijacking. Where scroll-driven animations are missing — plain horizontal scrolling with snap. For stages, case studies, product tours.",
+            "docs": "One file, zero dependencies, JS only for the cursor light. Fallback base: body with overflow-x: auto and scroll-snap (data-snap), the track is a flex row of 34rem panels. Inside @supports (animation-timeline: view()) body becomes a track 3 × 22rem tall (2.4 × 26rem from 64rem: just enough for the ride, no empty scrolling), the window is sticky, the track rides on the view() timeline in the contain range to translateX(-100% + 100cqi). The tile cascade is off. Slots: 01 panel, 02 panel, 03 panel, 04 panel — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is its own, see above; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-005-* with light-dark, container queries, DOM order = reading order.",
+            "ai": {
+              "summary": "A CSS horizontal strip: a tall track, a sticky window and a panel row riding on animation-timeline: view() in the contain range. Scrolling stays vertical. Without support — horizontal scroll with snap. Slots via items.",
+              "preserve": [
+                "the local --vibeui-layout-005-* palette — do not swap it for your theme tokens",
+                "native vertical scrolling — no wheel hijacking or JS scroll, the strip rides on the view() timeline",
+                "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
+                "the fallback with horizontal overflow and snap: without it the panels vanish in Firefox",
+                "motion only via transform/opacity, the cursor light on CSS variables, the static state under prefers-reduced-motion",
+                "the ghost instead of demo text: the category sells composition, so composition must be shown"
+              ],
+              "adapt": [
+                "heading and lead — the title and subtitle above the layout; without them — a ghost",
+                "items — slots in order: 01 panel, 02 panel, 03 panel, 04 panel; title/text/value/media",
+                "media — your own frame, video or a background from the Background category (surface-*) inside a slot, under the text",
+                "snap — panel snapping in the horizontal fallback without view()",
+                "numbers — slot numbers for filling; turn off for production",
+                "accent — the color of icons, buttons, dots and glows",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Fill every slot: an empty one stays a ghost and gives away the placeholder.",
+                "Track height sets the ride length: added panels — raise the multiplier in the calc, otherwise the strip rides too fast.",
+                "A live background (surface-*) — only in one slot: several WebGL contexts in one section are too much."
+              ],
+              "usage": "<Layout005\n  heading=\"Layout heading\"\n  lead=\"A one-line subtitle.\"\n  items={[\n    { title: \"panel\", text: \"The main thing, briefly.\" },\n    { title: \"panel\", text: \"The main thing, briefly.\" },\n    { title: \"panel\", text: \"The main thing, briefly.\" },\n    { title: \"panel\", text: \"The main thing, briefly.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "snap": {
+                "label": "Snap"
+              },
+              "numbers": {
+                "label": "Numbers"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-006",
+      "type": "registry:block",
+      "title": "Закреплённый кадр",
+      "description": "Закреплённый кадр и главы: слева кадр стоит, справа идут главы, и кадр меняется, когда читатель доходит до каждой. Чистый CSS на именованных view-таймлайнах. Для истории продукта, туров и лонгридов.",
+      "categories": [
+        "layout"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-006/layout-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-006.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, JS только для света за курсором. Grid 5/6 с 56rem (data-side=right меняет порядок), сцена — sticky со стопкой из трёх слоёв в одной grid-area; каждая глава объявляет view-timeline-name, body собирает их timeline-scope, слой k анимируется по таймлайну главы k (диапазон entry 20–80%). Media слоя k берётся из items[k].media, иначе из items[0].media. Без поддержки виден первый слой. Каскад плиток выключен. Слоты: 01 кадр (media по главам через слоты 02–04), 02 глава, 03 глава, 04 глава — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление своё, см. выше; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-006-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "meta": {
+        "tags": [
+          "layout",
+          "sticky",
+          "scrollytelling",
+          "chapters",
+          "media",
+          "split",
+          "story"
+        ],
+        "preview": {
+          "width": "natural",
+          "aspect": "1280 / 900"
+        },
+        "ai": {
+          "usage": "<Layout006\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Кадр (media по главам через слоты 02–04)\", text: \"Коротко о главном.\" },\n    { title: \"Глава\", text: \"Коротко о главном.\" },\n    { title: \"Глава\", text: \"Коротко о главном.\" },\n    { title: \"Глава\", text: \"Коротко о главном.\" },\n  ]}\n/>",
+          "summary": "Закреплённый кадр на CSS: sticky-сцена из трёх слоёв, каждая глава — именованный view-timeline, timeline-scope на раскладке, слой проявляется по таймлайну своей главы. Без поддержки — первый слой. Слоты через items: 01 кадр, 02–04 главы, media глав становятся слоями.",
+          "preserve": [
+            "локальную палитру --vibeui-layout-006-* и не подменять её токенами вашей темы",
+            "timeline-scope на раскладке и view-timeline-name на главах — только так слой кадра может слушать чужую главу без JS",
+            "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
+            "sticky-сцену с align-self: start — иначе она растянется на всю высоту и закрепление не сработает",
+            "движение только через transform/opacity, свет за курсором на CSS-переменных, статику при prefers-reduced-motion",
+            "призрак вместо демонстрационного текста: категория продаёт композицию, показывать надо композицию"
+          ],
+          "adapt": [
+            "heading и lead — заголовок и подзаголовок над раскладкой; без них — призрак",
+            "items — слоты по порядку: 01 кадр (media по главам через слоты 02–04), 02 глава, 03 глава, 04 глава; title/text/value/media",
+            "media — свой кадр, видео или фон из категории «Фон» (surface-*) внутри слота, ложится под текст",
+            "side — закреплённый кадр слева или справа",
+            "numbers — номера слотов для наполнения; для продакшена выключите",
+            "accent — цвет иконок, кнопок, точек и свечения",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Заполняйте все слоты: пустой остаётся призраком и выдаёт заглушку.",
+            "Кадр меняется по главам: положите в media глав 02–04 три разных кадра.",
+            "Живой фон (surface-*) — только в один слот: несколько WebGL-контекстов в одной секции лишние."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "side",
+            "label": "Кадр",
+            "type": "select",
+            "options": [
+              "left",
+              "right"
+            ],
+            "default": "left"
+          },
+          {
+            "prop": "numbers",
+            "label": "Номера",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "side",
+          "numbers",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Sticky Media",
+            "description": "A sticky frame with chapters: the frame stays on the left, chapters pass on the right, and the frame changes as the reader reaches each. Pure CSS on named view timelines. For product stories, tours and long reads.",
+            "docs": "One file, zero dependencies, JS only for the cursor light. A 5/6 grid from 56rem (data-side=right swaps the order), the stage is sticky with a stack of three layers in one grid-area; each chapter declares a view-timeline-name, body collects them with timeline-scope, layer k animates on chapter k's timeline (entry 20–80% range). Layer k media comes from items[k].media, else items[0].media. Without support the first layer is visible. The tile cascade is off. Slots: 01 frame (media per chapter via slots 02–04), 02 chapter, 03 chapter, 04 chapter — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is its own, see above; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-006-* with light-dark, container queries, DOM order = reading order.",
+            "ai": {
+              "summary": "A CSS sticky frame: a sticky stage of three layers, each chapter a named view-timeline, timeline-scope on the layout, a layer fades in on its chapter's timeline. Without support — the first layer. Slots via items: 01 frame, 02–04 chapters, chapter media become layers.",
+              "preserve": [
+                "the local --vibeui-layout-006-* palette — do not swap it for your theme tokens",
+                "timeline-scope on the layout and view-timeline-name on the chapters — the only way a frame layer can listen to another chapter without JS",
+                "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
+                "the sticky stage with align-self: start — otherwise it stretches to full height and sticking fails",
+                "motion only via transform/opacity, the cursor light on CSS variables, the static state under prefers-reduced-motion",
+                "the ghost instead of demo text: the category sells composition, so composition must be shown"
+              ],
+              "adapt": [
+                "heading and lead — the title and subtitle above the layout; without them — a ghost",
+                "items — slots in order: 01 frame (media per chapter via slots 02–04), 02 chapter, 03 chapter, 04 chapter; title/text/value/media",
+                "media — your own frame, video or a background from the Background category (surface-*) inside a slot, under the text",
+                "side — the sticky frame on the left or the right",
+                "numbers — slot numbers for filling; turn off for production",
+                "accent — the color of icons, buttons, dots and glows",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Fill every slot: an empty one stays a ghost and gives away the placeholder.",
+                "The frame changes by chapter: put three different frames into the media of chapters 02–04.",
+                "A live background (surface-*) — only in one slot: several WebGL contexts in one section are too much."
+              ],
+              "usage": "<Layout006\n  heading=\"Layout heading\"\n  lead=\"A one-line subtitle.\"\n  items={[\n    { title: \"frame (media per chapter via slots 02–04)\", text: \"The main thing, briefly.\" },\n    { title: \"chapter\", text: \"The main thing, briefly.\" },\n    { title: \"chapter\", text: \"The main thing, briefly.\" },\n    { title: \"chapter\", text: \"The main thing, briefly.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "side": {
+                "label": "Frame"
+              },
+              "numbers": {
+                "label": "Numbers"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-007",
+      "type": "registry:block",
+      "title": "Кинетический заголовок",
+      "description": "Кинетический заголовок: слово в масштаб кадра держит раскладку, четыре коротких блока стоят по углам. Буквы разъезжаются по прокрутке и отвечают на наведение. Для студии, портфолио, манифеста и запуска.",
+      "categories": [
+        "layout"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-007/layout-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-007.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, JS только для света за курсором. Grid 1/2/1 с областями: word по центру на два ряда, tl/tr/bl/br по углам; на узкой ширине слово сверху, блоки парами. Слово разбито на span с индексом от центра (--r): по view() буквы съезжаются из разлёта (диапазон entry 0 — cover 45%), на hover буква приподнимается и поворачивается на r×4°. Размер — clamp(4rem, 20cqi, 17rem). Каскад плиток выключен. Слоты: 01 верхний левый блок, 02 верхний правый блок, 03 нижний левый блок, 04 нижний правый блок — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление своё, см. выше; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-007-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "meta": {
+        "tags": [
+          "layout",
+          "typography",
+          "kinetic",
+          "hero",
+          "headline",
+          "letters",
+          "studio"
+        ],
+        "preview": {
+          "width": "natural",
+          "aspect": "1280 / 760"
+        },
+        "ai": {
+          "usage": "<Layout007\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Верхний левый блок\", text: \"Коротко о главном.\" },\n    { title: \"Верхний правый блок\", text: \"Коротко о главном.\" },\n    { title: \"Нижний левый блок\", text: \"Коротко о главном.\" },\n    { title: \"Нижний правый блок\", text: \"Коротко о главном.\" },\n  ]}\n/>",
+          "summary": "Кинетический заголовок на CSS: слово в clamp(4rem, 20cqi, 17rem) по центру сетки 1/2/1, буквы — span с индексом от центра, съезжаются по animation-timeline: view() и отвечают на hover; четыре слота-блока по углам через items.",
+          "preserve": [
+            "локальную палитру --vibeui-layout-007-* и не подменять её токенами вашей темы",
+            "слово как настоящий текст в h2 с aria-label, буквы — aria-hidden span: читалка получает слово целиком",
+            "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
+            "масштаб слова от ширины контейнера (cqi), а не от вьюпорта — раскладка живёт в любой колонке",
+            "движение только через transform/opacity, свет за курсором на CSS-переменных, статику при prefers-reduced-motion",
+            "призрак вместо демонстрационного текста: категория продаёт композицию, показывать надо композицию"
+          ],
+          "adapt": [
+            "heading и lead — заголовок и подзаголовок над раскладкой; без них — призрак",
+            "items — слоты по порядку: 01 верхний левый блок, 02 верхний правый блок, 03 нижний левый блок, 04 нижний правый блок; title/text/value/media",
+            "media — свой кадр, видео или фон из категории «Фон» (surface-*) внутри слота, ложится под текст",
+            "word — слово заголовка; короткое, 4–8 букв, иначе не влезет в ширину",
+            "weight — bold или black: вес слова",
+            "numbers — номера слотов для наполнения; для продакшена выключите",
+            "accent — цвет иконок, кнопок, точек и свечения",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Заполняйте все слоты: пустой остаётся призраком и выдаёт заглушку.",
+            "Слово должно быть коротким: восемь букв — предел, иначе оно упрётся в блоки по бокам.",
+            "Живой фон (surface-*) — только в один слот: несколько WebGL-контекстов в одной секции лишние."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "weight",
+            "label": "Вес",
+            "type": "select",
+            "options": [
+              "black",
+              "bold"
+            ],
+            "default": "black"
+          },
+          {
+            "prop": "numbers",
+            "label": "Номера",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "weight",
+          "numbers",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Kinetic Heading",
+            "description": "A kinetic heading: a frame-scale word holds the layout, four short blocks sit in the corners. Letters spread on scroll and respond to hover. For studios, portfolios, manifestos and launches.",
+            "docs": "One file, zero dependencies, JS only for the cursor light. A 1/2/1 grid with areas: word in the center over two rows, tl/tr/bl/br in the corners; on narrow widths the word is on top, blocks in pairs. The word is split into spans with an index from the center (--r): on view() letters converge from a spread (entry 0 — cover 45% range), on hover a letter lifts and rotates by r×4°. Size — clamp(4rem, 20cqi, 17rem). The tile cascade is off. Slots: 01 top-left block, 02 top-right block, 03 bottom-left block, 04 bottom-right block — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is its own, see above; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-007-* with light-dark, container queries, DOM order = reading order.",
+            "ai": {
+              "summary": "A CSS kinetic heading: a clamp(4rem, 20cqi, 17rem) word in the center of a 1/2/1 grid, letters are spans indexed from the center, converging on animation-timeline: view() and responding to hover; four corner block slots via items.",
+              "preserve": [
+                "the local --vibeui-layout-007-* palette — do not swap it for your theme tokens",
+                "the word as real text in an h2 with aria-label, letters as aria-hidden spans: a screen reader gets the whole word",
+                "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
+                "the word scale from the container width (cqi), not the viewport — the layout lives in any column",
+                "motion only via transform/opacity, the cursor light on CSS variables, the static state under prefers-reduced-motion",
+                "the ghost instead of demo text: the category sells composition, so composition must be shown"
+              ],
+              "adapt": [
+                "heading and lead — the title and subtitle above the layout; without them — a ghost",
+                "items — slots in order: 01 top-left block, 02 top-right block, 03 bottom-left block, 04 bottom-right block; title/text/value/media",
+                "media — your own frame, video or a background from the Background category (surface-*) inside a slot, under the text",
+                "word — the heading word; short, 4–8 letters, otherwise it will not fit the width",
+                "weight — bold or black: the word weight",
+                "numbers — slot numbers for filling; turn off for production",
+                "accent — the color of icons, buttons, dots and glows",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Fill every slot: an empty one stays a ghost and gives away the placeholder.",
+                "The word must be short: eight letters is the limit, otherwise it hits the side blocks.",
+                "A live background (surface-*) — only in one slot: several WebGL contexts in one section are too much."
+              ],
+              "usage": "<Layout007\n  heading=\"Layout heading\"\n  lead=\"A one-line subtitle.\"\n  items={[\n    { title: \"top-left block\", text: \"The main thing, briefly.\" },\n    { title: \"top-right block\", text: \"The main thing, briefly.\" },\n    { title: \"bottom-left block\", text: \"The main thing, briefly.\" },\n    { title: \"bottom-right block\", text: \"The main thing, briefly.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "weight": {
+                "label": "Weight"
+              },
+              "numbers": {
+                "label": "Numbers"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-008",
+      "type": "registry:block",
+      "title": "Оболочка приложения",
+      "description": "Оболочка приложения: сайдбар, топбар и рабочая область с показателями и таблицей. Сайдбар сворачивается до иконок без JS — чекбокс и :has(). Владелец прокрутки — рабочая область. Для кабинета, CRM, аналитики и админки.",
+      "categories": [
+        "layout"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-008/layout-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-008.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, JS только для света за курсором и useId для чекбокса сайдбара. Grid auto/1fr с 48rem: сайдбар 16rem на два ряда, топбар, main с overflow: auto — единственный прокручиваемый контейнер, оболочка высотой min(44rem, 100dvh). Сворачивание: скрытый checkbox перед сайдбаром, label в топбаре, :checked ~ aside сужает до 4.5rem и прячет подписи (data-collapsed — начальное состояние). На телефоне сайдбар скрыт, main в две колонки. data-side=right переносит сайдбар вправо. Слоты: 01 навигация сайдбара, 02 топбар, 03 показатель, 04 показатель, 05 график, 06 таблица — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление по прокрутке через animation-timeline: view(), без поддержки — каскад при загрузке; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-008-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "meta": {
+        "tags": [
+          "layout",
+          "app shell",
+          "dashboard",
+          "sidebar",
+          "admin",
+          "saas",
+          "workspace"
+        ],
+        "preview": {
+          "width": "natural",
+          "aspect": "1280 / 760"
+        },
+        "ai": {
+          "usage": "<Layout008\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Навигация сайдбара\", text: \"Коротко о главном.\" },\n    { title: \"Топбар\", text: \"Коротко о главном.\" },\n    { title: \"Показатель\", text: \"Коротко о главном.\" },\n    { title: \"Показатель\", text: \"Коротко о главном.\" },\n    { title: \"График\", text: \"Коротко о главном.\" },\n    { title: \"Таблица\", text: \"Коротко о главном.\" },\n  ]}\n/>",
+          "summary": "Оболочка приложения на CSS Grid: сайдбар на два ряда, топбар, рабочая область с overflow: auto как единственный scroll-root. Сворачивание сайдбара — checkbox + label + :checked ~, без JS. Слоты через items: навигация, топбар, три показателя, таблица.",
+          "preserve": [
+            "локальную палитру --vibeui-layout-008-* и не подменять её токенами вашей темы",
+            "один владелец прокрутки — main с overflow: auto; оболочка не должна прокручиваться целиком вместе с сайдбаром",
+            "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
+            "сворачивание на checkbox и :checked ~ — без state и без JS, кнопка остаётся label с aria-label",
+            "движение только через transform/opacity, свет за курсором на CSS-переменных, статику при prefers-reduced-motion",
+            "призрак вместо демонстрационного текста: категория продаёт композицию, показывать надо композицию"
+          ],
+          "adapt": [
+            "heading и lead — заголовок и подзаголовок над раскладкой; без них — призрак",
+            "items — слоты по порядку: 01 навигация сайдбара, 02 топбар, 03 показатель, 04 показатель, 05 график, 06 таблица; title/text/value/media",
+            "media — свой кадр, видео или фон из категории «Фон» (surface-*) внутри слота, ложится под текст",
+            "side — сайдбар слева или справа",
+            "collapsed — сайдбар свёрнут до иконок при загрузке",
+            "numbers — номера слотов для наполнения; для продакшена выключите",
+            "accent — цвет иконок, кнопок, точек и свечения",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Заполняйте все слоты: пустой остаётся призраком и выдаёт заглушку.",
+            "Маршруты, пользователь и данные приходят снаружи: это раскладка, не приложение.",
+            "Живой фон (surface-*) — только в один слот: несколько WebGL-контекстов в одной секции лишние."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "side",
+            "label": "Сайдбар",
+            "type": "select",
+            "options": [
+              "left",
+              "right"
+            ],
+            "default": "left"
+          },
+          {
+            "prop": "collapsed",
+            "label": "Свёрнут",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "numbers",
+            "label": "Номера",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "side",
+          "numbers",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "App Shell",
+            "description": "An app shell: a sidebar, a topbar and a workspace with stats and a table. The sidebar collapses to icons without JS — a checkbox and :has(). The workspace owns the scroll. For dashboards, CRMs, analytics and admin panels.",
+            "docs": "One file, zero dependencies, JS only for the cursor light and useId for the sidebar checkbox. An auto/1fr grid from 48rem: a 16rem sidebar over two rows, a topbar, main with overflow: auto — the only scrolling container, the shell is min(44rem, 100dvh) tall. Collapsing: a hidden checkbox before the sidebar, a label in the topbar, :checked ~ aside narrows to 4.5rem and hides labels (data-collapsed — the initial state). On phones the sidebar is hidden, main in two columns. data-side=right moves the sidebar right. Slots: 01 sidebar navigation, 02 topbar, 03 stat, 04 stat, 05 chart, 06 table — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is scroll-driven via animation-timeline: view(), without support — a load cascade; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-008-* with light-dark, container queries, DOM order = reading order.",
+            "ai": {
+              "summary": "An app shell on CSS Grid: a two-row sidebar, a topbar, a workspace with overflow: auto as the only scroll root. Sidebar collapsing — checkbox + label + :checked ~, no JS. Slots via items: navigation, topbar, three stats, a table.",
+              "preserve": [
+                "the local --vibeui-layout-008-* palette — do not swap it for your theme tokens",
+                "a single scroll owner — main with overflow: auto; the shell must not scroll as a whole with the sidebar",
+                "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
+                "collapsing on a checkbox and :checked ~ — no state and no JS, the button stays a label with an aria-label",
+                "motion only via transform/opacity, the cursor light on CSS variables, the static state under prefers-reduced-motion",
+                "the ghost instead of demo text: the category sells composition, so composition must be shown"
+              ],
+              "adapt": [
+                "heading and lead — the title and subtitle above the layout; without them — a ghost",
+                "items — slots in order: 01 sidebar navigation, 02 topbar, 03 stat, 04 stat, 05 chart, 06 table; title/text/value/media",
+                "media — your own frame, video or a background from the Background category (surface-*) inside a slot, under the text",
+                "side — the sidebar on the left or the right",
+                "collapsed — the sidebar collapsed to icons on load",
+                "numbers — slot numbers for filling; turn off for production",
+                "accent — the color of icons, buttons, dots and glows",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Fill every slot: an empty one stays a ghost and gives away the placeholder.",
+                "Routes, the user and data come from outside: this is a layout, not an app.",
+                "A live background (surface-*) — only in one slot: several WebGL contexts in one section are too much."
+              ],
+              "usage": "<Layout008\n  heading=\"Layout heading\"\n  lead=\"A one-line subtitle.\"\n  items={[\n    { title: \"sidebar navigation\", text: \"The main thing, briefly.\" },\n    { title: \"topbar\", text: \"The main thing, briefly.\" },\n    { title: \"stat\", text: \"The main thing, briefly.\" },\n    { title: \"stat\", text: \"The main thing, briefly.\" },\n    { title: \"chart\", text: \"The main thing, briefly.\" },\n    { title: \"table\", text: \"The main thing, briefly.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "side": {
+                "label": "Sidebar"
+              },
+              "collapsed": {
+                "label": "Collapsed"
+              },
+              "numbers": {
+                "label": "Numbers"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-009",
+      "type": "registry:block",
+      "title": "Раскрывающиеся панели",
+      "description": "Раскрывающиеся панели: пять вертикальных панелей в ряд, наведённая расширяется, остальные ужимаются, подписи проявляются. Без JS — flex-grow и :hover, в режиме click — radio. Для галереи услуг, направлений, портфолио и кейсов.",
+      "categories": [
+        "layout"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-009/layout-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-009.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, JS только для света за курсором и useId для группы radio. Flex-ряд с 48rem (столбик на узкой ширине), каждая панель flex: 1, раскрытая — flex-grow 3.2 с переходом 0.6s. hover: :hover и :focus-within; click (data-expand=click): скрытые radio с общим name и label на всю панель, раскрыта та, у которой :has(input:checked). Подписи панели появляются только в раскрытой (opacity/transform). Слоты: 01 панель, 02 панель, 03 панель, 04 панель, 05 панель — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление по прокрутке через animation-timeline: view(), без поддержки — каскад при загрузке; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-009-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "meta": {
+        "tags": [
+          "layout",
+          "accordion",
+          "panels",
+          "expand",
+          "gallery",
+          "hover",
+          "portfolio"
+        ],
+        "preview": {
+          "width": "natural",
+          "aspect": "1280 / 720"
+        },
+        "ai": {
+          "usage": "<Layout009\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Панель\", text: \"Коротко о главном.\" },\n    { title: \"Панель\", text: \"Коротко о главном.\" },\n    { title: \"Панель\", text: \"Коротко о главном.\" },\n    { title: \"Панель\", text: \"Коротко о главном.\" },\n    { title: \"Панель\", text: \"Коротко о главном.\" },\n  ]}\n/>",
+          "summary": "Раскрывающиеся панели на CSS: flex-ряд из пяти панелей, наведённая растёт по flex-grow с переходом, подписи проявляются; режим click на radio и :has(:checked), работает на touch. Слоты через items с media в каждой панели.",
+          "preserve": [
+            "локальную палитру --vibeui-layout-009-* и не подменять её токенами вашей темы",
+            "раскрытие через flex-grow и переход — не через JS-измерения ширины; :focus-within даёт раскрытие с клавиатуры",
+            "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
+            "режим click на radio с label на всю панель — это и touch-версия, и доступный вариант",
+            "движение только через transform/opacity, свет за курсором на CSS-переменных, статику при prefers-reduced-motion",
+            "призрак вместо демонстрационного текста: категория продаёт композицию, показывать надо композицию"
+          ],
+          "adapt": [
+            "heading и lead — заголовок и подзаголовок над раскладкой; без них — призрак",
+            "items — слоты по порядку: 01 панель, 02 панель, 03 панель, 04 панель, 05 панель; title/text/value/media",
+            "media — свой кадр, видео или фон из категории «Фон» (surface-*) внутри слота, ложится под текст",
+            "expand — hover (и фокус) или click (radio, работает на touch)",
+            "numbers — номера слотов для наполнения; для продакшена выключите",
+            "accent — цвет иконок, кнопок, точек и свечения",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Заполняйте все слоты: пустой остаётся призраком и выдаёт заглушку.",
+            "На touch режим hover не раскрывается: для мобильной аудитории ставьте expand=click.",
+            "Живой фон (surface-*) — только в один слот: несколько WebGL-контекстов в одной секции лишние."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "expand",
+            "label": "Раскрытие",
+            "type": "select",
+            "options": [
+              "hover",
+              "click"
+            ],
+            "default": "hover"
+          },
+          {
+            "prop": "numbers",
+            "label": "Номера",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "expand",
+          "numbers",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Expanding Panels",
+            "description": "Expanding panels: five vertical panels in a row, the hovered one expands, the rest shrink, captions fade in. No JS — flex-grow and :hover, in click mode — radio. For service galleries, directions, portfolios and case studies.",
+            "docs": "One file, zero dependencies, JS only for the cursor light and useId for the radio group. A flex row from 48rem (a column on narrow widths), each panel flex: 1, the expanded one flex-grow 3.2 with a 0.6s transition. hover: :hover and :focus-within; click (data-expand=click): hidden radios with a shared name and a full-panel label, the one with :has(input:checked) is expanded. Panel captions appear only in the expanded one (opacity/transform). Slots: 01 panel, 02 panel, 03 panel, 04 panel, 05 panel — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is scroll-driven via animation-timeline: view(), without support — a load cascade; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-009-* with light-dark, container queries, DOM order = reading order.",
+            "ai": {
+              "summary": "CSS expanding panels: a flex row of five panels, the hovered one grows via flex-grow with a transition, captions fade in; a click mode on radio and :has(:checked), works on touch. Slots via items with media in each panel.",
+              "preserve": [
+                "the local --vibeui-layout-009-* palette — do not swap it for your theme tokens",
+                "expansion via flex-grow and a transition — not via JS width measurement; :focus-within gives keyboard expansion",
+                "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
+                "the click mode on radios with a full-panel label — both the touch version and the accessible one",
+                "motion only via transform/opacity, the cursor light on CSS variables, the static state under prefers-reduced-motion",
+                "the ghost instead of demo text: the category sells composition, so composition must be shown"
+              ],
+              "adapt": [
+                "heading and lead — the title and subtitle above the layout; without them — a ghost",
+                "items — slots in order: 01 panel, 02 panel, 03 panel, 04 panel, 05 panel; title/text/value/media",
+                "media — your own frame, video or a background from the Background category (surface-*) inside a slot, under the text",
+                "expand — hover (and focus) or click (radio, works on touch)",
+                "numbers — slot numbers for filling; turn off for production",
+                "accent — the color of icons, buttons, dots and glows",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Fill every slot: an empty one stays a ghost and gives away the placeholder.",
+                "The hover mode does not expand on touch: for a mobile audience use expand=click.",
+                "A live background (surface-*) — only in one slot: several WebGL contexts in one section are too much."
+              ],
+              "usage": "<Layout009\n  heading=\"Layout heading\"\n  lead=\"A one-line subtitle.\"\n  items={[\n    { title: \"panel\", text: \"The main thing, briefly.\" },\n    { title: \"panel\", text: \"The main thing, briefly.\" },\n    { title: \"panel\", text: \"The main thing, briefly.\" },\n    { title: \"panel\", text: \"The main thing, briefly.\" },\n    { title: \"panel\", text: \"The main thing, briefly.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "expand": {
+                "label": "Expand"
+              },
+              "numbers": {
+                "label": "Numbers"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-010",
+      "type": "registry:block",
+      "title": "Мозаика",
+      "description": "Мозаика: плотная сетка из восьми плиток разной высоты, дыры заполняются автоматически — без экспериментального masonry и без JS. Для галереи работ, отзывов, ленты и коллекций.",
+      "categories": [
+        "layout"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-010/layout-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-010.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, JS только для света за курсором. Grid с grid-auto-rows: 6rem и grid-auto-flow: dense; высота слота — grid-row: span 2–4 по позиции. Две колонки, с 48rem три, data-columns=four — четыре. Порядок DOM сохраняется, dense переставляет визуально только мелкие плитки вперёд. Слоты: 01 плитка, 02 плитка, 03 плитка, 04 плитка, 05 плитка, 06 плитка, 07 плитка, 08 плитка — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление по прокрутке через animation-timeline: view(), без поддержки — каскад при загрузке; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-010-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "meta": {
+        "tags": [
+          "layout",
+          "masonry",
+          "mosaic",
+          "gallery",
+          "grid",
+          "pinterest",
+          "portfolio"
+        ],
+        "preview": {
+          "width": "natural",
+          "aspect": "1280 / 820"
+        },
+        "ai": {
+          "usage": "<Layout010\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Плитка\", text: \"Коротко о главном.\" },\n    { title: \"Плитка\", text: \"Коротко о главном.\" },\n    { title: \"Плитка\", text: \"Коротко о главном.\" },\n    { title: \"Плитка\", text: \"Коротко о главном.\" },\n    { title: \"Плитка\", text: \"Коротко о главном.\" },\n    { title: \"Плитка\", text: \"Коротко о главном.\" },\n    { title: \"Плитка\", text: \"Коротко о главном.\" },\n    { title: \"Плитка\", text: \"Коротко о главном.\" },\n  ]}\n/>",
+          "summary": "Мозаика на CSS Grid: auto-rows 6rem, span 2–4 по слоту, grid-auto-flow: dense заполняет дыры. Две, три или четыре колонки по container-запросам. Восемь слотов через items, призрак без них.",
+          "preserve": [
+            "локальную палитру --vibeui-layout-010-* и не подменять её токенами вашей темы",
+            "grid-auto-flow: dense и span по слотам — без них появляются дыры; не заменять на CSS columns (ломает порядок чтения) и не на JS-masonry",
+            "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
+            "разную высоту слотов — одинаковые плитки превращают мозаику в обычную сетку",
+            "движение только через transform/opacity, свет за курсором на CSS-переменных, статику при prefers-reduced-motion",
+            "призрак вместо демонстрационного текста: категория продаёт композицию, показывать надо композицию"
+          ],
+          "adapt": [
+            "heading и lead — заголовок и подзаголовок над раскладкой; без них — призрак",
+            "items — слоты по порядку: 01 плитка, 02 плитка, 03 плитка, 04 плитка, 05 плитка, 06 плитка, 07 плитка, 08 плитка; title/text/value/media",
+            "media — свой кадр, видео или фон из категории «Фон» (surface-*) внутри слота, ложится под текст",
+            "columns — three или four колонки на широком экране",
+            "numbers — номера слотов для наполнения; для продакшена выключите",
+            "accent — цвет иконок, кнопок, точек и свечения",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Заполняйте все слоты: пустой остаётся призраком и выдаёт заглушку.",
+            "Кадры (media) кладите в высокие слоты 01, 03, 05, 07 — они рассчитаны под изображения.",
+            "Живой фон (surface-*) — только в один слот: несколько WebGL-контекстов в одной секции лишние."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "columns",
+            "label": "Колонки",
+            "type": "select",
+            "options": [
+              "three",
+              "four"
+            ],
+            "default": "three"
+          },
+          {
+            "prop": "numbers",
+            "label": "Номера",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "columns",
+          "numbers",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Masonry",
+            "description": "A mosaic: a dense grid of eight tiles of different heights, gaps fill automatically — no experimental masonry and no JS. For galleries, testimonials, feeds and collections.",
+            "docs": "One file, zero dependencies, JS only for the cursor light. A grid with grid-auto-rows: 6rem and grid-auto-flow: dense; slot height is grid-row: span 2–4 by position. Two columns, three from 48rem, data-columns=four — four. DOM order is kept, dense only moves small tiles forward visually. Slots: 01 tile, 02 tile, 03 tile, 04 tile, 05 tile, 06 tile, 07 tile, 08 tile — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is scroll-driven via animation-timeline: view(), without support — a load cascade; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-010-* with light-dark, container queries, DOM order = reading order.",
+            "ai": {
+              "summary": "A CSS Grid mosaic: 6rem auto-rows, span 2–4 per slot, grid-auto-flow: dense fills the gaps. Two, three or four columns by container queries. Eight slots via items, a ghost without them.",
+              "preserve": [
+                "the local --vibeui-layout-010-* palette — do not swap it for your theme tokens",
+                "grid-auto-flow: dense and per-slot spans — without them gaps appear; do not replace with CSS columns (breaks reading order) or JS masonry",
+                "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
+                "the different slot heights — equal tiles turn the mosaic into a plain grid",
+                "motion only via transform/opacity, the cursor light on CSS variables, the static state under prefers-reduced-motion",
+                "the ghost instead of demo text: the category sells composition, so composition must be shown"
+              ],
+              "adapt": [
+                "heading and lead — the title and subtitle above the layout; without them — a ghost",
+                "items — slots in order: 01 tile, 02 tile, 03 tile, 04 tile, 05 tile, 06 tile, 07 tile, 08 tile; title/text/value/media",
+                "media — your own frame, video or a background from the Background category (surface-*) inside a slot, under the text",
+                "columns — three or four columns on wide screens",
+                "numbers — slot numbers for filling; turn off for production",
+                "accent — the color of icons, buttons, dots and glows",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Fill every slot: an empty one stays a ghost and gives away the placeholder.",
+                "Put frames (media) into the tall slots 01, 03, 05, 07 — they are sized for images.",
+                "A live background (surface-*) — only in one slot: several WebGL contexts in one section are too much."
+              ],
+              "usage": "<Layout010\n  heading=\"Layout heading\"\n  lead=\"A one-line subtitle.\"\n  items={[\n    { title: \"tile\", text: \"The main thing, briefly.\" },\n    { title: \"tile\", text: \"The main thing, briefly.\" },\n    { title: \"tile\", text: \"The main thing, briefly.\" },\n    { title: \"tile\", text: \"The main thing, briefly.\" },\n    { title: \"tile\", text: \"The main thing, briefly.\" },\n    { title: \"tile\", text: \"The main thing, briefly.\" },\n    { title: \"tile\", text: \"The main thing, briefly.\" },\n    { title: \"tile\", text: \"The main thing, briefly.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "columns": {
+                "label": "Columns"
+              },
+              "numbers": {
+                "label": "Numbers"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-012",
+      "type": "registry:block",
+      "title": "Орбита интеграций",
+      "description": "Орбита интеграций: центр и шесть узлов по двум кольцам, кольца медленно вращаются, узлы остаются прямыми, наведение останавливает. Без JS. Для страницы «работает с», экосистемы и партнёров.",
+      "categories": [
+        "layout"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-012/layout-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-012.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, JS только для света за курсором. Центр — плитка 7rem с ореолом; кольца — абсолютные круги радиуса --r1/--r2 (8/13rem, с 48rem 10/16rem) с dashed-рамкой и keyframe-вращением (40s и 70s в обратную сторону, data-spin); узел — точка на кольце через rotate(--a) translateX(r), плитка узла противовращается тем же keyframe, чтобы иконка стояла прямо. Hover на орбиту — animation-play-state: paused. data-rings=one прячет второе кольцо. Слоты: 01 центр, 02 узел, 03 узел, 04 узел, 05 узел, 06 узел, 07 узел — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление своё, см. выше; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-012-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "meta": {
+        "tags": [
+          "layout",
+          "orbit",
+          "integrations",
+          "diagram",
+          "rings",
+          "nodes",
+          "ecosystem"
+        ],
+        "preview": {
+          "width": "natural",
+          "aspect": "1280 / 760"
+        },
+        "ai": {
+          "usage": "<Layout012\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Центр\", text: \"Коротко о главном.\" },\n    { title: \"Узел\", text: \"Коротко о главном.\" },\n    { title: \"Узел\", text: \"Коротко о главном.\" },\n    { title: \"Узел\", text: \"Коротко о главном.\" },\n    { title: \"Узел\", text: \"Коротко о главном.\" },\n    { title: \"Узел\", text: \"Коротко о главном.\" },\n    { title: \"Узел\", text: \"Коротко о главном.\" },\n  ]}\n/>",
+          "summary": "Орбита на CSS: центр с ореолом, два вращающихся кольца, узлы по углу через rotate/translate с противовращением, пауза на hover. Семь слотов через items: центр и шесть узлов.",
+          "preserve": [
+            "локальную палитру --vibeui-layout-012-* и не подменять её токенами вашей темы",
+            "противовращение плиток узлов тем же keyframe и той же длительностью — иначе иконки закрутятся вместе с кольцом",
+            "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
+            "позиционирование узлов через rotate/translate от --a — не считать координаты в JS",
+            "движение только через transform/opacity, свет за курсором на CSS-переменных, статику при prefers-reduced-motion",
+            "призрак вместо демонстрационного текста: категория продаёт композицию, показывать надо композицию"
+          ],
+          "adapt": [
+            "heading и lead — заголовок и подзаголовок над раскладкой; без них — призрак",
+            "items — слоты по порядку: 01 центр, 02 узел, 03 узел, 04 узел, 05 узел, 06 узел, 07 узел; title/text/value/media",
+            "media — свой кадр, видео или фон из категории «Фон» (surface-*) внутри слота, ложится под текст",
+            "rings — one или two кольца узлов",
+            "spin — вращение колец; без него статичная схема",
+            "numbers — номера слотов для наполнения; для продакшена выключите",
+            "accent — цвет иконок, кнопок, точек и свечения",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Заполняйте все слоты: пустой остаётся призраком и выдаёт заглушку.",
+            "В узлы кладите логотипы через media или короткие названия через title; текст длиннее слова не влезет.",
+            "Живой фон (surface-*) — только в один слот: несколько WebGL-контекстов в одной секции лишние."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "rings",
+            "label": "Кольца",
+            "type": "select",
+            "options": [
+              "two",
+              "one"
+            ],
+            "default": "two"
+          },
+          {
+            "prop": "spin",
+            "label": "Вращение",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "numbers",
+            "label": "Номера",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "rings",
+          "numbers",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Integration Orbit",
+            "description": "An integration orbit: a core and six nodes on two rings, the rings slowly rotate, the nodes stay upright, hover pauses. No JS. For 'works with' pages, ecosystems and partners.",
+            "docs": "One file, zero dependencies, JS only for the cursor light. The core is a 7rem tile with a halo; the rings are absolute circles of radius --r1/--r2 (8/13rem, 10/16rem from 48rem) with a dashed border and keyframe rotation (40s and 70s reversed, data-spin); a node is a point on the ring via rotate(--a) translateX(r), the node tile counter-rotates with the same keyframe so the icon stays upright. Hover on the orbit — animation-play-state: paused. data-rings=one hides the second ring. Slots: 01 core, 02 node, 03 node, 04 node, 05 node, 06 node, 07 node — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is its own, see above; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-012-* with light-dark, container queries, DOM order = reading order.",
+            "ai": {
+              "summary": "A CSS orbit: a core with a halo, two rotating rings, nodes by angle via rotate/translate with counter-rotation, paused on hover. Seven slots via items: the core and six nodes.",
+              "preserve": [
+                "the local --vibeui-layout-012-* palette — do not swap it for your theme tokens",
+                "the counter-rotation of node tiles with the same keyframe and duration — otherwise icons spin with the ring",
+                "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
+                "node positioning via rotate/translate from --a — do not compute coordinates in JS",
+                "motion only via transform/opacity, the cursor light on CSS variables, the static state under prefers-reduced-motion",
+                "the ghost instead of demo text: the category sells composition, so composition must be shown"
+              ],
+              "adapt": [
+                "heading and lead — the title and subtitle above the layout; without them — a ghost",
+                "items — slots in order: 01 core, 02 node, 03 node, 04 node, 05 node, 06 node, 07 node; title/text/value/media",
+                "media — your own frame, video or a background from the Background category (surface-*) inside a slot, under the text",
+                "rings — one or two rings of nodes",
+                "spin — ring rotation; without it a static diagram",
+                "numbers — slot numbers for filling; turn off for production",
+                "accent — the color of icons, buttons, dots and glows",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Fill every slot: an empty one stays a ghost and gives away the placeholder.",
+                "Put logos into nodes via media or short names via title; text longer than a word will not fit.",
+                "A live background (surface-*) — only in one slot: several WebGL contexts in one section are too much."
+              ],
+              "usage": "<Layout012\n  heading=\"Layout heading\"\n  lead=\"A one-line subtitle.\"\n  items={[\n    { title: \"core\", text: \"The main thing, briefly.\" },\n    { title: \"node\", text: \"The main thing, briefly.\" },\n    { title: \"node\", text: \"The main thing, briefly.\" },\n    { title: \"node\", text: \"The main thing, briefly.\" },\n    { title: \"node\", text: \"The main thing, briefly.\" },\n    { title: \"node\", text: \"The main thing, briefly.\" },\n    { title: \"node\", text: \"The main thing, briefly.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "rings": {
+                "label": "Rings"
+              },
+              "spin": {
+                "label": "Spin"
+              },
+              "numbers": {
+                "label": "Numbers"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-014",
+      "type": "registry:block",
+      "title": "Таймлайн с годом",
+      "description": "Таймлайн с закреплённым годом: слева год или этап держится, пока идут его события, справа — события с точками на линии времени. Чистый CSS sticky. Для истории компании, дорожной карты, changelog и биографии.",
+      "categories": [
+        "layout"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-014/layout-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-014.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, JS только для света за курсором. Группы «год + события»: grid 1/2 с 48rem (data-side=right — год справа), год position: sticky с align-self: start в пределах своей группы, крупный моноширинный из value слота. События — плитки с точкой на вертикальной линии (::before у списка), точка на hover заливается акцентом. На узкой ширине год — обычный заголовок группы. Слоты: 01 год/этап 1 (value), 02 событие, 03 событие, 04 год/этап 2 (value), 05 событие, 06 год/этап 3 (value), 07 событие — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление по прокрутке через animation-timeline: view(), без поддержки — каскад при загрузке; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-014-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "meta": {
+        "tags": [
+          "layout",
+          "timeline",
+          "sticky",
+          "history",
+          "roadmap",
+          "years",
+          "changelog"
+        ],
+        "preview": {
+          "width": "natural",
+          "aspect": "1280 / 900"
+        },
+        "ai": {
+          "usage": "<Layout014\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Год/этап 1 (value)\", text: \"Коротко о главном.\" },\n    { title: \"Событие\", text: \"Коротко о главном.\" },\n    { title: \"Событие\", text: \"Коротко о главном.\" },\n    { title: \"Год/этап 2 (value)\", text: \"Коротко о главном.\" },\n    { title: \"Событие\", text: \"Коротко о главном.\" },\n    { title: \"Год/этап 3 (value)\", text: \"Коротко о главном.\" },\n    { title: \"Событие\", text: \"Коротко о главном.\" },\n  ]}\n/>",
+          "summary": "Таймлайн на CSS: три группы, в каждой sticky-год (value слота, крупный моноширинный) и события с точками на линии; grid 1/2 по container-запросу. Семь слотов через items: годы и события.",
+          "preserve": [
+            "локальную палитру --vibeui-layout-014-* и не подменять её токенами вашей темы",
+            "sticky у года с align-self: start внутри группы — иначе год растянется на высоту группы и закрепляться будет нечему",
+            "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
+            "год как value, а не title: крупная цифра — это архитектура строки, а не заголовок",
+            "движение только через transform/opacity, свет за курсором на CSS-переменных, статику при prefers-reduced-motion",
+            "призрак вместо демонстрационного текста: категория продаёт композицию, показывать надо композицию"
+          ],
+          "adapt": [
+            "heading и lead — заголовок и подзаголовок над раскладкой; без них — призрак",
+            "items — слоты по порядку: 01 год/этап 1 (value), 02 событие, 03 событие, 04 год/этап 2 (value), 05 событие, 06 год/этап 3 (value), 07 событие; title/text/value/media",
+            "media — свой кадр, видео или фон из категории «Фон» (surface-*) внутри слота, ложится под текст",
+            "side — закреплённый год слева или справа",
+            "numbers — номера слотов для наполнения; для продакшена выключите",
+            "accent — цвет иконок, кнопок, точек и свечения",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Заполняйте все слоты: пустой остаётся призраком и выдаёт заглушку.",
+            "Год живёт в value слотов 01, 04, 06; title рядом с ним — короткая подпись этапа.",
+            "Живой фон (surface-*) — только в один слот: несколько WebGL-контекстов в одной секции лишние."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "side",
+            "label": "Год",
+            "type": "select",
+            "options": [
+              "left",
+              "right"
+            ],
+            "default": "left"
+          },
+          {
+            "prop": "numbers",
+            "label": "Номера",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "side",
+          "numbers",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Sticky Timeline",
+            "description": "A timeline with a sticky year: the year or stage on the left holds while its events pass, events with dots on the time line on the right. Pure CSS sticky. For company history, roadmaps, changelogs and biographies.",
+            "docs": "One file, zero dependencies, JS only for the cursor light. Groups of 'year + events': a 1/2 grid from 48rem (data-side=right — year on the right), the year is position: sticky with align-self: start within its group, large monospace from the slot's value. Events are tiles with a dot on the vertical line (::before on the list), the dot fills with accent on hover. On narrow widths the year is a plain group heading. Slots: 01 year/stage 1 (value), 02 event, 03 event, 04 year/stage 2 (value), 05 event, 06 year/stage 3 (value), 07 event — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is scroll-driven via animation-timeline: view(), without support — a load cascade; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-014-* with light-dark, container queries, DOM order = reading order.",
+            "ai": {
+              "summary": "A CSS timeline: three groups, each with a sticky year (the slot's value, large monospace) and events with dots on the line; a 1/2 grid by container query. Seven slots via items: years and events.",
+              "preserve": [
+                "the local --vibeui-layout-014-* palette — do not swap it for your theme tokens",
+                "sticky on the year with align-self: start within the group — otherwise the year stretches to the group height and nothing sticks",
+                "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
+                "the year as value, not title: the large digit is the architecture of the row, not a heading",
+                "motion only via transform/opacity, the cursor light on CSS variables, the static state under prefers-reduced-motion",
+                "the ghost instead of demo text: the category sells composition, so composition must be shown"
+              ],
+              "adapt": [
+                "heading and lead — the title and subtitle above the layout; without them — a ghost",
+                "items — slots in order: 01 year/stage 1 (value), 02 event, 03 event, 04 year/stage 2 (value), 05 event, 06 year/stage 3 (value), 07 event; title/text/value/media",
+                "media — your own frame, video or a background from the Background category (surface-*) inside a slot, under the text",
+                "side — the sticky year on the left or the right",
+                "numbers — slot numbers for filling; turn off for production",
+                "accent — the color of icons, buttons, dots and glows",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Fill every slot: an empty one stays a ghost and gives away the placeholder.",
+                "The year lives in the value of slots 01, 04, 06; the title next to it is a short stage caption.",
+                "A live background (surface-*) — only in one slot: several WebGL contexts in one section are too much."
+              ],
+              "usage": "<Layout014\n  heading=\"Layout heading\"\n  lead=\"A one-line subtitle.\"\n  items={[\n    { title: \"year/stage 1 (value)\", text: \"The main thing, briefly.\" },\n    { title: \"event\", text: \"The main thing, briefly.\" },\n    { title: \"event\", text: \"The main thing, briefly.\" },\n    { title: \"year/stage 2 (value)\", text: \"The main thing, briefly.\" },\n    { title: \"event\", text: \"The main thing, briefly.\" },\n    { title: \"year/stage 3 (value)\", text: \"The main thing, briefly.\" },\n    { title: \"event\", text: \"The main thing, briefly.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "side": {
+                "label": "Year"
+              },
+              "numbers": {
+                "label": "Numbers"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-015",
+      "type": "registry:block",
+      "title": "Колонки-ленты",
+      "description": "Колонки-ленты: слева описание и ссылки, справа ряд колонок с горизонтальной прокруткой и snap — ссылка довозит ряд до своей колонки, активная следует за прокруткой, пилюля едет к ней. У каждой колонки своя вертикальная прокрутка. Для личного сайта, портфолио и «второго мозга».",
+      "categories": [
+        "layout"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-015/layout-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-015.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, JS только для света за курсором и undefined. Grid 18rem/1fr с 48rem, высота min(46rem, 100dvh). Ряд — flex с overflow-x: auto и scroll-snap-type x mandatory (data-snap), колонка — flex: 0 0 var(--col) (26/32rem, data-width) с header и внутренним overflow-y: auto. Клик по кнопке — row.scrollTo({left: column.offsetLeft, behavior: smooth}); onScroll через rAF ищет ближайшую колонку по offsetLeft и ставит aria-current; пилюля — абсолютный span с top/height от offsetTop активной кнопки и переходом 0.4s. Ниже 48rem — навигация строкой сверху, колонки во всю ширину. Слот 01 — описание слева (title = имя), 02–06 — колонки: title — заголовок, text — подводка, media — своё содержимое колонки вместо призрака. Слоты: 01 описание слева (title — имя), 02 колонка, 03 колонка, 04 колонка, 05 колонка, 06 колонка — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление своё, см. выше; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-015-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "meta": {
+        "tags": [
+          "layout",
+          "columns",
+          "deck",
+          "portfolio",
+          "sidebar",
+          "horizontal",
+          "snap",
+          "personal"
+        ],
+        "preview": {
+          "width": "natural",
+          "aspect": "1280 / 760"
+        },
+        "ai": {
+          "usage": "<Layout015\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Описание слева (title — имя)\", text: \"Коротко о главном.\" },\n    { title: \"Колонка\", text: \"Коротко о главном.\" },\n    { title: \"Колонка\", text: \"Коротко о главном.\" },\n    { title: \"Колонка\", text: \"Коротко о главном.\" },\n    { title: \"Колонка\", text: \"Коротко о главном.\" },\n    { title: \"Колонка\", text: \"Коротко о главном.\" },\n  ]}\n/>",
+          "summary": "Колонки-ленты: закреплённая левая колонка с навигацией и пилюлей, справа flex-ряд колонок с scroll-snap и собственной вертикальной прокруткой каждой; клик везёт ряд smooth-scroll, активная колонка вычисляется по offsetLeft на scroll. Шесть слотов через items: описание и пять колонок.",
+          "preserve": [
+            "локальную палитру --vibeui-layout-015-* и не подменять её токенами вашей темы",
+            "родную горизонтальную прокрутку ряда с scroll-snap — колёсико, трекпад и touch работают сами, JS только довозит по клику",
+            "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
+            "собственную вертикальную прокрутку каждой колонки при общей высоте — так колонки читаются независимо",
+            "движение только через transform/opacity, свет за курсором на CSS-переменных, статику при prefers-reduced-motion",
+            "призрак вместо демонстрационного текста: категория продаёт композицию, показывать надо композицию"
+          ],
+          "adapt": [
+            "heading и lead — заголовок и подзаголовок над раскладкой; без них — призрак",
+            "items — слоты по порядку: 01 описание слева (title — имя), 02 колонка, 03 колонка, 04 колонка, 05 колонка, 06 колонка; title/text/value/media",
+            "media — свой кадр, видео или фон из категории «Фон» (surface-*) внутри слота, ложится под текст",
+            "width — narrow (26rem) или wide (32rem)",
+            "snap — привязка горизонтальной прокрутки к началу колонки",
+            "numbers — номера слотов для наполнения; для продакшена выключите",
+            "accent — цвет иконок, кнопок, точек и свечения",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Заполняйте все слоты: пустой остаётся призраком и выдаёт заглушку.",
+            "Содержимое колонок кладите в media слотов 02–06 — карточки, фото, список; заголовок и подводка — title и text.",
+            "Живой фон (surface-*) — только в один слот: несколько WebGL-контекстов в одной секции лишние."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "width",
+            "label": "Колонка",
+            "type": "select",
+            "options": [
+              "narrow",
+              "wide"
+            ],
+            "default": "narrow"
+          },
+          {
+            "prop": "snap",
+            "label": "Snap",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "numbers",
+            "label": "Номера",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "width",
+          "numbers",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Column Deck",
+            "description": "A column deck: an intro and links on the left, a row of snap-scrolling columns on the right — a link drives the row to its column, the active link follows the scroll, a pill slides to it. Each column scrolls vertically on its own. For personal sites, portfolios and 'second brains'.",
+            "docs": "One file, zero dependencies, JS only for the cursor light and undefined. An 18rem/1fr grid from 48rem, height min(46rem, 100dvh). The row is a flex with overflow-x: auto and scroll-snap-type x mandatory (data-snap), a column is flex: 0 0 var(--col) (26/32rem, data-width) with a header and an inner overflow-y: auto. Clicking a button — row.scrollTo({left: column.offsetLeft, behavior: smooth}); onScroll via rAF finds the nearest column by offsetLeft and sets aria-current; the pill is an absolute span with top/height from the active button's offsetTop and a 0.4s transition. Below 48rem — the nav is a top row, columns are full width. Slot 01 is the left intro (title = name), 02–06 are columns: title — heading, text — lead, media — your own column content instead of the ghost. Slots: 01 the left intro (title — name), 02 column, 03 column, 04 column, 05 column, 06 column — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is its own, see above; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-015-* with light-dark, container queries, DOM order = reading order.",
+            "ai": {
+              "summary": "A column deck: a pinned left column with navigation and a pill, on the right a flex row of columns with scroll-snap and each column's own vertical scroll; a click drives the row with smooth scroll, the active column is computed by offsetLeft on scroll. Six slots via items: the intro and five columns.",
+              "preserve": [
+                "the local --vibeui-layout-015-* palette — do not swap it for your theme tokens",
+                "the native horizontal scroll of the row with scroll-snap — wheel, trackpad and touch work on their own, JS only drives on click",
+                "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
+                "each column's own vertical scroll at a shared height — that is how columns read independently",
+                "motion only via transform/opacity, the cursor light on CSS variables, the static state under prefers-reduced-motion",
+                "the ghost instead of demo text: the category sells composition, so composition must be shown"
+              ],
+              "adapt": [
+                "heading and lead — the title and subtitle above the layout; without them — a ghost",
+                "items — slots in order: 01 the left intro (title — name), 02 column, 03 column, 04 column, 05 column, 06 column; title/text/value/media",
+                "media — your own frame, video or a background from the Background category (surface-*) inside a slot, under the text",
+                "width — narrow (26rem) or wide (32rem)",
+                "snap — snapping the horizontal scroll to a column start",
+                "numbers — slot numbers for filling; turn off for production",
+                "accent — the color of icons, buttons, dots and glows",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Fill every slot: an empty one stays a ghost and gives away the placeholder.",
+                "Put column content into the media of slots 02–06 — cards, photos, a list; the heading and lead are title and text.",
+                "A live background (surface-*) — only in one slot: several WebGL contexts in one section are too much."
+              ],
+              "usage": "<Layout015\n  heading=\"Layout heading\"\n  lead=\"A one-line subtitle.\"\n  items={[\n    { title: \"the left intro (title — name)\", text: \"The main thing, briefly.\" },\n    { title: \"column\", text: \"The main thing, briefly.\" },\n    { title: \"column\", text: \"The main thing, briefly.\" },\n    { title: \"column\", text: \"The main thing, briefly.\" },\n    { title: \"column\", text: \"The main thing, briefly.\" },\n    { title: \"column\", text: \"The main thing, briefly.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "width": {
+                "label": "Column"
+              },
+              "snap": {
+                "label": "Snap"
+              },
+              "numbers": {
+                "label": "Numbers"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "layout-016",
+      "type": "registry:block",
+      "title": "Каталог с боковой навигацией",
+      "description": "Раскладка витрины, как у самого VibeUI: шапка с логотипом, разделами и действиями, панель поиска, слева рубрики со счётчиками и активной подсветкой, справа сетка карточек с превью и кодом. Для библиотек, каталогов, маркетплейсов и документации с примерами.",
+      "categories": [
+        "layout"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-016/layout-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-016.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, JS только для света за курсором. Grid из трёх рядов (шапка, фильтр, main) высотой min(46rem, 100dvh); main — 15rem/1fr с 56rem (data-sidebar выключает колонку рубрик), сетка карточек 1/2/3 колонки (data-density). Рубрики — слот 02 (список со счётчиками и активной строкой), карточки — слоты 03–06: tile как превью, подпись с кодом VU001–004 и названием из title. Шапка: логотип из items[0].title, счётчик из items[0].text. Каждая карточка — article с рамкой и подсветкой на hover. Слоты: 01 шапка (title — логотип, text — счётчик), 02 рубрики, 03 карточка, 04 карточка, 05 карточка, 06 карточка — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление по прокрутке через animation-timeline: view(), без поддержки — каскад при загрузке; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-016-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "meta": {
+        "tags": [
+          "layout",
+          "catalog",
+          "shell",
+          "sidebar",
+          "grid",
+          "cards",
+          "library",
+          "marketplace"
+        ],
+        "preview": {
+          "width": "natural",
+          "aspect": "1280 / 760"
+        },
+        "ai": {
+          "usage": "<Layout016\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Шапка (title — логотип, text — счётчик)\", text: \"Коротко о главном.\" },\n    { title: \"Рубрики\", text: \"Коротко о главном.\" },\n    { title: \"Карточка\", text: \"Коротко о главном.\" },\n    { title: \"Карточка\", text: \"Коротко о главном.\" },\n    { title: \"Карточка\", text: \"Коротко о главном.\" },\n    { title: \"Карточка\", text: \"Коротко о главном.\" },\n  ]}\n/>",
+          "summary": "Каталог с боковой навигацией: шапка, панель поиска, закреплённые рубрики со счётчиками, сетка карточек с превью и подписью — раскладка VibeUI на CSS Grid с container-запросами. Шесть слотов через items: шапка, рубрики и четыре карточки.",
+          "preserve": [
+            "локальную палитру --vibeui-layout-016-* и не подменять её токенами вашей темы",
+            "прокрутку только у сетки карточек и колонки рубрик — шапка и фильтр стоят, как у настоящего каталога",
+            "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
+            "карточку как article с подписью под превью — код и название читаются без наведения",
+            "движение только через transform/opacity, свет за курсором на CSS-переменных, статику при prefers-reduced-motion",
+            "призрак вместо демонстрационного текста: категория продаёт композицию, показывать надо композицию"
+          ],
+          "adapt": [
+            "heading и lead — заголовок и подзаголовок над раскладкой; без них — призрак",
+            "items — слоты по порядку: 01 шапка (title — логотип, text — счётчик), 02 рубрики, 03 карточка, 04 карточка, 05 карточка, 06 карточка; title/text/value/media",
+            "media — свой кадр, видео или фон из категории «Фон» (surface-*) внутри слота, ложится под текст",
+            "density — two или three колонки карточек на широком экране",
+            "sidebar — колонка рубрик слева; без неё сетка шире",
+            "numbers — номера слотов для наполнения; для продакшена выключите",
+            "accent — цвет иконок, кнопок, точек и свечения",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Заполняйте все слоты: пустой остаётся призраком и выдаёт заглушку.",
+            "Превью карточек кладите в media слотов 03–06; название — в title, оно встанет в подпись рядом с кодом.",
+            "Живой фон (surface-*) — только в один слот: несколько WebGL-контекстов в одной секции лишние."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "density",
+            "label": "Колонки",
+            "type": "select",
+            "options": [
+              "two",
+              "three"
+            ],
+            "default": "two"
+          },
+          {
+            "prop": "sidebar",
+            "label": "Рубрики",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "numbers",
+            "label": "Номера",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "density",
+          "numbers",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Catalog Shell",
+            "description": "A showcase layout like VibeUI itself: a header with a logo, sections and actions, a search bar, categories with counters and an active highlight on the left, a card grid with previews and codes on the right. For libraries, catalogs, marketplaces and docs with examples.",
+            "docs": "One file, zero dependencies, JS only for the cursor light. A three-row grid (header, filter, main) of height min(46rem, 100dvh); main is 15rem/1fr from 56rem (data-sidebar turns the category column off), the card grid has 1/2/3 columns (data-density). Categories are slot 02 (a list with counters and an active row), cards are slots 03–06: the tile as a preview, a caption with codes VU001–004 and the title. Header: the logo from items[0].title, the counter from items[0].text. Each card is an article with a border and a hover highlight. Slots: 01 header (title — logo, text — counter), 02 categories, 03 card, 04 card, 05 card, 06 card — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is scroll-driven via animation-timeline: view(), without support — a load cascade; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-016-* with light-dark, container queries, DOM order = reading order.",
+            "ai": {
+              "summary": "A catalog shell: a header, a search bar, pinned categories with counters, a card grid with previews and captions — the VibeUI layout on CSS Grid with container queries. Six slots via items: header, categories and four cards.",
+              "preserve": [
+                "the local --vibeui-layout-016-* palette — do not swap it for your theme tokens",
+                "scrolling only in the card grid and the category column — the header and filter stay, like in a real catalog",
+                "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
+                "the card as an article with a caption under the preview — the code and name read without hover",
+                "motion only via transform/opacity, the cursor light on CSS variables, the static state under prefers-reduced-motion",
+                "the ghost instead of demo text: the category sells composition, so composition must be shown"
+              ],
+              "adapt": [
+                "heading and lead — the title and subtitle above the layout; without them — a ghost",
+                "items — slots in order: 01 header (title — logo, text — counter), 02 categories, 03 card, 04 card, 05 card, 06 card; title/text/value/media",
+                "media — your own frame, video or a background from the Background category (surface-*) inside a slot, under the text",
+                "density — two or three card columns on wide screens",
+                "sidebar — the category column on the left; without it the grid is wider",
+                "numbers — slot numbers for filling; turn off for production",
+                "accent — the color of icons, buttons, dots and glows",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Fill every slot: an empty one stays a ghost and gives away the placeholder.",
+                "Put card previews into the media of slots 03–06; the name goes into title and lands in the caption next to the code.",
+                "A live background (surface-*) — only in one slot: several WebGL contexts in one section are too much."
+              ],
+              "usage": "<Layout016\n  heading=\"Layout heading\"\n  lead=\"A one-line subtitle.\"\n  items={[\n    { title: \"header (title — logo, text — counter)\", text: \"The main thing, briefly.\" },\n    { title: \"categories\", text: \"The main thing, briefly.\" },\n    { title: \"card\", text: \"The main thing, briefly.\" },\n    { title: \"card\", text: \"The main thing, briefly.\" },\n    { title: \"card\", text: \"The main thing, briefly.\" },\n    { title: \"card\", text: \"The main thing, briefly.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "density": {
+                "label": "Columns"
+              },
+              "sidebar": {
+                "label": "Sidebar"
+              },
+              "numbers": {
+                "label": "Numbers"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

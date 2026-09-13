@@ -69,6 +69,8 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/block/team")).PREVIEWS
     case "block/background":
       return (await import("@/registry/previews-lazy/block/background")).PREVIEWS
+    case "block/layout":
+      return (await import("@/registry/previews-lazy/block/layout")).PREVIEWS
     case "component/accordion":
       return (await import("@/registry/previews-lazy/component/accordion")).PREVIEWS
     case "component/alert":
@@ -245,6 +247,10 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/animation/stacks")).PREVIEWS
     case "animation/cursor":
       return (await import("@/registry/previews-lazy/animation/cursor")).PREVIEWS
+    case "animation/sketch":
+      return (await import("@/registry/previews-lazy/animation/sketch")).PREVIEWS
+    case "animation/folio":
+      return (await import("@/registry/previews-lazy/animation/folio")).PREVIEWS
     case "animation/text":
       return (await import("@/registry/previews-lazy/animation/text")).PREVIEWS
     case "animation/background":

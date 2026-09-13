@@ -69,6 +69,8 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/block/team")).PREVIEWS
     case "block/background":
       return (await import("@/registry/previews/block/background")).PREVIEWS
+    case "block/layout":
+      return (await import("@/registry/previews/block/layout")).PREVIEWS
     case "component/accordion":
       return (await import("@/registry/previews/component/accordion")).PREVIEWS
     case "component/alert":
@@ -245,6 +247,10 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/animation/stacks")).PREVIEWS
     case "animation/cursor":
       return (await import("@/registry/previews/animation/cursor")).PREVIEWS
+    case "animation/sketch":
+      return (await import("@/registry/previews/animation/sketch")).PREVIEWS
+    case "animation/folio":
+      return (await import("@/registry/previews/animation/folio")).PREVIEWS
     case "animation/text":
       return (await import("@/registry/previews/animation/text")).PREVIEWS
     case "animation/background":

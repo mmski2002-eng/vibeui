@@ -1,0 +1,2528 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "sketch-001",
+      "type": "registry:component",
+      "title": "Рукописная кнопка",
+      "description": "Кнопка, нарисованная от руки: контур дрожит, как в рисованном мультфильме, по наведению перерисовывается заново, по нажатию линия жирнеет. Три вида: контур, заливка чернилами и штриховка. Настоящий <button>, ноль зависимостей.",
+      "categories": [
+        "sketch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sketch-001/sketch-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sketch-001.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Хост — <button>, слой чернил — SVG под подписью: контур rectPoints со скруглением 9, для solid — второй неровный контур с fill, для scribble (по умолчанию) — штриховка одной непрерывной пилой между кромками с шагом 11px, тонкой линией 0.7 от базовой. :active утолщает линию через --width. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-001-* с light-dark, reduced-motion выключает boil.",
+      "meta": {
+        "tags": [
+          "sketch",
+          "hand-drawn",
+          "handwritten",
+          "doodle",
+          "rough",
+          "boil",
+          "button",
+          "cta"
+        ],
+        "preview": {
+          "props": {
+            "label": "Готово"
+          }
+        },
+        "ai": {
+          "export": "Sketch001",
+          "usage": "<Sketch001 label=\"Готово\" onClick={() => save()} />",
+          "summary": "Рукописная кнопка: настоящий <button> с SVG-контуром от руки под подписью, три кадра boil на CSS, варианты outline/solid/scribble, новый росчерк по наведению.",
+          "preserve": [
+            "локальную палитру --vibeui-sketch-001-* и не подменять её токенами вашей темы",
+            "три кадра контура и переключение через @property + step-end — это «кипящая линия» рисованной анимации, не заменять на CSS-фильтры и не на JS-таймер",
+            "детерминированный seed: одна подпись — один почерк при каждой загрузке, а не случайный при каждом рендере",
+            "настоящий <button> с фокусом и :active — рисованность не отменяет доступность",
+            "статику при prefers-reduced-motion: линия остаётся рукописной, но не дрожит",
+            "overflow: visible у слоя чернил — линия выходит за коробку на пару пикселей, обрезка убьёт рисованность"
+          ],
+          "adapt": [
+            "label — подпись; от неё же по умолчанию считается seed почерка",
+            "variant — scribble (штриховка одной линией), outline или solid (заливка чернилами, текст инвертирован)",
+            "onClick — обработчик нажатия",
+            "rough — neat или loose: аккуратный или размашистый почерк",
+            "boil — still, soft или lively: дрожание линии",
+            "seed — число, чтобы зафиксировать понравившийся росчерк",
+            "accent — цвет линий; по умолчанию совпадает с цветом текста",
+            "ink — цвет текста; по умолчанию чернильный в тон темы",
+            "шрифты: замените FONTS на свой self-hosted @font-face, если Google Fonts недоступны",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Neucha и Caveat покрывают кириллицу; Kalam и другие латинские рукописные — нет.",
+            "Подпись держите короткой: контур считается по коробке, длинный текст переносится и коробка растёт.",
+            "Контур появляется после измерения хоста: на сервере рендерится только содержимое, SVG дорисовывается на клиенте — гидрация чистая."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "variant",
+            "label": "Вид",
+            "type": "select",
+            "options": [
+              "scribble",
+              "outline",
+              "solid"
+            ],
+            "default": "scribble"
+          },
+          {
+            "prop": "rough",
+            "label": "Почерк",
+            "type": "select",
+            "options": [
+              "neat",
+              "loose"
+            ],
+            "default": "neat"
+          },
+          {
+            "prop": "boil",
+            "label": "Дрожание",
+            "type": "select",
+            "options": [
+              "soft",
+              "still",
+              "lively"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Линия",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "variant",
+          "boil",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hand-drawn Button",
+            "description": "A hand-drawn button: the outline boils like in a drawn cartoon, hover redraws it, pressing thickens the line. Three looks: outline, ink fill and hatching. A real <button>, zero dependencies.",
+            "docs": "One file, zero dependencies, \"use client\". The host is a <button>, the ink layer is an SVG under the caption: a rectPoints outline with radius 9, for solid a second uneven filled outline, for scribble (default) a single continuous sawtooth hatch between the edges at 11px steps with a 0.7× thin line. :active thickens the line via --width. Outlines are drawn in pixels: the host is measured with ResizeObserver, perimeter points are shifted by deterministic noise (mulberry32 from seed, by default a hash of the label), segments are quadratic curves; three frames of one line differ by a small boil jitter. Frames are switched by CSS: @property --frame (integer) + @keyframes step-end 1.2s, each path is visible only on its frame (opacity via clamp(1 − (frame − i)²)). Hover shifts the seed — a fresh stroke. Neucha and Caveat fonts load via <link precedence> from Google Fonts (with system handwriting fallbacks). Palette --vibeui-sketch-001-* with light-dark, reduced motion disables boil.",
+            "ai": {
+              "summary": "A hand-drawn button: a real <button> with a hand-drawn SVG outline under the caption, three CSS boil frames, outline/solid/scribble variants, a fresh stroke on hover.",
+              "preserve": [
+                "the local --vibeui-sketch-001-* palette — do not swap it for your theme tokens",
+                "the three outline frames switched via @property + step-end — this is the 'boiling line' of drawn animation, do not replace with CSS filters or a JS timer",
+                "the deterministic seed: one label — one handwriting on every load, not random on every render",
+                "a real <button> with focus and :active — the drawn look does not cancel accessibility",
+                "the static state under prefers-reduced-motion: the line stays hand-drawn but does not shake",
+                "overflow: visible on the ink layer — the line leaves the box by a couple of pixels, clipping kills the drawn feel"
+              ],
+              "adapt": [
+                "label — the caption; the handwriting seed is derived from it by default",
+                "variant — scribble (single-stroke hatching), outline or solid (ink fill, inverted text)",
+                "onClick — the click handler",
+                "rough — neat or loose: tidy or sweeping handwriting",
+                "boil — still, soft or lively: line jitter",
+                "seed — a number to pin a stroke you like",
+                "accent — the line color; matches the text color by default",
+                "ink — the text color; ink-toned by default",
+                "fonts: replace FONTS with your own self-hosted @font-face if Google Fonts is unavailable",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Neucha and Caveat cover Cyrillic; Kalam and other Latin handwriting fonts do not.",
+                "Keep the caption short: the outline follows the box, long text wraps and the box grows.",
+                "The outline appears after the host is measured: the server renders only the content, the SVG is drawn on the client — hydration stays clean."
+              ],
+              "usage": "<Sketch001 label=\"Done\" onClick={() => save()} />"
+            },
+            "controls": {
+              "variant": {
+                "label": "Variant"
+              },
+              "rough": {
+                "label": "Hand"
+              },
+              "boil": {
+                "label": "Boil"
+              },
+              "accent": {
+                "label": "Line"
+              },
+              "ink": {
+                "label": "Text"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Done"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sketch-002",
+      "type": "registry:component",
+      "title": "Рукописный переключатель",
+      "description": "Переключатель, нарисованный от руки: капсула-дорожка и кружок-ползунок дрожат, включённая дорожка заливается чернилами. Внутри настоящий чекбокс с role=switch — работает с клавиатуры и в формах.",
+      "categories": [
+        "sketch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sketch-002/sketch-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sketch-002.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Хост измерения — дорожка 3.2×1.7em; дорожка — rectPoints с радиусом h/2, ползунок — ellipsePoints в левом или правом конце по состоянию, включённая дорожка получает второй заполненный контур. Состояние — useState от defaultChecked; управляемый режим оборачивайте снаружи. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-002-* с light-dark, reduced-motion выключает boil.",
+      "meta": {
+        "tags": [
+          "sketch",
+          "hand-drawn",
+          "handwritten",
+          "doodle",
+          "rough",
+          "boil",
+          "toggle",
+          "switch",
+          "form"
+        ],
+        "preview": {
+          "props": {
+            "label": "Уведомления",
+            "defaultChecked": true
+          }
+        },
+        "ai": {
+          "export": "Sketch002",
+          "usage": "<Sketch002 label=\"Уведомления\" defaultChecked />",
+          "summary": "Рукописный переключатель: настоящий checkbox role=switch под нарисованной капсулой и кружком, заливка при включении, boil на CSS.",
+          "preserve": [
+            "локальную палитру --vibeui-sketch-002-* и не подменять её токенами вашей темы",
+            "три кадра контура и переключение через @property + step-end — это «кипящая линия» рисованной анимации, не заменять на CSS-фильтры и не на JS-таймер",
+            "детерминированный seed: одна подпись — один почерк при каждой загрузке, а не случайный при каждом рендере",
+            "настоящий <input type=checkbox role=switch> под рисунком — состояние и доступность его, рисунок только сверху",
+            "статику при prefers-reduced-motion: линия остаётся рукописной, но не дрожит",
+            "overflow: visible у слоя чернил — линия выходит за коробку на пару пикселей, обрезка убьёт рисованность"
+          ],
+          "adapt": [
+            "label — подпись справа от переключателя",
+            "defaultChecked — начальное состояние; управляемое состояние — через onChange и checked родителя",
+            "rough — neat или loose: аккуратный или размашистый почерк",
+            "boil — still, soft или lively: дрожание линии",
+            "seed — число, чтобы зафиксировать понравившийся росчерк",
+            "accent — цвет линий; по умолчанию совпадает с цветом текста",
+            "ink — цвет текста; по умолчанию чернильный в тон темы",
+            "шрифты: замените FONTS на свой self-hosted @font-face, если Google Fonts недоступны",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Neucha и Caveat покрывают кириллицу; Kalam и другие латинские рукописные — нет.",
+            "Для управляемого состояния оберните компонент и передавайте defaultChecked с key — или вынесите useState наружу.",
+            "Контур появляется после измерения хоста: на сервере рендерится только содержимое, SVG дорисовывается на клиенте — гидрация чистая."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultChecked",
+            "label": "Включён",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "rough",
+            "label": "Почерк",
+            "type": "select",
+            "options": [
+              "neat",
+              "loose"
+            ],
+            "default": "neat"
+          },
+          {
+            "prop": "boil",
+            "label": "Дрожание",
+            "type": "select",
+            "options": [
+              "soft",
+              "still",
+              "lively"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Линия",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "defaultChecked",
+          "boil",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hand-drawn Toggle",
+            "description": "A hand-drawn toggle: a capsule track and a circle knob boil, the on track fills with ink. A real checkbox with role=switch inside — keyboard and form friendly.",
+            "docs": "One file, zero dependencies, \"use client\". The measured host is the 3.2×1.7em track; the track is rectPoints with radius h/2, the knob is ellipsePoints at the left or right end by state, the on track gets a second filled outline. State is useState from defaultChecked; wrap for controlled mode. Outlines are drawn in pixels: the host is measured with ResizeObserver, perimeter points are shifted by deterministic noise (mulberry32 from seed, by default a hash of the label), segments are quadratic curves; three frames of one line differ by a small boil jitter. Frames are switched by CSS: @property --frame (integer) + @keyframes step-end 1.2s, each path is visible only on its frame (opacity via clamp(1 − (frame − i)²)). Hover shifts the seed — a fresh stroke. Neucha and Caveat fonts load via <link precedence> from Google Fonts (with system handwriting fallbacks). Palette --vibeui-sketch-002-* with light-dark, reduced motion disables boil.",
+            "ai": {
+              "summary": "A hand-drawn toggle: a real checkbox role=switch under a drawn capsule and knob, ink fill when on, CSS boil.",
+              "preserve": [
+                "the local --vibeui-sketch-002-* palette — do not swap it for your theme tokens",
+                "the three outline frames switched via @property + step-end — this is the 'boiling line' of drawn animation, do not replace with CSS filters or a JS timer",
+                "the deterministic seed: one label — one handwriting on every load, not random on every render",
+                "a real <input type=checkbox role=switch> under the drawing — state and accessibility are its, the drawing is only on top",
+                "the static state under prefers-reduced-motion: the line stays hand-drawn but does not shake",
+                "overflow: visible on the ink layer — the line leaves the box by a couple of pixels, clipping kills the drawn feel"
+              ],
+              "adapt": [
+                "label — the caption to the right of the toggle",
+                "defaultChecked — the initial state; controlled state via the parent's onChange and checked",
+                "rough — neat or loose: tidy or sweeping handwriting",
+                "boil — still, soft or lively: line jitter",
+                "seed — a number to pin a stroke you like",
+                "accent — the line color; matches the text color by default",
+                "ink — the text color; ink-toned by default",
+                "fonts: replace FONTS with your own self-hosted @font-face if Google Fonts is unavailable",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Neucha and Caveat cover Cyrillic; Kalam and other Latin handwriting fonts do not.",
+                "For controlled state wrap the component and pass defaultChecked with a key — or lift useState out.",
+                "The outline appears after the host is measured: the server renders only the content, the SVG is drawn on the client — hydration stays clean."
+              ],
+              "usage": "<Sketch002 label=\"Notifications\" defaultChecked />"
+            },
+            "controls": {
+              "defaultChecked": {
+                "label": "On"
+              },
+              "rough": {
+                "label": "Hand"
+              },
+              "boil": {
+                "label": "Boil"
+              },
+              "accent": {
+                "label": "Line"
+              },
+              "ink": {
+                "label": "Text"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Notifications",
+                "defaultChecked": true
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sketch-003",
+      "type": "registry:component",
+      "title": "Рукописный чекбокс",
+      "description": "Чекбокс, нарисованный от руки: квадратик дрожит, галочка — два размашистых штриха, которые появляются при выборе. Настоящий <input type=checkbox> с подписью, работает с клавиатуры.",
+      "categories": [
+        "sketch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sketch-003/sketch-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sketch-003.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Хост — квадрат 1.4em; квадрат — rectPoints с шагом 8, галочка — три точки [0.2, 0.52]→[0.42, 0.78]→[0.88, 0.18] толщиной 3. Состояние — useState от defaultChecked. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-003-* с light-dark, reduced-motion выключает boil.",
+      "meta": {
+        "tags": [
+          "sketch",
+          "hand-drawn",
+          "handwritten",
+          "doodle",
+          "rough",
+          "boil",
+          "checkbox",
+          "form"
+        ],
+        "preview": {
+          "props": {
+            "label": "Согласен с условиями"
+          }
+        },
+        "ai": {
+          "export": "Sketch003",
+          "usage": "<Sketch003 label=\"Согласен с условиями\" defaultChecked />",
+          "summary": "Рукописный чекбокс: настоящий input под нарисованным квадратом, галочка из двух штрихов при выборе, boil на CSS.",
+          "preserve": [
+            "локальную палитру --vibeui-sketch-003-* и не подменять её токенами вашей темы",
+            "три кадра контура и переключение через @property + step-end — это «кипящая линия» рисованной анимации, не заменять на CSS-фильтры и не на JS-таймер",
+            "детерминированный seed: одна подпись — один почерк при каждой загрузке, а не случайный при каждом рендере",
+            "настоящий <input type=checkbox> и <label> — клик по подписи и клавиатура работают без JS",
+            "статику при prefers-reduced-motion: линия остаётся рукописной, но не дрожит",
+            "overflow: visible у слоя чернил — линия выходит за коробку на пару пикселей, обрезка убьёт рисованность"
+          ],
+          "adapt": [
+            "label — подпись чекбокса",
+            "defaultChecked — начальное состояние",
+            "rough — neat или loose: аккуратный или размашистый почерк",
+            "boil — still, soft или lively: дрожание линии",
+            "seed — число, чтобы зафиксировать понравившийся росчерк",
+            "accent — цвет линий; по умолчанию совпадает с цветом текста",
+            "ink — цвет текста; по умолчанию чернильный в тон темы",
+            "шрифты: замените FONTS на свой self-hosted @font-face, если Google Fonts недоступны",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Neucha и Caveat покрывают кириллицу; Kalam и другие латинские рукописные — нет.",
+            "Галочка выходит за квадрат вправо-вверх намеренно — так рисуют рукой.",
+            "Контур появляется после измерения хоста: на сервере рендерится только содержимое, SVG дорисовывается на клиенте — гидрация чистая."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultChecked",
+            "label": "Отмечен",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "rough",
+            "label": "Почерк",
+            "type": "select",
+            "options": [
+              "neat",
+              "loose"
+            ],
+            "default": "neat"
+          },
+          {
+            "prop": "boil",
+            "label": "Дрожание",
+            "type": "select",
+            "options": [
+              "soft",
+              "still",
+              "lively"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Линия",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "defaultChecked",
+          "boil",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hand-drawn Checkbox",
+            "description": "A hand-drawn checkbox: the square boils, the tick is two sweeping strokes that appear when checked. A real <input type=checkbox> with a label, keyboard friendly.",
+            "docs": "One file, zero dependencies, \"use client\". The host is a 1.4em square; the square is rectPoints at step 8, the tick is three points [0.2, 0.52]→[0.42, 0.78]→[0.88, 0.18] at width 3. State is useState from defaultChecked. Outlines are drawn in pixels: the host is measured with ResizeObserver, perimeter points are shifted by deterministic noise (mulberry32 from seed, by default a hash of the label), segments are quadratic curves; three frames of one line differ by a small boil jitter. Frames are switched by CSS: @property --frame (integer) + @keyframes step-end 1.2s, each path is visible only on its frame (opacity via clamp(1 − (frame − i)²)). Hover shifts the seed — a fresh stroke. Neucha and Caveat fonts load via <link precedence> from Google Fonts (with system handwriting fallbacks). Palette --vibeui-sketch-003-* with light-dark, reduced motion disables boil.",
+            "ai": {
+              "summary": "A hand-drawn checkbox: a real input under a drawn square, a two-stroke tick when checked, CSS boil.",
+              "preserve": [
+                "the local --vibeui-sketch-003-* palette — do not swap it for your theme tokens",
+                "the three outline frames switched via @property + step-end — this is the 'boiling line' of drawn animation, do not replace with CSS filters or a JS timer",
+                "the deterministic seed: one label — one handwriting on every load, not random on every render",
+                "a real <input type=checkbox> and <label> — clicking the caption and the keyboard work without JS",
+                "the static state under prefers-reduced-motion: the line stays hand-drawn but does not shake",
+                "overflow: visible on the ink layer — the line leaves the box by a couple of pixels, clipping kills the drawn feel"
+              ],
+              "adapt": [
+                "label — the checkbox caption",
+                "defaultChecked — the initial state",
+                "rough — neat or loose: tidy or sweeping handwriting",
+                "boil — still, soft or lively: line jitter",
+                "seed — a number to pin a stroke you like",
+                "accent — the line color; matches the text color by default",
+                "ink — the text color; ink-toned by default",
+                "fonts: replace FONTS with your own self-hosted @font-face if Google Fonts is unavailable",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Neucha and Caveat cover Cyrillic; Kalam and other Latin handwriting fonts do not.",
+                "The tick leaves the square up-right on purpose — that is how a hand draws it.",
+                "The outline appears after the host is measured: the server renders only the content, the SVG is drawn on the client — hydration stays clean."
+              ],
+              "usage": "<Sketch003 label=\"I agree to the terms\" defaultChecked />"
+            },
+            "controls": {
+              "defaultChecked": {
+                "label": "Checked"
+              },
+              "rough": {
+                "label": "Hand"
+              },
+              "boil": {
+                "label": "Boil"
+              },
+              "accent": {
+                "label": "Line"
+              },
+              "ink": {
+                "label": "Text"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "I agree to the terms"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sketch-004",
+      "type": "registry:component",
+      "title": "Рукописные радиокнопки",
+      "description": "Радиокнопки, нарисованные от руки: кружки дрожат, выбранный закрашен чернильной точкой. Настоящая группа <input type=radio> с общим name, подписи кликабельны, стрелки работают.",
+      "categories": [
+        "sketch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sketch-004/sketch-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sketch-004.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Кружки — ellipsePoints 9.5px в холсте 24×24 (без измерения), точка выбора — заполненная ellipsePoints 4.5px. Группа с name от useId, состояние — индекс в useState. data-direction=row кладёт варианты в строку. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-004-* с light-dark, reduced-motion выключает boil.",
+      "meta": {
+        "tags": [
+          "sketch",
+          "hand-drawn",
+          "handwritten",
+          "doodle",
+          "rough",
+          "boil",
+          "radio",
+          "form",
+          "choice"
+        ],
+        "preview": {
+          "props": {}
+        },
+        "ai": {
+          "export": "Sketch004",
+          "usage": "<Sketch004 options={[\"Пером\", \"Карандашом\", \"Маркером\"]} direction=\"row\" />",
+          "summary": "Рукописные радиокнопки: настоящая группа radio под нарисованными кружками, выбранный с закрашенной точкой, boil на CSS.",
+          "preserve": [
+            "локальную палитру --vibeui-sketch-004-* и не подменять её токенами вашей темы",
+            "три кадра контура и переключение через @property + step-end — это «кипящая линия» рисованной анимации, не заменять на CSS-фильтры и не на JS-таймер",
+            "детерминированный seed: одна подпись — один почерк при каждой загрузке, а не случайный при каждом рендере",
+            "настоящие <input type=radio> с общим name — стрелки, Tab и формы работают сами",
+            "статику при prefers-reduced-motion: линия остаётся рукописной, но не дрожит",
+            "overflow: visible у слоя чернил — линия выходит за коробку на пару пикселей, обрезка убьёт рисованность"
+          ],
+          "adapt": [
+            "options — список вариантов; выбран первый",
+            "direction — column или row",
+            "rough — neat или loose: аккуратный или размашистый почерк",
+            "boil — still, soft или lively: дрожание линии",
+            "seed — число, чтобы зафиксировать понравившийся росчерк",
+            "accent — цвет линий; по умолчанию совпадает с цветом текста",
+            "ink — цвет текста; по умолчанию чернильный в тон темы",
+            "шрифты: замените FONTS на свой self-hosted @font-face, если Google Fonts недоступны",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Neucha и Caveat покрывают кириллицу; Kalam и другие латинские рукописные — нет.",
+            "Значение выбранного варианта — индекс в options; для отправки формы добавьте value снаружи.",
+            "Контур появляется после измерения хоста: на сервере рендерится только содержимое, SVG дорисовывается на клиенте — гидрация чистая."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "direction",
+            "label": "Направление",
+            "type": "select",
+            "options": [
+              "column",
+              "row"
+            ],
+            "default": "column"
+          },
+          {
+            "prop": "rough",
+            "label": "Почерк",
+            "type": "select",
+            "options": [
+              "neat",
+              "loose"
+            ],
+            "default": "neat"
+          },
+          {
+            "prop": "boil",
+            "label": "Дрожание",
+            "type": "select",
+            "options": [
+              "soft",
+              "still",
+              "lively"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Линия",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "direction",
+          "boil",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hand-drawn Radio",
+            "description": "Hand-drawn radio buttons: the circles boil, the selected one is filled with an ink dot. A real <input type=radio> group with a shared name, clickable labels, arrow keys work.",
+            "docs": "One file, zero dependencies, \"use client\". Circles are ellipsePoints 9.5px in a 24×24 canvas (no measurement), the selection dot is a filled 4.5px ellipsePoints. The group has a name from useId, state is an index in useState. data-direction=row lays options in a row. Outlines are drawn in pixels: the host is measured with ResizeObserver, perimeter points are shifted by deterministic noise (mulberry32 from seed, by default a hash of the label), segments are quadratic curves; three frames of one line differ by a small boil jitter. Frames are switched by CSS: @property --frame (integer) + @keyframes step-end 1.2s, each path is visible only on its frame (opacity via clamp(1 − (frame − i)²)). Hover shifts the seed — a fresh stroke. Neucha and Caveat fonts load via <link precedence> from Google Fonts (with system handwriting fallbacks). Palette --vibeui-sketch-004-* with light-dark, reduced motion disables boil.",
+            "ai": {
+              "summary": "Hand-drawn radios: a real radio group under drawn circles, the selected one with a filled dot, CSS boil.",
+              "preserve": [
+                "the local --vibeui-sketch-004-* palette — do not swap it for your theme tokens",
+                "the three outline frames switched via @property + step-end — this is the 'boiling line' of drawn animation, do not replace with CSS filters or a JS timer",
+                "the deterministic seed: one label — one handwriting on every load, not random on every render",
+                "real <input type=radio> with a shared name — arrow keys, Tab and forms work on their own",
+                "the static state under prefers-reduced-motion: the line stays hand-drawn but does not shake",
+                "overflow: visible on the ink layer — the line leaves the box by a couple of pixels, clipping kills the drawn feel"
+              ],
+              "adapt": [
+                "options — the option list; the first is selected",
+                "direction — column or row",
+                "rough — neat or loose: tidy or sweeping handwriting",
+                "boil — still, soft or lively: line jitter",
+                "seed — a number to pin a stroke you like",
+                "accent — the line color; matches the text color by default",
+                "ink — the text color; ink-toned by default",
+                "fonts: replace FONTS with your own self-hosted @font-face if Google Fonts is unavailable",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Neucha and Caveat cover Cyrillic; Kalam and other Latin handwriting fonts do not.",
+                "The selected value is an index into options; add a value for form submission on the outside.",
+                "The outline appears after the host is measured: the server renders only the content, the SVG is drawn on the client — hydration stays clean."
+              ],
+              "usage": "<Sketch004 options={[\"Pen\", \"Pencil\", \"Marker\"]} direction=\"row\" />"
+            },
+            "controls": {
+              "direction": {
+                "label": "Direction"
+              },
+              "rough": {
+                "label": "Hand"
+              },
+              "boil": {
+                "label": "Boil"
+              },
+              "accent": {
+                "label": "Line"
+              },
+              "ink": {
+                "label": "Text"
+              }
+            },
+            "preview": {
+              "props": {
+                "options": [
+                  "Pen",
+                  "Pencil",
+                  "Marker"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sketch-005",
+      "type": "registry:component",
+      "title": "Рукописное поле",
+      "description": "Поле ввода в рукописной рамке: контур дрожит, в фокусе линия жирнеет и рисуется заново. Настоящий <input> или <textarea> с подписью и плейсхолдером — стили формы остаются вашими.",
+      "categories": [
+        "sketch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sketch-005/sketch-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sketch-005.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Хост измерения — обёртка поля; рамка — rectPoints со скруглением 6, seed сдвигается при фокусе (новый росчерк), :focus-within поднимает --width до 3 и ускоряет boil. kind=area рендерит textarea с rows=3. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-005-* с light-dark, reduced-motion выключает boil.",
+      "meta": {
+        "tags": [
+          "sketch",
+          "hand-drawn",
+          "handwritten",
+          "doodle",
+          "rough",
+          "boil",
+          "input",
+          "textarea",
+          "form"
+        ],
+        "preview": {
+          "props": {}
+        },
+        "ai": {
+          "export": "Sketch005",
+          "usage": "<Sketch005 label=\"Имя\" placeholder=\"Как к вам обращаться?\" />",
+          "summary": "Рукописное поле: настоящий input/textarea внутри нарисованной рамки, в фокусе линия жирнее и перерисовывается, boil на CSS.",
+          "preserve": [
+            "локальную палитру --vibeui-sketch-005-* и не подменять её токенами вашей темы",
+            "три кадра контура и переключение через @property + step-end — это «кипящая линия» рисованной анимации, не заменять на CSS-фильтры и не на JS-таймер",
+            "детерминированный seed: одна подпись — один почерк при каждой загрузке, а не случайный при каждом рендере",
+            "настоящий <input>/<textarea> с label по id — валидация, автозаполнение и формы работают",
+            "статику при prefers-reduced-motion: линия остаётся рукописной, но не дрожит",
+            "overflow: visible у слоя чернил — линия выходит за коробку на пару пикселей, обрезка убьёт рисованность"
+          ],
+          "adapt": [
+            "label — подпись над полем",
+            "placeholder — подсказка внутри поля",
+            "kind — line (input) или area (textarea)",
+            "rough — neat или loose: аккуратный или размашистый почерк",
+            "boil — still, soft или lively: дрожание линии",
+            "seed — число, чтобы зафиксировать понравившийся росчерк",
+            "accent — цвет линий; по умолчанию совпадает с цветом текста",
+            "ink — цвет текста; по умолчанию чернильный в тон темы",
+            "шрифты: замените FONTS на свой self-hosted @font-face, если Google Fonts недоступны",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Neucha и Caveat покрывают кириллицу; Kalam и другие латинские рукописные — нет.",
+            "Значение и onChange прокидывайте снаружи обёрткой — компонент не управляет вводом, только рисует рамку.",
+            "Контур появляется после измерения хоста: на сервере рендерится только содержимое, SVG дорисовывается на клиенте — гидрация чистая."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "kind",
+            "label": "Тип",
+            "type": "select",
+            "options": [
+              "line",
+              "area"
+            ],
+            "default": "line"
+          },
+          {
+            "prop": "rough",
+            "label": "Почерк",
+            "type": "select",
+            "options": [
+              "neat",
+              "loose"
+            ],
+            "default": "neat"
+          },
+          {
+            "prop": "boil",
+            "label": "Дрожание",
+            "type": "select",
+            "options": [
+              "soft",
+              "still",
+              "lively"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Линия",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "kind",
+          "boil",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hand-drawn Input",
+            "description": "An input in a hand-drawn frame: the outline boils, in focus the line thickens and redraws. A real <input> or <textarea> with a label and placeholder — your form styles stay yours.",
+            "docs": "One file, zero dependencies, \"use client\". The measured host is the field wrapper; the frame is rectPoints with radius 6, the seed shifts on focus (a fresh stroke), :focus-within raises --width to 3 and speeds up the boil. kind=area renders a textarea with rows=3. Outlines are drawn in pixels: the host is measured with ResizeObserver, perimeter points are shifted by deterministic noise (mulberry32 from seed, by default a hash of the label), segments are quadratic curves; three frames of one line differ by a small boil jitter. Frames are switched by CSS: @property --frame (integer) + @keyframes step-end 1.2s, each path is visible only on its frame (opacity via clamp(1 − (frame − i)²)). Hover shifts the seed — a fresh stroke. Neucha and Caveat fonts load via <link precedence> from Google Fonts (with system handwriting fallbacks). Palette --vibeui-sketch-005-* with light-dark, reduced motion disables boil.",
+            "ai": {
+              "summary": "A hand-drawn field: a real input/textarea inside a drawn frame, the line thickens and redraws on focus, CSS boil.",
+              "preserve": [
+                "the local --vibeui-sketch-005-* palette — do not swap it for your theme tokens",
+                "the three outline frames switched via @property + step-end — this is the 'boiling line' of drawn animation, do not replace with CSS filters or a JS timer",
+                "the deterministic seed: one label — one handwriting on every load, not random on every render",
+                "a real <input>/<textarea> with a label by id — validation, autofill and forms work",
+                "the static state under prefers-reduced-motion: the line stays hand-drawn but does not shake",
+                "overflow: visible on the ink layer — the line leaves the box by a couple of pixels, clipping kills the drawn feel"
+              ],
+              "adapt": [
+                "label — the caption above the field",
+                "placeholder — the hint inside the field",
+                "kind — line (input) or area (textarea)",
+                "rough — neat or loose: tidy or sweeping handwriting",
+                "boil — still, soft or lively: line jitter",
+                "seed — a number to pin a stroke you like",
+                "accent — the line color; matches the text color by default",
+                "ink — the text color; ink-toned by default",
+                "fonts: replace FONTS with your own self-hosted @font-face if Google Fonts is unavailable",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Neucha and Caveat cover Cyrillic; Kalam and other Latin handwriting fonts do not.",
+                "Pass value and onChange from the outside via a wrapper — the component does not manage input, it only draws the frame.",
+                "The outline appears after the host is measured: the server renders only the content, the SVG is drawn on the client — hydration stays clean."
+              ],
+              "usage": "<Sketch005 label=\"Name\" placeholder=\"What should we call you?\" />"
+            },
+            "controls": {
+              "kind": {
+                "label": "Kind"
+              },
+              "rough": {
+                "label": "Hand"
+              },
+              "boil": {
+                "label": "Boil"
+              },
+              "accent": {
+                "label": "Line"
+              },
+              "ink": {
+                "label": "Text"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Name",
+                "placeholder": "What should we call you?"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sketch-006",
+      "type": "registry:component",
+      "title": "Рукописный бейдж",
+      "description": "Бейдж, нарисованный от руки: капсула дрожит, текст рукописный, вариант с чернильной заливкой. Для статусов, тегов и пометок «новое».",
+      "categories": [
+        "sketch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sketch-006/sketch-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sketch-006.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Хост — inline-flex span, капсула — rectPoints с радиусом h/2 и тонкой линией 1.6; solid — второй заполненный контур, текст в on-accent. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-006-* с light-dark, reduced-motion выключает boil.",
+      "meta": {
+        "tags": [
+          "sketch",
+          "hand-drawn",
+          "handwritten",
+          "doodle",
+          "rough",
+          "boil",
+          "badge",
+          "tag",
+          "chip",
+          "label"
+        ],
+        "preview": {
+          "props": {}
+        },
+        "ai": {
+          "export": "Sketch006",
+          "usage": "<Sketch006 text=\"Новое\" variant=\"solid\" />",
+          "summary": "Рукописный бейдж: капсула от руки вокруг текста, outline/solid, boil на CSS.",
+          "preserve": [
+            "локальную палитру --vibeui-sketch-006-* и не подменять её токенами вашей темы",
+            "три кадра контура и переключение через @property + step-end — это «кипящая линия» рисованной анимации, не заменять на CSS-фильтры и не на JS-таймер",
+            "детерминированный seed: одна подпись — один почерк при каждой загрузке, а не случайный при каждом рендере",
+            "тонкую линию 1.6 — бейдж мелкий, толстый контур превращает его в кнопку",
+            "статику при prefers-reduced-motion: линия остаётся рукописной, но не дрожит",
+            "overflow: visible у слоя чернил — линия выходит за коробку на пару пикселей, обрезка убьёт рисованность"
+          ],
+          "adapt": [
+            "text — текст бейджа",
+            "variant — outline или solid",
+            "rough — neat или loose: аккуратный или размашистый почерк",
+            "boil — still, soft или lively: дрожание линии",
+            "seed — число, чтобы зафиксировать понравившийся росчерк",
+            "accent — цвет линий; по умолчанию совпадает с цветом текста",
+            "ink — цвет текста; по умолчанию чернильный в тон темы",
+            "шрифты: замените FONTS на свой self-hosted @font-face, если Google Fonts недоступны",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Neucha и Caveat покрывают кириллицу; Kalam и другие латинские рукописные — нет.",
+            "Для счётчика передавайте число строкой: text=\"12\".",
+            "Контур появляется после измерения хоста: на сервере рендерится только содержимое, SVG дорисовывается на клиенте — гидрация чистая."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "variant",
+            "label": "Вид",
+            "type": "select",
+            "options": [
+              "outline",
+              "solid"
+            ],
+            "default": "outline"
+          },
+          {
+            "prop": "rough",
+            "label": "Почерк",
+            "type": "select",
+            "options": [
+              "neat",
+              "loose"
+            ],
+            "default": "neat"
+          },
+          {
+            "prop": "boil",
+            "label": "Дрожание",
+            "type": "select",
+            "options": [
+              "soft",
+              "still",
+              "lively"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Линия",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "variant",
+          "boil",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hand-drawn Badge",
+            "description": "A hand-drawn badge: the capsule boils, the text is handwritten, a variant with ink fill. For statuses, tags and 'new' marks.",
+            "docs": "One file, zero dependencies, \"use client\". The host is an inline-flex span, the capsule is rectPoints with radius h/2 and a thin 1.6 line; solid is a second filled outline, text in on-accent. Outlines are drawn in pixels: the host is measured with ResizeObserver, perimeter points are shifted by deterministic noise (mulberry32 from seed, by default a hash of the label), segments are quadratic curves; three frames of one line differ by a small boil jitter. Frames are switched by CSS: @property --frame (integer) + @keyframes step-end 1.2s, each path is visible only on its frame (opacity via clamp(1 − (frame − i)²)). Hover shifts the seed — a fresh stroke. Neucha and Caveat fonts load via <link precedence> from Google Fonts (with system handwriting fallbacks). Palette --vibeui-sketch-006-* with light-dark, reduced motion disables boil.",
+            "ai": {
+              "summary": "A hand-drawn badge: a hand-drawn capsule around text, outline/solid, CSS boil.",
+              "preserve": [
+                "the local --vibeui-sketch-006-* palette — do not swap it for your theme tokens",
+                "the three outline frames switched via @property + step-end — this is the 'boiling line' of drawn animation, do not replace with CSS filters or a JS timer",
+                "the deterministic seed: one label — one handwriting on every load, not random on every render",
+                "the thin 1.6 line — the badge is small, a thick outline turns it into a button",
+                "the static state under prefers-reduced-motion: the line stays hand-drawn but does not shake",
+                "overflow: visible on the ink layer — the line leaves the box by a couple of pixels, clipping kills the drawn feel"
+              ],
+              "adapt": [
+                "text — the badge text",
+                "variant — outline or solid",
+                "rough — neat or loose: tidy or sweeping handwriting",
+                "boil — still, soft or lively: line jitter",
+                "seed — a number to pin a stroke you like",
+                "accent — the line color; matches the text color by default",
+                "ink — the text color; ink-toned by default",
+                "fonts: replace FONTS with your own self-hosted @font-face if Google Fonts is unavailable",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Neucha and Caveat cover Cyrillic; Kalam and other Latin handwriting fonts do not.",
+                "For a counter pass the number as a string: text=\"12\".",
+                "The outline appears after the host is measured: the server renders only the content, the SVG is drawn on the client — hydration stays clean."
+              ],
+              "usage": "<Sketch006 text=\"New\" variant=\"solid\" />"
+            },
+            "controls": {
+              "variant": {
+                "label": "Variant"
+              },
+              "rough": {
+                "label": "Hand"
+              },
+              "boil": {
+                "label": "Boil"
+              },
+              "accent": {
+                "label": "Line"
+              },
+              "ink": {
+                "label": "Text"
+              }
+            },
+            "preview": {
+              "props": {
+                "text": "New"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sketch-007",
+      "type": "registry:component",
+      "title": "Рукописная карточка",
+      "description": "Карточка в рукописной рамке с нарисованной тенью: заголовок дисплейным рукописным шрифтом, любое содержимое внутри, рамка следует за высотой. Для заметок, подсказок и «бумажных» блоков.",
+      "categories": [
+        "sketch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sketch-007/sketch-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sketch-007.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Хост — блок с padding и фоном paper; рамка — rectPoints со скруглением 12, тень — тот же контур со сдвигом 5/6px приглушённым цветом и opacity 0.35. children заменяют абзац text. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-007-* с light-dark, reduced-motion выключает boil.",
+      "meta": {
+        "tags": [
+          "sketch",
+          "hand-drawn",
+          "handwritten",
+          "doodle",
+          "rough",
+          "boil",
+          "card",
+          "note",
+          "container"
+        ],
+        "preview": {
+          "props": {}
+        },
+        "ai": {
+          "export": "Sketch007",
+          "usage": "<Sketch007 title=\"Заметка\">\n  <p>Любое содержимое.</p>\n</Sketch007>",
+          "summary": "Рукописная карточка: рамка и тень от руки вокруг содержимого, заголовок Caveat, children вместо текста, boil на CSS.",
+          "preserve": [
+            "локальную палитру --vibeui-sketch-007-* и не подменять её токенами вашей темы",
+            "три кадра контура и переключение через @property + step-end — это «кипящая линия» рисованной анимации, не заменять на CSS-фильтры и не на JS-таймер",
+            "детерминированный seed: одна подпись — один почерк при каждой загрузке, а не случайный при каждом рендере",
+            "непрозрачный фон paper у карточки — рамка лежит под содержимым, без фона тень просвечивала бы сквозь текст",
+            "статику при prefers-reduced-motion: линия остаётся рукописной, но не дрожит",
+            "overflow: visible у слоя чернил — линия выходит за коробку на пару пикселей, обрезка убьёт рисованность"
+          ],
+          "adapt": [
+            "title — заголовок",
+            "text — текст; children заменяют его целиком",
+            "children — своё содержимое вместо text",
+            "rough — neat или loose: аккуратный или размашистый почерк",
+            "boil — still, soft или lively: дрожание линии",
+            "seed — число, чтобы зафиксировать понравившийся росчерк",
+            "accent — цвет линий; по умолчанию совпадает с цветом текста",
+            "ink — цвет текста; по умолчанию чернильный в тон темы",
+            "шрифты: замените FONTS на свой self-hosted @font-face, если Google Fonts недоступны",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Neucha и Caveat покрывают кириллицу; Kalam и другие латинские рукописные — нет.",
+            "Внутрь можно класть другие рукописные компоненты — кнопку, чекбокс; у каждого свой слой чернил.",
+            "Контур появляется после измерения хоста: на сервере рендерится только содержимое, SVG дорисовывается на клиенте — гидрация чистая."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "rough",
+            "label": "Почерк",
+            "type": "select",
+            "options": [
+              "neat",
+              "loose"
+            ],
+            "default": "neat"
+          },
+          {
+            "prop": "boil",
+            "label": "Дрожание",
+            "type": "select",
+            "options": [
+              "soft",
+              "still",
+              "lively"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Линия",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "rough",
+          "boil",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hand-drawn Card",
+            "description": "A card in a hand-drawn frame with a drawn shadow: a display handwriting title, any content inside, the frame follows the height. For notes, hints and 'paper' blocks.",
+            "docs": "One file, zero dependencies, \"use client\". The host is a block with padding and a paper background; the frame is rectPoints with radius 12, the shadow is the same outline shifted 5/6px in the muted color at 0.35 opacity. children replace the text paragraph. Outlines are drawn in pixels: the host is measured with ResizeObserver, perimeter points are shifted by deterministic noise (mulberry32 from seed, by default a hash of the label), segments are quadratic curves; three frames of one line differ by a small boil jitter. Frames are switched by CSS: @property --frame (integer) + @keyframes step-end 1.2s, each path is visible only on its frame (opacity via clamp(1 − (frame − i)²)). Hover shifts the seed — a fresh stroke. Neucha and Caveat fonts load via <link precedence> from Google Fonts (with system handwriting fallbacks). Palette --vibeui-sketch-007-* with light-dark, reduced motion disables boil.",
+            "ai": {
+              "summary": "A hand-drawn card: a drawn frame and shadow around content, a Caveat title, children instead of text, CSS boil.",
+              "preserve": [
+                "the local --vibeui-sketch-007-* palette — do not swap it for your theme tokens",
+                "the three outline frames switched via @property + step-end — this is the 'boiling line' of drawn animation, do not replace with CSS filters or a JS timer",
+                "the deterministic seed: one label — one handwriting on every load, not random on every render",
+                "the opaque paper background on the card — the frame sits under the content, without it the shadow would show through the text",
+                "the static state under prefers-reduced-motion: the line stays hand-drawn but does not shake",
+                "overflow: visible on the ink layer — the line leaves the box by a couple of pixels, clipping kills the drawn feel"
+              ],
+              "adapt": [
+                "title — the title",
+                "text — the body; children replace it entirely",
+                "children — your own content instead of text",
+                "rough — neat or loose: tidy or sweeping handwriting",
+                "boil — still, soft or lively: line jitter",
+                "seed — a number to pin a stroke you like",
+                "accent — the line color; matches the text color by default",
+                "ink — the text color; ink-toned by default",
+                "fonts: replace FONTS with your own self-hosted @font-face if Google Fonts is unavailable",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Neucha and Caveat cover Cyrillic; Kalam and other Latin handwriting fonts do not.",
+                "Other hand-drawn components can go inside — a button, a checkbox; each has its own ink layer.",
+                "The outline appears after the host is measured: the server renders only the content, the SVG is drawn on the client — hydration stays clean."
+              ],
+              "usage": "<Sketch007 title=\"A note\">\n  <p>Any content.</p>\n</Sketch007>"
+            },
+            "controls": {
+              "rough": {
+                "label": "Hand"
+              },
+              "boil": {
+                "label": "Boil"
+              },
+              "accent": {
+                "label": "Line"
+              },
+              "ink": {
+                "label": "Text"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "A margin note",
+                "text": "The frame follows the content box, so the card can be any height."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sketch-008",
+      "type": "registry:component",
+      "title": "Рукописные вкладки",
+      "description": "Вкладки с рукописным подчёркиванием: тонкая линия под рядом, под активной вкладкой — жирный штрих, который перерисовывается по её ширине. Настоящие role=tab/tabpanel, стрелки переключают.",
+      "categories": [
+        "sketch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sketch-008/sketch-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sketch-008.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Хост — tablist; rail — линия по всей ширине приглушённого цвета, mark — линия по offsetLeft/offsetWidth активной кнопки (измеряется в эффекте по active и ширине) толщиной 3. Клавиатура: ArrowLeft/Right по кругу с переносом фокуса, roving tabindex. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-008-* с light-dark, reduced-motion выключает boil.",
+      "meta": {
+        "tags": [
+          "sketch",
+          "hand-drawn",
+          "handwritten",
+          "doodle",
+          "rough",
+          "boil",
+          "tabs",
+          "navigation"
+        ],
+        "preview": {
+          "props": {}
+        },
+        "ai": {
+          "export": "Sketch008",
+          "usage": "<Sketch008 tabs={[\"Обзор\", \"Цены\", \"Отзывы\"]} />",
+          "summary": "Рукописные вкладки: role=tab/tabpanel, линия под рядом и жирный подчёрк под активной, перерисовка по её ширине, стрелки, boil на CSS.",
+          "preserve": [
+            "локальную палитру --vibeui-sketch-008-* и не подменять её токенами вашей темы",
+            "три кадра контура и переключение через @property + step-end — это «кипящая линия» рисованной анимации, не заменять на CSS-фильтры и не на JS-таймер",
+            "детерминированный seed: одна подпись — один почерк при каждой загрузке, а не случайный при каждом рендере",
+            "roving tabindex и стрелки — так вкладки ведут себя по ARIA, рисунок этого не меняет",
+            "статику при prefers-reduced-motion: линия остаётся рукописной, но не дрожит",
+            "overflow: visible у слоя чернил — линия выходит за коробку на пару пикселей, обрезка убьёт рисованность"
+          ],
+          "adapt": [
+            "tabs — названия вкладок; панель показывает текст активной",
+            "rough — neat или loose: аккуратный или размашистый почерк",
+            "boil — still, soft или lively: дрожание линии",
+            "seed — число, чтобы зафиксировать понравившийся росчерк",
+            "accent — цвет линий; по умолчанию совпадает с цветом текста",
+            "ink — цвет текста; по умолчанию чернильный в тон темы",
+            "шрифты: замените FONTS на свой self-hosted @font-face, если Google Fonts недоступны",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Neucha и Caveat покрывают кириллицу; Kalam и другие латинские рукописные — нет.",
+            "Панель показывает название активной вкладки: подставьте своё содержимое по индексу active снаружи или доработайте panel.",
+            "Контур появляется после измерения хоста: на сервере рендерится только содержимое, SVG дорисовывается на клиенте — гидрация чистая."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "rough",
+            "label": "Почерк",
+            "type": "select",
+            "options": [
+              "neat",
+              "loose"
+            ],
+            "default": "neat"
+          },
+          {
+            "prop": "boil",
+            "label": "Дрожание",
+            "type": "select",
+            "options": [
+              "soft",
+              "still",
+              "lively"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Линия",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "rough",
+          "boil",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hand-drawn Tabs",
+            "description": "Tabs with a hand-drawn underline: a thin line under the row, a bold stroke under the active tab redrawn to its width. Real role=tab/tabpanel, arrow keys switch.",
+            "docs": "One file, zero dependencies, \"use client\". The host is the tablist; rail is a muted full-width line, mark is a width-3 line by the active button's offsetLeft/offsetWidth (measured in an effect by active and width). Keyboard: ArrowLeft/Right cyclic with focus move, roving tabindex. Outlines are drawn in pixels: the host is measured with ResizeObserver, perimeter points are shifted by deterministic noise (mulberry32 from seed, by default a hash of the label), segments are quadratic curves; three frames of one line differ by a small boil jitter. Frames are switched by CSS: @property --frame (integer) + @keyframes step-end 1.2s, each path is visible only on its frame (opacity via clamp(1 − (frame − i)²)). Hover shifts the seed — a fresh stroke. Neucha and Caveat fonts load via <link precedence> from Google Fonts (with system handwriting fallbacks). Palette --vibeui-sketch-008-* with light-dark, reduced motion disables boil.",
+            "ai": {
+              "summary": "Hand-drawn tabs: role=tab/tabpanel, a line under the row and a bold underline under the active tab redrawn to its width, arrow keys, CSS boil.",
+              "preserve": [
+                "the local --vibeui-sketch-008-* palette — do not swap it for your theme tokens",
+                "the three outline frames switched via @property + step-end — this is the 'boiling line' of drawn animation, do not replace with CSS filters or a JS timer",
+                "the deterministic seed: one label — one handwriting on every load, not random on every render",
+                "roving tabindex and arrow keys — that is how tabs behave per ARIA, the drawing does not change it",
+                "the static state under prefers-reduced-motion: the line stays hand-drawn but does not shake",
+                "overflow: visible on the ink layer — the line leaves the box by a couple of pixels, clipping kills the drawn feel"
+              ],
+              "adapt": [
+                "tabs — the tab names; the panel shows the active one's text",
+                "rough — neat or loose: tidy or sweeping handwriting",
+                "boil — still, soft or lively: line jitter",
+                "seed — a number to pin a stroke you like",
+                "accent — the line color; matches the text color by default",
+                "ink — the text color; ink-toned by default",
+                "fonts: replace FONTS with your own self-hosted @font-face if Google Fonts is unavailable",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Neucha and Caveat cover Cyrillic; Kalam and other Latin handwriting fonts do not.",
+                "The panel shows the active tab's name: substitute your content by the active index from outside or extend the panel.",
+                "The outline appears after the host is measured: the server renders only the content, the SVG is drawn on the client — hydration stays clean."
+              ],
+              "usage": "<Sketch008 tabs={[\"Overview\", \"Pricing\", \"Reviews\"]} />"
+            },
+            "controls": {
+              "rough": {
+                "label": "Hand"
+              },
+              "boil": {
+                "label": "Boil"
+              },
+              "accent": {
+                "label": "Line"
+              },
+              "ink": {
+                "label": "Text"
+              }
+            },
+            "preview": {
+              "props": {
+                "tabs": [
+                  "Overview",
+                  "Pricing",
+                  "Reviews"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sketch-009",
+      "type": "registry:component",
+      "title": "Рукописная пометка",
+      "description": "Пометка в тексте, как ручкой на распечатке: двойное подчёркивание, жёлтый маркер или обводка кружком в полтора оборота. Inline-элемент внутри любого абзаца, рисунок дрожит под словом.",
+      "categories": [
+        "sketch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sketch-009/sketch-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sketch-009.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Inline-span измеряется как хост; underline — две линии под коробкой, highlight — одна линия толщиной 0.8h с opacity 0.35 и жёлтыми чернилами по умолчанию, circle — 34 точки по спирали в полтора оборота с растущим радиусом. Наследует шрифт абзаца. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-009-* с light-dark, reduced-motion выключает boil.",
+      "meta": {
+        "tags": [
+          "sketch",
+          "hand-drawn",
+          "handwritten",
+          "doodle",
+          "rough",
+          "boil",
+          "text",
+          "underline",
+          "highlight",
+          "annotation",
+          "marker"
+        ],
+        "preview": {
+          "props": {}
+        },
+        "ai": {
+          "export": "Sketch009",
+          "usage": "Это <Sketch009 text=\"самое важное\" kind=\"highlight\" /> в абзаце.",
+          "summary": "Рукописная пометка: inline-span с подчёркиванием, маркером или обводкой от руки под словом, boil на CSS, шрифт наследуется.",
+          "preserve": [
+            "локальную палитру --vibeui-sketch-009-* и не подменять её токенами вашей темы",
+            "три кадра контура и переключение через @property + step-end — это «кипящая линия» рисованной анимации, не заменять на CSS-фильтры и не на JS-таймер",
+            "детерминированный seed: одна подпись — один почерк при каждой загрузке, а не случайный при каждом рендере",
+            "display: inline и наследование шрифта — пометка живёт внутри чужого абзаца, а не приносит свой",
+            "статику при prefers-reduced-motion: линия остаётся рукописной, но не дрожит",
+            "overflow: visible у слоя чернил — линия выходит за коробку на пару пикселей, обрезка убьёт рисованность"
+          ],
+          "adapt": [
+            "text — слово или фраза",
+            "kind — underline (два штриха), highlight (маркер) или circle (обводка в полтора оборота)",
+            "rough — neat или loose: аккуратный или размашистый почерк",
+            "boil — still, soft или lively: дрожание линии",
+            "seed — число, чтобы зафиксировать понравившийся росчерк",
+            "accent — цвет линий; по умолчанию совпадает с цветом текста",
+            "ink — цвет текста; по умолчанию чернильный в тон темы",
+            "шрифты: замените FONTS на свой self-hosted @font-face, если Google Fonts недоступны",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Neucha и Caveat покрывают кириллицу; Kalam и другие латинские рукописные — нет.",
+            "Обводка выходит за строку на 6–8px вверх и вниз: дайте абзацу line-height не меньше 1.6.",
+            "Контур появляется после измерения хоста: на сервере рендерится только содержимое, SVG дорисовывается на клиенте — гидрация чистая."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "kind",
+            "label": "Пометка",
+            "type": "select",
+            "options": [
+              "underline",
+              "highlight",
+              "circle"
+            ],
+            "default": "underline"
+          },
+          {
+            "prop": "rough",
+            "label": "Почерк",
+            "type": "select",
+            "options": [
+              "neat",
+              "loose"
+            ],
+            "default": "neat"
+          },
+          {
+            "prop": "boil",
+            "label": "Дрожание",
+            "type": "select",
+            "options": [
+              "soft",
+              "still",
+              "lively"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Линия",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "kind",
+          "boil",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hand-drawn Mark",
+            "description": "A mark in text like a pen on a printout: a double underline, a yellow marker or a one-and-a-half-loop circle. An inline element inside any paragraph, the drawing boils under the word.",
+            "docs": "One file, zero dependencies, \"use client\". The inline span is measured as the host; underline is two lines under the box, highlight is one line 0.8h thick at 0.35 opacity with yellow ink by default, circle is 34 points along a one-and-a-half-turn spiral with a growing radius. Inherits the paragraph font. Outlines are drawn in pixels: the host is measured with ResizeObserver, perimeter points are shifted by deterministic noise (mulberry32 from seed, by default a hash of the label), segments are quadratic curves; three frames of one line differ by a small boil jitter. Frames are switched by CSS: @property --frame (integer) + @keyframes step-end 1.2s, each path is visible only on its frame (opacity via clamp(1 − (frame − i)²)). Hover shifts the seed — a fresh stroke. Neucha and Caveat fonts load via <link precedence> from Google Fonts (with system handwriting fallbacks). Palette --vibeui-sketch-009-* with light-dark, reduced motion disables boil.",
+            "ai": {
+              "summary": "A hand-drawn mark: an inline span with an underline, marker or circle drawn under the word, CSS boil, inherited font.",
+              "preserve": [
+                "the local --vibeui-sketch-009-* palette — do not swap it for your theme tokens",
+                "the three outline frames switched via @property + step-end — this is the 'boiling line' of drawn animation, do not replace with CSS filters or a JS timer",
+                "the deterministic seed: one label — one handwriting on every load, not random on every render",
+                "display: inline and font inheritance — the mark lives inside someone else's paragraph and does not bring its own",
+                "the static state under prefers-reduced-motion: the line stays hand-drawn but does not shake",
+                "overflow: visible on the ink layer — the line leaves the box by a couple of pixels, clipping kills the drawn feel"
+              ],
+              "adapt": [
+                "text — the word or phrase",
+                "kind — underline (two strokes), highlight (marker) or circle (a one-and-a-half loop)",
+                "rough — neat or loose: tidy or sweeping handwriting",
+                "boil — still, soft or lively: line jitter",
+                "seed — a number to pin a stroke you like",
+                "accent — the line color; matches the text color by default",
+                "ink — the text color; ink-toned by default",
+                "fonts: replace FONTS with your own self-hosted @font-face if Google Fonts is unavailable",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Neucha and Caveat cover Cyrillic; Kalam and other Latin handwriting fonts do not.",
+                "The circle leaves the line by 6–8px up and down: give the paragraph a line-height of at least 1.6.",
+                "The outline appears after the host is measured: the server renders only the content, the SVG is drawn on the client — hydration stays clean."
+              ],
+              "usage": "This is <Sketch009 text=\"the key point\" kind=\"highlight\" /> in a paragraph."
+            },
+            "controls": {
+              "kind": {
+                "label": "Mark"
+              },
+              "rough": {
+                "label": "Hand"
+              },
+              "boil": {
+                "label": "Boil"
+              },
+              "accent": {
+                "label": "Line"
+              },
+              "ink": {
+                "label": "Text"
+              }
+            },
+            "preview": {
+              "props": {
+                "text": "the key point"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sketch-010",
+      "type": "registry:component",
+      "title": "Рукописная стрелка",
+      "description": "Стрелка-аннотация от руки: изогнутый штрих с наконечником и рукописная подпись у хвоста, дрожит как в скетче. Указывает вправо, влево или вниз — на кнопку, поле, скриншот.",
+      "categories": [
+        "sketch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sketch-010/sketch-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sketch-010.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Хост 11×5.5rem; древко — 12 точек квадратичной кривой между стартом и концом по direction, наконечник — два крыла под ±0.5 рад от угла последнего отрезка, длиной 14px. Подпись — абсолютный span Caveat с наклоном −4°. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-010-* с light-dark, reduced-motion выключает boil.",
+      "meta": {
+        "tags": [
+          "sketch",
+          "hand-drawn",
+          "handwritten",
+          "doodle",
+          "rough",
+          "boil",
+          "arrow",
+          "annotation",
+          "pointer",
+          "doodle"
+        ],
+        "preview": {
+          "props": {}
+        },
+        "ai": {
+          "export": "Sketch010",
+          "usage": "<Sketch010 label=\"вот сюда\" direction=\"right\" />",
+          "summary": "Рукописная стрелка: изогнутое древко и наконечник от руки, подпись Caveat, три направления, boil на CSS.",
+          "preserve": [
+            "локальную палитру --vibeui-sketch-010-* и не подменять её токенами вашей темы",
+            "три кадра контура и переключение через @property + step-end — это «кипящая линия» рисованной анимации, не заменять на CSS-фильтры и не на JS-таймер",
+            "детерминированный seed: одна подпись — один почерк при каждой загрузке, а не случайный при каждом рендере",
+            "наконечник как два штриха от угла последнего отрезка — он поворачивается вместе с кривой автоматически",
+            "статику при prefers-reduced-motion: линия остаётся рукописной, но не дрожит",
+            "overflow: visible у слоя чернил — линия выходит за коробку на пару пикселей, обрезка убьёт рисованность"
+          ],
+          "adapt": [
+            "label — подпись у хвоста",
+            "direction — right, left или down",
+            "rough — neat или loose: аккуратный или размашистый почерк",
+            "boil — still, soft или lively: дрожание линии",
+            "seed — число, чтобы зафиксировать понравившийся росчерк",
+            "accent — цвет линий; по умолчанию совпадает с цветом текста",
+            "ink — цвет текста; по умолчанию чернильный в тон темы",
+            "шрифты: замените FONTS на свой self-hosted @font-face, если Google Fonts недоступны",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Neucha и Caveat покрывают кириллицу; Kalam и другие латинские рукописные — нет.",
+            "Размер задайте через className (width/height) — кривая пересчитается под коробку.",
+            "Контур появляется после измерения хоста: на сервере рендерится только содержимое, SVG дорисовывается на клиенте — гидрация чистая."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "direction",
+            "label": "Направление",
+            "type": "select",
+            "options": [
+              "right",
+              "left",
+              "down"
+            ],
+            "default": "right"
+          },
+          {
+            "prop": "rough",
+            "label": "Почерк",
+            "type": "select",
+            "options": [
+              "neat",
+              "loose"
+            ],
+            "default": "neat"
+          },
+          {
+            "prop": "boil",
+            "label": "Дрожание",
+            "type": "select",
+            "options": [
+              "soft",
+              "still",
+              "lively"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Линия",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "direction",
+          "boil",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hand-drawn Arrow",
+            "description": "A hand-drawn annotation arrow: a curved stroke with a head and a handwritten caption at the tail, boiling like a sketch. Points right, left or down — at a button, a field, a screenshot.",
+            "docs": "One file, zero dependencies, \"use client\". The host is 11×5.5rem; the shaft is 12 points of a quadratic curve between start and end by direction, the head is two wings at ±0.5 rad from the last segment angle, 14px long. The caption is an absolute Caveat span tilted −4°. Outlines are drawn in pixels: the host is measured with ResizeObserver, perimeter points are shifted by deterministic noise (mulberry32 from seed, by default a hash of the label), segments are quadratic curves; three frames of one line differ by a small boil jitter. Frames are switched by CSS: @property --frame (integer) + @keyframes step-end 1.2s, each path is visible only on its frame (opacity via clamp(1 − (frame − i)²)). Hover shifts the seed — a fresh stroke. Neucha and Caveat fonts load via <link precedence> from Google Fonts (with system handwriting fallbacks). Palette --vibeui-sketch-010-* with light-dark, reduced motion disables boil.",
+            "ai": {
+              "summary": "A hand-drawn arrow: a curved shaft and head drawn by hand, a Caveat caption, three directions, CSS boil.",
+              "preserve": [
+                "the local --vibeui-sketch-010-* palette — do not swap it for your theme tokens",
+                "the three outline frames switched via @property + step-end — this is the 'boiling line' of drawn animation, do not replace with CSS filters or a JS timer",
+                "the deterministic seed: one label — one handwriting on every load, not random on every render",
+                "the head as two strokes from the last segment's angle — it turns with the curve automatically",
+                "the static state under prefers-reduced-motion: the line stays hand-drawn but does not shake",
+                "overflow: visible on the ink layer — the line leaves the box by a couple of pixels, clipping kills the drawn feel"
+              ],
+              "adapt": [
+                "label — the caption at the tail",
+                "direction — right, left or down",
+                "rough — neat or loose: tidy or sweeping handwriting",
+                "boil — still, soft or lively: line jitter",
+                "seed — a number to pin a stroke you like",
+                "accent — the line color; matches the text color by default",
+                "ink — the text color; ink-toned by default",
+                "fonts: replace FONTS with your own self-hosted @font-face if Google Fonts is unavailable",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Neucha and Caveat cover Cyrillic; Kalam and other Latin handwriting fonts do not.",
+                "Set the size via className (width/height) — the curve recalculates for the box.",
+                "The outline appears after the host is measured: the server renders only the content, the SVG is drawn on the client — hydration stays clean."
+              ],
+              "usage": "<Sketch010 label=\"right here\" direction=\"right\" />"
+            },
+            "controls": {
+              "direction": {
+                "label": "Direction"
+              },
+              "rough": {
+                "label": "Hand"
+              },
+              "boil": {
+                "label": "Boil"
+              },
+              "accent": {
+                "label": "Line"
+              },
+              "ink": {
+                "label": "Text"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "right here"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sketch-011",
+      "type": "registry:component",
+      "title": "Рукописное уведомление",
+      "description": "Уведомление, нарисованное от руки: рамка дрожит, слева кружок с восклицательным знаком, тон меняет цвет чернил — синий, янтарный, красный. role=status, для ошибок — alert.",
+      "categories": [
+        "sketch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sketch-011/sketch-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sketch-011.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Хост с левым отступом 3.5rem под значок; рамка — rectPoints со скруглением 10, значок — ellipsePoints радиуса 14 у x=26, палочка толщиной 3 и заполненная точка. Тон задаёт --accent семантическим oklch-цветом с light-dark. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-011-* с light-dark, reduced-motion выключает boil.",
+      "meta": {
+        "tags": [
+          "sketch",
+          "hand-drawn",
+          "handwritten",
+          "doodle",
+          "rough",
+          "boil",
+          "alert",
+          "notice",
+          "message",
+          "status"
+        ],
+        "preview": {
+          "props": {}
+        },
+        "ai": {
+          "export": "Sketch011",
+          "usage": "<Sketch011 kind=\"warn\" title=\"Черновик не сохранён\" text=\"Изменения пропадут, если закрыть вкладку.\" />",
+          "summary": "Рукописное уведомление: рамка, кружок с «!» от руки, три тона чернил, role по тону, boil на CSS.",
+          "preserve": [
+            "локальную палитру --vibeui-sketch-011-* и не подменять её токенами вашей темы",
+            "три кадра контура и переключение через @property + step-end — это «кипящая линия» рисованной анимации, не заменять на CSS-фильтры и не на JS-таймер",
+            "детерминированный seed: одна подпись — один почерк при каждой загрузке, а не случайный при каждом рендере",
+            "семантические цвета тонов (янтарный, красный, синий) — фирменный акцент здесь неуместен, тон должен читаться сразу",
+            "статику при prefers-reduced-motion: линия остаётся рукописной, но не дрожит",
+            "overflow: visible у слоя чернил — линия выходит за коробку на пару пикселей, обрезка убьёт рисованность"
+          ],
+          "adapt": [
+            "title — заголовок",
+            "text — текст уведомления",
+            "kind — info, warn или danger: цвет чернил и role",
+            "rough — neat или loose: аккуратный или размашистый почерк",
+            "boil — still, soft или lively: дрожание линии",
+            "seed — число, чтобы зафиксировать понравившийся росчерк",
+            "accent — цвет линий; по умолчанию совпадает с цветом текста",
+            "ink — цвет текста; по умолчанию чернильный в тон темы",
+            "шрифты: замените FONTS на свой self-hosted @font-face, если Google Fonts недоступны",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Neucha и Caveat покрывают кириллицу; Kalam и другие латинские рукописные — нет.",
+            "Для закрываемого уведомления добавьте кнопку снаружи: компонент только рисует.",
+            "Контур появляется после измерения хоста: на сервере рендерится только содержимое, SVG дорисовывается на клиенте — гидрация чистая."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "kind",
+            "label": "Тон",
+            "type": "select",
+            "options": [
+              "warn",
+              "info",
+              "danger"
+            ],
+            "default": "warn"
+          },
+          {
+            "prop": "rough",
+            "label": "Почерк",
+            "type": "select",
+            "options": [
+              "neat",
+              "loose"
+            ],
+            "default": "neat"
+          },
+          {
+            "prop": "boil",
+            "label": "Дрожание",
+            "type": "select",
+            "options": [
+              "soft",
+              "still",
+              "lively"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Линия",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "kind",
+          "boil",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hand-drawn Alert",
+            "description": "A hand-drawn alert: the frame boils, a circled exclamation mark on the left, the kind sets the ink — blue, amber, red. role=status, alert for errors.",
+            "docs": "One file, zero dependencies, \"use client\". The host has a 3.5rem left padding for the icon; the frame is rectPoints with radius 10, the icon is an ellipsePoints of radius 14 at x=26, a width-3 stick and a filled dot. The kind sets --accent with a semantic oklch color via light-dark. Outlines are drawn in pixels: the host is measured with ResizeObserver, perimeter points are shifted by deterministic noise (mulberry32 from seed, by default a hash of the label), segments are quadratic curves; three frames of one line differ by a small boil jitter. Frames are switched by CSS: @property --frame (integer) + @keyframes step-end 1.2s, each path is visible only on its frame (opacity via clamp(1 − (frame − i)²)). Hover shifts the seed — a fresh stroke. Neucha and Caveat fonts load via <link precedence> from Google Fonts (with system handwriting fallbacks). Palette --vibeui-sketch-011-* with light-dark, reduced motion disables boil.",
+            "ai": {
+              "summary": "A hand-drawn alert: a frame, a circled '!' drawn by hand, three ink kinds, role by kind, CSS boil.",
+              "preserve": [
+                "the local --vibeui-sketch-011-* palette — do not swap it for your theme tokens",
+                "the three outline frames switched via @property + step-end — this is the 'boiling line' of drawn animation, do not replace with CSS filters or a JS timer",
+                "the deterministic seed: one label — one handwriting on every load, not random on every render",
+                "the semantic kind colors (amber, red, blue) — a brand accent is wrong here, the kind must read instantly",
+                "the static state under prefers-reduced-motion: the line stays hand-drawn but does not shake",
+                "overflow: visible on the ink layer — the line leaves the box by a couple of pixels, clipping kills the drawn feel"
+              ],
+              "adapt": [
+                "title — the title",
+                "text — the alert text",
+                "kind — info, warn or danger: ink color and role",
+                "rough — neat or loose: tidy or sweeping handwriting",
+                "boil — still, soft or lively: line jitter",
+                "seed — a number to pin a stroke you like",
+                "accent — the line color; matches the text color by default",
+                "ink — the text color; ink-toned by default",
+                "fonts: replace FONTS with your own self-hosted @font-face if Google Fonts is unavailable",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Neucha and Caveat cover Cyrillic; Kalam and other Latin handwriting fonts do not.",
+                "For a dismissible alert add a button on the outside: the component only draws.",
+                "The outline appears after the host is measured: the server renders only the content, the SVG is drawn on the client — hydration stays clean."
+              ],
+              "usage": "<Sketch011 kind=\"warn\" title=\"Draft not saved\" text=\"Changes will be lost if you close the tab.\" />"
+            },
+            "controls": {
+              "kind": {
+                "label": "Kind"
+              },
+              "rough": {
+                "label": "Hand"
+              },
+              "boil": {
+                "label": "Boil"
+              },
+              "accent": {
+                "label": "Line"
+              },
+              "ink": {
+                "label": "Text"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Draft not saved",
+                "text": "Changes will be lost if you close the tab."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sketch-012",
+      "type": "registry:component",
+      "title": "Рукописные шаги",
+      "description": "Шаги процесса от руки: кружки с номерами и дрожащие линии между ними, пройденные залиты с галочкой, текущий обведён дважды. Настоящий <ol> с aria-current — для оформления заказа, мастера и статуса заявки.",
+      "categories": [
+        "sketch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sketch-012/sketch-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sketch-012.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Кружки — ellipsePoints радиуса 13 в холсте 32×32 (без измерения), соединители — линии в холсте 48×12; состояние шага считается от current: done (заливка + галочка цветом paper), current (двойной кружок), todo (приглушённый). Подписи под кружками абсолютно. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-012-* с light-dark, reduced-motion выключает boil.",
+      "meta": {
+        "tags": [
+          "sketch",
+          "hand-drawn",
+          "handwritten",
+          "doodle",
+          "rough",
+          "boil",
+          "steps",
+          "stepper",
+          "progress",
+          "wizard"
+        ],
+        "preview": {
+          "props": {}
+        },
+        "ai": {
+          "export": "Sketch012",
+          "usage": "<Sketch012 steps={[\"Заявка\", \"Оплата\", \"Доставка\", \"Готово\"]} current={2} />",
+          "summary": "Рукописные шаги: <ol> с кружками-номерами и линиями от руки, done/current/todo по current, aria-current, boil на CSS.",
+          "preserve": [
+            "локальную палитру --vibeui-sketch-012-* и не подменять её токенами вашей темы",
+            "три кадра контура и переключение через @property + step-end — это «кипящая линия» рисованной анимации, не заменять на CSS-фильтры и не на JS-таймер",
+            "детерминированный seed: одна подпись — один почерк при каждой загрузке, а не случайный при каждом рендере",
+            "<ol> и aria-current=step — порядок и текущий шаг читаются без рисунка",
+            "статику при prefers-reduced-motion: линия остаётся рукописной, но не дрожит",
+            "overflow: visible у слоя чернил — линия выходит за коробку на пару пикселей, обрезка убьёт рисованность"
+          ],
+          "adapt": [
+            "steps — названия шагов",
+            "current — текущий шаг (с единицы); предыдущие считаются пройденными",
+            "rough — neat или loose: аккуратный или размашистый почерк",
+            "boil — still, soft или lively: дрожание линии",
+            "seed — число, чтобы зафиксировать понравившийся росчерк",
+            "accent — цвет линий; по умолчанию совпадает с цветом текста",
+            "ink — цвет текста; по умолчанию чернильный в тон темы",
+            "шрифты: замените FONTS на свой self-hosted @font-face, если Google Fonts недоступны",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Neucha и Caveat покрывают кириллицу; Kalam и другие латинские рукописные — нет.",
+            "Названия шагов держите короткими: они стоят под кружками в одну строку.",
+            "Контур появляется после измерения хоста: на сервере рендерится только содержимое, SVG дорисовывается на клиенте — гидрация чистая."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "rough",
+            "label": "Почерк",
+            "type": "select",
+            "options": [
+              "neat",
+              "loose"
+            ],
+            "default": "neat"
+          },
+          {
+            "prop": "boil",
+            "label": "Дрожание",
+            "type": "select",
+            "options": [
+              "soft",
+              "still",
+              "lively"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Линия",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "rough",
+          "boil",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hand-drawn Steps",
+            "description": "Hand-drawn process steps: numbered circles with boiling lines between them, done ones filled with a tick, the current one double-circled. A real <ol> with aria-current — for checkout, wizards and request status.",
+            "docs": "One file, zero dependencies, \"use client\". Circles are ellipsePoints of radius 13 in a 32×32 canvas (no measurement), connectors are lines in a 48×12 canvas; the step state comes from current: done (fill + a paper-colored tick), current (double circle), todo (muted). Labels sit under the circles absolutely. Outlines are drawn in pixels: the host is measured with ResizeObserver, perimeter points are shifted by deterministic noise (mulberry32 from seed, by default a hash of the label), segments are quadratic curves; three frames of one line differ by a small boil jitter. Frames are switched by CSS: @property --frame (integer) + @keyframes step-end 1.2s, each path is visible only on its frame (opacity via clamp(1 − (frame − i)²)). Hover shifts the seed — a fresh stroke. Neucha and Caveat fonts load via <link precedence> from Google Fonts (with system handwriting fallbacks). Palette --vibeui-sketch-012-* with light-dark, reduced motion disables boil.",
+            "ai": {
+              "summary": "Hand-drawn steps: an <ol> with numbered circles and lines drawn by hand, done/current/todo by current, aria-current, CSS boil.",
+              "preserve": [
+                "the local --vibeui-sketch-012-* palette — do not swap it for your theme tokens",
+                "the three outline frames switched via @property + step-end — this is the 'boiling line' of drawn animation, do not replace with CSS filters or a JS timer",
+                "the deterministic seed: one label — one handwriting on every load, not random on every render",
+                "<ol> and aria-current=step — the order and the current step read without the drawing",
+                "the static state under prefers-reduced-motion: the line stays hand-drawn but does not shake",
+                "overflow: visible on the ink layer — the line leaves the box by a couple of pixels, clipping kills the drawn feel"
+              ],
+              "adapt": [
+                "steps — the step names",
+                "current — the current step (from one); earlier ones count as done",
+                "rough — neat or loose: tidy or sweeping handwriting",
+                "boil — still, soft or lively: line jitter",
+                "seed — a number to pin a stroke you like",
+                "accent — the line color; matches the text color by default",
+                "ink — the text color; ink-toned by default",
+                "fonts: replace FONTS with your own self-hosted @font-face if Google Fonts is unavailable",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Neucha and Caveat cover Cyrillic; Kalam and other Latin handwriting fonts do not.",
+                "Keep step names short: they sit under the circles on one line.",
+                "The outline appears after the host is measured: the server renders only the content, the SVG is drawn on the client — hydration stays clean."
+              ],
+              "usage": "<Sketch012 steps={[\"Request\", \"Payment\", \"Delivery\", \"Done\"]} current={2} />"
+            },
+            "controls": {
+              "rough": {
+                "label": "Hand"
+              },
+              "boil": {
+                "label": "Boil"
+              },
+              "accent": {
+                "label": "Line"
+              },
+              "ink": {
+                "label": "Text"
+              }
+            },
+            "preview": {
+              "props": {
+                "steps": [
+                  "Request",
+                  "Payment",
+                  "Delivery",
+                  "Done"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sketch-013",
+      "type": "registry:component",
+      "title": "Рукописный разделитель",
+      "description": "Разделитель, проведённый от руки: линия дрожит во всю ширину, слово посередине («или») стоит на бумажной подложке. role=separator — для форм входа, списков и секций.",
+      "categories": [
+        "sketch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sketch-013/sketch-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sketch-013.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Хост во всю ширину высотой 1.5rem; линия — linePoints с шагом 18 и повышенной неровностью; слово — span с фоном paper поверх линии. weight=thick поднимает --width до 3.2. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-013-* с light-dark, reduced-motion выключает boil.",
+      "meta": {
+        "tags": [
+          "sketch",
+          "hand-drawn",
+          "handwritten",
+          "doodle",
+          "rough",
+          "boil",
+          "divider",
+          "separator",
+          "hr"
+        ],
+        "preview": {
+          "props": {}
+        },
+        "ai": {
+          "export": "Sketch013",
+          "usage": "<Sketch013 text=\"или\" />",
+          "summary": "Рукописный разделитель: линия от руки во всю ширину, слово посередине на подложке, role=separator, boil на CSS.",
+          "preserve": [
+            "локальную палитру --vibeui-sketch-013-* и не подменять её токенами вашей темы",
+            "три кадра контура и переключение через @property + step-end — это «кипящая линия» рисованной анимации, не заменять на CSS-фильтры и не на JS-таймер",
+            "детерминированный seed: одна подпись — один почерк при каждой загрузке, а не случайный при каждом рендере",
+            "бумажную подложку у слова — она и прячет линию под ним, отдельный разрыв линии не нужен",
+            "статику при prefers-reduced-motion: линия остаётся рукописной, но не дрожит",
+            "overflow: visible у слоя чернил — линия выходит за коробку на пару пикселей, обрезка убьёт рисованность"
+          ],
+          "adapt": [
+            "text — слово посередине; пустая строка даёт чистую линию",
+            "weight — thin или thick",
+            "rough — neat или loose: аккуратный или размашистый почерк",
+            "boil — still, soft или lively: дрожание линии",
+            "seed — число, чтобы зафиксировать понравившийся росчерк",
+            "accent — цвет линий; по умолчанию совпадает с цветом текста",
+            "ink — цвет текста; по умолчанию чернильный в тон темы",
+            "шрифты: замените FONTS на свой self-hosted @font-face, если Google Fonts недоступны",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Neucha и Caveat покрывают кириллицу; Kalam и другие латинские рукописные — нет.",
+            "На цветном фоне переопределите --paper под фон секции, иначе подложка слова будет видна.",
+            "Контур появляется после измерения хоста: на сервере рендерится только содержимое, SVG дорисовывается на клиенте — гидрация чистая."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "weight",
+            "label": "Толщина",
+            "type": "select",
+            "options": [
+              "thin",
+              "thick"
+            ],
+            "default": "thin"
+          },
+          {
+            "prop": "rough",
+            "label": "Почерк",
+            "type": "select",
+            "options": [
+              "neat",
+              "loose"
+            ],
+            "default": "neat"
+          },
+          {
+            "prop": "boil",
+            "label": "Дрожание",
+            "type": "select",
+            "options": [
+              "soft",
+              "still",
+              "lively"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Линия",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "weight",
+          "boil",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hand-drawn Divider",
+            "description": "A hand-drawn divider: the line boils full width, a word in the middle ('or') sits on a paper backing. role=separator — for sign-in forms, lists and sections.",
+            "docs": "One file, zero dependencies, \"use client\". A full-width host 1.5rem tall; the line is linePoints at step 18 with extra roughness; the word is a span with a paper background over the line. weight=thick raises --width to 3.2. Outlines are drawn in pixels: the host is measured with ResizeObserver, perimeter points are shifted by deterministic noise (mulberry32 from seed, by default a hash of the label), segments are quadratic curves; three frames of one line differ by a small boil jitter. Frames are switched by CSS: @property --frame (integer) + @keyframes step-end 1.2s, each path is visible only on its frame (opacity via clamp(1 − (frame − i)²)). Hover shifts the seed — a fresh stroke. Neucha and Caveat fonts load via <link precedence> from Google Fonts (with system handwriting fallbacks). Palette --vibeui-sketch-013-* with light-dark, reduced motion disables boil.",
+            "ai": {
+              "summary": "A hand-drawn divider: a full-width line drawn by hand, a word in the middle on a backing, role=separator, CSS boil.",
+              "preserve": [
+                "the local --vibeui-sketch-013-* palette — do not swap it for your theme tokens",
+                "the three outline frames switched via @property + step-end — this is the 'boiling line' of drawn animation, do not replace with CSS filters or a JS timer",
+                "the deterministic seed: one label — one handwriting on every load, not random on every render",
+                "the paper backing on the word — it hides the line under it, no separate line gap needed",
+                "the static state under prefers-reduced-motion: the line stays hand-drawn but does not shake",
+                "overflow: visible on the ink layer — the line leaves the box by a couple of pixels, clipping kills the drawn feel"
+              ],
+              "adapt": [
+                "text — the word in the middle; an empty string gives a plain line",
+                "weight — thin or thick",
+                "rough — neat or loose: tidy or sweeping handwriting",
+                "boil — still, soft or lively: line jitter",
+                "seed — a number to pin a stroke you like",
+                "accent — the line color; matches the text color by default",
+                "ink — the text color; ink-toned by default",
+                "fonts: replace FONTS with your own self-hosted @font-face if Google Fonts is unavailable",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Neucha and Caveat cover Cyrillic; Kalam and other Latin handwriting fonts do not.",
+                "On a colored background override --paper to the section background, otherwise the word backing shows.",
+                "The outline appears after the host is measured: the server renders only the content, the SVG is drawn on the client — hydration stays clean."
+              ],
+              "usage": "<Sketch013 text=\"or\" />"
+            },
+            "controls": {
+              "weight": {
+                "label": "Weight"
+              },
+              "rough": {
+                "label": "Hand"
+              },
+              "boil": {
+                "label": "Boil"
+              },
+              "accent": {
+                "label": "Line"
+              },
+              "ink": {
+                "label": "Text"
+              }
+            },
+            "preview": {
+              "props": {
+                "text": "or"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sketch-014",
+      "type": "registry:component",
+      "title": "Рукописная клавиша",
+      "description": "Сочетание клавиш в нарисованных от руки клавишах: у каждой — контур и штрих-тень снизу, между ними «+». Настоящие <kbd> — для подсказок, документации и палитры команд.",
+      "categories": [
+        "sketch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sketch-014/sketch-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sketch-014.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Каждая клавиша — вложенный компонент Key со своим useSize: контур rectPoints со скруглением 5 и штрих-тень внизу толщиной 3. Между клавишами «+» приглушённым. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-014-* с light-dark, reduced-motion выключает boil.",
+      "meta": {
+        "tags": [
+          "sketch",
+          "hand-drawn",
+          "handwritten",
+          "doodle",
+          "rough",
+          "boil",
+          "kbd",
+          "shortcut",
+          "keyboard"
+        ],
+        "preview": {
+          "props": {}
+        },
+        "ai": {
+          "export": "Sketch014",
+          "usage": "<Sketch014 keys={[\"Ctrl\", \"K\"]} />",
+          "summary": "Рукописная клавиша: <kbd> в нарисованных клавишах с тенью-штрихом, «+» между, boil на CSS.",
+          "preserve": [
+            "локальную палитру --vibeui-sketch-014-* и не подменять её токенами вашей темы",
+            "три кадра контура и переключение через @property + step-end — это «кипящая линия» рисованной анимации, не заменять на CSS-фильтры и не на JS-таймер",
+            "детерминированный seed: одна подпись — один почерк при каждой загрузке, а не случайный при каждом рендере",
+            "<kbd> на каждой клавише — семантика сочетания остаётся",
+            "статику при prefers-reduced-motion: линия остаётся рукописной, но не дрожит",
+            "overflow: visible у слоя чернил — линия выходит за коробку на пару пикселей, обрезка убьёт рисованность"
+          ],
+          "adapt": [
+            "keys — клавиши сочетания по порядку",
+            "rough — neat или loose: аккуратный или размашистый почерк",
+            "boil — still, soft или lively: дрожание линии",
+            "seed — число, чтобы зафиксировать понравившийся росчерк",
+            "accent — цвет линий; по умолчанию совпадает с цветом текста",
+            "ink — цвет текста; по умолчанию чернильный в тон темы",
+            "шрифты: замените FONTS на свой self-hosted @font-face, если Google Fonts недоступны",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Neucha и Caveat покрывают кириллицу; Kalam и другие латинские рукописные — нет.",
+            "Символы вроде ⌘ и ⇧ подставляйте прямо в keys.",
+            "Контур появляется после измерения хоста: на сервере рендерится только содержимое, SVG дорисовывается на клиенте — гидрация чистая."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "rough",
+            "label": "Почерк",
+            "type": "select",
+            "options": [
+              "neat",
+              "loose"
+            ],
+            "default": "neat"
+          },
+          {
+            "prop": "boil",
+            "label": "Дрожание",
+            "type": "select",
+            "options": [
+              "soft",
+              "still",
+              "lively"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Линия",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "rough",
+          "boil",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hand-drawn Kbd",
+            "description": "A keyboard shortcut in hand-drawn keys: each has an outline and a shadow stroke underneath, a '+' between them. Real <kbd> — for hints, docs and command palettes.",
+            "docs": "One file, zero dependencies, \"use client\". Each key is a nested Key component with its own useSize: a rectPoints outline with radius 5 and a width-3 shadow stroke at the bottom. A muted '+' between keys. Outlines are drawn in pixels: the host is measured with ResizeObserver, perimeter points are shifted by deterministic noise (mulberry32 from seed, by default a hash of the label), segments are quadratic curves; three frames of one line differ by a small boil jitter. Frames are switched by CSS: @property --frame (integer) + @keyframes step-end 1.2s, each path is visible only on its frame (opacity via clamp(1 − (frame − i)²)). Hover shifts the seed — a fresh stroke. Neucha and Caveat fonts load via <link precedence> from Google Fonts (with system handwriting fallbacks). Palette --vibeui-sketch-014-* with light-dark, reduced motion disables boil.",
+            "ai": {
+              "summary": "A hand-drawn kbd: <kbd> in drawn keys with a shadow stroke, '+' between, CSS boil.",
+              "preserve": [
+                "the local --vibeui-sketch-014-* palette — do not swap it for your theme tokens",
+                "the three outline frames switched via @property + step-end — this is the 'boiling line' of drawn animation, do not replace with CSS filters or a JS timer",
+                "the deterministic seed: one label — one handwriting on every load, not random on every render",
+                "<kbd> on each key — the shortcut semantics stay",
+                "the static state under prefers-reduced-motion: the line stays hand-drawn but does not shake",
+                "overflow: visible on the ink layer — the line leaves the box by a couple of pixels, clipping kills the drawn feel"
+              ],
+              "adapt": [
+                "keys — the shortcut keys in order",
+                "rough — neat or loose: tidy or sweeping handwriting",
+                "boil — still, soft or lively: line jitter",
+                "seed — a number to pin a stroke you like",
+                "accent — the line color; matches the text color by default",
+                "ink — the text color; ink-toned by default",
+                "fonts: replace FONTS with your own self-hosted @font-face if Google Fonts is unavailable",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Neucha and Caveat cover Cyrillic; Kalam and other Latin handwriting fonts do not.",
+                "Put symbols like ⌘ and ⇧ directly into keys.",
+                "The outline appears after the host is measured: the server renders only the content, the SVG is drawn on the client — hydration stays clean."
+              ],
+              "usage": "<Sketch014 keys={[\"Ctrl\", \"K\"]} />"
+            },
+            "controls": {
+              "rough": {
+                "label": "Hand"
+              },
+              "boil": {
+                "label": "Boil"
+              },
+              "accent": {
+                "label": "Line"
+              },
+              "ink": {
+                "label": "Text"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sketch-015",
+      "type": "registry:component",
+      "title": "Рукописная цитата",
+      "description": "Цитата от руки: слева нарисованная скобка, текст крупным рукописным Caveat, автор после дрожащего тире. Настоящий <blockquote> с <footer> — для отзывов и эпиграфов.",
+      "categories": [
+        "sketch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sketch-015/sketch-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sketch-015.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Хост — блок с левым отступом 2rem; скобка — три точки по левому краю толщиной 3 с повышенной неровностью, тире — линия перед автором. Текст — Caveat 1.75rem. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-015-* с light-dark, reduced-motion выключает boil.",
+      "meta": {
+        "tags": [
+          "sketch",
+          "hand-drawn",
+          "handwritten",
+          "doodle",
+          "rough",
+          "boil",
+          "quote",
+          "blockquote",
+          "testimonial"
+        ],
+        "preview": {
+          "props": {}
+        },
+        "ai": {
+          "export": "Sketch015",
+          "usage": "<Sketch015 text=\"Хороший интерфейс — как хорошая шутка.\" author=\"Мартин Леблан\" />",
+          "summary": "Рукописная цитата: <blockquote> с нарисованной скобкой и тире, текст Caveat, boil на CSS.",
+          "preserve": [
+            "локальную палитру --vibeui-sketch-015-* и не подменять её токенами вашей темы",
+            "три кадра контура и переключение через @property + step-end — это «кипящая линия» рисованной анимации, не заменять на CSS-фильтры и не на JS-таймер",
+            "детерминированный seed: одна подпись — один почерк при каждой загрузке, а не случайный при каждом рендере",
+            "<blockquote> и <footer> — цитата и её источник читаются семантически",
+            "статику при prefers-reduced-motion: линия остаётся рукописной, но не дрожит",
+            "overflow: visible у слоя чернил — линия выходит за коробку на пару пикселей, обрезка убьёт рисованность"
+          ],
+          "adapt": [
+            "text — текст цитаты",
+            "author — подпись автора",
+            "rough — neat или loose: аккуратный или размашистый почерк",
+            "boil — still, soft или lively: дрожание линии",
+            "seed — число, чтобы зафиксировать понравившийся росчерк",
+            "accent — цвет линий; по умолчанию совпадает с цветом текста",
+            "ink — цвет текста; по умолчанию чернильный в тон темы",
+            "шрифты: замените FONTS на свой self-hosted @font-face, если Google Fonts недоступны",
+            "tone — тема: «auto» следует теме страницы, «light» и «dark» фиксируют её"
+          ],
+          "notes": [
+            "Neucha и Caveat покрывают кириллицу; Kalam и другие латинские рукописные — нет.",
+            "Длинная цитата растянет скобку: она следует за высотой блока.",
+            "Контур появляется после измерения хоста: на сервере рендерится только содержимое, SVG дорисовывается на клиенте — гидрация чистая."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "rough",
+            "label": "Почерк",
+            "type": "select",
+            "options": [
+              "neat",
+              "loose"
+            ],
+            "default": "neat"
+          },
+          {
+            "prop": "boil",
+            "label": "Дрожание",
+            "type": "select",
+            "options": [
+              "soft",
+              "still",
+              "lively"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Линия",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "rough",
+          "boil",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hand-drawn Quote",
+            "description": "A hand-drawn quote: a drawn bracket on the left, large handwritten Caveat text, the author after a boiling dash. A real <blockquote> with <footer> — for testimonials and epigraphs.",
+            "docs": "One file, zero dependencies, \"use client\". The host is a block with a 2rem left padding; the bracket is three points along the left edge at width 3 with extra roughness, the dash is a line before the author. Text is Caveat 1.75rem. Outlines are drawn in pixels: the host is measured with ResizeObserver, perimeter points are shifted by deterministic noise (mulberry32 from seed, by default a hash of the label), segments are quadratic curves; three frames of one line differ by a small boil jitter. Frames are switched by CSS: @property --frame (integer) + @keyframes step-end 1.2s, each path is visible only on its frame (opacity via clamp(1 − (frame − i)²)). Hover shifts the seed — a fresh stroke. Neucha and Caveat fonts load via <link precedence> from Google Fonts (with system handwriting fallbacks). Palette --vibeui-sketch-015-* with light-dark, reduced motion disables boil.",
+            "ai": {
+              "summary": "A hand-drawn quote: a <blockquote> with a drawn bracket and dash, Caveat text, CSS boil.",
+              "preserve": [
+                "the local --vibeui-sketch-015-* palette — do not swap it for your theme tokens",
+                "the three outline frames switched via @property + step-end — this is the 'boiling line' of drawn animation, do not replace with CSS filters or a JS timer",
+                "the deterministic seed: one label — one handwriting on every load, not random on every render",
+                "<blockquote> and <footer> — the quote and its source read semantically",
+                "the static state under prefers-reduced-motion: the line stays hand-drawn but does not shake",
+                "overflow: visible on the ink layer — the line leaves the box by a couple of pixels, clipping kills the drawn feel"
+              ],
+              "adapt": [
+                "text — the quote text",
+                "author — the author caption",
+                "rough — neat or loose: tidy or sweeping handwriting",
+                "boil — still, soft or lively: line jitter",
+                "seed — a number to pin a stroke you like",
+                "accent — the line color; matches the text color by default",
+                "ink — the text color; ink-toned by default",
+                "fonts: replace FONTS with your own self-hosted @font-face if Google Fonts is unavailable",
+                "tone — the theme: \"auto\" follows the page, \"light\" and \"dark\" pin it"
+              ],
+              "notes": [
+                "Neucha and Caveat cover Cyrillic; Kalam and other Latin handwriting fonts do not.",
+                "A long quote stretches the bracket: it follows the block height.",
+                "The outline appears after the host is measured: the server renders only the content, the SVG is drawn on the client — hydration stays clean."
+              ],
+              "usage": "<Sketch015 text=\"A good interface is like a good joke.\" author=\"Martin LeBlanc\" />"
+            },
+            "controls": {
+              "rough": {
+                "label": "Hand"
+              },
+              "boil": {
+                "label": "Boil"
+              },
+              "accent": {
+                "label": "Line"
+              },
+              "ink": {
+                "label": "Text"
+              }
+            },
+            "preview": {
+              "props": {
+                "text": "A good interface is like a good joke: you should not have to explain it.",
+                "author": "Martin LeBlanc"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

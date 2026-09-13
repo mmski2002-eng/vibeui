@@ -877,6 +877,21 @@ export const CATEGORIES = [
     group: "application",
   },
   {
+    slug: "sketch",
+    label: "Рукописный",
+    en: "Hand-drawn",
+    group: "marketing",
+  },
+  {
+    slug: "folio",
+    label: "Портфолио",
+    en: "Portfolio",
+    group: "marketing",
+    // Рабочий стол и подобные сцены живут во всю ширину: в половинном
+    // кадре не видно ни окон, ни таскбара.
+    wide: true,
+  },
+  {
     slug: "text",
     label: "Текстовая анимация",
     en: "Text animation",
@@ -890,6 +905,15 @@ export const CATEGORIES = [
     group: "marketing",
     // Фон живёт во всю ширину экрана: в половинном кадре от него остаётся
     // угол, по которому не понять ни рисунка, ни движения.
+    wide: true,
+  },
+  {
+    slug: "layout",
+    label: "Раскладки",
+    en: "Layouts",
+    group: "marketing",
+    // Раскладка — композиция во всю ширину: bento, стопки, ленты. В половине
+    // кадра её геометрия не читается.
     wide: true,
   },
 ] as const satisfies readonly {

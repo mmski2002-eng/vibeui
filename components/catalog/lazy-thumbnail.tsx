@@ -228,7 +228,7 @@ export function LazyThumbnail({
         onClick={holdPreviewLink}
       >
         <div
-          className="w-full overflow-x-hidden overflow-y-auto pt-[5px] [scrollbar-gutter:stable]"
+          className="w-full overflow-x-hidden overflow-y-auto"
           style={{
             minHeight: NATURAL_MIN_HEIGHT,
             maxHeight: NATURAL_MAX_HEIGHT,

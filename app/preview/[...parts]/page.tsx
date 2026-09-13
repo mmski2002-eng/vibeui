@@ -100,7 +100,9 @@ export default async function PreviewPage({
     <div
       className={
         (query.theme === "dark" ? "dark " : "") +
-        "bg-background min-h-screen overflow-x-hidden" +
+        // overflow-x-clip, не hidden: hidden делает обёртку scroll-контейнером,
+        // и position: sticky внутри блоков перестаёт цепляться за окно.
+        "bg-background min-h-screen overflow-x-clip" +
         (centered
           ? " flex items-start justify-center px-4 pt-12 pb-4 sm:px-10 sm:pt-16 sm:pb-10"
           : "")

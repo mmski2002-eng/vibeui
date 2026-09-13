@@ -33,6 +33,7 @@
     "registry/blocks/newsletter/registry.json",
     "registry/blocks/team/registry.json",
     "registry/blocks/background/registry.json",
+    "registry/blocks/layout/registry.json",
     "registry/components/accordion/registry.json",
     "registry/components/alert/registry.json",
     "registry/components/alert-dialog/registry.json",
@@ -121,6 +122,8 @@
     "registry/animations/checklist/registry.json",
     "registry/animations/stacks/registry.json",
     "registry/animations/cursor/registry.json",
+    "registry/animations/sketch/registry.json",
+    "registry/animations/folio/registry.json",
     "registry/animations/text/registry.json",
     "registry/animations/background/registry.json"
   ]

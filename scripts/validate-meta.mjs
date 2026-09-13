@@ -259,10 +259,19 @@ function validateSource(where, directory, item) {
     errors.push(`${where}: нет экспорта ${symbol}`)
   }
 
+  // Чужие пакеты допустимы только объявленные в dependencies: их ставит
+  // `Copy for AI`, всё остальное item тащить не может.
+  const declared = new Set(item.dependencies ?? [])
+
   for (const match of source.matchAll(/^import[^"']+["']([^"']+)["']/gm)) {
-    if (match[1] !== ALLOWED_IMPORT) {
+    const specifier = match[1]
+    const pkg = specifier.startsWith("@")
+      ? specifier.split("/").slice(0, 2).join("/")
+      : specifier.split("/")[0]
+
+    if (specifier !== ALLOWED_IMPORT && !declared.has(pkg)) {
       errors.push(
-        `${where}: импорт "${match[1]}" — item должен быть самодостаточным файлом`,
+        `${where}: импорт "${specifier}" — item должен быть самодостаточным файлом или объявить пакет в dependencies`,
       )
     }
   }

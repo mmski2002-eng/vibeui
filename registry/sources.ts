@@ -33,6 +33,7 @@ import logosRegistry from "@/registry/blocks/logos/registry.json"
 import newsletterRegistry from "@/registry/blocks/newsletter/registry.json"
 import teamRegistry from "@/registry/blocks/team/registry.json"
 import backgroundRegistry from "@/registry/blocks/background/registry.json"
+import layoutRegistry from "@/registry/blocks/layout/registry.json"
 import accordionRegistry from "@/registry/components/accordion/registry.json"
 import alertRegistry from "@/registry/components/alert/registry.json"
 import alertDialogRegistry from "@/registry/components/alert-dialog/registry.json"
@@ -121,6 +122,8 @@ import statusRegistry from "@/registry/animations/status/registry.json"
 import checklistRegistry from "@/registry/animations/checklist/registry.json"
 import stacksRegistry from "@/registry/animations/stacks/registry.json"
 import cursorRegistry from "@/registry/animations/cursor/registry.json"
+import sketchRegistry from "@/registry/animations/sketch/registry.json"
+import folioRegistry from "@/registry/animations/folio/registry.json"
 import textRegistry from "@/registry/animations/text/registry.json"
 import backgroundAnimationRegistry from "@/registry/animations/background/registry.json"
 
@@ -283,6 +286,11 @@ export const SOURCES = [
     directory: "registry/blocks/background",
     kind: "block",
     items: backgroundRegistry.items,
+  },
+  {
+    directory: "registry/blocks/layout",
+    kind: "block",
+    items: layoutRegistry.items,
   },
   {
     directory: "registry/components/accordion",
@@ -723,6 +731,16 @@ export const SOURCES = [
     directory: "registry/animations/cursor",
     kind: "animation",
     items: cursorRegistry.items,
+  },
+  {
+    directory: "registry/animations/sketch",
+    kind: "animation",
+    items: sketchRegistry.items,
+  },
+  {
+    directory: "registry/animations/folio",
+    kind: "animation",
+    items: folioRegistry.items,
   },
   {
     directory: "registry/animations/text",
