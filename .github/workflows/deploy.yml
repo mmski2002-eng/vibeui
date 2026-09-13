@@ -42,7 +42,11 @@ jobs:
 
       - run: npm run lint
 
+      # Секрет нужен только чтобы better-auth не ругался при пререндере:
+      # на сервере свой из .env, в бандл значение не попадает.
       - run: npm run build
+        env:
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET || 'ci-prerender-only-not-a-real-secret-0000' }}
 
       # Только после сборки: LayoutProps и прочие типы маршрутов Next
       # генерирует в .next/types, в чистом checkout их ещё нет.
@@ -78,6 +82,9 @@ jobs:
       - name: Проверить живой сайт
         run: |
           curl -fsS -o /dev/null -w 'components %{http_code}\n' https://vibeui.ru/components
-          curl -fsS https://vibeui.ru/c/hero-001 | grep -q "npx shadcn"
+          # Страница item'а публичная и содержит команду установки; сам маршрут
+          # /c/<name> закрыт для анонимов (нужен аккаунт), поэтому ждём 401.
+          curl -fsS https://vibeui.ru/components/hero-001 | grep -q "npx shadcn"
+          test "$(curl -s -o /dev/null -w '%{http_code}' https://vibeui.ru/c/hero-001)" = "401"
           curl -fsS https://vibeui.ru/robots.txt | grep -q "Sitemap: https://vibeui.ru/sitemap.xml"
           curl -fsS https://vibeui.ru/sitemap.xml | grep -q "<loc>https://vibeui.ru/components</loc>"
