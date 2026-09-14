@@ -1,4 +1,4 @@
-import { and, count, desc, ilike, or, sql } from "drizzle-orm"
+import { count, desc, ilike, or, sql } from "drizzle-orm"
 import { Search } from "lucide-react"
 
 import { AdminHeading, INPUT_CLASS } from "@/components/admin/parts"

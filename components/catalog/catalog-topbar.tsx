@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useSyncExternalStore } from "react"
 import { Search, UserRound } from "lucide-react"
 
 import { LocaleSwitch } from "@/components/catalog/locale-switch"
@@ -24,16 +24,22 @@ export function CatalogTopbar({
   const en = locale === "en"
   const pathname = stripLocale(usePathname())
   const { data: session } = useSession()
-  // До монтирования показываем гостевой вариант — тот же, что отдал сервер:
-  // разметка кабинета статическая и сессии не знает, а `useSession` на
+  // До гидратации показываем гостевой вариант — тот же, что отдал сервер:
+  // разметка каталога статическая и сессии не знает, а `useSession` на
   // клиенте отдаёт её из куки сразу. Без этой задержки первый клиентский
   // рендер расходится с серверным (кнопка «Кабинет» вместо «Войти») и React
   // перерисовывает страницу целиком (hydration mismatch, ошибка #418).
-  const [mounted, setMounted] = useState(false)
+  //
+  // `useSyncExternalStore` с серверным снимком `false` — канонический способ
+  // узнать факт гидратации без setState в эффекте: первый клиентский рендер
+  // берёт серверный снимок и совпадает с HTML, затем переключается на `true`.
+  const hydrated = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  )
 
-  useEffect(() => setMounted(true), [])
-
-  const authed = mounted && Boolean(session)
+  const authed = hydrated && Boolean(session)
   const sections = [
     { href: "/components", label: t.topbar.components },
     { href: "/blocks", label: t.topbar.blocks },

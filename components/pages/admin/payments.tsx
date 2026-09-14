@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { and, count, desc, eq, ilike, or, sql } from "drizzle-orm"
+import { and, count, desc, eq, ilike, or } from "drizzle-orm"
 import { Download, Search } from "lucide-react"
 
 import { AdminHeading, INPUT_CLASS } from "@/components/admin/parts"
