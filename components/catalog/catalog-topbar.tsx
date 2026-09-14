@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useEffect, useState } from "react"
 import { Search, UserRound } from "lucide-react"
 
 import { LocaleSwitch } from "@/components/catalog/locale-switch"
@@ -23,6 +24,16 @@ export function CatalogTopbar({
   const en = locale === "en"
   const pathname = stripLocale(usePathname())
   const { data: session } = useSession()
+  // До монтирования показываем гостевой вариант — тот же, что отдал сервер:
+  // разметка кабинета статическая и сессии не знает, а `useSession` на
+  // клиенте отдаёт её из куки сразу. Без этой задержки первый клиентский
+  // рендер расходится с серверным (кнопка «Кабинет» вместо «Войти») и React
+  // перерисовывает страницу целиком (hydration mismatch, ошибка #418).
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => setMounted(true), [])
+
+  const authed = mounted && Boolean(session)
   const sections = [
     { href: "/components", label: t.topbar.components },
     { href: "/blocks", label: t.topbar.blocks },
@@ -119,11 +130,11 @@ export function CatalogTopbar({
             aria-hidden="true"
           />
           <Link
-            href={session ? "/account" : "/signin"}
+            href={authed ? "/account" : "/signin"}
             className="border-shell-border-strong bg-shell-elevated text-shell-fg hover:border-shell-accent focus-visible:ring-shell-ring inline-flex h-9 shrink-0 items-center justify-center gap-2 rounded-lg border px-3 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none"
           >
             <UserRound className="hidden size-4 sm:block" aria-hidden="true" />
-            {session ? (en ? "Account" : "Кабинет") : en ? "Sign in" : "Войти"}
+            {authed ? (en ? "Account" : "Кабинет") : en ? "Sign in" : "Войти"}
           </Link>
         </div>
       </div>
