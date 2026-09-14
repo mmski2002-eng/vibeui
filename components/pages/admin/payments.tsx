@@ -1,11 +1,12 @@
 import Link from "next/link"
-import { and, desc, eq, ilike, or, sql } from "drizzle-orm"
+import { and, count, desc, eq, ilike, or, sql } from "drizzle-orm"
 import { Download, Search } from "lucide-react"
 
 import { AdminHeading, INPUT_CLASS } from "@/components/admin/parts"
 import { ADMIN_TEXTS } from "@/components/admin/texts"
-import { Button, ButtonLink } from "@/components/account/ui/button"
+import { Button } from "@/components/account/ui/button"
 import { CellStack, DataTable } from "@/components/account/ui/data-table"
+import { Pager } from "@/components/account/ui/pager"
 import { StatusPill, type PillTone } from "@/components/account/ui/status-pill"
 import { requireAdmin } from "@/lib/admin"
 import { db } from "@/lib/db"
@@ -34,67 +35,80 @@ export const PAYMENT_TONE: Record<Status, PillTone> = {
 }
 
 /**
- * Платежи как они лежат у нас: с поиском по почте и идентификатору ЮKassa.
- *
- * Пагинация курсором по дате, а не смещением: смещение на длинной таблице
- * заставляет базу перечитывать всё, что пропущено, и на общем сервере это
- * заметно.
+ * Платежи как они лежат у нас: с поиском по почте и идентификатору ЮKassa и
+ * постраничной навигацией. Смещение (offset), а не курсор: администратору
+ * нужно листать взад-вперёд и видеть номер страницы, а таблица платежей —
+ * это внутренний инструмент с умеренным числом строк.
  */
 export async function AdminPayments({
   query,
   status,
-  before,
+  page = 1,
 }: {
   query?: string
   status?: string
-  before?: string
+  page?: number
 }) {
   await requireAdmin()
 
   const t = ADMIN_TEXTS.payments
   const needle = query?.trim()
-  const cursor = before ? new Date(before) : null
 
-  const filters = [
-    status && status !== "all" ? eq(payment.status, status) : undefined,
-    cursor && !Number.isNaN(cursor.getTime())
-      ? sql`${payment.createdAt} < ${cursor}`
-      : undefined,
-    needle
-      ? or(
-          ilike(user.email, `%${needle}%`),
-          ilike(payment.yookassaId, `%${needle}%`),
-        )
-      : undefined,
-  ].filter(Boolean)
+  const where = and(
+    ...[
+      status && status !== "all" ? eq(payment.status, status) : undefined,
+      needle
+        ? or(
+            ilike(user.email, `%${needle}%`),
+            ilike(payment.yookassaId, `%${needle}%`),
+          )
+        : undefined,
+    ].filter(Boolean),
+  )
 
-  const rows = await db
-    .select({
-      id: payment.id,
-      createdAt: payment.createdAt,
-      paidAt: payment.paidAt,
-      amount: payment.amount,
-      status: payment.status,
-      yookassaId: payment.yookassaId,
-      userId: payment.userId,
-      email: user.email,
-    })
-    .from(payment)
-    .leftJoin(user, eq(user.id, payment.userId))
-    .where(filters.length ? and(...filters) : undefined)
-    .orderBy(desc(payment.createdAt))
-    .limit(PAGE + 1)
+  const [rows, totalRows] = await Promise.all([
+    db
+      .select({
+        id: payment.id,
+        createdAt: payment.createdAt,
+        paidAt: payment.paidAt,
+        amount: payment.amount,
+        status: payment.status,
+        yookassaId: payment.yookassaId,
+        userId: payment.userId,
+        email: user.email,
+      })
+      .from(payment)
+      .leftJoin(user, eq(user.id, payment.userId))
+      .where(where)
+      .orderBy(desc(payment.createdAt))
+      .limit(PAGE)
+      .offset((page - 1) * PAGE),
+    db
+      .select({ value: count() })
+      .from(payment)
+      .leftJoin(user, eq(user.id, payment.userId))
+      .where(where),
+  ])
 
-  const page = rows.slice(0, PAGE)
-  const next = rows.length > PAGE ? page[page.length - 1]?.createdAt : null
-  const sum = page
+  const total = totalRows[0]?.value ?? 0
+  const hasNext = page * PAGE < total
+  const sum = rows
     .filter((row) => row.status === "succeeded")
-    .reduce((total, row) => total + Number(row.amount), 0)
+    .reduce((acc, row) => acc + Number(row.amount), 0)
 
   const search = new URLSearchParams()
 
   if (needle) search.set("q", needle)
   if (status && status !== "all") search.set("status", status)
+
+  const pageHref = (target: number) => {
+    const p = new URLSearchParams(search)
+    if (target > 1) p.set("page", String(target))
+    const qs = p.toString()
+
+    return `/account/admin/payments${qs ? `?${qs}` : ""}`
+  }
 
   return (
     <>
@@ -165,7 +179,7 @@ export async function AdminPayments({
           { key: "amount", label: t.columnAmount, align: "right", className: "w-28" },
           { key: "open", label: "", align: "right", className: "w-24", hideBelow: "sm" },
         ]}
-        rows={page.map((row) => {
+        rows={rows.map((row) => {
           const status = statusOf(row.status)
 
           return {
@@ -205,14 +219,7 @@ export async function AdminPayments({
         })}
       />
 
-      {next ? (
-        <ButtonLink
-          href={`/account/admin/payments?${search.toString()}${search.size ? "&" : ""}before=${next.toISOString()}`}
-          className="mt-4"
-        >
-          {t.more}
-        </ButtonLink>
-      ) : null}
+      <Pager page={page} hasNext={hasNext} total={total} perPage={PAGE} href={pageHref} />
     </>
   )
 }

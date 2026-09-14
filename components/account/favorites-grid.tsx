@@ -121,7 +121,7 @@ export function FavoritesGrid({
                   gone[card.name] && "opacity-60",
                 )}
               >
-                <div className="bg-preview-surface flex h-44 items-center justify-center overflow-hidden">
+                <div className="bg-preview-surface flex min-h-48 flex-col">
                   {card.preview}
                 </div>
                 <div className="border-shell-divider border-t px-4 py-3">

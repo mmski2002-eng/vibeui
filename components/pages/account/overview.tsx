@@ -240,7 +240,7 @@ export async function AccountOverview({ locale }: { locale: Locale }) {
                   </span>
                 ) : null}
               </div>
-              <div className="bg-preview-surface flex min-h-56 items-center justify-center">
+              <div className="bg-preview-surface flex min-h-56 flex-col">
                 <CatalogThumbnail slug={resume} locale={locale} />
               </div>
               <div className="border-shell-divider flex flex-wrap items-center justify-between gap-3 border-t px-5 py-4">
@@ -311,7 +311,7 @@ export async function AccountOverview({ locale }: { locale: Locale }) {
                       padded={false}
                       className="acc-lift overflow-hidden"
                     >
-                      <div className="bg-preview-surface flex min-h-32 items-center justify-center">
+                      <div className="bg-preview-surface flex min-h-40 flex-col">
                         <CatalogThumbnail slug={row.itemName} locale={locale} />
                       </div>
                       <Link

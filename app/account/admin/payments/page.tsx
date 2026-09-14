@@ -8,9 +8,15 @@ export const metadata = {
 export default async function Page({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; status?: string; before?: string }>
+  searchParams: Promise<{ q?: string; status?: string; page?: string }>
 }) {
-  const { q, status, before } = await searchParams
+  const { q, status, page } = await searchParams
 
-  return <AdminPayments query={q} status={status} before={before} />
+  return (
+    <AdminPayments
+      query={q}
+      status={status}
+      page={Number(page) > 1 ? Number(page) : 1}
+    />
+  )
 }

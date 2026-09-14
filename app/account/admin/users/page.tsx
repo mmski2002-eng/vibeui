@@ -8,9 +8,9 @@ export const metadata = {
 export default async function Page({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; before?: string }>
+  searchParams: Promise<{ q?: string; page?: string }>
 }) {
-  const { q, before } = await searchParams
+  const { q, page } = await searchParams
 
-  return <AdminUsers query={q} before={before} />
+  return <AdminUsers query={q} page={Number(page) > 1 ? Number(page) : 1} />
 }

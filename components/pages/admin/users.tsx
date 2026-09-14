@@ -1,10 +1,11 @@
-import { and, desc, ilike, or, sql } from "drizzle-orm"
+import { and, count, desc, ilike, or, sql } from "drizzle-orm"
 import { Search } from "lucide-react"
 
 import { AdminHeading, INPUT_CLASS } from "@/components/admin/parts"
 import { ADMIN_TEXTS } from "@/components/admin/texts"
-import { Button, ButtonLink } from "@/components/account/ui/button"
+import { Button } from "@/components/account/ui/button"
 import { CellStack, DataTable } from "@/components/account/ui/data-table"
+import { Pager } from "@/components/account/ui/pager"
 import { StatusPill } from "@/components/account/ui/status-pill"
 import { requireAdmin } from "@/lib/admin"
 import { db } from "@/lib/db"
@@ -14,52 +15,57 @@ import { resolveSubscription } from "@/lib/subscription-state"
 
 const PAGE = 40
 
-/** Список пользователей с поиском. Тариф считается тем же кодом, что и в
- *  кабинете человека: два разных ответа на вопрос «есть ли у него Pro» —
- *  худшее, что может случиться с поддержкой. */
+/** Список пользователей с поиском и постраничной навигацией. Тариф считается
+ *  тем же кодом, что и в кабинете человека: два разных ответа на вопрос
+ *  «есть ли у него Pro» — худшее, что может случиться с поддержкой. */
 export async function AdminUsers({
   query,
-  before,
+  page = 1,
 }: {
   query?: string
-  before?: string
+  page?: number
 }) {
   await requireAdmin()
 
   const t = ADMIN_TEXTS.users
   const needle = query?.trim()
-  const cursor = before ? new Date(before) : null
+  const where = needle
+    ? or(ilike(user.email, `%${needle}%`), ilike(user.name, `%${needle}%`))
+    : undefined
 
-  const filters = [
-    needle
-      ? or(ilike(user.email, `%${needle}%`), ilike(user.name, `%${needle}%`))
-      : undefined,
-    cursor && !Number.isNaN(cursor.getTime())
-      ? sql`${user.createdAt} < ${cursor}`
-      : undefined,
-  ].filter(Boolean)
+  const [rows, totalRows] = await Promise.all([
+    db
+      .select({
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        createdAt: user.createdAt,
+        emailVerified: user.emailVerified,
+        blockedAt: user.blockedAt,
+        subscription,
+      })
+      .from(user)
+      .leftJoin(subscription, sql`${subscription.userId} = ${user.id}`)
+      .where(where)
+      .orderBy(desc(user.createdAt))
+      .limit(PAGE)
+      .offset((page - 1) * PAGE),
+    db.select({ value: count() }).from(user).where(where),
+  ])
 
-  const rows = await db
-    .select({
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      createdAt: user.createdAt,
-      emailVerified: user.emailVerified,
-      blockedAt: user.blockedAt,
-      subscription,
-    })
-    .from(user)
-    .leftJoin(subscription, sql`${subscription.userId} = ${user.id}`)
-    .where(filters.length ? and(...filters) : undefined)
-    .orderBy(desc(user.createdAt))
-    .limit(PAGE + 1)
-
-  const page = rows.slice(0, PAGE)
-  const next = rows.length > PAGE ? page[page.length - 1]?.createdAt : null
+  const total = totalRows[0]?.value ?? 0
+  const hasNext = page * PAGE < total
   const params = new URLSearchParams()
 
   if (needle) params.set("q", needle)
+
+  const pageHref = (target: number) => {
+    const p = new URLSearchParams(params)
+    if (target > 1) p.set("page", String(target))
+    const qs = p.toString()
+
+    return `/account/admin/users${qs ? `?${qs}` : ""}`
+  }
 
   return (
     <>
@@ -97,7 +103,7 @@ export async function AdminUsers({
           { key: "plan", label: t.columnPlan, className: "w-28" },
           { key: "joined", label: t.columnJoined, align: "right", className: "w-32" },
         ]}
-        rows={page.map((row) => {
+        rows={rows.map((row) => {
           const state = resolveSubscription(row.subscription ?? undefined)
           const pro =
             state.kind !== "free" && state.kind !== "expired"
@@ -135,14 +141,7 @@ export async function AdminUsers({
         })}
       />
 
-      {next ? (
-        <ButtonLink
-          href={`/account/admin/users?${params.toString()}${params.size ? "&" : ""}before=${next.toISOString()}`}
-          className="mt-4"
-        >
-          {t.more}
-        </ButtonLink>
-      ) : null}
+      <Pager page={page} hasNext={hasNext} total={total} perPage={PAGE} href={pageHref} />
     </>
   )
 }
