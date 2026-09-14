@@ -165,7 +165,7 @@ const TEXTS = {
       },
       {
         question: "Как считается лимит на бесплатном тарифе?",
-        answer: `${FREE_MONTHLY_LIMIT} разных компонентов в месяц с аккаунтом. Повторное копирование того же компонента в том же месяце ничего не списывает. Pro снимает лимит целиком.`,
+        answer: `${FREE_MONTHLY_LIMIT} разных компонентов в месяц с аккаунтом. Компонент засчитывается, когда вы открываете его исходник или берёте ссылку на установку — ссылка действует 24 часа. Взять тот же компонент снова в том же месяце бесплатно, ссылка выдаётся заново. Pro снимает лимит целиком.`,
       },
       {
         question: "Будет ли чек?",
@@ -334,7 +334,7 @@ const TEXTS = {
       },
       {
         question: "How does the free limit work?",
-        answer: `${FREE_MONTHLY_LIMIT} different components a month with an account. Copying the same component again in the same month costs nothing. Pro removes the limit entirely.`,
+        answer: `${FREE_MONTHLY_LIMIT} different components a month with an account. A component counts when you open its source or take an install link — the link is valid for 24 hours. Taking the same component again in the same month is free and issues a fresh link. Pro removes the limit entirely.`,
       },
       {
         question: "Will I get a receipt?",

@@ -23,6 +23,16 @@ const DEMO = "/demo/"
 function stripItem(item) {
   let touched = false
 
+  // Исходник из статики убираем: `public/r` отдаёт nginx без проверки, и
+  // оставленный тут `content` — это код, отданный даром. Реальный файл
+  // приезжает по подписанной ссылке через /r/pro (см. lib/registry-link).
+  for (const file of item.files ?? []) {
+    if (file.content !== undefined) {
+      delete file.content
+      touched = true
+    }
+  }
+
   if (item.meta?.preview) {
     delete item.meta.preview
     touched = true

@@ -1,4 +1,5 @@
 import { denialText, resolveAccess } from "@/lib/access"
+import { verifyRegistryLink } from "@/lib/registry-link"
 import { buildRegistryItem } from "@/lib/registry-item"
 import { getCatalogItem } from "@/registry/index"
 
@@ -12,7 +13,7 @@ import { getCatalogItem } from "@/registry/index"
 export const dynamic = "force-dynamic"
 
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ name: string }> },
 ) {
   const { name } = await params
@@ -22,12 +23,23 @@ export async function GET(
     return new Response("Not found\n", { status: 404 })
   }
 
-  const access = await resolveAccess(slug)
+  // Подписанная ссылка (сутки) открывает item без ключа: доступ и лимит
+  // проверены на её выдаче. Нет подписи — обычная проверка ключа/подписки.
+  const query = new URL(request.url).searchParams
+  const signed = verifyRegistryLink(
+    slug,
+    Number(query.get("exp")),
+    query.get("sig"),
+  )
 
-  if (!access.allowed) {
-    // 401 вместо 403: CLI показывает тело ответа, и человек видит, что
-    // делать дальше.
-    return new Response(denialText(access.reason), { status: 401 })
+  if (!signed) {
+    const access = await resolveAccess(slug)
+
+    if (!access.allowed) {
+      // 401 вместо 403: CLI показывает тело ответа, и человек видит, что
+      // делать дальше.
+      return new Response(denialText(access.reason), { status: 401 })
+    }
   }
 
   const item = await buildRegistryItem(slug)

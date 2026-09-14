@@ -7,17 +7,12 @@ import { CatalogSidebar } from "@/components/catalog/catalog-sidebar"
 import { ItemWorkbench } from "@/components/catalog/item-workbench"
 import { GatedReveal } from "@/components/catalog/gated-reveal"
 import { JsonLd } from "@/components/json-ld"
-import { CopyButton } from "@/components/copy-button"
 import { ReportDialog } from "@/components/report/report-dialog"
 import { resolveControlValues, resolvePreviewSurface } from "@/lib/controls"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
 import { localizeItem } from "@/lib/localize"
 import { breadcrumbs, SITE_URL } from "@/lib/seo"
-import {
-  getInstallCommand,
-  getItemDocUrl,
-  getRegistryItemUrl,
-} from "@/lib/site"
+import { getItemDocUrl } from "@/lib/site"
 import {
   catalogBasePath,
   getCatalogItem,
@@ -56,8 +51,6 @@ export async function ItemPage({
   const initialTheme = resolvePreviewSurface(flat.get("theme") ?? undefined)
   const initialValues = resolveControlValues(block, flat)
 
-  const installCommand = getInstallCommand(block.name)
-  const registryUrl = getRegistryItemUrl(block.name)
   const docUrl = getItemDocUrl(block.name)
   const kind = getItemKind(block.name) ?? "block"
   const category = block.categories?.[0]
@@ -198,35 +191,11 @@ export async function ItemPage({
               {t.item.dev}
             </h2>
 
-            <div className="space-y-3">
-              {installCommand && registryUrl ? (
-                <>
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                    <code className="bg-shell-elevated border-shell-border text-shell-fg min-w-0 flex-1 overflow-x-auto rounded-md border px-3 py-2 font-mono text-sm">
-                      {installCommand}
-                    </code>
-                    <CopyButton
-                      value={installCommand}
-                      label={t.item.copyCommand}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                    <code className="bg-shell-elevated border-shell-border text-shell-muted min-w-0 flex-1 overflow-x-auto rounded-md border px-3 py-2 font-mono text-sm">
-                      {registryUrl}
-                    </code>
-                    <CopyButton
-                      value={registryUrl}
-                      label={t.item.registryUrl}
-                    />
-                  </div>
-                </>
-              ) : (
-                <p className="text-shell-muted text-sm">
-                  {t.item.noCommand}
-                  <code className="mx-1 font-mono">REGISTRY_BASE_URL</code>
-                </p>
-              )}
-            </div>
+            <p className="text-shell-muted max-w-2xl text-sm text-pretty">
+              {locale === "en"
+                ? "The install command lives in the “Component source” block below — a signed link that stays valid for 24 hours."
+                : "Команда установки — в блоке «Исходник компонента» ниже: подписанная ссылка действует сутки."}
+            </p>
 
             {block.docs ? (
               <details className="border-shell-border mt-4 rounded-xl border">
@@ -268,7 +237,7 @@ export async function ItemPage({
 
             <GatedReveal
               id="code"
-              url={`/f/${block.name}.tsx`}
+              issueFor={block.name}
               asCode
               summary={t.item.source}
               note={t.item.sourceNote}

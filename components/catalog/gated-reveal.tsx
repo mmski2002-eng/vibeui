@@ -13,15 +13,17 @@ type RevealState = "idle" | "loading" | "ok" | "denied" | "error"
 /**
  * «Показать код» / «Копировать для ИИ» без утечки в статику. Полезное тело —
  * исходник или инструкция для агента — не встраивается в страницу, а
- * забирается по закрытому адресу (`/f`, `/c`) при первом раскрытии. Сервер
- * отвечает 401 без входа и без Pro: тогда вместо кода показываем, куда идти.
+ * рождается по запросу.
  *
- * Страница остаётся статической и индексируемой (в разметке кода нет), а
- * доступ решается на лету — тем же 401, что и у shadcn CLI.
+ * `issueFor` — режим исходника: панель дёргает выдачу, где один раз
+ * проверяются вход, подписка и лимит, и получает код плюс команду установки
+ * с подписью на сутки. `url` — простой текстовый источник (инструкция /c).
+ * Без входа и без Pro — 401, тогда вместо кода показываем, куда идти.
  */
 export function GatedReveal({
   id,
   url,
+  issueFor,
   summary,
   note,
   copyLabel,
@@ -29,7 +31,8 @@ export function GatedReveal({
   locale,
 }: {
   id?: string
-  url: string
+  url?: string
+  issueFor?: string
   summary: string
   note: string
   copyLabel: string
@@ -41,6 +44,7 @@ export function GatedReveal({
   const { data: session } = useSession()
   const [state, setState] = useState<RevealState>("idle")
   const [text, setText] = useState("")
+  const [install, setInstall] = useState<string | null>(null)
 
   async function load() {
     if (state === "loading" || state === "ok") {
@@ -50,13 +54,34 @@ export function GatedReveal({
     setState("loading")
 
     try {
-      const response = await fetch(url)
+      if (issueFor) {
+        const response = await fetch(
+          `/api/registry-source?name=${encodeURIComponent(issueFor)}`,
+        )
 
-      if (response.ok) {
-        setText(await response.text())
-        setState("ok")
+        if (response.ok) {
+          const data = await response.json()
+          setText(typeof data.source === "string" ? data.source : "")
+          setInstall(
+            typeof data.installCommand === "string"
+              ? data.installCommand
+              : null,
+          )
+          setState("ok")
+        } else {
+          setState(response.status === 401 ? "denied" : "error")
+        }
+      } else if (url) {
+        const response = await fetch(url)
+
+        if (response.ok) {
+          setText(await response.text())
+          setState("ok")
+        } else {
+          setState(response.status === 401 ? "denied" : "error")
+        }
       } else {
-        setState(response.status === 401 ? "denied" : "error")
+        setState("error")
       }
     } catch {
       setState("error")
@@ -87,13 +112,31 @@ export function GatedReveal({
         </div>
 
         {state === "ok" ? (
-          asCode ? (
-            <CodeBlock code={text} />
-          ) : (
-            <pre className="bg-shell-elevated border-shell-border text-shell-fg max-h-96 overflow-auto rounded-lg border p-4 text-xs leading-relaxed whitespace-pre-wrap">
-              {text}
-            </pre>
-          )
+          <div className="space-y-3">
+            {asCode ? (
+              <CodeBlock code={text} />
+            ) : (
+              <pre className="bg-shell-elevated border-shell-border text-shell-fg max-h-96 overflow-auto rounded-lg border p-4 text-xs leading-relaxed whitespace-pre-wrap">
+                {text}
+              </pre>
+            )}
+
+            {install ? (
+              <div className="space-y-1.5">
+                <p className="text-shell-muted text-xs">
+                  {en
+                    ? "Install (link is valid for 24 hours):"
+                    : "Установка (ссылка действует 24 часа):"}
+                </p>
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                  <code className="bg-shell-elevated border-shell-border text-shell-fg min-w-0 flex-1 overflow-x-auto rounded-md border px-3 py-2 font-mono text-xs">
+                    {install}
+                  </code>
+                  <CopyButton value={install} label={t.card.copyCommand} />
+                </div>
+              </div>
+            ) : null}
+          </div>
         ) : state === "denied" ? (
           <div className="border-shell-accent/40 bg-shell-accent/10 flex flex-col items-start gap-3 rounded-lg border p-4">
             <p className="text-shell-fg text-sm">

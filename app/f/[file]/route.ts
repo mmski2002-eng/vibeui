@@ -1,4 +1,5 @@
 import { denialText, resolveAccess } from "@/lib/access"
+import { verifyRegistryLink } from "@/lib/registry-link"
 import { getBlockSource } from "@/registry/source.server"
 
 /**
@@ -17,7 +18,7 @@ import { getBlockSource } from "@/registry/source.server"
 export const dynamic = "force-dynamic"
 
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ file: string }> },
 ) {
   const { file } = await params
@@ -28,10 +29,21 @@ export async function GET(
     return new Response("Not found\n", { status: 404 })
   }
 
-  const access = await resolveAccess(slug)
+  // Подписанная ссылка живёт сутки и открывает исходник без сессии: доступ и
+  // лимит проверены на её выдаче. Нет подписи — обычная проверка сессии.
+  const params_ = new URL(request.url).searchParams
+  const signed = verifyRegistryLink(
+    slug,
+    Number(params_.get("exp")),
+    params_.get("sig"),
+  )
 
-  if (!access.allowed) {
-    return new Response(denialText(access.reason), { status: 401 })
+  if (!signed) {
+    const access = await resolveAccess(slug)
+
+    if (!access.allowed) {
+      return new Response(denialText(access.reason), { status: 401 })
+    }
   }
 
   return new Response(source, {
