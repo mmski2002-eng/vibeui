@@ -72,6 +72,7 @@ export async function POST(request: Request) {
         description: `VibeUI ${plan.title}`,
         email: row.email,
         userId: current.userId,
+        plan: plan.id,
         paymentMethodId: current.paymentMethodId as string,
       })
       charged += 1

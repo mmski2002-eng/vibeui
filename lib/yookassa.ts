@@ -102,12 +102,15 @@ export async function createCheckout({
   description,
   email,
   userId,
+  plan,
   returnUrl,
 }: {
   amount: string
   description: string
   email: string
   userId: string
+  /** Уходит в metadata: по нему вебхук понимает, какой период выдавать. */
+  plan: string
   returnUrl: string
 }) {
   const money: Money = { value: amount, currency: "RUB" }
@@ -120,7 +123,7 @@ export async function createCheckout({
     // Без этого не будет автопродления: сохранённый способ оплаты и есть
     // то, чем списывают следующий период.
     save_payment_method: true,
-    metadata: { userId },
+    metadata: { userId, plan },
     receipt: receipt(email, description, money),
   })
 }
@@ -131,12 +134,14 @@ export async function chargeSaved({
   description,
   email,
   userId,
+  plan,
   paymentMethodId,
 }: {
   amount: string
   description: string
   email: string
   userId: string
+  plan: string
   paymentMethodId: string
 }) {
   const money: Money = { value: amount, currency: "RUB" }
@@ -146,7 +151,7 @@ export async function chargeSaved({
     capture: true,
     payment_method_id: paymentMethodId,
     description,
-    metadata: { userId },
+    metadata: { userId, plan },
     receipt: receipt(email, description, money),
   })
 }

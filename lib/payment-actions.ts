@@ -29,6 +29,7 @@ export async function startCheckout(formData: FormData) {
     description: `VibeUI ${plan.title}`,
     email: user.email,
     userId: user.id,
+    plan: plan.id,
     returnUrl: `${SITE_URL}/account/subscription`,
   })
 
