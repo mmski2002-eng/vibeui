@@ -14,6 +14,7 @@ import {
   sum,
 } from "drizzle-orm"
 
+import { fillDays, lastDays } from "@/lib/days"
 import { db } from "@/lib/db"
 import {
   payment,
@@ -237,4 +238,108 @@ export async function discoveryStats(days: Period, now = new Date()) {
     invited: invited[0]?.value ?? 0,
     invitedPaid: Number(invitedPaid[0]?.value ?? 0),
   } satisfies DiscoveryStats
+}
+
+export type TrendStats = {
+  revenueByDay: { day: string; value: number }[]
+  signupsByDay: { day: string; value: number }[]
+  activeByDay: { day: string; value: number }[]
+  previous: { signups: number; active: number; newPro: number; payments: number }
+  funnel: { signups: number; verified: number; active: number; pro: number }
+}
+
+/**
+ * Ряды по дням и прошлый период для стрелок изменения. Дни без событий
+ * добиваются нулями здесь, а не в разметке: график обязан показывать
+ * пустоту так же честно, как пики.
+ */
+export async function trendStats(days: Period, now = new Date()) {
+  const from = periodStart(days, now)
+  const before = periodStart(days, from)
+  const range = lastDays(days, now)
+
+  const [revenue, signups, active, previous, funnel] = await Promise.all([
+    db
+      .select({
+        day: sql<string>`to_char(date_trunc('day', ${payment.paidAt}), 'YYYY-MM-DD')`,
+        value: sql<number>`coalesce(sum(cast(${payment.amount} as numeric)), 0)`,
+      })
+      .from(payment)
+      .where(and(eq(payment.status, "succeeded"), gte(payment.paidAt, from)))
+      .groupBy(sql`date_trunc('day', ${payment.paidAt})`),
+    db
+      .select({
+        day: sql<string>`to_char(date_trunc('day', ${user.createdAt}), 'YYYY-MM-DD')`,
+        value: count(),
+      })
+      .from(user)
+      .where(gte(user.createdAt, from))
+      .groupBy(sql`date_trunc('day', ${user.createdAt})`),
+    db
+      .select({
+        day: sql<string>`to_char(date_trunc('day', ${usage.firstUsedAt}), 'YYYY-MM-DD')`,
+        value: countDistinct(usage.userId),
+      })
+      .from(usage)
+      .where(gte(usage.firstUsedAt, from))
+      .groupBy(sql`date_trunc('day', ${usage.firstUsedAt})`),
+    Promise.all([
+      db
+        .select({ value: count() })
+        .from(user)
+        .where(and(gte(user.createdAt, before), lt(user.createdAt, from))),
+      db
+        .select({ value: countDistinct(usage.userId) })
+        .from(usage)
+        .where(and(gte(usage.firstUsedAt, before), lt(usage.firstUsedAt, from))),
+      db
+        .select({ value: count() })
+        .from(subscription)
+        .where(
+          and(
+            gte(subscription.createdAt, before),
+            lt(subscription.createdAt, from),
+          ),
+        ),
+      db
+        .select({ value: count() })
+        .from(payment)
+        .where(
+          and(
+            eq(payment.status, "succeeded"),
+            gte(payment.createdAt, before),
+            lt(payment.createdAt, from),
+          ),
+        ),
+    ]),
+    // Воронка периода: зарегистрировались → подтвердили → взяли компонент
+    // → оформили Pro. Все четыре считаются по людям, пришедшим в период.
+    db
+      .select({
+        signups: count(),
+        verified: sql<number>`count(*) filter (where ${user.emailVerified})`,
+        active: sql<number>`count(*) filter (where exists (select 1 from ${usage} where ${usage.userId} = ${user.id}))`,
+        pro: sql<number>`count(*) filter (where exists (select 1 from ${subscription} where ${subscription.userId} = ${user.id}))`,
+      })
+      .from(user)
+      .where(gte(user.createdAt, from)),
+  ])
+
+  return {
+    revenueByDay: fillDays(range, revenue),
+    signupsByDay: fillDays(range, signups),
+    activeByDay: fillDays(range, active),
+    previous: {
+      signups: previous[0][0]?.value ?? 0,
+      active: previous[1][0]?.value ?? 0,
+      newPro: previous[2][0]?.value ?? 0,
+      payments: previous[3][0]?.value ?? 0,
+    },
+    funnel: {
+      signups: funnel[0]?.signups ?? 0,
+      verified: Number(funnel[0]?.verified ?? 0),
+      active: Number(funnel[0]?.active ?? 0),
+      pro: Number(funnel[0]?.pro ?? 0),
+    },
+  } satisfies TrendStats
 }

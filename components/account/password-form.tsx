@@ -3,7 +3,9 @@
 import { useState } from "react"
 
 import { ACCOUNT_TEXTS } from "@/components/account/texts"
-import { Field, INPUT_CLASS, SUBMIT_CLASS } from "@/components/auth/auth-card"
+import { Button } from "@/components/account/ui/button"
+import { useToast } from "@/components/account/ui/toast"
+import { Field, INPUT_CLASS } from "@/components/auth/auth-card"
 import { PasswordInput } from "@/components/auth/password-input"
 import { authClient } from "@/lib/auth-client"
 import type { Locale } from "@/lib/i18n"
@@ -16,6 +18,7 @@ import type { Locale } from "@/lib/i18n"
  */
 export function PasswordForm({ locale }: { locale: Locale }) {
   const t = ACCOUNT_TEXTS[locale].profile
+  const toast = useToast()
   const [state, setState] = useState<"idle" | "pending" | "done">("idle")
   const [error, setError] = useState<string>()
 
@@ -49,6 +52,7 @@ export function PasswordForm({ locale }: { locale: Locale }) {
 
           form.reset()
           setState("done")
+          toast({ title: t.changed })
 
           return
         } catch {
@@ -83,24 +87,14 @@ export function PasswordForm({ locale }: { locale: Locale }) {
       </Field>
 
       {error ? (
-        <p role="alert" className="text-shell-accent-text mb-4 text-sm">
+        <p role="alert" className="text-shell-danger mb-4 text-sm">
           {error}
         </p>
       ) : null}
 
-      {state === "done" ? (
-        <p role="status" className="text-shell-muted mb-4 text-sm">
-          {t.changed}
-        </p>
-      ) : null}
-
-      <button
-        type="submit"
-        className={SUBMIT_CLASS}
-        disabled={state === "pending"}
-      >
+      <Button type="submit" variant="primary" pending={state === "pending"}>
         {state === "pending" ? t.changing : t.change}
-      </button>
+      </Button>
     </form>
   )
 }

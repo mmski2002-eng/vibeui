@@ -1,11 +1,14 @@
-import Link from "next/link"
 import { desc, eq } from "drizzle-orm"
+import { Heart } from "lucide-react"
 
 import {
   FavoritesGrid,
   type FavoriteCard,
 } from "@/components/account/favorites-grid"
 import { ACCOUNT_TEXTS } from "@/components/account/texts"
+import { ButtonLink } from "@/components/account/ui/button"
+import { EmptyState } from "@/components/account/ui/empty-state"
+import { PageHeader } from "@/components/account/ui/page-header"
 import { CatalogThumbnail } from "@/components/catalog/catalog-thumbnail"
 import { db } from "@/lib/db"
 import { favorite } from "@/lib/db/schema"
@@ -60,35 +63,33 @@ export async function AccountFavorites({ locale }: { locale: Locale }) {
 
   return (
     <>
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="text-shell-fg text-2xl font-semibold tracking-tight sm:text-3xl">
-            {t.title}
-          </h1>
-          <p className="text-shell-muted mt-1.5 max-w-xl text-sm leading-relaxed">
-            {t.lead}
-          </p>
-        </div>
-        {rows.length > 0 ? (
-          <p className="text-shell-muted text-sm tabular-nums">
-            {t.count(rows.length)}
-          </p>
-        ) : null}
-      </div>
+      <PageHeader
+        title={t.title}
+        lead={t.lead}
+        action={
+          rows.length > 0 ? (
+            <p className="text-shell-muted text-sm tabular-nums">
+              {t.count(rows.length)}
+            </p>
+          ) : null
+        }
+      />
 
       {rows.length === 0 ? (
-        <div className="border-shell-border mt-8 rounded-2xl border border-dashed p-10 text-center">
-          <p className="text-shell-fg text-sm">{t.empty}</p>
-          <p className="text-shell-muted mx-auto mt-2 max-w-sm text-sm leading-relaxed">
-            {t.emptyNote}
-          </p>
-          <Link
-            href={localePath(locale, "/components")}
-            className="bg-shell-accent text-shell-accent-fg mt-6 inline-flex h-10 items-center rounded-lg px-4 text-sm font-semibold transition-colors hover:bg-shell-accent-deep"
-          >
-            {t.emptyAction}
-          </Link>
-        </div>
+        <EmptyState
+          index={1}
+          icon={<Heart />}
+          title={t.empty}
+          note={t.emptyNote}
+          action={
+            <ButtonLink
+              href={localePath(locale, "/components")}
+              variant="primary"
+            >
+              {t.emptyAction}
+            </ButtonLink>
+          }
+        />
       ) : (
         <FavoritesGrid locale={locale} cards={cards} />
       )}

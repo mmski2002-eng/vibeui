@@ -49,7 +49,7 @@ export function PaymentActions({
   }
 
   return (
-    <div className="border-shell-border bg-shell-panel mt-6 grid gap-4 rounded-2xl border p-5">
+    <div className="border-shell-border bg-shell-panel acc-shadow acc-reveal mt-6 grid gap-4 rounded-2xl border p-5">
       <div className="border-shell-border border-b pb-4">
         <p className="text-shell-fg text-sm font-medium">{t.receipt}</p>
         <p className="text-shell-muted mt-1 max-w-xl text-sm leading-relaxed">
@@ -69,7 +69,7 @@ export function PaymentActions({
             onClick={() =>
               run("receipt", () => setReceiptUrl({ paymentId, url: receipt }))
             }
-            className="border-shell-border text-shell-fg hover:border-shell-accent inline-flex h-10 items-center gap-2 rounded-lg border px-3.5 text-sm transition-colors disabled:opacity-60"
+            className="acc-press border-shell-border bg-shell-panel text-shell-fg hover:border-shell-accent-line hover:bg-shell-elevated inline-flex h-10 items-center gap-2 rounded-lg border px-3.5 text-sm font-medium disabled:opacity-60"
           >
             {pending === "receipt" ? (
               <Loader2 className="size-4 animate-spin" aria-hidden="true" />
@@ -113,7 +113,7 @@ export function PaymentActions({
             onClick={() =>
               run("refund", () => markRefunded({ paymentId, reason }))
             }
-            className="border-shell-border text-shell-fg hover:border-shell-accent inline-flex h-10 items-center gap-2 rounded-lg border px-3.5 text-sm transition-colors disabled:opacity-60"
+            className="acc-press border-shell-border bg-shell-panel text-shell-fg hover:border-shell-accent-line hover:bg-shell-elevated inline-flex h-10 items-center gap-2 rounded-lg border px-3.5 text-sm font-medium disabled:opacity-60"
           >
             {pending === "refund" ? (
               <Loader2 className="size-4 animate-spin" aria-hidden="true" />
@@ -160,7 +160,7 @@ function Action({
         type="button"
         disabled={busy}
         onClick={onRun}
-        className="border-shell-border text-shell-fg hover:border-shell-accent mt-3 inline-flex h-10 items-center gap-2 rounded-lg border px-3.5 text-sm transition-colors disabled:opacity-60"
+        className="acc-press border-shell-border bg-shell-panel text-shell-fg hover:border-shell-accent-line hover:bg-shell-elevated mt-3 inline-flex h-10 items-center gap-2 rounded-lg border px-3.5 text-sm font-medium disabled:opacity-60"
       >
         {busy ? (
           <Loader2 className="size-4 animate-spin" aria-hidden="true" />

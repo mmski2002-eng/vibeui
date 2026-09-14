@@ -2,6 +2,9 @@ import Link from "next/link"
 import { desc, sql } from "drizzle-orm"
 
 import { AdminHeading } from "@/components/admin/parts"
+import { ButtonLink } from "@/components/account/ui/button"
+import { CellStack, DataTable } from "@/components/account/ui/data-table"
+import { formatDateTime } from "@/lib/format"
 import { ADMIN_TEXTS } from "@/components/admin/texts"
 import { requireAdmin } from "@/lib/admin"
 import { db } from "@/lib/db"
@@ -35,48 +38,61 @@ export async function AdminLog({ before }: { before?: string }) {
     <>
       <AdminHeading title={t.title} lead={t.lead} />
 
-      {page.length === 0 ? (
-        <p className="text-shell-muted text-sm">{t.empty}</p>
-      ) : (
-        <ul className="border-shell-border divide-y divide-[var(--shell-divider)] rounded-2xl border">
-          {page.map((row) => (
-            <li
-              key={row.id}
-              className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-4 py-3 text-sm"
+      <DataTable
+        index={1}
+        caption={t.title}
+        empty={t.empty}
+        columns={[
+          { key: "when", label: t.columnWhen, className: "w-36" },
+          { key: "what", label: t.columnWhat },
+          { key: "who", label: t.columnWho, hideBelow: "md" },
+          { key: "target", label: t.columnTarget, align: "right", className: "w-28" },
+        ]}
+        rows={page.map((row) => ({
+          id: row.id,
+          cells: [
+            <span key="when" className="text-shell-muted text-xs tabular-nums">
+              {formatDateTime(row.createdAt)}
+            </span>,
+            <CellStack
+              key="what"
+              primary={t.actions[row.action] ?? row.action}
+              secondary={
+                row.details &&
+                typeof row.details === "object" &&
+                "reason" in row.details &&
+                typeof row.details.reason === "string"
+                  ? row.details.reason
+                  : undefined
+              }
+            />,
+            <span key="who" className="text-shell-muted truncate text-xs">
+              {row.adminEmail}
+            </span>,
+            <Link
+              key="target"
+              href={
+                row.targetType === "user"
+                  ? `/account/admin/users/${row.targetId}`
+                  : row.targetType === "payment"
+                    ? `/account/admin/payments/${row.targetId}`
+                    : `/account/admin/reports/${row.targetId}`
+              }
+              className="text-shell-muted hover:text-shell-fg font-mono text-xs transition-colors"
             >
-              <span className="text-shell-muted w-36 shrink-0 tabular-nums">
-                {row.createdAt.toLocaleString("ru-RU")}
-              </span>
-              <span className="text-shell-muted min-w-0 flex-1 truncate">
-                {row.adminEmail}
-              </span>
-              <span className="text-shell-fg">
-                {t.actions[row.action] ?? row.action}
-              </span>
-              <Link
-                href={
-                  row.targetType === "user"
-                    ? `/account/admin/users/${row.targetId}`
-                    : row.targetType === "payment"
-                      ? `/account/admin/payments/${row.targetId}`
-                      : `/account/admin/reports/${row.targetId}`
-                }
-                className="text-shell-muted hover:text-shell-fg shrink-0 font-mono text-xs transition-colors"
-              >
-                {row.targetId.slice(0, 8)}…
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+              {row.targetType} · {row.targetId.slice(0, 8)}…
+            </Link>,
+          ],
+        }))}
+      />
 
       {next ? (
-        <Link
+        <ButtonLink
           href={`/account/admin/log?before=${next.toISOString()}`}
-          className="border-shell-border text-shell-fg hover:border-shell-accent mt-4 inline-flex h-10 items-center rounded-lg border px-4 text-sm transition-colors"
+          className="mt-4"
         >
           {t.more}
-        </Link>
+        </ButtonLink>
       ) : null}
     </>
   )

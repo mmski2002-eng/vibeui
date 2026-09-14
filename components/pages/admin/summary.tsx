@@ -1,31 +1,34 @@
 import {
-  AdminHeading,
-  DayBars,
-  Metric,
-  PeriodSwitch,
-  Ranked,
-  Section,
-} from "@/components/admin/parts"
+  AlertTriangle,
+  CreditCard,
+  Search,
+  Sparkles,
+  UserPlus,
+  Users,
+  Wallet,
+} from "lucide-react"
+
+import { Ranked } from "@/components/admin/parts"
 import { ADMIN_TEXTS } from "@/components/admin/texts"
+import { AreaChart, Bars, Funnel } from "@/components/account/ui/charts"
+import { PageHeader } from "@/components/account/ui/page-header"
+import { Panel, PanelHeader } from "@/components/account/ui/panel"
+import { Segmented } from "@/components/account/ui/segmented"
+import { StatTile } from "@/components/account/ui/stat-tile"
 import { requireAdmin } from "@/lib/admin"
 import {
   discoveryStats,
   moneyStats,
   peopleStats,
   periodStart,
+  trendStats,
   type Period,
 } from "@/lib/admin-stats"
-
-function money(value: number) {
-  return `${Math.round(value).toLocaleString("ru-RU")} ₽`
-}
-
-function share(part: number, whole: number) {
-  return whole > 0 ? `${Math.round((part / whole) * 100)}%` : "—"
-}
+import { formatNumber } from "@/lib/format"
 
 /**
- * Сводка: деньги, люди, поиск и приглашения.
+ * Сводка: ключевые числа с динамикой, графики, «требует внимания»,
+ * воронка, поиск и приглашения — в порядке чтения сверху вниз.
  *
  * Никаких выдуманных показателей: каждое число здесь — это запрос к базе.
  * Там, где данных нет, так и написано; нулями достижения не рисуем.
@@ -34,10 +37,11 @@ export async function AdminSummary({ period }: { period: Period }) {
   await requireAdmin()
 
   const t = ADMIN_TEXTS.summary
-  const [money$, people, discovery] = await Promise.all([
+  const [money, people, discovery, trends] = await Promise.all([
     moneyStats(period),
     peopleStats(period),
     discoveryStats(period),
+    trendStats(period),
   ])
 
   const since = periodStart(period).toLocaleDateString("ru-RU", {
@@ -46,96 +50,193 @@ export async function AdminSummary({ period }: { period: Period }) {
   })
 
   return (
-    <>
-      <AdminHeading
+    <div className="grid gap-6">
+      <PageHeader
         title={t.title}
         lead={t.lead}
+        eyebrow={t.since(since)}
         action={
-          <PeriodSwitch
-            base="/account/admin"
-            current={period}
-            labels={t.periods}
+          <Segmented
+            name="admin-period"
+            current={String(period)}
+            items={[7, 30, 90].map((days) => ({
+              value: String(days),
+              label: t.periods[days as Period],
+              href: `/account/admin?period=${days}`,
+            }))}
           />
         }
       />
 
-      <p className="text-shell-muted -mt-2 mb-6 text-xs">{t.since(since)}</p>
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <StatTile
+          index={0}
+          label={t.revenue}
+          value={money.revenue}
+          kind="rub"
+          before={money.revenueBefore}
+          deltaSuffix={t.versusPeriod}
+          spark={trends.revenueByDay.map((row) => row.value)}
+          tone="accent"
+          icon={<Wallet />}
+          href="/account/admin/payments?status=succeeded"
+        />
+        <StatTile
+          index={1}
+          label={t.newPro}
+          value={people.newPro}
+          before={trends.previous.newPro}
+          deltaSuffix={t.versusPeriod}
+          tone="ok"
+          icon={<Sparkles />}
+        />
+        <StatTile
+          index={2}
+          label={t.signups}
+          value={people.signups}
+          before={trends.previous.signups}
+          deltaSuffix={t.versusPeriod}
+          spark={trends.signupsByDay.map((row) => row.value)}
+          icon={<UserPlus />}
+          href="/account/admin/users"
+        />
+        <StatTile
+          index={3}
+          label={t.active}
+          value={people.active}
+          before={trends.previous.active}
+          deltaSuffix={t.versusPeriod}
+          spark={trends.activeByDay.map((row) => row.value)}
+          icon={<Users />}
+        />
+      </div>
 
-      <Section title={t.money}>
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-          <Metric
-            label={t.revenue}
-            value={money(money$.revenue)}
-            note={t.versus(money(money$.revenueBefore))}
-            accent={money$.revenue > 0}
+      <div className="grid items-start gap-6 xl:grid-cols-2">
+        <Panel index={4}>
+          <PanelHeader
+            title={t.revenueChart}
+            action={
+              <span className="text-shell-muted text-xs tabular-nums">
+                {money.payments} · {formatNumber(money.average, "rub")}
+              </span>
+            }
           />
-          <Metric label={t.payments} value={String(money$.payments)} />
-          <Metric label={t.average} value={money(money$.average)} />
-          <Metric label={t.activeSubs} value={String(money$.activeSubs)} />
-          <Metric label={t.cancelling} value={String(money$.cancelling)} />
-          <Metric
+          <AreaChart
+            data={trends.revenueByDay}
+            kind="rub"
+            labels={[t.revenue]}
+            index={5}
+            height={160}
+          />
+        </Panel>
+        <Panel index={5}>
+          <PanelHeader title={t.signupsChart} />
+          <Bars
+            data={trends.signupsByDay}
+            label={t.signups}
+            index={6}
+            height={160}
+          />
+        </Panel>
+      </div>
+
+      <section>
+        <PanelHeader
+          title={
+            <span className="flex items-center gap-2">
+              <AlertTriangle className="text-shell-warn size-4" aria-hidden="true" />
+              {t.attention}
+            </span>
+          }
+          note={t.attentionNote}
+          className="acc-reveal mb-3"
+        />
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          <StatTile
+            index={6}
             label={t.stuck}
-            value={String(money$.stuck)}
+            value={money.stuck}
             note={t.stuckNote}
-            accent={money$.stuck > 0}
+            tone={money.stuck > 0 ? "warn" : undefined}
+            href="/account/admin/payments?status=pending"
+            icon={<CreditCard />}
           />
-          <Metric
+          <StatTile
+            index={7}
             label={t.failing}
-            value={String(money$.failing)}
-            accent={money$.failing > 0}
+            value={money.failing}
+            tone={money.failing > 0 ? "danger" : undefined}
+            href="/account/admin/users"
           />
-        </div>
-      </Section>
-
-      <Section title={t.people}>
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-          <Metric label={t.signups} value={String(people.signups)} />
-          <Metric
-            label={t.verified}
-            value={share(people.verified, people.signups)}
-            note={`${people.verified} из ${people.signups}`}
+          <StatTile
+            index={8}
+            label={t.cancelling}
+            value={money.cancelling}
+            tone={money.cancelling > 0 ? "warn" : undefined}
+            note={`${t.activeSubs}: ${money.activeSubs}`}
           />
-          <Metric label={t.active} value={String(people.active)} />
-          <Metric
+          <StatTile
+            index={9}
             label={t.exhausted}
-            value={String(people.exhausted)}
-            accent={people.exhausted > 0}
+            value={people.exhausted}
+            tone={people.exhausted > 0 ? "accent" : undefined}
+            note={`${t.churn}: ${people.churn}`}
           />
-          <Metric label={t.newPro} value={String(people.newPro)} />
-          <Metric label={t.churn} value={String(people.churn)} />
         </div>
+      </section>
 
-        <div className="mt-3">
-          {people.byDay.length > 0 ? (
-            <DayBars data={people.byDay} label={t.signups} />
-          ) : (
-            <p className="text-shell-muted text-sm">{t.noData}</p>
-          )}
-        </div>
-      </Section>
+      <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
+        <Panel index={10}>
+          <PanelHeader title={t.funnel} note={t.funnelNote} />
+          <Funnel
+            index={11}
+            steps={[
+              { label: t.signups, value: trends.funnel.signups },
+              { label: t.funnelVerified, value: trends.funnel.verified },
+              { label: t.funnelActive, value: trends.funnel.active },
+              { label: t.funnelPro, value: trends.funnel.pro },
+            ]}
+          />
+        </Panel>
 
-      <Section title={t.discovery}>
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-          <Metric label={t.visits} value={String(discovery.visits)} />
-          <Metric label={t.invited} value={String(discovery.invited)} />
-          <Metric label={t.invitedPaid} value={String(discovery.invitedPaid)} />
-        </div>
-
-        <div className="mt-4 grid gap-4 lg:grid-cols-2">
-          <div>
-            <p className="text-shell-muted mb-2 text-xs font-medium tracking-wide uppercase">
-              {t.topQueries}
-            </p>
-            <Ranked rows={discovery.top} empty={t.noData} />
+        <Panel index={11}>
+          <PanelHeader
+            title={
+              <span className="flex items-center gap-2">
+                <Search className="text-shell-muted size-4" aria-hidden="true" />
+                {t.searchTitle}
+              </span>
+            }
+          />
+          <div className="grid gap-5 md:grid-cols-2">
+            <div>
+              <p className="text-shell-muted mb-2 text-[11px] font-medium tracking-wide uppercase">
+                {t.topQueries}
+              </p>
+              <Ranked rows={discovery.top} empty={t.noData} />
+            </div>
+            <div>
+              <p className="text-shell-muted mb-2 text-[11px] font-medium tracking-wide uppercase">
+                {t.emptyQueries}
+              </p>
+              <Ranked rows={discovery.empty} empty={t.noData} tone="warn" />
+            </div>
           </div>
-          <div>
-            <p className="text-shell-muted mb-2 text-xs font-medium tracking-wide uppercase">
-              {t.emptyQueries}
-            </p>
-            <Ranked rows={discovery.empty} empty={t.noData} />
-          </div>
+        </Panel>
+      </div>
+
+      <Panel index={12}>
+        <PanelHeader title={t.referralsTitle} />
+        <div className="grid gap-3 sm:grid-cols-3">
+          <StatTile label={t.visits} value={discovery.visits} />
+          <StatTile label={t.invited} value={discovery.invited} />
+          <StatTile
+            label={t.invitedPaid}
+            value={discovery.invitedPaid}
+            tone={discovery.invitedPaid > 0 ? "ok" : undefined}
+          />
         </div>
-      </Section>
-    </>
+      </Panel>
+    </div>
   )
 }

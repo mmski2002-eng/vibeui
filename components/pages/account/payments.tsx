@@ -1,25 +1,35 @@
 import { desc, eq } from "drizzle-orm"
+import { Receipt } from "lucide-react"
 
-import { PaymentsList, type PaymentRow } from "@/components/account/billing-parts"
 import { ACCOUNT_TEXTS } from "@/components/account/texts"
+import { DataTable } from "@/components/account/ui/data-table"
+import { EmptyState } from "@/components/account/ui/empty-state"
+import { PageHeader } from "@/components/account/ui/page-header"
+import { StatTile } from "@/components/account/ui/stat-tile"
+import { StatusPill, type PillTone } from "@/components/account/ui/status-pill"
 import { db } from "@/lib/db"
 import { payment } from "@/lib/db/schema"
+import { formatDate, formatNumber } from "@/lib/format"
 import type { Locale } from "@/lib/i18n"
 import { requireUser } from "@/lib/session"
 
-function money(amount: string, locale: Locale) {
-  const value = Math.round(Number(amount))
-
-  return locale === "en" ? `${value} RUB` : `${value} ₽`
-}
+type Status = keyof (typeof ACCOUNT_TEXTS)["ru"]["billing"]["status"]
 
 /** Статусы ЮKassa приводим к четырём понятным: остальное — «неизвестен». */
-function paymentStatus(value: string): PaymentRow["status"] {
+function paymentStatus(value: string): Status {
   if (value === "succeeded" || value === "pending" || value === "canceled") {
     return value
   }
 
   return value === "refunded" ? "refunded" : "unknown"
+}
+
+const TONE: Record<Status, PillTone> = {
+  succeeded: "ok",
+  pending: "warn",
+  canceled: "muted",
+  refunded: "accent",
+  unknown: "muted",
 }
 
 /**
@@ -29,6 +39,7 @@ function paymentStatus(value: string): PaymentRow["status"] {
 export async function AccountPayments({ locale }: { locale: Locale }) {
   const user = await requireUser(locale)
   const t = ACCOUNT_TEXTS[locale].payments
+  const b = ACCOUNT_TEXTS[locale].billing
 
   const history = await db
     .select()
@@ -37,28 +48,103 @@ export async function AccountPayments({ locale }: { locale: Locale }) {
     .orderBy(desc(payment.createdAt))
     .limit(200)
 
-  const rows: PaymentRow[] = history.map((entry) => ({
-    id: entry.id,
-    date: (entry.paidAt ?? entry.createdAt).toLocaleDateString(
-      locale === "en" ? "en-GB" : "ru-RU",
-    ),
-    amount: money(entry.amount, locale),
-    status: paymentStatus(entry.status),
-    receiptUrl: entry.receiptUrl,
-  }))
+  const paid = history.filter((entry) => entry.status === "succeeded")
+  const total = paid.reduce((sum, entry) => sum + Number(entry.amount), 0)
+  const year = new Date().getUTCFullYear()
+  const thisYear = paid
+    .filter((entry) => (entry.paidAt ?? entry.createdAt).getUTCFullYear() === year)
+    .reduce((sum, entry) => sum + Number(entry.amount), 0)
 
   return (
     <>
-      <h1 className="text-shell-fg text-2xl font-semibold tracking-tight sm:text-3xl">
-        {t.title}
-      </h1>
-      <p className="text-shell-muted mt-1.5 max-w-2xl text-sm leading-relaxed">
-        {t.lead}
-      </p>
+      <PageHeader title={t.title} lead={t.lead} />
 
-      <section className="mt-6">
-        <PaymentsList locale={locale} rows={rows} />
-      </section>
+      {history.length === 0 ? (
+        <EmptyState index={1} icon={<Receipt />} title={t.empty} />
+      ) : (
+        <div className="grid gap-6">
+          <div className="grid gap-3 sm:grid-cols-3">
+            <StatTile
+              index={1}
+              label={b.paidTotal}
+              value={total}
+              kind="rub"
+              locale={locale}
+              note={b.paymentsCount(paid.length)}
+            />
+            <StatTile
+              index={2}
+              label={String(year)}
+              value={thisYear}
+              kind="rub"
+              locale={locale}
+            />
+            <StatTile
+              index={3}
+              label={b.status.pending}
+              value={history.filter((entry) => entry.status === "pending").length}
+              locale={locale}
+              tone={
+                history.some((entry) => entry.status === "pending")
+                  ? "warn"
+                  : undefined
+              }
+            />
+          </div>
+
+          <DataTable
+            index={4}
+            caption={t.title}
+            empty={t.empty}
+            columns={[
+              { key: "date", label: b.columnDate, className: "w-32" },
+              { key: "status", label: b.columnStatus },
+              { key: "amount", label: b.columnAmount, align: "right", className: "w-28" },
+              { key: "receipt", label: b.columnReceipt, align: "right", className: "w-36" },
+            ]}
+            rows={history.map((entry) => {
+              const status = paymentStatus(entry.status)
+
+              return {
+                id: entry.id,
+                cells: [
+                  <span key="date" className="text-shell-muted tabular-nums">
+                    {formatDate(entry.paidAt ?? entry.createdAt, locale)}
+                  </span>,
+                  <StatusPill key="status" tone={TONE[status]}>
+                    {b.status[status]}
+                  </StatusPill>,
+                  <span key="amount" className="font-medium tabular-nums">
+                    {formatNumber(Number(entry.amount), "rub", locale)}
+                  </span>,
+                  entry.receiptUrl ? (
+                    <a
+                      key="receipt"
+                      href={entry.receiptUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-shell-accent-text inline-flex items-center gap-1 text-xs font-medium hover:underline"
+                    >
+                      <Receipt className="size-3.5" aria-hidden="true" />
+                      {t.receipt}
+                    </a>
+                  ) : status === "succeeded" ? (
+                    <span key="receipt" className="text-shell-muted text-xs">
+                      {t.receiptSoon}
+                    </span>
+                  ) : (
+                    <span key="receipt" />
+                  ),
+                ],
+              }
+            })}
+          />
+
+          <p className="text-shell-muted text-xs leading-relaxed">
+            {b.paymentsNote}
+          </p>
+        </div>
+      )}
     </>
   )
 }

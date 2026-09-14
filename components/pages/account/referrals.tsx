@@ -1,15 +1,26 @@
-import Link from "next/link"
 import { notFound } from "next/navigation"
+import { Link2, MousePointerClick, UserPlus, Users, Wallet } from "lucide-react"
 
 import { CopyLink } from "@/components/account/copy-link"
 import { ACCOUNT_TEXTS } from "@/components/account/texts"
+import { ButtonLink } from "@/components/account/ui/button"
+import { AreaChart, Funnel } from "@/components/account/ui/charts"
+import { CellStack, DataTable } from "@/components/account/ui/data-table"
+import { PageHeader } from "@/components/account/ui/page-header"
+import { Panel, PanelHeader } from "@/components/account/ui/panel"
+import { Segmented } from "@/components/account/ui/segmented"
+import { StatTile } from "@/components/account/ui/stat-tile"
+import { StatusPill } from "@/components/account/ui/status-pill"
+import { formatDate } from "@/lib/format"
 import { localePath, type Locale } from "@/lib/i18n"
 import {
   maskEmail,
   partnerCode,
+  partnerStats,
   referralsOf,
   referralTotals,
   visitsByCode,
+  type PartnerPeriod,
 } from "@/lib/partners"
 import { SITE_URL } from "@/lib/seo"
 import { requireUser } from "@/lib/session"
@@ -17,7 +28,7 @@ import { requireUser } from "@/lib/session"
 const PAGE = 50
 
 /**
- * Кабинет партнёра: ссылка, счётчики и список приведённых людей.
+ * Кабинет партнёра: ссылка, динамика, воронка и список приведённых людей.
  *
  * Не партнёру — 404, а не «раздел недоступен»: программа закрытая, и
  * объяснять, как в неё попасть, страница не должна.
@@ -25,9 +36,11 @@ const PAGE = 50
 export async function AccountReferrals({
   locale,
   before,
+  period = 30,
 }: {
   locale: Locale
   before?: string
+  period?: PartnerPeriod
 }) {
   const user = await requireUser(locale)
   const code = await partnerCode(user.id)
@@ -41,119 +54,184 @@ export async function AccountReferrals({
   const validCursor =
     cursor && !Number.isNaN(cursor.getTime()) ? cursor : undefined
 
-  const [clicks, totals, rows] = await Promise.all([
+  const [clicks, totals, rows, stats] = await Promise.all([
     visitsByCode(code),
     referralTotals(user.id),
     referralsOf(user.id, { before: validCursor, limit: PAGE + 1 }),
+    partnerStats(user.id, code, period),
   ])
 
   const page = rows.slice(0, PAGE)
   const next = rows.length > PAGE ? page[page.length - 1]?.createdAt : null
-  const dates = locale === "en" ? "en-GB" : "ru-RU"
+  const conversion =
+    totals.total > 0 ? Math.round((totals.paid / totals.total) * 100) : 0
+  const base = localePath(locale, "/account/referrals")
 
   return (
     <>
-      <h1 className="text-shell-fg text-2xl font-semibold tracking-tight sm:text-3xl">
-        {t.title}
-      </h1>
-      <p className="text-shell-muted mt-1.5 max-w-2xl text-sm leading-relaxed">
-        {t.lead}
-      </p>
-
-      <section className="border-shell-border bg-shell-panel mt-6 rounded-2xl border p-5 sm:p-6">
-        <CopyLink url={`${SITE_URL}/i/${code}`} locale={locale} />
-
-        <dl className="border-shell-border mt-5 grid grid-cols-3 gap-4 border-t pt-5 text-sm">
-          <Stat label={t.clicks} value={String(clicks)} />
-          <Stat label={t.signedUp} value={String(totals.total)} />
-          <Stat
-            label={t.paid}
-            value={String(totals.paid)}
-            accent={totals.paid > 0}
+      <PageHeader
+        title={t.title}
+        lead={t.lead}
+        action={
+          <Segmented
+            name="ref-period"
+            current={String(period)}
+            items={[30, 90].map((days) => ({
+              value: String(days),
+              label: t.period[days as PartnerPeriod],
+              href: `${base}?period=${days}`,
+            }))}
           />
-        </dl>
-      </section>
+        }
+      />
 
-      <section className="mt-8">
-        <h2 className="text-shell-fg text-sm font-medium">{t.listTitle}</h2>
-        {page.length === 0 ? (
-          <p className="text-shell-muted mt-3 text-sm">{t.listEmpty}</p>
-        ) : (
-          <ul className="border-shell-border mt-3 divide-y divide-[var(--shell-divider)] rounded-2xl border">
-            {page.map((referral) => (
-              <li
-                key={referral.id}
-                className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 px-4 py-3 text-sm"
-              >
-                <span className="min-w-0 flex-1">
-                  <span className="text-shell-fg block truncate">
-                    {maskEmail(referral.email)}
-                  </span>
-                  <span className="text-shell-muted block truncate text-xs">
-                    {referral.name}
-                  </span>
-                </span>
-                <span
-                  className={`shrink-0 rounded-md px-2 py-0.5 text-xs font-medium ${
-                    referral.firstPaidAt
-                      ? "bg-shell-accent text-shell-accent-fg"
-                      : "border-shell-border text-shell-muted border"
-                  }`}
-                >
+      <div className="grid gap-6">
+        <Panel variant="hero" index={0}>
+          <PanelHeader
+            title={
+              <span className="flex items-center gap-2">
+                <Link2 className="text-shell-accent-text size-4" aria-hidden="true" />
+                {t.linkTitle}
+              </span>
+            }
+            action={
+              <span className="text-shell-muted font-mono text-xs">
+                {t.code}: <span className="text-shell-fg">{code}</span>
+              </span>
+            }
+          />
+          <CopyLink url={`${SITE_URL}/i/${code}`} locale={locale} />
+        </Panel>
+
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          <StatTile
+            index={1}
+            label={t.clicks}
+            value={stats.current.visits}
+            before={stats.previous.visits}
+            deltaSuffix={t.versus}
+            locale={locale}
+            spark={stats.visitsByDay.map((row) => row.value)}
+            icon={<MousePointerClick />}
+            note={`${clicks} ${t.allTime}`}
+          />
+          <StatTile
+            index={2}
+            label={t.signedUp}
+            value={stats.current.signups}
+            before={stats.previous.signups}
+            deltaSuffix={t.versus}
+            locale={locale}
+            spark={stats.signupsByDay.map((row) => row.value)}
+            tone="accent"
+            icon={<UserPlus />}
+            note={`${totals.total} ${t.allTime}`}
+          />
+          <StatTile
+            index={3}
+            label={t.paid}
+            value={stats.current.paid}
+            before={stats.previous.paid}
+            deltaSuffix={t.versus}
+            locale={locale}
+            spark={stats.paidByDay.map((row) => row.value)}
+            tone="ok"
+            icon={<Wallet />}
+            note={`${totals.paid} ${t.allTime}`}
+          />
+          <StatTile
+            index={4}
+            label={t.conversion}
+            value={conversion}
+            kind="percent"
+            locale={locale}
+            icon={<Users />}
+            note={`${totals.paid} / ${totals.total}`}
+          />
+        </div>
+
+        <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
+          <Panel index={5}>
+            <PanelHeader title={t.dynamics} note={t.dynamicsNote} />
+            <AreaChart
+              data={stats.visitsByDay}
+              second={stats.signupsByDay}
+              labels={[t.clicks, t.signedUp]}
+              locale={locale}
+              index={6}
+              secondTone="ok"
+            />
+          </Panel>
+
+          <Panel index={6}>
+            <PanelHeader title={t.funnelTitle} note={t.funnelNote} />
+            <Funnel
+              locale={locale}
+              index={7}
+              steps={[
+                { label: t.clicks, value: stats.current.visits },
+                { label: t.signedUp, value: stats.current.signups },
+                { label: t.paid, value: stats.current.paid },
+              ]}
+            />
+          </Panel>
+        </div>
+
+        <section>
+          <h2 className="text-shell-fg acc-reveal mb-3 font-semibold" style={{ ["--i" as string]: 7 }}>
+            {t.listTitle}
+          </h2>
+          <DataTable
+            index={8}
+            caption={t.listTitle}
+            empty={t.listEmpty}
+            columns={[
+              { key: "person", label: t.columnPerson },
+              { key: "status", label: t.columnStatus, className: "w-36" },
+              { key: "date", label: t.columnDate, align: "right", className: "w-32" },
+            ]}
+            rows={page.map((referral) => ({
+              id: referral.id,
+              cells: [
+                <CellStack
+                  key="person"
+                  primary={maskEmail(referral.email)}
+                  secondary={referral.name}
+                />,
+                <StatusPill key="status" tone={referral.firstPaidAt ? "ok" : "muted"} dot={Boolean(referral.firstPaidAt)}>
                   {referral.firstPaidAt ? t.paidLabel : t.notPaid}
+                </StatusPill>,
+                <span key="date" className="text-shell-muted text-xs tabular-nums">
+                  {formatDate(referral.createdAt, locale)}
+                </span>,
+              ],
+            }))}
+          />
+
+          {next ? (
+            <ButtonLink
+              href={`${base}?period=${period}&before=${next.toISOString()}`}
+              className="mt-4"
+            >
+              {t.more}
+            </ButtonLink>
+          ) : null}
+        </section>
+
+        <Panel variant="soft" index={9}>
+          <PanelHeader title={t.howTitle} />
+          <ol className="text-shell-muted grid gap-2 text-sm leading-relaxed">
+            {t.how.map((line, position) => (
+              <li key={line} className="flex gap-2.5">
+                <span className="text-shell-accent-text shrink-0 tabular-nums">
+                  {position + 1}.
                 </span>
-                <span className="text-shell-muted w-24 shrink-0 text-right text-xs tabular-nums">
-                  {referral.createdAt.toLocaleDateString(dates)}
-                </span>
+                {line}
               </li>
             ))}
-          </ul>
-        )}
-
-        {next ? (
-          <Link
-            href={localePath(
-              locale,
-              `/account/referrals?before=${next.toISOString()}`,
-            )}
-            className="border-shell-border text-shell-fg hover:border-shell-accent mt-4 inline-flex h-10 items-center rounded-lg border px-4 text-sm transition-colors"
-          >
-            {t.more}
-          </Link>
-        ) : null}
-      </section>
-
-      <section className="border-shell-border mt-8 rounded-2xl border p-5 sm:p-6">
-        <h2 className="text-shell-fg text-sm font-medium">{t.howTitle}</h2>
-        <ol className="text-shell-muted mt-3 grid gap-2 text-sm leading-relaxed">
-          {t.how.map((line) => (
-            <li key={line}>{line}</li>
-          ))}
-        </ol>
-      </section>
+          </ol>
+        </Panel>
+      </div>
     </>
-  )
-}
-
-function Stat({
-  label,
-  value,
-  accent,
-}: {
-  label: string
-  value: string
-  accent?: boolean
-}) {
-  return (
-    <div className="min-w-0">
-      <dt className="text-shell-muted truncate text-xs">{label}</dt>
-      <dd
-        className={`mt-1 text-xl font-semibold tabular-nums ${
-          accent ? "text-shell-accent-text" : "text-shell-fg"
-        }`}
-      >
-        {value}
-      </dd>
-    </div>
   )
 }

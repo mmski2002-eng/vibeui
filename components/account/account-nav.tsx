@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, ViewTransition } from "react"
 import {
   BarChart3,
   ChevronDown,
@@ -25,6 +25,7 @@ import {
 import { ACCOUNT_TEXTS } from "@/components/account/texts"
 import { ADMIN_TEXTS } from "@/components/admin/texts"
 import { localePath, stripLocale, type Locale } from "@/lib/i18n"
+import { cn } from "@/lib/utils"
 
 type Section = { href: string; label: string; icon: LucideIcon }
 
@@ -148,7 +149,7 @@ export function AccountNav({
           onClick={() => setOpen((was) => !was)}
           aria-expanded={open}
           aria-controls="account-sections"
-          className="border-shell-border bg-shell-panel text-shell-fg focus-visible:ring-shell-ring flex h-11 w-full items-center justify-between gap-3 rounded-xl border px-3.5 text-sm font-medium focus-visible:ring-2 focus-visible:outline-none"
+          className="border-shell-border bg-shell-panel text-shell-fg focus-visible:ring-shell-ring acc-press acc-shadow flex h-11 w-full items-center justify-between gap-3 rounded-xl border px-3.5 text-sm font-medium focus-visible:ring-2 focus-visible:outline-none"
         >
           <span className="flex min-w-0 items-center gap-2">
             <current.icon
@@ -169,7 +170,7 @@ export function AccountNav({
         <div
           id="account-sections"
           hidden={!open}
-          className="border-shell-border bg-shell-panel absolute inset-x-0 top-[calc(100%+0.5rem)] z-30 rounded-xl border p-2 shadow-lg"
+          className="border-shell-border bg-shell-panel acc-shadow acc-reveal absolute inset-x-0 top-[calc(100%+0.5rem)] z-30 rounded-xl border p-2"
         >
           {groups.map((group) => (
             <div key={group.title} className="mb-2 last:mb-0">
@@ -247,14 +248,31 @@ function NavLink({
       href={localePath(locale, section.href)}
       aria-current={active ? "page" : undefined}
       onClick={onNavigate}
-      className={`focus-visible:ring-shell-ring flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none ${
+      className={cn(
+        "focus-visible:ring-shell-ring relative isolate flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none",
         active
-          ? "bg-shell-elevated text-shell-fg font-medium"
-          : "text-shell-muted hover:bg-shell-elevated/60 hover:text-shell-fg"
-      }`}
+          ? "text-shell-fg font-medium"
+          : "text-shell-muted hover:bg-shell-elevated/60 hover:text-shell-fg",
+      )}
     >
+      {/* Подложка активного пункта — один элемент на всё меню: при
+          переходе браузер перемещает её к новому пункту, а не рисует
+          заново. Оранжевая риска слева — знак «вы здесь». */}
+      {active ? (
+        <ViewTransition name="acc-nav-pill" share="acc-pill" default="none">
+          <span
+            aria-hidden="true"
+            className="bg-shell-elevated absolute inset-0 -z-10 rounded-lg"
+          >
+            <span className="bg-shell-accent absolute top-2 bottom-2 left-0 w-0.5 rounded-full" />
+          </span>
+        </ViewTransition>
+      ) : null}
       <Icon
-        className={`size-4 shrink-0 ${active ? "text-shell-accent-text" : ""}`}
+        className={cn(
+          "size-4 shrink-0 transition-colors",
+          active && "text-shell-accent-text",
+        )}
         aria-hidden="true"
       />
       <span className="truncate">{section.label}</span>
@@ -262,8 +280,13 @@ function NavLink({
   )
 }
 
+/**
+ * Корневые страницы («Обзор», «Сводка») активны только по точному адресу:
+ * иначе «Сводка» подсвечивалась на каждой странице админки вместе с
+ * настоящим разделом.
+ */
 function isActive(pathname: string, href: string) {
-  return href === "/account"
-    ? pathname === "/account"
+  return href === "/account" || href === "/account/admin"
+    ? pathname === href
     : pathname === href || pathname.startsWith(`${href}/`)
 }

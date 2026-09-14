@@ -10,9 +10,9 @@ export const metadata = {
 export default async function Page({
   searchParams,
 }: {
-  searchParams: Promise<{ before?: string }>
+  searchParams: Promise<{ before?: string; period?: string }>
 }) {
-  const { before } = await searchParams
+  const { before, period } = await searchParams
 
-  return <AccountReferrals locale={LOCALE} before={before} />
+  return <AccountReferrals locale={LOCALE} before={before} period={period === "90" ? 90 : 30} />
 }

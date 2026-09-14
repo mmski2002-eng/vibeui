@@ -54,7 +54,7 @@ export function ReportPanel({
 
   return (
     <div className="grid gap-4">
-      <div className="border-shell-border bg-shell-panel rounded-2xl border p-5">
+      <div className="border-shell-border bg-shell-panel acc-shadow acc-reveal rounded-2xl border p-5">
         <div className="flex flex-wrap items-center gap-3">
           <label className="text-shell-muted flex items-center gap-2 text-sm">
             {t.setStatus}
@@ -85,7 +85,7 @@ export function ReportPanel({
               type="button"
               disabled={pending === "assign"}
               onClick={() => run("assign", () => assignReport({ id }))}
-              className="border-shell-border text-shell-fg hover:border-shell-accent inline-flex h-10 items-center gap-2 rounded-lg border px-3.5 text-sm transition-colors disabled:opacity-60"
+              className="acc-press border-shell-border bg-shell-panel text-shell-fg hover:border-shell-accent-line hover:bg-shell-elevated inline-flex h-10 items-center gap-2 rounded-lg border px-3.5 text-sm font-medium disabled:opacity-60"
             >
               {pending === "assign" ? (
                 <Loader2 className="size-4 animate-spin" aria-hidden="true" />
@@ -96,7 +96,7 @@ export function ReportPanel({
         </div>
       </div>
 
-      <div className="border-shell-border bg-shell-panel rounded-2xl border p-5">
+      <div className="border-shell-border bg-shell-panel acc-shadow acc-reveal rounded-2xl border p-5">
         <p className="text-shell-fg text-sm font-medium">{t.reply}</p>
         <p className="text-shell-muted mt-1 text-sm">{t.replyNote}</p>
         <textarea
@@ -114,7 +114,7 @@ export function ReportPanel({
               setReply("")
             })
           }
-          className="bg-shell-accent text-shell-accent-fg mt-3 inline-flex h-10 items-center gap-2 rounded-lg px-4 text-sm font-semibold transition-colors hover:bg-shell-accent-deep disabled:opacity-60"
+          className="acc-press bg-shell-accent text-shell-accent-fg mt-3 inline-flex h-10 items-center gap-2 rounded-lg px-4 text-sm font-semibold hover:bg-shell-accent-deep disabled:opacity-60"
         >
           {pending === "reply" ? (
             <Loader2 className="size-4 animate-spin" aria-hidden="true" />
@@ -141,7 +141,7 @@ export function ReportPanel({
               setNote("")
             })
           }
-          className="border-shell-border text-shell-fg hover:border-shell-accent mt-3 inline-flex h-10 items-center gap-2 rounded-lg border px-3.5 text-sm transition-colors disabled:opacity-60"
+          className="acc-press border-shell-border bg-shell-panel text-shell-fg hover:border-shell-accent-line hover:bg-shell-elevated mt-3 inline-flex h-10 items-center gap-2 rounded-lg border px-3.5 text-sm font-medium disabled:opacity-60"
         >
           {pending === "note" ? (
             <Loader2 className="size-4 animate-spin" aria-hidden="true" />

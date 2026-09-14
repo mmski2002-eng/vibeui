@@ -2,9 +2,10 @@
 
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-import { Loader2 } from "lucide-react"
-
 import { ADMIN_TEXTS } from "@/components/admin/texts"
+import { Button as UiButton } from "@/components/account/ui/button"
+import { Panel } from "@/components/account/ui/panel"
+import { useToast } from "@/components/account/ui/toast"
 import {
   grantProDays,
   resendVerification,
@@ -43,32 +44,29 @@ export function UserActions({
   const router = useRouter()
   const [reason, setReason] = useState("")
   const [days, setDays] = useState(30)
+  const toast = useToast()
   const [pending, setPending] = useState<string>()
-  const [failed, setFailed] = useState(false)
-  const [done, setDone] = useState(false)
   const [text, setText] = useState(note)
 
   const needsReason = reason.trim().length < 3
 
   async function run(name: string, action: () => Promise<unknown>) {
     setPending(name)
-    setFailed(false)
-    setDone(false)
 
     try {
       await action()
-      setDone(true)
+      toast({ title: t.done })
       setReason("")
       router.refresh()
     } catch {
-      setFailed(true)
+      toast({ title: t.failed, tone: "danger" })
     } finally {
       setPending(undefined)
     }
   }
 
   return (
-    <div className="border-shell-border bg-shell-panel grid gap-5 rounded-2xl border p-5">
+    <Panel index={3} className="grid gap-5 p-5">
       <div>
         <label className="text-shell-fg mb-1.5 block text-sm font-medium">
           {t.reason}
@@ -76,7 +74,7 @@ export function UserActions({
         <input
           value={reason}
           onChange={(event) => setReason(event.target.value)}
-          className="border-shell-border bg-shell-elevated text-shell-fg focus-visible:border-shell-accent focus-visible:ring-shell-ring h-10 w-full rounded-lg border px-3 text-sm outline-none focus-visible:ring-2"
+          className="border-shell-border bg-shell-elevated text-shell-fg focus-visible:border-shell-accent focus-visible:ring-shell-ring h-10 w-full rounded-lg border px-3 text-sm outline-none transition-colors focus-visible:ring-2"
         />
         <p className="text-shell-muted mt-1.5 text-xs">{t.reasonRequired}</p>
       </div>
@@ -124,7 +122,7 @@ export function UserActions({
         </div>
       ) : null}
 
-      <div className="border-shell-border grid gap-3 border-t pt-4">
+      <div className="border-shell-danger/30 bg-shell-danger-soft grid gap-3 rounded-xl border p-4">
         <Row note={t.blockNote}>
           <Button
             busy={pending === "block"}
@@ -213,17 +211,7 @@ export function UserActions({
         />
       </div>
 
-      {done ? (
-        <p role="status" className="text-shell-muted text-sm">
-          {t.done}
-        </p>
-      ) : null}
-      {failed ? (
-        <p role="alert" className="text-shell-accent-text text-sm">
-          {t.failed}
-        </p>
-      ) : null}
-    </div>
+    </Panel>
   )
 }
 
@@ -262,20 +250,15 @@ function Button({
   onRun: () => void
 }) {
   return (
-    <button
-      type="button"
-      disabled={busy || disabled}
+    <UiButton
+      size="sm"
+      variant={tone === "danger" ? "danger" : "secondary"}
+      pending={busy}
+      disabled={disabled}
       onClick={onRun}
-      className={`mt-2 inline-flex h-10 shrink-0 items-center gap-2 rounded-lg border px-3.5 text-sm transition-colors disabled:opacity-60 ${
-        tone === "danger"
-          ? "border-shell-accent/50 text-shell-accent-text hover:border-shell-accent"
-          : "border-shell-border text-shell-fg hover:border-shell-accent"
-      }`}
+      className="mt-2"
     >
-      {busy ? (
-        <Loader2 className="size-4 animate-spin" aria-hidden="true" />
-      ) : null}
       {label}
-    </button>
+    </UiButton>
   )
 }

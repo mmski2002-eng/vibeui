@@ -8,6 +8,8 @@ import {
   type DeviceRow,
 } from "@/components/account/profile-panels"
 import { ACCOUNT_TEXTS } from "@/components/account/texts"
+import { PageHeader } from "@/components/account/ui/page-header"
+import { Panel, PanelHeader } from "@/components/account/ui/panel"
 import { db } from "@/lib/db"
 import { session as sessionTable } from "@/lib/db/schema"
 import type { Locale } from "@/lib/i18n"
@@ -69,51 +71,36 @@ export async function AccountProfile({ locale }: { locale: Locale }) {
 
   return (
     <>
-      <h1 className="text-shell-fg text-2xl font-semibold tracking-tight sm:text-3xl">
-        {t.title}
-      </h1>
+      <PageHeader title={t.title} />
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-2">
-        <section className="border-shell-border bg-shell-panel rounded-2xl border p-5 sm:p-6">
-          <h2 className="text-shell-fg font-medium">{t.nameTitle}</h2>
-          <p className="text-shell-muted mt-1.5 mb-4 text-sm leading-relaxed">
-            {t.nameNote}
-          </p>
+      <div className="grid items-start gap-6 lg:grid-cols-2">
+        <Panel index={1}>
+          <PanelHeader title={t.emailTitle} />
+          <EmailPanel
+            locale={locale}
+            email={user.email}
+            verified={Boolean(user.emailVerified)}
+          />
+        </Panel>
+
+        <Panel index={2}>
+          <PanelHeader title={t.nameTitle} note={t.nameNote} />
           <ProfileForm
             locale={locale}
             name={user.name ?? ""}
             accountLocale={accountLocale}
           />
-        </section>
+        </Panel>
 
-        <section className="border-shell-border bg-shell-panel rounded-2xl border p-5 sm:p-6">
-          <h2 className="text-shell-fg font-medium">{t.emailTitle}</h2>
-          <div className="mt-4">
-            <EmailPanel
-              locale={locale}
-              email={user.email}
-              verified={Boolean(user.emailVerified)}
-            />
-          </div>
-        </section>
-
-        <section className="border-shell-border bg-shell-panel rounded-2xl border p-5 sm:p-6">
-          <h2 className="text-shell-fg font-medium">{t.passwordTitle}</h2>
-          {/* Пояснение внутри панели: под него не нужна вторая карточка во
-              всю высоту формы. */}
-          <p className="text-shell-muted mt-1.5 mb-4 text-sm leading-relaxed">
-            {t.passwordNote}
-          </p>
+        <Panel index={3}>
+          <PanelHeader title={t.passwordTitle} note={t.passwordNote} />
           <PasswordForm locale={locale} />
-        </section>
+        </Panel>
 
-        <section className="border-shell-border bg-shell-panel rounded-2xl border p-5 sm:p-6">
-          <h2 className="text-shell-fg font-medium">{t.devicesTitle}</h2>
-          <p className="text-shell-muted mt-1.5 mb-4 text-sm leading-relaxed">
-            {t.devicesNote}
-          </p>
+        <Panel index={4}>
+          <PanelHeader title={t.devicesTitle} note={t.devicesNote} />
           <DevicesPanel locale={locale} devices={devices} />
-        </section>
+        </Panel>
       </div>
     </>
   )

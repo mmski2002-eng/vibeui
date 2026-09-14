@@ -1,9 +1,11 @@
 "use client"
 
 import { useState, useTransition } from "react"
-import { Check, Copy, Heart, Loader2 } from "lucide-react"
+import { Check, Copy, Heart, Undo2 } from "lucide-react"
 
 import { ACCOUNT_TEXTS } from "@/components/account/texts"
+import { Button } from "@/components/account/ui/button"
+import { useToast } from "@/components/account/ui/toast"
 import { setFavorite } from "@/lib/account-actions"
 import type { Locale } from "@/lib/i18n"
 
@@ -27,8 +29,8 @@ export function CopyItemLink({
   if (!url) return null
 
   return (
-    <button
-      type="button"
+    <Button
+      size="sm"
       onClick={async () => {
         try {
           await navigator.clipboard.writeText(url)
@@ -39,15 +41,16 @@ export function CopyItemLink({
           // копирует ссылку со страницы компонента, ломать кабинет незачем.
         }
       }}
-      className="border-shell-border text-shell-fg hover:border-shell-accent focus-visible:ring-shell-ring inline-flex h-9 items-center gap-1.5 rounded-lg border px-3 text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
+      icon={
+        copied ? (
+          <Check className="text-shell-ok size-4" aria-hidden="true" />
+        ) : (
+          <Copy className="size-4" aria-hidden="true" />
+        )
+      }
     >
-      {copied ? (
-        <Check className="text-shell-accent-text size-4" aria-hidden="true" />
-      ) : (
-        <Copy className="size-4" aria-hidden="true" />
-      )}
       {copied ? t.copied : (label ?? t.copy)}
-    </button>
+    </Button>
   )
 }
 
@@ -65,6 +68,7 @@ export function RemoveFavorite({
   onRemoved?: (removed: boolean) => void
 }) {
   const t = ACCOUNT_TEXTS[locale].favorites
+  const toast = useToast()
   const [removed, setRemoved] = useState(false)
   const [pending, start] = useTransition()
 
@@ -74,42 +78,37 @@ export function RemoveFavorite({
         await setFavorite(itemName, next)
         setRemoved(!next)
         onRemoved?.(!next)
+
+        if (!next) toast({ title: t.removed, tone: "info" })
       } catch {
-        // Состояние не меняем: карточка останется на месте, и повторное
-        // нажатие — единственное, что нужно сделать человеку.
+        toast({ title: ACCOUNT_TEXTS[locale].profile.failed, tone: "danger" })
       }
     })
   }
 
   if (removed) {
     return (
-      <span className="text-shell-muted inline-flex h-9 items-center gap-2 text-sm">
-        {t.removed}
-        <button
-          type="button"
-          disabled={pending}
-          onClick={() => toggle(true)}
-          className="text-shell-accent-text hover:underline disabled:opacity-60"
-        >
-          {t.undo}
-        </button>
-      </span>
+      <Button
+        size="sm"
+        variant="ghost"
+        pending={pending}
+        onClick={() => toggle(true)}
+        icon={<Undo2 className="size-4" aria-hidden="true" />}
+      >
+        {t.undo}
+      </Button>
     )
   }
 
   return (
-    <button
-      type="button"
-      disabled={pending}
+    <Button
+      size="sm"
+      variant="ghost"
+      pending={pending}
       onClick={() => toggle(false)}
-      className="border-shell-border text-shell-muted hover:border-shell-accent hover:text-shell-fg focus-visible:ring-shell-ring inline-flex h-9 items-center gap-1.5 rounded-lg border px-3 text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none disabled:opacity-60"
+      icon={<Heart className="size-4" aria-hidden="true" />}
     >
-      {pending ? (
-        <Loader2 className="size-4 animate-spin" aria-hidden="true" />
-      ) : (
-        <Heart className="size-4" aria-hidden="true" />
-      )}
       {t.remove}
-    </button>
+    </Button>
   )
 }

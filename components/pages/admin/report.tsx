@@ -58,7 +58,7 @@ export async function AdminReport({ id }: { id: string }) {
         action={
           <div className="flex items-center gap-2">
             <Pill>{t.kind[row.kind as Kind] ?? row.kind}</Pill>
-            <Pill tone={row.status === "new" ? "accent" : "muted"}>
+            <Pill tone={row.status === "new" ? "warn" : row.status === "answered" ? "ok" : row.status === "in_progress" ? "accent" : "muted"}>
               {t.status[row.status as Status] ?? row.status}
             </Pill>
           </div>
@@ -114,7 +114,7 @@ export async function AdminReport({ id }: { id: string }) {
 
         <div className="grid content-start gap-4">
           {row.itemName ? (
-            <section className="border-shell-border bg-shell-panel overflow-hidden rounded-2xl border">
+            <section className="border-shell-border bg-shell-panel acc-shadow acc-reveal overflow-hidden rounded-2xl border">
               <p className="text-shell-muted border-shell-border border-b px-4 py-2.5 text-xs font-medium tracking-wide uppercase">
                 {t.about}
               </p>
@@ -140,7 +140,7 @@ export async function AdminReport({ id }: { id: string }) {
           {row.userId ? (
             <Link
               href={`/account/admin/users/${row.userId}`}
-              className="border-shell-border bg-shell-panel hover:border-shell-accent block rounded-2xl border p-4 text-sm transition-colors"
+              className="border-shell-border bg-shell-panel acc-shadow acc-lift block rounded-2xl border p-4 text-sm"
             >
               <span className="text-shell-muted block text-xs">{t.from}</span>
               <span className="text-shell-fg block truncate">{row.email}</span>

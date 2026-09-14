@@ -31,6 +31,13 @@
   --color-shell-accent-soft: var(--shell-accent-soft);
   --color-shell-accent-line: var(--shell-accent-line);
   --color-shell-ring: var(--shell-ring);
+  --color-shell-panel-2: var(--shell-panel-2);
+  --color-shell-ok: var(--shell-ok);
+  --color-shell-ok-soft: var(--shell-ok-soft);
+  --color-shell-warn: var(--shell-warn);
+  --color-shell-warn-soft: var(--shell-warn-soft);
+  --color-shell-danger: var(--shell-danger);
+  --color-shell-danger-soft: var(--shell-danger-soft);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -55,6 +62,12 @@
 }
 
 :root {
+  /* Длительности и кривая движения кабинета. В :root, а не в оболочке:
+     псевдоэлементы view-transition живут на корне документа. */
+  --motion-fast: 140ms;
+  --motion-base: 220ms;
+  --motion-slow: 460ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -185,6 +198,20 @@
       var(--shell-bg)
     );
     --shell-accent-line: color-mix(in oklab, var(--shell-accent) 28%, transparent);
+
+    /* Кабинет: второй уровень поверхности и семантические цвета.
+       Оранжевый — только действие и акцент; «оплачен», «ожидает» и
+       «ошибка» получили свои оттенки, иначе один цвет означал всё сразу. */
+    --shell-panel-2: oklch(0.205 0 0);
+    --shell-ok: oklch(0.74 0.17 155);
+    --shell-ok-soft: color-mix(in oklab, var(--shell-ok) 14%, var(--shell-panel));
+    --shell-warn: oklch(0.82 0.16 85);
+    --shell-warn-soft: color-mix(in oklab, var(--shell-warn) 14%, var(--shell-panel));
+    --shell-danger: oklch(0.68 0.2 25);
+    --shell-danger-soft: color-mix(in oklab, var(--shell-danger) 14%, var(--shell-panel));
+    --shell-shadow:
+      0 1px 2px oklch(0 0 0 / 35%),
+      0 12px 32px -16px oklch(0 0 0 / 70%);
 
     /* Дефолт кадра — тот же почти-чёрный, что и страница: карточка не должна
        быть светлее фона, её отделяет рамка. Значение перекрывается атрибутом
@@ -364,6 +391,25 @@
     --shell-accent-text: oklch(0.56 0.19 50);
     --shell-ring: oklch(0.64 0.2144 39.8);
     --shell-accent-deep: oklch(0.56 0.19 39.8);
+    --shell-panel-2: oklch(0.985 0 0);
+    --shell-ok: oklch(0.55 0.16 155);
+    --shell-warn: oklch(0.6 0.15 75);
+    --shell-danger: oklch(0.55 0.2 25);
+    --shell-shadow:
+      0 1px 2px oklch(0 0 0 / 5%),
+      0 12px 32px -16px oklch(0 0 0 / 14%);
+  }
+
+  /* Светлый кабинет: плоскость Porcelain White #F2F2F2 из брендбука, а
+     панели — белые с мягкой тенью. В каталоге наоборот (белый фон, серые
+     панели): там панели — редкие вставки, а в кабинете из них состоит всё,
+     и серое-на-белом превращало экран в набор прямоугольников без уровней. */
+  html[data-shell-theme="light"] .catalog-shell.account-shell {
+    --shell-bg: oklch(0.9612 0 0);
+    --shell-panel: oklch(1 0 0);
+    --shell-panel-2: oklch(0.975 0 0);
+    --shell-elevated: oklch(0.955 0 0);
+    --shell-border: oklch(0 0 0 / 7%);
   }
 
   /* Подложка превью на карточке. Переключателем меняется только она:
@@ -1096,4 +1142,202 @@
 
 .auth-rise {
   animation: auth-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ---------------------------------------------------------------------------
+   Кабинет: движение и поверхности.
+
+   Всё движение — CSS: появление панелей, рисование графиков, рост
+   столбцов, отклик нажатия. JS участвует только в счётчике чисел.
+   prefers-reduced-motion гасит всё разом в конце блока.
+   ------------------------------------------------------------------------- */
+
+@keyframes acc-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@keyframes acc-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes acc-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes acc-grow-y {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+@keyframes acc-grow-x {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes acc-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes acc-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+}
+
+/* Появление снизу с задержкой по порядковому номеру `--i`. */
+.acc-reveal {
+  animation: acc-rise var(--motion-slow, 460ms) var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 45ms);
+}
+
+/* Линия графика рисуется слева направо: pathLength="1" в SVG делает длину
+   любого пути единицей, поэтому dasharray/dashoffset не зависят от данных. */
+.acc-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  animation: acc-draw 1100ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 45ms + 120ms);
+}
+
+.acc-fade-late {
+  animation: acc-fade 600ms ease-out both;
+  animation-delay: calc(var(--i, 0) * 45ms + 700ms);
+}
+
+.acc-grow-y {
+  transform-origin: bottom;
+  animation: acc-grow-y 620ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 14ms + 120ms);
+}
+
+.acc-grow-x {
+  transform-origin: left;
+  animation: acc-grow-x 720ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 60ms + 120ms);
+}
+
+/* Отклик нажатия: кнопка «садится», а не выцветает. */
+.acc-press {
+  transition:
+    transform var(--motion-fast, 140ms) ease,
+    background-color var(--motion-fast, 140ms) ease,
+    border-color var(--motion-fast, 140ms) ease,
+    color var(--motion-fast, 140ms) ease,
+    box-shadow var(--motion-fast, 140ms) ease;
+}
+
+.acc-press:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* Карточка под курсором приподнимается, рамка теплеет. */
+.acc-lift {
+  transition:
+    transform var(--motion-base, 220ms) var(--ease-out),
+    border-color var(--motion-base, 220ms) ease,
+    box-shadow var(--motion-base, 220ms) ease;
+}
+
+.acc-lift:hover {
+  transform: translateY(-2px);
+  border-color: var(--shell-accent-line);
+  box-shadow: var(--shell-shadow);
+}
+
+.acc-shadow {
+  box-shadow: var(--shell-shadow);
+}
+
+/* Hero-панель: тёплое свечение в верхнем углу, поверх — содержимое. */
+.acc-hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.acc-hero::before {
+  content: "";
+  position: absolute;
+  inset: -40% auto auto -10%;
+  width: 60%;
+  aspect-ratio: 1;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in oklab, var(--shell-accent) 22%, transparent),
+    transparent 70%
+  );
+}
+
+.acc-skeleton {
+  border-radius: 0.5rem;
+  background: linear-gradient(
+    90deg,
+    var(--shell-elevated) 25%,
+    color-mix(in oklab, var(--shell-elevated) 55%, var(--shell-panel)) 50%,
+    var(--shell-elevated) 75%
+  );
+  background-size: 200% 100%;
+  animation: acc-shimmer 1.4s linear infinite;
+}
+
+.acc-toast {
+  animation: acc-toast-in var(--motion-base, 220ms) var(--ease-out) both;
+}
+
+/* Переходы между разделами: рабочая область плавно сменяется, колонка
+   разделов и шапка стоят на месте. Активный пункт меню и «таблетка»
+   переключателя периода переезжают к новому положению. */
+::view-transition-old(.acc-page) {
+  animation: 120ms ease-in both acc-fade reverse;
+}
+
+::view-transition-new(.acc-page) {
+  animation:
+    220ms ease-out 80ms both acc-fade,
+    380ms var(--ease-out) both acc-rise;
+}
+
+::view-transition-group(.acc-pill) {
+  animation-duration: 260ms;
+  animation-timing-function: var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .acc-reveal,
+  .acc-draw,
+  .acc-fade-late,
+  .acc-grow-y,
+  .acc-grow-x,
+  .acc-toast {
+    animation: none;
+  }
+
+  .acc-skeleton {
+    animation: none;
+  }
+
+  .acc-press:active:not(:disabled),
+  .acc-lift:hover {
+    transform: none;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }

@@ -19,18 +19,22 @@ export function CatalogShell({
   children,
   locale,
   wash = false,
+  className,
 }: {
   children: ReactNode
   locale: Locale
   /** Тёплый налив под первым экраном. Только главная: в каталоге фон
    *  обязан успокоиться, там в фокусе карточки. */
   wash?: boolean
+  /** Дополнительный класс оболочки: кабинет метит себя `account-shell`,
+   *  чтобы светлая тема переопределила ему плоскость и панели. */
+  className?: string
 }) {
   return (
     <div
       // Пробел перед подстановкой обязателен: без него сборщик стилей
       // читает последний класс слитно с `${` и утилиту не выпускает.
-      className={`catalog-shell bg-shell text-shell-fg flex min-h-screen flex-col [--catalog-header-height:6rem] lg:[--catalog-header-height:3.5rem] ${wash ? "shell-wash" : ""}`}
+      className={`catalog-shell bg-shell text-shell-fg flex min-h-screen flex-col [--catalog-header-height:6rem] lg:[--catalog-header-height:3.5rem] ${wash ? "shell-wash" : ""} ${className ?? ""}`}
     >
       <CatalogTopbar itemCount={getCatalogItems().length} locale={locale} />
       {/* Отметки избранного грузятся один раз на страницу и раздаются

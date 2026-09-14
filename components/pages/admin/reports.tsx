@@ -1,7 +1,9 @@
-import Link from "next/link"
 import { and, desc, eq, sql } from "drizzle-orm"
 
-import { AdminHeading, Pill } from "@/components/admin/parts"
+import { AdminHeading, INPUT_CLASS } from "@/components/admin/parts"
+import { Button, ButtonLink } from "@/components/account/ui/button"
+import { CellStack, DataTable } from "@/components/account/ui/data-table"
+import { StatusPill, type PillTone } from "@/components/account/ui/status-pill"
 import { ADMIN_TEXTS } from "@/components/admin/texts"
 import { requireAdmin } from "@/lib/admin"
 import { db } from "@/lib/db"
@@ -11,6 +13,14 @@ const PAGE = 40
 
 type Kind = keyof typeof ADMIN_TEXTS.reports.kind
 type Status = keyof typeof ADMIN_TEXTS.reports.status
+
+const STATUS_TONE: Record<Status, PillTone> = {
+  new: "warn",
+  in_progress: "accent",
+  answered: "ok",
+  closed: "muted",
+  spam: "muted",
+}
 
 function days(from: Date) {
   return Math.floor((Date.now() - from.getTime()) / (24 * 60 * 60 * 1000))
@@ -66,12 +76,12 @@ export async function AdminReports({
     <>
       <AdminHeading title={t.title} lead={t.lead} />
 
-      <form className="mb-4 flex flex-wrap items-center gap-2" action="">
-        <select
-          name="kind"
-          defaultValue={kind ?? "all"}
-          className="border-shell-border bg-shell-elevated text-shell-fg h-10 rounded-lg border px-3 text-sm outline-none"
-        >
+      <form
+        className="acc-reveal mb-4 flex flex-wrap items-center gap-2"
+        action=""
+        style={{ ["--i" as string]: 1 }}
+      >
+        <select name="kind" defaultValue={kind ?? "all"} className={INPUT_CLASS}>
           <option value="all">{ADMIN_TEXTS.payments.all}</option>
           {Object.entries(t.kind).map(([key, label]) => (
             <option key={key} value={key}>
@@ -79,11 +89,7 @@ export async function AdminReports({
             </option>
           ))}
         </select>
-        <select
-          name="status"
-          defaultValue={status ?? "all"}
-          className="border-shell-border bg-shell-elevated text-shell-fg h-10 rounded-lg border px-3 text-sm outline-none"
-        >
+        <select name="status" defaultValue={status ?? "all"} className={INPUT_CLASS}>
           <option value="all">{ADMIN_TEXTS.payments.all}</option>
           {Object.entries(t.status).map(([key, label]) => (
             <option key={key} value={key}>
@@ -91,7 +97,7 @@ export async function AdminReports({
             </option>
           ))}
         </select>
-        <label className="text-shell-muted flex items-center gap-2 text-sm">
+        <label className="text-shell-muted flex h-10 items-center gap-2 text-sm">
           <input
             type="checkbox"
             name="mine"
@@ -101,53 +107,46 @@ export async function AdminReports({
           />
           {t.mine}
         </label>
-        <button
-          type="submit"
-          className="border-shell-border text-shell-fg hover:border-shell-accent inline-flex h-10 items-center rounded-lg border px-3.5 text-sm transition-colors"
-        >
-          {ADMIN_TEXTS.reports.setStatus}
-        </button>
+        <Button type="submit">{ADMIN_TEXTS.users.find}</Button>
       </form>
 
-      {page.length === 0 ? (
-        <p className="text-shell-muted text-sm">{t.empty}</p>
-      ) : (
-        <ul className="border-shell-border divide-y divide-[var(--shell-divider)] rounded-2xl border">
-          {page.map((row) => (
-            <li key={row.id}>
-              <Link
-                href={`/account/admin/reports/${row.id}`}
-                className="hover:bg-shell-elevated flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3 text-sm transition-colors"
-              >
-                <span className="min-w-0 flex-1">
-                  <span className="text-shell-fg block truncate font-medium">
-                    {row.subject}
-                  </span>
-                  <span className="text-shell-muted block truncate text-xs">
-                    {row.email}
-                    {row.itemName ? ` · ${row.itemName}` : ""}
-                  </span>
-                </span>
-                <Pill>{t.kind[row.kind as Kind] ?? row.kind}</Pill>
-                <Pill tone={row.status === "new" ? "accent" : "muted"}>
-                  {t.status[row.status as Status] ?? row.status}
-                </Pill>
-                <span className="text-shell-muted w-20 shrink-0 text-right text-xs tabular-nums">
-                  {t.age(days(row.createdAt))}
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+      <DataTable
+        index={2}
+        caption={t.title}
+        empty={t.empty}
+        columns={[
+          { key: "subject", label: "Обращение" },
+          { key: "kind", label: "Тип", className: "w-28", hideBelow: "sm" },
+          { key: "status", label: t.setStatus, className: "w-28" },
+          { key: "age", label: "Возраст", align: "right", className: "w-24" },
+        ]}
+        rows={page.map((row) => ({
+          id: row.id,
+          href: `/account/admin/reports/${row.id}`,
+          cells: [
+            <CellStack
+              key="subject"
+              primary={row.subject}
+              secondary={`${row.email}${row.itemName ? ` · ${row.itemName}` : ""}`}
+            />,
+            <StatusPill key="kind">{t.kind[row.kind as Kind] ?? row.kind}</StatusPill>,
+            <StatusPill key="status" tone={STATUS_TONE[row.status as Status] ?? "muted"} dot={row.status === "new"}>
+              {t.status[row.status as Status] ?? row.status}
+            </StatusPill>,
+            <span key="age" className="text-shell-muted text-xs tabular-nums">
+              {t.age(days(row.createdAt))}
+            </span>,
+          ],
+        }))}
+      />
 
       {next ? (
-        <Link
+        <ButtonLink
           href={`/account/admin/reports?${params.toString()}${params.size ? "&" : ""}before=${next.toISOString()}`}
-          className="border-shell-border text-shell-fg hover:border-shell-accent mt-4 inline-flex h-10 items-center rounded-lg border px-4 text-sm transition-colors"
+          className="mt-4"
         >
           {t.more}
-        </Link>
+        </ButtonLink>
       ) : null}
     </>
   )

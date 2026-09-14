@@ -1,10 +1,16 @@
 "use client"
 
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
-import { Check, Copy, Loader2 } from "lucide-react"
+import { Check, Copy, KeyRound, ShieldOff } from "lucide-react"
 
 import { ACCOUNT_TEXTS } from "@/components/account/texts"
+import { Button } from "@/components/account/ui/button"
+import { EmptyState } from "@/components/account/ui/empty-state"
+import { Panel } from "@/components/account/ui/panel"
+import { StatusPill } from "@/components/account/ui/status-pill"
+import { useToast } from "@/components/account/ui/toast"
 import { createRegistryToken, revokeRegistryToken } from "@/lib/account-actions"
 import { localePath, type Locale } from "@/lib/i18n"
 
@@ -20,8 +26,8 @@ type TokenRow = {
  * Ключ установки: выпуск, показ один раз, отзыв.
  *
  * Замена подтверждается отдельно — новый ключ гасит действующий, и в чужом
- * CI это выглядит как внезапно сломавшаяся сборка. Ошибку операции панель
- * показывает: раньше неудача выглядела как «ничего не произошло», хотя
+ * CI это выглядит как внезапно сломавшаяся сборка. Ошибка операции уходит
+ * в тост: раньше неудача выглядела как «ничего не произошло», хотя
  * действующий ключ мог уже быть отозван.
  */
 export function TokenPanel({
@@ -34,10 +40,10 @@ export function TokenPanel({
   tokens: TokenRow[]
 }) {
   const t = ACCOUNT_TEXTS[locale].connect
+  const toast = useToast()
   const [fresh, setFresh] = useState<string>()
   const [pending, setPending] = useState(false)
   const [confirming, setConfirming] = useState(false)
-  const [failed, setFailed] = useState(false)
   const [copied, setCopied] = useState(false)
 
   const active = tokens.filter((token) => !token.revoked)
@@ -45,7 +51,7 @@ export function TokenPanel({
 
   if (!pro) {
     return (
-      <div className="border-shell-border bg-shell-panel rounded-2xl border p-5">
+      <Panel variant="soft" index={5}>
         <p className="text-shell-muted text-sm leading-relaxed">{t.keyFree}</p>
         <Link
           href={localePath(locale, "/pricing")}
@@ -53,13 +59,12 @@ export function TokenPanel({
         >
           {t.upgrade}
         </Link>
-      </div>
+      </Panel>
     )
   }
 
   async function issue() {
     setPending(true)
-    setFailed(false)
 
     try {
       setFresh(await createRegistryToken())
@@ -67,7 +72,7 @@ export function TokenPanel({
     } catch {
       // Действующий ключ при неудаче остаётся прежним: замена идёт одной
       // транзакцией на сервере.
-      setFailed(true)
+      toast({ title: t.failed, tone: "danger" })
     } finally {
       setPending(false)
     }
@@ -76,17 +81,27 @@ export function TokenPanel({
   return (
     <div className="grid gap-4">
       {fresh ? (
-        <div className="border-shell-accent/50 bg-shell-panel rounded-2xl border p-5">
-          <p className="text-shell-fg font-medium">{t.freshTitle}</p>
+        <Panel variant="hero" index={0}>
+          <p className="text-shell-fg flex items-center gap-2 font-medium">
+            <KeyRound className="text-shell-accent-text size-4" aria-hidden="true" />
+            {t.freshTitle}
+          </p>
           <p className="text-shell-muted mt-2 max-w-xl text-sm leading-relaxed">
             {t.freshNote}
           </p>
           <div className="mt-4 flex flex-wrap items-center gap-2">
-            <code className="border-shell-border bg-shell-elevated text-shell-fg min-w-0 flex-1 overflow-x-auto rounded-lg border px-3 py-2 font-mono text-xs">
+            <code className="border-shell-border bg-shell-elevated text-shell-fg min-w-0 flex-1 overflow-x-auto rounded-lg border px-3 py-2.5 font-mono text-xs">
               {fresh}
             </code>
-            <button
-              type="button"
+            <Button
+              variant="primary"
+              icon={
+                copied ? (
+                  <Check className="size-4" aria-hidden="true" />
+                ) : (
+                  <Copy className="size-4" aria-hidden="true" />
+                )
+              }
               onClick={async () => {
                 try {
                   await navigator.clipboard.writeText(fresh)
@@ -97,75 +112,50 @@ export function TokenPanel({
                   // экране, его можно выделить руками.
                 }
               }}
-              className="bg-shell-accent text-shell-accent-fg inline-flex h-10 shrink-0 items-center gap-1.5 rounded-lg px-4 text-sm font-semibold transition-colors hover:bg-shell-accent-deep"
             >
-              {copied ? (
-                <Check className="size-4" aria-hidden="true" />
-              ) : (
-                <Copy className="size-4" aria-hidden="true" />
-              )}
               {copied ? t.copied : t.copy}
-            </button>
+            </Button>
           </div>
-        </div>
+        </Panel>
       ) : null}
 
-      <div className="border-shell-border bg-shell-panel rounded-2xl border p-5">
+      <Panel index={5}>
         {confirming ? (
-          <>
+          <div className="border-shell-warn/40 bg-shell-warn-soft rounded-xl border p-4">
             <p className="text-shell-fg text-sm font-medium">{t.replace}</p>
-            <p className="text-shell-muted mt-2 max-w-xl text-sm leading-relaxed">
+            <p className="text-shell-muted mt-1.5 max-w-xl text-sm leading-relaxed">
               {t.replaceWarning}
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
-              <button
-                type="button"
-                disabled={pending}
-                onClick={issue}
-                className="bg-shell-accent text-shell-accent-fg inline-flex h-10 items-center gap-2 rounded-lg px-4 text-sm font-semibold transition-colors hover:bg-shell-accent-deep disabled:opacity-60"
-              >
-                {pending ? (
-                  <Loader2 className="size-4 animate-spin" aria-hidden="true" />
-                ) : null}
+              <Button variant="primary" pending={pending} onClick={issue}>
                 {pending ? t.creating : t.confirmReplace}
-              </button>
-              <button
-                type="button"
-                onClick={() => setConfirming(false)}
-                className="border-shell-border text-shell-muted hover:text-shell-fg inline-flex h-10 items-center rounded-lg border px-4 text-sm transition-colors"
-              >
+              </Button>
+              <Button variant="ghost" onClick={() => setConfirming(false)}>
                 {t.cancel}
-              </button>
+              </Button>
             </div>
-          </>
+          </div>
         ) : (
-          <button
-            type="button"
-            disabled={pending}
+          <Button
+            variant="primary"
+            pending={pending}
+            icon={<KeyRound className="size-4" aria-hidden="true" />}
             onClick={() => (hasActive ? setConfirming(true) : issue())}
-            className="bg-shell-accent text-shell-accent-fg inline-flex h-10 items-center gap-2 rounded-lg px-4 text-sm font-semibold transition-colors hover:bg-shell-accent-deep disabled:opacity-60"
           >
-            {pending ? (
-              <Loader2 className="size-4 animate-spin" aria-hidden="true" />
-            ) : null}
             {pending ? t.creating : hasActive ? t.replace : t.create}
-          </button>
+          </Button>
         )}
 
-        {failed ? (
-          <p role="alert" className="text-shell-accent-text mt-3 text-sm">
-            {t.failed}
-          </p>
-        ) : null}
-
         {tokens.length === 0 ? (
-          <p className="text-shell-muted mt-4 text-sm">{t.noKeys}</p>
+          <div className="mt-4">
+            <EmptyState compact icon={<KeyRound />} title={t.noKeys} />
+          </div>
         ) : (
           <ul className="mt-5 grid gap-2">
             {tokens.map((token) => (
               <li
                 key={token.id}
-                className="border-shell-border flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-xl border px-3.5 py-3"
+                className="border-shell-border bg-shell-panel-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-xl border px-3.5 py-3"
               >
                 <div className="min-w-0">
                   <p className="text-shell-fg font-mono text-sm">
@@ -179,13 +169,9 @@ export function TokenPanel({
                   </p>
                 </div>
                 <div className="flex shrink-0 items-center gap-3">
-                  <span
-                    className={`text-xs ${
-                      token.revoked ? "text-shell-muted" : "text-shell-accent-text"
-                    }`}
-                  >
+                  <StatusPill tone={token.revoked ? "muted" : "ok"} dot={!token.revoked}>
                     {token.revoked ? t.revoked : t.active}
-                  </span>
+                  </StatusPill>
                   {token.revoked ? null : (
                     <RevokeButton locale={locale} id={token.id} />
                   )}
@@ -194,59 +180,57 @@ export function TokenPanel({
             ))}
           </ul>
         )}
-      </div>
+      </Panel>
     </div>
   )
 }
 
 function RevokeButton({ locale, id }: { locale: Locale; id: string }) {
   const t = ACCOUNT_TEXTS[locale].connect
+  const router = useRouter()
+  const toast = useToast()
   const [asking, setAsking] = useState(false)
   const [pending, setPending] = useState(false)
-  const [failed, setFailed] = useState(false)
 
   if (asking) {
     return (
-      <span className="flex items-center gap-2 text-xs">
-        <button
-          type="button"
-          disabled={pending}
+      <span className="flex items-center gap-1">
+        <Button
+          size="sm"
+          variant="danger"
+          pending={pending}
           onClick={async () => {
             setPending(true)
-            setFailed(false)
 
             try {
               await revokeRegistryToken(id)
+              toast({ title: t.revoked, tone: "info" })
+              router.refresh()
             } catch {
-              setFailed(true)
+              toast({ title: t.failed, tone: "danger" })
             } finally {
               setPending(false)
               setAsking(false)
             }
           }}
-          className="text-shell-accent-text hover:underline disabled:opacity-60"
         >
           {pending ? t.revoking : t.confirmRevoke}
-        </button>
-        <button
-          type="button"
-          onClick={() => setAsking(false)}
-          className="text-shell-muted hover:text-shell-fg"
-        >
+        </Button>
+        <Button size="sm" variant="ghost" onClick={() => setAsking(false)}>
           {t.cancel}
-        </button>
-        {failed ? <span className="text-shell-accent-text">{t.failed}</span> : null}
+        </Button>
       </span>
     )
   }
 
   return (
-    <button
-      type="button"
+    <Button
+      size="sm"
+      variant="ghost"
+      icon={<ShieldOff className="size-4" aria-hidden="true" />}
       onClick={() => setAsking(true)}
-      className="text-shell-muted hover:text-shell-fg text-xs transition-colors"
     >
       {t.revoke}
-    </button>
+    </Button>
   )
 }

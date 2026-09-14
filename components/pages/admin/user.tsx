@@ -1,13 +1,26 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { count, desc, eq } from "drizzle-orm"
+import { and, count, desc, eq } from "drizzle-orm"
+import {
+  ArrowLeft,
+  CreditCard,
+  KeyRound,
+  LifeBuoy,
+  MonitorSmartphone,
+  ShieldAlert,
+  UserPlus,
+} from "lucide-react"
 
-import { AdminHeading, Pill } from "@/components/admin/parts"
+import { AdminHeading, Card, Row } from "@/components/admin/parts"
 import { ADMIN_TEXTS } from "@/components/admin/texts"
 import { UserActions } from "@/components/admin/user-actions"
+import { Bars } from "@/components/account/ui/charts"
+import { StatTile } from "@/components/account/ui/stat-tile"
+import { StatusPill, type PillTone } from "@/components/account/ui/status-pill"
 import { requireAdmin } from "@/lib/admin"
 import { db } from "@/lib/db"
 import {
+  adminAction,
   payment,
   registryToken,
   report,
@@ -15,9 +28,27 @@ import {
   usage,
   user,
 } from "@/lib/db/schema"
-import { getSubscriptionRow, resolveSubscription } from "@/lib/subscription-state"
+import { formatDate, formatDateTime, formatNumber } from "@/lib/format"
+import { resolveSubscription, getSubscriptionRow } from "@/lib/subscription-state"
 
-/** Карточка пользователя: всё, что нужно поддержке, на одном экране. */
+type Event = {
+  id: string
+  at: Date
+  icon: typeof CreditCard
+  title: string
+  note?: string
+  href?: string
+  tone?: PillTone
+}
+
+/**
+ * Карточка пользователя: всё, что нужно поддержке, на одном экране.
+ *
+ * Середина — лента событий: регистрация, платежи, обращения и действия
+ * администратора одним списком по времени. Раньше они лежали в шести
+ * отдельных панелях, и историю «что с ним происходило» приходилось
+ * собирать в голове.
+ */
 export async function AdminUser({ id }: { id: string }) {
   await requireAdmin()
 
@@ -29,7 +60,7 @@ export async function AdminUser({ id }: { id: string }) {
     notFound()
   }
 
-  const [subscriptionRow, months, tokens, sessions, payments, reports] =
+  const [subscriptionRow, months, tokens, sessions, payments, reports, actions] =
     await Promise.all([
       getSubscriptionRow(id),
       db
@@ -56,208 +87,287 @@ export async function AdminUser({ id }: { id: string }) {
         .from(payment)
         .where(eq(payment.userId, id))
         .orderBy(desc(payment.createdAt))
-        .limit(5),
+        .limit(10),
       db
         .select()
         .from(report)
         .where(eq(report.userId, id))
         .orderBy(desc(report.createdAt))
-        .limit(5),
+        .limit(10),
+      db
+        .select()
+        .from(adminAction)
+        .where(
+          and(eq(adminAction.targetType, "user"), eq(adminAction.targetId, id)),
+        )
+        .orderBy(desc(adminAction.createdAt))
+        .limit(20),
     ])
 
   const state = resolveSubscription(subscriptionRow)
+  const pro = state.kind !== "free" && state.kind !== "expired"
+  const paidTotal = payments
+    .filter((entry) => entry.status === "succeeded")
+    .reduce((sum, entry) => sum + Number(entry.amount), 0)
+  const usedTotal = months.reduce((sum, month) => sum + month.value, 0)
+
+  const events: Event[] = [
+    {
+      id: "joined",
+      at: row.createdAt,
+      icon: UserPlus,
+      title: t.card.joined(formatDate(row.createdAt)),
+      note: `${t.card.locale}: ${row.locale}`,
+    },
+    ...payments.map((entry) => ({
+      id: entry.id,
+      at: entry.paidAt ?? entry.createdAt,
+      icon: CreditCard,
+      title: `${ADMIN_TEXTS.payments.cardTitle} · ${formatNumber(Number(entry.amount), "rub")}`,
+      note: ADMIN_TEXTS.payments.status[
+        entry.status as keyof typeof ADMIN_TEXTS.payments.status
+      ] ?? entry.status,
+      href: `/account/admin/payments/${entry.id}`,
+      tone: (entry.status === "succeeded"
+        ? "ok"
+        : entry.status === "pending"
+          ? "warn"
+          : "muted") as PillTone,
+    })),
+    ...reports.map((entry) => ({
+      id: entry.id,
+      at: entry.createdAt,
+      icon: LifeBuoy,
+      title: entry.subject,
+      note:
+        ADMIN_TEXTS.reports.status[
+          entry.status as keyof typeof ADMIN_TEXTS.reports.status
+        ] ?? entry.status,
+      href: `/account/admin/reports/${entry.id}`,
+      tone: (entry.status === "new" ? "warn" : "muted") as PillTone,
+    })),
+    ...actions.map((entry) => ({
+      id: entry.id,
+      at: entry.createdAt,
+      icon: ShieldAlert,
+      title: ADMIN_TEXTS.log.actions[entry.action] ?? entry.action,
+      note: entry.adminEmail,
+      tone: "accent" as PillTone,
+    })),
+  ].sort((a, b) => b.at.getTime() - a.at.getTime())
 
   return (
     <>
       <Link
         href="/account/admin/users"
-        className="text-shell-muted hover:text-shell-fg mb-4 inline-block text-sm transition-colors"
+        className="text-shell-muted hover:text-shell-fg mb-4 inline-flex items-center gap-1 text-sm transition-colors"
       >
-        ← {t.title}
+        <ArrowLeft className="size-4" aria-hidden="true" />
+        {t.title}
       </Link>
 
       <AdminHeading
         title={row.email}
         lead={row.name}
         action={
-          <div className="flex flex-wrap items-center gap-2">
-            {row.blockedAt ? <Pill tone="accent">{t.blocked}</Pill> : null}
-            <Pill tone={row.emailVerified ? "muted" : "accent"}>
+          <>
+            {row.blockedAt ? (
+              <StatusPill tone="danger">{t.blocked}</StatusPill>
+            ) : null}
+            <StatusPill tone={row.emailVerified ? "ok" : "warn"}>
               {row.emailVerified ? t.verified : t.unverified}
-            </Pill>
-            <Pill tone={state.kind === "free" ? "muted" : "solid"}>
+            </StatusPill>
+            <StatusPill
+              tone={
+                state.kind === "past_due" ? "warn" : pro ? "solid" : "muted"
+              }
+              dot={pro}
+            >
               {state.kind}
-            </Pill>
-          </div>
+            </StatusPill>
+          </>
         }
       />
 
       {row.blockedAt ? (
-        <p className="border-shell-accent/40 bg-shell-accent/10 text-shell-fg mb-6 rounded-xl border px-4 py-3 text-sm">
-          {row.blockedReason}
-        </p>
+        <div className="border-shell-danger/40 bg-shell-danger-soft text-shell-fg acc-reveal mb-6 rounded-xl border px-4 py-3 text-sm">
+          <span className="text-shell-danger font-medium">{t.blocked}</span>
+          {row.blockedReason ? ` · ${row.blockedReason}` : null}
+        </div>
       ) : null}
 
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_24rem]">
+      <div className="mb-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <StatTile
+          index={0}
+          label={t.card.subscription}
+          value={
+            "until" in state ? formatDate(state.until) : state.kind
+          }
+          note={state.kind}
+          tone={pro ? "accent" : undefined}
+        />
+        <StatTile
+          index={1}
+          label={t.card.payments}
+          value={paidTotal}
+          kind="rub"
+          note={`${payments.length}`}
+        />
+        <StatTile
+          index={2}
+          label={t.card.usage}
+          value={usedTotal}
+          spark={[...months].reverse().map((month) => month.value)}
+        />
+        <StatTile
+          index={3}
+          label={t.card.sessions}
+          value={sessions.filter((entry) => entry.expiresAt > new Date()).length}
+          note={`${t.card.tokens}: ${tokens.filter((token) => !token.revokedAt).length}`}
+        />
+      </div>
+
+      <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_24rem]">
         <div className="grid content-start gap-4">
-          <Card title={t.card.profile}>
-            <dl className="grid gap-2 text-sm">
-              <Line label={t.card.joined(
-                row.createdAt.toLocaleDateString("ru-RU"),
-              )} />
-              <Line label={`${t.card.locale}: ${row.locale}`} />
-              {row.adminNote ? (
-                <Line label={`${t.card.note}: ${row.adminNote}`} />
-              ) : null}
-            </dl>
-          </Card>
-
-          <Card title={t.card.usage}>
-            {months.length === 0 ? (
-              <p className="text-shell-muted text-sm">{t.card.nothing}</p>
-            ) : (
-              <ul className="grid gap-1 text-sm">
-                {months.map((month) => (
-                  <li key={month.period} className="text-shell-muted">
-                    {t.card.usageMonth(month.period, month.value)}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </Card>
-
-          <Card title={t.card.payments}>
-            {payments.length === 0 ? (
-              <p className="text-shell-muted text-sm">{t.card.nothing}</p>
-            ) : (
-              <ul className="grid gap-1 text-sm">
-                {payments.map((entry) => (
-                  <li key={entry.id}>
-                    <Link
-                      href={`/account/admin/payments/${entry.id}`}
-                      className="text-shell-muted hover:text-shell-fg flex justify-between gap-3 transition-colors"
-                    >
-                      <span className="tabular-nums">
-                        {(entry.paidAt ?? entry.createdAt).toLocaleDateString(
-                          "ru-RU",
-                        )}
+          <Card title="Лента событий" index={4}>
+            <ol className="relative grid gap-4 before:absolute before:top-2 before:bottom-2 before:left-[15px] before:w-px before:bg-[var(--shell-divider)]">
+              {events.map((event, position) => {
+                const Icon = event.icon
+                const body = (
+                  <>
+                    <span className="min-w-0 flex-1">
+                      <span className="text-shell-fg block truncate text-sm">
+                        {event.title}
                       </span>
-                      <span>{entry.status}</span>
-                      <span className="text-shell-fg tabular-nums">
-                        {Math.round(Number(entry.amount))} ₽
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </Card>
+                      {event.note ? (
+                        <span className="text-shell-muted block truncate text-xs">
+                          {event.note}
+                        </span>
+                      ) : null}
+                    </span>
+                    <span className="text-shell-muted shrink-0 text-xs tabular-nums">
+                      {formatDateTime(event.at)}
+                    </span>
+                  </>
+                )
 
-          <Card title={t.card.reports}>
-            {reports.length === 0 ? (
-              <p className="text-shell-muted text-sm">{t.card.nothing}</p>
-            ) : (
-              <ul className="grid gap-1 text-sm">
-                {reports.map((entry) => (
-                  <li key={entry.id}>
-                    <Link
-                      href={`/account/admin/reports/${entry.id}`}
-                      className="text-shell-muted hover:text-shell-fg block truncate transition-colors"
+                return (
+                  <li
+                    key={`${event.id}-${position}`}
+                    className="acc-reveal relative flex items-start gap-3"
+                    style={{ ["--i" as string]: position }}
+                  >
+                    <span
+                      className={`bg-shell-panel relative z-10 flex size-8 shrink-0 items-center justify-center rounded-full border ${
+                        event.tone === "ok"
+                          ? "border-shell-ok/40 text-shell-ok"
+                          : event.tone === "warn"
+                            ? "border-shell-warn/40 text-shell-warn"
+                            : event.tone === "accent"
+                              ? "border-shell-accent-line text-shell-accent-text"
+                              : "border-shell-border text-shell-muted"
+                      }`}
                     >
-                      {entry.subject}
-                    </Link>
+                      <Icon className="size-3.5" aria-hidden="true" />
+                    </span>
+                    {event.href ? (
+                      <Link
+                        href={event.href}
+                        className="hover:bg-shell-elevated/60 -my-1.5 flex min-w-0 flex-1 items-baseline gap-3 rounded-lg px-2 py-1.5 transition-colors"
+                      >
+                        {body}
+                      </Link>
+                    ) : (
+                      <span className="flex min-w-0 flex-1 items-baseline gap-3 px-2">
+                        {body}
+                      </span>
+                    )}
                   </li>
-                ))}
-              </ul>
-            )}
+                )
+              })}
+            </ol>
           </Card>
 
-          <Card title={t.card.tokens}>
-            {tokens.length === 0 ? (
-              <p className="text-shell-muted text-sm">{t.card.nothing}</p>
-            ) : (
-              <ul className="grid gap-1 text-sm">
-                {tokens.map((token) => (
-                  <li
-                    key={token.id}
-                    className="text-shell-muted flex justify-between gap-3"
-                  >
-                    {/* Только префикс: полное значение ключа мы и сами не
-                        храним, в базе лежит отпечаток. */}
-                    <span className="font-mono text-xs">{token.prefix}…</span>
-                    <span className="text-xs">
-                      {token.revokedAt ? "отозван" : "действует"}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </Card>
+          {months.length > 0 ? (
+            <Card title={t.card.usage} index={5}>
+              <Bars
+                data={[...months].reverse().map((month) => ({
+                  day: `${month.period}-01`,
+                  value: month.value,
+                }))}
+                height={90}
+                index={6}
+              />
+            </Card>
+          ) : null}
 
-          <Card title={t.card.sessions}>
-            {sessions.length === 0 ? (
-              <p className="text-shell-muted text-sm">{t.card.nothing}</p>
-            ) : (
-              <ul className="grid gap-1 text-sm">
-                {sessions.map((entry) => (
-                  <li
-                    key={entry.id}
-                    className="text-shell-muted flex justify-between gap-3"
-                  >
-                    <span className="min-w-0 truncate text-xs">
-                      {entry.userAgent ?? "—"}
-                    </span>
-                    <span className="shrink-0 text-xs tabular-nums">
-                      {entry.updatedAt.toLocaleDateString("ru-RU")}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </Card>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Card
+              title={
+                <span className="flex items-center gap-2">
+                  <KeyRound className="text-shell-muted size-4" aria-hidden="true" />
+                  {t.card.tokens}
+                </span>
+              }
+              index={6}
+            >
+              {tokens.length === 0 ? (
+                <p className="text-shell-muted text-sm">{t.card.nothing}</p>
+              ) : (
+                <dl>
+                  {tokens.map((token) => (
+                    <Row key={token.id} label={<span className="font-mono text-xs">{token.prefix}…</span>}>
+                      <StatusPill tone={token.revokedAt ? "muted" : "ok"}>
+                        {token.revokedAt ? "отозван" : "действует"}
+                      </StatusPill>
+                    </Row>
+                  ))}
+                </dl>
+              )}
+            </Card>
+
+            <Card
+              title={
+                <span className="flex items-center gap-2">
+                  <MonitorSmartphone className="text-shell-muted size-4" aria-hidden="true" />
+                  {t.card.sessions}
+                </span>
+              }
+              index={7}
+            >
+              {sessions.length === 0 ? (
+                <p className="text-shell-muted text-sm">{t.card.nothing}</p>
+              ) : (
+                <dl>
+                  {sessions.map((entry) => (
+                    <Row
+                      key={entry.id}
+                      label={
+                        <span className="block max-w-48 truncate text-xs">
+                          {entry.userAgent ?? "—"}
+                        </span>
+                      }
+                    >
+                      <span className="text-xs tabular-nums">
+                        {formatDate(entry.updatedAt)}
+                      </span>
+                    </Row>
+                  ))}
+                </dl>
+              )}
+            </Card>
+          </div>
         </div>
 
-        <div className="grid content-start gap-4">
-          <Card title={t.card.subscription}>
-            <p className="text-shell-fg text-sm">{state.kind}</p>
-            {"until" in state ? (
-              <p className="text-shell-muted mt-1 text-sm tabular-nums">
-                {state.until.toLocaleDateString("ru-RU")}
-              </p>
-            ) : null}
-          </Card>
-
-          <UserActions
-            userId={row.id}
-            blocked={Boolean(row.blockedAt)}
-            verified={row.emailVerified}
-            hasSubscription={Boolean(subscriptionRow)}
-            cancelling={Boolean(subscriptionRow?.cancelAtPeriodEnd)}
-            note={row.adminNote ?? ""}
-          />
-        </div>
+        <UserActions
+          userId={row.id}
+          blocked={Boolean(row.blockedAt)}
+          verified={row.emailVerified}
+          hasSubscription={Boolean(subscriptionRow)}
+          cancelling={Boolean(subscriptionRow?.cancelAtPeriodEnd)}
+          note={row.adminNote ?? ""}
+        />
       </div>
     </>
   )
-}
-
-function Card({
-  title,
-  children,
-}: {
-  title: string
-  children: React.ReactNode
-}) {
-  return (
-    <section className="border-shell-border bg-shell-panel rounded-2xl border p-5">
-      <h2 className="text-shell-muted mb-3 text-xs font-medium tracking-wide uppercase">
-        {title}
-      </h2>
-      {children}
-    </section>
-  )
-}
-
-function Line({ label }: { label: string }) {
-  return <div className="text-shell-muted">{label}</div>
 }

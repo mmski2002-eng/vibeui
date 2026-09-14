@@ -2,7 +2,12 @@ import { desc, eq } from "drizzle-orm"
 
 import { REPORT_FORM_TEXTS } from "@/components/admin/texts"
 import { ReportForm } from "@/components/report/report-form"
+import { DataTable } from "@/components/account/ui/data-table"
+import { PageHeader } from "@/components/account/ui/page-header"
+import { Panel } from "@/components/account/ui/panel"
+import { StatusPill, type PillTone } from "@/components/account/ui/status-pill"
 import { db } from "@/lib/db"
+import { formatDate } from "@/lib/format"
 import { report } from "@/lib/db/schema"
 import type { Locale } from "@/lib/i18n"
 import { requireUser } from "@/lib/session"
@@ -43,48 +48,50 @@ export async function AccountSupport({ locale }: { locale: Locale }) {
     .orderBy(desc(report.createdAt))
     .limit(20)
 
+  const tone: Record<string, PillTone> = {
+    new: "warn",
+    in_progress: "accent",
+    answered: "ok",
+    closed: "muted",
+    spam: "muted",
+  }
+
   return (
     <>
-      <h1 className="text-shell-fg text-2xl font-semibold tracking-tight sm:text-3xl">
-        {t.supportTitle}
-      </h1>
-      <p className="text-shell-muted mt-1.5 max-w-2xl text-sm leading-relaxed">
-        {t.supportLead}
-      </p>
+      <PageHeader title={t.supportTitle} lead={t.supportLead} />
 
-      <div className="mt-6 grid items-start gap-6 lg:grid-cols-2">
-        <section className="border-shell-border bg-shell-panel rounded-2xl border p-5 sm:p-6">
+      <div className="grid items-start gap-6 lg:grid-cols-2">
+        <Panel index={1}>
           <ReportForm
             locale={locale}
             kind="support"
             email={user.email}
             compact
           />
-        </section>
+        </Panel>
 
         {mine.length > 0 ? (
-          <section>
-            <ul className="border-shell-border divide-y divide-[var(--shell-divider)] rounded-2xl border">
-              {mine.map((row) => (
-                <li
-                  key={row.id}
-                  className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-4 py-3 text-sm"
-                >
-                  <span className="text-shell-fg min-w-0 flex-1 truncate">
-                    {row.subject}
-                  </span>
-                  <span className="text-shell-muted shrink-0 text-xs">
-                    {STATUS_LABEL[locale][row.status] ?? row.status}
-                  </span>
-                  <span className="text-shell-muted w-24 shrink-0 text-right text-xs tabular-nums">
-                    {row.createdAt.toLocaleDateString(
-                      locale === "en" ? "en-GB" : "ru-RU",
-                    )}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </section>
+          <DataTable
+            index={2}
+            empty=""
+            columns={[
+              { key: "subject", label: locale === "en" ? "Subject" : "Тема" },
+              { key: "status", label: locale === "en" ? "Status" : "Статус", className: "w-32" },
+              { key: "date", label: locale === "en" ? "Date" : "Дата", align: "right", className: "w-28" },
+            ]}
+            rows={mine.map((row) => ({
+              id: row.id,
+              cells: [
+                <span key="subject" className="block truncate">{row.subject}</span>,
+                <StatusPill key="status" tone={tone[row.status] ?? "muted"}>
+                  {STATUS_LABEL[locale][row.status] ?? row.status}
+                </StatusPill>,
+                <span key="date" className="text-shell-muted text-xs tabular-nums">
+                  {formatDate(row.createdAt, locale)}
+                </span>,
+              ],
+            }))}
+          />
         ) : null}
       </div>
     </>

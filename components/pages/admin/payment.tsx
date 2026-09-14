@@ -67,9 +67,9 @@ export async function AdminPayment({ id }: { id: string }) {
         lead={row.email ?? row.userId}
       />
 
-      <div className="border-shell-border bg-shell-panel grid gap-3 rounded-2xl border p-5 text-sm">
+      <div className="border-shell-border bg-shell-panel acc-shadow acc-reveal grid gap-3 rounded-2xl border p-5 text-sm">
         <Row label={t.columnStatus}>
-          <Pill tone={row.status === "succeeded" ? "muted" : "accent"}>
+          <Pill tone={row.status === "succeeded" ? "ok" : row.status === "pending" ? "warn" : "muted"}>
             {t.status[statusOf(row.status)]}
           </Pill>
         </Row>
@@ -115,7 +115,7 @@ export async function AdminPayment({ id }: { id: string }) {
       <PaymentActions paymentId={row.id} receiptUrl={row.receiptUrl} />
 
       {row.payload ? (
-        <details className="border-shell-border mt-6 rounded-2xl border">
+        <details className="border-shell-border bg-shell-panel acc-shadow mt-6 rounded-2xl border">
           <summary className="text-shell-fg cursor-pointer px-4 py-3 text-sm font-medium select-none marker:content-none [&::-webkit-details-marker]:hidden">
             {t.payload}
           </summary>

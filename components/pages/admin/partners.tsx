@@ -1,12 +1,17 @@
 import Link from "next/link"
+import { Handshake } from "lucide-react"
 
 import {
   CreateInviteForm,
   DeleteInviteButton,
 } from "@/components/admin/partner-actions"
-import { AdminHeading, Pill } from "@/components/admin/parts"
+import { AdminHeading } from "@/components/admin/parts"
 import { ADMIN_TEXTS } from "@/components/admin/texts"
 import { CopyLink } from "@/components/account/copy-link"
+import { EmptyState } from "@/components/account/ui/empty-state"
+import { Panel } from "@/components/account/ui/panel"
+import { StatusPill } from "@/components/account/ui/status-pill"
+import { formatDate } from "@/lib/format"
 import { requireAdmin } from "@/lib/admin"
 import { listInvites } from "@/lib/partners"
 import { SITE_URL } from "@/lib/seo"
@@ -25,11 +30,18 @@ export async function AdminPartners() {
       <CreateInviteForm />
 
       {invites.length === 0 ? (
-        <p className="text-shell-muted mt-6 text-sm">{t.empty}</p>
+        <div className="mt-6">
+          <EmptyState index={2} icon={<Handshake />} title={t.empty} />
+        </div>
       ) : (
-        <ul className="border-shell-border mt-6 divide-y divide-[var(--shell-divider)] rounded-2xl border">
-          {invites.map((invite) => (
-            <li key={invite.id} className="grid gap-3 px-4 py-4 text-sm">
+        <ul className="mt-6 grid gap-3">
+          {invites.map((invite, position) => (
+            <Panel
+              key={invite.id}
+              as="li"
+              index={position + 2}
+              className="acc-lift grid gap-3 p-4 text-sm"
+            >
               <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
                 <Link
                   href={`/account/admin/partners/${invite.id}`}
@@ -38,16 +50,16 @@ export async function AdminPartners() {
                   {invite.name}
                 </Link>
                 {invite.claimedBy ? (
-                  <Pill tone="solid">{t.claimed}</Pill>
+                  <StatusPill tone="ok" dot>{t.claimed}</StatusPill>
                 ) : (
-                  <Pill>{t.notClaimed}</Pill>
+                  <StatusPill tone="muted">{t.notClaimed}</StatusPill>
                 )}
                 <span className="text-shell-muted shrink-0 text-xs tabular-nums">
-                  {t.referrals}: {invite.referrals} · {t.paid}:{" "}
-                  {invite.referralsPaid}
+                  {t.referrals}: <span className="text-shell-fg">{invite.referrals}</span> · {t.paid}:{" "}
+                  <span className="text-shell-fg">{invite.referralsPaid}</span>
                 </span>
                 <span className="text-shell-muted w-24 shrink-0 text-right text-xs tabular-nums">
-                  {invite.createdAt.toLocaleDateString("ru-RU")}
+                  {formatDate(invite.createdAt)}
                 </span>
                 {invite.claimedBy ? null : (
                   <DeleteInviteButton id={invite.id} />
@@ -56,14 +68,12 @@ export async function AdminPartners() {
               {invite.claimedBy ? (
                 <p className="text-shell-muted truncate text-xs">
                   {invite.partnerEmail}
-                  {invite.claimedAt
-                    ? ` · ${invite.claimedAt.toLocaleDateString("ru-RU")}`
-                    : null}
+                  {invite.claimedAt ? ` · ${formatDate(invite.claimedAt)}` : null}
                 </p>
               ) : (
                 <CopyLink url={`${SITE_URL}/i/${invite.code}`} />
               )}
-            </li>
+            </Panel>
           ))}
         </ul>
       )}

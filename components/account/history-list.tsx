@@ -6,6 +6,8 @@ import { Search } from "lucide-react"
 
 import { CopyItemLink } from "@/components/account/item-actions"
 import { ACCOUNT_TEXTS } from "@/components/account/texts"
+import { Button } from "@/components/account/ui/button"
+import { EmptyState } from "@/components/account/ui/empty-state"
 import { localePath, type Locale } from "@/lib/i18n"
 
 export type HistoryRow = {
@@ -64,7 +66,7 @@ export function HistoryList({
 
   return (
     <>
-      <div className="mt-6 flex flex-wrap items-center gap-3">
+      <div className="acc-reveal flex flex-wrap items-center gap-3" style={{ ["--i" as string]: 2 }}>
         <label className="relative min-w-0 flex-1 sm:max-w-xs">
           <span className="sr-only">{t.search}</span>
           <Search
@@ -106,14 +108,16 @@ export function HistoryList({
       </div>
 
       {visible.length === 0 ? (
-        <p className="text-shell-muted mt-8 text-sm">{t.nothingFound}</p>
+        <div className="mt-5">
+          <EmptyState compact icon={<Search />} title={t.nothingFound} />
+        </div>
       ) : (
         <>
-          <ul className="border-shell-border mt-6 divide-y divide-[var(--shell-divider)] rounded-2xl border">
+          <ul className="border-shell-border bg-shell-panel acc-shadow acc-reveal divide-shell-divider mt-5 divide-y rounded-2xl border" style={{ ["--i" as string]: 3 }}>
             {visible.slice(0, shown).map((row) => (
               <li
                 key={`${row.period}-${row.name}`}
-                className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3"
+                className="hover:bg-shell-elevated/60 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3 transition-colors first:rounded-t-2xl last:rounded-b-2xl"
               >
                 <div className="min-w-0 flex-1">
                   <Link
@@ -138,13 +142,9 @@ export function HistoryList({
 
           <div className="mt-4 flex flex-wrap items-center gap-4">
             {visible.length > shown ? (
-              <button
-                type="button"
-                onClick={() => setShown((was) => was + PAGE)}
-                className="border-shell-border text-shell-fg hover:border-shell-accent inline-flex h-10 items-center rounded-lg border px-4 text-sm transition-colors"
-              >
+              <Button onClick={() => setShown((was) => was + PAGE)}>
                 {t.more}
-              </button>
+              </Button>
             ) : null}
             <p className="text-shell-muted text-xs tabular-nums">
               {t.shown(Math.min(shown, visible.length), visible.length)}

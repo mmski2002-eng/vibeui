@@ -6,7 +6,10 @@ import { Search } from "lucide-react"
 
 import { CopyItemLink, RemoveFavorite } from "@/components/account/item-actions"
 import { ACCOUNT_TEXTS } from "@/components/account/texts"
+import { Button } from "@/components/account/ui/button"
+import { EmptyState } from "@/components/account/ui/empty-state"
 import { localePath, type Locale } from "@/lib/i18n"
+import { cn } from "@/lib/utils"
 
 export type FavoriteCard = {
   name: string
@@ -64,7 +67,7 @@ export function FavoritesGrid({
 
   return (
     <>
-      <div className="mt-6 flex flex-wrap items-center gap-3">
+      <div className="acc-reveal flex flex-wrap items-center gap-3" style={{ ["--i" as string]: 1 }}>
         <label className="relative min-w-0 flex-1 sm:max-w-xs">
           <span className="sr-only">{t.search}</span>
           <Search
@@ -84,7 +87,7 @@ export function FavoritesGrid({
         </label>
 
         {kinds.length > 1 ? (
-          <div className="border-shell-border flex items-center gap-0.5 rounded-lg border p-0.5">
+          <div className="border-shell-border bg-shell-panel flex items-center gap-0.5 rounded-lg border p-0.5">
             <Chip
               active={kind === "all"}
               onClick={() => setKind("all")}
@@ -103,21 +106,25 @@ export function FavoritesGrid({
       </div>
 
       {visible.length === 0 ? (
-        <p className="text-shell-muted mt-8 text-sm">{t.nothingFound}</p>
+        <div className="mt-6">
+          <EmptyState compact icon={<Search />} title={t.nothingFound} />
+        </div>
       ) : (
         <>
-          <ul className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {visible.slice(0, shown).map((card) => (
+          <ul className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            {visible.slice(0, shown).map((card, position) => (
               <li
                 key={card.name}
-                className={`border-shell-card-strong bg-shell overflow-hidden rounded-2xl border transition-opacity ${
-                  gone[card.name] ? "opacity-60" : ""
-                }`}
+                style={{ ["--i" as string]: position + 2 }}
+                className={cn(
+                  "border-shell-border bg-shell-panel acc-shadow acc-lift acc-reveal overflow-hidden rounded-2xl border",
+                  gone[card.name] && "opacity-60",
+                )}
               >
                 <div className="bg-preview-surface flex h-44 items-center justify-center overflow-hidden">
                   {card.preview}
                 </div>
-                <div className="border-shell-border border-t px-4 py-3">
+                <div className="border-shell-divider border-t px-4 py-3">
                   <Link
                     href={localePath(locale, card.href)}
                     className="text-shell-fg hover:text-shell-accent-text block truncate text-sm font-medium transition-colors"
@@ -143,13 +150,12 @@ export function FavoritesGrid({
           </ul>
 
           {visible.length > shown ? (
-            <button
-              type="button"
+            <Button
+              className="mt-6"
               onClick={() => setShown((was) => was + PAGE)}
-              className="border-shell-border text-shell-fg hover:border-shell-accent mt-6 inline-flex h-10 items-center rounded-lg border px-4 text-sm transition-colors"
             >
               {t.more}
-            </button>
+            </Button>
           ) : null}
         </>
       )}
@@ -171,11 +177,12 @@ function Chip({
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className={`h-8 rounded-md px-2.5 text-sm transition-colors ${
+      className={cn(
+        "acc-press h-8 rounded-md px-2.5 text-sm",
         active
           ? "bg-shell-elevated text-shell-fg font-medium"
-          : "text-shell-muted hover:text-shell-fg"
-      }`}
+          : "text-shell-muted hover:text-shell-fg",
+      )}
     >
       {label}
     </button>

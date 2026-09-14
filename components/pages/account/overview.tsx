@@ -1,142 +1,249 @@
 import Link from "next/link"
-import { ArrowUpRight } from "lucide-react"
-import { and, count, desc, eq } from "drizzle-orm"
+import {
+  ArrowUpRight,
+  Clock,
+  Heart,
+  Infinity as InfinityIcon,
+  Layers,
+  Sparkles,
+  Timer,
+} from "lucide-react"
 
 import { CopyItemLink } from "@/components/account/item-actions"
 import { ACCOUNT_TEXTS } from "@/components/account/texts"
+import { ButtonLink } from "@/components/account/ui/button"
+import { Bars, Ring } from "@/components/account/ui/charts"
+import { CountUp } from "@/components/account/ui/count-up"
+import { EmptyState } from "@/components/account/ui/empty-state"
+import { PageHeader } from "@/components/account/ui/page-header"
+import { Panel, PanelHeader } from "@/components/account/ui/panel"
+import { StatTile } from "@/components/account/ui/stat-tile"
+import { StatusPill } from "@/components/account/ui/status-pill"
 import { CatalogThumbnail } from "@/components/catalog/catalog-thumbnail"
-import { db } from "@/lib/db"
-import { favorite, usage } from "@/lib/db/schema"
-import {
-  FREE_MONTHLY_LIMIT,
-  currentPeriod,
-  getUsedCount,
-} from "@/lib/entitlements"
+import { overviewStats } from "@/lib/account-stats"
+import { FREE_MONTHLY_LIMIT, getUsedCount } from "@/lib/entitlements"
+import { formatDay } from "@/lib/format"
 import { localePath, type Locale } from "@/lib/i18n"
 import { requireUser } from "@/lib/session"
 import { getItemDocUrl } from "@/lib/site"
 import { getSubscriptionState, isProState } from "@/lib/subscription-state"
 import { getCatalogItem, getItemKind, itemBasePath } from "@/registry/index"
 
-/** Первое число следующего месяца — день, когда лимит обнулится. */
-function nextReset(locale: Locale) {
-  const now = new Date()
-  const next = new Date(
-    Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1),
-  )
+const DAY = 24 * 60 * 60 * 1000
 
-  return next.toLocaleDateString(locale === "en" ? "en-GB" : "ru-RU", {
-    day: "numeric",
-    month: "long",
-  })
+/** Первое число следующего месяца — день, когда лимит обнулится. */
+function nextReset(now = new Date()) {
+  return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1))
 }
 
-function shortDate(value: Date, locale: Locale) {
-  return value.toLocaleDateString(locale === "en" ? "en-GB" : "ru-RU", {
-    day: "numeric",
-    month: "short",
-  })
+function daysUntil(date: Date, now = new Date()) {
+  return Math.max(0, Math.ceil((date.getTime() - now.getTime()) / DAY))
 }
 
 /**
- * Обзор кабинета: сначала работа, потом ограничения.
+ * Обзор кабинета: состояние, цифры, продолжение работы.
  *
- * Раньше первым экраном шла лента лимита с числом во всю высоту, и человек,
- * пришедший продолжить работу, читал про то, чего ему нельзя. Теперь сверху
- * стоит компонент, с которым он работал последним, — с живым превью и двумя
- * действиями, а лимит ужат до строки со шкалой.
+ * Первый экран — hero-панель с тарифом и кольцом лимита: это то, что
+ * человек проверяет первым делом. Под ней — ряд плиток с динамикой,
+ * дальше — компонент, с которым он работал последним, и активность.
  */
 export async function AccountOverview({ locale }: { locale: Locale }) {
   const user = await requireUser(locale)
   const t = ACCOUNT_TEXTS[locale].overview
+  const now = new Date()
 
-  const [state, used, recent, saved, savedTotal] = await Promise.all([
+  const [state, used, stats] = await Promise.all([
     getSubscriptionState(user.id),
     getUsedCount(user.id),
-    db
-      .select()
-      .from(usage)
-      .where(and(eq(usage.userId, user.id), eq(usage.period, currentPeriod())))
-      .orderBy(desc(usage.firstUsedAt))
-      .limit(6),
-    db
-      .select()
-      .from(favorite)
-      .where(eq(favorite.userId, user.id))
-      .orderBy(desc(favorite.createdAt))
-      .limit(3),
-    db
-      .select({ value: count() })
-      .from(favorite)
-      .where(eq(favorite.userId, user.id)),
+    overviewStats(user.id, now),
   ])
 
-  const savedCount = savedTotal[0]?.value ?? 0
   const pro = isProState(state)
-  // Продолжаем с последнего взятого, а если истории нет — с последнего
-  // сохранённого: обе вещи человек уже выбрал сам.
-  const resume = recent[0]?.itemName ?? saved[0]?.itemName
+  const left = Math.max(0, FREE_MONTHLY_LIMIT - used)
+  const reset = nextReset(now)
+  const until = "until" in state ? state.until : null
+  const resume = stats.recent[0]?.itemName ?? stats.saved[0]?.itemName
   const resumeItem = resume ? getCatalogItem(resume) : undefined
-  const fresh = recent.length === 0 && savedCount === 0
+  const fresh = stats.recent.length === 0 && stats.savedCount === 0
+  const dateTag = locale === "en" ? "en-GB" : "ru-RU"
 
   return (
     <div className="grid gap-6">
-      <header className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="text-shell-fg text-2xl font-semibold tracking-tight sm:text-3xl">
-            {t.title}
-          </h1>
-          <p className="text-shell-muted mt-1.5 text-sm">{t.lead}</p>
-        </div>
-        <Link
-          href={localePath(locale, "/components")}
-          className="border-shell-border text-shell-fg hover:border-shell-accent focus-visible:ring-shell-ring inline-flex h-10 items-center gap-1.5 rounded-lg border px-3.5 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none"
-        >
-          {ACCOUNT_TEXTS[locale].nav.catalog}
-          <ArrowUpRight className="size-4" aria-hidden="true" />
-        </Link>
-      </header>
+      <PageHeader
+        title={t.title}
+        lead={t.lead}
+        action={
+          <ButtonLink
+            href={localePath(locale, "/components")}
+            icon={<ArrowUpRight className="size-4" aria-hidden="true" />}
+          >
+            {ACCOUNT_TEXTS[locale].nav.catalog}
+          </ButtonLink>
+        }
+      />
 
-      <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_18rem]">
+      <Panel variant="hero" index={0} className="p-5 sm:p-7">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-5">
+            {pro ? (
+              <Ring value={1} max={1} tone="accent" label={t.noLimit}>
+                <InfinityIcon
+                  className="text-shell-accent-text size-7"
+                  aria-hidden="true"
+                />
+              </Ring>
+            ) : (
+              <Ring
+                value={left}
+                max={FREE_MONTHLY_LIMIT}
+                tone={left < 10 ? "warn" : "accent"}
+                label={t.limitLeft(left, FREE_MONTHLY_LIMIT)}
+              >
+                <span className="text-shell-fg text-2xl leading-none font-semibold tabular-nums">
+                  <CountUp value={left} locale={locale} />
+                </span>
+                <span className="text-shell-muted mt-1 text-[11px]">
+                  {t.of(FREE_MONTHLY_LIMIT)}
+                </span>
+              </Ring>
+            )}
+
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-2">
+                <StatusPill tone={pro ? "solid" : "muted"} dot={pro}>
+                  {state.kind === "bonus"
+                    ? ACCOUNT_TEXTS[locale].plan.bonus
+                    : pro
+                      ? ACCOUNT_TEXTS[locale].plan.pro
+                      : ACCOUNT_TEXTS[locale].plan.free}
+                </StatusPill>
+                {!pro && left < 10 ? (
+                  <StatusPill tone="warn">{t.limitTitle}</StatusPill>
+                ) : null}
+              </div>
+              <p className="text-shell-fg mt-2 text-xl font-semibold tracking-tight sm:text-2xl">
+                {pro ? t.planPro : t.planFree}
+              </p>
+              <p className="text-shell-muted mt-1 max-w-md text-sm leading-relaxed">
+                {pro
+                  ? until
+                    ? t.proUntil(until.toLocaleDateString(dateTag))
+                    : t.proNote
+                  : t.limitResets(
+                      reset.toLocaleDateString(dateTag, {
+                        day: "numeric",
+                        month: "long",
+                      }),
+                    )}
+              </p>
+              {!pro ? (
+                <p className="text-shell-muted mt-1 max-w-md text-xs leading-relaxed">
+                  {t.limitNote}
+                </p>
+              ) : null}
+            </div>
+          </div>
+
+          <div className="flex shrink-0 flex-wrap gap-2 sm:flex-col sm:items-end">
+            {pro ? (
+              <ButtonLink href={localePath(locale, "/account/subscription")}>
+                {t.manage}
+              </ButtonLink>
+            ) : (
+              <ButtonLink
+                href={localePath(locale, "/pricing")}
+                variant="primary"
+                icon={<Sparkles className="size-4" aria-hidden="true" />}
+              >
+                {t.upgrade}
+              </ButtonLink>
+            )}
+          </div>
+        </div>
+      </Panel>
+
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <StatTile
+          index={1}
+          label={t.monthTaken}
+          value={stats.monthTaken}
+          locale={locale}
+          spark={stats.monthByDay.map((row) => row.value)}
+          tone="accent"
+          icon={<Layers />}
+        />
+        <StatTile
+          index={2}
+          label={t.allTime}
+          value={stats.allTime}
+          locale={locale}
+          icon={<Clock />}
+          href={localePath(locale, "/account/history")}
+        />
+        <StatTile
+          index={3}
+          label={t.savedCount}
+          value={stats.savedCount}
+          locale={locale}
+          icon={<Heart />}
+          href={localePath(locale, "/account/favorites")}
+        />
+        <StatTile
+          index={4}
+          label={
+            pro
+              ? state.kind === "pro"
+                ? t.daysToRenewal
+                : t.daysLeft
+              : t.daysToReset
+          }
+          value={daysUntil(pro && until ? until : reset, now)}
+          locale={locale}
+          icon={<Timer />}
+          href={localePath(locale, "/account/subscription")}
+        />
+      </div>
+
+      <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_20rem]">
         <div className="grid content-start gap-6">
           {fresh ? (
-            <section className="border-shell-border bg-shell-panel rounded-2xl border p-6 sm:p-7">
-              <h2 className="text-shell-fg text-lg font-medium">
-                {t.startTitle}
-              </h2>
-              <ol className="text-shell-muted mt-4 grid gap-2.5 text-sm">
-                {t.startSteps.map((step, index) => (
+            <Panel index={5}>
+              <PanelHeader title={t.startTitle} />
+              <ol className="text-shell-muted grid gap-2.5 text-sm">
+                {t.startSteps.map((step, position) => (
                   <li key={step} className="flex items-start gap-2.5">
                     <span className="border-shell-border text-shell-fg mt-px flex size-5 shrink-0 items-center justify-center rounded-full border text-[11px] tabular-nums">
-                      {index + 1}
+                      {position + 1}
                     </span>
                     {step}
                   </li>
                 ))}
               </ol>
-              <Link
+              <ButtonLink
                 href={localePath(locale, "/components")}
-                className="bg-shell-accent text-shell-accent-fg focus-visible:ring-shell-ring mt-6 inline-flex h-11 items-center rounded-lg px-4 text-sm font-semibold transition-colors hover:bg-shell-accent-deep focus-visible:ring-2 focus-visible:outline-none"
+                variant="primary"
+                size="lg"
+                className="mt-6"
               >
                 {t.startAction}
-              </Link>
-            </section>
+              </ButtonLink>
+            </Panel>
           ) : resume ? (
-            <section className="border-shell-card-strong bg-shell overflow-hidden rounded-2xl border">
-              <div className="border-shell-border flex items-center justify-between gap-4 border-b px-5 py-3">
-                <h2 className="text-shell-fg text-sm font-medium">
+            <Panel index={5} padded={false} className="overflow-hidden">
+              <div className="border-shell-divider flex items-center justify-between gap-4 border-b px-5 py-3">
+                <h2 className="text-shell-fg text-sm font-semibold">
                   {t.resume}
                 </h2>
-                {recent[0] ? (
+                {stats.recent[0] ? (
                   <span className="text-shell-muted text-xs tabular-nums">
-                    {t.taken} {shortDate(recent[0].firstUsedAt, locale)}
+                    {t.taken} {formatDay(stats.recent[0].firstUsedAt, locale)}
                   </span>
                 ) : null}
               </div>
               <div className="bg-preview-surface flex min-h-56 items-center justify-center">
                 <CatalogThumbnail slug={resume} locale={locale} />
               </div>
-              <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-4">
+              <div className="border-shell-divider flex flex-wrap items-center justify-between gap-3 border-t px-5 py-4">
                 <div className="min-w-0">
                   <p className="text-shell-fg truncate font-medium">
                     {resumeItem?.title ?? resume}
@@ -146,28 +253,44 @@ export async function AccountOverview({ locale }: { locale: Locale }) {
                   </p>
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <Link
+                  <ButtonLink
                     href={localePath(
                       locale,
                       `${itemBasePath(getItemKind(resume) ?? "component")}/${resume}`,
                     )}
-                    className="bg-shell-accent text-shell-accent-fg focus-visible:ring-shell-ring inline-flex h-9 items-center rounded-lg px-3.5 text-sm font-semibold transition-colors hover:bg-shell-accent-deep focus-visible:ring-2 focus-visible:outline-none"
+                    variant="primary"
+                    size="sm"
                   >
                     {t.open}
-                  </Link>
-                  <CopyItemLink
-                    url={getItemDocUrl(resume)}
-                    locale={locale}
-                  />
+                  </ButtonLink>
+                  <CopyItemLink url={getItemDocUrl(resume)} locale={locale} />
                 </div>
               </div>
-            </section>
+            </Panel>
           ) : null}
 
-          {savedCount > 0 ? (
-            <section>
+          <Panel index={6}>
+            <PanelHeader
+              title={t.activity}
+              note={t.activityNote}
+              action={
+                stats.recent.length > 0 ? (
+                  <Link
+                    href={localePath(locale, "/account/history")}
+                    className="text-shell-muted hover:text-shell-fg text-sm transition-colors"
+                  >
+                    {t.recentAll}
+                  </Link>
+                ) : null
+              }
+            />
+            <Bars data={stats.byDay} locale={locale} height={120} index={7} />
+          </Panel>
+
+          {stats.savedCount > 0 ? (
+            <section className="acc-reveal" style={{ ["--i" as string]: 8 }}>
               <div className="mb-3 flex items-baseline justify-between gap-4">
-                <h2 className="text-shell-fg font-medium">{t.savedTitle}</h2>
+                <h2 className="text-shell-fg font-semibold">{t.savedTitle}</h2>
                 <Link
                   href={localePath(locale, "/account/favorites")}
                   className="text-shell-muted hover:text-shell-fg text-sm transition-colors"
@@ -176,57 +299,62 @@ export async function AccountOverview({ locale }: { locale: Locale }) {
                 </Link>
               </div>
               <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {saved.map((row) => {
+                {stats.saved.map((row, position) => {
                   const item = getCatalogItem(row.itemName)
                   const kind = getItemKind(row.itemName) ?? "component"
 
                   return (
-                    <li
+                    <Panel
                       key={row.itemName}
-                      className="border-shell-border bg-shell overflow-hidden rounded-xl border"
+                      as="li"
+                      index={9 + position}
+                      padded={false}
+                      className="acc-lift overflow-hidden"
                     >
                       <div className="bg-preview-surface flex min-h-32 items-center justify-center">
-                        <CatalogThumbnail
-                          slug={row.itemName}
-                          locale={locale}
-                        />
+                        <CatalogThumbnail slug={row.itemName} locale={locale} />
                       </div>
                       <Link
                         href={localePath(
                           locale,
                           `${itemBasePath(kind)}/${row.itemName}`,
                         )}
-                        className="border-shell-border text-shell-fg hover:text-shell-accent-text block truncate border-t px-3 py-2.5 text-sm transition-colors"
+                        className="border-shell-divider text-shell-fg hover:text-shell-accent-text block truncate border-t px-3 py-2.5 text-sm transition-colors"
                       >
                         {item?.title ?? row.itemName}
                       </Link>
-                    </li>
+                    </Panel>
                   )
                 })}
               </ul>
             </section>
           ) : null}
+        </div>
 
-          <section className="border-shell-border bg-shell-panel rounded-2xl border p-5 sm:p-6">
-            <div className="mb-4 flex items-baseline justify-between gap-4">
-              <h2 className="text-shell-fg font-medium">{t.recentTitle}</h2>
-              {recent.length > 0 ? (
-                <Link
-                  href={localePath(locale, "/account/history")}
-                  className="text-shell-muted hover:text-shell-fg text-sm transition-colors"
-                >
-                  {t.recentAll}
-                </Link>
-              ) : null}
-            </div>
-
-            {recent.length === 0 ? (
-              <p className="text-shell-muted text-sm leading-relaxed">
-                {t.recentEmpty}
-              </p>
+        <div className="grid content-start gap-4">
+          <Panel index={6}>
+            <PanelHeader
+              title={t.recentTitle}
+              action={
+                stats.recent.length > 0 ? (
+                  <Link
+                    href={localePath(locale, "/account/history")}
+                    className="text-shell-muted hover:text-shell-fg text-sm transition-colors"
+                  >
+                    {t.recentAll}
+                  </Link>
+                ) : null
+              }
+            />
+            {stats.recent.length === 0 ? (
+              <EmptyState
+                compact
+                icon={<Clock />}
+                title={t.recentEmpty}
+              />
             ) : (
               <ul className="grid gap-0.5">
-                {recent.map((row) => {
+                {stats.recent.map((row) => {
                   const item = getCatalogItem(row.itemName)
                   const kind = getItemKind(row.itemName) ?? "component"
 
@@ -248,7 +376,7 @@ export async function AccountOverview({ locale }: { locale: Locale }) {
                           </span>
                         </span>
                         <span className="text-shell-muted shrink-0 text-xs tabular-nums">
-                          {shortDate(row.firstUsedAt, locale)}
+                          {formatDay(row.firstUsedAt, locale)}
                         </span>
                       </Link>
                     </li>
@@ -256,83 +384,33 @@ export async function AccountOverview({ locale }: { locale: Locale }) {
                 })}
               </ul>
             )}
-          </section>
-        </div>
+          </Panel>
 
-        <div className="grid content-start gap-4">
-          {pro ? (
-            <aside className="border-shell-accent/40 bg-shell-panel rounded-2xl border p-5">
-              <p className="text-shell-accent-text text-sm font-semibold">
+          {stats.savedCount === 0 ? (
+            <Panel index={7} variant="soft">
+              <p className="text-shell-fg font-medium">{t.savedTitle}</p>
+              <p className="text-shell-muted mt-2 text-sm leading-relaxed">
+                {t.savedEmpty}
+              </p>
+            </Panel>
+          ) : null}
+
+          {!pro ? (
+            <Panel index={8} variant="soft">
+              <p className="text-shell-accent-text flex items-center gap-1.5 text-sm font-semibold">
+                <Sparkles className="size-4" aria-hidden="true" />
                 {t.proTitle}
               </p>
               <p className="text-shell-muted mt-2 text-sm leading-relaxed">
                 {t.proNote}
               </p>
-              {"until" in state ? (
-                <p className="text-shell-muted mt-3 text-sm">
-                  {t.proUntil(
-                    state.until.toLocaleDateString(
-                      locale === "en" ? "en-GB" : "ru-RU",
-                    ),
-                  )}
-                </p>
-              ) : null}
-              <Link
-                href={localePath(locale, "/account/subscription")}
-                className="border-shell-border-strong text-shell-fg hover:border-shell-accent mt-4 inline-flex h-9 items-center rounded-lg border px-3 text-sm transition-colors"
-              >
-                {t.manage}
-              </Link>
-            </aside>
-          ) : (
-            <aside className="border-shell-border bg-shell-panel rounded-2xl border p-5">
-              <div className="flex items-baseline justify-between gap-3">
-                <p className="text-shell-fg font-medium tabular-nums">
-                  {t.limitLeft(
-                    Math.max(0, FREE_MONTHLY_LIMIT - used),
-                    FREE_MONTHLY_LIMIT,
-                  )}
-                </p>
-              </div>
-              {/* Одна полоса вместо ста делений: на телефоне сетка занимала
-                  пять рядов ради одного числа. */}
-              <div
-                role="img"
-                aria-label={t.limitLeft(
-                  Math.max(0, FREE_MONTHLY_LIMIT - used),
-                  FREE_MONTHLY_LIMIT,
-                )}
-                className="bg-shell-elevated mt-3 h-2 overflow-hidden rounded-full"
-              >
-                <span
-                  className="bg-shell-accent block h-full rounded-full"
-                  style={{
-                    width: `${Math.min(100, (used / FREE_MONTHLY_LIMIT) * 100)}%`,
-                  }}
-                />
-              </div>
-              <p className="text-shell-muted mt-3 text-sm">
-                {t.limitResets(nextReset(locale))}
-              </p>
-              <p className="text-shell-muted mt-3 text-xs leading-relaxed">
-                {t.limitNote}
-              </p>
               <Link
                 href={localePath(locale, "/pricing")}
-                className="text-shell-accent-text mt-4 inline-block text-sm font-medium hover:underline"
+                className="text-shell-accent-text mt-3 inline-block text-sm font-medium hover:underline"
               >
                 {t.upgrade}
               </Link>
-            </aside>
-          )}
-
-          {savedCount === 0 ? (
-            <aside className="border-shell-border bg-shell-panel rounded-2xl border p-5">
-              <p className="text-shell-fg font-medium">{t.savedTitle}</p>
-              <p className="text-shell-muted mt-2 text-sm leading-relaxed">
-                {t.savedEmpty}
-              </p>
-            </aside>
+            </Panel>
           ) : null}
         </div>
       </div>

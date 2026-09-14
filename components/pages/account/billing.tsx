@@ -1,14 +1,20 @@
-import Link from "next/link"
+import type { ReactNode } from "react"
 import { and, eq } from "drizzle-orm"
+import { Receipt, Sparkles } from "lucide-react"
 
 import {
   PendingPayment,
   RenewalButton,
 } from "@/components/account/billing-parts"
 import { ACCOUNT_TEXTS } from "@/components/account/texts"
+import { ButtonLink } from "@/components/account/ui/button"
+import { PageHeader } from "@/components/account/ui/page-header"
+import { Panel } from "@/components/account/ui/panel"
+import { StatusPill } from "@/components/account/ui/status-pill"
 import { db } from "@/lib/db"
 import { payment } from "@/lib/db/schema"
 import { FREE_MONTHLY_LIMIT } from "@/lib/entitlements"
+import { formatDate, formatNumber } from "@/lib/format"
 import { localePath, type Locale } from "@/lib/i18n"
 import { PLANS } from "@/lib/plans"
 import { requireUser } from "@/lib/session"
@@ -18,30 +24,22 @@ import {
   resolveSubscription,
 } from "@/lib/subscription-state"
 
-function money(amount: string, locale: Locale) {
-  const value = Math.round(Number(amount))
-
-  return locale === "en" ? `${value} RUB` : `${value} ₽`
-}
-
-function day(value: Date, locale: Locale) {
-  return value.toLocaleDateString(locale === "en" ? "en-GB" : "ru-RU")
-}
+const DAY = 24 * 60 * 60 * 1000
 
 /**
  * Тариф и оплата одним экраном.
  *
- * Раньше страница читала любую строку подписки и говорила «Активна» даже
- * тогда, когда срок кончился, а бесплатный тариф показывался пунктирной
- * рамкой «Подписки нет» — как ошибка, хотя это нормальное состояние.
+ * Hero-панель говорит, какой тариф и до какого числа; под ней — шкала
+ * оплаченного периода и ключевые поля. Бесплатный тариф — нормальное
+ * состояние с полноценной карточкой, а не «подписки нет».
  */
 export async function AccountBilling({ locale }: { locale: Locale }) {
   const user = await requireUser(locale)
   const t = ACCOUNT_TEXTS[locale].billing
+  const now = new Date()
 
-  const [row, history] = await Promise.all([
+  const [row, pendingRows] = await Promise.all([
     getSubscriptionRow(user.id),
-    // Только «ожидает»: история целиком живёт на странице оплаты.
     db
       .select({ status: payment.status })
       .from(payment)
@@ -49,120 +47,229 @@ export async function AccountBilling({ locale }: { locale: Locale }) {
       .limit(1),
   ])
 
-  const state = resolveSubscription(row)
-  const waiting = history.some((entry) => entry.status === "pending")
+  const state = resolveSubscription(row, now)
+  const waiting = pendingRows.length > 0
+  const active =
+    state.kind === "pro" ||
+    state.kind === "cancelled" ||
+    state.kind === "past_due" ||
+    state.kind === "bonus"
 
   return (
     <>
-      <h1 className="text-shell-fg text-2xl font-semibold tracking-tight sm:text-3xl">
-        {t.title}
-      </h1>
+      <PageHeader
+        title={t.title}
+        action={
+          <ButtonLink
+            href={localePath(locale, "/account/payments")}
+            icon={<Receipt className="size-4" aria-hidden="true" />}
+          >
+            {t.payments}
+          </ButtonLink>
+        }
+      />
 
       {waiting ? <PendingPayment locale={locale} /> : null}
 
-      <section className="border-shell-border bg-shell-panel mt-6 rounded-2xl border p-6 sm:p-7">
-        <p className="text-shell-muted text-xs font-medium tracking-wide uppercase">
-          {t.currentPlan}
-        </p>
-
-        {state.kind === "free" || state.kind === "expired" ? (
-          <>
-            <p className="text-shell-fg mt-2 text-2xl font-semibold">
+      {!active ? (
+        <Panel variant="hero" index={1} className="p-6 sm:p-8">
+          <p className="text-shell-muted text-xs font-medium tracking-wide uppercase">
+            {t.currentPlan}
+          </p>
+          <div className="mt-2 flex flex-wrap items-center gap-3">
+            <p className="text-shell-fg text-3xl font-semibold tracking-tight">
               {t.freeTitle}
             </p>
-            <p className="text-shell-muted mt-2 max-w-xl text-sm leading-relaxed">
-              {state.kind === "expired"
-                ? t.expiredNote(day(state.endedAt, locale))
-                : t.freeNote(FREE_MONTHLY_LIMIT)}
+            {state.kind === "expired" ? (
+              <StatusPill tone="muted">{t.expiredTitle}</StatusPill>
+            ) : null}
+          </div>
+          <p className="text-shell-muted mt-3 max-w-xl text-sm leading-relaxed">
+            {state.kind === "expired"
+              ? t.expiredNote(formatDate(state.endedAt, locale))
+              : t.freeNote(FREE_MONTHLY_LIMIT)}
+          </p>
+          <ButtonLink
+            href={localePath(locale, "/pricing")}
+            variant="primary"
+            size="lg"
+            className="mt-6"
+            icon={<Sparkles className="size-4" aria-hidden="true" />}
+          >
+            {state.kind === "expired" ? t.payAgain : t.choosePlan}
+          </ButtonLink>
+        </Panel>
+      ) : (
+        <ActivePlan locale={locale} state={state} now={now} />
+      )}
+    </>
+  )
+}
+
+function ActivePlan({
+  locale,
+  state,
+  now,
+}: {
+  locale: Locale
+  state: Exclude<
+    ReturnType<typeof resolveSubscription>,
+    { kind: "free" } | { kind: "expired" }
+  >
+  now: Date
+}) {
+  const t = ACCOUNT_TEXTS[locale].billing
+  const plan = "plan" in state ? state.plan : null
+  const days = plan ? PLANS[plan].days : 30
+  const start = new Date(state.until.getTime() - days * DAY)
+  const elapsed = Math.min(
+    1,
+    Math.max(0, (now.getTime() - start.getTime()) / (days * DAY)),
+  )
+  const left = Math.max(0, Math.ceil((state.until.getTime() - now.getTime()) / DAY))
+  const pastDue = state.kind === "past_due"
+
+  const title =
+    state.kind === "bonus"
+      ? ACCOUNT_TEXTS[locale].plan.bonus
+      : planTitle(state.plan)
+
+  const note =
+    state.kind === "bonus"
+      ? t.bonusNote
+      : state.kind === "cancelled"
+        ? t.cancelledNote(formatDate(state.until, locale))
+        : state.kind === "past_due"
+          ? t.pastDueNote(state.attempts, formatDate(state.until, locale))
+          : t.proNote
+
+  return (
+    <div className="grid gap-6">
+      <Panel
+        variant={pastDue ? "warn" : "hero"}
+        index={1}
+        className="p-6 sm:p-8"
+      >
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="min-w-0">
+            <p className="text-shell-muted text-xs font-medium tracking-wide uppercase">
+              {t.currentPlan}
             </p>
-            <Link
-              href={localePath(locale, "/pricing")}
-              className="bg-shell-accent text-shell-accent-fg mt-5 inline-flex h-10 items-center rounded-lg px-4 text-sm font-semibold transition-colors hover:bg-shell-accent-deep"
-            >
-              {state.kind === "expired" ? t.payAgain : t.choosePlan}
-            </Link>
-          </>
-        ) : (
-          <>
-            <div className="mt-2 flex flex-wrap items-start justify-between gap-4">
-              <div>
-                <p className="text-shell-fg text-2xl font-semibold">
-                  {state.kind === "bonus"
-                    ? ACCOUNT_TEXTS[locale].plan.bonus
-                    : planTitle(state.plan)}
-                </p>
-                <p className="text-shell-muted mt-2 max-w-xl text-sm leading-relaxed">
-                  {state.kind === "bonus"
-                    ? t.bonusNote
-                    : state.kind === "cancelled"
-                      ? t.cancelledNote(day(state.until, locale))
-                      : state.kind === "past_due"
-                        ? t.pastDueNote(
-                            state.attempts,
-                            day(state.until, locale),
-                          )
-                        : t.proNote}
-                </p>
-              </div>
-              <span
-                className={`rounded-lg px-2.5 py-1 text-sm font-medium ${
-                  state.kind === "past_due"
-                    ? "border-shell-accent text-shell-accent-text border"
-                    : "bg-shell-accent text-shell-accent-fg"
-                }`}
-              >
-                {state.kind === "past_due"
-                  ? t.pastDueTitle
-                  : ACCOUNT_TEXTS[locale].plan.pro}
-              </span>
+            <div className="mt-2 flex flex-wrap items-center gap-3">
+              <p className="text-shell-fg text-3xl font-semibold tracking-tight">
+                {title}
+              </p>
+              <StatusPill tone={pastDue ? "warn" : "solid"} dot={!pastDue}>
+                {pastDue ? t.pastDueTitle : ACCOUNT_TEXTS[locale].plan.pro}
+              </StatusPill>
             </div>
+            <p className="text-shell-muted mt-3 max-w-xl text-sm leading-relaxed">
+              {note}
+            </p>
+          </div>
 
-            <dl className="text-shell-muted mt-5 grid gap-1.5 text-sm">
-              <div className="flex flex-wrap gap-x-2">
-                <dt>{t.until(day(state.until, locale))}</dt>
-              </div>
-              <div className="flex flex-wrap gap-x-2">
-                {/* Про следующее списание говорим только там, где оно и
-                    правда произойдёт: у бонуса и отменённого продления
-                    списания нет. */}
-                <dt>
-                  {state.kind === "pro"
-                    ? t.renewsOn(
-                        day(state.until, locale),
-                        state.plan
-                          ? money(PLANS[state.plan].price, locale)
-                          : "",
-                      )
-                    : t.noRenewal}
-                </dt>
-              </div>
-            </dl>
-
+          <div className="flex shrink-0 flex-wrap gap-2">
             {state.kind === "pro" || state.kind === "cancelled" ? (
               <RenewalButton
                 locale={locale}
                 cancelled={state.kind === "cancelled"}
               />
             ) : null}
-
-            {state.kind === "past_due" ? (
-              <Link
-                href={localePath(locale, "/pricing")}
-                className="bg-shell-accent text-shell-accent-fg mt-5 inline-flex h-10 items-center rounded-lg px-4 text-sm font-semibold transition-colors hover:bg-shell-accent-deep"
-              >
+            {pastDue ? (
+              <ButtonLink href={localePath(locale, "/pricing")} variant="primary">
                 {t.payAgain}
-              </Link>
+              </ButtonLink>
             ) : null}
-          </>
-        )}
-      </section>
+          </div>
+        </div>
 
-      <Link
-        href={localePath(locale, "/account/payments")}
-        className="text-shell-muted hover:text-shell-fg mt-8 inline-flex items-center gap-1.5 text-sm transition-colors"
+        {/* Шкала оплаченного периода: где сегодня между началом и концом. */}
+        <div className="mt-7">
+          <div className="text-shell-muted mb-2 flex items-center justify-between text-xs">
+            <span>{t.periodTitle}</span>
+            <span className="tabular-nums">
+              {left} {locale === "en" ? "d" : "дн."}
+            </span>
+          </div>
+          <div className="bg-shell-elevated relative h-2 overflow-hidden rounded-full">
+            <span
+              className="acc-grow-x block h-full rounded-full"
+              style={{
+                width: `${Math.max(1, elapsed * 100)}%`,
+                background: pastDue ? "var(--shell-warn)" : "var(--shell-accent)",
+              }}
+            />
+          </div>
+          <div className="text-shell-muted mt-2 flex items-center justify-between text-[11px] tabular-nums">
+            <span>
+              {t.periodStarted} · {formatDate(start, locale)}
+            </span>
+            <span>
+              {t.periodEnds} · {formatDate(state.until, locale)}
+            </span>
+          </div>
+        </div>
+      </Panel>
+
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <Field index={2} label={t.plan} value={title} />
+        <Field
+          index={3}
+          label={t.price}
+          value={
+            plan ? formatNumber(Number(PLANS[plan].price), "rub", locale) : "—"
+          }
+        />
+        <Field
+          index={4}
+          label={t.nextCharge}
+          value={
+            state.kind === "pro"
+              ? formatDate(state.until, locale)
+              : t.noRenewal
+          }
+          small={state.kind !== "pro"}
+        />
+        <Field
+          index={5}
+          label={t.renewal}
+          value={
+            <StatusPill
+              tone={state.kind === "pro" ? "ok" : "muted"}
+              dot={state.kind === "pro"}
+            >
+              {state.kind === "pro" ? t.renewalOn : t.renewalOff}
+            </StatusPill>
+          }
+        />
+      </div>
+    </div>
+  )
+}
+
+function Field({
+  index,
+  label,
+  value,
+  small,
+}: {
+  index: number
+  label: string
+  value: ReactNode
+  small?: boolean
+}) {
+  return (
+    <Panel index={index} padded={false} className="rounded-xl p-4">
+      <p className="text-shell-muted mb-1.5 text-xs font-medium">{label}</p>
+      <div
+        className={
+          small
+            ? "text-shell-fg text-sm leading-snug"
+            : "text-shell-fg text-lg font-semibold tabular-nums"
+        }
       >
-        {t.payments} →
-      </Link>
-    </>
+        {value}
+      </div>
+    </Panel>
   )
 }

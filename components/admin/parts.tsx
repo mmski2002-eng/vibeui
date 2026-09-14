@@ -1,48 +1,61 @@
-import Link from "next/link"
 import type { ReactNode } from "react"
 
-/** Плитка с числом. Подпись сверху, значение крупно, пояснение мелко. */
+import { PageHeader } from "@/components/account/ui/page-header"
+import { Panel } from "@/components/account/ui/panel"
+import { StatTile } from "@/components/account/ui/stat-tile"
+import { StatusPill, type PillTone } from "@/components/account/ui/status-pill"
+import { cn } from "@/lib/utils"
+
+/**
+ * Детали админки собраны из примитивов кабинета (`components/account/ui`).
+ * Здесь остались только обёртки с прежними именами и подписи, специфичные
+ * для админки, чтобы карточки платежа, обращения и пользователя не
+ * переписывать ради переименования.
+ */
+
+/** Плитка с числом: подпись сверху, значение крупно, пояснение мелко. */
 export function Metric({
   label,
   value,
   note,
   accent,
+  index,
 }: {
   label: string
-  value: string
+  value: string | number
   note?: string
   accent?: boolean
+  index?: number
 }) {
   return (
-    <div className="border-shell-border bg-shell-panel min-w-0 rounded-xl border p-4">
-      <p className="text-shell-muted truncate text-xs">{label}</p>
-      <p
-        className={`mt-1.5 text-2xl font-semibold tabular-nums ${
-          accent ? "text-shell-accent-text" : "text-shell-fg"
-        }`}
-      >
-        {value}
-      </p>
-      {note ? (
-        <p className="text-shell-muted mt-1 text-xs leading-snug">{note}</p>
-      ) : null}
-    </div>
+    <StatTile
+      label={label}
+      value={value}
+      note={note}
+      tone={accent ? "accent" : undefined}
+      index={index}
+    />
   )
 }
 
 export function Section({
   title,
   action,
+  index,
   children,
 }: {
   title: string
   action?: ReactNode
+  index?: number
   children: ReactNode
 }) {
   return (
-    <section className="mt-8 first:mt-0">
+    <section
+      className={cn("mt-8 first:mt-0", index !== undefined && "acc-reveal")}
+      style={index !== undefined ? { ["--i" as string]: index } : undefined}
+    >
       <div className="mb-3 flex flex-wrap items-baseline justify-between gap-3">
-        <h2 className="text-shell-fg font-medium">{title}</h2>
+        <h2 className="text-shell-fg font-semibold">{title}</h2>
         {action}
       </div>
       {children}
@@ -50,95 +63,46 @@ export function Section({
   )
 }
 
-/**
- * Столбики по дням. Своя разметка вместо библиотеки графиков: ряд чисел за
- * три месяца — это тридцать `span`, а не повод тянуть в бандл рисовалку.
- */
-export function DayBars({
-  data,
-  label,
-}: {
-  data: { day: string; value: number }[]
-  label: string
-}) {
-  const top = Math.max(1, ...data.map((row) => row.value))
-
-  return (
-    <div
-      role="img"
-      aria-label={`${label}: ${data.reduce((sum, row) => sum + row.value, 0)}`}
-      className="border-shell-border bg-shell-panel flex h-24 items-end gap-[3px] rounded-xl border p-3"
-    >
-      {data.length === 0 ? null : (
-        data.map((row) => (
-          <span
-            key={row.day}
-            title={`${row.day}: ${row.value}`}
-            className="bg-shell-accent/70 min-w-[3px] flex-1 rounded-sm"
-            style={{ height: `${Math.max(4, (row.value / top) * 100)}%` }}
-          />
-        ))
-      )}
-    </div>
-  )
-}
-
-/** Список «текст — число», одинаковый у топа запросов и пустых запросов. */
+/** Список «текст — число» с полосой доли: топ запросов и пустые запросы. */
 export function Ranked({
   rows,
   empty,
+  tone = "accent",
 }: {
   rows: { query: string; value: number }[]
   empty: string
+  tone?: "accent" | "warn"
 }) {
   if (rows.length === 0) {
     return <p className="text-shell-muted text-sm">{empty}</p>
   }
 
+  const top = Math.max(1, ...rows.map((row) => row.value))
+
   return (
-    <ul className="border-shell-border divide-y divide-[var(--shell-divider)] rounded-xl border">
-      {rows.map((row) => (
+    <ol className="grid gap-1">
+      {rows.map((row, position) => (
         <li
           key={row.query}
-          className="flex items-baseline justify-between gap-4 px-3.5 py-2 text-sm"
+          className="relative isolate flex items-baseline justify-between gap-4 overflow-hidden rounded-md px-2.5 py-1.5 text-sm"
         >
+          <span
+            aria-hidden="true"
+            className="acc-grow-x absolute inset-y-0 left-0 -z-10 rounded-md opacity-[0.14]"
+            style={{
+              ["--i" as string]: position,
+              width: `${(row.value / top) * 100}%`,
+              background:
+                tone === "warn" ? "var(--shell-warn)" : "var(--shell-accent)",
+            }}
+          />
           <span className="text-shell-fg min-w-0 truncate">{row.query}</span>
-          <span className="text-shell-muted shrink-0 tabular-nums">
+          <span className="text-shell-muted shrink-0 text-xs tabular-nums">
             {row.value}
           </span>
         </li>
       ))}
-    </ul>
-  )
-}
-
-/** Переключатель периода: ссылки, а не кнопки — период уезжает в адрес. */
-export function PeriodSwitch({
-  base,
-  current,
-  labels,
-}: {
-  base: string
-  current: number
-  labels: Record<number, string>
-}) {
-  return (
-    <div className="border-shell-border flex items-center gap-0.5 rounded-lg border p-0.5">
-      {[7, 30, 90].map((days) => (
-        <Link
-          key={days}
-          href={`${base}?period=${days}`}
-          aria-current={days === current ? "true" : undefined}
-          className={`h-8 rounded-md px-2.5 text-sm leading-8 transition-colors ${
-            days === current
-              ? "bg-shell-elevated text-shell-fg font-medium"
-              : "text-shell-muted hover:text-shell-fg"
-          }`}
-        >
-          {labels[days]}
-        </Link>
-      ))}
-    </div>
+    </ol>
   )
 }
 
@@ -146,48 +110,82 @@ export function AdminHeading({
   title,
   lead,
   action,
+  eyebrow,
 }: {
-  title: string
-  lead?: string
+  title: ReactNode
+  lead?: ReactNode
   action?: ReactNode
+  eyebrow?: ReactNode
 }) {
   return (
-    <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
-      <div>
-        <h1 className="text-shell-fg text-2xl font-semibold tracking-tight sm:text-3xl">
-          {title}
-        </h1>
-        {lead ? (
-          <p className="text-shell-muted mt-1.5 max-w-2xl text-sm leading-relaxed">
-            {lead}
-          </p>
-        ) : null}
-      </div>
-      {action}
-    </div>
+    <PageHeader title={title} lead={lead} action={action} eyebrow={eyebrow} />
   )
 }
 
-/** Значок статуса: одинаковый у платежей, обращений и пользователей. */
+/** Значок статуса. Старые тона админки переведены на семантические. */
 export function Pill({
   children,
   tone = "muted",
 }: {
   children: ReactNode
-  tone?: "muted" | "accent" | "solid"
+  tone?: PillTone
 }) {
-  const style =
-    tone === "solid"
-      ? "bg-shell-accent text-shell-accent-fg"
-      : tone === "accent"
-        ? "border-shell-accent/50 text-shell-accent-text border"
-        : "border-shell-border text-shell-muted border"
+  return <StatusPill tone={tone}>{children}</StatusPill>
+}
 
+/** Панель карточки: заголовок и содержимое. */
+export function Card({
+  title,
+  action,
+  index,
+  variant,
+  children,
+}: {
+  title?: ReactNode
+  action?: ReactNode
+  index?: number
+  variant?: "default" | "soft" | "danger" | "warn"
+  children: ReactNode
+}) {
   return (
-    <span
-      className={`inline-flex shrink-0 items-center rounded-md px-2 py-0.5 text-xs font-medium ${style}`}
-    >
+    <Panel index={index} variant={variant}>
+      {title ? (
+        <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
+          <h2 className="text-shell-fg text-base font-semibold tracking-tight">
+            {title}
+          </h2>
+          {action}
+        </div>
+      ) : null}
       {children}
-    </span>
+    </Panel>
+  )
+}
+
+export const INPUT_CLASS =
+  "border-shell-border bg-shell-panel text-shell-fg placeholder:text-shell-muted focus-visible:border-shell-accent focus-visible:ring-shell-ring h-10 min-w-0 rounded-lg border px-3 text-sm outline-none transition-colors focus-visible:ring-2"
+
+/** Строка «подпись — значение» для карточек. */
+export function Row({
+  label,
+  children,
+  mono,
+}: {
+  label: ReactNode
+  children: ReactNode
+  mono?: boolean
+}) {
+  return (
+    <div className="border-shell-divider flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b py-2.5 text-sm last:border-b-0">
+      <dt className="text-shell-muted shrink-0">{label}</dt>
+      <dd
+        className={cn(
+          "text-shell-fg min-w-0 text-right",
+          mono && "font-mono text-xs",
+        )}
+      >
+        {children}
+      </dd>
+    </div>
   )
 }

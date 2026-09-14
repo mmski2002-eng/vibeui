@@ -1,11 +1,16 @@
 import Link from "next/link"
 import { and, desc, eq, ilike, or, sql } from "drizzle-orm"
+import { Download, Search } from "lucide-react"
 
-import { AdminHeading, Pill } from "@/components/admin/parts"
+import { AdminHeading, INPUT_CLASS } from "@/components/admin/parts"
 import { ADMIN_TEXTS } from "@/components/admin/texts"
+import { Button, ButtonLink } from "@/components/account/ui/button"
+import { CellStack, DataTable } from "@/components/account/ui/data-table"
+import { StatusPill, type PillTone } from "@/components/account/ui/status-pill"
 import { requireAdmin } from "@/lib/admin"
 import { db } from "@/lib/db"
 import { payment, user } from "@/lib/db/schema"
+import { formatDate, formatNumber } from "@/lib/format"
 
 const PAGE = 50
 
@@ -18,6 +23,14 @@ function statusOf(value: string): Status {
     value === "refunded"
     ? value
     : "unknown"
+}
+
+export const PAYMENT_TONE: Record<Status, PillTone> = {
+  succeeded: "ok",
+  pending: "warn",
+  canceled: "muted",
+  refunded: "accent",
+  unknown: "danger",
 }
 
 /**
@@ -74,6 +87,9 @@ export async function AdminPayments({
 
   const page = rows.slice(0, PAGE)
   const next = rows.length > PAGE ? page[page.length - 1]?.createdAt : null
+  const sum = page
+    .filter((row) => row.status === "succeeded")
+    .reduce((total, row) => total + Number(row.amount), 0)
 
   const search = new URLSearchParams()
 
@@ -89,25 +105,37 @@ export async function AdminPayments({
           <Link
             href={`/api/admin/payments.csv?${search.toString()}`}
             prefetch={false}
-            className="border-shell-border text-shell-fg hover:border-shell-accent inline-flex h-10 items-center rounded-lg border px-3.5 text-sm transition-colors"
+            className="acc-press border-shell-border bg-shell-panel text-shell-fg hover:border-shell-accent-line hover:bg-shell-elevated inline-flex h-10 items-center gap-2 rounded-lg border px-4 text-sm font-medium"
           >
+            <Download className="size-4" aria-hidden="true" />
             {t.export}
           </Link>
         }
       />
 
-      <form className="mb-4 flex flex-wrap items-center gap-2" action="">
-        <input
-          type="search"
-          name="q"
-          defaultValue={needle}
-          placeholder={t.search}
-          className="border-shell-border bg-shell-elevated text-shell-fg placeholder:text-shell-muted focus-visible:border-shell-accent focus-visible:ring-shell-ring h-10 min-w-0 flex-1 rounded-lg border px-3 text-sm outline-none sm:max-w-sm focus-visible:ring-2"
-        />
+      <form
+        className="acc-reveal mb-4 flex flex-wrap items-center gap-2"
+        action=""
+        style={{ ["--i" as string]: 1 }}
+      >
+        <label className="relative min-w-0 flex-1 sm:max-w-sm">
+          <span className="sr-only">{t.search}</span>
+          <Search
+            aria-hidden="true"
+            className="text-shell-muted pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2"
+          />
+          <input
+            type="search"
+            name="q"
+            defaultValue={needle}
+            placeholder={t.search}
+            className={`${INPUT_CLASS} w-full pl-9`}
+          />
+        </label>
         <select
           name="status"
           defaultValue={status ?? "all"}
-          className="border-shell-border bg-shell-elevated text-shell-fg h-10 rounded-lg border px-3 text-sm outline-none"
+          className={INPUT_CLASS}
         >
           <option value="all">{t.all}</option>
           {Object.entries(t.status)
@@ -118,63 +146,72 @@ export async function AdminPayments({
               </option>
             ))}
         </select>
-        <button
-          type="submit"
-          className="border-shell-border text-shell-fg hover:border-shell-accent inline-flex h-10 items-center rounded-lg border px-3.5 text-sm transition-colors"
-        >
-          {ADMIN_TEXTS.payments.columnStatus}
-        </button>
+        <Button type="submit">{t.find}</Button>
+        {sum > 0 ? (
+          <span className="text-shell-muted ml-auto text-xs tabular-nums">
+            {t.sum}: {formatNumber(sum, "rub")}
+          </span>
+        ) : null}
       </form>
 
-      {page.length === 0 ? (
-        <p className="text-shell-muted text-sm">{t.empty}</p>
-      ) : (
-        <ul className="border-shell-border divide-y divide-[var(--shell-divider)] rounded-2xl border">
-          {page.map((row) => (
-            <li
-              key={row.id}
-              className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3 text-sm"
-            >
-              <span className="text-shell-muted w-24 shrink-0 tabular-nums">
-                {(row.paidAt ?? row.createdAt).toLocaleDateString("ru-RU")}
-              </span>
-              <span className="min-w-0 flex-1">
-                <Link
-                  href={`/account/admin/users/${row.userId}`}
-                  className="text-shell-fg hover:text-shell-accent-text block truncate transition-colors"
-                >
-                  {row.email ?? row.userId}
-                </Link>
-                <span className="text-shell-muted block truncate font-mono text-xs">
-                  {row.yookassaId}
-                </span>
-              </span>
-              <Pill
-                tone={row.status === "succeeded" ? "muted" : "accent"}
-              >
-                {t.status[statusOf(row.status)]}
-              </Pill>
-              <span className="text-shell-fg w-20 shrink-0 text-right font-medium tabular-nums">
-                {Math.round(Number(row.amount))} ₽
-              </span>
+      <DataTable
+        index={2}
+        caption={t.title}
+        empty={t.empty}
+        columns={[
+          { key: "date", label: t.columnDate, className: "w-28" },
+          { key: "user", label: t.columnUser },
+          { key: "status", label: t.columnStatus, className: "w-32" },
+          { key: "amount", label: t.columnAmount, align: "right", className: "w-28" },
+          { key: "open", label: "", align: "right", className: "w-24", hideBelow: "sm" },
+        ]}
+        rows={page.map((row) => {
+          const status = statusOf(row.status)
+
+          return {
+            id: row.id,
+            cells: [
+              <span key="date" className="text-shell-muted text-xs tabular-nums">
+                {formatDate(row.paidAt ?? row.createdAt)}
+              </span>,
+              <CellStack
+                key="user"
+                primary={
+                  <Link
+                    href={`/account/admin/users/${row.userId}`}
+                    className="hover:text-shell-accent-text transition-colors"
+                  >
+                    {row.email ?? row.userId}
+                  </Link>
+                }
+                secondary={row.yookassaId}
+                mono
+              />,
+              <StatusPill key="status" tone={PAYMENT_TONE[status]}>
+                {t.status[status]}
+              </StatusPill>,
+              <span key="amount" className="font-medium tabular-nums">
+                {formatNumber(Number(row.amount), "rub")}
+              </span>,
               <Link
+                key="open"
                 href={`/account/admin/payments/${row.id}`}
-                className="text-shell-muted hover:text-shell-fg shrink-0 text-xs transition-colors"
+                className="text-shell-muted hover:text-shell-fg text-xs transition-colors"
               >
-                {t.open}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+                {t.open} →
+              </Link>,
+            ],
+          }
+        })}
+      />
 
       {next ? (
-        <Link
+        <ButtonLink
           href={`/account/admin/payments?${search.toString()}${search.size ? "&" : ""}before=${next.toISOString()}`}
-          className="border-shell-border text-shell-fg hover:border-shell-accent mt-4 inline-flex h-10 items-center rounded-lg border px-4 text-sm transition-colors"
+          className="mt-4"
         >
           {t.more}
-        </Link>
+        </ButtonLink>
       ) : null}
     </>
   )

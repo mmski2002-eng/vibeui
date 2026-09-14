@@ -1,8 +1,9 @@
 import "server-only"
 
 import { randomBytes, randomUUID } from "node:crypto"
-import { and, count, desc, eq, isNull, sql } from "drizzle-orm"
+import { and, count, desc, eq, gte, isNull, lt, sql } from "drizzle-orm"
 
+import { fillDays, lastDays } from "@/lib/days"
 import { db } from "@/lib/db"
 import {
   partnerInvite,
@@ -282,4 +283,115 @@ export async function deleteInvite(id: string) {
     .returning({ id: partnerInvite.id })
 
   return deleted.length > 0
+}
+
+export type PartnerPeriod = 30 | 90
+
+/**
+ * Динамика партнёра за период: переходы и регистрации по дням, итоги
+ * периода и такого же периода до него — для стрелок изменения.
+ */
+export async function partnerStats(
+  partnerId: string,
+  code: string,
+  days: PartnerPeriod,
+  now = new Date(),
+) {
+  const from = new Date(now.getTime() - days * 24 * 60 * 60 * 1000)
+  const before = new Date(from.getTime() - days * 24 * 60 * 60 * 1000)
+
+  const [visitsByDay, signupsByDay, current, previous, paidByDay] =
+    await Promise.all([
+      db
+        .select({
+          day: sql<string>`to_char(date_trunc('day', ${referralVisit.landedAt}), 'YYYY-MM-DD')`,
+          value: count(),
+        })
+        .from(referralVisit)
+        .where(and(eq(referralVisit.code, code), gte(referralVisit.landedAt, from)))
+        .groupBy(sql`date_trunc('day', ${referralVisit.landedAt})`),
+      db
+        .select({
+          day: sql<string>`to_char(date_trunc('day', ${user.createdAt}), 'YYYY-MM-DD')`,
+          value: count(),
+        })
+        .from(user)
+        .where(and(eq(user.invitedBy, partnerId), gte(user.createdAt, from)))
+        .groupBy(sql`date_trunc('day', ${user.createdAt})`),
+      periodTotals(partnerId, code, from, now),
+      periodTotals(partnerId, code, before, from),
+      db
+        .select({
+          day: sql<string>`to_char(date_trunc('day', ${payment.paidAt}), 'YYYY-MM-DD')`,
+          value: sql<number>`count(distinct ${payment.userId})`,
+        })
+        .from(payment)
+        .innerJoin(user, eq(user.id, payment.userId))
+        .where(
+          and(
+            eq(user.invitedBy, partnerId),
+            eq(payment.status, "succeeded"),
+            gte(payment.paidAt, from),
+          ),
+        )
+        .groupBy(sql`date_trunc('day', ${payment.paidAt})`),
+    ])
+
+  const range = lastDays(days, now)
+
+  return {
+    visitsByDay: fillDays(range, visitsByDay),
+    signupsByDay: fillDays(range, signupsByDay),
+    paidByDay: fillDays(range, paidByDay),
+    current,
+    previous,
+  }
+}
+
+async function periodTotals(
+  partnerId: string,
+  code: string,
+  from: Date,
+  to: Date,
+) {
+  const [visits, signups, paid] = await Promise.all([
+    db
+      .select({ value: count() })
+      .from(referralVisit)
+      .where(
+        and(
+          eq(referralVisit.code, code),
+          gte(referralVisit.landedAt, from),
+          lt(referralVisit.landedAt, to),
+        ),
+      ),
+    db
+      .select({ value: count() })
+      .from(user)
+      .where(
+        and(
+          eq(user.invitedBy, partnerId),
+          gte(user.createdAt, from),
+          lt(user.createdAt, to),
+        ),
+      ),
+    db
+      .select({ value: sql<number>`count(distinct ${payment.userId})` })
+      .from(payment)
+      .innerJoin(user, eq(user.id, payment.userId))
+      .where(
+        and(
+          eq(user.invitedBy, partnerId),
+          eq(payment.status, "succeeded"),
+          gte(payment.paidAt, from),
+          lt(payment.paidAt, to),
+        ),
+      ),
+  ])
+
+  return {
+    visits: visits[0]?.value ?? 0,
+    signups: signups[0]?.value ?? 0,
+    paid: Number(paid[0]?.value ?? 0),
+  }
 }

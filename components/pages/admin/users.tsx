@@ -1,11 +1,15 @@
-import Link from "next/link"
 import { and, desc, ilike, or, sql } from "drizzle-orm"
+import { Search } from "lucide-react"
 
-import { AdminHeading, Pill } from "@/components/admin/parts"
+import { AdminHeading, INPUT_CLASS } from "@/components/admin/parts"
 import { ADMIN_TEXTS } from "@/components/admin/texts"
+import { Button, ButtonLink } from "@/components/account/ui/button"
+import { CellStack, DataTable } from "@/components/account/ui/data-table"
+import { StatusPill } from "@/components/account/ui/status-pill"
 import { requireAdmin } from "@/lib/admin"
 import { db } from "@/lib/db"
 import { subscription, user } from "@/lib/db/schema"
+import { formatDate } from "@/lib/format"
 import { resolveSubscription } from "@/lib/subscription-state"
 
 const PAGE = 40
@@ -61,69 +65,83 @@ export async function AdminUsers({
     <>
       <AdminHeading title={t.title} lead={t.lead} />
 
-      <form className="mb-4 flex flex-wrap items-center gap-2" action="">
-        <input
-          type="search"
-          name="q"
-          defaultValue={needle}
-          placeholder={t.search}
-          className="border-shell-border bg-shell-elevated text-shell-fg placeholder:text-shell-muted focus-visible:border-shell-accent focus-visible:ring-shell-ring h-10 min-w-0 flex-1 rounded-lg border px-3 text-sm outline-none sm:max-w-sm focus-visible:ring-2"
-        />
-        <button
-          type="submit"
-          className="border-shell-border text-shell-fg hover:border-shell-accent inline-flex h-10 items-center rounded-lg border px-3.5 text-sm transition-colors"
-        >
-          {t.columnUser}
-        </button>
+      <form
+        className="acc-reveal mb-4 flex flex-wrap items-center gap-2"
+        action=""
+        style={{ ["--i" as string]: 1 }}
+      >
+        <label className="relative min-w-0 flex-1 sm:max-w-sm">
+          <span className="sr-only">{t.search}</span>
+          <Search
+            aria-hidden="true"
+            className="text-shell-muted pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2"
+          />
+          <input
+            type="search"
+            name="q"
+            defaultValue={needle}
+            placeholder={t.search}
+            className={`${INPUT_CLASS} w-full pl-9`}
+          />
+        </label>
+        <Button type="submit">{t.find}</Button>
       </form>
 
-      {page.length === 0 ? (
-        <p className="text-shell-muted text-sm">{t.empty}</p>
-      ) : (
-        <ul className="border-shell-border divide-y divide-[var(--shell-divider)] rounded-2xl border">
-          {page.map((row) => {
-            const state = resolveSubscription(row.subscription ?? undefined)
+      <DataTable
+        index={2}
+        caption={t.title}
+        empty={t.empty}
+        columns={[
+          { key: "user", label: t.columnUser },
+          { key: "state", label: t.columnState, hideBelow: "md" },
+          { key: "plan", label: t.columnPlan, className: "w-28" },
+          { key: "joined", label: t.columnJoined, align: "right", className: "w-32" },
+        ]}
+        rows={page.map((row) => {
+          const state = resolveSubscription(row.subscription ?? undefined)
+          const pro =
+            state.kind !== "free" && state.kind !== "expired"
 
-            return (
-              <li key={row.id}>
-                <Link
-                  href={`/account/admin/users/${row.id}`}
-                  className="hover:bg-shell-elevated flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3 text-sm transition-colors"
-                >
-                  <span className="min-w-0 flex-1">
-                    <span className="text-shell-fg block truncate">
-                      {row.email}
-                    </span>
-                    <span className="text-shell-muted block truncate text-xs">
-                      {row.name}
-                    </span>
-                  </span>
-                  {row.blockedAt ? (
-                    <Pill tone="accent">{t.blocked}</Pill>
-                  ) : null}
-                  {row.emailVerified ? null : (
-                    <Pill tone="accent">{t.unverified}</Pill>
-                  )}
-                  <Pill tone={state.kind === "free" ? "muted" : "solid"}>
-                    {state.kind}
-                  </Pill>
-                  <span className="text-shell-muted w-24 shrink-0 text-right text-xs tabular-nums">
-                    {row.createdAt.toLocaleDateString("ru-RU")}
-                  </span>
-                </Link>
-              </li>
-            )
-          })}
-        </ul>
-      )}
+          return {
+            id: row.id,
+            href: `/account/admin/users/${row.id}`,
+            cells: [
+              <CellStack key="user" primary={row.email} secondary={row.name} />,
+              <span key="state" className="flex flex-wrap gap-1.5">
+                {row.blockedAt ? (
+                  <StatusPill tone="danger">{t.blocked}</StatusPill>
+                ) : null}
+                {row.emailVerified ? null : (
+                  <StatusPill tone="warn">{t.unverified}</StatusPill>
+                )}
+              </span>,
+              <StatusPill
+                key="plan"
+                tone={
+                  state.kind === "past_due"
+                    ? "warn"
+                    : pro
+                      ? "solid"
+                      : "muted"
+                }
+              >
+                {state.kind}
+              </StatusPill>,
+              <span key="joined" className="text-shell-muted text-xs tabular-nums">
+                {formatDate(row.createdAt)}
+              </span>,
+            ],
+          }
+        })}
+      />
 
       {next ? (
-        <Link
+        <ButtonLink
           href={`/account/admin/users?${params.toString()}${params.size ? "&" : ""}before=${next.toISOString()}`}
-          className="border-shell-border text-shell-fg hover:border-shell-accent mt-4 inline-flex h-10 items-center rounded-lg border px-4 text-sm transition-colors"
+          className="mt-4"
         >
           {t.more}
-        </Link>
+        </ButtonLink>
       ) : null}
     </>
   )
