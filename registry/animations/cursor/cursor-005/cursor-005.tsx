@@ -67,6 +67,9 @@ overflow:hidden;border-radius:1rem;border:1px solid var(--vibeui-cursor-005-bord
 background:var(--vibeui-cursor-005-bg);color:var(--vibeui-cursor-005-fg);
 font-family:var(--vibeui-cursor-005-font);
 cursor:crosshair;user-select:none;
+/* Свой контекст наложения: z-index призраков растёт с каждым появлением и
+   без isolation вылезал бы поверх соседей блока — текста над полем. */
+isolation:isolate;
 /* Вертикальный жест остаётся за страницей: поле в ленте каталога не должно
    ловить прокрутку; горизонтальный ведёт шлейф. */
 touch-action:pan-y;
