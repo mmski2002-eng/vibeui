@@ -1,78 +1,153 @@
 import Link from "next/link"
-import type { ReactNode } from "react"
-import { Check } from "lucide-react"
+import { ArrowRight, Infinity as InfinityIcon, Lock, LockOpen, Sparkles } from "lucide-react"
 
 import { CatalogShell } from "@/components/catalog/catalog-shell"
-import { Comparison001 } from "@/registry/blocks/comparison/comparison-001/comparison-001"
+import { PlanCards } from "@/components/pages/pricing/plan-cards"
+import { Reveal } from "@/components/pages/pricing/reveal"
+import { Cursor005 } from "@/registry/animations/cursor/cursor-005/cursor-005"
 import { Pricing011 } from "@/registry/blocks/pricing/pricing-011/pricing-011"
 import { getUsedCount } from "@/lib/entitlements"
 import { localePath, type Locale } from "@/lib/i18n"
 import { FREE_MONTHLY_LIMIT } from "@/lib/limits"
-import { startCheckout } from "@/lib/payment-actions"
 import { PLANS } from "@/lib/plans"
 import { getSession } from "@/lib/session"
 import { getSubscriptionState, isProState } from "@/lib/subscription-state"
+import { getCatalogItems, getItemsByKind } from "@/registry/index"
 
 /** Витрина красится фирменным оранжевым: блоки из реестра берут его пропом. */
 const BRAND_ACCENT = "#ff5900"
 
 const MONTHLY = Math.round(Number(PLANS.monthly.price))
 const YEARLY = Math.round(Number(PLANS.yearly.price))
+const ENTERPRISE_MONTHLY = Math.round(Number(PLANS["enterprise-monthly"].price))
+const ENTERPRISE_YEARLY = Math.round(Number(PLANS["enterprise-yearly"].price))
 const YEARLY_SAVING = Math.round((1 - YEARLY / (MONTHLY * 12)) * 100)
+
+const ITEMS = getCatalogItems().length
+const ANIMATIONS = getItemsByKind("animation").length
+
+const number = (value: number) => value.toLocaleString("ru-RU")
 
 const TEXTS = {
   ru: {
-    title: "Тарифы",
-    lede: "Витрина открыта целиком: смотреть, искать и примерять компоненты можно без аккаунта. Платным становится объём работы, а не доступ к дизайну.",
-    switchLabel: "Период оплаты",
-    month: "Помесячно",
-    year: "На год",
-    save: `−${YEARLY_SAVING} %`,
-    perMonth: "/ мес",
-    perYear: "/ год",
-    free: "Бесплатно",
-    pro: "Pro",
-    freeFeatures: [
-      "Весь каталог, превью и поиск",
-      `${FREE_MONTHLY_LIMIT} разных компонентов в месяц`,
-      "Copy for AI и установка через shadcn",
-      "Избранное и история",
+    eyebrow: "Тарифы",
+    title: "Сайт за вечер.\nДизайн — ваш.",
+    lede: `${number(ITEMS)} блоков, компонентов и анимаций. Выбираете, копируете промпт, ИИ-агент ставит в проект как есть: анимации, типографика, отступы. Ноль зависимостей.`,
+    heroPrimary: "Начать бесплатно",
+    heroPrimarySigned: "Открыть каталог",
+    heroSecondary: "К тарифам",
+    heroNote: `${FREE_MONTHLY_LIMIT} компонентов в месяц бесплатно. Карта не нужна.`,
+    heroHint: "Проведите курсором по полю",
+    trust: [
+      `${number(ITEMS)} элементов`,
+      "Ноль зависимостей",
+      "shadcn CLI",
+      "Оплата картой и СБП",
+      "Отмена в один клик",
     ],
-    proFeatures: [
-      "Без лимита на компоненты",
-      "Анимации и закрытые блоки",
-      "Ключ для установки прямо из shadcn CLI",
-    ],
-    signup: "Создать аккаунт",
-    toAccount: "В кабинет",
-    payMonth: "Оплатить месяц",
-    payYear: "Оплатить год",
-    proUntil: (date: string) => `Pro активен до ${date}`,
-    manage: "Управлять подпиской",
-    limitTitle: "Как считается лимит",
-    limitLines: [
-      `С аккаунтом — ${FREE_MONTHLY_LIMIT} разных компонентов в месяц. Без аккаунта исходники не выдаются.`,
-      "Повторное копирование того же компонента в том же месяце ничего не списывает.",
-      "Pro снимает лимит целиком: считать ничего не нужно.",
-    ],
+    plansEyebrow: "Тарифы",
+    plansTitle: "Бесплатно — чтобы попробовать. Pro — чтобы собирать.",
+    plans: {
+      switchLabel: "Период оплаты",
+      month: "Помесячно",
+      year: "На год",
+      save: `−${YEARLY_SAVING} %`,
+      perMonth: "/ мес",
+      perYear: "/ год",
+      yearlyNotePro: `${number(Math.round(YEARLY / 12))} ₽ в месяц`,
+      yearlyNoteEnterprise: `${number(Math.round(ENTERPRISE_YEARLY / 12))} ₽ в месяц`,
+      savingNote: `экономия ${number(MONTHLY * 12 - YEARLY)} ₽`,
+      free: {
+        name: "Бесплатно",
+        eyebrow: "Чтобы попробовать",
+        features: [
+          "Весь каталог, живые превью и поиск",
+          `${FREE_MONTHLY_LIMIT} разных компонентов в месяц`,
+          "Copy for AI и установка через shadcn",
+          "Ключ для установки прямо из shadcn CLI",
+          "Избранное и история",
+        ],
+        cta: "Создать аккаунт",
+        ctaSigned: "В кабинет",
+        under: "Без карты. Лимит обнуляется первого числа.",
+      },
+      pro: {
+        name: "Pro",
+        eyebrow: "Чтобы собирать",
+        badge: "Популярный",
+        plusAll: "Всё из бесплатного, плюс:",
+        features: [
+          "Без лимита на компоненты",
+          `${ANIMATIONS} анимаций: курсоры, фоны, текст, стопки`,
+          "Закрытые блоки — те, что только в Pro",
+        ],
+        anchor: "Меньше часа работы верстальщика",
+        cta: "Открыть Pro",
+        payMonth: "Оплатить месяц",
+        payYear: "Оплатить год",
+        under: "Продление отключается в кабинете в один клик.",
+        activeUntil: "Pro активен до",
+        manage: "Управлять подпиской",
+      },
+      enterprise: {
+        name: "Энтерпрайз",
+        eyebrow: "Чтобы поддержать",
+        badge: "Респект",
+        plusAll: "Всё из Pro, плюс:",
+        features: [
+          "Личный респект от создателя",
+          "Ваше имя — в голове автора, когда он пишет следующий блок",
+          "Чувство, что проект стал лучше благодаря вам",
+        ],
+        cta: "Заслужить респект",
+        under: "Ровно вдвое дороже Pro. Так и задумано.",
+      },
+    },
     usage: (used: number) =>
       `В этом месяце вы взяли ${used} из ${FREE_MONTHLY_LIMIT}.`,
-    compareEyebrow: "Сравнение",
-    compareTitle: "Что входит в каждый тариф",
-    compareRows: [
-      { feature: "Каталог, живые превью и поиск", them: true, us: true },
-      { feature: "Copy for AI и установка через shadcn", them: true, us: true },
-      { feature: "Избранное и история", them: true, us: true },
-      { feature: "Ключ для shadcn CLI", them: true, us: true },
+    proEyebrow: "Что открывает Pro",
+    proTitle: "Три вещи, ради которых берут Pro",
+    proTiles: [
       {
-        feature: `${FREE_MONTHLY_LIMIT} разных компонентов в месяц`,
-        them: true,
-        us: true,
+        title: "Анимации",
+        text: `${ANIMATIONS} живых сцен: курсоры, шейдерные фоны, текстовые эффекты, стопки карточек. Каждая — один файл без библиотек.`,
+        chips: [
+          "Курсоры",
+          "Фоны",
+          "Текст",
+          "Стопки",
+          "Аватары",
+          "Устройства",
+          "Портфолио",
+          "Рукописный",
+        ],
       },
-      { feature: "Без лимита на компоненты", them: false, us: true },
-      { feature: "Анимации", them: false, us: true },
-      { feature: "Закрытые блоки", them: false, us: true },
+      {
+        title: "Закрытые блоки",
+        text: "Секции, которые видно на витрине, но код которых отдаётся только в Pro: первые экраны, раскладки, шейдеры.",
+      },
+      {
+        title: "Без лимита",
+        text: "Сотни компонентов в месяц вместо ста. Собирайте сайты подряд, не считая копирования.",
+      },
     ],
+    stepsEyebrow: "Как это работает",
+    stepsTitle: "Три шага от каталога до сайта",
+    steps: [
+      {
+        title: "Выбираете",
+        text: "Открываете каталог, примеряете блок на светлой и тёмной подложке, крутите настройки прямо на карточке.",
+      },
+      {
+        title: "Копируете для ИИ",
+        text: "Кнопка «Copy for AI» собирает промпт: команда установки, что сохранить, что можно менять под бренд.",
+      },
+      {
+        title: "Агент ставит",
+        text: "Cursor, Claude Code или любой другой агент ставит тот же файл, что вы видели в превью. Никаких «примерно таких же».",
+      },
+    ],
+    snippet: "npx shadcn add vibeui.ru/r/hero-011",
     faqEyebrow: "Вопросы об оплате",
     faqTitle: "Что обычно спрашивают перед оплатой",
     faqLede: "Только про деньги, документы и отмену. Про сами компоненты — в каталоге.",
@@ -89,19 +164,22 @@ const TEXTS = {
           "Да, в конце оплаченного периода. Отключить продление можно в кабинете в любой момент: доступ сохранится до конца периода, следующего списания не будет.",
       },
       {
+        question: "Как считается лимит на бесплатном тарифе?",
+        answer: `${FREE_MONTHLY_LIMIT} разных компонентов в месяц с аккаунтом. Повторное копирование того же компонента в том же месяце ничего не списывает. Pro снимает лимит целиком.`,
+      },
+      {
         question: "Будет ли чек?",
         answer:
           "Продавец — самозанятый, чек формируется в «Мой налог» после каждой оплаты. Ссылка на чек появляется в кабинете в разделе оплат.",
       },
       {
         question: "Что будет, когда подписка закончится?",
-        answer:
-          "Тариф станет бесплатным: сто компонентов в месяц, избранное и история останутся. Всё, что вы уже скопировали в свой проект, остаётся вашим.",
+        answer: `Тариф станет бесплатным: ${FREE_MONTHLY_LIMIT} компонентов в месяц, избранное и история останутся. Всё, что вы уже скопировали в свой проект, остаётся вашим.`,
       },
       {
-        question: "Можно ли вернуть деньги?",
+        question: "Что такое Энтерпрайз?",
         answer:
-          "Если Pro не подошёл в первые 7 дней — напишите нам, вернём оплату за текущий период.",
+          "Ровно то же, что Pro, вдвое дороже — и личный респект от создателя. Это способ поддержать проект, если он вам сэкономил больше, чем стоит. Доступ у тарифов одинаковый.",
       },
       {
         question: "Есть ли тариф для команд?",
@@ -111,63 +189,134 @@ const TEXTS = {
     ],
     contactText: "Не нашли свой вопрос?",
     contactLabel: "Написать в поддержку",
-    legal: "Оплата картой или через СБП через ЮKassa. Продавец — самозанятый. Оформляя подписку, вы принимаете",
+    ctaTitle: "Начните бесплатно. Pro — когда лимит станет тесен.",
+    ctaText: `${FREE_MONTHLY_LIMIT} компонентов в месяц без карты. Потом — ${number(MONTHLY)} ₽ в месяц, отмена в один клик.`,
+    ctaButton: "Создать аккаунт",
+    ctaButtonSigned: "Открыть каталог",
+    legal: "Оплата картой или через СБП через ЮKassa. Оформляя подписку, вы принимаете",
     offer: "оферту",
     and: "и",
     privacy: "политику конфиденциальности",
   },
   en: {
-    title: "Pricing",
-    lede: "The showcase is fully open: browse, search and try components without an account. You pay for volume of work, not for access to design.",
-    switchLabel: "Billing period",
-    month: "Monthly",
-    year: "Yearly",
-    save: `−${YEARLY_SAVING}%`,
-    perMonth: "/ mo",
-    perYear: "/ yr",
-    free: "Free",
-    pro: "Pro",
-    freeFeatures: [
-      "The whole catalog, previews and search",
-      `${FREE_MONTHLY_LIMIT} different components a month`,
-      "Copy for AI and install through shadcn",
-      "Favourites and history",
+    eyebrow: "Pricing",
+    title: "A site in an evening.\nThe design is yours.",
+    lede: `${number(ITEMS)} blocks, components and animations. Pick, copy the prompt, and the AI agent installs it as is: animations, typography, spacing. Zero dependencies.`,
+    heroPrimary: "Start for free",
+    heroPrimarySigned: "Open the catalog",
+    heroSecondary: "See plans",
+    heroNote: `${FREE_MONTHLY_LIMIT} components a month for free. No card needed.`,
+    heroHint: "Move your cursor across the field",
+    trust: [
+      `${number(ITEMS)} items`,
+      "Zero dependencies",
+      "shadcn CLI",
+      "Card and SBP payments",
+      "Cancel in one click",
     ],
-    proFeatures: [
-      "No limit on components",
-      "Animations and closed blocks",
-      "A key to install straight from the shadcn CLI",
-    ],
-    signup: "Create an account",
-    toAccount: "Open account",
-    payMonth: "Pay for a month",
-    payYear: "Pay for a year",
-    proUntil: (date: string) => `Pro is active until ${date}`,
-    manage: "Manage subscription",
-    limitTitle: "How the limit works",
-    limitLines: [
-      `With an account — ${FREE_MONTHLY_LIMIT} different components a month. Without an account no source is served.`,
-      "Copying the same component again in the same month costs nothing.",
-      "Pro removes the limit entirely: nothing to count.",
-    ],
+    plansEyebrow: "Plans",
+    plansTitle: "Free to try. Pro to build.",
+    plans: {
+      switchLabel: "Billing period",
+      month: "Monthly",
+      year: "Yearly",
+      save: `−${YEARLY_SAVING}%`,
+      perMonth: "/ mo",
+      perYear: "/ yr",
+      yearlyNotePro: `${number(Math.round(YEARLY / 12))} ₽ a month`,
+      yearlyNoteEnterprise: `${number(Math.round(ENTERPRISE_YEARLY / 12))} ₽ a month`,
+      savingNote: `save ${number(MONTHLY * 12 - YEARLY)} ₽`,
+      free: {
+        name: "Free",
+        eyebrow: "To try",
+        features: [
+          "The whole catalog, live previews and search",
+          `${FREE_MONTHLY_LIMIT} different components a month`,
+          "Copy for AI and shadcn install",
+          "A key to install straight from the shadcn CLI",
+          "Favourites and history",
+        ],
+        cta: "Create an account",
+        ctaSigned: "Open account",
+        under: "No card. The limit resets on the first of the month.",
+      },
+      pro: {
+        name: "Pro",
+        eyebrow: "To build",
+        badge: "Popular",
+        plusAll: "Everything in Free, plus:",
+        features: [
+          "No limit on components",
+          `${ANIMATIONS} animations: cursors, backgrounds, text, stacks`,
+          "Closed blocks — the ones only in Pro",
+        ],
+        anchor: "Less than an hour of a front-end contractor",
+        cta: "Get Pro",
+        payMonth: "Pay for a month",
+        payYear: "Pay for a year",
+        under: "Renewal switches off in your account in one click.",
+        activeUntil: "Pro is active until",
+        manage: "Manage subscription",
+      },
+      enterprise: {
+        name: "Enterprise",
+        eyebrow: "To support",
+        badge: "Respect",
+        plusAll: "Everything in Pro, plus:",
+        features: [
+          "Personal respect from the creator",
+          "Your name in the author's head while he writes the next block",
+          "The feeling that the project got better because of you",
+        ],
+        cta: "Earn respect",
+        under: "Exactly twice the price of Pro. On purpose.",
+      },
+    },
     usage: (used: number) =>
       `This month you have taken ${used} of ${FREE_MONTHLY_LIMIT}.`,
-    compareEyebrow: "Comparison",
-    compareTitle: "What each plan includes",
-    compareRows: [
-      { feature: "Catalog, live previews and search", them: true, us: true },
-      { feature: "Copy for AI and shadcn install", them: true, us: true },
-      { feature: "Favourites and history", them: true, us: true },
-      { feature: "A key for the shadcn CLI", them: true, us: true },
+    proEyebrow: "What Pro unlocks",
+    proTitle: "Three things people get Pro for",
+    proTiles: [
       {
-        feature: `${FREE_MONTHLY_LIMIT} different components a month`,
-        them: true,
-        us: true,
+        title: "Animations",
+        text: `${ANIMATIONS} live scenes: cursors, shader backgrounds, text effects, card stacks. Each one a single file with no libraries.`,
+        chips: [
+          "Cursors",
+          "Backgrounds",
+          "Text",
+          "Stacks",
+          "Avatars",
+          "Devices",
+          "Portfolio",
+          "Hand-drawn",
+        ],
       },
-      { feature: "No limit on components", them: false, us: true },
-      { feature: "Animations", them: false, us: true },
-      { feature: "Closed blocks", them: false, us: true },
+      {
+        title: "Closed blocks",
+        text: "Sections you can see in the showcase but whose code is served only in Pro: heroes, layouts, shaders.",
+      },
+      {
+        title: "No limit",
+        text: "Hundreds of components a month instead of a hundred. Build sites back to back without counting copies.",
+      },
     ],
+    stepsEyebrow: "How it works",
+    stepsTitle: "Three steps from the catalog to a site",
+    steps: [
+      {
+        title: "Pick",
+        text: "Open the catalog, try a block on a light and a dark surface, tweak the settings right on the card.",
+      },
+      {
+        title: "Copy for AI",
+        text: "The Copy for AI button assembles a prompt: the install command, what to keep, what can change for your brand.",
+      },
+      {
+        title: "The agent installs",
+        text: "Cursor, Claude Code or any other agent installs the same file you saw in the preview. No \"something similar\".",
+      },
+    ],
+    snippet: "npx shadcn add vibeui.ru/r/hero-011",
     faqEyebrow: "Billing questions",
     faqTitle: "What people ask before paying",
     faqLede: "Only money, documents and cancellation. The components speak for themselves in the catalog.",
@@ -184,19 +333,22 @@ const TEXTS = {
           "Yes, at the end of the paid period. Turn renewal off in your account at any time: access stays until the period ends, and there is no next charge.",
       },
       {
+        question: "How does the free limit work?",
+        answer: `${FREE_MONTHLY_LIMIT} different components a month with an account. Copying the same component again in the same month costs nothing. Pro removes the limit entirely.`,
+      },
+      {
         question: "Will I get a receipt?",
         answer:
           "The seller is a self-employed individual; a receipt is issued through the tax service after every payment. A link to it appears in the payments section of your account.",
       },
       {
         question: "What happens when the subscription ends?",
-        answer:
-          "The plan becomes free: a hundred components a month, favourites and history stay. Everything you already copied into your project remains yours.",
+        answer: `The plan becomes free: ${FREE_MONTHLY_LIMIT} components a month, favourites and history stay. Everything you already copied into your project remains yours.`,
       },
       {
-        question: "Can I get a refund?",
+        question: "What is Enterprise?",
         answer:
-          "If Pro is not for you within the first 7 days, write to us and we refund the current period.",
+          "Exactly the same as Pro at twice the price — plus personal respect from the creator. It is a way to support the project if it saved you more than it costs. Access is identical.",
       },
       {
         question: "Is there a team plan?",
@@ -206,21 +358,30 @@ const TEXTS = {
     ],
     contactText: "Did not find your question?",
     contactLabel: "Write to support",
-    legal: "Card or SBP payments via YooKassa. The seller is a self-employed individual. By subscribing you accept the",
+    ctaTitle: "Start for free. Go Pro when the limit gets tight.",
+    ctaText: `${FREE_MONTHLY_LIMIT} components a month with no card. Then ${number(MONTHLY)} ₽ a month, cancel in one click.`,
+    ctaButton: "Create an account",
+    ctaButtonSigned: "Open the catalog",
+    legal: "Card or SBP payments via YooKassa. By subscribing you accept the",
     offer: "offer",
     and: "and the",
     privacy: "privacy policy",
   },
 } as const
 
-const CHECK =
-  "text-shell-muted flex items-start gap-2.5 text-sm leading-relaxed"
+function Eyebrow({ children }: { children: string }) {
+  return (
+    <p className="text-shell-accent-text text-xs font-semibold tracking-[0.14em] uppercase">
+      {children}
+    </p>
+  )
+}
 
 /**
- * Страница тарифов. Карточки — свои, потому что кнопка оплаты зависит и от
- * тарифа, и от периода: блок из реестра умеет одну ссылку на план. Период
- * переключается без JavaScript: две радиокнопки и `has()` на секции.
- * Сравнение и вопросы — блоки из реестра в фирменном цвете.
+ * Страница тарифов — витрина, а не справка. Первый экран продаёт результат
+ * (сайт за вечер) поверх живого шлейфа из каталога, дальше три тарифа с
+ * тёмным Pro в центре, три причины взять Pro, три шага до сайта, вопросы
+ * об оплате и финальный призыв. Логика оплаты и сессии — как была.
  */
 export async function PricingPage({ locale }: { locale: Locale }) {
   const t = TEXTS[locale]
@@ -233,177 +394,218 @@ export async function PricingPage({ locale }: { locale: Locale }) {
     : [null, 0]
   const pro = state ? isProState(state) : false
   const dates = locale === "en" ? "en-GB" : "ru-RU"
-  const until = state && "until" in state ? state.until : null
+  const until =
+    state && "until" in state ? state.until.toLocaleDateString(dates) : null
+  const catalogHref = localePath(locale, "/components")
+  const signupHref = localePath(locale, "/signup?next=/pricing")
+  const [titleFirst, titleSecond] = t.title.split("\n")
 
   return (
     <CatalogShell locale={locale}>
-      <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-12 sm:py-16 lg:px-6">
-        <h1 className="text-shell-fg text-3xl font-semibold tracking-tight sm:text-4xl">
-          {t.title}
-        </h1>
-        <p className="text-shell-muted mt-3 max-w-2xl text-base leading-relaxed">
-          {t.lede}
-        </p>
-
-        {/* Переключатель периода: радиокнопки в форме, цены и кнопки оплаты
-            прячутся правилами `group-has-[…:checked]`. */}
-        <section className="group/period mt-10">
-          <form
-            className="border-shell-border bg-shell-panel inline-flex items-center gap-0.5 rounded-lg border p-0.5"
-            aria-label={t.switchLabel}
-          >
-            <PeriodOption id="pricing-month" name="period" defaultChecked>
-              {t.month}
-            </PeriodOption>
-            <PeriodOption id="pricing-year" name="period">
-              {t.year}
-              <span className="bg-shell-accent text-shell-accent-fg ml-2 rounded px-1.5 py-0.5 text-[0.6875rem] font-semibold">
-                {t.save}
-              </span>
-            </PeriodOption>
-          </form>
-
-          <div className="mt-5 grid gap-4 md:grid-cols-2">
-            <article className="border-shell-border bg-shell-panel rounded-2xl border p-6">
-              <h2 className="text-shell-fg text-lg font-semibold">{t.free}</h2>
-              <p className="text-shell-fg mt-3 text-4xl font-semibold tabular-nums">
-                0 ₽
-              </p>
-              <ul className="mt-6 grid gap-2.5">
-                {t.freeFeatures.map((feature) => (
-                  <li key={feature} className={CHECK}>
-                    <Check
-                      className="text-shell-muted mt-1 size-3.5 shrink-0"
-                      aria-hidden="true"
-                    />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
+      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:py-8 lg:px-6">
+        {/* Первый экран: шлейф картинок из каталога живёт под текстом, текст
+            не ловит курсор — движение доходит до поля. */}
+        <section className="relative isolate overflow-hidden rounded-3xl bg-[#151515] text-[#f2f2f2]">
+          <Cursor005
+            caption=""
+            size={150}
+            threshold={90}
+            lifetime={1500}
+            max={10}
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              inset: 0,
+              aspectRatio: "auto",
+              minHeight: 0,
+              border: 0,
+              borderRadius: 0,
+            }}
+          />
+          <div
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_60%_at_50%_100%,rgba(255,89,0,0.22),transparent_70%)]"
+            aria-hidden="true"
+          />
+          <div className="pointer-events-none relative z-10 mx-auto flex max-w-3xl flex-col items-center px-6 py-20 text-center sm:py-28 lg:py-32">
+            <p className="text-xs font-semibold tracking-[0.14em] text-[#ff5900] uppercase">
+              {t.eyebrow}
+            </p>
+            <h1 className="mt-5 text-4xl leading-[1.02] font-semibold tracking-[-0.03em] text-balance sm:text-6xl lg:text-7xl">
+              {titleFirst}
+              <br />
+              <span className="text-[#ff5900]">{titleSecond}</span>
+            </h1>
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-pretty text-[#f2f2f2]/70 sm:text-lg">
+              {t.lede}
+            </p>
+            <div className="pointer-events-auto mt-9 flex flex-wrap items-center justify-center gap-3">
               <Link
-                href={
-                  session
-                    ? localePath(locale, "/account")
-                    : localePath(locale, "/signup?next=/pricing")
-                }
-                className="border-shell-border-strong text-shell-fg hover:border-shell-accent mt-6 inline-flex h-10 items-center justify-center rounded-lg border px-4 text-sm font-medium transition-colors"
+                href={session ? catalogHref : signupHref}
+                className="inline-flex h-12 items-center gap-2 rounded-full bg-[#ff5900] px-6 text-sm font-semibold text-[#151515] transition-colors hover:bg-[#ff7a33] focus-visible:ring-2 focus-visible:ring-[#ff5900] focus-visible:ring-offset-2 focus-visible:ring-offset-[#151515] focus-visible:outline-none"
               >
-                {session ? t.toAccount : t.signup}
+                {session ? t.heroPrimarySigned : t.heroPrimary}
+                <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
-            </article>
-
-            <article className="border-shell-accent bg-shell-panel relative rounded-2xl border p-6">
-              <h2 className="text-shell-fg text-lg font-semibold">{t.pro}</h2>
-              <p className="text-shell-fg mt-3 text-4xl font-semibold tabular-nums group-has-[#pricing-year:checked]/period:hidden">
-                {MONTHLY} ₽
-                <span className="text-shell-muted text-base font-normal">
-                  {" "}
-                  {t.perMonth}
-                </span>
-              </p>
-              <p className="text-shell-fg mt-3 hidden text-4xl font-semibold tabular-nums group-has-[#pricing-year:checked]/period:block">
-                {YEARLY} ₽
-                <span className="text-shell-muted text-base font-normal">
-                  {" "}
-                  {t.perYear}
-                </span>
-              </p>
-              <p className="text-shell-muted mt-1 text-sm">
-                {locale === "en"
-                  ? `${Math.round(YEARLY / 12)} ₽ a month when paid yearly`
-                  : `${Math.round(YEARLY / 12)} ₽ в месяц при оплате за год`}
-              </p>
-              <ul className="mt-6 grid gap-2.5">
-                {t.proFeatures.map((feature) => (
-                  <li key={feature} className={CHECK}>
-                    <Check
-                      className="text-shell-accent-text mt-1 size-3.5 shrink-0"
-                      aria-hidden="true"
-                    />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-
-              {!session ? (
-                <Link
-                  href={localePath(locale, "/signup?next=/pricing")}
-                  className="bg-shell-accent text-shell-accent-fg hover:bg-shell-accent-deep mt-6 inline-flex h-10 items-center justify-center rounded-lg px-4 text-sm font-semibold transition-colors"
-                >
-                  {t.signup}
-                </Link>
-              ) : pro ? (
-                <div className="mt-6 flex flex-wrap items-center gap-3">
-                  {until ? (
-                    <span className="text-shell-fg text-sm font-medium">
-                      {t.proUntil(until.toLocaleDateString(dates))}
-                    </span>
-                  ) : null}
-                  <Link
-                    href={localePath(locale, "/account/subscription")}
-                    className="border-shell-border-strong text-shell-fg hover:border-shell-accent inline-flex h-10 items-center justify-center rounded-lg border px-4 text-sm font-medium transition-colors"
-                  >
-                    {t.manage}
-                  </Link>
-                </div>
-              ) : (
-                <div className="mt-6">
-                  <form
-                    action={startCheckout}
-                    className="group-has-[#pricing-year:checked]/period:hidden"
-                  >
-                    <input type="hidden" name="plan" value="monthly" />
-                    <button
-                      type="submit"
-                      className="bg-shell-accent text-shell-accent-fg hover:bg-shell-accent-deep inline-flex h-10 items-center justify-center rounded-lg px-4 text-sm font-semibold transition-colors"
-                    >
-                      {t.payMonth}
-                    </button>
-                  </form>
-                  <form
-                    action={startCheckout}
-                    className="hidden group-has-[#pricing-year:checked]/period:block"
-                  >
-                    <input type="hidden" name="plan" value="yearly" />
-                    <button
-                      type="submit"
-                      className="bg-shell-accent text-shell-accent-fg hover:bg-shell-accent-deep inline-flex h-10 items-center justify-center rounded-lg px-4 text-sm font-semibold transition-colors"
-                    >
-                      {t.payYear}
-                    </button>
-                  </form>
-                </div>
-              )}
-            </article>
+              <a
+                href="#plans"
+                className="inline-flex h-12 items-center rounded-full border border-[#f2f2f2]/25 px-6 text-sm font-medium transition-colors hover:border-[#f2f2f2]/60 focus-visible:ring-2 focus-visible:ring-[#ff5900] focus-visible:outline-none"
+              >
+                {t.heroSecondary}
+              </a>
+            </div>
+            <p className="mt-5 text-sm text-[#f2f2f2]/50">{t.heroNote}</p>
           </div>
+          <p className="pointer-events-none absolute right-5 bottom-4 z-10 hidden text-xs text-[#f2f2f2]/35 sm:block">
+            {t.heroHint}
+          </p>
         </section>
 
-        <section className="border-shell-border mt-8 rounded-2xl border p-5 sm:p-6">
-          <h2 className="text-shell-fg text-sm font-medium">{t.limitTitle}</h2>
-          <ul className="text-shell-muted mt-3 grid gap-2 text-sm leading-relaxed">
-            {t.limitLines.map((line) => (
-              <li key={line}>{line}</li>
-            ))}
-          </ul>
+        {/* Доверие до цены */}
+        <ul className="text-shell-muted mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 px-2 text-sm">
+          {t.trust.map((line) => (
+            <li key={line} className="flex items-center gap-2">
+              <span
+                className="bg-shell-accent size-1.5 rounded-full"
+                aria-hidden="true"
+              />
+              {line}
+            </li>
+          ))}
+        </ul>
+
+        {/* Тарифы */}
+        <section id="plans" className="scroll-mt-24 pt-20 sm:pt-24">
+          <Reveal className="mx-auto max-w-2xl text-center">
+            <Eyebrow>{t.plansEyebrow}</Eyebrow>
+            <h2 className="text-shell-fg mt-3 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+              {t.plansTitle}
+            </h2>
+          </Reveal>
+          <Reveal delay={120} className="mt-8 text-center">
+            <PlanCards
+              texts={{
+                ...t.plans,
+                pro: {
+                  ...t.plans.pro,
+                  activeUntil: until ? `${t.plans.pro.activeUntil} ${until}` : null,
+                },
+              }}
+              prices={{
+                monthly: MONTHLY,
+                yearly: YEARLY,
+                enterpriseMonthly: ENTERPRISE_MONTHLY,
+                enterpriseYearly: ENTERPRISE_YEARLY,
+              }}
+              signed={Boolean(session)}
+              pro={pro}
+              signupHref={signupHref}
+              accountHref={localePath(locale, "/account")}
+              manageHref={localePath(locale, "/account/subscription")}
+            />
+          </Reveal>
           {session && !pro ? (
-            <p className="text-shell-fg mt-3 text-sm font-medium tabular-nums">
+            <p className="text-shell-muted mt-5 text-center text-sm tabular-nums">
               {t.usage(used)}
             </p>
           ) : null}
         </section>
 
-        <div className="mt-12">
-          <Comparison001
-            eyebrow={t.compareEyebrow}
-            title={t.compareTitle}
-            themLabel={t.free}
-            usLabel={t.pro}
-            rows={[...t.compareRows]}
-            accent={BRAND_ACCENT}
-          />
-        </div>
+        {/* Три причины */}
+        <section className="pt-20 sm:pt-24">
+          <Reveal className="mx-auto max-w-2xl text-center">
+            <Eyebrow>{t.proEyebrow}</Eyebrow>
+            <h2 className="text-shell-fg mt-3 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+              {t.proTitle}
+            </h2>
+          </Reveal>
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
+            {t.proTiles.map((tile, index) => (
+              <Reveal key={tile.title} delay={index * 120} className="min-w-0">
+                <article className="border-shell-border bg-shell-panel group flex h-full flex-col overflow-hidden rounded-3xl border">
+                  <div className="relative flex h-40 w-full items-center justify-center overflow-hidden">
+                    {index === 0 ? (
+                      /* Бегущая строка категорий: два одинаковых ряда, сдвиг на половину — бесшовный цикл. */
+                      /* Абсолют: бегущая строка шире карточки и не должна её растягивать. */
+                      <div className="pricing-marquee absolute top-1/2 left-0 flex w-max -translate-y-1/2 gap-2 motion-reduce:animate-none">
+                        {("chips" in tile ? [...tile.chips, ...tile.chips] : []).map((chip, position) => (
+                          <span
+                            key={`${chip}-${position}`}
+                            className="border-shell-border-strong text-shell-fg rounded-full border px-3 py-1.5 text-sm whitespace-nowrap"
+                          >
+                            {chip}
+                          </span>
+                        ))}
+                      </div>
+                    ) : index === 1 ? (
+                      <div className="relative grid size-20 place-items-center rounded-2xl bg-[#151515] text-[#ff5900] shadow-[0_20px_50px_-20px_rgba(255,89,0,0.6)] transition-transform duration-500 group-hover:-rotate-6">
+                        <Lock
+                          className="size-8 transition-opacity duration-300 group-hover:opacity-0"
+                          aria-hidden="true"
+                        />
+                        <LockOpen
+                          className="absolute size-8 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                          aria-hidden="true"
+                        />
+                      </div>
+                    ) : (
+                      <p className="text-shell-fg flex items-center gap-3 text-5xl font-semibold tracking-tight tabular-nums">
+                        <span className="text-shell-muted line-through decoration-[#ff5900] decoration-2">
+                          {FREE_MONTHLY_LIMIT}
+                        </span>
+                        <ArrowRight className="text-shell-muted size-6" aria-hidden="true" />
+                        <InfinityIcon
+                          className="size-12 text-[#ff5900] transition-transform duration-500 group-hover:scale-125"
+                          aria-hidden="true"
+                        />
+                      </p>
+                    )}
+                  </div>
+                  <div className="border-shell-border border-t p-6">
+                    <h3 className="text-shell-fg flex items-center gap-2 text-lg font-semibold">
+                      {index === 0 ? (
+                        <Sparkles className="text-shell-accent-text size-4" aria-hidden="true" />
+                      ) : null}
+                      {tile.title}
+                    </h3>
+                    <p className="text-shell-muted mt-2 text-sm leading-relaxed">{tile.text}</p>
+                  </div>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </section>
 
-        <div className="mt-12">
+        {/* Три шага */}
+        <section className="pt-20 sm:pt-24">
+          <Reveal className="mx-auto max-w-2xl text-center">
+            <Eyebrow>{t.stepsEyebrow}</Eyebrow>
+            <h2 className="text-shell-fg mt-3 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+              {t.stepsTitle}
+            </h2>
+          </Reveal>
+          <ol className="mt-10 grid gap-4 md:grid-cols-3">
+            {t.steps.map((step, index) => (
+              <Reveal key={step.title} delay={index * 120} className="h-full">
+                <li className="border-shell-border flex h-full flex-col rounded-3xl border p-6">
+                  <span className="text-shell-accent-text text-sm font-semibold tabular-nums">
+                    0{index + 1}
+                  </span>
+                  <h3 className="text-shell-fg mt-3 text-lg font-semibold">{step.title}</h3>
+                  <p className="text-shell-muted mt-2 text-sm leading-relaxed">{step.text}</p>
+                  {index === 2 ? (
+                    <p className="mt-auto pt-6">
+                      <code className="pricing-type block w-fit max-w-full overflow-hidden rounded-lg bg-[#151515] px-3 py-2 font-mono text-xs whitespace-nowrap text-[#f2f2f2] motion-reduce:animate-none">
+                        <span className="text-[#ff5900]">$</span> {t.snippet}
+                      </code>
+                    </p>
+                  ) : null}
+                </li>
+              </Reveal>
+            ))}
+          </ol>
+        </section>
+
+        <div className="pt-20 sm:pt-24">
           <Pricing011
             eyebrow={t.faqEyebrow}
             title={t.faqTitle}
@@ -417,6 +619,25 @@ export async function PricingPage({ locale }: { locale: Locale }) {
             accent={BRAND_ACCENT}
           />
         </div>
+
+        {/* Финальный призыв: оранжевая полоса — второе и последнее пятно цвета. */}
+        <Reveal className="pt-16 sm:pt-20">
+          <section className="rounded-3xl bg-[#ff5900] px-6 py-12 text-center text-[#151515] sm:px-10 sm:py-16">
+            <h2 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+              {t.ctaTitle}
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-pretty text-[#151515]/75">
+              {t.ctaText}
+            </p>
+            <Link
+              href={session ? catalogHref : signupHref}
+              className="mt-8 inline-flex h-12 items-center gap-2 rounded-full bg-[#151515] px-6 text-sm font-semibold text-[#f2f2f2] transition-colors hover:bg-[#2a2a2a] focus-visible:ring-2 focus-visible:ring-[#151515] focus-visible:ring-offset-2 focus-visible:ring-offset-[#ff5900] focus-visible:outline-none"
+            >
+              {session ? t.ctaButtonSigned : t.ctaButton}
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+          </section>
+        </Reveal>
 
         <p className="text-shell-muted mt-10 text-sm leading-relaxed">
           {t.legal}{" "}
@@ -437,33 +658,5 @@ export async function PricingPage({ locale }: { locale: Locale }) {
         </p>
       </main>
     </CatalogShell>
-  )
-}
-
-function PeriodOption({
-  id,
-  name,
-  defaultChecked,
-  children,
-}: {
-  id: string
-  name: string
-  defaultChecked?: boolean
-  children: ReactNode
-}) {
-  return (
-    <label
-      htmlFor={id}
-      className="text-shell-muted has-[:checked]:bg-shell-elevated has-[:checked]:text-shell-fg has-[:focus-visible]:ring-shell-ring inline-flex h-8 cursor-pointer items-center rounded-md px-3 text-sm transition-colors has-[:checked]:font-medium has-[:focus-visible]:ring-2"
-    >
-      <input
-        id={id}
-        type="radio"
-        name={name}
-        defaultChecked={defaultChecked}
-        className="sr-only"
-      />
-      {children}
-    </label>
   )
 }

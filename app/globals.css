@@ -192,6 +192,36 @@
     --preview-surface: oklch(0.115 0 0);
   }
 
+
+/* Сцена входа всегда тёмная: страницы входа, регистрации, восстановления
+   и подтверждения живут на Oil Black независимо от темы оболочки. Токены
+   продублированы из тёмной ветки .catalog-shell, чтобы поля и кнопки форм
+   брали цвета оттуда же, а не из светлой темы. */
+  .catalog-shell .auth-stage,
+  html[data-shell-theme="light"] .catalog-shell .auth-stage {
+    --shell-bg: oklch(0.115 0 0);
+    --shell-panel: oklch(0.17 0 0);
+    --shell-elevated: oklch(0.2178 0 0);
+    --shell-surface: oklch(0.97 0.002 265);
+    --shell-border: oklch(1 0 0 / 10%);
+    --shell-border-strong: oklch(1 0 0 / 22%);
+    --shell-divider: oklch(1 0 0 / 8%);
+    --shell-scroll: oklch(1 0 0 / 10%);
+    --shell-scroll-strong: oklch(1 0 0 / 20%);
+    --shell-card-border: oklch(1 0 0 / 6%);
+    --shell-card-border-strong: oklch(1 0 0 / 8%);
+    --shell-fg: oklch(0.985 0 0);
+    --shell-muted: oklch(0.708 0 0);
+    --shell-accent: oklch(0.6803 0.2144 39.8);
+    --shell-accent-fg: oklch(0.145 0 0);
+    --shell-accent-text: oklch(0.6803 0.2144 39.8);
+    --shell-ring: oklch(0.6803 0.2144 39.8);
+    --shell-accent-deep: oklch(0.6 0.2 39.8);
+    --shell-accent-soft: color-mix( in oklab, var(--shell-accent) 12%, var(--shell-bg) );
+    --shell-accent-line: color-mix(in oklab, var(--shell-accent) 28%, transparent);
+    --preview-surface: oklch(0.115 0 0);
+  }
+
   /* Налив и зерно живут в псевдоэлементах оболочки: обе подложки должны
      лежать под всем содержимым, а лишний div ради фона в разметке не нужен.
      isolation отрезает их z-index от остальной страницы. */
@@ -1017,4 +1047,53 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
+}
+
+/* Страница тарифов: бегущая строка категорий и «печатающийся» сниппет.
+   Живут здесь, а не в блоке: это витрина сайта, не item реестра. */
+@keyframes pricing-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes pricing-type {
+  from {
+    width: 0;
+  }
+}
+
+.pricing-marquee {
+  animation: pricing-marquee 22s linear infinite;
+}
+
+.pricing-type {
+  animation: pricing-type 2s steps(36) both;
+}
+
+/* Сцена входа: два оранжевых пятна медленно плывут, карточка всплывает. */
+@keyframes auth-drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(6vw, -4vh) scale(1.12); }
+}
+
+@keyframes auth-drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-5vw, 5vh) scale(0.92); }
+}
+
+@keyframes auth-rise {
+  from { opacity: 0; transform: translateY(18px) scale(0.985); }
+}
+
+.auth-glow-a {
+  animation: auth-drift-a 18s ease-in-out infinite;
+}
+
+.auth-glow-b {
+  animation: auth-drift-b 24s ease-in-out infinite;
+}
+
+.auth-rise {
+  animation: auth-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
