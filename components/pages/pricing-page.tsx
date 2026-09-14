@@ -483,6 +483,7 @@ export async function PricingPage({ locale }: { locale: Locale }) {
           </Reveal>
           <Reveal delay={120} className="mt-8 text-center">
             <PlanCards
+              locale={locale}
               texts={{
                 ...t.plans,
                 pro: {

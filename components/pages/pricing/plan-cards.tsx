@@ -53,6 +53,7 @@ export type PlanCardsTexts = {
 }
 
 export type PlanCardsProps = {
+  locale: "ru" | "en"
   texts: PlanCardsTexts
   prices: { monthly: number; yearly: number; enterpriseMonthly: number; enterpriseYearly: number }
   signed: boolean
@@ -137,6 +138,7 @@ function Feature({
  * которую человек либо оценит, либо просто пройдёт мимо к Pro.
  */
 export function PlanCards({
+  locale,
   texts: t,
   prices,
   signed,
@@ -272,6 +274,7 @@ export function PlanCards({
             ) : (
               <form action={startCheckout}>
                 <input type="hidden" name="plan" value={yearly ? "yearly" : "monthly"} />
+                <input type="hidden" name="locale" value={locale} />
                 <button type="submit" className={proButton}>
                   {yearly ? t.pro.payYear : t.pro.payMonth}
                 </button>
@@ -320,6 +323,7 @@ export function PlanCards({
                   name="plan"
                   value={yearly ? "enterprise-yearly" : "enterprise-monthly"}
                 />
+                <input type="hidden" name="locale" value={locale} />
                 <button type="submit" className={outlineButton}>
                   {t.enterprise.cta}
                 </button>

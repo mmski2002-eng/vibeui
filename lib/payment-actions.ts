@@ -8,7 +8,8 @@ import { subscription } from "@/lib/db/schema"
 import { PLANS, isPlanId } from "@/lib/plans"
 import { SITE_URL } from "@/lib/seo"
 import { requireUser } from "@/lib/session"
-import { createCheckout } from "@/lib/yookassa"
+import { localePath } from "@/lib/i18n"
+import { createCheckout, isYookassaConfigured } from "@/lib/yookassa"
 
 /**
  * Начало оплаты. Платёж создаётся на сервере: цена не должна приходить из
@@ -16,30 +17,38 @@ import { createCheckout } from "@/lib/yookassa"
  */
 export async function startCheckout(formData: FormData) {
   const planId = String(formData.get("plan"))
+  const locale = formData.get("locale") === "en" ? "en" : "ru"
 
   if (!isPlanId(planId)) {
     throw new Error("Неизвестный тариф")
   }
 
-  const user = await requireUser()
-  const plan = PLANS[planId]
-
-  const payment = await createCheckout({
-    amount: plan.price,
-    description: `VibeUI ${plan.title}`,
-    email: user.email,
-    userId: user.id,
-    plan: plan.id,
-    returnUrl: `${SITE_URL}/account/subscription`,
-  })
-
-  const url = payment.confirmation?.confirmation_url
-
-  if (!url) {
-    throw new Error("ЮKassa не вернула ссылку подтверждения")
+  // Пока касса не подключена, кнопка «Оплатить» ведёт не на ошибку, а на
+  // страницу с объяснением: пользуйтесь бесплатно.
+  if (!isYookassaConfigured()) {
+    redirect(localePath(locale, "/pricing/soon"))
   }
 
-  redirect(url)
+  const user = await requireUser()
+  const plan = PLANS[planId]
+  let url: string | undefined
+
+  try {
+    const payment = await createCheckout({
+      amount: plan.price,
+      description: `VibeUI ${plan.title}`,
+      email: user.email,
+      userId: user.id,
+      plan: plan.id,
+      returnUrl: `${SITE_URL}/account/subscription`,
+    })
+
+    url = payment.confirmation?.confirmation_url
+  } catch (error) {
+    console.error("[checkout] касса не ответила", error)
+  }
+
+  redirect(url ?? localePath(locale, "/pricing/soon"))
 }
 
 /** Отмена: доступ живёт до конца оплаченного периода, деньги не трогаем. */

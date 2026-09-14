@@ -23,6 +23,11 @@ type Payment = {
   metadata?: Record<string, string>
 }
 
+/** Ключи заданы — платежи можно принимать. Без них витрина живёт бесплатно. */
+export function isYookassaConfigured() {
+  return Boolean(process.env.YOOKASSA_SHOP_ID && process.env.YOOKASSA_SECRET_KEY)
+}
+
 function auth() {
   const shop = process.env.YOOKASSA_SHOP_ID
   const secret = process.env.YOOKASSA_SECRET_KEY
