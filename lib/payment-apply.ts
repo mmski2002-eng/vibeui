@@ -6,6 +6,7 @@ import { eq } from "drizzle-orm"
 import { db } from "@/lib/db"
 import { payment, subscription, webhookEvent } from "@/lib/db/schema"
 import { PLANS, isPlanId } from "@/lib/plans"
+import { fetchPayment } from "@/lib/yookassa"
 
 /**
  * Применение успешного платежа: запись платежа и продление подписки.
@@ -56,7 +57,10 @@ export async function grantDays(userId: string, days: number) {
 }
 
 export type ApplyResult =
-  | { applied: false; reason: "duplicate" | "not_succeeded" | "no_metadata" }
+  | {
+      applied: false
+      reason: "duplicate" | "not_succeeded" | "no_metadata" | "unverified"
+    }
   | { applied: true; userId: string; plan: string }
 
 /**
@@ -66,6 +70,13 @@ export type ApplyResult =
  * идентификатором платежа не продлевает подписку. Администратор может
  * попросить применить событие заново — тогда `force` снимает эту защиту, но
  * запись платежа всё равно не задваивается уникальным `yookassa_id`.
+ *
+ * `verify` обязателен для вебхука: тело POST-запроса контролирует
+ * отправитель, а подлинность источника по IP ненадёжна (за обратным прокси
+ * IP берётся из заголовка, который можно подделать). Поэтому статус, сумму,
+ * план и владельца берём не из присланного тела, а из ответа ЮKassa по
+ * `object.id` — единственного источника правды о деньгах. Событие с
+ * выдуманным `id` в ЮKassa не найдётся, и Pro никто не получит.
  */
 export async function applyPaymentEvent(
   body: {
@@ -79,7 +90,7 @@ export async function applyPaymentEvent(
       receipt_registration?: string
     }
   },
-  options: { force?: boolean } = {},
+  options: { force?: boolean; verify?: boolean } = {},
 ): Promise<ApplyResult> {
   const object = body?.object
 
@@ -87,10 +98,50 @@ export async function applyPaymentEvent(
     return { applied: false, reason: "not_succeeded" }
   }
 
+  const id = object.id
+
+  // Источник полей платежа. По умолчанию — присланное тело; при verify —
+  // ответ ЮKassa по этому id: сумма, статус, план и владелец берутся оттуда,
+  // тело в расчёт не идёт. Событие с выдуманным id в ЮKassa не найдётся.
+  let source: {
+    status?: string
+    amount?: { value?: string }
+    metadata?: Record<string, string>
+    payment_method?: { id?: string }
+    receipt_registration?: string
+  } = object
+
+  if (options.verify) {
+    let real
+    try {
+      real = await fetchPayment(id)
+    } catch {
+      return { applied: false, reason: "unverified" }
+    }
+
+    if (!real || real.id !== id || real.status !== "succeeded") {
+      return { applied: false, reason: "unverified" }
+    }
+
+    source = {
+      status: real.status,
+      amount: real.amount,
+      metadata: real.metadata,
+      payment_method: real.payment_method,
+    }
+  }
+
+  // В БД кладём проверенный объект, а не присланное тело: администратор
+  // потом применяет платёж заново из сохранённого payload (без verify), и
+  // доверять там можно только тому, что уже сверено с ЮKassa.
+  const stored = options.verify
+    ? { event: body.event, object: { id, ...source } }
+    : body
+
   const [seen] = await db
     .select({ id: webhookEvent.id, processedAt: webhookEvent.processedAt })
     .from(webhookEvent)
-    .where(eq(webhookEvent.id, object.id))
+    .where(eq(webhookEvent.id, id))
     .limit(1)
 
   if (seen?.processedAt && !options.force) {
@@ -99,11 +150,11 @@ export async function applyPaymentEvent(
 
   await db
     .insert(webhookEvent)
-    .values({ id: object.id, type: body.event, payload: body })
+    .values({ id, type: body.event, payload: stored })
     .onConflictDoNothing()
 
-  const userId = object.metadata?.userId
-  const planId = object.metadata?.plan
+  const userId = source.metadata?.userId
+  const planId = source.metadata?.plan
 
   if (!userId || !planId || !isPlanId(planId)) {
     return { applied: false, reason: "no_metadata" }
@@ -116,12 +167,12 @@ export async function applyPaymentEvent(
     .values({
       id: randomUUID(),
       userId,
-      yookassaId: object.id,
-      amount: object.amount?.value ?? plan.price,
-      status: object.status ?? "succeeded",
+      yookassaId: id,
+      amount: source.amount?.value ?? plan.price,
+      status: source.status ?? "succeeded",
       paidAt: new Date(),
-      receiptStatus: object.receipt_registration ?? null,
-      payload: body,
+      receiptStatus: source.receipt_registration ?? null,
+      payload: stored,
     })
     // Повторное применение не должно плодить строки: один платёж — одна.
     .onConflictDoNothing()
@@ -144,7 +195,7 @@ export async function applyPaymentEvent(
         cancelAtPeriodEnd: false,
         failedAttempts: 0,
         paymentMethodId:
-          object.payment_method?.id ?? existing.paymentMethodId ?? null,
+          source.payment_method?.id ?? existing.paymentMethodId ?? null,
         updatedAt: new Date(),
       })
       .where(eq(subscription.userId, userId))
@@ -155,7 +206,7 @@ export async function applyPaymentEvent(
       plan: plan.id,
       status: "active",
       currentPeriodEnd: periodEnd,
-      paymentMethodId: object.payment_method?.id ?? null,
+      paymentMethodId: source.payment_method?.id ?? null,
     })
   }
 
@@ -163,7 +214,7 @@ export async function applyPaymentEvent(
   await db
     .update(webhookEvent)
     .set({ processedAt: new Date() })
-    .where(eq(webhookEvent.id, object.id))
+    .where(eq(webhookEvent.id, id))
 
   return { applied: true, userId, plan: plan.id }
 }
