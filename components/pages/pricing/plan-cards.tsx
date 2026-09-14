@@ -197,7 +197,7 @@ export function PlanCards({
 
       <div className="mt-8 grid items-stretch gap-4 text-left lg:grid-cols-3 lg:gap-5">
         {/* Free */}
-        <article className="border-shell-border bg-shell order-2 flex flex-col rounded-3xl border p-6 sm:p-7 lg:order-1">
+        <article className="border-shell-border bg-shell-panel order-2 flex flex-col rounded-3xl border p-6 sm:p-7 lg:order-1">
           <p className="text-shell-muted text-xs font-medium tracking-wide uppercase">
             {t.free.eyebrow}
           </p>
@@ -285,7 +285,7 @@ export function PlanCards({
         </article>
 
         {/* Enterprise */}
-        <article className="border-shell-border bg-shell order-3 flex flex-col rounded-3xl border p-6 sm:p-7">
+        <article className="border-shell-border bg-shell-panel order-3 flex flex-col rounded-3xl border p-6 sm:p-7">
           <div className="flex items-center justify-between gap-3">
             <p className="text-shell-muted text-xs font-medium tracking-wide uppercase">
               {t.enterprise.eyebrow}

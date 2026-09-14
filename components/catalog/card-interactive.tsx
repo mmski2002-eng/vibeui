@@ -265,14 +265,14 @@ export function CardInteractive({
         ref={frameRef}
         data-preview-theme={theme}
         style={floor ? { minHeight: floor } : undefined}
-        className={`catalog-card-body bg-shell flex min-w-0 flex-1 flex-col rounded-xl border ${pro ? "border-shell-accent/50 ring-shell-accent/20 ring-1" : "border-shell-border"}`}
+        className={`catalog-card-body bg-shell-panel flex min-w-0 flex-1 flex-col rounded-xl border ${pro ? "border-shell-accent/50 ring-shell-accent/20 ring-1" : "border-shell-border"}`}
       >
         {/* Отдельная полоса, а не наложение поверх кадра: у компонентов
             высота разная, и при переключении настройки содержимое доезжало
             до кнопок и уходило под них. Теперь кадру достаётся своя область. */}
         <div
           data-part="toolbar"
-          className="border-shell-border bg-shell shrink-0 items-center justify-between gap-2 border-b px-1.5 py-1.5"
+          className="border-shell-border bg-shell-panel shrink-0 items-center justify-between gap-2 border-b px-1.5 py-1.5"
         >
           <div className="flex min-w-0 flex-1 basis-0 items-center gap-1">
             {pro ? (

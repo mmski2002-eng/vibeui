@@ -34,7 +34,7 @@ export function CatalogTopbar({
   ]
 
   return (
-    <header className="border-shell-border bg-shell sticky top-0 z-30 border-b">
+    <header className="border-shell-border bg-shell-panel sticky top-0 z-30 border-b">
       <div className="mx-auto grid h-[95px] w-full max-w-[1440px] grid-cols-[auto_1fr] grid-rows-[55px_40px] items-center gap-x-3 px-4 lg:h-[55px] lg:grid-cols-[auto_1fr_auto] lg:grid-rows-1 lg:gap-x-8 lg:px-6">
         <div className="flex items-center gap-6">
           <Link
