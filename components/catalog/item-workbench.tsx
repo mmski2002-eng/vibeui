@@ -8,7 +8,7 @@ import {
   ConfigurablePreview,
   ItemControls,
 } from "@/components/catalog/item-configurator"
-import { CopyButton } from "@/components/copy-button"
+import { GatedCopy } from "@/components/catalog/gated-copy"
 import { GatedReveal } from "@/components/catalog/gated-reveal"
 import {
   defaultValues,
@@ -93,11 +93,11 @@ export function ItemWorkbench({
         <p className="text-shell-muted max-w-md text-sm text-pretty">
           {t.item.copyLead}
         </p>
-        <CopyButton
+        <GatedCopy
           value={link}
           label={t.card.copy}
           copiedLabel={t.card.copied}
-          variant="primary"
+          locale={locale}
           className="h-11 shrink-0 px-5"
           onCopied={noteCopied}
         />
@@ -190,11 +190,11 @@ export function ItemWorkbench({
         ) : null}
 
         <div className="mt-5 flex flex-wrap items-center gap-3">
-          <CopyButton
+          <GatedCopy
             value={link}
             label={t.card.copy}
             copiedLabel={t.card.copied}
-            variant="primary"
+            locale={locale}
             className="h-11 px-5"
             onCopied={noteCopied}
           />

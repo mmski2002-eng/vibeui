@@ -10,7 +10,7 @@ import { useFavorites } from "@/components/catalog/favorites-provider"
 import { useSession } from "@/lib/auth-client"
 import { useEffect, useId, useRef, useState, type ReactNode } from "react"
 
-import { CopyButton } from "@/components/copy-button"
+import { GatedCopy } from "@/components/catalog/gated-copy"
 import { SHELL_THEME_EVENT } from "@/components/catalog/theme-switch"
 import {
   cardControlIcon,
@@ -729,10 +729,12 @@ export function CardInteractive({
           >
             {t.card.getCode}
           </button>
-          <CopyButton
+          <GatedCopy
             value={docLink}
             label={t.card.copy}
             copiedLabel={t.card.copied}
+            locale={locale}
+            variant="secondary"
             className="h-7 px-3 text-xs"
           />
         </div>
