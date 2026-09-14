@@ -23,7 +23,7 @@ const STYLES = `
 --vibeui-cta-009-ink:oklch(0.15 0 0);
 --vibeui-cta-009-muted:oklch(0.15 0 0 / 78%);
 --vibeui-cta-009-button:oklch(1 0 0);
---vibeui-cta-009-button-ink:oklch(0.15 0 0);
+--vibeui-cta-009-button-ink:oklch(from var(--vibeui-cta-009-button) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-cta-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-cta-009-dur-2:180ms;
 container-type:inline-size;

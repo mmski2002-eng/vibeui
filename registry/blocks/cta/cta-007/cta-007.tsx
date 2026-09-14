@@ -29,7 +29,7 @@ const STYLES = `
 --vibeui-cta-007-field:light-dark(oklch(1 0 0),oklch(0.22 0 0));
 --vibeui-cta-007-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-cta-007-button:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
---vibeui-cta-007-button-ink:oklch(0.15 0 0);
+--vibeui-cta-007-button-ink:oklch(from var(--vibeui-cta-007-button) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-cta-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-cta-007-dur-2:180ms;
 container-type:inline-size;

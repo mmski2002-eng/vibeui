@@ -45,9 +45,9 @@ const STYLES = `
 --vibeui-navbar-013-button:light-dark(#000000,#ffffff);
 --vibeui-navbar-013-button-ink:light-dark(#ffffff,#000000);
 --vibeui-navbar-013-accent:light-dark(#1a1a1a,#f2f2f2);
---vibeui-navbar-013-menu-bg:#000000;
---vibeui-navbar-013-menu-ink:#ffffff;
---vibeui-navbar-013-menu-muted:color-mix(in oklab,#ffffff 52%,#000000);
+--vibeui-navbar-013-menu-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-navbar-013-menu-ink:light-dark(#000000,#ffffff);
+--vibeui-navbar-013-menu-muted:light-dark(color-mix(in oklab,#000000 58%,#ffffff),color-mix(in oklab,#ffffff 66%,#1a1a1a));
 --vibeui-navbar-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-navbar-013-ease:cubic-bezier(.32,.72,0,1);
 --vibeui-navbar-013-dur-2:180ms;
@@ -62,8 +62,8 @@ container-type:inline-size;
 :where([data-vibeui-block="navbar-013"][data-tone="dark"]){color-scheme:dark}
 :where([data-vibeui-block="navbar-013"][data-surface="orange"]){
 --vibeui-navbar-013-menu-bg:light-dark(#1a1a1a,#f2f2f2);
---vibeui-navbar-013-menu-ink:#000000;
---vibeui-navbar-013-menu-muted:color-mix(in oklab,#000000 56%,light-dark(#1a1a1a,#f2f2f2));
+--vibeui-navbar-013-menu-ink:light-dark(#ffffff,#111111);
+--vibeui-navbar-013-menu-muted:light-dark(color-mix(in oklab,#ffffff 60%,#1a1a1a),color-mix(in oklab,#111111 56%,#f2f2f2));
 }
 [data-vibeui-block="navbar-013"]{
 display:block;min-width:min(100%,16rem);
