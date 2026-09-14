@@ -8,7 +8,7 @@ import {
   ConfigurablePreview,
   ItemControls,
 } from "@/components/catalog/item-configurator"
-import { GatedCopy } from "@/components/catalog/gated-copy"
+import { CopyForAi } from "@/components/catalog/copy-for-ai"
 import { GatedReveal } from "@/components/catalog/gated-reveal"
 import {
   defaultValues,
@@ -93,8 +93,9 @@ export function ItemWorkbench({
         <p className="text-shell-muted max-w-md text-sm text-pretty">
           {t.item.copyLead}
         </p>
-        <GatedCopy
-          value={link}
+        <CopyForAi
+          name={item.name}
+          params={params.toString()}
           label={t.card.copy}
           copiedLabel={t.card.copied}
           locale={locale}
@@ -146,12 +147,6 @@ export function ItemWorkbench({
           ))}
         </ol>
 
-        {link ? (
-          <p className="text-shell-muted bg-shell-elevated border-shell-border mt-4 max-w-2xl rounded-lg border px-3 py-2 font-mono text-xs break-all">
-            {t.item.example} {link}
-          </p>
-        ) : null}
-
         {controls.length > 0 ? (
           // Настройка меняет пропсы и ссылку, но не исходник: установленный
           // файл обязан остаться тем же (см. docs/CONTROLS.md).
@@ -190,8 +185,9 @@ export function ItemWorkbench({
         ) : null}
 
         <div className="mt-5 flex flex-wrap items-center gap-3">
-          <GatedCopy
-            value={link}
+          <CopyForAi
+            name={item.name}
+            params={params.toString()}
             label={t.card.copy}
             copiedLabel={t.card.copied}
             locale={locale}

@@ -24,7 +24,6 @@ import { getDictionary, localePath, type Locale } from "@/lib/i18n"
 export function CodeSheet({
   name,
   title,
-  installCommand,
   itemUrl,
   locale,
   open,
@@ -32,7 +31,6 @@ export function CodeSheet({
 }: {
   name: string
   title: string
-  installCommand: string | null
   itemUrl: string
   locale: Locale
   open: boolean
@@ -42,6 +40,7 @@ export function CodeSheet({
   const { data: session } = useSession()
   const dialogRef = useRef<HTMLDialogElement>(null)
   const [source, setSource] = useState<string | null>(null)
+  const [install, setInstall] = useState<string | null>(null)
   const [failed, setFailed] = useState(false)
   // 401 — не ошибка, а закрытая дверь: код есть, но нужен вход или Pro.
   const [denied, setDenied] = useState(false)
@@ -69,14 +68,18 @@ export function CodeSheet({
 
     let cancelled = false
 
-    fetch(`/f/${name}.tsx`)
+    fetch(`/api/registry-source?name=${encodeURIComponent(name)}`)
       .then(async (response) => {
         if (cancelled) {
           return
         }
 
         if (response.ok) {
-          setSource(await response.text())
+          const data = await response.json()
+          setSource(typeof data.source === "string" ? data.source : "")
+          setInstall(
+            typeof data.installCommand === "string" ? data.installCommand : null,
+          )
         } else if (response.status === 401) {
           setDenied(true)
         } else {
@@ -131,18 +134,26 @@ export function CodeSheet({
         </header>
 
         <div className="flex-1 space-y-6 overflow-y-auto px-5 py-5">
-          <section className="space-y-2">
-            <div className="flex items-center justify-between gap-3">
-              <h2 className="text-sm font-medium">{t.card.install}</h2>
-              <CopyButton
-                value={installCommand}
-                label={t.card.copyCommand}
-                copiedLabel={t.card.copied}
-                className="h-7 px-3 text-xs"
+          {denied ? null : (
+            <section className="space-y-2">
+              <div className="flex items-center justify-between gap-3">
+                <h2 className="text-sm font-medium">{t.card.install}</h2>
+                {install ? (
+                  <CopyButton
+                    value={install}
+                    label={t.card.copyCommand}
+                    copiedLabel={t.card.copied}
+                    className="h-7 px-3 text-xs"
+                  />
+                ) : null}
+              </div>
+              <CodeBlock
+                code={
+                  install ?? (failed ? t.item.noCommand : `${t.card.loading}`)
+                }
               />
-            </div>
-            <CodeBlock code={installCommand ?? t.item.noCommand} />
-          </section>
+            </section>
+          )}
 
           <section className="space-y-2">
             <div className="flex items-center justify-between gap-3">

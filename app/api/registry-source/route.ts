@@ -46,6 +46,9 @@ export async function GET(request: Request) {
       source,
       registryUrl,
       installCommand: `npx shadcn@latest add ${registryUrl}`,
+      // Подписанная короткая ссылка для «Копировать для ИИ»: агент откроет её
+      // и получит бриф без входа, пока она жива.
+      docUrl: `${base}/c/${slug}?${query}`,
       expiresAt: exp,
     },
     { headers: { "cache-control": "private, no-store" } },

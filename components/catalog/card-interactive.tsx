@@ -10,7 +10,7 @@ import { useFavorites } from "@/components/catalog/favorites-provider"
 import { useSession } from "@/lib/auth-client"
 import { useEffect, useId, useRef, useState, type ReactNode } from "react"
 
-import { GatedCopy } from "@/components/catalog/gated-copy"
+import { CopyForAi } from "@/components/catalog/copy-for-ai"
 import { SHELL_THEME_EVENT } from "@/components/catalog/theme-switch"
 import {
   cardControlIcon,
@@ -76,12 +76,10 @@ export function CardInteractive({
   full,
   natural,
   locale,
-  docUrl,
   itemUrl,
   title,
   englishTitle,
   previewProps,
-  installCommand,
   pro,
   children,
 }: {
@@ -98,14 +96,12 @@ export function CardInteractive({
       полноширинном поле, что и статичная миниатюра, а не узким по центру. */
   natural: boolean
   locale: Locale
-  docUrl: string | null
   itemUrl: string
   title: string
   /** Английское имя компонента: показывается в скобках рядом с русским. */
   englishTitle: string | null
   /** Демо-содержимое превью на языке витрины. */
   previewProps?: Record<string, unknown>
-  installCommand: string | null
   /** Закрытый item: исходник отдаётся только по подписке. */
   pro: boolean
   children: ReactNode
@@ -254,12 +250,6 @@ export function CardInteractive({
   if (locale !== "ru") {
     docParams.set("lang", locale)
   }
-
-  const docLink = docUrl
-    ? docParams.toString()
-      ? `${docUrl}?${docParams}`
-      : docUrl
-    : null
 
   // Тема переносится, только если её выбрали руками: "auto" — это отсутствие
   // выбора, и страница item'а решит сама по теме оболочки.
@@ -729,8 +719,9 @@ export function CardInteractive({
           >
             {t.card.getCode}
           </button>
-          <GatedCopy
-            value={docLink}
+          <CopyForAi
+            name={name}
+            params={docParams.toString()}
             label={t.card.copy}
             copiedLabel={t.card.copied}
             locale={locale}
@@ -744,7 +735,6 @@ export function CardInteractive({
         <CodeSheet
           name={name}
           title={title}
-          installCommand={installCommand}
           itemUrl={itemUrl}
           locale={locale}
           open={sheet}

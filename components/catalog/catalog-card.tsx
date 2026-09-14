@@ -4,7 +4,6 @@ import { pickCardControls } from "@/lib/card-controls"
 import { getControls } from "@/lib/controls"
 import { localePath, type Locale } from "@/lib/i18n"
 import { localizeItem } from "@/lib/localize"
-import { getInstallCommand, getItemDocUrl } from "@/lib/site"
 import { getItemKind, itemBasePath } from "@/registry/index"
 import type { CatalogItem } from "@/registry/meta"
 
@@ -53,13 +52,11 @@ export function CatalogCard({
         natural={localized.meta?.preview?.width === "natural"}
         previewProps={localized.meta?.preview?.props}
         locale={locale}
-        docUrl={getItemDocUrl(localized.name)}
         itemUrl={localePath(locale, `${itemBasePath(kind)}/${localized.name}`)}
         title={localized.title ?? localized.name}
         englishTitle={
           englishTitle && englishTitle !== localized.title ? englishTitle : null
         }
-        installCommand={getInstallCommand(localized.name)}
         pro={localized.meta?.pro === true}
       >
         <CatalogThumbnail slug={localized.name} locale={locale} />

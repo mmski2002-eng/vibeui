@@ -398,7 +398,7 @@ const RU: Dictionary = {
     use: "Использовать с ИИ",
     copyLead: "Ссылка для ИИ-агента: в ней превью, код и инструкция.",
     copyHint:
-      "Вставь ссылку в чат агента в своём проекте и напиши, куда добавить блок.",
+      "Вставь ссылку в чат агента в своём проекте и напиши, куда добавить блок. Ссылка личная и действует 24 часа.",
     flow: "Как это работает",
     flowSteps: [
       "Выбрали здесь",
@@ -586,7 +586,7 @@ const EN: Dictionary = {
     use: "Use it with AI",
     copyLead: "A link for your AI agent: preview, code and instructions.",
     copyHint:
-      "Paste the link into your agent's chat and say where the block should go.",
+      "Paste the link into your agent's chat and say where the block should go. The link is personal and valid for 24 hours.",
     flow: "How it works",
     flowSteps: ["Pick it here", "Paste into the chat", "Get it in your project"],
     flowChat: "put this on the home page as the hero:",
