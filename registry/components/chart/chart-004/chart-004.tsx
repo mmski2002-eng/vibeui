@@ -16,6 +16,8 @@ export type Chart004Props = Omit<
   unitLabel?: string
   /** Подпись полосы для скринридера: {label}, {value}, {unit}. */
   rowLabel?: string
+  /** Растить полосы по очереди при появлении. */
+  animate?: boolean
   accent?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
@@ -35,7 +37,9 @@ const STYLES = `
 --vibeui-chart-004-muted:color-mix(in oklab,var(--vibeui-chart-004-fg) 68%,transparent);
 --vibeui-chart-004-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-chart-004-track:light-dark(oklch(0.95 0 265),oklch(0.3 0 265));
---vibeui-chart-004-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
+--vibeui-chart-004-accent:light-dark(oklch(0.54 0.12 192),oklch(0.78 0.12 192));
+--vibeui-chart-004-dur:0.9s;
+--vibeui-chart-004-ease:cubic-bezier(.2,.8,.2,1);
 --vibeui-chart-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -48,7 +52,7 @@ background:var(--vibeui-chart-004-bg);
 border:1px solid var(--vibeui-chart-004-border);border-radius:0.875rem;
 color:var(--vibeui-chart-004-fg);font-family:var(--vibeui-chart-004-font);
 }
-[data-vibeui-block="chart-004"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
+\[data\-vibeui\-block="chart\-004"\] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:650;letter-spacing:-0.01em}
 [data-vibeui-block="chart-004"] ol{display:flex;flex-direction:column;gap:0.5rem;margin:0;padding:0;list-style:none}
 /* Подпись, полоса и число в одной сетке: колонки не разъезжаются между
    строками, и числа стоят ровным столбцом. */
@@ -59,19 +63,34 @@ font-size:0.8125rem;
 [data-vibeui-block="chart-004"] [data-part="label"]{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 [data-vibeui-block="chart-004"] [data-part="value"]{font-weight:650;font-variant-numeric:tabular-nums}
 [data-vibeui-block="chart-004"] [data-part="track"]{
-grid-column:1 / -1;height:0.5rem;border-radius:9999px;
+grid-column:1 / -1;height:0.625rem;border-radius:9999px;
 background:var(--vibeui-chart-004-track);overflow:hidden;
 }
 [data-vibeui-block="chart-004"] [data-part="fill"]{
-display:block;height:100%;border-radius:inherit;
-background:var(--vibeui-chart-004-accent);color:oklch(from var(--vibeui-chart-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
+display:block;height:100%;border-radius:inherit;transform-origin:left;
+background:linear-gradient(90deg,color-mix(in oklab,var(--vibeui-chart-004-accent) 80%,#fff 8%),var(--vibeui-chart-004-accent));
+box-shadow:inset 0 1px 0 color-mix(in oklab,#fff 40%,transparent);
+color:oklch(from var(--vibeui-chart-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);transition:filter 0.2s;}
+[data-vibeui-block="chart-004"] [data-part="row"]{transition:opacity 0.2s}
+[data-vibeui-block="chart-004"] ol:hover [data-part="row"]:not(:hover){opacity:0.55}
+[data-vibeui-block="chart-004"] [data-part="row"]:hover [data-part="fill"]{filter:brightness(1.08)}
+[data-vibeui-block="chart-004"] [data-part="row"]:hover [data-part="value"]{color:var(--vibeui-chart-004-accent)}
 /* Первая строка ярче: лидер должен читаться сразу. */
 [data-vibeui-block="chart-004"] li:first-child [data-part="fill"]{background:var(--vibeui-chart-004-accent);color:oklch(from var(--vibeui-chart-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="chart-004"] li:not(:first-child) [data-part="fill"]{
 background:color-mix(in oklab,var(--vibeui-chart-004-accent) 55%,var(--vibeui-chart-004-track));
 }
 [data-vibeui-block="chart-004"] [data-part="unit"]{font-size:0.75rem;color:var(--vibeui-chart-004-muted)}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-004"] *{animation:none!important;transition:none!important}}
+/* Появление: полосы вырастают слева по очереди, числа всплывают. */
+[data-vibeui-block="chart-004"][data-animate] [data-part="fill"]{transform:scaleX(0);animation:vibeui-chart-004-grow var(--vibeui-chart-004-dur) var(--vibeui-chart-004-ease) calc(var(--i) * 80ms) forwards}
+[data-vibeui-block="chart-004"][data-animate] [data-part="value"]{opacity:0;animation:vibeui-chart-004-fade 0.4s var(--vibeui-chart-004-ease) calc(var(--i) * 80ms + 0.4s) forwards}
+@keyframes vibeui-chart-004-grow{to{transform:scaleX(1)}}
+@keyframes vibeui-chart-004-fade{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="chart-004"] *{animation:none!important;transition:none!important}
+[data-vibeui-block="chart-004"][data-animate] [data-part="fill"]{transform:none}
+[data-vibeui-block="chart-004"][data-animate] [data-part="value"]{opacity:1}
+}
 `
 
 const DEFAULT_ROWS: Chart004Row[] = [
@@ -123,6 +142,7 @@ export function Chart004({
   unit = "визитов",
   unitLabel = "Единица измерения: {unit}",
   rowLabel = "{label}: {value} {unit}",
+  animate = true,
   accent,
   background = "",
   className,
@@ -151,13 +171,14 @@ export function Chart004({
         {...props}
         data-slot="chart"
         data-vibeui-block="chart-004"
+        data-animate={animate ? "" : undefined}
         className={className}
         style={palette}
       >
         <figcaption data-part="title">{title}</figcaption>
         <ol>
-          {rows.map((row) => (
-            <li key={row.label} data-part="row">
+          {rows.map((row, index) => (
+            <li key={row.label} data-part="row" style={{ "--i": index } as CSSProperties}>
               <span data-part="label">{row.label}</span>
               <span data-part="value">{row.value}</span>
               <span

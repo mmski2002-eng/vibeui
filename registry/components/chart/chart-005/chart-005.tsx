@@ -15,6 +15,8 @@ export type Chart005Props = Omit<
   total?: string
   /** Подпись доли для скринридера: {label} и {percent}. */
   partLabel?: string
+  /** Раскрывать доли по очереди при появлении. */
+  animate?: boolean
   accent?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
@@ -33,7 +35,9 @@ const STYLES = `
 --vibeui-chart-005-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-chart-005-muted:color-mix(in oklab,var(--vibeui-chart-005-fg) 68%,transparent);
 --vibeui-chart-005-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
---vibeui-chart-005-accent:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
+--vibeui-chart-005-accent:light-dark(oklch(0.5 0.08 262),oklch(0.82 0.06 262));
+--vibeui-chart-005-dur:0.9s;
+--vibeui-chart-005-ease:cubic-bezier(.2,.8,.2,1);
 --vibeui-chart-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -47,7 +51,7 @@ border:1px solid var(--vibeui-chart-005-border);border-radius:0.875rem;
 color:var(--vibeui-chart-005-fg);font-family:var(--vibeui-chart-005-font);
 }
 [data-vibeui-block="chart-005"] [data-part="head"]{display:flex;align-items:baseline;justify-content:space-between;gap:0.75rem}
-[data-vibeui-block="chart-005"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
+\[data\-vibeui\-block="chart\-005"\] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:650;letter-spacing:-0.01em}
 [data-vibeui-block="chart-005"] [data-part="total"]{
 font-size:0.875rem;font-weight:680;font-variant-numeric:tabular-nums;
 color:var(--vibeui-chart-005-accent);
@@ -60,21 +64,36 @@ display:flex;height:1.5rem;overflow:hidden;border-radius:0.5rem;
    легенды обязана совпасть с ним. Подпись поверх насыщенной заливки — белая. */
 [data-vibeui-block="chart-005"] [data-part="part"]{
 display:flex;align-items:center;justify-content:center;min-width:0;
-background:oklch(0.62 0.15 var(--vibeui-chart-005-hue,250));
-color:oklch(0.99 0 265);
-font-size:0.6875rem;font-weight:650;font-variant-numeric:tabular-nums;
+background:linear-gradient(180deg,oklch(0.7 0.19 var(--vibeui-chart-005-hue,250)),oklch(0.62 0.17 var(--vibeui-chart-005-hue,250)));
+color:oklch(0.99 0 265);transform-origin:left;
+font-size:0.75rem;font-weight:650;font-variant-numeric:tabular-nums;
+transition:filter 0.2s,opacity 0.2s;
 }
 [data-vibeui-block="chart-005"] [data-part="part"] + [data-part="part"]{box-shadow:inset 1px 0 0 oklch(1 0 0 / 55%)}
+[data-vibeui-block="chart-005"] [data-part="bar"]{border-radius:0.625rem;box-shadow:inset 0 1px 0 oklch(1 0 0 / 35%)}
+[data-vibeui-block="chart-005"] [data-part="bar"]:hover [data-part="part"]:not(:hover){opacity:0.55}
+[data-vibeui-block="chart-005"] [data-part="part"]:hover{filter:brightness(1.08)}
+[data-vibeui-block="chart-005"] li{transition:opacity 0.2s}
+[data-vibeui-block="chart-005"] ul:hover li:not(:hover){opacity:0.55}
 /* Доля меньше пяти процентов не подписывается: текст в неё не влезает. */
 [data-vibeui-block="chart-005"] [data-part="part"][data-narrow="true"] span{display:none}
 [data-vibeui-block="chart-005"] ul{display:flex;flex-wrap:wrap;gap:0.375rem 0.875rem;margin:0;padding:0;list-style:none}
 [data-vibeui-block="chart-005"] li{display:inline-flex;align-items:center;gap:0.375rem;font-size:0.75rem;color:var(--vibeui-chart-005-muted)}
 [data-vibeui-block="chart-005"] [data-part="dot"]{
 width:0.5rem;height:0.5rem;border-radius:0.1875rem;
-background:oklch(0.62 0.15 var(--vibeui-chart-005-hue,250));
+background:oklch(0.66 0.18 var(--vibeui-chart-005-hue,250));
 }
 [data-vibeui-block="chart-005"] [data-part="legend-value"]{color:var(--vibeui-chart-005-fg);font-weight:650;font-variant-numeric:tabular-nums}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-005"] *{animation:none!important;transition:none!important}}
+/* Появление: доли раскрываются слева направо по очереди. */
+[data-vibeui-block="chart-005"][data-animate] [data-part="part"]{transform:scaleX(0);animation:vibeui-chart-005-grow 0.7s var(--vibeui-chart-005-ease) calc(var(--i) * 120ms) forwards}
+[data-vibeui-block="chart-005"][data-animate] li{opacity:0;animation:vibeui-chart-005-fade 0.4s var(--vibeui-chart-005-ease) calc(var(--i) * 120ms + 0.35s) forwards}
+@keyframes vibeui-chart-005-grow{to{transform:scaleX(1)}}
+@keyframes vibeui-chart-005-fade{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="chart-005"] *{animation:none!important;transition:none!important}
+[data-vibeui-block="chart-005"][data-animate] [data-part="part"]{transform:none}
+[data-vibeui-block="chart-005"][data-animate] li{opacity:1}
+}
 `
 
 const DEFAULT_PARTS: Chart005Part[] = [
@@ -125,6 +144,7 @@ export function Chart005({
   parts = DEFAULT_PARTS,
   total = "1 240 000 ₽",
   partLabel = "{label}: {percent}%",
+  animate = true,
   accent,
   background = "",
   className,
@@ -153,6 +173,7 @@ export function Chart005({
         {...props}
         data-slot="chart"
         data-vibeui-block="chart-005"
+        data-animate={animate ? "" : undefined}
         className={className}
         style={palette}
       >
@@ -161,7 +182,7 @@ export function Chart005({
           <span data-part="total">{total}</span>
         </div>
         <div data-part="bar">
-          {parts.map((part) => {
+          {parts.map((part, index) => {
             const percent = Math.round((part.value / sum) * 100)
 
             return (
@@ -177,6 +198,7 @@ export function Chart005({
                 style={
                   {
                     "--vibeui-chart-005-hue": part.hue ?? 250,
+                    "--i": index,
                     flexBasis: `${percent}%`,
                   } as CSSProperties
                 }
@@ -187,8 +209,8 @@ export function Chart005({
           })}
         </div>
         <ul>
-          {parts.map((part) => (
-            <li key={part.label}>
+          {parts.map((part, index) => (
+            <li key={part.label} style={{ "--i": index } as CSSProperties}>
               <span
                 data-part="dot"
                 aria-hidden="true"

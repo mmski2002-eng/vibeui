@@ -19,6 +19,8 @@ export type Chart018Props = Omit<
   keyText?: Record<string, string>
   /** Накопленный итог в скрытой таблице: {total}. */
   runningLabel?: string
+  /** Растить ступени по очереди при появлении. */
+  animate?: boolean
   accent?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
@@ -34,6 +36,8 @@ export type Chart018Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="chart-018"]){
 --vibeui-chart-018-bg:transparent;
+--vibeui-chart-018-dur:0.7s;
+--vibeui-chart-018-ease:cubic-bezier(.2,.8,.2,1);
 --vibeui-chart-018-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-chart-018-muted:color-mix(in oklab,var(--vibeui-chart-018-fg) 68%,transparent);
 --vibeui-chart-018-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
@@ -53,9 +57,16 @@ background:var(--vibeui-chart-018-bg);
 border:1px solid var(--vibeui-chart-018-border);border-radius:0.875rem;
 color:var(--vibeui-chart-018-fg);font-family:var(--vibeui-chart-018-font);
 }
-[data-vibeui-block="chart-018"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
+\[data\-vibeui\-block="chart\-018"\] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:650;letter-spacing:-0.01em}
 [data-vibeui-block="chart-018"] svg{display:block;width:100%;height:auto}
 [data-vibeui-block="chart-018"] [data-part="grid"]{stroke:var(--vibeui-chart-018-grid);stroke-width:1}
+[data-vibeui-block="chart-018"] svg{overflow:visible}
+[data-vibeui-block="chart-018"] [data-part="bar"]{transform-box:fill-box;transition:opacity 0.2s,filter 0.2s}
+[data-vibeui-block="chart-018"] [data-part="bar"][data-kind="up"],[data-vibeui-block="chart-018"] [data-part="bar"][data-kind="total"]{transform-origin:bottom}
+[data-vibeui-block="chart-018"] [data-part="bar"][data-kind="down"]{transform-origin:top}
+[data-vibeui-block="chart-018"] svg:hover [data-part="bar"]:not(:hover){opacity:0.5}
+[data-vibeui-block="chart-018"] [data-part="bar"]:hover{filter:brightness(1.08)}
+[data-vibeui-block="chart-018"] g:hover [data-part="value"]{font-weight:700}
 [data-vibeui-block="chart-018"] [data-part="bar"][data-kind="up"]{fill:var(--vibeui-chart-018-up)}
 [data-vibeui-block="chart-018"] [data-part="bar"][data-kind="down"]{fill:var(--vibeui-chart-018-down)}
 [data-vibeui-block="chart-018"] [data-part="bar"][data-kind="total"]{fill:var(--vibeui-chart-018-total)}
@@ -83,7 +94,16 @@ font-size:0.6875rem;color:var(--vibeui-chart-018-muted);
 position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
 clip-path:inset(50%);white-space:nowrap;border:0;
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-018"] *{animation:none!important;transition:none!important}}
+/* Появление: ступени вырастают по очереди слева направо, коннекторы и подписи следом. */
+[data-vibeui-block="chart-018"][data-animate] [data-part="bar"]{transform:scaleY(0);animation:vibeui-chart-018-grow var(--vibeui-chart-018-dur) var(--vibeui-chart-018-ease) calc(var(--i) * 110ms) forwards}
+[data-vibeui-block="chart-018"][data-animate] [data-part="value"],[data-vibeui-block="chart-018"][data-animate] [data-part="link"]{opacity:0;animation:vibeui-chart-018-fade 0.35s var(--vibeui-chart-018-ease) calc(var(--i) * 110ms + 0.45s) forwards}
+@keyframes vibeui-chart-018-grow{to{transform:scaleY(1)}}
+@keyframes vibeui-chart-018-fade{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="chart-018"] *{animation:none!important;transition:none!important}
+[data-vibeui-block="chart-018"][data-animate] [data-part="bar"]{transform:none}
+[data-vibeui-block="chart-018"][data-animate] [data-part="value"],[data-vibeui-block="chart-018"][data-animate] [data-part="link"]{opacity:1}
+}
 `
 
 const LEFT = 8
@@ -148,6 +168,7 @@ export function Chart018({
   unitLabel = "Единица измерения: {unit}",
   keyText = KEY_TEXT,
   runningLabel = "накопленный итог {total}",
+  animate = true,
   accent,
   background = "",
   className,
@@ -200,6 +221,7 @@ export function Chart018({
         {...props}
         data-slot="chart"
         data-vibeui-block="chart-018"
+        data-animate={animate ? "" : undefined}
         className={className}
         style={palette}
       >
@@ -213,7 +235,7 @@ export function Chart018({
             const next = bars[index + 1]
 
             return (
-              <g key={bar.step.label}>
+              <g key={bar.step.label} style={{ "--i": index } as CSSProperties}>
                 <rect
                   data-part="bar"
                   data-kind={bar.kind}

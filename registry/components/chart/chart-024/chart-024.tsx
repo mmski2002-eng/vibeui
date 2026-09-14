@@ -19,6 +19,8 @@ export type Chart024Props = Omit<
   keyText?: Record<string, string>
   /** Накопленный итог в скрытой таблице: {total}. */
   runningLabel?: string
+  /** Растить полосы по очереди при появлении. */
+  animate?: boolean
   accent?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
@@ -35,6 +37,8 @@ export type Chart024Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="chart-024"]){
 --vibeui-chart-024-bg:transparent;
+--vibeui-chart-024-dur:0.7s;
+--vibeui-chart-024-ease:cubic-bezier(.2,.8,.2,1);
 --vibeui-chart-024-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-chart-024-muted:color-mix(in oklab,var(--vibeui-chart-024-fg) 68%,transparent);
 --vibeui-chart-024-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
@@ -54,12 +58,18 @@ background:var(--vibeui-chart-024-bg);
 border:1px solid var(--vibeui-chart-024-border);border-radius:0.875rem;
 color:var(--vibeui-chart-024-fg);font-family:var(--vibeui-chart-024-font);
 }
-[data-vibeui-block="chart-024"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
+\[data\-vibeui\-block="chart\-024"\] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:650;letter-spacing:-0.01em}
 [data-vibeui-block="chart-024"] svg{display:block;width:100%;height:auto}
 [data-vibeui-block="chart-024"] [data-part="grid"]{stroke:var(--vibeui-chart-024-grid);stroke-width:1}
 [data-vibeui-block="chart-024"] [data-part="tick"]{
 fill:var(--vibeui-chart-024-muted);font-size:7.5px;text-anchor:middle;font-variant-numeric:tabular-nums;
 }
+[data-vibeui-block="chart-024"] svg{overflow:visible}
+[data-vibeui-block="chart-024"] [data-part="bar"]{transform-box:fill-box;transform-origin:left;transition:opacity 0.2s,filter 0.2s}
+[data-vibeui-block="chart-024"] [data-part="bar"][data-kind="down"]{transform-origin:right}
+[data-vibeui-block="chart-024"] svg:hover g:not(:hover) [data-part="bar"]{opacity:0.5}
+[data-vibeui-block="chart-024"] g:hover [data-part="bar"]{filter:brightness(1.08)}
+[data-vibeui-block="chart-024"] g:hover [data-part="value"]{fill:var(--vibeui-chart-024-fg);font-weight:700}
 [data-vibeui-block="chart-024"] [data-part="bar"][data-kind="up"]{fill:var(--vibeui-chart-024-up)}
 [data-vibeui-block="chart-024"] [data-part="bar"][data-kind="down"]{fill:var(--vibeui-chart-024-down)}
 [data-vibeui-block="chart-024"] [data-part="bar"][data-kind="total"]{fill:var(--vibeui-chart-024-total)}
@@ -83,7 +93,16 @@ fill:var(--vibeui-chart-024-muted);font-size:8px;font-variant-numeric:tabular-nu
 position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
 clip-path:inset(50%);white-space:nowrap;border:0;
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-024"] *{animation:none!important;transition:none!important}}
+/* Появление: полосы вырастают по очереди, коннекторы и цифры следом. */
+[data-vibeui-block="chart-024"][data-animate] [data-part="bar"]{transform:scaleX(0);animation:vibeui-chart-024-grow var(--vibeui-chart-024-dur) var(--vibeui-chart-024-ease) calc(var(--i) * 100ms) forwards}
+[data-vibeui-block="chart-024"][data-animate] [data-part="value"],[data-vibeui-block="chart-024"][data-animate] [data-part="connector"]{opacity:0;animation:vibeui-chart-024-fade 0.35s var(--vibeui-chart-024-ease) calc(var(--i) * 100ms + 0.45s) forwards}
+@keyframes vibeui-chart-024-grow{to{transform:scaleX(1)}}
+@keyframes vibeui-chart-024-fade{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="chart-024"] *{animation:none!important;transition:none!important}
+[data-vibeui-block="chart-024"][data-animate] [data-part="bar"]{transform:none}
+[data-vibeui-block="chart-024"][data-animate] [data-part="value"],[data-vibeui-block="chart-024"][data-animate] [data-part="connector"]{opacity:1}
+}
 `
 
 const DEFAULT_STEPS: Chart024Step[] = [
@@ -160,6 +179,7 @@ export function Chart024({
   unitLabel = "Единица измерения: {unit}",
   keyText = KEY_TEXT,
   runningLabel = "накопленный итог {total}",
+  animate = true,
   accent,
   background = "",
   className,
@@ -211,6 +231,7 @@ export function Chart024({
         {...props}
         data-slot="chart"
         data-vibeui-block="chart-024"
+        data-animate={animate ? "" : undefined}
         className={className}
         style={palette}
       >
@@ -240,7 +261,7 @@ export function Chart024({
             const next = bars[index + 1]
 
             return (
-              <g key={bar.step.label}>
+              <g key={bar.step.label} style={{ "--i": index } as CSSProperties}>
                 <text data-part="label" x={4} y={y + ROW_HEIGHT / 2 + 3}>
                   {bar.step.label}
                 </text>

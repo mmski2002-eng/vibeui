@@ -17,6 +17,8 @@ export type Chart014Props = Omit<
   zones?: Chart014Zone[]
   /** Имя картинки для скринридера: {title}, {value}, {max} и {zone}. */
   chartLabel?: string
+  /** Поворачивать стрелку от нуля при появлении. */
+  animate?: boolean
   accent?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
@@ -39,6 +41,8 @@ const STYLES = `
 --vibeui-chart-014-warn:light-dark(oklch(0.76 0.15 85),oklch(0.83 0.14 85));
 --vibeui-chart-014-good:light-dark(oklch(0.64 0.15 155),oklch(0.76 0.14 155));
 --vibeui-chart-014-needle:light-dark(oklch(0.25 0 265),oklch(0.9 0 265));
+--vibeui-chart-014-dur:1.2s;
+--vibeui-chart-014-ease:cubic-bezier(.2,.8,.2,1);
 --vibeui-chart-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -51,16 +55,20 @@ background:var(--vibeui-chart-014-bg);
 border:1px solid var(--vibeui-chart-014-border);border-radius:0.875rem;
 color:var(--vibeui-chart-014-fg);font-family:var(--vibeui-chart-014-font);
 }
-[data-vibeui-block="chart-014"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
+\[data\-vibeui\-block="chart\-014"\] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:650;letter-spacing:-0.01em}
 [data-vibeui-block="chart-014"] svg{display:block;width:100%;height:auto}
-[data-vibeui-block="chart-014"] [data-part="zone"]{fill:none;stroke-width:12;stroke-linecap:butt}
+[data-vibeui-block="chart-014"] svg{overflow:visible}
+[data-vibeui-block="chart-014"] [data-part="zone"]{fill:none;stroke-width:12;stroke-linecap:butt;transition:stroke-width 0.2s}
+[data-vibeui-block="chart-014"] [data-part="zone"]:hover{stroke-width:15}
 [data-vibeui-block="chart-014"] [data-part="zone"][data-tone="bad"]{stroke:var(--vibeui-chart-014-bad)}
 [data-vibeui-block="chart-014"] [data-part="zone"][data-tone="warn"]{stroke:var(--vibeui-chart-014-warn)}
 [data-vibeui-block="chart-014"] [data-part="zone"][data-tone="good"]{stroke:var(--vibeui-chart-014-good)}
 [data-vibeui-block="chart-014"] [data-part="needle"]{
 stroke:var(--vibeui-chart-014-needle);stroke-width:3;stroke-linecap:round;
+transform-box:view-box;transform-origin:90px 92px;
+filter:drop-shadow(0 1px 2px rgb(0 0 0 / .3));
 }
-[data-vibeui-block="chart-014"] [data-part="hub"]{fill:var(--vibeui-chart-014-needle)}
+[data-vibeui-block="chart-014"] [data-part="hub"]{fill:var(--vibeui-chart-014-needle);stroke:light-dark(oklch(1 0 0),oklch(0.2 0 265));stroke-width:2}
 [data-vibeui-block="chart-014"] [data-part="edge"]{
 fill:var(--vibeui-chart-014-muted);font-size:9px;font-variant-numeric:tabular-nums;
 }
@@ -68,7 +76,7 @@ fill:var(--vibeui-chart-014-muted);font-size:9px;font-variant-numeric:tabular-nu
 display:flex;align-items:baseline;justify-content:center;gap:0.375rem;margin:-1.75rem 0 0;
 }
 [data-vibeui-block="chart-014"] [data-part="number"]{
-font-size:1.75rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;
+font-size:1.875rem;font-weight:700;line-height:1;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="chart-014"] [data-part="unit"]{font-size:0.75rem;color:var(--vibeui-chart-014-muted)}
 [data-vibeui-block="chart-014"] [data-part="scale"]{
@@ -82,7 +90,18 @@ display:flex;align-items:center;gap:0.3125rem;font-variant-numeric:tabular-nums;
 [data-vibeui-block="chart-014"] [data-part="dot"][data-tone="bad"]{background:var(--vibeui-chart-014-bad)}
 [data-vibeui-block="chart-014"] [data-part="dot"][data-tone="warn"]{background:var(--vibeui-chart-014-warn)}
 [data-vibeui-block="chart-014"] [data-part="dot"][data-tone="good"]{background:var(--vibeui-chart-014-good)}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-014"] *{animation:none!important;transition:none!important}}
+/* Появление: зоны прорисовываются, стрелка идёт от нуля с перелётом. */
+[data-vibeui-block="chart-014"][data-animate] [data-part="zone"]{stroke-dasharray:1;stroke-dashoffset:1;animation:vibeui-chart-014-draw 0.7s var(--vibeui-chart-014-ease) calc(var(--i) * 140ms) forwards}
+[data-vibeui-block="chart-014"][data-animate] [data-part="needle"]{animation:vibeui-chart-014-swing var(--vibeui-chart-014-dur) cubic-bezier(.34,1.4,.4,1) 0.25s both}
+[data-vibeui-block="chart-014"][data-animate] [data-part="reading"],[data-vibeui-block="chart-014"][data-animate] [data-part="scale"]{opacity:0;animation:vibeui-chart-014-fade 0.5s var(--vibeui-chart-014-ease) 0.7s forwards}
+@keyframes vibeui-chart-014-draw{to{stroke-dashoffset:0}}
+@keyframes vibeui-chart-014-swing{from{transform:rotate(calc(-1 * var(--vibeui-chart-014-sweep)))}}
+@keyframes vibeui-chart-014-fade{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="chart-014"] *{animation:none!important;transition:none!important}
+[data-vibeui-block="chart-014"][data-animate] [data-part="zone"]{stroke-dashoffset:0}
+[data-vibeui-block="chart-014"][data-animate] [data-part="reading"],[data-vibeui-block="chart-014"][data-animate] [data-part="scale"]{opacity:1}
+}
 `
 
 const CENTER_X = 90
@@ -153,6 +172,7 @@ export function Chart014({
   unit = "баллов из 100",
   zones = DEFAULT_ZONES,
   chartLabel = "{title}: {value} из {max}, зона «{zone}»",
+  animate = true,
   accent,
   background = "",
   className,
@@ -196,8 +216,9 @@ export function Chart014({
         {...props}
         data-slot="chart"
         data-vibeui-block="chart-014"
+        data-animate={animate ? "" : undefined}
         className={className}
-        style={palette}
+        style={{ "--vibeui-chart-014-sweep": `${share * 180}deg`, ...palette } as CSSProperties}
       >
         <figcaption data-part="title">{title}</figcaption>
         <svg
@@ -210,12 +231,14 @@ export function Chart014({
             zone: current?.label ?? "",
           })}
         >
-          {bands.map((band) => (
+          {bands.map((band, index) => (
             <path
               key={band.zone.label}
               data-part="zone"
               data-tone={band.zone.tone}
               d={arc(band.from, Math.max(band.to, band.from + 0.001))}
+              pathLength={1}
+              style={{ "--i": index } as CSSProperties}
             />
           ))}
           <line

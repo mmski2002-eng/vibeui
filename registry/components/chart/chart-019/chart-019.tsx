@@ -18,6 +18,8 @@ export type Chart019Props = Omit<
   axesLabel?: string
   /** Заголовок первого столбца скрытой таблицы. */
   rowHeader?: string
+  /** Выскакивать точками по очереди при появлении. */
+  animate?: boolean
   accent?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
@@ -38,7 +40,9 @@ const STYLES = `
 --vibeui-chart-019-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-chart-019-grid:light-dark(oklch(0.94 0 265),oklch(0.3 0 265));
 --vibeui-chart-019-axis:light-dark(oklch(0.78 0 265),oklch(0.46 0 265));
---vibeui-chart-019-accent:light-dark(oklch(0.287 0 0),oklch(0.895 0 0));
+--vibeui-chart-019-accent:light-dark(oklch(0.6 0.22 342),oklch(0.78 0.17 342));
+--vibeui-chart-019-dur:0.9s;
+--vibeui-chart-019-ease:cubic-bezier(.2,.8,.2,1);
 --vibeui-chart-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -51,13 +55,22 @@ background:var(--vibeui-chart-019-bg);
 border:1px solid var(--vibeui-chart-019-border);border-radius:0.875rem;
 color:var(--vibeui-chart-019-fg);font-family:var(--vibeui-chart-019-font);
 }
-[data-vibeui-block="chart-019"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
+\[data\-vibeui\-block="chart\-019"\] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:650;letter-spacing:-0.01em}
 [data-vibeui-block="chart-019"] svg{display:block;width:100%;height:auto}
 [data-vibeui-block="chart-019"] [data-part="grid"]{stroke:var(--vibeui-chart-019-grid);stroke-width:1}
 [data-vibeui-block="chart-019"] [data-part="axis"]{stroke:var(--vibeui-chart-019-axis);stroke-width:1}
+[data-vibeui-block="chart-019"] svg{overflow:visible}
+[data-vibeui-block="chart-019"] [data-part="spot"] text{
+fill:var(--vibeui-chart-019-fg);font-size:8.5px;font-weight:700;text-anchor:middle;
+opacity:0;transition:opacity 0.2s;pointer-events:none;
+}
+[data-vibeui-block="chart-019"] [data-part="spot"]:hover text{opacity:1}
+[data-vibeui-block="chart-019"] svg:hover [data-part="dot"]:not(:hover){fill-opacity:0.3}
+[data-vibeui-block="chart-019"] [data-part="dot"]:hover{fill-opacity:1;r:6}
 [data-vibeui-block="chart-019"] [data-part="dot"]{
-fill:var(--vibeui-chart-019-accent);fill-opacity:0.6;
-stroke:var(--vibeui-chart-019-accent);stroke-width:1;
+fill:var(--vibeui-chart-019-accent);fill-opacity:0.62;
+stroke:var(--vibeui-chart-019-accent);stroke-width:1.25;
+transform-box:fill-box;transform-origin:center;transition:fill-opacity 0.2s,r 0.2s;
 }
 [data-vibeui-block="chart-019"] [data-part="tick-x"]{
 fill:var(--vibeui-chart-019-muted);font-size:8px;text-anchor:middle;font-variant-numeric:tabular-nums;
@@ -73,7 +86,13 @@ fill:var(--vibeui-chart-019-fg);font-size:8.5px;font-weight:600;
 position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
 clip-path:inset(50%);white-space:nowrap;border:0;
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-019"] *{animation:none!important;transition:none!important}}
+/* Появление: точки выскакивают по очереди. */
+[data-vibeui-block="chart-019"][data-animate] [data-part="dot"]{transform:scale(0);animation:vibeui-chart-019-pop 0.5s var(--vibeui-chart-019-ease) calc(var(--i) * 50ms) forwards}
+@keyframes vibeui-chart-019-pop{60%{transform:scale(1.3)}to{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="chart-019"] *{animation:none!important;transition:none!important}
+[data-vibeui-block="chart-019"][data-animate] [data-part="dot"]{transform:none}
+}
 `
 
 const LEFT = 34
@@ -151,6 +170,7 @@ export function Chart019({
   yLabel = "страниц за визит",
   axesLabel = "Ось X — {x}, ось Y — {y}. Обе оси начинаются с нуля.",
   rowHeader = "Страница",
+  animate = true,
   accent,
   background = "",
   className,
@@ -182,6 +202,7 @@ export function Chart019({
         {...props}
         data-slot="chart"
         data-vibeui-block="chart-019"
+        data-animate={animate ? "" : undefined}
         className={className}
         style={palette}
       >
@@ -210,14 +231,18 @@ export function Chart019({
           })}
           <line data-part="axis" x1={LEFT} y1={TOP} x2={LEFT} y2={BASE} />
           <line data-part="axis" x1={LEFT} y1={BASE} x2={RIGHT} y2={BASE} />
-          {dots.map((dot) => (
-            <circle
-              key={dot.label}
-              data-part="dot"
-              cx={LEFT + (dot.x / xTop) * (RIGHT - LEFT)}
-              cy={BASE - (dot.y / yTop) * (BASE - TOP)}
-              r={4.5}
-            />
+          {dots.map((dot, index) => (
+            <g key={dot.label} data-part="spot" style={{ "--i": index } as CSSProperties}>
+              <text x={LEFT + (dot.x / xTop) * (RIGHT - LEFT)} y={BASE - (dot.y / yTop) * (BASE - TOP) - 9}>
+                {dot.label}
+              </text>
+              <circle
+                data-part="dot"
+                cx={LEFT + (dot.x / xTop) * (RIGHT - LEFT)}
+                cy={BASE - (dot.y / yTop) * (BASE - TOP)}
+                r={4.5}
+              />
+            </g>
           ))}
           <text data-part="axis-name" x={RIGHT} y={BASE + 26} textAnchor="end">
             {xLabel} →

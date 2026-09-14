@@ -16,6 +16,8 @@ export type Chart023Props = Omit<
   unitLabel?: string
   /** Шапка скрытой таблицы: ключи stage, count и conversion. */
   tableText?: Record<string, string>
+  /** Раскрывать воронку сверху вниз при появлении. */
+  animate?: boolean
   accent?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
@@ -36,7 +38,9 @@ const STYLES = `
 --vibeui-chart-023-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-chart-023-lead:light-dark(oklch(0.82 0 265),oklch(0.44 0 265));
 --vibeui-chart-023-blend:light-dark(oklch(1 0 0),oklch(0.19 0 265));
---vibeui-chart-023-accent:light-dark(oklch(0.28 0 0),oklch(0.885 0 0));
+--vibeui-chart-023-accent:light-dark(oklch(0.52 0.13 206),oklch(0.76 0.12 206));
+--vibeui-chart-023-dur:0.9s;
+--vibeui-chart-023-ease:cubic-bezier(.2,.8,.2,1);
 --vibeui-chart-023-drop:light-dark(oklch(0.295 0 0),oklch(0.903 0 0));
 --vibeui-chart-023-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -50,10 +54,16 @@ background:var(--vibeui-chart-023-bg);
 border:1px solid var(--vibeui-chart-023-border);border-radius:0.875rem;
 color:var(--vibeui-chart-023-fg);font-family:var(--vibeui-chart-023-font);
 }
-[data-vibeui-block="chart-023"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
+\[data\-vibeui\-block="chart\-023"\] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:650;letter-spacing:-0.01em}
 [data-vibeui-block="chart-023"] svg{display:block;width:100%;height:auto}
+[data-vibeui-block="chart-023"] svg{overflow:visible}
+[data-vibeui-block="chart-023"] g{transition:opacity 0.2s}
+[data-vibeui-block="chart-023"] svg:hover g:not(:hover){opacity:0.5}
+[data-vibeui-block="chart-023"] g:hover [data-part="band"]{filter:brightness(1.08)}
+[data-vibeui-block="chart-023"] g:hover [data-part="name"]{fill:var(--vibeui-chart-023-accent)}
 [data-vibeui-block="chart-023"] [data-part="band"]{
 fill:color-mix(in oklab,var(--vibeui-chart-023-accent) var(--vibeui-chart-023-mix,70%),var(--vibeui-chart-023-blend));
+transform-box:fill-box;transform-origin:top;transition:filter 0.2s;
 }
 [data-vibeui-block="chart-023"] [data-part="lead"]{stroke:var(--vibeui-chart-023-lead);stroke-width:1}
 [data-vibeui-block="chart-023"] [data-part="name"]{
@@ -68,7 +78,16 @@ fill:var(--vibeui-chart-023-muted);font-size:8px;font-variant-numeric:tabular-nu
 position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
 clip-path:inset(50%);white-space:nowrap;border:0;
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-023"] *{animation:none!important;transition:none!important}}
+/* Появление: полосы раскрываются сверху вниз, подписи выезжают следом. */
+[data-vibeui-block="chart-023"][data-animate] [data-part="band"]{transform:scaleY(0);animation:vibeui-chart-023-open 0.5s var(--vibeui-chart-023-ease) calc(var(--i) * 120ms) forwards}
+[data-vibeui-block="chart-023"][data-animate] [data-part="lead"],[data-vibeui-block="chart-023"][data-animate] [data-part="name"],[data-vibeui-block="chart-023"][data-animate] [data-part="figures"]{opacity:0;animation:vibeui-chart-023-fade 0.4s var(--vibeui-chart-023-ease) calc(var(--i) * 120ms + 0.3s) forwards}
+@keyframes vibeui-chart-023-open{to{transform:scaleY(1)}}
+@keyframes vibeui-chart-023-fade{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="chart-023"] *{animation:none!important;transition:none!important}
+[data-vibeui-block="chart-023"][data-animate] [data-part="band"]{transform:none}
+[data-vibeui-block="chart-023"][data-animate] [data-part="lead"],[data-vibeui-block="chart-023"][data-animate] [data-part="name"],[data-vibeui-block="chart-023"][data-animate] [data-part="figures"]{opacity:1}
+}
 `
 
 const DEFAULT_STAGES: Chart023Stage[] = [
@@ -133,6 +152,7 @@ export function Chart023({
   unit = "сделок за месяц",
   unitLabel = "Единица измерения: {unit}. Проценты у подписи — потеря относительно предыдущего этапа.",
   tableText = TABLE_TEXT,
+  animate = true,
   accent,
   background = "",
   className,
@@ -177,6 +197,7 @@ export function Chart023({
         {...props}
         data-slot="chart"
         data-vibeui-block="chart-023"
+        data-animate={animate ? "" : undefined}
         className={className}
         style={palette}
       >
@@ -189,7 +210,7 @@ export function Chart023({
               : null
 
             return (
-              <g key={band.stage.label}>
+              <g key={band.stage.label} style={{ "--i": band.index } as CSSProperties}>
                 <polygon
                   data-part="band"
                   style={

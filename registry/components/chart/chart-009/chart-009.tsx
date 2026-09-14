@@ -16,6 +16,8 @@ export type Chart009Props = Omit<
   beforeLabel?: string
   /** Подпись пары для скринридера: {label}, {now}, {before} и подписи периодов. */
   groupLabel?: string
+  /** Растить пары столбиков по очереди при появлении. */
+  animate?: boolean
   accent?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
@@ -35,7 +37,9 @@ const STYLES = `
 --vibeui-chart-009-muted:color-mix(in oklab,var(--vibeui-chart-009-fg) 68%,transparent);
 --vibeui-chart-009-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-chart-009-track:light-dark(oklch(0.93 0 265),oklch(0.32 0 265));
---vibeui-chart-009-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
+--vibeui-chart-009-accent:light-dark(oklch(0.6 0.13 216),oklch(0.78 0.12 216));
+--vibeui-chart-009-dur:0.9s;
+--vibeui-chart-009-ease:cubic-bezier(.2,.8,.2,1);
 --vibeui-chart-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -49,7 +53,7 @@ border:1px solid var(--vibeui-chart-009-border);border-radius:0.875rem;
 color:var(--vibeui-chart-009-fg);font-family:var(--vibeui-chart-009-font);
 }
 [data-vibeui-block="chart-009"] [data-part="head"]{display:flex;align-items:baseline;justify-content:space-between;gap:0.75rem;flex-wrap:wrap}
-[data-vibeui-block="chart-009"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
+\[data\-vibeui\-block="chart\-009"\] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:650;letter-spacing:-0.01em}
 [data-vibeui-block="chart-009"] [data-part="legend"]{display:flex;gap:0.75rem;font-size:0.75rem;color:var(--vibeui-chart-009-muted)}
 [data-vibeui-block="chart-009"] [data-part="key"]{display:inline-flex;align-items:center;gap:0.375rem}
 [data-vibeui-block="chart-009"] [data-part="swatch"]{width:0.625rem;height:0.625rem;border-radius:0.1875rem;background:var(--vibeui-chart-009-accent);color:oklch(from var(--vibeui-chart-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
@@ -59,16 +63,28 @@ color:var(--vibeui-chart-009-fg);font-family:var(--vibeui-chart-009-font);
 display:flex;align-items:flex-end;gap:0.875rem;height:7rem;
 }
 [data-vibeui-block="chart-009"] [data-part="group"]{display:flex;align-items:flex-end;gap:0.1875rem;flex:1;height:100%}
+[data-vibeui-block="chart-009"] [data-part="group"]{transition:opacity 0.2s}
+[data-vibeui-block="chart-009"] [data-part="plot"]:hover [data-part="group"]:not(:hover){opacity:0.5}
 [data-vibeui-block="chart-009"] [data-part="bar"]{
-flex:1;border-radius:0.25rem 0.25rem 0 0;background:var(--vibeui-chart-009-accent);color:oklch(from var(--vibeui-chart-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
+flex:1;border-radius:0.3rem 0.3rem 0.1rem 0.1rem;transform-origin:bottom;
+background:linear-gradient(to top,color-mix(in oklab,var(--vibeui-chart-009-accent) 82%,#000 4%),var(--vibeui-chart-009-accent));
+box-shadow:inset 0 1px 0 color-mix(in oklab,#fff 40%,transparent);
+color:oklch(from var(--vibeui-chart-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="chart-009"] [data-part="bar"][data-before="true"]{
-background:color-mix(in oklab,var(--vibeui-chart-009-accent) 30%,var(--vibeui-chart-009-track));
+background:color-mix(in oklab,var(--vibeui-chart-009-accent) 32%,var(--vibeui-chart-009-track));box-shadow:none;
 }
 [data-vibeui-block="chart-009"] [data-part="axis"]{
 display:flex;gap:0.875rem;font-size:0.6875rem;color:var(--vibeui-chart-009-muted);
 }
 [data-vibeui-block="chart-009"] [data-part="axis"] span{flex:1;text-align:center}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-009"] *{animation:none!important;transition:none!important}}
+/* Появление: пары вырастают по очереди, «раньше» чуть впереди «сейчас». */
+[data-vibeui-block="chart-009"][data-animate] [data-part="bar"]{transform:scaleY(0);animation:vibeui-chart-009-grow 0.75s var(--vibeui-chart-009-ease) calc(var(--i) * 90ms + 90ms) forwards}
+[data-vibeui-block="chart-009"][data-animate] [data-part="bar"][data-before="true"]{animation-delay:calc(var(--i) * 90ms)}
+@keyframes vibeui-chart-009-grow{60%{transform:scaleY(1.04)}to{transform:scaleY(1)}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="chart-009"] *{animation:none!important;transition:none!important}
+[data-vibeui-block="chart-009"][data-animate] [data-part="bar"]{transform:none}
+}
 `
 
 const DEFAULT_GROUPS: Chart009Group[] = [
@@ -120,6 +136,7 @@ export function Chart009({
   nowLabel = "Эта неделя",
   beforeLabel = "Прошлая",
   groupLabel = "{label}: {nowLabel} {now}, {beforeLabel} {before}",
+  animate = true,
   accent,
   background = "",
   className,
@@ -151,6 +168,7 @@ export function Chart009({
         {...props}
         data-slot="chart"
         data-vibeui-block="chart-009"
+        data-animate={animate ? "" : undefined}
         className={className}
         style={palette}
       >
@@ -168,11 +186,12 @@ export function Chart009({
           </p>
         </div>
         <div data-part="plot">
-          {groups.map((group) => (
+          {groups.map((group, index) => (
             <div
               key={group.label}
               data-part="group"
               role="img"
+              style={{ "--i": index } as CSSProperties}
               aria-label={fillTemplate(groupLabel, {
                 label: group.label,
                 now: group.now,

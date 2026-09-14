@@ -14,6 +14,8 @@ export type Chart011Props = Omit<
   unit?: string
   /** Подпись под графиком: {unit}. */
   unitLabel?: string
+  /** Прорисовывать линию и точки при появлении. */
+  animate?: boolean
   accent?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
@@ -34,7 +36,9 @@ const STYLES = `
 --vibeui-chart-011-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-chart-011-grid:light-dark(oklch(0.94 0 265),oklch(0.3 0 265));
 --vibeui-chart-011-dot:light-dark(oklch(1 0 0),oklch(0.24 0 265));
---vibeui-chart-011-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
+--vibeui-chart-011-accent:light-dark(oklch(0.7 0.16 78),oklch(0.84 0.15 82));
+--vibeui-chart-011-dur:0.9s;
+--vibeui-chart-011-ease:cubic-bezier(.2,.8,.2,1);
 --vibeui-chart-011-callout:light-dark(oklch(0.22 0 265),oklch(0.92 0 265));
 --vibeui-chart-011-callout-fg:light-dark(oklch(1 0 0),oklch(0.2 0 265));
 --vibeui-chart-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -49,15 +53,24 @@ background:var(--vibeui-chart-011-bg);
 border:1px solid var(--vibeui-chart-011-border);border-radius:0.875rem;
 color:var(--vibeui-chart-011-fg);font-family:var(--vibeui-chart-011-font);
 }
-[data-vibeui-block="chart-011"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
-[data-vibeui-block="chart-011"] svg{display:block;width:100%;height:auto}
-[data-vibeui-block="chart-011"] [data-part="grid"]{stroke:var(--vibeui-chart-011-grid);stroke-width:1}
+\[data\-vibeui\-block="chart\-011"\] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:650;letter-spacing:-0.01em}
+[data-vibeui-block="chart-011"] svg{display:block;width:100%;height:auto;overflow:visible}
+[data-vibeui-block="chart-011"] [data-part="grid"]{stroke:var(--vibeui-chart-011-grid);stroke-width:1;stroke-dasharray:3 4}
 [data-vibeui-block="chart-011"] [data-part="line"]{
-fill:none;stroke:var(--vibeui-chart-011-accent);stroke-width:2;
+fill:none;stroke:var(--vibeui-chart-011-accent);stroke-width:2.25;
 stroke-linejoin:round;stroke-linecap:round;
+filter:drop-shadow(0 0 5px color-mix(in oklab,var(--vibeui-chart-011-accent) 40%,transparent));
 }
+[data-vibeui-block="chart-011"] [data-part="spot"]{cursor:default}
+[data-vibeui-block="chart-011"] [data-part="hint"]{
+fill:var(--vibeui-chart-011-fg);font-size:9px;font-weight:700;text-anchor:middle;font-variant-numeric:tabular-nums;
+opacity:0;transition:opacity 0.2s;pointer-events:none;
+}
+[data-vibeui-block="chart-011"] [data-part="spot"]:hover [data-part="hint"]{opacity:1}
+[data-vibeui-block="chart-011"] [data-part="spot"]:hover [data-part="dot"]{r:4.5}
 [data-vibeui-block="chart-011"] [data-part="dot"]{
 fill:var(--vibeui-chart-011-dot);stroke:var(--vibeui-chart-011-accent);stroke-width:2;
+transform-box:fill-box;transform-origin:center;transition:r 0.2s;
 }
 [data-vibeui-block="chart-011"] [data-part="dot"][data-last="true"]{fill:var(--vibeui-chart-011-accent)}
 [data-vibeui-block="chart-011"] [data-part="callout"]{fill:var(--vibeui-chart-011-callout)}
@@ -73,7 +86,19 @@ fill:var(--vibeui-chart-011-muted);font-size:8.5px;text-anchor:middle;
 position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
 clip-path:inset(50%);white-space:nowrap;border:0;
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-011"] *{animation:none!important;transition:none!important}}
+/* Появление: линия прорисовывается, точки выскакивают по ходу, выноска в конце. */
+[data-vibeui-block="chart-011"][data-animate] [data-part="line"]{stroke-dasharray:1;stroke-dashoffset:1;animation:vibeui-chart-011-draw var(--vibeui-chart-011-dur) var(--vibeui-chart-011-ease) forwards}
+[data-vibeui-block="chart-011"][data-animate] [data-part="dot"]{transform:scale(0);animation:vibeui-chart-011-pop 0.4s var(--vibeui-chart-011-ease) calc(var(--i) * var(--vibeui-chart-011-step)) forwards}
+[data-vibeui-block="chart-011"][data-animate] [data-part="callout"],[data-vibeui-block="chart-011"][data-animate] [data-part="callout-text"]{opacity:0;animation:vibeui-chart-011-fade 0.4s var(--vibeui-chart-011-ease) var(--vibeui-chart-011-dur) forwards}
+@keyframes vibeui-chart-011-draw{to{stroke-dashoffset:0}}
+@keyframes vibeui-chart-011-pop{60%{transform:scale(1.3)}to{transform:scale(1)}}
+@keyframes vibeui-chart-011-fade{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="chart-011"] *{animation:none!important;transition:none!important}
+[data-vibeui-block="chart-011"][data-animate] [data-part="line"]{stroke-dashoffset:0}
+[data-vibeui-block="chart-011"][data-animate] [data-part="dot"]{transform:none}
+[data-vibeui-block="chart-011"][data-animate] [data-part="callout"],[data-vibeui-block="chart-011"][data-animate] [data-part="callout-text"]{opacity:1}
+}
 `
 
 const LEFT = 12
@@ -130,6 +155,7 @@ export function Chart011({
   points = DEFAULT_POINTS,
   unit = "тысяч рублей",
   unitLabel = "Единица измерения: {unit}. Последнее значение подписано на графике.",
+  animate = true,
   accent,
   background = "",
   className,
@@ -180,8 +206,9 @@ export function Chart011({
         {...props}
         data-slot="chart"
         data-vibeui-block="chart-011"
+        data-animate={animate ? "" : undefined}
         className={className}
-        style={palette}
+        style={{ "--vibeui-chart-011-step": `${0.9 / Math.max(1, spots.length - 1)}s`, ...palette } as CSSProperties}
       >
         <figcaption data-part="title">{title}</figcaption>
         <svg viewBox="0 0 300 136" aria-hidden="true" focusable="false">
@@ -199,16 +226,20 @@ export function Chart011({
               />
             )
           })}
-          <path data-part="line" d={path} />
+          <path data-part="line" d={path} pathLength={1} />
           {spots.map((spot, index) => (
-            <circle
-              key={points[index].label}
-              data-part="dot"
-              data-last={index === spots.length - 1 ? "true" : undefined}
-              cx={spot.x}
-              cy={spot.y}
-              r={3}
-            />
+            <g key={points[index].label} data-part="spot" style={{ "--i": index } as CSSProperties}>
+              <text data-part="hint" x={spot.x} y={spot.y - 9}>
+                {points[index].value}
+              </text>
+              <circle
+                data-part="dot"
+                data-last={index === spots.length - 1 ? "true" : undefined}
+                cx={spot.x}
+                cy={spot.y}
+                r={3}
+              />
+            </g>
           ))}
           <rect
             data-part="callout"

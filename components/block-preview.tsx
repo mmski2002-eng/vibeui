@@ -76,12 +76,20 @@ export function BlockPreview({
   }, [])
 
   const current = VIEWPORTS.find((item) => item.id === viewport) ?? VIEWPORTS[0]
-  const frameWidth = current.width
-  const frameHeight = current.height
-  const scale =
-    containerWidth === null
-      ? null
-      : Math.min(1, (containerWidth - current.bezel) / frameWidth)
+  const available =
+    containerWidth === null ? null : Math.max(containerWidth - current.bezel, 0)
+  // Секции показывают настоящий 1440px-лейаут и вписываются масштабом. У
+  // компонента и анимации раскладки под ширину экрана нет: ужатый экран лишь
+  // уменьшает их. Поэтому экран сужается до контейнера при той же пропорции,
+  // а содержимое остаётся 1:1 — масштаб включается, только если сам экран
+  // уже контейнера, чего после сужения не бывает.
+  const natural = kind !== "block"
+  const frameWidth =
+    natural && available
+      ? Math.min(current.width, Math.floor(available))
+      : current.width
+  const frameHeight = Math.round((current.height * frameWidth) / current.width)
+  const scale = available === null ? null : Math.min(1, available / frameWidth)
   const measured = scale !== null
   const previewPath = `/preview/${kind}/${category}/${slug}`
 

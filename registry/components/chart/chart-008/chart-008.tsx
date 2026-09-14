@@ -16,6 +16,8 @@ export type Chart008Props = Omit<
   dropText?: string
   /** Подпись полосы для скринридера: {label}, {value}, {unit}, {share}. */
   stepLabel?: string
+  /** Раскрывать ступени сверху вниз при появлении. */
+  animate?: boolean
   accent?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
@@ -35,7 +37,9 @@ const STYLES = `
 --vibeui-chart-008-muted:color-mix(in oklab,var(--vibeui-chart-008-fg) 68%,transparent);
 --vibeui-chart-008-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-chart-008-track:light-dark(oklch(0.94 0 265),oklch(0.3 0 265));
---vibeui-chart-008-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
+--vibeui-chart-008-accent:light-dark(oklch(0.54 0.2 276),oklch(0.74 0.15 276));
+--vibeui-chart-008-dur:0.9s;
+--vibeui-chart-008-ease:cubic-bezier(.2,.8,.2,1);
 --vibeui-chart-008-drop:light-dark(oklch(0.295 0 0),oklch(0.905 0 0));
 --vibeui-chart-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -49,18 +53,23 @@ background:var(--vibeui-chart-008-bg);
 border:1px solid var(--vibeui-chart-008-border);border-radius:0.875rem;
 color:var(--vibeui-chart-008-fg);font-family:var(--vibeui-chart-008-font);
 }
-[data-vibeui-block="chart-008"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
+\[data\-vibeui\-block="chart\-008"\] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:650;letter-spacing:-0.01em}
 [data-vibeui-block="chart-008"] ol{display:flex;flex-direction:column;gap:0.375rem;margin:0;padding:0;list-style:none}
 [data-vibeui-block="chart-008"] [data-part="row"]{display:flex;flex-direction:column;gap:0.25rem}
 [data-vibeui-block="chart-008"] [data-part="head"]{
 display:flex;align-items:baseline;justify-content:space-between;gap:0.5rem;font-size:0.8125rem;
 }
 [data-vibeui-block="chart-008"] [data-part="value"]{font-weight:650;font-variant-numeric:tabular-nums}
+[data-vibeui-block="chart-008"] li{transition:opacity 0.2s}
+[data-vibeui-block="chart-008"] ol:hover li:not(:hover){opacity:0.5}
+[data-vibeui-block="chart-008"] li:hover [data-part="value"]{color:var(--vibeui-chart-008-accent)}
 [data-vibeui-block="chart-008"] [data-part="bar"]{
-height:1.25rem;border-radius:0.375rem;
-background:color-mix(in oklab,var(--vibeui-chart-008-accent) var(--vibeui-chart-008-mix,80%),var(--vibeui-chart-008-track));
+height:1.375rem;border-radius:0.4rem;transform-origin:left;
+background:linear-gradient(90deg,color-mix(in oklab,var(--vibeui-chart-008-accent) var(--vibeui-chart-008-mix,80%),var(--vibeui-chart-008-track)),color-mix(in oklab,var(--vibeui-chart-008-accent) calc(var(--vibeui-chart-008-mix,80%) + 12%),var(--vibeui-chart-008-track)));
+box-shadow:inset 0 1px 0 color-mix(in oklab,#fff 35%,transparent);transition:filter 0.2s;
 }
 /* Переход между шагами: именно он показывает, где теряются люди. */
+[data-vibeui-block="chart-008"] li:hover [data-part="bar"]{filter:brightness(1.08)}
 [data-vibeui-block="chart-008"] [data-part="drop"]{
 display:flex;align-items:center;gap:0.375rem;padding-left:0.25rem;
 font-size:0.75rem;color:var(--vibeui-chart-008-muted);
@@ -73,7 +82,16 @@ border-bottom:1.5px solid var(--vibeui-chart-008-muted);
 transform:rotate(-45deg) translateY(-0.0625rem);
 }
 [data-vibeui-block="chart-008"] [data-part="unit"]{font-size:0.75rem;color:var(--vibeui-chart-008-muted)}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-008"] *{animation:none!important;transition:none!important}}
+/* Появление: ступени раскрываются сверху вниз, проценты перехода всплывают. */
+[data-vibeui-block="chart-008"][data-animate] [data-part="bar"]{transform:scaleX(0);animation:vibeui-chart-008-grow 0.7s var(--vibeui-chart-008-ease) calc(var(--i) * 140ms) forwards}
+[data-vibeui-block="chart-008"][data-animate] [data-part="drop"],[data-vibeui-block="chart-008"][data-animate] [data-part="value"]{opacity:0;animation:vibeui-chart-008-fade 0.4s var(--vibeui-chart-008-ease) calc(var(--i) * 140ms + 0.35s) forwards}
+@keyframes vibeui-chart-008-grow{to{transform:scaleX(1)}}
+@keyframes vibeui-chart-008-fade{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="chart-008"] *{animation:none!important;transition:none!important}
+[data-vibeui-block="chart-008"][data-animate] [data-part="bar"]{transform:none}
+[data-vibeui-block="chart-008"][data-animate] [data-part="drop"],[data-vibeui-block="chart-008"][data-animate] [data-part="value"]{opacity:1}
+}
 `
 
 const DEFAULT_STEPS: Chart008Step[] = [
@@ -124,6 +142,7 @@ export function Chart008({
   unit = "человек за неделю",
   dropText = "ушли {drop} от предыдущего шага",
   stepLabel = "{label}: {value} {unit}, {share}% от первого шага",
+  animate = true,
   accent,
   background = "",
   className,
@@ -155,6 +174,7 @@ export function Chart008({
         {...props}
         data-slot="chart"
         data-vibeui-block="chart-008"
+        data-animate={animate ? "" : undefined}
         className={className}
         style={palette}
       >
@@ -168,7 +188,7 @@ export function Chart008({
               : 0
 
             return (
-              <li key={step.label}>
+              <li key={step.label} style={{ "--i": index } as CSSProperties}>
                 {previous ? (
                   <p data-part="drop">
                     {dropBefore}

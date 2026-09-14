@@ -5405,6 +5405,183 @@
           }
         }
       }
+    },
+    {
+      "name": "avatar-040",
+      "type": "registry:component",
+      "title": "Аватар с наклоном",
+      "description": "Карточка портрета, которая разворачивается в объёме за курсором: слои разъезжаются параллаксом, следом идёт блик. На тач — по удержанию пальца.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "avatar-040/avatar-040.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/avatar-040.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент: наклон считается от положения курсора внутри карточки и водится CSS-переменными rx/ry, а не инлайновым transform. Слои — снимок, штора, блик, подпись, метка — разнесены по глубине через translateZ на общей сцене с perspective и transform-style: preserve-3d, поэтому при наклоне разъезжаются параллаксом. Поток pointermove гасится через requestAnimationFrame: за кадр применяется последнее положение. Блик — радиальный градиент в режиме soft-light, его центр gx/gy идёт за указателем, а прозрачность снимается при уходе. Тема берётся из color-scheme через light-dark(), тёмную включает класс .dark. При prefers-reduced-motion одно правило гасит transform, и карточка остаётся плоской.",
+      "meta": {
+        "tags": [
+          "avatar",
+          "profile",
+          "card",
+          "tilt",
+          "3d",
+          "parallax",
+          "hover",
+          "interactive",
+          "pointer"
+        ],
+        "ai": {
+          "export": "Avatar040",
+          "usage": "<Avatar040 name=\"Мария Гурова\" role=\"Продуктовый дизайнер\" src=\"/avatars/maria.webp\" />",
+          "summary": "Аватар-карточка с 3D-наклоном: портрет разворачивается в объёме за курсором или пальцем, слои разъезжаются параллаксом через translateZ, за указателем идёт блик. Имя и роль лежат поверх снимка на затемнении. Один файл, ноль зависимостей, собственная палитра.",
+          "preserve": [
+            "наклон через CSS-переменные rx/ry, а не инлайновый transform: одно правило гасит его при prefers-reduced-motion",
+            "perspective на обёртке и transform-style: preserve-3d на карточке — без них слои не уходят в глубину и параллакса нет",
+            "разнос слоёв по translateZ: снимок глубже, подпись и метка ближе — на этом держится параллакс",
+            "requestAnimationFrame в обработчике pointermove: гасит поток событий, наклон остаётся гладким",
+            "сброс наклона на pointerleave/up/cancel: иначе карточка застывает накрененной после ухода курсора",
+            "штора-градиент у нижней кромки: имя читается поверх любого снимка",
+            "локальная палитра --vibeui-avatar-040-* — не подменять её токенами своей темы"
+          ],
+          "adapt": [
+            "name, role, badge и caption",
+            "src — фото профиля; пусто, и в кадре инициалы имени",
+            "цвет акцента через accent (метка-точка и фокус)",
+            "цвет текста через textColor — приглушённый выводится из него",
+            "aspect-ratio карточки и радиус, если нужен другой формат кадра"
+          ],
+          "notes": [
+            "role='img' с aria-label собирает имя и роль в одну подпись для скринридера: сам наклон декоративен.",
+            "без src кадр показывает инициалы на цветной подложке — компонент выглядит готовым и без фотографии.",
+            "угол наклона задаётся в коде обработчика (10°): крупной карточке хватит меньшего, чтобы не выглядеть аттракционом.",
+            "фото профиля — забота проекта; демо-снимки лежат в /demo/avatars и в чужой сборке недоступны."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "name",
+            "label": "Имя",
+            "type": "text",
+            "default": "Мария Гурова",
+            "maxLength": 30
+          },
+          {
+            "prop": "role",
+            "label": "Роль",
+            "type": "text",
+            "default": "Продуктовый дизайнер",
+            "maxLength": 40
+          },
+          {
+            "prop": "badge",
+            "label": "Метка",
+            "type": "text",
+            "default": "3D",
+            "maxLength": 16
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Наведите или удерживайте",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "textColor",
+            "label": "Цвет текста",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "name",
+          "role",
+          "badge",
+          "accent"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "src": "/demo/avatars/maria-512.webp"
+          }
+        },
+        "i18n": {
+          "en": {
+            "title": "Tilt Avatar",
+            "description": "A portrait card that turns in 3D toward the cursor: the layers spread apart with parallax and a highlight follows the pointer. On touch it works by holding a finger.",
+            "ai": {
+              "summary": "A tilt avatar card: the portrait turns in 3D toward the cursor or finger, the layers spread apart with parallax via translateZ, and a highlight follows the pointer. The name and role sit over the photo on a scrim. One file, no dependencies, its own palette.",
+              "preserve": [
+                "the tilt through CSS variables rx/ry rather than an inline transform: a single rule kills it under prefers-reduced-motion",
+                "perspective on the wrapper and transform-style: preserve-3d on the card — without them the layers stay flat and there is no parallax",
+                "the layers spread over translateZ: the photo deeper, the caption and badge closer — the parallax rests on this",
+                "requestAnimationFrame in the pointermove handler: it throttles the event stream so the tilt stays smooth",
+                "resetting the tilt on pointerleave/up/cancel: otherwise the card freezes tilted after the cursor leaves",
+                "the scrim gradient at the bottom edge: the name stays readable over any photo",
+                "the local --vibeui-avatar-040-* palette — do not swap it for your theme tokens"
+              ],
+              "adapt": [
+                "name, role, badge and caption",
+                "src — the profile photo; leave it empty and the frame shows the name's initials",
+                "the accent colour via accent (the caption dot and focus ring)",
+                "the text colour via textColor — the muted one is derived from it",
+                "the card's aspect-ratio and radius for a different frame format"
+              ],
+              "notes": [
+                "role='img' with an aria-label folds the name and role into one label for the screen reader: the tilt itself is decorative.",
+                "without src the frame shows initials on a coloured backing — the component looks finished even with no photo.",
+                "the tilt angle is set in the handler code (10°): a large card needs a smaller one so it does not read as a fairground ride.",
+                "the profile photo is the project's concern; the demo shots live under /demo/avatars and are not available in another build."
+              ],
+              "usage": "<Avatar040 name=\"Maria Gurova\" role=\"Product designer\" src=\"/avatars/maria.webp\" />"
+            },
+            "controls": {
+              "name": {
+                "label": "Name",
+                "default": "Maria Gurova"
+              },
+              "role": {
+                "label": "Role",
+                "default": "Product designer"
+              },
+              "badge": {
+                "label": "Badge",
+                "default": "3D"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": "Hover or hold"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "textColor": {
+                "label": "Text colour"
+              }
+            },
+            "preview": {
+              "props": {
+                "name": "Maria Gurova",
+                "role": "Product designer",
+                "caption": "Hover or hold"
+              }
+            },
+            "docs": "A client component: the tilt is computed from the cursor position inside the card and driven by CSS variables rx/ry rather than an inline transform. The layers — photo, scrim, glare, caption, badge — are spread over depth through translateZ on a shared scene with perspective and transform-style: preserve-3d, so they move apart with parallax on tilt. The pointermove stream is throttled through requestAnimationFrame: only the last position is applied per frame. The glare is a radial gradient in soft-light blend mode whose centre gx/gy follows the pointer and whose opacity drops on leave. The theme comes from color-scheme through light-dark(), and the .dark class turns the dark theme on. Under prefers-reduced-motion a single rule kills the transform and the card stays flat."
+          }
+        }
+      }
     }
   ]
 }

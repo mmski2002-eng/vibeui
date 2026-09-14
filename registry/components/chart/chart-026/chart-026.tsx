@@ -20,6 +20,8 @@ export type Chart026Props = Omit<
   unitLabel?: string
   /** Рост вверх — это хорошо. Выключите там, где рост означает потери. */
   riseIsGood?: boolean
+  /** Въезжать строками и прорисовывать спарклайны при появлении. */
+  animate?: boolean
   accent?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
@@ -38,7 +40,9 @@ const STYLES = `
 --vibeui-chart-026-muted:color-mix(in oklab,var(--vibeui-chart-026-fg) 64%,transparent);
 --vibeui-chart-026-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-chart-026-rule:light-dark(oklch(0.94 0 265),oklch(0.3 0 265));
---vibeui-chart-026-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
+--vibeui-chart-026-accent:light-dark(oklch(0.53 0.14 166),oklch(0.78 0.14 166));
+--vibeui-chart-026-dur:0.9s;
+--vibeui-chart-026-ease:cubic-bezier(.2,.8,.2,1);
 --vibeui-chart-026-good:light-dark(oklch(0.52 0.15 152),oklch(0.75 0.14 152));
 --vibeui-chart-026-bad:light-dark(oklch(0.55 0.19 25),oklch(0.74 0.16 25));
 --vibeui-chart-026-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -54,7 +58,7 @@ border:1px solid var(--vibeui-chart-026-border);border-radius:0.875rem;
 color:var(--vibeui-chart-026-fg);font-family:var(--vibeui-chart-026-font);
 }
 [data-vibeui-block="chart-026"] *{box-sizing:border-box}
-[data-vibeui-block="chart-026"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
+\[data\-vibeui\-block="chart\-026"\] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:650;letter-spacing:-0.01em}
 [data-vibeui-block="chart-026"] [data-part="rows"]{
 display:flex;flex-direction:column;
 margin:0;padding:0;list-style:none;
@@ -84,12 +88,16 @@ color:var(--vibeui-chart-026-muted);
 [data-vibeui-block="chart-026"] [data-part="change"][data-tone="good"]{color:var(--vibeui-chart-026-good)}
 [data-vibeui-block="chart-026"] [data-part="change"][data-tone="bad"]{color:var(--vibeui-chart-026-bad)}
 [data-vibeui-block="chart-026"] [data-part="spark"]{display:block;width:100%;height:1.375rem}
+[data-vibeui-block="chart-026"] [data-part="row"]{transition:opacity 0.2s,background-color 0.2s;border-radius:0.375rem}
+[data-vibeui-block="chart-026"] [data-part="rows"]:hover [data-part="row"]:not(:hover){opacity:0.55}
+[data-vibeui-block="chart-026"] [data-part="row"]:hover [data-part="value"]{color:var(--vibeui-chart-026-accent)}
 [data-vibeui-block="chart-026"] [data-part="line"]{
 fill:none;stroke:var(--vibeui-chart-026-accent);stroke-width:1.75;
-stroke-linejoin:round;stroke-linecap:round;
+stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke;
+filter:drop-shadow(0 0 3px color-mix(in oklab,var(--vibeui-chart-026-accent) 40%,transparent));
 }
 [data-vibeui-block="chart-026"] [data-part="area"]{
-fill:var(--vibeui-chart-026-accent);opacity:0.14;stroke:none;
+fill:var(--vibeui-chart-026-accent);opacity:0.16;stroke:none;
 }
 [data-vibeui-block="chart-026"] [data-part="last"]{fill:var(--vibeui-chart-026-accent)}
 [data-vibeui-block="chart-026"] [data-part="unit"]{margin:0;font-size:0.75rem;color:var(--vibeui-chart-026-muted)}
@@ -103,7 +111,18 @@ fill:var(--vibeui-chart-026-accent);opacity:0.14;stroke:none;
 position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
 clip-path:inset(50%);white-space:nowrap;border:0;
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-026"] *{animation:none!important;transition:none!important}}
+/* Появление: строки въезжают по очереди, спарклайны открываются слева направо. */
+[data-vibeui-block="chart-026"][data-animate] [data-part="row"]{opacity:0;translate:0 0.35rem;animation:vibeui-chart-026-rise 0.5s var(--vibeui-chart-026-ease) calc(var(--i) * 80ms) forwards}
+[data-vibeui-block="chart-026"][data-animate] [data-part="line"],[data-vibeui-block="chart-026"][data-animate] [data-part="area"]{clip-path:inset(-30% 100% -30% 0);animation:vibeui-chart-026-draw 0.8s var(--vibeui-chart-026-ease) calc(var(--i) * 80ms + 0.2s) forwards}
+[data-vibeui-block="chart-026"][data-animate] [data-part="last"]{opacity:0;animation:vibeui-chart-026-fade 0.3s var(--vibeui-chart-026-ease) calc(var(--i) * 80ms + 0.9s) forwards}
+@keyframes vibeui-chart-026-rise{to{opacity:1;translate:0 0}}
+@keyframes vibeui-chart-026-draw{to{clip-path:inset(-30% 0 -30% 0)}}
+@keyframes vibeui-chart-026-fade{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="chart-026"] *{animation:none!important;transition:none!important}
+[data-vibeui-block="chart-026"][data-animate] [data-part="row"],[data-vibeui-block="chart-026"][data-animate] [data-part="last"]{opacity:1;translate:none}
+[data-vibeui-block="chart-026"][data-animate] [data-part="line"],[data-vibeui-block="chart-026"][data-animate] [data-part="area"]{clip-path:none}
+}
 `
 
 const WIDTH = 68
@@ -189,6 +208,7 @@ export function Chart026({
   rows = DEFAULT_ROWS,
   unitLabel = "Показателей: {count}. Микрографик показывает восемь последних значений ряда.",
   riseIsGood = true,
+  animate = true,
   accent,
   background = "",
   className,
@@ -215,12 +235,13 @@ export function Chart026({
         {...props}
         data-slot="chart"
         data-vibeui-block="chart-026"
+        data-animate={animate ? "" : undefined}
         className={className}
         style={palette}
       >
         <figcaption data-part="title">{title}</figcaption>
         <ul data-part="rows">
-          {rows.map((row) => {
+          {rows.map((row, index) => {
             const spots = place(row.series)
             const line = spots
               .map(
@@ -234,7 +255,7 @@ export function Chart026({
             const tone = rising === riseIsGood ? "good" : "bad"
 
             return (
-              <li key={row.label} data-part="row">
+              <li key={row.label} data-part="row" style={{ "--i": index } as CSSProperties}>
                 <span data-part="name">{row.label}</span>
                 <span data-part="figures">
                   <span data-part="value">{row.value}</span>

@@ -22,6 +22,8 @@ export type Chart027Props = Omit<
   compareLabel?: string
   /** Подпись под графиком: {count}. */
   unitLabel?: string
+  /** Раскрывать многоугольник из центра при появлении. */
+  animate?: boolean
   accent?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
@@ -40,7 +42,9 @@ const STYLES = `
 --vibeui-chart-027-muted:color-mix(in oklab,var(--vibeui-chart-027-fg) 66%,transparent);
 --vibeui-chart-027-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-chart-027-grid:light-dark(oklch(0.92 0 265),oklch(0.32 0 265));
---vibeui-chart-027-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
+--vibeui-chart-027-accent:light-dark(oklch(0.57 0.2 306),oklch(0.76 0.16 306));
+--vibeui-chart-027-dur:0.9s;
+--vibeui-chart-027-ease:cubic-bezier(.2,.8,.2,1);
 --vibeui-chart-027-compare:color-mix(in oklab,var(--vibeui-chart-027-fg) 45%,transparent);
 --vibeui-chart-027-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -55,19 +59,29 @@ border:1px solid var(--vibeui-chart-027-border);border-radius:0.875rem;
 color:var(--vibeui-chart-027-fg);font-family:var(--vibeui-chart-027-font);
 }
 [data-vibeui-block="chart-027"] *{box-sizing:border-box}
-[data-vibeui-block="chart-027"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
+\[data\-vibeui\-block="chart\-027"\] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:650;letter-spacing:-0.01em}
 [data-vibeui-block="chart-027"] svg{display:block;width:100%;height:auto}
 [data-vibeui-block="chart-027"] [data-part="web"]{fill:none;stroke:var(--vibeui-chart-027-grid);stroke-width:1}
 [data-vibeui-block="chart-027"] [data-part="spoke"]{stroke:var(--vibeui-chart-027-grid);stroke-width:1}
+[data-vibeui-block="chart-027"] svg{overflow:visible}
 [data-vibeui-block="chart-027"] [data-part="shape"]{
-fill:var(--vibeui-chart-027-accent);fill-opacity:0.18;
+fill:var(--vibeui-chart-027-accent);fill-opacity:0.2;
 stroke:var(--vibeui-chart-027-accent);stroke-width:2;stroke-linejoin:round;
+transform-box:view-box;transform-origin:130px 102px;
+filter:drop-shadow(0 0 6px color-mix(in oklab,var(--vibeui-chart-027-accent) 35%,transparent));
 }
 [data-vibeui-block="chart-027"] [data-part="compare"]{
 fill:none;stroke:var(--vibeui-chart-027-compare);stroke-width:1.5;
-stroke-dasharray:4 3;stroke-linejoin:round;
+stroke-dasharray:4 3;stroke-linejoin:round;transform-box:view-box;transform-origin:130px 102px;
 }
-[data-vibeui-block="chart-027"] [data-part="dot"]{fill:var(--vibeui-chart-027-accent)}
+[data-vibeui-block="chart-027"] [data-part="dot"]{fill:var(--vibeui-chart-027-accent);transform-box:fill-box;transform-origin:center;transition:r 0.2s}
+[data-vibeui-block="chart-027"] [data-part="axis"]{cursor:default}
+[data-vibeui-block="chart-027"] [data-part="axis"] [data-part="hint"]{
+fill:var(--vibeui-chart-027-fg);font-size:8.5px;font-weight:700;text-anchor:middle;font-variant-numeric:tabular-nums;
+opacity:0;transition:opacity 0.2s;pointer-events:none;
+}
+[data-vibeui-block="chart-027"] [data-part="axis"]:hover [data-part="hint"]{opacity:1}
+[data-vibeui-block="chart-027"] [data-part="axis"]:hover [data-part="dot"]{r:4}
 [data-vibeui-block="chart-027"] [data-part="name"]{
 fill:var(--vibeui-chart-027-muted);font-size:8.5px;
 }
@@ -88,7 +102,17 @@ background:repeating-linear-gradient(90deg,var(--vibeui-chart-027-compare) 0 0.2
 position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
 clip-path:inset(50%);white-space:nowrap;border:0;
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-027"] *{animation:none!important;transition:none!important}}
+/* Появление: фигура раскрывается из центра, узлы выскакивают, сравнение проявляется. */
+[data-vibeui-block="chart-027"][data-animate] [data-part="shape"]{transform:scale(0);animation:vibeui-chart-027-open var(--vibeui-chart-027-dur) var(--vibeui-chart-027-ease) 0.1s forwards}
+[data-vibeui-block="chart-027"][data-animate] [data-part="compare"]{opacity:0;transform:scale(0.6);animation:vibeui-chart-027-compare 0.8s var(--vibeui-chart-027-ease) 0.5s forwards}
+[data-vibeui-block="chart-027"][data-animate] [data-part="dot"]{transform:scale(0);animation:vibeui-chart-027-pop 0.4s var(--vibeui-chart-027-ease) calc(0.5s + var(--i) * 60ms) forwards}
+@keyframes vibeui-chart-027-open{70%{transform:scale(1.04)}to{transform:scale(1)}}
+@keyframes vibeui-chart-027-compare{to{opacity:1;transform:scale(1)}}
+@keyframes vibeui-chart-027-pop{60%{transform:scale(1.4)}to{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="chart-027"] *{animation:none!important;transition:none!important}
+[data-vibeui-block="chart-027"][data-animate] [data-part="shape"],[data-vibeui-block="chart-027"][data-animate] [data-part="dot"],[data-vibeui-block="chart-027"][data-animate] [data-part="compare"]{transform:none;opacity:1}
+}
 `
 
 const CENTER_X = 130
@@ -172,6 +196,7 @@ export function Chart027({
   seriesLabel = "Наш продукт",
   compareLabel = "Среднее по рынку",
   unitLabel = "Осей: {count}. Значения — доля от края паутины в процентах.",
+  animate = true,
   accent,
   background = "",
   className,
@@ -201,6 +226,7 @@ export function Chart027({
         {...props}
         data-slot="chart"
         data-vibeui-block="chart-027"
+        data-animate={animate ? "" : undefined}
         className={className}
         style={palette}
       >
@@ -235,13 +261,18 @@ export function Chart027({
             const spot = place(index, axes.length, values[index] / 100)
 
             return (
-              <circle
-                key={axis.label}
-                data-part="dot"
-                cx={spot.x}
-                cy={spot.y}
-                r={2.5}
-              />
+              <g key={axis.label} data-part="axis" style={{ "--i": index } as CSSProperties}>
+                <circle cx={spot.x} cy={spot.y} r={9} fill="transparent" />
+                <text data-part="hint" x={spot.x} y={spot.y - 8}>
+                  {values[index]}
+                </text>
+                <circle
+                  data-part="dot"
+                  cx={spot.x}
+                  cy={spot.y}
+                  r={2.5}
+                />
+              </g>
             )
           })}
           {axes.map((axis, index) => {

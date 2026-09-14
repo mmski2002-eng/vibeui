@@ -18,6 +18,8 @@ export type Chart021Props = Omit<
   rowHeader?: string
   /** Час в шапке скрытой таблицы: {hour}. */
   hourLabel?: string
+  /** Проявлять клетки волной при появлении. */
+  animate?: boolean
   accent?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
@@ -37,7 +39,9 @@ const STYLES = `
 --vibeui-chart-021-muted:color-mix(in oklab,var(--vibeui-chart-021-fg) 68%,transparent);
 --vibeui-chart-021-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-chart-021-empty:light-dark(oklch(0.96 0 265),oklch(0.27 0 265));
---vibeui-chart-021-accent:light-dark(oklch(0.28 0 0),oklch(0.892 0 0));
+--vibeui-chart-021-accent:light-dark(oklch(0.6 0.2 18),oklch(0.76 0.16 18));
+--vibeui-chart-021-dur:0.9s;
+--vibeui-chart-021-ease:cubic-bezier(.2,.8,.2,1);
 --vibeui-chart-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -50,7 +54,7 @@ background:var(--vibeui-chart-021-bg);
 border:1px solid var(--vibeui-chart-021-border);border-radius:0.875rem;
 color:var(--vibeui-chart-021-fg);font-family:var(--vibeui-chart-021-font);
 }
-[data-vibeui-block="chart-021"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
+\[data\-vibeui\-block="chart\-021"\] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:650;letter-spacing:-0.01em}
 [data-vibeui-block="chart-021"] [data-part="map"]{
 display:grid;grid-template-columns:1.75rem repeat(var(--vibeui-chart-021-cols),1fr);
 gap:2px;align-items:center;
@@ -59,8 +63,21 @@ gap:2px;align-items:center;
 font-size:0.6875rem;color:var(--vibeui-chart-021-muted);
 }
 [data-vibeui-block="chart-021"] [data-part="cell"]{
-aspect-ratio:1;border-radius:2px;min-height:0.75rem;
+position:relative;aspect-ratio:1;border-radius:3px;min-height:0.75rem;
 background:color-mix(in oklab,var(--vibeui-chart-021-accent) calc(var(--vibeui-chart-021-level) * 100%),var(--vibeui-chart-021-empty));
+transition:transform 0.15s var(--vibeui-chart-021-ease),box-shadow 0.15s,opacity 0.2s;
+}
+[data-vibeui-block="chart-021"] [data-part="map"]:hover [data-part="cell"]:not(:hover){opacity:0.7}
+[data-vibeui-block="chart-021"] [data-part="cell"]:hover{transform:scale(1.25);z-index:1;box-shadow:0 0 0 2px light-dark(oklch(1 0 0),oklch(0.2 0 265)),0 4px 10px rgb(0 0 0 / .2)}
+[data-vibeui-block="chart-021"] [data-part="cell"]::after{
+content:attr(data-value);position:absolute;left:50%;bottom:calc(100% + 0.4rem);transform:translateX(-50%);
+padding:0.15rem 0.4rem;border-radius:0.3rem;white-space:nowrap;
+background:light-dark(oklch(0.22 0 265),oklch(0.96 0 265));color:light-dark(oklch(0.98 0 265),oklch(0.2 0 265));
+font-size:0.6875rem;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.3;
+opacity:0;pointer-events:none;transition:opacity 0.15s;
+}
+[data-vibeui-block="chart-021"] [data-part="cell"]:hover::after{opacity:1}
+[data-vibeui-block="chart-021"] [data-part="cell"]:focus-visible{outline:2px solid var(--vibeui-chart-021-accent);outline-offset:1px;
 }
 [data-vibeui-block="chart-021"] [data-part="hours"]{
 display:grid;grid-template-columns:1.75rem repeat(var(--vibeui-chart-021-cols),1fr);
@@ -80,7 +97,13 @@ background:color-mix(in oklab,var(--vibeui-chart-021-accent) calc(var(--vibeui-c
 position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
 clip-path:inset(50%);white-space:nowrap;border:0;
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-021"] *{animation:none!important;transition:none!important}}
+/* Появление: клетки проявляются волной по индексу. */
+[data-vibeui-block="chart-021"][data-animate] [data-part="cell"]{opacity:0;animation:vibeui-chart-021-fade 0.35s var(--vibeui-chart-021-ease) calc(var(--i) * 9ms) forwards}
+@keyframes vibeui-chart-021-fade{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="chart-021"] *{animation:none!important;transition:none!important}
+[data-vibeui-block="chart-021"][data-animate] [data-part="cell"]{opacity:1}
+}
 `
 
 const DEFAULT_DAYS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
@@ -146,6 +169,7 @@ export function Chart021({
   scaleText = SCALE_TEXT,
   rowHeader = "День",
   hourLabel = "{hour}:00",
+  animate = true,
   accent,
   background = "",
   className,
@@ -175,6 +199,7 @@ export function Chart021({
         {...props}
         data-slot="chart"
         data-vibeui-block="chart-021"
+        data-animate={animate ? "" : undefined}
         className={className}
         style={palette}
       >
@@ -187,11 +212,13 @@ export function Chart021({
                 <span
                   key={hour}
                   data-part="cell"
+                  data-value={`${day} ${hour} · ${matrix[dayIndex]?.[hourIndex] ?? 0}`}
                   style={
                     {
                       "--vibeui-chart-021-level": (
                         (matrix[dayIndex]?.[hourIndex] ?? 0) / max
                       ).toFixed(3),
+                      "--i": dayIndex * hours.length + hourIndex,
                     } as CSSProperties
                   }
                 />

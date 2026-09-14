@@ -15,8 +15,8 @@ export type ButtonAnim001Props = Omit<ComponentProps<"div">, "children"> & {
   darkLabel?: string
   lightLabel?: string
   /**
-   * Цвет ручки при включённом свете. Пустая строка — заводской жёлтый:
-   * ручка светится, как лампа, которую она включает.
+   * Цвет ручки при включённом свете. Пустая строка — заводской оранжевый:
+   * ручка светится брендовым цветом, как лампа, которую она включает.
    */
   gripColor?: string
 }
@@ -97,14 +97,14 @@ transition:background-color .3s cubic-bezier(.4,0,.2,1),border-color .3s cubic-b
 /* Свет выключен — ручка гаснет, но оттенок выбранного цвета в ней остаётся:
    так видно, что настройка применилась, даже когда лампа не горит. */
 [data-vibeui-block="button-anim-001"][data-dark="true"] [data-part="body"]{
---vibeui-button-anim-001-grip:color-mix(in oklab,var(--vibeui-button-anim-001-grip-lit,oklch(0.86 0.17 92)) 22%,oklch(0.14 0 0));
+--vibeui-button-anim-001-grip:color-mix(in oklab,var(--vibeui-button-anim-001-grip-lit,oklch(0.6803 0.2144 39.8)) 80%,oklch(0.32 0 0));
 --vibeui-button-anim-001-grip-edge:color-mix(in oklab,var(--vibeui-button-anim-001-grip) 55%,oklch(0.34 0 0));
 --vibeui-button-anim-001-grip-line:color-mix(in oklab,var(--vibeui-button-anim-001-grip) 60%,oklch(0.4 0 0));
 }
 /* Свет включён — ручка горит. Оттенки кромки и насечек считаются от неё,
    поэтому свой цвет достаточно задать один раз, в --grip-lit. */
 [data-vibeui-block="button-anim-001"][data-dark="false"] [data-part="body"]{
---vibeui-button-anim-001-grip:var(--vibeui-button-anim-001-grip-lit,oklch(0.86 0.17 92));
+--vibeui-button-anim-001-grip:var(--vibeui-button-anim-001-grip-lit,oklch(0.6803 0.2144 39.8));
 --vibeui-button-anim-001-grip-edge:color-mix(in oklab,var(--vibeui-button-anim-001-grip) 78%,oklch(0.3 0 0));
 --vibeui-button-anim-001-grip-line:color-mix(in oklab,var(--vibeui-button-anim-001-grip) 55%,oklch(0.25 0 0));
 }

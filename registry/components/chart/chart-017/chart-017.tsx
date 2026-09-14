@@ -18,6 +18,8 @@ export type Chart017Props = Omit<
   unitLabel?: string
   /** Доля в скрытой таблице: {share}. */
   shareLabel?: string
+  /** Раскрывать ступени сверху вниз при появлении. */
+  animate?: boolean
   accent?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
@@ -36,7 +38,9 @@ const STYLES = `
 --vibeui-chart-017-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-chart-017-muted:color-mix(in oklab,var(--vibeui-chart-017-fg) 68%,transparent);
 --vibeui-chart-017-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
---vibeui-chart-017-accent:light-dark(oklch(0.287 0 0),oklch(0.881 0 0));
+--vibeui-chart-017-accent:light-dark(oklch(0.55 0.21 302),oklch(0.76 0.17 302));
+--vibeui-chart-017-dur:0.9s;
+--vibeui-chart-017-ease:cubic-bezier(.2,.8,.2,1);
 --vibeui-chart-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -49,7 +53,7 @@ background:var(--vibeui-chart-017-bg);
 border:1px solid var(--vibeui-chart-017-border);border-radius:0.875rem;
 color:var(--vibeui-chart-017-fg);font-family:var(--vibeui-chart-017-font);
 }
-[data-vibeui-block="chart-017"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
+\[data\-vibeui\-block="chart\-017"\] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:650;letter-spacing:-0.01em}
 [data-vibeui-block="chart-017"] ol{display:flex;flex-direction:column;margin:0;padding:0;list-style:none}
 [data-vibeui-block="chart-017"] [data-part="step"]{display:flex;flex-direction:column}
 /* Трапеция целиком живёт в clip-path: никакого SVG и никаких псевдоэлементов
@@ -57,13 +61,16 @@ color:var(--vibeui-chart-017-fg);font-family:var(--vibeui-chart-017-font);
 [data-vibeui-block="chart-017"] [data-part="slab"]{
 display:flex;align-items:center;justify-content:center;gap:0.5rem;
 box-sizing:border-box;padding-inline:var(--vibeui-chart-017-inset);
-height:2.75rem;color:oklch(1 0 0);font-size:0.8125rem;font-weight:600;
+height:2.75rem;color:oklch(1 0 0);font-size:0.8125rem;font-weight:600;transform-origin:top;
+background-image:linear-gradient(180deg,color-mix(in oklab,#fff 14%,transparent),transparent 60%);transition:filter 0.2s,opacity 0.2s;
 background:var(--vibeui-chart-017-slab);
 clip-path:polygon(var(--vibeui-chart-017-tl) 0%,var(--vibeui-chart-017-tr) 0%,var(--vibeui-chart-017-br) 100%,var(--vibeui-chart-017-bl) 100%);
 }
 /* Подпись живёт внутри узкой части трапеции: за её краем clip-path режет
    текст посреди буквы. Ширину задаёт padding по узкой стороне, лишнее
    уходит в многоточие, а число не сжимается — цифры не усекают. */
+[data-vibeui-block="chart-017"] ol:hover [data-part="step"]:not(:hover) [data-part="slab"]{opacity:0.55}
+[data-vibeui-block="chart-017"] [data-part="step"]:hover [data-part="slab"]{filter:brightness(1.08)}
 [data-vibeui-block="chart-017"] [data-part="label"]{
 min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
@@ -78,7 +85,16 @@ font-variant-numeric:tabular-nums;
 position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
 clip-path:inset(50%);white-space:nowrap;border:0;
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-017"] *{animation:none!important;transition:none!important}}
+/* Появление: ступени раскрываются сверху вниз, проценты перехода всплывают. */
+[data-vibeui-block="chart-017"][data-animate] [data-part="slab"]{transform:scaleY(0);animation:vibeui-chart-017-open 0.55s var(--vibeui-chart-017-ease) calc(var(--i) * 130ms) forwards}
+[data-vibeui-block="chart-017"][data-animate] [data-part="drop"]{opacity:0;animation:vibeui-chart-017-fade 0.4s var(--vibeui-chart-017-ease) calc(var(--i) * 130ms + 0.4s) forwards}
+@keyframes vibeui-chart-017-open{to{transform:scaleY(1)}}
+@keyframes vibeui-chart-017-fade{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="chart-017"] *{animation:none!important;transition:none!important}
+[data-vibeui-block="chart-017"][data-animate] [data-part="slab"]{transform:none}
+[data-vibeui-block="chart-017"][data-animate] [data-part="drop"]{opacity:1}
+}
 `
 
 const MIN_SHARE = 0.34
@@ -135,6 +151,7 @@ export function Chart017({
   dropLabel = "↓ переход {rate}% · потеря {loss}",
   unitLabel = "Единица измерения: {unit}. Ширина ступени — доля от первого шага.",
   shareLabel = "{share}% от первого шага",
+  animate = true,
   accent,
   background = "",
   className,
@@ -163,6 +180,7 @@ export function Chart017({
         {...props}
         data-slot="chart"
         data-vibeui-block="chart-017"
+        data-animate={animate ? "" : undefined}
         className={className}
         style={palette}
       >
@@ -192,7 +210,7 @@ export function Chart017({
             } as CSSProperties
 
             return (
-              <li key={step.label} data-part="step">
+              <li key={step.label} data-part="step" style={{ "--i": index } as CSSProperties}>
                 <div data-part="slab" style={edges}>
                   <span data-part="label">{step.label}</span>
                   <span data-part="count">{step.value}</span>

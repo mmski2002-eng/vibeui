@@ -18,6 +18,8 @@ export type Chart025Props = Omit<
   dayHeader?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
+  /** Растить кружки волной при появлении. */
+  animate?: boolean
   accent?: string
 }
 
@@ -35,7 +37,9 @@ const STYLES = `
 --vibeui-chart-025-muted:color-mix(in oklab,var(--vibeui-chart-025-fg) 68%,transparent);
 --vibeui-chart-025-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-chart-025-empty:light-dark(oklch(0.9 0 265),oklch(0.4 0 265));
---vibeui-chart-025-accent:light-dark(oklch(0.28 0 0),oklch(0.897 0 0));
+--vibeui-chart-025-accent:light-dark(oklch(0.62 0.17 136),oklch(0.78 0.16 136));
+--vibeui-chart-025-dur:0.9s;
+--vibeui-chart-025-ease:cubic-bezier(.2,.8,.2,1);
 --vibeui-chart-025-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -48,7 +52,7 @@ background:var(--vibeui-chart-025-bg);
 border:1px solid var(--vibeui-chart-025-border);border-radius:0.875rem;
 color:var(--vibeui-chart-025-fg);font-family:var(--vibeui-chart-025-font);
 }
-[data-vibeui-block="chart-025"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
+\[data\-vibeui\-block="chart\-025"\] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:650;letter-spacing:-0.01em}
 [data-vibeui-block="chart-025"] svg{display:block;width:100%;height:auto}
 [data-vibeui-block="chart-025"] [data-part="day"]{
 fill:var(--vibeui-chart-025-muted);font-size:7.5px;text-anchor:start;
@@ -56,7 +60,14 @@ fill:var(--vibeui-chart-025-muted);font-size:7.5px;text-anchor:start;
 [data-vibeui-block="chart-025"] [data-part="hour"]{
 fill:var(--vibeui-chart-025-muted);font-size:7px;text-anchor:middle;font-variant-numeric:tabular-nums;
 }
-[data-vibeui-block="chart-025"] [data-part="dot"]{fill:var(--vibeui-chart-025-empty)}
+[data-vibeui-block="chart-025"] svg{overflow:visible}
+[data-vibeui-block="chart-025"] [data-part="dot"]{fill:var(--vibeui-chart-025-empty);transform-box:fill-box;transform-origin:center;transition:transform 0.15s var(--vibeui-chart-025-ease),fill-opacity 0.2s}
+[data-vibeui-block="chart-025"] [data-part="dot"]:hover{transform:scale(1.35);fill-opacity:1}
+[data-vibeui-block="chart-025"] [data-part="hint"]{
+fill:var(--vibeui-chart-025-fg);font-size:7.5px;font-weight:700;text-anchor:middle;font-variant-numeric:tabular-nums;
+opacity:0;transition:opacity 0.15s;pointer-events:none;
+}
+[data-vibeui-block="chart-025"] [data-part="spot"]:hover [data-part="hint"]{opacity:1}
 [data-vibeui-block="chart-025"] [data-part="scale"]{
 display:flex;align-items:center;gap:0.3125rem;font-size:0.6875rem;color:var(--vibeui-chart-025-muted);
 }
@@ -66,7 +77,13 @@ display:flex;align-items:center;gap:0.3125rem;font-size:0.6875rem;color:var(--vi
 position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
 clip-path:inset(50%);white-space:nowrap;border:0;
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-025"] *{animation:none!important;transition:none!important}}
+/* Появление: кружки вырастают волной по индексу. */
+[data-vibeui-block="chart-025"][data-animate] [data-part="dot"]{transform:scale(0);animation:vibeui-chart-025-pop 0.45s var(--vibeui-chart-025-ease) calc(var(--i) * 8ms) forwards}
+@keyframes vibeui-chart-025-pop{to{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="chart-025"] *{animation:none!important;transition:none!important}
+[data-vibeui-block="chart-025"][data-animate] [data-part="dot"]{transform:none}
+}
 `
 
 const DEFAULT_DAYS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
@@ -136,6 +153,7 @@ export function Chart025({
   summaryText = DEFAULT_SUMMARY_TEXT,
   dayHeader = "День",
   background = "",
+  animate = true,
   accent,
   className,
   style,
@@ -168,6 +186,7 @@ export function Chart025({
         {...props}
         data-slot="chart"
         data-vibeui-block="chart-025"
+        data-animate={animate ? "" : undefined}
         className={className}
         style={palette}
       >
@@ -192,22 +211,27 @@ export function Chart025({
                 const r = 0.8 + level * RADIUS_MAX
 
                 return (
-                  <circle
-                    key={hour}
-                    data-part="dot"
-                    cx={LEFT + hourIndex * CELL + CELL / 2}
-                    cy={TOP + dayIndex * CELL + CELL / 2}
-                    r={r}
-                    fillOpacity={0.25 + level * 0.75}
-                    style={
-                      {
-                        fill:
-                          level > 0.02
-                            ? "var(--vibeui-chart-025-accent)"
-                            : "var(--vibeui-chart-025-empty)",
-                      } as CSSProperties
-                    }
-                  />
+                  <g key={hour} data-part="spot">
+                    <text data-part="hint" x={LEFT + hourIndex * CELL + CELL / 2} y={TOP + dayIndex * CELL - 2}>
+                      {value}
+                    </text>
+                    <circle
+                      data-part="dot"
+                      cx={LEFT + hourIndex * CELL + CELL / 2}
+                      cy={TOP + dayIndex * CELL + CELL / 2}
+                      r={r}
+                      fillOpacity={0.25 + level * 0.75}
+                      style={
+                        {
+                          fill:
+                            level > 0.02
+                              ? "var(--vibeui-chart-025-accent)"
+                              : "var(--vibeui-chart-025-empty)",
+                          "--i": dayIndex * hours.length + hourIndex,
+                        } as CSSProperties
+                      }
+                    />
+                  </g>
                 )
               })}
             </Fragment>

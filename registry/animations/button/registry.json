@@ -116,6 +116,150 @@
           }
         }
       }
+    },
+    {
+      "name": "button-anim-002",
+      "type": "registry:component",
+      "title": "Док с увеличением",
+      "description": "Панель иконок в стиле macOS: курсор ведёт лупу, иконки растут пружиной, подпрыгивают по клику и отражаются на полу, у запущенных — точка, а слот ⌘K открывает мини-меню.",
+      "categories": [
+        "button"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-anim-002/button-anim-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-anim-002.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент. Увеличение считается raised-cosine колоколом от расстояния курсора до центра каждой иконки и пишется прямо в DOM-переменную --s, а не через состояние React: pointermove идёт десятками событий в секунду, рендер на каждое — потерянные кадры (тот же приём, что у магнитной кнопки button-071). CSS-переход width/height сглаживает шаги в пружину. Лупа только для мыши (pointerType === 'mouse'); на тач-вводе и при prefers-reduced-motion иконки стоят на месте. Клик добавляет data-bounce и запускает keyframe-подпрыгивание, метка снимается по onAnimationEnd. Отражение — та же иконка, отражённая scaleY(-1) под маской-градиентом. Тултип и точка запущенного приложения — на чистом CSS (:hover/:focus-visible, data-active). Меню ⌘K — состояние menuOpen. Тема из color-scheme через light-dark(), тёмную включает класс .dark.",
+      "meta": {
+        "tags": [
+          "button",
+          "dock",
+          "macos",
+          "magnify",
+          "toolbar",
+          "launcher",
+          "hover",
+          "animated",
+          "tooltip",
+          "command"
+        ],
+        "ai": {
+          "export": "ButtonAnim002",
+          "usage": "<ButtonAnim002 activeIds={[\"signal\"]} onSelect={(item) => console.log(item.id)} />",
+          "summary": "Док иконок-кнопок с увеличением в стиле macOS: курсор ведёт лупу, иконка растёт тем сильнее, чем ближе указатель, соседи мягко входят и выходят из пика. Клик подбрасывает иконку, под доком её отражение, у запущенного приложения точка, слот ⌘K открывает меню команд. Один файл, ноль зависимостей, собственная палитра.",
+          "preserve": [
+            "размер иконок пишется в DOM-переменную --s из обработчика, а не через состояние: pointermove слишком част для рендера на каждое событие",
+            "raised-cosine колокол увеличения (не линейный шатёр): соседи мягко входят и выходят из пика",
+            "лупа только для мыши и гаснет при prefers-reduced-motion: на тач-вводе цель — сама точка касания",
+            "CSS-переход width/height — им лупа превращается из ступенек в пружину",
+            "подпрыгивание через data-bounce + keyframe, метка снимается по onAnimationEnd, иначе следующий клик её не перезапустит",
+            "отражение на полу и тултип/точка на чистом CSS — не переносить их в состояние React",
+            "локальная палитра --vibeui-button-anim-002-* — не подменять её токенами своей темы"
+          ],
+          "adapt": [
+            "items — свои иконки: <img>, svg или встроенная плитка Tile; id и label обязательны",
+            "activeIds — какие инструменты помечены точкой запущенного приложения",
+            "commandLabel и commands — подпись слота и пункты меню ⌘K",
+            "onSelect и onCommand — реакция на клик по иконке и по слоту команд",
+            "цвет акцента через accent, цвет текста через textColor"
+          ],
+          "notes": [
+            "каждая иконка — button с aria-label: док остаётся клавиатурным, тултип показывается и по фокусу.",
+            "встроенные плитки — CSS-градиенты, а не картинки: компонент выглядит готовым без ассетов, свои иконки передаются пропом items.",
+            "REST/PEAK/RADIUS увеличения заданы константами в коде — крупному доку хватит меньшего PEAK, чтобы не выглядеть аттракционом.",
+            "меню ⌘K раскрывается вверх от правого края — оставьте над доком воздух под лист."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "commandLabel",
+            "label": "Слот команд",
+            "type": "text",
+            "default": "⌘K",
+            "maxLength": 8
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "textColor",
+            "label": "Цвет текста",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "activeIds": [
+              "signal"
+            ]
+          }
+        },
+        "i18n": {
+          "en": {
+            "title": "Magnifying Dock",
+            "description": "A macOS-style icon bar: the cursor drives a magnifier, icons grow on a spring, bounce on click and cast a floor reflection, running ones get a dot, and a ⌘K slot opens a small menu.",
+            "ai": {
+              "summary": "A dock of icon buttons with macOS-style magnification: the cursor drives a magnifier, an icon grows the closer the pointer gets, and neighbours ease in and out of the peak. A click bounces the icon, its reflection sits under the dock, running apps get a dot, and a ⌘K slot opens a command menu. One file, no dependencies, its own palette.",
+              "preserve": [
+                "the icon size is written to the CSS variable --s from the handler rather than through state: pointermove is too frequent to render on every event",
+                "the raised-cosine magnification bell (not a linear tent): neighbours ease in and out of the peak",
+                "the magnifier is mouse-only and dies under prefers-reduced-motion: on touch the target is the tap point itself",
+                "the width/height CSS transition — it turns the magnifier from steps into a spring",
+                "the bounce via data-bounce + a keyframe, cleared on onAnimationEnd, or the next click will not restart it",
+                "the floor reflection and the tooltip/dot on pure CSS — do not move them into React state",
+                "the local --vibeui-button-anim-002-* palette — do not swap it for your theme tokens"
+              ],
+              "adapt": [
+                "items — your own icons: an <img>, an svg or the built-in Tile; id and label are required",
+                "activeIds — which tools carry the running-app dot",
+                "commandLabel and commands — the slot caption and the ⌘K menu entries",
+                "onSelect and onCommand — reacting to an icon click and to the command slot",
+                "the accent colour via accent, the text colour via textColor"
+              ],
+              "notes": [
+                "each icon is a button with an aria-label: the dock stays keyboard-operable and the tooltip shows on focus too.",
+                "the built-in tiles are CSS gradients, not images: the component looks finished with no assets, and your own icons come through the items prop.",
+                "the REST/PEAK/RADIUS of the magnifier are constants in the code — a large dock needs a smaller PEAK so it does not read as a fairground ride.",
+                "the ⌘K menu opens upward from the right edge — leave room above the dock for the sheet."
+              ],
+              "usage": "<ButtonAnim002 activeIds={[\"signal\"]} onSelect={(item) => console.log(item.id)} />"
+            },
+            "controls": {
+              "commandLabel": {
+                "label": "Command slot",
+                "default": "⌘K"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "textColor": {
+                "label": "Text colour"
+              }
+            },
+            "preview": {
+              "props": {
+                "activeIds": [
+                  "signal"
+                ]
+              }
+            },
+            "docs": "A client component. The magnification is computed as a raised-cosine bell from the cursor's distance to each icon's centre and written straight to the CSS variable --s rather than through React state: pointermove fires dozens of times a second and rendering on each is wasted frames (the same trick as the magnetic button button-071). A width/height CSS transition smooths the steps into a spring. The magnifier is mouse-only (pointerType === 'mouse'); on touch and under prefers-reduced-motion the icons stay put. A click adds data-bounce and starts a keyframe hop, cleared on onAnimationEnd. The reflection is the same icon flipped scaleY(-1) under a gradient mask. The tooltip and the running-app dot are pure CSS (:hover/:focus-visible, data-active). The ⌘K menu is the menuOpen state. The theme comes from color-scheme through light-dark(), and the .dark class turns the dark theme on."
+          }
+        }
+      }
     }
   ]
 }

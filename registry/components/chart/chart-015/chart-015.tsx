@@ -17,6 +17,8 @@ export type Chart015Props = Omit<
   unitLabel?: string
   /** Заголовки скрытой таблицы: ключи period и total. */
   tableText?: Record<string, string>
+  /** Растить слои по очереди при появлении. */
+  animate?: boolean
   accent?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
@@ -32,6 +34,8 @@ export type Chart015Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="chart-015"]){
 --vibeui-chart-015-bg:transparent;
+--vibeui-chart-015-dur:0.8s;
+--vibeui-chart-015-ease:cubic-bezier(.2,.8,.2,1);
 --vibeui-chart-015-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-chart-015-muted:color-mix(in oklab,var(--vibeui-chart-015-fg) 68%,transparent);
 --vibeui-chart-015-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
@@ -49,7 +53,7 @@ background:var(--vibeui-chart-015-bg);
 border:1px solid var(--vibeui-chart-015-border);border-radius:0.875rem;
 color:var(--vibeui-chart-015-fg);font-family:var(--vibeui-chart-015-font);
 }
-[data-vibeui-block="chart-015"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
+\[data\-vibeui\-block="chart\-015"\] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:650;letter-spacing:-0.01em}
 [data-vibeui-block="chart-015"] [data-part="plot"]{
 display:flex;align-items:flex-end;gap:0.5rem;height:var(--vibeui-chart-015-height);
 padding-bottom:0.25rem;border-bottom:1px solid var(--vibeui-chart-015-border);
@@ -63,8 +67,10 @@ flex:1 1 0;display:flex;flex-direction:column;justify-content:flex-end;height:10
 display:flex;flex-direction:column-reverse;width:100%;border-radius:0.25rem;overflow:hidden;
 background:var(--vibeui-chart-015-track);
 }
+[data-vibeui-block="chart-015"] [data-part="stack"]{transform-origin:bottom;border-radius:0.35rem 0.35rem 0.1rem 0.1rem;overflow:hidden}
 [data-vibeui-block="chart-015"] [data-part="layer"]{
 min-height:2px;background:var(--vibeui-chart-015-layer);
+box-shadow:inset 0 1px 0 color-mix(in oklab,#fff 30%,transparent);transition:opacity 0.2s,filter 0.2s;
 }
 [data-vibeui-block="chart-015"] [data-part="axis"]{
 display:flex;gap:0.5rem;margin:0;padding:0;list-style:none;
@@ -75,7 +81,19 @@ font-size:0.6875rem;color:var(--vibeui-chart-015-muted);
 display:flex;flex-wrap:wrap;gap:0.25rem 0.875rem;margin:0;padding:0;list-style:none;
 font-size:0.75rem;
 }
-[data-vibeui-block="chart-015"] [data-part="legend"] li{display:flex;align-items:center;gap:0.375rem}
+[data-vibeui-block="chart-015"] [data-part="legend"] li{display:flex;align-items:center;gap:0.375rem;padding:0.125rem 0.375rem;margin:0 -0.375rem;border-radius:0.3rem;transition:background-color 0.2s}
+[data-vibeui-block="chart-015"] [data-part="legend"] li:hover{background:color-mix(in oklab,var(--vibeui-chart-015-fg) 6%,transparent)}
+/* Наведение на серию в легенде гасит остальные слои во всех столбцах
+   (слой k — k-й в стопке, серия k — k-я в легенде). */
+[data-vibeui-block="chart-015"]:has([data-part="legend"] li:hover) [data-part="layer"]{opacity:0.3}
+[data-vibeui-block="chart-015"]:has([data-part="legend"] li:nth-child(1):hover) [data-part="layer"]:nth-child(1),
+[data-vibeui-block="chart-015"]:has([data-part="legend"] li:nth-child(2):hover) [data-part="layer"]:nth-child(2),
+[data-vibeui-block="chart-015"]:has([data-part="legend"] li:nth-child(3):hover) [data-part="layer"]:nth-child(3),
+[data-vibeui-block="chart-015"]:has([data-part="legend"] li:nth-child(4):hover) [data-part="layer"]:nth-child(4),
+[data-vibeui-block="chart-015"]:has([data-part="legend"] li:nth-child(5):hover) [data-part="layer"]:nth-child(5),
+[data-vibeui-block="chart-015"]:has([data-part="legend"] li:nth-child(6):hover) [data-part="layer"]:nth-child(6){opacity:1;filter:brightness(1.08)}
+[data-vibeui-block="chart-015"] [data-part="plot"]:hover [data-part="column"]:not(:hover) [data-part="stack"]{opacity:0.55}
+[data-vibeui-block="chart-015"] [data-part="stack"]{transition:opacity 0.2s}
 [data-vibeui-block="chart-015"] [data-part="chip"]{
 width:0.625rem;height:0.625rem;border-radius:2px;background:var(--vibeui-chart-015-layer);
 }
@@ -84,7 +102,16 @@ width:0.625rem;height:0.625rem;border-radius:2px;background:var(--vibeui-chart-0
 position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
 clip-path:inset(50%);white-space:nowrap;border:0;
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-015"] *{animation:none!important;transition:none!important}}
+/* Появление: столбцы вырастают от основания по очереди. */
+[data-vibeui-block="chart-015"][data-animate] [data-part="stack"]{transform:scaleY(0);animation:vibeui-chart-015-grow var(--vibeui-chart-015-dur) var(--vibeui-chart-015-ease) calc(var(--i) * 70ms) forwards}
+[data-vibeui-block="chart-015"][data-animate] [data-part="legend"] li{opacity:0;animation:vibeui-chart-015-fade 0.4s var(--vibeui-chart-015-ease) calc(0.5s + var(--i) * 60ms) forwards}
+@keyframes vibeui-chart-015-grow{60%{transform:scaleY(1.03)}to{transform:scaleY(1)}}
+@keyframes vibeui-chart-015-fade{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="chart-015"] *{animation:none!important;transition:none!important}
+[data-vibeui-block="chart-015"][data-animate] [data-part="stack"]{transform:none}
+[data-vibeui-block="chart-015"][data-animate] [data-part="legend"] li{opacity:1}
+}
 `
 
 const DEFAULT_SERIES = ["Новые", "Повторные", "Партнёрские"]
@@ -146,6 +173,7 @@ export function Chart015({
   unit = "заказов в месяц",
   unitLabel = "Единица измерения: {unit}. Максимум столбца — {max}.",
   tableText = TABLE_TEXT,
+  animate = true,
   accent,
   background = "",
   className,
@@ -182,6 +210,7 @@ export function Chart015({
         {...props}
         data-slot="chart"
         data-vibeui-block="chart-015"
+        data-animate={animate ? "" : undefined}
         className={className}
         style={palette}
       >
@@ -191,7 +220,7 @@ export function Chart015({
             <div key={period.label} data-part="column">
               <div
                 data-part="stack"
-                style={{ height: `${(totals[periodIndex] / max) * 100}%` }}
+                style={{ height: `${(totals[periodIndex] / max) * 100}%`, "--i": periodIndex } as CSSProperties}
               >
                 {period.values.map((value, seriesIndex) => (
                   <span
@@ -217,7 +246,7 @@ export function Chart015({
         </ul>
         <ul data-part="legend">
           {series.map((name, index) => (
-            <li key={name}>
+            <li key={name} style={{ "--i": index } as CSSProperties}>
               <span
                 data-part="chip"
                 aria-hidden="true"

@@ -21,6 +21,8 @@ export type Chart029Props = Omit<
   unitLabel?: string
   lessLabel?: string
   moreLabel?: string
+  /** Проявлять клетки неделями при появлении. */
+  animate?: boolean
   accent?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
@@ -39,7 +41,9 @@ const STYLES = `
 --vibeui-chart-029-muted:color-mix(in oklab,var(--vibeui-chart-029-fg) 64%,transparent);
 --vibeui-chart-029-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-chart-029-empty:light-dark(oklch(0.94 0 265),oklch(0.29 0 265));
---vibeui-chart-029-accent:light-dark(oklch(0.287 0 0),oklch(0.899 0 0));
+--vibeui-chart-029-accent:light-dark(oklch(0.58 0.17 152),oklch(0.76 0.16 152));
+--vibeui-chart-029-dur:0.9s;
+--vibeui-chart-029-ease:cubic-bezier(.2,.8,.2,1);
 --vibeui-chart-029-cell:0.75rem;
 --vibeui-chart-029-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -54,7 +58,7 @@ border:1px solid var(--vibeui-chart-029-border);border-radius:0.875rem;
 color:var(--vibeui-chart-029-fg);font-family:var(--vibeui-chart-029-font);
 }
 [data-vibeui-block="chart-029"] *{box-sizing:border-box}
-[data-vibeui-block="chart-029"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
+\[data\-vibeui\-block="chart\-029"\] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:650;letter-spacing:-0.01em}
 /* Лента прокручивается внутри себя: год клеток шире телефона, и обрезать её
    лучше здесь, чем растягивать страницу. */
 [data-vibeui-block="chart-029"] [data-part="scroll"]{
@@ -84,8 +88,20 @@ grid-template-rows:repeat(7,var(--vibeui-chart-029-cell));
 gap:0.125rem;
 }
 [data-vibeui-block="chart-029"] [data-part="cell"]{
-width:var(--vibeui-chart-029-cell);height:var(--vibeui-chart-029-cell);
+position:relative;width:var(--vibeui-chart-029-cell);height:var(--vibeui-chart-029-cell);
 border-radius:0.1875rem;background:var(--vibeui-chart-029-empty);
+transition:transform 0.15s var(--vibeui-chart-029-ease),box-shadow 0.15s;
+}
+[data-vibeui-block="chart-029"] [data-part="grid"] [data-part="cell"]:hover{transform:scale(1.3);z-index:1;box-shadow:0 0 0 1.5px light-dark(oklch(1 0 0),oklch(0.2 0 265)),0 3px 8px rgb(0 0 0 / .2)}
+[data-vibeui-block="chart-029"] [data-part="grid"] [data-part="cell"]::after{
+content:attr(data-value);position:absolute;left:50%;bottom:calc(100% + 0.35rem);transform:translateX(-50%);
+padding:0.15rem 0.4rem;border-radius:0.3rem;white-space:nowrap;
+background:light-dark(oklch(0.22 0 265),oklch(0.96 0 265));color:light-dark(oklch(0.98 0 265),oklch(0.2 0 265));
+font-size:0.6875rem;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.3;
+opacity:0;pointer-events:none;transition:opacity 0.15s;
+}
+[data-vibeui-block="chart-029"] [data-part="grid"] [data-part="cell"]:hover::after{opacity:1}
+[data-vibeui-block="chart-029"] [data-part="cell"]:focus-visible{outline:2px solid var(--vibeui-chart-029-accent);
 }
 /* Ступени задаются прозрачностью акцента: перекрасить весь график можно одной
    переменной, и цвет остаётся согласованным на любом фоне. */
@@ -104,7 +120,13 @@ font-size:0.75rem;color:var(--vibeui-chart-029-muted);
 position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
 clip-path:inset(50%);white-space:nowrap;border:0;
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-029"] *{animation:none!important;transition:none!important}}
+/* Появление: клетки проявляются неделя за неделей слева направо. */
+[data-vibeui-block="chart-029"][data-animate] [data-part="grid"] [data-part="cell"]{opacity:0;animation:vibeui-chart-029-fade 0.35s var(--vibeui-chart-029-ease) calc(var(--i) * 28ms) forwards}
+@keyframes vibeui-chart-029-fade{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="chart-029"] *{animation:none!important;transition:none!important}
+[data-vibeui-block="chart-029"][data-animate] [data-part="grid"] [data-part="cell"]{opacity:1}
+}
 `
 
 // Дефолтная лента считается формулой, а не выписана числами: тридцать недель
@@ -178,6 +200,7 @@ export function Chart029({
   unitLabel = "Дней в ленте: {count}. Насыщенность клетки — уровень активности от нуля до четырёх.",
   lessLabel = "реже",
   moreLabel = "чаще",
+  animate = true,
   accent,
   background = "",
   className,
@@ -210,6 +233,7 @@ export function Chart029({
         {...props}
         data-slot="chart"
         data-vibeui-block="chart-029"
+        data-animate={animate ? "" : undefined}
         className={className}
         style={palette}
       >
@@ -235,6 +259,8 @@ export function Chart029({
                     key={`${weekIndex}-${dayIndex}`}
                     data-part="cell"
                     data-level={level || undefined}
+                    data-value={`${days[dayIndex] ?? ""} · ${level}`}
+                    style={{ "--i": weekIndex } as CSSProperties}
                   />
                 )),
               )}

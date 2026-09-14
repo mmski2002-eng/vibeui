@@ -17,6 +17,8 @@ export type Chart012Props = Omit<
   averageLabel?: string
   /** Подпись под графиком: {unit} и {max}. */
   unitLabel?: string
+  /** Открывать площадь слева направо при появлении. */
+  animate?: boolean
   accent?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
@@ -36,7 +38,9 @@ const STYLES = `
 --vibeui-chart-012-muted:color-mix(in oklab,var(--vibeui-chart-012-fg) 68%,transparent);
 --vibeui-chart-012-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-chart-012-grid:light-dark(oklch(0.94 0 265),oklch(0.3 0 265));
---vibeui-chart-012-accent:light-dark(oklch(0.295 0 0),oklch(0.906 0 0));
+--vibeui-chart-012-accent:light-dark(oklch(0.54 0.15 232),oklch(0.78 0.13 232));
+--vibeui-chart-012-dur:0.9s;
+--vibeui-chart-012-ease:cubic-bezier(.2,.8,.2,1);
 --vibeui-chart-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -52,16 +56,25 @@ color:var(--vibeui-chart-012-fg);font-family:var(--vibeui-chart-012-font);
 [data-vibeui-block="chart-012"] [data-part="head"]{
 display:flex;align-items:baseline;justify-content:space-between;gap:0.75rem;
 }
-[data-vibeui-block="chart-012"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
+\[data\-vibeui\-block="chart\-012"\] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:650;letter-spacing:-0.01em}
 [data-vibeui-block="chart-012"] [data-part="now"]{
-font-size:1.125rem;font-weight:700;font-variant-numeric:tabular-nums;
+font-size:1.25rem;font-weight:700;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;color:var(--vibeui-chart-012-accent);
 color:var(--vibeui-chart-012-accent);
 }
-[data-vibeui-block="chart-012"] svg{display:block;width:100%;height:auto}
-[data-vibeui-block="chart-012"] [data-part="grid"]{stroke:var(--vibeui-chart-012-grid);stroke-width:1}
+[data-vibeui-block="chart-012"] svg{display:block;width:100%;height:auto;overflow:visible}
+[data-vibeui-block="chart-012"] [data-part="grid"]{stroke:var(--vibeui-chart-012-grid);stroke-width:1;stroke-dasharray:3 4}
+/* Ловушки наведения: перекрестие, точка и значение на каждой позиции. */
+[data-vibeui-block="chart-012"] [data-part="hit"]{cursor:crosshair}
+[data-vibeui-block="chart-012"] [data-part="hit"] rect{fill:transparent}
+[data-vibeui-block="chart-012"] [data-part="hit"] line{stroke:var(--vibeui-chart-012-accent);stroke-width:1;stroke-dasharray:3 3;opacity:0;transition:opacity 0.15s}
+[data-vibeui-block="chart-012"] [data-part="hit"] circle{fill:light-dark(oklch(1 0 0),oklch(0.2 0 265));stroke:var(--vibeui-chart-012-accent);stroke-width:2;opacity:0;transition:opacity 0.15s}
+[data-vibeui-block="chart-012"] [data-part="hit"] text{fill:var(--vibeui-chart-012-fg);font-size:9px;font-weight:700;text-anchor:middle;font-variant-numeric:tabular-nums;opacity:0;transition:opacity 0.15s}
+[data-vibeui-block="chart-012"] [data-part="hit"]:hover line{opacity:0.6}
+[data-vibeui-block="chart-012"] [data-part="hit"]:hover circle,[data-vibeui-block="chart-012"] [data-part="hit"]:hover text{opacity:1}
 [data-vibeui-block="chart-012"] [data-part="area"]{fill:url(#vibeui-chart-012-fade)}
 [data-vibeui-block="chart-012"] [data-part="line"]{
-fill:none;stroke:var(--vibeui-chart-012-accent);stroke-width:2;stroke-linejoin:round;
+fill:none;stroke:var(--vibeui-chart-012-accent);stroke-width:2.25;stroke-linejoin:round;stroke-linecap:round;
+filter:drop-shadow(0 0 5px color-mix(in oklab,var(--vibeui-chart-012-accent) 40%,transparent));
 }
 [data-vibeui-block="chart-012"] [data-part="average"]{
 stroke:var(--vibeui-chart-012-muted);stroke-width:1;stroke-dasharray:4 3;
@@ -77,7 +90,17 @@ fill:var(--vibeui-chart-012-muted);font-size:8.5px;text-anchor:middle;
 position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
 clip-path:inset(50%);white-space:nowrap;border:0;
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-012"] *{animation:none!important;transition:none!important}}
+/* Появление: площадь и линия открываются слева направо, среднее проявляется. */
+[data-vibeui-block="chart-012"][data-animate] [data-part="line"],[data-vibeui-block="chart-012"][data-animate] [data-part="area"]{clip-path:inset(-10% 100% -10% 0);animation:vibeui-chart-012-draw var(--vibeui-chart-012-dur) var(--vibeui-chart-012-ease) forwards}
+[data-vibeui-block="chart-012"][data-animate] [data-part="area"]{animation-delay:0.1s}
+[data-vibeui-block="chart-012"][data-animate] [data-part="average"],[data-vibeui-block="chart-012"][data-animate] [data-part="average-text"],[data-vibeui-block="chart-012"][data-animate] [data-part="now"]{opacity:0;animation:vibeui-chart-012-fade 0.5s var(--vibeui-chart-012-ease) 0.6s forwards}
+@keyframes vibeui-chart-012-draw{to{clip-path:inset(-10% 0 -10% 0)}}
+@keyframes vibeui-chart-012-fade{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="chart-012"] *{animation:none!important;transition:none!important}
+[data-vibeui-block="chart-012"][data-animate] [data-part="line"],[data-vibeui-block="chart-012"][data-animate] [data-part="area"]{clip-path:none}
+[data-vibeui-block="chart-012"][data-animate] [data-part="average"],[data-vibeui-block="chart-012"][data-animate] [data-part="average-text"],[data-vibeui-block="chart-012"][data-animate] [data-part="now"]{opacity:1}
+}
 `
 
 const LEFT = 6
@@ -138,6 +161,7 @@ export function Chart012({
   showAverage = true,
   averageLabel = "среднее {value}",
   unitLabel = "Единица измерения: {unit}. Максимум шкалы — {max}.",
+  animate = true,
   accent,
   background = "",
   className,
@@ -182,6 +206,7 @@ export function Chart012({
         {...props}
         data-slot="chart"
         data-vibeui-block="chart-012"
+        data-animate={animate ? "" : undefined}
         className={className}
         style={palette}
       >
@@ -241,6 +266,18 @@ export function Chart012({
               {point.label}
             </text>
           ))}
+          {spots.map((spot, index) => {
+            const half = (RIGHT - LEFT) / Math.max(1, spots.length - 1) / 2
+
+            return (
+              <g key={index} data-part="hit">
+                <rect x={spot.x - half} y={TOP - 10} width={half * 2} height={BASE - TOP + 10} />
+                <line x1={spot.x} y1={TOP} x2={spot.x} y2={BASE} />
+                <circle cx={spot.x} cy={spot.y} r={3.5} />
+                <text x={spot.x} y={spot.y - 8}>{points[index].value}</text>
+              </g>
+            )
+          })}
         </svg>
         <p data-part="unit">{fillTemplate(unitLabel, { unit, max })}</p>
         <div data-part="data">

@@ -20,6 +20,8 @@ export type Chart016Props = Omit<
   unitLabel?: string
   /** Легенда: ключи fact и plan. */
   keyText?: Record<string, string>
+  /** Растить полосу факта при появлении. */
+  animate?: boolean
   accent?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
@@ -41,7 +43,9 @@ const STYLES = `
 --vibeui-chart-016-band:light-dark(oklch(0.96 0 265),oklch(0.25 0 265));
 --vibeui-chart-016-band-2:light-dark(oklch(0.93 0 265),oklch(0.29 0 265));
 --vibeui-chart-016-band-3:light-dark(oklch(0.89 0 265),oklch(0.33 0 265));
---vibeui-chart-016-accent:light-dark(oklch(0.263 0 0),oklch(0.903 0 0));
+--vibeui-chart-016-accent:light-dark(oklch(0.55 0.19 266),oklch(0.75 0.14 266));
+--vibeui-chart-016-dur:0.9s;
+--vibeui-chart-016-ease:cubic-bezier(.2,.8,.2,1);
 --vibeui-chart-016-over:light-dark(oklch(0.287 0 0),oklch(0.906 0 0));
 --vibeui-chart-016-plan:light-dark(oklch(0.3 0 265),oklch(0.9 0 265));
 --vibeui-chart-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -56,7 +60,7 @@ background:var(--vibeui-chart-016-bg);
 border:1px solid var(--vibeui-chart-016-border);border-radius:0.875rem;
 color:var(--vibeui-chart-016-fg);font-family:var(--vibeui-chart-016-font);
 }
-[data-vibeui-block="chart-016"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
+\[data\-vibeui\-block="chart\-016"\] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:650;letter-spacing:-0.01em}
 [data-vibeui-block="chart-016"] ul{display:flex;flex-direction:column;gap:0.625rem;margin:0;padding:0;list-style:none}
 [data-vibeui-block="chart-016"] [data-part="row"]{
 display:grid;grid-template-columns:1fr auto;gap:0.25rem 0.75rem;font-size:0.8125rem;
@@ -75,8 +79,12 @@ var(--vibeui-chart-016-band-3) 0 60%,
 var(--vibeui-chart-016-band-2) 60% 85%,
 var(--vibeui-chart-016-band) 85% 100%);
 }
+[data-vibeui-block="chart-016"] [data-part="row"]{transition:opacity 0.2s}
+[data-vibeui-block="chart-016"] ul:hover [data-part="row"]:not(:hover){opacity:0.55}
+[data-vibeui-block="chart-016"] [data-part="row"]:hover [data-part="numbers"] b{color:var(--vibeui-chart-016-accent)}
 [data-vibeui-block="chart-016"] [data-part="fact"]{
-position:absolute;top:50%;left:0;height:0.4375rem;transform:translateY(-50%);
+position:absolute;top:50%;left:0;height:0.4375rem;transform:translateY(-50%);transform-origin:left;
+box-shadow:0 0 6px color-mix(in oklab,var(--vibeui-chart-016-accent) 45%,transparent);
 border-radius:0 0.125rem 0.125rem 0;background:var(--vibeui-chart-016-accent);color:oklch(from var(--vibeui-chart-016-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="chart-016"] [data-part="fact"][data-over="true"]{background:var(--vibeui-chart-016-over)}
 [data-vibeui-block="chart-016"] [data-part="plan"]{
@@ -94,7 +102,20 @@ width:0.75rem;height:0.375rem;border-radius:1px;background:var(--vibeui-chart-01
 [data-vibeui-block="chart-016"] [data-part="swatch"][data-kind="plan"]{
 width:2px;height:0.75rem;background:var(--vibeui-chart-016-plan);
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-016"] *{animation:none!important;transition:none!important}}
+/* Появление: диапазоны проявляются, факт вырастает слева, риска плана выскакивает. */
+[data-vibeui-block="chart-016"][data-animate] [data-part="track"]{opacity:0;animation:vibeui-chart-016-fade 0.4s var(--vibeui-chart-016-ease) calc(var(--i) * 90ms) forwards}
+[data-vibeui-block="chart-016"][data-animate] [data-part="fact"]{transform:translateY(-50%) scaleX(0);animation:vibeui-chart-016-grow 0.8s var(--vibeui-chart-016-ease) calc(var(--i) * 90ms + 0.2s) forwards}
+[data-vibeui-block="chart-016"][data-animate] [data-part="plan"]{transform:scaleY(0);animation:vibeui-chart-016-tick 0.35s var(--vibeui-chart-016-ease) calc(var(--i) * 90ms + 0.8s) forwards}
+[data-vibeui-block="chart-016"][data-animate] [data-part="numbers"]{opacity:0;animation:vibeui-chart-016-fade 0.4s var(--vibeui-chart-016-ease) calc(var(--i) * 90ms + 0.6s) forwards}
+@keyframes vibeui-chart-016-fade{to{opacity:1}}
+@keyframes vibeui-chart-016-grow{to{transform:translateY(-50%) scaleX(1)}}
+@keyframes vibeui-chart-016-tick{to{transform:scaleY(1)}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="chart-016"] *{animation:none!important;transition:none!important}
+[data-vibeui-block="chart-016"][data-animate] [data-part="track"],[data-vibeui-block="chart-016"][data-animate] [data-part="numbers"]{opacity:1}
+[data-vibeui-block="chart-016"][data-animate] [data-part="fact"]{transform:translateY(-50%)}
+[data-vibeui-block="chart-016"][data-animate] [data-part="plan"]{transform:none}
+}
 `
 
 const DEFAULT_ROWS: Chart016Row[] = [
@@ -152,6 +173,7 @@ export function Chart016({
   compareLabel = "из {plan} · {done}%",
   unitLabel = "Единица измерения: {unit}",
   keyText = KEY_TEXT,
+  animate = true,
   accent,
   background = "",
   className,
@@ -178,12 +200,13 @@ export function Chart016({
         {...props}
         data-slot="chart"
         data-vibeui-block="chart-016"
+        data-animate={animate ? "" : undefined}
         className={className}
         style={palette}
       >
         <figcaption data-part="title">{title}</figcaption>
         <ul>
-          {rows.map((row) => {
+          {rows.map((row, index) => {
             // Шкала строки — план, растянутый до scaleMax: так риска плана
             // стоит в одном и том же месте у всех строк, и глаз сравнивает
             // перевыполнение, а не абсолютные величины разной природы.
@@ -191,7 +214,7 @@ export function Chart016({
             const done = Math.round((row.fact / (row.plan || 1)) * 100)
 
             return (
-              <li key={row.label} data-part="row">
+              <li key={row.label} data-part="row" style={{ "--i": index } as CSSProperties}>
                 <span data-part="label">{row.label}</span>
                 <span data-part="numbers">
                   <b>{row.fact}</b>{" "}

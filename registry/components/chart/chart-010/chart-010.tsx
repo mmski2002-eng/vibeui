@@ -14,6 +14,8 @@ export type Chart010Props = Omit<
   unit?: string
   /** Подпись под графиком: {unit} и {top} — верх округлённой шкалы. */
   scaleLabel?: string
+  /** Растить столбцы от оси по очереди при появлении. */
+  animate?: boolean
   accent?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
@@ -35,7 +37,9 @@ const STYLES = `
 --vibeui-chart-010-grid:light-dark(oklch(0.93 0 265),oklch(0.3 0 265));
 --vibeui-chart-010-axis:light-dark(oklch(0.78 0 265),oklch(0.46 0 265));
 --vibeui-chart-010-track:light-dark(oklch(0.94 0 265),oklch(0.31 0 265));
---vibeui-chart-010-accent:light-dark(oklch(0.287 0 0),oklch(0.903 0 0));
+--vibeui-chart-010-accent:light-dark(oklch(0.58 0.17 244),oklch(0.76 0.14 244));
+--vibeui-chart-010-dur:0.9s;
+--vibeui-chart-010-ease:cubic-bezier(.2,.8,.2,1);
 --vibeui-chart-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -48,7 +52,7 @@ background:var(--vibeui-chart-010-bg);
 border:1px solid var(--vibeui-chart-010-border);border-radius:0.875rem;
 color:var(--vibeui-chart-010-fg);font-family:var(--vibeui-chart-010-font);
 }
-[data-vibeui-block="chart-010"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
+\[data\-vibeui\-block="chart\-010"\] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:650;letter-spacing:-0.01em}
 [data-vibeui-block="chart-010"] svg{display:block;width:100%;height:auto}
 [data-vibeui-block="chart-010"] [data-part="grid"]{stroke:var(--vibeui-chart-010-grid);stroke-width:1}
 [data-vibeui-block="chart-010"] [data-part="axis"]{stroke:var(--vibeui-chart-010-axis);stroke-width:1}
@@ -59,7 +63,18 @@ fill:var(--vibeui-chart-010-muted);font-size:8.5px;font-variant-numeric:tabular-
 fill:var(--vibeui-chart-010-muted);font-size:8.5px;text-anchor:middle;
 }
 [data-vibeui-block="chart-010"] [data-part="bar"]{
-fill:color-mix(in oklab,var(--vibeui-chart-010-accent) 60%,var(--vibeui-chart-010-track));
+fill:color-mix(in oklab,var(--vibeui-chart-010-accent) 55%,var(--vibeui-chart-010-track));
+transform-box:fill-box;transform-origin:bottom;transition:fill 0.2s,opacity 0.2s;
+}
+[data-vibeui-block="chart-010"] svg:hover [data-part="bar"]:not(:hover){opacity:0.55}
+[data-vibeui-block="chart-010"] [data-part="bar"]:hover{fill:var(--vibeui-chart-010-accent)}
+[data-vibeui-block="chart-010"] g:hover [data-part="name"]{fill:var(--vibeui-chart-010-accent)}
+[data-vibeui-block="chart-010"] [data-part="hint"]{
+fill:var(--vibeui-chart-010-fg);font-size:8.5px;font-weight:700;font-variant-numeric:tabular-nums;text-anchor:middle;
+opacity:0;transition:opacity 0.2s;pointer-events:none;
+}
+[data-vibeui-block="chart-010"] g:hover [data-part="hint"]{opacity:1}
+[data-vibeui-block="chart-010"] [data-part="bar"][data-peak="true"]{filter:drop-shadow(0 2px 4px color-mix(in oklab,var(--vibeui-chart-010-accent) 45%,transparent));
 }
 [data-vibeui-block="chart-010"] [data-part="bar"][data-peak="true"]{fill:var(--vibeui-chart-010-accent)}
 [data-vibeui-block="chart-010"] [data-part="unit"]{margin:0;font-size:0.75rem;color:var(--vibeui-chart-010-muted)}
@@ -67,7 +82,16 @@ fill:color-mix(in oklab,var(--vibeui-chart-010-accent) 60%,var(--vibeui-chart-01
 position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
 clip-path:inset(50%);white-space:nowrap;border:0;
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-010"] *{animation:none!important;transition:none!important}}
+/* Появление: столбцы вырастают от оси по очереди. */
+[data-vibeui-block="chart-010"][data-animate] [data-part="bar"]{transform:scaleY(0);animation:vibeui-chart-010-grow 0.75s var(--vibeui-chart-010-ease) calc(var(--i) * 60ms) forwards}
+[data-vibeui-block="chart-010"][data-animate] [data-part="name"]{opacity:0;animation:vibeui-chart-010-fade 0.4s var(--vibeui-chart-010-ease) calc(var(--i) * 60ms + 0.3s) forwards}
+@keyframes vibeui-chart-010-grow{to{transform:scaleY(1)}}
+@keyframes vibeui-chart-010-fade{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="chart-010"] *{animation:none!important;transition:none!important}
+[data-vibeui-block="chart-010"][data-animate] [data-part="bar"]{transform:none}
+[data-vibeui-block="chart-010"][data-animate] [data-part="name"]{opacity:1}
+}
 `
 
 const LEFT = 34
@@ -146,6 +170,7 @@ export function Chart010({
   columns = DEFAULT_COLUMNS,
   unit = "установок",
   scaleLabel = "Ось значений — {unit}, шкала до {top}",
+  animate = true,
   accent,
   background = "",
   className,
@@ -178,6 +203,7 @@ export function Chart010({
         {...props}
         data-slot="chart"
         data-vibeui-block="chart-010"
+        data-animate={animate ? "" : undefined}
         className={className}
         style={palette}
       >
@@ -201,7 +227,10 @@ export function Chart010({
             const x = LEFT + band * index + (band - barWidth) / 2
 
             return (
-              <g key={column.label}>
+              <g key={column.label} style={{ "--i": index } as CSSProperties}>
+                <text data-part="hint" x={x + barWidth / 2} y={BASE - height - 4}>
+                  {column.value}
+                </text>
                 <rect
                   data-part="bar"
                   data-peak={column.value === peak ? "true" : undefined}

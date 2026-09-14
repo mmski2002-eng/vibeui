@@ -18,6 +18,8 @@ export type Chart020Props = Omit<
   unitLabel?: string
   /** Абсолютное значение в легенде: {value} и {max}. */
   rawLabel?: string
+  /** Наполнять дуги при появлении. */
+  animate?: boolean
   accent?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
@@ -33,6 +35,8 @@ export type Chart020Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="chart-020"]){
 --vibeui-chart-020-bg:transparent;
+--vibeui-chart-020-dur:1.1s;
+--vibeui-chart-020-ease:cubic-bezier(.2,.8,.2,1);
 --vibeui-chart-020-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-chart-020-muted:color-mix(in oklab,var(--vibeui-chart-020-fg) 68%,transparent);
 --vibeui-chart-020-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
@@ -49,24 +53,33 @@ background:var(--vibeui-chart-020-bg);
 border:1px solid var(--vibeui-chart-020-border);border-radius:0.875rem;
 color:var(--vibeui-chart-020-fg);font-family:var(--vibeui-chart-020-font);
 }
-[data-vibeui-block="chart-020"] [data-part="title"]{flex:1 0 100%;margin:0;font-size:0.875rem;font-weight:650}
+[data-vibeui-block="chart-020"] [data-part="title"]{flex:1 0 100%;margin:0;font-size:0.9375rem;font-weight:650;letter-spacing:-0.01em}
 [data-vibeui-block="chart-020"] svg{display:block;width:8.75rem;height:8.75rem;flex:0 0 auto}
 [data-vibeui-block="chart-020"] [data-part="track"]{
 fill:none;stroke:var(--vibeui-chart-020-track);stroke-width:9;
 }
+[data-vibeui-block="chart-020"] svg{overflow:visible}
 [data-vibeui-block="chart-020"] [data-part="ring"]{
-fill:none;stroke-width:9;stroke-linecap:round;
+fill:none;stroke-width:9;stroke-linecap:round;transition:opacity 0.2s,stroke-width 0.2s;
 }
 [data-vibeui-block="chart-020"] [data-part="legend"]{
 flex:1 1 9rem;display:flex;flex-direction:column;gap:0.5rem;margin:0;padding:0;list-style:none;
 }
 [data-vibeui-block="chart-020"] [data-part="row"]{
 display:grid;grid-template-columns:0.5rem 1fr auto;align-items:center;gap:0.5rem;
-font-size:0.8125rem;
+font-size:0.8125rem;padding:0.2rem 0.375rem;margin:0 -0.375rem;border-radius:0.375rem;transition:background-color 0.2s,opacity 0.2s;
 }
 [data-vibeui-block="chart-020"] [data-part="chip"]{
 width:0.5rem;height:0.5rem;border-radius:9999px;background:var(--vibeui-chart-020-ring);
 }
+[data-vibeui-block="chart-020"] [data-part="row"]:hover{background:color-mix(in oklab,var(--vibeui-chart-020-fg) 6%,transparent)}
+/* Наведение на строку легенды гасит остальные дуги (кольцо k — k-я группа). */
+[data-vibeui-block="chart-020"]:has([data-part="row"]:hover) [data-part="ring"]{opacity:0.25}
+[data-vibeui-block="chart-020"]:has([data-part="row"]:nth-child(1):hover) g:nth-child(1) [data-part="ring"],
+[data-vibeui-block="chart-020"]:has([data-part="row"]:nth-child(2):hover) g:nth-child(2) [data-part="ring"],
+[data-vibeui-block="chart-020"]:has([data-part="row"]:nth-child(3):hover) g:nth-child(3) [data-part="ring"],
+[data-vibeui-block="chart-020"]:has([data-part="row"]:nth-child(4):hover) g:nth-child(4) [data-part="ring"],
+[data-vibeui-block="chart-020"]:has([data-part="row"]:nth-child(5):hover) g:nth-child(5) [data-part="ring"]{opacity:1;stroke-width:11}
 [data-vibeui-block="chart-020"] [data-part="name"]{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 [data-vibeui-block="chart-020"] [data-part="share"]{font-weight:650;font-variant-numeric:tabular-nums}
 [data-vibeui-block="chart-020"] [data-part="raw"]{
@@ -74,7 +87,15 @@ grid-column:2 / -1;font-size:0.6875rem;color:var(--vibeui-chart-020-muted);
 font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="chart-020"] [data-part="unit"]{flex:1 0 100%;margin:0;font-size:0.75rem;color:var(--vibeui-chart-020-muted)}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-020"] *{animation:none!important;transition:none!important}}
+/* Появление: дуги наполняются одновременно, легенда всплывает. */
+[data-vibeui-block="chart-020"][data-animate] [data-part="ring"]{animation:vibeui-chart-020-fill var(--vibeui-chart-020-dur) var(--vibeui-chart-020-ease) calc(var(--i) * 90ms) both}
+[data-vibeui-block="chart-020"][data-animate] [data-part="row"]{opacity:0;animation:vibeui-chart-020-rise 0.5s var(--vibeui-chart-020-ease) calc(0.3s + var(--i) * 90ms) forwards}
+@keyframes vibeui-chart-020-fill{from{stroke-dasharray:0 1000}}
+@keyframes vibeui-chart-020-rise{from{opacity:0;translate:0 0.3rem}to{opacity:1;translate:0 0}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="chart-020"] *{animation:none!important;transition:none!important}
+[data-vibeui-block="chart-020"][data-animate] [data-part="row"]{opacity:1}
+}
 `
 
 const CENTER = 60
@@ -128,6 +149,7 @@ export function Chart020({
   unit = "процентов от цели",
   unitLabel = "Единица измерения: {unit}",
   rawLabel = "{value} из {max}",
+  animate = true,
   accent,
   background = "",
   className,
@@ -173,13 +195,14 @@ export function Chart020({
         {...props}
         data-slot="chart"
         data-vibeui-block="chart-020"
+        data-animate={animate ? "" : undefined}
         className={className}
         style={palette}
       >
         <figcaption data-part="title">{title}</figcaption>
         <svg viewBox="0 0 120 120" aria-hidden="true" focusable="false">
-          {rings.map((ring) => (
-            <g key={ring.metric.label}>
+          {rings.map((ring, index) => (
+            <g key={ring.metric.label} style={{ "--i": index } as CSSProperties}>
               <circle
                 data-part="track"
                 cx={CENTER}
@@ -199,8 +222,8 @@ export function Chart020({
           ))}
         </svg>
         <ul data-part="legend">
-          {rings.map((ring) => (
-            <li key={ring.metric.label} data-part="row">
+          {rings.map((ring, index) => (
+            <li key={ring.metric.label} data-part="row" style={{ "--i": index } as CSSProperties}>
               <span
                 data-part="chip"
                 aria-hidden="true"
