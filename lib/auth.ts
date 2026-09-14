@@ -3,7 +3,7 @@ import "server-only"
 import { betterAuth } from "better-auth"
 import { APIError } from "better-auth/api"
 import { drizzleAdapter } from "better-auth/adapters/drizzle"
-import { eq } from "drizzle-orm"
+import { eq, sql } from "drizzle-orm"
 import { cookies } from "next/headers"
 
 import { CONSENT_VERSION } from "@/lib/consent"
@@ -69,6 +69,15 @@ function localeOf(user: object): Locale {
 }
 
 const BASE_URL = process.env.BETTER_AUTH_URL ?? "https://vibeui.ru"
+
+/** Следующее имя по умолчанию: Viber000001, Viber000002, … */
+async function viberName() {
+  const [row] = await db.execute<{ n: string }>(
+    sql`SELECT nextval('viber_name_seq') AS n`,
+  )
+
+  return `Viber${String(row?.n ?? 1).padStart(6, "0")}`
+}
 
 /**
  * Аутентификация. Своё здесь только письма и дополнительные поля профиля:
@@ -198,6 +207,9 @@ export const auth = betterAuth({
          * аккаунта: позже её нельзя ни задать, ни переписать — иначе
          * реферала можно переписать на другого блогера задним числом.
          * Здесь же фиксируется согласие: его нужно уметь доказать.
+         *
+         * Имя необязательно: пустое заменяется на «Viber000001» и далее
+         * по счётчику базы. Поменять его можно потом в кабинете.
          */
         before: async (data) => {
           if (data.consentVersion !== CONSENT_VERSION) {
@@ -211,9 +223,12 @@ export const auth = betterAuth({
           const code = store.get("vibeui_ref")?.value
           const resolved = code ? await resolveCode(code) : null
 
+          const name = String(data.name ?? "").trim() || (await viberName())
+
           return {
             data: {
               ...data,
+              name,
               invitedBy:
                 resolved?.kind === "referral" ? resolved.partnerId : null,
               consentAt: new Date(),

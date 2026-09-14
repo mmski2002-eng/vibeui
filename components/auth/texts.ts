@@ -8,15 +8,20 @@ import type { Locale } from "@/lib/i18n"
 export const AUTH_TEXTS = {
   ru: {
     back: "← На витрину",
-    signInTitle: "Вернитесь к своей библиотеке",
-    signInHint: "Аккаунт хранит избранное, лимит копирований и подписку.",
-    signUpTitle: "Соберите свою библиотеку дизайна",
-    signUpHint: "100 компонентов в месяц, избранное и история — бесплатно.",
+    signInTitle: "С возвращением",
+    tabsLabel: "Вход или регистрация",
+    tabSignIn: "Вход",
+    tabSignUp: "Регистрация",
+    signInHint: "Избранное, лимит копирований и подписка — в кабинете.",
+    signUpTitle: "Создайте аккаунт",
+    signUpHint: "",
+    nameOptional: "Необязательно — придумаем сами",
     resetTitle: "Восстановление пароля",
     resetHint: "Пришлём ссылку на почту, по которой можно задать новый пароль.",
     newPasswordTitle: "Новый пароль",
     name: "Имя",
     email: "Почта",
+    emailPlaceholder: "you@studio.ru",
     password: "Пароль",
     newPassword: "Новый пароль",
     passwordHint: "Не короче 10 символов",
@@ -36,16 +41,13 @@ export const AUTH_TEXTS = {
     consent: "Соглашаюсь с",
     offer: "офертой",
     consentAnd: "и",
-    privacy: "обработкой персональных данных",
+    privacy: "политикой конфиденциальности",
     verifySent:
       "Письмо со ссылкой отправлено. Откройте её, чтобы подтвердить адрес и войти. Ссылка действует 30 минут.",
     resetSent:
       "Если такой адрес зарегистрирован, письмо со ссылкой уже отправлено. Ссылка действует 30 минут.",
     spamHint:
       "Письма нет через минуту — загляните в «Спам» и «Промоакции». Мы молодой отправитель, и почтовые службы иногда перестраховываются.",
-    showcaseTitle: "Выбери дизайн. Отдай ИИ. Получи сайт.",
-    showcaseNote:
-      "Полторы тысячи готовых компонентов и секций. Аккаунт хранит избранное, историю и лимит копирований.",
     verifyExisting:
       "Если аккаунт с этим адресом уже есть, письма не будет — войдите или восстановите пароль.",
     verifyTitle: "Подтвердите почту",
@@ -79,15 +81,20 @@ export const AUTH_TEXTS = {
   },
   en: {
     back: "← Back to catalog",
-    signInTitle: "Back to your library",
-    signInHint: "An account keeps your favourites, monthly limit and plan.",
-    signUpTitle: "Build your design library",
-    signUpHint: "100 components a month, favourites and history — free.",
+    signInTitle: "Welcome back",
+    tabsLabel: "Sign in or sign up",
+    tabSignIn: "Sign in",
+    tabSignUp: "Sign up",
+    signInHint: "Favourites, the copy limit and your plan live in the account.",
+    signUpTitle: "Create an account",
+    signUpHint: "",
+    nameOptional: "Optional — we will pick one",
     resetTitle: "Reset password",
     resetHint: "We will email a link for setting a new password.",
     newPasswordTitle: "New password",
     name: "Name",
     email: "Email",
+    emailPlaceholder: "you@studio.dev",
     password: "Password",
     newPassword: "New password",
     passwordHint: "At least 10 characters",
@@ -107,16 +114,13 @@ export const AUTH_TEXTS = {
     consent: "I agree to the",
     offer: "terms",
     consentAnd: "and",
-    privacy: "processing of personal data",
+    privacy: "privacy policy",
     verifySent:
       "The link is on its way. Open it to confirm your address and sign in. It expires in 30 minutes.",
     resetSent:
       "If that address is registered, the link is already on its way. It expires in 30 minutes.",
     spamHint:
       "Nothing after a minute — check Spam and Promotions. We are a young sender, and mail services sometimes play it safe.",
-    showcaseTitle: "Pick a design. Hand it to AI. Ship the page.",
-    showcaseNote:
-      "Fifteen hundred ready components and sections. An account keeps your favourites, history and monthly limit.",
     verifyExisting:
       "If an account with this address already exists, no letter will arrive — sign in or reset your password.",
     verifyTitle: "Confirm your email",

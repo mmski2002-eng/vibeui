@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
+import { ArrowRight, Lock, Mail } from "lucide-react"
 
 import { Field, INPUT_CLASS, SUBMIT_CLASS } from "@/components/auth/auth-card"
 import { PasswordInput } from "@/components/auth/password-input"
@@ -68,17 +69,29 @@ export function SignInForm({ locale }: { locale: Locale }) {
         }
       }}
     >
-      <Field label={t.email}>
+      <Field label={t.email} icon={<Mail />}>
         <input
           className={INPUT_CLASS}
           type="email"
           name="email"
+          placeholder={t.emailPlaceholder}
           autoComplete="email"
           required
           autoFocus
         />
       </Field>
-      <Field label={t.password}>
+      <Field
+        label={t.password}
+        icon={<Lock />}
+        aside={
+          <Link
+            href={localePath(locale, "/reset")}
+            className="text-shell-muted hover:text-shell-fg text-xs transition-colors"
+          >
+            {t.forgot}
+          </Link>
+        }
+      >
         <PasswordInput
           locale={locale}
           className={INPUT_CLASS}
@@ -117,14 +130,8 @@ export function SignInForm({ locale }: { locale: Locale }) {
 
       <button type="submit" className={SUBMIT_CLASS} disabled={pending}>
         {pending ? t.entering : t.enter}
+        <ArrowRight className="size-4" aria-hidden="true" />
       </button>
-
-      <Link
-        href={localePath(locale, "/reset")}
-        className="text-shell-muted hover:text-shell-fg mt-4 block text-center text-sm transition-colors"
-      >
-        {t.forgot}
-      </Link>
     </form>
   )
 }

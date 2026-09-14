@@ -1,11 +1,9 @@
-import Link from "next/link"
 import { Suspense } from "react"
 
 import { AuthCard } from "@/components/auth/auth-card"
 import { SignInForm } from "@/components/auth/signin-form"
 import { AUTH_TEXTS } from "@/components/auth/texts"
 import { CatalogShell } from "@/components/catalog/catalog-shell"
-import { localePath } from "@/lib/i18n"
 
 const LOCALE = "en" as const
 const t = AUTH_TEXTS[LOCALE]
@@ -20,19 +18,9 @@ export default function SignInPageEn() {
     <CatalogShell locale={LOCALE}>
       <AuthCard
         locale={LOCALE}
+        tabs="signin"
         title={t.signInTitle}
         description={t.signInHint}
-        footer={
-          <>
-            {t.noAccount}{" "}
-            <Link
-              href={localePath(LOCALE, "/signup")}
-              className="text-shell-fg underline"
-            >
-              {t.createShort}
-            </Link>
-          </>
-        }
       >
         {/* Форма читает ?next= и ?reset= из адреса: без границы
             Suspense страница входа перестала бы собираться заранее. */}

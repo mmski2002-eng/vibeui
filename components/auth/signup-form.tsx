@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
+import { ArrowRight, Lock, Mail, User } from "lucide-react"
 
 import { Field, INPUT_CLASS, SUBMIT_CLASS } from "@/components/auth/auth-card"
 import { PasswordInput } from "@/components/auth/password-input"
@@ -34,7 +35,7 @@ export function SignUpForm({ locale }: { locale: Locale }) {
 
         try {
           const { error: failure } = await authClient.signUp.email({
-            name: String(form.get("name")),
+            name: String(form.get("name") ?? "").trim(),
             email,
             password: String(form.get("password")),
             // Письма уходят позже, из фоновых задач: язык страницы известен
@@ -72,31 +73,33 @@ export function SignUpForm({ locale }: { locale: Locale }) {
         }
       }}
     >
-      <Field label={t.name}>
+      <Field label={t.name} icon={<User />}>
         <input
           className={INPUT_CLASS}
           type="text"
           name="name"
+          placeholder={t.nameOptional}
           autoComplete="name"
-          required
           maxLength={60}
           autoFocus
         />
       </Field>
-      <Field label={t.email}>
+      <Field label={t.email} icon={<Mail />}>
         <input
           className={INPUT_CLASS}
           type="email"
           name="email"
+          placeholder={t.emailPlaceholder}
           autoComplete="email"
           required
         />
       </Field>
-      <Field label={t.password} hint={t.passwordHint}>
+      <Field label={t.password} icon={<Lock />}>
         <PasswordInput
           locale={locale}
           className={INPUT_CLASS}
           name="password"
+          placeholder={t.passwordHint}
           autoComplete="new-password"
           required
           minLength={10}
@@ -104,7 +107,7 @@ export function SignUpForm({ locale }: { locale: Locale }) {
         />
       </Field>
 
-      <label className="mb-4 flex items-start gap-2.5 text-sm">
+      <label className="mb-4 flex items-start gap-2.5 text-sm leading-snug">
         <input
           type="checkbox"
           name="consent"
@@ -137,6 +140,7 @@ export function SignUpForm({ locale }: { locale: Locale }) {
 
       <button type="submit" className={SUBMIT_CLASS} disabled={pending}>
         {pending ? t.creating : t.create}
+        <ArrowRight className="size-4" aria-hidden="true" />
       </button>
     </form>
   )
