@@ -405,7 +405,7 @@ export async function PricingPage({ locale }: { locale: Locale }) {
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:py-8 lg:px-6">
         {/* Первый экран: шлейф картинок из каталога живёт под текстом, текст
             не ловит курсор — движение доходит до поля. */}
-        <section className="relative isolate overflow-hidden rounded-3xl bg-[#151515] text-[#f2f2f2]">
+        <section className="border-shell-border text-shell-fg relative isolate overflow-hidden rounded-3xl border bg-[light-dark(#ffffff,#151515)]">
           <Cursor005
             caption=""
             size={150}
@@ -435,27 +435,27 @@ export async function PricingPage({ locale }: { locale: Locale }) {
               <br />
               <span className="text-[#ff5900]">{titleSecond}</span>
             </h1>
-            <p className="mt-6 max-w-2xl text-base leading-relaxed text-pretty text-[#f2f2f2]/70 sm:text-lg">
+            <p className="text-shell-muted mt-6 max-w-2xl text-base leading-relaxed text-pretty sm:text-lg">
               {t.lede}
             </p>
             <div className="pointer-events-auto mt-9 flex flex-wrap items-center justify-center gap-3">
               <Link
                 href={session ? catalogHref : signupHref}
-                className="inline-flex h-12 items-center gap-2 rounded-full bg-[#ff5900] px-6 text-sm font-semibold text-[#151515] transition-colors hover:bg-[#ff7a33] focus-visible:ring-2 focus-visible:ring-[#ff5900] focus-visible:ring-offset-2 focus-visible:ring-offset-[#151515] focus-visible:outline-none"
+                className="inline-flex h-12 items-center gap-2 rounded-full bg-[#ff5900] px-6 text-sm font-semibold text-[#151515] transition-colors hover:bg-[#ff7a33] focus-visible:ring-2 focus-visible:ring-[#ff5900] focus-visible:ring-offset-2 focus-visible:ring-offset-[light-dark(#ffffff,#151515)] focus-visible:outline-none"
               >
                 {session ? t.heroPrimarySigned : t.heroPrimary}
                 <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
               <a
                 href="#plans"
-                className="inline-flex h-12 items-center rounded-full border border-[#f2f2f2]/25 px-6 text-sm font-medium transition-colors hover:border-[#f2f2f2]/60 focus-visible:ring-2 focus-visible:ring-[#ff5900] focus-visible:outline-none"
+                className="border-shell-border-strong hover:border-shell-accent inline-flex h-12 items-center rounded-full border px-6 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-[#ff5900] focus-visible:outline-none"
               >
                 {t.heroSecondary}
               </a>
             </div>
-            <p className="mt-5 text-sm text-[#f2f2f2]/50">{t.heroNote}</p>
+            <p className="text-shell-muted mt-5 text-sm">{t.heroNote}</p>
           </div>
-          <p className="pointer-events-none absolute right-5 bottom-4 z-10 hidden text-xs text-[#f2f2f2]/35 sm:block">
+          <p className="text-shell-muted pointer-events-none absolute right-5 bottom-4 z-10 hidden text-xs opacity-70 sm:block">
             {t.heroHint}
           </p>
         </section>
@@ -538,7 +538,7 @@ export async function PricingPage({ locale }: { locale: Locale }) {
                         ))}
                       </div>
                     ) : index === 1 ? (
-                      <div className="relative grid size-20 place-items-center rounded-2xl bg-[#151515] text-[#ff5900] shadow-[0_20px_50px_-20px_rgba(255,89,0,0.6)] transition-transform duration-500 group-hover:-rotate-6">
+                      <div className="relative grid size-20 place-items-center rounded-2xl bg-[light-dark(#f2f2f2,#151515)] text-[#ff5900] shadow-[0_20px_50px_-20px_rgba(255,89,0,0.45)] transition-transform duration-500 group-hover:-rotate-6">
                         <Lock
                           className="size-8 transition-opacity duration-300 group-hover:opacity-0"
                           aria-hidden="true"
@@ -595,7 +595,7 @@ export async function PricingPage({ locale }: { locale: Locale }) {
                   <p className="text-shell-muted mt-2 text-sm leading-relaxed">{step.text}</p>
                   {index === 2 ? (
                     <p className="mt-auto pt-6">
-                      <code className="pricing-type block w-fit max-w-full overflow-hidden rounded-lg bg-[#151515] px-3 py-2 font-mono text-xs whitespace-nowrap text-[#f2f2f2] motion-reduce:animate-none">
+                      <code className="pricing-type block w-fit max-w-full overflow-hidden rounded-lg bg-[light-dark(#f2f2f2,#151515)] px-3 py-2 font-mono text-xs whitespace-nowrap text-[light-dark(#151515,#f2f2f2)] motion-reduce:animate-none">
                         <span className="text-[#ff5900]">$</span> {t.snippet}
                       </code>
                     </p>
