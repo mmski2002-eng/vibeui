@@ -275,7 +275,7 @@ export function CardInteractive({
         ref={frameRef}
         data-preview-theme={theme}
         style={floor ? { minHeight: floor } : undefined}
-        className="border-shell-border bg-shell catalog-card-body flex min-w-0 flex-1 flex-col rounded-xl border"
+        className={`catalog-card-body bg-shell flex min-w-0 flex-1 flex-col rounded-xl border ${pro ? "border-shell-accent/50 ring-shell-accent/20 ring-1" : "border-shell-border"}`}
       >
         {/* Отдельная полоса, а не наложение поверх кадра: у компонентов
             высота разная, и при переключении настройки содержимое доезжало
@@ -285,6 +285,28 @@ export function CardInteractive({
           className="border-shell-border bg-shell shrink-0 items-center justify-between gap-2 border-b px-1.5 py-1.5"
         >
           <div className="flex min-w-0 flex-1 basis-0 items-center gap-1">
+            {pro ? (
+              // Плашка стоит первой в шапке кадра: закрытый item виден в сетке
+              // сразу, ещё до подписи и до нажатия «Копировать для ИИ».
+              <span
+                title={locale === "en" ? "Pro only" : "Только по Pro"}
+                className="bg-shell-accent text-shell-accent-fg mr-1 inline-flex h-5 shrink-0 items-center gap-1 rounded px-1.5 text-[0.6875rem] font-bold uppercase"
+              >
+                <svg
+                  width="10"
+                  height="10"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.7"
+                  aria-hidden="true"
+                >
+                  <rect x="3.25" y="7" width="9.5" height="6.25" rx="1.6" />
+                  <path d="M5.5 7V5.2a2.5 2.5 0 0 1 5 0V7" strokeLinecap="round" />
+                </svg>
+                Pro
+              </span>
+            ) : null}
             {cardControls.map((control) => {
               const value = values[control.prop]
               const Icon = cardControlIcon(control, value)
@@ -681,13 +703,6 @@ export function CardInteractive({
               {copiedCode ? t.card.idCopied : ""}
             </span>
           </button>
-          {pro ? (
-            /* Метка стоит до названия: человек должен увидеть её раньше,
-               чем нажмёт «Копировать для ИИ» и упрётся в отказ. */
-            <span className="border-shell-accent text-shell-accent mr-1.5 inline-flex h-5 shrink-0 items-center rounded border px-1.5 align-[1px] text-[0.6875rem] font-semibold">
-              Pro
-            </span>
-          ) : null}
           <Link
             href={`${itemUrl}?${itemParams}`}
             className="hover:text-shell-fg transition-colors focus-visible:outline-none"

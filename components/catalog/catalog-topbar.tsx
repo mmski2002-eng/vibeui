@@ -26,10 +26,10 @@ export function CatalogTopbar({
   const sections = [
     { href: "/components", label: t.topbar.components },
     { href: "/blocks", label: t.topbar.blocks },
-    { href: "/animations", label: t.topbar.animations },
+    { href: "/animations", label: t.topbar.animations, pro: true },
     // Сценарии — вход со стороны задачи, а не ещё один список компонентов.
     // Из одинаковых подписей это не читается, поэтому у пункта метка.
-    { href: "/scenarios", label: t.topbar.scenarios, marked: true },
+    { href: "/scenarios", label: t.topbar.scenarios, marked: true, pro: true },
     { href: "/pricing", label: t.topbar.pricing },
   ]
 
@@ -70,7 +70,7 @@ export function CatalogTopbar({
             // раз то, что человек ищет глазами, а не находит в подвале.
             className="nav-scroll flex min-w-0 items-center gap-0.5 overflow-x-auto lg:gap-1"
           >
-            {sections.map(({ href, label, marked }) => {
+            {sections.map(({ href, label, marked, pro }) => {
               const active =
                 pathname === href || pathname.startsWith(`${href}/`)
               return (
@@ -87,6 +87,14 @@ export function CatalogTopbar({
                     />
                   ) : null}
                   {label}
+                  {pro ? (
+                    <span
+                      className="bg-shell-accent text-shell-accent-fg ml-1.5 inline-flex shrink-0 items-center rounded px-1 text-[0.5625rem] leading-[1.5] font-bold uppercase"
+                      aria-hidden="true"
+                    >
+                      Pro
+                    </span>
+                  ) : null}
                 </Link>
               )
             })}

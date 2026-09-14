@@ -5,12 +5,11 @@ import { CatalogItemNav } from "@/components/catalog/catalog-item-nav"
 import { CatalogColumns } from "@/components/catalog/catalog-columns"
 import { CatalogSidebar } from "@/components/catalog/catalog-sidebar"
 import { ItemWorkbench } from "@/components/catalog/item-workbench"
-import { CodeBlock } from "@/components/code-block"
+import { GatedReveal } from "@/components/catalog/gated-reveal"
 import { JsonLd } from "@/components/json-ld"
 import { CopyButton } from "@/components/copy-button"
 import { ReportDialog } from "@/components/report/report-dialog"
 import { resolveControlValues, resolvePreviewSurface } from "@/lib/controls"
-import { buildCopyForAiPrompt } from "@/lib/copy-for-ai"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
 import { localizeItem } from "@/lib/localize"
 import { breadcrumbs, SITE_URL } from "@/lib/seo"
@@ -25,7 +24,6 @@ import {
   getCategoryLabel,
   getItemKind,
 } from "@/registry/index"
-import { getBlockSource } from "@/registry/source.server"
 
 /**
  * Страница item'а. Подложка и значения контролов приезжают с витрины через
@@ -58,17 +56,10 @@ export async function ItemPage({
   const initialTheme = resolvePreviewSurface(flat.get("theme") ?? undefined)
   const initialValues = resolveControlValues(block, flat)
 
-  const source = await getBlockSource(slug)
   const installCommand = getInstallCommand(block.name)
   const registryUrl = getRegistryItemUrl(block.name)
   const docUrl = getItemDocUrl(block.name)
   const kind = getItemKind(block.name) ?? "block"
-  const aiPrompt = buildCopyForAiPrompt(block, {
-    installCommand,
-    registryUrl,
-    kind,
-    locale,
-  })
   const category = block.categories?.[0]
   const tags = block.meta?.tags ?? []
   // Три пункта — верхняя граница читаемого списка в шапке: дальше человек
@@ -194,7 +185,6 @@ export async function ItemPage({
             category={category ?? ""}
             locale={locale}
             docUrl={docUrl}
-            fullPrompt={aiPrompt}
             initialTheme={initialTheme}
             initialValues={initialValues}
           />
@@ -276,27 +266,15 @@ export async function ItemPage({
               <ReportDialog locale={locale} itemName={block.name} />
             </div>
 
-            <details
+            <GatedReveal
               id="code"
-              className="border-shell-border mt-4 scroll-mt-20 rounded-xl border"
-            >
-              <summary className="text-shell-fg hover:text-shell-fg cursor-pointer px-4 py-3 text-sm font-medium select-none marker:content-none [&::-webkit-details-marker]:hidden">
-                {t.item.source}
-              </summary>
-              <div className="border-shell-border border-t p-4">
-                <div className="mb-3 flex items-center justify-between gap-3">
-                  <p className="text-shell-muted max-w-2xl text-sm text-pretty">
-                    {t.item.sourceNote}
-                  </p>
-                  <CopyButton value={source} label={t.item.copyCode} />
-                </div>
-                {source ? (
-                  <CodeBlock code={source} />
-                ) : (
-                  <p className="text-shell-muted text-sm">{t.item.noSource}</p>
-                )}
-              </div>
-            </details>
+              url={`/f/${block.name}.tsx`}
+              asCode
+              summary={t.item.source}
+              note={t.item.sourceNote}
+              copyLabel={t.item.copyCode}
+              locale={locale}
+            />
           </section>
         </main>
       </CatalogColumns>

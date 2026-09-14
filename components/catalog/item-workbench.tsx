@@ -9,6 +9,7 @@ import {
   ItemControls,
 } from "@/components/catalog/item-configurator"
 import { CopyButton } from "@/components/copy-button"
+import { GatedReveal } from "@/components/catalog/gated-reveal"
 import {
   defaultValues,
   getControls,
@@ -32,7 +33,6 @@ export function ItemWorkbench({
   category,
   locale,
   docUrl,
-  fullPrompt,
   initialTheme,
   initialValues,
 }: {
@@ -41,7 +41,6 @@ export function ItemWorkbench({
   category: string
   locale: Locale
   docUrl: string | null
-  fullPrompt: string
   initialTheme: PreviewSurface
   initialValues: ControlValues
 }) {
@@ -77,6 +76,12 @@ export function ItemWorkbench({
       ? `${docUrl}?${params}`
       : docUrl
     : null
+
+  // Инструкция для агента забирается по закрытому /c при раскрытии, а не
+  // впечатывается в страницу: без входа и без Pro сервер отвечает 401.
+  const promptUrl = params.toString()
+    ? `/c/${item.name}?${params}`
+    : `/c/${item.name}`
 
   return (
     <>
@@ -203,24 +208,15 @@ export function ItemWorkbench({
         <CopyFlow locale={locale} link={link} className="mt-6" />
 
         {/* Запасной путь: если агент не может открыть ссылку, инструкцию
-            копируют целиком. */}
-        <details
+            копируют целиком. Тело закрыто — как и сама ссылка /c. */}
+        <GatedReveal
           id="ai-prompt"
-          className="border-shell-border mt-6 scroll-mt-20 border-t pt-5"
-        >
-          <summary className="text-shell-muted hover:text-shell-fg cursor-pointer text-sm select-none marker:content-none [&::-webkit-details-marker]:hidden">
-            {t.item.showFull}
-          </summary>
-          <p className="text-shell-muted mt-3 max-w-2xl text-sm text-pretty">
-            {t.item.fullNote}
-          </p>
-          <div className="mt-3">
-            <CopyButton value={fullPrompt} label={t.item.copyFull} />
-          </div>
-          <pre className="bg-shell-elevated border-shell-border text-shell-fg mt-3 max-h-96 overflow-auto rounded-lg border p-4 text-xs leading-relaxed whitespace-pre-wrap">
-            {fullPrompt}
-          </pre>
-        </details>
+          url={promptUrl}
+          summary={t.item.showFull}
+          note={t.item.fullNote}
+          copyLabel={t.item.copyFull}
+          locale={locale}
+        />
       </section>
     </>
   )

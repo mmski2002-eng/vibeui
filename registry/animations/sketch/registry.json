@@ -20,6 +20,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client». Хост — <button>, слой чернил — SVG под подписью: контур rectPoints со скруглением 9, для solid — второй неровный контур с fill, для scribble (по умолчанию) — штриховка одной непрерывной пилой между кромками с шагом 11px, тонкой линией 0.7 от базовой. :active утолщает линию через --width. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-001-* с light-dark, reduced-motion выключает boil.",
       "meta": {
+        "pro": true,
         "tags": [
           "sketch",
           "hand-drawn",
@@ -195,6 +196,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client». Хост измерения — дорожка 3.2×1.7em; дорожка — rectPoints с радиусом h/2, ползунок — ellipsePoints в левом или правом конце по состоянию, включённая дорожка получает второй заполненный контур. Состояние — useState от defaultChecked; управляемый режим оборачивайте снаружи. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-002-* с light-dark, reduced-motion выключает boil.",
       "meta": {
+        "pro": true,
         "tags": [
           "sketch",
           "hand-drawn",
@@ -366,6 +368,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client». Хост — квадрат 1.4em; квадрат — rectPoints с шагом 8, галочка — три точки [0.2, 0.52]→[0.42, 0.78]→[0.88, 0.18] толщиной 3. Состояние — useState от defaultChecked. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-003-* с light-dark, reduced-motion выключает boil.",
       "meta": {
+        "pro": true,
         "tags": [
           "sketch",
           "hand-drawn",
@@ -534,6 +537,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client». Кружки — ellipsePoints 9.5px в холсте 24×24 (без измерения), точка выбора — заполненная ellipsePoints 4.5px. Группа с name от useId, состояние — индекс в useState. data-direction=row кладёт варианты в строку. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-004-* с light-dark, reduced-motion выключает boil.",
       "meta": {
+        "pro": true,
         "tags": [
           "sketch",
           "hand-drawn",
@@ -709,6 +713,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client». Хост измерения — обёртка поля; рамка — rectPoints со скруглением 6, seed сдвигается при фокусе (новый росчерк), :focus-within поднимает --width до 3 и ускоряет boil. kind=area рендерит textarea с rows=3. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-005-* с light-dark, reduced-motion выключает boil.",
       "meta": {
+        "pro": true,
         "tags": [
           "sketch",
           "hand-drawn",
@@ -883,6 +888,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client». Хост — inline-flex span, капсула — rectPoints с радиусом h/2 и тонкой линией 1.6; solid — второй заполненный контур, текст в on-accent. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-006-* с light-dark, reduced-motion выключает boil.",
       "meta": {
+        "pro": true,
         "tags": [
           "sketch",
           "hand-drawn",
@@ -1055,6 +1061,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client». Хост — блок с padding и фоном paper; рамка — rectPoints со скруглением 12, тень — тот же контур со сдвигом 5/6px приглушённым цветом и opacity 0.35. children заменяют абзац text. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-007-* с light-dark, reduced-motion выключает boil.",
       "meta": {
+        "pro": true,
         "tags": [
           "sketch",
           "hand-drawn",
@@ -1216,6 +1223,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client». Хост — tablist; rail — линия по всей ширине приглушённого цвета, mark — линия по offsetLeft/offsetWidth активной кнопки (измеряется в эффекте по active и ширине) толщиной 3. Клавиатура: ArrowLeft/Right по кругу с переносом фокуса, roving tabindex. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-008-* с light-dark, reduced-motion выключает boil.",
       "meta": {
+        "pro": true,
         "tags": [
           "sketch",
           "hand-drawn",
@@ -1375,6 +1383,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client». Inline-span измеряется как хост; underline — две линии под коробкой, highlight — одна линия толщиной 0.8h с opacity 0.35 и жёлтыми чернилами по умолчанию, circle — 34 точки по спирали в полтора оборота с растущим радиусом. Наследует шрифт абзаца. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-009-* с light-dark, reduced-motion выключает boil.",
       "meta": {
+        "pro": true,
         "tags": [
           "sketch",
           "hand-drawn",
@@ -1549,6 +1558,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client». Хост 11×5.5rem; древко — 12 точек квадратичной кривой между стартом и концом по direction, наконечник — два крыла под ±0.5 рад от угла последнего отрезка, длиной 14px. Подпись — абсолютный span Caveat с наклоном −4°. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-010-* с light-dark, reduced-motion выключает boil.",
       "meta": {
+        "pro": true,
         "tags": [
           "sketch",
           "hand-drawn",
@@ -1722,6 +1732,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client». Хост с левым отступом 3.5rem под значок; рамка — rectPoints со скруглением 10, значок — ellipsePoints радиуса 14 у x=26, палочка толщиной 3 и заполненная точка. Тон задаёт --accent семантическим oklch-цветом с light-dark. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-011-* с light-dark, reduced-motion выключает boil.",
       "meta": {
+        "pro": true,
         "tags": [
           "sketch",
           "hand-drawn",
@@ -1898,6 +1909,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client». Кружки — ellipsePoints радиуса 13 в холсте 32×32 (без измерения), соединители — линии в холсте 48×12; состояние шага считается от current: done (заливка + галочка цветом paper), current (двойной кружок), todo (приглушённый). Подписи под кружками абсолютно. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-012-* с light-dark, reduced-motion выключает boil.",
       "meta": {
+        "pro": true,
         "tags": [
           "sketch",
           "hand-drawn",
@@ -2062,6 +2074,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client». Хост во всю ширину высотой 1.5rem; линия — linePoints с шагом 18 и повышенной неровностью; слово — span с фоном paper поверх линии. weight=thick поднимает --width до 3.2. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-013-* с light-dark, reduced-motion выключает boil.",
       "meta": {
+        "pro": true,
         "tags": [
           "sketch",
           "hand-drawn",
@@ -2233,6 +2246,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client». Каждая клавиша — вложенный компонент Key со своим useSize: контур rectPoints со скруглением 5 и штрих-тень внизу толщиной 3. Между клавишами «+» приглушённым. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-014-* с light-dark, reduced-motion выключает boil.",
       "meta": {
+        "pro": true,
         "tags": [
           "sketch",
           "hand-drawn",
@@ -2384,6 +2398,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client». Хост — блок с левым отступом 2rem; скобка — три точки по левому краю толщиной 3 с повышенной неровностью, тире — линия перед автором. Текст — Caveat 1.75rem. Контуры рисуются в пикселях: хост измеряется ResizeObserver, точки периметра сдвигаются детерминированным шумом (mulberry32 от seed, по умолчанию — хэш подписи), отрезки — квадратичные кривые; три кадра одной линии отличаются мелкой дрожью boil. Кадры переключает CSS: @property --frame (integer) + @keyframes step-end 1.2s, каждый path видим только на своём кадре (opacity через clamp(1 − (frame − i)²)). Наведение сдвигает seed — новый росчерк. Шрифты Neucha и Caveat подключаются <link precedence> с Google Fonts (с fallback на системные рукописные). Палитра --vibeui-sketch-015-* с light-dark, reduced-motion выключает boil.",
       "meta": {
+        "pro": true,
         "tags": [
           "sketch",
           "hand-drawn",
