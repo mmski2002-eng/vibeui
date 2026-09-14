@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Стопка аватаров",
       "description": "Ряд аватаров внахлёст с обводкой цвета карточки и пилюлей остатка «+N»: при появлении карточки кружки разъезжаются из одной точки в свою позицию, а по наведению верхний слегка приподнимается.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,14 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-avatar-anim-002-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Кружки лежат внахлёст через отрицательный margin-left и обводку цвета карточки; при монтировании каждый кружок разъезжается из общей точки в свою позицию с задержкой через --i, а по hover приподнимается и выходит на передний план.",
       "meta": {
-        "tags": ["avatar", "stack", "overlap", "team", "animated", "hover"],
+        "tags": [
+          "avatar",
+          "stack",
+          "overlap",
+          "team",
+          "animated",
+          "hover"
+        ],
         "ai": {
           "export": "AvatarAnim002",
           "usage": "<AvatarAnim002 people={[{ initials: \"АК\", name: \"Анна Ковалёва\" }]} moreCount={8} caption=\"12 участников\" />",
@@ -58,7 +67,11 @@
             "prop": "size",
             "label": "Размер",
             "type": "select",
-            "options": ["sm", "md", "lg"],
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ],
             "default": "md"
           }
         ],
@@ -149,7 +162,11 @@
             "caption": "12 участников обсуждения"
           }
         },
-        "cardControls": ["gradient", "isometric", "size"]
+        "cardControls": [
+          "gradient",
+          "isometric",
+          "size"
+        ]
       }
     },
     {
@@ -157,7 +174,9 @@
       "type": "registry:component",
       "title": "Профильная карточка",
       "description": "Компактная профильная карточка: аватар с непрерывно пульсирующим кольцом, имя, роль и ряд из мини-статистик, которые въезжают снизу по очереди при появлении карточки.",
-      "categories": ["avatar"],
+      "categories": [
+        "avatar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -169,7 +188,14 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-avatar-anim-003-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. За аватаром непрерывно пульсирует размытое кольцо акцентного цвета — сигнал «на связи», не привязанный к hover. Статистики снизу въезжают по очереди с нарастающей задержкой по nth-child при монтировании карточки.",
       "meta": {
-        "tags": ["avatar", "profile", "card", "stats", "animated", "pulse"],
+        "tags": [
+          "avatar",
+          "profile",
+          "card",
+          "stats",
+          "animated",
+          "pulse"
+        ],
         "ai": {
           "export": "AvatarAnim003",
           "usage": "<AvatarAnim003 name=\"Анна Ковалёва\" role=\"Дизайнер\" initials=\"АК\" stats={[{ label: \"Проекты\", value: \"24\" }]} />",
@@ -304,7 +330,258 @@
             ]
           }
         },
-        "cardControls": ["gradient", "isometric", "pulse", "accent"]
+        "cardControls": [
+          "gradient",
+          "isometric",
+          "pulse",
+          "accent"
+        ]
+      }
+    },
+    {
+      "name": "avatar-anim-004",
+      "type": "registry:component",
+      "title": "Команда со шторкой-досье",
+      "description": "Пять тёмных портретов в ряд, где карточка открывает досье в шторке справа: страница затемняется и замирает, панель въезжает сбоку, и только когда она встала, проявляется текст — фото, имя, роль, биография и ссылка. Закрытие в обратном порядке. На наведении фото не гаснет, а разогревается: тёплая засветка в цвет акцента снизу, лёгкий зум, оранжевая рамка, снизу всплывает подпись со стрелкой.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "avatar-anim-004/avatar-anim-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/avatar-anim-004.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client», палитра в локальных --vibeui-avatar-anim-004-*. Тему берёт из окружения через light-dark() плюс правило для класса .dark; цвета шторки можно задать пропами panelBackground и panelColor. Хореография открытия целиком на CSS-переходах с задержками: слой [data-part=layer] переключает data-open, затемнение и панель едут duration мс по cubic-bezier(0.45,0,0.55,1), текст внутри ([data-part=sheet]) проявляется за 240 мс с задержкой duration — то есть после того, как шторка доехала. При закрытии задержки меняются местами: текст гаснет первым, панель и затемнение ждут его 240 мс и уходят следом; visibility слоя выключается по окончании всей цепочки. JS отвечает за состояние, блокировку прокрутки body на время открытия, Escape и возврат фокуса на карточку. Сетка считается от собственной ширины блока: уже 48rem — лента в один ряд с горизонтальной прокруткой и snap (с мышью видна тонкая полоса прокрутки), от 48rem — сетка, все пять в ряд. Карточка — 3:4, на устройствах с наведением подпись спрятана и всплывает на hover, фото насыщается и чуть растёт, поверх проявляется тёплая засветка [data-part=glow] в цвет акцента (mix-blend-mode: screen) и внутренняя рамка 2px, стрелка в углу подписи подменяется второй такой же; без наведения подпись видна всегда, а в углу карточки — плюс. Шторка — fixed-слой поверх страницы: panelWidth % ширины окна, уже 48rem — во всё окно; внутри собственный container-type, размеры шрифтов через cqi. Биография — массив абзацев bio, не HTML. Без фото карточка показывает инициалы на плашке. prefers-reduced-motion обнуляет длительности и задержки.",
+      "meta": {
+        "tags": [
+          "team",
+          "people",
+          "drawer",
+          "sidebar",
+          "panel",
+          "slide-in",
+          "overlay",
+          "bio",
+          "portrait",
+          "row",
+          "hover",
+          "glow",
+          "about"
+        ],
+        "ai": {
+          "export": "AvatarAnim004",
+          "usage": "<AvatarAnim004\n  title=\"Кто делает VibeUI\"\n  description=\"Нажмите на карточку, чтобы узнать, кто чем занят.\"\n  duration={650}\n  panelWidth={60}\n  overlay={35}\n  members={[\n    {\n      id: \"anna\",\n      name: \"Анна Смирнова\",\n      role: \"Арт-директор\",\n      photo: \"/team/anna.jpg\",\n      linkedin: \"https://www.linkedin.com/in/anna\",\n      bio: [\"Первый абзац.\", \"Второй абзац.\"],\n    },\n  ]}\n/>",
+          "summary": "Пять портретов в ряд со шторкой-досье: карточка открывает панель справа, страница затемняется и замирает, текст проявляется после хода шторки, закрытие в обратном порядке; на наведении фото разогревается засветкой в цвет акцента. Один файл, ноль зависимостей, вся хореография на CSS-переходах с задержками.",
+          "preserve": [
+            "локальную палитру --vibeui-avatar-anim-004-* — не подменять её токенами темы; цвета шторки задаются пропами panelBackground и panelColor",
+            "порядок хореографии: затемнение и панель едут вместе, текст проявляется с задержкой duration, при закрытии — текст гаснет первым, а панель ждёт его 240 мс; это делают transition-delay на [data-part=layer][data-open], не переписывать на JS-таймеры или библиотеку анимации",
+            "шторку как fixed-слой поверх страницы с блокировкой прокрутки body, Escape и возвратом фокуса на карточку",
+            "сетку от собственной ширины блока (container queries): уже 48rem — лента в один ряд с прокруткой, от 48rem — пять в ряд; карточки не переносятся на второй ряд",
+            "поведение карточки на наведении — подпись снизу, тёплая засветка и рамка в цвет акцента, зум и подмена стрелки — и плюс в углу там, где наведения нет",
+            "отключение переходов при prefers-reduced-motion"
+          ],
+          "adapt": [
+            "members — свои люди: id, name, role, photo, bio (массив абзацев), linkedin",
+            "title и description — заголовок и подводка над сеткой",
+            "duration — ход шторки в мс; panelWidth — её ширина в % окна; overlay — затемнение в %",
+            "panelBackground и panelColor — цвета шторки, например тёмная панель на светлой странице",
+            "accent — цвет засветки, рамки и стрелки на наведении (по умолчанию #ff5900 под тёплый свет демо-фото); под холодные фото возьмите свой",
+            "closeLabel и linkedinLabel — подписи для скринридера и ссылки"
+          ],
+          "notes": [
+            "Биография — массив строк, а не HTML: каждая строка становится абзацем. Нужна разметка — замените [data-part=bio] на свой рендер.",
+            "Слой шторки — position: fixed с z-index 200; если у страницы есть свои слои выше, поднимите --vibeui-avatar-anim-004 z-index через className.",
+            "Прокрутка страницы блокируется через document.body.style.overflow на время открытия; если на странице другой такой же замок, объедините их."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Кто делает VibeUI",
+            "maxLength": 60
+          },
+          {
+            "prop": "duration",
+            "label": "Ход шторки, мс",
+            "type": "number",
+            "default": 650,
+            "min": 200,
+            "max": 1500
+          },
+          {
+            "prop": "panelWidth",
+            "label": "Ширина шторки, %",
+            "type": "number",
+            "default": 70,
+            "min": 30,
+            "max": 100
+          },
+          {
+            "prop": "overlay",
+            "label": "Затемнение, %",
+            "type": "number",
+            "default": 28,
+            "min": 0,
+            "max": 90
+          },
+          {
+            "prop": "panelBackground",
+            "label": "Фон шторки",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "panelColor",
+            "label": "Текст шторки",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "duration",
+          "panelWidth",
+          "overlay"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Team with a dossier drawer",
+            "description": "Five dark portraits in a row where a card opens a dossier in a drawer on the right: the page dims and freezes, the panel slides in from the side, and only once it has settled does the text appear — photo, name, role, bio and a link. Closing runs in reverse. On hover the photo does not fade but warms up: an accent-colored glow from the bottom, a slight zoom, an orange frame, and a caption with an arrow rises from below.",
+            "docs": "One file, zero dependencies, \"use client\", palette in local --vibeui-avatar-anim-004-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class; the drawer colors can be set with the panelBackground and panelColor props. The opening choreography is entirely CSS transitions with delays: the [data-part=layer] toggles data-open, the dim and the panel travel for duration ms on cubic-bezier(0.45,0,0.55,1), the text inside ([data-part=sheet]) fades in over 240 ms with a delay of duration — that is, after the drawer has arrived. On close the delays swap: the text fades first, the panel and the dim wait 240 ms for it and leave after; the layer's visibility switches off when the whole chain ends. JS handles state, locking body scroll while open, Escape and returning focus to the card. The grid is computed from the block's own width: below 48rem a single-row horizontally scrolling strip with snap (a thin scrollbar is visible with a mouse), from 48rem a grid with all five in a row. A card is 3:4; on hover-capable devices the caption is hidden and rises on hover, the photo saturates and grows slightly, a warm accent-colored glow [data-part=glow] (mix-blend-mode: screen) and a 2px inner frame appear on top, the arrow in the caption corner is swapped for a second copy; without hover the caption is always visible and a plus sits in the card corner. The drawer is a fixed layer over the page: panelWidth % of the viewport width, below 48rem the full viewport; inside it has its own container-type, font sizes in cqi. The bio is an array of paragraphs, not HTML. Without a photo the card shows initials on a plate. prefers-reduced-motion zeroes durations and delays.",
+            "ai": {
+              "summary": "Five portraits in a row with a dossier drawer: a card opens a panel on the right, the page dims and freezes, the text appears after the drawer has travelled, closing runs in reverse; on hover the photo warms up with an accent-colored glow. One file, zero dependencies, the whole choreography on CSS transitions with delays.",
+              "preserve": [
+                "the local --vibeui-avatar-anim-004-* palette — do not swap it for theme tokens; the drawer colors come from the panelBackground and panelColor props",
+                "the choreography order: the dim and the panel travel together, the text appears with a delay of duration, on close the text fades first and the panel waits 240 ms for it; this is done by transition-delay on [data-part=layer][data-open], do not rewrite it with JS timers or an animation library",
+                "the drawer as a fixed layer over the page with body scroll lock, Escape and focus return to the card",
+                "the grid computed from the block's own width (container queries): below 48rem a single-row scrolling strip, from 48rem five in a row; cards never wrap to a second row",
+                "the card hover behavior — caption from the bottom, accent-colored glow and frame, zoom and arrow swap — and the plus in the corner where there is no hover",
+                "the transition removal under prefers-reduced-motion"
+              ],
+              "adapt": [
+                "members — your people: id, name, role, photo, bio (an array of paragraphs), linkedin",
+                "title and description — the heading and intro above the grid",
+                "duration — the drawer travel in ms; panelWidth — its width in % of the viewport; overlay — the dim in %",
+                "panelBackground and panelColor — the drawer colors, e.g. a dark panel on a light page",
+                "accent — the color of the hover glow, frame and arrow (#ff5900 by default to match the warm light of the demo photos); pick your own for cool-toned photos",
+                "closeLabel and linkedinLabel — labels for the screen reader and the link"
+              ],
+              "notes": [
+                "The bio is an array of strings, not HTML: each string becomes a paragraph. If you need markup, replace [data-part=bio] with your own render.",
+                "The drawer layer is position: fixed with z-index 200; if the page has its own layers above it, raise the z-index via className.",
+                "Page scroll is locked via document.body.style.overflow while open; if the page has another lock of the same kind, merge them."
+              ],
+              "usage": "<AvatarAnim004\n  title=\"Who makes VibeUI\"\n  description=\"Tap a card to read who does what.\"\n  duration={650}\n  panelWidth={60}\n  overlay={35}\n  members={[\n    {\n      id: \"anna\",\n      name: \"Anna Smith\",\n      role: \"Art Director\",\n      photo: \"/team/anna.jpg\",\n      linkedin: \"https://www.linkedin.com/in/anna\",\n      bio: [\"First paragraph.\", \"Second paragraph.\"],\n    },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Who makes VibeUI"
+              },
+              "duration": {
+                "label": "Drawer travel, ms"
+              },
+              "panelWidth": {
+                "label": "Drawer width, %"
+              },
+              "overlay": {
+                "label": "Dim, %"
+              },
+              "panelBackground": {
+                "label": "Drawer background"
+              },
+              "panelColor": {
+                "label": "Drawer text"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Who makes VibeUI",
+                "description": "Five people, one library: design, code, motion and words that AI turns into websites. Tap a card to see who is responsible for what.",
+                "closeLabel": "Close",
+                "members": [
+                  {
+                    "id": "alisa",
+                    "name": "Alisa Vorontsova",
+                    "role": "Art Director",
+                    "photo": "/demo/cards/portrait-01.webp",
+                    "linkedin": "https://www.linkedin.com",
+                    "bio": [
+                      "Alisa is responsible for how every component in the catalog looks, from the first screen to a tooltip. Her rule: a block has to read as a finished thing, not a placeholder — otherwise AI assembles a faceless template out of it.",
+                      "Before VibeUI she ran design systems in product teams for seven years and got tired of explaining to developers why a button that is \"almost the same\" is a different button. Now she explains it to agents through metadata, and they listen better.",
+                      "Outside work she paints in watercolor and claims that is exactly why there is never a pure gray in her palettes."
+                    ]
+                  },
+                  {
+                    "id": "marina",
+                    "name": "Marina Sokolova",
+                    "role": "Brand Voice",
+                    "photo": "/demo/posters/poster-03.webp",
+                    "linkedin": "https://www.linkedin.com",
+                    "bio": [
+                      "Marina writes everything a person and an agent read: catalog headings, component descriptions, AI instructions. She names the same block the way a designer, a developer and a client would — and all three find it.",
+                      "She came from music journalism and still believes a component description has rhythm: if a sentence does not sound right out loud, the model will not get it either. She actually reads every catalog text aloud.",
+                      "In the evenings she sings in a small jazz band — hence the attention to where the pause in a sentence goes."
+                    ]
+                  },
+                  {
+                    "id": "igor",
+                    "name": "Igor Belyaev",
+                    "role": "Lead Frontend Engineer",
+                    "photo": "/demo/cards/portrait-02.webp",
+                    "linkedin": "https://www.linkedin.com",
+                    "bio": [
+                      "Igor makes sure every component stays a single file with no dependencies that you can carry into any project and it just works. If a block pulls in a library, the block gets rewritten — the library does not get added.",
+                      "Fifteen years in frontend, the last five on the border with design: container queries, light-dark(), portable palettes. He is the first on the team to check how a component behaves in someone else's Tailwind config and on a weak laptop.",
+                      "He keeps an old ThinkPad at home specifically to see whether an animation drops frames where there is no GPU."
+                    ]
+                  },
+                  {
+                    "id": "elena",
+                    "name": "Elena Krylova",
+                    "role": "Head of Projects",
+                    "photo": "/demo/cards/portrait-04.webp",
+                    "linkedin": "https://www.linkedin.com",
+                    "bio": [
+                      "Elena runs the catalog as a product: which categories come first, what ships, what waits. She is also the first to tell the team a deadline is unrealistic — and it usually saves everyone a week at the end.",
+                      "Before VibeUI she managed projects at a web studio and knows first-hand how long assembling a site from ready blocks takes. Now that is her main metric: from \"picked a design\" to \"the site works\" — one evening.",
+                      "Scope, deadlines and who is blocked by what — always on one board, in front of everyone. She does not like surprises, so there are none."
+                    ]
+                  },
+                  {
+                    "id": "timur",
+                    "name": "Timur Gareev",
+                    "role": "Motion Designer",
+                    "photo": "/demo/cards/portrait-06.webp",
+                    "linkedin": "https://www.linkedin.com",
+                    "bio": [
+                      "Timur makes the motion: how the drawer opens, how the caption rises, how cards fan out. His measure is simple — if you notice the animation before you understand what it is telling you, it is unnecessary.",
+                      "He works with a layout from the first sketches instead of \"animating\" a finished one, which is why motion in the catalog reads as intent rather than decoration. He writes every curve in CSS himself: animation libraries do not make it into components.",
+                      "In his free time he shoots slow-motion footage of water and falling fabric — later it comes back as a linear() with overshoot."
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
       }
     }
   ]

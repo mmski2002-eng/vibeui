@@ -66,4 +66,6 @@ export const PREVIEWS = {
     import("@/registry/components/avatar/avatar-037/avatar-037").then((module) => module.Avatar037),
   "avatar-039": () =>
     import("@/registry/components/avatar/avatar-039/avatar-039").then((module) => module.Avatar039),
+  "avatar-040": () =>
+    import("@/registry/components/avatar/avatar-040/avatar-040").then((module) => module.Avatar040),
 } satisfies PreviewLoaderMap

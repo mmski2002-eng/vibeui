@@ -756,6 +756,200 @@
           "accent"
         ]
       }
+    },
+    {
+      "name": "cursor-005",
+      "type": "registry:component",
+      "title": "Шлейф картинок",
+      "description": "За курсором тянется шлейф картинок: на каждые несколько десятков пикселей пути в точке курсора всплывает следующая картинка набора, ложится под случайным углом, держится секунду и растворяется призраком, уходя вверх. Свежая всегда сверху, старые вытесняются. Классический image trail без библиотек анимации.",
+      "categories": [
+        "cursor"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cursor-005/cursor-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cursor-005.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client», палитра в локальных --vibeui-cursor-005-*. Тему берёт из окружения через light-dark() плюс правило для класса .dark; фон поля — background с автоопределением схемы. Поле — 16:9 с overflow:hidden. Пул из max <img> лежит в разметке заранее и переиспользуется по кругу: на pointermove считается расстояние от точки последнего появления, и если оно ≥ threshold, следующий призрак получает координаты (--vibeui-cursor-005-x/y), случайный угол ±rotate (--vibeui-cursor-005-r), z-index по счётчику и перезапуск CSS-анимации через снятие data-live с принудительным reflow. Набор images идёт по кругу независимо от размера пула — src подменяется только когда отличается. Анимация vibeui-cursor-005-ghost длится lifetime мс: всплытие с перелётом (scale 0.55 → 1.04 → 1 к 26%), пауза до 62%, растворение с уходом на 24px вверх и scale 0.82. Точка — центр картинки: translate(-50%) внутри calc. pointerdown тоже ставит призрак, чтобы тап на тач-экране давал отклик; touch-action:pan-y оставляет вертикальный жест странице, горизонтальный ведёт шлейф. Подпись caption лежит по центру и гаснет после первого касания (data-touched). При prefers-reduced-motion анимации нет: призрак просто ставится и висит, пока его не сменит следующий по кругу.",
+      "meta": {
+        "tags": [
+          "cursor",
+          "image trail",
+          "trail",
+          "mouse",
+          "pointer",
+          "gallery",
+          "hover",
+          "phantom",
+          "ghost",
+          "follow",
+          "portfolio"
+        ],
+        "ai": {
+          "export": "Cursor005",
+          "usage": "<Cursor005\n  images={[\"/work/01.jpg\", \"/work/02.jpg\", \"/work/03.jpg\"]}\n  caption=\"Проведите курсором\"\n  threshold={80}\n  size={160}\n  lifetime={1200}\n  rotate={12}\n  max={12}\n/>",
+          "summary": "Шлейф картинок за курсором: на каждые threshold px пути всплывает следующая картинка набора под случайным углом, держится и растворяется. Пул <img> переиспользуется по кругу, ход одной картинки — CSS-анимация. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-cursor-005-* — не подменять её токенами темы",
+            "пул <img> в разметке и перезапуск CSS-анимации через data-live с reflow — не создавать элементы на каждое движение и не тянуть gsap/framer-motion",
+            "порог threshold по расстоянию, а не по времени: шлейф должен зависеть от скорости руки",
+            "ход призрака целиком в @keyframes vibeui-cursor-005-ghost: всплытие с перелётом, пауза, растворение вверх — это и есть характер движения",
+            "z-index по счётчику: свежая картинка всегда сверху",
+            "статичное поведение при prefers-reduced-motion: картинка ставится без анимации"
+          ],
+          "adapt": [
+            "images — свои картинки (работы, кадры, обложки); набор идёт по кругу",
+            "threshold — шаг между картинками в px; size — сторона картинки",
+            "lifetime — время жизни в мс; rotate — разброс поворота в градусах; max — сколько висит одновременно",
+            "caption — подпись до первого касания; accent — её цвет",
+            "background — фон поля; пусто — ложится на фон страницы",
+            "высота — aspect-ratio 16/9 и min-height через className"
+          ],
+          "notes": [
+            "Картинки в пуле загружаются при монтировании: для десятков тяжёлых фото подготовьте уменьшенные версии.",
+            "Поле ловит только горизонтальные касания (touch-action: pan-y), чтобы не мешать прокрутке страницы на телефоне.",
+            "Скруглять или менять пропорцию призраков — через --vibeui-cursor-005-radius и size; для не-квадратных картинок замените width/height у [data-part=ghost]."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "threshold",
+            "label": "Шаг, px",
+            "type": "number",
+            "default": 80,
+            "min": 20,
+            "max": 240
+          },
+          {
+            "prop": "size",
+            "label": "Размер, px",
+            "type": "number",
+            "default": 160,
+            "min": 60,
+            "max": 320
+          },
+          {
+            "prop": "lifetime",
+            "label": "Время жизни, мс",
+            "type": "number",
+            "default": 1200,
+            "min": 400,
+            "max": 3000
+          },
+          {
+            "prop": "rotate",
+            "label": "Разброс поворота",
+            "type": "number",
+            "default": 12,
+            "min": 0,
+            "max": 45
+          },
+          {
+            "prop": "max",
+            "label": "Одновременно",
+            "type": "number",
+            "default": 12,
+            "min": 3,
+            "max": 24
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Проведите курсором",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет подписи",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "threshold",
+          "size",
+          "lifetime",
+          "rotate"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Image trail",
+            "description": "A trail of images follows the cursor: every few dozen pixels of travel the next image in the set pops up at the cursor, lands at a random angle, holds for a second and dissolves like a phantom, drifting upward. The newest is always on top, the old ones get pushed out. The classic image trail with no animation library.",
+            "docs": "One file, zero dependencies, \"use client\", palette in local --vibeui-cursor-005-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class; the field background is background with automatic scheme detection. The field is 16:9 with overflow:hidden. A pool of max <img> elements sits in the markup up front and is reused in a loop: on pointermove the distance from the last spawn point is measured, and if it is ≥ threshold the next ghost gets coordinates (--vibeui-cursor-005-x/y), a random angle within ±rotate (--vibeui-cursor-005-r), a z-index from a counter and a CSS animation restart by removing data-live with a forced reflow. The images set cycles independently of the pool size — src is swapped only when it differs. The vibeui-cursor-005-ghost animation lasts lifetime ms: a pop with overshoot (scale 0.55 → 1.04 → 1 by 26%), a hold until 62%, a dissolve drifting 24px up at scale 0.82. The point is the image center: translate(-50%) inside calc. pointerdown also spawns a ghost so a tap on touch gives feedback; touch-action:pan-y leaves the vertical gesture to the page, the horizontal one drives the trail. The caption sits in the center and fades after the first touch (data-touched). Under prefers-reduced-motion there is no animation: a ghost is placed and stays until the next one in the loop replaces it.",
+            "ai": {
+              "summary": "An image trail behind the cursor: every threshold px of travel the next image in the set pops up at a random angle, holds and dissolves. The <img> pool is reused in a loop, a single image's motion is a CSS animation. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-cursor-005-* palette — do not swap it for theme tokens",
+                "the <img> pool in the markup and the CSS animation restart via data-live with a reflow — do not create elements per move and do not pull in gsap/framer-motion",
+                "the distance-based threshold, not a time-based one: the trail has to depend on hand speed",
+                "the ghost's motion entirely in @keyframes vibeui-cursor-005-ghost: a pop with overshoot, a hold, an upward dissolve — that is the motion's character",
+                "the counter-based z-index: the newest image is always on top",
+                "the static behavior under prefers-reduced-motion: the image is placed without animation"
+              ],
+              "adapt": [
+                "images — your own images (work, frames, covers); the set cycles",
+                "threshold — the step between images in px; size — the image side",
+                "lifetime — the life span in ms; rotate — the rotation spread in degrees; max — how many hang at once",
+                "caption — the caption before the first touch; accent — its color",
+                "background — the field background; empty — it sits on the page background",
+                "the height — aspect-ratio 16/9 and min-height via className"
+              ],
+              "notes": [
+                "Pool images load on mount: for dozens of heavy photos prepare downsized versions.",
+                "The field catches only horizontal touches (touch-action: pan-y) so it does not block page scrolling on a phone.",
+                "To round or change the ghosts' proportions use --vibeui-cursor-005-radius and size; for non-square images replace width/height on [data-part=ghost]."
+              ],
+              "usage": "<Cursor005\n  images={[\"/work/01.jpg\", \"/work/02.jpg\", \"/work/03.jpg\"]}\n  caption=\"Move your cursor\"\n  threshold={80}\n  size={160}\n  lifetime={1200}\n  rotate={12}\n  max={12}\n/>"
+            },
+            "controls": {
+              "threshold": {
+                "label": "Step, px"
+              },
+              "size": {
+                "label": "Size, px"
+              },
+              "lifetime": {
+                "label": "Lifetime, ms"
+              },
+              "rotate": {
+                "label": "Rotation spread"
+              },
+              "max": {
+                "label": "At once"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": "Move your cursor"
+              },
+              "accent": {
+                "label": "Caption color"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "caption": "Move your cursor"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

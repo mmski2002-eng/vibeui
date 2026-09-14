@@ -18,4 +18,7 @@ export const PREVIEWS = {
   "cursor-004": dynamic(() =>
     import("@/registry/animations/cursor/cursor-004/cursor-004").then((module) => module.Cursor004),
   ),
+  "cursor-005": dynamic(() =>
+    import("@/registry/animations/cursor/cursor-005/cursor-005").then((module) => module.Cursor005),
+  ),
 } satisfies PreviewMap

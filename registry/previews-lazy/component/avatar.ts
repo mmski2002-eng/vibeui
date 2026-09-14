@@ -99,4 +99,7 @@ export const PREVIEWS = {
   "avatar-039": dynamic(() =>
     import("@/registry/components/avatar/avatar-039/avatar-039").then((module) => module.Avatar039),
   ),
+  "avatar-040": dynamic(() =>
+    import("@/registry/components/avatar/avatar-040/avatar-040").then((module) => module.Avatar040),
+  ),
 } satisfies PreviewMap

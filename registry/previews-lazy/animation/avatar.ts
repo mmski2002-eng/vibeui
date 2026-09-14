@@ -12,4 +12,7 @@ export const PREVIEWS = {
   "avatar-anim-003": dynamic(() =>
     import("@/registry/animations/avatar/avatar-anim-003/avatar-anim-003").then((module) => module.AvatarAnim003),
   ),
+  "avatar-anim-004": dynamic(() =>
+    import("@/registry/animations/avatar/avatar-anim-004/avatar-anim-004").then((module) => module.AvatarAnim004),
+  ),
 } satisfies PreviewMap

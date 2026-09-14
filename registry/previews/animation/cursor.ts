@@ -12,4 +12,6 @@ export const PREVIEWS = {
     import("@/registry/animations/cursor/cursor-003/cursor-003").then((module) => module.Cursor003),
   "cursor-004": () =>
     import("@/registry/animations/cursor/cursor-004/cursor-004").then((module) => module.Cursor004),
+  "cursor-005": () =>
+    import("@/registry/animations/cursor/cursor-005/cursor-005").then((module) => module.Cursor005),
 } satisfies PreviewLoaderMap

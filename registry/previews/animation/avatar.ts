@@ -8,4 +8,6 @@ export const PREVIEWS = {
     import("@/registry/animations/avatar/avatar-anim-002/avatar-anim-002").then((module) => module.AvatarAnim002),
   "avatar-anim-003": () =>
     import("@/registry/animations/avatar/avatar-anim-003/avatar-anim-003").then((module) => module.AvatarAnim003),
+  "avatar-anim-004": () =>
+    import("@/registry/animations/avatar/avatar-anim-004/avatar-anim-004").then((module) => module.AvatarAnim004),
 } satisfies PreviewLoaderMap
