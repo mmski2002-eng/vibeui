@@ -140,6 +140,9 @@ type Dictionary = {
     /** «ещё 15 в категории» */
     more: (count: number) => string
     parts: string
+    wipTitle: string
+    wipText: string
+    wipLink: string
     partsNote: string
     copy: string
     copied: string
@@ -351,6 +354,10 @@ const RU: Dictionary = {
   },
   scenarios: {
     title: "Сценарии",
+    wipTitle: "Раздел в разработке",
+    wipText:
+      "Собираем сценарии заново: задача → готовый порядок секций → промпт на целую страницу. Пока раздел закрыт, каталог и поиск работают как обычно.",
+    wipLink: "Открыть каталог",
     metaTitle: "Сценарии — с чего начать",
     description:
       "Вход со стороны задачи, а не устройства библиотеки. Сценарий раскладывает «сделать лендинг услуги» или «собрать магазин» на секции в понятном порядке и объясняет, зачем на странице каждая.",
@@ -552,6 +559,10 @@ const EN: Dictionary = {
   },
   scenarios: {
     title: "Scenarios",
+    wipTitle: "Section under construction",
+    wipText:
+      "We are rebuilding scenarios: a task → a ready order of sections → a prompt for the whole page. While the section is closed, the catalog and search work as usual.",
+    wipLink: "Open the catalog",
     metaTitle: "Scenarios — where to start",
     description:
       "An entry point from the task, not from how the library is built. A scenario breaks “make a service landing” or “build a store” into sections in a sensible order and says what each one is for.",

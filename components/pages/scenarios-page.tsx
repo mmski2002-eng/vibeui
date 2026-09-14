@@ -30,6 +30,31 @@ export function ScenariosPage({ locale }: { locale: Locale }) {
           </p>
         </header>
 
+        {scenarios.length === 0 ? (
+          <section className="border-shell-border bg-shell-panel relative overflow-hidden rounded-2xl border px-6 py-14 text-center sm:py-20">
+            <div
+              className="pointer-events-none absolute inset-x-10 -top-px h-px bg-gradient-to-r from-transparent via-[#ff5900] to-transparent"
+              aria-hidden="true"
+            />
+            <p className="text-shell-accent-text text-xs font-semibold tracking-[0.14em] uppercase">
+              {t.scenarios.title}
+            </p>
+            <h2 className="text-shell-fg mt-3 text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
+              {t.scenarios.wipTitle}
+            </h2>
+            <p className="text-shell-muted mx-auto mt-3 max-w-xl text-sm text-pretty sm:text-base">
+              {t.scenarios.wipText}
+            </p>
+            <Link
+              href={localePath(locale, "/components")}
+              className="bg-shell-accent text-shell-accent-fg hover:bg-shell-accent-deep mt-8 inline-flex h-11 items-center gap-2 rounded-full px-6 text-sm font-semibold transition-colors"
+            >
+              {t.scenarios.wipLink}
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+          </section>
+        ) : null}
+
         <ul className="grid gap-6 sm:grid-cols-2">
           {scenarios.map((resolved) => {
             const cover = resolved.cover
