@@ -55,7 +55,13 @@ export async function requireAdmin() {
   return session.user
 }
 
-export type AdminTarget = "user" | "payment" | "report" | "token" | "partner"
+export type AdminTarget =
+  | "user"
+  | "payment"
+  | "report"
+  | "token"
+  | "partner"
+  | "setting"
 
 /**
  * Запись в журнал. Пишется после успешного действия: журнал отвечает на

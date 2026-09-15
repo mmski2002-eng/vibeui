@@ -3,6 +3,7 @@ import { and, count, desc, eq, ilike, or } from "drizzle-orm"
 import { Download, Search } from "lucide-react"
 
 import { AdminHeading, INPUT_CLASS } from "@/components/admin/parts"
+import { PriceSettings } from "@/components/admin/price-settings"
 import { ADMIN_TEXTS } from "@/components/admin/texts"
 import { Button } from "@/components/account/ui/button"
 import { CellStack, DataTable } from "@/components/account/ui/data-table"
@@ -12,6 +13,8 @@ import { requireAdmin } from "@/lib/admin"
 import { db } from "@/lib/db"
 import { payment, user } from "@/lib/db/schema"
 import { formatDate, formatNumber } from "@/lib/format"
+import { getPlans } from "@/lib/plan-prices"
+import { PLANS } from "@/lib/plans"
 
 const PAGE = 50
 
@@ -66,7 +69,7 @@ export async function AdminPayments({
     ].filter(Boolean),
   )
 
-  const [rows, totalRows] = await Promise.all([
+  const [rows, totalRows, plans] = await Promise.all([
     db
       .select({
         id: payment.id,
@@ -89,7 +92,10 @@ export async function AdminPayments({
       .from(payment)
       .leftJoin(user, eq(user.id, payment.userId))
       .where(where),
+    getPlans(),
   ])
+
+  const rub = (price: string) => String(Math.round(Number(price)))
 
   const total = totalRows[0]?.value ?? 0
   const hasNext = page * PAGE < total
@@ -125,6 +131,12 @@ export async function AdminPayments({
             {t.export}
           </Link>
         }
+      />
+
+      <PriceSettings
+        monthly={rub(plans.monthly.price)}
+        yearly={rub(plans.yearly.price)}
+        defaults={{ monthly: rub(PLANS.monthly.price), yearly: rub(PLANS.yearly.price) }}
       />
 
       <form

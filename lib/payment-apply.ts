@@ -5,7 +5,8 @@ import { eq } from "drizzle-orm"
 
 import { db } from "@/lib/db"
 import { payment, subscription, webhookEvent } from "@/lib/db/schema"
-import { PLANS, isPlanId } from "@/lib/plans"
+import { getPlans } from "@/lib/plan-prices"
+import { isPlanId } from "@/lib/plans"
 import { fetchPayment } from "@/lib/yookassa"
 
 /**
@@ -160,7 +161,7 @@ export async function applyPaymentEvent(
     return { applied: false, reason: "no_metadata" }
   }
 
-  const plan = PLANS[planId]
+  const plan = (await getPlans())[planId]
 
   await db
     .insert(payment)

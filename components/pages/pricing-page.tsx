@@ -9,7 +9,7 @@ import { Pricing011 } from "@/registry/blocks/pricing/pricing-011/pricing-011"
 import { getUsedCount } from "@/lib/entitlements"
 import { localePath, type Locale } from "@/lib/i18n"
 import { FREE_MONTHLY_LIMIT } from "@/lib/limits"
-import { PLANS } from "@/lib/plans"
+import { getPlans, type Plans } from "@/lib/plan-prices"
 import { getSession } from "@/lib/session"
 import { getSubscriptionState, isProState } from "@/lib/subscription-state"
 import { getCatalogItems, getItemsByKind } from "@/registry/index"
@@ -17,18 +17,41 @@ import { getCatalogItems, getItemsByKind } from "@/registry/index"
 /** Витрина красится фирменным оранжевым: блоки из реестра берут его пропом. */
 const BRAND_ACCENT = "#ff5900"
 
-const MONTHLY = Math.round(Number(PLANS.monthly.price))
-const YEARLY = Math.round(Number(PLANS.yearly.price))
-const ENTERPRISE_MONTHLY = Math.round(Number(PLANS["enterprise-monthly"].price))
-const ENTERPRISE_YEARLY = Math.round(Number(PLANS["enterprise-yearly"].price))
-const YEARLY_SAVING = Math.round((1 - YEARLY / (MONTHLY * 12)) * 100)
+type Prices = {
+  MONTHLY: number
+  YEARLY: number
+  ENTERPRISE_MONTHLY: number
+  ENTERPRISE_YEARLY: number
+  YEARLY_SAVING: number
+}
+
+/** Цены в рублях без копеек: администратор правит их в кабинете. */
+function pricesOf(plans: Plans): Prices {
+  const MONTHLY = Math.round(Number(plans.monthly.price))
+  const YEARLY = Math.round(Number(plans.yearly.price))
+
+  return {
+    MONTHLY,
+    YEARLY,
+    ENTERPRISE_MONTHLY: Math.round(Number(plans["enterprise-monthly"].price)),
+    ENTERPRISE_YEARLY: Math.round(Number(plans["enterprise-yearly"].price)),
+    YEARLY_SAVING: Math.round((1 - YEARLY / (MONTHLY * 12)) * 100),
+  }
+}
 
 const ITEMS = getCatalogItems().length
 const ANIMATIONS = getItemsByKind("animation").length
 
 const number = (value: number) => value.toLocaleString("ru-RU")
 
-const TEXTS = {
+const buildTexts = ({
+  MONTHLY,
+  YEARLY,
+  ENTERPRISE_MONTHLY,
+  ENTERPRISE_YEARLY,
+  YEARLY_SAVING,
+}: Prices) =>
+  ({
   ru: {
     eyebrow: "Тарифы",
     title: "Сайт за вечер.\nДизайн — ваш.",
@@ -367,7 +390,7 @@ const TEXTS = {
     and: "and the",
     privacy: "privacy policy",
   },
-} as const
+}) as const
 
 function Eyebrow({ children }: { children: string }) {
   return (
@@ -384,7 +407,9 @@ function Eyebrow({ children }: { children: string }) {
  * об оплате и финальный призыв. Логика оплаты и сессии — как была.
  */
 export async function PricingPage({ locale }: { locale: Locale }) {
-  const t = TEXTS[locale]
+  const prices = pricesOf(await getPlans())
+  const { MONTHLY, YEARLY, ENTERPRISE_MONTHLY, ENTERPRISE_YEARLY } = prices
+  const t = buildTexts(prices)[locale]
   const session = await getSession()
   const [state, used] = session
     ? await Promise.all([

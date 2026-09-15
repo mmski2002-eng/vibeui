@@ -357,3 +357,14 @@ export const searchQuery = pgTable(
     index("search_query_results_idx").on(table.results, table.createdAt),
   ],
 )
+
+/**
+ * Настройки сайта, которые администратор меняет без релиза. Ключ — имя
+ * настройки (`price.monthly`), значение — строка: настроек единицы, и
+ * типизировать их колонками рано.
+ */
+export const setting = pgTable("setting", {
+  key: text("key").primaryKey(),
+  value: text("value").notNull(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+})

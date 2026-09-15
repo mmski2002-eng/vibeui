@@ -24,6 +24,7 @@ const LOG_ACTIONS: Record<string, string> = {
   "payment.receipt": "Внёс ссылку на чек",
   "partner.create": "Создал ссылку для блогера",
   "partner.delete": "Удалил ссылку для блогера",
+  "setting.prices": "Изменил цены тарифов",
 }
 
 /**
@@ -170,6 +171,14 @@ export const ADMIN_TEXTS = {
     receiptSave: "Сохранить ссылку",
     receiptSaving: "Сохраняем…",
     receiptMissing: "не внесён",
+    prices: "Цены тарифов",
+    pricesNote:
+      "Цена Pro в рублях, без копеек. Энтерпрайз считается вдвое дороже сам. Новая цена сразу уходит на витрину и в следующие списания; уже оплаченные периоды не меняются.",
+    priceMonthly: "Pro на месяц, ₽",
+    priceYearly: "Pro на год, ₽",
+    pricesSave: "Сохранить цены",
+    pricesSaving: "Сохраняем…",
+    pricesDefault: "по умолчанию",
   },
   reports: {
     title: "Жалобы",

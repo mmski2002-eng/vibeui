@@ -5,7 +5,8 @@ import { redirect } from "next/navigation"
 
 import { db } from "@/lib/db"
 import { subscription } from "@/lib/db/schema"
-import { PLANS, isPlanId } from "@/lib/plans"
+import { getPlans } from "@/lib/plan-prices"
+import { isPlanId } from "@/lib/plans"
 import { SITE_URL } from "@/lib/seo"
 import { requireUser } from "@/lib/session"
 import { localePath } from "@/lib/i18n"
@@ -30,7 +31,7 @@ export async function startCheckout(formData: FormData) {
   }
 
   const user = await requireUser()
-  const plan = PLANS[planId]
+  const plan = (await getPlans())[planId]
   let url: string | undefined
 
   try {

@@ -16,7 +16,7 @@ import { payment } from "@/lib/db/schema"
 import { FREE_MONTHLY_LIMIT } from "@/lib/entitlements"
 import { formatDate, formatNumber } from "@/lib/format"
 import { localePath, type Locale } from "@/lib/i18n"
-import { PLANS } from "@/lib/plans"
+import { getPlans, type Plans } from "@/lib/plan-prices"
 import { requireUser } from "@/lib/session"
 import {
   getSubscriptionRow,
@@ -38,13 +38,14 @@ export async function AccountBilling({ locale }: { locale: Locale }) {
   const t = ACCOUNT_TEXTS[locale].billing
   const now = new Date()
 
-  const [row, pendingRows] = await Promise.all([
+  const [row, pendingRows, plans] = await Promise.all([
     getSubscriptionRow(user.id),
     db
       .select({ status: payment.status })
       .from(payment)
       .where(and(eq(payment.userId, user.id), eq(payment.status, "pending")))
       .limit(1),
+    getPlans(),
   ])
 
   const state = resolveSubscription(row, now)
@@ -100,7 +101,7 @@ export async function AccountBilling({ locale }: { locale: Locale }) {
           </ButtonLink>
         </Panel>
       ) : (
-        <ActivePlan locale={locale} state={state} now={now} />
+        <ActivePlan locale={locale} state={state} now={now} plans={plans} />
       )}
     </>
   )
@@ -110,8 +111,10 @@ function ActivePlan({
   locale,
   state,
   now,
+  plans,
 }: {
   locale: Locale
+  plans: Plans
   state: Exclude<
     ReturnType<typeof resolveSubscription>,
     { kind: "free" } | { kind: "expired" }
@@ -120,7 +123,7 @@ function ActivePlan({
 }) {
   const t = ACCOUNT_TEXTS[locale].billing
   const plan = "plan" in state ? state.plan : null
-  const days = plan ? PLANS[plan].days : 30
+  const days = plan ? plans[plan].days : 30
   const start = new Date(state.until.getTime() - days * DAY)
   const elapsed = Math.min(
     1,
@@ -217,7 +220,7 @@ function ActivePlan({
           index={3}
           label={t.price}
           value={
-            plan ? formatNumber(Number(PLANS[plan].price), "rub", locale) : "—"
+            plan ? formatNumber(Number(plans[plan].price), "rub", locale) : "—"
           }
         />
         <Field

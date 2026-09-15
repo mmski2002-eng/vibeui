@@ -10,6 +10,7 @@ import {
   payment,
   registryToken,
   session,
+  setting,
   subscription,
   usage,
   user,
@@ -17,6 +18,7 @@ import {
 import { currentPeriod } from "@/lib/entitlements"
 import { createInvite, deleteInvite } from "@/lib/partners"
 import { applyPaymentEvent, grantDays } from "@/lib/payment-apply"
+import { PRICE_KEYS } from "@/lib/plan-prices"
 import { fetchPayment } from "@/lib/yookassa"
 
 /**
@@ -470,4 +472,49 @@ export async function deletePartnerInvite(input: { id: string }) {
   })
 
   revalidatePath("/account/admin/partners")
+}
+
+function rublesOrThrow(value: string, label: string) {
+  const amount = Number(value.trim())
+
+  if (!Number.isInteger(amount) || amount < 1 || amount > 1_000_000) {
+    throw new Error(`${label}: нужно целое число рублей`)
+  }
+
+  return String(amount)
+}
+
+/**
+ * Цены Pro. Хранятся в рублях без копеек; в платёж уходят как `N.00`.
+ * Энтерпрайз отдельно не задаётся — он всегда вдвое дороже Pro.
+ */
+export async function setPlanPrices(input: { monthly: string; yearly: string }) {
+  const admin = await requireAdmin()
+  const monthly = rublesOrThrow(input.monthly, "Месяц")
+  const yearly = rublesOrThrow(input.yearly, "Год")
+
+  for (const [key, value] of [
+    [PRICE_KEYS.monthly, monthly],
+    [PRICE_KEYS.yearly, yearly],
+  ] as const) {
+    await db
+      .insert(setting)
+      .values({ key, value })
+      .onConflictDoUpdate({
+        target: setting.key,
+        set: { value, updatedAt: new Date() },
+      })
+  }
+
+  await logAdminAction({
+    adminEmail: admin.email,
+    action: "setting.prices",
+    targetType: "setting",
+    targetId: "prices",
+    details: { monthly, yearly },
+  })
+
+  for (const path of ["/", "/en", "/pricing", "/en/pricing", "/account/admin/payments"]) {
+    revalidatePath(path)
+  }
 }

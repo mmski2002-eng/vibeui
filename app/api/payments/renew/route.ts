@@ -3,7 +3,8 @@ import { and, eq, isNotNull, lt } from "drizzle-orm"
 import { db } from "@/lib/db"
 import { subscription, user } from "@/lib/db/schema"
 import { sendMail } from "@/lib/mail"
-import { PLANS, isPlanId } from "@/lib/plans"
+import { getPlans } from "@/lib/plan-prices"
+import { isPlanId } from "@/lib/plans"
 import { pruneSearchLog } from "@/lib/search-log"
 import { chargeSaved } from "@/lib/yookassa"
 
@@ -48,6 +49,7 @@ export async function POST(request: Request) {
   // операции в сутки заводить незачем.
   await pruneSearchLog()
 
+  const plans = await getPlans()
   let charged = 0
   let closed = 0
 
@@ -64,7 +66,7 @@ export async function POST(request: Request) {
       continue
     }
 
-    const plan = isPlanId(current.plan) ? PLANS[current.plan] : PLANS.monthly
+    const plan = isPlanId(current.plan) ? plans[current.plan] : plans.monthly
 
     try {
       await chargeSaved({

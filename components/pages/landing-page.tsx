@@ -12,7 +12,7 @@ import {
 } from "@/components/pages/landing/category-explorer"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
 import { FREE_MONTHLY_LIMIT } from "@/lib/limits"
-import { PLANS } from "@/lib/plans"
+import { getPlans } from "@/lib/plan-prices"
 import { getInstallCommand } from "@/lib/site"
 import { CATEGORIES, type ItemKind } from "@/registry/categories"
 import {
@@ -51,7 +51,7 @@ const BTN_GHOST =
  * Главная — витринный лендинг. Каталог живёт в своих разделах (/components,
  * /blocks, /animations); здесь — обзор с живыми числами из реестра.
  */
-export function LandingPage({ locale }: { locale: Locale }) {
+export async function LandingPage({ locale }: { locale: Locale }) {
   const t = getDictionary(locale)
   const en = locale === "en"
 
@@ -155,7 +155,7 @@ export function LandingPage({ locale }: { locale: Locale }) {
         "Одна команда — и готово",
       ]
 
-  const monthly = Number(PLANS.monthly.price).toLocaleString("ru-RU")
+  const monthly = Number((await getPlans()).monthly.price).toLocaleString("ru-RU")
   const tiers = en
     ? [
         {
