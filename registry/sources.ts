@@ -25,6 +25,7 @@ import consentRegistry from "@/registry/blocks/consent/registry.json"
 import downloadsRegistry from "@/registry/blocks/downloads/registry.json"
 import portfolioRegistry from "@/registry/blocks/portfolio/registry.json"
 import realtyRegistry from "@/registry/blocks/realty/registry.json"
+import restaurantRegistry from "@/registry/blocks/restaurant/registry.json"
 import eventsRegistry from "@/registry/blocks/events/registry.json"
 import videoRegistry from "@/registry/blocks/video/registry.json"
 import podcastRegistry from "@/registry/blocks/podcast/registry.json"
@@ -248,6 +249,11 @@ export const SOURCES = [
     directory: "registry/blocks/realty",
     kind: "block",
     items: realtyRegistry.items,
+  },
+  {
+    directory: "registry/blocks/restaurant",
+    kind: "block",
+    items: restaurantRegistry.items,
   },
   {
     directory: "registry/blocks/events",

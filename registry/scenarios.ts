@@ -120,6 +120,37 @@ export const SCENARIOS: Scenario[] = [
       { item: "realty-012", anchor: "footer", role: "Подвал", roleEn: "Footer", note: "Адрес, часы, телефон и мессенджеры значками на тёмно-зелёном.", noteEn: "Address, hours, phone and messengers with icons on dark green." },
     ],
   },
+  {
+    slug: "restaurant",
+    label: "Ресторан",
+    en: "Restaurant",
+    summary:
+      "Сайт ресторана северной кухни: первый экран с бегущей строкой, меню с фото у курсора, шеф, галерея зала с параллаксом, бронь стола, события, отзывы поверх фото, карта и подвал. Тёмная тема: свечи, дерево и винное свечение.",
+    summaryEn:
+      "A Nordic-cuisine restaurant site: a hero with a ticker, a menu with cursor photos, the chef, a parallax hall gallery, table booking, events, reviews over a photo, a map and a footer. A dark theme: candles, wood and a wine-red glow.",
+    demo: "/scenarios/restaurant/demo",
+    source: "app/scenarios/restaurant/demo/page.tsx",
+    images: "docs/scenarios/restaurant/IMAGES.md",
+    theme: {
+      tone: "dark",
+      accent: "#7d2a3a",
+      ink: "#f2ebe0",
+      font: "Playfair Display, Manrope",
+    },
+    sections: [
+      { item: "restaurant-001", anchor: "", role: "Шапка", roleEn: "Header", note: "Словомарка, часы, телефон и бронь; прозрачная поверх фото, темнеет при скролле.", noteEn: "Wordmark, hours, phone and booking; transparent over the photo, darkens on scroll." },
+      { item: "restaurant-002", anchor: "hero", role: "Первый экран", roleEn: "First screen", note: "Фото с наездом, заголовок построчно, бегущая строка анонсов.", noteEn: "A photo with push-in, a line-by-line headline, an announcements ticker." },
+      { item: "restaurant-003", anchor: "menu", role: "Меню", roleEn: "Menu", note: "Разделы табами, лидеры до цены, метки, фото блюда у курсора.", noteEn: "Sections as tabs, leaders to the price, tags, a dish photo by the cursor." },
+      { item: "restaurant-011", anchor: "menu", role: "Плашка", roleEn: "Band", note: "«Вино недели» винной полосой с бликом между меню и шефом.", noteEn: "“Wine of the week” as a wine-red band with a shine between the menu and the chef." },
+      { item: "restaurant-004", anchor: "chef", role: "Шеф", roleEn: "Chef", note: "Портрет со вторым фото внахлёст, цитата, росчерк, факты.", noteEn: "A portrait with an overlapping second photo, a quote, a signature, facts." },
+      { item: "restaurant-005", anchor: "hall", role: "Зал", roleEn: "Hall", note: "Колонки фото с параллаксом при скролле и лайтбокс.", noteEn: "Photo columns with scroll parallax and a lightbox." },
+      { item: "restaurant-006", anchor: "book", role: "Бронь", roleEn: "Booking", note: "Свободные окна чипами, дата, время, гости степпером, телефон.", noteEn: "Free slots as chips, date, time, guests stepper, phone." },
+      { item: "restaurant-007", anchor: "events", role: "События", roleEn: "Events", note: "Лента с днём недели серифом, ценой и фото по наведению.", noteEn: "A feed with a serif weekday, price and a hover photo." },
+      { item: "restaurant-008", anchor: "reviews", role: "Отзывы", roleEn: "Reviews", note: "Стеклянные карточки поверх мутного фото зала, общая оценка.", noteEn: "Glass cards over a blurred hall photo, an overall score." },
+      { item: "restaurant-009", anchor: "map", role: "Как добраться", roleEn: "Directions", note: "Яндекс Карта с меткой и карточка с адресом, часами и маршрутом.", noteEn: "A Yandex Map with a pin and a card with address, hours and a route." },
+      { item: "restaurant-010", anchor: "footer", role: "Подвал", roleEn: "Footer", note: "Часы по дням, телефон, мессенджеры значками, ссылки.", noteEn: "Hours by day, phone, messengers with icons, links." },
+    ],
+  },
 ]
 
 // Опечатка в имени item'а здесь означала бы пустую карточку в рецепте,
