@@ -162,11 +162,9 @@ function ReferralItem({ referral }: { referral: ReferralRow }) {
     ? t.notPaid
     : state.kind === "expired"
       ? `${t.paidAt(date(referral.firstPaidAt))}, ${t.expired}`
-      : state.kind === "cancelled"
-        ? `${t.paidAt(date(referral.firstPaidAt))}, ${t.cancelled}, ${t.activeUntil(date(state.until))}`
-        : "until" in state
-          ? `${t.paidAt(date(referral.firstPaidAt))}, ${t.activeUntil(date(state.until))}`
-          : t.paidAt(date(referral.firstPaidAt))
+      : "until" in state
+        ? `${t.paidAt(date(referral.firstPaidAt))}, ${t.activeUntil(date(state.until))}`
+        : t.paidAt(date(referral.firstPaidAt))
 
   return (
     <li className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3 text-sm">

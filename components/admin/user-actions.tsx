@@ -13,7 +13,6 @@ import {
   revokeUserTokens,
   saveUserNote,
   setBlocked,
-  setRenewal,
   signOutEverywhere,
   verifyEmailManually,
 } from "@/lib/admin-actions"
@@ -29,15 +28,11 @@ export function UserActions({
   userId,
   blocked,
   verified,
-  hasSubscription,
-  cancelling,
   note,
 }: {
   userId: string
   blocked: boolean
   verified: boolean
-  hasSubscription: boolean
-  cancelling: boolean
   note: string
 }) {
   const t = ADMIN_TEXTS.users.actions
@@ -106,21 +101,6 @@ export function UserActions({
           />
         </div>
       </div>
-
-      {hasSubscription ? (
-        <div className="border-shell-border border-t pt-4">
-          <Button
-            busy={pending === "renewal"}
-            disabled={needsReason}
-            label={cancelling ? t.resumeRenewal : t.cancelRenewal}
-            onRun={() =>
-              run("renewal", () =>
-                setRenewal({ userId, cancel: !cancelling, reason }),
-              )
-            }
-          />
-        </div>
-      ) : null}
 
       <div className="border-shell-danger/30 bg-shell-danger-soft grid gap-3 rounded-xl border p-4">
         <Row note={t.blockNote}>

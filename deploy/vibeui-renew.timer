@@ -1,5 +1,5 @@
 [Unit]
-Description=VibeUI: продление подписок раз в час
+Description=VibeUI: обслуживание подписок раз в час
 
 [Timer]
 OnCalendar=hourly

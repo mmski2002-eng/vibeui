@@ -66,7 +66,7 @@ const buildTexts = ({
       "Ноль зависимостей",
       "shadcn CLI",
       "Оплата картой и СБП",
-      "Отмена в один клик",
+      "Без автосписаний",
     ],
     plansEyebrow: "Тарифы",
     plansTitle: "Бесплатно — чтобы попробовать. Pro — чтобы собирать.",
@@ -108,7 +108,7 @@ const buildTexts = ({
         cta: "Открыть Pro",
         payMonth: "Оплатить месяц",
         payYear: "Оплатить год",
-        under: "Продление отключается в кабинете в один клик.",
+        under: "Разовая оплата. Карта не сохраняется, автосписаний нет.",
         activeUntil: "Pro активен до",
         manage: "Управлять подпиской",
       },
@@ -173,7 +173,7 @@ const buildTexts = ({
     snippet: "npx shadcn add vibeui.ru/r/hero-011",
     faqEyebrow: "Вопросы об оплате",
     faqTitle: "Что обычно спрашивают перед оплатой",
-    faqLede: "Только про деньги, документы и отмену. Про сами компоненты — в каталоге.",
+    faqLede: "Только про деньги, документы и сроки. Про сами компоненты — в каталоге.",
     faq: [
       {
         question: "Как оплатить?",
@@ -184,7 +184,7 @@ const buildTexts = ({
       {
         question: "Подписка продлевается сама?",
         answer:
-          "Да, в конце оплаченного периода. Отключить продление можно в кабинете в любой момент: доступ сохранится до конца периода, следующего списания не будет.",
+          "Нет. Оплата разовая — за месяц или за год, карта не сохраняется. Когда срок закончится, тариф станет бесплатным, а оплатить снова можно в любой момент из кабинета.",
       },
       {
         question: "Как считается лимит на бесплатном тарифе?",
@@ -213,7 +213,7 @@ const buildTexts = ({
     contactText: "Не нашли свой вопрос?",
     contactLabel: "Написать в поддержку",
     ctaTitle: "Начните бесплатно. Pro — когда лимит станет тесен.",
-    ctaText: `${FREE_MONTHLY_LIMIT} компонентов в месяц без карты. Потом — ${number(MONTHLY)} ₽ в месяц, отмена в один клик.`,
+    ctaText: `${FREE_MONTHLY_LIMIT} компонентов в месяц без карты. Потом — ${number(MONTHLY)} ₽ за месяц, без автосписаний.`,
     ctaButton: "Создать аккаунт",
     ctaButtonSigned: "Открыть каталог",
     legal: "Оплата картой или через СБП через ЮKassa. Оформляя подписку, вы принимаете",
@@ -235,7 +235,7 @@ const buildTexts = ({
       "Zero dependencies",
       "shadcn CLI",
       "Card and SBP payments",
-      "Cancel in one click",
+      "No auto-charges",
     ],
     plansEyebrow: "Plans",
     plansTitle: "Free to try. Pro to build.",
@@ -277,7 +277,7 @@ const buildTexts = ({
         cta: "Get Pro",
         payMonth: "Pay for a month",
         payYear: "Pay for a year",
-        under: "Renewal switches off in your account in one click.",
+        under: "One-off payment. No card on file, no auto-charges.",
         activeUntil: "Pro is active until",
         manage: "Manage subscription",
       },
@@ -342,7 +342,7 @@ const buildTexts = ({
     snippet: "npx shadcn add vibeui.ru/r/hero-011",
     faqEyebrow: "Billing questions",
     faqTitle: "What people ask before paying",
-    faqLede: "Only money, documents and cancellation. The components speak for themselves in the catalog.",
+    faqLede: "Only money, documents and access periods. The components speak for themselves in the catalog.",
     faq: [
       {
         question: "How do I pay?",
@@ -353,7 +353,7 @@ const buildTexts = ({
       {
         question: "Does the subscription renew itself?",
         answer:
-          "Yes, at the end of the paid period. Turn renewal off in your account at any time: access stays until the period ends, and there is no next charge.",
+          "No. You pay once — for a month or a year — and no card is stored. When the period ends the plan becomes free, and you can pay again any time from your account.",
       },
       {
         question: "How does the free limit work?",
@@ -382,7 +382,7 @@ const buildTexts = ({
     contactText: "Did not find your question?",
     contactLabel: "Write to support",
     ctaTitle: "Start for free. Go Pro when the limit gets tight.",
-    ctaText: `${FREE_MONTHLY_LIMIT} components a month with no card. Then ${number(MONTHLY)} ₽ a month, cancel in one click.`,
+    ctaText: `${FREE_MONTHLY_LIMIT} components a month with no card. Then ${number(MONTHLY)} ₽ for a month, no auto-charges.`,
     ctaButton: "Create an account",
     ctaButtonSigned: "Open the catalog",
     legal: "Card or SBP payments via YooKassa. By subscribing you accept the",

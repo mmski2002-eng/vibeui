@@ -1,10 +1,7 @@
 "use server"
 
-import { eq } from "drizzle-orm"
 import { redirect } from "next/navigation"
 
-import { db } from "@/lib/db"
-import { subscription } from "@/lib/db/schema"
 import { getPlans } from "@/lib/plan-prices"
 import { isPlanId } from "@/lib/plans"
 import { SITE_URL } from "@/lib/seo"
@@ -50,23 +47,4 @@ export async function startCheckout(formData: FormData) {
   }
 
   redirect(url ?? localePath(locale, "/pricing/soon"))
-}
-
-/** Отмена: доступ живёт до конца оплаченного периода, деньги не трогаем. */
-export async function cancelSubscription() {
-  const user = await requireUser()
-
-  await db
-    .update(subscription)
-    .set({ cancelAtPeriodEnd: true, updatedAt: new Date() })
-    .where(eq(subscription.userId, user.id))
-}
-
-export async function resumeSubscription() {
-  const user = await requireUser()
-
-  await db
-    .update(subscription)
-    .set({ cancelAtPeriodEnd: false, updatedAt: new Date() })
-    .where(eq(subscription.userId, user.id))
 }

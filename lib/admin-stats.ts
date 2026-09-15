@@ -46,9 +46,7 @@ export type MoneyStats = {
   payments: number
   average: number
   activeSubs: number
-  cancelling: number
   stuck: number
-  failing: number
 }
 
 export async function moneyStats(days: Period, now = new Date()) {
@@ -77,8 +75,6 @@ export async function moneyStats(days: Period, now = new Date()) {
     db
       .select({
         active: count(),
-        cancelling: sql<number>`count(*) filter (where ${subscription.cancelAtPeriodEnd})`,
-        failing: sql<number>`count(*) filter (where ${subscription.failedAttempts} > 0)`,
       })
       .from(subscription)
       .where(
@@ -104,8 +100,6 @@ export async function moneyStats(days: Period, now = new Date()) {
     payments,
     average: payments > 0 ? Math.round(revenue / payments) : 0,
     activeSubs: subs[0]?.active ?? 0,
-    cancelling: Number(subs[0]?.cancelling ?? 0),
-    failing: Number(subs[0]?.failing ?? 0),
     stuck: stuck[0]?.value ?? 0,
   } satisfies MoneyStats
 }
@@ -165,10 +159,11 @@ export async function peopleStats(days: Period, now = new Date()) {
     db
       .select({ value: count() })
       .from(subscription)
+      // Отток: доступ закончился в периоде и не был оплачен снова.
       .where(
         and(
-          eq(subscription.cancelAtPeriodEnd, true),
-          gte(subscription.updatedAt, from),
+          gte(subscription.currentPeriodEnd, from),
+          lt(subscription.currentPeriodEnd, now),
         ),
       ),
   ])

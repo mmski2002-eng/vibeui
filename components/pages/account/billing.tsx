@@ -2,10 +2,7 @@ import type { ReactNode } from "react"
 import { and, eq } from "drizzle-orm"
 import { Receipt, Sparkles } from "lucide-react"
 
-import {
-  PendingPayment,
-  RenewalButton,
-} from "@/components/account/billing-parts"
+import { PendingPayment } from "@/components/account/billing-parts"
 import { ACCOUNT_TEXTS } from "@/components/account/texts"
 import { ButtonLink } from "@/components/account/ui/button"
 import { PageHeader } from "@/components/account/ui/page-header"
@@ -50,11 +47,7 @@ export async function AccountBilling({ locale }: { locale: Locale }) {
 
   const state = resolveSubscription(row, now)
   const waiting = pendingRows.length > 0
-  const active =
-    state.kind === "pro" ||
-    state.kind === "cancelled" ||
-    state.kind === "past_due" ||
-    state.kind === "bonus"
+  const active = state.kind === "pro" || state.kind === "bonus"
 
   return (
     <>
@@ -130,7 +123,6 @@ function ActivePlan({
     Math.max(0, (now.getTime() - start.getTime()) / (days * DAY)),
   )
   const left = Math.max(0, Math.ceil((state.until.getTime() - now.getTime()) / DAY))
-  const pastDue = state.kind === "past_due"
 
   const title =
     state.kind === "bonus"
@@ -140,19 +132,11 @@ function ActivePlan({
   const note =
     state.kind === "bonus"
       ? t.bonusNote
-      : state.kind === "cancelled"
-        ? t.cancelledNote(formatDate(state.until, locale))
-        : state.kind === "past_due"
-          ? t.pastDueNote(state.attempts, formatDate(state.until, locale))
-          : t.proNote
+      : t.proNote(formatDate(state.until, locale))
 
   return (
     <div className="grid gap-6">
-      <Panel
-        variant={pastDue ? "warn" : "hero"}
-        index={1}
-        className="p-6 sm:p-8"
-      >
+      <Panel variant="hero" index={1} className="p-6 sm:p-8">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0">
             <p className="text-shell-muted text-xs font-medium tracking-wide uppercase">
@@ -162,8 +146,8 @@ function ActivePlan({
               <p className="text-shell-fg text-3xl font-semibold tracking-tight">
                 {title}
               </p>
-              <StatusPill tone={pastDue ? "warn" : "solid"} dot={!pastDue}>
-                {pastDue ? t.pastDueTitle : ACCOUNT_TEXTS[locale].plan.pro}
+              <StatusPill tone="solid" dot>
+                {ACCOUNT_TEXTS[locale].plan.pro}
               </StatusPill>
             </div>
             <p className="text-shell-muted mt-3 max-w-xl text-sm leading-relaxed">
@@ -172,17 +156,9 @@ function ActivePlan({
           </div>
 
           <div className="flex shrink-0 flex-wrap gap-2">
-            {state.kind === "pro" || state.kind === "cancelled" ? (
-              <RenewalButton
-                locale={locale}
-                cancelled={state.kind === "cancelled"}
-              />
-            ) : null}
-            {pastDue ? (
-              <ButtonLink href={localePath(locale, "/pricing")} variant="primary">
-                {t.payAgain}
-              </ButtonLink>
-            ) : null}
+            <ButtonLink href={localePath(locale, "/pricing")} variant="secondary">
+              {t.extend}
+            </ButtonLink>
           </div>
         </div>
 
@@ -199,7 +175,7 @@ function ActivePlan({
               className="acc-grow-x block h-full rounded-full"
               style={{
                 width: `${Math.max(1, elapsed * 100)}%`,
-                background: pastDue ? "var(--shell-warn)" : "var(--shell-accent)",
+                background: "var(--shell-accent)",
               }}
             />
           </div>
@@ -225,26 +201,10 @@ function ActivePlan({
         />
         <Field
           index={4}
-          label={t.nextCharge}
-          value={
-            state.kind === "pro"
-              ? formatDate(state.until, locale)
-              : t.noRenewal
-          }
-          small={state.kind !== "pro"}
+          label={t.accessUntil}
+          value={formatDate(state.until, locale)}
         />
-        <Field
-          index={5}
-          label={t.renewal}
-          value={
-            <StatusPill
-              tone={state.kind === "pro" ? "ok" : "muted"}
-              dot={state.kind === "pro"}
-            >
-              {state.kind === "pro" ? t.renewalOn : t.renewalOff}
-            </StatusPill>
-          }
-        />
+        <Field index={5} label={t.billingMode} value={t.oneOff} small />
       </div>
     </div>
   )

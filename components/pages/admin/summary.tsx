@@ -163,17 +163,9 @@ export async function AdminSummary({ period }: { period: Period }) {
           />
           <StatTile
             index={7}
-            label={t.failing}
-            value={money.failing}
-            tone={money.failing > 0 ? "danger" : undefined}
+            label={t.activeSubs}
+            value={money.activeSubs}
             href="/account/admin/users"
-          />
-          <StatTile
-            index={8}
-            label={t.cancelling}
-            value={money.cancelling}
-            tone={money.cancelling > 0 ? "warn" : undefined}
-            note={`${t.activeSubs}: ${money.activeSubs}`}
           />
           <StatTile
             index={9}

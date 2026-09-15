@@ -123,13 +123,7 @@ export async function AdminUsers({
               </span>,
               <StatusPill
                 key="plan"
-                tone={
-                  state.kind === "past_due"
-                    ? "warn"
-                    : pro
-                      ? "solid"
-                      : "muted"
-                }
+                tone={pro ? "solid" : "muted"}
               >
                 {state.kind}
               </StatusPill>,

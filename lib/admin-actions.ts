@@ -74,35 +74,6 @@ export async function grantProDays(input: {
   refresh(input.userId)
 }
 
-export async function setRenewal(input: {
-  userId: string
-  cancel: boolean
-  reason: string
-}) {
-  const admin = await requireAdmin()
-  const reason = requireReason(input.reason)
-
-  await db
-    .update(subscription)
-    .set({ cancelAtPeriodEnd: input.cancel, updatedAt: new Date() })
-    .where(eq(subscription.userId, input.userId))
-
-  await logAdminAction({
-    adminEmail: admin.email,
-    action: input.cancel ? "user.cancel_renewal" : "user.resume_renewal",
-    targetType: "user",
-    targetId: input.userId,
-    details: { reason },
-  })
-
-  refresh(input.userId)
-}
-
-/**
- * Блокировка аккаунта: закрывает вход и выдачу исходников, гасит сессии.
- * Разблокировка причину тоже требует — «вернули доступ, потому что» важнее
- * самого факта.
- */
 export async function setBlocked(input: {
   userId: string
   blocked: boolean

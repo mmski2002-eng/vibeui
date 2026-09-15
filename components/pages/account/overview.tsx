@@ -190,13 +190,7 @@ export async function AccountOverview({ locale }: { locale: Locale }) {
         />
         <StatTile
           index={4}
-          label={
-            pro
-              ? state.kind === "pro"
-                ? t.daysToRenewal
-                : t.daysLeft
-              : t.daysToReset
-          }
+          label={pro ? t.daysLeft : t.daysToReset}
           value={daysUntil(pro && until ? until : reset, now)}
           locale={locale}
           icon={<Timer />}

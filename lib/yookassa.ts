@@ -124,9 +124,6 @@ export async function createCheckout({
     capture: true,
     confirmation: { type: "redirect", return_url: returnUrl },
     description,
-    // Без этого не будет автопродления: сохранённый способ оплаты и есть
-    // то, чем списывают следующий период.
-    save_payment_method: true,
     metadata: { userId, plan },
     receipt: receipt(email, description, money),
   }
@@ -136,11 +133,9 @@ export async function createCheckout({
 
 /**
  * Магазин может быть не до конца настроен в кабинете ЮKassa, и тогда API
- * отказывает не в платеже, а в его опциях: 403 «store can't make recurring
- * payments» — не включены автоплатежи, 400 на `receipt` — не подключена
+ * отказывает не в платеже, а в его опции: 400 на `receipt` — не подключена
  * фискализация (чек самозанятого и так выбивается в «Мой налог» вне сайта).
- * Платёж в обоих случаях важнее опции: убираем её и пробуем снова. Когда
- * менеджер включит опцию, первый же запрос пройдёт целиком без редеплоя.
+ * Платёж важнее опции: убираем её и пробуем снова.
  */
 async function requestWithFallback(body: Record<string, unknown>) {
   try {
@@ -149,9 +144,7 @@ async function requestWithFallback(body: Record<string, unknown>) {
     const message = error instanceof Error ? error.message : ""
     const stripped = { ...body }
 
-    if (/recurring/i.test(message) && "save_payment_method" in stripped) {
-      delete stripped.save_payment_method
-    } else if (/receipt/i.test(message) && "receipt" in stripped) {
+    if (/receipt/i.test(message) && "receipt" in stripped) {
       delete stripped.receipt
     } else {
       throw error
@@ -161,34 +154,6 @@ async function requestWithFallback(body: Record<string, unknown>) {
 
     return requestWithFallback(stripped)
   }
-}
-
-/** Автосписание по сохранённому способу оплаты: подтверждение не требуется. */
-export async function chargeSaved({
-  amount,
-  description,
-  email,
-  userId,
-  plan,
-  paymentMethodId,
-}: {
-  amount: string
-  description: string
-  email: string
-  userId: string
-  plan: string
-  paymentMethodId: string
-}) {
-  const money: Money = { value: amount, currency: "RUB" }
-
-  return request({
-    amount: money,
-    capture: true,
-    payment_method_id: paymentMethodId,
-    description,
-    metadata: { userId, plan },
-    receipt: receipt(email, description, money),
-  })
 }
 
 /**

@@ -326,13 +326,9 @@ curl -s -w ' %{http_code}' -u "$YOOKASSA_SHOP_ID:$YOOKASSA_SECRET_KEY" https://a
 `/pricing/soon`, а в `journalctl -u vibeui` лежит `[checkout] касса не
 ответила ... 401`.
 
-Опции магазина. Автоплатежи (`save_payment_method`) и чеки через ЮKassa
-(`receipt`) включает менеджер ЮKassa; пока они выключены, API отвечает 403
-«store can't make recurring payments» или 400 на `receipt`. Приложение в
-этом случае повторяет запрос без отклонённой опции: оплата проходит, но без
-сохранённой карты автопродления не будет — подписка доработает оплаченный
-период и выключится. Включить автоплатежи: написать менеджеру ЮKassa для
-магазина из `YOOKASSA_SHOP_ID`; редеплой не нужен.
+Оплата разовая: месяц или год, карта не сохраняется, автосписаний нет.
+Чеки через ЮKassa (`receipt`) включает менеджер; пока фискализация выключена,
+API отвечает 400 на `receipt`, и приложение повторяет запрос без него.
 
 ### 8.2. Вебхук в кабинете
 
@@ -358,22 +354,22 @@ curl -s -o /dev/null -w '%{http_code}\n' -X POST -H 'Content-Type: application/j
 доставка того же события подписку второй раз не продлевает
 (таблица `webhook_event`).
 
-### 8.3. Таймер продления
+### 8.3. Таймер обслуживания подписок
 
-Списание по сохранённой карте делает не приложение, а systemd-таймер раз в
-час. Юниты лежат в `deploy/`:
+Раз в час таймер переводит подписки с истёкшей датой в `expired` и чистит
+лог поиска. Автосписаний нет. Юниты лежат в `deploy/`:
 
 ```bash
 sudo cp deploy/vibeui-renew.service deploy/vibeui-renew.timer /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable --now vibeui-renew.timer
 sudo systemctl start vibeui-renew.service      # разовый прогон
-journalctl -u vibeui-renew.service -n 5        # {"due":0,"charged":0,"closed":0}
+journalctl -u vibeui-renew.service -n 5        # {"closed":0}
 ```
 
 Ключ таймера — `CRON_SECRET` из того же `/etc/vibeui.env`. Без него
-маршрут отвечает 403, и продления не будет: подписки после конца периода
-просто останутся `active` с истёкшей датой.
+маршрут отвечает 403; права Pro при этом всё равно считаются по дате, а в
+базе истёкшие подписки просто останутся `active`.
 
 ### 8.4. Тестовый платёж
 

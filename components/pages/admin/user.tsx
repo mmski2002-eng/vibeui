@@ -178,9 +178,7 @@ export async function AdminUser({ id }: { id: string }) {
               {row.emailVerified ? t.verified : t.unverified}
             </StatusPill>
             <StatusPill
-              tone={
-                state.kind === "past_due" ? "warn" : pro ? "solid" : "muted"
-              }
+              tone={pro ? "solid" : "muted"}
               dot={pro}
             >
               {state.kind}
@@ -363,8 +361,6 @@ export async function AdminUser({ id }: { id: string }) {
           userId={row.id}
           blocked={Boolean(row.blockedAt)}
           verified={row.emailVerified}
-          hasSubscription={Boolean(subscriptionRow)}
-          cancelling={Boolean(subscriptionRow?.cancelAtPeriodEnd)}
           note={row.adminNote ?? ""}
         />
       </div>
