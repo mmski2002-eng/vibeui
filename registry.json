@@ -24,6 +24,7 @@
     "registry/blocks/consent/registry.json",
     "registry/blocks/downloads/registry.json",
     "registry/blocks/portfolio/registry.json",
+    "registry/blocks/realty/registry.json",
     "registry/blocks/events/registry.json",
     "registry/blocks/video/registry.json",
     "registry/blocks/podcast/registry.json",
@@ -123,6 +124,7 @@
     "registry/animations/stacks/registry.json",
     "registry/animations/cursor/registry.json",
     "registry/animations/sketch/registry.json",
+    "registry/animations/cards/registry.json",
     "registry/animations/folio/registry.json",
     "registry/animations/text/registry.json",
     "registry/animations/background/registry.json"

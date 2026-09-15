@@ -89,6 +89,37 @@ export const SCENARIOS: Scenario[] = [
       { item: "sketch-023", anchor: "process", role: "Стикеры на полях", roleEn: "Margin stickers", note: "Три записки: перенос по погоде, настоящие люди, свободные даты.", noteEn: "Three notes: weather rescheduling, real people, free dates." },
     ],
   },
+  {
+    slug: "realty",
+    label: "Агентство недвижимости",
+    en: "Real estate agency",
+    summary:
+      "Сайт агентства недвижимости: поиск жилья на первом экране, подборка объектов с фильтром, районы на Яндекс Карте, шаги сделки, ипотечный калькулятор, агенты, отзывы, вопросы и заявка на оценку. Песочная тема с серифом и латунным акцентом.",
+    summaryEn:
+      "A real estate agency site: property search on the first screen, a filtered listings grid, districts on a Yandex Map, deal steps, a mortgage calculator, agents, reviews, FAQ and an appraisal form. A sand theme with serif headlines and a brass accent.",
+    demo: "/scenarios/realty/demo",
+    source: "app/scenarios/realty/demo/page.tsx",
+    images: "docs/scenarios/realty/IMAGES.md",
+    theme: {
+      tone: "light",
+      accent: "#b8925a",
+      ink: "#173b2e",
+      font: "Cormorant Garamond, Manrope",
+    },
+    sections: [
+      { item: "realty-001", anchor: "", role: "Шапка", roleEn: "Header", note: "Имя серифом, ссылки, телефон и кнопка «Оценить квартиру»; липнет к верху.", noteEn: "A serif name, links, phone and an “Appraise my flat” button; sticky." },
+      { item: "realty-002", anchor: "hero", role: "Первый экран", roleEn: "First screen", note: "Фото с медленным наездом и форма поиска: купить или снять, тип, район, бюджет.", noteEn: "A photo with a slow push-in and a search form: buy or rent, type, district, budget." },
+      { item: "realty-003", anchor: "objects", role: "Подборка объектов", roleEn: "Listings", note: "Шесть карточек с ценой и параметрами, чипы по типу, второе фото по наведению, по клику карточка переворачивается в окно.", noteEn: "Six cards with price and specs, type chips, a second photo on hover, a click flips the card into a window." },
+      { item: "realty-010", anchor: "districts", role: "Районы", roleEn: "Districts", note: "Настоящая Яндекс Карта с метками районов и карточки с ценой за метр.", noteEn: "A real Yandex Map with district pins and cards with price per metre." },
+      { item: "realty-005", anchor: "process", role: "Шаги сделки", roleEn: "Deal steps", note: "Пять шагов со сроками на тёмно-зелёном фоне.", noteEn: "Five steps with durations on a dark green background." },
+      { item: "realty-006", anchor: "mortgage", role: "Ипотека", roleEn: "Mortgage", note: "Калькулятор с ползунками и набегающим платежом.", noteEn: "A calculator with sliders and a rolling payment." },
+      { item: "realty-008", anchor: "agents", role: "Агенты", roleEn: "Agents", note: "Портреты 4:5, факт-плашка на фото, телефон и «написать».", noteEn: "4:5 portraits, a fact tag on the photo, phone and “message”." },
+      { item: "realty-009", anchor: "reviews", role: "Отзывы", roleEn: "Reviews", note: "Серифные цитаты со звёздами и источником, общая оценка в шапке.", noteEn: "Serif quotes with stars and a source, an overall score in the head." },
+      { item: "realty-011", anchor: "faq", role: "Вопросы", roleEn: "FAQ", note: "Серифный аккордеон на details в две колонки с липким заголовком.", noteEn: "A serif details accordion in two columns with a sticky heading." },
+      { item: "realty-007", anchor: "valuation", role: "Оценка квартиры", roleEn: "Appraisal", note: "Обещания, фото офиса и форма: адрес, метраж, комнаты, телефон.", noteEn: "Promises, an office photo and a form: address, area, rooms, phone." },
+      { item: "realty-012", anchor: "footer", role: "Подвал", roleEn: "Footer", note: "Адрес, часы, телефон и мессенджеры значками на тёмно-зелёном.", noteEn: "Address, hours, phone and messengers with icons on dark green." },
+    ],
+  },
 ]
 
 // Опечатка в имени item'а здесь означала бы пустую карточку в рецепте,

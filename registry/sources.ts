@@ -24,6 +24,7 @@ import waitlistRegistry from "@/registry/blocks/waitlist/registry.json"
 import consentRegistry from "@/registry/blocks/consent/registry.json"
 import downloadsRegistry from "@/registry/blocks/downloads/registry.json"
 import portfolioRegistry from "@/registry/blocks/portfolio/registry.json"
+import realtyRegistry from "@/registry/blocks/realty/registry.json"
 import eventsRegistry from "@/registry/blocks/events/registry.json"
 import videoRegistry from "@/registry/blocks/video/registry.json"
 import podcastRegistry from "@/registry/blocks/podcast/registry.json"
@@ -123,6 +124,7 @@ import checklistRegistry from "@/registry/animations/checklist/registry.json"
 import stacksRegistry from "@/registry/animations/stacks/registry.json"
 import cursorRegistry from "@/registry/animations/cursor/registry.json"
 import sketchRegistry from "@/registry/animations/sketch/registry.json"
+import cardsRegistry from "@/registry/animations/cards/registry.json"
 import folioRegistry from "@/registry/animations/folio/registry.json"
 import textRegistry from "@/registry/animations/text/registry.json"
 import backgroundAnimationRegistry from "@/registry/animations/background/registry.json"
@@ -241,6 +243,11 @@ export const SOURCES = [
     directory: "registry/blocks/portfolio",
     kind: "block",
     items: portfolioRegistry.items,
+  },
+  {
+    directory: "registry/blocks/realty",
+    kind: "block",
+    items: realtyRegistry.items,
   },
   {
     directory: "registry/blocks/events",
@@ -736,6 +743,11 @@ export const SOURCES = [
     directory: "registry/animations/sketch",
     kind: "animation",
     items: sketchRegistry.items,
+  },
+  {
+    directory: "registry/animations/cards",
+    kind: "animation",
+    items: cardsRegistry.items,
   },
   {
     directory: "registry/animations/folio",

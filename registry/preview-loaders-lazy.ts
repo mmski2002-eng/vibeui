@@ -51,6 +51,8 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/block/downloads")).PREVIEWS
     case "block/portfolio":
       return (await import("@/registry/previews-lazy/block/portfolio")).PREVIEWS
+    case "block/realty":
+      return (await import("@/registry/previews-lazy/block/realty")).PREVIEWS
     case "block/events":
       return (await import("@/registry/previews-lazy/block/events")).PREVIEWS
     case "block/video":
@@ -249,6 +251,8 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/animation/cursor")).PREVIEWS
     case "animation/sketch":
       return (await import("@/registry/previews-lazy/animation/sketch")).PREVIEWS
+    case "animation/cards":
+      return (await import("@/registry/previews-lazy/animation/cards")).PREVIEWS
     case "animation/folio":
       return (await import("@/registry/previews-lazy/animation/folio")).PREVIEWS
     case "animation/text":
