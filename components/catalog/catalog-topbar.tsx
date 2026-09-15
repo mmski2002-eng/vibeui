@@ -136,7 +136,7 @@ export function CatalogTopbar({
             aria-hidden="true"
           />
           <Link
-            href={authed ? "/account" : "/signin"}
+            href={localePath(locale, authed ? "/account" : "/signin")}
             className="border-shell-border-strong bg-shell-elevated text-shell-fg hover:border-shell-accent focus-visible:ring-shell-ring inline-flex h-9 shrink-0 items-center justify-center gap-2 rounded-lg border px-3 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none"
           >
             <UserRound className="hidden size-4 sm:block" aria-hidden="true" />

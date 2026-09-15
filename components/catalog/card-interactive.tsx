@@ -23,7 +23,7 @@ import {
   type ControlValues,
   type PreviewSurface,
 } from "@/lib/controls"
-import { getDictionary, type Locale } from "@/lib/i18n"
+import { getDictionary, type Locale, localePath } from "@/lib/i18n"
 import { itemCode } from "@/lib/item-code"
 import type { ItemKind } from "@/registry/categories"
 import type { ItemControl } from "@/registry/meta"
@@ -528,7 +528,7 @@ export function CardInteractive({
               type="button"
               onClick={() => {
                 if (!signedIn) {
-                  router.push("/signup")
+                  router.push(localePath(locale, "/signup"))
 
                   return
                 }
