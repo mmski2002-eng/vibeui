@@ -34,6 +34,8 @@ import pressRegistry from "@/registry/blocks/press/registry.json"
 import dataGridRegistry from "@/registry/blocks/data-grid/registry.json"
 import logosRegistry from "@/registry/blocks/logos/registry.json"
 import newsletterRegistry from "@/registry/blocks/newsletter/registry.json"
+import processRegistry from "@/registry/blocks/process/registry.json"
+import statsRegistry from "@/registry/blocks/stats/registry.json"
 import teamRegistry from "@/registry/blocks/team/registry.json"
 import backgroundRegistry from "@/registry/blocks/background/registry.json"
 import layoutRegistry from "@/registry/blocks/layout/registry.json"
@@ -295,6 +297,16 @@ export const SOURCES = [
     directory: "registry/blocks/newsletter",
     kind: "block",
     items: newsletterRegistry.items,
+  },
+  {
+    directory: "registry/blocks/process",
+    kind: "block",
+    items: processRegistry.items,
+  },
+  {
+    directory: "registry/blocks/stats",
+    kind: "block",
+    items: statsRegistry.items,
   },
   {
     directory: "registry/blocks/team",

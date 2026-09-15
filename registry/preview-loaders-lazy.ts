@@ -71,6 +71,10 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/block/logos")).PREVIEWS
     case "block/newsletter":
       return (await import("@/registry/previews-lazy/block/newsletter")).PREVIEWS
+    case "block/process":
+      return (await import("@/registry/previews-lazy/block/process")).PREVIEWS
+    case "block/stats":
+      return (await import("@/registry/previews-lazy/block/stats")).PREVIEWS
     case "block/team":
       return (await import("@/registry/previews-lazy/block/team")).PREVIEWS
     case "block/background":
