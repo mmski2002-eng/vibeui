@@ -46,5 +46,13 @@ export function withPreserveHeader(source: string, item: CatalogItem): string {
     "",
   ].join("\n")
 
+  // shadcn CLI прогоняет файлы с директивой через ts-morph и теряет
+  // комментарии перед ней, поэтому шапка встаёт после "use client".
+  const directive = /^(["']use client["'];?\r?\n)\r?\n?/.exec(source)
+
+  if (directive) {
+    return `${directive[1]}\n${header}${source.slice(directive[0].length)}`
+  }
+
   return header + source
 }
