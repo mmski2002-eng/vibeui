@@ -17,13 +17,13 @@ export type Map003Props = {
   latitude?: number
   longitude?: number
   zoom?: number
-  /** Город виджета в написании 2ГИС: moscow, spb, novosibirsk. */
+  /** Город для ссылки «Открыть в 2ГИС» в написании 2ГИС: moscow, spb, novosibirsk. */
   city?: string
-  /** Готовая ссылка из конструктора виджетов 2ГИС. Перебивает координаты. */
+  /** Готовая ссылка на любую встраиваемую карту. Перебивает координаты. */
   embedUrl?: string
-  /** Ключ MapGL. Пусто — работает встроенный виджет 2ГИС. */
+  /** Ключ MapGL. Пусто — показывается карта OpenStreetMap без ключа. */
   apiKey?: string
-  /** Тема карты. Работает только с ключом: у виджета схемы нет. */
+  /** Тема карты. С ключом — стиль MapGL, без ключа — инверсия подложки OSM. */
   theme?: "auto" | "light" | "dark"
   /** Идентификаторы оформления MapGL. Пусто — стиль по умолчанию. */
   lightStyleId?: string
@@ -75,9 +75,11 @@ declare global {
 // Подпись стоит под картой, а не поверх неё: на телефоне плашка поверх
 // карты закрывает как раз тот квартал, ради которого карту и открыли.
 //
-// Карта настоящая в обоих режимах. Без ключа блок показывает штатный виджет
-// 2ГИС (iframe, ключ не нужен). С ключом подключается MapGL — тогда
-// доступны тёмное оформление и управление картой из кода.
+// Карта настоящая в обоих режимах. Без ключа блок показывает карту
+// OpenStreetMap (iframe, ключ не нужен): старый виджет widgets.2gis.com
+// закрыт и отдаёт 451, а 2gis.ru запрещает себя во фрейме. С ключом
+// подключается MapGL 2ГИС — тогда доступны фирменная карта, тёмное
+// оформление и управление картой из кода.
 const STYLES = `
 :where([data-vibeui-block="map-003"]){
 --vibeui-map-003-bg:transparent;
@@ -129,6 +131,11 @@ border-bottom:1px solid var(--vibeui-map-003-border);
 [data-vibeui-block="map-003"] iframe{
 position:absolute;inset:0;width:100%;height:100%;border:0;display:block;
 }
+/* У OSM нет тёмной схемы: в тёмной теме подложка инвертируется, метка и
+   подписи остаются читаемыми. */
+[data-vibeui-block="map-003"] [data-part="stage"][data-scheme="dark"] iframe[data-osm]{
+filter:invert(1) hue-rotate(180deg) brightness(.92) contrast(.9);
+}
 [data-vibeui-block="map-003"] [data-part="status"]{
 position:absolute;left:0.75rem;top:0.75rem;z-index:2;margin:0;
 padding:0.375rem 0.6875rem;border-radius:0.5rem;max-width:22rem;
@@ -173,7 +180,7 @@ const DEFAULT_NOTES: Map003Note[] = [
 
 const STATUS_TEXT: Record<string, string> = {
   failed:
-    "MapGL не загрузился — показан встроенный виджет 2ГИС. Проверьте ключ и список доменов в кабинете.",
+    "MapGL не загрузился — показана карта OpenStreetMap. Проверьте ключ и список доменов в кабинете 2ГИС.",
 }
 
 /**
@@ -230,8 +237,8 @@ function loadScript(source: string): Promise<void> {
 }
 
 /**
- * Секция «адрес филиала»: карта 2ГИС во всю ширину и строка справки под ней.
- * Один файл, ноль зависимостей, ключ не обязателен.
+ * Секция «адрес филиала»: карта во всю ширину и строка справки под ней.
+ * Без ключа — OpenStreetMap, с ключом MapGL — карта 2ГИС. Один файл, ноль зависимостей.
  */
 export function Map003({
   eyebrow = "Офис",
@@ -365,17 +372,16 @@ export function Map003({
     ...style,
   } as CSSProperties
 
-  // Виджет 2ГИС: ключ не нужен, точка и масштаб передаются в options.
-  // Ссылка из конструктора виджетов подставляется как есть.
-  const widgetOptions = encodeURIComponent(
-    JSON.stringify({
-      pos: { lat: point.latitude, lon: point.longitude, zoom },
-      opt: { city },
-    }),
-  )
+  // Карта без ключа — OpenStreetMap: рамка bbox считается из zoom по
+  // ширине тайла (360° / 2^zoom), кадр примерно 3,4 тайла в ширину и
+  // вдвое ниже. Готовая ссылка (embedUrl) подставляется как есть.
+  const halfLon = (360 / 2 ** zoom) * 1.7
+  const halfLat = halfLon * Math.cos((point.latitude * Math.PI) / 180) * 0.47
+  const bbox = [point.longitude - halfLon, point.latitude - halfLat, point.longitude + halfLon, point.latitude + halfLat].map((value) => value.toFixed(5)).join(",")
   const embedSource =
     embedUrl ||
-    `https://widgets.2gis.com/widget?type=firmsonmap&options=${widgetOptions}`
+    `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${point.latitude.toFixed(5)},${point.longitude.toFixed(5)}`
+  const osm = !embedUrl
 
   const openHref = `https://2gis.ru/${city}/geo/${point.longitude},${point.latitude}`
 
@@ -398,7 +404,7 @@ export function Map003({
           </div>
 
           <div data-part="shell">
-            <div data-part="stage" style={stageStyle}>
+            <div data-part="stage" style={stageStyle} data-scheme={mapTheme}>
               <div
                 data-part="canvas"
                 ref={canvasRef}
@@ -408,9 +414,9 @@ export function Map003({
               {status === "ready" ? null : (
                 <iframe
                   src={embedSource}
-                  title={`${providerLabel}: ${address}`}
+                  title={`${osm ? "OpenStreetMap" : providerLabel}: ${address}`}
                   loading="lazy"
-                  allowFullScreen
+                  data-osm={osm ? "true" : undefined}
                   referrerPolicy="no-referrer-when-downgrade"
                 />
               )}

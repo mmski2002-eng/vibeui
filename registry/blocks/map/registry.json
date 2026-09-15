@@ -371,8 +371,8 @@
     {
       "name": "map-003",
       "type": "registry:block",
-      "title": "Карта 2ГИС с адресной строкой",
-      "description": "Виджет 2ГИС во всю ширину и строка под ним: адрес, часы и вход стоят под картой, а не закрывают собой нужный квартал.",
+      "title": "Карта с адресной строкой: OSM без ключа, 2ГИС с ключом",
+      "description": "Карта во всю ширину и строка под ней: адрес, часы и вход стоят под картой, а не закрывают собой нужный квартал. Без ключа показывает OpenStreetMap, с ключом MapGL — карту 2ГИС с тёмным стилем; ссылка «Открыть в 2ГИС» есть всегда.",
       "categories": [
         "map"
       ],
@@ -385,7 +385,7 @@
           "target": "@components/vibeui/map-003.tsx"
         }
       ],
-      "docs": "Блок самодостаточный: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-map-003-*. Карта настоящая без всякой настройки: по умолчанию встраивается штатный виджет 2ГИС (widgets.2gis.com), которому не нужен ключ, — точка, масштаб и город передаются в options. Готовую ссылку из конструктора виджетов можно подставить пропом embedUrl. Если задан apiKey, вместо виджета поднимается MapGL: тогда доступны тёмное оформление по идентификатору стиля и управление картой из кода. Если MapGL не загрузился, блок возвращается к виджету и пишет об этом плашкой.",
+      "docs": "Блок самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-map-003-*. Карта настоящая без настройки: по умолчанию встраивается OpenStreetMap (iframe openstreetmap.org/export/embed.html), ключ не нужен — рамка bbox считается из zoom, метка ставится по координатам, в тёмной теме подложка инвертируется CSS-фильтром. Старый виджет widgets.2gis.com закрыт (отдаёт 451), а 2gis.ru запрещает себя во фрейме, поэтому без ключа 2ГИС недоступен. Готовую ссылку на любую встраиваемую карту можно передать через embedUrl. Если задан apiKey, вместо OSM подключается MapGL 2ГИС: карта 2ГИС, тёмный стиль по идентификатору и управление картой из кода. Если MapGL не загрузился, блок возвращается к OSM и пишет об этом на плашке.",
       "meta": {
         "tags": [
           "map",
@@ -401,31 +401,31 @@
         "ai": {
           "export": "Map003",
           "usage": "<Map003 address=\"Москва, Пресненская наб., 6с2\" latitude={55.7482} longitude={37.539} city=\"moscow\" />",
-          "summary": "Секция адреса филиала: карта 2ГИС во всю ширину и строка справки под ней — адрес, часы, вход и кнопка перехода в 2ГИС. Без ключа работает штатный виджет 2ГИС; с apiKey подключается MapGL с тёмным оформлением.",
+          "summary": "Секция адреса филиала: карта во всю ширину и строка справки под ней — адрес, часы, вход и ссылка «Открыть в 2ГИС». Без ключа работает OpenStreetMap; с apiKey подключается MapGL 2ГИС с тёмным стилем.",
           "preserve": [
-            "локальную палитру --vibeui-map-003-* — не подменять её токенами темы проекта",
-            "виджет 2ГИС как режим по умолчанию: карта обязана работать без ключа, иначе на странице пустой кадр",
-            "строку справки под картой, а не поверх неё: на телефоне плашка поверх карты закрывает как раз нужный квартал",
-            "город в options виджета: без верного города 2ГИС открывает карту не там",
-            "прозрачный фон по умолчанию: блок ложится на фон страницы, а не подкладывает под себя плашку",
-            "возврат к виджету, когда MapGL не загрузился: карта на странице важнее сообщения об ошибке",
-            "очистку контейнера и destroy() карты в клине эффекта — иначе смена точки оставляет вторую карту поверх первой"
+            "локальную палитру --vibeui-map-003-* — не подменять её токенами своей темы",
+            "OpenStreetMap как режим по умолчанию: карта обязана работать без ключа, иначе страница покажет пустую рамку",
+            "строку справки под картой, а не поверх неё: на телефоне плашка поверх закрывает как раз нужный квартал",
+            "bbox из zoom и метку по координатам: без них OSM откроет карту не там",
+            "прозрачный фон по умолчанию: блок лежит на фоне страницы, а не пересобирает его",
+            "плашку о сбое, когда MapGL не загрузился: карта не пропадает молча",
+            "возврат к OSM с destroy() карты — смена темы или точки не оставляет второй холст"
           ],
           "adapt": [
-            "address — адрес точки: подпись под картой и ссылка в 2ГИС",
-            "latitude, longitude и city — точка и город виджета",
-            "embedUrl — готовая ссылка из конструктора виджетов 2ГИС вместо собранной по координатам",
-            "notes — короткие строки справки: часы, вход, телефон",
-            "eyebrow и title — заголовочная часть секции",
+            "address и точку адреса: подпись под картой и ссылка в 2ГИС",
+            "latitude, longitude, zoom — точка и масштаб кадра; city — город в ссылке «Открыть в 2ГИС»",
+            "embedUrl — готовая ссылка на любую встраиваемую карту вместо расчёта по координатам",
+            "notes — строки справки: часы, вход, телефон",
+            "eyebrow и title — заголовок секции",
             "lightStyleId и darkStyleId — оформление MapGL из кабинета 2ГИС",
-            "apiKey, theme, zoom, accent и background — оформление карты и секции"
+            "apiKey, theme, accent и background — подключение ключа и цвета"
           ],
           "notes": [
-            "Виджету ключ не нужен: widgets.2gis.com встраивается как есть и показывает настоящую карту 2ГИС.",
-            "Тёмное оформление есть только у MapGL: у виджета схемы нет, и проп theme на него не влияет.",
-            "Ключ MapGL берётся в кабинете 2ГИС и привязывается к домену. Держите его в переменной окружения, а не в исходнике блока.",
-            "Идентификаторы стилей меняются в кабинете 2ГИС. Пустой lightStyleId означает стиль по умолчанию, а не отсутствие карты.",
-            "Не переносите CSS-переменные в globals.css: блок должен остаться одним файлом."
+            "Без ключа карта — OpenStreetMap: widgets.2gis.com закрыт, а 2gis.ru не разрешает iframe. Карта 2ГИС появляется только с apiKey.",
+            "Тёмная тема без ключа — инверсия подложки CSS-фильтром; с ключом — стиль MapGL по darkStyleId.",
+            "Ключ MapGL выдаёт кабинет 2ГИС и привязывает к домену. Держите его в переменной окружения.",
+            "Идентификаторы стилей делаются в кабинете 2ГИС. Пустой lightStyleId оставляет стиль по умолчанию.",
+            "Не добавляйте CSS-переменные в globals.css: весь стиль блока внутри файла."
           ]
         },
         "controls": [
@@ -459,35 +459,35 @@
         ],
         "i18n": {
           "en": {
-            "title": "2GIS Map With An Address Bar",
-            "description": "A full-width 2GIS widget with a bar underneath: the address, hours and entrance sit below the map instead of covering the block you came to see.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-map-003-*. The map is real with no setup: by default it embeds the standard 2GIS widget (widgets.2gis.com), which needs no key — the point, the zoom and the city go into its options. A ready link from the 2GIS widget constructor can be passed through embedUrl. When apiKey is set, MapGL replaces the widget: the dark style id and scripting become available. If MapGL fails to load, the block falls back to the widget and says so on a small plate.",
+            "title": "Map with an address bar: OSM without a key, 2GIS with one",
+            "description": "A full-width map with a bar underneath: the address, hours and entrance sit below the map instead of covering the block you came to see. Without a key it shows OpenStreetMap; with a MapGL key — a 2GIS map with a dark style; the “Open in 2GIS” link is always there.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-map-003-*. The map is real with no setup: by default it embeds OpenStreetMap (an openstreetmap.org/export/embed.html iframe), no key needed — the bbox is computed from zoom, the marker is placed by coordinates, in the dark theme the tiles are inverted with a CSS filter. The old widgets.2gis.com widget is gone (returns 451) and 2gis.ru refuses to be framed, so 2GIS is unavailable without a key. A ready link to any embeddable map can be passed through embedUrl. When apiKey is set, MapGL 2GIS replaces OSM: a 2GIS map, a dark style by id and scripting. If MapGL fails to load, the block falls back to OSM and says so on a small plate.",
             "ai": {
-              "summary": "A branch address section: a full-width 2GIS map with a details bar underneath — address, hours, entrance and a link into 2GIS. With no key the standard 2GIS widget works; with apiKey MapGL takes over and adds the dark style.",
+              "summary": "A branch address section: a full-width map with a details bar underneath — address, hours, entrance and an “Open in 2GIS” link. With no key OpenStreetMap works; with apiKey MapGL 2GIS takes over and adds the dark style.",
               "preserve": [
                 "the local --vibeui-map-003-* palette — do not swap it for your theme tokens",
-                "the 2GIS widget as the default mode: the map must work without a key, otherwise the page shows an empty frame",
+                "OpenStreetMap as the default mode: the map must work without a key, otherwise the page shows an empty frame",
                 "the details bar under the map rather than over it: on a phone an overlay covers exactly the block people came to see",
-                "the city in the widget options: with the wrong city 2GIS opens the map somewhere else",
-                "the transparent background by default: the block sits on the page background instead of laying a panel under itself",
-                "the fallback to the widget when MapGL fails: a map on the page matters more than an error message",
-                "emptying the container and calling destroy() in the effect cleanup — otherwise a new point stacks a second map over the first"
+                "the bbox from zoom and the marker by coordinates: without them OSM opens somewhere else",
+                "the transparent background by default: the block sits on the page background instead of repainting it",
+                "the failure plate when MapGL does not load: the map must not vanish silently",
+                "the fallback to OSM with destroy() on the map — a theme or point change leaves no second canvas"
               ],
               "adapt": [
-                "address — the point address: the caption under the map and the link into 2GIS",
-                "latitude, longitude and city — the point and the widget city",
-                "embedUrl — a ready link from the 2GIS widget constructor instead of the one built from coordinates",
-                "notes — the short detail rows: hours, entrance, phone",
-                "eyebrow and title — the heading part of the section",
-                "lightStyleId and darkStyleId — the MapGL look from the 2GIS cabinet",
-                "apiKey, theme, zoom, accent and background — the look of the map and the section"
+                "address and the address point: the caption under the map and the 2GIS link",
+                "latitude, longitude, zoom — the point and the frame scale; city — the city in the “Open in 2GIS” link",
+                "embedUrl — a ready link to any embeddable map instead of computing from coordinates",
+                "notes — the details rows: hours, entrance, phone",
+                "eyebrow and title — the section heading",
+                "lightStyleId and darkStyleId — MapGL styling from the 2GIS console",
+                "apiKey, theme, accent and background — the key and colours"
               ],
               "notes": [
-                "The widget needs no key: widgets.2gis.com embeds as is and shows the real 2GIS map.",
-                "Only MapGL has a dark look: the widget has no scheme and the theme prop does not reach it.",
-                "The MapGL key comes from the 2GIS cabinet and is bound to a domain. Keep it in an environment variable rather than in the block source.",
-                "Style ids are managed in the 2GIS cabinet. An empty lightStyleId means the default style, not a missing map.",
-                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+                "Without a key the map is OpenStreetMap: widgets.2gis.com is closed and 2gis.ru does not allow iframes. The 2GIS map appears only with apiKey.",
+                "Dark theme without a key inverts the tiles with a CSS filter; with a key the MapGL style from darkStyleId is used.",
+                "The MapGL key comes from the 2GIS console and is bound to a domain. Keep it in an environment variable.",
+                "Style ids are made in the 2GIS console. An empty lightStyleId keeps the default style.",
+                "Do not add CSS variables to globals.css: the whole style lives inside the file."
               ],
               "usage": "<Map003 address=\"6 Presnenskaya nab., Moscow\" latitude={55.7482} longitude={37.539} city=\"moscow\" />"
             },
