@@ -26,13 +26,15 @@ export type Cta017Props = {
   style?: CSSProperties
 }
 
-// Финальный призыв: тёмная карточка с живым обратным отсчётом до старта
-// (дни:часы:минуты:секунды, тикает раз в секунду, цифры перелистываются),
+// Финальный призыв: тёмная карточка в цветном halo (conic-свечение за
+// карточкой, два плывущих пятна внутри) с обратным отсчётом до старта
+// (flip-часы: плашки переворачиваются по оси X раз в секунду),
 // плашка «осталось мест» и форма — email и кнопка. С action уходит POST,
 // без него показывает «место за вами». Дата берётся из startsAt.
 const FONTS = "https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
 
 const STYLES = `
+@property --vibeui-cta-017-a{syntax:"<angle>";inherits:false;initial-value:0deg}
 :where([data-vibeui-block="cta-017"]){
 --vibeui-cta-017-bg:light-dark(#ffffff,#0f1117);
 --vibeui-cta-017-fg:light-dark(#111827,#f3f4f6);
@@ -53,17 +55,24 @@ container-type:inline-size;
 [data-vibeui-block="cta-017"]{box-sizing:border-box;display:block;background:var(--vibeui-cta-017-bg);color:var(--vibeui-cta-017-fg);font-family:var(--vibeui-cta-017-font);font-size:.9375rem;line-height:1.5}
 [data-vibeui-block="cta-017"] *{box-sizing:border-box}
 [data-vibeui-block="cta-017"] [data-part="shell"]{max-width:76rem;margin:0 auto;padding:4rem 1.25rem}
-[data-vibeui-block="cta-017"] [data-part="card"]{position:relative;overflow:hidden;display:grid;gap:2rem;padding:2.5rem 1.5rem;border-radius:1.5rem;background:var(--vibeui-cta-017-card);color:var(--vibeui-cta-017-on-card);color-scheme:dark}
-[data-vibeui-block="cta-017"] [data-part="card"]::before{content:"";position:absolute;right:-20%;top:-60%;width:60cqi;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,color-mix(in oklab,var(--vibeui-cta-017-accent) 55%,transparent),transparent);pointer-events:none}
+[data-vibeui-block="cta-017"] [data-part="card"]{position:relative;isolation:isolate;overflow:hidden;display:grid;gap:2rem;padding:2.5rem 1.5rem;border-radius:1.5rem;background:var(--vibeui-cta-017-card);color:var(--vibeui-cta-017-on-card);color-scheme:dark;box-shadow:0 0 0 1px rgb(255 255 255 / .08),0 40px 80px -40px color-mix(in oklab,var(--vibeui-cta-017-accent) 70%,transparent)}
+[data-vibeui-block="cta-017"] [data-part="card"]>*{position:relative;z-index:1}
+[data-vibeui-block="cta-017"] [data-part="card"]::before{content:"";position:absolute;right:-20%;top:-60%;width:70cqi;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,color-mix(in oklab,var(--vibeui-cta-017-accent) 75%,transparent),transparent);filter:blur(20px);pointer-events:none;animation:vibeui-cta-017-drift 9s ease-in-out infinite alternate}
+[data-vibeui-block="cta-017"] [data-part="card"]::after{content:"";position:absolute;left:-10%;bottom:-60%;width:45cqi;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,color-mix(in oklab,var(--vibeui-cta-017-accent) 45%,transparent),transparent);filter:blur(24px);pointer-events:none;animation:vibeui-cta-017-drift 12s ease-in-out infinite alternate-reverse}
+@keyframes vibeui-cta-017-drift{from{transform:translate(0,0) scale(1)}to{transform:translate(-8%,10%) scale(1.15)}}
+[data-vibeui-block="cta-017"] [data-part="wrap"]{position:relative}
+[data-vibeui-block="cta-017"] [data-part="wrap"]::before{content:"";position:absolute;inset:-.5rem;border-radius:2rem;background:conic-gradient(from var(--vibeui-cta-017-a),color-mix(in oklab,var(--vibeui-cta-017-accent) 60%,transparent),transparent 30%,color-mix(in oklab,var(--vibeui-cta-017-marker) 50%,transparent) 50%,transparent 70%,color-mix(in oklab,var(--vibeui-cta-017-accent) 60%,transparent));filter:blur(28px);opacity:.7;pointer-events:none;animation:vibeui-cta-017-halo 14s linear infinite}
+@keyframes vibeui-cta-017-halo{to{--vibeui-cta-017-a:360deg}}
 [data-vibeui-block="cta-017"] [data-part="copy"]{position:relative}
 [data-vibeui-block="cta-017"] [data-part="eyebrow"]{display:inline-block;margin:0 0 1rem;padding:.35rem .7rem;border-radius:.5rem;background:var(--vibeui-cta-017-marker);color:#1a2e05;font-family:var(--vibeui-cta-017-display);font-size:.72rem;font-weight:600}
 [data-vibeui-block="cta-017"] [data-part="title"]{margin:0;font-family:var(--vibeui-cta-017-display);font-weight:700;font-size:clamp(1.8rem,3.8cqi,2.9rem);line-height:1.08;letter-spacing:-.02em;text-wrap:balance}
 [data-vibeui-block="cta-017"] [data-part="text"]{margin:1rem 0 0;max-width:30rem;color:var(--vibeui-cta-017-muted)}
 [data-vibeui-block="cta-017"] [data-part="timer"]{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.5rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="cta-017"] [data-part="unit"]{display:grid;justify-items:center;gap:.35rem;padding:.9rem .5rem;border-radius:.9rem;background:rgb(248 250 252 / .06);border:1px solid var(--vibeui-cta-017-line)}
-[data-vibeui-block="cta-017"] [data-part="digits"]{position:relative;height:2.2rem;overflow:hidden;font-family:var(--vibeui-cta-017-display);font-size:1.9rem;font-weight:700;line-height:2.2rem;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-[data-vibeui-block="cta-017"] [data-part="digits"] span{display:block;animation:vibeui-cta-017-flip .4s cubic-bezier(.2,.8,.2,1)}
-@keyframes vibeui-cta-017-flip{from{transform:translateY(60%);opacity:0}to{transform:none;opacity:1}}
+[data-vibeui-block="cta-017"] [data-part="unit"]{display:grid;justify-items:center;gap:.5rem;perspective:600px}
+[data-vibeui-block="cta-017"] [data-part="digits"]{position:relative;width:100%;height:3.4rem;border-radius:.7rem;background:linear-gradient(#1f2937,#111827);box-shadow:inset 0 1px 0 rgb(255 255 255 / .12),0 10px 20px -12px rgb(0 0 0 / .8);font-family:var(--vibeui-cta-017-display);font-size:1.9rem;font-weight:700;line-height:3.4rem;text-align:center;letter-spacing:-.02em;font-variant-numeric:tabular-nums;transform-style:preserve-3d}
+[data-vibeui-block="cta-017"] [data-part="digits"]::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgb(0 0 0 / .55);box-shadow:0 1px 0 rgb(255 255 255 / .06)}
+[data-vibeui-block="cta-017"] [data-part="digits"] span{display:block;border-radius:inherit;transform-origin:center;animation:vibeui-cta-017-flip .5s cubic-bezier(.2,.8,.2,1);backface-visibility:hidden}
+@keyframes vibeui-cta-017-flip{from{transform:rotateX(-80deg);opacity:.2}60%{opacity:1}to{transform:none}}
 [data-vibeui-block="cta-017"] [data-part="unit"] small{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--vibeui-cta-017-muted)}
 [data-vibeui-block="cta-017"] [data-part="timer-label"]{margin:.75rem 0 0;font-size:.8rem;color:var(--vibeui-cta-017-muted);text-align:center}
 [data-vibeui-block="cta-017"] [data-part="form"]{position:relative;display:grid;gap:.75rem}
@@ -83,7 +92,7 @@ container-type:inline-size;
 @container (min-width: 60rem){
 [data-vibeui-block="cta-017"] [data-part="shell"]{padding:5rem 2rem}
 [data-vibeui-block="cta-017"] [data-part="card"]{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:3rem;padding:3.5rem;align-items:center}
-[data-vibeui-block="cta-017"] [data-part="digits"]{font-size:2.4rem}
+[data-vibeui-block="cta-017"] [data-part="digits"]{font-size:2.4rem;height:4rem;line-height:4rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="cta-017"] *{animation:none!important;transition:none!important}}`
 
@@ -155,6 +164,7 @@ export function Cta017({
       </style>
       <section data-vibeui-block="cta-017" data-tone={tone === "auto" ? undefined : tone} className={className} style={palette}>
         <div data-part="shell">
+          <div data-part="wrap">
           <div data-part="card">
             <div data-part="copy">
               {eyebrow ? <span data-part="eyebrow">{eyebrow}</span> : null}
@@ -194,6 +204,7 @@ export function Cta017({
                 </form>
               )}
             </div>
+          </div>
           </div>
         </div>
       </section>

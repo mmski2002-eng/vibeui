@@ -17,6 +17,8 @@ export type Footer021Props = {
   socialsLabel?: string
   /** Реквизиты: ИП, ИНН, лицензия. */
   legal?: string
+  /** Гигантское слово контуром внизу: true — имя бренда, строка — своё, false — без него. */
+  giant?: boolean | string
   tone?: "auto" | "light" | "dark"
   accent?: string
   background?: string
@@ -25,8 +27,10 @@ export type Footer021Props = {
 }
 
 // Подвал лендинга курса: словомарка с подписью, автор и почта, две колонки
-// ссылок (разделы и документы), соцсети капсулами, внизу реквизиты ИП и
-// лицензия на образовательную деятельность. Серверный, без состояния.
+// ссылок (разделы и документы), соцсети капсулами, реквизиты ИП и лицензия.
+// В самом низу имя бренда гигантским контуром на всю ширину: выезжает
+// снизу при скролле (scroll-driven), заливается акцентом по наведению.
+// Серверный, без состояния.
 const FONTS = "https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
 
 const STYLES = `
@@ -44,7 +48,7 @@ container-type:inline-size;
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="footer-021"]{color-scheme:dark}
 :where([data-vibeui-block="footer-021"][data-tone="light"]){color-scheme:light}
 :where([data-vibeui-block="footer-021"][data-tone="dark"]){color-scheme:dark}
-[data-vibeui-block="footer-021"]{box-sizing:border-box;display:block;background:var(--vibeui-footer-021-bg);color:var(--vibeui-footer-021-fg);font-family:var(--vibeui-footer-021-font);font-size:.9375rem;line-height:1.5;border-top:1px solid var(--vibeui-footer-021-line)}
+[data-vibeui-block="footer-021"]{box-sizing:border-box;display:block;overflow:hidden;background:var(--vibeui-footer-021-bg);color:var(--vibeui-footer-021-fg);font-family:var(--vibeui-footer-021-font);font-size:.9375rem;line-height:1.5;border-top:1px solid var(--vibeui-footer-021-line)}
 [data-vibeui-block="footer-021"] *{box-sizing:border-box}
 [data-vibeui-block="footer-021"] a{color:inherit;text-decoration:none}
 [data-vibeui-block="footer-021"] a:focus-visible{outline:2px solid var(--vibeui-footer-021-accent);outline-offset:3px;border-radius:.25rem}
@@ -63,6 +67,10 @@ container-type:inline-size;
 [data-vibeui-block="footer-021"] [data-part="social"]{display:inline-flex;align-items:center;height:2.4rem;padding:0 .9rem;border-radius:999px;background:var(--vibeui-footer-021-chip);border:1px solid var(--vibeui-footer-021-line);font-size:.82rem;font-weight:600;transition:border-color .2s,transform .2s}
 [data-vibeui-block="footer-021"] [data-part="social"]:hover{border-color:var(--vibeui-footer-021-accent);transform:translateY(-1px)}
 [data-vibeui-block="footer-021"] [data-part="bottom"]{padding-top:1.25rem;font-size:.75rem;color:var(--vibeui-footer-021-muted)}
+[data-vibeui-block="footer-021"] [data-part="giant"]{display:block;margin:2rem 0 -.18em;font-family:var(--vibeui-footer-021-display);font-weight:700;font-size:clamp(3rem,13.5cqi,13rem);line-height:.9;letter-spacing:-.04em;white-space:nowrap;text-align:center;color:transparent;-webkit-text-stroke:1px color-mix(in oklab,var(--vibeui-footer-021-fg) 35%,transparent);user-select:none;pointer-events:none;transition:color .6s,-webkit-text-stroke-color .6s}
+[data-vibeui-block="footer-021"]:hover [data-part="giant"]{color:color-mix(in oklab,var(--vibeui-footer-021-accent) 10%,transparent);-webkit-text-stroke-color:var(--vibeui-footer-021-accent)}
+@supports (animation-timeline: view()){[data-vibeui-block="footer-021"] [data-part="giant"]{animation:vibeui-footer-021-rise linear both;animation-timeline:view();animation-range:entry 0% entry 100%}}
+@keyframes vibeui-footer-021-rise{from{transform:translateY(40%);opacity:0}to{transform:none;opacity:1}}
 [data-vibeui-block="footer-021"] [data-part="bottom"] p{margin:0;max-width:60rem}
 @container (min-width: 56rem){
 [data-vibeui-block="footer-021"] [data-part="shell"]{padding:4rem 2rem 1.75rem}
@@ -86,6 +94,7 @@ export function Footer021({
     { label: "Behance", href: "https://behance.net/" },
   ],
   socialsLabel = "Мы в сети",
+  giant = true,
   legal = "ИП Мороз Ксения Андреевна, ИНН 780000000000, ОГРНИП 320000000000000. Лицензия на образовательную деятельность № Л035-00000-78/00000000. © 2021–2026.",
   tone = "auto",
   accent,
@@ -145,6 +154,11 @@ export function Footer021({
           </div>
           <div data-part="bottom">{legal ? <p>{legal}</p> : null}</div>
         </div>
+        {giant ? (
+          <span data-part="giant" aria-hidden="true">
+            {giant === true ? brand : giant}
+          </span>
+        ) : null}
       </footer>
     </>
   )

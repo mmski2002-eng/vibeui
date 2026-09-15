@@ -3570,8 +3570,8 @@
     {
       "name": "pricing-020",
       "type": "registry:block",
-      "title": "Тарифы курса с рассрочкой",
-      "description": "Тарифы курса: переключатель «оплата сразу / рассрочка на 6 месяцев» пересчитывает цены, три плана, выделенный залит тёмным и приподнят, плашка «осталось мест», старая цена зачёркнута, стикер «−20 % до 30 сентября» и подпись про договор и оплату.",
+      "title": "Тарифы курса с рассрочкой, рамкой и полоской мест",
+      "description": "Тарифы курса: переключатель «сразу / рассрочка на N месяцев» перелистывает цены, у выделенного плана вращающаяся conic-рамка, полоска занятых мест заполняется при появлении, карточки ловят курсорный блик. Старая цена зачёркнута, «осталось мест» плашкой, настоящие ссылки на оплату.",
       "categories": [
         "pricing"
       ],
@@ -3584,7 +3584,7 @@
           "target": "@components/vibeui/pricing-020.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради переключателя. Переключатель — две кнопки aria-pressed на общей капсуле с бегунком ::before (transform translateX). Цена — Math.round(price / months) в режиме рассрочки, формат Intl.NumberFormat ru-RU, aria-live на блоке суммы. План featured — заливка цветом текста, translateY(-.75rem) на широком экране, кнопка акцентом. Сетка три колонки от 56rem (container query). Палитра --vibeui-pricing-020-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, «use client» ради переключателя и блика. Переключатель — role=group с aria-pressed и плашкой ::before на translateX. Цена — span с key=значение: смена значения перемонтирует span с @keyframes въезда снизу (высота фиксирована, overflow:hidden). Рамка — ::before выделенного плана с inset:-2px и conic-gradient(from var(--a)), угол — @property <angle>, @keyframes 5 с; карточка isolation:isolate. Полоска мест — seatsTaken/seatsTotal → --fill, ::before шириной calc(var(--fill)×100 %) с @keyframes от нуля. Блик — ::after с radial-gradient в --mx/--my из pointermove. Числа — Intl.NumberFormat ru-RU. От 56rem (container query) три колонки, выделенный приподнят. Палитра --vibeui-pricing-020-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
         "tags": [
           "course",
@@ -3593,8 +3593,10 @@
           "landing",
           "pricing",
           "plans",
-          "instalments",
-          "toggle"
+          "installment",
+          "toggle",
+          "conic",
+          "progress"
         ],
         "preview": {
           "width": "natural",
@@ -3608,21 +3610,21 @@
         ],
         "ai": {
           "export": "Pricing020",
-          "usage": "<Pricing020\n  title=\"Три формата — одна программа\"\n  months={6}\n  sticker=\"−20 % до 30 сентября\"\n  plans={[\n    { name: \"С куратором\", price: 49000, oldPrice: 61000, featured: true, seats: \"Осталось 12 мест\", features: [\"Куратор на 12 человек\", \"Защита кейса\"], actionLabel: \"Записаться\", actionHref: \"/pay/mentor\" },\n  ]}\n/>",
-          "summary": "Самодостаточные тарифы для курса, подписки или услуги с рассрочкой: переключатель способа оплаты, три плана с выделенным, места и скидка. Планы — массив пропсом.",
+          "usage": "<Pricing020\n  months={6}\n  sticker=\"−20 % до 30 сентября\"\n  plans={[\n    { name: \"Сам\", price: 29000, oldPrice: 36000, features: [\"18 уроков\", \"Чат потока\"], actionLabel: \"Выбрать\", actionHref: \"/pay/solo\" },\n    { name: \"С куратором\", price: 49000, oldPrice: 61000, featured: true, seats: \"Осталось 12 мест\", seatsTaken: 48, seatsTotal: 60, features: [\"Куратор на 12 человек\", \"Защита кейса\"], actionLabel: \"Записаться\", actionHref: \"/pay/mentor\" },\n  ]}\n/>",
+          "summary": "Самодостаточные тарифы для курса, подписки или услуги с рассрочкой: перелистывание цен, вращающаяся рамка у главного плана, полоска мест, блик и настоящие ссылки на оплату. Планы — массив пропсом.",
           "preserve": [
-            "переключатель «сразу / рассрочка» с пересчётом — цена в месяц продаёт лучше цены за курс",
-            "выделенный план заливкой и подъёмом, плашку мест на нём",
-            "зачёркнутую старую цену и стикер срока скидки"
+            "перелистывание цены при смене режима — число не просто меняется",
+            "вращающуюся conic-рамку выделенного плана через @property",
+            "полоску занятых мест и курсорный блик карточек"
           ],
           "adapt": [
-            "plans: названия, тексты, цены, старые цены, списки, места, ссылки",
-            "months, onceLabel, splitLabel, sticker, note, currency, eyebrow, title, lede",
+            "plans: имена, тексты, цены, старые цены, features, seats, seatsTaken/seatsTotal, featured, ссылки",
+            "months, onceLabel, splitLabel, sticker, note, currency; eyebrow, title, lede",
             "accent и background, tone"
           ],
           "notes": [
-            "Цены — числа в рублях без форматирования; блок форматирует сам.",
-            "В режиме рассрочки старая цена не показывается, вместо неё «всего N ₽»."
+            "@property для угла — Chrome 85+, Safari 16.4+, Firefox 128+; без него рамка статична.",
+            "Полоска рисуется только когда заданы и seatsTaken, и seatsTotal."
           ]
         },
         "controls": [
@@ -3674,26 +3676,26 @@
         ],
         "i18n": {
           "en": {
-            "title": "Course pricing with instalments",
-            "description": "Course pricing: a “pay now / 6-month instalments” switch recalculates prices, three plans, the featured one filled dark and lifted, a “seats left” tag, the old price struck through, a “−20 % until 30 September” sticker and a note about the contract and payment.",
-            "docs": "One file, zero dependencies, “use client” for the switch. The switch is two aria-pressed buttons on a shared pill with a ::before thumb (transform translateX). Price is Math.round(price / months) in instalment mode, formatted with Intl.NumberFormat ru-RU, aria-live on the amount block. The featured plan is filled with the text colour, translateY(-.75rem) on wide screens, an accent button. A three-column grid from 56rem (container query). Palette --vibeui-pricing-020-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "title": "Course pricing with instalments, a spinning frame and a seats bar",
+            "description": "Course pricing: a “pay now / instalments over N months” switch flips the prices, the featured plan has a spinning conic frame, a seats-taken bar fills on appearance, cards catch a cursor sheen. The old price is struck through, “seats left” as a tag, real payment links.",
+            "docs": "One file, zero dependencies, “use client” for the switch and the sheen. The switch is a role=group with aria-pressed and a ::before pill on translateX. The price is a span keyed by value: a change remounts it with a slide-up @keyframes (fixed height, overflow:hidden). The frame is the featured plan's ::before with inset:-2px and conic-gradient(from var(--a)), the angle an @property <angle> animated over 5 s; the card is isolation:isolate. The seats bar maps seatsTaken/seatsTotal to --fill, a ::before calc(var(--fill)×100 %) wide with a from-zero @keyframes. The sheen is an ::after radial-gradient at --mx/--my from pointermove. Numbers via Intl.NumberFormat ru-RU. From 56rem (container query) three columns, the featured one lifted. Palette --vibeui-pricing-020-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
             "ai": {
-              "summary": "Self-contained pricing for a course, subscription or service with instalments: a payment-mode switch, three plans with a featured one, seats and a discount. Plans come in as a prop array.",
+              "summary": "Self-contained pricing for a course, subscription or service with instalments: price flipping, a spinning frame on the main plan, a seats bar, a sheen and real payment links. Plans come in as a prop array.",
               "preserve": [
-                "the “now / instalments” switch with recalculation — a monthly price sells better than a course price",
-                "the featured plan filled and lifted, the seats tag on it",
-                "the struck-through old price and the discount deadline sticker"
+                "the price flip on mode change — the number doesn't merely change",
+                "the featured plan's spinning conic frame via @property",
+                "the seats-taken bar and the cards' cursor sheen"
               ],
               "adapt": [
-                "plans: names, texts, prices, old prices, feature lists, seats, links",
-                "months, onceLabel, splitLabel, sticker, note, currency, eyebrow, title, lede",
+                "plans: names, texts, prices, old prices, features, seats, seatsTaken/seatsTotal, featured, links",
+                "months, onceLabel, splitLabel, sticker, note, currency; eyebrow, title, lede",
                 "accent and background, tone"
               ],
               "notes": [
-                "Prices are plain numbers; the block formats them itself.",
-                "In instalment mode the old price is hidden and “total N” shows instead."
+                "@property for the angle — Chrome 85+, Safari 16.4+, Firefox 128+; without it the frame is static.",
+                "The bar draws only when both seatsTaken and seatsTotal are set."
               ],
-              "usage": "<Pricing020\n  title=\"Three formats — one programme\"\n  months={6}\n  sticker=\"−20 % until 30 September\"\n  plans={[\n    { name: \"With a mentor\", price: 490, oldPrice: 610, featured: true, seats: \"12 seats left\", features: [\"A mentor per 12 students\", \"Case defence\"], actionLabel: \"Enroll\", actionHref: \"/pay/mentor\" },\n  ]}\n/>"
+              "usage": "<Pricing020\n  months={6}\n  sticker=\"−20 % until 30 September\"\n  plans={[\n    { name: \"Solo\", price: 29000, oldPrice: 36000, features: [\"18 lessons\", \"Cohort chat\"], actionLabel: \"Choose\", actionHref: \"/pay/solo\" },\n    { name: \"With a mentor\", price: 49000, oldPrice: 61000, featured: true, seats: \"12 seats left\", seatsTaken: 48, seatsTotal: 60, features: [\"A mentor per 12 people\", \"Case defence\"], actionLabel: \"Enroll\", actionHref: \"/pay/mentor\" },\n  ]}\n/>"
             },
             "controls": {
               "title": {

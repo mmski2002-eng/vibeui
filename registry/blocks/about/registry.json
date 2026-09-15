@@ -1179,8 +1179,8 @@
     {
       "name": "about-008",
       "type": "registry:block",
-      "title": "Автор курса с маркером и регалиями",
-      "description": "Автор курса: портрет на цветной подложке со сдвигом и стикером «12 лет», имя крупно, роль, цитата с маркерным выделением, регалии галочками, компании текстом, три факта цифрами и ссылка на портфолио.",
+      "title": "Автор курса с цитатой во весь ряд и бегущей строкой",
+      "description": "Автор курса: цитата крупно на весь ряд, маркер под фразой рисуется при входе в кадр. Ниже портрет на наклонённой цветной подложке, имя, роль, регалии галочками и факты цифрами. Внизу бегущая строка компаний и регалий с паузой по наведению.",
       "categories": [
         "about"
       ],
@@ -1193,7 +1193,7 @@
           "target": "@components/vibeui/about-008.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. Медиа: подложка через ::before со сдвигом на 1.25rem, портрет aspect-ratio 4/5, стикер из первого факта с rotate(3deg). Слово в *звёздочках* в quote — <mark> с градиентной подложкой маркера. Регалии — список с галочками data-URI. От 56rem (container query) две колонки 4fr/6fr по центру. Палитра --vibeui-about-008-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Цитата — <p> с font-size до 2.5rem и text-wrap:balance; слово в *звёздочках* → <mark> с фоновым маркером background-size 0→100 % через animation-timeline:view() под @supports (в остальных браузерах маркер нарисован сразу). Подложка портрета — ::before с rotate(-2deg), по наведению +2deg. Бегущая строка — track с двумя копиями списка (вторая aria-hidden), @keyframes translateX(-50 %) 32 с, пауза по :hover, края растворяются mask-image. От 56rem (container query) портрет и текст 4fr/6fr. Палитра --vibeui-about-008-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
         "tags": [
           "course",
@@ -1201,9 +1201,10 @@
           "edtech",
           "landing",
           "author",
-          "about",
-          "credentials",
-          "marker"
+          "instructor",
+          "quote",
+          "marquee",
+          "ticker"
         ],
         "preview": {
           "width": "natural",
@@ -1219,21 +1220,21 @@
         ],
         "ai": {
           "export": "About008",
-          "usage": "<About008\n  name=\"Ксения Мороз\"\n  role=\"Ведущий продуктовый дизайнер, 12 лет в интерфейсах\"\n  quote=\"Я учу *собирать интерфейс так, чтобы его можно было отдать в разработку завтра*.\"\n  image=\"/photos/author.webp\"\n  credentials={[\"Дизайн-система Тинькофф Бизнес\", \"Лид дизайна в Самокате\"]}\n  companies={[\"Тинькофф\", \"Самокат\"]}\n  facts={[{ value: \"12\", label: \"лет в продуктах\" }, { value: \"3 000+\", label: \"выпускников\" }]}\n/>",
-          "summary": "Самодостаточная секция «автор» для курса, книги или консультанта: портрет, цитата с маркером, регалии, компании и факты. Всё содержимое пропсами.",
+          "usage": "<About008\n  name=\"Ксения Мороз\"\n  role=\"Ведущий продуктовый дизайнер, 12 лет в интерфейсах\"\n  quote=\"Я не учу «рисовать красиво». Я учу *собирать интерфейс так, чтобы его можно было отдать в разработку завтра*.\"\n  image=\"/photos/author.webp\"\n  credentials={[\"Дизайн-система Тинькофф Бизнес\", \"Лид дизайна в Самокате\"]}\n  companies={[\"Тинькофф\", \"Самокат\", \"Ozon\"]}\n  facts={[{ value: \"12\", label: \"лет в продуктах\" }, { value: \"3 000+\", label: \"выпускников\" }]}\n/>",
+          "summary": "Самодостаточная секция об авторе для курса, консультанта или эксперта: цитата во весь ряд с рисующимся маркером, портрет на подложке, регалии, факты и бегущая строка компаний. Всё содержимое пропсами.",
           "preserve": [
-            "цитату с маркерным выделением — позиция автора в одной фразе",
-            "портрет на сдвинутой цветной подложке со стикером из первого факта",
-            "регалии галочками и компании текстом — доверие без логотипов"
+            "цитату во весь ряд с маркером, который рисуется при скролле",
+            "наклонённую подложку портрета и стикер из первого факта",
+            "бегущую строку компаний и регалий с паузой по наведению"
           ],
           "adapt": [
-            "name, role, quote (слово в *звёздочках*), text, image, credentials, companies, companiesLabel, facts, linkLabel, linkHref",
-            "eyebrow",
+            "name, role, quote (фраза в *звёздочках*), text, image, imageAlt",
+            "credentials, companies, companiesLabel, facts, linkLabel, linkHref",
             "accent и background, tone"
           ],
           "notes": [
-            "Стикер берёт первый факт: ставьте самый сильный первым.",
-            "Без image рисуется подложка нужных пропорций."
+            "Бегущая строка склеивает companies и credentials; чтобы оставить только компании, передайте credentials={[]}.",
+            "reduced-motion останавливает строку и рисует маркер сразу."
           ]
         },
         "controls": [
@@ -1277,26 +1278,26 @@
         ],
         "i18n": {
           "en": {
-            "title": "Course author with a marker and credentials",
-            "description": "The course author: a portrait on an offset colour underlay with a “12 years” sticker, a large name, role, a quote with a marker highlight, credentials as checkmarks, companies as text, three facts in figures and a portfolio link.",
-            "docs": "One file, zero dependencies, a server component. Media: an underlay via ::before offset by 1.25rem, the portrait at aspect-ratio 4/5, a sticker from the first fact with rotate(3deg). A *starred* word in quote becomes a <mark> with a gradient marker underlay. Credentials are a list with data-URI checkmarks. From 56rem (container query) two columns 4fr/6fr, centred. Palette --vibeui-about-008-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "title": "Course author with a full-row quote and a ticker",
+            "description": "The course author: a large full-row quote, the marker under a phrase draws itself as it enters the viewport. Below, a portrait on a tilted coloured backdrop, name, role, credentials with checkmarks and facts in figures. At the bottom a ticker of companies and credentials, paused on hover.",
+            "docs": "One file, zero dependencies, a server component. The quote is a <p> up to 2.5rem with text-wrap:balance; a *starred* phrase becomes <mark> with a background marker growing background-size 0→100 % via animation-timeline:view() under @supports (other browsers draw the marker at once). The portrait backdrop is a ::before rotated -2deg, +2deg on hover. The ticker is a track with two copies of the list (the second aria-hidden), @keyframes translateX(-50 %) over 32 s, paused on :hover, edges dissolved with mask-image. From 56rem (container query) the portrait and text are 4fr/6fr. Palette --vibeui-about-008-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
             "ai": {
-              "summary": "A self-contained “author” section for a course, book or consultant: a portrait, a marker quote, credentials, companies and facts. All content via props.",
+              "summary": "A self-contained author section for a course, consultant or expert: a full-row quote with a self-drawing marker, a portrait on a backdrop, credentials, facts and a ticker of companies. All content via props.",
               "preserve": [
-                "the quote with a marker highlight — the author's stance in one phrase",
-                "the portrait on an offset colour underlay with a sticker from the first fact",
-                "credentials as checkmarks and companies as text — trust without logos"
+                "the full-row quote with a marker that draws on scroll",
+                "the tilted portrait backdrop and the sticker from the first fact",
+                "the ticker of companies and credentials paused on hover"
               ],
               "adapt": [
-                "name, role, quote (a *starred* word), text, image, credentials, companies, companiesLabel, facts, linkLabel, linkHref",
-                "eyebrow",
+                "name, role, quote (a *starred* phrase), text, image, imageAlt",
+                "credentials, companies, companiesLabel, facts, linkLabel, linkHref",
                 "accent and background, tone"
               ],
               "notes": [
-                "The sticker takes the first fact: put the strongest one first.",
-                "Without image a placeholder of the right aspect is drawn."
+                "The ticker joins companies and credentials; pass credentials={[]} to keep companies only.",
+                "reduced-motion stops the ticker and draws the marker at once."
               ],
-              "usage": "<About008\n  name=\"Ksenia Moroz\"\n  role=\"Lead product designer, 12 years in interfaces\"\n  quote=\"I teach *building interfaces you can hand to developers tomorrow*.\"\n  image=\"/photos/author.webp\"\n  credentials={[\"Tinkoff Business design system\", \"Design lead at Samokat\"]}\n  companies={[\"Tinkoff\", \"Samokat\"]}\n  facts={[{ value: \"12\", label: \"years in product\" }, { value: \"3,000+\", label: \"graduates\" }]}\n/>"
+              "usage": "<About008\n  name=\"Ksenia Moroz\"\n  role=\"Lead product designer, 12 years in interfaces\"\n  quote=\"I don’t teach “drawing pretty”. I teach *building an interface you can hand to developers tomorrow*.\"\n  image=\"/photos/author.webp\"\n  credentials={[\"Tinkoff Business design system\", \"Design lead at Samokat\"]}\n  companies={[\"Tinkoff\", \"Samokat\", \"Ozon\"]}\n  facts={[{ value: \"12\", label: \"years in product\" }, { value: \"3,000+\", label: \"graduates\" }]}\n/>"
             },
             "controls": {
               "name": {

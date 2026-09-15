@@ -3370,8 +3370,8 @@
     {
       "name": "testimonials-018",
       "type": "registry:block",
-      "title": "Отзывы студентов с видео и потоком",
-      "description": "Отзывы студентов курса: карточки с большой кавычкой, у первой — видео-превью с кнопкой play, фото, имя ссылкой на профиль, должность и плашка потока. Сверху общая оценка со звёздами. Карточки появляются каскадом.",
+      "title": "Отзывы двумя встречными бегущими рядами с видео",
+      "description": "Отзывы бесконечной лентой: два ряда карточек едут навстречу друг другу, пауза по наведению, края растворяются. Карточка с видео-отзывом открывает лайтбокс с плеером. Слева сверху общая оценка со звёздами. Имя — ссылка на профиль, поток плашкой.",
       "categories": [
         "testimonials"
       ],
@@ -3384,7 +3384,7 @@
           "target": "@components/vibeui/testimonials-018.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. Шапка — flex с заголовком и оценкой (звёзды строкой). Сетка 1/2/3 колонки (container query 44rem и 64rem). Карточка с videoHref получает <a data-part=video> aspect-ratio 16/10 с превью и кнопкой play; имя с href — ссылка с подчёркиванием; поток — плашка цвета маркера. Появление — @keyframes с задержкой --n×90ms. Палитра --vibeui-testimonials-018-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, «use client» ради лайтбокса. Ряды — items пополам (при ≤3 отзывах оба ряда из всех); каждый ряд — track с двумя копиями <ul> (вторая aria-hidden, ссылки tabIndex=-1), @keyframes translateX(-50 %) длительностью max(30 с, n×14 с), второй ряд animation-direction:reverse, пауза по :hover и :focus-within, края — mask-image. Лайтбокс — <dialog> с showModal(): ссылка на mp4/webm/mov → <video controls autoplay>, иначе <iframe allow=autoplay>; клик по фону и Escape закрывают, onClose сбрасывает состояние. reduced-motion: ряды становятся переносимой сеткой без копий. Палитра --vibeui-testimonials-018-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
         "tags": [
           "course",
@@ -3392,9 +3392,11 @@
           "edtech",
           "landing",
           "reviews",
-          "testimonials",
+          "marquee",
+          "ticker",
           "video",
-          "rating"
+          "lightbox",
+          "dialog"
         ],
         "preview": {
           "width": "natural",
@@ -3437,21 +3439,21 @@
         ],
         "ai": {
           "export": "Testimonials018",
-          "usage": "<Testimonials018\n  title=\"Что говорят после защиты\"\n  score=\"4,9\"\n  scoreLabel=\"по 412 отзывам\"\n  items={[\n    { quote: \"Самое ценное — ревью.\", name: \"Марина Соколова\", role: \"UI-дизайнер, Авито\", image: \"/photos/graduate-04.webp\", cohort: \"поток 11\", video: \"/photos/lesson.webp\", videoHref: \"/reviews/marina\", href: \"https://t.me/marina\" },\n  ]}\n/>",
-          "summary": "Самодостаточная секция отзывов для курса, школы или сервиса: карточки с видео-превью, фото, ссылкой на профиль, потоком и общей оценкой. Отзывы — массив пропсом.",
+          "usage": "<Testimonials018\n  score=\"4,9\"\n  scoreLabel=\"по 412 отзывам выпускников\"\n  items={[\n    { quote: \"Самое ценное — ревью…\", name: \"Марина Соколова\", role: \"UI-дизайнер, Авито\", image: \"/photos/marina.webp\", cohort: \"поток 11\", video: \"/photos/review.webp\", videoHref: \"/video/marina.mp4\", href: \"https://t.me/marina\" },\n  ]}\n/>",
+          "summary": "Самодостаточные отзывы для курса, школы или сервиса: две встречные бегущие строки с паузой по наведению, видео в лайтбоксе, оценка со звёздами, ссылки на профили. Отзывы — массив пропсом.",
           "preserve": [
-            "имя ссылкой на профиль и плашку потока — отзыв проверяем",
-            "видео-превью с кнопкой play на карточке, где есть videoHref",
-            "большую кавычку акцентом и общую оценку со звёздами в шапке"
+            "два встречных ряда с паузой по наведению и растворяющимися краями",
+            "лайтбокс на <dialog> для видео-отзыва — без перехода со страницы",
+            "общую оценку со звёздами в шапке"
           ],
           "adapt": [
-            "items: цитаты, имена, роли, фото, ссылки, видео, потоки",
-            "eyebrow, title, lede, score, scoreLabel, videoLabel",
+            "items: цитаты, имена, роли, фото, ссылки на профили, видео и превью, потоки",
+            "score, scoreLabel, videoLabel, closeLabel; eyebrow, title, lede",
             "accent и background, tone"
           ],
           "notes": [
-            "Видео открывается по ссылке videoHref — плеер не встроен, чтобы блок оставался лёгким.",
-            "Без href имя выводится текстом."
+            "Для iframe-плееров (YouTube, VK, Kinescope) давайте embed-ссылку, не адрес страницы.",
+            "Шесть и больше отзывов дают два разных ряда; при трёх ряды дублируют друг друга."
           ]
         },
         "controls": [
@@ -3495,26 +3497,26 @@
         ],
         "i18n": {
           "en": {
-            "title": "Student reviews with video and cohort",
-            "description": "Course student reviews: cards with a large quotation mark, the first with a video preview and a play button, a photo, the name as a profile link, role and a cohort tag. An overall score with stars on top. Cards cascade in.",
-            "docs": "One file, zero dependencies, a server component. The head is a flex row with the heading and score (stars as a string). A 1/2/3-column grid (container queries 44rem and 64rem). A card with videoHref gets an <a data-part=video> at aspect-ratio 16/10 with a preview and a play button; a name with href is an underlined link; the cohort is a marker-coloured tag. Appearance via @keyframes with a --n×90ms delay. Palette --vibeui-testimonials-018-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "title": "Reviews as two opposing tickers with video",
+            "description": "Reviews as an endless ticker: two rows of cards travel toward each other, paused on hover, edges dissolve. A card with a video review opens a lightbox with a player. A total score with stars top left. The name links to a profile, the cohort as a tag.",
+            "docs": "One file, zero dependencies, “use client” for the lightbox. Rows are items split in half (with ≤3 reviews both rows show all); each row is a track with two <ul> copies (the second aria-hidden, links tabIndex=-1), @keyframes translateX(-50 %) lasting max(30 s, n×14 s), the second row animation-direction:reverse, paused on :hover and :focus-within, edges via mask-image. The lightbox is a <dialog> with showModal(): a link to mp4/webm/mov → <video controls autoplay>, otherwise <iframe allow=autoplay>; a click on the backdrop and Escape close it, onClose resets state. reduced-motion: rows become a wrapping grid without copies. Palette --vibeui-testimonials-018-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
             "ai": {
-              "summary": "A self-contained reviews section for a course, school or service: cards with a video preview, a photo, a profile link, a cohort and an overall score. Reviews come in as a prop array.",
+              "summary": "Self-contained reviews for a course, school or service: two opposing tickers paused on hover, video in a lightbox, a star score, profile links. Reviews come in as a prop array.",
               "preserve": [
-                "the name as a profile link and the cohort tag — the review is verifiable",
-                "the video preview with a play button on cards that have videoHref",
-                "the large accent quotation mark and the overall score with stars in the head"
+                "two opposing rows paused on hover with dissolving edges",
+                "the <dialog> lightbox for a video review — no leaving the page",
+                "the total score with stars in the header"
               ],
               "adapt": [
-                "items: quotes, names, roles, photos, links, videos, cohorts",
-                "eyebrow, title, lede, score, scoreLabel, videoLabel",
+                "items: quotes, names, roles, photos, profile links, video and preview, cohorts",
+                "score, scoreLabel, videoLabel, closeLabel; eyebrow, title, lede",
                 "accent and background, tone"
               ],
               "notes": [
-                "Video opens via the videoHref link — no embedded player, to keep the block light.",
-                "Without href the name is plain text."
+                "For iframe players (YouTube, VK, Kinescope) pass the embed link, not the page URL.",
+                "Six or more reviews give two different rows; with three the rows mirror each other."
               ],
-              "usage": "<Testimonials018\n  title=\"What people say after the defence\"\n  score=\"4.9\"\n  scoreLabel=\"from 412 reviews\"\n  items={[\n    { quote: \"The most valuable part is the review.\", name: \"Marina Sokolova\", role: \"UI designer, Avito\", image: \"/photos/graduate-04.webp\", cohort: \"cohort 11\", video: \"/photos/lesson.webp\", videoHref: \"/reviews/marina\", href: \"https://t.me/marina\" },\n  ]}\n/>"
+              "usage": "<Testimonials018\n  score=\"4.9\"\n  scoreLabel=\"from 412 graduate reviews\"\n  items={[\n    { quote: \"The most valuable part is the review…\", name: \"Marina Sokolova\", role: \"UI designer, Avito\", image: \"/photos/marina.webp\", cohort: \"cohort 11\", video: \"/photos/review.webp\", videoHref: \"/video/marina.mp4\", href: \"https://t.me/marina\" },\n  ]}\n/>"
             },
             "controls": {
               "title": {

@@ -1,4 +1,6 @@
-import type { CSSProperties } from "react"
+"use client"
+
+import { useRef, useState, type CSSProperties } from "react"
 
 export type Testimonials018Item = {
   quote: string
@@ -7,7 +9,7 @@ export type Testimonials018Item = {
   image?: string
   /** Ссылка на профиль: подпись становится ссылкой. */
   href?: string
-  /** Видео-отзыв: превью и ссылка. */
+  /** Видео-отзыв: превью и ссылка на файл (mp4/webm) или страницу плеера. */
   video?: string
   videoHref?: string
   /** Поток: «поток 12, весна 2026». */
@@ -23,6 +25,7 @@ export type Testimonials018Props = {
   score?: string
   scoreLabel?: string
   videoLabel?: string
+  closeLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   background?: string
@@ -30,9 +33,10 @@ export type Testimonials018Props = {
   style?: CSSProperties
 }
 
-// Отзывы студентов: карточки-мозаика, одна с видео-превью и кнопкой play,
-// у остальных фото, имя с ссылкой на профиль, должность и поток. Слева
-// сверху общая оценка со звёздами. Карточки появляются каскадом.
+// Отзывы бесконечной лентой: два ряда карточек едут навстречу друг другу,
+// пауза по наведению, края растворяются маской. Карточка с видео открывает
+// <dialog> с плеером (файл — <video>, страница — iframe), Escape и клик по
+// фону закрывают. Слева сверху общая оценка со звёздами.
 const FONTS = "https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
 
 const STYLES = `
@@ -51,26 +55,33 @@ container-type:inline-size;
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="testimonials-018"]{color-scheme:dark}
 :where([data-vibeui-block="testimonials-018"][data-tone="light"]){color-scheme:light}
 :where([data-vibeui-block="testimonials-018"][data-tone="dark"]){color-scheme:dark}
-[data-vibeui-block="testimonials-018"]{box-sizing:border-box;display:block;background:var(--vibeui-testimonials-018-bg);color:var(--vibeui-testimonials-018-fg);font-family:var(--vibeui-testimonials-018-font);font-size:.9375rem;line-height:1.5}
+[data-vibeui-block="testimonials-018"]{box-sizing:border-box;display:block;overflow:hidden;background:var(--vibeui-testimonials-018-bg);color:var(--vibeui-testimonials-018-fg);font-family:var(--vibeui-testimonials-018-font);font-size:.9375rem;line-height:1.5}
 [data-vibeui-block="testimonials-018"] *{box-sizing:border-box}
-[data-vibeui-block="testimonials-018"] [data-part="shell"]{max-width:76rem;margin:0 auto;padding:4rem 1.25rem}
+[data-vibeui-block="testimonials-018"] [data-part="shell"]{max-width:76rem;margin:0 auto;padding:4rem 1.25rem 0}
 [data-vibeui-block="testimonials-018"] [data-part="head"]{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1.5rem 3rem;margin-bottom:2.5rem}
 [data-vibeui-block="testimonials-018"] [data-part="eyebrow"]{margin:0 0 .75rem;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-testimonials-018-accent);font-weight:700}
 [data-vibeui-block="testimonials-018"] [data-part="title"]{margin:0;font-family:var(--vibeui-testimonials-018-display);font-weight:700;font-size:clamp(1.8rem,3.6cqi,2.75rem);line-height:1.1;letter-spacing:-.02em}
 [data-vibeui-block="testimonials-018"] [data-part="lede"]{margin:.75rem 0 0;max-width:34rem;color:var(--vibeui-testimonials-018-muted)}
-[data-vibeui-block="testimonials-018"] [data-part="score"]{display:flex;align-items:center;gap:.9rem}
+[data-vibeui-block="testimonials-018"] [data-part="score"]{display:flex;align-items:center;gap:.9rem;margin:0}
 [data-vibeui-block="testimonials-018"] [data-part="score"] b{font-family:var(--vibeui-testimonials-018-display);font-size:2.5rem;font-weight:700;line-height:1;letter-spacing:-.02em}
 [data-vibeui-block="testimonials-018"] [data-part="stars"]{display:block;color:var(--vibeui-testimonials-018-accent);letter-spacing:.1em;font-size:.9rem}
 [data-vibeui-block="testimonials-018"] [data-part="score"] small{display:block;font-size:.78rem;color:var(--vibeui-testimonials-018-muted)}
-[data-vibeui-block="testimonials-018"] [data-part="grid"]{display:grid;gap:1.25rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="testimonials-018"] [data-part="card"]{display:flex;flex-direction:column;gap:1rem;padding:1.5rem;border-radius:1.25rem;background:var(--vibeui-testimonials-018-card);border:1px solid var(--vibeui-testimonials-018-line);animation:vibeui-testimonials-018-in .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--vibeui-testimonials-018-n) * 90ms)}
-@keyframes vibeui-testimonials-018-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-[data-vibeui-block="testimonials-018"] [data-part="video"]{position:relative;display:block;aspect-ratio:16/10;overflow:hidden;border-radius:.9rem;background:light-dark(#e5e7eb,#1f2430)}
+[data-vibeui-block="testimonials-018"] [data-part="rows"]{display:grid;gap:1.25rem;padding-bottom:4rem;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+[data-vibeui-block="testimonials-018"] [data-part="row"]{overflow:hidden}
+[data-vibeui-block="testimonials-018"] [data-part="track"]{display:flex;gap:1.25rem;width:max-content;animation:vibeui-testimonials-018-run var(--vibeui-testimonials-018-t,60s) linear infinite}
+[data-vibeui-block="testimonials-018"] [data-part="row"][data-reverse="true"] [data-part="track"]{animation-direction:reverse}
+[data-vibeui-block="testimonials-018"] [data-part="row"]:hover [data-part="track"],[data-vibeui-block="testimonials-018"] [data-part="row"]:focus-within [data-part="track"]{animation-play-state:paused}
+@keyframes vibeui-testimonials-018-run{to{transform:translateX(-50%)}}
+[data-vibeui-block="testimonials-018"] [data-part="track"] ul{display:flex;gap:1.25rem;margin:0;padding:0;list-style:none}
+[data-vibeui-block="testimonials-018"] [data-part="card"]{display:flex;flex-direction:column;gap:1rem;width:min(22rem,78vw);padding:1.5rem;border-radius:1.25rem;background:var(--vibeui-testimonials-018-card);border:1px solid var(--vibeui-testimonials-018-line);transition:border-color .3s,transform .3s}
+[data-vibeui-block="testimonials-018"] [data-part="card"]:hover{border-color:color-mix(in oklab,var(--vibeui-testimonials-018-accent) 40%,var(--vibeui-testimonials-018-line));transform:translateY(-3px)}
+[data-vibeui-block="testimonials-018"] [data-part="video"]{position:relative;display:block;width:100%;aspect-ratio:16/10;overflow:hidden;border:0;padding:0;border-radius:.9rem;background:light-dark(#e5e7eb,#1f2430);cursor:pointer;font:inherit;color:inherit}
 [data-vibeui-block="testimonials-018"] [data-part="video"] img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="testimonials-018"] [data-part="video"]:hover img{transform:scale(1.04)}
+[data-vibeui-block="testimonials-018"] [data-part="video"]:focus-visible{outline:2px solid var(--vibeui-testimonials-018-accent);outline-offset:3px}
 [data-vibeui-block="testimonials-018"] [data-part="play"]{position:absolute;left:1rem;bottom:1rem;display:inline-flex;align-items:center;gap:.5rem;padding:.5rem .9rem .5rem .5rem;border-radius:999px;background:#fff;color:#111827;font-size:.8rem;font-weight:600}
 [data-vibeui-block="testimonials-018"] [data-part="play"]::before{content:"";width:1.5rem;height:1.5rem;border-radius:50%;background:var(--vibeui-testimonials-018-accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 6.5v11l9-5.5z' fill='%23fff'/%3E%3C/svg%3E") center/1rem no-repeat}
-[data-vibeui-block="testimonials-018"] [data-part="quote"]{margin:0;font-size:1.02rem;line-height:1.5}
+[data-vibeui-block="testimonials-018"] [data-part="quote"]{margin:0;font-size:.98rem;line-height:1.5}
 [data-vibeui-block="testimonials-018"] [data-part="quote"]::before{content:"“";display:block;font-family:var(--vibeui-testimonials-018-display);font-size:2.5rem;line-height:.6;color:var(--vibeui-testimonials-018-accent);margin-bottom:.4rem}
 [data-vibeui-block="testimonials-018"] [data-part="who"]{display:flex;align-items:center;gap:.75rem;margin-top:auto;padding-top:1rem;border-top:1px solid var(--vibeui-testimonials-018-line)}
 [data-vibeui-block="testimonials-018"] [data-part="avatar"]{width:2.5rem;height:2.5rem;border-radius:50%;object-fit:cover;flex:none;background:light-dark(#e5e7eb,#1f2430)}
@@ -79,17 +90,29 @@ container-type:inline-size;
 [data-vibeui-block="testimonials-018"] a:focus-visible{outline:2px solid var(--vibeui-testimonials-018-accent);outline-offset:3px}
 [data-vibeui-block="testimonials-018"] [data-part="role"]{display:block;font-size:.8rem;color:var(--vibeui-testimonials-018-muted)}
 [data-vibeui-block="testimonials-018"] [data-part="cohort"]{margin-left:auto;flex:none;padding:.25rem .55rem;border-radius:.4rem;background:var(--vibeui-testimonials-018-marker);color:#1a2e05;font-size:.68rem;font-weight:700}
-@container (min-width: 44rem){[data-vibeui-block="testimonials-018"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@container (min-width: 64rem){[data-vibeui-block="testimonials-018"] [data-part="shell"]{padding:5.5rem 2rem}[data-vibeui-block="testimonials-018"] [data-part="grid"]{grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="testimonials-018"] *{animation:none!important;transition:none!important}}`
+[data-vibeui-block="testimonials-018"] [data-part="dialog"]{width:min(56rem,calc(100vw - 2rem));max-width:none;padding:0;border:0;border-radius:1.25rem;background:#0b0d12;color:#fff;overflow:hidden;box-shadow:0 40px 80px -30px rgb(0 0 0 / .6)}
+[data-vibeui-block="testimonials-018"] [data-part="dialog"]::backdrop{background:rgb(11 13 18 / .75);backdrop-filter:blur(8px)}
+[data-vibeui-block="testimonials-018"] [data-part="dialog"][open]{animation:vibeui-testimonials-018-pop .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes vibeui-testimonials-018-pop{from{opacity:0;transform:scale(.96) translateY(10px)}to{opacity:1;transform:none}}
+[data-vibeui-block="testimonials-018"] [data-part="player"]{display:block;width:100%;aspect-ratio:16/9;border:0;background:#000}
+[data-vibeui-block="testimonials-018"] [data-part="dialog-bar"]{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 1.25rem;font-size:.85rem}
+[data-vibeui-block="testimonials-018"] [data-part="close"]{border:0;border-radius:999px;padding:.45rem .9rem;background:rgb(255 255 255 / .12);color:#fff;font:inherit;font-size:.8rem;font-weight:600;cursor:pointer}
+[data-vibeui-block="testimonials-018"] [data-part="close"]:focus-visible{outline:2px solid var(--vibeui-testimonials-018-marker);outline-offset:2px}
+@container (min-width: 64rem){[data-vibeui-block="testimonials-018"] [data-part="shell"]{padding:5.5rem 2rem 0}[data-vibeui-block="testimonials-018"] [data-part="rows"]{padding-bottom:5.5rem}}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="testimonials-018"] [data-part="track"]{animation:none;width:auto;flex-wrap:wrap}[data-vibeui-block="testimonials-018"] [data-part="track"] ul[aria-hidden]{display:none}[data-vibeui-block="testimonials-018"] [data-part="rows"]{mask-image:none;-webkit-mask-image:none}[data-vibeui-block="testimonials-018"] *{transition:none!important}}`
 
 const DEFAULT_ITEMS: Testimonials018Item[] = [
   { quote: "Самое ценное — ревью. Куратор разобрал мою домашку на 20 минут видео и показал, где я теряю пользователя. На работе так никто не делает.", name: "Марина Соколова", role: "UI-дизайнер, Авито", cohort: "поток 11", videoHref: "#" },
   { quote: "Пришёл продактом, чтобы перестать ждать дизайнеров. Через месяц собрал прототип фичи сам и получил «да» на тест за один созвон.", name: "Игорь Левин", role: "Продакт-менеджер, Ozon", cohort: "поток 12" },
   { quote: "Лайвы по средам — это отдельный курс. Ксения на живом файле показывает, как думает, а не только что нажать.", name: "Алина Фёдорова", role: "Дизайнер, фриланс", cohort: "поток 12" },
+  { quote: "Защита перед арт-директором — страшно и полезно. Через неделю повторила тот же рассказ на собеседовании и получила оффер.", name: "Дарья Ким", role: "Продуктовый дизайнер, Яндекс", cohort: "поток 10" },
+  { quote: "Автолейаут наконец перестал быть магией. Сдал дизайн-систему на работе через месяц после курса.", name: "Сергей Панов", role: "Дизайнер, Тинькофф", cohort: "поток 11" },
+  { quote: "Чат потока живёт до сих пор: там обсуждаем вакансии и смотрим работы друг друга.", name: "Оля Ракова", role: "UX-дизайнер, СберМаркет", cohort: "поток 9" },
 ]
 
-/** Отзывы студентов: мозаика карточек с видео-отзывом, фото, потоком и общей оценкой. */
+const FILE = /\.(mp4|webm|mov|m4v)(\?|#|$)/i
+
+/** Отзывы двумя встречными бегущими рядами с паузой по наведению и видео в лайтбоксе. */
 export function Testimonials018({
   eyebrow = "Отзывы",
   title = "Что говорят после защиты",
@@ -98,17 +121,28 @@ export function Testimonials018({
   score = "4,9",
   scoreLabel = "по 412 отзывам выпускников",
   videoLabel = "Видео-отзыв",
+  closeLabel = "Закрыть",
   tone = "auto",
   accent,
   background,
   className,
   style,
 }: Testimonials018Props) {
+  const dialog = useRef<HTMLDialogElement>(null)
+  const [current, setCurrent] = useState<Testimonials018Item | null>(null)
   const palette = {
     ...(accent ? { "--vibeui-testimonials-018-accent": accent } : null),
     ...(background ? { "--vibeui-testimonials-018-bg": background } : null),
     ...style,
   } as CSSProperties
+  const half = Math.ceil(items.length / 2)
+  const rows = items.length > 3 ? [items.slice(0, half), items.slice(half)] : [items, items]
+
+  const open = (item: Testimonials018Item) => {
+    setCurrent(item)
+    dialog.current?.showModal()
+  }
+  const close = () => dialog.current?.close()
 
   return (
     <>
@@ -136,34 +170,62 @@ export function Testimonials018({
               </p>
             ) : null}
           </div>
-          <ul data-part="grid">
-            {items.map((item, index) => (
-              <li key={item.name} data-part="card" style={{ ["--vibeui-testimonials-018-n" as string]: index }}>
-                {item.videoHref ? (
-                  <a data-part="video" href={item.videoHref} aria-label={`${videoLabel}: ${item.name}`}>
-                    {item.video ? <img src={item.video} alt="" loading="lazy" /> : null}
-                    <span data-part="play">{videoLabel}</span>
-                  </a>
-                ) : null}
-                <blockquote data-part="quote">{item.quote}</blockquote>
-                <div data-part="who">
-                  {item.image ? <img data-part="avatar" src={item.image} alt="" loading="lazy" /> : <span data-part="avatar" />}
-                  <span>
-                    {item.href ? (
-                      <a data-part="name" href={item.href}>
-                        {item.name}
-                      </a>
-                    ) : (
-                      <span data-part="name">{item.name}</span>
-                    )}
-                    <span data-part="role">{item.role}</span>
-                  </span>
-                  {item.cohort ? <span data-part="cohort">{item.cohort}</span> : null}
-                </div>
-              </li>
-            ))}
-          </ul>
         </div>
+        <div data-part="rows">
+          {rows.map((row, rowIndex) => (
+            <div key={rowIndex} data-part="row" data-reverse={rowIndex % 2 === 1} style={{ ["--vibeui-testimonials-018-t" as string]: `${Math.max(30, row.length * 14)}s` }}>
+              <div data-part="track">
+                {[0, 1].map((copy) => (
+                  <ul key={copy} aria-hidden={copy === 1 ? "true" : undefined}>
+                    {row.map((item) => (
+                      <li key={item.name} data-part="card">
+                        {item.videoHref ? (
+                          <button type="button" data-part="video" onClick={() => open(item)} aria-label={`${videoLabel}: ${item.name}`} tabIndex={copy === 1 ? -1 : undefined}>
+                            {item.video ? <img src={item.video} alt="" loading="lazy" /> : null}
+                            <span data-part="play">{videoLabel}</span>
+                          </button>
+                        ) : null}
+                        <blockquote data-part="quote">{item.quote}</blockquote>
+                        <div data-part="who">
+                          {item.image ? <img data-part="avatar" src={item.image} alt="" loading="lazy" /> : <span data-part="avatar" />}
+                          <span>
+                            {item.href ? (
+                              <a data-part="name" href={item.href} tabIndex={copy === 1 ? -1 : undefined}>
+                                {item.name}
+                              </a>
+                            ) : (
+                              <span data-part="name">{item.name}</span>
+                            )}
+                            <span data-part="role">{item.role}</span>
+                          </span>
+                          {item.cohort ? <span data-part="cohort">{item.cohort}</span> : null}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <dialog ref={dialog} data-part="dialog" onClose={() => setCurrent(null)} onClick={(event) => event.target === dialog.current && close()} aria-label={current ? `${videoLabel}: ${current.name}` : videoLabel}>
+          {current?.videoHref ? (
+            FILE.test(current.videoHref) ? (
+              <video data-part="player" src={current.videoHref} poster={current.video} controls autoPlay playsInline />
+            ) : (
+              <iframe data-part="player" src={current.videoHref} title={`${videoLabel}: ${current.name}`} allow="autoplay; fullscreen; picture-in-picture" />
+            )
+          ) : null}
+          <div data-part="dialog-bar">
+            <span>
+              {current?.name}
+              {current?.role ? ` · ${current.role}` : ""}
+            </span>
+            <button type="button" data-part="close" onClick={close}>
+              {closeLabel}
+            </button>
+          </div>
+        </dialog>
       </section>
     </>
   )

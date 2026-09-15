@@ -6,6 +6,7 @@ import { Course002 } from "@/registry/blocks/course/course-002/course-002"
 import { Course003 } from "@/registry/blocks/course/course-003/course-003"
 import { Course004 } from "@/registry/blocks/course/course-004/course-004"
 import { Cta017 } from "@/registry/blocks/cta/cta-017/cta-017"
+import { Cta018 } from "@/registry/blocks/cta/cta-018/cta-018"
 import { Faq017 } from "@/registry/blocks/faq/faq-017/faq-017"
 import { Footer021 } from "@/registry/blocks/footer/footer-021/footer-021"
 import { Hero022 } from "@/registry/blocks/hero/hero-022/hero-022"
@@ -14,8 +15,10 @@ import { Pricing020 } from "@/registry/blocks/pricing/pricing-020/pricing-020"
 import { Testimonials018 } from "@/registry/blocks/testimonials/testimonials-018/testimonials-018"
 
 /**
- * Сценарий «Онлайн-курс»: светлая тема, индиго и лаймовый маркер. Восемь
- * блоков из общих групп каталога плюс четыре предметных из course. Витрина
+ * Сценарий «Онлайн-курс»: светлая тема, индиго и лаймовый маркер. Девять
+ * блоков из общих групп каталога плюс четыре предметных из course. Секции
+ * проявляются при скролле (scroll-driven animation, в старых браузерах
+ * видны сразу), фон чередуется: белый → мягкий индиго → тёмный. Витрина
  * результата, не шаблон.
  */
 export const metadata = {
@@ -32,6 +35,10 @@ const page: CSSProperties = {
 }
 
 const light = { tone: "light" } as const
+
+const SOFT = "linear-gradient(180deg,#ffffff 0%,#eef2ff 40%,#f5f3ff 100%)"
+
+const REVEAL = `@supports (animation-timeline: view()){[data-reveal]{animation:vibeui-demo-reveal linear both;animation-timeline:view();animation-range:entry 0% entry 35%}@keyframes vibeui-demo-reveal{from{opacity:.2;transform:translateY(28px)}to{opacity:1;transform:none}}}@media (prefers-reduced-motion:reduce){[data-reveal]{animation:none}}`
 
 const PHOTOS = "/demo/course"
 
@@ -52,6 +59,9 @@ export default function Page() {
     <div style={page} className="min-h-dvh">
       <style href="vibeui-demo-scroll" precedence="medium">
         {`html{scroll-behavior:smooth;scroll-padding-top:5rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}`}
+      </style>
+      <style href="vibeui-demo-reveal" precedence="medium">
+        {REVEAL}
       </style>
       <Navbar022
         {...light}
@@ -83,49 +93,53 @@ export default function Page() {
           poster={`${PHOTOS}/poster.webp`}
           posterAlt="Кадр из первого урока: дизайнер за монитором с макетом"
           duration="4:32"
-          sticker="Осталось 12 мест"
+          seatsTaken={48}
+          seatsTotal={60}
+          dateValue="6 окт"
         />
       </div>
 
-      <div id="who">
+      <div id="who" data-reveal>
         <Course001 {...light} />
       </div>
 
-      <div id="program">
-        <Course002 {...light} />
+      <div id="program" data-reveal>
+        <Course002 {...light} style={{ background: SOFT }} />
       </div>
 
-      <div id="results">
-        <Course003 {...light} cases={CASES} />
+      <div id="results" data-reveal>
+        <Course003 {...light} cases={CASES} background="#111827" style={{ ["--vibeui-course-003-fg" as string]: "#f3f4f6", ["--vibeui-course-003-muted" as string]: "#9ca3af", ["--vibeui-course-003-card" as string]: "#1b2130", ["--vibeui-course-003-line" as string]: "#2a3140" }} />
       </div>
 
-      <div id="author">
+      <div id="author" data-reveal>
         <About008 {...light} image={`${PHOTOS}/author.webp`} imageAlt="Ксения Мороз за рабочим столом" />
       </div>
 
-      <div id="format">
-        <Course004 {...light} image={`${PHOTOS}/lesson.webp`} imageAlt="Ксения записывает урок в студии" />
+      <div id="format" data-reveal>
+        <Course004 {...light} image={`${PHOTOS}/lesson.webp`} imageAlt="Ксения записывает урок в студии" style={{ background: SOFT }} />
       </div>
 
-      <div id="pricing">
+      <div id="pricing" data-reveal>
         <Pricing020 {...light} />
       </div>
 
-      <div id="reviews">
+      <div id="reviews" data-reveal>
         <Testimonials018 {...light} items={REVIEWS} />
       </div>
 
-      <div id="faq">
-        <Faq017 {...light} />
+      <div id="faq" data-reveal>
+        <Faq017 {...light} style={{ background: SOFT }} />
       </div>
 
-      <div id="enroll">
+      <div id="enroll" data-reveal>
         <Cta017 {...light} startsAt="2026-10-06T10:00:00+03:00" action="" />
       </div>
 
       <div id="footer">
         <Footer021 {...light} email="hello@figmapro.school" />
       </div>
+
+      <Cta018 {...light} price="49 000 ₽" href="#pricing" caption="Старт 6 октября" showAfter="#hero" hideNear="#pricing, #enroll, #footer" />
     </div>
   )
 }

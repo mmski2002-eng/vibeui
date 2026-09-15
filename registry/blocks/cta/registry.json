@@ -2634,8 +2634,8 @@
     {
       "name": "cta-017",
       "type": "registry:block",
-      "title": "Призыв с обратным отсчётом до старта",
-      "description": "Финальный призыв курса: тёмная карточка с индиго-свечением, живой обратный отсчёт до старта (дни, часы, минуты, секунды — цифры перелистываются), «осталось мест», форма с email и кнопкой. С action уходит POST, без него показывает «место за вами».",
+      "title": "Финальный призыв с flip-часами и свечением",
+      "description": "Финальный призыв курса: тёмная карточка в цветном halo — conic-свечение за карточкой и два плывущих пятна внутри, обратный отсчёт flip-часами (дни, часы, минуты, секунды переворачиваются по оси X), плашка «осталось мест», форма с email и кнопкой. С action уходит POST, без него показывает «место за вами».",
       "categories": [
         "cta"
       ],
@@ -2648,7 +2648,7 @@
           "target": "@components/vibeui/cta-017.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради таймера и формы. Время берётся только на клиенте (useEffect + setInterval раз в секунду), на сервере таймер рендерится нулями с aria-hidden — без hydration mismatch. Каждая цифра — span с key=значение, поэтому смена перезапускает @keyframes flip. Форма: <input type=email name=email required>, кнопка submit; action пустой — submit перехватывается, рендерится карточка done с role=status. От 60rem (container query) карточка в две колонки. Палитра --vibeui-cta-017-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, «use client» ради таймера и формы. Время берётся только на клиенте (useEffect + setInterval раз в секунду), на сервере таймер отдаётся нулями с aria-hidden — нет hydration mismatch. Каждая цифра — span с key=значение в плашке с perspective:600px: смена значения перемонтирует span с @keyframes rotateX(-80deg)→0, линия посередине — ::after. Halo — ::before обёртки wrap с inset:-.5rem, conic-gradient(from var(--a)) и blur(28px), угол — @property <angle>, 14 с; пятна — ::before/::after карточки с blur и @keyframes drift. Форма: <input type=email name=email required>, кнопка submit; action пустой — submit перехватывается, показывается done. От 60rem (container query) две колонки 1.1fr/1fr. Палитра --vibeui-cta-017-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
         "tags": [
           "course",
@@ -2658,8 +2658,9 @@
           "cta",
           "countdown",
           "timer",
-          "enroll",
-          "form"
+          "flip",
+          "form",
+          "glow"
         ],
         "preview": {
           "width": "natural",
@@ -2678,9 +2679,9 @@
           "usage": "<Cta017\n  title=\"Старт 6 октября. Следующий поток — только в феврале\"\n  startsAt=\"2026-10-06T10:00:00+03:00\"\n  seats=\"Осталось 12 мест из 60\"\n  submitLabel=\"Забронировать место\"\n  action=\"/api/enroll\"\n/>",
           "summary": "Самодостаточный финальный призыв для курса, вебинара или запуска: обратный отсчёт до даты, места и форма с email. Дата старта — пропсом в ISO.",
           "preserve": [
-            "обратный отсчёт с перелистыванием цифр — срочность, а не абстрактное «скоро»",
-            "таймер только на клиенте, нулями на сервере — без hydration mismatch",
-            "форму с одним полем email и карточку «место за вами» вместо alert"
+            "flip-часы: плашки переворачиваются по оси X, а не просто меняют цифру",
+            "halo из conic-свечения за карточкой и плывущие пятна внутри",
+            "форму с email и состоянием «место за вами» без action"
           ],
           "adapt": [
             "eyebrow, title, text, startsAt (ISO), countdownLabel, seats, placeholder, submitLabel, doneTitle, doneText, consent",
@@ -2688,8 +2689,8 @@
             "accent и background, tone"
           ],
           "notes": [
-            "После даты старта таймер стоит на нулях — меняйте startsAt на следующий поток.",
-            "Карточка всегда тёмная (color-scheme:dark внутри), фон вокруг следует теме."
+            "@property для угла halo — Chrome 85+, Safari 16.4+, Firefox 128+; без него свечение статично.",
+            "startsAt в ISO с часовым поясом; когда дата прошла, таймер показывает нули."
           ]
         },
         "controls": [
@@ -2733,15 +2734,15 @@
         ],
         "i18n": {
           "en": {
-            "title": "CTA with a countdown to the start",
-            "description": "The course's final call: a dark card with an indigo glow, a live countdown to the start (days, hours, minutes, seconds — digits flip), “seats left”, an email form with a button. With action it POSTs, without it shows “the seat is yours”.",
-            "docs": "One file, zero dependencies, “use client” for the timer and the form. Time is taken on the client only (useEffect + setInterval every second); on the server the timer renders zeros with aria-hidden — no hydration mismatch. Each digit is a span with key=value, so a change restarts the flip @keyframes. The form: <input type=email name=email required>, a submit button; with empty action submit is intercepted and a done card with role=status renders. From 60rem (container query) the card is two columns. Palette --vibeui-cta-017-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "title": "Final call with flip clock and glow",
+            "description": "The course's final call: a dark card in a coloured halo — a conic glow behind the card and two drifting spots inside, a countdown as a flip clock (days, hours, minutes, seconds flip on the X axis), a “seats left” tag, a form with email and a button. With action it POSTs, without it shows “your seat is reserved”.",
+            "docs": "One file, zero dependencies, “use client” for the timer and the form. Time is read only on the client (useEffect + setInterval every second); on the server the timer renders zeros with aria-hidden — no hydration mismatch. Each figure is a span keyed by value inside a tile with perspective:600px: a change remounts it with @keyframes rotateX(-80deg)→0, the middle line is an ::after. The halo is the wrap's ::before with inset:-.5rem, conic-gradient(from var(--a)) and blur(28px), the angle an @property <angle> over 14 s; the spots are the card's ::before/::after with blur and a drift @keyframes. The form: <input type=email name=email required>, a submit button; with an empty action submit is intercepted and done is shown. From 60rem (container query) two columns 1.1fr/1fr. Palette --vibeui-cta-017-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
             "ai": {
               "summary": "A self-contained final call for a course, webinar or launch: a countdown to a date, seats and an email form. The start date comes in as an ISO prop.",
               "preserve": [
-                "the countdown with flipping digits — urgency, not an abstract “soon”",
-                "the client-only timer with zeros on the server — no hydration mismatch",
-                "the single-field email form and the “seat is yours” card instead of an alert"
+                "the flip clock: tiles flip on the X axis rather than merely changing the figure",
+                "the conic halo behind the card and the drifting spots inside",
+                "the email form with a “your seat is reserved” state without action"
               ],
               "adapt": [
                 "eyebrow, title, text, startsAt (ISO), countdownLabel, seats, placeholder, submitLabel, doneTitle, doneText, consent",
@@ -2749,8 +2750,8 @@
                 "accent and background, tone"
               ],
               "notes": [
-                "After the start date the timer sits at zeros — change startsAt to the next cohort.",
-                "The card is always dark (color-scheme:dark inside); the background around follows the theme."
+                "@property for the halo angle — Chrome 85+, Safari 16.4+, Firefox 128+; without it the glow is static.",
+                "startsAt in ISO with a timezone; once the date has passed the timer shows zeros."
               ],
               "usage": "<Cta017\n  title=\"Starts 6 October. The next cohort is in February\"\n  startsAt=\"2026-10-06T10:00:00+03:00\"\n  seats=\"12 of 60 seats left\"\n  submitLabel=\"Reserve a seat\"\n  action=\"/api/enroll\"\n/>"
             },
@@ -2787,6 +2788,169 @@
                 "doneTitle": "The seat is yours",
                 "doneText": "The email with the curriculum and link is on its way. Check Promotions if you don’t see it.",
                 "consent": "By clicking you agree to the data processing policy."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cta-018",
+      "type": "registry:block",
+      "title": "Плавающая кнопка записи с ценой",
+      "description": "Плавающая кнопка записи: закреплена внизу экрана, выезжает снизу, когда первый экран ушёл из вида, и прячется, пока на экране тарифы или финальный призыв — чтобы не дублировать кнопку рядом с ценами. Слева подпись с зелёной точкой, справа цена в капсуле.",
+      "categories": [
+        "cta"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-018/cta-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-018.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради видимости. Корень — position:fixed внизу с safe-area, pointer-events:none; плашка — pointer-events:auto, translateY(100 %)→0 за .55 с при data-show. showAfter — селектор порога: IntersectionObserver ставит passed, когда элемент выше вьюпорта; hideNear — селекторы блоков, при пересечении которых (rootMargin -20 % снизу) кнопка прячется; hideAtBottom прячет у низа страницы. Без showAfter кнопка видна сразу. placement=static кладёт кнопку в поток (для превью и документации). Подпись показывается от 40rem (container query). Скрытая плашка — aria-hidden и tabIndex=-1 у ссылки. Палитра --vibeui-cta-018-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "course",
+          "education",
+          "edtech",
+          "landing",
+          "cta",
+          "floating",
+          "sticky",
+          "button",
+          "price"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "placement": "static",
+            "showAfter": "",
+            "hideNear": ""
+          }
+        },
+        "cardControls": [
+          "label",
+          "tone",
+          "accent"
+        ],
+        "ai": {
+          "export": "Cta018",
+          "usage": "<Cta018\n  label=\"Записаться\"\n  price=\"49 000 ₽\"\n  href=\"#pricing\"\n  caption=\"Старт 6 октября\"\n  showAfter=\"#hero\"\n  hideNear=\"#pricing, #enroll, #footer\"\n/>",
+          "summary": "Самодостаточная плавающая кнопка для лендинга курса, вебинара или продукта с одной целью: появляется после первого экрана, прячется у тарифов и подвала, цена в капсуле.",
+          "preserve": [
+            "появление после первого экрана и скрытие у тарифов — кнопка не мешает там, где уже есть цены",
+            "капсулу с ценой внутри кнопки",
+            "плашку в pointer-events:none корне — не перекрывает клики вокруг"
+          ],
+          "adapt": [
+            "label, price, href, caption",
+            "showAfter, hideNear, hideAtBottom, placement",
+            "accent, tone"
+          ],
+          "notes": [
+            "Ставьте компонент в конец страницы; секции должны иметь id, на которые ссылаются showAfter и hideNear.",
+            "В превью каталога кнопка показана в потоке (placement=static)."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "label",
+            "label": "Текст",
+            "type": "text",
+            "default": "Записаться",
+            "maxLength": 20
+          },
+          {
+            "prop": "price",
+            "label": "Цена",
+            "type": "text",
+            "default": "49 000 ₽",
+            "maxLength": 14
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Старт 6 октября",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Floating enroll button with a price",
+            "description": "A floating enroll button: pinned to the bottom of the screen, it slides up once the first screen has scrolled out of view and hides while pricing or the final call are on screen — so the button isn't duplicated next to prices. A caption with a green dot on the left, the price in a pill on the right.",
+            "docs": "One file, zero dependencies, “use client” for visibility. The root is position:fixed at the bottom with safe-area, pointer-events:none; the bar is pointer-events:auto, translateY(100 %)→0 over .55 s on data-show. showAfter is the threshold selector: an IntersectionObserver sets passed once the element is above the viewport; hideNear lists selectors whose intersection (rootMargin -20 % at the bottom) hides the button; hideAtBottom hides it near the page bottom. Without showAfter the button is visible at once. placement=static puts the button in the flow (for previews and docs). The caption shows from 40rem (container query). A hidden bar is aria-hidden with tabIndex=-1 on the link. Palette --vibeui-cta-018-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained floating button for a course, webinar or single-goal product landing: appears after the first screen, hides near pricing and the footer, the price in a pill.",
+              "preserve": [
+                "appearing after the first screen and hiding near pricing — the button stays out of the way where prices already are",
+                "the price pill inside the button",
+                "the bar inside a pointer-events:none root — it doesn't block clicks around it"
+              ],
+              "adapt": [
+                "label, price, href, caption",
+                "showAfter, hideNear, hideAtBottom, placement",
+                "accent, tone"
+              ],
+              "notes": [
+                "Place the component at the end of the page; sections need the ids referenced by showAfter and hideNear.",
+                "In the catalogue preview the button is shown in the flow (placement=static)."
+              ],
+              "usage": "<Cta018\n  label=\"Enroll\"\n  price=\"$490\"\n  href=\"#pricing\"\n  caption=\"Starts 6 October\"\n  showAfter=\"#hero\"\n  hideNear=\"#pricing, #enroll, #footer\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Enroll"
+              },
+              "price": {
+                "label": "Price",
+                "default": "$490"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": "Starts 6 October"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "placement": "static",
+                "showAfter": "",
+                "hideNear": "",
+                "label": "Enroll",
+                "price": "$490",
+                "caption": "Starts 6 October"
               }
             }
           }

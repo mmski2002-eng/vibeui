@@ -38,4 +38,6 @@ export const PREVIEWS = {
     import("@/registry/blocks/cta/cta-016/cta-016").then((module) => module.Cta016),
   "cta-017": () =>
     import("@/registry/blocks/cta/cta-017/cta-017").then((module) => module.Cta017),
+  "cta-018": () =>
+    import("@/registry/blocks/cta/cta-018/cta-018").then((module) => module.Cta018),
 } satisfies PreviewLoaderMap

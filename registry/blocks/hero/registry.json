@@ -3938,8 +3938,8 @@
     {
       "name": "hero-022",
       "type": "registry:block",
-      "title": "Первый экран курса с маркером и превью урока",
-      "description": "Первый экран лендинга курса: заголовок с маркерным подчёркиванием, которое дорисовывается при появлении, зелёная точка «старт 6 октября», стикер «осталось мест», кнопка и превью урока с play и длительностью. Внизу строка фактов и логотипы компаний текстом.",
+      "title": "Бенто-хиро курса с плитками и наклоном",
+      "description": "Первый экран лендинга курса: гигантский заголовок на всю ширину, слова проявляются из размытия, маркер под словом дорисовывается. Под ним мозаика из четырёх плиток: превью урока с play, цифра-гигант, живой индикатор мест и дата старта — плитки наклоняются за курсором. Фон — плывущий mesh-градиент, факты внизу набегают счётчиком.",
       "categories": [
         "hero"
       ],
@@ -3952,7 +3952,7 @@
           "target": "@components/vibeui/hero-022.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. Слово в *звёздочках* в title превращается в span с фоновым градиентом-маркером (background-size 0→100 % с задержкой .9s, box-decoration-break:clone — подчёркивание переносится по строкам). Появление блоков — @keyframes fade с задержками. Стикер — pop с overshoot. Превью — <a> с aspect-ratio 16/10, кнопкой play и длительностью. Радиальное индиго-свечение через ::before секции. От 60rem (container query) две колонки и строка фактов на всю ширину. Палитра --vibeui-hero-022-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, «use client» ради наклона и счётчиков. Заголовок режется на слова: каждое — span с @keyframes blur(8px)→0 и задержкой --i×70ms; слово в *звёздочках* получает фоновый маркер, который растёт background-size 0→100 % после слов. Плитки — <ul data-part=bento>, у каждой pointermove пишет --rx/--ry/--mx/--my в style без ререндеров: rotateX/rotateY до 6° и блик через ::after. Mesh — три радиальных градиента на ::before секции с медленной анимацией transform. Факты — компонент с IntersectionObserver и requestAnimationFrame, число набегает за 1,4 с. От 60rem (container query) плитки 4 колонки: превью 2×2, остальные 1×1. Палитра --vibeui-hero-022-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
         "tags": [
           "course",
@@ -3960,9 +3960,10 @@
           "edtech",
           "landing",
           "hero",
-          "marker",
+          "bento",
+          "tilt",
           "video",
-          "sticker"
+          "counter"
         ],
         "preview": {
           "width": "natural",
@@ -3978,21 +3979,21 @@
         ],
         "ai": {
           "export": "Hero022",
-          "usage": "<Hero022\n  eyebrow=\"Онлайн-курс · старт 6 октября\"\n  title=\"Figma для продуктовых дизайнеров: от макета до *живого прототипа*\"\n  lede=\"Шесть недель практики на реальных задачах.\"\n  primaryLabel=\"Записаться на поток\"\n  primaryHref=\"#pricing\"\n  secondaryLabel=\"Смотреть первый урок\"\n  secondaryHref=\"/lesson-1\"\n  poster=\"/photos/poster.webp\"\n  duration=\"4:32\"\n  sticker=\"Осталось 12 мест\"\n  facts={[{ value: \"6\", label: \"недель\" }, { value: \"18\", label: \"уроков\" }]}\n  logos={[\"Ozon\", \"Яндекс\"]}\n/>",
-          "summary": "Самодостаточный первый экран для курса, вебинара или школы: маркерный заголовок, стикер, превью видео, факты и логотипы. Всё содержимое пропсами.",
+          "usage": "<Hero022\n  eyebrow=\"Онлайн-курс · старт 6 октября\"\n  title=\"Figma для продуктовых дизайнеров: от макета до *живого прототипа*\"\n  lede=\"Шесть недель практики на реальных задачах.\"\n  primaryLabel=\"Записаться на поток\"\n  primaryHref=\"#pricing\"\n  secondaryLabel=\"Смотреть первый урок\"\n  secondaryHref=\"/lesson-1\"\n  poster=\"/photos/poster.webp\"\n  duration=\"4:32\"\n  bigValue=\"6\"\n  bigLabel=\"недель\"\n  seatsTaken={48}\n  seatsTotal={60}\n  dateValue=\"6 окт\"\n  facts={[{ value: \"18\", label: \"уроков\" }, { value: \"94 %\", label: \"доходят до защиты\" }]}\n  logos={[\"Ozon\", \"Яндекс\"]}\n/>",
+          "summary": "Самодостаточный бенто-хиро для курса, вебинара или школы: заголовок-словами, четыре плитки с 3D-наклоном (видео, цифра, места, дата), счётчики фактов и логотипы. Всё содержимое пропсами.",
           "preserve": [
-            "маркерное подчёркивание, которое дорисовывается — главный жест экрана",
-            "превью урока с play и длительностью вместо абстрактной иллюстрации",
-            "строку фактов и логотипы под линией — доверие в одном ряду"
+            "заголовок словами из размытия и маркер, растущий после — главный жест экрана",
+            "бенто из четырёх плиток с наклоном за курсором через CSS-переменные, без ререндеров",
+            "счётчики фактов по IntersectionObserver и плывущий mesh-фон"
           ],
           "adapt": [
             "eyebrow, title (слово в *звёздочках*), lede, primaryLabel/Href, secondaryLabel/Href",
-            "poster, duration, sticker, facts, logosLabel, logos",
-            "accent и background, tone"
+            "poster, duration, bigValue/bigLabel, seatsTaken/seatsTotal/seatsLabel, dateValue/dateLabel",
+            "facts, logosLabel, logos, accent и background, tone"
           ],
           "notes": [
-            "Логотипы — текстом в фирменном шрифте; свои SVG подставляйте через children-обёртку или замену массива.",
-            "reduced-motion выключает анимации, подчёркивание сразу нарисовано."
+            "Счётчик разбирает число из value: «94 %» и «3 000+» набегают, текст без цифр показывается как есть.",
+            "reduced-motion выключает наклон, размытие и счётчики — всё нарисовано сразу."
           ]
         },
         "controls": [
@@ -4015,11 +4016,20 @@
             "maxLength": 90
           },
           {
-            "prop": "sticker",
-            "label": "Стикер",
+            "prop": "dateValue",
+            "label": "Дата",
             "type": "text",
-            "default": "Осталось 12 мест",
-            "maxLength": 24
+            "default": "6 окт",
+            "maxLength": 12
+          },
+          {
+            "prop": "seatsTaken",
+            "label": "Занято мест",
+            "type": "number",
+            "default": 48,
+            "min": 0,
+            "max": 60,
+            "step": 1
           },
           {
             "prop": "accent",
@@ -4036,35 +4046,38 @@
         ],
         "i18n": {
           "en": {
-            "title": "Course hero with a marker and a lesson preview",
-            "description": "A course landing first screen: a headline with a marker underline that draws itself on appearance, a green “starts 6 October” dot, a “seats left” sticker, a button and a lesson preview with play and duration. Below, a row of facts and company logos as text.",
-            "docs": "One file, zero dependencies, a server component. A *starred* word in title becomes a span with a background-gradient marker (background-size 0→100 % with a .9s delay, box-decoration-break:clone — the underline wraps across lines). Blocks appear via @keyframes fade with delays. The sticker pops with overshoot. The preview is an <a> with aspect-ratio 16/10, a play button and duration. A radial indigo glow via the section's ::before. From 60rem (container query) two columns and a full-width facts row. Palette --vibeui-hero-022-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "title": "Course bento hero with tilting tiles",
+            "description": "A course landing first screen: a giant full-width headline whose words sharpen out of a blur and a marker that draws under one word. Below, a mosaic of four tiles: a lesson preview with play, a giant number, a live seats indicator and the start date — tiles tilt toward the cursor. A drifting mesh gradient behind, facts count up at the bottom.",
+            "docs": "One file, zero dependencies, “use client” for tilt and counters. The headline is split into words: each a span with @keyframes blur(8px)→0 and an --i×70ms delay; a *starred* word gets a background marker growing background-size 0→100 % after the words. Tiles are a <ul data-part=bento>; pointermove writes --rx/--ry/--mx/--my into style without re-renders: rotateX/rotateY up to 6° and a sheen via ::after. The mesh is three radial gradients on the section's ::before with a slow transform animation. Facts are a component with IntersectionObserver and requestAnimationFrame counting up over 1.4 s. From 60rem (container query) tiles form 4 columns: the preview 2×2, the rest 1×1. Palette --vibeui-hero-022-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
             "ai": {
-              "summary": "A self-contained first screen for a course, webinar or school: a marker headline, a sticker, a video preview, facts and logos. All content via props.",
+              "summary": "A self-contained bento hero for a course, webinar or school: a word-by-word headline, four 3D-tilting tiles (video, number, seats, date), counting facts and logos. All content via props.",
               "preserve": [
-                "the marker underline drawing itself — the main gesture of the screen",
-                "the lesson preview with play and duration instead of an abstract illustration",
-                "the facts row and logos under the rule — trust in one line"
+                "the headline words sharpening out of a blur and the marker growing after — the main gesture of the screen",
+                "the four-tile bento tilting toward the cursor via CSS variables, no re-renders",
+                "fact counters on IntersectionObserver and the drifting mesh background"
               ],
               "adapt": [
                 "eyebrow, title (a *starred* word), lede, primaryLabel/Href, secondaryLabel/Href",
-                "poster, duration, sticker, facts, logosLabel, logos",
-                "accent and background, tone"
+                "poster, duration, bigValue/bigLabel, seatsTaken/seatsTotal/seatsLabel, dateValue/dateLabel",
+                "facts, logosLabel, logos, accent and background, tone"
               ],
               "notes": [
-                "Logos are text in the display font; use your own SVGs by replacing the array or wrapping.",
-                "reduced-motion disables animations; the underline is drawn at once."
+                "The counter parses the number out of value: “94 %” and “3 000+” count up, text without digits shows as is.",
+                "reduced-motion disables tilt, blur and counters — everything is drawn at once."
               ],
-              "usage": "<Hero022\n  eyebrow=\"Online course · starts 6 October\"\n  title=\"Figma for product designers: from mockup to a *living prototype*\"\n  lede=\"Six weeks of practice on real tasks.\"\n  primaryLabel=\"Enroll\"\n  primaryHref=\"#pricing\"\n  secondaryLabel=\"Watch the first lesson\"\n  secondaryHref=\"/lesson-1\"\n  poster=\"/photos/poster.webp\"\n  duration=\"4:32\"\n  sticker=\"12 seats left\"\n  facts={[{ value: \"6\", label: \"weeks\" }, { value: \"18\", label: \"lessons\" }]}\n  logos={[\"Ozon\", \"Yandex\"]}\n/>"
+              "usage": "<Hero022\n  eyebrow=\"Online course · starts 6 October\"\n  title=\"Figma for product designers: from mockup to a *living prototype*\"\n  lede=\"Six weeks of practice on real tasks.\"\n  primaryLabel=\"Enroll\"\n  primaryHref=\"#pricing\"\n  secondaryLabel=\"Watch the first lesson\"\n  secondaryHref=\"/lesson-1\"\n  poster=\"/photos/poster.webp\"\n  duration=\"4:32\"\n  bigValue=\"6\"\n  bigLabel=\"weeks\"\n  seatsTaken={48}\n  seatsTotal={60}\n  dateValue=\"6 Oct\"\n  facts={[{ value: \"18\", label: \"lessons\" }, { value: \"94 %\", label: \"reach the defence\" }]}\n  logos={[\"Ozon\", \"Yandex\"]}\n/>"
             },
             "controls": {
               "title": {
                 "label": "Title",
                 "default": "Figma for product designers: from mockup to a *living prototype*"
               },
-              "sticker": {
-                "label": "Sticker",
-                "default": "12 seats left"
+              "dateValue": {
+                "label": "Date",
+                "default": "6 Oct"
+              },
+              "seatsTaken": {
+                "label": "Seats taken"
               },
               "tone": {
                 "label": "Theme"
@@ -4085,12 +4098,12 @@
                 "lede": "Six weeks of practice on real tasks: build three interfaces, defend a project before an art director and leave with a portfolio people look at.",
                 "primaryLabel": "Enroll",
                 "secondaryLabel": "Watch the first lesson",
-                "sticker": "12 seats left",
+                "bigValue": "6",
+                "bigLabel": "weeks",
+                "seatsLabel": "seats taken",
+                "dateValue": "6 Oct",
+                "dateLabel": "cohort starts",
                 "facts": [
-                  {
-                    "value": "6",
-                    "label": "weeks"
-                  },
                   {
                     "value": "18",
                     "label": "40-minute lessons"

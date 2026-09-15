@@ -2943,8 +2943,8 @@
     {
       "name": "footer-021",
       "type": "registry:block",
-      "title": "Подвал курса с реквизитами",
-      "description": "Подвал лендинга курса: словомарка с подписью, автор и почта, две колонки ссылок (разделы курса и документы), соцсети капсулами, внизу реквизиты ИП и лицензия на образовательную деятельность.",
+      "title": "Подвал курса с гигантским контуром бренда",
+      "description": "Подвал лендинга курса: словомарка с подписью, автор и почта, две колонки ссылок, соцсети капсулами, реквизиты ИП и лицензия. В самом низу имя бренда гигантским контуром на всю ширину — выезжает снизу при скролле и заливается акцентом по наведению на подвал.",
       "categories": [
         "footer"
       ],
@@ -2957,7 +2957,7 @@
           "target": "@components/vibeui/footer-021.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. <footer> с верхней сеткой: колонкой на узком, от 56rem (container query) 1.6fr/1fr/1fr/1.2fr. Колонки ссылок из columns, соцсети — капсулы target=_blank. Нижняя строка — реквизиты мелким. Верхняя граница секции — линия. Палитра --vibeui-footer-021-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Сетка top до 56rem (container query) в колонку, от 56rem 1.6fr/1fr/1fr/1.2fr. Гигант — span aria-hidden с font-size clamp(3rem, 13.5cqi, 13rem), color:transparent и -webkit-text-stroke 1px, margin-bottom -.18em срезает нижнюю часть; animation-timeline:view() под @supports поднимает его translateY(40 %)→0 при входе в кадр, :hover подвала подкрашивает контур акцентом. giant=true печатает brand, строка — своё слово, false — без гиганта. Палитра --vibeui-footer-021-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
         "tags": [
           "course",
@@ -2966,8 +2966,9 @@
           "landing",
           "footer",
           "legal",
-          "licence",
-          "socials"
+          "socials",
+          "outline",
+          "wordmark"
         ],
         "preview": {
           "width": "natural",
@@ -2981,21 +2982,21 @@
         ],
         "ai": {
           "export": "Footer021",
-          "usage": "<Footer021\n  brand=\"Figma Pro\"\n  caption=\"Онлайн-курс для продуктовых дизайнеров\"\n  author=\"Автор и ведущая — Ксения Мороз\"\n  email=\"hello@figmapro.school\"\n  columns={[{ title: \"Курс\", links: [{ label: \"Программа\", href: \"#program\" }] }, { title: \"Документы\", links: [{ label: \"Договор оферты\", href: \"/offer\" }] }]}\n  socials={[{ label: \"Telegram\", href: \"https://t.me/figmapro\" }]}\n  legal=\"ИП Мороз К. А., ИНН …, лицензия № …\"\n/>",
+          "usage": "<Footer021\n  brand=\"Figma Pro\"\n  caption=\"Онлайн-курс для продуктовых дизайнеров\"\n  author=\"Автор и ведущая — Ксения Мороз\"\n  email=\"hello@figmapro.school\"\n  giant=\"Figma Pro\"\n  columns={[{ title: \"Курс\", links: [{ label: \"Программа\", href: \"#program\" }] }]}\n  socials={[{ label: \"Telegram\", href: \"https://t.me/figmapro\" }]}\n  legal=\"ИП Мороз К. А., ИНН 780000000000. Лицензия № Л035-00000-78/00000000.\"\n/>",
           "summary": "Самодостаточный подвал для курса, школы или эксперта: словомарка, автор, колонки ссылок, соцсети и реквизиты с лицензией. Всё содержимое пропсами.",
           "preserve": [
-            "реквизиты и лицензию мелким внизу — для образовательных продуктов это обязательная строка",
-            "колонки ссылок из массива columns — разделы и документы отдельно",
-            "соцсети капсулами, а не иконками"
+            "гигантское имя бренда контуром внизу — фирменный финал страницы",
+            "почту ссылкой с подчёркиванием акцентом и соцсети капсулами",
+            "реквизиты и лицензию мелким текстом в самом низу"
           ],
           "adapt": [
-            "brand, caption, author, email, legal",
-            "columns (заголовки и ссылки), socials, socialsLabel",
+            "brand, caption, author, email, columns, socials, socialsLabel, legal",
+            "giant: true — имя бренда, строка — своё слово, false — без гиганта",
             "accent и background, tone"
           ],
           "notes": [
-            "Колонок может быть одна или три — сетка на широком экране рассчитана на две.",
-            "Ссылки соцсетей открываются в новой вкладке с rel=noreferrer."
+            "Гигант не переносится: длинное имя уменьшайте через giant с коротким словом.",
+            "reduced-motion и старые браузеры показывают контур сразу, без выезда."
           ]
         },
         "controls": [
@@ -3012,17 +3013,16 @@
           },
           {
             "prop": "brand",
-            "label": "Имя",
+            "label": "Бренд",
             "type": "text",
             "default": "Figma Pro",
             "maxLength": 24
           },
           {
-            "prop": "author",
-            "label": "Автор",
-            "type": "text",
-            "default": "Автор и ведущая — Ксения Мороз",
-            "maxLength": 50
+            "prop": "giant",
+            "label": "Гигант",
+            "type": "boolean",
+            "default": true
           },
           {
             "prop": "accent",
@@ -3039,35 +3039,34 @@
         ],
         "i18n": {
           "en": {
-            "title": "Course footer with legal details",
-            "description": "A course landing footer: a wordmark with a caption, the author and email, two link columns (course sections and documents), socials as pills, at the bottom the sole-trader details and the education licence.",
-            "docs": "One file, zero dependencies, a server component. A <footer> with a top grid: a column when narrow, 1.6fr/1fr/1fr/1.2fr from 56rem (container query). Link columns from columns, socials as target=_blank pills. The bottom line is small legal text. A top border line on the section. Palette --vibeui-footer-021-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "title": "Course footer with a giant outlined brand",
+            "description": "A course landing footer: a wordmark with a caption, the author and email, two link columns, socials as pills, sole-trader details and the licence. At the very bottom the brand name as a giant full-width outline — it rises from below on scroll and fills with the accent when the footer is hovered.",
+            "docs": "One file, zero dependencies, a server component. The top grid stacks below 56rem (container query), from 56rem 1.6fr/1fr/1fr/1.2fr. The giant is an aria-hidden span with font-size clamp(3rem, 13.5cqi, 13rem), color:transparent and a 1px -webkit-text-stroke, margin-bottom -.18em crops its lower part; animation-timeline:view() under @supports lifts it translateY(40 %)→0 as it enters the viewport, the footer's :hover tints the outline with the accent. giant=true prints brand, a string prints your own word, false removes the giant. Palette --vibeui-footer-021-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
             "ai": {
               "summary": "A self-contained footer for a course, school or expert: a wordmark, the author, link columns, socials and legal details with a licence. All content via props.",
               "preserve": [
-                "legal details and the licence in small print at the bottom — mandatory for education products",
-                "link columns from the columns array — sections and documents separately",
-                "socials as pills, not icons"
+                "the giant outlined brand name at the bottom — the page's signature ending",
+                "the email link underlined with the accent and socials as pills",
+                "the details and licence in small print at the very bottom"
               ],
               "adapt": [
-                "brand, caption, author, email, legal",
-                "columns (titles and links), socials, socialsLabel",
+                "brand, caption, author, email, columns, socials, socialsLabel, legal",
+                "giant: true — the brand name, a string — your own word, false — no giant",
                 "accent and background, tone"
               ],
               "notes": [
-                "One or three columns work — the wide grid is designed for two.",
-                "Social links open in a new tab with rel=noreferrer."
+                "The giant does not wrap: shorten a long name via giant with a short word.",
+                "reduced-motion and older browsers show the outline at once, without the rise."
               ],
-              "usage": "<Footer021\n  brand=\"Figma Pro\"\n  caption=\"An online course for product designers\"\n  author=\"Author and host — Ksenia Moroz\"\n  email=\"hello@figmapro.school\"\n  columns={[{ title: \"Course\", links: [{ label: \"Curriculum\", href: \"#program\" }] }, { title: \"Documents\", links: [{ label: \"Terms\", href: \"/terms\" }] }]}\n  socials={[{ label: \"Telegram\", href: \"https://t.me/figmapro\" }]}\n  legal=\"Sole trader K. Moroz, licence no. …\"\n/>"
+              "usage": "<Footer021\n  brand=\"Figma Pro\"\n  caption=\"An online course for product designers\"\n  author=\"Author and host — Ksenia Moroz\"\n  email=\"hello@figmapro.school\"\n  giant=\"Figma Pro\"\n  columns={[{ title: \"Course\", links: [{ label: \"Curriculum\", href: \"#program\" }] }]}\n  socials={[{ label: \"Telegram\", href: \"https://t.me/figmapro\" }]}\n  legal=\"Sole trader K. A. Moroz, TIN 780000000000. Licence No. L035-00000-78/00000000.\"\n/>"
             },
             "controls": {
               "brand": {
-                "label": "Name",
+                "label": "Brand",
                 "default": "Figma Pro"
               },
-              "author": {
-                "label": "Author",
-                "default": "Author and host — Ksenia Moroz"
+              "giant": {
+                "label": "Giant"
               },
               "tone": {
                 "label": "Theme"

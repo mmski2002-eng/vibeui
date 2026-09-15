@@ -4,8 +4,8 @@
     {
       "name": "course-001",
       "type": "registry:block",
-      "title": "Для кого: персоны переключателем",
-      "description": "«Для кого»: три типичных старта переключателем-радио, справа карточка — кто вы сейчас, что получите и список результатов галочками. Смена персоны перерисовывает карточку: текст въезжает, галочки появляются каскадом.",
+      "title": "Для кого: раздвигающиеся плитки",
+      "description": "«Для кого»: три плитки в ряд с гигантским знаком на фоне — «0», «→», «PM». Выбранная раздвигается втрое и показывает описание и список результатов галочками, остальные сжимаются до вертикальной подписи. Переключение по наведению, клику и с клавиатуры.",
       "categories": [
         "course"
       ],
@@ -18,7 +18,7 @@
           "target": "@components/vibeui/course-001.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради переключателя. Переключатель — <ul role=tablist> с кнопками role=tab и aria-selected; активная подсвечена заливкой акцента и точкой-радио. Карточка получает key персоны и пересоздаётся — @keyframes на карточку и на пункты списка с задержкой --n×70ms. От 56rem (container query) две колонки 1fr/1.2fr. Палитра --vibeui-course-001-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, «use client» ради активной плитки. <ul role=tablist> из <li> с flex:1; активная — flex-grow:3 и заливка fg, переход .6s cubic-bezier. Знак — span с font-size до 12rem и opacity .12 (.22 у активной). Кнопка role=tab с aria-selected занимает плитку, onMouseEnter/onFocus/onClick меняют индекс. Панель монтируется только у активной: @keyframes въезд и каскад пунктов --n×70ms. До 56rem (container query) плитки колонкой, активная растёт по высоте; от 56rem ряд высотой 26rem, подписи неактивных — writing-mode:vertical-rl. Палитра --vibeui-course-001-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
         "tags": [
           "course",
@@ -27,7 +27,8 @@
           "landing",
           "personas",
           "audience",
-          "tabs"
+          "accordion",
+          "tiles"
         ],
         "preview": {
           "width": "natural",
@@ -41,21 +42,21 @@
         ],
         "ai": {
           "export": "Course001",
-          "usage": "<Course001\n  title=\"Курс подстраивается под то, откуда вы приходите\"\n  personas={[\n    { label: \"Начинаю с нуля\", title: \"Вы никогда не открывали Figma\", text: \"Начнём с сетки и компонентов.\", outcomes: [\"Три экрана приложения\", \"Первый проект в портфолио\"], note: \"с нуля до первого проекта\" },\n  ]}\n/>",
-          "summary": "Самодостаточная секция «для кого» для курса, сервиса или продукта с несколькими аудиториями: персоны переключателем и карточка результатов под каждую. Персоны — массив пропсом.",
+          "usage": "<Course001\n  title=\"Курс подстраивается под то, откуда вы приходите\"\n  personas={[\n    { label: \"Начинаю с нуля\", glyph: \"0\", title: \"Вы никогда не открывали Figma\", text: \"Начнём с сетки и компонентов.\", outcomes: [\"Три экрана приложения\", \"Первый проект в портфолио\"], note: \"с нуля до первого проекта\" },\n  ]}\n/>",
+          "summary": "Самодостаточная секция «для кого» для курса, сервиса или продукта с несколькими аудиториями: раздвигающиеся плитки-персоны с гигантским знаком и списком результатов. Персоны — массив пропсом.",
           "preserve": [
-            "переключатель персон вместо трёх одинаковых колонок — человек выбирает себя, а не читает всё",
-            "пересоздание карточки по key с каскадом галочек",
-            "плашку-заметку с коротким обещанием"
+            "горизонтальный аккордеон: активная плитка растёт втрое, остальные сжимаются до подписи",
+            "гигантский знак-глиф на фоне плитки",
+            "каскад галочек при раскрытии"
           ],
           "adapt": [
-            "personas: подписи, заголовки, тексты, результаты, заметки",
+            "personas: подписи, глифы, заголовки, тексты, результаты, заметки",
             "eyebrow, title, lede, outcomesLabel",
             "accent и background, tone"
           ],
           "notes": [
-            "Персон может быть две или пять — переключатель растёт списком.",
-            "Первая персона открыта по умолчанию."
+            "Персон лучше три-четыре: при пяти подписи неактивных плиток становятся тесными.",
+            "Без glyph на фоне рисуется порядковый номер."
           ]
         },
         "controls": [
@@ -92,26 +93,26 @@
         ],
         "i18n": {
           "en": {
-            "title": "Who it’s for: personas as a switch",
-            "description": "“Who it’s for”: three typical starting points as a radio switch, a card on the right — who you are now, what you get and a checklist of outcomes. Switching a persona re-renders the card: the text slides in, checkmarks cascade.",
-            "docs": "One file, zero dependencies, “use client” for the switch. The switch is a <ul role=tablist> with role=tab buttons and aria-selected; the active one is highlighted with an accent fill and a radio dot. The card gets the persona as key and remounts — @keyframes on the card and on list items with a --n×70ms delay. From 56rem (container query) two columns 1fr/1.2fr. Palette --vibeui-course-001-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "title": "Who it’s for: expanding tiles",
+            "description": "“Who it’s for”: three tiles in a row with a giant glyph behind — “0”, “→”, “PM”. The chosen one expands threefold and shows a description and a checklist of outcomes, the rest shrink to a vertical label. Switch on hover, click and keyboard.",
+            "docs": "One file, zero dependencies, “use client” for the active tile. A <ul role=tablist> of <li> with flex:1; the active one gets flex-grow:3 and an fg fill, a .6s cubic-bezier transition. The glyph is a span up to 12rem with opacity .12 (.22 when active). A role=tab button with aria-selected fills the tile; onMouseEnter/onFocus/onClick change the index. The panel mounts only in the active tile: a @keyframes slide-in and a --n×70ms cascade of items. Below 56rem (container query) tiles stack and the active one grows in height; from 56rem a 26rem-tall row, inactive labels in writing-mode:vertical-rl. Palette --vibeui-course-001-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
             "ai": {
-              "summary": "A self-contained “who it’s for” section for a course, service or multi-audience product: personas as a switch and an outcomes card per persona. Personas come in as a prop array.",
+              "summary": "A self-contained “who it’s for” section for a course, service or multi-audience product: expanding persona tiles with a giant glyph and an outcomes list. Personas come in as a prop array.",
               "preserve": [
-                "the persona switch instead of three identical columns — people pick themselves rather than reading everything",
-                "remounting the card by key with cascading checkmarks",
-                "the note tag with a short promise"
+                "the horizontal accordion: the active tile grows threefold, the rest shrink to a label",
+                "the giant glyph behind each tile",
+                "the cascade of checkmarks on expand"
               ],
               "adapt": [
-                "personas: labels, titles, texts, outcomes, notes",
+                "personas: labels, glyphs, titles, texts, outcomes, notes",
                 "eyebrow, title, lede, outcomesLabel",
                 "accent and background, tone"
               ],
               "notes": [
-                "Two or five personas work — the switch grows as a list.",
-                "The first persona is open by default."
+                "Three or four personas work best: with five the inactive labels get cramped.",
+                "Without glyph the index number is drawn behind."
               ],
-              "usage": "<Course001\n  title=\"The course adapts to where you start\"\n  personas={[\n    { label: \"Starting from zero\", title: \"You have never opened Figma\", text: \"We start with grids and components.\", outcomes: [\"Three app screens\", \"First portfolio project\"], note: \"from zero to a first project\" },\n  ]}\n/>"
+              "usage": "<Course001\n  title=\"The course adapts to where you start\"\n  personas={[\n    { label: \"Starting from zero\", glyph: \"0\", title: \"You have never opened Figma\", text: \"We start with grids and components.\", outcomes: [\"Three app screens\", \"First portfolio project\"], note: \"from zero to a first project\" },\n  ]}\n/>"
             },
             "controls": {
               "title": {
@@ -133,22 +134,24 @@
               "props": {
                 "eyebrow": "Who it’s for",
                 "title": "The course adapts to where you start",
-                "lede": "Three typical starts — three sets of practice. Pick yours to see what you get.",
+                "lede": "Three typical starts — three sets of practice. Open yours.",
                 "outcomesLabel": "What you get",
                 "personas": [
                   {
                     "label": "Starting from zero",
+                    "glyph": "0",
                     "title": "You have never opened Figma",
                     "text": "You want into interface design but don’t know where to start. We begin with grids and components and reach a prototype in six weeks.",
                     "outcomes": [
                       "Three mobile app screens by the guidelines",
-                      "Understand components and auto layout",
+                      "Components and auto layout without fear",
                       "A first portfolio project with a mentor's review"
                     ],
                     "note": "from zero to a first project"
                   },
                   {
                     "label": "From graphic design",
+                    "glyph": "→",
                     "title": "You can draw, but not interfaces",
                     "text": "You know composition and type but get lost in a product team: states, flows, design systems. We translate the skill into product.",
                     "outcomes": [
@@ -160,6 +163,7 @@
                   },
                   {
                     "label": "PM without hands",
+                    "glyph": "PM",
                     "title": "You brief designers",
                     "text": "You want to build prototypes for hypotheses yourself and speak the team's language without waiting in the design queue.",
                     "outcomes": [
@@ -179,8 +183,8 @@
     {
       "name": "course-002",
       "type": "registry:block",
-      "title": "Программа по неделям аккордеоном",
-      "description": "Программа курса: недели аккордеоном на details, номер недели плашкой, внутри уроки с длительностью и кнопкой play, домашка в лаймовой плашке. Справа липкая сводка в цифрах и итоговый проект пунктирной карточкой.",
+      "title": "Программа закреплённой сценой по неделям",
+      "description": "Программа курса как закреплённая сцена: слева липкая колонка недель с линией прогресса, минутами и сводкой, справа недели раскрыты подряд. При скролле текущая неделя подсвечивается в колонке и на карточке, клик по неделе плавно скроллит к ней. У уроков иконки типа (запись, лайв, ревью, текст) и сумма минут. На узком экране — аккордеон.",
       "categories": [
         "course"
       ],
@@ -193,7 +197,7 @@
           "target": "@components/vibeui/course-002.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. <details name={useId()}> — открыта одна неделя (openFirst открывает первую), summary сеткой auto/1fr/1.5rem с шевроном, который поворачивается и заливается акцентом при [open]. Уроки — список с play-кружком и @keyframes каскадом --n×50ms. Домашка — плашка цвета маркера. Сводка — тёмная карточка с цифрами, итоговый проект — пунктирная рамка. От 60rem (container query) 1.6fr/1fr, aside position:sticky. Палитра --vibeui-course-002-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, «use client» ради IntersectionObserver и аккордеона. Недели — <article data-index> с ref; IO с rootMargin -35 %/-55 % ставит active, в колонке пункт с data-active и прогресс-линия scaleY((active+1)/n). Клик по пункту — scrollIntoView({block:start}), scroll-margin-top 6rem. Минуты считаются из length («35 мин», «1,5 ч») и печатаются в колонке и под уроками. Иконки — inline SVG по kind. До 60rem (container query) колонка скрыта, заголовок недели — кнопка с aria-expanded, панель grid-template-rows 0fr→1fr; от 60rem 17rem/1fr, aside position:sticky, панели всегда открыты, неактивные недели полупрозрачны. Палитра --vibeui-course-002-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
         "tags": [
           "course",
@@ -202,7 +206,8 @@
           "landing",
           "curriculum",
           "syllabus",
-          "accordion",
+          "sticky",
+          "scrollspy",
           "program"
         ],
         "preview": {
@@ -217,21 +222,21 @@
         ],
         "ai": {
           "export": "Course002",
-          "usage": "<Course002\n  title=\"Шесть недель — три проекта в портфолио\"\n  weeks={[\n    { label: \"Неделя 1\", title: \"Сетка и первый экран\", lessons: [{ title: \"Как устроена Figma\", length: \"35 мин\" }], homework: \"Экран онбординга\" },\n  ]}\n  summary={[{ value: \"18\", label: \"уроков\" }, { value: \"24 ч\", label: \"видео\" }]}\n  finalTitle=\"Мобильное приложение с нуля до прототипа\"\n/>",
-          "summary": "Самодостаточная программа для курса, интенсива или буткемпа: недели аккордеоном с уроками и домашками, липкая сводка и итоговый проект. Недели — массив пропсом.",
+          "usage": "<Course002\n  title=\"Шесть недель — три проекта в портфолио\"\n  weeks={[\n    { label: \"Неделя 1\", title: \"Сетка и первый экран\", lessons: [{ title: \"Как устроена Figma\", length: \"35 мин\" }, { title: \"Разбор домашек\", length: \"1 ч\", kind: \"live\" }], homework: \"Экран онбординга\" },\n  ]}\n  summary={[{ value: \"18\", label: \"уроков\" }, { value: \"24 ч\", label: \"видео\" }]}\n  finalTitle=\"Мобильное приложение с нуля до прототипа\"\n/>",
+          "summary": "Самодостаточная программа для курса, интенсива или буткемпа: липкая колонка недель с прогрессом по скроллу, раскрытые недели с иконками уроков и минутами, сводка и итоговый проект. Недели — массив пропсом.",
           "preserve": [
-            "details с общим name — один открытый модуль, без состояния",
-            "липкую сводку в цифрах справа — ответ «сколько это» всегда на экране",
-            "домашку плашкой цвета маркера и уроки с длительностью"
+            "закреплённую колонку недель с подсветкой по скроллу и линией прогресса",
+            "иконки типов уроков и сумму минут недели",
+            "аккордеон на узком экране с плавным раскрытием grid-template-rows"
           ],
           "adapt": [
-            "weeks: подписи, темы, тексты, уроки с длительностью, домашки",
+            "weeks: подписи, темы, тексты, уроки с length и kind, домашки",
             "summary, summaryTitle, finalTitle, finalText, homeworkLabel, openFirst",
             "accent и background, tone"
           ],
           "notes": [
-            "Атрибут name у details — Chrome 120+, Safari 17.2+, Firefox 130+; в старых браузерах модули открываются независимо.",
-            "Плавное раскрытие высоты браузер не анимирует: анимируются уроки внутри."
+            "kind у урока: video (по умолчанию), live, review, text — меняет иконку и цвет.",
+            "Минуты разбираются из length по «мин» и «ч»; без числа урок не учитывается в сумме."
           ]
         },
         "controls": [
@@ -274,26 +279,26 @@
         ],
         "i18n": {
           "en": {
-            "title": "Curriculum by week as an accordion",
-            "description": "A course curriculum: weeks as a details accordion, the week number as a tag, lessons with duration and a play button inside, homework in a lime tag. On the right a sticky summary in figures and a final project in a dashed card.",
-            "docs": "One file, zero dependencies, a server component. <details name={useId()}> — one week open (openFirst opens the first), a summary grid auto/1fr/1.5rem with a chevron that rotates and fills with the accent when [open]. Lessons are a list with a play circle and a @keyframes cascade of --n×50ms. Homework is a marker-coloured tag. The summary is a dark card with figures, the final project a dashed frame. From 60rem (container query) 1.6fr/1fr, the aside position:sticky. Palette --vibeui-course-002-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "title": "Curriculum as a pinned scene by week",
+            "description": "A course curriculum as a pinned scene: a sticky column of weeks with a progress line, minutes and a summary on the left, weeks expanded in a row on the right. On scroll the current week highlights in the column and on the card; clicking a week scrolls to it smoothly. Lessons carry type icons (recording, live, review, text) and a minutes total. On narrow screens an accordion.",
+            "docs": "One file, zero dependencies, “use client” for IntersectionObserver and the accordion. Weeks are <article data-index> with refs; an IO with rootMargin -35 %/-55 % sets active, the column item gets data-active and the progress line scaleY((active+1)/n). Clicking an item runs scrollIntoView({block:start}) with scroll-margin-top 6rem. Minutes are parsed from length (“35 min”, “1.5 h”) and printed in the column and under lessons. Icons are inline SVGs by kind. Below 60rem (container query) the column is hidden, the week header is a button with aria-expanded, the panel animates grid-template-rows 0fr→1fr; from 60rem 17rem/1fr, the aside position:sticky, panels always open, inactive weeks translucent. Palette --vibeui-course-002-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
             "ai": {
-              "summary": "A self-contained curriculum for a course, intensive or bootcamp: weeks as an accordion with lessons and homework, a sticky summary and a final project. Weeks come in as a prop array.",
+              "summary": "A self-contained curriculum for a course, intensive or bootcamp: a sticky column of weeks with scroll-driven highlight, expanded weeks with lesson icons and minutes, a summary and a final project. Weeks come in as a prop array.",
               "preserve": [
-                "details with a shared name — one open module, no state",
-                "the sticky figures summary on the right — “how much is it” always on screen",
-                "homework as a marker-coloured tag and lessons with duration"
+                "the pinned week column with scroll highlight and a progress line",
+                "lesson type icons and the week's minutes total",
+                "the narrow-screen accordion with a smooth grid-template-rows reveal"
               ],
               "adapt": [
-                "weeks: labels, topics, texts, lessons with duration, homework",
+                "weeks: labels, topics, texts, lessons with length and kind, homework",
                 "summary, summaryTitle, finalTitle, finalText, homeworkLabel, openFirst",
                 "accent and background, tone"
               ],
               "notes": [
-                "The name attribute on details — Chrome 120+, Safari 17.2+, Firefox 130+; older browsers open modules independently.",
-                "Browsers do not animate the height; lessons inside animate instead."
+                "A lesson's kind: video (default), live, review, text — changes the icon and colour.",
+                "Minutes are parsed from length by “min” and “h”; a lesson without a number is not counted."
               ],
-              "usage": "<Course002\n  title=\"Six weeks — three portfolio projects\"\n  weeks={[\n    { label: \"Week 1\", title: \"Grid and the first screen\", lessons: [{ title: \"How Figma works\", length: \"35 min\" }], homework: \"An onboarding screen\" },\n  ]}\n  summary={[{ value: \"18\", label: \"lessons\" }, { value: \"24 h\", label: \"video\" }]}\n  finalTitle=\"A mobile app from scratch to a prototype\"\n/>"
+              "usage": "<Course002\n  title=\"Six weeks — three portfolio projects\"\n  weeks={[\n    { label: \"Week 1\", title: \"Grid and the first screen\", lessons: [{ title: \"How Figma works\", length: \"35 min\" }, { title: \"Homework review\", length: \"1 h\", kind: \"live\" }], homework: \"An onboarding screen\" },\n  ]}\n  summary={[{ value: \"18\", label: \"lessons\" }, { value: \"24 h\", label: \"video\" }]}\n  finalTitle=\"A mobile app from scratch to a prototype\"\n/>"
             },
             "controls": {
               "title": {
@@ -358,6 +363,11 @@
                       {
                         "title": "Interface typography",
                         "length": "45 min"
+                      },
+                      {
+                        "title": "Homework review: live",
+                        "length": "1 h",
+                        "kind": "live"
                       }
                     ],
                     "homework": "An onboarding screen from a reference"
@@ -377,6 +387,10 @@
                       {
                         "title": "States: hover, focus, error",
                         "length": "35 min"
+                      },
+                      {
+                        "title": "Component checklist",
+                        "kind": "text"
                       }
                     ],
                     "homework": "A set of 12 components"
@@ -392,6 +406,11 @@
                       {
                         "title": "Tokens, styles, variables",
                         "length": "45 min"
+                      },
+                      {
+                        "title": "System review with a mentor",
+                        "length": "1 h",
+                        "kind": "review"
                       }
                     ],
                     "homework": "A mini system with 2 themes"
@@ -420,8 +439,9 @@
                         "length": "40 min"
                       },
                       {
-                        "title": "Review with a developer: live",
-                        "length": "1.5 h"
+                        "title": "Review with a developer",
+                        "length": "1.5 h",
+                        "kind": "live"
                       }
                     ],
                     "homework": "Mockups for three breakpoints"
@@ -435,8 +455,9 @@
                         "length": "40 min"
                       },
                       {
-                        "title": "Defence before an art director: live",
-                        "length": "2 h"
+                        "title": "Defence before an art director",
+                        "length": "2 h",
+                        "kind": "live"
                       }
                     ],
                     "homework": "The final case"
@@ -451,8 +472,8 @@
     {
       "name": "course-003",
       "type": "registry:block",
-      "title": "Результаты выпускников «было → стало»",
-      "description": "Результаты выпускников: карточки со скрином проекта, плашкой выгоды, портретом, стрелкой «было → стало» и цитатой. Скрин приподнимается по наведению, карточки появляются каскадом.",
+      "title": "Результаты выпускников горизонтальной лентой",
+      "description": "Результаты выпускников горизонтальной лентой: крупные карточки со скрином проекта на 16:10, scroll-snap, тянутся мышью и колесом, стрелки по краям. Над лентой счётчики, набегающие при появлении. У карточки курсорный блик и стрелка «было → стало», которая дорисовывается, когда карточка в кадре.",
       "categories": [
         "course"
       ],
@@ -465,7 +486,7 @@
           "target": "@components/vibeui/course-003.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. Сетка 1/2/3 колонки (container query 44rem и 64rem). Карточка: work с aspect-ratio 4/3 и scale 1.04 по hover, плашка gain цвета маркера, блок path сеткой 1fr/auto/1fr со стрелкой в акцентном кружке, цитата курсивом, ссылка на кейс. Появление — @keyframes с задержкой --n×90ms. Палитра --vibeui-course-003-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, «use client» ради drag, счётчиков и блика. Лента — <ul> с overflow-x:auto, scroll-snap-type:x mandatory, скрытым скроллбаром и отрицательными полями до края шелла. Drag — pointer capture для мыши: движение >4px переводит в data-drag (snap выключен, user-select:none), клик после драга гасится onClickCapture. Стрелки — scrollBy на ширину карточки. Счётчики — IntersectionObserver на секции и requestAnimationFrame 1,4 с с easeOut. Блик — ::after с radial-gradient в --mx/--my из pointermove. Стрелка — SVG path со stroke-dasharray, dashoffset→0 при data-seen (IO с root=лента, threshold .6). От 64rem (container query) карточка 56 % ширины. Палитра --vibeui-course-003-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
         "tags": [
           "course",
@@ -473,8 +494,9 @@
           "edtech",
           "landing",
           "results",
-          "graduates",
-          "cases",
+          "carousel",
+          "scroll-snap",
+          "counter",
           "before-after"
         ],
         "preview": {
@@ -522,21 +544,21 @@
         ],
         "ai": {
           "export": "Course003",
-          "usage": "<Course003\n  title=\"Кем стали выпускники прошлых потоков\"\n  cases={[\n    { name: \"Артём Гусев\", image: \"/photos/graduate-01.webp\", work: \"/photos/work-01.webp\", before: \"маркетолог, 4 года\", after: \"продуктовый дизайнер, Ozon\", gain: \"оффер через 2 месяца\", quote: \"Кейс показал на собеседовании — взяли без тестового.\", href: \"/cases/artem\" },\n  ]}\n/>",
-          "summary": "Самодостаточная секция результатов для курса, школы или агентства: скрин работы, портрет, «было → стало», выгода и цитата. Кейсы — массив пропсом.",
+          "usage": "<Course003\n  title=\"Кем стали выпускники прошлых потоков\"\n  stats={[{ value: 3200, suffix: \"+\", label: \"выпускников\" }, { value: 71, suffix: \" %\", label: \"сменили работу\" }]}\n  cases={[\n    { name: \"Артём Гусев\", image: \"/photos/graduate-01.webp\", work: \"/photos/work-01.webp\", before: \"маркетолог, 4 года\", after: \"продуктовый дизайнер, Ozon\", gain: \"оффер через 2 месяца\", quote: \"Кейс показал на собеседовании — взяли без тестового.\", href: \"/cases/artem\" },\n  ]}\n/>",
+          "summary": "Самодостаточная лента результатов для курса, школы или агентства: drag и snap, счётчики, крупный скрин, «было → стало» с рисующейся стрелкой и курсорный блик. Кейсы и счётчики — массивы пропсом.",
           "preserve": [
-            "стрелку «было → стало» — результат в одной строке, без абзаца",
-            "скрин работы над карточкой: доказательство, а не аватар",
-            "плашку выгоды цвета маркера в углу скрина"
+            "горизонтальную ленту со scroll-snap и drag мышью — кейсы листаются, а не сжимаются в сетку",
+            "счётчики, набегающие при появлении, и стрелку «было → стало», которая дорисовывается в кадре",
+            "курсорный блик карточки через CSS-переменные без ререндеров"
           ],
           "adapt": [
             "cases: имена, портреты, скрины, было/стало, выгода, цитата, ссылка",
-            "eyebrow, title, lede, beforeLabel, afterLabel, linkLabel",
+            "stats: значения, суффиксы, подписи; eyebrow, title, lede, beforeLabel, afterLabel, linkLabel",
             "accent и background, tone"
           ],
           "notes": [
-            "Без work карточка показывает подложку — лучше давать скрины всем.",
-            "href у кейса необязателен: без него ссылки нет."
+            "На тачскринах drag не перехватывается — работает нативный скролл со snap.",
+            "stats={[]} убирает счётчики; value — число, суффикс отдельной строкой."
           ]
         },
         "controls": [
@@ -573,26 +595,26 @@
         ],
         "i18n": {
           "en": {
-            "title": "Graduate results “before → after”",
-            "description": "Graduate results: cards with a project screenshot, a gain tag, a portrait, a “before → after” arrow and a quote. The screenshot lifts on hover, cards cascade in.",
-            "docs": "One file, zero dependencies, a server component. A 1/2/3-column grid (container queries 44rem and 64rem). A card: work with aspect-ratio 4/3 and scale 1.04 on hover, a marker-coloured gain tag, a path block as a 1fr/auto/1fr grid with an arrow in an accent circle, an italic quote, a case link. Appearance via @keyframes with a --n×90ms delay. Palette --vibeui-course-003-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "title": "Graduate results as a horizontal lane",
+            "description": "Graduate results as a horizontal lane: large cards with a 16:10 project screenshot, scroll-snap, draggable with the mouse and the wheel, arrows at the edges. Counters above the lane count up on appearance. Each card has a cursor sheen and a “before → after” arrow that draws itself when the card is in view.",
+            "docs": "One file, zero dependencies, “use client” for drag, counters and the sheen. The lane is a <ul> with overflow-x:auto, scroll-snap-type:x mandatory, a hidden scrollbar and negative margins to the shell edge. Drag uses pointer capture for the mouse: movement over 4px switches data-drag (snap off, user-select:none), a click after a drag is cancelled in onClickCapture. Arrows scrollBy one card width. Counters use an IntersectionObserver on the section and a 1.4 s requestAnimationFrame with easeOut. The sheen is an ::after radial-gradient at --mx/--my from pointermove. The arrow is an SVG path with stroke-dasharray, dashoffset→0 on data-seen (IO with root=lane, threshold .6). From 64rem (container query) a card is 56 % wide. Palette --vibeui-course-003-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
             "ai": {
-              "summary": "A self-contained results section for a course, school or agency: a work screenshot, a portrait, “before → after”, a gain and a quote. Cases come in as a prop array.",
+              "summary": "A self-contained results lane for a course, school or agency: drag and snap, counters, a large screenshot, “before → after” with a self-drawing arrow and a cursor sheen. Cases and counters come in as prop arrays.",
               "preserve": [
-                "the “before → after” arrow — the result in one line, no paragraph",
-                "the work screenshot over the card: proof, not an avatar",
-                "the marker-coloured gain tag in the screenshot corner"
+                "the horizontal lane with scroll-snap and mouse drag — cases are browsed, not squeezed into a grid",
+                "counters counting up on appearance and the “before → after” arrow drawing itself in view",
+                "the card's cursor sheen via CSS variables, no re-renders"
               ],
               "adapt": [
                 "cases: names, portraits, screenshots, before/after, gain, quote, link",
-                "eyebrow, title, lede, beforeLabel, afterLabel, linkLabel",
+                "stats: values, suffixes, labels; eyebrow, title, lede, beforeLabel, afterLabel, linkLabel",
                 "accent and background, tone"
               ],
               "notes": [
-                "Without work the card shows a placeholder — better give everyone a screenshot.",
-                "href is optional: without it there is no link."
+                "On touch screens drag is not intercepted — native scrolling with snap works.",
+                "stats={[]} removes the counters; value is a number, the suffix a separate string."
               ],
-              "usage": "<Course003\n  title=\"Where graduates of past cohorts are now\"\n  cases={[\n    { name: \"Artem Gusev\", image: \"/photos/graduate-01.webp\", work: \"/photos/work-01.webp\", before: \"marketer, 4 years\", after: \"product designer, Ozon\", gain: \"an offer in 2 months\", quote: \"Showed the case at the interview — hired without a test task.\", href: \"/cases/artem\" },\n  ]}\n/>"
+              "usage": "<Course003\n  title=\"Where graduates of past cohorts are now\"\n  stats={[{ value: 3200, suffix: \"+\", label: \"graduates\" }, { value: 71, suffix: \" %\", label: \"changed jobs\" }]}\n  cases={[\n    { name: \"Artem Gusev\", image: \"/photos/graduate-01.webp\", work: \"/photos/work-01.webp\", before: \"marketer, 4 years\", after: \"product designer, Ozon\", gain: \"an offer in 2 months\", quote: \"Showed the case at the interview — hired without a test task.\", href: \"/cases/artem\" },\n  ]}\n/>"
             },
             "controls": {
               "title": {
@@ -618,31 +640,47 @@
                 "beforeLabel": "Before",
                 "afterLabel": "After",
                 "linkLabel": "See the case",
+                "stats": [
+                  {
+                    "value": 3200,
+                    "suffix": "+",
+                    "label": "graduates in 5 years"
+                  },
+                  {
+                    "value": 71,
+                    "suffix": " %",
+                    "label": "changed jobs within six months"
+                  },
+                  {
+                    "value": 48,
+                    "label": "partner companies"
+                  }
+                ],
                 "cases": [
                   {
                     "name": "Artem Gusev",
-                    "image": "/demo/people/person-03.webp",
-                    "work": "/demo/places/place-05.webp",
+                    "image": "/demo/people/person-01.webp",
+                    "work": "/demo/places/place-01.webp",
                     "before": "marketer, 4 years",
                     "after": "product designer, Ozon",
                     "gain": "an offer in 2 months",
-                    "quote": "Showed the defence case at the interview — hired without a test task.",
+                    "quote": "Showed the case from the defence at the interview — hired without a test task.",
                     "href": "#"
                   },
                   {
                     "name": "Lena Krylova",
-                    "image": "/demo/people/person-04.webp",
-                    "work": "/demo/places/place-06.webp",
+                    "image": "/demo/people/person-02.webp",
+                    "work": "/demo/places/place-02.webp",
                     "before": "graphic designer",
                     "after": "UI designer, Samokat",
                     "gain": "×1.8 income",
-                    "quote": "Finally understood auto layout. Mockups don’t fall apart anymore.",
+                    "quote": "Finally understood auto layout. Mockups don’t fall apart any more.",
                     "href": "#"
                   },
                   {
                     "name": "Daniil Orlov",
-                    "image": "/demo/people/person-05.webp",
-                    "work": "/demo/places/place-07.webp",
+                    "image": "/demo/people/person-03.webp",
+                    "work": "/demo/places/place-04.webp",
                     "before": "product manager",
                     "after": "PM who builds prototypes himself",
                     "gain": "hypotheses in an evening",
@@ -659,8 +697,8 @@
     {
       "name": "course-004",
       "type": "registry:block",
-      "title": "Как проходит неделя: лента по дням",
-      "description": "Как проходит обучение: вертикальная лента дней с точками на линии, у каждого дня тип занятия (запись, лайв, ревью, чат) и время; справа фото занятия с подписью и список форматов с цифрами. Линия ленты дорисовывается при появлении.",
+      "title": "Неделя курса календарной лентой",
+      "description": "Как проходит неделя — календарной лентой: семь колонок с днями, занятия лежат как события в календаре, лайв пульсирует точкой и залит маркером, пустые дни заштрихованы. Колонки появляются каскадом. Ниже фото занятия и форматы обучения.",
       "categories": [
         "course"
       ],
@@ -673,7 +711,7 @@
           "target": "@components/vibeui/course-004.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. <ol> с линией через ::before и акцентной линией ::after, которая растёт scaleY 0→1 за 1.4s; дни появляются с задержкой --n×120ms. Точка дня — кружок с бордюром акцента; лайв (kind «лайв»/«live») — залитая точка с ореолом и плашка цвета маркера. От 60rem (container query) две колонки 1.2fr/1fr. Палитра --vibeui-course-004-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Дни группируются по weekdays: каждая колонка — <li data-busy> с подписью дня и списком событий, пустая — заштрихованный span (repeating-linear-gradient). Событие — карточка с цветной полоской слева, мета-строкой «тип · время», заголовком и текстом; kind из набора «лайв/live/эфир/вебинар» даёт data-kind=live: заливка маркером и пульсирующая точка (@keyframes scale/opacity на ::after). Колонки — @keyframes с задержкой --n×80ms. До 48rem (container query) колонки — строки с днём слева (3.2rem/1fr); от 48rem семь колонок; от 64rem фото и форматы в два столбца. Палитра --vibeui-course-004-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
         "tags": [
           "course",
@@ -681,9 +719,10 @@
           "edtech",
           "landing",
           "schedule",
-          "timeline",
+          "calendar",
+          "week",
           "format",
-          "week"
+          "live"
         ],
         "preview": {
           "width": "natural",
@@ -699,21 +738,21 @@
         ],
         "ai": {
           "export": "Course004",
-          "usage": "<Course004\n  title=\"Одна неделя курса — по дням\"\n  days={[\n    { day: \"пн\", kind: \"запись\", time: \"с утра\", title: \"Три урока недели открываются\" },\n    { day: \"ср\", kind: \"лайв\", time: \"19:30\", title: \"Лайв с автором: разбор и вопросы\" },\n  ]}\n  formats={[{ title: \"18 записанных уроков\", text: \"по 35–50 минут\" }]}\n  image=\"/photos/lesson.webp\"\n/>",
-          "summary": "Самодостаточная секция «как проходит обучение» для курса, школы или клуба: неделя по дням лентой, фото и форматы. Дни и форматы — массивы пропсом.",
+          "usage": "<Course004\n  title=\"Одна неделя курса — по дням\"\n  days={[\n    { day: \"пн\", kind: \"запись\", time: \"с утра\", title: \"Три урока недели открываются\" },\n    { day: \"ср\", kind: \"лайв\", time: \"19:30 · 1,5 ч\", title: \"Лайв с автором: разбор и вопросы\" },\n    { day: \"сб\", kind: \"ревью\", time: \"до 12:00\", title: \"Дедлайн домашки\" },\n  ]}\n  image=\"/photos/lesson.webp\"\n  formats={[{ title: \"18 записанных уроков\", text: \"по 35–50 минут\" }]}\n/>",
+          "summary": "Самодостаточная секция «как проходит неделя» для курса, интенсива или клуба: календарная лента на семь дней с событиями, пульсирующим лайвом, фото и форматами. Дни и форматы — массивы пропсом.",
           "preserve": [
-            "ленту по дням с типом занятия — отвечает на «сколько времени и когда»",
-            "акцентную линию, которая дорисовывается, и залитую точку у лайва",
-            "форматы карточками с цифрами справа"
+            "семь колонок-дней с событиями и заштрихованными пустыми днями — расписание читается как календарь",
+            "пульсирующую точку и заливку маркером у лайва",
+            "каскадное появление колонок"
           ],
           "adapt": [
-            "days: день, тип, время, заголовок, текст",
-            "formats, image, imageAlt, caption, eyebrow, title, lede",
+            "days: день, тип, время, заголовок, текст — несколько событий в один день допустимы",
+            "weekdays, formats, image, imageAlt, caption; eyebrow, title, lede",
             "accent и background, tone"
           ],
           "notes": [
-            "Тип «лайв»/«live» подсвечивается особо; остальные типы нейтральные.",
-            "Без image правая колонка показывает только форматы."
+            "day должен совпадать с подписью в weekdays (регистр не важен); иначе событие не попадёт в колонку.",
+            "Лайв определяется по kind: «лайв», «live», «эфир», «вебинар»."
           ]
         },
         "controls": [
@@ -750,26 +789,26 @@
         ],
         "i18n": {
           "en": {
-            "title": "How a week goes: a day-by-day feed",
-            "description": "How learning goes: a vertical feed of days with dots on a line, each day with a session type (recording, live, review, chat) and time; on the right a session photo with a caption and a list of formats with figures. The feed line draws itself on appearance.",
-            "docs": "One file, zero dependencies, a server component. An <ol> with a line via ::before and an accent line via ::after growing scaleY 0→1 over 1.4s; days appear with a --n×120ms delay. A day's dot is a circle with an accent border; live (kind “лайв”/“live”) is a filled dot with a halo and a marker-coloured tag. From 60rem (container query) two columns 1.2fr/1fr. Palette --vibeui-course-004-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "title": "A course week as a calendar lane",
+            "description": "How a week goes — as a calendar lane: seven day columns, sessions laid out like calendar events, the live pulses with a dot and is filled with the marker, empty days are hatched. Columns cascade in. Below, a photo of a session and the learning formats.",
+            "docs": "One file, zero dependencies, a server component. Days are grouped by weekdays: each column is a <li data-busy> with the day label and an events list, an empty one a hatched span (repeating-linear-gradient). An event is a card with a coloured bar on the left, a “kind · time” meta line, a title and text; a kind from the set “лайв/live/эфир/вебинар” yields data-kind=live: a marker fill and a pulsing dot (@keyframes scale/opacity on ::after). Columns use @keyframes with a --n×80ms delay. Below 48rem (container query) columns become rows with the day on the left (3.2rem/1fr); from 48rem seven columns; from 64rem the photo and formats in two columns. Palette --vibeui-course-004-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
             "ai": {
-              "summary": "A self-contained “how learning goes” section for a course, school or club: a week day by day, a photo and formats. Days and formats come in as prop arrays.",
+              "summary": "A self-contained “how a week goes” section for a course, intensive or club: a seven-day calendar lane with events, a pulsing live, a photo and formats. Days and formats come in as prop arrays.",
               "preserve": [
-                "the day feed with session types — answers “how much time and when”",
-                "the accent line drawing itself and the filled dot for the live",
-                "formats as cards with figures on the right"
+                "seven day columns with events and hatched empty days — the schedule reads like a calendar",
+                "the pulsing dot and marker fill on the live",
+                "the cascading appearance of columns"
               ],
               "adapt": [
-                "days: day, kind, time, title, text",
-                "formats, image, imageAlt, caption, eyebrow, title, lede",
+                "days: day, kind, time, title, text — several events on one day are fine",
+                "weekdays, formats, image, imageAlt, caption; eyebrow, title, lede",
                 "accent and background, tone"
               ],
               "notes": [
-                "The “лайв”/“live” kind is highlighted; other kinds are neutral.",
-                "Without image the right column shows formats only."
+                "day must match a label in weekdays (case-insensitive); otherwise the event lands in no column.",
+                "A live is detected by kind: “лайв”, “live”, “эфир”, “вебинар”."
               ],
-              "usage": "<Course004\n  title=\"One course week — day by day\"\n  days={[\n    { day: \"mon\", kind: \"recording\", time: \"morning\", title: \"Three lessons of the week open\" },\n    { day: \"wed\", kind: \"live\", time: \"19:30\", title: \"Live with the author: review and questions\" },\n  ]}\n  formats={[{ title: \"18 recorded lessons\", text: \"35–50 minutes each\" }]}\n  image=\"/photos/lesson.webp\"\n/>"
+              "usage": "<Course004\n  title=\"One course week, day by day\"\n  weekdays={[\"Mon\", \"Tue\", \"Wed\", \"Thu\", \"Fri\", \"Sat\", \"Sun\"]}\n  days={[\n    { day: \"Mon\", kind: \"recording\", time: \"morning\", title: \"Three lessons of the week open\" },\n    { day: \"Wed\", kind: \"live\", time: \"19:30 · 1.5 h\", title: \"Live with the author: review and questions\" },\n    { day: \"Sat\", kind: \"review\", time: \"by 12:00\", title: \"Homework deadline\" },\n  ]}\n  image=\"/photos/lesson.webp\"\n  formats={[{ title: \"18 recorded lessons\", text: \"35–50 minutes each\" }]}\n/>"
             },
             "controls": {
               "title": {
@@ -790,56 +829,72 @@
               "width": "natural",
               "props": {
                 "image": "/demo/places/place-02.webp",
-                "eyebrow": "How learning goes",
-                "title": "One course week — day by day",
-                "lede": "Recorded lessons, a live on Wednesdays and reviewed homework. Five to seven hours a week, the rest at your pace.",
+                "eyebrow": "How learning works",
+                "title": "One course week, day by day",
+                "lede": "Recorded lessons, a live on Wednesdays and reviewed homework. Five to seven hours a week, the rest at your own pace.",
                 "caption": "Live on Wednesdays — the recording stays",
+                "weekdays": [
+                  "Mon",
+                  "Tue",
+                  "Wed",
+                  "Thu",
+                  "Fri",
+                  "Sat",
+                  "Sun"
+                ],
                 "days": [
                   {
-                    "day": "mon",
+                    "day": "Mon",
                     "kind": "recording",
                     "time": "morning",
                     "title": "Three lessons of the week open",
-                    "text": "Watch at your pace; notes and files in your account."
+                    "text": "Watch at your own pace; notes and files are in your account."
                   },
                   {
-                    "day": "wed",
+                    "day": "Wed",
                     "kind": "live",
-                    "time": "19:30, 1.5 h",
+                    "time": "19:30 · 1.5 h",
                     "title": "Live with the author: review and questions",
-                    "text": "The recording stays; questions can be asked in advance in chat."
+                    "text": "The recording stays; ask questions in advance in the chat."
                   },
                   {
-                    "day": "sat",
+                    "day": "Thu",
+                    "kind": "chat",
+                    "time": "all day",
+                    "title": "Questions to the mentor",
+                    "text": "Answers within two hours during working time."
+                  },
+                  {
+                    "day": "Sat",
                     "kind": "review",
                     "time": "by 12:00",
                     "title": "Homework deadline",
-                    "text": "A mentor checks within 48 hours and records a video review."
+                    "text": "The mentor reviews within 48 hours and records a video breakdown."
                   },
                   {
-                    "day": "sun",
+                    "day": "Sun",
                     "kind": "chat",
                     "time": "all day",
-                    "title": "Reviewing others' work",
+                    "title": "Peer review",
                     "text": "See how others solved it and discuss in the cohort chat."
                   }
                 ],
                 "formats": [
                   {
                     "title": "18 recorded lessons",
-                    "text": "35–50 minutes, with timecodes and files"
+                    "text": "35–50 minutes each, with timecodes and files"
                   },
                   {
                     "title": "6 lives with the author",
                     "text": "on Wednesdays, recordings kept for a year"
                   },
                   {
-                    "title": "A mentor per 12 students",
-                    "text": "a video review of every homework"
+                    "title": "A mentor per 12 people",
+                    "text": "a video breakdown of every homework"
                   },
                   {
                     "title": "Cohort chat",
-                    "text": "and a closed alumni community after"
+                    "text": "and a closed alumni community afterwards"
                   }
                 ]
               }
