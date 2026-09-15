@@ -82,13 +82,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     }),
-    ...getScenarios().flatMap((scenario) =>
-      localized(`/scenarios/${scenario.slug}`, {
+    ...getScenarios().flatMap((scenario) => [
+      ...localized(`/scenarios/${scenario.slug}`, {
         lastModified,
         changeFrequency: "monthly",
         priority: 0.7,
       }),
-    ),
+      // Демо — одна страница без языковой пары: это и есть готовый сайт.
+      {
+        url: `${SITE_URL}${scenario.demo}`,
+        lastModified,
+        changeFrequency: "monthly" as const,
+        priority: 0.6,
+      },
+    ]),
   ]
 
   return [

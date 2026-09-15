@@ -131,24 +131,34 @@ type Dictionary = {
     title: string
     metaTitle: string
     description: string
-    /** «10 секций» — с русским склонением. */
-    stepCount: (count: number) => string
-    step: string
-    optional: string
-    chosen: string
-    choose: string
-    /** «ещё 15 в категории» */
-    more: (count: number) => string
-    parts: string
-    wipTitle: string
-    wipText: string
-    wipLink: string
-    partsNote: string
+    empty: string
+    /** «14 блоков» — с русским склонением. */
+    blocksCount: (count: number) => string
+    openRecipe: string
+    openInCatalog: string
+    showInDemo: string
+    openDemo: string
     copy: string
     copied: string
     copyNote: string
-    openCategory: string
-  }
+    signIn: string
+    proTitle: string
+    proText: string
+    proLink: string
+    composition: string
+    compositionNote: (count: number) => string
+    rules: string
+    ruleTheme: (tone: string, accent: string, ink: string) => string
+    ruleFont: (font: string) => string
+    ruleList: string[]
+    images: string
+    imagesNote: string
+    imageFile: string
+    imageFormat: string
+    imagePrompt: string
+    howTo: string
+    howToSteps: string[]
+  },
   item: {
     preview: string
     use: string
@@ -354,44 +364,58 @@ const RU: Dictionary = {
   },
   scenarios: {
     title: "Сценарии",
-    wipTitle: "Раздел в разработке",
-    wipText:
-      "Собираем сценарии заново: задача → готовый порядок секций → промпт на целую страницу. Пока раздел закрыт, каталог и поиск работают как обычно.",
-    wipLink: "Открыть каталог",
-    metaTitle: "Сценарии — с чего начать",
+    metaTitle: "Сценарии — готовые сайты из блоков",
     description:
-      "Вход со стороны задачи, а не устройства библиотеки. Сценарий раскладывает «сделать лендинг услуги» или «собрать магазин» на секции в понятном порядке и объясняет, зачем на странице каждая.",
-    stepCount: (count) => {
+      "Готовые страницы, собранные из блоков каталога: смотрите демо, а в Pro — точный состав, код страницы и ссылка для ИИ-агента, чтобы собрать такую же у себя.",
+    empty: "Сценариев пока нет.",
+    blocksCount: (count) => {
       const tail = count % 100
       const last = count % 10
 
-      if (tail > 10 && tail < 20) {
-        return `${count} секций`
-      }
+      if (tail > 10 && tail < 20) return `${count} блоков`
+      if (last === 1) return `${count} блок`
+      if (last > 1 && last < 5) return `${count} блока`
 
-      if (last === 1) {
-        return `${count} секция`
-      }
-
-      if (last > 1 && last < 5) {
-        return `${count} секции`
-      }
-
-      return `${count} секций`
+      return `${count} блоков`
     },
-    step: "Шаг",
-    optional: "необязательно",
-    chosen: "Выбрано",
-    choose: "Выбрать",
-    more: (count) => `ещё ${count} в категории`,
-    parts: "Понадобятся компоненты",
-    partsNote:
-      "Мелкие части страницы: их ставят по одному, когда доходит до вёрстки формы или таблицы.",
+    openRecipe: "Из чего собрано",
+    openInCatalog: "Открыть в каталоге",
+    showInDemo: "Показать в демо",
+    openDemo: "Открыть демо",
     copy: "Копировать сценарий для ИИ",
     copied: "Скопировано",
     copyNote:
-      "Промпт со всеми выбранными блоками, порядком секций и командами установки. Вставьте его агенту — он поставит блоки из реестра и соберёт страницу.",
-    openCategory: "Открыть категорию",
+      "Ссылка на сутки: команды установки всех блоков и исходник страницы целиком. Вставьте её агенту в своём проекте — он поставит блоки и соберёт страницу как в демо.",
+    signIn: "Войти",
+    proTitle: "Точный состав, код страницы и ссылка для агента — в Pro",
+    proText:
+      "Демо и список блоков открыты всем. Подписчику показываются пропсы каждого блока как в демо, общие правила темы, промпты картинок и одна ссылка, по которой ИИ-агент собирает такую же страницу.",
+    proLink: "Открыть Pro",
+    composition: "Из чего собрано",
+    compositionNote: (count) =>
+      `${count} блоков из каталога, в порядке появления на странице. Каждый ставится своей командой; ничего не пересоздаётся.`,
+    rules: "Общие правила страницы",
+    ruleTheme: (tone, accent, ink) =>
+      `Одна тема на все блоки: tone="${tone}", accent="${accent}", ink="${ink}" — передаются каждому блоку пропсами.`,
+    ruleFont: (font) => `Шрифты ${font} блоки подключают сами; страница ставит тот же шрифт на текст между блоками.`,
+    ruleList: [
+      "Все секции внутри обёртки sketch-018: она даёт въезд листов, нитку и доодлы на полях.",
+      "Стикеры и разделители — между секциями, позиционированием со стороны страницы.",
+      "Меняются только тексты, ссылки и фото. Порядок секций, пропсы темы и обёртка остаются.",
+    ],
+    images: "Картинки",
+    imagesNote:
+      "Промпты, которыми сделаны фото демо. Сгенерируйте свои в любом генераторе с этим общим стилем и положите в public/photos/ с этими именами.",
+    imageFile: "Файл",
+    imageFormat: "Формат",
+    imagePrompt: "Промпт",
+    howTo: "Как повторить",
+    howToSteps: [
+      "Нажмите «Копировать сценарий для ИИ» — в буфере ссылка на сутки.",
+      "Вставьте её агенту в своём проекте (Cursor, Claude Code, Codex) и напишите: «собери эту страницу».",
+      "Агент поставит все блоки командами и соберёт страницу по исходнику демо.",
+      "Замените тексты, ссылки и фото на свои. Больше ничего менять не нужно.",
+    ],
   },
   item: {
     preview: "Превью",
@@ -559,27 +583,49 @@ const EN: Dictionary = {
   },
   scenarios: {
     title: "Scenarios",
-    wipTitle: "Section under construction",
-    wipText:
-      "We are rebuilding scenarios: a task → a ready order of sections → a prompt for the whole page. While the section is closed, the catalog and search work as usual.",
-    wipLink: "Open the catalog",
-    metaTitle: "Scenarios — where to start",
+    metaTitle: "Scenarios — finished sites built from blocks",
     description:
-      "An entry point from the task, not from how the library is built. A scenario breaks “make a service landing” or “build a store” into sections in a sensible order and says what each one is for.",
-    stepCount: (count) => `${count} section${count === 1 ? "" : "s"}`,
-    step: "Step",
-    optional: "optional",
-    chosen: "Chosen",
-    choose: "Choose",
-    more: (count) => `${count} more in the category`,
-    parts: "Components you will need",
-    partsNote:
-      "The small parts of a page: you install them one by one when you get to a form or a table.",
+      "Finished pages assembled from catalog blocks: see the demo, and in Pro — the exact composition, the page source and a link for your AI agent to build the same page in your project.",
+    empty: "No scenarios yet.",
+    blocksCount: (count) => `${count} block${count === 1 ? "" : "s"}`,
+    openRecipe: "What it is made of",
+    openInCatalog: "Open in the catalog",
+    showInDemo: "Show in the demo",
+    openDemo: "Open the demo",
     copy: "Copy the scenario for AI",
     copied: "Copied",
     copyNote:
-      "A prompt with every chosen block, the order of the sections and the install commands. Paste it to your agent — it installs the blocks from the registry and assembles the page.",
-    openCategory: "Open the category",
+      "A 24-hour link: install commands for every block and the whole page source. Paste it to your agent in your project — it installs the blocks and assembles the page as in the demo.",
+    signIn: "Sign in",
+    proTitle: "The exact composition, page source and agent link are in Pro",
+    proText:
+      "The demo and the block list are open to everyone. Subscribers see every block's props as in the demo, the theme rules, the image prompts and one link an AI agent uses to build the same page.",
+    proLink: "Get Pro",
+    composition: "What it is made of",
+    compositionNote: (count) =>
+      `${count} catalog blocks in page order. Each one is installed with its own command; nothing is recreated.`,
+    rules: "Page rules",
+    ruleTheme: (tone, accent, ink) =>
+      `One theme for every block: tone="${tone}", accent="${accent}", ink="${ink}" — passed to each block as props.`,
+    ruleFont: (font) => `The blocks load the ${font} fonts themselves; the page sets the same font on text between blocks.`,
+    ruleList: [
+      "Every section sits inside the sketch-018 wrapper: it provides the sheet slide-in, the thread and the margin doodles.",
+      "Stickers and dividers go between sections, positioned from the page side.",
+      "Only texts, links and photos change. The section order, theme props and the wrapper stay.",
+    ],
+    images: "Images",
+    imagesNote:
+      "The prompts the demo photos were made with. Generate yours in any generator with this shared style and put them into public/photos/ under these names.",
+    imageFile: "File",
+    imageFormat: "Format",
+    imagePrompt: "Prompt",
+    howTo: "How to repeat it",
+    howToSteps: [
+      "Press “Copy the scenario for AI” — a 24-hour link lands in your clipboard.",
+      "Paste it to your agent in your project (Cursor, Claude Code, Codex) and say: “build this page”.",
+      "The agent installs every block with the commands and assembles the page from the demo source.",
+      "Replace texts, links and photos with yours. Nothing else needs changing.",
+    ],
   },
   item: {
     preview: "Preview",

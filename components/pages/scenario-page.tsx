@@ -1,56 +1,38 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import { ArrowUpRight, Lock } from "lucide-react"
 
 import { CatalogShell } from "@/components/catalog/catalog-shell"
-import { CatalogThumbnail } from "@/components/catalog/catalog-thumbnail"
-import { CopyButton } from "@/components/copy-button"
+import { ScenarioCopy } from "@/components/catalog/scenario-copy"
+import { ScenarioTour } from "@/components/catalog/scenario-tour"
+import { isPro } from "@/lib/entitlements"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
-import {
-  buildScenarioPrompt,
-  getScenario,
-  resolveScenario,
-  scenarioPath,
-  type ScenarioSelection,
-} from "@/lib/scenario"
-import { getSiteBaseUrl } from "@/lib/site"
-import { catalogBasePath, itemBasePath } from "@/registry/index"
+import { getScenario, scenarioSections, scenarioText } from "@/lib/scenario"
+import { extractUsage, readScenarioImages, readScenarioSource } from "@/lib/scenario.server"
+import { getSession } from "@/lib/session"
 
 /**
- * Страница сценария: задача, разложенная в упорядоченные секции.
+ * Страница сценария: готовая страница и рецепт «из чего», без вариантов.
  *
- * Шаг называет роль на странице («Форма заявки»), а не категорию каталога
- * («Контакты»): человек, пришедший с задачей, узнаёт нужное, не зная нашей
- * таксономии. Внутри шага — несколько вариантов с живым превью; выбранный
- * уезжает в адрес, поэтому собранным сценарием можно поделиться ссылкой.
- *
- * Ставятся по-прежнему сами блоки: сценарий ничего не устанавливает, он
- * только собирает промпт и ведёт в категории.
+ * Всем: демо в живом кадре и список блоков — видно, что каждый есть в
+ * каталоге. Подписчику: точный JSX каждого блока из демо, общие правила,
+ * промпты картинок и ссылка для агента с исходником страницы целиком.
  */
-export function ScenarioPage({
-  locale,
-  slug,
-  query,
-}: {
-  locale: Locale
-  slug: string
-  query: Record<string, string | string[] | undefined>
-}) {
+export async function ScenarioPage({ locale, slug }: { locale: Locale; slug: string }) {
   const scenario = getScenario(slug)
 
   if (!scenario) {
     notFound()
   }
 
-  const t = getDictionary(locale)
-  const selection: ScenarioSelection = Object.fromEntries(
-    Object.entries(query).map(([key, value]) => [
-      key,
-      Array.isArray(value) ? value[0] : value,
-    ]),
-  )
-  const resolved = resolveScenario(scenario, locale, selection)
-  const prompt = buildScenarioPrompt(resolved, locale, getSiteBaseUrl())
-  const steps = resolved.steps.filter((step) => step.chosen)
+  const t = getDictionary(locale).scenarios
+  const text = scenarioText(scenario, locale)
+  const sections = scenarioSections(scenario, locale)
+  const session = await getSession()
+  const pro = session ? await isPro(session.user.id) : false
+  const [source, pictures] = pro
+    ? await Promise.all([readScenarioSource(scenario), readScenarioImages(scenario)])
+    : [null, null]
 
   return (
     <CatalogShell locale={locale}>
@@ -58,172 +40,134 @@ export function ScenarioPage({
         <nav aria-label="Breadcrumb" className="mb-4">
           <ol className="text-shell-muted flex flex-wrap items-center gap-2 text-sm">
             <li>
-              <Link
-                href={localePath(locale, "/scenarios")}
-                className="hover:text-shell-fg"
-              >
-                {t.scenarios.title}
+              <Link href={localePath(locale, "/scenarios")} className="hover:text-shell-fg transition-colors">
+                {t.title}
               </Link>
             </li>
             <li aria-hidden="true">/</li>
-            <li className="text-shell-fg font-medium">{resolved.label}</li>
+            <li className="text-shell-fg">{text.label}</li>
           </ol>
         </nav>
 
-        <header className="border-shell-border mb-8 border-b pb-8">
-          <h1 className="text-shell-fg text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
-            {resolved.label}
-          </h1>
-          <p className="text-shell-muted mt-3 max-w-2xl text-sm text-pretty sm:text-base">
-            {resolved.summary}
-          </p>
-          <p className="text-shell-muted mt-3 text-xs tabular-nums">
-            {t.scenarios.stepCount(resolved.steps.length)}
-          </p>
-
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            <CopyButton
-              value={prompt}
-              label={t.scenarios.copy}
-              copiedLabel={t.scenarios.copied}
-              variant="primary"
-            />
+        <header className="mb-6">
+          <h1 className="text-shell-fg text-2xl font-semibold tracking-tight sm:text-3xl">{text.label}</h1>
+          <p className="text-shell-muted mt-3 max-w-2xl text-sm text-pretty sm:text-base">{text.summary}</p>
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <Link
+              href={scenario.demo}
+              className="acc-press border-shell-border-strong text-shell-fg hover:border-shell-accent inline-flex h-11 items-center gap-2 rounded-full border px-5 text-sm font-medium transition-colors"
+            >
+              {t.openDemo}
+              <ArrowUpRight className="size-4" aria-hidden="true" />
+            </Link>
+            {pro ? (
+              <ScenarioCopy slug={scenario.slug} locale={locale} labels={{ copy: t.copy, copied: t.copied, signIn: t.signIn }} />
+            ) : (
+              <Link
+                href={localePath(locale, "/pricing")}
+                className="acc-press inline-flex h-11 items-center gap-2 rounded-full bg-[#ff5900] px-5 text-sm font-semibold text-[#151515] transition-colors hover:bg-[#ff7a33]"
+              >
+                <Lock className="size-4" aria-hidden="true" />
+                {t.proLink}
+              </Link>
+            )}
           </div>
-          <p className="text-shell-muted mt-3 max-w-2xl text-xs">
-            {t.scenarios.copyNote}
-          </p>
+          {pro ? <p className="text-shell-muted mt-3 max-w-2xl text-xs">{t.copyNote}</p> : null}
         </header>
 
-        <ol className="flex flex-col gap-10">
-          {resolved.steps.map((step, index) => (
-            <li key={step.category}>
-              <div className="mb-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <span className="text-shell-muted text-xs tabular-nums">
-                  {t.scenarios.step} {index + 1}
-                </span>
-                <h2 className="text-shell-fg text-lg font-medium">
-                  {step.role}
-                </h2>
-                {step.optional ? (
-                  <span className="border-shell-border text-shell-muted rounded-full border px-2 py-0.5 text-[11px]">
-                    {t.scenarios.optional}
-                  </span>
-                ) : null}
-                <Link
-                  href={localePath(
-                    locale,
-                    `${catalogBasePath(step.kind)}/${step.category}`,
-                  )}
-                  className="text-shell-muted hover:text-shell-fg ml-auto text-xs"
-                >
-                  {step.categoryLabel} · {t.scenarios.more(step.total)}
-                </Link>
-              </div>
+        <section className="mt-2">
+          <h2 className="text-shell-fg text-lg font-semibold">{t.composition}</h2>
+          <p className="text-shell-muted mt-2 max-w-2xl text-sm">{t.compositionNote(sections.length)}</p>
+          <div className="mt-6">
+            <ScenarioTour
+              demo={scenario.demo}
+              labels={{ show: t.showInDemo, openInCatalog: t.openInCatalog }}
+              rows={sections.map((section) => ({
+                name: section.name,
+                role: section.role,
+                title: section.item.title ?? section.name,
+                note: section.note,
+                path: section.path,
+                anchor: section.anchor,
+                usage:
+                  pro && source && section.exportName
+                    ? (extractUsage(source, section.exportName) ?? `<${section.exportName} />`)
+                    : null,
+              }))}
+            />
+          </div>
+        </section>
 
-              <p className="text-shell-muted mb-4 max-w-2xl text-sm">
-                {step.why}
-              </p>
-
-              {/* Варианты шага: тот же живой компонент из registry, что и в
-                  каталоге. Выбранный отмечен рамкой и уезжает в адрес. */}
-              <ul className="grid gap-4 sm:grid-cols-2">
-                {step.choices.map((item) => {
-                  const active = item.name === step.chosen?.name
-
-                  return (
-                    <li key={item.name}>
-                      {/* Кадр превью не оборачивается ссылкой: внутри живой
-                          блок со своими ссылками, а <a> внутри <a> — ошибка
-                          разметки и сломанная гидратация. Выбор делает
-                          строка под кадром. */}
-                      <div
-                        data-active={active ? "true" : undefined}
-                        className={
-                          "overflow-hidden rounded-xl border transition-colors " +
-                          (active
-                            ? "border-shell-accent"
-                            : "border-shell-border")
-                        }
-                      >
-                        <div className="pointer-events-none">
-                          <CatalogThumbnail slug={item.name} locale={locale} />
-                        </div>
-                        <div className="flex items-baseline justify-between gap-2 px-3 py-2">
-                          <Link
-                            href={localePath(
-                              locale,
-                              `${itemBasePath(step.kind)}/${item.name}`,
-                            )}
-                            className="text-shell-fg hover:text-shell-accent truncate text-sm"
-                          >
-                            {item.title ?? item.name}
-                          </Link>
-                          {active ? (
-                            <span className="text-shell-accent shrink-0 text-xs">
-                              {t.scenarios.chosen}
-                            </span>
-                          ) : (
-                            <Link
-                              href={localePath(
-                                locale,
-                                scenarioPath(scenario.slug, {
-                                  ...selection,
-                                  [step.category]: item.name,
-                                }),
-                              )}
-                              scroll={false}
-                              // Единственная ссылка, кладущая выбор в query:
-                              // краулер накапливал параметры и разошёлся на
-                              // 114 550 адресов за сутки (docs/HOSTING-AUDIT.md).
-                              rel="nofollow"
-                              className="text-shell-muted hover:text-shell-fg shrink-0 text-xs underline"
-                            >
-                              {t.scenarios.choose}
-                            </Link>
-                          )}
-                        </div>
-                      </div>
-                    </li>
-                  )
-                })}
+        {pro && pictures ? (
+          <>
+            <section className="mt-12">
+              <h2 className="text-shell-fg text-lg font-semibold">{t.rules}</h2>
+              <ul className="text-shell-muted mt-3 grid max-w-2xl gap-2 text-sm">
+                <li>{t.ruleTheme(scenario.theme.tone, scenario.theme.accent, scenario.theme.ink)}</li>
+                <li>{t.ruleFont(scenario.theme.font)}</li>
+                {t.ruleList.map((rule) => (
+                  <li key={rule}>{rule}</li>
+                ))}
               </ul>
-            </li>
-          ))}
-        </ol>
+            </section>
 
-        {resolved.parts.length > 0 ? (
-          <section className="border-shell-border mt-12 border-t pt-8">
-            <h2 className="text-shell-fg text-lg font-medium">
-              {t.scenarios.parts}
-            </h2>
-            <p className="text-shell-muted mt-2 max-w-2xl text-sm">
-              {t.scenarios.partsNote}
-            </p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {resolved.parts.map((part) => (
-                <Link
-                  key={part.slug}
-                  href={localePath(
-                    locale,
-                    `${catalogBasePath(part.kind)}/${part.slug}`,
-                  )}
-                  className="border-shell-border text-shell-fg hover:border-shell-border-strong inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-sm transition-colors"
-                >
-                  {part.label}
-                  <span className="text-shell-muted text-xs tabular-nums">
-                    {part.count}
-                  </span>
-                </Link>
-              ))}
-            </div>
+            {pictures.images.length > 0 ? (
+              <section className="mt-12">
+                <h2 className="text-shell-fg text-lg font-semibold">{t.images}</h2>
+                <p className="text-shell-muted mt-2 max-w-2xl text-sm">{t.imagesNote}</p>
+                {pictures.style ? (
+                  <pre className="bg-shell-elevated border-shell-border text-shell-fg mt-4 overflow-auto rounded-lg border p-3 font-mono text-[11px] leading-relaxed whitespace-pre-wrap">
+                    {pictures.style}
+                  </pre>
+                ) : null}
+                <div className="border-shell-border mt-4 overflow-x-auto rounded-lg border">
+                  <table className="w-full text-left text-sm">
+                    <thead className="text-shell-muted text-xs">
+                      <tr>
+                        <th className="px-3 py-2 font-medium">{t.imageFile}</th>
+                        <th className="px-3 py-2 font-medium">{t.imageFormat}</th>
+                        <th className="px-3 py-2 font-medium">{t.imagePrompt}</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-shell-border divide-y">
+                      {pictures.images.map((image) => (
+                        <tr key={`${image.file}-${image.format}`} className="align-top">
+                          <td className="px-3 py-2 font-mono text-xs whitespace-nowrap">{image.file}</td>
+                          <td className="text-shell-muted px-3 py-2 text-xs whitespace-nowrap">{image.format}</td>
+                          <td className="text-shell-fg px-3 py-2 text-xs">{image.prompt}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            ) : null}
+
+            <section className="mt-12">
+              <h2 className="text-shell-fg text-lg font-semibold">{t.howTo}</h2>
+              <ol className="text-shell-muted mt-3 grid max-w-2xl gap-2 text-sm">
+                {t.howToSteps.map((step, index) => (
+                  <li key={step} className="flex gap-3">
+                    <span className="text-shell-accent-text font-semibold tabular-nums">{index + 1}</span>
+                    <span>{step}</span>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          </>
+        ) : (
+          <section className="border-shell-border bg-shell-panel mt-12 rounded-2xl border px-6 py-10 text-center">
+            <p className="text-shell-accent-text text-xs font-semibold tracking-[0.14em] uppercase">Pro</p>
+            <h2 className="text-shell-fg mt-3 text-xl font-semibold text-balance sm:text-2xl">{t.proTitle}</h2>
+            <p className="text-shell-muted mx-auto mt-3 max-w-xl text-sm text-pretty">{t.proText}</p>
+            <Link
+              href={localePath(locale, "/pricing")}
+              className="acc-press mt-6 inline-flex h-11 items-center gap-2 rounded-full bg-[#ff5900] px-6 text-sm font-semibold text-[#151515] transition-colors hover:bg-[#ff7a33]"
+            >
+              {t.proLink}
+            </Link>
           </section>
-        ) : null}
-
-        {steps.length === 0 ? (
-          <p className="text-shell-muted py-16 text-center text-sm">
-            {t.catalog.searchEmpty}
-          </p>
-        ) : null}
+        )}
       </main>
     </CatalogShell>
   )
