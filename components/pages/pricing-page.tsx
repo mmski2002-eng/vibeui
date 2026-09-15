@@ -451,7 +451,7 @@ export async function PricingPage({ locale }: { locale: Locale }) {
             className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_60%_at_50%_100%,rgba(255,89,0,0.22),transparent_70%)]"
             aria-hidden="true"
           />
-          <div className="pointer-events-none relative z-10 mx-auto flex max-w-3xl flex-col items-center px-6 py-20 text-center sm:py-28 lg:py-32">
+          <div className="pointer-events-none relative z-10 mx-auto flex max-w-3xl flex-col items-center px-6 py-12 text-center sm:py-14 lg:py-16">
             <p className="text-xs font-semibold tracking-[0.14em] text-[#ff5900] uppercase">
               {t.eyebrow}
             </p>
