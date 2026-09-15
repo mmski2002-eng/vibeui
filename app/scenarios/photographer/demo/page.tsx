@@ -109,6 +109,9 @@ export default function Page() {
   return (
     <Surface025 tone="light" pattern="grid" cell={24} strength="soft" paper={PAPER} style={page} className="min-h-dvh">
       <link rel="stylesheet" href={FONTS} precedence="medium" />
+      <style href="vibeui-demo-scroll" precedence="medium">
+        {`html{scroll-behavior:smooth;scroll-padding-top:5.5rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}`}
+      </style>
 
       <Sketch019
         {...sketch}

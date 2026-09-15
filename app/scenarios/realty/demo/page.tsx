@@ -74,6 +74,9 @@ const FAQ = [
 export default function Page() {
   return (
     <div style={page} className="min-h-dvh">
+      <style href="vibeui-demo-scroll" precedence="medium">
+        {`html{scroll-behavior:smooth;scroll-padding-top:5.5rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}`}
+      </style>
       <Realty001
         {...realty}
         brand="Дом на Неве"
