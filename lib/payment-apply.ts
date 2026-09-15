@@ -87,7 +87,7 @@ export async function applyPaymentEvent(
       status?: string
       amount?: { value?: string }
       metadata?: Record<string, string>
-      payment_method?: { id?: string }
+      payment_method?: { id?: string; saved?: boolean }
       receipt_registration?: string
     }
   },
@@ -108,7 +108,7 @@ export async function applyPaymentEvent(
     status?: string
     amount?: { value?: string }
     metadata?: Record<string, string>
-    payment_method?: { id?: string }
+    payment_method?: { id?: string; saved?: boolean }
     receipt_registration?: string
   } = object
 
@@ -184,6 +184,12 @@ export async function applyPaymentEvent(
     .where(eq(subscription.userId, userId))
     .limit(1)
 
+  // Списывать потом можно только сохранённым способом: у СБП и разовой
+  // карты id тоже есть, но `saved: false`, и попытка продления по нему
+  // вернёт отказ — три отказа подряд и подписка закрылась бы сама.
+  const savedMethodId = source.payment_method?.saved
+    ? (source.payment_method.id ?? null)
+    : null
   const periodEnd = nextPeriodEnd(existing?.currentPeriodEnd, plan.days)
 
   if (existing) {
@@ -195,8 +201,7 @@ export async function applyPaymentEvent(
         currentPeriodEnd: periodEnd,
         cancelAtPeriodEnd: false,
         failedAttempts: 0,
-        paymentMethodId:
-          source.payment_method?.id ?? existing.paymentMethodId ?? null,
+        paymentMethodId: savedMethodId ?? existing.paymentMethodId ?? null,
         updatedAt: new Date(),
       })
       .where(eq(subscription.userId, userId))
@@ -207,7 +212,7 @@ export async function applyPaymentEvent(
       plan: plan.id,
       status: "active",
       currentPeriodEnd: periodEnd,
-      paymentMethodId: source.payment_method?.id ?? null,
+      paymentMethodId: savedMethodId,
     })
   }
 
