@@ -55,6 +55,8 @@ export async function ScenarioPage({ locale, slug }: { locale: Locale; slug: str
           <div className="mt-5 flex flex-wrap items-center gap-3">
             <Link
               href={scenario.demo}
+              target="_blank"
+              rel="noopener"
               className="acc-press border-shell-border-strong text-shell-fg hover:border-shell-accent inline-flex h-11 items-center gap-2 rounded-full border px-5 text-sm font-medium transition-colors"
             >
               {t.openDemo}

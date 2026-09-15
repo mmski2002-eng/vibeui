@@ -64,6 +64,8 @@ export function ScenariosPage({ locale }: { locale: Locale }) {
                       </Link>
                       <Link
                         href={scenario.demo}
+                        target="_blank"
+                        rel="noopener"
                         className="text-shell-muted hover:text-shell-fg transition-colors"
                       >
                         {t.openDemo}
