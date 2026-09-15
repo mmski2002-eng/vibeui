@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react"
+import { useLayoutEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react"
 
 export type Restaurant003Dish = {
   name: string
@@ -166,7 +166,7 @@ export function Restaurant003({
   const [image, setImage] = useState<string | null>(null)
   const root = useRef<HTMLElement>(null)
   const tabs = useRef<HTMLUListElement>(null)
-  const [pill, setPill] = useState<{ x: number; y: number; w: number; h: number } | null>(null)
+  const pill = useRef<HTMLLIElement>(null)
   const section = sections[Math.min(active, sections.length - 1)]
   const palette = {
     ...(accent ? { "--vibeui-restaurant-003-accent": accent } : null),
@@ -179,18 +179,21 @@ export function Restaurant003({
     root.current?.style.setProperty("--vibeui-restaurant-003-y", `${event.clientY}px`)
   }
 
-  useEffect(() => {
-    setImage(null)
-  }, [active])
-
-  // Плашка под активным табом: меряем кнопку и едем к ней transform'ом.
+  // Плашка под активным табом: меряем кнопку и пишем размеры прямо в DOM —
+  // без состояния и лишних рендеров, transition в CSS довозит.
   useLayoutEffect(() => {
     const list = tabs.current
     if (!list) return
     const measure = () => {
       const button = list.querySelectorAll<HTMLElement>('[data-part="tab"]')[active]
       if (!button) return
-      setPill({ x: button.offsetLeft, y: button.offsetTop, w: button.offsetWidth, h: button.offsetHeight })
+      const element = pill.current
+      if (!element) return
+      element.style.width = `${button.offsetWidth}px`
+      element.style.height = `${button.offsetHeight}px`
+      element.style.setProperty("--vibeui-restaurant-003-px", `${button.offsetLeft}px`)
+      element.style.setProperty("--vibeui-restaurant-003-py", `${button.offsetTop}px`)
+      element.dataset.ready = "true"
     }
     measure()
     const observer = new ResizeObserver(measure)
@@ -212,15 +215,19 @@ export function Restaurant003({
             {lede ? <p data-part="lede">{lede}</p> : null}
           </div>
           <ul ref={tabs} data-part="tabs" role="tablist" aria-label="Разделы меню">
-            <li
-              aria-hidden="true"
-              data-part="pill"
-              data-ready={pill !== null}
-              style={pill ? ({ width: pill.w, height: pill.h, ["--vibeui-restaurant-003-px" as string]: `${pill.x}px`, ["--vibeui-restaurant-003-py" as string]: `${pill.y}px` } as CSSProperties) : undefined}
-            />
+            <li ref={pill} aria-hidden="true" data-part="pill" />
             {sections.map((item, index) => (
               <li key={item.title} role="presentation">
-                <button type="button" role="tab" data-part="tab" aria-selected={index === active} onClick={() => setActive(index)}>
+                <button
+                  type="button"
+                  role="tab"
+                  data-part="tab"
+                  aria-selected={index === active}
+                  onClick={() => {
+                    setActive(index)
+                    setImage(null)
+                  }}
+                >
                   {item.title}
                 </button>
               </li>
