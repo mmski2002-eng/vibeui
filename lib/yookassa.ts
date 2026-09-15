@@ -119,8 +119,7 @@ export async function createCheckout({
   returnUrl: string
 }) {
   const money: Money = { value: amount, currency: "RUB" }
-
-  return request({
+  const body: Record<string, unknown> = {
     amount: money,
     capture: true,
     confirmation: { type: "redirect", return_url: returnUrl },
@@ -130,7 +129,38 @@ export async function createCheckout({
     save_payment_method: true,
     metadata: { userId, plan },
     receipt: receipt(email, description, money),
-  })
+  }
+
+  return requestWithFallback(body)
+}
+
+/**
+ * Магазин может быть не до конца настроен в кабинете ЮKassa, и тогда API
+ * отказывает не в платеже, а в его опциях: 403 «store can't make recurring
+ * payments» — не включены автоплатежи, 400 на `receipt` — не подключена
+ * фискализация (чек самозанятого и так выбивается в «Мой налог» вне сайта).
+ * Платёж в обоих случаях важнее опции: убираем её и пробуем снова. Когда
+ * менеджер включит опцию, первый же запрос пройдёт целиком без редеплоя.
+ */
+async function requestWithFallback(body: Record<string, unknown>) {
+  try {
+    return await request(body)
+  } catch (error) {
+    const message = error instanceof Error ? error.message : ""
+    const stripped = { ...body }
+
+    if (/recurring/i.test(message) && "save_payment_method" in stripped) {
+      delete stripped.save_payment_method
+    } else if (/receipt/i.test(message) && "receipt" in stripped) {
+      delete stripped.receipt
+    } else {
+      throw error
+    }
+
+    console.warn("[yookassa] опция платежа отклонена, повтор без неё:", message)
+
+    return requestWithFallback(stripped)
+  }
 }
 
 /** Автосписание по сохранённому способу оплаты: подтверждение не требуется. */
