@@ -130,7 +130,9 @@ background:var(--vibeui-contact-006-soft);border-style:dashed;
 font-size:0.5625rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;
 color:var(--vibeui-contact-006-muted);
 }
-[data-vibeui-block="contact-006"] [data-part="field"]{display:grid;gap:0.3125rem}
+/* align-content:start: в паре полей ряд растягивает оба по высоте, и без этого
+   строки короткого поля (пояс) разъезжаются, селект уезжает ниже телефона. */
+[data-vibeui-block="contact-006"] [data-part="field"]{display:grid;gap:0.3125rem;align-content:start}
 [data-vibeui-block="contact-006"] label[for]{font-size:0.8125rem;font-weight:640}
 [data-vibeui-block="contact-006"] input[type="tel"],
 [data-vibeui-block="contact-006"] select{
@@ -139,7 +141,7 @@ border:1px solid var(--vibeui-contact-006-border);
 background:var(--vibeui-contact-006-card);color:inherit;font:inherit;font-size:0.9375rem;
 }
 [data-vibeui-block="contact-006"] select{appearance:none;cursor:pointer;padding-right:2rem}
-[data-vibeui-block="contact-006"] [data-part="select"]{position:relative;display:block}
+[data-vibeui-block="contact-006"] [data-part="select"]{position:relative;display:grid}
 [data-vibeui-block="contact-006"] [data-part="select"]::after{
 content:"";position:absolute;right:0.875rem;top:50%;margin-top:-0.25rem;
 width:0.375rem;height:0.375rem;pointer-events:none;
