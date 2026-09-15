@@ -192,6 +192,40 @@ function Ink({ w, h, layers }: { w: number; h: number; layers: Layer[] }) {
   )
 }
 
+/**
+ * Штриховка как карандашом, не отрывая руки: пила между кромками, но шаг,
+ * наклон и заход к кромке гуляют от штриха к штриху — ровная пила выглядит
+ * машинной. Каждый шестой штрих не дотягивает до кромки, как бывает у руки.
+ */
+function hatchPoints(w: number, h: number, seed: number, rough: number): Point[] {
+  const next = random(seed)
+  const jitter = (amount: number) => (next() - 0.5) * 2 * amount
+  const top = 5
+  const bottom = h - 5
+  const points: Point[] = []
+  let x = 6 + (bottom - top) * 0.55
+  let index = 0
+
+  while (x <= w - 4) {
+    const back = (bottom - top) * (0.42 + next() * 0.28)
+    const short = index % 6 === 5
+    const peak: Point = [x + jitter(1.5), top + (short ? 5 + jitter(3) : jitter(2.5))]
+    const dip: Point = [x - back + jitter(2), bottom - (short ? jitter(2) : 1 + jitter(3))]
+
+    points.push(peak, [(peak[0] + dip[0]) / 2 + jitter(1.5), (peak[1] + dip[1]) / 2 + jitter(1.5)], dip)
+
+    const step = 8.5 + next() * 5 + rough
+    const nextX = x + step
+
+    if (nextX <= w - 4) points.push([(dip[0] + nextX) / 2 + jitter(1.5), (top + bottom) / 2 + jitter(2)])
+
+    x = nextX
+    index += 1
+  }
+
+  return points
+}
+
 const ROUGH = { neat: 0.8, loose: 1.8 } as const
 const BOIL = { still: 0, soft: 0.7, lively: 1.4 } as const
 
@@ -260,28 +294,11 @@ export function Sketch001({
   const shake = BOIL[boil] ?? BOIL.soft
   const outline = sketch(rectPoints(w, h, 2, 9), base, roughness, shake, true)
   const fill = variant === "solid" ? sketch(rectPoints(w, h, 5, 8, 10), base + 11, roughness * 0.7, shake, true) : null
-  // Штриховка одной непрерывной линией, как карандашом не отрывая руки:
-  // пила между верхней и нижней кромками — вниз-влево круче, вверх-вправо
-  // положе, шаг 11px. Точки ложатся в один path, поэтому и «кипит» он целиком.
+  // Штриховка одним path: см. hatchPoints. Кипит он целиком.
   let hatch: string[] | null = null
 
   if (variant === "scribble" && w > 0 && h > 0) {
-    const top = 5
-    const bottom = h - 5
-    const back = (bottom - top) * 0.55
-    const step = 11
-    const points: Point[] = []
-
-    for (let x = 6 + back; x <= w - 4; x += step) {
-      const peak: Point = [x, top]
-      const dip: Point = [x - back, bottom]
-
-      points.push(peak, [(peak[0] + dip[0]) / 2, (top + bottom) / 2], dip)
-
-      const nextPeak: Point = [x + step, top]
-
-      if (nextPeak[0] <= w - 4) points.push([(dip[0] + nextPeak[0]) / 2, (top + bottom) / 2])
-    }
+    const points = hatchPoints(w, h, base + 17, roughness)
 
     hatch = points.length > 2 ? sketch(points, base + 23, roughness * 0.45, shake * 0.8) : null
   }

@@ -51,4 +51,28 @@ export const PREVIEWS = {
   "sketch-015": dynamic(() =>
     import("@/registry/animations/sketch/sketch-015/sketch-015").then((module) => module.Sketch015),
   ),
+  "sketch-016": dynamic(() =>
+    import("@/registry/animations/sketch/sketch-016/sketch-016").then((module) => module.Sketch016),
+  ),
+  "sketch-017": dynamic(() =>
+    import("@/registry/animations/sketch/sketch-017/sketch-017").then((module) => module.Sketch017),
+  ),
+  "sketch-018": dynamic(() =>
+    import("@/registry/animations/sketch/sketch-018/sketch-018").then((module) => module.Sketch018),
+  ),
+  "sketch-019": dynamic(() =>
+    import("@/registry/animations/sketch/sketch-019/sketch-019").then((module) => module.Sketch019),
+  ),
+  "sketch-020": dynamic(() =>
+    import("@/registry/animations/sketch/sketch-020/sketch-020").then((module) => module.Sketch020),
+  ),
+  "sketch-021": dynamic(() =>
+    import("@/registry/animations/sketch/sketch-021/sketch-021").then((module) => module.Sketch021),
+  ),
+  "sketch-022": dynamic(() =>
+    import("@/registry/animations/sketch/sketch-022/sketch-022").then((module) => module.Sketch022),
+  ),
+  "sketch-023": dynamic(() =>
+    import("@/registry/animations/sketch/sketch-023/sketch-023").then((module) => module.Sketch023),
+  ),
 } satisfies PreviewMap

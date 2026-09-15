@@ -2538,6 +2538,1553 @@
           }
         }
       }
+    },
+    {
+      "name": "sketch-016",
+      "type": "registry:component",
+      "title": "Рукописный первый экран",
+      "description": "Первый экран от руки: дисплейный рукописный заголовок с обведённым словом, две нарисованные кнопки и фото, приклеенное к листу скотчем под наклоном. Контуры дорисовываются при появлении, слова заголовка дописываются по одному.",
+      "categories": [
+        "sketch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sketch-016/sketch-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sketch-016.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Раскладка от собственной ширины (container query): до 52rem колонка, дальше текст слева и фото справа. Заголовок разбит на слова, каждое въезжает с задержкой --n×70ms; titleAccent обводится эллипсом в полтора оборота, измеренным по коробке span. Кнопки и фото — Framed: хост измеряется ResizeObserver, по коробке рисуется контур rectPoints тремя кадрами boil; первичная кнопка залита (fill), фото с нарисованной тенью и полоской «скотча». Дорисовка: path с pathLength=1 и stroke-dashoffset 1→0, задержка своя у каждого слоя; после — обычный boil через @property --frame и step-end. Шрифты Neucha и Caveat через <link precedence>. Палитра --vibeui-sketch-016-* с light-dark, tone фиксирует схему, reduced-motion выключает всё.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "sketch",
+          "hand-drawn",
+          "handwritten",
+          "doodle",
+          "rough",
+          "boil",
+          "hero",
+          "header",
+          "photo",
+          "portfolio"
+        ],
+        "preview": {
+          "props": {
+            "image": "/demo/people/person-05.webp"
+          }
+        },
+        "ai": {
+          "export": "Sketch016",
+          "usage": "<Sketch016\n  eyebrow=\"Портретный фотограф · Петербург\"\n  title=\"Снимаю людей,\"\n  titleAccent=\"а не позы\"\n  lede=\"Час разговора, немного прогулки — и на карточках вы настоящие.\"\n  primaryLabel=\"Записаться\"\n  primaryHref=\"#book\"\n  secondaryLabel=\"Смотреть работы\"\n  secondaryHref=\"#works\"\n  image=\"/photos/hero.webp\"\n  imageCaption=\"Нева, май, плёнка\"\n/>",
+          "summary": "Самодостаточный первый экран для портфолио, студии или личного сайта: рукописная типографика, нарисованные кнопки и фото-«распечатка». Всё содержимое пропсами, картинка любая.",
+          "preserve": [
+            "дорисовку контуров при появлении и дрожание boil после — это и есть «рукописность», без них блок становится обычным хиро",
+            "обводку titleAccent эллипсом и наклон фото с тенью и скотчем — узнаваемые детали листа",
+            "дисплейный Caveat в заголовке и кнопках, Neucha в тексте: шрифты грузятся самим блоком"
+          ],
+          "adapt": [
+            "все тексты — title, titleAccent, eyebrow, lede, подписи кнопок — ссылки и фото",
+            "accent и ink — цвет линий и текста",
+            "rough и boil — размашистость и живость линии, tone — светлая или тёмная схема"
+          ],
+          "notes": [
+            "Фото ожидается вертикальное 4:5; горизонтальное обрежется по центру.",
+            "titleAccent пустой — обводки нет, заголовок остаётся одной строкой."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Снимаю людей,",
+            "maxLength": 40
+          },
+          {
+            "prop": "titleAccent",
+            "label": "Обведённое",
+            "type": "text",
+            "default": "а не позы",
+            "maxLength": 24
+          },
+          {
+            "prop": "rough",
+            "label": "Почерк",
+            "type": "select",
+            "options": [
+              "loose",
+              "neat"
+            ],
+            "default": "loose"
+          },
+          {
+            "prop": "boil",
+            "label": "Дрожание",
+            "type": "select",
+            "options": [
+              "soft",
+              "still",
+              "lively"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Линия",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hand-drawn hero",
+            "description": "A hand-drawn first screen: a display handwritten headline with a circled word, two sketched buttons and a photo taped to the sheet at a slight tilt. Outlines draw themselves in on appearance, headline words arrive one by one.",
+            "docs": "One file, zero dependencies, “use client”. Layout follows its own width (container query): a column under 52rem, text left and photo right above. The headline is split into words, each rising with a --n×70ms delay; titleAccent is circled by a one-and-a-half-turn ellipse measured from the span box. Buttons and the photo are Framed: the host is measured by ResizeObserver, a rectPoints outline is drawn in three boil frames; the primary button is filled, the photo gets a drawn shadow and a strip of tape. Draw-in: paths with pathLength=1 and stroke-dashoffset 1→0, each layer with its own delay; then the usual boil via @property --frame and step-end. Neucha and Caveat via <link precedence>. Palette --vibeui-sketch-016-* with light-dark, tone pins the scheme, reduced-motion turns everything off.",
+            "ai": {
+              "summary": "A self-contained first screen for a portfolio, studio or personal site: handwritten type, sketched buttons and a taped print. All content via props, any photo.",
+              "preserve": [
+                "the draw-in of outlines on appearance and the boil after — that is what makes it hand-drawn; without them it is a plain hero",
+                "the ellipse around titleAccent and the tilted photo with shadow and tape — the recognisable details of the sheet",
+                "display Caveat in the headline and buttons, Neucha in body text: the block loads its own fonts"
+              ],
+              "adapt": [
+                "all texts — title, titleAccent, eyebrow, lede, button labels — links and the photo",
+                "accent and ink — line and text colours",
+                "rough and boil — how loose and how alive the line is, tone — light or dark scheme"
+              ],
+              "notes": [
+                "The photo is expected portrait 4:5; a landscape one is centre-cropped.",
+                "Empty titleAccent — no circle, the headline stays one line."
+              ],
+              "usage": "<Sketch016\n  eyebrow=\"Portrait photographer · Lisbon\"\n  title=\"I shoot people,\"\n  titleAccent=\"not poses\"\n  lede=\"An hour of talking, a short walk — and you look like yourself.\"\n  primaryLabel=\"Book a shoot\"\n  primaryHref=\"#book\"\n  secondaryLabel=\"See the work\"\n  secondaryHref=\"#works\"\n  image=\"/photos/hero.webp\"\n  imageCaption=\"Tagus, May, film\"\n/>"
+            },
+            "controls": {
+              "tone": {
+                "label": "Theme"
+              },
+              "title": {
+                "label": "Headline",
+                "default": "I shoot people,"
+              },
+              "titleAccent": {
+                "label": "Circled",
+                "default": "not poses"
+              },
+              "rough": {
+                "label": "Hand"
+              },
+              "boil": {
+                "label": "Boil"
+              },
+              "accent": {
+                "label": "Line"
+              },
+              "ink": {
+                "label": "Text"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Portrait photographer · Lisbon",
+                "title": "I shoot people,",
+                "titleAccent": "not poses",
+                "lede": "An hour of talking, a short walk — and you look like yourself.",
+                "primaryLabel": "Book a shoot",
+                "secondaryLabel": "See the work",
+                "imageCaption": "Tagus, May, film",
+                "arrowLabel": "that's me"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sketch-017",
+      "type": "registry:component",
+      "title": "Рукописная галерея с фильтром",
+      "description": "Галерея от руки: чипы жанров в нарисованных капсулах фильтруют кадры, кадры лежат на столе masonry-колонками, каждый под своим наклоном, с рукописной подписью. Прилетают по одному при прокрутке, при смене жанра лишние сдуваются. Клик по кадру: он вылетает с места на передний план, увеличивается и выравнивается; стрелки и Esc.",
+      "categories": [
+        "sketch"
+      ],
+      "dependencies": [
+        "react-dom"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sketch-017/sketch-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sketch-017.tsx"
+        }
+      ],
+      "docs": "Один файл, «use client»; единственная зависимость — react-dom ради портала лайтбокса (в React-проекте он уже есть). Жанры выводятся из works (уникальные category), чип «все» — allLabel. Чип — кнопка с aria-pressed и капсулой rectPoints по своей коробке, активный залит (fill). Стол — <ul> с CSS columns (1/2/3 по container query), слот break-inside:avoid; кадр — figure в рамке с нарисованной тенью, наклон от seed (−1.6…1.6°), по hover выравнивается. Появление: IntersectionObserver один раз ставит data-shown, transform/opacity с задержкой --n×60ms. Фильтр в два такта: на 260ms стол получает data-leaving (кадры сжимаются и гаснут), затем список пересобирается с новым key и кадры прилетают заново. Картинки object-fit:cover с aspect-ratio по orientation. Шрифты Neucha и Caveat через <link precedence>, палитра --vibeui-sketch-017-* с light-dark, reduced-motion убирает движение. Лайтбокс (lightbox=true): по клику кадр вылетает FLIP-переходом — портал в body с position:fixed стартует с коробки фото и за 0.6s переезжает в центр (left/top/width/height + поворот), прокрутка блокируется с компенсацией ширины скроллбара, чтобы страница не дёргалась; Esc и клик по подложке возвращают кадр на место и размонтируют портал по таймеру; стрелки и ← → листают в пределах текущего жанра.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "sketch",
+          "hand-drawn",
+          "handwritten",
+          "doodle",
+          "rough",
+          "boil",
+          "gallery",
+          "portfolio",
+          "filter",
+          "masonry",
+          "photo",
+          "tabs"
+        ],
+        "preview": {
+          "props": {
+            "works": [
+              {
+                "title": "Лиза и Марк, Ладога",
+                "category": "Свадьба",
+                "image": "/demo/places/place-02.webp",
+                "orientation": "portrait"
+              },
+              {
+                "title": "Портрет для обложки",
+                "category": "Портрет",
+                "image": "/demo/people/person-03.webp",
+                "orientation": "portrait"
+              },
+              {
+                "title": "Семья на даче",
+                "category": "Семья",
+                "image": "/demo/people/person-07.webp",
+                "orientation": "landscape"
+              },
+              {
+                "title": "Утро на Васильевском",
+                "category": "Улица",
+                "image": "/demo/places/place-05.webp",
+                "orientation": "landscape"
+              },
+              {
+                "title": "Анна, актриса",
+                "category": "Портрет",
+                "image": "/demo/people/person-01.webp",
+                "orientation": "portrait"
+              },
+              {
+                "title": "Регистрация в Пушкине",
+                "category": "Свадьба",
+                "image": "/demo/places/place-07.webp",
+                "orientation": "landscape"
+              }
+            ]
+          }
+        },
+        "ai": {
+          "export": "Sketch017",
+          "usage": "<Sketch017\n  title=\"Работы\"\n  allLabel=\"Все\"\n  works={[\n    { title: \"Лиза и Марк\", category: \"Свадьба\", image: \"/photos/work-01.webp\", orientation: \"portrait\" },\n    { title: \"Утро на Васильевском\", category: \"Улица\", image: \"/photos/work-04.webp\", orientation: \"landscape\" },\n  ]}\n/>",
+          "summary": "Самодостаточная галерея работ с фильтром по жанрам для портфолио: masonry, наклонённые распечатки, рукописные подписи и чипы. Работы — массив пропсом.",
+          "preserve": [
+            "фильтр в два такта (сдувание, потом новая раскладка) и вылет кадра на передний план FLIP-переходом с места — резкие подмены ломают ощущение стола",
+            "наклон и нарисованную тень у каждого кадра, выравнивание по hover",
+            "masonry колонками с break-inside:avoid — кадры разной ориентации без дыр"
+          ],
+          "adapt": [
+            "works: заголовки, жанры, картинки, подписи, ориентации",
+            "allLabel, title, defaultCategory, lightbox и подписи кнопок closeLabel/prevLabel/nextLabel",
+            "accent и ink, rough и boil, tone"
+          ],
+          "notes": [
+            "Жанр берётся строкой из category как есть: «Свадьба» и «свадьба» — два разных чипа.",
+            "Без картинки кадр остаётся подложкой нужной ориентации."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Работы",
+            "maxLength": 30
+          },
+          {
+            "prop": "allLabel",
+            "label": "Чип «все»",
+            "type": "text",
+            "default": "Все",
+            "maxLength": 16
+          },
+          {
+            "prop": "rough",
+            "label": "Почерк",
+            "type": "select",
+            "options": [
+              "loose",
+              "neat"
+            ],
+            "default": "loose"
+          },
+          {
+            "prop": "boil",
+            "label": "Дрожание",
+            "type": "select",
+            "options": [
+              "soft",
+              "still",
+              "lively"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Линия",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hand-drawn filtered gallery",
+            "description": "A hand-drawn gallery: genre chips in sketched capsules filter the shots, shots lie on the desk in masonry columns, each at its own tilt with a handwritten caption. They land one by one on scroll; on a genre change the extra ones blow away. Click a shot: it flies from its place to the foreground, grows and straightens; arrows and Esc.",
+            "docs": "One file, “use client”; the only dependency is react-dom for the lightbox portal (already present in any React project). Genres come from works (unique category), the “all” chip is allLabel. A chip is a button with aria-pressed and a rectPoints capsule drawn on its own box, the active one is filled. The desk is a <ul> with CSS columns (1/2/3 by container query), slots break-inside:avoid; a shot is a figure in a frame with a drawn shadow, tilted from the seed (−1.6…1.6°), straightening on hover. Appearance: IntersectionObserver sets data-shown once, transform/opacity delayed by --n×60ms. The filter works in two beats: for 260ms the desk gets data-leaving (shots shrink and fade), then the list remounts with a new key and shots land again. Images object-fit:cover with aspect-ratio per orientation. Neucha and Caveat via <link precedence>, palette --vibeui-sketch-017-* with light-dark, reduced-motion removes motion. Lightbox (lightbox=true): on click the shot flies with a FLIP transition — a portal in body with position:fixed starts from the photo box and moves to the centre in 0.6s (left/top/width/height + rotation), scrolling is locked with scrollbar-width compensation so the page does not jump; Esc and a backdrop click return the shot and unmount the portal on a timer; arrows and ← → step within the current genre.",
+            "ai": {
+              "summary": "A self-contained portfolio gallery with genre filter: masonry, tilted prints, handwritten captions and chips. Works come in as a prop array.",
+              "preserve": [
+                "the two-beat filter (blow away, then re-lay) and the FLIP fly-out of a shot from its place — abrupt swaps break the desk feeling",
+                "the tilt and drawn shadow of every print, straightening on hover",
+                "masonry columns with break-inside:avoid — mixed orientations without gaps"
+              ],
+              "adapt": [
+                "works: titles, genres, images, captions, orientations",
+                "allLabel, title, defaultCategory, lightbox and the closeLabel/prevLabel/nextLabel captions",
+                "accent and ink, rough and boil, tone"
+              ],
+              "notes": [
+                "A genre is taken from category as a string: “Wedding” and “wedding” are two chips.",
+                "Without an image a print stays a placeholder of the right orientation."
+              ],
+              "usage": "<Sketch017\n  title=\"Work\"\n  allLabel=\"All\"\n  works={[\n    { title: \"Lisa & Mark\", category: \"Wedding\", image: \"/photos/work-01.webp\", orientation: \"portrait\" },\n    { title: \"Morning on the island\", category: \"Street\", image: \"/photos/work-04.webp\", orientation: \"landscape\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Work"
+              },
+              "allLabel": {
+                "label": "“All” chip",
+                "default": "All"
+              },
+              "rough": {
+                "label": "Hand"
+              },
+              "boil": {
+                "label": "Boil"
+              },
+              "accent": {
+                "label": "Line"
+              },
+              "ink": {
+                "label": "Text"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Work",
+                "allLabel": "All",
+                "works": [
+                  {
+                    "title": "Lisa & Mark, the lake",
+                    "category": "Wedding",
+                    "image": "/demo/places/place-02.webp",
+                    "orientation": "portrait"
+                  },
+                  {
+                    "title": "Cover portrait",
+                    "category": "Portrait",
+                    "image": "/demo/people/person-03.webp",
+                    "orientation": "portrait"
+                  },
+                  {
+                    "title": "Family at the cottage",
+                    "category": "Family",
+                    "image": "/demo/people/person-07.webp",
+                    "orientation": "landscape"
+                  },
+                  {
+                    "title": "Morning on the island",
+                    "category": "Street",
+                    "image": "/demo/places/place-05.webp",
+                    "orientation": "landscape"
+                  },
+                  {
+                    "title": "Anna, actress",
+                    "category": "Portrait",
+                    "image": "/demo/people/person-01.webp",
+                    "orientation": "portrait"
+                  },
+                  {
+                    "title": "Registry office",
+                    "category": "Wedding",
+                    "image": "/demo/places/place-07.webp",
+                    "orientation": "landscape"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sketch-018",
+      "type": "registry:component",
+      "title": "Стопка листов при прокрутке",
+      "description": "Прокрутка как стопка листов: каждая секция въезжает снизу под небольшим наклоном и ложится ровно, будто её положили на стол; вдоль края тянется карандашная нитка, которая дорисовывается по мере прокрутки и завязывает узел у каждого листа. На полях — доодлы по паре на лист, они дорисовываются, когда нитка доходит до секции. Секции внутри любые.",
+      "categories": [
+        "sketch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sketch-018/sketch-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sketch-018.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Обёртка над секциями: каждый прямой потомок заворачивается в лист с наклоном от seed (знак чередуется). Лист въезжает один раз: IntersectionObserver ставит data-shown, transition transform/opacity 0.9s; лист, который при загрузке уже на экране, показывается сразу. Нитка — SVG слева на rail 4.5rem (только от 64rem ширины окна): вертикальная линия sketch тремя кадрами boil, pathLength=1, stroke-dashoffset = 1 − progress; progress считается на rAF по scroll/resize/ResizeObserver как доля блока, прошедшая отметку 55% экрана. Узлы — точки у верха каждого листа, вспыхивают, когда нитка их достигла; labels подписывают узлы вертикально. Шрифты через <link precedence>, палитра --vibeui-sketch-018-* с light-dark, reduced-motion показывает всё сразу. Доодлы (doodles): пара имён на лист из набора film, frame, coffee, clock, glasses, lens, heart, chat, coin, tag, phone, calendar, star, camera — штрихи в коробке 48×48 тем же sketch, левый у узла, правый зеркально на правой рейке (появляется вместе с левой от 64rem); штрихи дорисовываются по очереди (pathLength, dashoffset с задержкой --k×120ms), когда progress доходит до узла.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "sketch",
+          "hand-drawn",
+          "handwritten",
+          "doodle",
+          "rough",
+          "boil",
+          "scroll",
+          "reveal",
+          "transition",
+          "page",
+          "wrapper",
+          "layout"
+        ],
+        "preview": {
+          "props": {
+            "labels": [
+              "первое",
+              "второе",
+              "третье"
+            ]
+          }
+        },
+        "ai": {
+          "export": "Sketch018",
+          "usage": "<Sketch018 labels={[\"работы\", \"как проходит\", \"обо мне\", \"цены\"]}>\n  <Works />\n  <Process />\n  <About />\n  <Pricing />\n</Sketch018>",
+          "summary": "Самодостаточная обёртка страницы: секции появляются как листы, положенные на стол, а нитка вдоль края показывает, где вы. Содержимое не трогает — только оборачивает.",
+          "preserve": [
+            "въезд листа с наклоном и выравниванием — это и есть эффект «положили на стол», без наклона это обычный fade-in",
+            "нитку с pathLength и dashoffset от progress — она рисуется, а не появляется",
+            "чередование знака наклона между листами"
+          ],
+          "adapt": [
+            "labels у узлов, doodles — пары значков на лист из 14 в наборе, thread — нитку можно выключить",
+            "accent и ink, rough и boil, tone",
+            "секции внутри — любые блоки"
+          ],
+          "notes": [
+            "Нитка и доодлы появляются от 64rem ширины окна: на узких экранах им нет места.",
+            "Лист — обёртка div: секции с margin-collapse внутри ведут себя как обычно."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "thread",
+            "label": "Нитка",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "rough",
+            "label": "Почерк",
+            "type": "select",
+            "options": [
+              "loose",
+              "neat"
+            ],
+            "default": "loose"
+          },
+          {
+            "prop": "boil",
+            "label": "Дрожание",
+            "type": "select",
+            "options": [
+              "soft",
+              "still",
+              "lively"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Линия",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Paper stack on scroll",
+            "description": "Scrolling as a stack of sheets: every section slides up at a slight tilt and settles flat as if laid on a desk; a pencil thread runs along the edge, drawing itself as you scroll and tying a knot at each sheet. Margins carry doodles, a pair per sheet, drawn in when the thread reaches the section. Any sections inside.",
+            "docs": "One file, zero dependencies, “use client”. A wrapper around sections: each direct child is wrapped into a sheet tilted from the seed (sign alternates). A sheet slides in once: IntersectionObserver sets data-shown, transition transform/opacity 0.9s; a sheet already on screen at load shows at once. The thread is an SVG on a 4.5rem rail on the left (from 64rem width only): a vertical sketch line in three boil frames, pathLength=1, stroke-dashoffset = 1 − progress; progress is computed on rAF from scroll/resize/ResizeObserver as the share of the block past the 55% screen mark. Knots are dots at the top of each sheet, popping when the thread reaches them; labels caption the knots vertically. Fonts via <link precedence>, palette --vibeui-sketch-018-* with light-dark, reduced-motion shows everything at once. Doodles: a pair of names per sheet from film, frame, coffee, clock, glasses, lens, heart, chat, coin, tag, phone, calendar, star, camera — strokes in a 48×48 box with the same sketch, the left one at the knot, the right one mirrored on the right rail (shown together with the left from 64rem); strokes draw in one by one (pathLength, dashoffset delayed by --k×120ms) once progress reaches the knot.",
+            "ai": {
+              "summary": "A self-contained page wrapper: sections appear like sheets laid on a desk and a thread along the edge shows where you are. It never touches the content — only wraps it.",
+              "preserve": [
+                "the tilted slide-in that settles flat — that is the “laid on the desk” effect; without the tilt it is a plain fade-in",
+                "the thread with pathLength and dashoffset from progress — it is drawn, not faded in",
+                "the alternating tilt sign between sheets"
+              ],
+              "adapt": [
+                "labels at the knots, doodles — icon pairs per sheet from the set of 14, thread — the thread can be turned off",
+                "accent and ink, rough and boil, tone",
+                "sections inside — any blocks"
+              ],
+              "notes": [
+                "The thread and doodles appear from 64rem viewport width: narrow screens have no room for them.",
+                "A sheet is a div wrapper: sections with margin collapse inside behave as usual."
+              ],
+              "usage": "<Sketch018 labels={[\"work\", \"process\", \"about\", \"pricing\"]}>\n  <Works />\n  <Process />\n  <About />\n  <Pricing />\n</Sketch018>"
+            },
+            "controls": {
+              "thread": {
+                "label": "Thread"
+              },
+              "rough": {
+                "label": "Hand"
+              },
+              "boil": {
+                "label": "Boil"
+              },
+              "accent": {
+                "label": "Line"
+              },
+              "ink": {
+                "label": "Text"
+              }
+            },
+            "preview": {
+              "props": {
+                "labels": [
+                  "first",
+                  "second",
+                  "third"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sketch-019",
+      "type": "registry:component",
+      "title": "Рукописная шапка",
+      "description": "Шапка от руки: нарисованный фотоаппарат вместо логотипа, имя рукописным шрифтом, ссылки с росчерком-подчёркиванием и кнопка в нарисованной капсуле. Низ шапки — карандашная линия. На узком экране ссылки прячутся за «меню».",
+      "categories": [
+        "sketch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sketch-019/sketch-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sketch-019.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Хост — <header> с position:sticky (sticky=false отключает), фон paper с прозрачностью и blur. Логотип — SVG-фотоаппарат из пяти контуров (корпус rectPoints, объектив и зрачок circlePoints, видоискатель, кнопка), тремя кадрами boil; проп logo подменяет его картинкой. Ссылки: под каждой sketch-линия по ширине коробки, видна по hover и у aria-current. Кнопка — капсула rectPoints с заливкой. Меню на узком экране — <button aria-expanded> и <ul hidden>, раскрывается состоянием; от 48rem ширины (container query) показываются ссылки и кнопка. Нижняя линия — sketch по ширине хоста с выходом за края. Шрифты Neucha и Caveat через <link precedence>, палитра --vibeui-sketch-019-* с light-dark.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "sketch",
+          "hand-drawn",
+          "handwritten",
+          "doodle",
+          "rough",
+          "boil",
+          "navbar",
+          "header",
+          "navigation",
+          "camera",
+          "logo"
+        ],
+        "preview": {
+          "props": {
+            "sticky": false
+          }
+        },
+        "ai": {
+          "export": "Sketch019",
+          "usage": "<Sketch019\n  brand=\"Аня Соколова\"\n  caption=\"фотограф · Петербург\"\n  links={[\n    { label: \"Работы\", href: \"#works\", current: true },\n    { label: \"Обо мне\", href: \"#about\" },\n  ]}\n  actionLabel=\"Записаться\"\n  actionHref=\"#book\"\n/>",
+          "summary": "Самодостаточная шапка для портфолио, студии или личного сайта: рукописное имя, нарисованный фотоаппарат, ссылки с росчерком, кнопка-капсула и мобильное меню. Всё содержимое пропсами.",
+          "preserve": [
+            "нарисованный фотоаппарат тремя кадрами boil — это логотип по умолчанию; картинку давать через logo, не заменяя SVG",
+            "росчерк под ссылками по hover и у текущей — вместо обычного underline",
+            "карандашную линию низа с выходом за края и sticky-поведение"
+          ],
+          "adapt": [
+            "brand, caption, links, actionLabel, actionHref, menuLabel",
+            "logo — своя картинка вместо фотоаппарата",
+            "accent и ink, rough и boil, tone, sticky, actionStyle — штриховка или заливка кнопки"
+          ],
+          "notes": [
+            "Ссылка с current: true получает жирный росчерк всегда.",
+            "Меню на узком экране открывается кнопкой; якоря внутри страницы его не закрывают — закрыть можно той же кнопкой."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "brand",
+            "label": "Имя",
+            "type": "text",
+            "default": "Аня Соколова",
+            "maxLength": 30
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "фотограф · Петербург",
+            "maxLength": 40
+          },
+          {
+            "prop": "actionStyle",
+            "label": "Кнопка",
+            "type": "select",
+            "options": [
+              "hatch",
+              "solid"
+            ],
+            "default": "hatch"
+          },
+          {
+            "prop": "sticky",
+            "label": "Липкая",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "rough",
+            "label": "Почерк",
+            "type": "select",
+            "options": [
+              "loose",
+              "neat"
+            ],
+            "default": "loose"
+          },
+          {
+            "prop": "boil",
+            "label": "Дрожание",
+            "type": "select",
+            "options": [
+              "soft",
+              "still",
+              "lively"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Линия",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hand-drawn navbar",
+            "description": "A hand-drawn header: a sketched camera instead of a logo, the name in a handwritten face, links with a stroke underline and a button in a drawn capsule. The bottom edge is a pencil line. On narrow screens links hide behind “menu”.",
+            "docs": "One file, zero dependencies, “use client”. The host is a <header> with position:sticky (sticky=false turns it off), paper background with transparency and blur. The logo is an SVG camera of five outlines (body rectPoints, lens and pupil circlePoints, finder, button) in three boil frames; the logo prop swaps it for an image. Links: a sketch line under each across its box, visible on hover and for aria-current. The button is a rectPoints capsule with fill. The narrow-screen menu is a <button aria-expanded> and a <ul hidden> toggled by state; from 48rem width (container query) links and the button show. The bottom line is a sketch across the host width past the edges. Neucha and Caveat via <link precedence>, palette --vibeui-sketch-019-* with light-dark.",
+            "ai": {
+              "summary": "A self-contained header for a portfolio, studio or personal site: handwritten name, sketched camera, links with a stroke, a capsule button and a mobile menu. All content via props.",
+              "preserve": [
+                "the sketched camera in three boil frames — the default logo; supply an image via logo instead of replacing the SVG",
+                "the stroke under links on hover and for the current one — instead of a plain underline",
+                "the pencil bottom line past the edges and the sticky behaviour"
+              ],
+              "adapt": [
+                "brand, caption, links, actionLabel, actionHref, menuLabel",
+                "logo — your own image instead of the camera",
+                "accent and ink, rough and boil, tone, sticky, actionStyle — hatched or filled button"
+              ],
+              "notes": [
+                "A link with current: true always gets the bold stroke.",
+                "The narrow-screen menu opens with the button; in-page anchors do not close it — the same button does."
+              ],
+              "usage": "<Sketch019\n  brand=\"Anna Sokolova\"\n  caption=\"photographer · Lisbon\"\n  links={[\n    { label: \"Work\", href: \"#works\", current: true },\n    { label: \"About\", href: \"#about\" },\n  ]}\n  actionLabel=\"Book a shoot\"\n  actionHref=\"#book\"\n/>"
+            },
+            "controls": {
+              "tone": {
+                "label": "Theme"
+              },
+              "brand": {
+                "label": "Name",
+                "default": "Anna Sokolova"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": "photographer · Lisbon"
+              },
+              "sticky": {
+                "label": "Sticky"
+              },
+              "rough": {
+                "label": "Hand"
+              },
+              "boil": {
+                "label": "Boil"
+              },
+              "accent": {
+                "label": "Line"
+              },
+              "ink": {
+                "label": "Text"
+              },
+              "actionStyle": {
+                "label": "Button"
+              }
+            },
+            "preview": {
+              "props": {
+                "sticky": false,
+                "brand": "Anna Sokolova",
+                "caption": "photographer · Lisbon",
+                "actionLabel": "Book a shoot",
+                "menuLabel": "menu",
+                "links": [
+                  {
+                    "label": "Work",
+                    "href": "#works",
+                    "current": true
+                  },
+                  {
+                    "label": "Process",
+                    "href": "#process"
+                  },
+                  {
+                    "label": "About",
+                    "href": "#about"
+                  },
+                  {
+                    "label": "Prices",
+                    "href": "#pricing"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sketch-020",
+      "type": "registry:component",
+      "title": "Рукописный «обо мне»",
+      "description": "«Обо мне» от руки: фото приклеено скотчем под наклоном, текст рукописным шрифтом, цифры обведены кружками как в блокноте, список с галочками в два штриха. От 52rem фото прилипает сбоку, пока читают текст.",
+      "categories": [
+        "sketch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sketch-020/sketch-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sketch-020.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Раскладка от собственной ширины: колонка, от 52rem — фото слева (sticky top:6rem) и текст справа. Фото — figure в рамке rectPoints с нарисованной тенью и полоской скотча, наклон −1.5°. Цифры — span, измеренный ResizeObserver, вокруг эллипс в полтора оборота; чётные повёрнуты в другую сторону. Галочки — три точки в два штриха тем же sketch. Все контуры тремя кадрами boil через @property --frame и step-end. Шрифты Neucha и Caveat через <link precedence>, палитра --vibeui-sketch-020-* с light-dark, tone фиксирует схему.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "sketch",
+          "hand-drawn",
+          "handwritten",
+          "doodle",
+          "rough",
+          "boil",
+          "about",
+          "bio",
+          "stats",
+          "photo",
+          "portfolio"
+        ],
+        "preview": {
+          "props": {
+            "image": "/demo/people/person-02.webp"
+          }
+        },
+        "ai": {
+          "export": "Sketch020",
+          "usage": "<Sketch020\n  eyebrow=\"Обо мне\"\n  title=\"Семь лет снимаю людей, которые не любят сниматься\"\n  paragraphs={[\"Начинала с репортажей…\", \"Снимаю на плёнку и цифру…\"]}\n  image=\"/photos/about.webp\"\n  imageCaption=\"домашняя студия, ноябрь\"\n  points={[\"Без поз\", \"Ретушь без пластика\"]}\n  stats={[{ value: \"300+\", label: \"съёмок\" }, { value: \"7 лет\", label: \"с камерой\" }]}\n/>",
+          "summary": "Самодостаточная секция «обо мне» для портфолио или личного сайта: приклеенное фото, рукописный текст, обведённые цифры и список с галочками. Всё содержимое пропсами.",
+          "preserve": [
+            "кружки вокруг цифр и наклон каждой второй — это и есть «блокнот»",
+            "фото со скотчем, тенью и наклоном, sticky на широком экране",
+            "галочки в два штриха вместо маркеров списка"
+          ],
+          "adapt": [
+            "eyebrow, title, paragraphs — тексты секции",
+            "points, stats, фото и подпись",
+            "accent и ink, rough и boil, tone"
+          ],
+          "notes": [
+            "Фото ожидается вертикальное 4:5; горизонтальное обрежется с приоритетом верхней части кадра.",
+            "stats пустой — блок цифр не рисуется; points пустой — списка нет."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Семь лет снимаю людей, которые не любят сниматься",
+            "maxLength": 80
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надпись",
+            "type": "text",
+            "default": "Обо мне",
+            "maxLength": 24
+          },
+          {
+            "prop": "rough",
+            "label": "Почерк",
+            "type": "select",
+            "options": [
+              "loose",
+              "neat"
+            ],
+            "default": "loose"
+          },
+          {
+            "prop": "boil",
+            "label": "Дрожание",
+            "type": "select",
+            "options": [
+              "soft",
+              "still",
+              "lively"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Линия",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hand-drawn about",
+            "description": "An “about” section by hand: a photo taped at a tilt, text in a handwritten face, numbers circled like in a notebook, a list with two-stroke checkmarks. From 52rem the photo sticks to the side while you read.",
+            "docs": "One file, zero dependencies, “use client”. Layout follows its own width: a column, from 52rem the photo on the left (sticky top:6rem) and text on the right. The photo is a figure in a rectPoints frame with a drawn shadow and a strip of tape, tilted −1.5°. Numbers are spans measured by ResizeObserver with a one-and-a-half-turn ellipse around them; even ones tilt the other way. Checkmarks are three points in two strokes with the same sketch. All outlines in three boil frames via @property --frame and step-end. Neucha and Caveat via <link precedence>, palette --vibeui-sketch-020-* with light-dark, tone pins the scheme.",
+            "ai": {
+              "summary": "A self-contained about section for a portfolio or personal site: taped photo, handwritten text, circled numbers and a checkmark list. All content via props.",
+              "preserve": [
+                "the circles around numbers and the alternating tilt — that is the notebook",
+                "the taped, shadowed, tilted photo, sticky on wide screens",
+                "two-stroke checkmarks instead of list bullets"
+              ],
+              "adapt": [
+                "eyebrow, title, paragraphs — the section texts",
+                "points, stats, photo and caption",
+                "accent and ink, rough and boil, tone"
+              ],
+              "notes": [
+                "The photo is expected portrait 4:5; a landscape one is cropped favouring the top of the frame.",
+                "Empty stats — no numbers block; empty points — no list."
+              ],
+              "usage": "<Sketch020\n  eyebrow=\"About\"\n  title=\"Seven years of shooting people who hate being shot\"\n  paragraphs={[\"I started with newspaper reportage…\", \"Film and digital…\"]}\n  image=\"/photos/about.webp\"\n  imageCaption=\"home studio, November\"\n  points={[\"No poses\", \"No plastic retouching\"]}\n  stats={[{ value: \"300+\", label: \"shoots\" }, { value: \"7 years\", label: \"with a camera\" }]}\n/>"
+            },
+            "controls": {
+              "tone": {
+                "label": "Theme"
+              },
+              "title": {
+                "label": "Title",
+                "default": "Seven years of shooting people who hate being shot"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "About"
+              },
+              "rough": {
+                "label": "Hand"
+              },
+              "boil": {
+                "label": "Boil"
+              },
+              "accent": {
+                "label": "Line"
+              },
+              "ink": {
+                "label": "Text"
+              }
+            },
+            "preview": {
+              "props": {
+                "image": "/demo/people/person-02.webp",
+                "eyebrow": "About",
+                "title": "Seven years of shooting people who hate being shot",
+                "paragraphs": [
+                  "I started with reportage for a city paper, so I never wait for the “right” light or arrange hands. I catch what is already happening.",
+                  "Film and digital, retouched by me and without plastic skin: freckles and wrinkles stay."
+                ],
+                "imageCaption": "home studio, November",
+                "points": [
+                  "No poses, no “say cheese”",
+                  "Film and digital",
+                  "No plastic retouching"
+                ],
+                "stats": [
+                  {
+                    "value": "300+",
+                    "label": "shoots"
+                  },
+                  {
+                    "value": "48",
+                    "label": "weddings"
+                  },
+                  {
+                    "value": "7 years",
+                    "label": "with a camera"
+                  },
+                  {
+                    "value": "10 days",
+                    "label": "to finished photos"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sketch-021",
+      "type": "registry:component",
+      "title": "Рукописная запись",
+      "description": "Запись на звонок от руки: настоящая форма в нарисованной рамке — дни и время как капсулы-радиокнопки (занятые перечёркнуты), телефон в рукописной рамке, чекбокс с галочкой в два штриха, кнопка залита чернилами. Без action показывает «готово» на месте.",
+      "categories": [
+        "sketch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sketch-021/sketch-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sketch-021.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Раскладка от собственной ширины: колонка, от 52rem — текст слева, форма справа. Форма — <form> внутри Frame (span, измеренный ResizeObserver, контур rectPoints с тенью), лист повёрнут на 0.6°, содержимое повёрнуто обратно. Дни и время — <label> с невидимым <input type=radio> и капсулой Frame; выбранная залита (fill), занятая disabled и перечёркнута диагональным штрихом. Телефон — <input type=tel> в Frame, в фокусе линия жирнеет. Чекбокс — скрытый input и квадрат Frame с галочкой, которая появляется по :checked. Кнопка — Frame с заливкой и <button type=submit>. action пустой — submit перехватывается и показывается doneLabel; с action форма уходит POST. Три кадра boil через @property --frame. Шрифты Neucha и Caveat через <link precedence>, палитра --vibeui-sketch-021-* с light-dark.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "sketch",
+          "hand-drawn",
+          "handwritten",
+          "doodle",
+          "rough",
+          "boil",
+          "contact",
+          "booking",
+          "form",
+          "schedule",
+          "slots",
+          "call"
+        ],
+        "preview": {
+          "props": {}
+        },
+        "ai": {
+          "export": "Sketch021",
+          "usage": "<Sketch021\n  eyebrow=\"Запись\"\n  title=\"Выберите день, я перезвоню\"\n  description=\"Пятнадцать минут по телефону: обсудим идею и место.\"\n  days={[{ label: \"Сегодня\", note: \"14 мая\" }, { label: \"Завтра\", note: \"15 мая\" }]}\n  slots={[{ time: \"10:00\" }, { time: \"11:00\", taken: true }, { time: \"12:00\" }]}\n  submitLabel=\"Записаться\"\n  action=\"/api/book\"\n/>",
+          "summary": "Самодостаточная форма записи на звонок для портфолио, мастера или студии: рукописные капсулы дней и времени, поле телефона, согласие и кнопка. Настоящая форма с именами полей day, slot, phone, consent.",
+          "preserve": [
+            "капсулы-радиокнопки с заливкой выбранной и перечёркнутыми занятыми — вместо обычных кнопок",
+            "нарисованную рамку листа с тенью и лёгкий поворот листа при ровном содержимом",
+            "галочку в два штриха у согласия и жирнеющую линию поля в фокусе"
+          ],
+          "adapt": [
+            "все подписи — eyebrow, title, description, submitLabel — дни, слоты, подсказка и футнот",
+            "action — куда отправлять форму; без него показывается doneLabel",
+            "accent и ink, rough и boil, tone"
+          ],
+          "notes": [
+            "Поля формы: day, slot, phone, consent — этого достаточно для обработчика.",
+            "Первый свободный слот выбран по умолчанию; занятые нельзя выбрать ни мышью, ни клавиатурой."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Выберите день, я перезвоню",
+            "maxLength": 60
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Записаться",
+            "maxLength": 24
+          },
+          {
+            "prop": "rough",
+            "label": "Почерк",
+            "type": "select",
+            "options": [
+              "loose",
+              "neat"
+            ],
+            "default": "loose"
+          },
+          {
+            "prop": "boil",
+            "label": "Дрожание",
+            "type": "select",
+            "options": [
+              "soft",
+              "still",
+              "lively"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Линия",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hand-drawn booking",
+            "description": "A hand-drawn call booking: a real form in a sketched frame — days and times as capsule radio buttons (taken ones crossed out), phone in a handwritten frame, a checkbox with a two-stroke tick, an ink-filled button. Without action it shows “done” in place.",
+            "docs": "One file, zero dependencies, “use client”. Layout follows its own width: a column, from 52rem text on the left and the form on the right. The form is a <form> inside Frame (a span measured by ResizeObserver, a rectPoints outline with shadow), the sheet rotated 0.6° with the content rotated back. Days and times are <label>s with an invisible <input type=radio> and a Frame capsule; the chosen one is filled, a taken one is disabled and crossed with a diagonal stroke. The phone is an <input type=tel> in a Frame whose line thickens on focus. The checkbox is a hidden input and a Frame square with a tick appearing on :checked. The button is a filled Frame with a <button type=submit>. With empty action submit is intercepted and doneLabel is shown; with action the form POSTs. Three boil frames via @property --frame. Neucha and Caveat via <link precedence>, palette --vibeui-sketch-021-* with light-dark.",
+            "ai": {
+              "summary": "A self-contained call booking form for a portfolio, craftsperson or studio: handwritten day and time capsules, a phone field, consent and a button. A real form with fields day, slot, phone, consent.",
+              "preserve": [
+                "capsule radio buttons with the chosen one filled and taken ones crossed out — instead of plain buttons",
+                "the drawn sheet frame with shadow and the slight sheet rotation with level content",
+                "the two-stroke tick on consent and the field line thickening on focus"
+              ],
+              "adapt": [
+                "all labels — eyebrow, title, description, submitLabel — days, slots, hint and footnote",
+                "action — where to submit; without it doneLabel is shown",
+                "accent and ink, rough and boil, tone"
+              ],
+              "notes": [
+                "Form fields: day, slot, phone, consent — enough for a handler.",
+                "The first free slot is selected by default; taken ones cannot be chosen by mouse or keyboard."
+              ],
+              "usage": "<Sketch021\n  eyebrow=\"Booking\"\n  title=\"Pick a day, I will call you\"\n  description=\"Fifteen minutes on the phone: the idea and the place.\"\n  days={[{ label: \"Today\", note: \"14 May\" }, { label: \"Tomorrow\", note: \"15 May\" }]}\n  slots={[{ time: \"10:00\" }, { time: \"11:00\", taken: true }, { time: \"12:00\" }]}\n  submitLabel=\"Book a call\"\n  action=\"/api/book\"\n/>"
+            },
+            "controls": {
+              "tone": {
+                "label": "Theme"
+              },
+              "title": {
+                "label": "Title",
+                "default": "Pick a day, I will call you"
+              },
+              "submitLabel": {
+                "label": "Button",
+                "default": "Book a call"
+              },
+              "rough": {
+                "label": "Hand"
+              },
+              "boil": {
+                "label": "Boil"
+              },
+              "accent": {
+                "label": "Line"
+              },
+              "ink": {
+                "label": "Text"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Booking",
+                "title": "Pick a day, I will call you",
+                "description": "Fifteen minutes on the phone: the idea, the place and what to bring.",
+                "days": [
+                  {
+                    "label": "Today",
+                    "note": "14 May"
+                  },
+                  {
+                    "label": "Tomorrow",
+                    "note": "15 May"
+                  },
+                  {
+                    "label": "Friday",
+                    "note": "16 May"
+                  }
+                ],
+                "phoneLabel": "Phone",
+                "phonePlaceholder": "+1 555 123-4567",
+                "phoneHint": "Country code is fine. No mask: it breaks pasting.",
+                "consentLabel": "I agree to a call on this number.",
+                "submitLabel": "Book a call",
+                "doneLabel": "Booked. I will call at the chosen time.",
+                "footNote": "I reply the same day. Rescheduling is free."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sketch-022",
+      "type": "registry:component",
+      "title": "Рукописный подвал",
+      "description": "Подвал от руки: «следующая история» — широкое фото, приклеенное скотчем с двух сторон, с рукописным названием и стрелкой-росчерком; ниже карандашная линия во всю ширину и строка со студией, контактом, ссылками и правами.",
+      "categories": [
+        "sketch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sketch-022/sketch-022.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sketch-022.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Хост — <footer>. История — <a> figure-подобный: измеряется ResizeObserver, рамка rectPoints с нарисованной тенью, два кусочка скотча, фото 16:8 object-fit:cover, под ним название дисплейным шрифтом, заметка и подпись-стрелка; по hover выравнивается и приподнимается. Линия — sketch по ширине хоста (пропорции через preserveAspectRatio=none). Нижняя строка — flex с переносом: студия, контакт, links, legal справа (margin-left:auto). Три кадра boil через @property --frame. Шрифты Neucha и Caveat через <link precedence>, палитра --vibeui-sketch-022-* с light-dark.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "sketch",
+          "hand-drawn",
+          "handwritten",
+          "doodle",
+          "rough",
+          "boil",
+          "footer",
+          "next",
+          "story",
+          "photo",
+          "portfolio"
+        ],
+        "preview": {
+          "props": {
+            "image": "/demo/places/place-02.webp"
+          }
+        },
+        "ai": {
+          "export": "Sketch022",
+          "usage": "<Sketch022\n  kicker=\"Следующая история\"\n  title=\"Лиза и Марк. Ладога, июнь\"\n  note=\"свадьба на два дня, без тамады и с костром\"\n  href=\"/stories/ladoga\"\n  image=\"/photos/next.webp\"\n  studioName=\"Аня Соколова\"\n  contactLabel=\"Написать\"\n  contactHref=\"mailto:hi@example.com\"\n  links={[{ label: \"Телеграм\", href: \"https://t.me/…\" }]}\n  legal=\"© 2026 Аня Соколова\"\n/>",
+          "summary": "Самодостаточный подвал для портфолио: приклеенное фото следующей истории с рукописной подписью и строка со студией под карандашной линией. Всё содержимое пропсами.",
+          "preserve": [
+            "скотч с двух сторон, тень и наклон истории, выравнивание по hover",
+            "карандашную линию во всю ширину вместо border-top",
+            "волнистое подчёркивание ссылок нижней строки"
+          ],
+          "adapt": [
+            "kicker, title, note, href, linkLabel и фото",
+            "studioName, contactLabel, contactHref, links, legal",
+            "accent и ink, rough и boil, tone"
+          ],
+          "notes": [
+            "Фото ожидается горизонтальное 2:1; другое обрежется по центру.",
+            "links пустой — нижняя строка без соцсетей."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "История",
+            "type": "text",
+            "default": "Лиза и Марк. Ладога, июнь",
+            "maxLength": 50
+          },
+          {
+            "prop": "studioName",
+            "label": "Студия",
+            "type": "text",
+            "default": "Аня Соколова",
+            "maxLength": 30
+          },
+          {
+            "prop": "rough",
+            "label": "Почерк",
+            "type": "select",
+            "options": [
+              "loose",
+              "neat"
+            ],
+            "default": "loose"
+          },
+          {
+            "prop": "boil",
+            "label": "Дрожание",
+            "type": "select",
+            "options": [
+              "soft",
+              "still",
+              "lively"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Линия",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hand-drawn footer",
+            "description": "A hand-drawn footer: “next story” — a wide photo taped on both sides with a handwritten title and a stroke arrow; below, a full-width pencil line and a row with the studio, contact, links and rights.",
+            "docs": "One file, zero dependencies, “use client”. The host is a <footer>. The story is an <a> figure-like: measured by ResizeObserver, a rectPoints frame with a drawn shadow, two pieces of tape, a 16:8 object-fit:cover photo, below it the title in the display face, a note and an arrow caption; straightens and lifts on hover. The line is a sketch across the host width (proportions via preserveAspectRatio=none). The bottom row is a wrapping flex: studio, contact, links, legal on the right (margin-left:auto). Three boil frames via @property --frame. Neucha and Caveat via <link precedence>, palette --vibeui-sketch-022-* with light-dark.",
+            "ai": {
+              "summary": "A self-contained portfolio footer: a taped next-story photo with a handwritten caption and a studio row under a pencil line. All content via props.",
+              "preserve": [
+                "tape on both sides, the shadow and tilt of the story, straightening on hover",
+                "the full-width pencil line instead of border-top",
+                "the wavy underline of bottom-row links"
+              ],
+              "adapt": [
+                "kicker, title, note, href, linkLabel and the photo",
+                "studioName, contactLabel, contactHref, links, legal",
+                "accent and ink, rough and boil, tone"
+              ],
+              "notes": [
+                "The photo is expected landscape 2:1; anything else is centre-cropped.",
+                "Empty links — a bottom row without socials."
+              ],
+              "usage": "<Sketch022\n  kicker=\"Next story\"\n  title=\"Lisa & Mark. The lake, June\"\n  note=\"a two-day wedding with a bonfire\"\n  href=\"/stories/lake\"\n  image=\"/photos/next.webp\"\n  studioName=\"Anna Sokolova\"\n  contactLabel=\"Write to me\"\n  contactHref=\"mailto:hi@example.com\"\n  links={[{ label: \"Telegram\", href: \"https://t.me/…\" }]}\n  legal=\"© 2026 Anna Sokolova\"\n/>"
+            },
+            "controls": {
+              "tone": {
+                "label": "Theme"
+              },
+              "title": {
+                "label": "Story",
+                "default": "Lisa & Mark. The lake, June"
+              },
+              "studioName": {
+                "label": "Studio",
+                "default": "Anna Sokolova"
+              },
+              "rough": {
+                "label": "Hand"
+              },
+              "boil": {
+                "label": "Boil"
+              },
+              "accent": {
+                "label": "Line"
+              },
+              "ink": {
+                "label": "Text"
+              }
+            },
+            "preview": {
+              "props": {
+                "image": "/demo/places/place-02.webp",
+                "kicker": "Next story",
+                "title": "Lisa & Mark. The lake, June",
+                "note": "a two-day wedding with a bonfire",
+                "linkLabel": "see →",
+                "studioName": "Anna Sokolova",
+                "contactLabel": "Write to me",
+                "legal": "© 2026. Photos not for reprint."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sketch-023",
+      "type": "registry:component",
+      "title": "Рукописный стикер",
+      "description": "Приклеенная записка на полях: квадрат бумаги под наклоном с нарисованной тенью, скотчем или пином, текст рукописным шрифтом. Для пометок редактора: «важно!», «свободные даты в мае», «сюда →».",
+      "categories": [
+        "sketch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sketch-023/sketch-023.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sketch-023.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Хост — inline-block с фоном paper (по умолчанию жёлтый стикер), повёрнут на tilt от верхней кромки; по hover чуть распрямляется. Рамка — rectPoints по коробке (ResizeObserver), тень — тот же контур со сдвигом 5/6px приглушённым цветом. pin: tape — полупрозрачная полоска скотча сверху, pin — кружок-кнопка, none — ничего. children заменяют текст. Три кадра boil через @property --frame и step-end. Шрифты через <link precedence>, палитра --vibeui-sketch-023-* с light-dark, reduced-motion выключает движение.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "sketch",
+          "hand-drawn",
+          "handwritten",
+          "doodle",
+          "rough",
+          "boil",
+          "sticker",
+          "note",
+          "post-it",
+          "annotation",
+          "margin"
+        ],
+        "preview": {
+          "props": {
+            "text": "свободные даты — май и июнь"
+          }
+        },
+        "ai": {
+          "export": "Sketch023",
+          "usage": "<Sketch023 text=\"свободные даты — май и июнь\" pin=\"tape\" tilt={-4} />",
+          "summary": "Самодостаточная записка на полях для любых пометок: текст или своё содержимое, скотч или пин, цвет бумаги и наклон пропсами. Ставится рядом с секцией или поверх неё позиционированием снаружи.",
+          "preserve": [
+            "наклон от верхней кромки и распрямление по hover — так записка «висит», а не лежит",
+            "нарисованную рамку с тенью и скотч или пин — без них это просто цветной блок",
+            "дисплейный Caveat в тексте"
+          ],
+          "adapt": [
+            "text или children, pin, paper, tilt",
+            "accent и ink, rough и boil, tone",
+            "позиционирование снаружи: записка не знает, где стоит"
+          ],
+          "notes": [
+            "Ширина до 16rem: длинный текст переносится, стикер растёт вниз.",
+            "paper — любой цвет; на тёмной теме дефолт темнеет сам."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "text",
+            "label": "Текст",
+            "type": "text",
+            "default": "свободные даты — май и июнь",
+            "maxLength": 60
+          },
+          {
+            "prop": "pin",
+            "label": "Крепление",
+            "type": "select",
+            "options": [
+              "tape",
+              "pin",
+              "none"
+            ],
+            "default": "tape"
+          },
+          {
+            "prop": "paper",
+            "label": "Бумага",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "rough",
+            "label": "Почерк",
+            "type": "select",
+            "options": [
+              "loose",
+              "neat"
+            ],
+            "default": "loose"
+          },
+          {
+            "prop": "boil",
+            "label": "Дрожание",
+            "type": "select",
+            "options": [
+              "soft",
+              "still",
+              "lively"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "accent",
+            "label": "Линия",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hand-drawn sticker",
+            "description": "A note stuck on the margin: a square of paper at a tilt with a drawn shadow, tape or a pin, text in a handwritten face. For editor's marks: “important!”, “free dates in May”, “here →”.",
+            "docs": "One file, zero dependencies, “use client”. The host is an inline-block with a paper background (yellow sticky by default), rotated by tilt from the top edge; it straightens slightly on hover. The frame is rectPoints on the box (ResizeObserver), the shadow the same outline offset 5/6px in a muted colour. pin: tape — a translucent strip on top, pin — a drawn push-pin head, none — nothing. children replace the text. Three boil frames via @property --frame and step-end. Fonts via <link precedence>, palette --vibeui-sketch-023-* with light-dark, reduced-motion turns motion off.",
+            "ai": {
+              "summary": "A self-contained margin note for any remark: text or your own content, tape or pin, paper colour and tilt via props. Placed next to a section or over it by positioning from outside.",
+              "preserve": [
+                "the tilt from the top edge and straightening on hover — that is how the note hangs rather than lies",
+                "the drawn frame with shadow and the tape or pin — without them it is a plain coloured block",
+                "display Caveat in the text"
+              ],
+              "adapt": [
+                "text or children, pin, paper, tilt",
+                "accent and ink, rough and boil, tone",
+                "positioning from outside: the note does not know where it stands"
+              ],
+              "notes": [
+                "Up to 16rem wide: long text wraps and the note grows down.",
+                "paper — any colour; on a dark theme the default darkens itself."
+              ],
+              "usage": "<Sketch023 text=\"free dates — May and June\" pin=\"tape\" tilt={-4} />"
+            },
+            "controls": {
+              "text": {
+                "label": "Text",
+                "default": "free dates — May and June"
+              },
+              "pin": {
+                "label": "Fixing"
+              },
+              "paper": {
+                "label": "Paper"
+              },
+              "rough": {
+                "label": "Hand"
+              },
+              "boil": {
+                "label": "Boil"
+              },
+              "accent": {
+                "label": "Line"
+              },
+              "ink": {
+                "label": "Text"
+              }
+            },
+            "preview": {
+              "props": {
+                "text": "free dates — May and June"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
