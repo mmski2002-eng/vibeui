@@ -44,4 +44,6 @@ export const PREVIEWS = {
     import("@/registry/blocks/background/surface-021/surface-021").then((module) => module.Surface021),
   "surface-024": () =>
     import("@/registry/blocks/background/surface-024/surface-024").then((module) => module.Surface024),
+  "surface-025": () =>
+    import("@/registry/blocks/background/surface-025/surface-025").then((module) => module.Surface025),
 } satisfies PreviewLoaderMap

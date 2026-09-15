@@ -66,4 +66,7 @@ export const PREVIEWS = {
   "surface-024": dynamic(() =>
     import("@/registry/blocks/background/surface-024/surface-024").then((module) => module.Surface024),
   ),
+  "surface-025": dynamic(() =>
+    import("@/registry/blocks/background/surface-025/surface-025").then((module) => module.Surface025),
+  ),
 } satisfies PreviewMap

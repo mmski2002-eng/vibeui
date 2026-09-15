@@ -3063,6 +3063,176 @@
           }
         }
       }
+    },
+    {
+      "name": "surface-025",
+      "type": "registry:block",
+      "title": "Тетрадный лист",
+      "description": "Бумага в клетку, линейку или точки, как тетрадный лист: разлиновка из CSS-градиентов, крупная клетка каждой пятой линией, красные поля по желанию. Приглушение линий настраивается, светлая и тёмная бумага. Обёртка: содержимое любой высоты кладётся поверх.",
+      "categories": [
+        "background"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "surface-025/surface-025.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/surface-025.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент без состояния. Разлиновка — background-image из linear-gradient (клетка и линейка) или radial-gradient (точки) двумя слоями: тонкий шагом cell и крупный шагом major×cell; цвета линий — color-mix от --vibeui-surface-025-ink с долей из strength (faint 0.055/0.095, soft 0.085/0.14, clear 0.13/0.2). major=0 убирает крупную клетку. margin — красная вертикаль на четвёртой клетке. children заменяют демонстрационные eyebrow/title/note. Палитра --vibeui-surface-025-* с light-dark: бумага #faf7f2 / #1c1a18, линии синевато-серые; tone фиксирует схему, paper и ink переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "background",
+          "paper",
+          "notebook",
+          "grid",
+          "graph paper",
+          "lined",
+          "dots",
+          "sketch",
+          "hand-drawn",
+          "wrapper"
+        ],
+        "preview": {
+          "width": "natural",
+          "aspect": "1280 / 560",
+          "props": {
+            "margin": true
+          }
+        },
+        "ai": {
+          "export": "Surface025",
+          "usage": "<Surface025 pattern=\"grid\" cell={24} strength=\"soft\" tone=\"light\">\n  {/* любые секции страницы */}\n</Surface025>",
+          "summary": "Самодостаточный фон-обёртка «тетрадный лист» для страниц в рукописном стиле: клетка, линейка или точки, шаг и приглушение пропсами, светлая и тёмная бумага. Секции внутри — любые.",
+          "preserve": [
+            "два слоя разлиновки — тонкий и крупный каждой пятой линией: одна сетка выглядит как таблица, а не тетрадь",
+            "цвет линий через color-mix от ink с долей из strength — так приглушение одинаково в обеих темах",
+            "бумагу и линии из палитры --vibeui-surface-025-* с light-dark, а не из токенов темы проекта"
+          ],
+          "adapt": [
+            "pattern, cell, major, strength, margin",
+            "paper и ink — цвета бумаги и линий, tone — схема",
+            "children — любое содержимое поверх; eyebrow, title, note — только для демо"
+          ],
+          "notes": [
+            "Блоки внутри с собственным непрозрачным фоном закроют клетку: у рукописных блоков VibeUI бумага задаётся переменной --vibeui-<name>-paper, её можно сделать transparent.",
+            "cell меньше 8px не применяется."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "pattern",
+            "label": "Разлиновка",
+            "type": "select",
+            "options": [
+              "grid",
+              "lines",
+              "dots"
+            ],
+            "default": "grid"
+          },
+          {
+            "prop": "strength",
+            "label": "Приглушение",
+            "type": "select",
+            "options": [
+              "soft",
+              "faint",
+              "clear"
+            ],
+            "default": "soft"
+          },
+          {
+            "prop": "margin",
+            "label": "Поля",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "paper",
+            "label": "Бумага",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Линии",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "pattern",
+          "strength",
+          "tone"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Notebook sheet",
+            "description": "Paper in squares, lines or dots like a notebook sheet: ruling from CSS gradients, a bold square every fifth line, optional red margin. Line strength is adjustable, light and dark paper. A wrapper: content of any height sits on top.",
+            "docs": "One file, zero dependencies, a stateless server component. The ruling is a background-image of linear-gradients (squares and lines) or radial-gradients (dots) in two layers: fine at cell and bold at major×cell; line colours are color-mix from --vibeui-surface-025-ink with a share from strength (faint 0.055/0.095, soft 0.085/0.14, clear 0.13/0.2). major=0 removes the bold grid. margin — a red vertical on the fourth cell. children replace the demo eyebrow/title/note. Palette --vibeui-surface-025-* with light-dark: paper #faf7f2 / #1c1a18, bluish-grey lines; tone pins the scheme, paper and ink override colours.",
+            "ai": {
+              "summary": "A self-contained notebook-sheet background wrapper for hand-drawn pages: squares, lines or dots, cell and strength via props, light and dark paper. Any sections inside.",
+              "preserve": [
+                "two ruling layers — fine and bold every fifth line: a single grid reads as a table, not a notebook",
+                "line colour via color-mix from ink with a share from strength — the same softness in both themes",
+                "paper and lines from the --vibeui-surface-025-* palette with light-dark, not from the project's theme tokens"
+              ],
+              "adapt": [
+                "pattern, cell, major, strength, margin",
+                "paper and ink — paper and line colours, tone — scheme",
+                "children — any content on top; eyebrow, title, note — demo only"
+              ],
+              "notes": [
+                "Blocks inside with their own opaque background cover the squares: VibeUI hand-drawn blocks take paper from --vibeui-<name>-paper, which can be set to transparent.",
+                "cell below 8px is not applied."
+              ],
+              "usage": "<Surface025 pattern=\"grid\" cell={24} strength=\"soft\" tone=\"light\">\n  {/* any page sections */}\n</Surface025>"
+            },
+            "controls": {
+              "pattern": {
+                "label": "Ruling"
+              },
+              "strength": {
+                "label": "Strength"
+              },
+              "margin": {
+                "label": "Margin"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "paper": {
+                "label": "Paper"
+              },
+              "ink": {
+                "label": "Lines"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Notebook sheet",
+                "title": "Squares, lines or dots",
+                "note": "Ruling from CSS gradients: loads and computes nothing. Cell, strength and the bold grid are props; content sits on top.",
+                "margin": true
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
