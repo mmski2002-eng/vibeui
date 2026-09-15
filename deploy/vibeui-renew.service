@@ -1,0 +1,12 @@
+# Продление подписок: раз в час просит приложение списать оплату с тех, у
+# кого период закончился. Ключ CRON_SECRET берётся из /etc/vibeui.env — тот
+# же файл читает сам сервис vibeui.
+[Unit]
+Description=VibeUI: продление подписок
+After=vibeui.service
+Requires=vibeui.service
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/vibeui.env
+ExecStart=/usr/bin/curl -fsS -X POST -H "X-Cron-Key: ${CRON_SECRET}" http://127.0.0.1:3003/api/payments/renew

@@ -284,6 +284,107 @@ curl -s https://<domain>/c/hero-001 | grep "npx shadcn"
 отваливаются с 500. Поэтому релизы лежат отдельными каталогами, а юнит
 работает через симлинк.
 
+## 8. Оплата (ЮKassa)
+
+Код оплаты в приложении есть целиком: создание платежа (`lib/yookassa.ts`,
+`lib/payment-actions.ts`), вебхук `/api/payments/webhook`, продление
+`/api/payments/renew`. Без настройки кнопка «Оплатить» уводит на
+`/pricing/soon` — так сайт живёт бесплатно, пока касса не подключена.
+Подключение — три шага на стороне сервера и кабинета ЮKassa, кода они не
+касаются.
+
+### 8.1. Ключи в `/etc/vibeui.env`
+
+В кабинете ЮKassa: Интеграция → Ключи API. Нужны `shopId` и секретный ключ.
+Для проверки сначала тестовый магазин (у него свой `shopId` и свой ключ,
+платежи в нём не списывают деньги), потом боевой.
+
+```bash
+sudo tee -a /etc/vibeui.env >/dev/null <<'EOF2'
+YOOKASSA_SHOP_ID=123456
+YOOKASSA_SECRET_KEY=test_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+CRON_SECRET=<node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))">
+EOF2
+bash -n /etc/vibeui.env && sudo systemctl restart vibeui
+```
+
+Файл читается как shell-код (`scripts/deploy-remote.sh` делает `source`),
+поэтому значения без пробелов и без кавычек. Переменные подхватываются только
+после рестарта юнита.
+
+Проверка ключей прямо с сервера, минуя приложение:
+
+```bash
+set -a; . /etc/vibeui.env; set +a
+curl -s -w ' %{http_code}' -u "$YOOKASSA_SHOP_ID:$YOOKASSA_SECRET_KEY" https://api.yookassa.ru/v3/me
+```
+
+`200` — пара верная. `401 invalid_credentials` — ключ не от этого магазина
+или перевыпущен: в кабинете сверить `shopId` и выпустить ключ заново
+(тестовый начинается с `test_`, боевой с `live_`; боевой работает только у
+активированного магазина). Приложение с такой парой уводит «Оплатить» на
+`/pricing/soon`, а в `journalctl -u vibeui` лежит `[checkout] касса не
+ответила ... 401`.
+
+### 8.2. Вебхук в кабинете
+
+Интеграция → HTTP-уведомления:
+
+| Поле | Значение |
+| --- | --- |
+| URL | `https://vibeui.ru/api/payments/webhook` |
+| События | только `payment.succeeded`: остальные обработчик игнорирует |
+
+Обработчик принимает запросы только с адресов ЮKassa (`YOOKASSA_NETWORKS`
+в `lib/yookassa.ts`); nginx уже передаёт `X-Real-IP`, отдельной настройки
+не нужно. Чужому источнику маршрут отвечает 403 — это и есть признак, что
+маршрут живой:
+
+```bash
+curl -s -o /dev/null -w '%{http_code}\n' -X POST -H 'Content-Type: application/json' \
+  -d '{}' https://vibeui.ru/api/payments/webhook   # 403
+```
+
+Тело уведомления приложению не доверяет: по `object.id` оно само
+запрашивает платёж у ЮKassa и только по этому ответу выдаёт Pro. Повторная
+доставка того же события подписку второй раз не продлевает
+(таблица `webhook_event`).
+
+### 8.3. Таймер продления
+
+Списание по сохранённой карте делает не приложение, а systemd-таймер раз в
+час. Юниты лежат в `deploy/`:
+
+```bash
+sudo cp deploy/vibeui-renew.service deploy/vibeui-renew.timer /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now vibeui-renew.timer
+sudo systemctl start vibeui-renew.service      # разовый прогон
+journalctl -u vibeui-renew.service -n 5        # {"due":0,"charged":0,"closed":0}
+```
+
+Ключ таймера — `CRON_SECRET` из того же `/etc/vibeui.env`. Без него
+маршрут отвечает 403, и продления не будет: подписки после конца периода
+просто останутся `active` с истёкшей датой.
+
+### 8.4. Тестовый платёж
+
+1. Тестовый `shopId` и ключ в `/etc/vibeui.env`, рестарт.
+2. Войти на сайт, `/pricing` → «Оплатить месяц». Должна открыться страница
+   ЮKassa; тестовая карта — `5555 5555 5555 4477`, любые срок и CVC.
+3. После оплаты — возврат на `/account/subscription`, тариф Pro, платёж в
+   `/account/payments` со ссылкой на чек.
+4. В админке `/admin/payments` платёж со статусом `succeeded`; если вебхук
+   не дошёл — «Применить событие заново» запрашивает платёж у ЮKassa и
+   выдаёт Pro тем же кодом.
+5. Сменить ключи на боевые, рестарт, один реальный платёж на минимальную
+   сумму, вернуть деньги из кабинета.
+
+Чеки: приложение шлёт `receipt` в каждом платеже (самозанятый, без НДС).
+В кабинете должна быть включена передача чеков через ЮKassa, иначе API
+отвечает 400 на поле `receipt`, и «Оплатить» уводит на `/pricing/soon` с
+ошибкой в `journalctl -u vibeui`.
+
 ## Что важно помнить
 
 - `public/r/` — артефакт сборки, в git его нет; он создаётся `npm run build`.

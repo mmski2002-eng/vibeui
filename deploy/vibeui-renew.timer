@@ -1,0 +1,10 @@
+[Unit]
+Description=VibeUI: продление подписок раз в час
+
+[Timer]
+OnCalendar=hourly
+RandomizedDelaySec=5min
+Persistent=true
+
+[Install]
+WantedBy=timers.target
