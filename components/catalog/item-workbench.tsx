@@ -71,6 +71,10 @@ export function ItemWorkbench({
     params.set("lang", locale)
   }
 
+  // Подложка кадра едет вместе с настройками: инструкция под спойлером и
+  // ссылка для агента должны говорить о том блоке, который человек видел.
+  params.set("theme", frameTheme)
+
   const link = docUrl
     ? params.toString()
       ? `${docUrl}?${params}`

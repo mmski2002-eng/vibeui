@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useState, type MouseEvent } from "react"
 
 import { useSession } from "@/lib/auth-client"
 import { localePath, type Locale } from "@/lib/i18n"
@@ -63,10 +63,24 @@ export function CopyForAi({
     )
   }
 
-  async function copy() {
+  async function copy(event: MouseEvent<HTMLButtonElement>) {
     if (state === "loading") {
       return
     }
+
+    // Подложка кадра, на которой человек смотрел блок: тёмная или светлая.
+    // «Как у оболочки» доводится до конкретной — агент получает то, что
+    // видели, а не абстрактное «auto». Читается до await: после него
+    // currentTarget уже пуст.
+    const surface = event.currentTarget.closest<HTMLElement>(
+      "[data-preview-theme]",
+    )?.dataset.previewTheme
+    const theme =
+      surface === "light" || surface === "dark"
+        ? surface
+        : document.documentElement.dataset.shellTheme === "light"
+          ? "light"
+          : "dark"
 
     setState("loading")
 
@@ -83,7 +97,11 @@ export function CopyForAi({
       }
 
       const data = await response.json()
-      const url = params ? `${data.docUrl}&${params}` : data.docUrl
+      const query = new URLSearchParams(params)
+
+      query.set("theme", theme)
+
+      const url = `${data.docUrl}&${query}`
 
       await navigator.clipboard.writeText(url)
       setState("copied")

@@ -59,6 +59,8 @@ export async function GET(
   const base = itemBasePath(kind)
   const pagePath = locale === "en" ? `/en${base}` : base
   const values = resolveControlValues(item, search)
+  const surface = search.get("theme")
+  const theme = surface === "light" || surface === "dark" ? surface : undefined
 
   // Свежая подпись на сутки для ссылок в брифе: по ним агент ставит компонент.
   const link = signRegistryLink(item.name)
@@ -73,6 +75,7 @@ export async function GET(
     fileUrl: `${siteUrl}/f/${item.name}.tsx?${query}`,
     values,
     locale,
+    theme,
   })
 
   return new Response(`${brief}\n`, {

@@ -55,6 +55,8 @@ export function buildAgentBrief(
     pageUrl: string | null
     fileUrl: string | null
     values: ControlValues
+    /** Подложка, на которой человек смотрел блок на витрине. */
+    theme?: "light" | "dark"
   },
 ): string {
   const {
@@ -63,10 +65,20 @@ export function buildAgentBrief(
     kind,
     pageUrl,
     fileUrl,
-    values,
+    values: chosen,
     locale,
+    theme,
   } = context
   const copy = PROMPT_COPY[locale].brief
+  const controls = getControls(item)
+  const toneControl = controls.find((control) => control.prop === "tone")
+  // Тема — часть того, что человек видел. У блоков с пропом tone она
+  // становится пропом в сниппете (если tone не выбрали руками); у остальных
+  // тему задаёт окружение, и тёмную подложку агент воспроизводит классом dark.
+  const values =
+    theme && toneControl && chosen.tone === "auto"
+      ? { ...chosen, tone: theme }
+      : chosen
   const ai = item.meta?.ai
   const title = item.title ?? item.name
   const target = installPath(item)
@@ -88,6 +100,10 @@ export function buildAgentBrief(
     `- ${copy.install(copy.noun[kind])}`,
     `- ${copy.placement[kind]}`,
   )
+
+  if (theme === "dark" && !toneControl) {
+    lines.push(`- ${copy.darkSurface}`)
+  }
 
   if (rules.length > 0) {
     lines.push(`- ${copy.preserve}`, ...rules.map((rule) => `  - ${rule}`))
@@ -130,7 +146,7 @@ export function buildAgentBrief(
     lines.push("", copy.usage, usage)
   }
 
-  const configured = getControls(item).some(
+  const configured = controls.some(
     (control) => values[control.prop] !== control.default,
   )
 

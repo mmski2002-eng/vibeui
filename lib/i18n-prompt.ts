@@ -25,6 +25,7 @@ type PromptCopy = {
     usage: string
     configured: string
     preserve: string
+    darkSurface: string
     placement: Record<ItemKind, string>
     readFile: string
     page: string
@@ -80,6 +81,8 @@ const RU: PromptCopy = {
     configured:
       "Пропсы в сниппете выбрал пользователь — вставляй компонент именно с ними.",
     preserve: "Сохрани как установлено:",
+    darkSurface:
+      "Пользователь смотрел блок на тёмной подложке. Блок берёт тему из окружения: если у сайта нет тёмной темы, оберни его в контейнер с классом dark.",
     placement: {
       component:
         "Это inline-компонент: поставь его туда, куда просил пользователь, внутрь существующей разметки.",
@@ -189,6 +192,8 @@ const EN: PromptCopy = {
     configured:
       "The props in the snippet were chosen by the user — render the component with exactly those.",
     preserve: "Keep as installed:",
+    darkSurface:
+      "The user previewed the block on a dark surface. The block takes its theme from its surroundings: if the site has no dark theme, wrap it in a container with the dark class.",
     placement: {
       component:
         "This is an inline component: put it where the user asked, inside the existing markup.",
