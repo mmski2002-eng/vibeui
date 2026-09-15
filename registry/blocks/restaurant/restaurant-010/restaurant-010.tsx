@@ -1,0 +1,224 @@
+import type { CSSProperties } from "react"
+
+export type Restaurant010Messenger = {
+  kind?: "telegram" | "whatsapp" | "vk" | "max"
+  label: string
+  href: string
+  short?: string
+}
+
+export type Restaurant010Link = {
+  label: string
+  href: string
+}
+
+export type Restaurant010Hours = {
+  days: string
+  time: string
+}
+
+export type Restaurant010Props = {
+  brand?: string
+  caption?: string
+  address?: string
+  hours?: readonly Restaurant010Hours[]
+  phone?: string
+  phoneHref?: string
+  email?: string
+  messengersLabel?: string
+  messengers?: readonly Restaurant010Messenger[]
+  /** Колонка ссылок: сертификаты, банкеты, вакансии. */
+  linksLabel?: string
+  links?: readonly Restaurant010Link[]
+  legal?: string
+  tone?: "auto" | "light" | "dark"
+  accent?: string
+  background?: string
+  className?: string
+  style?: CSSProperties
+}
+
+// Подвал ресторана: словомарка серифом и адрес, часы по дням таблицей,
+// телефон крупно и почта, мессенджеры значками с подписями, колонка
+// ссылок (сертификаты, банкеты, вакансии), внизу строка с реквизитами.
+const FONTS =
+  "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@400;500;600;700&display=swap"
+
+const STYLES = `
+:where([data-vibeui-block="restaurant-010"]){
+--vibeui-restaurant-010-bg:light-dark(#1c1714,#0e0c0b);
+--vibeui-restaurant-010-fg:#f2ebe0;
+--vibeui-restaurant-010-muted:rgb(242 235 224 / .62);
+--vibeui-restaurant-010-line:rgb(242 235 224 / .14);
+--vibeui-restaurant-010-chip:rgb(242 235 224 / .07);
+--vibeui-restaurant-010-accent:#7d2a3a;
+--vibeui-restaurant-010-glow:0 0 24px rgb(125 42 58 / .7),0 0 70px rgb(125 42 58 / .35);
+--vibeui-restaurant-010-accent-ink:light-dark(var(--vibeui-restaurant-010-accent),color-mix(in oklab,var(--vibeui-restaurant-010-accent) 55%,#f2ebe0));
+--vibeui-restaurant-010-display:"Playfair Display",Georgia,"Times New Roman",serif;
+--vibeui-restaurant-010-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
+container-type:inline-size;
+}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="restaurant-010"]{color-scheme:dark}
+:where([data-vibeui-block="restaurant-010"][data-tone="light"]){color-scheme:light}
+:where([data-vibeui-block="restaurant-010"][data-tone="dark"]){color-scheme:dark}
+[data-vibeui-block="restaurant-010"]{box-sizing:border-box;display:block;background:var(--vibeui-restaurant-010-bg);color:var(--vibeui-restaurant-010-fg);font-family:var(--vibeui-restaurant-010-font);font-size:.9375rem;line-height:1.5}
+[data-vibeui-block="restaurant-010"] *{box-sizing:border-box}
+[data-vibeui-block="restaurant-010"] a{color:inherit;text-decoration:none}
+[data-vibeui-block="restaurant-010"] a:focus-visible{outline:2px solid var(--vibeui-restaurant-010-accent);outline-offset:3px;border-radius:.25rem}
+[data-vibeui-block="restaurant-010"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:3.5rem 1.25rem 2rem}
+[data-vibeui-block="restaurant-010"] [data-part="top"]{display:grid;gap:2.25rem;padding-bottom:2.5rem;border-bottom:1px solid var(--vibeui-restaurant-010-line)}
+[data-vibeui-block="restaurant-010"] [data-part="brand"]{margin:0;font-family:var(--vibeui-restaurant-010-display);font-size:2.2rem;font-weight:500;line-height:1;letter-spacing:.04em;text-transform:uppercase}
+[data-vibeui-block="restaurant-010"] [data-part="caption"]{margin:.5rem 0 0;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-restaurant-010-muted)}
+[data-vibeui-block="restaurant-010"] address{font-style:normal;margin:1.25rem 0 0;color:var(--vibeui-restaurant-010-muted);max-width:20rem}
+[data-vibeui-block="restaurant-010"] [data-part="label"]{display:block;margin:0 0 .6rem;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-restaurant-010-muted)}
+[data-vibeui-block="restaurant-010"] [data-part="hours"]{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.3rem 1.25rem;font-size:.9rem}
+[data-vibeui-block="restaurant-010"] [data-part="hours"] dt{color:var(--vibeui-restaurant-010-muted)}
+[data-vibeui-block="restaurant-010"] [data-part="hours"] dd{margin:0;font-variant-numeric:tabular-nums}
+[data-vibeui-block="restaurant-010"] [data-part="phone"]{display:inline-block;font-family:var(--vibeui-restaurant-010-display);font-size:1.75rem;line-height:1.1}
+[data-vibeui-block="restaurant-010"] [data-part="email"]{display:inline-block;margin-top:.75rem;border-bottom:1px solid var(--vibeui-restaurant-010-accent);padding-bottom:.1rem}
+[data-vibeui-block="restaurant-010"] [data-part="messengers"]{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.25rem 0 0;padding:0;list-style:none}
+[data-vibeui-block="restaurant-010"] [data-part="messenger"]{display:inline-flex;align-items:center;gap:.5rem;height:2.5rem;padding:0 .9rem 0 .4rem;border-radius:999px;background:var(--vibeui-restaurant-010-chip);border:1px solid var(--vibeui-restaurant-010-line);font-weight:600;font-size:.8rem;transition:border-color .2s,transform .2s}
+[data-vibeui-block="restaurant-010"] [data-part="messenger"]:hover{border-color:var(--vibeui-restaurant-010-accent-ink);transform:translateY(-1px)}
+[data-vibeui-block="restaurant-010"] [data-part="icon"]{display:grid;place-items:center;width:1.7rem;height:1.7rem;border-radius:50%;background:var(--vibeui-restaurant-010-accent);color:#fff4ee;font-size:.7rem;font-weight:700;box-shadow:0 0 14px rgb(125 42 58 / .5)}
+[data-vibeui-block="restaurant-010"] [data-part="icon"] svg{width:1rem;height:1rem;fill:currentColor}
+[data-vibeui-block="restaurant-010"] [data-part="links"]{margin:0;padding:0;list-style:none;display:grid;gap:.5rem}
+[data-vibeui-block="restaurant-010"] [data-part="links"] a{font-size:.95rem;opacity:.85;transition:opacity .2s,color .2s}
+[data-vibeui-block="restaurant-010"] [data-part="links"] a:hover{opacity:1;color:var(--vibeui-restaurant-010-accent-ink)}
+[data-vibeui-block="restaurant-010"] [data-part="bottom"]{padding-top:1.5rem;font-size:.75rem;color:var(--vibeui-restaurant-010-muted)}
+[data-vibeui-block="restaurant-010"] [data-part="bottom"] p{margin:0}
+@container (min-width: 60rem){
+[data-vibeui-block="restaurant-010"] [data-part="shell"]{padding:4.5rem 2rem 2rem}
+[data-vibeui-block="restaurant-010"] [data-part="top"]{grid-template-columns:1.4fr 1fr 1.2fr .9fr;gap:3rem}
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="restaurant-010"] *{transition:none!important}}`
+
+const ICONS: Record<NonNullable<Restaurant010Messenger["kind"]>, string | null> = {
+  telegram:
+    "M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z",
+  whatsapp:
+    "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z",
+  vk: "M12.785 16.241s.288-.032.436-.194c.136-.148.131-.427.131-.427s-.019-1.307.577-1.5c.588-.19 1.343 1.264 2.143 1.823.604.422 1.063.33 1.063.33l2.137-.03s1.117-.071.587-.964c-.043-.073-.309-.662-1.588-1.87-1.34-1.264-1.16-1.06.454-3.246.983-1.331 1.376-2.145 1.253-2.493-.117-.332-.84-.244-.84-.244l-2.406.015s-.178-.025-.311.056c-.13.079-.213.262-.213.262s-.381 1.03-.889 1.907c-1.07 1.85-1.499 1.948-1.674 1.832-.407-.267-.305-1.075-.305-1.648 0-1.793.267-2.54-.521-2.733-.262-.065-.454-.107-1.123-.114-.858-.009-1.585.003-1.996.208-.274.136-.485.44-.356.457.159.022.518.099.709.363.246.341.237 1.107.237 1.107s.142 2.11-.33 2.371c-.325.18-.77-.187-1.725-1.865-.489-.859-.859-1.81-.859-1.81s-.071-.176-.198-.272c-.154-.115-.37-.151-.37-.151l-2.286.015s-.343.01-.469.161c-.112.135-.009.412-.009.412s1.79 4.258 3.817 6.403c1.858 1.967 3.968 1.838 3.968 1.838h.956z",
+  max: null,
+}
+
+/** Подвал ресторана: адрес, часы по дням, телефон, мессенджеры значками и ссылки. */
+export function Restaurant010({
+  brand = "Сойка",
+  caption = "Северная кухня · Петроградская",
+  address = "Санкт-Петербург, Большая Пушкарская, 20, вход со двора",
+  hours = [
+    { days: "Пн–Чт", time: "12:00–23:00" },
+    { days: "Пт–Сб", time: "12:00–01:00" },
+    { days: "Вс", time: "11:00–22:00" },
+  ],
+  phone = "+7 812 305-00-40",
+  phoneHref = "tel:+78123050040",
+  email = "hello@example.com",
+  messengersLabel = "Бронь и вопросы",
+  messengers = [
+    { kind: "telegram", label: "Telegram", href: "https://t.me/" },
+    { kind: "whatsapp", label: "WhatsApp", href: "https://wa.me/" },
+    { kind: "max", label: "Max", href: "https://max.ru/", short: "M" },
+  ],
+  linksLabel = "Ещё",
+  links = [
+    { label: "Подарочные сертификаты", href: "#" },
+    { label: "Банкеты и дальний зал", href: "#" },
+    { label: "Вакансии", href: "#" },
+    { label: "Политика конфиденциальности", href: "#" },
+  ],
+  legal = "© 2019–2026 ООО «Сойка». ИНН 7813000000. Меню не является публичной офертой.",
+  tone = "auto",
+  accent,
+  background,
+  className,
+  style,
+}: Restaurant010Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-restaurant-010-accent": accent } : null),
+    ...(background ? { "--vibeui-restaurant-010-bg": background } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <link rel="stylesheet" href={FONTS} precedence="medium" />
+      <style href="vibeui-restaurant-010" precedence="medium">
+        {STYLES}
+      </style>
+      <footer data-vibeui-block="restaurant-010" data-tone={tone === "auto" ? undefined : tone} className={className} style={palette}>
+        <div data-part="shell">
+          <div data-part="top">
+            <div>
+              <p data-part="brand">{brand}</p>
+              {caption ? <p data-part="caption">{caption}</p> : null}
+              {address ? <address>{address}</address> : null}
+            </div>
+            <div>
+              <span data-part="label">Часы</span>
+              <dl data-part="hours">
+                {hours.map((row) => (
+                  <div key={row.days} style={{ display: "contents" }}>
+                    <dt>{row.days}</dt>
+                    <dd>{row.time}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+            <div>
+              {phone ? (
+                <>
+                  <span data-part="label">{messengersLabel}</span>
+                  <a data-part="phone" href={phoneHref}>
+                    {phone}
+                  </a>
+                </>
+              ) : null}
+              {email ? (
+                <div>
+                  <a data-part="email" href={`mailto:${email}`}>
+                    {email}
+                  </a>
+                </div>
+              ) : null}
+              {messengers.length > 0 ? (
+                <ul data-part="messengers">
+                  {messengers.map((messenger) => {
+                    const icon = messenger.kind ? ICONS[messenger.kind] : null
+                    return (
+                      <li key={messenger.label}>
+                        <a data-part="messenger" href={messenger.href} target="_blank" rel="noreferrer noopener">
+                          <span data-part="icon" aria-hidden="true">
+                            {icon ? (
+                              <svg viewBox="0 0 24 24">
+                                <path d={icon} />
+                              </svg>
+                            ) : (
+                              messenger.short ?? messenger.label.slice(0, 2)
+                            )}
+                          </span>
+                          {messenger.label}
+                        </a>
+                      </li>
+                    )
+                  })}
+                </ul>
+              ) : null}
+            </div>
+            <div>
+              {linksLabel ? <span data-part="label">{linksLabel}</span> : null}
+              <ul data-part="links">
+                {links.map((link) => (
+                  <li key={link.label}>
+                    <a href={link.href}>{link.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <div data-part="bottom">{legal ? <p>{legal}</p> : null}</div>
+        </div>
+      </footer>
+    </>
+  )
+}

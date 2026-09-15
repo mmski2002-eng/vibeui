@@ -188,6 +188,12 @@ export const CATEGORIES = [
     group: "commerce",
   },
   {
+    slug: "restaurant",
+    label: "Ресторан",
+    en: "Restaurant",
+    group: "commerce",
+  },
+  {
     slug: "events",
     label: "События",
     en: "Events",

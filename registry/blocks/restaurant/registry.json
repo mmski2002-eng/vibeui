@@ -1,0 +1,2045 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "restaurant-001",
+      "type": "registry:block",
+      "title": "Шапка ресторана поверх фото",
+      "description": "Шапка ресторана: словомарка серифом капителью, ссылки с винным подчёркиванием, зелёная точка «сегодня до 23:00», телефон и кнопка «Забронировать». В режиме overlay лежит прозрачной поверх первого экрана, при скролле темнеет и сжимается.",
+      "categories": [
+        "restaurant"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "restaurant-001/restaurant-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/restaurant-001.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради скролла и меню. <header>: sticky по умолчанию; overlay=true — position:fixed поверх страницы, data-scrolled переключается после 40px (слушатель scroll, passive), фон и линия появляются переходом, отступы бара сжимаются. Ссылки — подчёркивание transform:scaleX. Часы — с зелёной точкой через ::before. Ссылки и кнопка от 64rem (container query), часы и телефон от 76rem; уже — кнопка «Меню» с aria-expanded и список под шапкой. Палитра --vibeui-restaurant-001-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "restaurant",
+          "cafe",
+          "bar",
+          "food",
+          "menu",
+          "dining",
+          "header",
+          "navbar",
+          "sticky",
+          "overlay"
+        ],
+        "preview": {
+          "props": {
+            "sticky": false
+          }
+        },
+        "ai": {
+          "export": "Restaurant001",
+          "usage": "<Restaurant001\n  brand=\"Сойка\"\n  caption=\"Северная кухня · Петроградская\"\n  hours=\"Сегодня до 23:00\"\n  phone=\"+7 812 305-00-40\"\n  phoneHref=\"tel:+78123050040\"\n  actionLabel=\"Забронировать\"\n  actionHref=\"#book\"\n  overlay\n  links={[{ label: \"Меню\", href: \"#menu\" }, { label: \"Шеф\", href: \"#chef\" }]}\n/>",
+          "summary": "Самодостаточная шапка для ресторана, бара или кафе: словомарка, ссылки, часы, телефон и кнопка брони; умеет лежать прозрачной поверх первого экрана.",
+          "preserve": [
+            "словомарку серифом капителью с подписью — ритм «ресторанной» шапки",
+            "прозрачный режим overlay с потемнением после скролла — фото первого экрана остаётся целым",
+            "зелёную точку у часов и телефон рядом с кнопкой: гости звонят"
+          ],
+          "adapt": [
+            "brand, caption, links, hours, phone, phoneHref, actionLabel, actionHref, menuLabel",
+            "overlay, sticky",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "В режиме overlay шапка не занимает места в потоке — первый экран должен сам отступить сверху (restaurant-002 это делает).",
+            "Открытое мобильное меню тоже переводит шапку в тёмный режим."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "brand",
+            "label": "Имя",
+            "type": "text",
+            "default": "Сойка",
+            "maxLength": 24
+          },
+          {
+            "prop": "hours",
+            "label": "Часы",
+            "type": "text",
+            "default": "Сегодня до 23:00",
+            "maxLength": 30
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Забронировать",
+            "maxLength": 20
+          },
+          {
+            "prop": "overlay",
+            "label": "Поверх фото",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Restaurant header over the photo",
+            "description": "A restaurant header: a small-caps serif wordmark, links with a wine-red underline, a green dot “open till 23:00”, a phone and a “Book a table” button. In overlay mode it sits transparent over the first screen and darkens and shrinks on scroll.",
+            "docs": "One file, zero dependencies, “use client” for scroll and the menu. A <header>: sticky by default; overlay=true — position:fixed over the page, data-scrolled flips after 40px (a passive scroll listener), background and line fade in, bar padding shrinks. Links underline via transform:scaleX. Hours carry a green dot via ::before. Links and the button from 64rem (container query), hours and phone from 76rem; below that a “Menu” button with aria-expanded and a list under the header. Palette --vibeui-restaurant-001-* with light-dark: ivory on dark wood, a dark wine accent with a glow (the -glow variable) and its lighter -accent-ink tint for text on dark; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained header for a restaurant, bar or cafe: wordmark, links, hours, phone and a booking button; can sit transparent over the first screen.",
+              "preserve": [
+                "the small-caps serif wordmark with a caption — the rhythm of a restaurant header",
+                "the transparent overlay mode darkening after scroll — the hero photo stays whole",
+                "the green dot by the hours and the phone next to the button: guests call"
+              ],
+              "adapt": [
+                "brand, caption, links, hours, phone, phoneHref, actionLabel, actionHref, menuLabel",
+                "overlay, sticky",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "In overlay mode the header takes no space in flow — the first screen must pad itself at the top (restaurant-002 does).",
+                "An open mobile menu also switches the header to the dark state."
+              ],
+              "usage": "<Restaurant001\n  brand=\"Jay\"\n  caption=\"Nordic kitchen · Old town\"\n  hours=\"Open till 23:00 today\"\n  phone=\"+351 21 000 00 40\"\n  phoneHref=\"tel:+351210000040\"\n  actionLabel=\"Book a table\"\n  actionHref=\"#book\"\n  overlay\n  links={[{ label: \"Menu\", href: \"#menu\" }, { label: \"Chef\", href: \"#chef\" }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Name",
+                "default": "Jay"
+              },
+              "hours": {
+                "label": "Hours",
+                "default": "Open till 23:00 today"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Book a table"
+              },
+              "overlay": {
+                "label": "Overlay"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "sticky": false,
+                "brand": "Jay",
+                "caption": "Nordic kitchen · Old town",
+                "hours": "Open till 23:00 today",
+                "phone": "+351 21 000 00 40",
+                "actionLabel": "Book a table",
+                "menuLabel": "Menu",
+                "links": [
+                  {
+                    "label": "Menu",
+                    "href": "#menu"
+                  },
+                  {
+                    "label": "Chef",
+                    "href": "#chef"
+                  },
+                  {
+                    "label": "Hall",
+                    "href": "#hall"
+                  },
+                  {
+                    "label": "Events",
+                    "href": "#events"
+                  },
+                  {
+                    "label": "Contacts",
+                    "href": "#map"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "restaurant-002",
+      "type": "registry:block",
+      "title": "Первый экран ресторана с бегущей строкой",
+      "description": "Первый экран ресторана: фото зала во весь экран с медленным наездом и тёплым затемнением, гигантский серифный заголовок появляется построчно снизу, слово в звёздочках — курсивом винным свечением, две кнопки и бегущая строка с сезонными анонсами внизу.",
+      "categories": [
+        "restaurant"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "restaurant-002/restaurant-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/restaurant-002.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Секция min-height:100svh, <img> absolute с анимацией drift (scale 1.02→1.12 за 28s, alternate) и градиентное затемнение снизу. Заголовок — строки в overflow:hidden, внутренний span поднимается translateY(110%)→0 с задержкой .3s + n×.14s; *слово* в строке превращается в <em> функцией emphasize без innerHTML. Подпись и кнопки — fade с задержками. Бегущая строка — лента, продублированная дважды, translateX(-50%) за 40s, края замаскированы mask-image. reduced-motion выключает всё. Палитра --vibeui-restaurant-002-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "restaurant",
+          "cafe",
+          "bar",
+          "food",
+          "menu",
+          "dining",
+          "hero",
+          "ticker",
+          "marquee",
+          "fullscreen"
+        ],
+        "preview": {
+          "props": {
+            "image": "/demo/places/place-03.webp"
+          }
+        },
+        "ai": {
+          "export": "Restaurant002",
+          "usage": "<Restaurant002\n  image=\"/photos/hero.webp\"\n  eyebrow=\"Кухня · бар · терраса\"\n  lines={[\"Север на тарелке,\", \"тепло за *столом*\"]}\n  lede=\"Ладожский сиг, оленина и морошка в получасе от Невского.\"\n  primaryLabel=\"Забронировать стол\"\n  primaryHref=\"#book\"\n  secondaryLabel=\"Смотреть меню\"\n  secondaryHref=\"#menu\"\n  ticker={[\"Сезонное меню — осень\", \"Устрицы по средам\", \"Джаз по пятницам\"]}\n/>",
+          "summary": "Самодостаточный первый экран для ресторана, бара или отеля: фото с наездом, построчный заголовок, две кнопки и бегущая строка анонсов. Всё содержимое пропсами.",
+          "preserve": [
+            "построчное появление заголовка снизу через overflow:hidden — это главный жест экрана",
+            "медленный наезд фото и градиентное затемнение — текст читается на любом снимке",
+            "бегущую строку с маской по краям для анонсов"
+          ],
+          "adapt": [
+            "image, eyebrow, lines (слово в *звёздочках* — акцентом), lede",
+            "primaryLabel/Href, secondaryLabel/Href, ticker",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Экран всегда тёмный: цвета фиксированы под фото, tone не меняет схему.",
+            "Шапка в режиме overlay ложится поверх: верхний отступ 8–9rem уже заложен."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Кухня · бар · терраса",
+            "maxLength": 40
+          },
+          {
+            "prop": "primaryLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Забронировать стол",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Restaurant hero with a ticker",
+            "description": "A restaurant first screen: a full-screen photo of the dining room with a slow push-in and a warm shade, a giant serif headline rising line by line, a starred word in italic wine-red, two buttons and a ticker with seasonal announcements below.",
+            "docs": "One file, zero dependencies, a server component. The section is min-height:100svh, an absolute <img> with a drift animation (scale 1.02→1.12 over 28s, alternate) and a bottom gradient shade. The headline is lines in overflow:hidden; the inner span rises translateY(110%)→0 with a delay of .3s + n×.14s; a *word* in a line becomes <em> via emphasize without innerHTML. The lede and buttons fade in with delays. The ticker is a tape duplicated twice, translateX(-50%) over 40s, edges masked with mask-image. reduced-motion disables everything. Palette --vibeui-restaurant-002-* with light-dark: ivory on dark wood, a dark wine accent with a glow (the -glow variable) and its lighter -accent-ink tint for text on dark; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained first screen for a restaurant, bar or hotel: a photo with push-in, a line-by-line headline, two buttons and an announcements ticker. All content via props.",
+              "preserve": [
+                "the line-by-line headline rising through overflow:hidden — the main gesture of the screen",
+                "the slow photo push-in and the gradient shade — text reads on any photo",
+                "the edge-masked ticker for announcements"
+              ],
+              "adapt": [
+                "image, eyebrow, lines (a *starred* word is accented), lede",
+                "primaryLabel/Href, secondaryLabel/Href, ticker",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The screen is always dark: colours are fixed for the photo, tone does not change the scheme.",
+                "An overlay header sits on top: the 8–9rem top padding is already there."
+              ],
+              "usage": "<Restaurant002\n  image=\"/photos/hero.webp\"\n  eyebrow=\"Kitchen · bar · terrace\"\n  lines={[\"The north on a plate,\", \"warmth at the *table*\"]}\n  lede=\"Lake whitefish, venison and cloudberries half an hour from the centre.\"\n  primaryLabel=\"Book a table\"\n  primaryHref=\"#book\"\n  secondaryLabel=\"See the menu\"\n  secondaryHref=\"#menu\"\n  ticker={[\"Seasonal menu — autumn\", \"Oysters on Wednesdays\", \"Jazz on Fridays\"]}\n/>"
+            },
+            "controls": {
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Kitchen · bar · terrace"
+              },
+              "primaryLabel": {
+                "label": "Button",
+                "default": "Book a table"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "image": "/demo/places/place-03.webp",
+                "eyebrow": "Kitchen · bar · terrace",
+                "lines": [
+                  "The north on a plate,",
+                  "warmth at the *table*"
+                ],
+                "lede": "Lake whitefish, venison and cloudberries half an hour from the centre. An open kitchen, candles and a table you want to come back to.",
+                "primaryLabel": "Book a table",
+                "secondaryLabel": "See the menu",
+                "ticker": [
+                  "Seasonal menu — autumn",
+                  "Oysters on Wednesdays",
+                  "Weekend brunch from 11:00",
+                  "Jazz on Fridays"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "restaurant-003",
+      "type": "registry:block",
+      "title": "Меню с разделами и фото у курсора",
+      "description": "Меню ресторана: разделы табами, блюда списком с точечным лидером до цены, состав и метки «острое», «вег», «шеф». Под активным табом плашка, которая переезжает к выбранному; смена раздела — блюда въезжают каскадом; по наведению на блюдо у курсора всплывает его фото.",
+      "categories": [
+        "restaurant"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "restaurant-003/restaurant-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/restaurant-003.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради табов и фото. Табы role=tab с aria-selected; под активным — плашка (li data-part=pill), её позиция и размер меряются useLayoutEffect по offsetLeft/offsetWidth кнопки и переезжают transform/width за .5s, ResizeObserver перемеряет на ресайз. Список пересобирается с новым key на смену раздела — @keyframes с задержкой --n×60ms. Строка блюда: название серифом, лидер — flex:1 с пунктирной нижней границей, цена nowrap. Метки получают data-kind по началу слова (вег/hot/шеф) и свой цвет. Фото — один <img> position:fixed, координаты курсора пишутся в CSS-переменные --x/--y на onMouseMove без ререндера; на устройствах без hover скрыт. Сетка блюд в две колонки от 48rem (container query). Палитра --vibeui-restaurant-003-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "restaurant",
+          "cafe",
+          "bar",
+          "food",
+          "menu",
+          "dining",
+          "tabs",
+          "dishes",
+          "price",
+          "leader"
+        ],
+        "preview": {
+          "props": {}
+        },
+        "ai": {
+          "export": "Restaurant003",
+          "usage": "<Restaurant003\n  title=\"Что готовим этой осенью\"\n  sections={[\n    { title: \"Закуски\", note: \"Хлеб печём сами\", dishes: [\n      { name: \"Тартар из оленины\", text: \"можжевельник, желток, ржаные чипсы\", price: \"890 ₽\", tags: [\"шеф\"], image: \"/photos/dish-02.webp\" },\n    ] },\n  ]}\n  fullLabel=\"Полное меню в PDF\"\n  fullHref=\"/menu.pdf\"\n/>",
+          "summary": "Самодостаточное меню для ресторана, бара или кафе: разделы табами, блюда с ценами и метками, фото блюда у курсора. Разделы и блюда — массив пропсом.",
+          "preserve": [
+            "точечный лидер между названием и ценой — классическая ресторанная строка",
+            "плашку, переезжающую под активный таб, и каскадное появление блюд при смене раздела",
+            "фото у курсора через CSS-переменные, а не через состояние: без ререндеров на каждое движение мыши"
+          ],
+          "adapt": [
+            "sections: разделы, заметки, блюда с текстом, ценой, метками и фото",
+            "eyebrow, title, lede, fullLabel, fullHref",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Метка красится по началу слова: «вег…» — оливковый, «остр…» — красный, «шеф…» — винный; остальные нейтральные.",
+            "Без image у блюда фото не всплывает; без hover (тач) фото скрыто."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что готовим этой осенью",
+            "maxLength": 50
+          },
+          {
+            "prop": "fullLabel",
+            "label": "Ссылка",
+            "type": "text",
+            "default": "Полное меню в PDF",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Menu with sections and a cursor photo",
+            "description": "A restaurant menu: sections as tabs, dishes as a list with a dotted leader to the price, ingredients and “spicy”, “veg”, “chef” tags. A pill under the active tab slides to the chosen one; switching a section cascades the dishes in; hovering a dish floats its photo by the cursor.",
+            "docs": "One file, zero dependencies, “use client” for tabs and the photo. Tabs are role=tab with aria-selected; under the active one a pill (li data-part=pill) whose position and size are measured in useLayoutEffect from the button's offsetLeft/offsetWidth and slide via transform/width over .5s, a ResizeObserver re-measures on resize. The list remounts with a new key on a section change — @keyframes with a --n×60ms delay. A dish row: a serif name, the leader is flex:1 with a dotted bottom border, the price nowrap. Tags get data-kind by the word start (veg/hot/chef) and their colour. The photo is one position:fixed <img>; cursor coordinates go into the --x/--y CSS variables on onMouseMove without re-rendering; hidden on devices without hover. Two dish columns from 48rem (container query). Palette --vibeui-restaurant-003-* with light-dark: ivory on dark wood, a dark wine accent with a glow (the -glow variable) and its lighter -accent-ink tint for text on dark; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained menu for a restaurant, bar or cafe: sections as tabs, dishes with prices and tags, a dish photo by the cursor. Sections and dishes come in as a prop array.",
+              "preserve": [
+                "the dotted leader between name and price — the classic restaurant line",
+                "the pill sliding under the active tab and the cascading dish appearance on a section change",
+                "the cursor photo via CSS variables, not state: no re-render on every mouse move"
+              ],
+              "adapt": [
+                "sections: sections, notes, dishes with text, price, tags and photo",
+                "eyebrow, title, lede, fullLabel, fullHref",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "A tag is coloured by its word start: “veg…” olive, “hot…”/“spicy…” red, “chef…” wine-red; others neutral.",
+                "Without image the photo does not float; without hover (touch) the photo is hidden."
+              ],
+              "usage": "<Restaurant003\n  title=\"What we cook this autumn\"\n  sections={[\n    { title: \"Starters\", note: \"We bake the bread ourselves\", dishes: [\n      { name: \"Venison tartare\", text: \"juniper, yolk, rye crisps\", price: \"€14\", tags: [\"chef\"], image: \"/photos/dish-02.webp\" },\n    ] },\n  ]}\n  fullLabel=\"Full menu as PDF\"\n  fullHref=\"/menu.pdf\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What we cook this autumn"
+              },
+              "fullLabel": {
+                "label": "Link",
+                "default": "Full menu as PDF"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Menu",
+                "title": "What we cook this autumn",
+                "lede": "The menu changes with the season. Fish from the lake, game from the forest, vegetables from nearby farms.",
+                "fullLabel": "Full menu as PDF",
+                "sections": [
+                  {
+                    "title": "Starters",
+                    "note": "We bake the bread ourselves twice a day",
+                    "dishes": [
+                      {
+                        "name": "Venison tartare",
+                        "text": "juniper, yolk, rye crisps",
+                        "price": "€14",
+                        "tags": [
+                          "chef"
+                        ]
+                      },
+                      {
+                        "name": "Oysters",
+                        "text": "3 pcs, shallot vinegar, lemon",
+                        "price": "€18"
+                      },
+                      {
+                        "name": "Roasted beetroot",
+                        "text": "goat cheese, hazelnut, thyme honey",
+                        "price": "€11",
+                        "tags": [
+                          "veg"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Mains",
+                    "dishes": [
+                      {
+                        "name": "Lake whitefish",
+                        "text": "smoked potato, sorrel sauce",
+                        "price": "€24",
+                        "tags": [
+                          "chef"
+                        ]
+                      },
+                      {
+                        "name": "Charcoal venison",
+                        "text": "parsnip purée, wine-red, moss",
+                        "price": "€32"
+                      },
+                      {
+                        "name": "Forest mushroom soup",
+                        "text": "cream, pine oil, crouton",
+                        "price": "€12",
+                        "tags": [
+                          "veg"
+                        ]
+                      },
+                      {
+                        "name": "Pike dumplings",
+                        "text": "dashi broth, hot oil",
+                        "price": "€15",
+                        "tags": [
+                          "spicy"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Desserts",
+                    "dishes": [
+                      {
+                        "name": "Sea buckthorn and meringue",
+                        "text": "honey, goat milk cream",
+                        "price": "€9",
+                        "tags": [
+                          "chef"
+                        ]
+                      },
+                      {
+                        "name": "Rye bread ice cream",
+                        "text": "black bread caramel",
+                        "price": "€8"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Bar",
+                    "note": "House infusions, 60 ml",
+                    "dishes": [
+                      {
+                        "name": "Cranberry and rosemary",
+                        "text": "gin, cranberry, rosemary syrup",
+                        "price": "€11"
+                      },
+                      {
+                        "name": "Pine sour",
+                        "text": "pine vodka, lemon, egg white",
+                        "price": "€10"
+                      },
+                      {
+                        "name": "Riesling Kabinett",
+                        "text": "Mosel, 150 ml glass",
+                        "price": "€11"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "restaurant-004",
+      "type": "registry:block",
+      "title": "Шеф с цитатой и росчерком",
+      "description": "Шеф: портрет 4:5 со вторым фото внахлёст, справа цитата серифом курсивом крупно, подпись рукописным росчерком, имя и роль, абзац и три факта цифрами.",
+      "categories": [
+        "restaurant"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "restaurant-004/restaurant-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/restaurant-004.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Сетка 5fr/6fr от 56rem (container query), колонки по центру. Медиа: портрет aspect-ratio 4/5, второе фото absolute справа внизу с рамкой цвета фона и тенью. Цитата — <blockquote> с кавычками через ::before/::after, росчерк — шрифт Caveat с rotate(-3deg), факты — flex со значениями серифом акцентом. Палитра --vibeui-restaurant-004-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "restaurant",
+          "cafe",
+          "bar",
+          "food",
+          "menu",
+          "dining",
+          "chef",
+          "about",
+          "quote",
+          "signature"
+        ],
+        "preview": {
+          "props": {
+            "image": "/demo/people/person-09.webp",
+            "imageSecondary": "/demo/places/place-02.webp"
+          }
+        },
+        "ai": {
+          "export": "Restaurant004",
+          "usage": "<Restaurant004\n  quote=\"Я выросла на Ладоге. Всё, что мы готовим, — попытка вернуть тот вкус.\"\n  name=\"Анна Рябова\"\n  role=\"Шеф-повар и совладелица\"\n  image=\"/photos/chef.webp\"\n  imageSecondary=\"/photos/chef-hands.webp\"\n  facts={[{ value: \"18\", label: \"лет на кухне\" }, { value: \"4\", label: \"сезонных меню в год\" }]}\n/>",
+          "summary": "Самодостаточная секция «о шефе» для ресторана, бара или кондитерской: портрет, цитата, росчерк-подпись и факты. Всё содержимое пропсами.",
+          "preserve": [
+            "цитату курсивным серифом крупно с кавычками — голос человека, а не описание",
+            "росчерк-подпись рукописным шрифтом под цитатой",
+            "второе фото внахлёст с рамкой цвета фона"
+          ],
+          "adapt": [
+            "quote, name, role, text, facts, signature, image, imageSecondary",
+            "eyebrow",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Без signature росчерком пишется name.",
+            "Шрифт Caveat подключается вместе с остальными; без сети росчерк идёт системным курсивом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "name",
+            "label": "Имя",
+            "type": "text",
+            "default": "Анна Рябова",
+            "maxLength": 30
+          },
+          {
+            "prop": "role",
+            "label": "Роль",
+            "type": "text",
+            "default": "Шеф-повар и совладелица",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Chef with a quote and a signature",
+            "description": "The chef: a 4:5 portrait with a second photo overlapping, a large italic serif quote on the right, a handwritten signature, name and role, a paragraph and three facts in figures.",
+            "docs": "One file, zero dependencies, a server component. A 5fr/6fr grid from 56rem (container query), columns centred. Media: the portrait at aspect-ratio 4/5, the second photo absolute bottom right with a background-coloured frame and a shadow. The quote is a <blockquote> with quotation marks via ::before/::after, the signature is the Caveat font with rotate(-3deg), facts a flex row with serif accent values. Palette --vibeui-restaurant-004-* with light-dark: ivory on dark wood, a dark wine accent with a glow (the -glow variable) and its lighter -accent-ink tint for text on dark; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained “about the chef” section for a restaurant, bar or patisserie: portrait, quote, signature and facts. All content via props.",
+              "preserve": [
+                "the large italic serif quote with quotation marks — a person's voice, not a description",
+                "the handwritten signature under the quote",
+                "the overlapping second photo with a background-coloured frame"
+              ],
+              "adapt": [
+                "quote, name, role, text, facts, signature, image, imageSecondary",
+                "eyebrow",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Without signature the name is written as the signature.",
+                "The Caveat font loads with the others; offline the signature falls back to a system cursive."
+              ],
+              "usage": "<Restaurant004\n  quote=\"I grew up by the lake. Everything we cook is an attempt to bring back that taste.\"\n  name=\"Anna Ryabova\"\n  role=\"Chef and co-owner\"\n  image=\"/photos/chef.webp\"\n  imageSecondary=\"/photos/chef-hands.webp\"\n  facts={[{ value: \"18\", label: \"years in kitchens\" }, { value: \"4\", label: \"seasonal menus a year\" }]}\n/>"
+            },
+            "controls": {
+              "name": {
+                "label": "Name",
+                "default": "Anna Ryabova"
+              },
+              "role": {
+                "label": "Role",
+                "default": "Chef and co-owner"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "image": "/demo/people/person-09.webp",
+                "imageSecondary": "/demo/places/place-02.webp",
+                "eyebrow": "Chef",
+                "quote": "I grew up by the lake. Everything we cook is an attempt to bring back that taste: smoke, forest and cold water.",
+                "name": "Anna Ryabova",
+                "role": "Chef and co-owner",
+                "text": "Ten years in Copenhagen and Helsinki, then home. The menu changes four times a year, fish arrives from the lake on Tuesdays and Fridays, bread is baked on a seven-year-old starter.",
+                "facts": [
+                  {
+                    "value": "18",
+                    "label": "years in kitchens"
+                  },
+                  {
+                    "value": "4",
+                    "label": "seasonal menus a year"
+                  },
+                  {
+                    "value": "2",
+                    "label": "guide stars"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "restaurant-005",
+      "type": "registry:block",
+      "title": "Галерея зала с параллаксом и лайтбоксом",
+      "description": "Галерея зала: три колонки фото разной высоты, при скролле колонки едут с разной скоростью, по наведению всплывает подпись. Клик — кадр вылетает из своей коробки в центр экрана на тёмном фоне, Escape и клик по фону закрывают.",
+      "categories": [
+        "restaurant"
+      ],
+      "dependencies": [
+        "react-dom"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "restaurant-005/restaurant-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/restaurant-005.tsx"
+        }
+      ],
+      "docs": "Один файл, зависимость только react-dom (createPortal), «use client». Фото раскладываются по трём колонкам с балансом высот: по убыванию высоты (из aspect) каждое идёт в самую короткую колонку, внутри колонки — в исходном порядке; параллакс — одна переменная прогресса секции во вьюпорте (−1…1), пишется в rAF на scroll без ререндера, колонки сдвигаются translateY(p × k) со своим k. Кадр — <button> с aspect-ratio из photo.aspect. Лайтбокс: слой position:fixed в портале, летун стартует из getBoundingClientRect кадра, после reflow и requestAnimationFrame едет к центрированной коробке (top/left/width/height с transition .55s), оригинал прячется; закрытие — обратно, фокус возвращается на кадр; скролл заперт с компенсацией скроллбара. reduced-motion выключает параллакс и переходы. Палитра --vibeui-restaurant-005-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "restaurant",
+          "cafe",
+          "bar",
+          "food",
+          "menu",
+          "dining",
+          "gallery",
+          "parallax",
+          "lightbox",
+          "masonry"
+        ],
+        "preview": {
+          "props": {
+            "photos": [
+              {
+                "src": "/demo/places/place-04.webp",
+                "aspect": "3 / 2",
+                "caption": "бар"
+              },
+              {
+                "src": "/demo/people/person-010.webp",
+                "aspect": "2 / 3",
+                "caption": "у окна"
+              },
+              {
+                "src": "/demo/places/place-08.webp",
+                "aspect": "1",
+                "caption": "сервировка"
+              },
+              {
+                "src": "/demo/places/place-06.webp",
+                "aspect": "3 / 2",
+                "caption": "терраса"
+              },
+              {
+                "src": "/demo/places/place-02.webp",
+                "aspect": "1",
+                "caption": "кухня"
+              },
+              {
+                "src": "/demo/places/place-01.webp",
+                "aspect": "2 / 3",
+                "caption": "зал"
+              }
+            ]
+          }
+        },
+        "ai": {
+          "export": "Restaurant005",
+          "usage": "<Restaurant005\n  title=\"Свечи, дерево и вид на двор\"\n  photos={[\n    { src: \"/photos/hall-01.webp\", aspect: \"3 / 2\", caption: \"бар\" },\n    { src: \"/photos/hall-02.webp\", aspect: \"2 / 3\", caption: \"у окна\" },\n    { src: \"/photos/hall-04.webp\", aspect: \"1\", caption: \"сервировка\" },\n  ]}\n/>",
+          "summary": "Самодостаточная галерея для ресторана, отеля или студии: колонки с параллаксом при скролле и лайтбокс с вылетом кадра. Фото — массив пропсом с пропорциями и подписями.",
+          "preserve": [
+            "параллакс колонок через одну CSS-переменную прогресса — без ререндеров на скролл",
+            "лайтбокс с вылетом из коробки кадра и возвратом назад: портал в body, reflow перед стартом",
+            "подписи, всплывающие по наведению, и разные пропорции кадров"
+          ],
+          "adapt": [
+            "photos: src, aspect, caption, alt",
+            "eyebrow, title, lede, closeLabel",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Колонок всегда три на широком экране и две на узком; фото распределяются по высоте, чтобы низ колонок сходился.",
+            "Лайтбокс показывает то же фото, что и в сетке — для полноразмерных кадров кладите файлы побольше."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Свечи, дерево и вид на двор",
+            "maxLength": 50
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hall gallery with parallax and a lightbox",
+            "description": "A dining hall gallery: three columns of photos of different heights, columns move at different speeds on scroll, a caption floats up on hover. A click flies the frame out of its box to the centre of the screen on a dark backdrop; Escape and a backdrop click close.",
+            "docs": "One file, the only dependency is react-dom (createPortal), “use client”. Photos are laid out in three height-balanced columns: in descending height (from aspect) each goes into the shortest column, keeping source order inside a column; parallax is one section-progress variable in the viewport (−1…1), written in rAF on scroll without re-rendering; columns shift translateY(p × k) with their own k. A frame is a <button> with aspect-ratio from photo.aspect. Lightbox: a position:fixed layer in a portal, the flyer starts from the frame's getBoundingClientRect, after a reflow and requestAnimationFrame moves to the centred box (top/left/width/height with a .55s transition), the original is hidden; closing reverses and focus returns to the frame; scroll is locked with scrollbar compensation. reduced-motion disables parallax and transitions. Palette --vibeui-restaurant-005-* with light-dark: ivory on dark wood, a dark wine accent with a glow (the -glow variable) and its lighter -accent-ink tint for text on dark; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained gallery for a restaurant, hotel or studio: columns with scroll parallax and a lightbox with a flying frame. Photos come in as a prop array with aspects and captions.",
+              "preserve": [
+                "column parallax through one progress CSS variable — no re-renders on scroll",
+                "the lightbox flying out of the frame's box and back: a portal into body, a reflow before the start",
+                "captions floating up on hover and different frame aspects"
+              ],
+              "adapt": [
+                "photos: src, aspect, caption, alt",
+                "eyebrow, title, lede, closeLabel",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Always three columns on wide screens and two on narrow; photos are distributed by height so the column bottoms line up.",
+                "The lightbox shows the same photo as the grid — use larger files for full-size frames."
+              ],
+              "usage": "<Restaurant005\n  title=\"Candles, wood and a courtyard view\"\n  photos={[\n    { src: \"/photos/hall-01.webp\", aspect: \"3 / 2\", caption: \"bar\" },\n    { src: \"/photos/hall-02.webp\", aspect: \"2 / 3\", caption: \"by the window\" },\n    { src: \"/photos/hall-04.webp\", aspect: \"1\", caption: \"table setting\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Candles, wood and a courtyard view"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Hall",
+                "title": "Candles, wood and a courtyard view",
+                "lede": "Forty seats in the hall, eight at the bar and a summer terrace. Tables for parties up to twelve — in the back room.",
+                "closeLabel": "Close",
+                "photos": [
+                  {
+                    "src": "/demo/places/place-04.webp",
+                    "aspect": "3 / 2",
+                    "caption": "bar"
+                  },
+                  {
+                    "src": "/demo/people/person-010.webp",
+                    "aspect": "2 / 3",
+                    "caption": "by the window"
+                  },
+                  {
+                    "src": "/demo/places/place-08.webp",
+                    "aspect": "1",
+                    "caption": "table setting"
+                  },
+                  {
+                    "src": "/demo/places/place-06.webp",
+                    "aspect": "3 / 2",
+                    "caption": "terrace"
+                  },
+                  {
+                    "src": "/demo/places/place-02.webp",
+                    "aspect": "1",
+                    "caption": "kitchen"
+                  },
+                  {
+                    "src": "/demo/places/place-01.webp",
+                    "aspect": "2 / 3",
+                    "caption": "hall"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "restaurant-006",
+      "type": "registry:block",
+      "title": "Бронь стола со свободными окнами",
+      "description": "Бронь стола: слева свободные окна на сегодня чипами и заметки, справа форма — дата, время, гости степпером ±, имя, телефон, пожелания, согласие. Клик по чипу подставляет время и сегодняшнюю дату. Настоящая форма: с action уходит POST, без него — «стол ваш» на месте.",
+      "categories": [
+        "restaurant"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "restaurant-006/restaurant-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/restaurant-006.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Чипы — <button aria-pressed>, клик пишет time и, если пусто, date=сегодня. Поля: date (min=сегодня), time (step 900), скрытый guests из степпера с границами minGuests/maxGuests, name, phone (tel), note (textarea), consent (required). action пустой — submit перехватывается и рендерится карточка done с role=status; с action — обычная отправка POST. От 56rem (container query) две колонки 1fr/1.1fr. Палитра --vibeui-restaurant-006-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "restaurant",
+          "cafe",
+          "bar",
+          "food",
+          "menu",
+          "dining",
+          "booking",
+          "reservation",
+          "form",
+          "table"
+        ],
+        "preview": {
+          "props": {}
+        },
+        "ai": {
+          "export": "Restaurant006",
+          "usage": "<Restaurant006\n  title=\"Оставьте стол за собой\"\n  slots={[\"18:00\", \"18:30\", \"19:30\", \"21:30\"]}\n  notes={[\"Стол держим 15 минут после брони\", \"Терраса открыта с мая\"]}\n  maxGuests={12}\n  action=\"/api/book\"\n/>",
+          "summary": "Самодостаточная форма брони для ресторана, бара или кафе: свободные окна чипами, дата, время, гости, телефон. Поля формы: date, time, guests, name, phone, note, consent.",
+          "preserve": [
+            "чипы свободных окон, подставляющие время в форму — бронь в два клика",
+            "степпер гостей вместо поля ввода и настоящие имена полей — обработчик получает date, time, guests, name, phone, note, consent",
+            "карточку «стол ваш» на месте формы, а не alert"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, slots, slotsLabel, notes, minGuests, maxGuests, submitLabel, doneTitle, doneText, consentLabel",
+            "action — куда отправлять; без него показывается done",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Дата в формате YYYY-MM-DD, время — HH:MM, шаг 15 минут.",
+            "Слоты — просто строки; список свободных окон должен приходить с сервера."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Оставьте стол за собой",
+            "maxLength": 40
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Забронировать",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Table booking with free slots",
+            "description": "Table booking: free slots for today as chips and notes on the left, a form on the right — date, time, guests with a ± stepper, name, phone, wishes, consent. A chip click fills the time and today's date. A real form: with action it POSTs, without it shows “the table is yours” in place.",
+            "docs": "One file, zero dependencies, “use client”. Chips are <button aria-pressed>; a click writes time and, if empty, date=today. Fields: date (min=today), time (step 900), a hidden guests from the stepper bounded by minGuests/maxGuests, name, phone (tel), note (textarea), consent (required). With empty action submit is intercepted and a done card with role=status renders; with action a normal POST. From 56rem (container query) two columns 1fr/1.1fr. Palette --vibeui-restaurant-006-* with light-dark: ivory on dark wood, a dark wine accent with a glow (the -glow variable) and its lighter -accent-ink tint for text on dark; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained booking form for a restaurant, bar or cafe: free slots as chips, date, time, guests, phone. Form fields: date, time, guests, name, phone, note, consent.",
+              "preserve": [
+                "the free-slot chips filling the time in the form — booking in two clicks",
+                "the guests stepper instead of an input and real field names — the handler gets date, time, guests, name, phone, note, consent",
+                "the “table is yours” card in place of the form, not an alert"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, slots, slotsLabel, notes, minGuests, maxGuests, submitLabel, doneTitle, doneText, consentLabel",
+                "action — where to submit; without it done is shown",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Date is YYYY-MM-DD, time is HH:MM, 15-minute step.",
+                "Slots are plain strings; the list of free slots should come from the server."
+              ],
+              "usage": "<Restaurant006\n  title=\"Keep a table for yourself\"\n  slots={[\"18:00\", \"18:30\", \"19:30\", \"21:30\"]}\n  notes={[\"We hold the table for 15 minutes\", \"The terrace opens in May\"]}\n  maxGuests={12}\n  action=\"/api/book\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Keep a table for yourself"
+              },
+              "submitLabel": {
+                "label": "Button",
+                "default": "Book"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Booking",
+                "title": "Keep a table for yourself",
+                "lede": "We confirm within fifteen minutes in working hours. Parties of eight or more — by phone.",
+                "slotsLabel": "Free today",
+                "notes": [
+                  "We hold the table for 15 minutes after booking",
+                  "With children — until 20:00, high chairs available",
+                  "The terrace is open from May to September"
+                ],
+                "submitLabel": "Book",
+                "doneTitle": "The table is yours",
+                "doneText": "We will send a confirmation to your messenger in a couple of minutes.",
+                "consentLabel": "I agree to data processing and a call to this number."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "restaurant-007",
+      "type": "registry:block",
+      "title": "События ресторана лентой",
+      "description": "События ресторана: лента строк с днём недели крупным серифом винным свечением слева, периодичностью капителью, названием, временем, текстом, ценой и ссылкой. По наведению строка подсвечивается и справа выезжает фото.",
+      "categories": [
+        "restaurant"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "restaurant-007/restaurant-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/restaurant-007.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. <ul> с границами между строками; строка — grid 4.5rem/1fr, от 56rem (container query) 7rem/1fr/11rem с фото в третьей колонке. По hover подложка строки (::before с inset 0 −1rem) проявляется opacity и лёгким scale без изменения раскладки, фото opacity 0→1 с лёгким scale. День — серифом в нижнем регистре, время — tabular-nums. Палитра --vibeui-restaurant-007-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "restaurant",
+          "cafe",
+          "bar",
+          "food",
+          "menu",
+          "dining",
+          "events",
+          "schedule",
+          "agenda",
+          "jazz"
+        ],
+        "preview": {
+          "props": {
+            "events": [
+              {
+                "day": "ср",
+                "when": "каждую неделю",
+                "time": "18:00–23:00",
+                "title": "Устричные среды",
+                "text": "Хасанские и дальневосточные устрицы по цене закупки, к ним — бокал мюскаде.",
+                "price": "650 ₽ / 6 шт.",
+                "actionLabel": "Занять стол",
+                "actionHref": "#book",
+                "image": "/demo/places/place-01.webp"
+              },
+              {
+                "day": "пт",
+                "when": "каждую неделю",
+                "time": "21:00",
+                "title": "Джаз у бара",
+                "text": "Трио Ильи Гордеева: стандарты и немного Северного модерна. Вход свободный.",
+                "price": "вход свободный",
+                "actionLabel": "Забронировать",
+                "actionHref": "#book",
+                "image": "/demo/places/place-04.webp"
+              },
+              {
+                "day": "сб–вс",
+                "when": "выходные",
+                "time": "11:00–16:00",
+                "title": "Бранч",
+                "text": "Сырники на ржаной муке, яйца с сигом, пирог дня и кофе без ограничений.",
+                "price": "1 900 ₽",
+                "actionLabel": "Меню бранча",
+                "actionHref": "#menu",
+                "image": "/demo/places/place-06.webp"
+              },
+              {
+                "day": "3 окт",
+                "when": "один вечер",
+                "time": "19:30",
+                "title": "Ужин с виноделом",
+                "text": "Шесть подач под вина «Усадьбы Дивноморское», за столом — сам винодел.",
+                "price": "7 500 ₽",
+                "actionLabel": "Осталось 6 мест",
+                "actionHref": "#book",
+                "image": "/demo/places/place-08.webp"
+              }
+            ]
+          }
+        },
+        "ai": {
+          "export": "Restaurant007",
+          "usage": "<Restaurant007\n  title=\"Что бывает по вечерам\"\n  events={[\n    { day: \"ср\", when: \"каждую неделю\", time: \"18:00–23:00\", title: \"Устричные среды\", text: \"Устрицы по цене закупки, к ним — бокал мюскаде.\", price: \"650 ₽ / 6 шт.\", actionLabel: \"Занять стол\", actionHref: \"#book\", image: \"/photos/event.webp\" },\n  ]}\n/>",
+          "summary": "Самодостаточная лента событий для ресторана, бара или клуба: день недели крупно, время, цена, ссылка и фото по наведению. События — массив пропсом.",
+          "preserve": [
+            "день недели крупным серифом слева — лента читается как афиша",
+            "подсветку строки подложкой ::before без прыжков раскладки и фото, выезжающее по наведению",
+            "цену серифом и ссылку с винным подчёркиванием в подвале строки"
+          ],
+          "adapt": [
+            "events: день, периодичность, время, название, текст, цена, ссылка, фото",
+            "eyebrow, title, lede",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "day — любая короткая строка: «ср», «сб–вс», «3 окт».",
+            "Без image третья колонка остаётся пустой, сетка не ломается."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что бывает по вечерам",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Restaurant events as a feed",
+            "description": "Restaurant events: a feed of rows with a large wine-red serif weekday on the left, recurrence in small caps, title, time, text, price and a link. On hover the row highlights and a photo slides in on the right.",
+            "docs": "One file, zero dependencies, a server component. A <ul> with borders between rows; a row is a 4.5rem/1fr grid, from 56rem (container query) 7rem/1fr/11rem with the photo in the third column. On hover the row backdrop (::before with inset 0 −1rem) fades in with a slight scale without changing layout, the photo goes opacity 0→1 with a slight scale. The day is lowercase serif, the time tabular-nums. Palette --vibeui-restaurant-007-* with light-dark: ivory on dark wood, a dark wine accent with a glow (the -glow variable) and its lighter -accent-ink tint for text on dark; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained events feed for a restaurant, bar or club: a large weekday, time, price, link and a hover photo. Events come in as a prop array.",
+              "preserve": [
+                "the large serif weekday on the left — the feed reads like a poster",
+                "the row highlight via a ::before backdrop without layout jumps and the photo sliding in on hover",
+                "the serif price and the wine-red-underlined link in the row footer"
+              ],
+              "adapt": [
+                "events: day, recurrence, time, title, text, price, link, photo",
+                "eyebrow, title, lede",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "day is any short string: “wed”, “sat–sun”, “3 oct”.",
+                "Without image the third column stays empty, the grid holds."
+              ],
+              "usage": "<Restaurant007\n  title=\"What happens in the evenings\"\n  events={[\n    { day: \"wed\", when: \"every week\", time: \"18:00–23:00\", title: \"Oyster Wednesdays\", text: \"Oysters at cost, with a glass of Muscadet.\", price: \"€9 / 6 pcs\", actionLabel: \"Take a table\", actionHref: \"#book\", image: \"/photos/event.webp\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What happens in the evenings"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Events",
+                "title": "What happens in the evenings",
+                "lede": "Oysters, jazz and winemaker dinners. Tables for events are held by booking.",
+                "events": [
+                  {
+                    "day": "wed",
+                    "when": "every week",
+                    "time": "18:00–23:00",
+                    "title": "Oyster Wednesdays",
+                    "text": "Oysters at cost, with a glass of Muscadet.",
+                    "price": "€9 / 6 pcs",
+                    "actionLabel": "Take a table",
+                    "actionHref": "#book",
+                    "image": "/demo/places/place-01.webp"
+                  },
+                  {
+                    "day": "fri",
+                    "when": "every week",
+                    "time": "21:00",
+                    "title": "Jazz at the bar",
+                    "text": "A trio playing standards and a little Nordic modern. Free entry, better hold a table.",
+                    "price": "free entry",
+                    "actionLabel": "Book",
+                    "actionHref": "#book",
+                    "image": "/demo/places/place-04.webp"
+                  },
+                  {
+                    "day": "sat–sun",
+                    "when": "weekends",
+                    "time": "11:00–16:00",
+                    "title": "Brunch",
+                    "text": "Rye cheesecakes, eggs with whitefish, the pie of the day and bottomless coffee.",
+                    "price": "€28",
+                    "actionLabel": "Brunch menu",
+                    "actionHref": "#menu",
+                    "image": "/demo/places/place-06.webp"
+                  },
+                  {
+                    "day": "3 oct",
+                    "when": "one night",
+                    "time": "19:30",
+                    "title": "Winemaker dinner",
+                    "text": "Six courses paired with estate wines, the winemaker at the table.",
+                    "price": "€110",
+                    "actionLabel": "6 seats left",
+                    "actionHref": "#book",
+                    "image": "/demo/places/place-08.webp"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "restaurant-008",
+      "type": "registry:block",
+      "title": "Отзывы поверх мутного фото",
+      "description": "Отзывы ресторана поверх размытого фото зала под тёплым затемнением: стеклянные карточки с курсивной серифной цитатой, звёзды винным свечением, имя, повод и источник. Слева общая оценка крупно.",
+      "categories": [
+        "restaurant"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "restaurant-008/restaurant-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/restaurant-008.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Фото — <img> absolute с blur(10px) и opacity .5, поверх градиентное затемнение. Сетка shell от 64rem (container query) 1fr/2.6fr, карточки в три колонки от 48rem с backdrop-filter и появлением @keyframes с задержкой --n×100ms. Звёзды — строка «★» по rating с aria-label. Секция всегда тёмная: цвета фиксированы под фото. Палитра --vibeui-restaurant-008-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "restaurant",
+          "cafe",
+          "bar",
+          "food",
+          "menu",
+          "dining",
+          "reviews",
+          "testimonials",
+          "rating",
+          "glass"
+        ],
+        "preview": {
+          "props": {
+            "image": "/demo/places/place-04.webp"
+          }
+        },
+        "ai": {
+          "export": "Restaurant008",
+          "usage": "<Restaurant008\n  title=\"Что пишут после ужина\"\n  score=\"4,9\"\n  scoreLabel=\"по 640 отзывам\"\n  image=\"/photos/hall-01.webp\"\n  reviews={[\n    { quote: \"Сиг с копчёным картофелем — лучшее, что я ела в городе за год.\", name: \"Мария К.\", occasion: \"ужин на двоих\", source: \"Яндекс Карты\", rating: 5 },\n  ]}\n/>",
+          "summary": "Самодостаточная секция отзывов для ресторана, бара или отеля: стеклянные карточки поверх мутного фото, звёзды, источник и общая оценка. Отзывы — массив пропсом.",
+          "preserve": [
+            "мутное фото зала под затемнением — атмосфера места вместо белой секции",
+            "стеклянные карточки с backdrop-filter и курсивную серифную цитату",
+            "повод и источник отзыва: проверяемо и по-человечески"
+          ],
+          "adapt": [
+            "reviews: цитаты, имена, поводы, источники, рейтинг",
+            "eyebrow, title, score, scoreLabel, image",
+            "accent, tone"
+          ],
+          "notes": [
+            "Без image остаётся тёмный фон без фото.",
+            "rating округляется до целого, больше 5 не рисуется."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что пишут после ужина",
+            "maxLength": 40
+          },
+          {
+            "prop": "score",
+            "label": "Оценка",
+            "type": "text",
+            "default": "4,9",
+            "maxLength": 4
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Reviews over a blurred photo",
+            "description": "Restaurant reviews over a blurred photo of the hall under a warm shade: glass cards with an italic serif quote, wine-red stars, name, occasion and source. A large overall score on the left.",
+            "docs": "One file, zero dependencies, a server component. The photo is an absolute <img> with blur(10px) and opacity .5, a gradient shade on top. The shell grid from 64rem (container query) is 1fr/2.6fr, cards in three columns from 48rem with backdrop-filter and a @keyframes appearance with a --n×100ms delay. Stars are a “★” string by rating with an aria-label. The section is always dark: colours are fixed for the photo. Palette --vibeui-restaurant-008-* with light-dark: ivory on dark wood, a dark wine accent with a glow (the -glow variable) and its lighter -accent-ink tint for text on dark; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained reviews section for a restaurant, bar or hotel: glass cards over a blurred photo, stars, source and an overall score. Reviews come in as a prop array.",
+              "preserve": [
+                "the blurred hall photo under a shade — the atmosphere of the place instead of a white section",
+                "the glass cards with backdrop-filter and the italic serif quote",
+                "the occasion and source of a review: verifiable and human"
+              ],
+              "adapt": [
+                "reviews: quotes, names, occasions, sources, rating",
+                "eyebrow, title, score, scoreLabel, image",
+                "accent, tone"
+              ],
+              "notes": [
+                "Without image a dark background without a photo remains.",
+                "rating is rounded to an integer; more than 5 is not drawn."
+              ],
+              "usage": "<Restaurant008\n  title=\"What people write after dinner\"\n  score=\"4.9\"\n  scoreLabel=\"from 640 reviews\"\n  image=\"/photos/hall-01.webp\"\n  reviews={[\n    { quote: \"Whitefish with smoked potato — the best thing I ate in town this year.\", name: \"Maria K.\", occasion: \"dinner for two\", source: \"Google\", rating: 5 },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What people write after dinner"
+              },
+              "score": {
+                "label": "Score",
+                "default": "4.9"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "image": "/demo/places/place-04.webp",
+                "eyebrow": "Reviews",
+                "title": "What people write after dinner",
+                "score": "4.9",
+                "scoreLabel": "from 640 reviews on three platforms",
+                "reviews": [
+                  {
+                    "quote": "Whitefish with smoked potato — the best thing I ate in town this year. Candles, quiet, nobody rushing you.",
+                    "name": "Maria K.",
+                    "occasion": "dinner for two",
+                    "source": "Google",
+                    "rating": 5
+                  },
+                  {
+                    "quote": "Came for oyster Wednesday, stayed till closing. The bartender built a sour around our conversation, not the menu.",
+                    "name": "Ilya and Sasha",
+                    "occasion": "wednesday",
+                    "source": "TripAdvisor",
+                    "rating": 5
+                  },
+                  {
+                    "quote": "Celebrated a birthday for twelve — the back room, our own menu, not a single slip.",
+                    "name": "Anna L.",
+                    "occasion": "birthday",
+                    "source": "Yelp",
+                    "rating": 5
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "restaurant-009",
+      "type": "registry:block",
+      "title": "Как добраться с картой и часами",
+      "description": "Как добраться: Яндекс Карта с меткой во всю ширину, поверх — карточка с адресом, часами по дням, ориентирами (метро, парковка, вход) и кнопками «Построить маршрут» и телефон. Без ключа работает штатный виджет.",
+      "categories": [
+        "restaurant"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "restaurant-009/restaurant-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/restaurant-009.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Без apiKey — <iframe> виджета Яндекс Карт с меткой pt и схемой theme; с apiKey — JS API v3 (loadScript один раз на адрес, YMap, слои, YMapMarker с винной меткой). Тема карты в auto следует странице через MutationObserver. Карточка — на узком под картой, от 56rem (container query) absolute слева поверх карты с прокруткой. Часы — <dl> сеткой auto/1fr с tabular-nums, адрес в <address>. Палитра --vibeui-restaurant-009-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "restaurant",
+          "cafe",
+          "bar",
+          "food",
+          "menu",
+          "dining",
+          "map",
+          "yandex",
+          "directions",
+          "hours",
+          "address"
+        ],
+        "preview": {
+          "props": {}
+        },
+        "ai": {
+          "export": "Restaurant009",
+          "usage": "<Restaurant009\n  title=\"Большая Пушкарская, 20\"\n  address=\"Санкт-Петербург, Большая Пушкарская, 20, вход со двора\"\n  latitude={59.9585}\n  longitude={30.3085}\n  hours={[{ days: \"Пн–Чт\", time: \"12:00–23:00\" }, { days: \"Пт–Сб\", time: \"12:00–01:00\" }]}\n  details={[\"м. «Горьковская» — 7 минут пешком\", \"Парковка во дворе по брони\"]}\n  phone=\"+7 812 305-00-40\"\n/>",
+          "summary": "Самодостаточная секция «как добраться» для ресторана, бара или салона: настоящая Яндекс Карта без ключа и карточка с адресом, часами и маршрутом. Всё содержимое пропсами.",
+          "preserve": [
+            "настоящую Яндекс Карту вместо картинки: виджет без ключа, JS API с ключом",
+            "карточку поверх карты с часами по дням и кнопкой маршрута — ответ на вопрос «как доехать»",
+            "адрес в <address> и часы в <dl>"
+          ],
+          "adapt": [
+            "title, address, latitude, longitude, zoom, hours, details, phone, phoneHref, routeLabel",
+            "apiKey, providerLabel",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Координаты — latitude/longitude; в URL Яндекса порядок обратный, код это учитывает.",
+            "На широком экране карточка закрывает левую часть карты — центр метки лучше смещать вправо через longitude."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Большая Пушкарская, 20",
+            "maxLength": 40
+          },
+          {
+            "prop": "zoom",
+            "label": "Зум",
+            "type": "number",
+            "default": 16,
+            "min": 10,
+            "max": 18
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Directions with a map and hours",
+            "description": "Directions: a full-width Yandex Map with a pin and a card on top with the address, hours by day, landmarks (metro, parking, entrance) and “Build a route” and phone buttons. Works without a key via the stock widget.",
+            "docs": "One file, zero dependencies, “use client”. Without apiKey — an <iframe> of the Yandex Maps widget with a pt pin and the theme scheme; with apiKey — JS API v3 (loadScript once per URL, YMap, layers, YMapMarker with a wine-red pin). In auto the map theme follows the page via a MutationObserver. The card sits under the map when narrow, from 56rem (container query) absolute on the left over the map with scrolling. Hours are a <dl> grid auto/1fr with tabular-nums, the address in <address>. Palette --vibeui-restaurant-009-* with light-dark: ivory on dark wood, a dark wine accent with a glow (the -glow variable) and its lighter -accent-ink tint for text on dark; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained “directions” section for a restaurant, bar or salon: a real keyless Yandex Map and a card with address, hours and a route. All content via props.",
+              "preserve": [
+                "a real Yandex Map instead of an image: the widget without a key, the JS API with one",
+                "the card over the map with hours by day and a route button — the answer to “how do I get there”",
+                "the address in <address> and hours in <dl>"
+              ],
+              "adapt": [
+                "title, address, latitude, longitude, zoom, hours, details, phone, phoneHref, routeLabel",
+                "apiKey, providerLabel",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Coordinates are latitude/longitude; Yandex URLs use the reverse order — the code handles it.",
+                "On wide screens the card covers the left of the map — shift the pin centre right via longitude."
+              ],
+              "usage": "<Restaurant009\n  title=\"20 Bolshaya Pushkarskaya\"\n  address=\"St Petersburg, 20 Bolshaya Pushkarskaya, courtyard entrance\"\n  latitude={59.9585}\n  longitude={30.3085}\n  hours={[{ days: \"Mon–Thu\", time: \"12:00–23:00\" }, { days: \"Fri–Sat\", time: \"12:00–01:00\" }]}\n  details={[\"Gorkovskaya metro — 7 minutes on foot\", \"Courtyard parking by booking\"]}\n  phone=\"+7 812 305-00-40\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "20 Bolshaya Pushkarskaya"
+              },
+              "zoom": {
+                "label": "Zoom"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Directions",
+                "title": "20 Bolshaya Pushkarskaya",
+                "address": "St Petersburg, 20 Bolshaya Pushkarskaya, courtyard entrance",
+                "hours": [
+                  {
+                    "days": "Mon–Thu",
+                    "time": "12:00–23:00"
+                  },
+                  {
+                    "days": "Fri–Sat",
+                    "time": "12:00–01:00"
+                  },
+                  {
+                    "days": "Sun",
+                    "time": "11:00–22:00"
+                  }
+                ],
+                "details": [
+                  "Gorkovskaya metro — 7 minutes on foot",
+                  "Courtyard parking, 6 spaces, by booking",
+                  "Courtyard entrance, the arch left of the pharmacy"
+                ],
+                "routeLabel": "Build a route",
+                "providerLabel": "Yandex Maps"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "restaurant-010",
+      "type": "registry:block",
+      "title": "Подвал ресторана с часами и мессенджерами",
+      "description": "Подвал ресторана на тёмном: словомарка серифом и адрес, часы по дням таблицей, телефон крупно, почта и мессенджеры значками с подписями, колонка ссылок — сертификаты, банкеты, вакансии. Внизу реквизиты.",
+      "categories": [
+        "restaurant"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "restaurant-010/restaurant-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/restaurant-010.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. <footer> с сеткой top: колонкой на узком, от 60rem (container query) 1.4fr/1fr/1.2fr/.9fr. Часы — <dl> сеткой с tabular-nums, адрес в <address>, телефон — <a href=tel:> серифом. Мессенджеры — капсулы с винным кружком и встроенным SVG (Telegram, WhatsApp, VK — path внутри файла) или буквой short (Max), target=_blank. Фон тёмный в обеих темах: подвал задуман контрастным. Палитра --vibeui-restaurant-010-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "restaurant",
+          "cafe",
+          "bar",
+          "food",
+          "menu",
+          "dining",
+          "footer",
+          "contacts",
+          "hours",
+          "messengers",
+          "telegram"
+        ],
+        "preview": {
+          "props": {}
+        },
+        "ai": {
+          "export": "Restaurant010",
+          "usage": "<Restaurant010\n  brand=\"Сойка\"\n  address=\"Санкт-Петербург, Большая Пушкарская, 20\"\n  hours={[{ days: \"Пн–Чт\", time: \"12:00–23:00\" }, { days: \"Пт–Сб\", time: \"12:00–01:00\" }]}\n  phone=\"+7 812 305-00-40\"\n  phoneHref=\"tel:+78123050040\"\n  email=\"hello@soyka.ru\"\n  messengers={[{ kind: \"telegram\", label: \"Telegram\", href: \"https://t.me/soyka\" }, { kind: \"whatsapp\", label: \"WhatsApp\", href: \"https://wa.me/78123050040\" }]}\n  links={[{ label: \"Подарочные сертификаты\", href: \"/gift\" }, { label: \"Банкеты\", href: \"/events\" }]}\n/>",
+          "summary": "Самодостаточный подвал для ресторана, бара или кафе: адрес, часы по дням, телефон, почта, мессенджеры значками и ссылки. Всё содержимое пропсами.",
+          "preserve": [
+            "часы по дням таблицей — первое, что ищут в подвале ресторана",
+            "телефон серифом крупно и мессенджеры капсулами со значками и подписями",
+            "контрастный тёмный фон и адрес в <address>"
+          ],
+          "adapt": [
+            "brand, caption, address, hours, phone, phoneHref, email, legal",
+            "messengersLabel, messengers (kind: telegram | whatsapp | vk | max, свой short), linksLabel, links",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Для мессенджера без встроенного значка задайте short — одна-две буквы в кружке.",
+            "Ссылки мессенджеров открываются в новой вкладке с rel=noreferrer."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "brand",
+            "label": "Имя",
+            "type": "text",
+            "default": "Сойка",
+            "maxLength": 24
+          },
+          {
+            "prop": "phone",
+            "label": "Телефон",
+            "type": "text",
+            "default": "+7 812 305-00-40",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Restaurant footer with hours and messengers",
+            "description": "A restaurant footer on dark: a serif wordmark and address, hours by day as a table, a large phone, email and messengers with icons and labels, a links column — gift cards, banquets, jobs. Legal details at the bottom.",
+            "docs": "One file, zero dependencies, a server component. A <footer> with a top grid: a column when narrow, 1.4fr/1fr/1.2fr/.9fr from 60rem (container query). Hours are a <dl> grid with tabular-nums, the address in <address>, the phone a serif <a href=tel:>. Messengers are pills with a wine-red circle and an inline SVG (Telegram, WhatsApp, VK — paths inside the file) or a short letter (Max), target=_blank. The background is dark in both themes: the footer is meant to contrast. Palette --vibeui-restaurant-010-* with light-dark: ivory on dark wood, a dark wine accent with a glow (the -glow variable) and its lighter -accent-ink tint for text on dark; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained footer for a restaurant, bar or cafe: address, hours by day, phone, email, messengers with icons and links. All content via props.",
+              "preserve": [
+                "hours by day as a table — the first thing people look for in a restaurant footer",
+                "the large serif phone and messengers as pills with icons and labels",
+                "the contrasting dark background and the address in <address>"
+              ],
+              "adapt": [
+                "brand, caption, address, hours, phone, phoneHref, email, legal",
+                "messengersLabel, messengers (kind: telegram | whatsapp | vk | max, custom short), linksLabel, links",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "For a messenger without a built-in icon set short — one or two letters in the circle.",
+                "Messenger links open in a new tab with rel=noreferrer."
+              ],
+              "usage": "<Restaurant010\n  brand=\"Jay\"\n  address=\"12 Embankment Street, Lisbon\"\n  hours={[{ days: \"Mon–Thu\", time: \"12:00–23:00\" }, { days: \"Fri–Sat\", time: \"12:00–01:00\" }]}\n  phone=\"+351 21 000 00 40\"\n  phoneHref=\"tel:+351210000040\"\n  email=\"hello@jay.pt\"\n  messengers={[{ kind: \"telegram\", label: \"Telegram\", href: \"https://t.me/jay\" }, { kind: \"whatsapp\", label: \"WhatsApp\", href: \"https://wa.me/351210000040\" }]}\n  links={[{ label: \"Gift cards\", href: \"/gift\" }, { label: \"Private dining\", href: \"/events\" }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Name",
+                "default": "Jay"
+              },
+              "phone": {
+                "label": "Phone",
+                "default": "+351 21 000 00 40"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Jay",
+                "caption": "Nordic kitchen · Old town",
+                "address": "12 Embankment Street, courtyard entrance, Lisbon",
+                "hours": [
+                  {
+                    "days": "Mon–Thu",
+                    "time": "12:00–23:00"
+                  },
+                  {
+                    "days": "Fri–Sat",
+                    "time": "12:00–01:00"
+                  },
+                  {
+                    "days": "Sun",
+                    "time": "11:00–22:00"
+                  }
+                ],
+                "phone": "+351 21 000 00 40",
+                "phoneHref": "tel:+351210000040",
+                "email": "hello@example.com",
+                "messengersLabel": "Booking and questions",
+                "messengers": [
+                  {
+                    "kind": "telegram",
+                    "label": "Telegram",
+                    "href": "https://t.me/"
+                  },
+                  {
+                    "kind": "whatsapp",
+                    "label": "WhatsApp",
+                    "href": "https://wa.me/"
+                  }
+                ],
+                "linksLabel": "More",
+                "links": [
+                  {
+                    "label": "Gift cards",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Private dining",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Jobs",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Privacy policy",
+                    "href": "#"
+                  }
+                ],
+                "legal": "© 2019–2026 Jay Ltd. The menu is not a public offer."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "restaurant-011",
+      "type": "registry:block",
+      "title": "Плашка «вино недели» с бликом",
+      "description": "Узкая винная плашка между секциями: капитель «Вино недели» и фото слева, название и описание по центру, цена серифом и ссылка справа. По полосе раз в семь секунд проходит блик.",
+      "categories": [
+        "restaurant"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "restaurant-011/restaurant-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/restaurant-011.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. <aside> с полосой: grid, от 52rem (container query) три колонки auto/1fr/auto. Блик — ::after с градиентом, skewX(-20deg) и @keyframes по left за 7s (60 % времени стоит за краем). Фото — маленький квадрат 3.5rem с тенью. Цвета плашки — акцент и on-accent, фон секции — фон страницы. Палитра --vibeui-restaurant-011-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "restaurant",
+          "cafe",
+          "bar",
+          "food",
+          "menu",
+          "dining",
+          "banner",
+          "offer",
+          "promo",
+          "band"
+        ],
+        "preview": {
+          "props": {
+            "image": "/demo/places/place-07.webp",
+            "style": {
+              "padding": "3rem 0"
+            }
+          }
+        },
+        "ai": {
+          "export": "Restaurant011",
+          "usage": "<Restaurant011\n  label=\"Вино недели\"\n  title=\"Riesling Kabinett, Мозель, 2022\"\n  text=\"Сухой, минеральный, с яблоком и лаймом.\"\n  price=\"650 ₽ / бокал\"\n  actionLabel=\"Смотреть бар\"\n  actionHref=\"#menu\"\n  image=\"/photos/dish-06.webp\"\n/>",
+          "summary": "Самодостаточная плашка спецпредложения для ресторана, бара или магазина: одна строка между секциями с ценой и ссылкой. Всё содержимое пропсами.",
+          "preserve": [
+            "одну строку между секциями вместо целого блока — предложение, а не секция",
+            "блик, проходящий по винной полосе раз в несколько секунд",
+            "цену серифом и кнопку контрастного цвета справа"
+          ],
+          "adapt": [
+            "label, title, text, price, image",
+            "actionLabel, actionHref",
+            "accent (цвет плашки) и background (фон вокруг), tone"
+          ],
+          "notes": [
+            "Плашка не имеет вертикальных отступов — ставьте её между секциями с собственными паддингами.",
+            "reduced-motion выключает блик."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "label",
+            "label": "Капитель",
+            "type": "text",
+            "default": "Вино недели",
+            "maxLength": 20
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Riesling Kabinett, Мозель, 2022",
+            "maxLength": 40
+          },
+          {
+            "prop": "price",
+            "label": "Цена",
+            "type": "text",
+            "default": "650 ₽ / бокал",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "“Wine of the week” band with a shine",
+            "description": "A narrow wine-red band between sections: a small-caps “Wine of the week” and a photo on the left, name and description in the centre, a serif price and a link on the right. A shine sweeps the band every seven seconds.",
+            "docs": "One file, zero dependencies, a server component. An <aside> with a band: grid, from 52rem (container query) three columns auto/1fr/auto. The shine is an ::after with a gradient, skewX(-20deg) and a @keyframes on left over 7s (parked beyond the edge 60 % of the time). The photo is a small 3.5rem square with a shadow. Band colours are accent and on-accent, the section background is the page background. Palette --vibeui-restaurant-011-* with light-dark: ivory on dark wood, a dark wine accent with a glow (the -glow variable) and its lighter -accent-ink tint for text on dark; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained special-offer band for a restaurant, bar or shop: one line between sections with a price and a link. All content via props.",
+              "preserve": [
+                "one line between sections instead of a whole block — an offer, not a section",
+                "the shine sweeping the wine-red band every few seconds",
+                "the serif price and the contrasting button on the right"
+              ],
+              "adapt": [
+                "label, title, text, price, image",
+                "actionLabel, actionHref",
+                "accent (band colour) and background (around it), tone"
+              ],
+              "notes": [
+                "The band has no vertical margins — place it between sections with their own paddings.",
+                "reduced-motion disables the shine."
+              ],
+              "usage": "<Restaurant011\n  label=\"Wine of the week\"\n  title=\"Riesling Kabinett, Mosel, 2022\"\n  text=\"Dry, mineral, apple and lime.\"\n  price=\"€11 / glass\"\n  actionLabel=\"See the bar\"\n  actionHref=\"#menu\"\n  image=\"/photos/dish-06.webp\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Wine of the week"
+              },
+              "title": {
+                "label": "Title",
+                "default": "Riesling Kabinett, Mosel, 2022"
+              },
+              "price": {
+                "label": "Price",
+                "default": "€11 / glass"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "image": "/demo/places/place-07.webp",
+                "style": {
+                  "padding": "3rem 0"
+                },
+                "label": "Wine of the week",
+                "title": "Riesling Kabinett, Mosel, 2022",
+                "text": "Dry, mineral, apple and lime. Perfect with whitefish and oysters.",
+                "price": "€11 / glass",
+                "actionLabel": "See the bar"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
