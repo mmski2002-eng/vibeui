@@ -636,6 +636,711 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "event-005",
+      "type": "registry:block",
+      "title": "Программа сеткой с липкой карточкой «Выбор дня»",
+      "description": "Программа фестиваля журнальной сеткой: карточки событий в четыре колонки — фото 4:3, заголовок, направление цветной капсулой, сцена и время, плашка «Бесплатно» или «18+» на фото. Справа липкая высокая карточка «Выбор дня» с фото, матовой плашкой, заголовком в стекле и акцентной кнопкой.",
+      "categories": [
+        "events"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "event-005/event-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/event-005.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Сетка 2/3/4 колонки (container query 48rem и 68rem), от 68rem справа колонка 19rem с position:sticky. Карточка: фото в <a tabIndex=-1 aria-hidden> (ссылка дублирует заголовок), scale 1.05 по наведению, плашка с backdrop-filter. Капсула направления — tagColor в --tag, tagInk в --ink. Карточка «Выбор дня» — фото на всю высоту с z-index:-1 и медленным scale по наведению, градиент-затемнение, плашка и заголовок на стекле (backdrop-filter blur 14px). Появление карточек — @keyframes с задержкой --n×60ms. Палитра --vibeui-event-005-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "festival",
+          "event",
+          "colorful",
+          "pills",
+          "landing",
+          "programme",
+          "events",
+          "grid",
+          "sticky",
+          "editorial"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {}
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Event005",
+          "usage": "<Event005\n  title=\"Что происходит на площадках\"\n  items={[\n    { title: \"Оркестр на воде\", image: \"/photos/event-01.webp\", tag: \"#Музыка\", tagColor: \"#ffe2d6\", stage: \"Главная сцена\", time: \"пт, 20:00\", href: \"/events/orchestra\" },\n  ]}\n  pick={{ label: \"Выбор дня\", image: \"/photos/pick.webp\", title: \"Ночной концерт на воде\", date: \"суббота, 22:00\", actionLabel: \"К событию →\", href: \"/events/night\" }}\n/>",
+          "summary": "Самодостаточная программа для фестиваля, медиа или афиши: сетка карточек с фото и цветными капсулами плюс липкая карточка-рекомендация справа. События и «выбор дня» — пропсами.",
+          "preserve": [
+            "липкую карточку «Выбор дня» справа — редакторская рекомендация, которая едет вместе с лентой",
+            "цветную капсулу направления на каждой карточке с цветом в данных",
+            "плашку на фото для «Бесплатно» и возраста"
+          ],
+          "adapt": [
+            "items: заголовки, фото, направления и цвета, сцены, время, плашки, ссылки",
+            "pick: подпись, фото, заголовок, дата, кнопка; eyebrow, title, moreLabel, moreHref",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "pick={undefined} убирает правую колонку — сетка растягивается на всю ширину.",
+            "Липкость работает от 68rem ширины контейнера; ниже карточка встаёт под сетку."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что происходит на площадках",
+            "maxLength": 50
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Programme grid with a sticky “pick of the day” card",
+            "description": "A festival programme as a magazine grid: event cards in four columns — a 4:3 photo, a title, the strand as a colour pill, stage and time, a “Free” or “18+” tag on the photo. On the right a tall sticky “pick of the day” card with a photo, a frosted label, a title on glass and an accent button.",
+            "docs": "One file, zero dependencies, a server component. A 2/3/4-column grid (container queries 48rem and 68rem), from 68rem a 19rem right column with position:sticky. A card: the photo in an <a tabIndex=-1 aria-hidden> (the title link duplicates it), scale 1.05 on hover, a tag with backdrop-filter. The strand pill maps tagColor to --tag and tagInk to --ink. The pick card: a full-height photo at z-index:-1 with a slow hover scale, a darkening gradient, a label and a title on glass (backdrop-filter blur 14px). Cards appear via @keyframes with a --n×60ms delay. Palette --vibeui-event-005-* with light-dark: a white background, black text, a lime accent #d3f43a; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained programme for a festival, media or listings site: a card grid with photos and colour pills plus a sticky recommendation card on the right. Events and the pick come in as props.",
+              "preserve": [
+                "the sticky “pick of the day” card on the right — an editorial recommendation riding along the feed",
+                "the colour strand pill on every card with the colour in the data",
+                "the photo tag for “Free” and age rating"
+              ],
+              "adapt": [
+                "items: titles, photos, strands and colours, stages, times, tags, links",
+                "pick: label, photo, title, date, button; eyebrow, title, moreLabel, moreHref",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "pick={undefined} removes the right column — the grid spans the full width.",
+                "Stickiness works from a 68rem container width; below that the card sits under the grid."
+              ],
+              "usage": "<Event005\n  title=\"What happens on the stages\"\n  items={[\n    { title: \"Orchestra on the water\", image: \"/photos/event-01.webp\", tag: \"#Music\", tagColor: \"#ffe2d6\", stage: \"Main stage\", time: \"Fri, 20:00\", href: \"/events/orchestra\" },\n  ]}\n  pick={{ label: \"Pick of the day\", image: \"/photos/pick.webp\", title: \"Night concert on the water\", date: \"Saturday, 22:00\", actionLabel: \"To the event →\", href: \"/events/night\" }}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What happens on the stages"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Programme",
+                "title": "What happens on the stages",
+                "moreLabel": "Full programme →",
+                "pick": {
+                  "label": "Pick of the day",
+                  "image": "/demo/festival/pick.webp",
+                  "title": "Night concert on the water: a stage in the middle of the pond",
+                  "date": "Saturday, 22:00 · Main stage",
+                  "actionLabel": "To the event →",
+                  "href": "#"
+                },
+                "items": [
+                  {
+                    "title": "Opening: orchestra on the water and a confetti salute",
+                    "image": "/demo/festival/event-01.webp",
+                    "tag": "#Music",
+                    "tagColor": "#ffe2d6",
+                    "stage": "Main stage",
+                    "time": "Fri, 20:00",
+                    "href": "#"
+                  },
+                  {
+                    "title": "Food row: 24 kitchens of the city",
+                    "image": "/demo/festival/event-02.webp",
+                    "tag": "#Food",
+                    "tagColor": "#c2df37",
+                    "stage": "Food court",
+                    "time": "all days, 12:00–23:00",
+                    "badge": "Free",
+                    "href": "#"
+                  },
+                  {
+                    "title": "The big picture: painting a 30-metre canvas",
+                    "image": "/demo/festival/event-03.webp",
+                    "tag": "#Kids",
+                    "tagColor": "#9854d1",
+                    "tagInk": "#fff",
+                    "stage": "Kids lawn",
+                    "time": "Sat, 11:00",
+                    "badge": "0+",
+                    "href": "#"
+                  },
+                  {
+                    "title": "How the city hears: a talk on street sound",
+                    "image": "/demo/festival/event-04.webp",
+                    "tag": "#Talks",
+                    "tagColor": "#f1ddbc",
+                    "stage": "Lecture tent",
+                    "time": "Sat, 15:00",
+                    "badge": "Free",
+                    "href": "#"
+                  },
+                  {
+                    "title": "Local brands and ceramics market",
+                    "image": "/demo/festival/event-05.webp",
+                    "tag": "#Market",
+                    "tagColor": "#006461",
+                    "tagInk": "#fff",
+                    "stage": "Alley",
+                    "time": "Sat–Sun, 12:00–21:00",
+                    "href": "#"
+                  },
+                  {
+                    "title": "Open-air cinema: shorts about the city",
+                    "image": "/demo/festival/event-06.webp",
+                    "tag": "#Cinema",
+                    "tagColor": "#f3c37d",
+                    "stage": "Embankment",
+                    "time": "Sat, 21:30",
+                    "href": "#"
+                  },
+                  {
+                    "title": "Morning yoga on the embankment",
+                    "image": "/demo/festival/event-07.webp",
+                    "tag": "#Morning",
+                    "tagColor": "#98f5af",
+                    "stage": "Embankment",
+                    "time": "Sat–Sun, 08:00",
+                    "badge": "Free",
+                    "href": "#"
+                  },
+                  {
+                    "title": "Silent disco: three DJs in headphones",
+                    "image": "/demo/festival/event-08.webp",
+                    "tag": "#Night",
+                    "tagColor": "#122378",
+                    "tagInk": "#fff",
+                    "stage": "Dance floor",
+                    "time": "Sat, 23:00",
+                    "badge": "18+",
+                    "href": "#"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "event-006",
+      "type": "registry:block",
+      "title": "Расписание по дням цветными капсулами",
+      "description": "Расписание фестиваля: дни — большие цветные капсулы (активная залита своим цветом), фильтр направлений маленькими капсулами, список слотов: время крупно, цветная полоска дня, заголовок, сцена, направление и плашка «Бесплатно» или «18+». Смена дня перерисовывает список с каскадом.",
+      "categories": [
+        "events"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "event-006/event-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/event-006.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради дня и фильтра. Дни — <ul role=tablist> с кнопками role=tab и aria-selected; day.color в --day, ink в --day-ink, активная — заливка, остальные — контур 2px. Фильтры собираются из slots автоматически (уникальные tag), кнопки с aria-pressed. Список — <ol key={day+tag}>, пересоздаётся и въезжает @keyframes с задержкой --n×40ms; полоска у времени — ::before цвета дня; от 56rem строка в три колонки 6rem/1fr/auto и подсветка строки градиентом цвета дня по наведению. Пустой фильтр — плашка emptyText. Палитра --vibeui-event-006-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "festival",
+          "event",
+          "colorful",
+          "pills",
+          "landing",
+          "schedule",
+          "timetable",
+          "tabs",
+          "filter",
+          "days"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {}
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Event006",
+          "usage": "<Event006\n  days={[\n    { key: \"fri\", label: \"Пятница\", date: \"22 авг\", color: \"#ffa5b1\" },\n    { key: \"sat\", label: \"Суббота\", date: \"23 авг\", color: \"#c2df37\" },\n  ]}\n  slots={[\n    { day: \"fri\", time: \"20:00\", title: \"Оркестр на воде\", stage: \"Главная сцена\", tag: \"#Музыка\", tagColor: \"#ffe2d6\" },\n    { day: \"sat\", time: \"08:00\", title: \"Йога\", stage: \"Набережная\", tag: \"#Утро\", tagColor: \"#98f5af\", note: \"Бесплатно\" },\n  ]}\n/>",
+          "summary": "Самодостаточное расписание для фестиваля, конференции или марафона: дни цветными капсулами, фильтр по направлению и список слотов по времени. Дни и слоты — массивы пропсом.",
+          "preserve": [
+            "дни как цветные капсулы с заливкой активного своим цветом — не серые табы",
+            "фильтр направлений, собранный из данных, и перерисовку списка с каскадом",
+            "цветную полоску дня у времени и подсветку строки по наведению"
+          ],
+          "adapt": [
+            "days: ключи, подписи, даты, цвета; slots: день, время, заголовок, сцена, направление и цвет, плашка, ссылка",
+            "eyebrow, title, allLabel, emptyText",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Первый день открыт по умолчанию; фильтр сбрасывается повторным кликом.",
+            "Слоты с одним направлением не показывают фильтр — он появляется от двух."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "По дням и площадкам",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Day-by-day schedule with colour pills",
+            "description": "A festival schedule: days as large colour pills (the active one filled with its colour), a strand filter as small pills, a list of slots: time large, a day-coloured bar, title, stage, strand and a “Free” or “18+” tag. Switching the day re-renders the list with a cascade.",
+            "docs": "One file, zero dependencies, “use client” for the day and the filter. Days are a <ul role=tablist> with role=tab buttons and aria-selected; day.color goes to --day, ink to --day-ink, the active one is filled, the rest outlined 2px. Filters are built from slots automatically (unique tag), buttons with aria-pressed. The list is an <ol key={day+tag}>, remounted and sliding in via @keyframes with a --n×40ms delay; the bar next to the time is a ::before in the day colour; from 56rem a three-column row 6rem/1fr/auto and a day-coloured gradient highlight on hover. An empty filter shows the emptyText plate. Palette --vibeui-event-006-* with light-dark: a white background, black text, a lime accent #d3f43a; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained schedule for a festival, conference or marathon: days as colour pills, a strand filter and a time-ordered slot list. Days and slots come in as prop arrays.",
+              "preserve": [
+                "days as colour pills with the active one filled in its own colour — not grey tabs",
+                "the strand filter built from data and the list re-render with a cascade",
+                "the day-coloured bar next to the time and the row highlight on hover"
+              ],
+              "adapt": [
+                "days: keys, labels, dates, colours; slots: day, time, title, stage, strand and colour, tag, link",
+                "eyebrow, title, allLabel, emptyText",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The first day is open by default; the filter resets on a second click.",
+                "Slots with a single strand show no filter — it appears from two."
+              ],
+              "usage": "<Event006\n  days={[\n    { key: \"fri\", label: \"Friday\", date: \"22 Aug\", color: \"#ffa5b1\" },\n    { key: \"sat\", label: \"Saturday\", date: \"23 Aug\", color: \"#c2df37\" },\n  ]}\n  slots={[\n    { day: \"fri\", time: \"20:00\", title: \"Orchestra on the water\", stage: \"Main stage\", tag: \"#Music\", tagColor: \"#ffe2d6\" },\n    { day: \"sat\", time: \"08:00\", title: \"Yoga\", stage: \"Embankment\", tag: \"#Morning\", tagColor: \"#98f5af\", note: \"Free\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "By day and venue"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Schedule",
+                "title": "By day and venue",
+                "allLabel": "All strands",
+                "emptyText": "Nothing on this day for the chosen strand — try the next one.",
+                "days": [
+                  {
+                    "key": "fri",
+                    "label": "Friday",
+                    "date": "22 Aug",
+                    "color": "#ffa5b1"
+                  },
+                  {
+                    "key": "sat",
+                    "label": "Saturday",
+                    "date": "23 Aug",
+                    "color": "#c2df37"
+                  },
+                  {
+                    "key": "sun",
+                    "label": "Sunday",
+                    "date": "24 Aug",
+                    "color": "#464dff",
+                    "ink": "#fff"
+                  }
+                ],
+                "slots": [
+                  {
+                    "day": "fri",
+                    "time": "18:00",
+                    "title": "Venues open, food court and market",
+                    "stage": "All venues",
+                    "tag": "#Food",
+                    "tagColor": "#c2df37",
+                    "note": "Free"
+                  },
+                  {
+                    "day": "fri",
+                    "time": "20:00",
+                    "title": "Orchestra on the water and a confetti salute",
+                    "stage": "Main stage",
+                    "tag": "#Music",
+                    "tagColor": "#ffe2d6"
+                  },
+                  {
+                    "day": "fri",
+                    "time": "22:00",
+                    "title": "DJ set on the embankment",
+                    "stage": "Embankment",
+                    "tag": "#Night",
+                    "tagColor": "#122378",
+                    "tagInk": "#fff",
+                    "note": "18+"
+                  },
+                  {
+                    "day": "sat",
+                    "time": "08:00",
+                    "title": "Yoga on the embankment",
+                    "stage": "Embankment",
+                    "tag": "#Morning",
+                    "tagColor": "#98f5af",
+                    "note": "Free"
+                  },
+                  {
+                    "day": "sat",
+                    "time": "11:00",
+                    "title": "The big picture: a 30-metre canvas",
+                    "stage": "Kids lawn",
+                    "tag": "#Kids",
+                    "tagColor": "#9854d1",
+                    "tagInk": "#fff",
+                    "note": "0+"
+                  },
+                  {
+                    "day": "sat",
+                    "time": "15:00",
+                    "title": "How the city hears: a talk on street sound",
+                    "stage": "Lecture tent",
+                    "tag": "#Talks",
+                    "tagColor": "#f1ddbc",
+                    "note": "Free"
+                  },
+                  {
+                    "day": "sat",
+                    "time": "20:00",
+                    "title": "Headliner: Sonya Volna and orchestra",
+                    "stage": "Main stage",
+                    "tag": "#Music",
+                    "tagColor": "#ffe2d6"
+                  },
+                  {
+                    "day": "sat",
+                    "time": "23:00",
+                    "title": "Silent disco in headphones",
+                    "stage": "Dance floor",
+                    "tag": "#Night",
+                    "tagColor": "#122378",
+                    "tagInk": "#fff",
+                    "note": "18+"
+                  },
+                  {
+                    "day": "sun",
+                    "time": "10:00",
+                    "title": "Bike parade along the embankment",
+                    "stage": "City",
+                    "tag": "#City",
+                    "tagColor": "#464dff",
+                    "tagInk": "#fff",
+                    "note": "Free"
+                  },
+                  {
+                    "day": "sun",
+                    "time": "14:00",
+                    "title": "Debate: who owns the courtyard",
+                    "stage": "Lecture tent",
+                    "tag": "#Talks",
+                    "tagColor": "#f1ddbc",
+                    "note": "Free"
+                  },
+                  {
+                    "day": "sun",
+                    "time": "19:00",
+                    "title": "Closing: the city choir",
+                    "stage": "Main stage",
+                    "tag": "#Music",
+                    "tagColor": "#ffe2d6"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "event-007",
+      "type": "registry:block",
+      "title": "Площадки в цветных рамках с фото-вкладкой",
+      "description": "Площадки фестиваля: карточки в цветной рамке — снаружи заливка цветом площадки, внутри белая карточка с названием, описанием, фактами капсулами и направлениями, фото-вкладка со скруглением. По наведению рамка растёт, фото приподнимается и поворачивается.",
+      "categories": [
+        "events"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "event-007/event-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/event-007.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Рамка — <li> с padding .5rem и background venue.color (--color), по наведению padding .75rem; внутри карточка с background card. Факты — капсулы color-mix(var(--color) 45 %, card). До 68rem фото — квадрат 5.5rem справа от текста; от 68rem (container query) карточка в колонку, фото 3:2 сверху. Сетка 1/2/4 колонки. Появление — @keyframes с задержкой --n×70ms. Палитра --vibeui-event-007-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "festival",
+          "event",
+          "colorful",
+          "pills",
+          "landing",
+          "venues",
+          "places",
+          "stages",
+          "frames"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {}
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Event007",
+          "usage": "<Event007\n  title=\"Шесть точек на карте парка\"\n  venues={[\n    { name: \"Главная сцена\", text: \"Сцена на понтонах посреди пруда.\", image: \"/photos/venue-01.webp\", color: \"#c2df37\", facts: [\"4 000 мест\", \"навес от дождя\"], tags: [\"#Музыка\", \"#Ночь\"], href: \"/venues/main\" },\n  ]}\n/>",
+          "summary": "Самодостаточная секция площадок для фестиваля, кампуса или выставки: карточки в цветной рамке с фото, фактами и направлениями. Площадки — массив пропсом с цветом на каждую.",
+          "preserve": [
+            "цветную рамку вокруг белой карточки — цвет в данных, а не фон секции",
+            "фото-вкладку, которая приподнимается и поворачивается по наведению",
+            "факты капсулами в тоне рамки"
+          ],
+          "adapt": [
+            "venues: названия, тексты, фото, цвета, факты, направления, ссылки",
+            "eyebrow, title, lede",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Четыре площадки встают в ряд от 68rem; при шести-восьми — два ряда.",
+            "Без image вкладка остаётся серой: лучше давать фото всем."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Шесть точек на карте парка",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Venues in colour frames with a photo tab",
+            "description": "Festival venues: cards in a colour frame — the venue colour outside, a white card inside with the name, description, facts as pills and strands, a rounded photo tab. On hover the frame grows and the photo lifts and tilts.",
+            "docs": "One file, zero dependencies, a server component. The frame is an <li> with padding .5rem and background venue.color (--color), padding .75rem on hover; inside a card with the card background. Facts are color-mix(var(--color) 45 %, card) pills. Below 68rem the photo is a 5.5rem square right of the text; from 68rem (container query) the card stacks, the 3:2 photo on top. A 1/2/4-column grid. Appearance via @keyframes with a --n×70ms delay. Palette --vibeui-event-007-* with light-dark: a white background, black text, a lime accent #d3f43a; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained venues section for a festival, campus or exhibition: cards in a colour frame with a photo, facts and strands. Venues come in as a prop array with a colour each.",
+              "preserve": [
+                "the colour frame around a white card — colour in the data, not the section background",
+                "the photo tab that lifts and tilts on hover",
+                "facts as pills in the frame’s tone"
+              ],
+              "adapt": [
+                "venues: names, texts, photos, colours, facts, strands, links",
+                "eyebrow, title, lede",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Four venues fit one row from 68rem; six to eight make two rows.",
+                "Without image the tab stays grey: better give every venue a photo."
+              ],
+              "usage": "<Event007\n  title=\"Six points on the park map\"\n  venues={[\n    { name: \"Main stage\", text: \"A stage on pontoons in the middle of the pond.\", image: \"/photos/venue-01.webp\", color: \"#c2df37\", facts: [\"4,000 seats\", \"rain canopy\"], tags: [\"#Music\", \"#Night\"], href: \"/venues/main\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Six points on the park map"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Venues",
+                "title": "Six points on the park map",
+                "lede": "No more than seven minutes on foot between any two. Water, toilets and wayfinding everywhere.",
+                "venues": [
+                  {
+                    "name": "Main stage",
+                    "text": "A stage on pontoons in the middle of the pond, the audience on the slope and on the water.",
+                    "image": "/demo/festival/venue-01.webp",
+                    "color": "#c2df37",
+                    "facts": [
+                      "4,000 seats",
+                      "live screens",
+                      "rain canopy"
+                    ],
+                    "tags": [
+                      "#Music",
+                      "#Night"
+                    ],
+                    "href": "#"
+                  },
+                  {
+                    "name": "Food court",
+                    "text": "Long tables under umbrellas, 24 kitchens and a bar with local breweries.",
+                    "image": "/demo/festival/venue-02.webp",
+                    "color": "#ffe2d6",
+                    "facts": [
+                      "12:00–23:00",
+                      "cashless",
+                      "vegan row"
+                    ],
+                    "tags": [
+                      "#Food",
+                      "#Workshops"
+                    ],
+                    "href": "#"
+                  },
+                  {
+                    "name": "Lecture tent",
+                    "text": "A white tent with open sides: talks, debates and daytime cinema.",
+                    "image": "/demo/festival/venue-03.webp",
+                    "color": "#d9cafe",
+                    "facts": [
+                      "300 seats",
+                      "sign language",
+                      "free"
+                    ],
+                    "tags": [
+                      "#Talks",
+                      "#Cinema"
+                    ],
+                    "href": "#"
+                  },
+                  {
+                    "name": "Kids lawn",
+                    "text": "An inflatable town, workshops and a quiet zone for the youngest.",
+                    "image": "/demo/festival/venue-04.webp",
+                    "color": "#98f5af",
+                    "facts": [
+                      "0+",
+                      "changing rooms",
+                      "hosts"
+                    ],
+                    "tags": [
+                      "#Kids",
+                      "#Workshops"
+                    ],
+                    "href": "#"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

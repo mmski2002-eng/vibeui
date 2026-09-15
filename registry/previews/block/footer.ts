@@ -34,4 +34,6 @@ export const PREVIEWS = {
     import("@/registry/blocks/footer/footer-020/footer-020").then((module) => module.Footer020),
   "footer-021": () =>
     import("@/registry/blocks/footer/footer-021/footer-021").then((module) => module.Footer021),
+  "footer-022": () =>
+    import("@/registry/blocks/footer/footer-022/footer-022").then((module) => module.Footer022),
 } satisfies PreviewLoaderMap

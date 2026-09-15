@@ -3130,6 +3130,253 @@
           }
         }
       }
+    },
+    {
+      "name": "footer-022",
+      "type": "registry:block",
+      "title": "Подвал с цветной полоской и иконками соцсетей",
+      "description": "Подвал фестиваля: тонкая цветная полоска сверху из цветов направлений (полоски растягиваются по наведению), словомарка с точкой слева и круглые иконки соцсетей справа, пять колонок ссылок, внизу организатор и год.",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-022/footer-022.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-022.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Полоска — flex из <i> с flex:1, по наведению flex:3. Иконки — inline SVG для telegram, vk, youtube, instagram по kind; незнакомый kind рисует первую букву. Кружок по наведению приподнимается с поворотом и инвертируется. Колонки 2/5 (container query 60rem). Палитра --vibeui-footer-022-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "festival",
+          "event",
+          "colorful",
+          "pills",
+          "landing",
+          "footer",
+          "socials",
+          "stripe",
+          "columns"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {}
+        },
+        "cardControls": [
+          "brand",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Footer022",
+          "usage": "<Footer022\n  brand=\"тридня\"\n  columns={[{ title: \"Фестиваль\", links: [{ label: \"Программа\", href: \"#program\" }] }]}\n  socials={[{ kind: \"telegram\", label: \"Telegram\", href: \"https://t.me/festival\" }]}\n  legal=\"Организатор — АНО «Городские выходные». © 2026.\"\n  stripe={[\"#ffe2d6\", \"#c2df37\", \"#464dff\"]}\n/>",
+          "summary": "Самодостаточный подвал для фестиваля, медиа или сообщества: цветная полоска, словомарка, иконки соцсетей, пять колонок и организатор. Всё содержимое пропсами.",
+          "preserve": [
+            "цветную полоску сверху из палитры направлений — подвал повторяет ритм хиро",
+            "круглые иконки соцсетей с инверсией по наведению",
+            "словомарку с точкой — ту же, что в шапке"
+          ],
+          "adapt": [
+            "brand, brandHref, columns, socials (kind, label, href), legal",
+            "stripe — набор цветов полоски, пустой массив убирает её",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "stripe={[]} убирает полоску.",
+            "Свои иконки: kind вне списка рисует первую букву подписи — замените массив ICONS в файле."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "тридня",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Footer with a colour stripe and social icons",
+            "description": "A festival footer: a thin colour stripe on top from the strand colours (segments stretch on hover), a wordmark with a dot on the left and round social icons on the right, five link columns, the organiser and year at the bottom.",
+            "docs": "One file, zero dependencies, a server component. The stripe is a flex of <i> with flex:1, flex:3 on hover. Icons are inline SVGs for telegram, vk, youtube, instagram by kind; an unknown kind draws the first letter. The circle lifts with a tilt and inverts on hover. Columns 2/5 (container query 60rem). Palette --vibeui-footer-022-* with light-dark: a white background, black text, a lime accent #d3f43a; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained footer for a festival, media or community site: a colour stripe, a wordmark, social icons, five columns and the organiser. All content via props.",
+              "preserve": [
+                "the colour stripe on top from the strand palette — the footer echoes the hero rhythm",
+                "round social icons inverting on hover",
+                "the wordmark with a dot — the same as in the header"
+              ],
+              "adapt": [
+                "brand, brandHref, columns, socials (kind, label, href), legal",
+                "stripe — the stripe colours, an empty array removes it",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "stripe={[]} removes the stripe.",
+                "Own icons: a kind outside the list draws the label’s first letter — replace the ICONS map in the file."
+              ],
+              "usage": "<Footer022\n  brand=\"threedays\"\n  columns={[{ title: \"Festival\", links: [{ label: \"Programme\", href: \"#program\" }] }]}\n  socials={[{ kind: \"telegram\", label: \"Telegram\", href: \"https://t.me/festival\" }]}\n  legal=\"Organiser — City Weekends. © 2026.\"\n  stripe={[\"#ffe2d6\", \"#c2df37\", \"#464dff\"]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "threedays"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "brand": "threedays",
+                "legal": "Organiser — City Weekends, a non-profit. Age ratings are shown next to every event. © 2026.",
+                "columns": [
+                  {
+                    "title": "Festival",
+                    "links": [
+                      {
+                        "label": "Programme",
+                        "href": "#program"
+                      },
+                      {
+                        "label": "Schedule",
+                        "href": "#schedule"
+                      },
+                      {
+                        "label": "Line-up",
+                        "href": "#lineup"
+                      },
+                      {
+                        "label": "Venues",
+                        "href": "#venues"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Tickets",
+                    "links": [
+                      {
+                        "label": "Buy",
+                        "href": "#tickets"
+                      },
+                      {
+                        "label": "Refunds",
+                        "href": "#faq"
+                      },
+                      {
+                        "label": "Families",
+                        "href": "#tickets"
+                      },
+                      {
+                        "label": "Promo codes",
+                        "href": "#"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Visitors",
+                    "links": [
+                      {
+                        "label": "Getting there",
+                        "href": "#map"
+                      },
+                      {
+                        "label": "Rules",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Accessibility",
+                        "href": "#faq"
+                      },
+                      {
+                        "label": "Lost and found",
+                        "href": "#"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Partners",
+                    "links": [
+                      {
+                        "label": "Take part",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Food court and market",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Sponsorship",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Press",
+                        "href": "#"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Team",
+                    "links": [
+                      {
+                        "label": "About",
+                        "href": "#about"
+                      },
+                      {
+                        "label": "Volunteers",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Jobs",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Contacts",
+                        "href": "#"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

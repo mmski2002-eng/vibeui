@@ -591,9 +591,9 @@ export const SYNONYMS: Synonym[] = [
     terms: ["ai"],
   },
   {
-    say: ["события", "мероприятия", "афиша"],
+    say: ["события", "мероприятия", "афиша", "фестиваль", "программа", "расписание", "площадки"],
     categories: ["events", "event-calendar"],
-    terms: ["events"],
+    terms: ["events", "festival", "programme", "schedule", "venues", "lineup"],
   },
   {
     say: ["подкаст", "аудио", "выпуски"],

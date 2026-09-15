@@ -18,4 +18,6 @@ export const PREVIEWS = {
     import("@/registry/blocks/team/people-006/people-006").then((module) => module.People006),
   "people-007": () =>
     import("@/registry/blocks/team/people-007/people-007").then((module) => module.People007),
+  "people-008": () =>
+    import("@/registry/blocks/team/people-008/people-008").then((module) => module.People008),
 } satisfies PreviewLoaderMap

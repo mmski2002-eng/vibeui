@@ -183,6 +183,38 @@ export const SCENARIOS: Scenario[] = [
       { item: "footer-021", anchor: "footer", role: "Подвал", roleEn: "Footer", note: "Автор, ссылки, соцсети и реквизиты с лицензией.", noteEn: "The author, links, socials and legal details with a licence." },
     ],
   },
+  {
+    slug: "festival",
+    label: "Городской фестиваль",
+    en: "City festival",
+    summary:
+      "Сайт городского фестиваля: гигантский заголовок и цветные капсулы направлений, манифест, программа с «выбором дня», расписание по дням, участники, площадки, билеты, карта, вопросы и баннер «купить билет». Белая страница, двенадцать цветов, капсулы и стикеры.",
+    summaryEn:
+      "A city festival site: a giant headline and colourful strand pills, a manifesto, a programme with a “pick of the day”, a day-by-day schedule, line-up, venues, tickets, a map, FAQ and a “buy a ticket” banner. A white page, twelve colours, pills and stickers.",
+    demo: "/scenarios/festival/demo",
+    source: "app/scenarios/festival/demo/page.tsx",
+    images: "docs/scenarios/festival/IMAGES.md",
+    theme: {
+      tone: "light",
+      accent: "#d3f43a",
+      ink: "#111111",
+      font: "Inter Tight, Inter",
+    },
+    sections: [
+      { item: "navbar-023", anchor: "", role: "Шапка", roleEn: "Header", note: "Словомарка с точкой, серая капсула поиска и лаймовая «Билеты».", noteEn: "A wordmark with a dot, a grey search pill and a lime “Tickets”." },
+      { item: "hero-023", anchor: "hero", role: "Первый экран", roleEn: "First screen", note: "Гигантский заголовок и цветные капсулы направлений со стикерами.", noteEn: "A giant headline and colourful strand pills with stickers." },
+      { item: "about-009", anchor: "about", role: "Манифест", roleEn: "Manifesto", note: "Крупный текст с жирными вставками и капсулы фактов.", noteEn: "Large text with bold inserts and fact pills." },
+      { item: "event-005", anchor: "program", role: "Программа", roleEn: "Programme", note: "Сетка событий и липкая карточка «Выбор дня».", noteEn: "An event grid and a sticky “pick of the day” card." },
+      { item: "event-006", anchor: "schedule", role: "Расписание", roleEn: "Schedule", note: "Дни цветными капсулами, фильтр направлений, слоты по времени.", noteEn: "Days as colour pills, a strand filter, time slots." },
+      { item: "people-008", anchor: "lineup", role: "Участники", roleEn: "Line-up", note: "Цветные карточки хедлайнеров, раскрываются по наведению.", noteEn: "Colourful headliner cards that expand on hover." },
+      { item: "event-007", anchor: "venues", role: "Площадки", roleEn: "Venues", note: "Карточки в цветной рамке с фото-вкладкой и фактами.", noteEn: "Cards in a colour frame with a photo tab and facts." },
+      { item: "pricing-021", anchor: "tickets", role: "Билеты", roleEn: "Tickets", note: "Три цветных тарифа и счётчик билетов.", noteEn: "Three colour tiers and a ticket counter." },
+      { item: "map-006", anchor: "map", role: "Карта", roleEn: "Map", note: "Яндекс Карта с метками площадок и «как добраться».", noteEn: "A Yandex Map with venue pins and “how to get there”." },
+      { item: "faq-018", anchor: "faq", role: "Вопросы", roleEn: "FAQ", note: "Две колонки вопросов с цветными маркерами.", noteEn: "Two columns of questions with colour markers." },
+      { item: "cta-019", anchor: "cta", role: "Призыв", roleEn: "Call to action", note: "Фото-баннер с капсулами «Программа» и «Купить билет».", noteEn: "A photo banner with “Programme” and “Buy a ticket” pills." },
+      { item: "footer-022", anchor: "footer", role: "Подвал", roleEn: "Footer", note: "Цветная полоска, соцсети иконками и пять колонок.", noteEn: "A colour stripe, social icons and five columns." },
+    ],
+  },
 ]
 
 // Опечатка в имени item'а здесь означала бы пустую карточку в рецепте,

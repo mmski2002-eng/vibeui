@@ -3780,6 +3780,208 @@
           }
         }
       }
+    },
+    {
+      "name": "pricing-021",
+      "type": "registry:block",
+      "title": "Билеты цветными карточками со счётчиком",
+      "description": "Билеты фестиваля: три карточки, каждая своего цвета, цена гигантом, зачёркнутая старая, список того, что входит, кнопка-пилюля. Счётчик «Билетов» умножает цены во всех карточках, число перелистывается. Выделенный тариф чуть крупнее и с чёрной кнопкой. Внизу строка про бесплатные зоны.",
+      "categories": [
+        "pricing"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-021/pricing-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-021.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради счётчика. Счётчик — role=group с кнопками «−»/«+» (disabled на границах 1…maxCount) и aria-live на числе. Карточка — <li> с ticket.color в --color и ink в --ink; data-dark переводит плашку и кнопку в тёмный режим, data-featured — scale(1.03) и чёрная кнопка. Цена — span с key=значение и @keyframes въезда снизу. Галочки — кружок currentColor с уголком цвета карточки через ::after. Формат чисел — Intl.NumberFormat ru-RU. От 56rem три колонки. Палитра --vibeui-pricing-021-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "festival",
+          "event",
+          "colorful",
+          "pills",
+          "landing",
+          "tickets",
+          "pricing",
+          "counter",
+          "tiers"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {}
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Pricing021",
+          "usage": "<Pricing021\n  tickets={[\n    { name: \"Один день\", price: 1500, oldPrice: 1900, color: \"#ffe2d6\", features: [\"Все сцены дня\", \"Лекторий и кино\"], actionLabel: \"Купить\", actionHref: \"/buy/day\" },\n    { name: \"Все три дня\", price: 3200, oldPrice: 4500, color: \"#c2df37\", featured: true, note: \"Выгоднее на 30 %\", features: [\"Все сцены\", \"Ночная программа\"], actionLabel: \"Купить\", actionHref: \"/buy/all\" },\n  ]}\n  freeNote=\"Детям до 7 лет — бесплатно.\"\n/>",
+          "summary": "Самодостаточные билеты для фестиваля, конференции или парка: три цветных тарифа, счётчик количества с перелистыванием цен и строка про бесплатное. Тарифы — массив пропсом с цветом на каждый.",
+          "preserve": [
+            "цвет карточки в данных — тарифы различаются цветом, а не рамкой",
+            "счётчик билетов, умножающий все цены с перелистыванием",
+            "строку о бесплатном под тарифами — снимает вопрос «а можно без билета»"
+          ],
+          "adapt": [
+            "tickets: названия, тексты, цены, старые цены, цвета, ink, features, featured, note, ссылки",
+            "counter, counterLabel, maxCount, freeNote, currency; eyebrow, title, lede",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "counter={false} прячет счётчик — цены показываются за один билет.",
+            "На тёмных цветах передавайте ink=\"#fff\"; кнопка станет белой."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Один браслет — все сцены",
+            "maxLength": 40
+          },
+          {
+            "prop": "counter",
+            "label": "Счётчик",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Tickets as colour cards with a counter",
+            "description": "Festival tickets: three cards, each in its own colour, a giant price, a struck-through old one, a list of what’s included, a pill button. A “Tickets” counter multiplies the prices on all cards, the number flips. The featured tier is slightly larger with a black button. A line about free zones at the bottom.",
+            "docs": "One file, zero dependencies, “use client” for the counter. The counter is a role=group with “−”/“+” buttons (disabled at the 1…maxCount bounds) and aria-live on the number. A card is an <li> with ticket.color in --color and ink in --ink; data-dark switches the tag and button to dark mode, data-featured adds scale(1.03) and a black button. The price is a span keyed by value with a slide-up @keyframes. Checkmarks are a currentColor circle with a card-coloured tick via ::after. Numbers via Intl.NumberFormat ru-RU. Three columns from 56rem. Palette --vibeui-pricing-021-* with light-dark: a white background, black text, a lime accent #d3f43a; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "Self-contained tickets for a festival, conference or park: three colour tiers, a quantity counter with flipping prices and a line about what’s free. Tiers come in as a prop array with a colour each.",
+              "preserve": [
+                "the card colour in the data — tiers differ by colour, not by a border",
+                "the ticket counter multiplying all prices with a flip",
+                "the free-zones line under the tiers — it answers “can I come without a ticket”"
+              ],
+              "adapt": [
+                "tickets: names, texts, prices, old prices, colours, ink, features, featured, note, links",
+                "counter, counterLabel, maxCount, freeNote, currency; eyebrow, title, lede",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "counter={false} hides the counter — prices show per single ticket.",
+                "Pass ink=\"#fff\" on dark colours; the button turns white."
+              ],
+              "usage": "<Pricing021\n  tickets={[\n    { name: \"One day\", price: 1500, oldPrice: 1900, color: \"#ffe2d6\", features: [\"All stages of the day\", \"Talks and cinema\"], actionLabel: \"Buy\", actionHref: \"/buy/day\" },\n    { name: \"All three days\", price: 3200, oldPrice: 4500, color: \"#c2df37\", featured: true, note: \"30 % cheaper\", features: [\"All stages\", \"Night programme\"], actionLabel: \"Buy\", actionHref: \"/buy/all\" },\n  ]}\n  freeNote=\"Kids under 7 enter free.\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "One wristband — every stage"
+              },
+              "counter": {
+                "label": "Counter"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Tickets",
+                "title": "One wristband — every stage",
+                "lede": "Presale until 1 August. Half the programme is free: the food court, market, lecture tent and morning sessions are open to all.",
+                "counterLabel": "Tickets",
+                "currency": "₽",
+                "freeNote": "Kids under 7 enter free with any ticket. Refunds until 15 August, no questions asked.",
+                "tickets": [
+                  {
+                    "name": "One day",
+                    "text": "Any of the three days.",
+                    "price": 1500,
+                    "oldPrice": 1900,
+                    "color": "#ffe2d6",
+                    "features": [
+                      "All stages and venues of the day",
+                      "Talks and cinema",
+                      "Kids lawn with a child"
+                    ],
+                    "actionLabel": "Buy a day",
+                    "actionHref": "#"
+                  },
+                  {
+                    "name": "All three days",
+                    "text": "One wristband for the whole festival.",
+                    "price": 3200,
+                    "oldPrice": 4500,
+                    "color": "#c2df37",
+                    "featured": true,
+                    "note": "30 % cheaper",
+                    "features": [
+                      "All stages and venues",
+                      "Night programme 18+",
+                      "Priority entry in the mornings",
+                      "10 % off at the food court"
+                    ],
+                    "actionLabel": "Buy everything",
+                    "actionHref": "#"
+                  },
+                  {
+                    "name": "Family",
+                    "text": "Two adults and kids under 14.",
+                    "price": 5000,
+                    "oldPrice": 6400,
+                    "color": "#464dff",
+                    "ink": "#fff",
+                    "features": [
+                      "All three days for the family",
+                      "Kids lawn and workshops",
+                      "Quiet zone and changing rooms",
+                      "Parking by the entrance"
+                    ],
+                    "actionLabel": "Buy family",
+                    "actionHref": "#"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

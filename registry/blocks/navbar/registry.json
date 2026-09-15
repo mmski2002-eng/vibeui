@@ -3862,6 +3862,214 @@
           }
         }
       }
+    },
+    {
+      "name": "navbar-023",
+      "type": "registry:block",
+      "title": "Шапка-островки фестиваля с кареткой и цветными точками",
+      "description": "Шапка фестиваля из островков: у начала страницы три отдельные капсулы на матовом стекле — бренд с лаймовым кружком-меткой, меню со ссылками и лаймовое «Билеты» — стоят широко; после прокрутки зазоры схлопываются и островки собираются в одну узкую пилюлю. Под ссылками ездит каретка: по наведению за курсором, иначе под текущим разделом. У ссылок цветные точки направлений. На узком экране бургер и панель.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-023/navbar-023.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-023.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради состояния прокрутки, каретки, скроллспая и меню. <header> sticky с pointer-events:none, кликабельны только островки. dock получает data-scrolled после 8px: у bar схлопываются gap и max-width, появляется плотное стекло с тенью, а у островков фон, рамка и тень гаснут — три капсулы становятся одной. Каретка — span с width и translate3d из CSS-переменных, которые пишутся из offsetLeft/offsetWidth: onMouseEnter ссылки ведёт её за курсором, onMouseLeave возвращает под aria-current; ResizeObserver пересчитывает при перестроении. Текущий раздел — IntersectionObserver по якорям ссылок (rootMargin -40 %/-55 %). Точка у ссылки — link.color в --dot, у активной масштаб 1.5. Ссылки от 60rem (container query); уже — бургер с aria-expanded, панель data-open под шапкой, Escape и клик снаружи закрывают. До 32rem у бургера прячется подпись. Палитра --vibeui-navbar-023-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "festival",
+          "event",
+          "colorful",
+          "pills",
+          "landing",
+          "header",
+          "navbar",
+          "sticky",
+          "floating",
+          "scrollspy",
+          "islands",
+          "glider",
+          "glass"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "spy": false
+          }
+        },
+        "cardControls": [
+          "brand",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Navbar023",
+          "usage": "<Navbar023\n  brand=\"тридня\"\n  markLabel=\"т\"\n  links={[\n    { label: \"Программа\", href: \"#program\", color: \"#ffe2d6\" },\n    { label: \"Билеты\", href: \"#tickets\", color: \"#c2df37\" },\n  ]}\n  actionLabel=\"Билеты\"\n  actionHref=\"#tickets\"\n/>",
+          "summary": "Самодостаточная шапка-островки для фестиваля, медиа или сообщества: три капсулы, которые после прокрутки собираются в одну пилюлю, каретка под ссылками, цветные точки и акцентная кнопка. Всё содержимое пропсами.",
+          "preserve": [
+            "три островка у начала и одну пилюлю после прокрутки — главный жест шапки",
+            "каретку под ссылками: за курсором по наведению, под текущим разделом по скроллу",
+            "цветные точки у ссылок и лаймовую метку бренда — цвет в данных"
+          ],
+          "adapt": [
+            "brand, brandHref, markLabel, links (подписи, якоря, цвета), actionLabel, actionHref, menuLabel, closeLabel, navLabel",
+            "spy — выключить скроллспай, если якорей на странице нет",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Скроллспай ищет секции по href ссылок: секции должны иметь id, иначе каретка появится только по наведению.",
+            "Порог схлопывания — 8px прокрутки страницы; в превью каталога прокрутки нет, показано верхнее состояние."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "brand",
+            "label": "Имя",
+            "type": "text",
+            "default": "тридня",
+            "maxLength": 20
+          },
+          {
+            "prop": "markLabel",
+            "label": "Метка",
+            "type": "text",
+            "default": "т",
+            "maxLength": 2
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Билеты",
+            "maxLength": 16
+          },
+          {
+            "prop": "spy",
+            "label": "Скроллспай",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Festival island header with a glider and colour dots",
+            "description": "A festival header made of islands: at the top of the page three separate frosted-glass pills — the brand with a lime mark, the menu with links and a lime “Tickets” — sit wide apart; after scrolling the gaps collapse and the islands gather into one narrow pill. A glider rides under the links: following the cursor on hover, otherwise under the current section. Links carry colour strand dots. On narrow screens a burger and a panel.",
+            "docs": "One file, zero dependencies, “use client” for the scroll state, the glider, the scroll spy and the menu. A sticky <header> with pointer-events:none, only the islands are clickable. The dock gets data-scrolled after 8px: the bar collapses its gap and max-width and gains dense glass with a shadow, while the islands drop their background, border and shadow — three pills become one. The glider is a span with width and translate3d from CSS variables written from offsetLeft/offsetWidth: a link's onMouseEnter leads it under the cursor, onMouseLeave returns it under aria-current; a ResizeObserver recomputes on reflow. The current section comes from an IntersectionObserver on the link anchors (rootMargin -40 %/-55 %). The link dot maps link.color to --dot, scaled 1.5 when active. Links from 60rem (container query); below that a burger with aria-expanded, a data-open panel under the header, Escape and an outside click close it. Under 32rem the burger hides its label. Palette --vibeui-navbar-023-* with light-dark: a white background, black text, a lime accent #d3f43a; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained island header for a festival, media or community site: three pills that gather into one after scrolling, a glider under the links, colour dots and an accent button. All content via props.",
+              "preserve": [
+                "three islands at the top and one pill after scrolling — the header's main gesture",
+                "the glider under the links: following the cursor on hover, under the current section on scroll",
+                "the colour dots on links and the lime brand mark — colour in the data"
+              ],
+              "adapt": [
+                "brand, brandHref, markLabel, links (labels, anchors, colours), actionLabel, actionHref, menuLabel, closeLabel, navLabel",
+                "spy — disable the scroll spy when the page has no anchors",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The scroll spy looks up sections by link href: sections need ids, otherwise the glider appears only on hover.",
+                "The collapse threshold is 8px of page scroll; the catalogue preview has no scroll, so the top state is shown."
+              ],
+              "usage": "<Navbar023\n  brand=\"threedays\"\n  markLabel=\"t\"\n  links={[\n    { label: \"Programme\", href: \"#program\", color: \"#ffe2d6\" },\n    { label: \"Tickets\", href: \"#tickets\", color: \"#c2df37\" },\n  ]}\n  actionLabel=\"Tickets\"\n  actionHref=\"#tickets\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "threedays"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Tickets"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "spy": {
+                "label": "Scroll spy"
+              },
+              "markLabel": {
+                "label": "Mark",
+                "default": "t"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "brand": "threedays",
+                "actionLabel": "Tickets",
+                "menuLabel": "Menu",
+                "links": [
+                  {
+                    "label": "Programme",
+                    "href": "#program",
+                    "color": "#ffe2d6"
+                  },
+                  {
+                    "label": "Schedule",
+                    "href": "#schedule",
+                    "color": "#c2df37"
+                  },
+                  {
+                    "label": "Line-up",
+                    "href": "#lineup",
+                    "color": "#9854d1"
+                  },
+                  {
+                    "label": "Venues",
+                    "href": "#venues",
+                    "color": "#464dff"
+                  },
+                  {
+                    "label": "FAQ",
+                    "href": "#faq",
+                    "color": "#ffa5b1"
+                  }
+                ],
+                "spy": false,
+                "markLabel": "t",
+                "closeLabel": "Close"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

@@ -4130,6 +4130,237 @@
           }
         }
       }
+    },
+    {
+      "name": "hero-023",
+      "type": "registry:block",
+      "title": "Первый экран с гигантским заголовком и цветными капсулами",
+      "description": "Первый экран фестиваля: гигантский заголовок в одну мысль на всю ширину, строка с датами и местом, два ряда цветных капсул направлений со стикерами-эмодзи на квадрате более тёмного оттенка. Капсулы выскакивают каскадом и приподнимаются по наведению.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-023/hero-023.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-023.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Заголовок — <h1> с font-size clamp(3rem, 10.5cqi, 8.75rem), line-height .95 и letter-spacing -.045em, white-space:pre-line (перенос через \\n), фраза в *звёздочках* красится в акцент. Капсулы — <ul> с tag.color в --tag и tag.ink в --ink; стикер — квадрат color-mix(var(--tag) 82 %, #000) с эмодзи и drop-shadow. Появление — @keyframes pop с overshoot и задержкой --n×45ms; hover — translateY(-4px) rotate(-1.5deg). Капсула без emoji получает data-plain и левый отступ. Палитра --vibeui-hero-023-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "festival",
+          "event",
+          "colorful",
+          "pills",
+          "landing",
+          "hero",
+          "headline",
+          "tags",
+          "stickers",
+          "emoji"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {}
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Hero023",
+          "usage": "<Hero023\n  title=\"Три дня города*.*\"\n  meta=\"22–24 августа · парк «Остров»\"\n  tags={[\n    { label: \"#Музыка\", color: \"#ffe2d6\", emoji: \"🎸\", href: \"#program\" },\n    { label: \"#Ночь\", color: \"#122378\", ink: \"#fff\", emoji: \"🌙\", href: \"#program\" },\n  ]}\n/>",
+          "summary": "Самодостаточный первый экран для фестиваля, медиа или сообщества: гигантский заголовок и цветные капсулы разделов со стикерами. Капсулы — массив пропсом с цветом на каждую.",
+          "preserve": [
+            "гигантский заголовок в одну мысль без подзаголовка-простыни",
+            "цветные капсулы со стикером на квадрате более тёмного оттенка — цвет задаётся в данных, а не в теме",
+            "каскадное появление капсул с overshoot"
+          ],
+          "adapt": [
+            "title (\\n для переноса, *фраза* в акцент), meta, tagsLabel",
+            "tags: подписи, цвета, ink для тёмных, emoji, ссылки",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "На тёмных капсулах передавайте ink=\"#fff\", иначе текст чёрный.",
+            "Эмодзи рисуются системным шрифтом: на разных ОС стикеры выглядят по-разному, это ожидаемо."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Три дня города*.*",
+            "maxLength": 40
+          },
+          {
+            "prop": "meta",
+            "label": "Подпись",
+            "type": "text",
+            "default": "22–24 августа · парк «Остров» · вход по билетам и бесплатные зоны",
+            "maxLength": 80
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hero with a giant headline and colour pills",
+            "description": "A festival first screen: a giant one-thought headline across the full width, a line with dates and place, two rows of colourful strand pills with emoji stickers on a darker-shade square. Pills pop in with a cascade and lift on hover.",
+            "docs": "One file, zero dependencies, a server component. The headline is an <h1> with font-size clamp(3rem, 10.5cqi, 8.75rem), line-height .95 and letter-spacing -.045em, white-space:pre-line (break via \\n), a *starred* phrase is coloured with the accent. Pills are a <ul> with tag.color in --tag and tag.ink in --ink; the sticker is a color-mix(var(--tag) 82 %, #000) square with an emoji and a drop-shadow. Appearance via a pop @keyframes with overshoot and a --n×45ms delay; hover is translateY(-4px) rotate(-1.5deg). A pill without emoji gets data-plain and left padding. Palette --vibeui-hero-023-* with light-dark: a white background, black text, a lime accent #d3f43a; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained first screen for a festival, media or community site: a giant headline and colourful section pills with stickers. Pills come in as a prop array with a colour each.",
+              "preserve": [
+                "the giant one-thought headline without a wall-of-text subtitle",
+                "colour pills with a sticker on a darker-shade square — colour lives in the data, not the theme",
+                "the cascading pop-in of pills with overshoot"
+              ],
+              "adapt": [
+                "title (\\n to break, *phrase* in the accent), meta, tagsLabel",
+                "tags: labels, colours, ink for dark ones, emoji, links",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Pass ink=\"#fff\" on dark pills, otherwise the text is black.",
+                "Emoji render in the system font: stickers differ across OSes, which is expected."
+              ],
+              "usage": "<Hero023\n  title=\"Three days of the city*.*\"\n  meta=\"22–24 August · Island Park\"\n  tags={[\n    { label: \"#Music\", color: \"#ffe2d6\", emoji: \"🎸\", href: \"#program\" },\n    { label: \"#Night\", color: \"#122378\", ink: \"#fff\", emoji: \"🌙\", href: \"#program\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Three days of the city*.*"
+              },
+              "meta": {
+                "label": "Caption",
+                "default": "22–24 August · Island Park · ticketed and free zones"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "title": "Three days of the city*.*",
+                "meta": "22–24 August · Island Park · ticketed and free zones",
+                "tagsLabel": "What’s on",
+                "tags": [
+                  {
+                    "label": "#Music",
+                    "color": "#ffe2d6",
+                    "emoji": "🎸",
+                    "href": "#"
+                  },
+                  {
+                    "label": "#Food",
+                    "color": "#c2df37",
+                    "emoji": "🌮",
+                    "href": "#"
+                  },
+                  {
+                    "label": "#Talks",
+                    "color": "#f1ddbc",
+                    "emoji": "🎙️",
+                    "href": "#"
+                  },
+                  {
+                    "label": "#Kids",
+                    "color": "#9854d1",
+                    "ink": "#fff",
+                    "emoji": "🪁",
+                    "href": "#"
+                  },
+                  {
+                    "label": "#Market",
+                    "color": "#006461",
+                    "ink": "#fff",
+                    "emoji": "🧶",
+                    "href": "#"
+                  },
+                  {
+                    "label": "#Cinema",
+                    "color": "#f3c37d",
+                    "emoji": "🎬",
+                    "href": "#"
+                  },
+                  {
+                    "label": "#Sport",
+                    "color": "#ffa5b1",
+                    "emoji": "🏀",
+                    "href": "#"
+                  },
+                  {
+                    "label": "#Night",
+                    "color": "#122378",
+                    "ink": "#fff",
+                    "emoji": "🌙",
+                    "href": "#"
+                  },
+                  {
+                    "label": "#Theatre",
+                    "color": "#d9cafe",
+                    "emoji": "🎭",
+                    "href": "#"
+                  },
+                  {
+                    "label": "#City",
+                    "color": "#464dff",
+                    "ink": "#fff",
+                    "emoji": "🚲",
+                    "href": "#"
+                  },
+                  {
+                    "label": "#Workshops",
+                    "color": "#fdb084",
+                    "emoji": "✂️",
+                    "href": "#"
+                  },
+                  {
+                    "label": "#Morning",
+                    "color": "#98f5af",
+                    "emoji": "🧘",
+                    "href": "#"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

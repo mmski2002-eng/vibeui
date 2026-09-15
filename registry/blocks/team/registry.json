@@ -1823,6 +1823,211 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "people-008",
+      "type": "registry:block",
+      "title": "Хедлайнеры на цветных карточках с раскрытием",
+      "description": "Хедлайнеры и спикеры фестиваля: карточки на цветных подложках, портрет кружком с белой обводкой, направление капсулой, имя крупно, роль и когда выступает. По наведению или фокусу карточка раскрывает описание, портрет поворачивается. Сетка в три колонки.",
+      "categories": [
+        "team"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "people-008/people-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/people-008.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Сетка 2/3 колонки (container query 48rem, от 68rem крупнее отступы и поля). person.color в --card, ink в --ink; data-dark переключает плашки на тёмные. Раскрытие — grid-template-rows 0fr→1fr по :hover и :focus-within (на тач-экранах — по тапу на ссылку имени). Появление — @keyframes scale с задержкой --n×60ms. Палитра --vibeui-people-008-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "festival",
+          "event",
+          "colorful",
+          "pills",
+          "landing",
+          "lineup",
+          "speakers",
+          "headliners",
+          "cards",
+          "reveal"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {}
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "People008",
+          "usage": "<People008\n  title=\"Кто выходит на сцены\"\n  people={[\n    { name: \"Соня Волна\", role: \"певица, хедлайнер\", image: \"/photos/speaker-01.webp\", color: \"#ffe2d6\", tag: \"#Музыка\", when: \"сб, 20:00 · Главная сцена\", text: \"Альбом «Пригород» стал саундтреком прошлого лета.\", href: \"/lineup/sonya\" },\n  ]}\n/>",
+          "summary": "Самодостаточная секция участников для фестиваля, конференции или школы: цветные карточки с портретом, ролью, временем выступления и раскрытием описания. Люди — массив пропсом с цветом на каждого.",
+          "preserve": [
+            "цвет карточки в данных, а не общий фон — каждый участник со своим цветом",
+            "раскрытие описания по наведению без кнопок",
+            "ровную сетку в три колонки: шесть участников — два полных ряда"
+          ],
+          "adapt": [
+            "people: имена, роли, портреты, цвета, ink, направления, время, тексты, ссылки",
+            "eyebrow, title, moreLabel, moreHref",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Шесть или девять участников дают полные ряды; при семи последний ряд неполный.",
+            "На тёмных цветах передавайте ink=\"#fff\"."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Кто выходит на сцены",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Headliners on colour cards with a reveal",
+            "description": "Festival headliners and speakers: cards on colour backdrops, a round portrait with a white ring, the strand as a pill, the name large, the role and when they perform. On hover or focus a card reveals its description and the portrait tilts. A three-column grid.",
+            "docs": "One file, zero dependencies, a server component. A 2/3-column grid (container query 48rem; from 68rem larger gaps and padding). person.color maps to --card, ink to --ink; data-dark switches tags to dark. The reveal is grid-template-rows 0fr→1fr on :hover and :focus-within (on touch via a tap on the name link). Appearance via a scale @keyframes with a --n×60ms delay. Palette --vibeui-people-008-* with light-dark: a white background, black text, a lime accent #d3f43a; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained line-up section for a festival, conference or school: colour cards with a portrait, role, performance time and a description reveal. People come in as a prop array with a colour each.",
+              "preserve": [
+                "the card colour in the data rather than a shared background — each person in their own colour",
+                "the description reveal on hover without buttons",
+                "the even three-column grid: six people make two full rows"
+              ],
+              "adapt": [
+                "people: names, roles, portraits, colours, ink, strands, times, texts, links",
+                "eyebrow, title, moreLabel, moreHref",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Six or nine people give full rows; with seven the last row is short.",
+                "Pass ink=\"#fff\" on dark colours."
+              ],
+              "usage": "<People008\n  title=\"Who takes the stages\"\n  people={[\n    { name: \"Sonya Volna\", role: \"singer, headliner\", image: \"/photos/speaker-01.webp\", color: \"#ffe2d6\", tag: \"#Music\", when: \"Sat, 20:00 · Main stage\", text: \"Her album became last summer’s soundtrack.\", href: \"/lineup/sonya\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Who takes the stages"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Line-up",
+                "title": "Who takes the stages",
+                "moreLabel": "All participants →",
+                "people": [
+                  {
+                    "name": "Sonya Volna",
+                    "role": "singer, headliner",
+                    "image": "/demo/festival/speaker-01.webp",
+                    "color": "#ffe2d6",
+                    "tag": "#Music",
+                    "when": "Sat, 20:00 · Main stage",
+                    "text": "Her album “Suburb” became last summer’s soundtrack. At the festival — with a forty-piece orchestra.",
+                    "href": "#"
+                  },
+                  {
+                    "name": "Marat Gusev",
+                    "role": "chef, Dvor",
+                    "image": "/demo/festival/speaker-02.webp",
+                    "color": "#c2df37",
+                    "tag": "#Food",
+                    "when": "Sat, 13:00 · Food court",
+                    "text": "Cooks with what grows within a hundred kilometres. Runs a pasta masterclass at the festival.",
+                    "href": "#"
+                  },
+                  {
+                    "name": "Vera Lanskaya",
+                    "role": "architect, urbanist",
+                    "image": "/demo/festival/speaker-03.webp",
+                    "color": "#d9cafe",
+                    "tag": "#Talks",
+                    "when": "Sun, 14:00 · Lecture tent",
+                    "text": "Designed the embankment the festival stands on. A debate on who owns the courtyard.",
+                    "href": "#"
+                  },
+                  {
+                    "name": "Yan Roshchin",
+                    "role": "DJ, Night",
+                    "image": "/demo/festival/speaker-04.webp",
+                    "color": "#464dff",
+                    "ink": "#fff",
+                    "tag": "#Night",
+                    "when": "Fri, 22:00 · Embankment",
+                    "text": "Resident of clubs in three cities. Opens the night programme with a set on the water.",
+                    "href": "#"
+                  },
+                  {
+                    "name": "Lera Pak",
+                    "role": "illustrator",
+                    "image": "/demo/festival/speaker-05.webp",
+                    "color": "#f3c37d",
+                    "tag": "#Kids",
+                    "when": "Sat, 11:00 · Kids lawn",
+                    "text": "Draws children’s books and murals for courtyards. Leads “The big picture” — a thirty-metre canvas.",
+                    "href": "#"
+                  },
+                  {
+                    "name": "Daniil Orlov",
+                    "role": "film director",
+                    "image": "/demo/festival/speaker-06.webp",
+                    "color": "#98f5af",
+                    "tag": "#Cinema",
+                    "when": "Sat, 21:30 · Embankment",
+                    "text": "Curator of the city shorts programme: nine films in ninety minutes.",
+                    "href": "#"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

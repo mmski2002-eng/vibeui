@@ -1358,6 +1358,175 @@
           }
         }
       }
+    },
+    {
+      "name": "about-009",
+      "type": "registry:block",
+      "title": "Манифест с жирными вставками и капсулами фактов",
+      "description": "Манифест фестиваля: линия сверху, маленькая подпись «Привет», крупный текст с жирными вставками и маркером, абзац помельче и ряд цветных капсул с цифрами. Текст проявляется при появлении в кадре.",
+      "categories": [
+        "about"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "about-009/about-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/about-009.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Текст — <p> с font-size clamp(1.6rem, 4.2cqi, 3.25rem) и max-width 22ch; *фраза* становится <b>, _фраза_ — <mark> с фоновым маркером акцентного цвета. Капсулы фактов — <li> с fact.color в --chip и ink в --ink, по наведению приподнимаются с поворотом. Проявление — animation-timeline:view() под @supports (в старых браузерах текст виден сразу). Палитра --vibeui-about-009-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "festival",
+          "event",
+          "colorful",
+          "pills",
+          "landing",
+          "manifesto",
+          "about",
+          "facts",
+          "statement"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {}
+        },
+        "cardControls": [
+          "label",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "About009",
+          "usage": "<About009\n  label=\"Привет\"\n  text=\"Три дня в августе парк становится *городом внутри города*. Половина программы _бесплатно_.\"\n  facts={[{ value: \"3\", label: \"дня\", color: \"#c2df37\" }, { value: \"120+\", label: \"событий\", color: \"#d9cafe\" }]}\n/>",
+          "summary": "Самодостаточная секция-манифест для фестиваля, медиа или сообщества: подпись, крупный текст с акцентами и цветные капсулы фактов. Всё содержимое пропсами.",
+          "preserve": [
+            "крупный текст с жирными вставками вместо заголовка и абзаца — читается как одна мысль",
+            "капсулы фактов с цветом в данных",
+            "линию сверху и маленькую подпись — ритм журнальной страницы"
+          ],
+          "adapt": [
+            "label, text (*жирное*, _маркер_), note",
+            "facts: значения, подписи, цвета, ink; linkLabel, linkHref",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "facts={[]} убирает капсулы; linkLabel пустой — без ссылки.",
+            "Маркер (_фраза_) красится акцентом секции: на тёмном фоне передайте accent посветлее."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Привет",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Manifesto with bold inserts and fact pills",
+            "description": "A festival manifesto: a rule on top, a small “Hello” label, large text with bold inserts and a marker, a smaller paragraph and a row of colourful fact pills. The text fades in as it enters the viewport.",
+            "docs": "One file, zero dependencies, a server component. The text is a <p> with font-size clamp(1.6rem, 4.2cqi, 3.25rem) and max-width 22ch; a *phrase* becomes <b>, an _phrase_ becomes <mark> with an accent-coloured background marker. Fact pills are <li> with fact.color in --chip and ink in --ink, lifting with a tilt on hover. The reveal uses animation-timeline:view() under @supports (older browsers show the text at once). Palette --vibeui-about-009-* with light-dark: a white background, black text, a lime accent #d3f43a; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained manifesto section for a festival, media or community site: a label, large text with accents and colourful fact pills. All content via props.",
+              "preserve": [
+                "large text with bold inserts instead of a heading and a paragraph — it reads as one thought",
+                "fact pills with colour in the data",
+                "the top rule and the small label — the rhythm of a magazine page"
+              ],
+              "adapt": [
+                "label, text (*bold*, _marker_), note",
+                "facts: values, labels, colours, ink; linkLabel, linkHref",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "facts={[]} removes the pills; an empty linkLabel means no link.",
+                "The marker (_phrase_) uses the section accent: on dark pass a lighter accent."
+              ],
+              "usage": "<About009\n  label=\"Hello\"\n  text=\"For three days in August the park becomes *a city within the city*. Half the programme is _free_.\"\n  facts={[{ value: \"3\", label: \"days\", color: \"#c2df37\" }, { value: \"120+\", label: \"events\", color: \"#d9cafe\" }]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Hello"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "label": "Hello",
+                "text": "For three days in August, Island Park becomes *a city within the city*: stages, kitchens, a lecture tent, a market and open-air cinema. Half the programme is _free_, the rest is one ticket for everything.",
+                "note": "The festival is made by locals: 140 volunteers, 60 local projects and eight neighbourhood communities. Not about TV headliners — about what is next door.",
+                "linkLabel": "About the festival and the team →",
+                "facts": [
+                  {
+                    "value": "3",
+                    "label": "days",
+                    "color": "#c2df37"
+                  },
+                  {
+                    "value": "6",
+                    "label": "stages and venues",
+                    "color": "#ffe2d6"
+                  },
+                  {
+                    "value": "120+",
+                    "label": "events",
+                    "color": "#d9cafe"
+                  },
+                  {
+                    "value": "48 %",
+                    "label": "of the programme free",
+                    "color": "#98f5af"
+                  },
+                  {
+                    "value": "0+",
+                    "label": "kids under 7 enter free",
+                    "color": "#f3c37d"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

@@ -2956,6 +2956,159 @@
           }
         }
       }
+    },
+    {
+      "name": "cta-019",
+      "type": "registry:block",
+      "title": "Фото-баннер с двумя капсулами действий",
+      "description": "Баннер-призыв: фото на всю ширину со скруглением, матовая плашка с датами в левом верхнем углу, справа снизу две капсулы — стеклянная вторичная «Программа» и лаймовая главная «Купить билет →». Фото медленно плывёт, капсулы приподнимаются по наведению.",
+      "categories": [
+        "cta"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-019/cta-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-019.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Баннер — flex-колонка min-height 18rem (14rem от 60rem) с isolation:isolate; фото position:absolute z-index:-1 с @keyframes drift 24 с (scale и сдвиг), затемнение градиентом через ::before. Плашка и вторичная капсула — backdrop-filter blur, главная — акцент с on-accent. Необязательный title крупно слева внизу с text-shadow. Палитра --vibeui-cta-019-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "festival",
+          "event",
+          "colorful",
+          "pills",
+          "landing",
+          "cta",
+          "banner",
+          "photo",
+          "buttons"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {}
+        },
+        "cardControls": [
+          "label",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Cta019",
+          "usage": "<Cta019\n  eyebrow=\"Продолжение следует\"\n  image=\"/photos/banner.webp\"\n  label=\"22–24 августа\"\n  secondaryLabel=\"Программа\"\n  secondaryHref=\"#program\"\n  primaryLabel=\"Купить билет →\"\n  primaryHref=\"#tickets\"\n/>",
+          "summary": "Самодостаточный баннер-призыв для фестиваля, медиа или продукта: фото на всю ширину, матовая плашка и две капсулы. Всё содержимое пропсами.",
+          "preserve": [
+            "фото на всю ширину со скруглением вместо цветной плашки",
+            "две капсулы: стеклянную вторичную и акцентную главную, справа снизу",
+            "медленный дрейф фото и подпись-линию над баннером"
+          ],
+          "adapt": [
+            "eyebrow, image, imageAlt, label, title",
+            "secondaryLabel/Href, primaryLabel/Href",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Фото должно быть широким (21:9 или 16:9): баннер невысокий, портретный кадр обрежется.",
+            "Пустой title — только плашка и кнопки, как в образце."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "label",
+            "label": "Плашка",
+            "type": "text",
+            "default": "22–24 августа",
+            "maxLength": 24
+          },
+          {
+            "prop": "primaryLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Купить билет →",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Photo banner with two action pills",
+            "description": "A call-to-action banner: a full-width rounded photo, a frosted label with dates top left, two pills bottom right — a glass secondary “Programme” and a lime primary “Buy a ticket →”. The photo drifts slowly, pills lift on hover.",
+            "docs": "One file, zero dependencies, a server component. The banner is a flex column with min-height 18rem (14rem from 60rem) and isolation:isolate; the photo is position:absolute z-index:-1 with a 24 s drift @keyframes (scale and shift), darkened by a ::before gradient. The label and secondary pill use backdrop-filter blur, the primary is the accent with on-accent. An optional title large bottom left with a text-shadow. Palette --vibeui-cta-019-* with light-dark: a white background, black text, a lime accent #d3f43a; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained call-to-action banner for a festival, media or product: a full-width photo, a frosted label and two pills. All content via props.",
+              "preserve": [
+                "the full-width rounded photo instead of a colour plate",
+                "two pills: a glass secondary and an accent primary, bottom right",
+                "the slow photo drift and the rule label above the banner"
+              ],
+              "adapt": [
+                "eyebrow, image, imageAlt, label, title",
+                "secondaryLabel/Href, primaryLabel/Href",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The photo should be wide (21:9 or 16:9): the banner is short, a portrait frame gets cropped.",
+                "An empty title leaves only the label and buttons, as in the reference."
+              ],
+              "usage": "<Cta019\n  eyebrow=\"To be continued\"\n  image=\"/photos/banner.webp\"\n  label=\"22–24 August\"\n  secondaryLabel=\"Programme\"\n  secondaryHref=\"#program\"\n  primaryLabel=\"Buy a ticket →\"\n  primaryHref=\"#tickets\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "22–24 August"
+              },
+              "primaryLabel": {
+                "label": "Button",
+                "default": "Buy a ticket →"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "To be continued",
+                "label": "22–24 August",
+                "secondaryLabel": "Programme",
+                "primaryLabel": "Buy a ticket →"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

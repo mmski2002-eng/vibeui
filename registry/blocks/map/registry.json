@@ -948,6 +948,218 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "map-006",
+      "type": "registry:block",
+      "title": "Карта площадок с легендой и «как добраться»",
+      "description": "Карта фестиваля: Яндекс Карта без ключа с метками всех площадок, справа легенда точек цветными кружками и список «как добраться» — метро, автобус, велосипед, машина — каждая строка на своей цветной капсуле со стикером-эмодзи. Кнопка «Открыть в Яндекс Картах».",
+      "categories": [
+        "map"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "map-006/map-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/map-006.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Виджет map-widget/v1 без ключа: центр — среднее координат points, метки — pt через «~» (pm2dgm), не кодировать; theme=light|dark, в auto следует за tone. Легенда — капсулы с point.color в --dot. Маршруты — <li> с route.color в --route и ink в --ink, стикер на квадрате color-mix(var(--route) 82 %, #000). От 60rem (container query) карта 1.5fr и колонка 1fr, кадр 16/11. Палитра --vibeui-map-006-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "festival",
+          "event",
+          "colorful",
+          "pills",
+          "landing",
+          "map",
+          "yandex",
+          "directions",
+          "legend"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {}
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Map006",
+          "usage": "<Map006\n  title=\"Парк «Остров», три входа\"\n  points={[\n    { name: \"Главная сцена\", latitude: 55.7467, longitude: 37.6178, color: \"#c2df37\" },\n    { name: \"Фуд-корт\", latitude: 55.7455, longitude: 37.6205, color: \"#ffa5b1\" },\n  ]}\n  routes={[{ mode: \"Метро\", text: \"«Парк культуры», 7 минут пешком\", emoji: \"🚇\", color: \"#ffe2d6\" }]}\n/>",
+          "summary": "Самодостаточная карта для фестиваля, кампуса или парка: Яндекс Карта с метками площадок, цветная легенда и цветные строки «как добраться». Точки и маршруты — массивы пропсом.",
+          "preserve": [
+            "несколько меток площадок на одной карте с цветной легендой",
+            "строки «как добраться» на цветных капсулах со стикерами — цвет в данных",
+            "виджет без ключа: карта работает сразу"
+          ],
+          "adapt": [
+            "title, address, points (названия, координаты, цвета), zoom",
+            "routes: вид транспорта, текст, эмодзи, цвет; routesLabel, openLabel",
+            "theme, accent и background, tone"
+          ],
+          "notes": [
+            "Цвета легенды не красят метки на карте — виджет рисует свои; легенда нужна для списка.",
+            "Виджет Яндекса не грузится в некоторых регионах и в iframe без интернета — оставляйте кнопку «Открыть»."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Парк «Остров», три входа",
+            "maxLength": 40
+          },
+          {
+            "prop": "zoom",
+            "label": "Масштаб",
+            "type": "number",
+            "default": 15,
+            "min": 10,
+            "max": 18
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Venue map with a legend and “how to get there”",
+            "description": "A festival map: a keyless Yandex Map with pins for all venues, on the right a legend with colour dots and a “how to get there” list — metro, bus, bike, car — each row on its own colour pill with an emoji sticker. An “Open in Yandex Maps” button.",
+            "docs": "One file, zero dependencies, a server component. The keyless map-widget/v1: the centre is the mean of points, pins are pt joined with “~” (pm2dgm), not encoded; theme=light|dark, in auto it follows tone. The legend is pills with point.color in --dot. Routes are <li> with route.color in --route and ink in --ink, the sticker on a color-mix(var(--route) 82 %, #000) square. From 60rem (container query) the map is 1.5fr and the column 1fr, the frame 16/11. Palette --vibeui-map-006-* with light-dark: a white background, black text, a lime accent #d3f43a; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained map for a festival, campus or park: a Yandex Map with venue pins, a colour legend and colour “how to get there” rows. Points and routes come in as prop arrays.",
+              "preserve": [
+                "several venue pins on one map with a colour legend",
+                "“how to get there” rows on colour pills with stickers — colour in the data",
+                "the keyless widget: the map works at once"
+              ],
+              "adapt": [
+                "title, address, points (names, coordinates, colours), zoom",
+                "routes: transport mode, text, emoji, colour; routesLabel, openLabel",
+                "theme, accent and background, tone"
+              ],
+              "notes": [
+                "Legend colours do not colour the pins on the map — the widget draws its own; the legend is for the list.",
+                "The Yandex widget does not load in some regions or offline — keep the “Open” button."
+              ],
+              "usage": "<Map006\n  title=\"Island Park, three entrances\"\n  points={[\n    { name: \"Main stage\", latitude: 55.7467, longitude: 37.6178, color: \"#c2df37\" },\n    { name: \"Food court\", latitude: 55.7455, longitude: 37.6205, color: \"#ffa5b1\" },\n  ]}\n  routes={[{ mode: \"Metro\", text: \"Park Kultury, 7 minutes on foot\", emoji: \"🚇\", color: \"#ffe2d6\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Island Park, three entrances"
+              },
+              "zoom": {
+                "label": "Zoom"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Getting there",
+                "title": "Island Park, three entrances",
+                "address": "Krymsky Val 9 · entrance 1 by the metro, 2 from the embankment, 3 by the bridge",
+                "routesLabel": "The way",
+                "openLabel": "Open in Yandex Maps",
+                "points": [
+                  {
+                    "name": "Main stage",
+                    "latitude": 55.7467,
+                    "longitude": 37.6178,
+                    "color": "#c2df37"
+                  },
+                  {
+                    "name": "Food court",
+                    "latitude": 55.7455,
+                    "longitude": 37.6205,
+                    "color": "#ffa5b1"
+                  },
+                  {
+                    "name": "Lecture tent",
+                    "latitude": 55.7478,
+                    "longitude": 37.6215,
+                    "color": "#9854d1"
+                  },
+                  {
+                    "name": "Kids lawn",
+                    "latitude": 55.7448,
+                    "longitude": 37.6165,
+                    "color": "#98f5af"
+                  },
+                  {
+                    "name": "Embankment",
+                    "latitude": 55.744,
+                    "longitude": 37.623,
+                    "color": "#464dff"
+                  }
+                ],
+                "routes": [
+                  {
+                    "mode": "Metro",
+                    "text": "Park Kultury, 7 minutes on foot to entrance 1",
+                    "emoji": "🚇",
+                    "color": "#ffe2d6"
+                  },
+                  {
+                    "mode": "Bus",
+                    "text": "B, 10, 79 — Krymsky Bridge stop",
+                    "emoji": "🚌",
+                    "color": "#d9cafe"
+                  },
+                  {
+                    "mode": "Bike",
+                    "text": "600 racks at every entrance, rental on the embankment",
+                    "emoji": "🚲",
+                    "color": "#c2df37"
+                  },
+                  {
+                    "mode": "Car",
+                    "text": "No parking at the park — leave it at the park-and-ride by the metro",
+                    "emoji": "🚗",
+                    "color": "#f1ddbc"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

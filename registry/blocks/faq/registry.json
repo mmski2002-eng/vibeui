@@ -3194,6 +3194,190 @@
           }
         }
       }
+    },
+    {
+      "name": "faq-018",
+      "type": "registry:block",
+      "title": "Вопросы в две колонки с цветными маркерами",
+      "description": "Вопросы фестиваля: две колонки раскрывающихся вопросов, у каждого цветной кружок-маркер, открытый вопрос заливается светло-серым, кружок растёт, плюс поворачивается в крестик. Открыт один за раз. Справа сверху «Не нашли ответ?» и лаймовая капсула.",
+      "categories": [
+        "faq"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "faq-018/faq-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/faq-018.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. <details name={useId()}> — открыт один. summary сеткой 1.5rem/1fr/1.5rem: кружок item.color в --dot (scale 1.6 при [open]), текст, плюс из двух чёрточек (rotate 45deg при [open]). Ответ — <p> с @keyframes fade. От 56rem (container query) две колонки с align-items:start, чтобы открытый вопрос не растягивал соседа. Палитра --vibeui-faq-018-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "festival",
+          "event",
+          "colorful",
+          "pills",
+          "landing",
+          "faq",
+          "questions",
+          "accordion",
+          "columns"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {}
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Faq018",
+          "usage": "<Faq018\n  title=\"Что спрашивают перед фестивалем\"\n  items={[\n    { question: \"Можно ли с детьми?\", answer: \"Да, до 7 лет бесплатно.\", color: \"#98f5af\" },\n    { question: \"Что бесплатно?\", answer: \"Фуд-корт, маркет и лекторий.\", color: \"#c2df37\" },\n  ]}\n  askLabel=\"Напишите в Telegram\"\n  askHref=\"https://t.me/festival\"\n/>",
+          "summary": "Самодостаточный блок вопросов для фестиваля, продукта или сервиса: две колонки details с цветными маркерами и капсулой «Напишите». Вопросы — массив пропсом с цветом на каждый.",
+          "preserve": [
+            "цветные кружки-маркеры у вопросов — цвет в данных, кружок растёт при открытии",
+            "две колонки с независимой высотой (align-items:start)",
+            "один открытый вопрос через name у details, без состояния"
+          ],
+          "adapt": [
+            "items: вопросы, ответы, цвета",
+            "eyebrow, title, askText, askLabel, askHref",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Атрибут name у details — Chrome 120+, Safari 17.2+, Firefox 130+; в старых браузерах вопросы открываются независимо.",
+            "Без color кружок красится акцентом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что спрашивают перед фестивалем",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "FAQ in two columns with colour markers",
+            "description": "Festival FAQ: two columns of expandable questions, each with a colour dot marker, the open question fills light grey, the dot grows and the plus rotates into a cross. One open at a time. Top right a “Didn’t find an answer?” line and a lime pill.",
+            "docs": "One file, zero dependencies, a server component. <details name={useId()}> — one open. The summary is a 1.5rem/1fr/1.5rem grid: a dot with item.color in --dot (scale 1.6 when [open]), the text, a plus made of two bars (rotate 45deg when [open]). The answer is a <p> with a fade @keyframes. From 56rem (container query) two columns with align-items:start so an open question does not stretch its neighbour. Palette --vibeui-faq-018-* with light-dark: a white background, black text, a lime accent #d3f43a; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained FAQ for a festival, product or service: two columns of details with colour markers and a “Write to us” pill. Questions come in as a prop array with a colour each.",
+              "preserve": [
+                "colour dot markers on questions — colour in the data, the dot grows on open",
+                "two columns with independent heights (align-items:start)",
+                "one open question via name on details, no state"
+              ],
+              "adapt": [
+                "items: questions, answers, colours",
+                "eyebrow, title, askText, askLabel, askHref",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The name attribute on details — Chrome 120+, Safari 17.2+, Firefox 130+; older browsers open questions independently.",
+                "Without color the dot uses the accent."
+              ],
+              "usage": "<Faq018\n  title=\"What people ask before the festival\"\n  items={[\n    { question: \"Can I bring kids?\", answer: \"Yes, under 7 enter free.\", color: \"#98f5af\" },\n    { question: \"What is free?\", answer: \"The food court, market and lecture tent.\", color: \"#c2df37\" },\n  ]}\n  askLabel=\"Write on Telegram\"\n  askHref=\"https://t.me/festival\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What people ask before the festival"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "FAQ",
+                "title": "What people ask before the festival",
+                "askText": "Didn’t find an answer?",
+                "askLabel": "Write on Telegram",
+                "items": [
+                  {
+                    "question": "Can I bring kids?",
+                    "answer": "Yes. Kids under 7 enter free with any ticket; the Kids lawn has hosts and workshops from 11:00 to 19:00, a quiet zone and changing rooms.",
+                    "color": "#98f5af"
+                  },
+                  {
+                    "question": "What is free and what needs a ticket?",
+                    "answer": "The food court, market, lecture tent, morning yoga and the bike parade are open to all. Stages, cinema and the night programme need a wristband.",
+                    "color": "#c2df37"
+                  },
+                  {
+                    "question": "What if it rains?",
+                    "answer": "The main stage and lecture tent have canopies, the food court has umbrellas. Cancellation only under a storm warning — then tickets are refunded in full.",
+                    "color": "#464dff"
+                  },
+                  {
+                    "question": "Can I bring my own food and water?",
+                    "answer": "Water in plastic bottles — yes, every venue has free fountains. Food and glass — no.",
+                    "color": "#ffe2d6"
+                  },
+                  {
+                    "question": "How do I return a ticket?",
+                    "answer": "Until 15 August — in full, in a minute from your account. Later — only by passing the wristband to someone else.",
+                    "color": "#ffa5b1"
+                  },
+                  {
+                    "question": "Are dogs allowed?",
+                    "answer": "On a lead and with water for the dog — yes, except the main stage zone after 20:00: it is loud there.",
+                    "color": "#f3c37d"
+                  },
+                  {
+                    "question": "Is it accessible?",
+                    "answer": "All entrances are step-free, stages have wheelchair zones, the lecture tent has sign language. A companion enters free.",
+                    "color": "#9854d1"
+                  },
+                  {
+                    "question": "Where do I park?",
+                    "answer": "No parking at the park. Use the park-and-ride at Park Kultury metro or come by bike — racks at every entrance.",
+                    "color": "#d9cafe"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
