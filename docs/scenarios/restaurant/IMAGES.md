@@ -37,5 +37,5 @@ watermark, no logos, Nordic-Russian cuisine restaurant in Saint Petersburg.
 - `hero.webp` — первый экран.
 - `dish-01…06.webp` — всплывающие фото блюд в меню.
 - `chef.webp`, `chef-hands.webp` — секция шефа.
-- `hall-01…04.webp` — галерея зала.
-- `event.webp` — события.
+- `hall-01…04.webp`, `chef-hands.webp`, `hero.webp`, `event.webp`, `dish-05.webp`, `chef.webp` — галерея зала.
+- `event.webp` — также события.

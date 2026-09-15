@@ -81,6 +81,9 @@ const HALL = [
   { src: `${PHOTOS}/hall-03.webp`, aspect: "3 / 2", caption: "терраса" },
   { src: `${PHOTOS}/chef-hands.webp`, aspect: "1", caption: "кухня" },
   { src: `${PHOTOS}/hero.webp`, aspect: "2 / 3", caption: "зал" },
+  { src: `${PHOTOS}/event.webp`, aspect: "3 / 2", caption: "джаз по пятницам" },
+  { src: `${PHOTOS}/dish-05.webp`, aspect: "1", caption: "устричная среда" },
+  { src: `${PHOTOS}/chef.webp`, aspect: "4 / 5", caption: "шеф" },
 ]
 
 const EVENTS = [

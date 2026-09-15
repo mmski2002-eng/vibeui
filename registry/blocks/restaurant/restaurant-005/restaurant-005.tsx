@@ -142,8 +142,8 @@ export function Restaurant005({
   // идёт в самую короткую колонку — низ колонок сходится, пустот нет.
   const columns = (() => {
     const heightOf = (aspect?: string) => {
-      const [w, h] = (aspect ?? "3 / 2").split("/").map((part) => Number(part.trim()))
-      return w && h ? h / w : 0.667
+      const [w, h = 1] = (aspect ?? "3 / 2").split("/").map((part) => Number(part.trim()))
+      return w ? h / w : 0.667
     }
     const order = photos.map((photo, index) => ({ photo, index, h: heightOf(photo.aspect) })).sort((a, b) => b.h - a.h || a.index - b.index)
     const buckets: { items: { photo: Restaurant005Photo; index: number }[]; h: number }[] = [0, 1, 2].map(() => ({ items: [], h: 0 }))
@@ -203,8 +203,8 @@ export function Restaurant005({
     if (phase === "closed" || current === null) return
     const photo = photos[current]
     const ratio = (() => {
-      const [w, h] = (photo.aspect ?? "3 / 2").split("/").map((part) => Number(part.trim()))
-      return w && h ? w / h : 1.5
+      const [w, h = 1] = (photo.aspect ?? "3 / 2").split("/").map((part) => Number(part.trim()))
+      return w ? w / h : 1.5
     })()
     let raf = 0
     if (phase === "start") {
