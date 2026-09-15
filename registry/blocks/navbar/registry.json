@@ -4070,6 +4070,194 @@
           }
         }
       }
+    },
+    {
+      "name": "navbar-024",
+      "type": "registry:block",
+      "title": "Неоновая рейка навигации слева с доком на телефоне",
+      "description": "Навигация тату-студии не полосой сверху, а неоновой рейкой у левого края: вертикальный логотип-вывеска, разделы иконками столбиком, по краю рейки ползёт неоновая полоска прогресса скролла, внизу кнопка записи и статус «есть окна» с пульсом. По наведению рейка раздвигается и показывает подписи, текущий раздел светится. На телефоне рейка становится нижним доком с иконками и кнопкой.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-024/navbar-024.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-024.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради прогресса и скроллспая. <header> position:fixed: до 60rem — док по низу экрана (иконка + подпись, кнопка «+» справа, safe-area), от 60rem — рейка слева шириной --rail (5.5rem), по :hover/:focus-within раздвигается до 14rem и проявляет подписи. Логотип — writing-mode:vertical-rl с rotate(180deg), text-shadow неона и редкое мерцание. Прогресс — линейный градиент до --p на полоске у края (rAF на scroll, без ререндеров). Активный раздел — IntersectionObserver по якорям (rootMargin -40 %/-55 %), aria-current, иконка с drop-shadow и точка. Иконки — inline SVG по link.icon: works, artists, process, pricing, faq, about, reviews, contacts. placement=static кладёт док в поток для превью. Странице нужен padding-left:5.5rem от 60rem и padding-bottom под док ниже — как в usage. Палитра --vibeui-navbar-024-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "tattoo",
+          "neon",
+          "dark",
+          "studio",
+          "landing",
+          "glow",
+          "flicker",
+          "navbar",
+          "sidebar",
+          "rail",
+          "dock",
+          "progress"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "tone": "dark",
+            "placement": "static",
+            "spy": false
+          }
+        },
+        "cardControls": [
+          "brand",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Navbar024",
+          "usage": "<Navbar024\n  brand=\"Inkra\"\n  links={[\n    { label: \"Работы\", href: \"#works\", icon: \"works\" },\n    { label: \"Мастера\", href: \"#artists\", icon: \"artists\" },\n    { label: \"Цены\", href: \"#pricing\", icon: \"pricing\" },\n  ]}\n  status=\"Есть окна\"\n  actionLabel=\"Записаться\"\n  actionHref=\"#booking\"\n/>\n{/* странице: padding-bottom:5rem; @media (min-width:60rem){padding-left:5.5rem;padding-bottom:0} */}",
+          "summary": "Самодостаточная неоновая навигация-рейка для тату-студии, бара или клуба: логотип-вывеска, иконки разделов, прогресс скролла, кнопка записи; на телефоне — нижний док. Разделы — массив пропсом с иконкой.",
+          "preserve": [
+            "рейку у левого края вместо полосы сверху и док снизу на телефоне — главный жест навигации",
+            "неоновую полоску прогресса по краю рейки и светящуюся иконку текущего раздела",
+            "раздвижение рейки по наведению с проявлением подписей"
+          ],
+          "adapt": [
+            "brand, brandHref, links (подписи, якоря, иконки из набора), status, actionLabel, actionHref",
+            "placement, spy",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Странице нужен отступ: padding-left 5.5rem от 60rem и padding-bottom 5rem ниже — иначе рейка и док перекроют контент.",
+            "Скроллспай ищет секции по href: секциям нужны id."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "brand",
+            "label": "Логотип",
+            "type": "text",
+            "default": "Inkra",
+            "maxLength": 16
+          },
+          {
+            "prop": "status",
+            "label": "Статус",
+            "type": "text",
+            "default": "Сегодня есть окна",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Neon side rail navigation with a phone dock",
+            "description": "Tattoo studio navigation not as a top bar but as a neon rail at the left edge: a vertical sign logo, sections as stacked icons, a neon scroll-progress strip creeping along the rail's edge, a booking button and a pulsing “open slots” status at the bottom. On hover the rail expands and reveals labels; the current section glows. On phones the rail becomes a bottom dock with icons and the button.",
+            "docs": "One file, zero dependencies, “use client” for progress and the scroll spy. A position:fixed <header>: below 60rem a dock along the bottom (icon + label, a “+” button on the right, safe-area); from 60rem a left rail --rail (5.5rem) wide that expands to 14rem on :hover/:focus-within and fades labels in. The logo is writing-mode:vertical-rl with rotate(180deg), a neon text-shadow and rare flicker. Progress is a linear-gradient up to --p on the edge strip (rAF on scroll, no re-renders). The active section comes from an IntersectionObserver on the anchors (rootMargin -40 %/-55 %), aria-current, an icon with a drop-shadow and a dot. Icons are inline SVGs by link.icon: works, artists, process, pricing, faq, about, reviews, contacts. placement=static puts the dock in the flow for previews. The page needs padding-left:5.5rem from 60rem and a bottom padding for the dock below — as in usage. Palette --vibeui-navbar-024-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained neon rail navigation for a tattoo studio, bar or club: a sign logo, section icons, scroll progress, a booking button; a bottom dock on phones. Sections come in as a prop array with an icon.",
+              "preserve": [
+                "the rail at the left edge instead of a top bar and the bottom dock on phones — the navigation's main gesture",
+                "the neon progress strip along the rail edge and the glowing icon of the current section",
+                "the rail expanding on hover with labels fading in"
+              ],
+              "adapt": [
+                "brand, brandHref, links (labels, anchors, icons from the set), status, actionLabel, actionHref",
+                "placement, spy",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The page needs an inset: padding-left 5.5rem from 60rem and padding-bottom 5rem below — otherwise the rail and dock cover content.",
+                "The scroll spy looks up sections by href: sections need ids."
+              ],
+              "usage": "<Navbar024\n  brand=\"Inkra\"\n  links={[\n    { label: \"Works\", href: \"#works\", icon: \"works\" },\n    { label: \"Artists\", href: \"#artists\", icon: \"artists\" },\n    { label: \"Pricing\", href: \"#pricing\", icon: \"pricing\" },\n  ]}\n  status=\"Open slots\"\n  actionLabel=\"Book\"\n  actionHref=\"#booking\"\n/>\n{/* on the page: padding-bottom:5rem; @media (min-width:60rem){padding-left:5.5rem;padding-bottom:0} */}"
+            },
+            "controls": {
+              "brand": {
+                "label": "Logo",
+                "default": "Inkra"
+              },
+              "status": {
+                "label": "Status",
+                "default": "Slots today"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "tone": "dark",
+                "status": "Open slots",
+                "actionLabel": "Book",
+                "links": [
+                  {
+                    "label": "Works",
+                    "href": "#works",
+                    "icon": "works"
+                  },
+                  {
+                    "label": "Artists",
+                    "href": "#artists",
+                    "icon": "artists"
+                  },
+                  {
+                    "label": "How it goes",
+                    "href": "#process",
+                    "icon": "process"
+                  },
+                  {
+                    "label": "Pricing",
+                    "href": "#pricing",
+                    "icon": "pricing"
+                  },
+                  {
+                    "label": "FAQ",
+                    "href": "#faq",
+                    "icon": "faq"
+                  }
+                ],
+                "placement": "static",
+                "spy": false
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

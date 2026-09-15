@@ -4361,6 +4361,191 @@
           }
         }
       }
+    },
+    {
+      "name": "hero-024",
+      "type": "registry:block",
+      "title": "Неоновая вывеска с фото и свечением за курсором",
+      "description": "Первый экран тату-студии: заголовок как неоновая вывеска — буквы зажигаются по одной с искрой, одна трубка «барахлит» и мерцает. На фоне крупное фото мастера с зерном плёнки и фуксиевой подсветкой по краю, за курсором ходит мягкое свечение. Внизу счётчики лет и работ набегают при появлении.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-024/hero-024.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-024.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради свечения за курсором и счётчиков. Заголовок режется на буквы: каждая — span с -webkit-text-stroke и @keyframes light (steps(2)) с задержкой --i×70ms, буква с индексом flicker получает вторую анимацию buzz с провалами opacity; aria-label на h1 даёт текст целиком. Фото — position:absolute с медленным scale и градиентами-затемнениями, зерно — SVG feTurbulence в data-URI с @keyframes steps(4). Свечение — radial-gradient в --mx/--my из pointermove (только мышь), пишется в style без ререндеров. Счётчики — IntersectionObserver и requestAnimationFrame 1,4 с; число разбирается из value, текст без цифр показывается как есть. Палитра --vibeui-hero-024-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "tattoo",
+          "neon",
+          "dark",
+          "studio",
+          "landing",
+          "hero",
+          "sign",
+          "letters",
+          "grain",
+          "counter"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "tone": "dark"
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Hero024",
+          "usage": "<Hero024\n  eyebrow=\"Тату-студия · с 2014\"\n  title=\"Носи\\nсвоё\"\n  flicker={5}\n  lede=\"Реализм, олд-скул, графика и минимализм.\"\n  primaryLabel=\"Записаться\"\n  primaryHref=\"#booking\"\n  image=\"/photos/hero.webp\"\n  facts={[{ value: \"11\", label: \"лет студии\" }, { value: \"4 800+\", label: \"работ\" }]}\n/>",
+          "summary": "Самодостаточный неоновый первый экран для тату-студии, бара или клуба: вывеска по буквам, фото с зерном, свечение за курсором и счётчики. Всё содержимое пропсами.",
+          "preserve": [
+            "вывеску, зажигающуюся по буквам, и одну барахлящую букву — главный жест экрана",
+            "зерно плёнки и фуксиевую подсветку поверх фото",
+            "свечение за курсором через CSS-переменные без ререндеров"
+          ],
+          "adapt": [
+            "eyebrow, title (\\n — перенос), flicker (индекс буквы или -1), lede",
+            "primaryLabel/Href, secondaryLabel/Href, image, imageAlt, facts",
+            "trail, accent и background, tone"
+          ],
+          "notes": [
+            "Заголовок в верхнем регистре по CSS: пишите как обычно.",
+            "reduced-motion зажигает все буквы сразу и выключает зерно и свечение."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Носи\nсвоё",
+            "maxLength": 24
+          },
+          {
+            "prop": "flicker",
+            "label": "Мерцающая буква",
+            "type": "number",
+            "default": 5,
+            "min": -1,
+            "max": 20
+          },
+          {
+            "prop": "trail",
+            "label": "Свечение за курсором",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Neon sign hero with a photo and a cursor glow",
+            "description": "A tattoo studio first screen: the headline as a neon sign — letters light up one by one with a spark, one tube “buzzes” and flickers. Behind, a large photo of an artist at work with film grain and a magenta rim light; a soft glow follows the cursor. Counters of years and works count up at the bottom.",
+            "docs": "One file, zero dependencies, “use client” for the cursor glow and counters. The headline is split into letters: each a span with -webkit-text-stroke and a light @keyframes (steps(2)) delayed --i×70ms; the letter at index flicker gets a second buzz animation with opacity dips; an aria-label on the h1 carries the whole text. The photo is position:absolute with a slow scale and darkening gradients; the grain is an SVG feTurbulence data URI with a steps(4) @keyframes. The glow is a radial-gradient at --mx/--my from pointermove (mouse only), written into style without re-renders. Counters use an IntersectionObserver and a 1.4 s requestAnimationFrame; the number is parsed out of value, text without digits shows as is. Palette --vibeui-hero-024-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained neon first screen for a tattoo studio, bar or club: a letter-by-letter sign, a grainy photo, a cursor glow and counters. All content via props.",
+              "preserve": [
+                "the sign lighting up letter by letter and one buzzing letter — the screen’s main gesture",
+                "film grain and magenta rim light over the photo",
+                "the cursor glow via CSS variables, no re-renders"
+              ],
+              "adapt": [
+                "eyebrow, title (\\n breaks), flicker (letter index or -1), lede",
+                "primaryLabel/Href, secondaryLabel/Href, image, imageAlt, facts",
+                "trail, accent and background, tone"
+              ],
+              "notes": [
+                "The headline is uppercased by CSS: write it normally.",
+                "reduced-motion lights all letters at once and disables grain and glow."
+              ],
+              "usage": "<Hero024\n  eyebrow=\"Tattoo studio · since 2014\"\n  title=\"Wear\\nyours\"\n  flicker={5}\n  lede=\"Realism, old school, graphic and minimalism.\"\n  primaryLabel=\"Book\"\n  primaryHref=\"#booking\"\n  image=\"/photos/hero.webp\"\n  facts={[{ value: \"11\", label: \"years\" }, { value: \"4,800+\", label: \"works\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Wear\nyours"
+              },
+              "flicker": {
+                "label": "Flickering letter"
+              },
+              "trail": {
+                "label": "Cursor glow"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "tone": "dark",
+                "eyebrow": "Tattoo studio · since 2014",
+                "title": "Wear\nyours",
+                "lede": "Realism, old school, graphic and minimalism. Four artists, a sterile room, a free sketch. The first session — this week.",
+                "primaryLabel": "Book a consultation",
+                "secondaryLabel": "See the works",
+                "facts": [
+                  {
+                    "value": "11",
+                    "label": "years of the studio"
+                  },
+                  {
+                    "value": "4 800+",
+                    "label": "works"
+                  },
+                  {
+                    "value": "4",
+                    "label": "artists"
+                  },
+                  {
+                    "value": "100 %",
+                    "label": "single-use needles"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

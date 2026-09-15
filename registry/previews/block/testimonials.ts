@@ -40,4 +40,6 @@ export const PREVIEWS = {
     import("@/registry/blocks/testimonials/testimonials-017/testimonials-017").then((module) => module.Testimonials017),
   "testimonials-018": () =>
     import("@/registry/blocks/testimonials/testimonials-018/testimonials-018").then((module) => module.Testimonials018),
+  "testimonials-019": () =>
+    import("@/registry/blocks/testimonials/testimonials-019/testimonials-019").then((module) => module.Testimonials019),
 } satisfies PreviewLoaderMap

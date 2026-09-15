@@ -3982,6 +3982,242 @@
           }
         }
       }
+    },
+    {
+      "name": "pricing-022",
+      "type": "registry:block",
+      "title": "Калькулятор цены по размеру и зоне с пакетами",
+      "description": "Стоимость тату: калькулятор — неоновый ползунок размера в сантиметрах и капсулы зон тела с множителем, итог перелистывается при каждом изменении, рядом «примерно N часов». Ниже три пакета с неоновыми рамками своего цвета, выделенный — с бегущей conic-рамкой.",
+      "categories": [
+        "pricing"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-022/pricing-022.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-022.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради размера и зоны. Ползунок — input type=range со стилизованным треком: заливка до --fill из значения, бегунок с неоновым box-shadow. Зоны — кнопки с aria-pressed и factor. Формула: max(minPrice, round(size² × ratePerCm × factor / 500) × 500), часы ≈ size²/60; итог — span с key=значение и @keyframes въезда, aria-live. Пакеты — <li> с pack.color в --neon (рамка, имя, точки), featured — ::before с conic-gradient(from var(--a)) через @property и маску-кольцо. От 60rem (container query) калькулятор в три колонки, пакеты в три. Палитра --vibeui-pricing-022-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "tattoo",
+          "neon",
+          "dark",
+          "studio",
+          "landing",
+          "pricing",
+          "calculator",
+          "slider",
+          "packages",
+          "conic"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "tone": "dark"
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Pricing022",
+          "usage": "<Pricing022\n  ratePerCm={180}\n  minPrice={5000}\n  zones={[{ key: \"arm\", label: \"Рука\", factor: 1 }, { key: \"ribs\", label: \"Рёбра\", factor: 1.4 }]}\n  packages={[\n    { name: \"Сеанс\", price: \"от 15 000\", hint: \"до 4 часов\", features: [\"Индивидуальный эскиз\", \"Коррекция через месяц\"], featured: true, color: \"#ff2bd6\", actionLabel: \"Записаться\", actionHref: \"#booking\" },\n  ]}\n/>",
+          "summary": "Самодостаточная секция стоимости для тату-студии, салона или мастерской с ценой «от»: калькулятор по размеру и зоне с перелистыванием итога и пакеты с неоновыми рамками. Зоны и пакеты — массивы пропсом.",
+          "preserve": [
+            "калькулятор по размеру и зоне с перелистыванием итога — человек видит порядок цены до звонка",
+            "неоновые рамки пакетов цветом из данных и бегущую conic-рамку выделенного",
+            "«примерно N часов» рядом с ценой"
+          ],
+          "adapt": [
+            "ratePerCm, minPrice, minSize, maxSize, defaultSize, zones (подписи и множители)",
+            "packages: названия, тексты, цены, подсказки, features, featured, цвета, ссылки; note, currency; eyebrow, title, lede",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Формула квадратичная по размеру: подберите ratePerCm под свои цены, округление — до 500.",
+            "@property для угла — Chrome 85+, Safari 16.4+, Firefox 128+; без него рамка статична."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Сколько это стоит",
+            "maxLength": 40
+          },
+          {
+            "prop": "ratePerCm",
+            "label": "₽ за см²",
+            "type": "number",
+            "default": 180,
+            "min": 50,
+            "max": 1000,
+            "step": 10
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Price calculator by size and zone with packages",
+            "description": "Tattoo pricing: a calculator — a neon size slider in centimetres and body-zone pills with a multiplier, the total flips on every change, next to it “about N hours”. Below three packages with neon frames in their own colours, the featured one with a spinning conic frame.",
+            "docs": "One file, zero dependencies, “use client” for size and zone. The slider is an input type=range with a styled track: a fill up to --fill from the value, a thumb with a neon box-shadow. Zones are buttons with aria-pressed and a factor. The formula: max(minPrice, round(size² × ratePerCm × factor / 500) × 500), hours ≈ size²/60; the total is a span keyed by value with a slide-in @keyframes, aria-live. Packages are <li> with pack.color in --neon (frame, name, dots); featured gets a ::before with conic-gradient(from var(--a)) via @property and a ring mask. From 60rem (container query) the calculator is three columns, packages three. Palette --vibeui-pricing-022-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained pricing section for a tattoo studio, salon or workshop with “from” prices: a size-and-zone calculator with a flipping total and packages with neon frames. Zones and packages come in as prop arrays.",
+              "preserve": [
+                "the size-and-zone calculator with a flipping total — people see the price range before calling",
+                "package neon frames in colours from the data and the featured spinning conic frame",
+                "“about N hours” next to the price"
+              ],
+              "adapt": [
+                "ratePerCm, minPrice, minSize, maxSize, defaultSize, zones (labels and multipliers)",
+                "packages: names, texts, prices, hints, features, featured, colours, links; note, currency; eyebrow, title, lede",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The formula is quadratic in size: tune ratePerCm to your prices, rounding is to 500.",
+                "@property for the angle — Chrome 85+, Safari 16.4+, Firefox 128+; without it the frame is static."
+              ],
+              "usage": "<Pricing022\n  ratePerCm={180}\n  minPrice={5000}\n  zones={[{ key: \"arm\", label: \"Arm\", factor: 1 }, { key: \"ribs\", label: \"Ribs\", factor: 1.4 }]}\n  packages={[\n    { name: \"Session\", price: \"from 15,000\", hint: \"up to 4 hours\", features: [\"A custom sketch\", \"A touch-up after a month\"], featured: true, color: \"#ff2bd6\", actionLabel: \"Book\", actionHref: \"#booking\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What it costs"
+              },
+              "ratePerCm": {
+                "label": "₽ per cm²"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "tone": "dark",
+                "eyebrow": "Pricing",
+                "title": "What it costs",
+                "lede": "The price depends on size, placement and detail. The calculator is approximate; the artist gives the exact figure after the sketch.",
+                "note": "Consultation and sketch are free. A 20 % deposit when booking a date, refundable 48 hours before.",
+                "currency": "₽",
+                "zones": [
+                  {
+                    "key": "arm",
+                    "label": "Arm",
+                    "factor": 1
+                  },
+                  {
+                    "key": "leg",
+                    "label": "Leg",
+                    "factor": 1
+                  },
+                  {
+                    "key": "back",
+                    "label": "Back",
+                    "factor": 1.1
+                  },
+                  {
+                    "key": "chest",
+                    "label": "Chest",
+                    "factor": 1.25
+                  },
+                  {
+                    "key": "ribs",
+                    "label": "Ribs",
+                    "factor": 1.4
+                  },
+                  {
+                    "key": "neck",
+                    "label": "Neck and hands",
+                    "factor": 1.5
+                  }
+                ],
+                "packages": [
+                  {
+                    "name": "Mini",
+                    "text": "A small piece within one consultation.",
+                    "price": "from 5 000",
+                    "hint": "up to 5 cm",
+                    "features": [
+                      "Sketch on the spot",
+                      "40 minutes",
+                      "Aftercare included"
+                    ],
+                    "color": "#22f3ff",
+                    "actionLabel": "Book",
+                    "actionHref": "#"
+                  },
+                  {
+                    "name": "Session",
+                    "text": "A medium piece in one visit.",
+                    "price": "from 15 000",
+                    "hint": "up to 4 hours",
+                    "features": [
+                      "A custom sketch",
+                      "Revisions until “yes”",
+                      "A free touch-up after a month"
+                    ],
+                    "featured": true,
+                    "color": "#ff2bd6",
+                    "actionLabel": "Book",
+                    "actionHref": "#"
+                  },
+                  {
+                    "name": "Sleeve",
+                    "text": "A large project over several sessions.",
+                    "price": "from 60 000",
+                    "hint": "3–6 sessions",
+                    "features": [
+                      "A concept for the whole arm",
+                      "A fixed project price",
+                      "Pay per session"
+                    ],
+                    "color": "#8b5cff",
+                    "actionLabel": "Discuss the project",
+                    "actionHref": "#"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

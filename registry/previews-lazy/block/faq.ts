@@ -60,4 +60,7 @@ export const PREVIEWS = {
   "faq-018": dynamic(() =>
     import("@/registry/blocks/faq/faq-018/faq-018").then((module) => module.Faq018),
   ),
+  "faq-019": dynamic(() =>
+    import("@/registry/blocks/faq/faq-019/faq-019").then((module) => module.Faq019),
+  ),
 } satisfies PreviewMap

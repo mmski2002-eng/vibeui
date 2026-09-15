@@ -2028,6 +2028,222 @@
           }
         }
       }
+    },
+    {
+      "name": "people-009",
+      "type": "registry:block",
+      "title": "Мастера-полароиды с неоновой обводкой и переворотом",
+      "description": "Мастера тату-студии: карточки-полароиды с неоновой обводкой своего цвета, портрет сверху, имя светится, стили капсулами, опыт и ближайшее окно лаймом. При наведении или фокусе карточка поворачивается в 3D и на обороте показывает три работы мастера и кнопку записи.",
+      "categories": [
+        "team"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "people-009/people-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/people-009.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Сцена — <li> с perspective:1400px, карточка — grid с transform-style:preserve-3d и rotateY(180deg) по :hover и :focus-within; лицо и оборот в одной grid-area с backface-visibility:hidden. Цвет обводки — artist.color в --neon: рамка, свечение и имя. Оборот aria-hidden, кнопка на нём с tabIndex=-1; для клавиатуры и ридеров есть скрытая ссылка записи. Сетка auto-fill 15rem, от 64rem (container query) четыре колонки. Появление — @keyframes с задержкой --n×90ms. Палитра --vibeui-people-009-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "tattoo",
+          "neon",
+          "dark",
+          "studio",
+          "landing",
+          "team",
+          "artists",
+          "flip",
+          "3d",
+          "polaroid"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "tone": "dark"
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "People009",
+          "usage": "<People009\n  artists={[\n    { name: \"Ася\", styles: [\"олд-скул\", \"нео-традишнл\"], experience: \"9 лет\", image: \"/photos/artist-01.webp\", works: [\"/photos/work-02.webp\", \"/photos/work-08.webp\", \"/photos/work-05.webp\"], slot: \"окно 21 сен\", color: \"#ff2bd6\", href: \"#booking\" },\n  ]}\n/>",
+          "summary": "Самодостаточная секция мастеров для тату-студии, барбершопа или салона: полароиды с неоновой обводкой, 3D-переворот к работам и кнопка записи. Мастера — массив пропсом с цветом на каждого.",
+          "preserve": [
+            "3D-переворот карточки к работам мастера по наведению и фокусу",
+            "неоновую обводку и светящееся имя цветом мастера из данных",
+            "ближайшее окно лаймом — вместо абстрактного «свободен»"
+          ],
+          "adapt": [
+            "artists: имена, стили, опыт, портреты, работы, окна, цвета, ссылки",
+            "eyebrow, title, lede, bookLabel",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "На тач-экранах переворот происходит по тапу (фокус), повторный тап по кнопке записи ведёт по ссылке.",
+            "Работ на обороте лучше ровно три: сетка на три колонки."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Четыре руки, четыре почерка",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Polaroid artists with neon frames and a flip",
+            "description": "Tattoo studio artists: polaroid cards with a neon frame in their own colour, the portrait on top, a glowing name, styles as pills, experience and the next open slot in lime. On hover or focus the card flips in 3D and shows three of the artist’s works and a booking button on the back.",
+            "docs": "One file, zero dependencies, a server component. The scene is an <li> with perspective:1400px, the card a grid with transform-style:preserve-3d and rotateY(180deg) on :hover and :focus-within; face and back share a grid-area with backface-visibility:hidden. The frame colour is artist.color in --neon: border, glow and name. The back is aria-hidden with its button at tabIndex=-1; a hidden booking link serves keyboard and readers. An auto-fill 15rem grid, four columns from 64rem (container query). Appearance via @keyframes with a --n×90ms delay. Palette --vibeui-people-009-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained artists section for a tattoo studio, barbershop or salon: neon-framed polaroids, a 3D flip to the works and a booking button. Artists come in as a prop array with a colour each.",
+              "preserve": [
+                "the 3D card flip to the artist’s works on hover and focus",
+                "the neon frame and glowing name in the artist’s colour from the data",
+                "the next open slot in lime — instead of an abstract “available”"
+              ],
+              "adapt": [
+                "artists: names, styles, experience, portraits, works, slots, colours, links",
+                "eyebrow, title, lede, bookLabel",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "On touch the flip happens on tap (focus); a second tap on the booking button follows the link.",
+                "Exactly three works on the back look best: the grid has three columns."
+              ],
+              "usage": "<People009\n  artists={[\n    { name: \"Asya\", styles: [\"old school\", \"neo-traditional\"], experience: \"9 years\", image: \"/photos/artist-01.webp\", works: [\"/photos/work-02.webp\", \"/photos/work-08.webp\", \"/photos/work-05.webp\"], slot: \"slot 21 Sep\", color: \"#ff2bd6\", href: \"#booking\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Four hands, four handwritings"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "tone": "dark",
+                "eyebrow": "Artists",
+                "title": "Four hands, four handwritings",
+                "lede": "Each works in their own style and never takes on another’s: the work comes out better and you land with the one who loves exactly this.",
+                "bookLabel": "Book",
+                "artists": [
+                  {
+                    "name": "Asya",
+                    "styles": [
+                      "old school",
+                      "neo-traditional"
+                    ],
+                    "experience": "9 years",
+                    "image": "/demo/tattoo/artist-01.webp",
+                    "works": [
+                      "/demo/tattoo/work-02.webp",
+                      "/demo/tattoo/work-08.webp",
+                      "/demo/tattoo/work-05.webp"
+                    ],
+                    "slot": "slot 21 Sep",
+                    "color": "#ff2bd6",
+                    "href": "#"
+                  },
+                  {
+                    "name": "Mark",
+                    "styles": [
+                      "realism",
+                      "black & grey"
+                    ],
+                    "experience": "14 years",
+                    "image": "/demo/tattoo/artist-02.webp",
+                    "works": [
+                      "/demo/tattoo/work-01.webp",
+                      "/demo/tattoo/work-06.webp",
+                      "/demo/tattoo/work-12.webp"
+                    ],
+                    "slot": "slot 3 Oct",
+                    "color": "#8b5cff",
+                    "href": "#"
+                  },
+                  {
+                    "name": "Timur",
+                    "styles": [
+                      "graphic",
+                      "ornament"
+                    ],
+                    "experience": "7 years",
+                    "image": "/demo/tattoo/artist-03.webp",
+                    "works": [
+                      "/demo/tattoo/work-04.webp",
+                      "/demo/tattoo/work-10.webp",
+                      "/demo/tattoo/work-07.webp"
+                    ],
+                    "slot": "slot 24 Sep",
+                    "color": "#22f3ff",
+                    "href": "#"
+                  },
+                  {
+                    "name": "Lina",
+                    "styles": [
+                      "minimal",
+                      "watercolour"
+                    ],
+                    "experience": "5 years",
+                    "image": "/demo/tattoo/artist-04.webp",
+                    "works": [
+                      "/demo/tattoo/work-03.webp",
+                      "/demo/tattoo/work-09.webp",
+                      "/demo/tattoo/work-11.webp"
+                    ],
+                    "slot": "slot tomorrow",
+                    "color": "#c8ff3a",
+                    "href": "#"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

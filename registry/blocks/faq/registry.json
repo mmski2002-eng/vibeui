@@ -3378,6 +3378,175 @@
           }
         }
       }
+    },
+    {
+      "name": "faq-019",
+      "type": "registry:block",
+      "title": "Вопросы с неоновой линией у открытого",
+      "description": "Вопросы тату-студии: аккордеон на details с номерами, у открытого вопроса слева загорается неоновая линия, номер светится, плюс поворачивается в крестик, ответ проявляется. Открыт один. Слева липкий заголовок с подводкой.",
+      "categories": [
+        "faq"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "faq-019/faq-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/faq-019.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. <details name={useId()}> — открыт один; линия — ::before details со scaleY 0→1 и неоновым box-shadow при [open]; summary сеткой 2.2rem/1fr/1.5rem: номер в mono, текст, плюс из двух чёрточек (rotate 45deg при [open]). Ответ — <p> с @keyframes fade. От 60rem (container query) две колонки 2fr/3fr, заголовок position:sticky. Палитра --vibeui-faq-019-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "tattoo",
+          "neon",
+          "dark",
+          "studio",
+          "landing",
+          "faq",
+          "accordion",
+          "questions"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "tone": "dark"
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Faq019",
+          "usage": "<Faq019\n  title=\"Что спрашивают до первой иглы\"\n  items={[\n    { question: \"Это больно?\", answer: \"Терпимо. Зависит от зоны, перерывы каждые 40 минут.\" },\n    { question: \"Сколько заживает?\", answer: \"Верхний слой — две недели, полностью — месяц.\" },\n  ]}\n/>",
+          "summary": "Самодостаточный блок вопросов для тату-студии, салона или сервиса с тёмным стилем: аккордеон с неоновой линией у открытого и липким заголовком. Вопросы — массив пропсом.",
+          "preserve": [
+            "неоновую линию слева у открытого вопроса и светящийся номер",
+            "один открытый вопрос через name у details, без состояния",
+            "липкий заголовок слева на широком экране"
+          ],
+          "adapt": [
+            "items: вопросы и ответы",
+            "eyebrow, title, lede",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Атрибут name у details — Chrome 120+, Safari 17.2+, Firefox 130+; в старых браузерах вопросы открываются независимо.",
+            "Номера считаются автоматически с 01."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что спрашивают до первой иглы",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "FAQ with a neon line on the open item",
+            "description": "Tattoo studio FAQ: a details accordion with numbers; on the open question a neon line lights up on the left, the number glows, the plus rotates into a cross, the answer fades in. One open at a time. A sticky heading with a lede on the left.",
+            "docs": "One file, zero dependencies, a server component. <details name={useId()}> — one open; the line is the details' ::before scaling Y 0→1 with a neon box-shadow when [open]; the summary is a 2.2rem/1fr/1.5rem grid: a mono number, the text, a plus of two bars (rotate 45deg when [open]). The answer is a <p> with a fade @keyframes. From 60rem (container query) two columns 2fr/3fr, the heading position:sticky. Palette --vibeui-faq-019-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained FAQ for a tattoo studio, salon or dark-styled service: an accordion with a neon line on the open item and a sticky heading. Questions come in as a prop array.",
+              "preserve": [
+                "the neon line on the left of the open question and the glowing number",
+                "one open question via name on details, no state",
+                "the sticky heading on the left on wide screens"
+              ],
+              "adapt": [
+                "items: questions and answers",
+                "eyebrow, title, lede",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The name attribute on details — Chrome 120+, Safari 17.2+, Firefox 130+; older browsers open questions independently.",
+                "Numbers are counted automatically from 01."
+              ],
+              "usage": "<Faq019\n  title=\"What people ask before the first needle\"\n  items={[\n    { question: \"Does it hurt?\", answer: \"Bearable. Depends on the zone, breaks every 40 minutes.\" },\n    { question: \"How long does it heal?\", answer: \"The top layer — two weeks, fully — a month.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What people ask before the first needle"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "tone": "dark",
+                "eyebrow": "FAQ",
+                "title": "What people ask before the first needle",
+                "lede": "About pain, healing, age and cover-ups. Didn’t find yours — write to us, we answer within an hour.",
+                "items": [
+                  {
+                    "question": "Does it hurt?",
+                    "answer": "Bearable. It depends on the zone: shoulder and forearm barely register, ribs and feet are sharper. Breaks every 40 minutes, numbing for sensitive zones."
+                  },
+                  {
+                    "question": "How long does it heal?",
+                    "answer": "The top layer — 10–14 days, fully — a month. The first three days under film, then cream twice a day. Instructions come with you."
+                  },
+                  {
+                    "question": "Can I come at 16?",
+                    "answer": "From 18. No exceptions, we ask for ID at the first session."
+                  },
+                  {
+                    "question": "How do I choose an artist?",
+                    "answer": "By style. Realism — Mark, old school — Asya, graphic — Timur, minimal — Lina. If unsure, write and we’ll suggest."
+                  },
+                  {
+                    "question": "Can an old tattoo be covered?",
+                    "answer": "Usually yes. Send a photo — we’ll say what’s possible and whether laser lightening is needed first."
+                  },
+                  {
+                    "question": "What to avoid before a session?",
+                    "answer": "Alcohol for a day, sun and tanning for three days, blood thinners. Sleep and eat — yes, please."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

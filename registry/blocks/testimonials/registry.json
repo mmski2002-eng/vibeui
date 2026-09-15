@@ -3579,6 +3579,185 @@
           }
         }
       }
+    },
+    {
+      "name": "testimonials-019",
+      "type": "registry:block",
+      "title": "Отзывы каруселью coverflow с фото заживших работ",
+      "description": "Отзывы: карусель coverflow — активная карточка в центре в полный размер, соседи уходят в глубину с поворотом и затемнением. На карточке фото зажившей работы с плашкой «спустя N лет», цитата, имя, стиль и место, неоновые звёзды. Стрелки, точки, клавиатура, клик по соседу.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-019/testimonials-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-019.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради активного индекса. Каждая карточка — <button> с --d (сдвиг от активной) и --abs: transform translateX(d×60 %) translateZ(−abs×14rem) rotateY(−d×28deg), opacity и brightness по abs, z-index 10−abs, переход .7 с; карточки дальше двух скрыты. Сцена с perspective:1600px и фиксированной высотой. Активная — tabIndex 0, остальные aria-hidden; ArrowLeft/ArrowRight на сцене. От 60rem (container query) сдвиг 78 % и поворот 32°. Палитра --vibeui-testimonials-019-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "tattoo",
+          "neon",
+          "dark",
+          "studio",
+          "landing",
+          "reviews",
+          "carousel",
+          "coverflow",
+          "3d"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "tone": "dark"
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Testimonials019",
+          "usage": "<Testimonials019\n  items={[\n    { quote: \"Через два года лев смотрится так, будто сделан вчера.\", name: \"Илья\", meta: \"реализм · предплечье · 2023\", image: \"/photos/healed-01.webp\", after: \"спустя 2 года\", rating: 5 },\n  ]}\n/>",
+          "summary": "Самодостаточная секция отзывов для тату-студии, салона или студии: карусель coverflow с фото результата «спустя время», рейтингом и клавиатурой. Отзывы — массив пропсом.",
+          "preserve": [
+            "coverflow: соседи в глубине с поворотом, активная в полный размер",
+            "фото зажившей работы с плашкой «спустя N лет» — доказательство, а не аватар",
+            "неоновые звёзды рейтинга"
+          ],
+          "adapt": [
+            "items: цитаты, имена, стиль и место, фото, плашки, рейтинг",
+            "eyebrow, title, prevLabel, nextLabel",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Отзывов лучше четыре-восемь: по краям видны только два соседа.",
+            "Высота сцены фиксирована (30/32rem): длинные цитаты режьте до трёх-четырёх строк."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Как это выглядит спустя годы",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Coverflow reviews with healed-work photos",
+            "description": "Reviews as a coverflow carousel — the active card centred at full size, neighbours receding with a turn and darkening. A card shows a healed-work photo with an “N years later” tag, the quote, name, style and placement, neon stars. Arrows, dots, keyboard, a click on a neighbour.",
+            "docs": "One file, zero dependencies, “use client” for the active index. Each card is a <button> with --d (offset from active) and --abs: transform translateX(d×60 %) translateZ(−abs×14rem) rotateY(−d×28deg), opacity and brightness by abs, z-index 10−abs, a .7 s transition; cards further than two are hidden. The stage has perspective:1600px and a fixed height. The active card is tabIndex 0, the rest aria-hidden; ArrowLeft/ArrowRight on the stage. From 60rem (container query) a 78 % offset and 32° turn. Palette --vibeui-testimonials-019-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained reviews section for a tattoo studio, salon or studio: a coverflow carousel with “years later” result photos, ratings and keyboard. Reviews come in as a prop array.",
+              "preserve": [
+                "the coverflow: neighbours in depth with a turn, the active one at full size",
+                "the healed-work photo with an “N years later” tag — proof, not an avatar",
+                "the neon rating stars"
+              ],
+              "adapt": [
+                "items: quotes, names, style and placement, photos, tags, rating",
+                "eyebrow, title, prevLabel, nextLabel",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Four to eight reviews work best: only two neighbours show at the edges.",
+                "The stage height is fixed (30/32rem): trim long quotes to three or four lines."
+              ],
+              "usage": "<Testimonials019\n  items={[\n    { quote: \"Two years on the lion looks like it was done yesterday.\", name: \"Ilya\", meta: \"realism · forearm · 2023\", image: \"/photos/healed-01.webp\", after: \"2 years later\", rating: 5 },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What it looks like years later"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "tone": "dark",
+                "eyebrow": "Reviews",
+                "title": "What it looks like years later",
+                "prevLabel": "Previous",
+                "nextLabel": "Next",
+                "items": [
+                  {
+                    "quote": "Mark asked three times where the shirt sleeve would end. Two years on the lion looks like it was done yesterday.",
+                    "name": "Ilya",
+                    "meta": "realism · forearm · 2023",
+                    "image": "/demo/tattoo/healed-01.webp",
+                    "after": "2 years later",
+                    "rating": 5
+                  },
+                  {
+                    "quote": "I feared the fine lines would blur. Lina sketched right on the skin and the fern is still crisp to the last leaf.",
+                    "name": "Marina",
+                    "meta": "minimal · shoulder · 2024",
+                    "image": "/demo/tattoo/healed-02.webp",
+                    "after": "a year later",
+                    "rating": 5
+                  },
+                  {
+                    "quote": "Asya talked me into peonies instead of daisies — and was right. The colour hasn’t faded despite a summer in the sun.",
+                    "name": "Kira",
+                    "meta": "neo-traditional · thigh · 2022",
+                    "image": "/demo/tattoo/healed-03.webp",
+                    "after": "3 years later",
+                    "rating": 5
+                  },
+                  {
+                    "quote": "An ornament on the calf — 9 hours over two sessions. Timur gave a break every forty minutes and it really helped.",
+                    "name": "Denis",
+                    "meta": "graphic · calf · 2024",
+                    "image": "/demo/tattoo/healed-04.webp",
+                    "after": "a year later",
+                    "rating": 5
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

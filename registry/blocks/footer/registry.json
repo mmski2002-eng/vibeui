@@ -3377,6 +3377,195 @@
           }
         }
       }
+    },
+    {
+      "name": "footer-023",
+      "type": "registry:block",
+      "title": "Подвал с неоновой линией, 18+ и лицензией",
+      "description": "Подвал тату-студии: неоновая линия-градиент сверху, логотип-вывеска, адрес, часы и телефон, две колонки ссылок, соцсети кружками со свечением по наведению, внизу значок «18+», лицензия и год.",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-023/footer-023.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-023.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Линия — ::before с linear-gradient фуксия→фиолет и box-shadow. Логотип — text-shadow неона. Соцсети — inline SVG по kind (telegram, vk, instagram, youtube), незнакомый — первая буква. Значок 18+ — кружок с акцентной обводкой и свечением. Сетка top до 56rem (container query) в колонку, от 56rem 1.6fr/1fr/1fr/auto. Палитра --vibeui-footer-023-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "tattoo",
+          "neon",
+          "dark",
+          "studio",
+          "landing",
+          "footer",
+          "socials",
+          "legal",
+          "age"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "tone": "dark"
+          }
+        },
+        "cardControls": [
+          "brand",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Footer023",
+          "usage": "<Footer023\n  brand=\"Inkra\"\n  address=\"Лиговский пр., 50\"\n  hours=\"ежедневно 12:00–22:00\"\n  phone=\"+7 812 240-70-17\"\n  phoneHref=\"tel:+78122407017\"\n  columns={[{ title: \"Студия\", links: [{ label: \"Работы\", href: \"#works\" }] }]}\n  socials={[{ kind: \"telegram\", label: \"Telegram\", href: \"https://t.me/studio\" }]}\n  legal=\"ИП Волкова А. С., лицензия № ЛО-78-01-011245. 18+. © 2026.\"\n/>",
+          "summary": "Самодостаточный подвал для тату-студии, бара или клуба: неоновая линия, адрес и часы, ссылки, соцсети, «18+» и лицензия. Всё содержимое пропсами.",
+          "preserve": [
+            "неоновую линию-градиент сверху — ту же, что под шапкой",
+            "значок «18+» с обводкой — обязательную маркировку видно",
+            "соцсети кружками со свечением по наведению"
+          ],
+          "adapt": [
+            "brand, brandHref, address, hours, phone, phoneHref, mapLabel, mapHref",
+            "columns, socials (kind, label, href), legal",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Свои иконки: kind вне списка рисует первую букву подписи — замените массив ICONS в файле.",
+            "Пустой legal убирает строку, значок 18+ остаётся."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "brand",
+            "label": "Логотип",
+            "type": "text",
+            "default": "Inkra",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Footer with a neon line, 18+ and the licence",
+            "description": "A tattoo studio footer: a neon gradient line on top, a sign-like logo, address, hours and phone, two link columns, social icons in circles glowing on hover, an “18+” badge, the licence and year at the bottom.",
+            "docs": "One file, zero dependencies, a server component. The line is a ::before with a magenta→violet linear-gradient and a box-shadow. The logo has a neon text-shadow. Socials are inline SVGs by kind (telegram, vk, instagram, youtube); an unknown kind draws the first letter. The 18+ badge is a circle with an accent ring and glow. The top grid stacks below 56rem (container query), from 56rem 1.6fr/1fr/1fr/auto. Palette --vibeui-footer-023-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained footer for a tattoo studio, bar or club: a neon line, address and hours, links, socials, “18+” and the licence. All content via props.",
+              "preserve": [
+                "the neon gradient line on top — the same as under the header",
+                "the ringed “18+” badge — the mandatory mark is visible",
+                "social icons in circles glowing on hover"
+              ],
+              "adapt": [
+                "brand, brandHref, address, hours, phone, phoneHref, mapLabel, mapHref",
+                "columns, socials (kind, label, href), legal",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Own icons: a kind outside the list draws the label’s first letter — replace the ICONS map in the file.",
+                "An empty legal removes the line; the 18+ badge stays."
+              ],
+              "usage": "<Footer023\n  brand=\"Inkra\"\n  address=\"Ligovsky 50\"\n  hours=\"daily 12:00–22:00\"\n  phone=\"+7 812 240-70-17\"\n  phoneHref=\"tel:+78122407017\"\n  columns={[{ title: \"Studio\", links: [{ label: \"Works\", href: \"#works\" }] }]}\n  socials={[{ kind: \"telegram\", label: \"Telegram\", href: \"https://t.me/studio\" }]}\n  legal=\"Sole trader A. Volkova, licence No. LO-78-01-011245. 18+. © 2026.\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Logo",
+                "default": "Inkra"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "tone": "dark",
+                "address": "St Petersburg, Ligovsky 50, courtyard, entrance by the neon arrow",
+                "hours": "daily 12:00–22:00",
+                "mapLabel": "on the map",
+                "legal": "Sole trader A. Volkova, licence No. LO-78-01-011245. Adults 18+ only. © 2014–2026.",
+                "columns": [
+                  {
+                    "title": "Studio",
+                    "links": [
+                      {
+                        "label": "Works",
+                        "href": "#works"
+                      },
+                      {
+                        "label": "Artists",
+                        "href": "#artists"
+                      },
+                      {
+                        "label": "Pricing",
+                        "href": "#pricing"
+                      },
+                      {
+                        "label": "FAQ",
+                        "href": "#faq"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Clients",
+                    "links": [
+                      {
+                        "label": "Book",
+                        "href": "#booking"
+                      },
+                      {
+                        "label": "Aftercare",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Gift certificate",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Terms and privacy",
+                        "href": "#"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

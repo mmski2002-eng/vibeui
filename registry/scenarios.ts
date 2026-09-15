@@ -215,6 +215,39 @@ export const SCENARIOS: Scenario[] = [
       { item: "footer-022", anchor: "footer", role: "Подвал", roleEn: "Footer", note: "Цветная полоска, соцсети иконками и пять колонок.", noteEn: "A colour stripe, social icons and five columns." },
     ],
   },
+  {
+    slug: "tattoo",
+    label: "Тату-студия",
+    en: "Tattoo studio",
+    summary:
+      "Сайт тату-студии: неоновая вывеска на первом экране, работы с фильтром по стилю и лайтбоксом, мастера-полароиды, как проходит сеанс, цифры, калькулятор цены, отзывы спустя годы, о студии и стерильности, вопросы, запись в три шага, контакты и подвал. Всегда тёмная тема: фуксия, фиолет и циан.",
+    summaryEn:
+      "A tattoo studio site: a neon sign hero, works filtered by style with a lightbox, polaroid artists, how a session goes, figures, a price calculator, reviews years later, about the studio and sterility, FAQ, a three-step booking, contacts and a footer. Always dark: magenta, violet and cyan.",
+    demo: "/scenarios/tattoo/demo",
+    source: "app/scenarios/tattoo/demo/page.tsx",
+    images: "docs/scenarios/tattoo/IMAGES.md",
+    theme: {
+      tone: "dark",
+      accent: "#ff2bd6",
+      ink: "#f3eefc",
+      font: "Unbounded, Manrope, JetBrains Mono",
+    },
+    sections: [
+      { item: "navbar-024", anchor: "", role: "Шапка", roleEn: "Header", note: "Неоновый логотип, лазерные подчёркивания, статус «есть окна».", noteEn: "A neon logo, laser underlines, an “open slots” status." },
+      { item: "hero-024", anchor: "hero", role: "Первый экран", roleEn: "First screen", note: "Вывеска зажигается по буквам, фото с зерном, свечение за курсором.", noteEn: "A sign lighting up letter by letter, a grainy photo, a cursor glow." },
+      { item: "portfolio-007", anchor: "works", role: "Работы", roleEn: "Works", note: "Фильтр по стилю, ч/б → цвет по наведению, лайтбокс с историей.", noteEn: "A style filter, b/w → colour on hover, a lightbox with the story." },
+      { item: "people-009", anchor: "artists", role: "Мастера", roleEn: "Artists", note: "Полароиды с неоновой обводкой, переворачиваются к работам.", noteEn: "Neon-framed polaroids that flip to the works." },
+      { item: "process-001", anchor: "process", role: "Как проходит", roleEn: "How it goes", note: "Пять шагов вдоль линии с бегущим импульсом.", noteEn: "Five steps along a line with a running pulse." },
+      { item: "stats-001", anchor: "stats", role: "В цифрах", roleEn: "In numbers", note: "Неоновые кольца и счётчики.", noteEn: "Neon rings and counters." },
+      { item: "pricing-022", anchor: "pricing", role: "Стоимость", roleEn: "Pricing", note: "Калькулятор по размеру и зоне, три пакета.", noteEn: "A size-and-zone calculator, three packages." },
+      { item: "testimonials-019", anchor: "reviews", role: "Отзывы", roleEn: "Reviews", note: "Карусель coverflow с фото заживших работ.", noteEn: "A coverflow carousel with healed-work photos." },
+      { item: "about-010", anchor: "about", role: "О студии", roleEn: "About", note: "Манифест, стерильность, документы, фото с параллаксом.", noteEn: "A manifesto, sterility, documents, parallax photos." },
+      { item: "faq-019", anchor: "faq", role: "Вопросы", roleEn: "FAQ", note: "Аккордеон с неоновой линией у открытого.", noteEn: "An accordion with a neon line on the open item." },
+      { item: "contact-017", anchor: "booking", role: "Запись", roleEn: "Booking", note: "Три шага: мастер и зона, дата, идея; сводка справа.", noteEn: "Three steps: artist and zone, date, idea; a summary on the right." },
+      { item: "cta-020", anchor: "contacts", role: "Контакты", roleEn: "Contacts", note: "Табличка OPEN, телефон, мессенджеры.", noteEn: "An OPEN sign, phone, messengers." },
+      { item: "footer-023", anchor: "footer", role: "Подвал", roleEn: "Footer", note: "Адрес, часы, соцсети, 18+ и лицензия.", noteEn: "Address, hours, socials, 18+ and the licence." },
+    ],
+  },
 ]
 
 // Опечатка в имени item'а здесь означала бы пустую карточку в рецепте,

@@ -3109,6 +3109,161 @@
           }
         }
       }
+    },
+    {
+      "name": "cta-020",
+      "type": "registry:block",
+      "title": "Неоновая табличка OPEN с телефоном и мессенджерами",
+      "description": "Призыв тату-студии: неоновая табличка «OPEN» с трубкой-рамкой и мерцанием, рядом заголовок, телефон крупно циановым, часы и адрес, мессенджеры капсулами со свечением. На фоне два плывущих пятна фуксии и фиолета.",
+      "categories": [
+        "cta"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-020/cta-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-020.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Табличка — span с border 3px акцента, text-shadow и box-shadow в три слоя (снаружи и inset), @keyframes flicker с редкими провалами. Пятна — ::before/::after секции с blur(90px) и @keyframes drift. Телефон — <a href=tel> в mono с text-shadow. Мессенджеры — inline SVG по kind (telegram, whatsapp, phone), незнакомый — без иконки. От 60rem (container query) табличка слева, текст справа. Палитра --vibeui-cta-020-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "tattoo",
+          "neon",
+          "dark",
+          "studio",
+          "landing",
+          "cta",
+          "sign",
+          "contacts",
+          "messengers"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "tone": "dark"
+          }
+        },
+        "cardControls": [
+          "sign",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Cta020",
+          "usage": "<Cta020\n  sign=\"Open\"\n  title=\"Бесплатная консультация — сегодня\"\n  phone=\"+7 812 240-70-17\"\n  phoneHref=\"tel:+78122407017\"\n  channels={[{ kind: \"telegram\", label: \"Telegram\", href: \"https://t.me/studio\" }]}\n  hours=\"ежедневно 12:00–22:00 · Лиговский, 50\"\n/>",
+          "summary": "Самодостаточный призыв для тату-студии, бара или салона: неоновая табличка, телефон, часы и мессенджеры. Всё содержимое пропсами.",
+          "preserve": [
+            "табличку OPEN с трубкой-рамкой и мерцанием — главный жест блока",
+            "телефон крупно циановым с href=tel",
+            "плывущие пятна фуксии и фиолета на фоне"
+          ],
+          "adapt": [
+            "sign, title, text, phone, phoneHref, hours",
+            "channels: kind, label, href — мессенджеры и звонок",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Табличка aria-hidden: слово на ней декоративное, смысл несёт заголовок.",
+            "Пустой sign убирает табличку — блок становится обычным призывом с контактами."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "sign",
+            "label": "Табличка",
+            "type": "text",
+            "default": "Open",
+            "maxLength": 8
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Бесплатная консультация — сегодня",
+            "maxLength": 50
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Neon OPEN sign with a phone and messengers",
+            "description": "A tattoo studio call to action: a neon “OPEN” sign with a tube frame and flicker, next to it a heading, the phone large in cyan, hours and address, messengers as glowing pills. Two drifting magenta and violet spots in the background.",
+            "docs": "One file, zero dependencies, a server component. The sign is a span with a 3px accent border, a three-layer text-shadow and box-shadow (outer and inset), a flicker @keyframes with rare dips. The spots are the section’s ::before/::after with blur(90px) and a drift @keyframes. The phone is an <a href=tel> in mono with a text-shadow. Messengers are inline SVGs by kind (telegram, whatsapp, phone); an unknown kind has no icon. From 60rem (container query) the sign on the left, text on the right. Palette --vibeui-cta-020-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained call to action for a tattoo studio, bar or salon: a neon sign, a phone, hours and messengers. All content via props.",
+              "preserve": [
+                "the OPEN sign with a tube frame and flicker — the block’s main gesture",
+                "the phone large in cyan with href=tel",
+                "the drifting magenta and violet spots in the background"
+              ],
+              "adapt": [
+                "sign, title, text, phone, phoneHref, hours",
+                "channels: kind, label, href — messengers and a call",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The sign is aria-hidden: its word is decorative, the heading carries the meaning.",
+                "An empty sign removes it — the block becomes a plain contact call."
+              ],
+              "usage": "<Cta020\n  sign=\"Open\"\n  title=\"A free consultation — today\"\n  phone=\"+7 812 240-70-17\"\n  phoneHref=\"tel:+78122407017\"\n  channels={[{ kind: \"telegram\", label: \"Telegram\", href: \"https://t.me/studio\" }]}\n  hours=\"daily 12:00–22:00 · Ligovsky 50\"\n/>"
+            },
+            "controls": {
+              "sign": {
+                "label": "Sign",
+                "default": "Open"
+              },
+              "title": {
+                "label": "Title",
+                "default": "A free consultation — today"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "tone": "dark",
+                "title": "A free consultation — today",
+                "text": "Come by or write: we’ll show the works, price it and draw a first sketch. No deposit, no obligations.",
+                "hours": "daily 12:00–22:00 · Ligovsky 50"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

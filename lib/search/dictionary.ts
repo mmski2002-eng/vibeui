@@ -331,7 +331,7 @@ export const SYNONYMS: Synonym[] = [
     terms: ["cta"],
   },
   {
-    say: ["команда", "сотрудники", "наши люди"],
+    say: ["команда", "сотрудники", "наши люди", "мастера", "специалисты"],
     categories: ["team"],
     terms: ["team"],
   },
@@ -496,7 +496,7 @@ export const SYNONYMS: Synonym[] = [
     terms: ["map"],
   },
   {
-    say: ["портфолио", "работы", "кейсы", "проекты"],
+    say: ["портфолио", "работы", "кейсы", "проекты", "тату", "татуировки", "эскизы"],
     categories: ["portfolio", "cases"],
     terms: ["portfolio", "cases"],
   },

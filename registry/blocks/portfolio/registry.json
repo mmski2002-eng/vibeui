@@ -966,6 +966,240 @@
           }
         }
       }
+    },
+    {
+      "name": "portfolio-007",
+      "type": "registry:block",
+      "title": "Работы с фильтром, проявлением в цвет и лайтбоксом",
+      "description": "Портфолио тату: фильтр по стилю неоновыми капсулами, плитки 4:5 лежат чёрно-белыми и проявляются в цвет при наведении с неоновой рамкой, подпись выезжает снизу. Смена фильтра перерисовывает сетку с каскадом. Клик открывает лайтбокс: фото, история эскиза, часы, мастер, стрелки и клавиатура.",
+      "categories": [
+        "portfolio"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "portfolio-007/portfolio-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/portfolio-007.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради фильтра и лайтбокса. Плитки — <button> с img в filter:grayscale(1) → 0 и scale 1.05 по :hover/:focus-visible, рамка — ::before с inset box-shadow акцента, подпись — translateY по наведению. Сетка 2/3/4 колонки (container query 44rem и 64rem), <ul key={filter}> пересоздаётся с @keyframes --n×45ms. Лайтбокс — <dialog> с showModal(): слева фото object-fit:contain, справа история (от 64rem колонка 22rem), стрелки листают по кругу, ArrowLeft/ArrowRight на dialog, клик по фону закрывает, onClose сбрасывает текущую. Палитра --vibeui-portfolio-007-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "tattoo",
+          "neon",
+          "dark",
+          "studio",
+          "landing",
+          "portfolio",
+          "gallery",
+          "filter",
+          "lightbox",
+          "grayscale"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "tone": "dark"
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Portfolio007",
+          "usage": "<Portfolio007\n  styles={[{ key: \"realism\", label: \"Реализм\" }, { key: \"minimal\", label: \"Минимализм\" }]}\n  works={[\n    { title: \"Лев\", style: \"realism\", image: \"/photos/work-01.webp\", meta: \"Марк · плечо\", hours: \"6 ч\", story: \"Референс — фото из заповедника.\" },\n  ]}\n/>",
+          "summary": "Самодостаточное портфолио для тату-студии, фотографа или иллюстратора: фильтр по стилю, плитки ч/б → цвет, лайтбокс с историей. Стили и работы — массивы пропсом.",
+          "preserve": [
+            "проявление из чёрно-белого в цвет по наведению с неоновой рамкой",
+            "фильтр по стилю с перерисовкой сетки каскадом",
+            "лайтбокс на <dialog> с историей эскиза и листанием"
+          ],
+          "adapt": [
+            "styles: ключи и подписи; works: заголовки, стили, фото, мастер и место, часы, история",
+            "eyebrow, title, allLabel, closeLabel",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Фото лучше 4:5, иначе плитка обрежет по object-fit.",
+            "Ключ style у работы должен совпадать с key стиля, иначе работа видна только в «Все»."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что выходит из-под иглы",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Works with a filter, colour reveal and a lightbox",
+            "description": "A tattoo portfolio: a style filter as neon pills, 4:5 tiles lie black-and-white and reveal colour on hover with a neon frame, the caption slides up. Changing the filter re-renders the grid with a cascade. A click opens a lightbox: the photo, the sketch story, hours, the artist, arrows and keyboard.",
+            "docs": "One file, zero dependencies, “use client” for the filter and the lightbox. Tiles are <button>s with the img in filter:grayscale(1) → 0 and scale 1.05 on :hover/:focus-visible, the frame an ::before with an inset accent box-shadow, the caption translateY on hover. A 2/3/4-column grid (container queries 44rem and 64rem); <ul key={filter}> remounts with a --n×45ms @keyframes. The lightbox is a <dialog> with showModal(): the photo object-fit:contain on the left, the story on the right (a 22rem column from 64rem), arrows cycle, ArrowLeft/ArrowRight on the dialog, a backdrop click closes, onClose resets the current item. Palette --vibeui-portfolio-007-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained portfolio for a tattoo studio, photographer or illustrator: a style filter, b/w → colour tiles, a lightbox with a story. Styles and works come in as prop arrays.",
+              "preserve": [
+                "the black-and-white to colour reveal on hover with a neon frame",
+                "the style filter re-rendering the grid with a cascade",
+                "the <dialog> lightbox with the sketch story and paging"
+              ],
+              "adapt": [
+                "styles: keys and labels; works: titles, styles, photos, artist and place, hours, story",
+                "eyebrow, title, allLabel, closeLabel",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Photos work best at 4:5, otherwise the tile crops by object-fit.",
+                "A work’s style key must match a style key, otherwise it shows only under “All”."
+              ],
+              "usage": "<Portfolio007\n  styles={[{ key: \"realism\", label: \"Realism\" }, { key: \"minimal\", label: \"Minimal\" }]}\n  works={[\n    { title: \"Lion\", style: \"realism\", image: \"/photos/work-01.webp\", meta: \"Mark · shoulder\", hours: \"6 h\", story: \"Reference — a photo from a reserve.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What comes out from under the needle"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "tone": "dark",
+                "eyebrow": "Works",
+                "title": "What comes out from under the needle",
+                "allLabel": "All",
+                "closeLabel": "Close",
+                "styles": [
+                  {
+                    "key": "realism",
+                    "label": "Realism"
+                  },
+                  {
+                    "key": "oldschool",
+                    "label": "Old school"
+                  },
+                  {
+                    "key": "graphic",
+                    "label": "Graphic"
+                  },
+                  {
+                    "key": "minimal",
+                    "label": "Minimal"
+                  },
+                  {
+                    "key": "color",
+                    "label": "Colour"
+                  }
+                ],
+                "works": [
+                  {
+                    "title": "Lion",
+                    "style": "realism",
+                    "image": "/demo/tattoo/work-01.webp",
+                    "meta": "Mark · shoulder",
+                    "hours": "6 h",
+                    "story": "Reference — a photo from a reserve. Light built so the mane reads even in five years."
+                  },
+                  {
+                    "title": "Swallow and rose",
+                    "style": "oldschool",
+                    "image": "/demo/tattoo/work-02.webp",
+                    "meta": "Asya · forearm",
+                    "hours": "3 h",
+                    "story": "Classic American flash reworked for the curve of the arm."
+                  },
+                  {
+                    "title": "Fern",
+                    "style": "minimal",
+                    "image": "/demo/tattoo/work-03.webp",
+                    "meta": "Lina · collarbone",
+                    "hours": "1.5 h",
+                    "story": "One unbroken line, sketched right on the skin."
+                  },
+                  {
+                    "title": "Mandala",
+                    "style": "graphic",
+                    "image": "/demo/tattoo/work-04.webp",
+                    "meta": "Timur · back",
+                    "hours": "9 h",
+                    "story": "Two sessions. Symmetry along the spine, corrected for posture."
+                  },
+                  {
+                    "title": "Koi",
+                    "style": "color",
+                    "image": "/demo/tattoo/work-05.webp",
+                    "meta": "Mark · calf",
+                    "hours": "7 h",
+                    "story": "Japanese school: the water swirls against the fish."
+                  },
+                  {
+                    "title": "Cat",
+                    "style": "realism",
+                    "image": "/demo/tattoo/work-06.webp",
+                    "meta": "Mark · thigh",
+                    "hours": "5 h",
+                    "story": "Colour realism from the owner’s photo, eyes as the last layer."
+                  },
+                  {
+                    "title": "Moon phases",
+                    "style": "minimal",
+                    "image": "/demo/tattoo/work-07.webp",
+                    "meta": "Lina · spine",
+                    "hours": "2 h",
+                    "story": "Dotwork, each phase a separate pass of a 3RL needle."
+                  },
+                  {
+                    "title": "Fox",
+                    "style": "color",
+                    "image": "/demo/tattoo/work-08.webp",
+                    "meta": "Asya · shoulder",
+                    "hours": "5 h",
+                    "story": "Neo-traditional: thick outline, warm palette, peonies instead of daisies."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

@@ -2003,6 +2003,225 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "contact-017",
+      "type": "registry:block",
+      "title": "Запись в три шага с неоновым степпером",
+      "description": "Запись в тату-студию: три шага степпером с неоновой полоской прогресса — мастер и зона капсулами, дата и время (свободные слоты лаймом), идея и контакты с референсом. Шаги въезжают, выбор собирается в липкую сводку справа. С action уходит POST, без него — «заявка у нас».",
+      "categories": [
+        "contact"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-017/contact-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-017.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради шагов и выбора. Степпер — <ol> с полосками ::before, data-active и data-done красят их акцентом со свечением. Выбор — кнопки с aria-pressed; мастер красит капсулу своим цветом через --neon, слоты — data-free лаймом. Значения дублируются в hidden-полях artist, zone, date, time, поля третьего шага — name, phone, idea, reference (file). «Дальше» disabled, пока шаг не заполнен. Сводка — aside aria-live, от 60rem (container query) колонка 1fr справа, position:sticky. Палитра --vibeui-contact-017-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "tattoo",
+          "neon",
+          "dark",
+          "studio",
+          "landing",
+          "booking",
+          "form",
+          "stepper",
+          "slots"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "tone": "dark"
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Contact017",
+          "usage": "<Contact017\n  artists={[{ key: \"asya\", name: \"Ася\", styles: \"олд-скул\", color: \"#ff2bd6\" }]}\n  zones={[\"рука\", \"нога\", \"спина\"]}\n  slots={[{ date: \"21 сен\", times: [\"11:00\", \"14:00\"] }]}\n  action=\"/api/booking\"\n/>",
+          "summary": "Самодостаточная форма записи для тату-студии, салона или мастерской: три шага, капсулы выбора, свободные слоты, сводка справа и отправка на action. Мастера, зоны и слоты — массивы пропсом.",
+          "preserve": [
+            "три шага с неоновым прогрессом вместо одной длинной формы",
+            "свободные слоты лаймом — видно, что окна есть",
+            "липкую сводку выбора справа"
+          ],
+          "adapt": [
+            "artists (ключи, имена, стили, цвета), zones, slots (даты и часы)",
+            "action, submitLabel, doneTitle, doneText, consent; eyebrow, title, lede",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Без action форма не уходит: покажется состояние «готово».",
+            "Слоты статичны: подставляйте актуальные из своей системы записи."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Забронировать сеанс",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Three-step booking with a neon stepper",
+            "description": "Tattoo studio booking: three steps with a neon progress stepper — artist and zone as pills, date and time (free slots in lime), idea and contacts with a reference. Steps slide in, the choice gathers in a sticky summary on the right. With action it POSTs, without it shows “we have your request”.",
+            "docs": "One file, zero dependencies, “use client” for steps and choices. The stepper is an <ol> with ::before bars; data-active and data-done paint them with the glowing accent. Choices are buttons with aria-pressed; the artist tints its pill via --neon, slots use data-free in lime. Values duplicate into hidden fields artist, zone, date, time; step three has name, phone, idea, reference (file). “Next” is disabled until the step is filled. The summary is an aria-live aside; from 60rem (container query) a 1fr right column, position:sticky. Palette --vibeui-contact-017-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained booking form for a tattoo studio, salon or workshop: three steps, choice pills, free slots, a summary on the right and submission to action. Artists, zones and slots come in as prop arrays.",
+              "preserve": [
+                "three steps with neon progress instead of one long form",
+                "free slots in lime — it shows there are openings",
+                "the sticky choice summary on the right"
+              ],
+              "adapt": [
+                "artists (keys, names, styles, colours), zones, slots (dates and hours)",
+                "action, submitLabel, doneTitle, doneText, consent; eyebrow, title, lede",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Without action the form does not submit: the “done” state shows.",
+                "Slots are static: feed current ones from your booking system."
+              ],
+              "usage": "<Contact017\n  artists={[{ key: \"asya\", name: \"Asya\", styles: \"old school\", color: \"#ff2bd6\" }]}\n  zones={[\"arm\", \"leg\", \"back\"]}\n  slots={[{ date: \"21 Sep\", times: [\"11:00\", \"14:00\"] }]}\n  action=\"/api/booking\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Book a session"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "tone": "dark",
+                "eyebrow": "Booking",
+                "title": "Book a session",
+                "lede": "Three steps, two minutes. Consultation and sketch are free, a deposit only when booking a date.",
+                "submitLabel": "Send the request",
+                "doneTitle": "We have your request",
+                "doneText": "We’ll message you within an hour to confirm the slot and discuss the sketch.",
+                "consent": "By pressing the button you agree to the privacy policy. You must be 18+.",
+                "zones": [
+                  "arm",
+                  "leg",
+                  "back",
+                  "chest",
+                  "ribs",
+                  "neck / hands"
+                ],
+                "artists": [
+                  {
+                    "key": "asya",
+                    "name": "Asya",
+                    "styles": "old school",
+                    "color": "#ff2bd6"
+                  },
+                  {
+                    "key": "mark",
+                    "name": "Mark",
+                    "styles": "realism",
+                    "color": "#8b5cff"
+                  },
+                  {
+                    "key": "timur",
+                    "name": "Timur",
+                    "styles": "graphic",
+                    "color": "#22f3ff"
+                  },
+                  {
+                    "key": "lina",
+                    "name": "Lina",
+                    "styles": "minimal",
+                    "color": "#c8ff3a"
+                  },
+                  {
+                    "key": "any",
+                    "name": "Any",
+                    "styles": "you choose",
+                    "color": "#a39bb5"
+                  }
+                ],
+                "slots": [
+                  {
+                    "date": "20 Sep",
+                    "times": [
+                      "12:00",
+                      "16:00"
+                    ]
+                  },
+                  {
+                    "date": "21 Sep",
+                    "times": [
+                      "11:00",
+                      "14:00",
+                      "18:00"
+                    ]
+                  },
+                  {
+                    "date": "23 Sep",
+                    "times": [
+                      "13:00"
+                    ]
+                  },
+                  {
+                    "date": "24 Sep",
+                    "times": [
+                      "10:00",
+                      "15:00",
+                      "19:00"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

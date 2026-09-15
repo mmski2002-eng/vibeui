@@ -1,0 +1,176 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "process-001",
+      "type": "registry:block",
+      "title": "Шаги вдоль неоновой линии с бегущим импульсом",
+      "description": "Как проходит: шаги вдоль линии-пути. По линии бежит неоновый импульс, шаги загораются по мере скролла — узел вспыхивает, номер светится, карточка проявляется, всё выше остаётся зажжённым. На широком экране линия горизонтальная и шаги в ряд, на узком — вертикальная.",
+      "categories": [
+        "process"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "process-001/process-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/process-001.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради IntersectionObserver. Шаги — <li data-index> в <ol>, IO (threshold .4, rootMargin -25 % снизу) поднимает lit до максимального увиденного индекса; заливка линии — ::before rail с высотой/шириной из --p = lit/(n−1). Импульс — ::after rail с @keyframes по top (или left от 60rem), градиент циана с blur. Узел — span с номером, при data-lit неоновый box-shadow и scale 1.15. От 60rem (container query) сетка repeat(--count) колонок, rail горизонтальный над карточками. Палитра --vibeui-process-001-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "tattoo",
+          "neon",
+          "dark",
+          "studio",
+          "landing",
+          "process",
+          "steps",
+          "timeline",
+          "scroll"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "tone": "dark"
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Process001",
+          "usage": "<Process001\n  title=\"От идеи до зажившей кожи\"\n  steps={[\n    { title: \"Идея\", text: \"Пишете: что, где, размер, референсы.\", note: \"бесплатно\" },\n    { title: \"Эскиз\", text: \"Мастер рисует под вашу анатомию.\", note: \"1–3 дня\" },\n    { title: \"Сеанс\", text: \"Стерильный кабинет, перерывы каждые 40 минут.\", note: \"от 1 ч\" },\n  ]}\n/>",
+          "summary": "Самодостаточная секция «как проходит» для тату-студии, клиники или сервиса с этапами: шаги вдоль неоновой линии, которые загораются по скроллу. Шаги — массив пропсом.",
+          "preserve": [
+            "линию с бегущим импульсом и заливкой до текущего шага",
+            "загорание шагов по скроллу через IntersectionObserver — не всё сразу",
+            "горизонтальный ряд на широком экране и вертикальную линию на узком"
+          ],
+          "adapt": [
+            "steps: заголовки, тексты, заметки",
+            "eyebrow, title, lede",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Шагов лучше от трёх до шести: колонки считаются по их числу.",
+            "reduced-motion зажигает все шаги сразу и останавливает импульс."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "От идеи до зажившей кожи",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Steps along a neon line with a running pulse",
+            "description": "How it goes: steps along a path line. A neon pulse runs along the line, steps light up as you scroll — the node flashes, the number glows, the card fades in, everything above stays lit. On wide screens the line is horizontal with steps in a row, on narrow ones vertical.",
+            "docs": "One file, zero dependencies, “use client” for the IntersectionObserver. Steps are <li data-index> in an <ol>; the IO (threshold .4, rootMargin -25 % at the bottom) raises lit to the highest index seen; the line fill is the rail’s ::before with height/width from --p = lit/(n−1). The pulse is the rail’s ::after with a @keyframes on top (or left from 60rem), a blurred cyan gradient. The node is a span with the number; on data-lit a neon box-shadow and scale 1.15. From 60rem (container query) a repeat(--count) grid, the rail horizontal above the cards. Palette --vibeui-process-001-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained “how it goes” section for a tattoo studio, clinic or any staged service: steps along a neon line lighting up on scroll. Steps come in as a prop array.",
+              "preserve": [
+                "the line with a running pulse and a fill up to the current step",
+                "steps lighting up on scroll via IntersectionObserver — not all at once",
+                "the horizontal row on wide screens and the vertical line on narrow ones"
+              ],
+              "adapt": [
+                "steps: titles, texts, notes",
+                "eyebrow, title, lede",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Three to six steps work best: columns are computed from their count.",
+                "reduced-motion lights all steps at once and stops the pulse."
+              ],
+              "usage": "<Process001\n  title=\"From an idea to healed skin\"\n  steps={[\n    { title: \"Idea\", text: \"Write to us: what, where, size, references.\", note: \"free\" },\n    { title: \"Sketch\", text: \"The artist draws for your anatomy.\", note: \"1–3 days\" },\n    { title: \"Session\", text: \"A sterile room, breaks every 40 minutes.\", note: \"from 1 h\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "From an idea to healed skin"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "tone": "dark",
+                "eyebrow": "How it goes",
+                "title": "From an idea to healed skin",
+                "lede": "Five steps, none skipped. Half the time is before the needle.",
+                "steps": [
+                  {
+                    "title": "Idea",
+                    "text": "Message us or drop by: what, where, size, references. We discuss which artist it suits.",
+                    "note": "free"
+                  },
+                  {
+                    "title": "Sketch",
+                    "text": "The artist draws for your anatomy: we try it on a photo and refine until “yes”.",
+                    "note": "1–3 days"
+                  },
+                  {
+                    "title": "Approval",
+                    "text": "Final size, placement, price and date. A 20 % deposit holds the slot.",
+                    "note": "30 min"
+                  },
+                  {
+                    "title": "Session",
+                    "text": "A sterile room, single-use needles and inks opened in front of you. Breaks every 40 minutes.",
+                    "note": "from 1 h"
+                  },
+                  {
+                    "title": "Aftercare",
+                    "text": "Film, instructions and a free touch-up after a month. The artist stays in touch until it heals.",
+                    "note": "30 days"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

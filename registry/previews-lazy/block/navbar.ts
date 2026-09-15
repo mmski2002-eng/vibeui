@@ -72,4 +72,7 @@ export const PREVIEWS = {
   "navbar-023": dynamic(() =>
     import("@/registry/blocks/navbar/navbar-023/navbar-023").then((module) => module.Navbar023),
   ),
+  "navbar-024": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-024/navbar-024").then((module) => module.Navbar024),
+  ),
 } satisfies PreviewMap

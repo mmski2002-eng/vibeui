@@ -34,6 +34,8 @@
     "registry/blocks/data-grid/registry.json",
     "registry/blocks/logos/registry.json",
     "registry/blocks/newsletter/registry.json",
+    "registry/blocks/process/registry.json",
+    "registry/blocks/stats/registry.json",
     "registry/blocks/team/registry.json",
     "registry/blocks/background/registry.json",
     "registry/blocks/layout/registry.json",

@@ -1527,6 +1527,171 @@
           }
         }
       }
+    },
+    {
+      "name": "about-010",
+      "type": "registry:block",
+      "title": "О студии с неоновой фразой и параллаксом фото",
+      "description": "О студии: манифест с неоновой фразой слева, пункты про стерильность с циановыми галочками и документы плашками; справа два фото слоями — зал уходит назад, рабочее место наезжает сверху с неоновой рамкой (параллакс по скроллу).",
+      "categories": [
+        "about"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "about-010/about-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/about-010.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Фраза в *звёздочках* → <mark> с text-shadow неона. Пункты — <li> с ::before-галочкой в циановом квадрате. Фото — два абсолютно позиционированных блока в media (min-height 26/34rem): hall на 85 % ширины сзади, desk 60 % спереди с неоновой рамкой; параллакс — animation-timeline:view() под @supports, translateY в разные стороны, в старых браузерах статично. От 60rem (container query) две колонки. Палитра --vibeui-about-010-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "tattoo",
+          "neon",
+          "dark",
+          "studio",
+          "landing",
+          "about",
+          "manifesto",
+          "parallax",
+          "sterility"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "tone": "dark"
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "About010",
+          "usage": "<About010\n  title=\"Тихое место с громкими работами\"\n  text=\"Правило одно: *никаких компромиссов со стерильностью*.\"\n  points={[{ title: \"Одноразовое всё\", text: \"Иглы, картриджи и краски вскрываются при вас.\" }]}\n  imageHall=\"/photos/studio-01.webp\"\n  imageDesk=\"/photos/studio-02.webp\"\n  docs={[\"Лицензия № ЛО-78-01-011245\"]}\n/>",
+          "summary": "Самодостаточная секция «о студии» для тату-студии, клиники или мастерской: манифест с неоновой фразой, стерильность пунктами, документы и два фото с параллаксом. Всё содержимое пропсами.",
+          "preserve": [
+            "неоновую фразу в манифесте вместо жирного",
+            "два фото слоями с параллаксом в разные стороны",
+            "документы плашками — доверие цифрами лицензий"
+          ],
+          "adapt": [
+            "eyebrow, title, text (*фраза* неоном), points, docs",
+            "imageHall, imageHallAlt, imageDesk, imageDeskAlt",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Фото зала лучше 3:2 или шире, рабочего места — 3:2.",
+            "reduced-motion и старые браузеры показывают фото без параллакса."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Тихое место с громкими работами",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "About the studio with a neon phrase and parallax photos",
+            "description": "About: a manifesto with a neon phrase on the left, sterility points with cyan checkmarks and documents as tags; on the right two layered photos — the hall recedes, the workstation rides over it with a neon frame (scroll parallax).",
+            "docs": "One file, zero dependencies, a server component. A *starred* phrase becomes <mark> with a neon text-shadow. Points are <li> with a ::before checkmark in a cyan square. Photos are two absolutely positioned blocks in media (min-height 26/34rem): hall at 85 % width behind, desk at 60 % in front with a neon frame; parallax via animation-timeline:view() under @supports, translateY in opposite directions, static in older browsers. From 60rem (container query) two columns. Palette --vibeui-about-010-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained “about” section for a tattoo studio, clinic or workshop: a manifesto with a neon phrase, sterility points, documents and two parallax photos. All content via props.",
+              "preserve": [
+                "the neon phrase in the manifesto instead of bold",
+                "two layered photos with parallax in opposite directions",
+                "documents as tags — trust through licence numbers"
+              ],
+              "adapt": [
+                "eyebrow, title, text (a *phrase* in neon), points, docs",
+                "imageHall, imageHallAlt, imageDesk, imageDeskAlt",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The hall photo works best at 3:2 or wider, the workstation at 3:2.",
+                "reduced-motion and older browsers show the photos without parallax."
+              ],
+              "usage": "<About010\n  title=\"A quiet place with loud work\"\n  text=\"One rule: *no compromises on sterility*.\"\n  points={[{ title: \"Everything single-use\", text: \"Needles, cartridges and inks are opened in front of you.\" }]}\n  imageHall=\"/photos/studio-01.webp\"\n  imageDesk=\"/photos/studio-02.webp\"\n  docs={[\"Licence No. LO-78-01-011245\"]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "A quiet place with loud work"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "tone": "dark",
+                "eyebrow": "About",
+                "title": "A quiet place with loud work",
+                "text": "Not a salon by the metro and not a basement with posters. Four rooms, daylight, quieter music and one rule: *no compromises on sterility*.",
+                "points": [
+                  {
+                    "title": "Everything single-use",
+                    "text": "Needles, cartridges, inks in capsules and film are opened in front of you."
+                  },
+                  {
+                    "title": "Autoclave and UV",
+                    "text": "Reusable grips go through a class B autoclave after every client."
+                  },
+                  {
+                    "title": "Numbing on request",
+                    "text": "Certified creams for sensitive zones, discussed in advance."
+                  }
+                ],
+                "imageHallAlt": "The studio hall",
+                "imageDeskAlt": "A sterile workstation",
+                "docs": [
+                  "Licence No. LO-78-01-011245",
+                  "Sanitary contract",
+                  "Artists' health records"
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
