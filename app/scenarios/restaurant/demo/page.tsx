@@ -1,20 +1,21 @@
 import type { CSSProperties } from "react"
 
-import { Restaurant001 } from "@/registry/blocks/restaurant/restaurant-001/restaurant-001"
-import { Restaurant002 } from "@/registry/blocks/restaurant/restaurant-002/restaurant-002"
+import { Navbar021 } from "@/registry/blocks/navbar/navbar-021/navbar-021"
+import { Hero021 } from "@/registry/blocks/hero/hero-021/hero-021"
 import { Restaurant003 } from "@/registry/blocks/restaurant/restaurant-003/restaurant-003"
-import { Restaurant004 } from "@/registry/blocks/restaurant/restaurant-004/restaurant-004"
+import { About007 } from "@/registry/blocks/about/about-007/about-007"
 import { Restaurant005 } from "@/registry/blocks/restaurant/restaurant-005/restaurant-005"
-import { Restaurant006 } from "@/registry/blocks/restaurant/restaurant-006/restaurant-006"
-import { Restaurant007 } from "@/registry/blocks/restaurant/restaurant-007/restaurant-007"
-import { Restaurant008 } from "@/registry/blocks/restaurant/restaurant-008/restaurant-008"
-import { Restaurant009 } from "@/registry/blocks/restaurant/restaurant-009/restaurant-009"
-import { Restaurant010 } from "@/registry/blocks/restaurant/restaurant-010/restaurant-010"
-import { Restaurant011 } from "@/registry/blocks/restaurant/restaurant-011/restaurant-011"
+import { Contact016 } from "@/registry/blocks/contact/contact-016/contact-016"
+import { Event004 } from "@/registry/blocks/events/event-004/event-004"
+import { Testimonials017 } from "@/registry/blocks/testimonials/testimonials-017/testimonials-017"
+import { Map005 } from "@/registry/blocks/map/map-005/map-005"
+import { Footer020 } from "@/registry/blocks/footer/footer-020/footer-020"
+import { Cta016 } from "@/registry/blocks/cta/cta-016/cta-016"
 
 /**
- * Сценарий «Ресторан»: тёмная тема, свечи и медь. Одиннадцать блоков
- * категории restaurant, шапка лежит прозрачной поверх первого экрана.
+ * Сценарий «Ресторан»: тёмная тема, свечи и медь. Одиннадцать блоков из
+ * общих групп каталога плюс меню и галерея из restaurant; шапка лежит
+ * прозрачной поверх первого экрана.
  * Витрина результата, не шаблон.
  */
 export const metadata = {
@@ -105,7 +106,7 @@ export default function Page() {
       <style href="vibeui-demo-scroll" precedence="medium">
         {`html{scroll-behavior:smooth;scroll-padding-top:4.5rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}`}
       </style>
-      <Restaurant001
+      <Navbar021
         {...dark}
         overlay
         brand="Сойка"
@@ -126,7 +127,7 @@ export default function Page() {
       />
 
       <div id="hero">
-        <Restaurant002
+        <Hero021
           {...dark}
           image={`${PHOTOS}/hero.webp`}
           imageAlt="Зал ресторана вечером: свечи на дубовых столах, открытая кухня"
@@ -153,7 +154,7 @@ export default function Page() {
         />
       </div>
 
-      <Restaurant011
+      <Cta016
         {...dark}
         label="Вино недели"
         title="Riesling Kabinett, Мозель, 2022"
@@ -165,7 +166,7 @@ export default function Page() {
       />
 
       <div id="chef">
-        <Restaurant004
+        <About007
           {...dark}
           eyebrow="Шеф"
           quote="Я выросла на Ладоге. Всё, что мы готовим, — это попытка вернуть тот вкус: дым, лес и холодная вода."
@@ -188,7 +189,7 @@ export default function Page() {
       </div>
 
       <div id="book">
-        <Restaurant006
+        <Contact016
           {...dark}
           eyebrow="Бронь"
           title="Оставьте стол за собой"
@@ -200,15 +201,15 @@ export default function Page() {
       </div>
 
       <div id="events">
-        <Restaurant007 {...dark} eyebrow="События" title="Что бывает по вечерам" lede="Устрицы, джаз и ужины с виноделами. Столы на события держим по брони." events={EVENTS} />
+        <Event004 {...dark} eyebrow="События" title="Что бывает по вечерам" lede="Устрицы, джаз и ужины с виноделами. Столы на события держим по брони." events={EVENTS} />
       </div>
 
       <div id="reviews">
-        <Restaurant008 {...dark} eyebrow="Отзывы" title="Что пишут после ужина" score="4,9" scoreLabel="по 640 отзывам на трёх площадках" image={`${PHOTOS}/hall-01.webp`} reviews={REVIEWS} />
+        <Testimonials017 {...dark} eyebrow="Отзывы" title="Что пишут после ужина" score="4,9" scoreLabel="по 640 отзывам на трёх площадках" image={`${PHOTOS}/hall-01.webp`} reviews={REVIEWS} />
       </div>
 
       <div id="map">
-        <Restaurant009
+        <Map005
           {...dark}
           eyebrow="Как добраться"
           title="Большая Пушкарская, 20"
@@ -228,7 +229,7 @@ export default function Page() {
       </div>
 
       <div id="footer">
-        <Restaurant010
+        <Footer020
           {...dark}
           brand="Сойка"
           caption="Северная кухня · Петроградская"

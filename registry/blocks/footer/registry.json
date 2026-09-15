@@ -2530,6 +2530,415 @@
           }
         }
       }
+    },
+    {
+      "name": "footer-019",
+      "type": "registry:block",
+      "title": "Подвал с мессенджерами",
+      "description": "Подвал агентства на тёмно-зелёном: имя серифом, адрес и часы, телефон крупно, почта и мессенджеры настоящими значками — Telegram, WhatsApp, VK, Max — с подписями. Внизу лицензия и ссылки на документы.",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-019/footer-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-019.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. <footer> с сеткой top: колонкой на узком, от 56rem (container query) 1.3fr/1fr/1.2fr. Адрес в <address>, часы с точкой акцента через ::before, телефон — <a href=tel:> серифом, почта — mailto. Мессенджеры — <ul> капсул: латунный кружок со встроенным SVG (Telegram, WhatsApp, VK — path внутри файла) или буквой short (Max), подпись рядом; ссылки target=_blank. Нижняя строка flex space-between: legal и список links. Фон тёмно-зелёный в обеих темах: подвал задуман контрастным. Палитра --vibeui-realty-005-* с light-dark: песок/чернильно-зелёный, латунный акцент; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "real estate",
+          "realty",
+          "property",
+          "apartment",
+          "agency",
+          "listing",
+          "footer",
+          "contacts",
+          "messengers",
+          "telegram",
+          "whatsapp",
+          "vk"
+        ],
+        "preview": {
+          "props": {},
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Footer019",
+          "usage": "<Footer019\n  brand=\"Дом на Неве\"\n  address=\"Санкт-Петербург, наб. реки Фонтанки, 24\"\n  hours=\"Ежедневно 10:00–20:00\"\n  phone=\"+7 812 240-00-40\"\n  phoneHref=\"tel:+78122400040\"\n  email=\"hello@domnaneve.ru\"\n  messengers={[\n    { kind: \"telegram\", label: \"Telegram\", href: \"https://t.me/domnaneve\" },\n    { kind: \"whatsapp\", label: \"WhatsApp\", href: \"https://wa.me/78122400040\" },\n    { kind: \"max\", label: \"Max\", href: \"https://max.ru/domnaneve\", short: \"M\" },\n  ]}\n/>",
+          "summary": "Самодостаточный подвал для агентства, застройщика или сервиса с живыми контактами: адрес, часы, телефон, почта, мессенджеры значками и документы. Всё содержимое пропсами.",
+          "preserve": [
+            "телефон серифом крупно — в недвижимости звонят",
+            "мессенджеры капсулами со значками и подписями, а не голыми иконками: понятно, куда писать",
+            "контрастный тёмно-зелёный фон и адрес в <address>"
+          ],
+          "adapt": [
+            "brand, caption, address, hours, phone, phoneHref, email, legal",
+            "messengers (kind: telegram | whatsapp | vk | max, свой short) и links",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Для мессенджера без встроенного значка задайте short — одна-две буквы в кружке.",
+            "Ссылки мессенджеров открываются в новой вкладке с rel=noreferrer."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "brand",
+            "label": "Имя",
+            "type": "text",
+            "default": "Дом на Неве",
+            "maxLength": 30
+          },
+          {
+            "prop": "phone",
+            "label": "Телефон",
+            "type": "text",
+            "default": "+7 812 240-00-40",
+            "maxLength": 24
+          },
+          {
+            "prop": "messengersLabel",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Напишите, где удобно",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Footer with messengers",
+            "description": "An agency footer on dark green: a serif name, address and hours, a large phone, email and messengers with real icons — Telegram, WhatsApp, VK, Max — with labels. Licence and document links at the bottom.",
+            "docs": "One file, zero dependencies, a server component. A <footer> with a top grid: a column when narrow, 1.3fr/1fr/1.2fr from 56rem (container query). The address is an <address>, hours with an accent dot via ::before, the phone a serif <a href=tel:>, email a mailto. Messengers are a <ul> of pills: a brass circle with an inline SVG (Telegram, WhatsApp, VK — paths inside the file) or a short letter (Max), a label beside; links target=_blank. The bottom row is flex space-between: legal and the links list. The background is dark green in both themes: the footer is meant to contrast. Palette --vibeui-realty-005-* with light-dark: sand / ink green, brass accent; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained footer for an agency, developer or service with live contacts: address, hours, phone, email, messengers with icons and documents. All content via props.",
+              "preserve": [
+                "the large serif phone — in real estate people call",
+                "messengers as pills with icons and labels, not bare icons: it is clear where to write",
+                "the contrasting dark green background and the address in <address>"
+              ],
+              "adapt": [
+                "brand, caption, address, hours, phone, phoneHref, email, legal",
+                "messengers (kind: telegram | whatsapp | vk | max, custom short) and links",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "For a messenger without a built-in icon set short — one or two letters in the circle.",
+                "Messenger links open in a new tab with rel=noreferrer."
+              ],
+              "usage": "<Footer019\n  brand=\"Neva Homes\"\n  address=\"12 Embankment Street, Lisbon\"\n  hours=\"Daily 10:00–20:00\"\n  phone=\"+351 21 000 00 00\"\n  phoneHref=\"tel:+351210000000\"\n  email=\"hello@nevahomes.pt\"\n  messengers={[\n    { kind: \"telegram\", label: \"Telegram\", href: \"https://t.me/nevahomes\" },\n    { kind: \"whatsapp\", label: \"WhatsApp\", href: \"https://wa.me/351210000000\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Name",
+                "default": "Neva Homes"
+              },
+              "phone": {
+                "label": "Phone",
+                "default": "+351 21 000 00 00"
+              },
+              "messengersLabel": {
+                "label": "Label",
+                "default": "Write where it suits you"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Neva Homes",
+                "caption": "Real estate agency · Lisbon",
+                "address": "12 Embankment Street, ground floor, Lisbon",
+                "hours": "Daily 10:00–20:00, viewings by appointment",
+                "phone": "+351 21 000 00 00",
+                "phoneHref": "tel:+351210000000",
+                "email": "hello@example.com",
+                "messengersLabel": "Write where it suits you",
+                "messengers": [
+                  {
+                    "kind": "telegram",
+                    "label": "Telegram",
+                    "href": "https://t.me/"
+                  },
+                  {
+                    "kind": "whatsapp",
+                    "label": "WhatsApp",
+                    "href": "https://wa.me/"
+                  },
+                  {
+                    "kind": "max",
+                    "label": "Max",
+                    "href": "https://max.ru/",
+                    "short": "M"
+                  },
+                  {
+                    "kind": "vk",
+                    "label": "VK",
+                    "href": "https://vk.com/"
+                  }
+                ],
+                "links": [
+                  {
+                    "label": "Privacy policy",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Terms",
+                    "href": "#"
+                  }
+                ],
+                "legal": "© 2007–2026 Neva Homes Ltd. Licence no. 0412. Not an offer."
+              },
+              "width": "natural"
+            }
+          }
+        },
+        "cardControls": [
+          "brand",
+          "tone",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "footer-020",
+      "type": "registry:block",
+      "title": "Подвал ресторана с часами и мессенджерами",
+      "description": "Подвал ресторана на тёмном: словомарка серифом и адрес, часы по дням таблицей, телефон крупно, почта и мессенджеры значками с подписями, колонка ссылок — сертификаты, банкеты, вакансии. Внизу реквизиты.",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-020/footer-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-020.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. <footer> с сеткой top: колонкой на узком, от 60rem (container query) 1.4fr/1fr/1.2fr/.9fr. Часы — <dl> сеткой с tabular-nums, адрес в <address>, телефон — <a href=tel:> серифом. Мессенджеры — капсулы с винным кружком и встроенным SVG (Telegram, WhatsApp, VK — path внутри файла) или буквой short (Max), target=_blank. Фон тёмный в обеих темах: подвал задуман контрастным. Палитра --vibeui-footer-020-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "restaurant",
+          "cafe",
+          "bar",
+          "food",
+          "menu",
+          "dining",
+          "footer",
+          "contacts",
+          "hours",
+          "messengers",
+          "telegram"
+        ],
+        "preview": {
+          "props": {},
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Footer020",
+          "usage": "<Footer020\n  brand=\"Сойка\"\n  address=\"Санкт-Петербург, Большая Пушкарская, 20\"\n  hours={[{ days: \"Пн–Чт\", time: \"12:00–23:00\" }, { days: \"Пт–Сб\", time: \"12:00–01:00\" }]}\n  phone=\"+7 812 305-00-40\"\n  phoneHref=\"tel:+78123050040\"\n  email=\"hello@soyka.ru\"\n  messengers={[{ kind: \"telegram\", label: \"Telegram\", href: \"https://t.me/soyka\" }, { kind: \"whatsapp\", label: \"WhatsApp\", href: \"https://wa.me/78123050040\" }]}\n  links={[{ label: \"Подарочные сертификаты\", href: \"/gift\" }, { label: \"Банкеты\", href: \"/events\" }]}\n/>",
+          "summary": "Самодостаточный подвал для ресторана, бара или кафе: адрес, часы по дням, телефон, почта, мессенджеры значками и ссылки. Всё содержимое пропсами.",
+          "preserve": [
+            "часы по дням таблицей — первое, что ищут в подвале ресторана",
+            "телефон серифом крупно и мессенджеры капсулами со значками и подписями",
+            "контрастный тёмный фон и адрес в <address>"
+          ],
+          "adapt": [
+            "brand, caption, address, hours, phone, phoneHref, email, legal",
+            "messengersLabel, messengers (kind: telegram | whatsapp | vk | max, свой short), linksLabel, links",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Для мессенджера без встроенного значка задайте short — одна-две буквы в кружке.",
+            "Ссылки мессенджеров открываются в новой вкладке с rel=noreferrer."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "brand",
+            "label": "Имя",
+            "type": "text",
+            "default": "Сойка",
+            "maxLength": 24
+          },
+          {
+            "prop": "phone",
+            "label": "Телефон",
+            "type": "text",
+            "default": "+7 812 305-00-40",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Restaurant footer with hours and messengers",
+            "description": "A restaurant footer on dark: a serif wordmark and address, hours by day as a table, a large phone, email and messengers with icons and labels, a links column — gift cards, banquets, jobs. Legal details at the bottom.",
+            "docs": "One file, zero dependencies, a server component. A <footer> with a top grid: a column when narrow, 1.4fr/1fr/1.2fr/.9fr from 60rem (container query). Hours are a <dl> grid with tabular-nums, the address in <address>, the phone a serif <a href=tel:>. Messengers are pills with a wine-red circle and an inline SVG (Telegram, WhatsApp, VK — paths inside the file) or a short letter (Max), target=_blank. The background is dark in both themes: the footer is meant to contrast. Palette --vibeui-footer-020-* with light-dark: ivory on dark wood, a dark wine accent with a glow (the -glow variable) and its lighter -accent-ink tint for text on dark; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained footer for a restaurant, bar or cafe: address, hours by day, phone, email, messengers with icons and links. All content via props.",
+              "preserve": [
+                "hours by day as a table — the first thing people look for in a restaurant footer",
+                "the large serif phone and messengers as pills with icons and labels",
+                "the contrasting dark background and the address in <address>"
+              ],
+              "adapt": [
+                "brand, caption, address, hours, phone, phoneHref, email, legal",
+                "messengersLabel, messengers (kind: telegram | whatsapp | vk | max, custom short), linksLabel, links",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "For a messenger without a built-in icon set short — one or two letters in the circle.",
+                "Messenger links open in a new tab with rel=noreferrer."
+              ],
+              "usage": "<Footer020\n  brand=\"Jay\"\n  address=\"12 Embankment Street, Lisbon\"\n  hours={[{ days: \"Mon–Thu\", time: \"12:00–23:00\" }, { days: \"Fri–Sat\", time: \"12:00–01:00\" }]}\n  phone=\"+351 21 000 00 40\"\n  phoneHref=\"tel:+351210000040\"\n  email=\"hello@jay.pt\"\n  messengers={[{ kind: \"telegram\", label: \"Telegram\", href: \"https://t.me/jay\" }, { kind: \"whatsapp\", label: \"WhatsApp\", href: \"https://wa.me/351210000040\" }]}\n  links={[{ label: \"Gift cards\", href: \"/gift\" }, { label: \"Private dining\", href: \"/events\" }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Name",
+                "default": "Jay"
+              },
+              "phone": {
+                "label": "Phone",
+                "default": "+351 21 000 00 40"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Jay",
+                "caption": "Nordic kitchen · Old town",
+                "address": "12 Embankment Street, courtyard entrance, Lisbon",
+                "hours": [
+                  {
+                    "days": "Mon–Thu",
+                    "time": "12:00–23:00"
+                  },
+                  {
+                    "days": "Fri–Sat",
+                    "time": "12:00–01:00"
+                  },
+                  {
+                    "days": "Sun",
+                    "time": "11:00–22:00"
+                  }
+                ],
+                "phone": "+351 21 000 00 40",
+                "phoneHref": "tel:+351210000040",
+                "email": "hello@example.com",
+                "messengersLabel": "Booking and questions",
+                "messengers": [
+                  {
+                    "kind": "telegram",
+                    "label": "Telegram",
+                    "href": "https://t.me/"
+                  },
+                  {
+                    "kind": "whatsapp",
+                    "label": "WhatsApp",
+                    "href": "https://wa.me/"
+                  }
+                ],
+                "linksLabel": "More",
+                "links": [
+                  {
+                    "label": "Gift cards",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Private dining",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Jobs",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Privacy policy",
+                    "href": "#"
+                  }
+                ],
+                "legal": "© 2019–2026 Jay Ltd. The menu is not a public offer."
+              },
+              "width": "natural"
+            }
+          }
+        },
+        "cardControls": [
+          "brand",
+          "tone",
+          "accent",
+          "background"
+        ]
+      }
     }
   ]
 }

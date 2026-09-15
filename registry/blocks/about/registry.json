@@ -1001,6 +1001,180 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "about-007",
+      "type": "registry:block",
+      "title": "Шеф с цитатой и росчерком",
+      "description": "Шеф: портрет 4:5 со вторым фото внахлёст, справа цитата серифом курсивом крупно, подпись рукописным росчерком, имя и роль, абзац и три факта цифрами.",
+      "categories": [
+        "about"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "about-007/about-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/about-007.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Сетка 5fr/6fr от 56rem (container query), колонки по центру. Медиа: портрет aspect-ratio 4/5, второе фото absolute справа внизу с рамкой цвета фона и тенью. Цитата — <blockquote> с кавычками через ::before/::after, росчерк — шрифт Caveat с rotate(-3deg), факты — flex со значениями серифом акцентом. Палитра --vibeui-about-007-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "restaurant",
+          "cafe",
+          "bar",
+          "food",
+          "menu",
+          "dining",
+          "chef",
+          "about",
+          "quote",
+          "signature"
+        ],
+        "preview": {
+          "props": {
+            "image": "/demo/people/person-09.webp",
+            "imageSecondary": "/demo/places/place-02.webp"
+          },
+          "width": "natural"
+        },
+        "ai": {
+          "export": "About007",
+          "usage": "<About007\n  quote=\"Я выросла на Ладоге. Всё, что мы готовим, — попытка вернуть тот вкус.\"\n  name=\"Анна Рябова\"\n  role=\"Шеф-повар и совладелица\"\n  image=\"/photos/chef.webp\"\n  imageSecondary=\"/photos/chef-hands.webp\"\n  facts={[{ value: \"18\", label: \"лет на кухне\" }, { value: \"4\", label: \"сезонных меню в год\" }]}\n/>",
+          "summary": "Самодостаточная секция «о шефе» для ресторана, бара или кондитерской: портрет, цитата, росчерк-подпись и факты. Всё содержимое пропсами.",
+          "preserve": [
+            "цитату курсивным серифом крупно с кавычками — голос человека, а не описание",
+            "росчерк-подпись рукописным шрифтом под цитатой",
+            "второе фото внахлёст с рамкой цвета фона"
+          ],
+          "adapt": [
+            "quote, name, role, text, facts, signature, image, imageSecondary",
+            "eyebrow",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Без signature росчерком пишется name.",
+            "Шрифт Caveat подключается вместе с остальными; без сети росчерк идёт системным курсивом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "name",
+            "label": "Имя",
+            "type": "text",
+            "default": "Анна Рябова",
+            "maxLength": 30
+          },
+          {
+            "prop": "role",
+            "label": "Роль",
+            "type": "text",
+            "default": "Шеф-повар и совладелица",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Chef with a quote and a signature",
+            "description": "The chef: a 4:5 portrait with a second photo overlapping, a large italic serif quote on the right, a handwritten signature, name and role, a paragraph and three facts in figures.",
+            "docs": "One file, zero dependencies, a server component. A 5fr/6fr grid from 56rem (container query), columns centred. Media: the portrait at aspect-ratio 4/5, the second photo absolute bottom right with a background-coloured frame and a shadow. The quote is a <blockquote> with quotation marks via ::before/::after, the signature is the Caveat font with rotate(-3deg), facts a flex row with serif accent values. Palette --vibeui-about-007-* with light-dark: ivory on dark wood, a dark wine accent with a glow (the -glow variable) and its lighter -accent-ink tint for text on dark; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained “about the chef” section for a restaurant, bar or patisserie: portrait, quote, signature and facts. All content via props.",
+              "preserve": [
+                "the large italic serif quote with quotation marks — a person's voice, not a description",
+                "the handwritten signature under the quote",
+                "the overlapping second photo with a background-coloured frame"
+              ],
+              "adapt": [
+                "quote, name, role, text, facts, signature, image, imageSecondary",
+                "eyebrow",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Without signature the name is written as the signature.",
+                "The Caveat font loads with the others; offline the signature falls back to a system cursive."
+              ],
+              "usage": "<About007\n  quote=\"I grew up by the lake. Everything we cook is an attempt to bring back that taste.\"\n  name=\"Anna Ryabova\"\n  role=\"Chef and co-owner\"\n  image=\"/photos/chef.webp\"\n  imageSecondary=\"/photos/chef-hands.webp\"\n  facts={[{ value: \"18\", label: \"years in kitchens\" }, { value: \"4\", label: \"seasonal menus a year\" }]}\n/>"
+            },
+            "controls": {
+              "name": {
+                "label": "Name",
+                "default": "Anna Ryabova"
+              },
+              "role": {
+                "label": "Role",
+                "default": "Chef and co-owner"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "image": "/demo/people/person-09.webp",
+                "imageSecondary": "/demo/places/place-02.webp",
+                "eyebrow": "Chef",
+                "quote": "I grew up by the lake. Everything we cook is an attempt to bring back that taste: smoke, forest and cold water.",
+                "name": "Anna Ryabova",
+                "role": "Chef and co-owner",
+                "text": "Ten years in Copenhagen and Helsinki, then home. The menu changes four times a year, fish arrives from the lake on Tuesdays and Fridays, bread is baked on a seven-year-old starter.",
+                "facts": [
+                  {
+                    "value": "18",
+                    "label": "years in kitchens"
+                  },
+                  {
+                    "value": "4",
+                    "label": "seasonal menus a year"
+                  },
+                  {
+                    "value": "2",
+                    "label": "guide stars"
+                  }
+                ]
+              },
+              "width": "natural"
+            }
+          }
+        },
+        "cardControls": [
+          "name",
+          "tone",
+          "accent",
+          "background"
+        ]
+      }
     }
   ]
 }

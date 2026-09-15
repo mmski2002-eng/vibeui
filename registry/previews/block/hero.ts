@@ -42,4 +42,8 @@ export const PREVIEWS = {
     import("@/registry/blocks/hero/hero-018/hero-018").then((module) => module.Hero018),
   "hero-019": () =>
     import("@/registry/blocks/hero/hero-019/hero-019").then((module) => module.Hero019),
+  "hero-020": () =>
+    import("@/registry/blocks/hero/hero-020/hero-020").then((module) => module.Hero020),
+  "hero-021": () =>
+    import("@/registry/blocks/hero/hero-021/hero-021").then((module) => module.Hero021),
 } satisfies PreviewLoaderMap

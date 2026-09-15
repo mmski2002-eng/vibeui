@@ -1,21 +1,22 @@
 import type { CSSProperties } from "react"
 
-import { Realty001 } from "@/registry/blocks/realty/realty-001/realty-001"
-import { Realty002 } from "@/registry/blocks/realty/realty-002/realty-002"
+import { Navbar020 } from "@/registry/blocks/navbar/navbar-020/navbar-020"
+import { Hero020 } from "@/registry/blocks/hero/hero-020/hero-020"
 import { Realty003 } from "@/registry/blocks/realty/realty-003/realty-003"
 import { Realty005 } from "@/registry/blocks/realty/realty-005/realty-005"
 import { Realty006 } from "@/registry/blocks/realty/realty-006/realty-006"
-import { Realty007 } from "@/registry/blocks/realty/realty-007/realty-007"
-import { Realty008 } from "@/registry/blocks/realty/realty-008/realty-008"
-import { Realty009 } from "@/registry/blocks/realty/realty-009/realty-009"
-import { Realty010 } from "@/registry/blocks/realty/realty-010/realty-010"
-import { Realty011 } from "@/registry/blocks/realty/realty-011/realty-011"
-import { Realty012 } from "@/registry/blocks/realty/realty-012/realty-012"
+import { Contact015 } from "@/registry/blocks/contact/contact-015/contact-015"
+import { People007 } from "@/registry/blocks/team/people-007/people-007"
+import { Testimonials016 } from "@/registry/blocks/testimonials/testimonials-016/testimonials-016"
+import { Map004 } from "@/registry/blocks/map/map-004/map-004"
+import { Faq016 } from "@/registry/blocks/faq/faq-016/faq-016"
+import { Footer019 } from "@/registry/blocks/footer/footer-019/footer-019"
 
 /**
  * Сценарий «Агентство недвижимости»: светлая песочная тема, серифные
- * заголовки, латунный акцент. Двенадцать блоков категории realty, включая
- * настоящую Яндекс Карту районов. Витрина результата, не шаблон.
+ * заголовки, латунный акцент. Двенадцать блоков: шапка, первый экран, подвал и остальное
+ * из общих групп каталога плюс четыре предметных из realty, включая Яндекс
+ * Карту районов. Витрина результата, не шаблон.
  */
 export const metadata = {
   title: "Дом на Неве — агентство недвижимости",
@@ -77,7 +78,7 @@ export default function Page() {
       <style href="vibeui-demo-scroll" precedence="medium">
         {`html{scroll-behavior:smooth;scroll-padding-top:5.5rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}`}
       </style>
-      <Realty001
+      <Navbar020
         {...realty}
         brand="Дом на Неве"
         brandHref="#"
@@ -96,7 +97,7 @@ export default function Page() {
       />
 
       <div id="hero">
-        <Realty002
+        <Hero020
           {...realty}
           image={`${PHOTOS}/hero.webp`}
           imageAlt="Гостиная квартиры в историческом доме с видом на Неву"
@@ -131,7 +132,7 @@ export default function Page() {
       </div>
 
       <div id="districts">
-        <Realty010
+        <Map004
           {...realty}
           eyebrow="Районы"
           title="Где вы будете жить"
@@ -161,7 +162,7 @@ export default function Page() {
       </div>
 
       <div id="agents">
-        <Realty008
+        <People007
           {...realty}
           eyebrow="Команда"
           title="Четыре человека, которые ведут вашу сделку"
@@ -171,7 +172,7 @@ export default function Page() {
       </div>
 
       <div id="reviews">
-        <Realty009
+        <Testimonials016
           {...realty}
           eyebrow="Отзывы"
           title="Что говорят после сделки"
@@ -183,11 +184,11 @@ export default function Page() {
       </div>
 
       <div id="faq">
-        <Realty011 {...realty} eyebrow="Вопросы" title="Что спрашивают перед первой встречей" items={FAQ} noteLabel="Не нашли ответ? Спросите" noteHref="#valuation" />
+        <Faq016 {...realty} eyebrow="Вопросы" title="Что спрашивают перед первой встречей" items={FAQ} noteLabel="Не нашли ответ? Спросите" noteHref="#valuation" />
       </div>
 
       <div id="valuation">
-        <Realty007
+        <Contact015
           {...realty}
           image={`${PHOTOS}/office.webp`}
           imageAlt="Офис агентства на первом этаже исторического дома"
@@ -196,7 +197,7 @@ export default function Page() {
       </div>
 
       <div id="footer">
-        <Realty012
+        <Footer019
           {...realty}
           brand="Дом на Неве"
           caption="Агентство недвижимости · Петербург"

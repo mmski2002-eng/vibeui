@@ -93,7 +93,9 @@
             },
             "title": "Aurora Hero",
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "accent": {
                 "label": "Accent"
               },
@@ -133,7 +135,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -274,7 +280,9 @@
             },
             "title": "Console Hero",
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "accent": {
                 "label": "Accent"
               },
@@ -324,7 +332,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -471,7 +483,9 @@
             },
             "title": "Mosaic Hero",
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "accent": {
                 "label": "Accent"
               },
@@ -516,7 +530,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -612,7 +630,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -675,7 +697,9 @@
               "usage": "<Hero004 title=\"Ship a landing page tonight\" primary={{ label: \"Get started\", href: \"/signup\" }} />"
             },
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "title": {
                 "label": "Headline",
                 "default": "Ship a landing page tonight"
@@ -785,7 +809,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -848,7 +876,9 @@
               "usage": "<Hero005 title=\"Show the product, not a promise\" appName=\"acme — workspace\" />"
             },
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "title": {
                 "label": "Headline",
                 "default": "Show the product, not a promise"
@@ -979,7 +1009,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -1043,7 +1077,9 @@
               "usage": "<Hero006 title=\"One section pulled apart every Friday\" submitLabel=\"Subscribe\" />"
             },
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "title": {
                 "label": "Headline",
                 "default": "One section pulled apart every Friday"
@@ -1157,7 +1193,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -1221,7 +1261,9 @@
               "usage": "<Hero007 title=\"Watch a page come together\" watchHref=\"/demo\" duration=\"6:24\" />"
             },
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "title": {
                 "label": "Headline",
                 "default": "Watch a page come together"
@@ -1340,7 +1382,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -1403,7 +1449,9 @@
               "usage": "<Hero008 logosTitle=\"Trusted by\" logos={[\"Kontur\", \"Litera\", \"Optika\"]} />"
             },
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "title": {
                 "label": "Headline",
                 "default": "Pages marketing teams actually trust"
@@ -1519,7 +1567,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -1584,7 +1636,9 @@
               "usage": "<Hero009 eyebrow=\"This year\" stats={[{ value: \"6\", unit: \"min\", label: \"To a finished page\" }]} />"
             },
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "title": {
                 "label": "Headline",
                 "default": "Less markup, more launches"
@@ -1707,7 +1761,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -1771,7 +1829,9 @@
               "usage": "<Hero010 title=\"Half the page is the picture\" imageCaption=\"Product photo\" />"
             },
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "title": {
                 "label": "Headline",
                 "default": "Half the page is the picture"
@@ -1886,7 +1946,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -1951,7 +2015,9 @@
               "usage": "<Hero011 title=\"A background that does\" titleAccent=\"half the work\" />"
             },
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "title": {
                 "label": "Headline",
                 "default": "A background that does"
@@ -2064,7 +2130,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -2127,7 +2197,9 @@
               "usage": "<Hero012 badge=\"New\" announcement=\"Version 2.4 is out\" announcementHref=\"/changelog\" />"
             },
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "announcement": {
                 "label": "Announcement",
                 "default": "Version 2.4 is out — 45 sections and a new Copy for AI"
@@ -2244,7 +2316,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -2315,7 +2391,9 @@
               "usage": "<Hero013 placeholder=\"Try: pricing with a toggle\" popular={[\"hero\", \"pricing\"]} />"
             },
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "title": {
                 "label": "Headline",
                 "default": "Search the catalog instead of scrolling it"
@@ -2430,7 +2508,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -2488,7 +2570,9 @@
               "usage": "<Hero014 kind=\"Online conference\" date=\"26 September, 11:00\" dateTime=\"2026-09-26T11:00:00+03:00\" />"
             },
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "title": {
                 "label": "Headline",
                 "default": "Vibecoding day: a product in eight hours"
@@ -2615,7 +2699,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -2686,7 +2774,9 @@
               "usage": "<Hero015 studio=\"Versta Studio\" link={{ label: \"See the work\", href: \"/works\" }} />"
             },
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "title": {
                 "label": "Headline",
                 "default": "We build interfaces that"
@@ -2807,7 +2897,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -2870,7 +2964,9 @@
               "usage": "<Hero016 title=\"Build it yourself or hand it over?\" eyebrow=\"Two ways to start\" />"
             },
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "title": {
                 "label": "Headline",
                 "default": "Build it yourself or hand it over?"
@@ -2994,7 +3090,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -3063,7 +3163,9 @@
               "usage": "<Hero017 prefix=\"We build\" words={[\"landing pages\", \"catalogues\", \"dashboards\"]} suffix=\"with no markup from scratch\" />"
             },
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "eyebrow": {
                 "label": "Eyebrow",
                 "default": "New sections every week"
@@ -3185,7 +3287,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -3251,7 +3357,9 @@
               "usage": "<Hero018 title=\"Ship a landing page that\" titleAccent=\"looks expensive\" />"
             },
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "title": {
                 "label": "Headline",
                 "default": "Ship a landing page that"
@@ -3355,7 +3463,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -3421,7 +3533,9 @@
               "usage": "<Hero019 title=\"Ship your first page tonight\" submitLabel=\"Create account\" />"
             },
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "title": {
                 "label": "Headline",
                 "default": "Ship your first page tonight"
@@ -3466,6 +3580,358 @@
           "title",
           "eyebrow",
           "submitLabel"
+        ]
+      }
+    },
+    {
+      "name": "hero-020",
+      "type": "registry:block",
+      "title": "Первый экран с поиском жилья",
+      "description": "Первый экран агентства: фото на весь экран с медленным наездом, серифный заголовок и форма поиска в карточке — купить или снять, тип, район, бюджет. Внизу три цифры доверия. Форма настоящая, уходит GET на страницу выдачи.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-020/hero-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-020.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Фото — <img> position:absolute с object-fit:cover и анимацией drift (scale 1.04→1.12 за 24s, alternate); поверх — градиентное затемнение снизу вверх. Форма <form method=\"get\" action>: режимы — radio в капсуле, поля — <select name=type|district|budget>, кнопка submit. От 52rem (container query) поля в ряд, высота экрана 44rem. reduced-motion выключает наезд. Палитра --vibeui-hero-020-* с light-dark: песок/чернильно-зелёный, латунный акцент; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "real estate",
+          "realty",
+          "property",
+          "apartment",
+          "agency",
+          "listing",
+          "realty"
+        ],
+        "preview": {
+          "props": {
+            "image": "/demo/places/place-05.webp"
+          },
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Hero020",
+          "usage": "<Hero020\n  image=\"/photos/hero.webp\"\n  title=\"Квартира, в которую хочется вернуться\"\n  lede=\"Подбираем жильё под ваш бюджет и ритм жизни.\"\n  modes={[\"Купить\", \"Снять\"]}\n  districts={[\"Любой район\", \"Центральный\", \"Петроградская\"]}\n  action=\"/search\"\n  stats={[{ value: \"1 240\", label: \"объектов\" }, { value: \"18 лет\", label: \"на рынке\" }]}\n/>",
+          "summary": "Самодостаточный первый экран для агентства или застройщика: фото с наездом, заголовок, форма поиска с настоящими полями и цифры доверия. Всё содержимое пропсами.",
+          "preserve": [
+            "медленный наезд фото (Ken Burns) и градиентное затемнение — текст читается на любом снимке",
+            "форму как настоящую <form method=get> с select и radio: выдача получает параметры без JS",
+            "серифный заголовок капителью над формой и капсулу режимов"
+          ],
+          "adapt": [
+            "image, eyebrow, title, lede",
+            "modes, types, districts, budgets, submitLabel, action, stats",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Фото ожидается горизонтальное 16:9; без него — тёмно-зелёный градиент.",
+            "Первый режим и первые пункты списков выбраны по умолчанию."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Квартира, в которую хочется вернуться",
+            "maxLength": 60
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Найти",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hero with property search",
+            "description": "An agency first screen: a full-bleed photo with a slow push-in, a serif headline and a search form in a card — buy or rent, type, district, budget. Three trust figures below. A real form that GETs to the results page.",
+            "docs": "One file, zero dependencies, a server component. The photo is an absolutely positioned <img> with object-fit:cover and a drift animation (scale 1.04→1.12 over 24s, alternate); a bottom-up gradient shade on top. The form is <form method=\"get\" action>: modes are radios in a capsule, fields are <select name=type|district|budget>, a submit button. From 52rem (container query) fields go in a row and the screen is 44rem tall. reduced-motion disables the push-in. Palette --vibeui-hero-020-* with light-dark: sand / ink green, brass accent; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained first screen for an agency or developer: a photo with push-in, a headline, a search form with real fields and trust figures. All content via props.",
+              "preserve": [
+                "the slow photo push-in (Ken Burns) and the gradient shade — text reads on any photo",
+                "the form as a real <form method=get> with select and radio: the results page gets parameters without JS",
+                "the small-caps serif headline over the form and the mode capsule"
+              ],
+              "adapt": [
+                "image, eyebrow, title, lede",
+                "modes, types, districts, budgets, submitLabel, action, stats",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The photo is expected 16:9; without it a dark green gradient shows.",
+                "The first mode and the first list entries are selected by default."
+              ],
+              "usage": "<Hero020\n  image=\"/photos/hero.webp\"\n  title=\"A flat you want to come home to\"\n  lede=\"We match homes to your budget and pace of life.\"\n  modes={[\"Buy\", \"Rent\"]}\n  districts={[\"Any district\", \"Centre\", \"Riverside\"]}\n  action=\"/search\"\n  stats={[{ value: \"1,240\", label: \"listings\" }, { value: \"18 years\", label: \"on the market\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Headline",
+                "default": "A flat you want to come home to"
+              },
+              "submitLabel": {
+                "label": "Button",
+                "default": "Find"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "image": "/demo/places/place-05.webp",
+                "eyebrow": "Real estate agency · since 2007",
+                "title": "A flat you want to come home to",
+                "lede": "We match homes in the city to your budget and pace of life: from a studio by the metro to a house with a garden.",
+                "modes": [
+                  "Buy",
+                  "Rent"
+                ],
+                "types": [
+                  "Flat",
+                  "House",
+                  "New build",
+                  "Commercial"
+                ],
+                "districts": [
+                  "Any district",
+                  "Centre",
+                  "Riverside",
+                  "Old town",
+                  "North"
+                ],
+                "budgets": [
+                  "Any budget",
+                  "under 200k",
+                  "200–400k",
+                  "400–800k",
+                  "over 800k"
+                ],
+                "submitLabel": "Find",
+                "stats": [
+                  {
+                    "value": "1,240",
+                    "label": "listings"
+                  },
+                  {
+                    "value": "18 years",
+                    "label": "on the market"
+                  },
+                  {
+                    "value": "3 offices",
+                    "label": "in the city"
+                  }
+                ]
+              },
+              "width": "natural"
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "hero-021",
+      "type": "registry:block",
+      "title": "Первый экран ресторана с бегущей строкой",
+      "description": "Первый экран ресторана: фото зала во весь экран с медленным наездом и тёплым затемнением, гигантский серифный заголовок появляется построчно снизу, слово в звёздочках — курсивом винным свечением, две кнопки и бегущая строка с сезонными анонсами внизу.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-021/hero-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-021.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Секция min-height:100svh, <img> absolute с анимацией drift (scale 1.02→1.12 за 28s, alternate) и градиентное затемнение снизу. Заголовок — строки в overflow:hidden, внутренний span поднимается translateY(110%)→0 с задержкой .3s + n×.14s; *слово* в строке превращается в <em> функцией emphasize без innerHTML. Подпись и кнопки — fade с задержками. Бегущая строка — лента, продублированная дважды, translateX(-50%) за 40s, края замаскированы mask-image. reduced-motion выключает всё. Палитра --vibeui-hero-021-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "restaurant",
+          "cafe",
+          "bar",
+          "food",
+          "menu",
+          "dining",
+          "hero",
+          "ticker",
+          "marquee",
+          "fullscreen"
+        ],
+        "preview": {
+          "props": {
+            "image": "/demo/places/place-03.webp"
+          },
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Hero021",
+          "usage": "<Hero021\n  image=\"/photos/hero.webp\"\n  eyebrow=\"Кухня · бар · терраса\"\n  lines={[\"Север на тарелке,\", \"тепло за *столом*\"]}\n  lede=\"Ладожский сиг, оленина и морошка в получасе от Невского.\"\n  primaryLabel=\"Забронировать стол\"\n  primaryHref=\"#book\"\n  secondaryLabel=\"Смотреть меню\"\n  secondaryHref=\"#menu\"\n  ticker={[\"Сезонное меню — осень\", \"Устрицы по средам\", \"Джаз по пятницам\"]}\n/>",
+          "summary": "Самодостаточный первый экран для ресторана, бара или отеля: фото с наездом, построчный заголовок, две кнопки и бегущая строка анонсов. Всё содержимое пропсами.",
+          "preserve": [
+            "построчное появление заголовка снизу через overflow:hidden — это главный жест экрана",
+            "медленный наезд фото и градиентное затемнение — текст читается на любом снимке",
+            "бегущую строку с маской по краям для анонсов"
+          ],
+          "adapt": [
+            "image, eyebrow, lines (слово в *звёздочках* — акцентом), lede",
+            "primaryLabel/Href, secondaryLabel/Href, ticker",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Экран всегда тёмный: цвета фиксированы под фото, tone не меняет схему.",
+            "Шапка в режиме overlay ложится поверх: верхний отступ 8–9rem уже заложен."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Кухня · бар · терраса",
+            "maxLength": 40
+          },
+          {
+            "prop": "primaryLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Забронировать стол",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Restaurant hero with a ticker",
+            "description": "A restaurant first screen: a full-screen photo of the dining room with a slow push-in and a warm shade, a giant serif headline rising line by line, a starred word in italic wine-red, two buttons and a ticker with seasonal announcements below.",
+            "docs": "One file, zero dependencies, a server component. The section is min-height:100svh, an absolute <img> with a drift animation (scale 1.02→1.12 over 28s, alternate) and a bottom gradient shade. The headline is lines in overflow:hidden; the inner span rises translateY(110%)→0 with a delay of .3s + n×.14s; a *word* in a line becomes <em> via emphasize without innerHTML. The lede and buttons fade in with delays. The ticker is a tape duplicated twice, translateX(-50%) over 40s, edges masked with mask-image. reduced-motion disables everything. Palette --vibeui-hero-021-* with light-dark: ivory on dark wood, a dark wine accent with a glow (the -glow variable) and its lighter -accent-ink tint for text on dark; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained first screen for a restaurant, bar or hotel: a photo with push-in, a line-by-line headline, two buttons and an announcements ticker. All content via props.",
+              "preserve": [
+                "the line-by-line headline rising through overflow:hidden — the main gesture of the screen",
+                "the slow photo push-in and the gradient shade — text reads on any photo",
+                "the edge-masked ticker for announcements"
+              ],
+              "adapt": [
+                "image, eyebrow, lines (a *starred* word is accented), lede",
+                "primaryLabel/Href, secondaryLabel/Href, ticker",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The screen is always dark: colours are fixed for the photo, tone does not change the scheme.",
+                "An overlay header sits on top: the 8–9rem top padding is already there."
+              ],
+              "usage": "<Hero021\n  image=\"/photos/hero.webp\"\n  eyebrow=\"Kitchen · bar · terrace\"\n  lines={[\"The north on a plate,\", \"warmth at the *table*\"]}\n  lede=\"Lake whitefish, venison and cloudberries half an hour from the centre.\"\n  primaryLabel=\"Book a table\"\n  primaryHref=\"#book\"\n  secondaryLabel=\"See the menu\"\n  secondaryHref=\"#menu\"\n  ticker={[\"Seasonal menu — autumn\", \"Oysters on Wednesdays\", \"Jazz on Fridays\"]}\n/>"
+            },
+            "controls": {
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Kitchen · bar · terrace"
+              },
+              "primaryLabel": {
+                "label": "Button",
+                "default": "Book a table"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "image": "/demo/places/place-03.webp",
+                "eyebrow": "Kitchen · bar · terrace",
+                "lines": [
+                  "The north on a plate,",
+                  "warmth at the *table*"
+                ],
+                "lede": "Lake whitefish, venison and cloudberries half an hour from the centre. An open kitchen, candles and a table you want to come back to.",
+                "primaryLabel": "Book a table",
+                "secondaryLabel": "See the menu",
+                "ticker": [
+                  "Seasonal menu — autumn",
+                  "Oysters on Wednesdays",
+                  "Weekend brunch from 11:00",
+                  "Jazz on Fridays"
+                ]
+              },
+              "width": "natural"
+            }
+          }
+        },
+        "cardControls": [
+          "eyebrow",
+          "tone",
+          "accent"
         ]
       }
     }

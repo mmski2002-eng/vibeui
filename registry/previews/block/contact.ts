@@ -22,4 +22,8 @@ export const PREVIEWS = {
     import("@/registry/blocks/contact/contact-012/contact-012").then((module) => module.Contact012),
   "contact-014": () =>
     import("@/registry/blocks/contact/contact-014/contact-014").then((module) => module.Contact014),
+  "contact-015": () =>
+    import("@/registry/blocks/contact/contact-015/contact-015").then((module) => module.Contact015),
+  "contact-016": () =>
+    import("@/registry/blocks/contact/contact-016/contact-016").then((module) => module.Contact016),
 } satisfies PreviewLoaderMap

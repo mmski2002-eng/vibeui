@@ -3016,6 +3016,356 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "testimonials-016",
+      "type": "registry:block",
+      "title": "Отзывы после сделки",
+      "description": "Отзывы клиентов агентства: серифные цитаты курсивом с большой латунной кавычкой, звёзды, кто и какую сделку провёл, источник отзыва плашкой. В шапке справа общая оценка крупно. Карточки появляются каскадом.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-016/testimonials-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-016.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Шапка секции — flex с заголовком слева и общей оценкой справа. Карточки 1/2/3 колонки (container query 48rem и 64rem); появление @keyframes с задержкой --n×90ms. Кавычка — абсолютный серифный символ с opacity .35; звёзды — строка «★» по rating с aria-label; источник — пилюля справа в строке автора. Палитра --vibeui-testimonials-016-* с light-dark: песок/чернильно-зелёный, латунный акцент; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "real estate",
+          "realty",
+          "property",
+          "apartment",
+          "agency",
+          "listing",
+          "reviews",
+          "testimonials",
+          "rating"
+        ],
+        "preview": {
+          "props": {},
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Testimonials016",
+          "usage": "<Testimonials016\n  title=\"Что говорят после сделки\"\n  score=\"4,9\"\n  scoreLabel=\"средняя оценка по 312 отзывам\"\n  reviews={[\n    { quote: \"Продали двушку за 26 дней и дороже, чем оценивали соседи.\", name: \"Ольга и Сергей\", deal: \"продали квартиру на Петроградской\", source: \"Яндекс Карты\", rating: 5 },\n  ]}\n/>",
+          "summary": "Самодостаточная секция отзывов для агентства, застройщика или юристов: цитаты серифом, звёзды, сделка и источник, общая оценка. Отзывы — массив пропсом.",
+          "preserve": [
+            "серифную курсивную цитату с большой полупрозрачной кавычкой — это голос, а не карточка каталога",
+            "строку «кто и какую сделку провёл» с плашкой источника: отзыв проверяем",
+            "общую оценку крупно акцентом в шапке секции напротив заголовка"
+          ],
+          "adapt": [
+            "reviews: цитаты, имена, сделки, источники, рейтинг, фото",
+            "eyebrow, title, lede, score, scoreLabel",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "rating округляется до целого, больше 5 не рисуется.",
+            "Пустой score скрывает блок оценки целиком."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что говорят после сделки",
+            "maxLength": 60
+          },
+          {
+            "prop": "score",
+            "label": "Оценка",
+            "type": "text",
+            "default": "4,9",
+            "maxLength": 4
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Post-deal reviews",
+            "description": "Agency client reviews: italic serif quotes with a large brass quotation mark, stars, who did which deal, the review source as a tag. A large overall score on the right of the head. Cards cascade in.",
+            "docs": "One file, zero dependencies, a server component. The section head is a flex row with the heading left and the overall score right. Cards in 1/2/3 columns (container queries 48rem and 64rem); appearance via @keyframes with a --n×90ms delay. The quotation mark is an absolutely positioned serif glyph at opacity .35; stars are a “★” string by rating with an aria-label; the source is a pill on the right of the author row. Palette --vibeui-testimonials-016-* with light-dark: sand / ink green, brass accent; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained reviews section for an agency, developer or law firm: serif quotes, stars, the deal and the source, an overall score. Reviews come in as a prop array.",
+              "preserve": [
+                "the italic serif quote with a large translucent quotation mark — a voice, not a catalogue card",
+                "the “who did which deal” row with the source tag: the review is verifiable",
+                "the large accent overall score in the section head opposite the heading"
+              ],
+              "adapt": [
+                "reviews: quotes, names, deals, sources, rating, photos",
+                "eyebrow, title, lede, score, scoreLabel",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "rating is rounded to an integer; more than 5 is not drawn.",
+                "An empty score hides the score block entirely."
+              ],
+              "usage": "<Testimonials016\n  title=\"What people say after the deal\"\n  score=\"4.9\"\n  scoreLabel=\"average of 312 reviews\"\n  reviews={[\n    { quote: \"Sold our two-bedroom in 26 days, above the neighbours estimate.\", name: \"Olga and Sergey\", deal: \"sold a flat in Riverside\", source: \"Google\", rating: 5 },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What people say after the deal"
+              },
+              "score": {
+                "label": "Score",
+                "default": "4.9"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Reviews",
+                "title": "What people say after the deal",
+                "lede": "Reviews from open platforms where they cannot be edited.",
+                "score": "4.9",
+                "scoreLabel": "average of 312 reviews",
+                "reviews": [
+                  {
+                    "quote": "Sold our two-bedroom in 26 days and above what the neighbouring agencies estimated. Ksenia took every call and viewing, we only signed.",
+                    "name": "Olga and Sergey",
+                    "deal": "sold a flat in Riverside",
+                    "source": "Google Maps",
+                    "rating": 5
+                  },
+                  {
+                    "quote": "Ilya found a mortgage programme two points below what our bank offered. Over a year that is a serious sum.",
+                    "name": "Dmitry",
+                    "deal": "bought a studio in the North",
+                    "source": "Google",
+                    "rating": 5
+                  },
+                  {
+                    "quote": "The flat had a renovation debt and a registered relative. Andrey cleared it all before the deal, we noticed nothing.",
+                    "name": "Anna",
+                    "deal": "bought a three-bedroom in the centre",
+                    "source": "Trustpilot",
+                    "rating": 5
+                  }
+                ]
+              },
+              "width": "natural"
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "testimonials-017",
+      "type": "registry:block",
+      "title": "Отзывы поверх мутного фото",
+      "description": "Отзывы ресторана поверх размытого фото зала под тёплым затемнением: стеклянные карточки с курсивной серифной цитатой, звёзды винным свечением, имя, повод и источник. Слева общая оценка крупно.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-017/testimonials-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-017.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Фото — <img> absolute с blur(10px) и opacity .5, поверх градиентное затемнение. Сетка shell от 64rem (container query) 1fr/2.6fr, карточки в три колонки от 48rem с backdrop-filter и появлением @keyframes с задержкой --n×100ms. Звёзды — строка «★» по rating с aria-label. Секция всегда тёмная: цвета фиксированы под фото. Палитра --vibeui-testimonials-017-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "restaurant",
+          "cafe",
+          "bar",
+          "food",
+          "menu",
+          "dining",
+          "reviews",
+          "testimonials",
+          "rating",
+          "glass"
+        ],
+        "preview": {
+          "props": {
+            "image": "/demo/places/place-04.webp"
+          },
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Testimonials017",
+          "usage": "<Testimonials017\n  title=\"Что пишут после ужина\"\n  score=\"4,9\"\n  scoreLabel=\"по 640 отзывам\"\n  image=\"/photos/hall-01.webp\"\n  reviews={[\n    { quote: \"Сиг с копчёным картофелем — лучшее, что я ела в городе за год.\", name: \"Мария К.\", occasion: \"ужин на двоих\", source: \"Яндекс Карты\", rating: 5 },\n  ]}\n/>",
+          "summary": "Самодостаточная секция отзывов для ресторана, бара или отеля: стеклянные карточки поверх мутного фото, звёзды, источник и общая оценка. Отзывы — массив пропсом.",
+          "preserve": [
+            "мутное фото зала под затемнением — атмосфера места вместо белой секции",
+            "стеклянные карточки с backdrop-filter и курсивную серифную цитату",
+            "повод и источник отзыва: проверяемо и по-человечески"
+          ],
+          "adapt": [
+            "reviews: цитаты, имена, поводы, источники, рейтинг",
+            "eyebrow, title, score, scoreLabel, image",
+            "accent, tone"
+          ],
+          "notes": [
+            "Без image остаётся тёмный фон без фото.",
+            "rating округляется до целого, больше 5 не рисуется."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что пишут после ужина",
+            "maxLength": 40
+          },
+          {
+            "prop": "score",
+            "label": "Оценка",
+            "type": "text",
+            "default": "4,9",
+            "maxLength": 4
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Reviews over a blurred photo",
+            "description": "Restaurant reviews over a blurred photo of the hall under a warm shade: glass cards with an italic serif quote, wine-red stars, name, occasion and source. A large overall score on the left.",
+            "docs": "One file, zero dependencies, a server component. The photo is an absolute <img> with blur(10px) and opacity .5, a gradient shade on top. The shell grid from 64rem (container query) is 1fr/2.6fr, cards in three columns from 48rem with backdrop-filter and a @keyframes appearance with a --n×100ms delay. Stars are a “★” string by rating with an aria-label. The section is always dark: colours are fixed for the photo. Palette --vibeui-testimonials-017-* with light-dark: ivory on dark wood, a dark wine accent with a glow (the -glow variable) and its lighter -accent-ink tint for text on dark; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained reviews section for a restaurant, bar or hotel: glass cards over a blurred photo, stars, source and an overall score. Reviews come in as a prop array.",
+              "preserve": [
+                "the blurred hall photo under a shade — the atmosphere of the place instead of a white section",
+                "the glass cards with backdrop-filter and the italic serif quote",
+                "the occasion and source of a review: verifiable and human"
+              ],
+              "adapt": [
+                "reviews: quotes, names, occasions, sources, rating",
+                "eyebrow, title, score, scoreLabel, image",
+                "accent, tone"
+              ],
+              "notes": [
+                "Without image a dark background without a photo remains.",
+                "rating is rounded to an integer; more than 5 is not drawn."
+              ],
+              "usage": "<Testimonials017\n  title=\"What people write after dinner\"\n  score=\"4.9\"\n  scoreLabel=\"from 640 reviews\"\n  image=\"/photos/hall-01.webp\"\n  reviews={[\n    { quote: \"Whitefish with smoked potato — the best thing I ate in town this year.\", name: \"Maria K.\", occasion: \"dinner for two\", source: \"Google\", rating: 5 },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What people write after dinner"
+              },
+              "score": {
+                "label": "Score",
+                "default": "4.9"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "image": "/demo/places/place-04.webp",
+                "eyebrow": "Reviews",
+                "title": "What people write after dinner",
+                "score": "4.9",
+                "scoreLabel": "from 640 reviews on three platforms",
+                "reviews": [
+                  {
+                    "quote": "Whitefish with smoked potato — the best thing I ate in town this year. Candles, quiet, nobody rushing you.",
+                    "name": "Maria K.",
+                    "occasion": "dinner for two",
+                    "source": "Google",
+                    "rating": 5
+                  },
+                  {
+                    "quote": "Came for oyster Wednesday, stayed till closing. The bartender built a sour around our conversation, not the menu.",
+                    "name": "Ilya and Sasha",
+                    "occasion": "wednesday",
+                    "source": "TripAdvisor",
+                    "rating": 5
+                  },
+                  {
+                    "quote": "Celebrated a birthday for twelve — the back room, our own menu, not a single slip.",
+                    "name": "Anna L.",
+                    "occasion": "birthday",
+                    "source": "Yelp",
+                    "rating": 5
+                  }
+                ]
+              },
+              "width": "natural"
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent"
+        ]
+      }
     }
   ]
 }

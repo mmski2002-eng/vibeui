@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Карта Яндекса с меткой",
       "description": "Секция «как добраться»: виджет Яндекс Карт во всю ширину, карточка с адресом и ориентирами и кнопка построения маршрута.",
-      "categories": ["map"],
+      "categories": [
+        "map"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,8 +20,17 @@
       ],
       "docs": "Блок самодостаточный: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-map-001-*. Карта настоящая без всякой настройки: по умолчанию встраивается штатный виджет Яндекс Карт (yandex.ru/map-widget/v1), которому не нужен ключ, а тёмная схема включается параметром theme. Если задан apiKey, вместо виджета поднимается JS API v3: тогда картой можно управлять из кода, а точку искать по адресу через ymaps3.search. Координаты важнее адреса: заданы latitude и longitude — виджет ставит метку по ним, не заданы — ищет по строке адреса. Если JS API не загрузился, блок возвращается к виджету и пишет об этом плашкой.",
       "meta": {
-        "tags": ["map", "yandex", "location", "address", "directions", "contacts"],
-        "preview": { "width": "natural" },
+        "tags": [
+          "map",
+          "yandex",
+          "location",
+          "address",
+          "directions",
+          "contacts"
+        ],
+        "preview": {
+          "width": "natural"
+        },
         "ai": {
           "export": "Map001",
           "usage": "<Map001 address=\"Москва, Пресненская наб., 12\" latitude={55.7495} longitude={37.5372} theme=\"auto\" />",
@@ -63,7 +74,11 @@
             "prop": "theme",
             "label": "Тема карты",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -74,7 +89,12 @@
             "min": 10,
             "max": 19
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
           {
             "prop": "background",
             "label": "Подложка",
@@ -122,10 +142,18 @@
                 "label": "Address",
                 "default": "12 Presnenskaya nab., Moscow City"
               },
-              "theme": { "label": "Map theme" },
-              "zoom": { "label": "Zoom" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "theme": {
+                "label": "Map theme"
+              },
+              "zoom": {
+                "label": "Zoom"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
@@ -148,7 +176,13 @@
             }
           }
         },
-        "cardControls": ["address", "theme", "zoom", "accent", "background"]
+        "cardControls": [
+          "address",
+          "theme",
+          "zoom",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -156,7 +190,9 @@
       "type": "registry:block",
       "title": "Карта Google рядом со справкой",
       "description": "Карта Google и панель контактов в одном ряду: адрес, часы работы, телефон и вход читаются, не закрывая саму карту.",
-      "categories": ["map"],
+      "categories": [
+        "map"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -168,8 +204,17 @@
       ],
       "docs": "Блок самодостаточный: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-map-002-*. Карта настоящая без всякой настройки: по умолчанию встраивается google.com/maps в режиме output=embed — ключ не нужен, метка встаёт по адресу из пропа, поэтому смена адреса двигает точку. Если задан apiKey, вместо встроенной карты поднимается JavaScript API: тогда работают тёмная схема (массив styles, а не облачный mapId), геокодер и управление картой из кода. Две колонки включает container query, поэтому блок одинаково живёт и в узкой колонке, и во всю ширину страницы.",
       "meta": {
-        "tags": ["map", "google", "location", "address", "office", "contacts"],
-        "preview": { "width": "natural" },
+        "tags": [
+          "map",
+          "google",
+          "location",
+          "address",
+          "office",
+          "contacts"
+        ],
+        "preview": {
+          "width": "natural"
+        },
         "ai": {
           "export": "Map002",
           "usage": "<Map002 address=\"Москва, 1-й Красногвардейский проезд, 21с1\" facts={[{ label: \"Часы\", value: \"Пн–Пт, 10:00–19:00\" }]} />",
@@ -217,7 +262,12 @@
             "min": 10,
             "max": 19
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
           {
             "prop": "background",
             "label": "Подложка",
@@ -265,9 +315,15 @@
                 "label": "Address",
                 "default": "21 1st Krasnogvardeisky proezd, Moscow"
               },
-              "zoom": { "label": "Zoom" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "zoom": {
+                "label": "Zoom"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
@@ -280,8 +336,14 @@
                     "label": "Hours",
                     "value": "Mon–Fri, 10:00–19:00. Saturday by appointment"
                   },
-                  { "label": "Phone", "value": "+7 495 120-45-90" },
-                  { "label": "Email", "value": "office@studio.ru" },
+                  {
+                    "label": "Phone",
+                    "value": "+7 495 120-45-90"
+                  },
+                  {
+                    "label": "Email",
+                    "value": "office@studio.ru"
+                  },
                   {
                     "label": "How to find us",
                     "value": "Entrance A, reception desk on the ground floor"
@@ -298,7 +360,12 @@
             }
           }
         },
-        "cardControls": ["address", "zoom", "accent", "background"]
+        "cardControls": [
+          "address",
+          "zoom",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -306,7 +373,9 @@
       "type": "registry:block",
       "title": "Карта 2ГИС с адресной строкой",
       "description": "Виджет 2ГИС во всю ширину и строка под ним: адрес, часы и вход стоят под картой, а не закрывают собой нужный квартал.",
-      "categories": ["map"],
+      "categories": [
+        "map"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -318,8 +387,17 @@
       ],
       "docs": "Блок самодостаточный: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-map-003-*. Карта настоящая без всякой настройки: по умолчанию встраивается штатный виджет 2ГИС (widgets.2gis.com), которому не нужен ключ, — точка, масштаб и город передаются в options. Готовую ссылку из конструктора виджетов можно подставить пропом embedUrl. Если задан apiKey, вместо виджета поднимается MapGL: тогда доступны тёмное оформление по идентификатору стиля и управление картой из кода. Если MapGL не загрузился, блок возвращается к виджету и пишет об этом плашкой.",
       "meta": {
-        "tags": ["map", "2gis", "mapgl", "location", "address", "branch"],
-        "preview": { "width": "natural" },
+        "tags": [
+          "map",
+          "2gis",
+          "mapgl",
+          "location",
+          "address",
+          "branch"
+        ],
+        "preview": {
+          "width": "natural"
+        },
         "ai": {
           "export": "Map003",
           "usage": "<Map003 address=\"Москва, Пресненская наб., 6с2\" latitude={55.7482} longitude={37.539} city=\"moscow\" />",
@@ -366,7 +444,12 @@
             "min": 10,
             "max": 19
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
           {
             "prop": "background",
             "label": "Подложка",
@@ -413,9 +496,15 @@
                 "label": "Address",
                 "default": "6 Presnenskaya nab., Moscow"
               },
-              "zoom": { "label": "Zoom" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "zoom": {
+                "label": "Zoom"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
@@ -423,12 +512,18 @@
                 "title": "Moscow City, Imperia Tower",
                 "address": "6 Presnenskaya nab., Moscow",
                 "notes": [
-                  { "label": "Hours", "value": "Mon–Fri, 09:00–20:00" },
+                  {
+                    "label": "Hours",
+                    "value": "Mon–Fri, 09:00–20:00"
+                  },
                   {
                     "label": "Entrance",
                     "value": "From the embankment, entrance 2, floor 8"
                   },
-                  { "label": "Phone", "value": "+7 495 120-45-90" }
+                  {
+                    "label": "Phone",
+                    "value": "+7 495 120-45-90"
+                  }
                 ],
                 "openLabel": "Open in 2GIS",
                 "providerLabel": "2GIS",
@@ -439,7 +534,419 @@
             }
           }
         },
-        "cardControls": ["address", "zoom", "accent", "background"]
+        "cardControls": [
+          "address",
+          "zoom",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "map-004",
+      "type": "registry:block",
+      "title": "Районы на Яндекс Карте",
+      "description": "Районы или объекты на настоящей Яндекс Карте: метки на карте и карточки рядом с фото, ценой за метр и числом объектов. Без ключа работает штатный виджет с метками, с ключом JS API — плашки с ценой и взаимная подсветка метки и карточки.",
+      "categories": [
+        "map"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "map-004/map-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/map-004.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Без apiKey — <iframe> виджета Яндекс Карт (yandex.ru/map-widget/v1) с центром ll, зумом z, метками pt через «~» (стиль pm2dgm) и схемой theme; ключ не нужен. С apiKey — JS API v3: один <script> на адрес (loadScript), YMap с YMapDefaultSchemeLayer и YMapDefaultFeaturesLayer, метки YMapMarker — свои плашки <button>/<a> с ценой и названием; наведение на карточку и на метку выставляет общий active, метка получает data-active. Тема карты в режиме auto следует странице (класс dark, color-scheme, prefers-color-scheme) через MutationObserver. Центр — среднее точек, если latitude/longitude не заданы. Раскладка: карта и список карточек колонкой, от 56rem (container query) 1.4fr/1fr, список растянут по высоте карты. Палитра --vibeui-realty-005-* с light-dark: песок/чернильно-зелёный, латунный акцент; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "real estate",
+          "realty",
+          "property",
+          "apartment",
+          "agency",
+          "listing",
+          "map",
+          "yandex",
+          "districts",
+          "pins",
+          "markers"
+        ],
+        "preview": {
+          "props": {
+            "points": [
+              {
+                "name": "Петроградская",
+                "price": "285 тыс ₽",
+                "count": "164 объекта",
+                "note": "модерн, тихие дворы, 10 минут до центра",
+                "image": "/demo/places/place-01.webp",
+                "latitude": 59.9632,
+                "longitude": 30.3117
+              },
+              {
+                "name": "Васильевский",
+                "price": "240 тыс ₽",
+                "count": "128 объектов",
+                "note": "набережные, линии, тихо вечером",
+                "image": "/demo/places/place-05.webp",
+                "latitude": 59.9412,
+                "longitude": 30.2626
+              },
+              {
+                "name": "Центральный",
+                "price": "310 тыс ₽",
+                "count": "402 объекта",
+                "note": "парадные, лепнина, лучшие школы",
+                "image": "/demo/places/place-03.webp",
+                "latitude": 59.9343,
+                "longitude": 30.3462
+              },
+              {
+                "name": "Приморский",
+                "price": "205 тыс ₽",
+                "count": "356 объектов",
+                "note": "новостройки у залива, парки",
+                "image": "/demo/places/place-07.webp",
+                "latitude": 59.9989,
+                "longitude": 30.2632
+              }
+            ]
+          },
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Map004",
+          "usage": "<Map004\n  title=\"Где вы будете жить\"\n  zoom={11}\n  points={[\n    { name: \"Петроградская\", price: \"285 тыс ₽\", count: \"164 объекта\", note: \"модерн, тихие дворы\", image: \"/photos/district-01.webp\", latitude: 59.9632, longitude: 30.3117, href: \"/districts/petrogradskaya\" },\n  ]}\n/>",
+          "summary": "Самодостаточная секция «районы на карте» для агентства или застройщика: настоящая Яндекс Карта с метками без ключа и карточки районов с ценой за метр. Точки — массив пропсом с координатами.",
+          "preserve": [
+            "настоящую Яндекс Карту вместо картинки: виджет без ключа, JS API с ключом — код умеет оба режима",
+            "взаимную подсветку карточки и метки через общий active (в режиме JS API)",
+            "цену за метр серифом в карточке и плашке-метке"
+          ],
+          "adapt": [
+            "points: названия, цены, число объектов, заметки, фото, координаты и ссылки",
+            "eyebrow, title, lede, zoom, latitude, longitude, apiKey",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Виджет без ключа не умеет подсвечивать метки с карточек — для этого нужен apiKey из кабинета разработчика Яндекса.",
+            "Координаты в формате latitude/longitude (широта, долгота); в URL и API Яндекса порядок обратный — код это учитывает."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Где вы будете жить",
+            "maxLength": 50
+          },
+          {
+            "prop": "zoom",
+            "label": "Зум",
+            "type": "number",
+            "default": 11,
+            "min": 8,
+            "max": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Districts on a Yandex Map",
+            "description": "Districts or listings on a real Yandex Map: pins on the map and cards beside it with a photo, price per metre and listing count. Without a key the stock widget with pins works; with a key the JS API draws price tags and highlights pin and card together.",
+            "docs": "One file, zero dependencies, “use client”. Without apiKey — an <iframe> of the Yandex Maps widget (yandex.ru/map-widget/v1) with centre ll, zoom z, pins pt joined with “~” (style pm2dgm) and the theme scheme; no key needed. With apiKey — JS API v3: one <script> per URL (loadScript), a YMap with YMapDefaultSchemeLayer and YMapDefaultFeaturesLayer, YMapMarker pins as custom <button>/<a> tags with price and name; hovering a card or a pin sets a shared active, the pin gets data-active. In auto mode the map theme follows the page (dark class, color-scheme, prefers-color-scheme) via a MutationObserver. The centre is the mean of the points unless latitude/longitude are given. Layout: map and card list stacked, from 56rem (container query) 1.4fr/1fr with the list stretched to the map height. Palette --vibeui-realty-005-* with light-dark: sand / ink green, brass accent; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained “districts on a map” section for an agency or developer: a real Yandex Map with pins and no key, and district cards with price per metre. Points come in as a prop array with coordinates.",
+              "preserve": [
+                "a real Yandex Map instead of an image: the widget without a key, the JS API with one — the code handles both",
+                "the mutual highlight of card and pin through a shared active (in JS API mode)",
+                "the serif price per metre in the card and in the pin tag"
+              ],
+              "adapt": [
+                "points: names, prices, listing counts, notes, photos, coordinates and links",
+                "eyebrow, title, lede, zoom, latitude, longitude, apiKey",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The keyless widget cannot highlight pins from cards — that needs an apiKey from the Yandex developer console.",
+                "Coordinates are latitude/longitude; Yandex URLs and API use the reverse order — the code handles it."
+              ],
+              "usage": "<Map004\n  title=\"Where you will live\"\n  zoom={11}\n  points={[\n    { name: \"Riverside\", price: \"€6,200\", count: \"164 listings\", note: \"art nouveau, quiet courtyards\", image: \"/photos/district-01.webp\", latitude: 59.9632, longitude: 30.3117, href: \"/districts/riverside\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Where you will live"
+              },
+              "zoom": {
+                "label": "Zoom"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Districts",
+                "title": "Where you will live",
+                "lede": "Average price per metre and live listings by district. Hover a district — its pin lights up on the map.",
+                "providerLabel": "Yandex Maps",
+                "points": [
+                  {
+                    "name": "Riverside",
+                    "price": "€6,200",
+                    "count": "164 listings",
+                    "note": "art nouveau, quiet courtyards, 10 minutes to the centre",
+                    "image": "/demo/places/place-01.webp",
+                    "latitude": 59.9632,
+                    "longitude": 30.3117
+                  },
+                  {
+                    "name": "Island",
+                    "price": "€5,400",
+                    "count": "128 listings",
+                    "note": "embankments, quiet in the evening",
+                    "image": "/demo/places/place-05.webp",
+                    "latitude": 59.9412,
+                    "longitude": 30.2626
+                  },
+                  {
+                    "name": "Centre",
+                    "price": "€7,100",
+                    "count": "402 listings",
+                    "note": "grand entrances, mouldings, the best schools",
+                    "image": "/demo/places/place-03.webp",
+                    "latitude": 59.9343,
+                    "longitude": 30.3462
+                  },
+                  {
+                    "name": "North",
+                    "price": "€4,600",
+                    "count": "356 listings",
+                    "note": "new builds by the bay, parks",
+                    "image": "/demo/places/place-07.webp",
+                    "latitude": 59.9989,
+                    "longitude": 30.2632
+                  }
+                ]
+              },
+              "width": "natural"
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "map-005",
+      "type": "registry:block",
+      "title": "Как добраться с картой и часами",
+      "description": "Как добраться: Яндекс Карта с меткой во всю ширину, поверх — карточка с адресом, часами по дням, ориентирами (метро, парковка, вход) и кнопками «Построить маршрут» и телефон. Без ключа работает штатный виджет.",
+      "categories": [
+        "map"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "map-005/map-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/map-005.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Без apiKey — <iframe> виджета Яндекс Карт с меткой pt и схемой theme; с apiKey — JS API v3 (loadScript один раз на адрес, YMap, слои, YMapMarker с винной меткой). Тема карты в auto следует странице через MutationObserver. Карточка — на узком под картой, от 56rem (container query) absolute слева поверх карты с прокруткой. Часы — <dl> сеткой auto/1fr с tabular-nums, адрес в <address>. Палитра --vibeui-map-005-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "restaurant",
+          "cafe",
+          "bar",
+          "food",
+          "menu",
+          "dining",
+          "map",
+          "yandex",
+          "directions",
+          "hours",
+          "address"
+        ],
+        "preview": {
+          "props": {},
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Map005",
+          "usage": "<Map005\n  title=\"Большая Пушкарская, 20\"\n  address=\"Санкт-Петербург, Большая Пушкарская, 20, вход со двора\"\n  latitude={59.9585}\n  longitude={30.3085}\n  hours={[{ days: \"Пн–Чт\", time: \"12:00–23:00\" }, { days: \"Пт–Сб\", time: \"12:00–01:00\" }]}\n  details={[\"м. «Горьковская» — 7 минут пешком\", \"Парковка во дворе по брони\"]}\n  phone=\"+7 812 305-00-40\"\n/>",
+          "summary": "Самодостаточная секция «как добраться» для ресторана, бара или салона: настоящая Яндекс Карта без ключа и карточка с адресом, часами и маршрутом. Всё содержимое пропсами.",
+          "preserve": [
+            "настоящую Яндекс Карту вместо картинки: виджет без ключа, JS API с ключом",
+            "карточку поверх карты с часами по дням и кнопкой маршрута — ответ на вопрос «как доехать»",
+            "адрес в <address> и часы в <dl>"
+          ],
+          "adapt": [
+            "title, address, latitude, longitude, zoom, hours, details, phone, phoneHref, routeLabel",
+            "apiKey, providerLabel",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Координаты — latitude/longitude; в URL Яндекса порядок обратный, код это учитывает.",
+            "На широком экране карточка закрывает левую часть карты — центр метки лучше смещать вправо через longitude."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Большая Пушкарская, 20",
+            "maxLength": 40
+          },
+          {
+            "prop": "zoom",
+            "label": "Зум",
+            "type": "number",
+            "default": 16,
+            "min": 10,
+            "max": 18
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Directions with a map and hours",
+            "description": "Directions: a full-width Yandex Map with a pin and a card on top with the address, hours by day, landmarks (metro, parking, entrance) and “Build a route” and phone buttons. Works without a key via the stock widget.",
+            "docs": "One file, zero dependencies, “use client”. Without apiKey — an <iframe> of the Yandex Maps widget with a pt pin and the theme scheme; with apiKey — JS API v3 (loadScript once per URL, YMap, layers, YMapMarker with a wine-red pin). In auto the map theme follows the page via a MutationObserver. The card sits under the map when narrow, from 56rem (container query) absolute on the left over the map with scrolling. Hours are a <dl> grid auto/1fr with tabular-nums, the address in <address>. Palette --vibeui-map-005-* with light-dark: ivory on dark wood, a dark wine accent with a glow (the -glow variable) and its lighter -accent-ink tint for text on dark; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained “directions” section for a restaurant, bar or salon: a real keyless Yandex Map and a card with address, hours and a route. All content via props.",
+              "preserve": [
+                "a real Yandex Map instead of an image: the widget without a key, the JS API with one",
+                "the card over the map with hours by day and a route button — the answer to “how do I get there”",
+                "the address in <address> and hours in <dl>"
+              ],
+              "adapt": [
+                "title, address, latitude, longitude, zoom, hours, details, phone, phoneHref, routeLabel",
+                "apiKey, providerLabel",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Coordinates are latitude/longitude; Yandex URLs use the reverse order — the code handles it.",
+                "On wide screens the card covers the left of the map — shift the pin centre right via longitude."
+              ],
+              "usage": "<Map005\n  title=\"20 Bolshaya Pushkarskaya\"\n  address=\"St Petersburg, 20 Bolshaya Pushkarskaya, courtyard entrance\"\n  latitude={59.9585}\n  longitude={30.3085}\n  hours={[{ days: \"Mon–Thu\", time: \"12:00–23:00\" }, { days: \"Fri–Sat\", time: \"12:00–01:00\" }]}\n  details={[\"Gorkovskaya metro — 7 minutes on foot\", \"Courtyard parking by booking\"]}\n  phone=\"+7 812 305-00-40\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "20 Bolshaya Pushkarskaya"
+              },
+              "zoom": {
+                "label": "Zoom"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Directions",
+                "title": "20 Bolshaya Pushkarskaya",
+                "address": "St Petersburg, 20 Bolshaya Pushkarskaya, courtyard entrance",
+                "hours": [
+                  {
+                    "days": "Mon–Thu",
+                    "time": "12:00–23:00"
+                  },
+                  {
+                    "days": "Fri–Sat",
+                    "time": "12:00–01:00"
+                  },
+                  {
+                    "days": "Sun",
+                    "time": "11:00–22:00"
+                  }
+                ],
+                "details": [
+                  "Gorkovskaya metro — 7 minutes on foot",
+                  "Courtyard parking, 6 spaces, by booking",
+                  "Courtyard entrance, the arch left of the pharmacy"
+                ],
+                "routeLabel": "Build a route",
+                "providerLabel": "Yandex Maps"
+              },
+              "width": "natural"
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

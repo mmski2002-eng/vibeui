@@ -2455,6 +2455,181 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "cta-016",
+      "type": "registry:block",
+      "title": "Плашка «вино недели» с бликом",
+      "description": "Узкая винная плашка между секциями: капитель «Вино недели» и фото слева, название и описание по центру, цена серифом и ссылка справа. По полосе раз в семь секунд проходит блик.",
+      "categories": [
+        "cta"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-016/cta-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-016.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. <aside> с полосой: grid, от 52rem (container query) три колонки auto/1fr/auto. Блик — ::after с градиентом, skewX(-20deg) и @keyframes по left за 7s (60 % времени стоит за краем). Фото — маленький квадрат 3.5rem с тенью. Цвета плашки — акцент и on-accent, фон секции — фон страницы. Палитра --vibeui-cta-016-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "restaurant",
+          "cafe",
+          "bar",
+          "food",
+          "menu",
+          "dining",
+          "banner",
+          "offer",
+          "promo",
+          "band"
+        ],
+        "preview": {
+          "props": {
+            "image": "/demo/places/place-07.webp",
+            "style": {
+              "padding": "3rem 0"
+            }
+          },
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Cta016",
+          "usage": "<Cta016\n  label=\"Вино недели\"\n  title=\"Riesling Kabinett, Мозель, 2022\"\n  text=\"Сухой, минеральный, с яблоком и лаймом.\"\n  price=\"650 ₽ / бокал\"\n  actionLabel=\"Смотреть бар\"\n  actionHref=\"#menu\"\n  image=\"/photos/dish-06.webp\"\n/>",
+          "summary": "Самодостаточная плашка спецпредложения для ресторана, бара или магазина: одна строка между секциями с ценой и ссылкой. Всё содержимое пропсами.",
+          "preserve": [
+            "одну строку между секциями вместо целого блока — предложение, а не секция",
+            "блик, проходящий по винной полосе раз в несколько секунд",
+            "цену серифом и кнопку контрастного цвета справа"
+          ],
+          "adapt": [
+            "label, title, text, price, image",
+            "actionLabel, actionHref",
+            "accent (цвет плашки) и background (фон вокруг), tone"
+          ],
+          "notes": [
+            "Плашка не имеет вертикальных отступов — ставьте её между секциями с собственными паддингами.",
+            "reduced-motion выключает блик."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "label",
+            "label": "Капитель",
+            "type": "text",
+            "default": "Вино недели",
+            "maxLength": 20
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Riesling Kabinett, Мозель, 2022",
+            "maxLength": 40
+          },
+          {
+            "prop": "price",
+            "label": "Цена",
+            "type": "text",
+            "default": "650 ₽ / бокал",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "“Wine of the week” band with a shine",
+            "description": "A narrow wine-red band between sections: a small-caps “Wine of the week” and a photo on the left, name and description in the centre, a serif price and a link on the right. A shine sweeps the band every seven seconds.",
+            "docs": "One file, zero dependencies, a server component. An <aside> with a band: grid, from 52rem (container query) three columns auto/1fr/auto. The shine is an ::after with a gradient, skewX(-20deg) and a @keyframes on left over 7s (parked beyond the edge 60 % of the time). The photo is a small 3.5rem square with a shadow. Band colours are accent and on-accent, the section background is the page background. Palette --vibeui-cta-016-* with light-dark: ivory on dark wood, a dark wine accent with a glow (the -glow variable) and its lighter -accent-ink tint for text on dark; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained special-offer band for a restaurant, bar or shop: one line between sections with a price and a link. All content via props.",
+              "preserve": [
+                "one line between sections instead of a whole block — an offer, not a section",
+                "the shine sweeping the wine-red band every few seconds",
+                "the serif price and the contrasting button on the right"
+              ],
+              "adapt": [
+                "label, title, text, price, image",
+                "actionLabel, actionHref",
+                "accent (band colour) and background (around it), tone"
+              ],
+              "notes": [
+                "The band has no vertical margins — place it between sections with their own paddings.",
+                "reduced-motion disables the shine."
+              ],
+              "usage": "<Cta016\n  label=\"Wine of the week\"\n  title=\"Riesling Kabinett, Mosel, 2022\"\n  text=\"Dry, mineral, apple and lime.\"\n  price=\"€11 / glass\"\n  actionLabel=\"See the bar\"\n  actionHref=\"#menu\"\n  image=\"/photos/dish-06.webp\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Wine of the week"
+              },
+              "title": {
+                "label": "Title",
+                "default": "Riesling Kabinett, Mosel, 2022"
+              },
+              "price": {
+                "label": "Price",
+                "default": "€11 / glass"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "image": "/demo/places/place-07.webp",
+                "style": {
+                  "padding": "3rem 0"
+                },
+                "label": "Wine of the week",
+                "title": "Riesling Kabinett, Mosel, 2022",
+                "text": "Dry, mineral, apple and lime. Perfect with whitefish and oysters.",
+                "price": "€11 / glass",
+                "actionLabel": "See the bar"
+              },
+              "width": "natural"
+            }
+          }
+        },
+        "cardControls": [
+          "label",
+          "tone",
+          "accent",
+          "background"
+        ]
+      }
     }
   ]
 }

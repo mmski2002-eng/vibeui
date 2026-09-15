@@ -1597,6 +1597,232 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "people-007",
+      "type": "registry:block",
+      "title": "Агенты с портретами",
+      "description": "Команда агентства недвижимости: портреты 4:5 в ряд, имя серифом, специализация, факт-плашка на фото («18 лет в сделках»), телефон и «написать» под линией. Карточка приподнимается по наведению.",
+      "categories": [
+        "team"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "people-007/people-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/people-007.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. <ul> сеткой auto-fill minmax(14rem,1fr), от 64rem (container query) ровно четыре колонки. Карточка: media с aspect-ratio 4/5 и object-position:center top, плашка fact поверх фото, тело с именем серифом, ролью и строкой контактов через бордюр. По hover карточка translateY(-4px) с тенью, фото scale 1.04. Без изображения — подложка цвета песка. Палитра --vibeui-people-007-* с light-dark: песок/чернильно-зелёный, латунный акцент; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "real estate",
+          "realty",
+          "property",
+          "apartment",
+          "agency",
+          "listing",
+          "team",
+          "agents",
+          "portraits"
+        ],
+        "preview": {
+          "props": {
+            "agents": [
+              {
+                "name": "Марина Лебедева",
+                "role": "Руководитель. Исторический фонд, центр",
+                "fact": "18 лет в сделках",
+                "image": "/demo/people/person-05.webp",
+                "phone": "+7 812 240-00-41",
+                "phoneHref": "tel:+78122400041",
+                "chatLabel": "Написать",
+                "chatHref": "#chat-1"
+              },
+              {
+                "name": "Илья Громов",
+                "role": "Новостройки и ипотека, все программы банков",
+                "fact": "412 сделок",
+                "image": "/demo/people/person-06.webp",
+                "phone": "+7 812 240-00-42",
+                "phoneHref": "tel:+78122400042",
+                "chatLabel": "Написать",
+                "chatHref": "#chat-2"
+              },
+              {
+                "name": "Ксения Орлова",
+                "role": "Аренда и продажа: Петроградская, Васильевский",
+                "fact": "26 дней до сделки",
+                "image": "/demo/people/person-07.webp",
+                "phone": "+7 812 240-00-43",
+                "phoneHref": "tel:+78122400043",
+                "chatLabel": "Написать",
+                "chatHref": "#chat-3"
+              },
+              {
+                "name": "Андрей Фёдоров",
+                "role": "Юрист. История квартиры, долги, собственники",
+                "fact": "0 оспоренных сделок",
+                "image": "/demo/people/person-08.webp",
+                "phone": "+7 812 240-00-44",
+                "phoneHref": "tel:+78122400044",
+                "chatLabel": "Почта",
+                "chatHref": "mailto:law@example.com"
+              }
+            ]
+          },
+          "width": "natural"
+        },
+        "ai": {
+          "export": "People007",
+          "usage": "<People007\n  title=\"Четыре человека, которые ведут вашу сделку\"\n  agents={[\n    { name: \"Марина Лебедева\", role: \"Руководитель. Исторический фонд\", fact: \"18 лет в сделках\", image: \"/photos/agent-01.webp\", phone: \"+7 812 240-00-41\", chatLabel: \"Написать\", chatHref: \"#\" },\n  ]}\n/>",
+          "summary": "Самодостаточная секция команды для агентства, застройщика или юридической фирмы: крупные портреты, имя серифом, специализация, факт и контакты. Агенты — массив пропсом.",
+          "preserve": [
+            "портреты 4:5 в полную ширину карточки — в недвижимости выбирают человека, а не логотип",
+            "факт-плашку на фото: конкретное число вместо «опытный специалист»",
+            "подъём карточки и лёгкий scale фото по наведению"
+          ],
+          "adapt": [
+            "agents: имена, роли, факты, портреты, телефоны и ссылки",
+            "eyebrow, title, lede",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Без phoneHref ссылка tel: собирается из цифр phone.",
+            "Портреты лучше с одинаковым кадрированием: по грудь, лицо в верхней трети."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Четыре человека, которые ведут вашу сделку",
+            "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Agents with portraits",
+            "description": "A real estate agency team: 4:5 portraits in a row, a serif name, specialisation, a fact tag on the photo (“18 years of deals”), phone and “message” under a rule. The card lifts on hover.",
+            "docs": "One file, zero dependencies, a server component. A <ul> grid of auto-fill minmax(14rem,1fr), exactly four columns from 64rem (container query). A card: media with aspect-ratio 4/5 and object-position:center top, a fact tag over the photo, a body with a serif name, role and a contacts row behind a rule. On hover the card translateY(-4px) with a shadow and the photo scales 1.04. Without an image a sand placeholder. Palette --vibeui-people-007-* with light-dark: sand / ink green, brass accent; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained team section for an agency, developer or law firm: large portraits, a serif name, specialisation, a fact and contacts. Agents come in as a prop array.",
+              "preserve": [
+                "full-width 4:5 portraits — in real estate people choose a person, not a logo",
+                "the fact tag on the photo: a concrete number instead of “experienced specialist”",
+                "the card lift and the slight photo scale on hover"
+              ],
+              "adapt": [
+                "agents: names, roles, facts, portraits, phones and links",
+                "eyebrow, title, lede",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Without phoneHref the tel: link is built from the digits of phone.",
+                "Portraits work best with the same crop: waist-up, face in the top third."
+              ],
+              "usage": "<People007\n  title=\"Four people who run your deal\"\n  agents={[\n    { name: \"Marina Lebedeva\", role: \"Head. Historic housing stock\", fact: \"18 years of deals\", image: \"/photos/agent-01.webp\", phone: \"+351 21 000 00 41\", chatLabel: \"Message\", chatHref: \"#\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Four people who run your deal"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Team",
+                "title": "Four people who run your deal",
+                "lede": "One agent from the first call to the keys. A lawyer joins every deal, not on request.",
+                "agents": [
+                  {
+                    "name": "Marina Lebedeva",
+                    "role": "Head. Historic housing stock, centre",
+                    "fact": "18 years of deals",
+                    "image": "/demo/people/person-05.webp",
+                    "phone": "+351 21 000 00 41",
+                    "phoneHref": "tel:+351210000041",
+                    "chatLabel": "Message",
+                    "chatHref": "#chat-1"
+                  },
+                  {
+                    "name": "Ilya Gromov",
+                    "role": "New builds and mortgages, every bank programme",
+                    "fact": "412 deals",
+                    "image": "/demo/people/person-06.webp",
+                    "phone": "+351 21 000 00 42",
+                    "phoneHref": "tel:+351210000042",
+                    "chatLabel": "Message",
+                    "chatHref": "#chat-2"
+                  },
+                  {
+                    "name": "Ksenia Orlova",
+                    "role": "Rent and sale: Riverside, Island",
+                    "fact": "26 days to a deal",
+                    "image": "/demo/people/person-07.webp",
+                    "phone": "+351 21 000 00 43",
+                    "phoneHref": "tel:+351210000043",
+                    "chatLabel": "Message",
+                    "chatHref": "#chat-3"
+                  },
+                  {
+                    "name": "Andrey Fedorov",
+                    "role": "Lawyer. Flat history, debts, owners",
+                    "fact": "0 contested deals",
+                    "image": "/demo/people/person-08.webp",
+                    "phone": "+351 21 000 00 44",
+                    "phoneHref": "tel:+351210000044",
+                    "chatLabel": "Email",
+                    "chatHref": "mailto:law@example.com"
+                  }
+                ]
+              },
+              "width": "natural"
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ]
+      }
     }
   ]
 }

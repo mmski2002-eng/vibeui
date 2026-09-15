@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Шапка с пилюлями",
       "description": "Шапка, в которой меню собрано в одну пилюлю: разделы читаются как единый объект. Пилюля — вдавленный жёлоб, активный раздел лежит на выпуклой каретке, которая переезжает под курсором. В узкой колонке пилюля не прячется в бургер, а превращается в ленту с горизонтальной прокруткой.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Один файл, ноль зависимостей, клиентский компонент. Поверхности следуют теме страницы через light-dark(), поэтому шапка светлеет и темнеет вместе с сайтом; акцент и текст на нём фиксированы брендом. Пилюля навигации получает внутреннюю тень — жёлоб, — а каретка активного пункта лежит поверх с собственной тенью и подсветкой сверху: разница глубин отделяет выбранный раздел от остальных. Положение каретки считается по offsetLeft/offsetWidth и едет за курсором и фокусом; до готовности JS активный пункт подсвечен обычным фоном, поэтому подсветка не пропадает без гидратации. У кнопки действия — свечение, следующее за курсором, у ссылки входа — подчёркивание, растущее из центра. Раскладка — container-запрос от собственной ширины блока. Палитра --vibeui-navbar-002-*.",
       "meta": {
-        "tags": ["navbar", "header", "navigation", "dark"],
+        "tags": [
+          "navbar",
+          "header",
+          "navigation",
+          "dark"
+        ],
         "preview": {
           "width": "natural",
           "aspect": "1280 / 121"
@@ -52,7 +59,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -110,7 +121,9 @@
               "usage": "<Navbar002\n  brand=\"Contour\"\n  links={[{ label: \"Product\", href: \"/product\", current: true }]}\n  actionLabel=\"Demo\"\n  actionHref=\"/demo\"\n/>"
             },
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "brand": {
                 "label": "Brand",
                 "default": "Contour"
@@ -163,7 +176,12 @@
             "docs": "One file, zero dependencies, a client component. The surfaces follow the page theme through light-dark(), so the header lightens and darkens with the site; the accent and the text on it are fixed by the brand. The navigation pill gets an inner shadow — a well — and the active-item glider sits on top with its own shadow and top highlight: the difference in depth separates the chosen section from the rest. The glider is positioned from offsetLeft/offsetWidth and follows cursor and focus; until the JS is ready the active item keeps a plain background, so the highlight never disappears before hydration. The action button carries a glow that tracks the cursor, and the sign-in link an underline growing from its centre. The layout is a container query on the block's own width. Palette --vibeui-navbar-002-*."
           }
         },
-        "cardControls": ["tone", "brand", "loginLabel", "actionLabel"]
+        "cardControls": [
+          "tone",
+          "brand",
+          "loginLabel",
+          "actionLabel"
+        ]
       }
     },
     {
@@ -171,7 +189,9 @@
       "type": "registry:block",
       "title": "Чистая шапка с главным действием",
       "description": "Универсальная шапка сайта: логотип слева, короткий ряд разделов, одно акцентное действие справа и волосяная линия снизу. Под ссылками едет тонкая линия-каретка, у кнопки стрелка уезжает вперёд. В узкой колонке разделы уходят в панель.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -183,7 +203,13 @@
       ],
       "docs": "Один файл, ноль зависимостей, клиентский компонент. Сдержанность здесь замысел, поэтому работа уходит в детали: линия-каретка под ссылками считается по offsetLeft/offsetWidth и едет за курсором и фокусом, знак поворачивается на наведении, у кнопки стрелка сдвигается вперёд. До готовности JS активный раздел подчёркнут статической линией, поэтому подсветка не пропадает без гидратации. Мобильная панель закрывается по Escape и по нажатию снаружи. Светлая и графитовая поверхности — data-tone. Раскладка — container-запрос от собственной ширины блока. Палитра --vibeui-navbar-003-*.",
       "meta": {
-        "tags": ["navbar", "header", "navigation", "cta", "universal"],
+        "tags": [
+          "navbar",
+          "header",
+          "navigation",
+          "cta",
+          "universal"
+        ],
         "preview": {
           "width": "natural",
           "aspect": "1280 / 128"
@@ -216,7 +242,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -240,7 +270,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["tone", "brand", "actionLabel", "accent"],
+        "cardControls": [
+          "tone",
+          "brand",
+          "actionLabel",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Clean Navbar with Primary Action",
@@ -269,7 +304,9 @@
               "usage": "<Navbar003\n  brand=\"Summit\"\n  links={[{ label: \"Features\", href: \"/features\", current: true }]}\n  actionLabel=\"Get started\"\n  actionHref=\"/start\"\n/>"
             },
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "brand": {
                 "label": "Brand",
                 "default": "Summit"
@@ -319,7 +356,9 @@
       "type": "registry:block",
       "title": "Продуктовая шапка с мега-меню",
       "description": "Шапка SaaS-платформы: группы верхнего уровня раскрываются панелью с колонками ссылок и промокарточкой. На широкой раскладке панель открывается ещё и по наведению с задержкой намерения, на узкой те же группы складываются в аккордеон.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -331,7 +370,13 @@
       ],
       "docs": "Один файл, ноль зависимостей, клиентский компонент. Раскрытие — кнопка с aria-expanded и aria-controls, а не ссылка: клавиатура и скринридер получают правильный disclosure. Группы взаимоисключающие; закрытие по Escape и по нажатию снаружи. Наведение открывает панель с задержкой 120 мс, уход из шапки закрывает её через 180 мс — курсор, проезжающий мимо, ничего не распахивает. На широкой раскладке лист позиционируется от самой шапки и выезжает панелью со скруглением и тенью; на узкой тот же лист разворачивается аккордеоном через grid-template-rows 0fr→1fr. Ссылки вне раскрытия получают tabindex=-1, поэтому фокус не проваливается в закрытую панель. Палитра --vibeui-navbar-004-*.",
       "meta": {
-        "tags": ["navbar", "header", "mega-menu", "saas", "navigation"],
+        "tags": [
+          "navbar",
+          "header",
+          "mega-menu",
+          "saas",
+          "navigation"
+        ],
         "preview": {
           "width": "natural",
           "aspect": "1280 / 128"
@@ -365,7 +410,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -389,7 +438,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["tone", "brand", "actionLabel", "accent"],
+        "cardControls": [
+          "tone",
+          "brand",
+          "actionLabel",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Product Navbar with Mega Menu",
@@ -419,7 +473,9 @@
               "usage": "<Navbar004\n  brand=\"Platform\"\n  groups={[{ label: \"Product\", columns: [{ title: \"Platform\", links: [{ label: \"Analytics\", href: \"/analytics\", note: \"Real-time reports\" }] }] }]}\n  links={[{ label: \"Pricing\", href: \"/pricing\" }]}\n  actionLabel=\"Request a demo\"\n/>"
             },
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "brand": {
                 "label": "Brand",
                 "default": "Platform"
@@ -549,7 +605,9 @@
       "type": "registry:block",
       "title": "Шапка магазина с поиском",
       "description": "Шапка e-commerce: капсула поиска в центре с иконкой и акцентной кнопкой внутри, кнопка каталога с группами, избранное и корзина со счётчиком, тихая служебная строка о доставке.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -561,7 +619,14 @@
       ],
       "docs": "Один файл, ноль зависимостей, клиентский компонент. Поле поиска — главный объект шапки, поэтому на фокусе оно меняет фон и получает кольцо, а не тонкую рамку: в момент ввода видно, куда идёт текст. Кнопка каталога морфит полоски в крестик, панель групп закрывается по Escape и по нажатию снаружи, её ссылки вне раскрытия получают tabindex=-1. Счётчик корзины отделён от фона кольцом, поэтому читается и поверх изображения. Форму поиска и состояние корзины обслуживает принимающий проект — здесь только доступная разметка: настоящая <form role=\"search\"> с submit-кнопкой. Палитра --vibeui-navbar-005-*.",
       "meta": {
-        "tags": ["navbar", "header", "shop", "ecommerce", "search", "cart"],
+        "tags": [
+          "navbar",
+          "header",
+          "shop",
+          "ecommerce",
+          "search",
+          "cart"
+        ],
         "preview": {
           "width": "natural",
           "aspect": "1280 / 160"
@@ -594,7 +659,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -626,7 +695,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["tone", "brand", "notice", "cartCount"],
+        "cardControls": [
+          "tone",
+          "brand",
+          "notice",
+          "cartCount"
+        ],
         "i18n": {
           "en": {
             "title": "Shop Navbar with Search",
@@ -655,7 +729,9 @@
               "usage": "<Navbar005\n  brand=\"Store\"\n  notice=\"Delivery from 2 days\"\n  searchAction=\"/search\"\n  catalogLinks={[{ label: \"New in\", href: \"/new\" }]}\n  cartCount={2}\n  cartHref=\"/cart\"\n/>"
             },
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "brand": {
                 "label": "Brand",
                 "default": "Store"
@@ -715,7 +791,9 @@
       "type": "registry:block",
       "title": "Шапка документации с поиском",
       "description": "Шапка документации: компактный бренд с названием раздела, версия раскрытием, поиск капсулой с горячей клавишей и переключатель светлой и тёмной поверхности. Работают «/» и Cmd/Ctrl+K, подпись клавиши подставляется под платформу читателя.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -767,7 +845,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -798,7 +880,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["tone", "brand", "section", "version"],
+        "cardControls": [
+          "tone",
+          "brand",
+          "section",
+          "version"
+        ],
         "i18n": {
           "en": {
             "title": "Docs Navbar with Search",
@@ -827,7 +914,9 @@
               "usage": "<Navbar006\n  brand=\"Device\"\n  section=\"Docs\"\n  version=\"v3.2\"\n  searchAction=\"/docs/search\"\n  links={[{ label: \"Guide\", href: \"/guide\", current: true }]}\n/>"
             },
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "brand": {
                 "label": "Brand",
                 "default": "Device"
@@ -894,7 +983,9 @@
       "type": "registry:block",
       "title": "Шапка рабочего пространства",
       "description": "Шапка кабинета или CRM: переключатель пространства с галочкой у текущего, хлебные крошки контекста, глобальный поиск с Cmd/Ctrl+K, уведомления с точкой и меню пользователя с карточкой аккаунта.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -946,7 +1037,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -969,7 +1064,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["tone", "workspace", "unread", "accent"],
+        "cardControls": [
+          "tone",
+          "workspace",
+          "unread",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Workspace Navbar",
@@ -998,7 +1098,9 @@
               "usage": "<Navbar007\n  workspace=\"Contour Lab\"\n  crumbs={[{ label: \"Projects\", href: \"/projects\" }, { label: \"Analytics\" }]}\n  userInitials=\"AK\"\n  unread\n/>"
             },
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "workspace": {
                 "label": "Workspace",
                 "default": "Contour Lab"
@@ -1070,7 +1172,9 @@
       "type": "registry:block",
       "title": "Шапка поверх фотографии",
       "description": "Шапка поверх фотографии или видео: на первом кадре ничем не подложена, а после прокрутки садится на плотную панель с размытием. Контрастная версия выбирается заранее — для тёмного кадра или для светлого.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1082,7 +1186,14 @@
       ],
       "docs": "Один файл, ноль зависимостей, клиентский компонент. Два состояния различает атрибут data-scrolled на доке: сверху шапка прозрачна, текст держится тенью, после 24 px прокрутки появляется полупрозрачная панель с backdrop-filter, нижней линией и внутренней подсветкой, а тени у текста снимаются. Читаемость не вычисляется смешиванием с пикселями кадра: контрастную версию задаёт проп theme. Каретка активного раздела — отдельный слой под ссылками; до готовности JS раздел подчёркнут статической линией. Мобильная панель закрывается по Escape и по нажатию снаружи. В витрине состояние считается по прокрутке собственной сцены блока, в проекте — по прокрутке окна. Палитра --vibeui-navbar-008-*.",
       "meta": {
-        "tags": ["navbar", "header", "overlay", "photo", "hero", "transparent"],
+        "tags": [
+          "navbar",
+          "header",
+          "overlay",
+          "photo",
+          "hero",
+          "transparent"
+        ],
         "preview": {
           "width": "natural",
           "aspect": "1280 / 520"
@@ -1121,7 +1232,10 @@
             "prop": "theme",
             "label": "Кадр",
             "type": "select",
-            "options": ["on-dark", "on-light"],
+            "options": [
+              "on-dark",
+              "on-light"
+            ],
             "default": "on-dark"
           },
           {
@@ -1138,7 +1252,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["brand", "theme", "actionLabel", "accent"],
+        "cardControls": [
+          "brand",
+          "theme",
+          "actionLabel",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Navbar over a Photo",
@@ -1218,7 +1337,9 @@
       "type": "registry:block",
       "title": "Шапка бизнеса с записью",
       "description": "Шапка клиники, салона, ресторана или мастерской: название с описанием услуги, телефон крупной ссылкой tel:, честное состояние «открыто / закрыто» рядом с часами, выбор филиала с адресом и акцентная кнопка записи.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1270,7 +1391,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -1301,7 +1426,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["tone", "name", "tagline", "phone"],
+        "cardControls": [
+          "tone",
+          "name",
+          "tagline",
+          "phone"
+        ],
         "i18n": {
           "en": {
             "title": "Local Business Navbar with Booking",
@@ -1330,7 +1460,9 @@
               "usage": "<Navbar009\n  name=\"Clarity Clinic\"\n  phone=\"+1 212 555-0184\"\n  phoneHref=\"tel:+12125550184\"\n  branches={[{ label: \"Lenina branch\", address: \"52 Lenina Ave\", href: \"/lenina\" }]}\n  actionHref=\"/appointment\"\n/>"
             },
             "controls": {
-              "tone": { "label": "Theme" },
+              "tone": {
+                "label": "Theme"
+              },
               "name": {
                 "label": "Name",
                 "default": "Clarity Clinic"
@@ -1380,7 +1512,9 @@
       "type": "registry:block",
       "title": "Плавающая шапка из островков",
       "description": "Шапка на матовом стекле: у начала прокрутки три островка стоят раздельно и широко, после прокрутки зазоры схлопываются и они собираются в одну узкую пилюлю. Активный раздел помечает каретка, переезжающая под курсором. Для AI-продукта, студии и технологичной презентации.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1392,7 +1526,14 @@
       ],
       "docs": "Один файл, ноль зависимостей, клиентский компонент. Островки — стеклянные капсулы: полупрозрачный фон, backdrop-filter, внутренняя подсветка сверху и мягкая тень. Два состояния шапки различает атрибут data-scrolled на доке: в верхнем островки самостоятельны и бар шире, в прокрученном фоны островков гаснут, а общий бар получает стекло, тень и меньшую ширину. Каретка активного пункта — отдельный слой под ссылками, её положение считается по offsetLeft/offsetWidth и едет за курсором и фокусом; до готовности JS активный пункт подсвечен обычным фоном, поэтому без гидратации подсветка не пропадает. У кнопки действия — свечение, следующее за курсором. Мобильное меню закрывается по Escape и клику снаружи. Раскладка — container-запрос от собственной ширины блока. Всё движение снимается через prefers-reduced-motion. Палитра --vibeui-navbar-010-*.",
       "meta": {
-        "tags": ["navbar", "header", "floating", "islands", "pill", "ai"],
+        "tags": [
+          "navbar",
+          "header",
+          "floating",
+          "islands",
+          "pill",
+          "ai"
+        ],
         "preview": {
           "width": "natural",
           "aspect": "1280 / 480"
@@ -1427,7 +1568,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -1441,7 +1586,10 @@
             "prop": "inset",
             "label": "Отступ",
             "type": "select",
-            "options": ["tight", "roomy"],
+            "options": [
+              "tight",
+              "roomy"
+            ],
             "default": "tight"
           },
           {
@@ -1451,7 +1599,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["tone", "brand", "inset", "accent"],
+        "cardControls": [
+          "tone",
+          "brand",
+          "inset",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Floating Island Navbar",
@@ -1482,10 +1635,19 @@
               "usage": "<Navbar010 demo={false} brand=\"Nova\" links={[{ label: \"Product\", href: \"/p\", current: true }]} actionLabel=\"Try it\" />"
             },
             "controls": {
-              "tone": { "label": "Theme" },
-              "brand": { "label": "Brand", "default": "Nova" },
-              "inset": { "label": "Inset" },
-              "accent": { "label": "Accent" }
+              "tone": {
+                "label": "Theme"
+              },
+              "brand": {
+                "label": "Brand",
+                "default": "Nova"
+              },
+              "inset": {
+                "label": "Inset"
+              },
+              "accent": {
+                "label": "Accent"
+              }
             },
             "preview": {
               "props": {
@@ -1495,10 +1657,23 @@
                 "menuLabel": "Menu",
                 "actionLabel": "Try it",
                 "links": [
-                  { "label": "Product", "href": "#product", "current": true },
-                  { "label": "Technology", "href": "#tech" },
-                  { "label": "Pricing", "href": "#pricing" },
-                  { "label": "Blog", "href": "#blog" }
+                  {
+                    "label": "Product",
+                    "href": "#product",
+                    "current": true
+                  },
+                  {
+                    "label": "Technology",
+                    "href": "#tech"
+                  },
+                  {
+                    "label": "Pricing",
+                    "href": "#pricing"
+                  },
+                  {
+                    "label": "Blog",
+                    "href": "#blog"
+                  }
                 ]
               }
             }
@@ -1511,7 +1686,9 @@
       "type": "registry:block",
       "title": "Шапка каталога «что, где, когда»",
       "description": "Шапка маркетплейса и каталога: ряд разделов с кареткой и крупная капсула поиска «что / где / когда» с акцентной кнопкой. Активное поле подсвечивается, капсула приподнята тенью. Для недвижимости, услуг, событий.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1523,7 +1700,14 @@
       ],
       "docs": "Один файл, ноль зависимостей, клиентский компонент. Капсула поиска — главный объект страницы, поэтому она приподнята тенью, а активное поле не просто красится: под ним вырастает линия акцента, и в момент ввода видно, какое из трёх полей принимает текст. Настоящая <form role=\"search\"> с submit-кнопкой: Enter отправляет запрос. Каретка разделов считается по offsetLeft/offsetWidth и едет за курсором и фокусом; до готовности JS активный раздел подсвечен обычным фоном. Поле «когда» необязательно — каталогу специалистов даты не нужны. В узкой колонке поля складываются в столбик. Палитра --vibeui-navbar-011-*.",
       "meta": {
-        "tags": ["navbar", "header", "marketplace", "search", "travel", "booking"],
+        "tags": [
+          "navbar",
+          "header",
+          "marketplace",
+          "search",
+          "travel",
+          "booking"
+        ],
         "preview": {
           "width": "natural",
           "aspect": "1280 / 340"
@@ -1556,7 +1740,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -1587,7 +1775,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["tone", "brand", "whatPlaceholder", "whenLabel"],
+        "cardControls": [
+          "tone",
+          "brand",
+          "whatPlaceholder",
+          "whenLabel"
+        ],
         "i18n": {
           "en": {
             "title": "What–Where–When Catalog Navbar",
@@ -1616,14 +1809,24 @@
               "usage": "<Navbar011\n  brand=\"Expanse\"\n  searchAction=\"/search\"\n  whatPlaceholder=\"A stay or a specialist\"\n  whenLabel=\"\"\n/>"
             },
             "controls": {
-              "tone": { "label": "Theme" },
-              "brand": { "label": "Brand", "default": "Expanse" },
+              "tone": {
+                "label": "Theme"
+              },
+              "brand": {
+                "label": "Brand",
+                "default": "Expanse"
+              },
               "whatPlaceholder": {
                 "label": "What hint",
                 "default": "A stay, a specialist, an event"
               },
-              "whenLabel": { "label": "When field", "default": "When" },
-              "accent": { "label": "Accent" }
+              "whenLabel": {
+                "label": "When field",
+                "default": "When"
+              },
+              "accent": {
+                "label": "Accent"
+              }
             },
             "preview": {
               "props": {
@@ -1648,7 +1851,9 @@
       "type": "registry:block",
       "title": "Редакционная шапка с крупным названием",
       "description": "Газетная шапка: крупный засечный знак по центру, тихая строка с датой, выпуском и подпиской сверху, строка рубрик между линейками снизу. Под рубриками едет каретка. Белая бумажная композиция.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1660,7 +1865,14 @@
       ],
       "docs": "Один файл, ноль зависимостей, клиентский компонент. Знак набран засечным шрифтом не для красоты: газетная шапка узнаётся именно контрастом засечного названия с сухим интерфейсным гротеском рубрик. Знак масштабируется от ширины блока через clamp с cqi и не обрезается. Каретка активной рубрики считается по offsetLeft/offsetWidth и едет за курсором и фокусом; до готовности JS рубрика подчёркнута статической линией. Акцентный работает дозой: подписка и каретка, остальное — чёрное на белом. Палитра --vibeui-navbar-012-*.",
       "meta": {
-        "tags": ["navbar", "header", "editorial", "magazine", "masthead", "newspaper"],
+        "tags": [
+          "navbar",
+          "header",
+          "editorial",
+          "magazine",
+          "masthead",
+          "newspaper"
+        ],
         "preview": {
           "width": "natural",
           "aspect": "1280 / 240"
@@ -1693,7 +1905,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -1724,7 +1940,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["tone", "brand", "dateline", "subscribeLabel"],
+        "cardControls": [
+          "tone",
+          "brand",
+          "dateline",
+          "subscribeLabel"
+        ],
         "i18n": {
           "en": {
             "title": "Editorial Masthead Navbar",
@@ -1753,11 +1974,24 @@
               "usage": "<Navbar012\n  brand=\"Grid\"\n  dateline=\"Wednesday, September 10, 2026\"\n  sections={[{ label: \"Featured\", href: \"/main\", current: true }]}\n/>"
             },
             "controls": {
-              "tone": { "label": "Theme" },
-              "brand": { "label": "Outlet", "default": "Grid" },
-              "dateline": { "label": "Date", "default": "Wednesday, September 10, 2026" },
-              "subscribeLabel": { "label": "Subscribe", "default": "Subscribe" },
-              "accent": { "label": "Accent" }
+              "tone": {
+                "label": "Theme"
+              },
+              "brand": {
+                "label": "Outlet",
+                "default": "Grid"
+              },
+              "dateline": {
+                "label": "Date",
+                "default": "Wednesday, September 10, 2026"
+              },
+              "subscribeLabel": {
+                "label": "Subscribe",
+                "default": "Subscribe"
+              },
+              "accent": {
+                "label": "Accent"
+              }
             },
             "preview": {
               "props": {
@@ -1767,12 +2001,31 @@
                 "sectionsLabel": "Sections",
                 "searchLabel": "Search the outlet",
                 "sections": [
-                  { "label": "Featured", "href": "#main", "current": true },
-                  { "label": "Practice", "href": "#practice" },
-                  { "label": "People", "href": "#people" },
-                  { "label": "Reviews", "href": "#reviews" },
-                  { "label": "Opinions", "href": "#opinions" },
-                  { "label": "Archive", "href": "#archive" }
+                  {
+                    "label": "Featured",
+                    "href": "#main",
+                    "current": true
+                  },
+                  {
+                    "label": "Practice",
+                    "href": "#practice"
+                  },
+                  {
+                    "label": "People",
+                    "href": "#people"
+                  },
+                  {
+                    "label": "Reviews",
+                    "href": "#reviews"
+                  },
+                  {
+                    "label": "Opinions",
+                    "href": "#opinions"
+                  },
+                  {
+                    "label": "Archive",
+                    "href": "#archive"
+                  }
                 ]
               }
             }
@@ -1785,7 +2038,9 @@
       "type": "registry:block",
       "title": "Полноэкранное типографическое меню",
       "description": "Минимальная шапка агентства или студии: знак и кнопка «Меню», открывающая полноэкранную чёрную или акцентную плоскость с крупными названиями разделов, номерами и контактом. Плоскость проявляется, строки въезжают каскадом.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1797,9 +2052,19 @@
       ],
       "docs": "Один файл, ноль зависимостей, без клиентского JS. Открытие — Popover API (атрибуты popover/popovertarget): нативный top layer, Escape, light-dismiss и возврат фокуса достаются бесплатно. Проявление плоскости и каскад строк тоже без JS — на @starting-style, transition-behavior: allow-discrete и задержках анимации по nth-child; там, где эти возможности не поддержаны, меню просто появляется, и ничего не ломается. Название раздела сдвигается на наведении, номер набран моноширинными цифрами. Всё движение снимается в prefers-reduced-motion. Палитра --vibeui-navbar-013-*.",
       "meta": {
-        "tags": ["navbar", "header", "fullscreen", "menu", "typographic", "studio", "popover"],
+        "tags": [
+          "navbar",
+          "header",
+          "fullscreen",
+          "menu",
+          "typographic",
+          "studio",
+          "popover"
+        ],
         "preview": {
-          "props": { "demo": true },
+          "props": {
+            "demo": true
+          },
           "width": "natural",
           "aspect": "1280 / 520"
         },
@@ -1831,7 +2096,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -1845,7 +2114,10 @@
             "prop": "surface",
             "label": "Плоскость",
             "type": "select",
-            "options": ["black", "accent"],
+            "options": [
+              "black",
+              "accent"
+            ],
             "default": "black"
           },
           {
@@ -1862,7 +2134,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["tone", "brand", "surface", "menuLabel"],
+        "cardControls": [
+          "tone",
+          "brand",
+          "surface",
+          "menuLabel"
+        ],
         "i18n": {
           "en": {
             "title": "Fullscreen Typographic Menu",
@@ -1891,11 +2168,23 @@
               "usage": "<Navbar013\n  brand=\"Tone Bureau\"\n  surface=\"black\"\n  links={[{ label: \"Works\", href: \"/works\", note: \"24 projects\" }]}\n/>"
             },
             "controls": {
-              "tone": { "label": "Theme" },
-              "brand": { "label": "Brand", "default": "Tone Bureau" },
-              "surface": { "label": "Plane" },
-              "menuLabel": { "label": "Button", "default": "Menu" },
-              "accent": { "label": "Accent" }
+              "tone": {
+                "label": "Theme"
+              },
+              "brand": {
+                "label": "Brand",
+                "default": "Tone Bureau"
+              },
+              "surface": {
+                "label": "Plane"
+              },
+              "menuLabel": {
+                "label": "Button",
+                "default": "Menu"
+              },
+              "accent": {
+                "label": "Accent"
+              }
             },
             "preview": {
               "props": {
@@ -1906,11 +2195,28 @@
                 "navLabel": "Site sections",
                 "contactLabel": "hello@tone.studio",
                 "links": [
-                  { "label": "Works", "href": "#works", "note": "24 projects" },
-                  { "label": "Studio", "href": "#studio", "note": "About us" },
-                  { "label": "Services", "href": "#services" },
-                  { "label": "Journal", "href": "#journal" },
-                  { "label": "Contact", "href": "#contact" }
+                  {
+                    "label": "Works",
+                    "href": "#works",
+                    "note": "24 projects"
+                  },
+                  {
+                    "label": "Studio",
+                    "href": "#studio",
+                    "note": "About us"
+                  },
+                  {
+                    "label": "Services",
+                    "href": "#services"
+                  },
+                  {
+                    "label": "Journal",
+                    "href": "#journal"
+                  },
+                  {
+                    "label": "Contact",
+                    "href": "#contact"
+                  }
                 ]
               }
             }
@@ -1923,7 +2229,9 @@
       "type": "registry:block",
       "title": "Вертикальная навигация студии",
       "description": "Узкая боковая полоса со знаком, подписью студии, короткими пунктами и контактом; большая часть ширины отдана работам. Для фотографа, архитектора, дизайн-студии. На телефоне полоса становится обычной верхней шапкой.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1935,7 +2243,14 @@
       ],
       "docs": "Один файл, ноль зависимостей, без клиентского JS. Вертикаль здесь не поза: горизонт экрана широкий, а список разделов у портфолио короткий — боковая полоса отдаёт работам всю ширину и держит навигацию в поле зрения при прокрутке. Полоса sticky и остаётся на месте, пока контент прокручивается документом; активный пункт помечен вертикальной линией акцента и фоном. Демонстрационные кадры собраны из градиентов и inline-SVG, поэтому блок не тянет ни одной картинки. В узкой колонке полоса превращается в верхнюю шапку с горизонтальным рядом пунктов. Палитра --vibeui-navbar-014-*.",
       "meta": {
-        "tags": ["navbar", "sidebar", "vertical", "studio", "portfolio", "photographer"],
+        "tags": [
+          "navbar",
+          "sidebar",
+          "vertical",
+          "studio",
+          "portfolio",
+          "photographer"
+        ],
         "preview": {
           "width": "natural",
           "aspect": "1280 / 560"
@@ -1968,7 +2283,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -1992,7 +2311,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["tone", "brand", "contactLabel", "accent"],
+        "cardControls": [
+          "tone",
+          "brand",
+          "contactLabel",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Vertical Studio Navigation",
@@ -2021,10 +2345,20 @@
               "usage": "<Navbar014 brand=\"Shade\" links={[{ label: \"Works\", href: \"/works\", current: true }]}>\n  {/* your works */}\n</Navbar014>"
             },
             "controls": {
-              "tone": { "label": "Theme" },
-              "brand": { "label": "Brand", "default": "Shade Photo" },
-              "contactLabel": { "label": "Contact", "default": "hello@shade.photo" },
-              "accent": { "label": "Accent" }
+              "tone": {
+                "label": "Theme"
+              },
+              "brand": {
+                "label": "Brand",
+                "default": "Shade Photo"
+              },
+              "contactLabel": {
+                "label": "Contact",
+                "default": "hello@shade.photo"
+              },
+              "accent": {
+                "label": "Accent"
+              }
             },
             "preview": {
               "props": {
@@ -2033,10 +2367,23 @@
                 "navLabel": "Site sections",
                 "contactLabel": "hello@shade.photo",
                 "links": [
-                  { "label": "Works", "href": "#works", "current": true },
-                  { "label": "Studio", "href": "#studio" },
-                  { "label": "Process", "href": "#process" },
-                  { "label": "Contacts", "href": "#contacts" }
+                  {
+                    "label": "Works",
+                    "href": "#works",
+                    "current": true
+                  },
+                  {
+                    "label": "Studio",
+                    "href": "#studio"
+                  },
+                  {
+                    "label": "Process",
+                    "href": "#process"
+                  },
+                  {
+                    "label": "Contacts",
+                    "href": "#contacts"
+                  }
                 ]
               }
             }
@@ -2049,7 +2396,9 @@
       "type": "registry:block",
       "title": "Симметричная шапка с центральным брендом",
       "description": "Шапка fashion и предметного дизайна: разреженный текстовый знак строго по центру, две группы ссылок капсом по краям, корзина со счётчиком. Разрядка знака раскрывается на наведении, у ссылок волосяная линия растёт из центра. Светлая и чёрная версии.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2061,7 +2410,14 @@
       ],
       "docs": "Один файл, ноль зависимостей, клиентский компонент. Премиальность создают пропорции и сдержанность, а не декор: у ссылок нет ни фонов, ни рамок — только волосяная линия, растущая из центра на наведении, а у знака разрядка, которая чуть раскрывается. Сетка из трёх колонок держит знак строго по центру независимо от длины боковых групп. В узкой колонке знак остаётся по центру, ссылки уходят в лист на непрозрачной поверхности; лист закрывается по Escape и по нажатию снаружи. Палитра --vibeui-navbar-015-*.",
       "meta": {
-        "tags": ["navbar", "header", "fashion", "centered", "symmetric", "luxury"],
+        "tags": [
+          "navbar",
+          "header",
+          "fashion",
+          "centered",
+          "symmetric",
+          "luxury"
+        ],
         "preview": {
           "width": "natural",
           "aspect": "1280 / 140"
@@ -2094,7 +2450,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -2118,7 +2478,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["tone", "brand", "bagLabel", "accent"],
+        "cardControls": [
+          "tone",
+          "brand",
+          "bagLabel",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Symmetric Centered-Brand Navbar",
@@ -2147,10 +2512,20 @@
               "usage": "<Navbar015\n  brand=\"Mera\"\n  leftLinks={[{ label: \"Collections\", href: \"/c\", current: true }]}\n  rightLinks={[{ label: \"Atelier\", href: \"/a\" }]}\n/>"
             },
             "controls": {
-              "tone": { "label": "Theme" },
-              "brand": { "label": "Mark", "default": "Mera" },
-              "bagLabel": { "label": "Service", "default": "Bag" },
-              "accent": { "label": "Accent" }
+              "tone": {
+                "label": "Theme"
+              },
+              "brand": {
+                "label": "Mark",
+                "default": "Mera"
+              },
+              "bagLabel": {
+                "label": "Service",
+                "default": "Bag"
+              },
+              "accent": {
+                "label": "Accent"
+              }
             },
             "preview": {
               "props": {
@@ -2159,12 +2534,25 @@
                 "menuLabel": "Menu",
                 "bagLabel": "Bag",
                 "leftLinks": [
-                  { "label": "Collections", "href": "#collections", "current": true },
-                  { "label": "Objects", "href": "#objects" }
+                  {
+                    "label": "Collections",
+                    "href": "#collections",
+                    "current": true
+                  },
+                  {
+                    "label": "Objects",
+                    "href": "#objects"
+                  }
                 ],
                 "rightLinks": [
-                  { "label": "Atelier", "href": "#atelier" },
-                  { "label": "Journal", "href": "#journal" }
+                  {
+                    "label": "Atelier",
+                    "href": "#atelier"
+                  },
+                  {
+                    "label": "Journal",
+                    "href": "#journal"
+                  }
                 ]
               }
             }
@@ -2177,7 +2565,9 @@
       "type": "registry:block",
       "title": "Двухуровневая корпоративная шапка",
       "description": "Шапка крупного бизнеса, университета или фонда: тёмная служебная строка с телефоном, пресс-центром и языком; белая основная — с брендом, подписью, направлениями и действием. Под направлениями едет каретка.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2189,7 +2579,14 @@
       ],
       "docs": "Один файл, ноль зависимостей, клиентский компонент. Строки разделены цветом, а не одним лишь кеглем: у крупной организации в шапке живут две разные аудитории — посетитель и подрядчик, — и тёмная полоса честно отделяет служебное от основного. Язык показан переключателем RU|EN, где текущий вариант залит акцентом. Каретка направления считается по offsetLeft/offsetWidth и едет за курсором и фокусом; до готовности JS направление подчёркнуто статической линией. В узкой колонке служебная строка сжимается до телефона и языка, направления уходят в панель, которая закрывается по Escape и по нажатию снаружи. Палитра --vibeui-navbar-016-*.",
       "meta": {
-        "tags": ["navbar", "header", "corporate", "two-level", "enterprise", "university"],
+        "tags": [
+          "navbar",
+          "header",
+          "corporate",
+          "two-level",
+          "enterprise",
+          "university"
+        ],
         "preview": {
           "width": "natural",
           "aspect": "1280 / 150"
@@ -2222,7 +2619,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -2253,7 +2654,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["tone", "brand", "tagline", "actionLabel"],
+        "cardControls": [
+          "tone",
+          "brand",
+          "tagline",
+          "actionLabel"
+        ],
         "i18n": {
           "en": {
             "title": "Two-Level Corporate Navbar",
@@ -2282,11 +2688,24 @@
               "usage": "<Navbar016\n  brand=\"Atlas Group\"\n  phone=\"+1 495 120-33-70\"\n  phoneHref=\"tel:+14951203370\"\n  links={[{ label: \"About\", href: \"/about\", current: true }]}\n/>"
             },
             "controls": {
-              "tone": { "label": "Theme" },
-              "brand": { "label": "Organization", "default": "Atlas Group" },
-              "tagline": { "label": "Tagline", "default": "Industry and infrastructure" },
-              "actionLabel": { "label": "Action", "default": "Contact us" },
-              "accent": { "label": "Accent" }
+              "tone": {
+                "label": "Theme"
+              },
+              "brand": {
+                "label": "Organization",
+                "default": "Atlas Group"
+              },
+              "tagline": {
+                "label": "Tagline",
+                "default": "Industry and infrastructure"
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Contact us"
+              },
+              "accent": {
+                "label": "Accent"
+              }
             },
             "preview": {
               "props": {
@@ -2299,16 +2718,41 @@
                 "menuLabel": "Menu",
                 "actionLabel": "Contact us",
                 "serviceLinks": [
-                  { "label": "Press", "href": "#press" },
-                  { "label": "Procurement", "href": "#procurement" },
-                  { "label": "Careers", "href": "#career" }
+                  {
+                    "label": "Press",
+                    "href": "#press"
+                  },
+                  {
+                    "label": "Procurement",
+                    "href": "#procurement"
+                  },
+                  {
+                    "label": "Careers",
+                    "href": "#career"
+                  }
                 ],
                 "links": [
-                  { "label": "About", "href": "#about", "current": true },
-                  { "label": "Directions", "href": "#directions" },
-                  { "label": "Projects", "href": "#projects" },
-                  { "label": "Sustainability", "href": "#esg" },
-                  { "label": "Contacts", "href": "#contacts" }
+                  {
+                    "label": "About",
+                    "href": "#about",
+                    "current": true
+                  },
+                  {
+                    "label": "Directions",
+                    "href": "#directions"
+                  },
+                  {
+                    "label": "Projects",
+                    "href": "#projects"
+                  },
+                  {
+                    "label": "Sustainability",
+                    "href": "#esg"
+                  },
+                  {
+                    "label": "Contacts",
+                    "href": "#contacts"
+                  }
                 ]
               }
             }
@@ -2321,7 +2765,9 @@
       "type": "registry:block",
       "title": "Шапка события с билетами",
       "description": "Шапка конференции или фестиваля: знак с акцентной частью, дата и город капсулой, программа с кареткой и кнопка-билет с вырезами по краям. Состояние продаж честное: «скоро» и «событие завершено» показываются вместо кнопки.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2333,7 +2779,14 @@
       ],
       "docs": "Один файл, ноль зависимостей, клиентский компонент. Кнопка билета сделана билетом буквально: вырезы по краям через mask из двух радиальных градиентов и пунктирная линия отрыва внутри — на странице фестиваля она должна читаться как объект, а не как очередная акцентная плашка. Дата и город вынесены в капсулу с точкой акцента. Плакатная версия делает фон чёрным и добавляет акцентное свечение сверху. Каретка раздела считается по offsetLeft/offsetWidth и едет за курсором и фокусом; до готовности JS раздел подчёркнут статической линией. Состояние продаж функционально: при sales=\"soon\" и \"closed\" вместо кнопки выводится статус с role=\"status\", без таймеров и искусственного дефицита. Палитра --vibeui-navbar-017-*.",
       "meta": {
-        "tags": ["navbar", "header", "event", "conference", "festival", "tickets"],
+        "tags": [
+          "navbar",
+          "header",
+          "event",
+          "conference",
+          "festival",
+          "tickets"
+        ],
         "preview": {
           "width": "natural",
           "aspect": "1280 / 140"
@@ -2366,7 +2819,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -2387,7 +2844,11 @@
             "prop": "sales",
             "label": "Продажи",
             "type": "select",
-            "options": ["open", "soon", "closed"],
+            "options": [
+              "open",
+              "soon",
+              "closed"
+            ],
             "default": "open"
           },
           {
@@ -2403,7 +2864,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["tone", "brand", "dateline", "sales"],
+        "cardControls": [
+          "tone",
+          "brand",
+          "dateline",
+          "sales"
+        ],
         "i18n": {
           "en": {
             "title": "Event Navbar with Tickets",
@@ -2432,12 +2898,26 @@
               "usage": "<Navbar017\n  brand=\"Grid·Fest\"\n  dateline=\"October 12–14 · Berlin\"\n  sales=\"open\"\n  ticketHref=\"https://tickets.example\"\n/>"
             },
             "controls": {
-              "tone": { "label": "Theme" },
-              "brand": { "label": "Event", "default": "Grid·Fest" },
-              "dateline": { "label": "Date & city", "default": "October 12–14 · Berlin" },
-              "sales": { "label": "Sales" },
-              "poster": { "label": "Poster" },
-              "accent": { "label": "Accent" }
+              "tone": {
+                "label": "Theme"
+              },
+              "brand": {
+                "label": "Event",
+                "default": "Grid·Fest"
+              },
+              "dateline": {
+                "label": "Date & city",
+                "default": "October 12–14 · Berlin"
+              },
+              "sales": {
+                "label": "Sales"
+              },
+              "poster": {
+                "label": "Poster"
+              },
+              "accent": {
+                "label": "Accent"
+              }
             },
             "preview": {
               "props": {
@@ -2449,10 +2929,23 @@
                 "soonLabel": "Sales open soon",
                 "closedLabel": "Event over",
                 "links": [
-                  { "label": "Program", "href": "#program", "current": true },
-                  { "label": "Speakers", "href": "#speakers" },
-                  { "label": "Venue", "href": "#venue" },
-                  { "label": "Partners", "href": "#partners" }
+                  {
+                    "label": "Program",
+                    "href": "#program",
+                    "current": true
+                  },
+                  {
+                    "label": "Speakers",
+                    "href": "#speakers"
+                  },
+                  {
+                    "label": "Venue",
+                    "href": "#venue"
+                  },
+                  {
+                    "label": "Partners",
+                    "href": "#partners"
+                  }
                 ]
               }
             }
@@ -2465,7 +2958,9 @@
       "type": "registry:block",
       "title": "Контекстная шапка статьи",
       "description": "Шапка чтения и обучения: возврат в раздел, сокращённое название материала, содержание раскрытием, действие «следующий урок» и полоса прогресса со свечением. Прогресс приходит от проекта либо считается блоком.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2477,7 +2972,14 @@
       ],
       "docs": "Один файл, ноль зависимостей, клиентский компонент. Полоса прогресса по умолчанию — представление значения, переданного владельцем прокрутки: одна страница не должна мерить прокрутку дважды. Если считать некому, autoProgress включает собственный замер документа через passive-слушатель scroll. Содержание закрывается по Escape и по нажатию снаружи, его ссылки вне раскрытия получают tabindex=-1, активная глава помечена вертикальной линией акцента. Панель ниже одной строки не растёт и не съедает высоту чтения; в узкой колонке действие скрывается, потому что возврат и содержание важнее. Палитра --vibeui-navbar-018-*.",
       "meta": {
-        "tags": ["navbar", "header", "article", "reading", "lesson", "progress"],
+        "tags": [
+          "navbar",
+          "header",
+          "article",
+          "reading",
+          "lesson",
+          "progress"
+        ],
         "preview": {
           "width": "natural",
           "aspect": "1280 / 104"
@@ -2510,7 +3012,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -2542,7 +3048,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["tone", "title", "actionLabel", "progress"],
+        "cardControls": [
+          "tone",
+          "title",
+          "actionLabel",
+          "progress"
+        ],
         "i18n": {
           "en": {
             "title": "Contextual Article Navbar",
@@ -2571,11 +3082,23 @@
               "usage": "<Navbar018\n  backLabel=\"Course\"\n  title=\"How long text reads\"\n  chapters={[{ label: \"Chapter\", href: \"#ch\", current: true }]}\n  progress={34}\n/>"
             },
             "controls": {
-              "tone": { "label": "Theme" },
-              "title": { "label": "Title", "default": "How long text reads" },
-              "actionLabel": { "label": "Action", "default": "Next lesson" },
-              "progress": { "label": "Progress" },
-              "accent": { "label": "Accent" }
+              "tone": {
+                "label": "Theme"
+              },
+              "title": {
+                "label": "Title",
+                "default": "How long text reads"
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Next lesson"
+              },
+              "progress": {
+                "label": "Progress"
+              },
+              "accent": {
+                "label": "Accent"
+              }
             },
             "preview": {
               "props": {
@@ -2585,9 +3108,19 @@
                 "actionLabel": "Next lesson",
                 "progress": 34,
                 "chapters": [
-                  { "label": "Why lines stay under 75 characters", "href": "#width", "current": true },
-                  { "label": "Air and leading", "href": "#air" },
-                  { "label": "Images in text", "href": "#images" }
+                  {
+                    "label": "Why lines stay under 75 characters",
+                    "href": "#width",
+                    "current": true
+                  },
+                  {
+                    "label": "Air and leading",
+                    "href": "#air"
+                  },
+                  {
+                    "label": "Images in text",
+                    "href": "#images"
+                  }
                 ]
               }
             }
@@ -2600,7 +3133,9 @@
       "type": "registry:block",
       "title": "Нижняя мобильная навигация",
       "description": "Панель у нижнего края телефона: 3–5 подписанных направлений с иконками, выбранное лежит на пилюле акцента, бейдж-счётчик отделён кольцом. Плотная поверхность или матовое стекло. Для магазина, сообщества, кабинета.",
-      "categories": ["navbar"],
+      "categories": [
+        "navbar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2612,7 +3147,14 @@
       ],
       "docs": "Один файл, ноль зависимостей, без клиентского JS. Выбранное направление лежит на пилюле, а не помечено одной полоской сверху: на маленьком экране цель пальца должна быть видна как объект. Иконка выбранного чуть увеличена и окрашена акцентом, при нажатии сжимается — обратная связь без JS. Проп glass делает поверхность матовым стеклом, если панели предстоит висеть поверх ленты. Учитывается safe-area-inset-bottom. Блок не фиксирует себя сам: закрепление (position:fixed + резерв высоты у контента) задаёт принимающий проект. Палитра --vibeui-navbar-019-*.",
       "meta": {
-        "tags": ["navbar", "bottom", "tabbar", "mobile", "navigation", "app"],
+        "tags": [
+          "navbar",
+          "bottom",
+          "tabbar",
+          "mobile",
+          "navigation",
+          "app"
+        ],
         "preview": {
           "width": "natural",
           "aspect": "1280 / 210"
@@ -2645,7 +3187,11 @@
             "prop": "tone",
             "label": "Тема",
             "type": "select",
-            "options": ["auto", "light", "dark"],
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
             "default": "auto"
           },
           {
@@ -2655,7 +3201,10 @@
             "default": ""
           }
         ],
-        "cardControls": ["tone", "accent"],
+        "cardControls": [
+          "tone",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Bottom Mobile Navigation",
@@ -2684,23 +3233,448 @@
               "usage": "<Navbar019\n  items={[{ label: \"Home\", href: \"/\", icon: \"home\", current: true }, { label: \"Cart\", href: \"/cart\", icon: \"cart\", badge: 2 }]}\n/>"
             },
             "controls": {
-              "tone": { "label": "Theme" },
-              "accent": { "label": "Accent" }
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              }
             },
             "preview": {
               "props": {
                 "navLabel": "Main sections",
                 "items": [
-                  { "label": "Home", "href": "#home", "icon": "home", "current": true },
-                  { "label": "Catalog", "href": "#catalog", "icon": "grid" },
-                  { "label": "Search", "href": "#search", "icon": "search" },
-                  { "label": "Cart", "href": "#cart", "icon": "cart", "badge": 2 },
-                  { "label": "Profile", "href": "#profile", "icon": "user" }
+                  {
+                    "label": "Home",
+                    "href": "#home",
+                    "icon": "home",
+                    "current": true
+                  },
+                  {
+                    "label": "Catalog",
+                    "href": "#catalog",
+                    "icon": "grid"
+                  },
+                  {
+                    "label": "Search",
+                    "href": "#search",
+                    "icon": "search"
+                  },
+                  {
+                    "label": "Cart",
+                    "href": "#cart",
+                    "icon": "cart",
+                    "badge": 2
+                  },
+                  {
+                    "label": "Profile",
+                    "href": "#profile",
+                    "icon": "user"
+                  }
                 ]
               }
             }
           }
         }
+      }
+    },
+    {
+      "name": "navbar-020",
+      "type": "registry:block",
+      "title": "Шапка агентства с телефоном",
+      "description": "Шапка агентства недвижимости: имя серифом с подписью, ссылки с латунным подчёркиванием, телефон крупно и кнопка «Оценить квартиру». Липнет к верху, на узком экране всё прячется в меню.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-020/navbar-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-020.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради кнопки меню. <header> с position:sticky и полупрозрачным фоном с blur, нижняя линия 1px. Ссылки — подчёркивание transform:scaleX по hover и у aria-current. Телефон — <a href=\"tel:\"> серифом. Ссылки и кнопка появляются от 64rem ширины (container query), телефон — от 72rem, подпись под именем прячется на 48–72rem, чтобы шапка всегда была в одну строку; уже 64rem — кнопка «Меню» с aria-expanded и список под шапкой. Палитра --vibeui-navbar-020-* с light-dark: песок/чернильно-зелёный, латунный акцент; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "real estate",
+          "realty",
+          "property",
+          "apartment",
+          "agency",
+          "listing",
+          "realty"
+        ],
+        "preview": {
+          "props": {
+            "sticky": false
+          },
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Navbar020",
+          "usage": "<Navbar020\n  brand=\"Дом на Неве\"\n  caption=\"Агентство недвижимости · Петербург\"\n  phone=\"+7 812 240-00-40\"\n  phoneHref=\"tel:+78122400040\"\n  actionLabel=\"Оценить квартиру\"\n  actionHref=\"#valuation\"\n  links={[{ label: \"Объекты\", href: \"#objects\", current: true }, { label: \"Ипотека\", href: \"#mortgage\" }]}\n/>",
+          "summary": "Самодостаточная шапка для сайта агентства, застройщика или риелтора: имя, ссылки, телефон и кнопка. Всё содержимое пропсами.",
+          "preserve": [
+            "серифное имя с подписью капителью и тонкую линию снизу — это узнаваемый «премиальный» ритм шапки",
+            "телефон крупным серифом рядом с кнопкой: в недвижимости звонят, а не пишут",
+            "подчёркивание ссылок transform:scaleX — вместо обычного underline"
+          ],
+          "adapt": [
+            "brand, caption, links: имя, подпись и пункты меню",
+            "phone, phoneHref, actionLabel, actionHref, menuLabel",
+            "accent и background, tone, sticky"
+          ],
+          "notes": [
+            "Ссылка с current: true подчёркнута всегда.",
+            "На узком экране телефон и кнопка живут в раскрывающемся меню."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "brand",
+            "label": "Имя",
+            "type": "text",
+            "default": "Дом на Неве",
+            "maxLength": 30
+          },
+          {
+            "prop": "phone",
+            "label": "Телефон",
+            "type": "text",
+            "default": "+7 812 240-00-40",
+            "maxLength": 24
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Оценить квартиру",
+            "maxLength": 24
+          },
+          {
+            "prop": "sticky",
+            "label": "Липкая",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Agency header with phone",
+            "description": "A real estate agency header: a serif name with a caption, links with a brass underline, a large phone number and an “Appraise my flat” button. Sticky; on narrow screens everything folds into a menu.",
+            "docs": "One file, zero dependencies, “use client” for the menu button. A <header> with position:sticky and a translucent blurred background, a 1px bottom line. Links underline via transform:scaleX on hover and for aria-current. The phone is a serif <a href=\"tel:\">. Links and the button appear from 64rem width (container query), the phone from 72rem, the caption under the name hides between 48 and 72rem so the header always stays one line; below 64rem a “Menu” button with aria-expanded and a list under the header. Palette --vibeui-navbar-020-* with light-dark: sand / ink green, brass accent; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained header for an agency, developer or realtor site: name, links, phone and a button. All content via props.",
+              "preserve": [
+                "the serif name with a small-caps caption and the thin bottom line — the recognisable premium rhythm of the header",
+                "the large serif phone next to the button: in real estate people call, not write",
+                "link underline via transform:scaleX — instead of a plain underline"
+              ],
+              "adapt": [
+                "brand, caption, links: name, caption and menu items",
+                "phone, phoneHref, actionLabel, actionHref, menuLabel",
+                "accent and background, tone, sticky"
+              ],
+              "notes": [
+                "A link with current: true is always underlined.",
+                "On narrow screens the phone and the button live in the fold-out menu."
+              ],
+              "usage": "<Navbar020\n  brand=\"Neva Homes\"\n  caption=\"Real estate agency · Lisbon\"\n  phone=\"+351 21 000 00 00\"\n  phoneHref=\"tel:+351210000000\"\n  actionLabel=\"Appraise my flat\"\n  actionHref=\"#valuation\"\n  links={[{ label: \"Listings\", href: \"#objects\", current: true }, { label: \"Mortgage\", href: \"#mortgage\" }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Name",
+                "default": "Neva Homes"
+              },
+              "phone": {
+                "label": "Phone",
+                "default": "+351 21 000 00 00"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Appraise my flat"
+              },
+              "sticky": {
+                "label": "Sticky"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "sticky": false,
+                "brand": "Neva Homes",
+                "caption": "Real estate agency · Lisbon",
+                "phone": "+351 21 000 00 00",
+                "actionLabel": "Appraise my flat",
+                "menuLabel": "Menu",
+                "links": [
+                  {
+                    "label": "Listings",
+                    "href": "#objects",
+                    "current": true
+                  },
+                  {
+                    "label": "Districts",
+                    "href": "#districts"
+                  },
+                  {
+                    "label": "How we work",
+                    "href": "#process"
+                  },
+                  {
+                    "label": "Mortgage",
+                    "href": "#mortgage"
+                  },
+                  {
+                    "label": "Agents",
+                    "href": "#agents"
+                  }
+                ]
+              },
+              "width": "natural"
+            }
+          }
+        },
+        "cardControls": [
+          "brand",
+          "tone",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "navbar-021",
+      "type": "registry:block",
+      "title": "Шапка ресторана поверх фото",
+      "description": "Шапка ресторана: словомарка серифом капителью, ссылки с винным подчёркиванием, зелёная точка «сегодня до 23:00», телефон и кнопка «Забронировать». В режиме overlay лежит прозрачной поверх первого экрана, при скролле темнеет и сжимается.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-021/navbar-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-021.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради скролла и меню. <header>: sticky по умолчанию; overlay=true — position:fixed поверх страницы, data-scrolled переключается после 40px (слушатель scroll, passive), фон и линия появляются переходом, отступы бара сжимаются. Ссылки — подчёркивание transform:scaleX. Часы — с зелёной точкой через ::before. Ссылки и кнопка от 64rem (container query), часы и телефон от 76rem; уже — кнопка «Меню» с aria-expanded и список под шапкой. Палитра --vibeui-navbar-021-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "restaurant",
+          "cafe",
+          "bar",
+          "food",
+          "menu",
+          "dining",
+          "header",
+          "navbar",
+          "sticky",
+          "overlay"
+        ],
+        "preview": {
+          "props": {
+            "sticky": false
+          },
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Navbar021",
+          "usage": "<Navbar021\n  brand=\"Сойка\"\n  caption=\"Северная кухня · Петроградская\"\n  hours=\"Сегодня до 23:00\"\n  phone=\"+7 812 305-00-40\"\n  phoneHref=\"tel:+78123050040\"\n  actionLabel=\"Забронировать\"\n  actionHref=\"#book\"\n  overlay\n  links={[{ label: \"Меню\", href: \"#menu\" }, { label: \"Шеф\", href: \"#chef\" }]}\n/>",
+          "summary": "Самодостаточная шапка для ресторана, бара или кафе: словомарка, ссылки, часы, телефон и кнопка брони; умеет лежать прозрачной поверх первого экрана.",
+          "preserve": [
+            "словомарку серифом капителью с подписью — ритм «ресторанной» шапки",
+            "прозрачный режим overlay с потемнением после скролла — фото первого экрана остаётся целым",
+            "зелёную точку у часов и телефон рядом с кнопкой: гости звонят"
+          ],
+          "adapt": [
+            "brand, caption, links, hours, phone, phoneHref, actionLabel, actionHref, menuLabel",
+            "overlay, sticky",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "В режиме overlay шапка не занимает места в потоке — первый экран должен сам отступить сверху (hero-021 это делает).",
+            "Открытое мобильное меню тоже переводит шапку в тёмный режим."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "brand",
+            "label": "Имя",
+            "type": "text",
+            "default": "Сойка",
+            "maxLength": 24
+          },
+          {
+            "prop": "hours",
+            "label": "Часы",
+            "type": "text",
+            "default": "Сегодня до 23:00",
+            "maxLength": 30
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Забронировать",
+            "maxLength": 20
+          },
+          {
+            "prop": "overlay",
+            "label": "Поверх фото",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Restaurant header over the photo",
+            "description": "A restaurant header: a small-caps serif wordmark, links with a wine-red underline, a green dot “open till 23:00”, a phone and a “Book a table” button. In overlay mode it sits transparent over the first screen and darkens and shrinks on scroll.",
+            "docs": "One file, zero dependencies, “use client” for scroll and the menu. A <header>: sticky by default; overlay=true — position:fixed over the page, data-scrolled flips after 40px (a passive scroll listener), background and line fade in, bar padding shrinks. Links underline via transform:scaleX. Hours carry a green dot via ::before. Links and the button from 64rem (container query), hours and phone from 76rem; below that a “Menu” button with aria-expanded and a list under the header. Palette --vibeui-navbar-021-* with light-dark: ivory on dark wood, a dark wine accent with a glow (the -glow variable) and its lighter -accent-ink tint for text on dark; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained header for a restaurant, bar or cafe: wordmark, links, hours, phone and a booking button; can sit transparent over the first screen.",
+              "preserve": [
+                "the small-caps serif wordmark with a caption — the rhythm of a restaurant header",
+                "the transparent overlay mode darkening after scroll — the hero photo stays whole",
+                "the green dot by the hours and the phone next to the button: guests call"
+              ],
+              "adapt": [
+                "brand, caption, links, hours, phone, phoneHref, actionLabel, actionHref, menuLabel",
+                "overlay, sticky",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "In overlay mode the header takes no space in flow — the first screen must pad itself at the top (hero-021 does).",
+                "An open mobile menu also switches the header to the dark state."
+              ],
+              "usage": "<Navbar021\n  brand=\"Jay\"\n  caption=\"Nordic kitchen · Old town\"\n  hours=\"Open till 23:00 today\"\n  phone=\"+351 21 000 00 40\"\n  phoneHref=\"tel:+351210000040\"\n  actionLabel=\"Book a table\"\n  actionHref=\"#book\"\n  overlay\n  links={[{ label: \"Menu\", href: \"#menu\" }, { label: \"Chef\", href: \"#chef\" }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Name",
+                "default": "Jay"
+              },
+              "hours": {
+                "label": "Hours",
+                "default": "Open till 23:00 today"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Book a table"
+              },
+              "overlay": {
+                "label": "Overlay"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "sticky": false,
+                "brand": "Jay",
+                "caption": "Nordic kitchen · Old town",
+                "hours": "Open till 23:00 today",
+                "phone": "+351 21 000 00 40",
+                "actionLabel": "Book a table",
+                "menuLabel": "Menu",
+                "links": [
+                  {
+                    "label": "Menu",
+                    "href": "#menu"
+                  },
+                  {
+                    "label": "Chef",
+                    "href": "#chef"
+                  },
+                  {
+                    "label": "Hall",
+                    "href": "#hall"
+                  },
+                  {
+                    "label": "Events",
+                    "href": "#events"
+                  },
+                  {
+                    "label": "Contacts",
+                    "href": "#map"
+                  }
+                ]
+              },
+              "width": "natural"
+            }
+          }
+        },
+        "cardControls": [
+          "brand",
+          "tone",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

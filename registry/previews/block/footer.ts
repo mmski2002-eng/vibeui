@@ -28,4 +28,8 @@ export const PREVIEWS = {
     import("@/registry/blocks/footer/footer-017/footer-017").then((module) => module.Footer017),
   "footer-018": () =>
     import("@/registry/blocks/footer/footer-018/footer-018").then((module) => module.Footer018),
+  "footer-019": () =>
+    import("@/registry/blocks/footer/footer-019/footer-019").then((module) => module.Footer019),
+  "footer-020": () =>
+    import("@/registry/blocks/footer/footer-020/footer-020").then((module) => module.Footer020),
 } satisfies PreviewLoaderMap

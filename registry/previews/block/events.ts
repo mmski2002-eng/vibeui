@@ -10,4 +10,6 @@ export const PREVIEWS = {
     import("@/registry/blocks/events/event-002/event-002").then((module) => module.Event002),
   "event-003": () =>
     import("@/registry/blocks/events/event-003/event-003").then((module) => module.Event003),
+  "event-004": () =>
+    import("@/registry/blocks/events/event-004/event-004").then((module) => module.Event004),
 } satisfies PreviewLoaderMap

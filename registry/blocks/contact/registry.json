@@ -1671,6 +1671,338 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "contact-015",
+      "type": "registry:block",
+      "title": "Оценка квартиры",
+      "description": "Бесплатная оценка квартиры: обещания списком и фото офиса слева, справа форма — адрес, площадь, комнаты, телефон, согласие. Настоящая форма: с action уходит POST, без него показывает «спасибо» на месте.",
+      "categories": [
+        "contact"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-015/contact-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-015.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради состояния «готово». <form> с полями address, area (number), rooms (select), phone (tel), consent (checkbox required); action пустой — submit перехватывается и рендерится карточка done с role=status; с action — обычная отправка POST. Список обещаний с латунными точками через ::before. От 56rem (container query) две колонки одной высоты: левая — flex-колонка, фото добирает остаток (flex:1 1 0, min-height 12rem, object-fit:cover), форма тянется на ту же высоту с ровными промежутками (align-content:space-between). Палитра --vibeui-contact-015-* с light-dark: песок/чернильно-зелёный, латунный акцент; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "real estate",
+          "realty",
+          "property",
+          "apartment",
+          "agency",
+          "listing",
+          "realty"
+        ],
+        "preview": {
+          "props": {
+            "image": "/demo/places/place-03.webp"
+          },
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Contact015",
+          "usage": "<Contact015\n  title=\"Узнайте, сколько стоит ваша квартира\"\n  image=\"/photos/office.webp\"\n  promises={[\"Цена, по которой квартира уйдёт за 30 дней\", \"План продажи без обязательств\"]}\n  action=\"/api/valuation\"\n/>",
+          "summary": "Самодостаточная форма оценки квартиры для агентства: обещания, фото, поля адреса, метража, комнат и телефона. Поля формы: address, area, rooms, phone, consent.",
+          "preserve": [
+            "форму как настоящую <form> с именами полей — обработчик получает address, area, rooms, phone, consent",
+            "обещания списком слева от формы: человек понимает, что получит, до того как заполнит",
+            "карточку «спасибо» на месте формы, а не alert"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, promises, rooms, submitLabel, doneTitle, doneText, consentLabel, image",
+            "action — куда отправлять; без него показывается done",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Согласие обязательное: без галочки браузер не отправит форму.",
+            "Фото ожидается горизонтальное 3:2."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Узнайте, сколько стоит ваша квартира",
+            "maxLength": 60
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Получить оценку",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Flat appraisal form",
+            "description": "A free flat appraisal: promises as a list and an office photo on the left, a form on the right — address, area, rooms, phone, consent. A real form: with action it POSTs, without it shows “thank you” in place.",
+            "docs": "One file, zero dependencies, “use client” for the done state. A <form> with address, area (number), rooms (select), phone (tel), consent (required checkbox); with empty action submit is intercepted and a done card with role=status renders; with action a normal POST. A promise list with brass dots via ::before. From 56rem (container query) two equal-height columns: the left is a flex column and the photo takes the remainder (flex:1 1 0, min-height 12rem, object-fit:cover), the form stretches to the same height with even spacing (align-content:space-between). Palette --vibeui-contact-015-* with light-dark: sand / ink green, brass accent; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained flat appraisal form for an agency: promises, a photo, address, area, rooms and phone fields. Form fields: address, area, rooms, phone, consent.",
+              "preserve": [
+                "the form as a real <form> with field names — the handler gets address, area, rooms, phone, consent",
+                "the promise list left of the form: people know what they get before filling it in",
+                "the “thank you” card in place of the form, not an alert"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, promises, rooms, submitLabel, doneTitle, doneText, consentLabel, image",
+                "action — where to submit; without it done is shown",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Consent is required: without the checkbox the browser will not submit.",
+                "The photo is expected landscape 3:2."
+              ],
+              "usage": "<Contact015\n  title=\"Find out what your flat is worth\"\n  image=\"/photos/office.webp\"\n  promises={[\"The price it sells for within 30 days\", \"A sale plan with no obligations\"]}\n  action=\"/api/valuation\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Find out what your flat is worth"
+              },
+              "submitLabel": {
+                "label": "Button",
+                "default": "Get an appraisal"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "image": "/demo/places/place-03.webp",
+                "eyebrow": "Free appraisal",
+                "title": "Find out what your flat is worth",
+                "lede": "We appraise by deals in your building and the neighbours' over the last year, not by listings. We call back within an hour in working hours.",
+                "promises": [
+                  "The price it sells for within 30 days",
+                  "What is worth fixing before the sale and what is not",
+                  "A sale plan and timing — no obligations"
+                ],
+                "rooms": [
+                  "Studio",
+                  "1 room",
+                  "2 rooms",
+                  "3 rooms",
+                  "4 and more"
+                ],
+                "submitLabel": "Get an appraisal",
+                "doneTitle": "Thank you, received",
+                "doneText": "We will call within an hour with a price range.",
+                "consentLabel": "I agree to data processing and a call to this number."
+              },
+              "width": "natural"
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "contact-016",
+      "type": "registry:block",
+      "title": "Бронь стола со свободными окнами",
+      "description": "Бронь стола: слева свободные окна на сегодня чипами и заметки, справа форма — дата, время, гости степпером ±, имя, телефон, пожелания, согласие. Клик по чипу подставляет время и сегодняшнюю дату. Настоящая форма: с action уходит POST, без него — «стол ваш» на месте.",
+      "categories": [
+        "contact"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-016/contact-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-016.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Чипы — <button aria-pressed>, клик пишет time и, если пусто, date=сегодня. Поля: date (min=сегодня), time (step 900), скрытый guests из степпера с границами minGuests/maxGuests, name, phone (tel), note (textarea), consent (required). action пустой — submit перехватывается и рендерится карточка done с role=status; с action — обычная отправка POST. От 56rem (container query) две колонки 1fr/1.1fr. Палитра --vibeui-contact-016-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "restaurant",
+          "cafe",
+          "bar",
+          "food",
+          "menu",
+          "dining",
+          "booking",
+          "reservation",
+          "form",
+          "table"
+        ],
+        "preview": {
+          "props": {},
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Contact016",
+          "usage": "<Contact016\n  title=\"Оставьте стол за собой\"\n  slots={[\"18:00\", \"18:30\", \"19:30\", \"21:30\"]}\n  notes={[\"Стол держим 15 минут после брони\", \"Терраса открыта с мая\"]}\n  maxGuests={12}\n  action=\"/api/book\"\n/>",
+          "summary": "Самодостаточная форма брони для ресторана, бара или кафе: свободные окна чипами, дата, время, гости, телефон. Поля формы: date, time, guests, name, phone, note, consent.",
+          "preserve": [
+            "чипы свободных окон, подставляющие время в форму — бронь в два клика",
+            "степпер гостей вместо поля ввода и настоящие имена полей — обработчик получает date, time, guests, name, phone, note, consent",
+            "карточку «стол ваш» на месте формы, а не alert"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, slots, slotsLabel, notes, minGuests, maxGuests, submitLabel, doneTitle, doneText, consentLabel",
+            "action — куда отправлять; без него показывается done",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Дата в формате YYYY-MM-DD, время — HH:MM, шаг 15 минут.",
+            "Слоты — просто строки; список свободных окон должен приходить с сервера."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Оставьте стол за собой",
+            "maxLength": 40
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Забронировать",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Table booking with free slots",
+            "description": "Table booking: free slots for today as chips and notes on the left, a form on the right — date, time, guests with a ± stepper, name, phone, wishes, consent. A chip click fills the time and today's date. A real form: with action it POSTs, without it shows “the table is yours” in place.",
+            "docs": "One file, zero dependencies, “use client”. Chips are <button aria-pressed>; a click writes time and, if empty, date=today. Fields: date (min=today), time (step 900), a hidden guests from the stepper bounded by minGuests/maxGuests, name, phone (tel), note (textarea), consent (required). With empty action submit is intercepted and a done card with role=status renders; with action a normal POST. From 56rem (container query) two columns 1fr/1.1fr. Palette --vibeui-contact-016-* with light-dark: ivory on dark wood, a dark wine accent with a glow (the -glow variable) and its lighter -accent-ink tint for text on dark; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained booking form for a restaurant, bar or cafe: free slots as chips, date, time, guests, phone. Form fields: date, time, guests, name, phone, note, consent.",
+              "preserve": [
+                "the free-slot chips filling the time in the form — booking in two clicks",
+                "the guests stepper instead of an input and real field names — the handler gets date, time, guests, name, phone, note, consent",
+                "the “table is yours” card in place of the form, not an alert"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, slots, slotsLabel, notes, minGuests, maxGuests, submitLabel, doneTitle, doneText, consentLabel",
+                "action — where to submit; without it done is shown",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Date is YYYY-MM-DD, time is HH:MM, 15-minute step.",
+                "Slots are plain strings; the list of free slots should come from the server."
+              ],
+              "usage": "<Contact016\n  title=\"Keep a table for yourself\"\n  slots={[\"18:00\", \"18:30\", \"19:30\", \"21:30\"]}\n  notes={[\"We hold the table for 15 minutes\", \"The terrace opens in May\"]}\n  maxGuests={12}\n  action=\"/api/book\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Keep a table for yourself"
+              },
+              "submitLabel": {
+                "label": "Button",
+                "default": "Book"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Booking",
+                "title": "Keep a table for yourself",
+                "lede": "We confirm within fifteen minutes in working hours. Parties of eight or more — by phone.",
+                "slotsLabel": "Free today",
+                "notes": [
+                  "We hold the table for 15 minutes after booking",
+                  "With children — until 20:00, high chairs available",
+                  "The terrace is open from May to September"
+                ],
+                "submitLabel": "Book",
+                "doneTitle": "The table is yours",
+                "doneText": "We will send a confirmation to your messenger in a couple of minutes.",
+                "consentLabel": "I agree to data processing and a call to this number."
+              },
+              "width": "natural"
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ]
+      }
     }
   ]
 }

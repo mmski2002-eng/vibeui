@@ -401,6 +401,241 @@
           }
         }
       }
+    },
+    {
+      "name": "event-004",
+      "type": "registry:block",
+      "title": "События ресторана лентой",
+      "description": "События ресторана: лента строк с днём недели крупным серифом винным свечением слева, периодичностью капителью, названием, временем, текстом, ценой и ссылкой. По наведению строка подсвечивается и справа выезжает фото.",
+      "categories": [
+        "events"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "event-004/event-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/event-004.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. <ul> с границами между строками; строка — grid 4.5rem/1fr, от 56rem (container query) 7rem/1fr/11rem с фото в третьей колонке. По hover подложка строки (::before с inset 0 −1rem) проявляется opacity и лёгким scale без изменения раскладки, фото opacity 0→1 с лёгким scale. День — серифом в нижнем регистре, время — tabular-nums. Палитра --vibeui-event-004-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "restaurant",
+          "cafe",
+          "bar",
+          "food",
+          "menu",
+          "dining",
+          "events",
+          "schedule",
+          "agenda",
+          "jazz"
+        ],
+        "preview": {
+          "props": {
+            "events": [
+              {
+                "day": "ср",
+                "when": "каждую неделю",
+                "time": "18:00–23:00",
+                "title": "Устричные среды",
+                "text": "Хасанские и дальневосточные устрицы по цене закупки, к ним — бокал мюскаде.",
+                "price": "650 ₽ / 6 шт.",
+                "actionLabel": "Занять стол",
+                "actionHref": "#book",
+                "image": "/demo/places/place-01.webp"
+              },
+              {
+                "day": "пт",
+                "when": "каждую неделю",
+                "time": "21:00",
+                "title": "Джаз у бара",
+                "text": "Трио Ильи Гордеева: стандарты и немного Северного модерна. Вход свободный.",
+                "price": "вход свободный",
+                "actionLabel": "Забронировать",
+                "actionHref": "#book",
+                "image": "/demo/places/place-04.webp"
+              },
+              {
+                "day": "сб–вс",
+                "when": "выходные",
+                "time": "11:00–16:00",
+                "title": "Бранч",
+                "text": "Сырники на ржаной муке, яйца с сигом, пирог дня и кофе без ограничений.",
+                "price": "1 900 ₽",
+                "actionLabel": "Меню бранча",
+                "actionHref": "#menu",
+                "image": "/demo/places/place-06.webp"
+              },
+              {
+                "day": "3 окт",
+                "when": "один вечер",
+                "time": "19:30",
+                "title": "Ужин с виноделом",
+                "text": "Шесть подач под вина «Усадьбы Дивноморское», за столом — сам винодел.",
+                "price": "7 500 ₽",
+                "actionLabel": "Осталось 6 мест",
+                "actionHref": "#book",
+                "image": "/demo/places/place-08.webp"
+              }
+            ]
+          },
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Event004",
+          "usage": "<Event004\n  title=\"Что бывает по вечерам\"\n  events={[\n    { day: \"ср\", when: \"каждую неделю\", time: \"18:00–23:00\", title: \"Устричные среды\", text: \"Устрицы по цене закупки, к ним — бокал мюскаде.\", price: \"650 ₽ / 6 шт.\", actionLabel: \"Занять стол\", actionHref: \"#book\", image: \"/photos/event.webp\" },\n  ]}\n/>",
+          "summary": "Самодостаточная лента событий для ресторана, бара или клуба: день недели крупно, время, цена, ссылка и фото по наведению. События — массив пропсом.",
+          "preserve": [
+            "день недели крупным серифом слева — лента читается как афиша",
+            "подсветку строки подложкой ::before без прыжков раскладки и фото, выезжающее по наведению",
+            "цену серифом и ссылку с винным подчёркиванием в подвале строки"
+          ],
+          "adapt": [
+            "events: день, периодичность, время, название, текст, цена, ссылка, фото",
+            "eyebrow, title, lede",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "day — любая короткая строка: «ср», «сб–вс», «3 окт».",
+            "Без image третья колонка остаётся пустой, сетка не ломается."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что бывает по вечерам",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Restaurant events as a feed",
+            "description": "Restaurant events: a feed of rows with a large wine-red serif weekday on the left, recurrence in small caps, title, time, text, price and a link. On hover the row highlights and a photo slides in on the right.",
+            "docs": "One file, zero dependencies, a server component. A <ul> with borders between rows; a row is a 4.5rem/1fr grid, from 56rem (container query) 7rem/1fr/11rem with the photo in the third column. On hover the row backdrop (::before with inset 0 −1rem) fades in with a slight scale without changing layout, the photo goes opacity 0→1 with a slight scale. The day is lowercase serif, the time tabular-nums. Palette --vibeui-event-004-* with light-dark: ivory on dark wood, a dark wine accent with a glow (the -glow variable) and its lighter -accent-ink tint for text on dark; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained events feed for a restaurant, bar or club: a large weekday, time, price, link and a hover photo. Events come in as a prop array.",
+              "preserve": [
+                "the large serif weekday on the left — the feed reads like a poster",
+                "the row highlight via a ::before backdrop without layout jumps and the photo sliding in on hover",
+                "the serif price and the wine-red-underlined link in the row footer"
+              ],
+              "adapt": [
+                "events: day, recurrence, time, title, text, price, link, photo",
+                "eyebrow, title, lede",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "day is any short string: “wed”, “sat–sun”, “3 oct”.",
+                "Without image the third column stays empty, the grid holds."
+              ],
+              "usage": "<Event004\n  title=\"What happens in the evenings\"\n  events={[\n    { day: \"wed\", when: \"every week\", time: \"18:00–23:00\", title: \"Oyster Wednesdays\", text: \"Oysters at cost, with a glass of Muscadet.\", price: \"€9 / 6 pcs\", actionLabel: \"Take a table\", actionHref: \"#book\", image: \"/photos/event.webp\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What happens in the evenings"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Events",
+                "title": "What happens in the evenings",
+                "lede": "Oysters, jazz and winemaker dinners. Tables for events are held by booking.",
+                "events": [
+                  {
+                    "day": "wed",
+                    "when": "every week",
+                    "time": "18:00–23:00",
+                    "title": "Oyster Wednesdays",
+                    "text": "Oysters at cost, with a glass of Muscadet.",
+                    "price": "€9 / 6 pcs",
+                    "actionLabel": "Take a table",
+                    "actionHref": "#book",
+                    "image": "/demo/places/place-01.webp"
+                  },
+                  {
+                    "day": "fri",
+                    "when": "every week",
+                    "time": "21:00",
+                    "title": "Jazz at the bar",
+                    "text": "A trio playing standards and a little Nordic modern. Free entry, better hold a table.",
+                    "price": "free entry",
+                    "actionLabel": "Book",
+                    "actionHref": "#book",
+                    "image": "/demo/places/place-04.webp"
+                  },
+                  {
+                    "day": "sat–sun",
+                    "when": "weekends",
+                    "time": "11:00–16:00",
+                    "title": "Brunch",
+                    "text": "Rye cheesecakes, eggs with whitefish, the pie of the day and bottomless coffee.",
+                    "price": "€28",
+                    "actionLabel": "Brunch menu",
+                    "actionHref": "#menu",
+                    "image": "/demo/places/place-06.webp"
+                  },
+                  {
+                    "day": "3 oct",
+                    "when": "one night",
+                    "time": "19:30",
+                    "title": "Winemaker dinner",
+                    "text": "Six courses paired with estate wines, the winemaker at the table.",
+                    "price": "€110",
+                    "actionLabel": "6 seats left",
+                    "actionHref": "#book",
+                    "image": "/demo/places/place-08.webp"
+                  }
+                ]
+              },
+              "width": "natural"
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ]
+      }
     }
   ]
 }

@@ -51,4 +51,10 @@ export const PREVIEWS = {
   "testimonials-015": dynamic(() =>
     import("@/registry/blocks/testimonials/testimonials-015/testimonials-015").then((module) => module.Testimonials015),
   ),
+  "testimonials-016": dynamic(() =>
+    import("@/registry/blocks/testimonials/testimonials-016/testimonials-016").then((module) => module.Testimonials016),
+  ),
+  "testimonials-017": dynamic(() =>
+    import("@/registry/blocks/testimonials/testimonials-017/testimonials-017").then((module) => module.Testimonials017),
+  ),
 } satisfies PreviewMap
