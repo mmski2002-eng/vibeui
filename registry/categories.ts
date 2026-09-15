@@ -182,6 +182,12 @@ export const CATEGORIES = [
     group: "marketing",
   },
   {
+    slug: "realty",
+    label: "Недвижимость",
+    en: "Real estate",
+    group: "commerce",
+  },
+  {
     slug: "events",
     label: "События",
     en: "Events",
@@ -880,6 +886,12 @@ export const CATEGORIES = [
     slug: "sketch",
     label: "Рукописный",
     en: "Hand-drawn",
+    group: "marketing",
+  },
+  {
+    slug: "cards",
+    label: "Карточки",
+    en: "Cards",
     group: "marketing",
   },
   {

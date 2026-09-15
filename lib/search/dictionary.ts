@@ -501,6 +501,25 @@ export const SYNONYMS: Synonym[] = [
     terms: ["portfolio", "cases"],
   },
   {
+    say: [
+      "недвижимость",
+      "агентство недвижимости",
+      "квартиры",
+      "квартира",
+      "риелтор",
+      "риэлтор",
+      "застройщик",
+      "жилой комплекс",
+      "объекты",
+      "ипотека",
+      "аренда",
+      "снять квартиру",
+      "купить квартиру",
+    ],
+    categories: ["realty"],
+    terms: ["real estate", "realty", "property", "listing", "mortgage", "apartment"],
+  },
+  {
     say: ["приложение", "скачать приложение", "сторы"],
     categories: ["downloads", "devices"],
     terms: ["downloads", "app"],
@@ -633,6 +652,20 @@ export const SYNONYMS: Synonym[] = [
       "boil",
       "wobbly",
     ],
+  },
+  {
+    say: [
+      "переворот карточки",
+      "переворачивающаяся карточка",
+      "флип",
+      "флип-карточка",
+      "карточка с обратной стороной",
+      "две стороны карточки",
+      "3d карточка",
+      "объёмная карточка",
+    ],
+    categories: ["cards"],
+    terms: ["flip", "flip card", "3d card", "two-sided", "backface", "rotate", "reveal"],
   },
   {
     say: [
