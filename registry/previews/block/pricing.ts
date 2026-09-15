@@ -40,4 +40,6 @@ export const PREVIEWS = {
     import("@/registry/blocks/pricing/pricing-018/pricing-018").then((module) => module.Pricing018),
   "pricing-019": () =>
     import("@/registry/blocks/pricing/pricing-019/pricing-019").then((module) => module.Pricing019),
+  "pricing-020": () =>
+    import("@/registry/blocks/pricing/pricing-020/pricing-020").then((module) => module.Pricing020),
 } satisfies PreviewLoaderMap

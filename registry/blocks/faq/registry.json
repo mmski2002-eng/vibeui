@@ -3018,6 +3018,182 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "faq-017",
+      "type": "registry:block",
+      "title": "Вопросы перед оплатой с карточкой «спросить»",
+      "description": "Вопросы о курсе: слева липкий заголовок и карточка «не нашли ответ — спросите в Telegram», справа аккордеон на details с общим name, плюс поворачивается в крест, открытый вопрос подсвечен акцентной полосой слева.",
+      "categories": [
+        "faq"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "faq-017/faq-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/faq-017.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. <details name={useId()}> — открыт один ответ. summary сеткой 1fr/1.5rem; плюс из двух псевдоэлементов, при [open] rotate(45deg) и заливка акцентом; details[open] получает border-left акцента. Ответ появляется @keyframes .35s. От 56rem (container query) 1fr/1.5fr, левая колонка position:sticky. Палитра --vibeui-faq-017-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "course",
+          "education",
+          "edtech",
+          "landing",
+          "faq",
+          "questions",
+          "accordion",
+          "telegram"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {}
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Faq017",
+          "usage": "<Faq017\n  title=\"Что спрашивают перед оплатой\"\n  askLabel=\"Спросить в Telegram\"\n  askHref=\"https://t.me/figmapro\"\n  items={[\n    { question: \"Что если я не потяну темп?\", answer: \"Записи и чат остаются на год: можно догнать со следующим потоком.\" },\n  ]}\n/>",
+          "summary": "Самодостаточная секция вопросов для курса, подписки или сервиса: аккордеон на details, липкий заголовок и карточка «спросить». Вопросы — массив пропсом.",
+          "preserve": [
+            "details с общим name — один открытый ответ без состояния",
+            "карточку «спросить в Telegram» рядом с вопросами — возражения закрывает человек",
+            "акцентную полосу у открытого вопроса и плюс, поворачивающийся в крест"
+          ],
+          "adapt": [
+            "items: вопросы и ответы",
+            "eyebrow, title, lede, askTitle, askText, askLabel, askHref",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Ссылка «спросить» открывается в новой вкладке с rel=noreferrer.",
+            "Атрибут name у details — Chrome 120+, Safari 17.2+, Firefox 130+."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что спрашивают перед оплатой",
+            "maxLength": 50
+          },
+          {
+            "prop": "askLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Спросить в Telegram",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Pre-purchase FAQ with an “ask” card",
+            "description": "Course questions: a sticky heading and a “no answer — ask on Telegram” card on the left, a details accordion with a shared name on the right, a plus rotating into a cross, the open question highlighted with an accent bar on the left.",
+            "docs": "One file, zero dependencies, a server component. <details name={useId()}> — one answer open. A summary grid 1fr/1.5rem; a plus of two pseudo-elements, rotate(45deg) and accent fill when [open]; details[open] gets an accent border-left. The answer appears via a .35s @keyframes. From 56rem (container query) 1fr/1.5fr, the left column position:sticky. Palette --vibeui-faq-017-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained FAQ section for a course, subscription or service: a details accordion, a sticky heading and an “ask” card. Questions come in as a prop array.",
+              "preserve": [
+                "details with a shared name — one open answer, no state",
+                "the “ask on Telegram” card next to the questions — a human closes objections",
+                "the accent bar on the open question and the plus rotating into a cross"
+              ],
+              "adapt": [
+                "items: questions and answers",
+                "eyebrow, title, lede, askTitle, askText, askLabel, askHref",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The “ask” link opens in a new tab with rel=noreferrer.",
+                "The name attribute on details — Chrome 120+, Safari 17.2+, Firefox 130+."
+              ],
+              "usage": "<Faq017\n  title=\"What people ask before paying\"\n  askLabel=\"Ask on Telegram\"\n  askHref=\"https://t.me/figmapro\"\n  items={[\n    { question: \"What if I can’t keep up?\", answer: \"Recordings and chat stay for a year: catch up with the next cohort.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What people ask before paying"
+              },
+              "askLabel": {
+                "label": "Button",
+                "default": "Ask on Telegram"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Questions",
+                "title": "What people ask before paying",
+                "lede": "About pace, experience, certificate, money and hardware. The rest on Telegram, answered within an hour.",
+                "askTitle": "No answer?",
+                "askText": "Write to the enrolment mentor — they will tell you whether the course fits you.",
+                "askLabel": "Ask on Telegram",
+                "items": [
+                  {
+                    "question": "What if I can’t keep up?",
+                    "answer": "Five to seven hours a week is the norm. If you fall behind, the mentor moves the deadline, and recordings and chat stay for a year: catch up with the next cohort for free."
+                  },
+                  {
+                    "question": "Do I need design experience?",
+                    "answer": "No. The first two weeks are for people opening Figma for the first time. For those who already can, these lessons close gaps in auto layout and components."
+                  },
+                  {
+                    "question": "Is there a certificate?",
+                    "answer": "Yes, a named certificate after the project defence. It guarantees nothing to an employer — your case does, and we help you write it up."
+                  },
+                  {
+                    "question": "Can I get a refund?",
+                    "answer": "In the first seven days — in full, no explanation. After that — proportionally to what you’ve completed, per the offer contract."
+                  },
+                  {
+                    "question": "How do instalments work?",
+                    "answer": "Interest-free, from a partner bank, for 6 months. Approval in a couple of minutes at checkout; the course opens at once."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

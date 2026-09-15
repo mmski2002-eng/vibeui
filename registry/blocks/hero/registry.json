@@ -3934,6 +3934,189 @@
           "accent"
         ]
       }
+    },
+    {
+      "name": "hero-022",
+      "type": "registry:block",
+      "title": "Первый экран курса с маркером и превью урока",
+      "description": "Первый экран лендинга курса: заголовок с маркерным подчёркиванием, которое дорисовывается при появлении, зелёная точка «старт 6 октября», стикер «осталось мест», кнопка и превью урока с play и длительностью. Внизу строка фактов и логотипы компаний текстом.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-022/hero-022.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-022.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Слово в *звёздочках* в title превращается в span с фоновым градиентом-маркером (background-size 0→100 % с задержкой .9s, box-decoration-break:clone — подчёркивание переносится по строкам). Появление блоков — @keyframes fade с задержками. Стикер — pop с overshoot. Превью — <a> с aspect-ratio 16/10, кнопкой play и длительностью. Радиальное индиго-свечение через ::before секции. От 60rem (container query) две колонки и строка фактов на всю ширину. Палитра --vibeui-hero-022-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "course",
+          "education",
+          "edtech",
+          "landing",
+          "hero",
+          "marker",
+          "video",
+          "sticker"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "poster": "/demo/places/place-03.webp"
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Hero022",
+          "usage": "<Hero022\n  eyebrow=\"Онлайн-курс · старт 6 октября\"\n  title=\"Figma для продуктовых дизайнеров: от макета до *живого прототипа*\"\n  lede=\"Шесть недель практики на реальных задачах.\"\n  primaryLabel=\"Записаться на поток\"\n  primaryHref=\"#pricing\"\n  secondaryLabel=\"Смотреть первый урок\"\n  secondaryHref=\"/lesson-1\"\n  poster=\"/photos/poster.webp\"\n  duration=\"4:32\"\n  sticker=\"Осталось 12 мест\"\n  facts={[{ value: \"6\", label: \"недель\" }, { value: \"18\", label: \"уроков\" }]}\n  logos={[\"Ozon\", \"Яндекс\"]}\n/>",
+          "summary": "Самодостаточный первый экран для курса, вебинара или школы: маркерный заголовок, стикер, превью видео, факты и логотипы. Всё содержимое пропсами.",
+          "preserve": [
+            "маркерное подчёркивание, которое дорисовывается — главный жест экрана",
+            "превью урока с play и длительностью вместо абстрактной иллюстрации",
+            "строку фактов и логотипы под линией — доверие в одном ряду"
+          ],
+          "adapt": [
+            "eyebrow, title (слово в *звёздочках*), lede, primaryLabel/Href, secondaryLabel/Href",
+            "poster, duration, sticker, facts, logosLabel, logos",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Логотипы — текстом в фирменном шрифте; свои SVG подставляйте через children-обёртку или замену массива.",
+            "reduced-motion выключает анимации, подчёркивание сразу нарисовано."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Figma для продуктовых дизайнеров: от макета до *живого прототипа*",
+            "maxLength": 90
+          },
+          {
+            "prop": "sticker",
+            "label": "Стикер",
+            "type": "text",
+            "default": "Осталось 12 мест",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Course hero with a marker and a lesson preview",
+            "description": "A course landing first screen: a headline with a marker underline that draws itself on appearance, a green “starts 6 October” dot, a “seats left” sticker, a button and a lesson preview with play and duration. Below, a row of facts and company logos as text.",
+            "docs": "One file, zero dependencies, a server component. A *starred* word in title becomes a span with a background-gradient marker (background-size 0→100 % with a .9s delay, box-decoration-break:clone — the underline wraps across lines). Blocks appear via @keyframes fade with delays. The sticker pops with overshoot. The preview is an <a> with aspect-ratio 16/10, a play button and duration. A radial indigo glow via the section's ::before. From 60rem (container query) two columns and a full-width facts row. Palette --vibeui-hero-022-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained first screen for a course, webinar or school: a marker headline, a sticker, a video preview, facts and logos. All content via props.",
+              "preserve": [
+                "the marker underline drawing itself — the main gesture of the screen",
+                "the lesson preview with play and duration instead of an abstract illustration",
+                "the facts row and logos under the rule — trust in one line"
+              ],
+              "adapt": [
+                "eyebrow, title (a *starred* word), lede, primaryLabel/Href, secondaryLabel/Href",
+                "poster, duration, sticker, facts, logosLabel, logos",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Logos are text in the display font; use your own SVGs by replacing the array or wrapping.",
+                "reduced-motion disables animations; the underline is drawn at once."
+              ],
+              "usage": "<Hero022\n  eyebrow=\"Online course · starts 6 October\"\n  title=\"Figma for product designers: from mockup to a *living prototype*\"\n  lede=\"Six weeks of practice on real tasks.\"\n  primaryLabel=\"Enroll\"\n  primaryHref=\"#pricing\"\n  secondaryLabel=\"Watch the first lesson\"\n  secondaryHref=\"/lesson-1\"\n  poster=\"/photos/poster.webp\"\n  duration=\"4:32\"\n  sticker=\"12 seats left\"\n  facts={[{ value: \"6\", label: \"weeks\" }, { value: \"18\", label: \"lessons\" }]}\n  logos={[\"Ozon\", \"Yandex\"]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Figma for product designers: from mockup to a *living prototype*"
+              },
+              "sticker": {
+                "label": "Sticker",
+                "default": "12 seats left"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "poster": "/demo/places/place-03.webp",
+                "eyebrow": "Online course · starts 6 October",
+                "title": "Figma for product designers: from mockup to a *living prototype*",
+                "lede": "Six weeks of practice on real tasks: build three interfaces, defend a project before an art director and leave with a portfolio people look at.",
+                "primaryLabel": "Enroll",
+                "secondaryLabel": "Watch the first lesson",
+                "sticker": "12 seats left",
+                "facts": [
+                  {
+                    "value": "6",
+                    "label": "weeks"
+                  },
+                  {
+                    "value": "18",
+                    "label": "40-minute lessons"
+                  },
+                  {
+                    "value": "3",
+                    "label": "portfolio projects"
+                  },
+                  {
+                    "value": "94 %",
+                    "label": "reach the defence"
+                  }
+                ],
+                "logosLabel": "Graduates work at",
+                "logos": [
+                  "Ozon",
+                  "Tinkoff",
+                  "Yandex",
+                  "Avito",
+                  "Samokat"
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

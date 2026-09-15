@@ -2630,6 +2630,168 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "cta-017",
+      "type": "registry:block",
+      "title": "Призыв с обратным отсчётом до старта",
+      "description": "Финальный призыв курса: тёмная карточка с индиго-свечением, живой обратный отсчёт до старта (дни, часы, минуты, секунды — цифры перелистываются), «осталось мест», форма с email и кнопкой. С action уходит POST, без него показывает «место за вами».",
+      "categories": [
+        "cta"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-017/cta-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-017.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради таймера и формы. Время берётся только на клиенте (useEffect + setInterval раз в секунду), на сервере таймер рендерится нулями с aria-hidden — без hydration mismatch. Каждая цифра — span с key=значение, поэтому смена перезапускает @keyframes flip. Форма: <input type=email name=email required>, кнопка submit; action пустой — submit перехватывается, рендерится карточка done с role=status. От 60rem (container query) карточка в две колонки. Палитра --vibeui-cta-017-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "course",
+          "education",
+          "edtech",
+          "landing",
+          "cta",
+          "countdown",
+          "timer",
+          "enroll",
+          "form"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "startsAt": "2027-02-01T10:00:00+03:00"
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Cta017",
+          "usage": "<Cta017\n  title=\"Старт 6 октября. Следующий поток — только в феврале\"\n  startsAt=\"2026-10-06T10:00:00+03:00\"\n  seats=\"Осталось 12 мест из 60\"\n  submitLabel=\"Забронировать место\"\n  action=\"/api/enroll\"\n/>",
+          "summary": "Самодостаточный финальный призыв для курса, вебинара или запуска: обратный отсчёт до даты, места и форма с email. Дата старта — пропсом в ISO.",
+          "preserve": [
+            "обратный отсчёт с перелистыванием цифр — срочность, а не абстрактное «скоро»",
+            "таймер только на клиенте, нулями на сервере — без hydration mismatch",
+            "форму с одним полем email и карточку «место за вами» вместо alert"
+          ],
+          "adapt": [
+            "eyebrow, title, text, startsAt (ISO), countdownLabel, seats, placeholder, submitLabel, doneTitle, doneText, consent",
+            "action — куда отправлять; без него показывается done",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "После даты старта таймер стоит на нулях — меняйте startsAt на следующий поток.",
+            "Карточка всегда тёмная (color-scheme:dark внутри), фон вокруг следует теме."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Старт 6 октября. Следующий поток — только в феврале",
+            "maxLength": 70
+          },
+          {
+            "prop": "seats",
+            "label": "Места",
+            "type": "text",
+            "default": "Осталось 12 мест из 60",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "CTA with a countdown to the start",
+            "description": "The course's final call: a dark card with an indigo glow, a live countdown to the start (days, hours, minutes, seconds — digits flip), “seats left”, an email form with a button. With action it POSTs, without it shows “the seat is yours”.",
+            "docs": "One file, zero dependencies, “use client” for the timer and the form. Time is taken on the client only (useEffect + setInterval every second); on the server the timer renders zeros with aria-hidden — no hydration mismatch. Each digit is a span with key=value, so a change restarts the flip @keyframes. The form: <input type=email name=email required>, a submit button; with empty action submit is intercepted and a done card with role=status renders. From 60rem (container query) the card is two columns. Palette --vibeui-cta-017-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained final call for a course, webinar or launch: a countdown to a date, seats and an email form. The start date comes in as an ISO prop.",
+              "preserve": [
+                "the countdown with flipping digits — urgency, not an abstract “soon”",
+                "the client-only timer with zeros on the server — no hydration mismatch",
+                "the single-field email form and the “seat is yours” card instead of an alert"
+              ],
+              "adapt": [
+                "eyebrow, title, text, startsAt (ISO), countdownLabel, seats, placeholder, submitLabel, doneTitle, doneText, consent",
+                "action — where to submit; without it done is shown",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "After the start date the timer sits at zeros — change startsAt to the next cohort.",
+                "The card is always dark (color-scheme:dark inside); the background around follows the theme."
+              ],
+              "usage": "<Cta017\n  title=\"Starts 6 October. The next cohort is in February\"\n  startsAt=\"2026-10-06T10:00:00+03:00\"\n  seats=\"12 of 60 seats left\"\n  submitLabel=\"Reserve a seat\"\n  action=\"/api/enroll\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Starts 6 October. The next cohort is in February"
+              },
+              "seats": {
+                "label": "Seats",
+                "default": "12 of 60 seats left"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "startsAt": "2027-02-01T10:00:00+03:00",
+                "eyebrow": "Next cohort",
+                "title": "Starts 6 October. The next cohort is in February",
+                "text": "Leave your email — we'll send the curriculum, the contract and a payment link. The seat is held for 48 hours.",
+                "countdownLabel": "until the cohort starts",
+                "seats": "12 of 60 seats left",
+                "placeholder": "Your email",
+                "submitLabel": "Reserve a seat",
+                "doneTitle": "The seat is yours",
+                "doneText": "The email with the curriculum and link is on its way. Check Promotions if you don’t see it.",
+                "consent": "By clicking you agree to the data processing policy."
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

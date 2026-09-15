@@ -194,6 +194,12 @@ export const CATEGORIES = [
     group: "commerce",
   },
   {
+    slug: "course",
+    label: "Онлайн-курс",
+    en: "Online course",
+    group: "commerce",
+  },
+  {
     slug: "events",
     label: "События",
     en: "Events",

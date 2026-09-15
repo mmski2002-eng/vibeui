@@ -3676,6 +3676,192 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "navbar-022",
+      "type": "registry:block",
+      "title": "Шапка курса с ценой и прогрессом",
+      "description": "Шапка лендинга курса: словомарка с ромбиком, подпись «курс · 6 недель», ссылки, кнопка «Записаться» с ценой в капсуле. Под шапкой полоска прогресса чтения страницы. На узком экране — кнопка «Меню».",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-022/navbar-022.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-022.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради прогресса и меню. <header> sticky с полупрозрачным фоном и blur. Прогресс — span с transform:scaleX(var(--progress)); значение пишется в CSS-переменную из requestAnimationFrame на scroll (passive), без ререндеров. Ссылки и кнопка от 60rem (container query); уже — кнопка «Меню» с aria-expanded и список под шапкой. Палитра --vibeui-navbar-022-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "course",
+          "education",
+          "edtech",
+          "landing",
+          "header",
+          "navbar",
+          "progress",
+          "sticky"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "sticky": false
+          }
+        },
+        "cardControls": [
+          "brand",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Navbar022",
+          "usage": "<Navbar022\n  brand=\"Figma Pro\"\n  caption=\"курс · 6 недель\"\n  actionLabel=\"Записаться\"\n  actionPrice=\"49 000 ₽\"\n  actionHref=\"#pricing\"\n  links={[{ label: \"Программа\", href: \"#program\" }, { label: \"Стоимость\", href: \"#pricing\" }]}\n/>",
+          "summary": "Самодостаточная шапка для лендинга курса, вебинара или продукта с одной кнопкой: ссылки, кнопка с ценой и полоска прогресса чтения.",
+          "preserve": [
+            "кнопку с ценой в капсуле — главное действие видно всегда",
+            "полоску прогресса чтения через CSS-переменную из rAF, без ререндеров",
+            "словомарку с ромбиком и подписью"
+          ],
+          "adapt": [
+            "brand, caption, links, actionLabel, actionPrice, actionHref, menuLabel",
+            "progress, sticky",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Прогресс считается от высоты документа: на короткой странице полоска заполняется быстро.",
+            "Без actionPrice капсула не рисуется."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "brand",
+            "label": "Имя",
+            "type": "text",
+            "default": "Figma Pro",
+            "maxLength": 24
+          },
+          {
+            "prop": "actionPrice",
+            "label": "Цена",
+            "type": "text",
+            "default": "49 000 ₽",
+            "maxLength": 14
+          },
+          {
+            "prop": "progress",
+            "label": "Прогресс",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Course header with price and progress",
+            "description": "A course landing header: a wordmark with a diamond, a “course · 6 weeks” caption, links, an “Enroll” button with the price in a pill. A reading-progress bar under the header. A “Menu” button on narrow screens.",
+            "docs": "One file, zero dependencies, “use client” for progress and the menu. A sticky <header> with a translucent blurred background. Progress is a span with transform:scaleX(var(--progress)); the value is written into a CSS variable from requestAnimationFrame on scroll (passive), no re-renders. Links and the button from 60rem (container query); below that a “Menu” button with aria-expanded and a list under the header. Palette --vibeui-navbar-022-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained header for a course, webinar or single-CTA product landing: links, a button with the price and a reading-progress bar.",
+              "preserve": [
+                "the button with the price in a pill — the main action is always visible",
+                "the reading-progress bar via a CSS variable from rAF, no re-renders",
+                "the wordmark with a diamond and a caption"
+              ],
+              "adapt": [
+                "brand, caption, links, actionLabel, actionPrice, actionHref, menuLabel",
+                "progress, sticky",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Progress is computed from document height: on a short page the bar fills fast.",
+                "Without actionPrice the pill is not drawn."
+              ],
+              "usage": "<Navbar022\n  brand=\"Figma Pro\"\n  caption=\"course · 6 weeks\"\n  actionLabel=\"Enroll\"\n  actionPrice=\"$490\"\n  actionHref=\"#pricing\"\n  links={[{ label: \"Curriculum\", href: \"#program\" }, { label: \"Pricing\", href: \"#pricing\" }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Name",
+                "default": "Figma Pro"
+              },
+              "actionPrice": {
+                "label": "Price",
+                "default": "$490"
+              },
+              "progress": {
+                "label": "Progress"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "sticky": false,
+                "caption": "course · 6 weeks",
+                "actionLabel": "Enroll",
+                "actionPrice": "$490",
+                "menuLabel": "Menu",
+                "links": [
+                  {
+                    "label": "Who it’s for",
+                    "href": "#who"
+                  },
+                  {
+                    "label": "Curriculum",
+                    "href": "#program"
+                  },
+                  {
+                    "label": "Results",
+                    "href": "#results"
+                  },
+                  {
+                    "label": "Author",
+                    "href": "#author"
+                  },
+                  {
+                    "label": "Pricing",
+                    "href": "#pricing"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

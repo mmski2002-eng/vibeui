@@ -3566,6 +3566,218 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "pricing-020",
+      "type": "registry:block",
+      "title": "Тарифы курса с рассрочкой",
+      "description": "Тарифы курса: переключатель «оплата сразу / рассрочка на 6 месяцев» пересчитывает цены, три плана, выделенный залит тёмным и приподнят, плашка «осталось мест», старая цена зачёркнута, стикер «−20 % до 30 сентября» и подпись про договор и оплату.",
+      "categories": [
+        "pricing"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-020/pricing-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-020.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради переключателя. Переключатель — две кнопки aria-pressed на общей капсуле с бегунком ::before (transform translateX). Цена — Math.round(price / months) в режиме рассрочки, формат Intl.NumberFormat ru-RU, aria-live на блоке суммы. План featured — заливка цветом текста, translateY(-.75rem) на широком экране, кнопка акцентом. Сетка три колонки от 56rem (container query). Палитра --vibeui-pricing-020-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "course",
+          "education",
+          "edtech",
+          "landing",
+          "pricing",
+          "plans",
+          "instalments",
+          "toggle"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {}
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Pricing020",
+          "usage": "<Pricing020\n  title=\"Три формата — одна программа\"\n  months={6}\n  sticker=\"−20 % до 30 сентября\"\n  plans={[\n    { name: \"С куратором\", price: 49000, oldPrice: 61000, featured: true, seats: \"Осталось 12 мест\", features: [\"Куратор на 12 человек\", \"Защита кейса\"], actionLabel: \"Записаться\", actionHref: \"/pay/mentor\" },\n  ]}\n/>",
+          "summary": "Самодостаточные тарифы для курса, подписки или услуги с рассрочкой: переключатель способа оплаты, три плана с выделенным, места и скидка. Планы — массив пропсом.",
+          "preserve": [
+            "переключатель «сразу / рассрочка» с пересчётом — цена в месяц продаёт лучше цены за курс",
+            "выделенный план заливкой и подъёмом, плашку мест на нём",
+            "зачёркнутую старую цену и стикер срока скидки"
+          ],
+          "adapt": [
+            "plans: названия, тексты, цены, старые цены, списки, места, ссылки",
+            "months, onceLabel, splitLabel, sticker, note, currency, eyebrow, title, lede",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Цены — числа в рублях без форматирования; блок форматирует сам.",
+            "В режиме рассрочки старая цена не показывается, вместо неё «всего N ₽»."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Три формата — одна программа",
+            "maxLength": 50
+          },
+          {
+            "prop": "months",
+            "label": "Месяцев",
+            "type": "number",
+            "default": 6,
+            "min": 2,
+            "max": 24
+          },
+          {
+            "prop": "sticker",
+            "label": "Стикер",
+            "type": "text",
+            "default": "−20 % до 30 сентября",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Course pricing with instalments",
+            "description": "Course pricing: a “pay now / 6-month instalments” switch recalculates prices, three plans, the featured one filled dark and lifted, a “seats left” tag, the old price struck through, a “−20 % until 30 September” sticker and a note about the contract and payment.",
+            "docs": "One file, zero dependencies, “use client” for the switch. The switch is two aria-pressed buttons on a shared pill with a ::before thumb (transform translateX). Price is Math.round(price / months) in instalment mode, formatted with Intl.NumberFormat ru-RU, aria-live on the amount block. The featured plan is filled with the text colour, translateY(-.75rem) on wide screens, an accent button. A three-column grid from 56rem (container query). Palette --vibeui-pricing-020-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "Self-contained pricing for a course, subscription or service with instalments: a payment-mode switch, three plans with a featured one, seats and a discount. Plans come in as a prop array.",
+              "preserve": [
+                "the “now / instalments” switch with recalculation — a monthly price sells better than a course price",
+                "the featured plan filled and lifted, the seats tag on it",
+                "the struck-through old price and the discount deadline sticker"
+              ],
+              "adapt": [
+                "plans: names, texts, prices, old prices, feature lists, seats, links",
+                "months, onceLabel, splitLabel, sticker, note, currency, eyebrow, title, lede",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Prices are plain numbers; the block formats them itself.",
+                "In instalment mode the old price is hidden and “total N” shows instead."
+              ],
+              "usage": "<Pricing020\n  title=\"Three formats — one programme\"\n  months={6}\n  sticker=\"−20 % until 30 September\"\n  plans={[\n    { name: \"With a mentor\", price: 490, oldPrice: 610, featured: true, seats: \"12 seats left\", features: [\"A mentor per 12 students\", \"Case defence\"], actionLabel: \"Enroll\", actionHref: \"/pay/mentor\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Three formats — one programme"
+              },
+              "months": {
+                "label": "Months"
+              },
+              "sticker": {
+                "label": "Sticker",
+                "default": "−20 % until 30 September"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Pricing",
+                "title": "Three formats — one programme",
+                "lede": "Interest-free instalments from a partner bank. Full refund in the first seven days, no questions.",
+                "onceLabel": "Pay now",
+                "splitLabel": "Instalments",
+                "sticker": "−20 % until 30 September",
+                "note": "Contract and receipt by email. Card, bank transfer or invoice for companies.",
+                "currency": "€",
+                "plans": [
+                  {
+                    "name": "Solo",
+                    "text": "Recorded lessons and the cohort chat. No homework review.",
+                    "price": 290,
+                    "oldPrice": 360,
+                    "features": [
+                      "18 lessons and all files",
+                      "Cohort chat and community",
+                      "Access to recordings for a year"
+                    ],
+                    "actionLabel": "Choose",
+                    "actionHref": "#"
+                  },
+                  {
+                    "name": "With a mentor",
+                    "text": "Everything in Solo plus a review of every homework and a case defence.",
+                    "price": 490,
+                    "oldPrice": 610,
+                    "featured": true,
+                    "seats": "12 seats left",
+                    "features": [
+                      "A mentor per 12 students",
+                      "Video reviews of six homeworks",
+                      "Defence before an art director",
+                      "Your case in the referral base"
+                    ],
+                    "actionLabel": "Enroll",
+                    "actionHref": "#"
+                  },
+                  {
+                    "name": "With placement",
+                    "text": "A mentor, a career track and three mock interviews.",
+                    "price": 790,
+                    "oldPrice": 980,
+                    "features": [
+                      "Everything in With a mentor",
+                      "CV and portfolio with a career consultant",
+                      "Three mock interviews",
+                      "Partner vacancies"
+                    ],
+                    "actionLabel": "Choose",
+                    "actionHref": "#"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

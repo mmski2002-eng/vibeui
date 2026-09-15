@@ -3366,6 +3366,217 @@
           "accent"
         ]
       }
+    },
+    {
+      "name": "testimonials-018",
+      "type": "registry:block",
+      "title": "Отзывы студентов с видео и потоком",
+      "description": "Отзывы студентов курса: карточки с большой кавычкой, у первой — видео-превью с кнопкой play, фото, имя ссылкой на профиль, должность и плашка потока. Сверху общая оценка со звёздами. Карточки появляются каскадом.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-018/testimonials-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-018.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Шапка — flex с заголовком и оценкой (звёзды строкой). Сетка 1/2/3 колонки (container query 44rem и 64rem). Карточка с videoHref получает <a data-part=video> aspect-ratio 16/10 с превью и кнопкой play; имя с href — ссылка с подчёркиванием; поток — плашка цвета маркера. Появление — @keyframes с задержкой --n×90ms. Палитра --vibeui-testimonials-018-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "course",
+          "education",
+          "edtech",
+          "landing",
+          "reviews",
+          "testimonials",
+          "video",
+          "rating"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "items": [
+              {
+                "quote": "Самое ценное — ревью. Куратор разобрал мою домашку на 20 минут видео и показал, где я теряю пользователя.",
+                "name": "Марина Соколова",
+                "role": "UI-дизайнер, Авито",
+                "image": "/demo/people/person-06.webp",
+                "cohort": "поток 11",
+                "video": "/demo/places/place-02.webp",
+                "videoHref": "#",
+                "href": "#"
+              },
+              {
+                "quote": "Пришёл продактом, чтобы перестать ждать дизайнеров. Через месяц собрал прототип фичи сам.",
+                "name": "Игорь Левин",
+                "role": "Продакт-менеджер, Ozon",
+                "image": "/demo/people/person-05.webp",
+                "cohort": "поток 12",
+                "href": "#"
+              },
+              {
+                "quote": "Лайвы по средам — это отдельный курс. Ксения на живом файле показывает, как думает.",
+                "name": "Алина Фёдорова",
+                "role": "Дизайнер, фриланс",
+                "image": "/demo/people/person-04.webp",
+                "cohort": "поток 12",
+                "href": "#"
+              }
+            ]
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Testimonials018",
+          "usage": "<Testimonials018\n  title=\"Что говорят после защиты\"\n  score=\"4,9\"\n  scoreLabel=\"по 412 отзывам\"\n  items={[\n    { quote: \"Самое ценное — ревью.\", name: \"Марина Соколова\", role: \"UI-дизайнер, Авито\", image: \"/photos/graduate-04.webp\", cohort: \"поток 11\", video: \"/photos/lesson.webp\", videoHref: \"/reviews/marina\", href: \"https://t.me/marina\" },\n  ]}\n/>",
+          "summary": "Самодостаточная секция отзывов для курса, школы или сервиса: карточки с видео-превью, фото, ссылкой на профиль, потоком и общей оценкой. Отзывы — массив пропсом.",
+          "preserve": [
+            "имя ссылкой на профиль и плашку потока — отзыв проверяем",
+            "видео-превью с кнопкой play на карточке, где есть videoHref",
+            "большую кавычку акцентом и общую оценку со звёздами в шапке"
+          ],
+          "adapt": [
+            "items: цитаты, имена, роли, фото, ссылки, видео, потоки",
+            "eyebrow, title, lede, score, scoreLabel, videoLabel",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Видео открывается по ссылке videoHref — плеер не встроен, чтобы блок оставался лёгким.",
+            "Без href имя выводится текстом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что говорят после защиты",
+            "maxLength": 50
+          },
+          {
+            "prop": "score",
+            "label": "Оценка",
+            "type": "text",
+            "default": "4,9",
+            "maxLength": 4
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Student reviews with video and cohort",
+            "description": "Course student reviews: cards with a large quotation mark, the first with a video preview and a play button, a photo, the name as a profile link, role and a cohort tag. An overall score with stars on top. Cards cascade in.",
+            "docs": "One file, zero dependencies, a server component. The head is a flex row with the heading and score (stars as a string). A 1/2/3-column grid (container queries 44rem and 64rem). A card with videoHref gets an <a data-part=video> at aspect-ratio 16/10 with a preview and a play button; a name with href is an underlined link; the cohort is a marker-coloured tag. Appearance via @keyframes with a --n×90ms delay. Palette --vibeui-testimonials-018-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained reviews section for a course, school or service: cards with a video preview, a photo, a profile link, a cohort and an overall score. Reviews come in as a prop array.",
+              "preserve": [
+                "the name as a profile link and the cohort tag — the review is verifiable",
+                "the video preview with a play button on cards that have videoHref",
+                "the large accent quotation mark and the overall score with stars in the head"
+              ],
+              "adapt": [
+                "items: quotes, names, roles, photos, links, videos, cohorts",
+                "eyebrow, title, lede, score, scoreLabel, videoLabel",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Video opens via the videoHref link — no embedded player, to keep the block light.",
+                "Without href the name is plain text."
+              ],
+              "usage": "<Testimonials018\n  title=\"What people say after the defence\"\n  score=\"4.9\"\n  scoreLabel=\"from 412 reviews\"\n  items={[\n    { quote: \"The most valuable part is the review.\", name: \"Marina Sokolova\", role: \"UI designer, Avito\", image: \"/photos/graduate-04.webp\", cohort: \"cohort 11\", video: \"/photos/lesson.webp\", videoHref: \"/reviews/marina\", href: \"https://t.me/marina\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What people say after the defence"
+              },
+              "score": {
+                "label": "Score",
+                "default": "4.9"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Reviews",
+                "title": "What people say after the defence",
+                "lede": "Reviews from the alumni chat and open platforms — with names, roles and profile links.",
+                "score": "4.9",
+                "scoreLabel": "from 412 graduate reviews",
+                "videoLabel": "Video review",
+                "items": [
+                  {
+                    "quote": "The most valuable part is the review. My mentor spent 20 minutes of video on my homework and showed where I lose the user.",
+                    "name": "Marina Sokolova",
+                    "role": "UI designer, Avito",
+                    "image": "/demo/people/person-06.webp",
+                    "cohort": "cohort 11",
+                    "video": "/demo/places/place-02.webp",
+                    "videoHref": "#",
+                    "href": "#"
+                  },
+                  {
+                    "quote": "Came as a PM to stop waiting for designers. A month later I built a feature prototype myself.",
+                    "name": "Igor Levin",
+                    "role": "Product manager, Ozon",
+                    "image": "/demo/people/person-05.webp",
+                    "cohort": "cohort 12",
+                    "href": "#"
+                  },
+                  {
+                    "quote": "The Wednesday lives are a course of their own. Ksenia shows how she thinks on a live file.",
+                    "name": "Alina Fedorova",
+                    "role": "Designer, freelance",
+                    "image": "/demo/people/person-04.webp",
+                    "cohort": "cohort 12",
+                    "href": "#"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

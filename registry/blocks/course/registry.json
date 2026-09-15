@@ -1,0 +1,852 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "course-001",
+      "type": "registry:block",
+      "title": "Для кого: персоны переключателем",
+      "description": "«Для кого»: три типичных старта переключателем-радио, справа карточка — кто вы сейчас, что получите и список результатов галочками. Смена персоны перерисовывает карточку: текст въезжает, галочки появляются каскадом.",
+      "categories": [
+        "course"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "course-001/course-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/course-001.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради переключателя. Переключатель — <ul role=tablist> с кнопками role=tab и aria-selected; активная подсвечена заливкой акцента и точкой-радио. Карточка получает key персоны и пересоздаётся — @keyframes на карточку и на пункты списка с задержкой --n×70ms. От 56rem (container query) две колонки 1fr/1.2fr. Палитра --vibeui-course-001-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "course",
+          "education",
+          "edtech",
+          "landing",
+          "personas",
+          "audience",
+          "tabs"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {}
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Course001",
+          "usage": "<Course001\n  title=\"Курс подстраивается под то, откуда вы приходите\"\n  personas={[\n    { label: \"Начинаю с нуля\", title: \"Вы никогда не открывали Figma\", text: \"Начнём с сетки и компонентов.\", outcomes: [\"Три экрана приложения\", \"Первый проект в портфолио\"], note: \"с нуля до первого проекта\" },\n  ]}\n/>",
+          "summary": "Самодостаточная секция «для кого» для курса, сервиса или продукта с несколькими аудиториями: персоны переключателем и карточка результатов под каждую. Персоны — массив пропсом.",
+          "preserve": [
+            "переключатель персон вместо трёх одинаковых колонок — человек выбирает себя, а не читает всё",
+            "пересоздание карточки по key с каскадом галочек",
+            "плашку-заметку с коротким обещанием"
+          ],
+          "adapt": [
+            "personas: подписи, заголовки, тексты, результаты, заметки",
+            "eyebrow, title, lede, outcomesLabel",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Персон может быть две или пять — переключатель растёт списком.",
+            "Первая персона открыта по умолчанию."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Курс подстраивается под то, откуда вы приходите",
+            "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Who it’s for: personas as a switch",
+            "description": "“Who it’s for”: three typical starting points as a radio switch, a card on the right — who you are now, what you get and a checklist of outcomes. Switching a persona re-renders the card: the text slides in, checkmarks cascade.",
+            "docs": "One file, zero dependencies, “use client” for the switch. The switch is a <ul role=tablist> with role=tab buttons and aria-selected; the active one is highlighted with an accent fill and a radio dot. The card gets the persona as key and remounts — @keyframes on the card and on list items with a --n×70ms delay. From 56rem (container query) two columns 1fr/1.2fr. Palette --vibeui-course-001-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained “who it’s for” section for a course, service or multi-audience product: personas as a switch and an outcomes card per persona. Personas come in as a prop array.",
+              "preserve": [
+                "the persona switch instead of three identical columns — people pick themselves rather than reading everything",
+                "remounting the card by key with cascading checkmarks",
+                "the note tag with a short promise"
+              ],
+              "adapt": [
+                "personas: labels, titles, texts, outcomes, notes",
+                "eyebrow, title, lede, outcomesLabel",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Two or five personas work — the switch grows as a list.",
+                "The first persona is open by default."
+              ],
+              "usage": "<Course001\n  title=\"The course adapts to where you start\"\n  personas={[\n    { label: \"Starting from zero\", title: \"You have never opened Figma\", text: \"We start with grids and components.\", outcomes: [\"Three app screens\", \"First portfolio project\"], note: \"from zero to a first project\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "The course adapts to where you start"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Who it’s for",
+                "title": "The course adapts to where you start",
+                "lede": "Three typical starts — three sets of practice. Pick yours to see what you get.",
+                "outcomesLabel": "What you get",
+                "personas": [
+                  {
+                    "label": "Starting from zero",
+                    "title": "You have never opened Figma",
+                    "text": "You want into interface design but don’t know where to start. We begin with grids and components and reach a prototype in six weeks.",
+                    "outcomes": [
+                      "Three mobile app screens by the guidelines",
+                      "Understand components and auto layout",
+                      "A first portfolio project with a mentor's review"
+                    ],
+                    "note": "from zero to a first project"
+                  },
+                  {
+                    "label": "From graphic design",
+                    "title": "You can draw, but not interfaces",
+                    "text": "You know composition and type but get lost in a product team: states, flows, design systems. We translate the skill into product.",
+                    "outcomes": [
+                      "A design system with tokens and variants",
+                      "A prototype with logic and error states",
+                      "A portfolio for product design vacancies"
+                    ],
+                    "note": "a switch in 6 weeks"
+                  },
+                  {
+                    "label": "PM without hands",
+                    "title": "You brief designers",
+                    "text": "You want to build prototypes for hypotheses yourself and speak the team's language without waiting in the design queue.",
+                    "outcomes": [
+                      "A clickable hypothesis prototype in an evening",
+                      "Understand design constraints and timing",
+                      "Read mockups and give precise feedback"
+                    ],
+                    "note": "a prototype in an evening"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "course-002",
+      "type": "registry:block",
+      "title": "Программа по неделям аккордеоном",
+      "description": "Программа курса: недели аккордеоном на details, номер недели плашкой, внутри уроки с длительностью и кнопкой play, домашка в лаймовой плашке. Справа липкая сводка в цифрах и итоговый проект пунктирной карточкой.",
+      "categories": [
+        "course"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "course-002/course-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/course-002.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. <details name={useId()}> — открыта одна неделя (openFirst открывает первую), summary сеткой auto/1fr/1.5rem с шевроном, который поворачивается и заливается акцентом при [open]. Уроки — список с play-кружком и @keyframes каскадом --n×50ms. Домашка — плашка цвета маркера. Сводка — тёмная карточка с цифрами, итоговый проект — пунктирная рамка. От 60rem (container query) 1.6fr/1fr, aside position:sticky. Палитра --vibeui-course-002-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "course",
+          "education",
+          "edtech",
+          "landing",
+          "curriculum",
+          "syllabus",
+          "accordion",
+          "program"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {}
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Course002",
+          "usage": "<Course002\n  title=\"Шесть недель — три проекта в портфолио\"\n  weeks={[\n    { label: \"Неделя 1\", title: \"Сетка и первый экран\", lessons: [{ title: \"Как устроена Figma\", length: \"35 мин\" }], homework: \"Экран онбординга\" },\n  ]}\n  summary={[{ value: \"18\", label: \"уроков\" }, { value: \"24 ч\", label: \"видео\" }]}\n  finalTitle=\"Мобильное приложение с нуля до прототипа\"\n/>",
+          "summary": "Самодостаточная программа для курса, интенсива или буткемпа: недели аккордеоном с уроками и домашками, липкая сводка и итоговый проект. Недели — массив пропсом.",
+          "preserve": [
+            "details с общим name — один открытый модуль, без состояния",
+            "липкую сводку в цифрах справа — ответ «сколько это» всегда на экране",
+            "домашку плашкой цвета маркера и уроки с длительностью"
+          ],
+          "adapt": [
+            "weeks: подписи, темы, тексты, уроки с длительностью, домашки",
+            "summary, summaryTitle, finalTitle, finalText, homeworkLabel, openFirst",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Атрибут name у details — Chrome 120+, Safari 17.2+, Firefox 130+; в старых браузерах модули открываются независимо.",
+            "Плавное раскрытие высоты браузер не анимирует: анимируются уроки внутри."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Шесть недель — три проекта в портфолио",
+            "maxLength": 50
+          },
+          {
+            "prop": "openFirst",
+            "label": "Первая открыта",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Curriculum by week as an accordion",
+            "description": "A course curriculum: weeks as a details accordion, the week number as a tag, lessons with duration and a play button inside, homework in a lime tag. On the right a sticky summary in figures and a final project in a dashed card.",
+            "docs": "One file, zero dependencies, a server component. <details name={useId()}> — one week open (openFirst opens the first), a summary grid auto/1fr/1.5rem with a chevron that rotates and fills with the accent when [open]. Lessons are a list with a play circle and a @keyframes cascade of --n×50ms. Homework is a marker-coloured tag. The summary is a dark card with figures, the final project a dashed frame. From 60rem (container query) 1.6fr/1fr, the aside position:sticky. Palette --vibeui-course-002-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained curriculum for a course, intensive or bootcamp: weeks as an accordion with lessons and homework, a sticky summary and a final project. Weeks come in as a prop array.",
+              "preserve": [
+                "details with a shared name — one open module, no state",
+                "the sticky figures summary on the right — “how much is it” always on screen",
+                "homework as a marker-coloured tag and lessons with duration"
+              ],
+              "adapt": [
+                "weeks: labels, topics, texts, lessons with duration, homework",
+                "summary, summaryTitle, finalTitle, finalText, homeworkLabel, openFirst",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The name attribute on details — Chrome 120+, Safari 17.2+, Firefox 130+; older browsers open modules independently.",
+                "Browsers do not animate the height; lessons inside animate instead."
+              ],
+              "usage": "<Course002\n  title=\"Six weeks — three portfolio projects\"\n  weeks={[\n    { label: \"Week 1\", title: \"Grid and the first screen\", lessons: [{ title: \"How Figma works\", length: \"35 min\" }], homework: \"An onboarding screen\" },\n  ]}\n  summary={[{ value: \"18\", label: \"lessons\" }, { value: \"24 h\", label: \"video\" }]}\n  finalTitle=\"A mobile app from scratch to a prototype\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Six weeks — three portfolio projects"
+              },
+              "openFirst": {
+                "label": "First open"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Curriculum",
+                "title": "Six weeks — three portfolio projects",
+                "lede": "Every week: three recorded lessons, a live review and homework checked by a mentor.",
+                "summaryTitle": "In numbers",
+                "homeworkLabel": "Homework:",
+                "finalTitle": "Final project: a mobile app from scratch to a prototype",
+                "finalText": "A defence before an art director from a partner company. The best cases go into the referral base.",
+                "summary": [
+                  {
+                    "value": "18",
+                    "label": "lessons"
+                  },
+                  {
+                    "value": "24 h",
+                    "label": "video and lives"
+                  },
+                  {
+                    "value": "6",
+                    "label": "reviewed homeworks"
+                  },
+                  {
+                    "value": "3",
+                    "label": "projects"
+                  }
+                ],
+                "weeks": [
+                  {
+                    "label": "Week 1",
+                    "title": "Grid, type and the first screen",
+                    "text": "What an interface is made of; a first screen by the platform guidelines.",
+                    "lessons": [
+                      {
+                        "title": "How Figma works: files, pages, frames",
+                        "length": "35 min"
+                      },
+                      {
+                        "title": "Grids and spacing: the 8-pixel system",
+                        "length": "40 min"
+                      },
+                      {
+                        "title": "Interface typography",
+                        "length": "45 min"
+                      }
+                    ],
+                    "homework": "An onboarding screen from a reference"
+                  },
+                  {
+                    "label": "Week 2",
+                    "title": "Components and auto layout",
+                    "lessons": [
+                      {
+                        "title": "Auto layout from simple to nested",
+                        "length": "50 min"
+                      },
+                      {
+                        "title": "Components and variants",
+                        "length": "45 min"
+                      },
+                      {
+                        "title": "States: hover, focus, error",
+                        "length": "35 min"
+                      }
+                    ],
+                    "homework": "A set of 12 components"
+                  },
+                  {
+                    "label": "Week 3",
+                    "title": "Design system and tokens",
+                    "lessons": [
+                      {
+                        "title": "Colour and theme: light and dark",
+                        "length": "40 min"
+                      },
+                      {
+                        "title": "Tokens, styles, variables",
+                        "length": "45 min"
+                      }
+                    ],
+                    "homework": "A mini system with 2 themes"
+                  },
+                  {
+                    "label": "Week 4",
+                    "title": "Flows and prototyping",
+                    "lessons": [
+                      {
+                        "title": "User journey and screens",
+                        "length": "40 min"
+                      },
+                      {
+                        "title": "A prototype with transitions and overlays",
+                        "length": "50 min"
+                      }
+                    ],
+                    "homework": "A clickable 6-screen prototype"
+                  },
+                  {
+                    "label": "Week 5",
+                    "title": "Working with developers",
+                    "lessons": [
+                      {
+                        "title": "Dev Mode and handoff",
+                        "length": "40 min"
+                      },
+                      {
+                        "title": "Review with a developer: live",
+                        "length": "1.5 h"
+                      }
+                    ],
+                    "homework": "Mockups for three breakpoints"
+                  },
+                  {
+                    "label": "Week 6",
+                    "title": "Case and defence",
+                    "lessons": [
+                      {
+                        "title": "How to write a portfolio case",
+                        "length": "40 min"
+                      },
+                      {
+                        "title": "Defence before an art director: live",
+                        "length": "2 h"
+                      }
+                    ],
+                    "homework": "The final case"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "course-003",
+      "type": "registry:block",
+      "title": "Результаты выпускников «было → стало»",
+      "description": "Результаты выпускников: карточки со скрином проекта, плашкой выгоды, портретом, стрелкой «было → стало» и цитатой. Скрин приподнимается по наведению, карточки появляются каскадом.",
+      "categories": [
+        "course"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "course-003/course-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/course-003.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Сетка 1/2/3 колонки (container query 44rem и 64rem). Карточка: work с aspect-ratio 4/3 и scale 1.04 по hover, плашка gain цвета маркера, блок path сеткой 1fr/auto/1fr со стрелкой в акцентном кружке, цитата курсивом, ссылка на кейс. Появление — @keyframes с задержкой --n×90ms. Палитра --vibeui-course-003-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "course",
+          "education",
+          "edtech",
+          "landing",
+          "results",
+          "graduates",
+          "cases",
+          "before-after"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "cases": [
+              {
+                "name": "Артём Гусев",
+                "image": "/demo/people/person-03.webp",
+                "work": "/demo/places/place-05.webp",
+                "before": "маркетолог, 4 года",
+                "after": "продуктовый дизайнер, Ozon",
+                "gain": "оффер через 2 месяца",
+                "quote": "Кейс с защиты показал на собеседовании — взяли без тестового.",
+                "href": "#"
+              },
+              {
+                "name": "Лена Крылова",
+                "image": "/demo/people/person-04.webp",
+                "work": "/demo/places/place-06.webp",
+                "before": "графический дизайнер",
+                "after": "UI-дизайнер, Самокат",
+                "gain": "×1,8 к доходу",
+                "quote": "Наконец поняла автолейаут. Теперь макеты не разваливаются.",
+                "href": "#"
+              },
+              {
+                "name": "Даниил Орлов",
+                "image": "/demo/people/person-05.webp",
+                "work": "/demo/places/place-07.webp",
+                "before": "продакт-менеджер",
+                "after": "продакт, сам собирает прототипы",
+                "gain": "гипотезы за вечер",
+                "quote": "Перестал ждать дизайнера две недели ради одного экрана.",
+                "href": "#"
+              }
+            ]
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Course003",
+          "usage": "<Course003\n  title=\"Кем стали выпускники прошлых потоков\"\n  cases={[\n    { name: \"Артём Гусев\", image: \"/photos/graduate-01.webp\", work: \"/photos/work-01.webp\", before: \"маркетолог, 4 года\", after: \"продуктовый дизайнер, Ozon\", gain: \"оффер через 2 месяца\", quote: \"Кейс показал на собеседовании — взяли без тестового.\", href: \"/cases/artem\" },\n  ]}\n/>",
+          "summary": "Самодостаточная секция результатов для курса, школы или агентства: скрин работы, портрет, «было → стало», выгода и цитата. Кейсы — массив пропсом.",
+          "preserve": [
+            "стрелку «было → стало» — результат в одной строке, без абзаца",
+            "скрин работы над карточкой: доказательство, а не аватар",
+            "плашку выгоды цвета маркера в углу скрина"
+          ],
+          "adapt": [
+            "cases: имена, портреты, скрины, было/стало, выгода, цитата, ссылка",
+            "eyebrow, title, lede, beforeLabel, afterLabel, linkLabel",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Без work карточка показывает подложку — лучше давать скрины всем.",
+            "href у кейса необязателен: без него ссылки нет."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Кем стали выпускники прошлых потоков",
+            "maxLength": 50
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Graduate results “before → after”",
+            "description": "Graduate results: cards with a project screenshot, a gain tag, a portrait, a “before → after” arrow and a quote. The screenshot lifts on hover, cards cascade in.",
+            "docs": "One file, zero dependencies, a server component. A 1/2/3-column grid (container queries 44rem and 64rem). A card: work with aspect-ratio 4/3 and scale 1.04 on hover, a marker-coloured gain tag, a path block as a 1fr/auto/1fr grid with an arrow in an accent circle, an italic quote, a case link. Appearance via @keyframes with a --n×90ms delay. Palette --vibeui-course-003-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained results section for a course, school or agency: a work screenshot, a portrait, “before → after”, a gain and a quote. Cases come in as a prop array.",
+              "preserve": [
+                "the “before → after” arrow — the result in one line, no paragraph",
+                "the work screenshot over the card: proof, not an avatar",
+                "the marker-coloured gain tag in the screenshot corner"
+              ],
+              "adapt": [
+                "cases: names, portraits, screenshots, before/after, gain, quote, link",
+                "eyebrow, title, lede, beforeLabel, afterLabel, linkLabel",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Without work the card shows a placeholder — better give everyone a screenshot.",
+                "href is optional: without it there is no link."
+              ],
+              "usage": "<Course003\n  title=\"Where graduates of past cohorts are now\"\n  cases={[\n    { name: \"Artem Gusev\", image: \"/photos/graduate-01.webp\", work: \"/photos/work-01.webp\", before: \"marketer, 4 years\", after: \"product designer, Ozon\", gain: \"an offer in 2 months\", quote: \"Showed the case at the interview — hired without a test task.\", href: \"/cases/artem\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Where graduates of past cohorts are now"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Results",
+                "title": "Where graduates of past cohorts are now",
+                "lede": "Not “100 % employed” but specific people and specific offers — with the work they built on the course.",
+                "beforeLabel": "Before",
+                "afterLabel": "After",
+                "linkLabel": "See the case",
+                "cases": [
+                  {
+                    "name": "Artem Gusev",
+                    "image": "/demo/people/person-03.webp",
+                    "work": "/demo/places/place-05.webp",
+                    "before": "marketer, 4 years",
+                    "after": "product designer, Ozon",
+                    "gain": "an offer in 2 months",
+                    "quote": "Showed the defence case at the interview — hired without a test task.",
+                    "href": "#"
+                  },
+                  {
+                    "name": "Lena Krylova",
+                    "image": "/demo/people/person-04.webp",
+                    "work": "/demo/places/place-06.webp",
+                    "before": "graphic designer",
+                    "after": "UI designer, Samokat",
+                    "gain": "×1.8 income",
+                    "quote": "Finally understood auto layout. Mockups don’t fall apart anymore.",
+                    "href": "#"
+                  },
+                  {
+                    "name": "Daniil Orlov",
+                    "image": "/demo/people/person-05.webp",
+                    "work": "/demo/places/place-07.webp",
+                    "before": "product manager",
+                    "after": "PM who builds prototypes himself",
+                    "gain": "hypotheses in an evening",
+                    "quote": "Stopped waiting two weeks for a designer for a single screen.",
+                    "href": "#"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "course-004",
+      "type": "registry:block",
+      "title": "Как проходит неделя: лента по дням",
+      "description": "Как проходит обучение: вертикальная лента дней с точками на линии, у каждого дня тип занятия (запись, лайв, ревью, чат) и время; справа фото занятия с подписью и список форматов с цифрами. Линия ленты дорисовывается при появлении.",
+      "categories": [
+        "course"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "course-004/course-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/course-004.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. <ol> с линией через ::before и акцентной линией ::after, которая растёт scaleY 0→1 за 1.4s; дни появляются с задержкой --n×120ms. Точка дня — кружок с бордюром акцента; лайв (kind «лайв»/«live») — залитая точка с ореолом и плашка цвета маркера. От 60rem (container query) две колонки 1.2fr/1fr. Палитра --vibeui-course-004-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "course",
+          "education",
+          "edtech",
+          "landing",
+          "schedule",
+          "timeline",
+          "format",
+          "week"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "image": "/demo/places/place-02.webp"
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Course004",
+          "usage": "<Course004\n  title=\"Одна неделя курса — по дням\"\n  days={[\n    { day: \"пн\", kind: \"запись\", time: \"с утра\", title: \"Три урока недели открываются\" },\n    { day: \"ср\", kind: \"лайв\", time: \"19:30\", title: \"Лайв с автором: разбор и вопросы\" },\n  ]}\n  formats={[{ title: \"18 записанных уроков\", text: \"по 35–50 минут\" }]}\n  image=\"/photos/lesson.webp\"\n/>",
+          "summary": "Самодостаточная секция «как проходит обучение» для курса, школы или клуба: неделя по дням лентой, фото и форматы. Дни и форматы — массивы пропсом.",
+          "preserve": [
+            "ленту по дням с типом занятия — отвечает на «сколько времени и когда»",
+            "акцентную линию, которая дорисовывается, и залитую точку у лайва",
+            "форматы карточками с цифрами справа"
+          ],
+          "adapt": [
+            "days: день, тип, время, заголовок, текст",
+            "formats, image, imageAlt, caption, eyebrow, title, lede",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Тип «лайв»/«live» подсвечивается особо; остальные типы нейтральные.",
+            "Без image правая колонка показывает только форматы."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Одна неделя курса — по дням",
+            "maxLength": 50
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "How a week goes: a day-by-day feed",
+            "description": "How learning goes: a vertical feed of days with dots on a line, each day with a session type (recording, live, review, chat) and time; on the right a session photo with a caption and a list of formats with figures. The feed line draws itself on appearance.",
+            "docs": "One file, zero dependencies, a server component. An <ol> with a line via ::before and an accent line via ::after growing scaleY 0→1 over 1.4s; days appear with a --n×120ms delay. A day's dot is a circle with an accent border; live (kind “лайв”/“live”) is a filled dot with a halo and a marker-coloured tag. From 60rem (container query) two columns 1.2fr/1fr. Palette --vibeui-course-004-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained “how learning goes” section for a course, school or club: a week day by day, a photo and formats. Days and formats come in as prop arrays.",
+              "preserve": [
+                "the day feed with session types — answers “how much time and when”",
+                "the accent line drawing itself and the filled dot for the live",
+                "formats as cards with figures on the right"
+              ],
+              "adapt": [
+                "days: day, kind, time, title, text",
+                "formats, image, imageAlt, caption, eyebrow, title, lede",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The “лайв”/“live” kind is highlighted; other kinds are neutral.",
+                "Without image the right column shows formats only."
+              ],
+              "usage": "<Course004\n  title=\"One course week — day by day\"\n  days={[\n    { day: \"mon\", kind: \"recording\", time: \"morning\", title: \"Three lessons of the week open\" },\n    { day: \"wed\", kind: \"live\", time: \"19:30\", title: \"Live with the author: review and questions\" },\n  ]}\n  formats={[{ title: \"18 recorded lessons\", text: \"35–50 minutes each\" }]}\n  image=\"/photos/lesson.webp\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "One course week — day by day"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "image": "/demo/places/place-02.webp",
+                "eyebrow": "How learning goes",
+                "title": "One course week — day by day",
+                "lede": "Recorded lessons, a live on Wednesdays and reviewed homework. Five to seven hours a week, the rest at your pace.",
+                "caption": "Live on Wednesdays — the recording stays",
+                "days": [
+                  {
+                    "day": "mon",
+                    "kind": "recording",
+                    "time": "morning",
+                    "title": "Three lessons of the week open",
+                    "text": "Watch at your pace; notes and files in your account."
+                  },
+                  {
+                    "day": "wed",
+                    "kind": "live",
+                    "time": "19:30, 1.5 h",
+                    "title": "Live with the author: review and questions",
+                    "text": "The recording stays; questions can be asked in advance in chat."
+                  },
+                  {
+                    "day": "sat",
+                    "kind": "review",
+                    "time": "by 12:00",
+                    "title": "Homework deadline",
+                    "text": "A mentor checks within 48 hours and records a video review."
+                  },
+                  {
+                    "day": "sun",
+                    "kind": "chat",
+                    "time": "all day",
+                    "title": "Reviewing others' work",
+                    "text": "See how others solved it and discuss in the cohort chat."
+                  }
+                ],
+                "formats": [
+                  {
+                    "title": "18 recorded lessons",
+                    "text": "35–50 minutes, with timecodes and files"
+                  },
+                  {
+                    "title": "6 lives with the author",
+                    "text": "on Wednesdays, recordings kept for a year"
+                  },
+                  {
+                    "title": "A mentor per 12 students",
+                    "text": "a video review of every homework"
+                  },
+                  {
+                    "title": "Cohort chat",
+                    "text": "and a closed alumni community after"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

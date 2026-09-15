@@ -2939,6 +2939,198 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "footer-021",
+      "type": "registry:block",
+      "title": "Подвал курса с реквизитами",
+      "description": "Подвал лендинга курса: словомарка с подписью, автор и почта, две колонки ссылок (разделы курса и документы), соцсети капсулами, внизу реквизиты ИП и лицензия на образовательную деятельность.",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-021/footer-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-021.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный компонент. <footer> с верхней сеткой: колонкой на узком, от 56rem (container query) 1.6fr/1fr/1fr/1.2fr. Колонки ссылок из columns, соцсети — капсулы target=_blank. Нижняя строка — реквизиты мелким. Верхняя граница секции — линия. Палитра --vibeui-footer-021-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "meta": {
+        "tags": [
+          "course",
+          "education",
+          "edtech",
+          "landing",
+          "footer",
+          "legal",
+          "licence",
+          "socials"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {}
+        },
+        "cardControls": [
+          "brand",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Footer021",
+          "usage": "<Footer021\n  brand=\"Figma Pro\"\n  caption=\"Онлайн-курс для продуктовых дизайнеров\"\n  author=\"Автор и ведущая — Ксения Мороз\"\n  email=\"hello@figmapro.school\"\n  columns={[{ title: \"Курс\", links: [{ label: \"Программа\", href: \"#program\" }] }, { title: \"Документы\", links: [{ label: \"Договор оферты\", href: \"/offer\" }] }]}\n  socials={[{ label: \"Telegram\", href: \"https://t.me/figmapro\" }]}\n  legal=\"ИП Мороз К. А., ИНН …, лицензия № …\"\n/>",
+          "summary": "Самодостаточный подвал для курса, школы или эксперта: словомарка, автор, колонки ссылок, соцсети и реквизиты с лицензией. Всё содержимое пропсами.",
+          "preserve": [
+            "реквизиты и лицензию мелким внизу — для образовательных продуктов это обязательная строка",
+            "колонки ссылок из массива columns — разделы и документы отдельно",
+            "соцсети капсулами, а не иконками"
+          ],
+          "adapt": [
+            "brand, caption, author, email, legal",
+            "columns (заголовки и ссылки), socials, socialsLabel",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Колонок может быть одна или три — сетка на широком экране рассчитана на две.",
+            "Ссылки соцсетей открываются в новой вкладке с rel=noreferrer."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "brand",
+            "label": "Имя",
+            "type": "text",
+            "default": "Figma Pro",
+            "maxLength": 24
+          },
+          {
+            "prop": "author",
+            "label": "Автор",
+            "type": "text",
+            "default": "Автор и ведущая — Ксения Мороз",
+            "maxLength": 50
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Course footer with legal details",
+            "description": "A course landing footer: a wordmark with a caption, the author and email, two link columns (course sections and documents), socials as pills, at the bottom the sole-trader details and the education licence.",
+            "docs": "One file, zero dependencies, a server component. A <footer> with a top grid: a column when narrow, 1.6fr/1fr/1fr/1.2fr from 56rem (container query). Link columns from columns, socials as target=_blank pills. The bottom line is small legal text. A top border line on the section. Palette --vibeui-footer-021-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "ai": {
+              "summary": "A self-contained footer for a course, school or expert: a wordmark, the author, link columns, socials and legal details with a licence. All content via props.",
+              "preserve": [
+                "legal details and the licence in small print at the bottom — mandatory for education products",
+                "link columns from the columns array — sections and documents separately",
+                "socials as pills, not icons"
+              ],
+              "adapt": [
+                "brand, caption, author, email, legal",
+                "columns (titles and links), socials, socialsLabel",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "One or three columns work — the wide grid is designed for two.",
+                "Social links open in a new tab with rel=noreferrer."
+              ],
+              "usage": "<Footer021\n  brand=\"Figma Pro\"\n  caption=\"An online course for product designers\"\n  author=\"Author and host — Ksenia Moroz\"\n  email=\"hello@figmapro.school\"\n  columns={[{ title: \"Course\", links: [{ label: \"Curriculum\", href: \"#program\" }] }, { title: \"Documents\", links: [{ label: \"Terms\", href: \"/terms\" }] }]}\n  socials={[{ label: \"Telegram\", href: \"https://t.me/figmapro\" }]}\n  legal=\"Sole trader K. Moroz, licence no. …\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Name",
+                "default": "Figma Pro"
+              },
+              "author": {
+                "label": "Author",
+                "default": "Author and host — Ksenia Moroz"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "caption": "An online course for product designers",
+                "author": "Author and host — Ksenia Moroz",
+                "columns": [
+                  {
+                    "title": "Course",
+                    "links": [
+                      {
+                        "label": "Curriculum",
+                        "href": "#program"
+                      },
+                      {
+                        "label": "Results",
+                        "href": "#results"
+                      },
+                      {
+                        "label": "Pricing",
+                        "href": "#pricing"
+                      },
+                      {
+                        "label": "FAQ",
+                        "href": "#faq"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Documents",
+                    "links": [
+                      {
+                        "label": "Terms",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Privacy policy",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Refund policy",
+                        "href": "#"
+                      }
+                    ]
+                  }
+                ],
+                "socialsLabel": "Find us",
+                "legal": "Sole trader Ksenia Moroz. Education licence no. L035-00000-78/00000000. © 2021–2026."
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
