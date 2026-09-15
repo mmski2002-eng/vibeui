@@ -1,5 +1,6 @@
 import "server-only"
 
+import { buildRegistryDocs, withPreserveHeader } from "@/lib/registry-docs"
 import { getCatalogItem } from "@/registry/index"
 import { getBlockSource } from "@/registry/source.server"
 
@@ -15,14 +16,13 @@ export async function buildRegistryItem(slug: string) {
     return null
   }
 
-  const files = await Promise.all(
-    (item.files ?? []).map(async (file) => ({
-      path: file.path,
-      type: file.type,
-      target: file.target,
-      content: await getBlockSource(slug),
-    })),
-  )
+  const source = await getBlockSource(slug)
+  const files = (item.files ?? []).map((file) => ({
+    path: file.path,
+    type: file.type,
+    target: file.target,
+    content: source === null ? undefined : withPreserveHeader(source, item),
+  }))
 
   return {
     $schema: "https://ui.shadcn.com/schema/registry-item.json",
@@ -32,6 +32,9 @@ export async function buildRegistryItem(slug: string) {
     description: item.description,
     dependencies: item.dependencies ?? [],
     registryDependencies: item.registryDependencies ?? [],
+    // shadcn CLI печатает docs после установки: правила доходят до агента
+    // терминалом, минуя пересказ фетчера.
+    docs: buildRegistryDocs(item),
     files,
   }
 }

@@ -19,9 +19,29 @@ import path from "node:path"
 const ROOT = "public/r"
 const DEMO = "/demo/"
 
+/**
+ * Три первых правила «сохрани как установлено» — в `docs`: shadcn CLI
+ * печатает это поле после установки, и правила доходят до агента терминалом,
+ * даже когда его фетчер пересказал бриф. Тот же текст для закрытых item'ов
+ * собирает lib/registry-docs.ts.
+ */
+function withRules(item) {
+  const rules = (item.meta?.ai?.preserve ?? []).slice(0, 3)
+
+  if (rules.length === 0 || item.docs?.startsWith("Сохрани как установлено:")) {
+    return false
+  }
+
+  const block = ["Сохрани как установлено:", ...rules.map((rule) => `- ${rule}`)].join("\n")
+
+  item.docs = item.docs ? `${block}\n\n${item.docs}` : block
+
+  return true
+}
+
 /** Витрина и её пути уходят; всё остальное в `meta` агенту нужно. */
 function stripItem(item) {
-  let touched = false
+  let touched = withRules(item)
 
   // Исходник из статики убираем: `public/r` отдаёт nginx без проверки, и
   // оставленный тут `content` — это код, отданный даром. Реальный файл

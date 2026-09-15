@@ -77,9 +77,25 @@ export function buildAgentBrief(
     lines.push(item.description)
   }
 
+  // Правила идут до команд и списком: фетчер агента пересказывает бриф и
+  // теряет прозу, а короткий список в начале переживает пересказ. Три
+  // первых правила — самые важные; остальное агент прочитает в файле.
+  const rules = (ai?.preserve ?? []).slice(0, 3)
+
   lines.push(
     "",
-    copy.install(copy.noun[kind]),
+    copy.rules,
+    `- ${copy.install(copy.noun[kind])}`,
+    `- ${copy.placement[kind]}`,
+  )
+
+  if (rules.length > 0) {
+    lines.push(`- ${copy.preserve}`, ...rules.map((rule) => `  - ${rule}`))
+  }
+
+  lines.push(
+    "",
+    copy.installHeading,
     installCommand ??
       (registryUrl ? `${copy.registryItem} ${registryUrl}` : copy.noCommand),
   )
@@ -122,15 +138,7 @@ export function buildAgentBrief(
     lines.push("", copy.configured)
   }
 
-  // Три первых правила — самые важные; остальное агент прочитает в файле,
-  // который к этому моменту уже установлен.
-  const rules = (ai?.preserve ?? []).slice(0, 3)
-
-  if (rules.length > 0) {
-    lines.push("", copy.preserve, ...bullets(rules))
-  }
-
-  lines.push("", copy.placement[kind], copy.readFile)
+  lines.push("", copy.readFile)
 
   if (pageUrl) {
     lines.push("", `${copy.page} ${pageUrl}`)

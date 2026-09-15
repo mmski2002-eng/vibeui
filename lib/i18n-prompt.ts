@@ -12,7 +12,9 @@ import type { ItemKind } from "@/registry/categories"
 type PromptCopy = {
   brief: {
     noun: Record<ItemKind, string>
+    rules: string
     install: (noun: string) => string
+    installHeading: string
     noCommand: string
     registryItem: string
     curl: string
@@ -63,8 +65,10 @@ const RU: PromptCopy = {
       animation: "компонент",
       template: "шаблон",
     },
+    rules: "Правила:",
     install: (noun) =>
-      `Установи ${noun} командой. Не пиши код сам и не пересоздавай его по описанию:`,
+      `Установи ${noun} командой ниже. Не пиши код сам и не пересоздавай его по описанию.`,
+    installHeading: "Установка:",
     noCommand: "Команда установки не сконфигурирована.",
     registryItem: "Registry item:",
     curl: "Если shadcn CLI в проекте нет — скачай файл, не переписывай его руками:",
@@ -170,8 +174,10 @@ const EN: PromptCopy = {
       animation: "component",
       template: "page",
     },
+    rules: "Rules:",
     install: (noun) =>
-      `Install this ${noun} with the command below. Do not write the code yourself and do not recreate it from the description:`,
+      `Install this ${noun} with the command below. Do not write the code yourself and do not recreate it from the description.`,
+    installHeading: "Install:",
     noCommand: "The install command is not configured.",
     registryItem: "Registry item:",
     curl: "No shadcn CLI in this project? Download the file — do not retype it:",

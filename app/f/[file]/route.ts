@@ -1,5 +1,7 @@
 import { denialText, resolveAccess } from "@/lib/access"
+import { withPreserveHeader } from "@/lib/registry-docs"
 import { verifyRegistryLink } from "@/lib/registry-link"
+import { getCatalogItem } from "@/registry/index"
 import { getBlockSource } from "@/registry/source.server"
 
 /**
@@ -23,9 +25,10 @@ export async function GET(
 ) {
   const { file } = await params
   const slug = file.replace(/\.tsx$/, "")
+  const item = getCatalogItem(slug)
   const source = await getBlockSource(slug)
 
-  if (!source) {
+  if (!item || !source) {
     return new Response("Not found\n", { status: 404 })
   }
 
@@ -46,7 +49,7 @@ export async function GET(
     }
   }
 
-  return new Response(source, {
+  return new Response(withPreserveHeader(source, item), {
     headers: {
       "content-type": "text/plain; charset=utf-8",
       "cache-control": "private, no-store",
