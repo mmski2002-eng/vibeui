@@ -32,7 +32,8 @@
         "preview": {
           "props": {
             "sticky": false
-          }
+          },
+          "width": "natural"
         },
         "ai": {
           "export": "Realty001",
@@ -185,10 +186,17 @@
                     "href": "#agents"
                   }
                 ]
-              }
+              },
+              "width": "natural"
             }
           }
-        }
+        },
+        "cardControls": [
+          "brand",
+          "tone",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -222,7 +230,8 @@
         "preview": {
           "props": {
             "image": "/demo/places/place-05.webp"
-          }
+          },
+          "width": "natural"
         },
         "ai": {
           "export": "Realty002",
@@ -369,10 +378,17 @@
                     "label": "in the city"
                   }
                 ]
-              }
+              },
+              "width": "natural"
             }
           }
-        }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -517,7 +533,8 @@
                 ]
               }
             ]
-          }
+          },
+          "width": "natural"
         },
         "ai": {
           "export": "Realty003",
@@ -747,10 +764,17 @@
                 "flipHint": "details",
                 "openLabel": "View listing",
                 "closeLabel": "Close"
-              }
+              },
+              "width": "natural"
             }
           }
-        }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -821,7 +845,8 @@
                 "y": 14
               }
             ]
-          }
+          },
+          "width": "natural"
         },
         "ai": {
           "export": "Realty004",
@@ -955,10 +980,17 @@
                     "y": 14
                   }
                 ]
-              }
+              },
+              "width": "natural"
             }
           }
-        }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -990,7 +1022,8 @@
           "realty"
         ],
         "preview": {
-          "props": {}
+          "props": {},
+          "width": "natural"
         },
         "ai": {
           "export": "Realty005",
@@ -1111,10 +1144,17 @@
                     "time": "1 day"
                   }
                 ]
-              }
+              },
+              "width": "natural"
             }
           }
-        }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1146,7 +1186,8 @@
           "realty"
         ],
         "preview": {
-          "props": {}
+          "props": {},
+          "width": "natural"
         },
         "ai": {
           "export": "Realty006",
@@ -1255,10 +1296,17 @@
                 "lede": "Computed by the annuity formula, the way banks do. We will find the exact rate for your programme.",
                 "actionLabel": "Find a programme",
                 "note": "A preliminary estimate, not a bank offer."
-              }
+              },
+              "width": "natural"
             }
           }
-        }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1292,7 +1340,8 @@
         "preview": {
           "props": {
             "image": "/demo/places/place-03.webp"
-          }
+          },
+          "width": "natural"
         },
         "ai": {
           "export": "Realty007",
@@ -1416,10 +1465,17 @@
                 "doneTitle": "Thank you, received",
                 "doneText": "We will call within an hour with a price range.",
                 "consentLabel": "I agree to data processing and a call to this number."
-              }
+              },
+              "width": "natural"
             }
           }
-        }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1496,7 +1552,8 @@
                 "chatHref": "mailto:law@example.com"
               }
             ]
-          }
+          },
+          "width": "natural"
         },
         "ai": {
           "export": "Realty008",
@@ -1634,10 +1691,17 @@
                     "chatHref": "mailto:law@example.com"
                   }
                 ]
-              }
+              },
+              "width": "natural"
             }
           }
-        }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1671,7 +1735,8 @@
           "rating"
         ],
         "preview": {
-          "props": {}
+          "props": {},
+          "width": "natural"
         },
         "ai": {
           "export": "Realty009",
@@ -1803,10 +1868,17 @@
                     "rating": 5
                   }
                 ]
-              }
+              },
+              "width": "natural"
             }
           }
-        }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1881,7 +1953,8 @@
                 "longitude": 30.2632
               }
             ]
-          }
+          },
+          "width": "natural"
         },
         "ai": {
           "export": "Realty010",
@@ -2027,10 +2100,17 @@
                     "longitude": 30.2632
                   }
                 ]
-              }
+              },
+              "width": "natural"
             }
           }
-        }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2065,7 +2145,8 @@
           "details"
         ],
         "preview": {
-          "props": {}
+          "props": {},
+          "width": "natural"
         },
         "ai": {
           "export": "Realty011",
@@ -2195,10 +2276,17 @@
                     "answer": "We revisit the price and strategy together. The contract can be terminated at any time without penalties."
                   }
                 ]
-              }
+              },
+              "width": "natural"
             }
           }
-        }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2235,7 +2323,8 @@
           "vk"
         ],
         "preview": {
-          "props": {}
+          "props": {},
+          "width": "natural"
         },
         "ai": {
           "export": "Realty012",
@@ -2392,10 +2481,17 @@
                   }
                 ],
                 "legal": "© 2007–2026 Neva Homes Ltd. Licence no. 0412. Not an offer."
-              }
+              },
+              "width": "natural"
             }
           }
-        }
+        },
+        "cardControls": [
+          "brand",
+          "tone",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

@@ -35,7 +35,8 @@
         "preview": {
           "props": {
             "sticky": false
-          }
+          },
+          "width": "natural"
         },
         "ai": {
           "export": "Restaurant001",
@@ -188,10 +189,17 @@
                     "href": "#map"
                   }
                 ]
-              }
+              },
+              "width": "natural"
             }
           }
-        }
+        },
+        "cardControls": [
+          "brand",
+          "tone",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -228,7 +236,8 @@
         "preview": {
           "props": {
             "image": "/demo/places/place-03.webp"
-          }
+          },
+          "width": "natural"
         },
         "ai": {
           "export": "Restaurant002",
@@ -341,10 +350,16 @@
                   "Weekend brunch from 11:00",
                   "Jazz on Fridays"
                 ]
-              }
+              },
+              "width": "natural"
             }
           }
-        }
+        },
+        "cardControls": [
+          "eyebrow",
+          "tone",
+          "accent"
+        ]
       }
     },
     {
@@ -379,7 +394,8 @@
           "leader"
         ],
         "preview": {
-          "props": {}
+          "props": {},
+          "width": "natural"
         },
         "ai": {
           "export": "Restaurant003",
@@ -589,10 +605,17 @@
                     ]
                   }
                 ]
-              }
+              },
+              "width": "natural"
             }
           }
-        }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -630,7 +653,8 @@
           "props": {
             "image": "/demo/people/person-09.webp",
             "imageSecondary": "/demo/places/place-02.webp"
-          }
+          },
+          "width": "natural"
         },
         "ai": {
           "export": "Restaurant004",
@@ -755,10 +779,17 @@
                     "label": "guide stars"
                   }
                 ]
-              }
+              },
+              "width": "natural"
             }
           }
-        }
+        },
+        "cardControls": [
+          "name",
+          "tone",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -828,7 +859,8 @@
                 "caption": "зал"
               }
             ]
-          }
+          },
+          "width": "natural"
         },
         "ai": {
           "export": "Restaurant005",
@@ -957,10 +989,17 @@
                     "caption": "hall"
                   }
                 ]
-              }
+              },
+              "width": "natural"
             }
           }
-        }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -995,7 +1034,8 @@
           "table"
         ],
         "preview": {
-          "props": {}
+          "props": {},
+          "width": "natural"
         },
         "ai": {
           "export": "Restaurant006",
@@ -1112,10 +1152,17 @@
                 "doneTitle": "The table is yours",
                 "doneText": "We will send a confirmation to your messenger in a couple of minutes.",
                 "consentLabel": "I agree to data processing and a call to this number."
-              }
+              },
+              "width": "natural"
             }
           }
-        }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1197,7 +1244,8 @@
                 "image": "/demo/places/place-08.webp"
               }
             ]
-          }
+          },
+          "width": "natural"
         },
         "ai": {
           "export": "Restaurant007",
@@ -1339,10 +1387,17 @@
                     "image": "/demo/places/place-08.webp"
                   }
                 ]
-              }
+              },
+              "width": "natural"
             }
           }
-        }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1379,7 +1434,8 @@
         "preview": {
           "props": {
             "image": "/demo/places/place-04.webp"
-          }
+          },
+          "width": "natural"
         },
         "ai": {
           "export": "Restaurant008",
@@ -1505,10 +1561,16 @@
                     "rating": 5
                   }
                 ]
-              }
+              },
+              "width": "natural"
             }
           }
-        }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent"
+        ]
       }
     },
     {
@@ -1544,7 +1606,8 @@
           "address"
         ],
         "preview": {
-          "props": {}
+          "props": {},
+          "width": "natural"
         },
         "ai": {
           "export": "Restaurant009",
@@ -1672,10 +1735,17 @@
                 ],
                 "routeLabel": "Build a route",
                 "providerLabel": "Yandex Maps"
-              }
+              },
+              "width": "natural"
             }
           }
-        }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1711,7 +1781,8 @@
           "telegram"
         ],
         "preview": {
-          "props": {}
+          "props": {},
+          "width": "natural"
         },
         "ai": {
           "export": "Restaurant010",
@@ -1868,10 +1939,17 @@
                   }
                 ],
                 "legal": "© 2019–2026 Jay Ltd. The menu is not a public offer."
-              }
+              },
+              "width": "natural"
             }
           }
-        }
+        },
+        "cardControls": [
+          "brand",
+          "tone",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1911,7 +1989,8 @@
             "style": {
               "padding": "3rem 0"
             }
-          }
+          },
+          "width": "natural"
         },
         "ai": {
           "export": "Restaurant011",
@@ -2035,10 +2114,17 @@
                 "text": "Dry, mineral, apple and lime. Perfect with whitefish and oysters.",
                 "price": "€11 / glass",
                 "actionLabel": "See the bar"
-              }
+              },
+              "width": "natural"
             }
           }
-        }
+        },
+        "cardControls": [
+          "label",
+          "tone",
+          "accent",
+          "background"
+        ]
       }
     }
   ]
