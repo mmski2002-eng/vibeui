@@ -15,7 +15,12 @@ import type { Scenario } from "@/registry/scenarios"
  */
 
 export async function readScenarioSource(scenario: Scenario): Promise<string> {
-  return readFile(path.join(process.cwd(), scenario.source), "utf8")
+  // Путь собирается от литеральной папки: иначе трассировка сборки не может
+  // сузить доступ к файлам и тащит в standalone весь проект.
+  return readFile(
+    path.join(process.cwd(), "app/scenarios", path.relative("app/scenarios", scenario.source)),
+    "utf8",
+  )
 }
 
 /**
@@ -79,7 +84,12 @@ export type ScenarioImage = { file: string; format: string; prompt: string }
 export async function readScenarioImages(scenario: Scenario): Promise<{ style: string; images: ScenarioImage[] }> {
   if (!scenario.images) return { style: "", images: [] }
 
-  const text = await readFile(path.join(process.cwd(), scenario.images), "utf8")
+  // Путь собирается от литеральной папки: иначе трассировка сборки не может
+  // сузить доступ к файлам и тащит в standalone весь проект.
+  const text = await readFile(
+    path.join(process.cwd(), "docs/scenarios", path.relative("docs/scenarios", scenario.images)),
+    "utf8",
+  )
   const style = text.match(/```\n([\s\S]*?)```/)?.[1].replace(/\s+/g, " ").trim() ?? ""
   const images = text
     .split("\n")

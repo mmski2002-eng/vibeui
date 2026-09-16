@@ -1,4 +1,5 @@
 import { AccountSupport } from "@/components/pages/account/support"
+import { pageNumber } from "@/components/account/ui/pager"
 
 const LOCALE = "en" as const
 
@@ -7,6 +8,12 @@ export const metadata = {
   robots: { index: false, follow: false },
 }
 
-export default function Page() {
-  return <AccountSupport locale={LOCALE} />
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>
+}) {
+  const { page } = await searchParams
+
+  return <AccountSupport locale={LOCALE} page={pageNumber(page)} />
 }
