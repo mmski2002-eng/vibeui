@@ -1,4 +1,5 @@
 import { AccountFavorites } from "@/components/pages/account/favorites"
+import { pageNumber } from "@/components/account/ui/pager"
 
 const LOCALE = "ru" as const
 
@@ -7,6 +8,19 @@ export const metadata = {
   robots: { index: false, follow: false },
 }
 
-export default function Page() {
-  return <AccountFavorites locale={LOCALE} />
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string; q?: string; kind?: string }>
+}) {
+  const { page, q, kind } = await searchParams
+
+  return (
+    <AccountFavorites
+      locale={LOCALE}
+      page={pageNumber(page)}
+      query={q ?? ""}
+      kind={kind ?? "all"}
+    />
+  )
 }

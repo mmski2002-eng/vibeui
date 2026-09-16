@@ -52,7 +52,8 @@ export const ACCOUNT_TEXTS = {
         "Отдайте ссылку ИИ-агенту",
       ],
       startAction: "Выбрать первый компонент",
-      limitLeft: (left: number, total: number) => `${left} из ${total} доступно`,
+      limitLeft: (left: number, total: number) =>
+        `${left} из ${total} доступно`,
       limitResets: (date: string) => `Обновится ${date}`,
       limitNote:
         "Считаются разные компоненты: повторное копирование того же самого лимит не занимает.",
@@ -76,7 +77,7 @@ export const ACCOUNT_TEXTS = {
     },
     favorites: {
       title: "Избранное",
-      lead: "Отложенные компоненты. Превью живые — это тот самый компонент, который поставится в проект.",
+      lead: "Отложенные компоненты: список, поиск и фильтр по типу. Превью и код — на странице компонента.",
       count: (n: number) => `Сохранено: ${n}`,
       search: "Поиск по избранному",
       searchPlaceholder: "Название или код…",
@@ -102,8 +103,7 @@ export const ACCOUNT_TEXTS = {
       allMonths: "Все месяцы",
       empty: "Записей пока нет. Первый скопированный компонент появится здесь.",
       nothingFound: "Ничего не нашлось",
-      more: "Показать ещё",
-      shown: (shown: number, total: number) => `Показано ${shown} из ${total}`,
+      apply: "Показать",
     },
     billing: {
       title: "Тариф и оплата",
@@ -114,8 +114,7 @@ export const ACCOUNT_TEXTS = {
       proNote: (date: string) =>
         `Компоненты без ограничений, закрытые — тоже. Оплата разовая, автосписаний нет: доступ до ${date}, потом тариф станет бесплатным, оплатить снова можно в любой момент.`,
       until: (date: string) => `Доступ до ${date}`,
-      bonusNote:
-        "Бонусные дни. Когда они закончатся, тариф станет бесплатным.",
+      bonusNote: "Бонусные дни. Когда они закончатся, тариф станет бесплатным.",
       expiredTitle: "Срок доступа закончился",
       expiredNote: (date: string) =>
         `Доступ Pro закончился ${date}. Бесплатный тариф продолжает работать.`,
@@ -130,7 +129,8 @@ export const ACCOUNT_TEXTS = {
       billingMode: "Оплата",
       oneOff: "Разовая, без автосписаний",
       paidTotal: "Оплачено всего",
-      paymentsCount: (n: number) => `${n} платеж${n % 10 === 1 && n % 100 !== 11 ? "" : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? "а" : "ей"}`,
+      paymentsCount: (n: number) =>
+        `${n} платеж${n % 10 === 1 && n % 100 !== 11 ? "" : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? "а" : "ей"}`,
       columnDate: "Дата",
       columnAmount: "Сумма",
       columnStatus: "Статус",
@@ -337,11 +337,12 @@ export const ACCOUNT_TEXTS = {
       daysToReset: "Days until the limit resets",
       daysLeft: "Days of access",
       activity: "Activity, last 30 days",
-      activityNote: "Distinct components by the day you first reached for them.",
+      activityNote:
+        "Distinct components by the day you first reached for them.",
     },
     favorites: {
       title: "Favourites",
-      lead: "Saved components. The previews are live — this is the component your project gets.",
+      lead: "Saved components: a list with search and a type filter. Preview and code live on the component page.",
       count: (n: number) => `Saved: ${n}`,
       search: "Search favourites",
       searchPlaceholder: "Name or code…",
@@ -367,8 +368,7 @@ export const ACCOUNT_TEXTS = {
       allMonths: "All months",
       empty: "No records yet. The first component you copy will show up here.",
       nothingFound: "Nothing found",
-      more: "Show more",
-      shown: (shown: number, total: number) => `Showing ${shown} of ${total}`,
+      apply: "Show",
     },
     billing: {
       title: "Plan and billing",
@@ -406,7 +406,8 @@ export const ACCOUNT_TEXTS = {
         "YooKassa confirms a payment within a few minutes. Refresh the page — the status will show up here.",
       refresh: "Refresh",
       payments: "Payment history and receipts",
-      paymentsNote: "A receipt appears here once it is issued through the tax service.",
+      paymentsNote:
+        "A receipt appears here once it is issued through the tax service.",
       paymentsEmpty: "No payments yet.",
       status: {
         succeeded: "Paid",
@@ -504,8 +505,7 @@ export const ACCOUNT_TEXTS = {
       unverified: "Not confirmed",
       verify: "Send the letter again",
       localeTitle: "Language of letters",
-      localeNote:
-        "Subscription and password letters arrive in this language.",
+      localeNote: "Subscription and password letters arrive in this language.",
       passwordTitle: "Change password",
       passwordNote:
         "Other devices will be signed out — that is how you take the account back if the password leaked. This tab stays open.",

@@ -2,14 +2,14 @@ import { desc, eq } from "drizzle-orm"
 import { Heart } from "lucide-react"
 
 import {
-  FavoritesGrid,
-  type FavoriteCard,
-} from "@/components/account/favorites-grid"
+  FAVORITES_PER_PAGE,
+  FavoritesList,
+  type FavoriteRow,
+} from "@/components/account/favorites-list"
 import { ACCOUNT_TEXTS } from "@/components/account/texts"
 import { ButtonLink } from "@/components/account/ui/button"
 import { EmptyState } from "@/components/account/ui/empty-state"
 import { PageHeader } from "@/components/account/ui/page-header"
-import { CatalogThumbnail } from "@/components/catalog/catalog-thumbnail"
 import { db } from "@/lib/db"
 import { favorite } from "@/lib/db/schema"
 import { localePath, type Locale } from "@/lib/i18n"
@@ -34,32 +34,68 @@ function kindLabel(kind: string, locale: Locale) {
     : found.label
 }
 
-export async function AccountFavorites({ locale }: { locale: Locale }) {
+/**
+ * Избранное. Строки из базы — только имена и даты, дёшево даже для сотен
+ * записей; названия и тип приходят из реестра. Поэтому поиск по названию и
+ * фильтр по типу считаются здесь, а не в SQL, и уже отфильтрованный список
+ * режется на страницы.
+ */
+export async function AccountFavorites({
+  locale,
+  page,
+  query,
+  kind,
+}: {
+  locale: Locale
+  page: number
+  query: string
+  kind: string
+}) {
   const user = await requireUser(locale)
   const t = ACCOUNT_TEXTS[locale].favorites
 
   const rows = await db
-    .select()
+    .select({ itemName: favorite.itemName, createdAt: favorite.createdAt })
     .from(favorite)
     .where(eq(favorite.userId, user.id))
     .orderBy(desc(favorite.createdAt))
 
-  const cards: FavoriteCard[] = rows.map((row) => {
+  const all: FavoriteRow[] = rows.map((row) => {
     const item = getCatalogItem(row.itemName)
-    const kind = getItemKind(row.itemName) ?? "component"
+    const itemKind = getItemKind(row.itemName) ?? "component"
 
     return {
       name: row.itemName,
       title: item?.title ?? row.itemName,
-      kind,
-      kindLabel: kindLabel(kind, locale),
-      href: `${itemBasePath(kind)}/${row.itemName}`,
+      kind: itemKind,
+      kindLabel: kindLabel(itemKind, locale),
+      href: `${itemBasePath(itemKind)}/${row.itemName}`,
       docUrl: getItemDocUrl(row.itemName),
-      // Превью рендерит сервер: это тот же компонент, что и в каталоге, и
-      // клиентской панели незачем знать про реестр.
-      preview: <CatalogThumbnail slug={row.itemName} locale={locale} />,
+      addedAt: row.createdAt.toLocaleDateString(
+        locale === "en" ? "en-GB" : "ru-RU",
+        { day: "numeric", month: "short" },
+      ),
     }
   })
+
+  const kinds = new Map<string, string>()
+
+  for (const row of all) kinds.set(row.kind, row.kindLabel)
+
+  const needle = query.trim().toLowerCase()
+  const filtered = all.filter((row) => {
+    if (kind !== "all" && row.kind !== kind) return false
+    if (!needle) return true
+
+    return (
+      row.title.toLowerCase().includes(needle) ||
+      row.name.toLowerCase().includes(needle)
+    )
+  })
+  const pageRows = filtered.slice(
+    (page - 1) * FAVORITES_PER_PAGE,
+    page * FAVORITES_PER_PAGE,
+  )
 
   return (
     <>
@@ -67,15 +103,15 @@ export async function AccountFavorites({ locale }: { locale: Locale }) {
         title={t.title}
         lead={t.lead}
         action={
-          rows.length > 0 ? (
+          all.length > 0 ? (
             <p className="text-shell-muted text-sm tabular-nums">
-              {t.count(rows.length)}
+              {t.count(all.length)}
             </p>
           ) : null
         }
       />
 
-      {rows.length === 0 ? (
+      {all.length === 0 ? (
         <EmptyState
           index={1}
           icon={<Heart />}
@@ -91,7 +127,15 @@ export async function AccountFavorites({ locale }: { locale: Locale }) {
           }
         />
       ) : (
-        <FavoritesGrid locale={locale} cards={cards} />
+        <FavoritesList
+          locale={locale}
+          rows={pageRows}
+          kinds={[...kinds.entries()]}
+          total={filtered.length}
+          page={page}
+          query={query}
+          kind={kind}
+        />
       )}
     </>
   )
