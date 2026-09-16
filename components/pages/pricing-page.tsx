@@ -466,7 +466,7 @@ export async function PricingPage({ locale }: { locale: Locale }) {
             <div className="pointer-events-auto mt-9 flex flex-wrap items-center justify-center gap-3">
               <Link
                 href={session ? catalogHref : signupHref}
-                className="inline-flex h-12 items-center gap-2 rounded-full bg-[#ff5900] px-6 text-sm font-semibold text-[#151515] transition-colors hover:bg-[#ff7a33] focus-visible:ring-2 focus-visible:ring-[#ff5900] focus-visible:ring-offset-2 focus-visible:ring-offset-[light-dark(#ffffff,#151515)] focus-visible:outline-none"
+                className="inline-flex h-12 items-center gap-2 rounded-full bg-shell-accent px-6 text-sm font-semibold text-shell-accent-fg transition-colors hover:bg-shell-accent-deep focus-visible:ring-2 focus-visible:ring-shell-accent focus-visible:ring-offset-2 focus-visible:ring-offset-[light-dark(#ffffff,#151515)] focus-visible:outline-none"
               >
                 {session ? t.heroPrimarySigned : t.heroPrimary}
                 <ArrowRight className="size-4" aria-hidden="true" />
@@ -563,13 +563,13 @@ export async function PricingPage({ locale }: { locale: Locale }) {
                         ))}
                       </div>
                     ) : index === 1 ? (
-                      <div className="relative grid size-20 place-items-center rounded-2xl bg-[light-dark(#f2f2f2,#151515)] text-[#ff5900] shadow-[0_20px_50px_-20px_rgba(255,89,0,0.45)] transition-transform duration-500 group-hover:-rotate-6">
+                      <div className="relative grid size-20 place-items-center rounded-2xl bg-[light-dark(#f2f2f2,#151515)] text-[#ff5900] shadow-[0_20px_50px_-20px_rgba(255,89,0,0.45)] transition-transform duration-(--motion-slow) group-hover:-rotate-6">
                         <Lock
-                          className="size-8 transition-opacity duration-300 group-hover:opacity-0"
+                          className="size-8 transition-opacity duration-(--motion-base) group-hover:opacity-0"
                           aria-hidden="true"
                         />
                         <LockOpen
-                          className="absolute size-8 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                          className="absolute size-8 opacity-0 transition-opacity duration-(--motion-base) group-hover:opacity-100"
                           aria-hidden="true"
                         />
                       </div>
@@ -580,7 +580,7 @@ export async function PricingPage({ locale }: { locale: Locale }) {
                         </span>
                         <ArrowRight className="text-shell-muted size-6" aria-hidden="true" />
                         <InfinityIcon
-                          className="size-12 text-[#ff5900] transition-transform duration-500 group-hover:scale-125"
+                          className="size-12 text-[#ff5900] transition-transform duration-(--motion-slow) group-hover:scale-125"
                           aria-hidden="true"
                         />
                       </p>

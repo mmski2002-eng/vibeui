@@ -3,17 +3,15 @@
 import { useEffect, useRef, useState } from "react"
 
 import {
-  DesktopFrame,
+  DeviceFrame,
   PHONE_BEZEL,
-  PhoneFrame,
   TABLET_BEZEL,
-  TabletFrame,
 } from "@/components/device-frames"
 import { getDictionary, type Locale } from "@/lib/i18n"
 import type { ItemKind } from "@/registry/categories"
 
 // bezel — сколько ширины контейнера съедает корпус устройства по бокам
-// (рамка DesktopFrame — 1px с каждой стороны).
+// (рамка десктопа — 1px с каждой стороны).
 const VIEWPORTS = [
   { id: "desktop", width: 1440, height: 810, bezel: 2 },
   { id: "tablet", width: 768, height: 1024, bezel: TABLET_BEZEL * 2 + 4 },
@@ -96,9 +94,11 @@ export function BlockPreview({
   // Экран: iframe шире контейнера и вписывается масштабом. position:absolute
   // держит его вне потока: страница не может уехать по горизонтали,
   // даже если transform по какой-то причине не применился.
+  // Экран — один и тот же узел при любом устройстве (см. DeviceFrame),
+  // поэтому смена размера едет CSS-transition'ом, а не щёлкает.
   const screen = (
     <div
-      className="relative"
+      className="preview-screen relative overflow-hidden"
       style={{
         width: measured ? frameWidth * scale : undefined,
         height: measured ? frameHeight * scale : frameHeight,
@@ -166,13 +166,12 @@ export function BlockPreview({
       </div>
 
       <div ref={containerRef} className="flex justify-center">
-        {viewport === "desktop" ? (
-          <DesktopFrame className="w-full">{screen}</DesktopFrame>
-        ) : viewport === "tablet" ? (
-          <TabletFrame>{screen}</TabletFrame>
-        ) : (
-          <PhoneFrame>{screen}</PhoneFrame>
-        )}
+        <DeviceFrame
+          kind={viewport}
+          className={viewport === "desktop" ? "w-full" : undefined}
+        >
+          {screen}
+        </DeviceFrame>
       </div>
     </div>
   )

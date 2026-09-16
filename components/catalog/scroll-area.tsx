@@ -195,7 +195,7 @@ export function ScrollArea({
       {thumb ? (
         <div
           aria-hidden="true"
-          className="absolute inset-y-0 right-0 flex w-2 touch-none border-l border-l-transparent p-px transition-opacity duration-150 select-none"
+          className="absolute inset-y-0 right-0 flex w-2 touch-none border-l border-l-transparent p-px transition-opacity duration-(--motion-fast) select-none"
           style={{ opacity: visible || hovered ? 1 : 0 }}
         >
           <div

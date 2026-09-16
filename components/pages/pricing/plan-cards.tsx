@@ -154,7 +154,7 @@ export function PlanCards({
     : prices.enterpriseMonthly
   const period = yearly ? t.perYear : t.perMonth
   const proButton =
-    "bg-[#ff5900] text-[#151515] hover:bg-[#ff7a33] focus-visible:ring-[#ff5900] inline-flex h-11 w-full items-center justify-center rounded-lg px-5 text-sm font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#151515] focus-visible:outline-none"
+    "bg-shell-accent text-shell-accent-fg hover:bg-shell-accent-deep focus-visible:ring-shell-accent inline-flex h-11 w-full items-center justify-center rounded-lg px-5 text-sm font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#151515] focus-visible:outline-none"
   const outlineButton =
     "border-shell-border-strong text-shell-fg hover:border-shell-accent focus-visible:ring-shell-ring inline-flex h-11 w-full items-center justify-center rounded-lg border px-5 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none"
 
@@ -163,8 +163,17 @@ export function PlanCards({
       <div
         role="group"
         aria-label={t.switchLabel}
-        className="border-shell-border bg-shell-panel mx-auto inline-flex items-center gap-0.5 rounded-full border p-1"
+        className="border-shell-border bg-shell-panel relative mx-auto inline-grid grid-cols-2 rounded-full border p-1"
       >
+        {/* Подложка активного периода — один элемент, который переезжает
+            между равными половинами, а не перекраска кнопок. */}
+        <span
+          aria-hidden="true"
+          className={cn(
+            "bg-shell-fg period-pill pointer-events-none absolute inset-y-1 w-[calc(50%-0.25rem)] rounded-full",
+            yearly ? "left-1/2" : "left-1",
+          )}
+        />
         {[false, true].map((option) => (
           <button
             key={String(option)}
@@ -172,9 +181,9 @@ export function PlanCards({
             aria-pressed={yearly === option}
             onClick={() => setYearly(option)}
             className={cn(
-              "focus-visible:ring-shell-ring inline-flex h-9 items-center gap-2 rounded-full px-4 text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none",
+              "focus-visible:ring-shell-ring relative inline-flex h-9 items-center justify-center gap-2 rounded-full px-4 text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none",
               yearly === option
-                ? "bg-shell-fg text-shell font-medium"
+                ? "text-shell font-medium"
                 : "text-shell-muted hover:text-shell-fg",
             )}
           >
@@ -184,7 +193,7 @@ export function PlanCards({
                 className={cn(
                   "rounded-full px-1.5 py-0.5 text-[0.6875rem] font-semibold",
                   yearly
-                    ? "bg-[#ff5900] text-[#151515]"
+                    ? "bg-shell-accent text-shell-accent-fg"
                     : "bg-shell-accent-soft text-shell-accent-text",
                 )}
               >

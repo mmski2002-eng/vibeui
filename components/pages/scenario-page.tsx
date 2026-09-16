@@ -8,7 +8,11 @@ import { ScenarioTour } from "@/components/catalog/scenario-tour"
 import { isPro } from "@/lib/entitlements"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
 import { getScenario, scenarioSections, scenarioText } from "@/lib/scenario"
-import { extractUsage, readScenarioImages, readScenarioSource } from "@/lib/scenario.server"
+import {
+  extractUsage,
+  readScenarioImages,
+  readScenarioSource,
+} from "@/lib/scenario.server"
 import { getSession } from "@/lib/session"
 
 /**
@@ -18,7 +22,13 @@ import { getSession } from "@/lib/session"
  * каталоге. Подписчику: точный JSX каждого блока из демо, общие правила,
  * промпты картинок и ссылка для агента с исходником страницы целиком.
  */
-export async function ScenarioPage({ locale, slug }: { locale: Locale; slug: string }) {
+export async function ScenarioPage({
+  locale,
+  slug,
+}: {
+  locale: Locale
+  slug: string
+}) {
   const scenario = getScenario(slug)
 
   if (!scenario) {
@@ -31,7 +41,10 @@ export async function ScenarioPage({ locale, slug }: { locale: Locale; slug: str
   const session = await getSession()
   const pro = session ? await isPro(session.user.id) : false
   const [source, pictures] = pro
-    ? await Promise.all([readScenarioSource(scenario), readScenarioImages(scenario)])
+    ? await Promise.all([
+        readScenarioSource(scenario),
+        readScenarioImages(scenario),
+      ])
     : [null, null]
 
   return (
@@ -40,7 +53,10 @@ export async function ScenarioPage({ locale, slug }: { locale: Locale; slug: str
         <nav aria-label="Breadcrumb" className="mb-4">
           <ol className="text-shell-muted flex flex-wrap items-center gap-2 text-sm">
             <li>
-              <Link href={localePath(locale, "/scenarios")} className="hover:text-shell-fg transition-colors">
+              <Link
+                href={localePath(locale, "/scenarios")}
+                className="hover:text-shell-fg transition-colors"
+              >
                 {t.title}
               </Link>
             </li>
@@ -50,8 +66,12 @@ export async function ScenarioPage({ locale, slug }: { locale: Locale; slug: str
         </nav>
 
         <header className="mb-6">
-          <h1 className="text-shell-fg text-2xl font-semibold tracking-tight sm:text-3xl">{text.label}</h1>
-          <p className="text-shell-muted mt-3 max-w-2xl text-sm text-pretty sm:text-base">{text.summary}</p>
+          <h1 className="text-shell-fg text-2xl font-semibold tracking-tight sm:text-3xl">
+            {text.label}
+          </h1>
+          <p className="text-shell-muted mt-3 max-w-2xl text-sm text-pretty sm:text-base">
+            {text.summary}
+          </p>
           <div className="mt-5 flex flex-wrap items-center gap-3">
             <Link
               href={scenario.demo}
@@ -63,23 +83,35 @@ export async function ScenarioPage({ locale, slug }: { locale: Locale; slug: str
               <ArrowUpRight className="size-4" aria-hidden="true" />
             </Link>
             {pro ? (
-              <ScenarioCopy slug={scenario.slug} locale={locale} labels={{ copy: t.copy, copied: t.copied, signIn: t.signIn }} />
+              <ScenarioCopy
+                slug={scenario.slug}
+                locale={locale}
+                labels={{ copy: t.copy, copied: t.copied, signIn: t.signIn }}
+              />
             ) : (
               <Link
                 href={localePath(locale, "/pricing")}
-                className="acc-press inline-flex h-11 items-center gap-2 rounded-full bg-[#ff5900] px-5 text-sm font-semibold text-[#151515] transition-colors hover:bg-[#ff7a33]"
+                className="acc-press bg-shell-accent text-shell-accent-fg hover:bg-shell-accent-deep inline-flex h-11 items-center gap-2 rounded-full px-5 text-sm font-semibold transition-colors"
               >
                 <Lock className="size-4" aria-hidden="true" />
                 {t.proLink}
               </Link>
             )}
           </div>
-          {pro ? <p className="text-shell-muted mt-3 max-w-2xl text-xs">{t.copyNote}</p> : null}
+          {pro ? (
+            <p className="text-shell-muted mt-3 max-w-2xl text-xs">
+              {t.copyNote}
+            </p>
+          ) : null}
         </header>
 
         <section className="mt-2">
-          <h2 className="text-shell-fg text-lg font-semibold">{t.composition}</h2>
-          <p className="text-shell-muted mt-2 max-w-2xl text-sm">{t.compositionNote(sections.length)}</p>
+          <h2 className="text-shell-fg text-lg font-semibold">
+            {t.composition}
+          </h2>
+          <p className="text-shell-muted mt-2 max-w-2xl text-sm">
+            {t.compositionNote(sections.length)}
+          </p>
           <div className="mt-6">
             <ScenarioTour
               demo={scenario.demo}
@@ -93,7 +125,8 @@ export async function ScenarioPage({ locale, slug }: { locale: Locale; slug: str
                 anchor: section.anchor,
                 usage:
                   pro && source && section.exportName
-                    ? (extractUsage(source, section.exportName) ?? `<${section.exportName} />`)
+                    ? (extractUsage(source, section.exportName) ??
+                      `<${section.exportName} />`)
                     : null,
               }))}
             />
@@ -105,7 +138,13 @@ export async function ScenarioPage({ locale, slug }: { locale: Locale; slug: str
             <section className="mt-12">
               <h2 className="text-shell-fg text-lg font-semibold">{t.rules}</h2>
               <ul className="text-shell-muted mt-3 grid max-w-2xl gap-2 text-sm">
-                <li>{t.ruleTheme(scenario.theme.tone, scenario.theme.accent, scenario.theme.ink)}</li>
+                <li>
+                  {t.ruleTheme(
+                    scenario.theme.tone,
+                    scenario.theme.accent,
+                    scenario.theme.ink,
+                  )}
+                </li>
                 <li>{t.ruleFont(scenario.theme.font)}</li>
                 {t.ruleList.map((rule) => (
                   <li key={rule}>{rule}</li>
@@ -115,8 +154,12 @@ export async function ScenarioPage({ locale, slug }: { locale: Locale; slug: str
 
             {pictures.images.length > 0 ? (
               <section className="mt-12">
-                <h2 className="text-shell-fg text-lg font-semibold">{t.images}</h2>
-                <p className="text-shell-muted mt-2 max-w-2xl text-sm">{t.imagesNote}</p>
+                <h2 className="text-shell-fg text-lg font-semibold">
+                  {t.images}
+                </h2>
+                <p className="text-shell-muted mt-2 max-w-2xl text-sm">
+                  {t.imagesNote}
+                </p>
                 {pictures.style ? (
                   <pre className="bg-shell-elevated border-shell-border text-shell-fg mt-4 overflow-auto rounded-lg border p-3 font-mono text-[11px] leading-relaxed whitespace-pre-wrap">
                     {pictures.style}
@@ -127,16 +170,29 @@ export async function ScenarioPage({ locale, slug }: { locale: Locale; slug: str
                     <thead className="text-shell-muted text-xs">
                       <tr>
                         <th className="px-3 py-2 font-medium">{t.imageFile}</th>
-                        <th className="px-3 py-2 font-medium">{t.imageFormat}</th>
-                        <th className="px-3 py-2 font-medium">{t.imagePrompt}</th>
+                        <th className="px-3 py-2 font-medium">
+                          {t.imageFormat}
+                        </th>
+                        <th className="px-3 py-2 font-medium">
+                          {t.imagePrompt}
+                        </th>
                       </tr>
                     </thead>
                     <tbody className="divide-shell-border divide-y">
                       {pictures.images.map((image) => (
-                        <tr key={`${image.file}-${image.format}`} className="align-top">
-                          <td className="px-3 py-2 font-mono text-xs whitespace-nowrap">{image.file}</td>
-                          <td className="text-shell-muted px-3 py-2 text-xs whitespace-nowrap">{image.format}</td>
-                          <td className="text-shell-fg px-3 py-2 text-xs">{image.prompt}</td>
+                        <tr
+                          key={`${image.file}-${image.format}`}
+                          className="align-top"
+                        >
+                          <td className="px-3 py-2 font-mono text-xs whitespace-nowrap">
+                            {image.file}
+                          </td>
+                          <td className="text-shell-muted px-3 py-2 text-xs whitespace-nowrap">
+                            {image.format}
+                          </td>
+                          <td className="text-shell-fg px-3 py-2 text-xs">
+                            {image.prompt}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -150,7 +206,9 @@ export async function ScenarioPage({ locale, slug }: { locale: Locale; slug: str
               <ol className="text-shell-muted mt-3 grid max-w-2xl gap-2 text-sm">
                 {t.howToSteps.map((step, index) => (
                   <li key={step} className="flex gap-3">
-                    <span className="text-shell-accent-text font-semibold tabular-nums">{index + 1}</span>
+                    <span className="text-shell-accent-text font-semibold tabular-nums">
+                      {index + 1}
+                    </span>
                     <span>{step}</span>
                   </li>
                 ))}
@@ -159,12 +217,18 @@ export async function ScenarioPage({ locale, slug }: { locale: Locale; slug: str
           </>
         ) : (
           <section className="border-shell-border bg-shell-panel mt-12 rounded-2xl border px-6 py-10 text-center">
-            <p className="text-shell-accent-text text-xs font-semibold tracking-[0.14em] uppercase">Pro</p>
-            <h2 className="text-shell-fg mt-3 text-xl font-semibold text-balance sm:text-2xl">{t.proTitle}</h2>
-            <p className="text-shell-muted mx-auto mt-3 max-w-xl text-sm text-pretty">{t.proText}</p>
+            <p className="text-shell-accent-text text-xs font-semibold tracking-[0.14em] uppercase">
+              Pro
+            </p>
+            <h2 className="text-shell-fg mt-3 text-xl font-semibold text-balance sm:text-2xl">
+              {t.proTitle}
+            </h2>
+            <p className="text-shell-muted mx-auto mt-3 max-w-xl text-sm text-pretty">
+              {t.proText}
+            </p>
             <Link
               href={localePath(locale, "/pricing")}
-              className="acc-press mt-6 inline-flex h-11 items-center gap-2 rounded-full bg-[#ff5900] px-6 text-sm font-semibold text-[#151515] transition-colors hover:bg-[#ff7a33]"
+              className="acc-press bg-shell-accent text-shell-accent-fg hover:bg-shell-accent-deep mt-6 inline-flex h-11 items-center gap-2 rounded-full px-6 text-sm font-semibold transition-colors"
             >
               {t.proLink}
             </Link>

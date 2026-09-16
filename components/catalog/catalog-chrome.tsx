@@ -399,7 +399,7 @@ export function CatalogChrome({
         >
           {/* Мобильная лента категорий: колонки на телефоне нет, а переходить
               между категориями надо. */}
-          <div className="order-1 -mx-4 mb-6 flex gap-2 overflow-x-auto px-4 pb-1 lg:hidden [&::-webkit-scrollbar]:hidden">
+          <div className="nav-scroll order-1 -mx-4 mb-6 flex gap-2 overflow-x-auto px-4 pb-1 lg:hidden">
             <Link
               href={localePath(locale, base)}
               className={

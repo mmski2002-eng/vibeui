@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, type CSSProperties, type FormEvent } from "react"
+import { useEffect, useState, type CSSProperties, type FormEvent } from "react"
 
 export type Contact016Props = {
   eyebrow?: string
@@ -124,6 +124,14 @@ export function Contact016({
   const [guests, setGuests] = useState(2)
   const [time, setTime] = useState("")
   const [date, setDate] = useState("")
+  // Нижняя граница даты — только на клиенте: сервер и браузер могут жить в
+  // разных сутках (UTC против местного времени), и SSR-значение расходилось
+  // бы с клиентским при гидратации.
+  const [minDate, setMinDate] = useState("")
+
+  useEffect(() => {
+    setMinDate(today())
+  }, [])
   const palette = {
     ...(accent ? { "--vibeui-contact-016-accent": accent } : null),
     ...(background ? { "--vibeui-contact-016-bg": background } : null),
@@ -185,7 +193,7 @@ export function Contact016({
               <div data-part="pair">
                 <label data-part="field">
                   <span>Дата</span>
-                  <input name="date" type="date" required value={date} min={today()} onChange={(event) => setDate(event.target.value)} />
+                  <input name="date" type="date" required value={date} min={minDate || undefined} onChange={(event) => setDate(event.target.value)} />
                 </label>
                 <label data-part="field">
                   <span>Время</span>

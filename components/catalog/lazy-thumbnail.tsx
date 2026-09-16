@@ -213,6 +213,12 @@ export function LazyThumbnail({
       )
     ) : null
 
+  // Пока чанк не приехал, кадр не пустой: мерцающая заглушка говорит
+  // «грузится», а не «сломалось». Снимается сама вместе с появлением контента.
+  const skeleton = content ? null : (
+    <div className="preview-skeleton absolute inset-0" aria-hidden="true" />
+  )
+
   // Натуральный блок: кадр фиксированной высоты (пропорция от ширины, как у
   // остальных секций — ряд ровный), а сам блок рисуется в натуральную величину
   // по ширине кадра. Container query внутри блока сам сворачивает его в узкую
@@ -224,9 +230,10 @@ export function LazyThumbnail({
         ref={frameRef}
         data-part="frame"
         data-frame="section"
-        className="preview-frame bg-preview-surface flex w-full flex-1"
+        className="preview-frame preview-frame-top bg-preview-surface relative flex w-full flex-1"
         onClick={holdPreviewLink}
       >
+        {skeleton}
         <div
           className="w-full overflow-x-hidden overflow-y-auto"
           style={{
@@ -245,9 +252,10 @@ export function LazyThumbnail({
       <div
         ref={frameRef}
         data-part="frame"
-        className="preview-frame bg-preview-surface flex w-full flex-1 justify-center"
+        className="preview-frame bg-preview-surface relative flex w-full flex-1 justify-center"
         onClick={holdPreviewLink}
       >
+        {skeleton}
         <div
           className={
             "preview-fade" +
@@ -281,7 +289,7 @@ export function LazyThumbnail({
       // паспарту. У остальных секций поля остаются — там кадр отделяет
       // блок от края.
       data-frame={half ? "section" : undefined}
-      className="preview-frame bg-preview-surface @container flex w-full flex-1"
+      className="preview-frame preview-frame-top bg-preview-surface @container flex w-full flex-1"
       onClick={holdPreviewLink}
       style={
         {
@@ -302,6 +310,7 @@ export function LazyThumbnail({
             : { aspectRatio: aspect ?? "16 / 9" }
         }
       >
+        {skeleton}
         <div className="block-thumbnail-frame">
           <div ref={scaleRef} className="block-thumbnail-scale preview-fade">
             {content}

@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { Check, Loader2 } from "lucide-react"
 import { useState, type MouseEvent } from "react"
 
 import { useSession } from "@/lib/auth-client"
@@ -11,7 +12,7 @@ import { cn } from "@/lib/utils"
 type CopyState = "idle" | "loading" | "copied" | "failed"
 
 const BASE =
-  "focus-visible:ring-shell-ring inline-flex h-9 shrink-0 items-center justify-center rounded-md border px-3 text-sm font-medium transition focus-visible:ring-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60"
+  "focus-visible:ring-shell-ring inline-flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-md border px-3 text-sm font-medium transition focus-visible:ring-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60"
 
 const VARIANTS = {
   primary:
@@ -120,17 +121,29 @@ export function CopyForAi({
       disabled={state === "loading"}
       className={cn(
         BASE,
-        state === "failed" ? "border-destructive text-destructive" : VARIANTS[variant],
+        state === "failed"
+          ? "border-destructive text-destructive"
+          : VARIANTS[variant],
+        state === "copied" && "copy-flash",
         className,
       )}
     >
-      {state === "copied"
-        ? (copiedLabel ?? (en ? "Copied" : "Скопировано"))
-        : state === "failed"
-          ? en
-            ? "Copy failed"
-            : "Не вышло"
-          : label}
+      {state === "copied" ? (
+        <Check className="copy-check size-4" aria-hidden="true" />
+      ) : state === "loading" ? (
+        <Loader2 className="size-4 animate-spin" aria-hidden="true" />
+      ) : null}
+      {/* Ключ по состоянию: новая подпись монтируется заново и проявляется,
+          а не подменяется скачком. */}
+      <span key={state} className="copy-label">
+        {state === "copied"
+          ? (copiedLabel ?? (en ? "Copied" : "Скопировано"))
+          : state === "failed"
+            ? en
+              ? "Copy failed"
+              : "Не вышло"
+            : label}
+      </span>
     </button>
   )
 }

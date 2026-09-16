@@ -58,7 +58,7 @@ const ACCENT_PRESETS = [
 ] as const
 
 const TOGGLE =
-  "border-shell-border text-shell-muted hover:text-shell-accent hover:border-shell-border-strong hover:bg-shell-panel focus-visible:ring-shell-ring inline-flex size-7 shrink-0 items-center justify-center rounded-md border transition-colors focus-visible:ring-2 focus-visible:outline-none"
+  "border-shell-border text-shell-muted hover:text-shell-accent hover:border-shell-border-strong hover:bg-shell-panel focus-visible:ring-shell-ring inline-flex size-7 shrink-0 items-center justify-center rounded-md border transition focus-visible:ring-2 focus-visible:outline-none"
 
 /**
  * Интерактивная часть карточки: подложка превью, настройка и подпись.
@@ -189,6 +189,9 @@ export function CardInteractive({
   const [reportSent, setReportSent] = useState(false)
   const { items: favorites, pinned, toggle: toggleFavourite } = useFavorites()
   const favourite = favorites?.has(name) ?? false
+  // «Поп» только после клика: уже отмеченные карточки при загрузке страницы
+  // прыгать не должны.
+  const [favouritePopped, setFavouritePopped] = useState(false)
   const signedIn = Boolean(useSession().data)
   const router = useRouter()
 
@@ -533,6 +536,7 @@ export function CardInteractive({
                   return
                 }
 
+                setFavouritePopped(!favourite)
                 toggleFavourite(name)
               }}
               aria-pressed={favourite}
@@ -540,10 +544,10 @@ export function CardInteractive({
               // в начало сетки.
               data-favourite={pinned?.has(name) ? "true" : undefined}
               title={t.card.favourite}
-              className={`${TOGGLE} ${favourite ? "text-shell-fg border-shell-border-strong" : ""}`}
+              className={`${TOGGLE} active:scale-90 ${favourite ? "text-shell-fg border-shell-border-strong" : ""}`}
             >
               <Heart
-                className="size-3.5"
+                className={`size-3.5 ${favourite && favouritePopped ? "fav-pop" : ""}`}
                 fill={favourite ? "currentColor" : "none"}
                 aria-hidden="true"
               />

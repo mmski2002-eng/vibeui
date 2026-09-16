@@ -55,7 +55,7 @@ export function Reveal({
       data-shown={shown ? "true" : "false"}
       style={{ transitionDelay: `${delay}ms` } as CSSProperties}
       className={cn(
-        "translate-y-5 opacity-0 transition-[opacity,transform] duration-700 ease-out data-[shown=true]:translate-y-0 data-[shown=true]:opacity-100 motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:transition-none",
+        "translate-y-5 opacity-0 transition-[opacity,transform] duration-(--motion-slow) data-[shown=true]:translate-y-0 data-[shown=true]:opacity-100 motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:transition-none",
         className,
       )}
     >

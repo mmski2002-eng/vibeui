@@ -236,7 +236,7 @@ export function SearchBox({
         <div
           id={listId}
           role="listbox"
-          className="border-shell-border bg-shell-elevated absolute top-full right-0 left-0 z-30 mt-2 overflow-hidden rounded-lg border shadow-lg shadow-black/20"
+          className="search-suggest border-shell-border bg-shell-elevated absolute top-full right-0 left-0 z-30 mt-2 overflow-hidden rounded-lg border shadow-lg shadow-black/20"
         >
           {outcome.approximate && hits.length > 0 ? (
             <p className="text-shell-muted border-shell-border border-b px-3 py-2 text-xs">

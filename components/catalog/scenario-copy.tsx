@@ -10,8 +10,8 @@ import { localePath, type Locale } from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 
 const BASE =
-  "acc-press inline-flex h-11 items-center gap-2 rounded-full px-5 text-sm font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-[#ff5900] focus-visible:ring-offset-2 focus-visible:outline-none"
-const PRIMARY = "bg-[#ff5900] text-[#151515] hover:bg-[#ff7a33]"
+  "acc-press inline-flex h-11 items-center gap-2 rounded-full px-5 text-sm font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-shell-accent focus-visible:ring-offset-2 focus-visible:outline-none"
+const PRIMARY = "bg-shell-accent text-shell-accent-fg hover:bg-shell-accent-deep"
 
 /**
  * «Копировать сценарий для ИИ»: подписанная ссылка на бриф целой страницы.

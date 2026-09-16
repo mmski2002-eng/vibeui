@@ -38,14 +38,17 @@ export function ScenariosPage({ locale }: { locale: Locale }) {
 
             return (
               <li key={scenario.slug}>
-                <div className="border-shell-border hover:border-shell-border-strong bg-shell-panel flex h-full flex-col overflow-hidden rounded-xl border transition-colors">
+                <div className="border-shell-border bg-shell-panel acc-lift flex h-full flex-col overflow-hidden rounded-xl border">
                   {/* Обложка вне ссылки: внутри iframe со своими ссылками. */}
                   <LiveCover src={scenario.demo} title={text.label} />
 
                   <div className="flex flex-1 flex-col gap-2 p-4">
                     <div className="flex items-baseline justify-between gap-2">
                       <h2 className="text-shell-fg text-base font-medium">
-                        <Link href={href} className="hover:text-shell-accent transition-colors">
+                        <Link
+                          href={href}
+                          className="hover:text-shell-accent transition-colors"
+                        >
                           {text.label}
                         </Link>
                       </h2>
@@ -53,7 +56,9 @@ export function ScenariosPage({ locale }: { locale: Locale }) {
                         {t.blocksCount(scenario.sections.length)}
                       </span>
                     </div>
-                    <p className="text-shell-muted text-sm text-pretty">{text.summary}</p>
+                    <p className="text-shell-muted text-sm text-pretty">
+                      {text.summary}
+                    </p>
                     <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-1 pt-2 text-xs">
                       <Link
                         href={href}

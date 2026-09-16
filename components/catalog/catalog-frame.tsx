@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation"
 import type { ReactNode } from "react"
 
 import { CatalogChrome, type NavCategory } from "@/components/catalog/catalog-chrome"
+import { CatalogTransition } from "@/components/catalog/catalog-transition"
 import type { Locale } from "@/lib/i18n"
 import type { ItemKind } from "@/registry/categories"
 import { catalogBasePath } from "@/registry/index"
@@ -39,8 +40,10 @@ export function CatalogFrame({
   const isCategory =
     active === null || categories.some((category) => category.slug === active)
 
+  const content = <CatalogTransition>{children}</CatalogTransition>
+
   if (!isCategory) {
-    return children
+    return content
   }
 
   return (
@@ -51,7 +54,7 @@ export function CatalogFrame({
       total={total}
       active={active}
     >
-      {children}
+      {content}
     </CatalogChrome>
   )
 }
