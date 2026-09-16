@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, type CSSProperties, type FormEvent } from "react"
+import { useState, useSyncExternalStore, type CSSProperties, type FormEvent } from "react"
 
 export type Contact016Props = {
   eyebrow?: string
@@ -99,6 +99,14 @@ function today(): string {
   return `${date.getFullYear()}-${month}-${day}`
 }
 
+function subscribeNever() {
+  return () => {}
+}
+
+function noMinDate() {
+  return ""
+}
+
 /** Бронь стола: свободные окна чипами, форма с датой, временем, гостями и телефоном. */
 export function Contact016({
   eyebrow = "Бронь",
@@ -124,14 +132,10 @@ export function Contact016({
   const [guests, setGuests] = useState(2)
   const [time, setTime] = useState("")
   const [date, setDate] = useState("")
-  // Нижняя граница даты — только на клиенте: сервер и браузер могут жить в
-  // разных сутках (UTC против местного времени), и SSR-значение расходилось
-  // бы с клиентским при гидратации.
-  const [minDate, setMinDate] = useState("")
-
-  useEffect(() => {
-    setMinDate(today())
-  }, [])
+  // Нижняя граница даты известна только на клиенте: сервер и браузер могут
+  // жить в разных сутках (UTC против местного времени), и SSR-значение
+  // расходилось бы с клиентским при гидратации. На сервере границы нет.
+  const minDate = useSyncExternalStore(subscribeNever, today, noMinDate)
   const palette = {
     ...(accent ? { "--vibeui-contact-016-accent": accent } : null),
     ...(background ? { "--vibeui-contact-016-bg": background } : null),
