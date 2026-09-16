@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation"
-import { Link2, MousePointerClick, UserPlus, Users, Wallet } from "lucide-react"
+import { Link2, MousePointerClick, Tag, UserPlus, Users, Wallet } from "lucide-react"
 
 import { CopyLink } from "@/components/account/copy-link"
 import { ACCOUNT_TEXTS } from "@/components/account/texts"
@@ -22,6 +22,7 @@ import {
   visitsByCode,
   type PartnerPeriod,
 } from "@/lib/partners"
+import { partnerPromo, promoStats } from "@/lib/promo"
 import { SITE_URL } from "@/lib/seo"
 import { requireUser } from "@/lib/session"
 
@@ -54,11 +55,13 @@ export async function AccountReferrals({
   const validCursor =
     cursor && !Number.isNaN(cursor.getTime()) ? cursor : undefined
 
-  const [clicks, totals, rows, stats] = await Promise.all([
+  const [clicks, totals, rows, stats, promo, promoTotals] = await Promise.all([
     visitsByCode(code),
     referralTotals(user.id),
     referralsOf(user.id, { before: validCursor, limit: PAGE + 1 }),
     partnerStats(user.id, code, period),
+    partnerPromo(user.id),
+    promoStats(user.id),
   ])
 
   const page = rows.slice(0, PAGE)
@@ -101,6 +104,41 @@ export async function AccountReferrals({
             }
           />
           <CopyLink url={`${SITE_URL}/i/${code}`} locale={locale} />
+        </Panel>
+
+        <Panel index={1}>
+          <PanelHeader
+            title={
+              <span className="flex items-center gap-2">
+                <Tag className="text-shell-accent-text size-4" aria-hidden="true" />
+                {t.promoTitle}
+              </span>
+            }
+            note={t.promoLead}
+            action={
+              promo?.code && promo.active ? (
+                <span className="text-shell-muted text-xs tabular-nums">
+                  {t.promoPayments}: <span className="text-shell-fg">{promoTotals.payments}</span> ·{" "}
+                  {t.promoRevenue}:{" "}
+                  <span className="text-shell-fg">
+                    {promoTotals.revenue.toLocaleString(locale === "en" ? "en-GB" : "ru-RU")} ₽
+                  </span>
+                </span>
+              ) : null
+            }
+          />
+          {promo?.code && promo.active ? (
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="border-shell-accent-line bg-shell-accent-soft text-shell-fg inline-flex h-11 items-center rounded-lg border px-4 font-mono text-lg font-semibold tracking-wide">
+                {promo.code}
+              </span>
+              <span className="text-shell-muted text-sm">
+                {t.promoDiscount(promo.percent)}
+              </span>
+            </div>
+          ) : (
+            <p className="text-shell-muted text-sm">{t.promoNone}</p>
+          )}
         </Panel>
 
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">

@@ -140,8 +140,19 @@ export const payment = pgTable(
     receiptUrl: text("receipt_url"),
     payload: jsonb("payload"),
     createdAt: timestamp("created_at").notNull().defaultNow(),
+    /** Цена без скидки, если платёж шёл по промокоду. */
+    listAmount: text("list_amount"),
+    promoCode: text("promo_code"),
+    promoPercent: integer("promo_percent"),
+    /** Чей промокод: по нему считается доля блогера. */
+    partnerId: text("partner_id").references(() => user.id, {
+      onDelete: "set null",
+    }),
   },
-  (table) => [index("payment_user_idx").on(table.userId)],
+  (table) => [
+    index("payment_user_idx").on(table.userId),
+    index("payment_partner_idx").on(table.partnerId, table.paidAt),
+  ],
 )
 
 /**
@@ -227,6 +238,11 @@ export const partnerInvite = pgTable(
       .unique()
       .references(() => user.id, { onDelete: "set null" }),
     claimedAt: timestamp("claimed_at"),
+    /** Промокод блогера — его ник в нижнем регистре. Скидка на первый платёж. */
+    promoCode: text("promo_code").unique(),
+    /** Свой процент; null — общий из настройки `promo.percent`. */
+    promoPercent: integer("promo_percent"),
+    promoActive: boolean("promo_active").notNull().default(true),
   },
   (table) => [index("partner_invite_created_idx").on(table.createdAt)],
 )

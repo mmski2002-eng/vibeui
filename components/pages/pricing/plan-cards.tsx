@@ -5,7 +5,9 @@ import { useEffect, useRef, useState } from "react"
 import type { ReactNode } from "react"
 import { Check, Crown, Sparkles } from "lucide-react"
 
+import { PromoField, type PromoTexts } from "@/components/pages/pricing/promo-field"
 import { startCheckout } from "@/lib/payment-actions"
+import type { AppliedPromo } from "@/lib/promo.shared"
 import { cn } from "@/lib/utils"
 
 export type PlanCardsTexts = {
@@ -50,6 +52,7 @@ export type PlanCardsTexts = {
     cta: string
     under: string
   }
+  promo: PromoTexts
 }
 
 export type PlanCardsProps = {
@@ -61,6 +64,12 @@ export type PlanCardsProps = {
   signupHref: string
   accountHref: string
   manageHref: string
+  promo: {
+    /** Код из адреса или куки партнёра. */
+    initialCode: string | null
+    /** Скидка только на первый платёж: тем, кто уже платил, поле не показываем. */
+    eligible: boolean
+  }
 }
 
 const money = new Intl.NumberFormat("ru-RU")
@@ -146,12 +155,27 @@ export function PlanCards({
   signupHref,
   accountHref,
   manageHref,
+  promo,
 }: PlanCardsProps) {
   const [yearly, setYearly] = useState(false)
-  const proPrice = yearly ? prices.yearly : prices.monthly
-  const enterprisePrice = yearly
+  const [applied, setApplied] = useState<AppliedPromo | null>(null)
+  const listPro = yearly ? prices.yearly : prices.monthly
+  const listEnterprise = yearly
     ? prices.enterpriseYearly
     : prices.enterpriseMonthly
+  const proPrice = applied
+    ? yearly
+      ? applied.prices.yearly
+      : applied.prices.monthly
+    : listPro
+  const enterprisePrice = applied
+    ? yearly
+      ? applied.prices["enterprise-yearly"]
+      : applied.prices["enterprise-monthly"]
+    : listEnterprise
+  const discountNote = applied
+    ? `−${applied.percent} % ${t.promo.byCode} ${applied.code}`
+    : null
   const period = yearly ? t.perYear : t.perMonth
   const proButton =
     "bg-shell-accent text-shell-accent-fg hover:bg-shell-accent-deep focus-visible:ring-shell-accent inline-flex h-11 w-full items-center justify-center rounded-lg px-5 text-sm font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#151515] focus-visible:outline-none"
@@ -246,15 +270,32 @@ export function PlanCards({
             </span>
           </div>
           <h2 className="mt-2 text-xl font-semibold">{t.pro.name}</h2>
-          <p className="mt-5 text-5xl font-semibold tracking-tight tabular-nums">
-            <AnimatedPrice value={proPrice} /> ₽
-            <span className="text-base font-normal text-[#f2f2f2]/60"> {period}</span>
+          <p className="mt-5 flex flex-wrap items-baseline gap-x-3 text-5xl font-semibold tracking-tight tabular-nums">
+            {applied ? (
+              <s className="promo-old text-2xl font-medium text-[#f2f2f2]/45 decoration-[#ff5900]/70 decoration-2">
+                {money.format(listPro)} ₽
+              </s>
+            ) : null}
+            <span>
+              <AnimatedPrice value={proPrice} /> ₽
+              <span className="text-base font-normal text-[#f2f2f2]/60"> {period}</span>
+            </span>
           </p>
           <p className="mt-1 min-h-5 text-sm text-[#f2f2f2]/60">
-            {yearly
-              ? `${t.yearlyNotePro} · ${t.savingNote}`
-              : t.pro.anchor}
+            {discountNote
+              ? discountNote
+              : yearly
+                ? `${t.yearlyNotePro} · ${t.savingNote}`
+                : t.pro.anchor}
           </p>
+          {promo.eligible && !pro ? (
+            <PromoField
+              texts={t.promo}
+              initialCode={promo.initialCode}
+              applied={applied}
+              onApplied={setApplied}
+            />
+          ) : null}
           <ul className="mt-6 grid gap-2.5">
             <li className="text-sm font-medium text-[#f2f2f2]/80">{t.pro.plusAll}</li>
             {t.pro.features.map((feature) => (
@@ -284,8 +325,14 @@ export function PlanCards({
               <form action={startCheckout}>
                 <input type="hidden" name="plan" value={yearly ? "yearly" : "monthly"} />
                 <input type="hidden" name="locale" value={locale} />
+                {applied ? <input type="hidden" name="promo" value={applied.code} /> : null}
                 <button type="submit" className={proButton}>
                   {yearly ? t.pro.payYear : t.pro.payMonth}
+                  {applied ? (
+                    <span className="ml-1.5 font-normal opacity-80">
+                      · {money.format(proPrice)} ₽ {t.promo.instead} {money.format(listPro)}
+                    </span>
+                  ) : null}
                 </button>
               </form>
             )}
@@ -305,12 +352,19 @@ export function PlanCards({
             </span>
           </div>
           <h2 className="text-shell-fg mt-2 text-xl font-semibold">{t.enterprise.name}</h2>
-          <p className="text-shell-fg mt-5 text-4xl font-semibold tracking-tight tabular-nums">
-            <AnimatedPrice value={enterprisePrice} /> ₽
-            <span className="text-shell-muted text-base font-normal"> {period}</span>
+          <p className="text-shell-fg mt-5 flex flex-wrap items-baseline gap-x-3 text-4xl font-semibold tracking-tight tabular-nums">
+            {applied ? (
+              <s className="promo-old text-shell-muted decoration-shell-accent/60 text-xl font-medium decoration-2">
+                {money.format(listEnterprise)} ₽
+              </s>
+            ) : null}
+            <span>
+              <AnimatedPrice value={enterprisePrice} /> ₽
+              <span className="text-shell-muted text-base font-normal"> {period}</span>
+            </span>
           </p>
           <p className="text-shell-muted mt-1 min-h-5 text-sm">
-            {yearly ? t.yearlyNoteEnterprise : " "}
+            {discountNote ? discountNote : yearly ? t.yearlyNoteEnterprise : " "}
           </p>
           <ul className="text-shell-muted mt-6 grid gap-2.5">
             <li className="text-shell-fg text-sm font-medium">{t.enterprise.plusAll}</li>
@@ -333,6 +387,7 @@ export function PlanCards({
                   value={yearly ? "enterprise-yearly" : "enterprise-monthly"}
                 />
                 <input type="hidden" name="locale" value={locale} />
+                {applied ? <input type="hidden" name="promo" value={applied.code} /> : null}
                 <button type="submit" className={outlineButton}>
                   {t.enterprise.cta}
                 </button>

@@ -1380,6 +1380,12 @@
   transition: left var(--motion-base, 220ms) var(--ease-out);
 }
 
+/* Промокод на тарифах: строка ввода и плашка проявляются, а не возникают. */
+.promo-form,
+.promo-applied {
+  animation: acc-fade var(--motion-base, 220ms) var(--ease-out) both;
+}
+
 /* Подсказки поиска: панель проявляется и чуть поднимается, а не возникает.
    @starting-style — панель монтируется условно, обычный transition на ней
    не сработал бы. */
@@ -1489,7 +1495,9 @@
   .fav-pop,
   .copy-flash,
   .copy-check,
-  .copy-label {
+  .copy-label,
+  .promo-form,
+  .promo-applied {
     animation: none;
   }
 

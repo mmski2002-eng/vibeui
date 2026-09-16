@@ -34,6 +34,7 @@ export async function GET(request: Request) {
       ? or(
           ilike(user.email, `%${needle}%`),
           ilike(payment.yookassaId, `%${needle}%`),
+          ilike(payment.promoCode, `%${needle}%`),
         )
       : undefined,
   ].filter(Boolean)
@@ -47,6 +48,9 @@ export async function GET(request: Request) {
       currency: payment.currency,
       status: payment.status,
       yookassaId: payment.yookassaId,
+      promoCode: payment.promoCode,
+      promoPercent: payment.promoPercent,
+      listAmount: payment.listAmount,
     })
     .from(payment)
     .leftJoin(user, eq(user.id, payment.userId))
@@ -56,7 +60,8 @@ export async function GET(request: Request) {
     // читается минутами, а бухгалтерии нужен период.
     .limit(5000)
 
-  const header = "created_at,paid_at,email,amount,currency,status,yookassa_id"
+  const header =
+    "created_at,paid_at,email,amount,currency,status,yookassa_id,promo_code,promo_percent,list_amount"
   const body = rows
     .map((row) =>
       [
@@ -67,6 +72,9 @@ export async function GET(request: Request) {
         row.currency,
         row.status,
         row.yookassaId,
+        row.promoCode ?? "",
+        row.promoPercent ?? "",
+        row.listAmount ?? "",
       ]
         .map((value) => escape(String(value)))
         .join(","),

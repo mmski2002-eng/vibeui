@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
+import { PartnerPromoForm } from "@/components/admin/partner-actions"
 import { AdminHeading, Metric, Pill, Section } from "@/components/admin/parts"
 import { AreaChart, Funnel } from "@/components/account/ui/charts"
 import { Panel, PanelHeader } from "@/components/account/ui/panel"
@@ -16,6 +17,7 @@ import {
   visitsByCode,
   type ReferralRow,
 } from "@/lib/partners"
+import { defaultPromoPercent, promoStats } from "@/lib/promo"
 import { SITE_URL } from "@/lib/seo"
 import { resolveSubscription } from "@/lib/subscription-state"
 
@@ -52,9 +54,13 @@ export async function AdminPartner({
       ? referralsOf(partnerId, { before: validCursor, limit: PAGE + 1 })
       : [],
   ])
-  const [partnerVisits, stats] = await Promise.all([
+  const [partnerVisits, stats, promo, promoDefault] = await Promise.all([
     code ? visitsByCode(code) : 0,
     partnerId && code ? partnerStats(partnerId, code, 90) : null,
+    partnerId
+      ? promoStats(partnerId)
+      : { payments: 0, revenue: 0, discount: 0 },
+    defaultPromoPercent(),
   ])
 
   const page = rows.slice(0, PAGE)
@@ -118,6 +124,31 @@ export async function AdminPartner({
           </Panel>
         </div>
       ) : null}
+
+      <Section
+        title={t.promoTitle}
+        action={
+          <span className="text-shell-muted text-xs tabular-nums">
+            {t.promoPayments}:{" "}
+            <span className="text-shell-fg">{promo.payments}</span> ·{" "}
+            {t.promoRevenue}:{" "}
+            <span className="text-shell-fg">{t.rub(promo.revenue)}</span> ·{" "}
+            {t.promoDiscount}:{" "}
+            <span className="text-shell-fg">{t.rub(promo.discount)}</span>
+          </span>
+        }
+      >
+        <p className="text-shell-muted mb-3 max-w-2xl text-sm leading-relaxed">
+          {t.promoNote}
+        </p>
+        <PartnerPromoForm
+          id={invite.id}
+          code={invite.promoCode}
+          percent={invite.promoPercent}
+          active={invite.promoActive}
+          defaultPercent={promoDefault}
+        />
+      </Section>
 
       <Section title={t.inviteLink}>
         <CopyLink url={`${SITE_URL}/i/${invite.code}`} />

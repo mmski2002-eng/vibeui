@@ -49,6 +49,14 @@ export async function AdminPartners() {
                 >
                   {invite.name}
                 </Link>
+                {invite.promoCode ? (
+                  <span
+                    className={`font-mono text-xs ${invite.promoActive ? "text-shell-fg" : "text-shell-muted line-through"}`}
+                    title={invite.promoActive ? t.promoCode : `${t.promoCode}: ${t.promoOff}`}
+                  >
+                    {invite.promoCode}
+                  </span>
+                ) : null}
                 {invite.claimedBy ? (
                   <StatusPill tone="ok" dot>{t.claimed}</StatusPill>
                 ) : (

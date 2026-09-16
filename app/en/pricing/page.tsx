@@ -9,6 +9,12 @@ export const metadata = pageMetadata({
     "A hundred components a month for free with an account. Pro removes the limit and unlocks animations and closed blocks.",
 })
 
-export default function Page() {
-  return <PricingPage locale="en" />
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ promo?: string }>
+}) {
+  const { promo } = await searchParams
+
+  return <PricingPage locale="en" promo={promo} />
 }

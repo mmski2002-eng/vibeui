@@ -7,6 +7,7 @@ import { auth } from "@/lib/auth"
 import { logAdminAction, requireAdmin } from "@/lib/admin"
 import { db } from "@/lib/db"
 import {
+  partnerInvite,
   payment,
   registryToken,
   session,
@@ -19,6 +20,7 @@ import { currentPeriod } from "@/lib/entitlements"
 import { createInvite, deleteInvite } from "@/lib/partners"
 import { applyPaymentEvent, grantDays } from "@/lib/payment-apply"
 import { PRICE_KEYS } from "@/lib/plan-prices"
+import { isPromoPercent, normalizePromo, PROMO_PERCENT_KEY } from "@/lib/promo"
 import { fetchPayment } from "@/lib/yookassa"
 
 /**
@@ -402,8 +404,8 @@ export async function setReceiptUrl(input: { paymentId: string; url: string }) {
   revalidatePath("/account/payments")
 }
 
-/** Ссылка для блогера. Имя — единственное, что о нём известно до регистрации. */
-export async function createPartnerInvite(input: { name: string }) {
+/** Ссылка для блогера. Имя и, если известен, ник для промокода. */
+export async function createPartnerInvite(input: { name: string; promoCode?: string }) {
   const admin = await requireAdmin()
   const name = input.name.trim().slice(0, 120)
 
@@ -411,19 +413,100 @@ export async function createPartnerInvite(input: { name: string }) {
     throw new Error("Имя обязательно")
   }
 
+  const promoCode = input.promoCode?.trim() ? promoCodeOrThrow(input.promoCode) : null
   const invite = await createInvite(name, admin.email)
+
+  if (promoCode) {
+    await setPromoCodeOrThrow(invite.id, promoCode)
+  }
 
   await logAdminAction({
     adminEmail: admin.email,
     action: "partner.create",
     targetType: "partner",
     targetId: invite.id,
-    details: { name, code: invite.code },
+    details: { name, code: invite.code, promoCode },
   })
 
   revalidatePath("/account/admin/partners")
 
   return invite
+}
+
+/**
+ * Промокод блогера: ник, свой процент (пусто — общий) и выключатель.
+ * Смена кода старые платежи не трогает: доля считается по partner_id.
+ */
+export async function setPartnerPromo(input: {
+  id: string
+  code: string
+  percent: string
+  active: boolean
+}) {
+  const admin = await requireAdmin()
+  const code = input.code.trim() ? promoCodeOrThrow(input.code) : null
+  const percentRaw = input.percent.trim()
+  const percent = percentRaw ? Number(percentRaw) : null
+
+  if (percent !== null && !isPromoPercent(percent)) {
+    throw new Error("Процент: целое число от 1 до 90")
+  }
+
+  if (code) {
+    await setPromoCodeOrThrow(input.id, code)
+  }
+
+  const updated = await db
+    .update(partnerInvite)
+    .set({ promoCode: code, promoPercent: percent, promoActive: input.active })
+    .where(eq(partnerInvite.id, input.id))
+    .returning({ id: partnerInvite.id })
+
+  if (updated.length === 0) {
+    throw new Error("Приглашение не найдено")
+  }
+
+  await logAdminAction({
+    adminEmail: admin.email,
+    action: "partner.promo",
+    targetType: "partner",
+    targetId: input.id,
+    details: { code, percent, active: input.active },
+  })
+
+  revalidatePath("/account/admin/partners")
+  revalidatePath(`/account/admin/partners/${input.id}`)
+  revalidatePath("/account/referrals")
+  revalidatePath("/pricing")
+  revalidatePath("/en/pricing")
+}
+
+function promoCodeOrThrow(raw: string) {
+  const code = normalizePromo(raw)
+
+  if (!code) {
+    throw new Error("Промокод: латиница, цифры, «-» и «_», от 3 до 24 символов")
+  }
+
+  return code
+}
+
+/** Код уникален на всю программу: чужой ник занять нельзя. */
+async function setPromoCodeOrThrow(inviteId: string, code: string) {
+  const [taken] = await db
+    .select({ id: partnerInvite.id })
+    .from(partnerInvite)
+    .where(eq(partnerInvite.promoCode, code))
+    .limit(1)
+
+  if (taken && taken.id !== inviteId) {
+    throw new Error("Такой промокод уже занят другим блогером")
+  }
+
+  await db
+    .update(partnerInvite)
+    .set({ promoCode: code })
+    .where(eq(partnerInvite.id, inviteId))
 }
 
 /** Удалить незанятое приглашение: занятое хранит аккаунт и его рефералов. */
@@ -459,15 +542,30 @@ function rublesOrThrow(value: string, label: string) {
  * Цены Pro. Хранятся в рублях без копеек; в платёж уходят как `N.00`.
  * Энтерпрайз отдельно не задаётся — он всегда вдвое дороже Pro.
  */
-export async function setPlanPrices(input: { monthly: string; yearly: string }) {
+export async function setPlanPrices(input: {
+  monthly: string
+  yearly: string
+  promoPercent?: string
+}) {
   const admin = await requireAdmin()
   const monthly = rublesOrThrow(input.monthly, "Месяц")
   const yearly = rublesOrThrow(input.yearly, "Год")
+  const promoPercent = Number(input.promoPercent?.trim())
 
-  for (const [key, value] of [
+  if (input.promoPercent !== undefined && !isPromoPercent(promoPercent)) {
+    throw new Error("Скидка по промокоду: целое число процентов от 1 до 90")
+  }
+
+  const entries: (readonly [string, string])[] = [
     [PRICE_KEYS.monthly, monthly],
     [PRICE_KEYS.yearly, yearly],
-  ] as const) {
+  ]
+
+  if (input.promoPercent !== undefined) {
+    entries.push([PROMO_PERCENT_KEY, String(promoPercent)])
+  }
+
+  for (const [key, value] of entries) {
     await db
       .insert(setting)
       .values({ key, value })
@@ -482,7 +580,7 @@ export async function setPlanPrices(input: { monthly: string; yearly: string }) 
     action: "setting.prices",
     targetType: "setting",
     targetId: "prices",
-    details: { monthly, yearly },
+    details: { monthly, yearly, promoPercent: input.promoPercent },
   })
 
   for (const path of ["/", "/en", "/pricing", "/en/pricing", "/account/admin/payments"]) {

@@ -24,6 +24,7 @@ const LOG_ACTIONS: Record<string, string> = {
   "payment.receipt": "Внёс ссылку на чек",
   "partner.create": "Создал ссылку для блогера",
   "partner.delete": "Удалил ссылку для блогера",
+  "partner.promo": "Изменил промокод блогера",
   "setting.prices": "Изменил цены тарифов",
 }
 
@@ -75,6 +76,22 @@ export const ADMIN_TEXTS = {
     expired: "истекла",
     more: "Показать ещё",
     rub: (amount: number) => `${amount.toLocaleString("ru-RU")} ₽`,
+    promoTitle: "Промокод",
+    promoNote:
+      "Ник блогера. Зритель вводит его на тарифах и получает скидку на первый платёж; платёж закрепляется за блогером. Смена кода старые платежи не трогает.",
+    promoCode: "Промокод",
+    promoPlaceholder: "ник, латиницей",
+    promoPercent: "Скидка, %",
+    promoPercentDefault: "пусто = общая",
+    promoActive: "Действует",
+    promoSave: "Сохранить промокод",
+    promoSaving: "Сохраняем…",
+    promoSaved: "Промокод сохранён",
+    promoNone: "не задан",
+    promoOff: "выключен",
+    promoPayments: "Оплат по промокоду",
+    promoRevenue: "Выручка по промокоду",
+    promoDiscount: "Скидок выдано",
   },
   summary: {
     title: "Сводка",
@@ -140,6 +157,7 @@ export const ADMIN_TEXTS = {
     columnAmount: "Сумма",
     columnStatus: "Статус",
     columnPlan: "Тариф",
+    columnPromo: "Промокод",
     open: "Открыть",
     cardTitle: "Платёж",
     yookassaId: "Идентификатор ЮKassa",
@@ -176,6 +194,9 @@ export const ADMIN_TEXTS = {
     pricesSave: "Сохранить цены",
     pricesSaving: "Сохраняем…",
     pricesDefault: "по умолчанию",
+    promoPercent: "Скидка по промокоду, %",
+    promoPercentNote:
+      "Скидка блогера на первый платёж. Цена после скидки округляется до «…90»: при 30 % месяц 690 → 490, год 5900 → 4090. У конкретного блогера процент можно переопределить на его странице.",
   },
   reports: {
     title: "Жалобы",

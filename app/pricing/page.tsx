@@ -9,6 +9,12 @@ export const metadata = pageMetadata({
     "Бесплатно — сто компонентов в месяц с аккаунтом. Pro снимает лимит и открывает анимации и закрытые блоки.",
 })
 
-export default function Page() {
-  return <PricingPage locale="ru" />
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ promo?: string }>
+}) {
+  const { promo } = await searchParams
+
+  return <PricingPage locale="ru" promo={promo} />
 }

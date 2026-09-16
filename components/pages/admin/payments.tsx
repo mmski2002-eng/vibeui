@@ -15,6 +15,7 @@ import { payment, user } from "@/lib/db/schema"
 import { formatDate, formatNumber } from "@/lib/format"
 import { getPlans } from "@/lib/plan-prices"
 import { PLANS } from "@/lib/plans"
+import { DEFAULT_PROMO_PERCENT, defaultPromoPercent } from "@/lib/promo"
 
 const PAGE = 50
 
@@ -64,12 +65,13 @@ export async function AdminPayments({
         ? or(
             ilike(user.email, `%${needle}%`),
             ilike(payment.yookassaId, `%${needle}%`),
+            ilike(payment.promoCode, `%${needle}%`),
           )
         : undefined,
     ].filter(Boolean),
   )
 
-  const [rows, totalRows, plans] = await Promise.all([
+  const [rows, totalRows, plans, promoPercent] = await Promise.all([
     db
       .select({
         id: payment.id,
@@ -80,6 +82,9 @@ export async function AdminPayments({
         yookassaId: payment.yookassaId,
         userId: payment.userId,
         email: user.email,
+        promoCode: payment.promoCode,
+        promoPercent: payment.promoPercent,
+        listAmount: payment.listAmount,
       })
       .from(payment)
       .leftJoin(user, eq(user.id, payment.userId))
@@ -93,6 +98,7 @@ export async function AdminPayments({
       .leftJoin(user, eq(user.id, payment.userId))
       .where(where),
     getPlans(),
+    defaultPromoPercent(),
   ])
 
   const rub = (price: string) => String(Math.round(Number(price)))
@@ -136,7 +142,12 @@ export async function AdminPayments({
       <PriceSettings
         monthly={rub(plans.monthly.price)}
         yearly={rub(plans.yearly.price)}
-        defaults={{ monthly: rub(PLANS.monthly.price), yearly: rub(PLANS.yearly.price) }}
+        promoPercent={String(promoPercent)}
+        defaults={{
+          monthly: rub(PLANS.monthly.price),
+          yearly: rub(PLANS.yearly.price),
+          promoPercent: String(DEFAULT_PROMO_PERCENT),
+        }}
       />
 
       <form
@@ -188,6 +199,7 @@ export async function AdminPayments({
           { key: "date", label: t.columnDate, className: "w-28" },
           { key: "user", label: t.columnUser },
           { key: "status", label: t.columnStatus, className: "w-32" },
+          { key: "promo", label: t.columnPromo, className: "w-36", hideBelow: "md" },
           { key: "amount", label: t.columnAmount, align: "right", className: "w-28" },
           { key: "open", label: "", align: "right", className: "w-24", hideBelow: "sm" },
         ]}
@@ -216,6 +228,20 @@ export async function AdminPayments({
               <StatusPill key="status" tone={PAYMENT_TONE[status]}>
                 {t.status[status]}
               </StatusPill>,
+              row.promoCode ? (
+                <CellStack
+                  key="promo"
+                  primary={row.promoCode}
+                  secondary={
+                    row.promoPercent !== null
+                      ? `−${row.promoPercent} %${row.listAmount ? ` · ${formatNumber(Number(row.listAmount), "rub")}` : ""}`
+                      : undefined
+                  }
+                  mono
+                />
+              ) : (
+                <span key="promo" className="text-shell-muted text-xs">—</span>
+              ),
               <span key="amount" className="font-medium tabular-nums">
                 {formatNumber(Number(row.amount), "rub")}
               </span>,

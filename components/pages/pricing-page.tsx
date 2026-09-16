@@ -10,6 +10,11 @@ import { getUsedCount } from "@/lib/entitlements"
 import { localePath, type Locale } from "@/lib/i18n"
 import { FREE_MONTHLY_LIMIT } from "@/lib/limits"
 import { getPlans, type Plans } from "@/lib/plan-prices"
+import {
+  isFirstPayment,
+  normalizePromo,
+  promoFromReferralCookie,
+} from "@/lib/promo"
 import { getSession } from "@/lib/session"
 import { getSubscriptionState, isProState } from "@/lib/subscription-state"
 import { getCatalogItems, getItemsByKind } from "@/registry/index"
@@ -80,6 +85,21 @@ const buildTexts = ({
       yearlyNotePro: `${number(Math.round(YEARLY / 12))} ₽ в месяц`,
       yearlyNoteEnterprise: `${number(Math.round(ENTERPRISE_YEARLY / 12))} ₽ в месяц`,
       savingNote: `экономия ${number(MONTHLY * 12 - YEARLY)} ₽`,
+      promo: {
+        have: "Есть промокод?",
+        placeholder: "Ник блогера",
+        apply: "Применить",
+        remove: "Убрать",
+        byCode: "по промокоду",
+        instead: "вместо",
+        errors: {
+          invalid: "Промокод: латиница, цифры, «-» и «_», от 3 символов",
+          not_found: "Такого промокода нет",
+          own: "Свой промокод применить нельзя",
+          not_first: "Скидка по промокоду — только на первый платёж",
+          failed: "Не получилось проверить, попробуйте ещё раз",
+        },
+      },
       free: {
         name: "Бесплатно",
         eyebrow: "Чтобы попробовать",
@@ -249,6 +269,21 @@ const buildTexts = ({
       yearlyNotePro: `${number(Math.round(YEARLY / 12))} ₽ a month`,
       yearlyNoteEnterprise: `${number(Math.round(ENTERPRISE_YEARLY / 12))} ₽ a month`,
       savingNote: `save ${number(MONTHLY * 12 - YEARLY)} ₽`,
+      promo: {
+        have: "Have a promo code?",
+        placeholder: "Blogger's handle",
+        apply: "Apply",
+        remove: "Remove",
+        byCode: "with promo code",
+        instead: "instead of",
+        errors: {
+          invalid: "Promo code: Latin letters, digits, “-” and “_”, 3+ characters",
+          not_found: "No such promo code",
+          own: "You cannot apply your own promo code",
+          not_first: "The promo discount applies to the first payment only",
+          failed: "Could not check the code, please try again",
+        },
+      },
       free: {
         name: "Free",
         eyebrow: "To try",
@@ -406,17 +441,29 @@ function Eyebrow({ children }: { children: string }) {
  * тёмным Pro в центре, три причины взять Pro, три шага до сайта, вопросы
  * об оплате и финальный призыв. Логика оплаты и сессии — как была.
  */
-export async function PricingPage({ locale }: { locale: Locale }) {
+export async function PricingPage({
+  locale,
+  promo,
+}: {
+  locale: Locale
+  /** Промокод из адреса `?promo=ник`. */
+  promo?: string
+}) {
   const prices = pricesOf(await getPlans())
   const { MONTHLY, YEARLY, ENTERPRISE_MONTHLY, ENTERPRISE_YEARLY } = prices
   const t = buildTexts(prices)[locale]
   const session = await getSession()
-  const [state, used] = session
+  const [state, used, firstPayment] = session
     ? await Promise.all([
         getSubscriptionState(session.user.id),
         getUsedCount(session.user.id),
+        isFirstPayment(session.user.id),
       ])
-    : [null, 0]
+    : [null, 0, true]
+  // Код подставляется сам: из адреса или из куки после ссылки блогера.
+  const initialPromo = firstPayment
+    ? (normalizePromo(promo) ?? (await promoFromReferralCookie()))
+    : null
   const pro = state ? isProState(state) : false
   const dates = locale === "en" ? "en-GB" : "ru-RU"
   const until =
@@ -527,6 +574,7 @@ export async function PricingPage({ locale }: { locale: Locale }) {
               signupHref={signupHref}
               accountHref={localePath(locale, "/account")}
               manageHref={localePath(locale, "/account/subscription")}
+              promo={{ initialCode: initialPromo, eligible: firstPayment }}
             />
           </Reveal>
           {session && !pro ? (

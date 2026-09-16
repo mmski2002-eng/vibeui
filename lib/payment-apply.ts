@@ -1,10 +1,10 @@
 import "server-only"
 
 import { randomUUID } from "node:crypto"
-import { eq } from "drizzle-orm"
+import { and, eq, isNull } from "drizzle-orm"
 
 import { db } from "@/lib/db"
-import { payment, subscription, webhookEvent } from "@/lib/db/schema"
+import { payment, subscription, user, webhookEvent } from "@/lib/db/schema"
 import { getPlans } from "@/lib/plan-prices"
 import { isPlanId } from "@/lib/plans"
 import { fetchPayment } from "@/lib/yookassa"
@@ -163,6 +163,29 @@ export async function applyPaymentEvent(
 
   const plan = (await getPlans())[planId]
 
+  // Промокод из metadata: положили мы сами при создании платежа. Партнёр
+  // проверяется по базе — чужой или удалённый id в колонку не попадёт.
+  const promoPercent = Number(source.metadata?.percent)
+  const promoCode = source.metadata?.promo ?? null
+  const partnerId = source.metadata?.partnerId
+    ? (
+        await db
+          .select({ id: user.id })
+          .from(user)
+          .where(eq(user.id, source.metadata.partnerId))
+          .limit(1)
+      )[0]?.id ?? null
+    : null
+  const promo =
+    promoCode && partnerId && Number.isInteger(promoPercent)
+      ? {
+          promoCode,
+          partnerId,
+          promoPercent,
+          listAmount: source.metadata?.listAmount ?? plan.price,
+        }
+      : null
+
   await db
     .insert(payment)
     .values({
@@ -174,9 +197,19 @@ export async function applyPaymentEvent(
       paidAt: new Date(),
       receiptStatus: source.receipt_registration ?? null,
       payload: stored,
+      ...promo,
     })
     // Повторное применение не должно плодить строки: один платёж — одна.
     .onConflictDoNothing()
+
+  // Пришёл без ссылки, но с кодом блогера — закрепляем за ним. Чужую
+  // привязку не трогаем: доля и так считается по платежу.
+  if (promo) {
+    await db
+      .update(user)
+      .set({ invitedBy: promo.partnerId })
+      .where(and(eq(user.id, userId), isNull(user.invitedBy)))
+  }
 
   const [existing] = await db
     .select()

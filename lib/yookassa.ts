@@ -117,6 +117,8 @@ export async function createCheckout({
   /** Уходит в metadata: по нему вебхук понимает, какой период выдавать. */
   plan: string
   returnUrl: string
+  /** Промокод и партнёр: вебхук раскладывает их по колонкам платежа. */
+  metadata?: Record<string, string>
 }) {
   const money: Money = { value: amount, currency: "RUB" }
   const body: Record<string, unknown> = {
@@ -124,7 +126,7 @@ export async function createCheckout({
     capture: true,
     confirmation: { type: "redirect", return_url: returnUrl },
     description,
-    metadata: { userId, plan },
+    metadata: { ...metadata, userId, plan },
     receipt: receipt(email, description, money),
   }
 
