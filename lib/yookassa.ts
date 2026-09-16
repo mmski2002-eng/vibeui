@@ -109,6 +109,7 @@ export async function createCheckout({
   userId,
   plan,
   returnUrl,
+  metadata,
 }: {
   amount: string
   description: string
