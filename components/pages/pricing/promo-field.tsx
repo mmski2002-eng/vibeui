@@ -88,14 +88,19 @@ export function PromoField({
   }
 
   // Код из адреса, куки или хранилища вкладки проверяется один раз при
-  // монтировании; состояние меняется только после ответа сервера.
+  // монтировании. Запуск отложен на тик: проверка ходит на сервер, и
+  // состояние меняется в её ответе, а не синхронно в теле эффекта.
   useEffect(() => {
     if (checkedRef.current) return
     checkedRef.current = true
 
     const code = initialCode ?? readStored()
 
-    if (code) void check(code)
+    if (!code) return
+
+    const timer = window.setTimeout(() => void check(code), 0)
+
+    return () => window.clearTimeout(timer)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
