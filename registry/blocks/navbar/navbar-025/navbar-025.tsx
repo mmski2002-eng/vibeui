@@ -41,7 +41,8 @@ export type Navbar025Props = {
 // serif'ом с акцентным амперсандом, справа тихая капсула «Музыка» с четырьмя
 // тонкими линиями, которые оживают пока играет (только по клику) и капсула «Подтвердить». Во втором —
 // разделы через тонкие точки. При прокрутке ярусы складываются в одну
-// компактную шапку на кремовом стекле — плавно, без перекладки. На узкой ширине разделы — за кнопкой «Меню».
+// одну строку: большая монограмма по центру тает, маленькая проявляется
+// слева на месте даты, разделы поднимаются в её ряд — всё на transition. На узкой ширине разделы — за кнопкой «Меню».
 const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700&display=swap"
 
 const STYLES = `
@@ -68,14 +69,19 @@ container-type:inline-size;
 [data-vibeui-block="navbar-025"] [data-part="veil"]{position:absolute;inset:0;z-index:-1;background:var(--vibeui-navbar-025-bg);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid var(--vibeui-navbar-025-line);opacity:0;transition:opacity .35s}
 [data-vibeui-block="navbar-025"]{position:relative}
 [data-vibeui-block="navbar-025"][data-placement="static"] [data-part="veil"],[data-vibeui-block="navbar-025"][data-scrolled="true"] [data-part="veil"],[data-vibeui-block="navbar-025"][data-open="true"] [data-part="veil"]{opacity:1}
-[data-vibeui-block="navbar-025"] [data-part="shell"]{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:.5rem 1rem;max-width:80rem;margin:0 auto;padding:1rem 1.25rem .9rem;transition:padding .45s cubic-bezier(.2,.9,.3,1),gap .45s cubic-bezier(.2,.9,.3,1)}
-[data-vibeui-block="navbar-025"][data-scrolled="true"] [data-part="shell"]{padding:.5rem 1.25rem .45rem;gap:.15rem 1rem}
-[data-vibeui-block="navbar-025"][data-scrolled="true"] [data-part="link"]{font-size:1.02rem}
-[data-vibeui-block="navbar-025"] [data-part="date"]{display:grid;gap:.1rem;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-navbar-025-muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+[data-vibeui-block="navbar-025"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:.9rem 1.25rem .8rem;transition:padding .5s cubic-bezier(.2,.9,.3,1)}
+[data-vibeui-block="navbar-025"][data-scrolled="true"] [data-part="shell"]{padding:.5rem 1.25rem .45rem}
+[data-vibeui-block="navbar-025"] [data-part="row"]{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;min-height:3rem;pointer-events:none}
+[data-vibeui-block="navbar-025"] [data-part="row"] > *{pointer-events:auto}
+[data-vibeui-block="navbar-025"] [data-part="date"]{display:grid;gap:.1rem;transition:opacity .4s;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-navbar-025-muted);white-space:nowrap;font-variant-numeric:tabular-nums}
 [data-vibeui-block="navbar-025"] [data-part="days"]{font-family:var(--vibeui-navbar-025-display);font-style:italic;font-size:.95rem;letter-spacing:0;text-transform:none;color:var(--vibeui-navbar-025-accent);transition:opacity .35s,max-height .45s cubic-bezier(.2,.9,.3,1);max-height:1.4rem;overflow:hidden}
 [data-vibeui-block="navbar-025"][data-scrolled="true"] [data-part="days"]{opacity:0;max-height:0}
-[data-vibeui-block="navbar-025"] [data-part="brand"]{justify-self:center;font-family:var(--vibeui-navbar-025-display);font-style:italic;font-weight:500;font-size:2rem;line-height:1;letter-spacing:.01em;color:var(--vibeui-navbar-025-plum);white-space:nowrap;transition:font-size .45s cubic-bezier(.2,.9,.3,1)}
-[data-vibeui-block="navbar-025"][data-scrolled="true"] [data-part="brand"]{font-size:1.5rem}
+[data-vibeui-block="navbar-025"][data-scrolled="true"] [data-part="date"]{opacity:0;pointer-events:none}
+[data-vibeui-block="navbar-025"] [data-part="brand"]{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:var(--vibeui-navbar-025-display);font-style:italic;font-weight:500;font-size:2rem;line-height:1;letter-spacing:.01em;color:var(--vibeui-navbar-025-plum);white-space:nowrap;transition:opacity .45s ease,transform .55s cubic-bezier(.2,.9,.3,1)}
+[data-vibeui-block="navbar-025"][data-scrolled="true"] [data-part="brand"]{opacity:0;transform:translate(-50%,-50%) scale(.9);pointer-events:none}
+[data-vibeui-block="navbar-025"] [data-part="brand-small"]{position:absolute;left:0;top:50%;transform:translate(0,-50%);font-family:var(--vibeui-navbar-025-display);font-style:italic;font-weight:500;font-size:1.5rem;line-height:1;color:var(--vibeui-navbar-025-plum);white-space:nowrap;opacity:0;transition:opacity .55s ease .15s;pointer-events:none}
+[data-vibeui-block="navbar-025"][data-scrolled="true"] [data-part="brand-small"]{opacity:1;pointer-events:auto}
+[data-vibeui-block="navbar-025"] [data-part="brand-small"] em{color:var(--vibeui-navbar-025-accent);font-style:italic;margin:0 .12em}
 [data-vibeui-block="navbar-025"] [data-part="brand"] em{color:var(--vibeui-navbar-025-accent);font-style:italic;margin:0 .12em}
 [data-vibeui-block="navbar-025"] [data-part="tools"]{display:flex;align-items:center;justify-content:flex-end;gap:.5rem}
 [data-vibeui-block="navbar-025"] [data-part="music"]{display:inline-flex;align-items:center;gap:.55rem;height:2.5rem;padding:0 .95rem 0 .8rem;border:1px solid var(--vibeui-navbar-025-line);border-radius:999px;background:transparent;color:var(--vibeui-navbar-025-muted);font-family:var(--vibeui-navbar-025-display);font-style:italic;font-size:1.05rem;line-height:1;cursor:pointer;transition:color .25s,border-color .25s,background .25s}
@@ -96,9 +102,9 @@ container-type:inline-size;
 [data-vibeui-block="navbar-025"] [data-part="action"]:hover{transform:translateY(-1px);background:color-mix(in oklab,var(--vibeui-navbar-025-accent) 88%,#000)}
 [data-vibeui-block="navbar-025"] [data-part="toggle"]{display:inline-flex;align-items:center;justify-content:center;width:2.5rem;height:2.5rem;border:1px solid var(--vibeui-navbar-025-line);border-radius:50%;background:transparent;color:inherit;cursor:pointer}
 [data-vibeui-block="navbar-025"] [data-part="toggle"] svg{width:1.1rem;height:1.1rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
-[data-vibeui-block="navbar-025"] [data-part="links"]{display:none;grid-column:1 / -1;justify-content:center;align-items:center;gap:0;margin:0;padding:.15rem 0 0;list-style:none;overflow:hidden;max-height:3rem;transition:max-height .45s cubic-bezier(.2,.9,.3,1),padding .45s cubic-bezier(.2,.9,.3,1)}
-[data-vibeui-block="navbar-025"][data-scrolled="true"] [data-part="links"]{max-height:2.2rem;padding:0}
-[data-vibeui-block="navbar-025"] [data-part="links"] li{display:flex;align-items:center}
+[data-vibeui-block="navbar-025"] [data-part="links"]{display:none;justify-content:center;align-items:center;gap:0;margin:.35rem 0 0;padding:0;list-style:none;pointer-events:none;transition:transform .55s cubic-bezier(.2,.9,.3,1),margin .55s cubic-bezier(.2,.9,.3,1)}
+[data-vibeui-block="navbar-025"][data-scrolled="true"] [data-part="links"]{transform:translateY(-2.95rem);margin:.35rem 0 -2.2rem}
+[data-vibeui-block="navbar-025"] [data-part="links"] li{display:flex;align-items:center;pointer-events:auto}
 [data-vibeui-block="navbar-025"] [data-part="links"] li+li::before{content:"";width:.25rem;height:.25rem;margin:0 .9rem;border-radius:50%;background:var(--vibeui-navbar-025-accent);opacity:.6}
 [data-vibeui-block="navbar-025"] [data-part="link"]{position:relative;display:inline-flex;align-items:center;height:2.2rem;font-family:var(--vibeui-navbar-025-display);font-size:1.15rem;transition:color .25s,font-size .35s cubic-bezier(.2,.9,.3,1);font-weight:500;letter-spacing:.01em;color:var(--vibeui-navbar-025-fg);transition:color .25s}
 [data-vibeui-block="navbar-025"] [data-part="link"]::after{content:"";position:absolute;left:0;right:0;bottom:.3rem;height:1px;background:var(--vibeui-navbar-025-accent);transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.2,.9,.3,1)}
@@ -112,7 +118,7 @@ container-type:inline-size;
 @container (min-width:56rem){
 [data-vibeui-block="navbar-025"] [data-part="links"]{display:flex}
 [data-vibeui-block="navbar-025"] [data-part="music-label"]{display:inline}
-[data-vibeui-block="navbar-025"] [data-part="shell"] [data-part="action"]{display:inline-flex}
+[data-vibeui-block="navbar-025"] [data-part="row"] [data-part="action"]{display:inline-flex}
 [data-vibeui-block="navbar-025"] [data-part="toggle"],[data-vibeui-block="navbar-025"] [data-part="sheet"]{display:none!important}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-025"] *{animation:none!important;transition:none!important}}`
@@ -143,7 +149,7 @@ export function Navbar025({
   actionLabel = "Подтвердить",
   actionHref = "#rsvp",
   music,
-  musicLabel = "Музыка",
+  musicLabel = "Наша музыка",
   playingLabel = "Играет",
   placement = "fixed",
   spy = true,
@@ -238,6 +244,7 @@ export function Navbar025({
       <header data-vibeui-block="navbar-025" data-tone={tone === "auto" ? undefined : tone} data-placement={placement} data-scrolled={scrolled ? "true" : undefined} data-open={open ? "true" : undefined} className={className} style={palette}>
         <span data-part="veil" aria-hidden="true" />
         <div data-part="shell">
+          <div data-part="row">
           <div data-part="date">
             <span>{caption}</span>
             <span data-part="days" aria-live="off">
@@ -245,6 +252,11 @@ export function Navbar025({
             </span>
           </div>
           <a data-part="brand" href={brandHref} aria-label={monogram}>
+            {left}
+            <em>&amp;</em>
+            {right}
+          </a>
+          <a data-part="brand-small" href={brandHref} aria-hidden="true" tabIndex={-1}>
             {left}
             <em>&amp;</em>
             {right}
@@ -270,6 +282,7 @@ export function Navbar025({
                 {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
               </svg>
             </button>
+          </div>
           </div>
           <ul data-part="links">
             {links.map((link) => (

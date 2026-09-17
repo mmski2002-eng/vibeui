@@ -68,12 +68,15 @@ container-type:inline-size;
 [data-vibeui-block="portfolio-008"] [data-part="item"]:hover [data-part="pic"],[data-vibeui-block="portfolio-008"] [data-part="item"]:focus-visible [data-part="pic"]{transform:translateY(-.3rem);box-shadow:0 24px 40px -24px rgb(43 26 36 / .6)}
 [data-vibeui-block="portfolio-008"] [data-part="item"]:hover img,[data-vibeui-block="portfolio-008"] [data-part="item"]:focus-visible img{filter:none;transform:scale(1.04)}
 [data-vibeui-block="portfolio-008"] [data-part="cap"]{display:block;padding:.5rem .2rem 0;font-family:var(--vibeui-portfolio-008-display);font-style:italic;font-size:1.05rem;color:var(--vibeui-portfolio-008-muted)}
-[data-vibeui-block="portfolio-008"] dialog{width:min(100%,72rem);max-width:calc(100% - 2rem);max-height:calc(100% - 2rem);margin:auto;padding:0;border:0;border-radius:1rem;background:#17131a;color:#f3ebe4;box-shadow:0 40px 80px -30px rgb(0 0 0 / .7)}
-[data-vibeui-block="portfolio-008"] dialog::backdrop{background:rgb(23 19 26 / .82);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-[data-vibeui-block="portfolio-008"] dialog[open]{animation:vibeui-portfolio-008-in .35s cubic-bezier(.2,.9,.3,1) both}
-@keyframes vibeui-portfolio-008-in{from{opacity:0;transform:scale(.96)}}
+[data-vibeui-block="portfolio-008"] dialog{width:min(100%,52rem);max-width:calc(100% - 2rem);max-height:calc(100% - 2rem);margin:auto;padding:0;border:0;border-radius:1.2rem;background:#1d1620;color:#f3ebe4;box-shadow:0 40px 90px -30px rgb(0 0 0 / .8),0 0 0 1px rgb(255 255 255 / .06)}
+[data-vibeui-block="portfolio-008"] dialog::backdrop{background:rgb(23 19 26 / .78);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);animation:vibeui-portfolio-008-veil .5s ease both}
+@keyframes vibeui-portfolio-008-veil{from{opacity:0}}
+[data-vibeui-block="portfolio-008"] dialog[open]{animation:vibeui-portfolio-008-in .55s cubic-bezier(.2,.9,.3,1) both}
+@keyframes vibeui-portfolio-008-in{from{opacity:0;transform:translateY(1.5rem) scale(.94)}}
 [data-vibeui-block="portfolio-008"] [data-part="stage"]{display:grid;grid-template-rows:minmax(0,1fr) auto;gap:.8rem;padding:1rem}
-[data-vibeui-block="portfolio-008"] [data-part="stage"] img{display:block;width:100%;max-height:70cqi;object-fit:contain;border-radius:.5rem}
+[data-vibeui-block="portfolio-008"] [data-part="frame"]{display:grid;place-items:center;min-height:12rem;max-height:min(32rem,calc(100vh - 9rem));overflow:hidden;border-radius:.6rem;background:#17131a}
+[data-vibeui-block="portfolio-008"] [data-part="stage"] img{display:block;max-width:100%;max-height:min(32rem,calc(100vh - 9rem));object-fit:contain;border-radius:.6rem;animation:vibeui-portfolio-008-photo .5s cubic-bezier(.2,.9,.3,1) both}
+@keyframes vibeui-portfolio-008-photo{from{opacity:0;transform:scale(1.03)}}
 [data-vibeui-block="portfolio-008"] [data-part="bar"]{display:flex;align-items:center;justify-content:space-between;gap:1rem}
 [data-vibeui-block="portfolio-008"] [data-part="bar"] p{margin:0;font-family:var(--vibeui-portfolio-008-display);font-style:italic;font-size:1.15rem;color:#d9c5a5}
 [data-vibeui-block="portfolio-008"] [data-part="bar"] div{display:flex;gap:.4rem}
@@ -169,7 +172,7 @@ export function Portfolio008({
         >
           {shown ? (
             <div data-part="stage">
-              {shown.src ? <img src={shown.src} alt={shown.alt ?? ""} /> : null}
+              <div data-part="frame">{shown.src ? <img key={shown.src} src={shown.src} alt={shown.alt ?? ""} /> : null}</div>
               <div data-part="bar">
                 <p>{shown.caption}</p>
                 <div>
