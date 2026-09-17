@@ -104,6 +104,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1,
     }),
+    ...localized("/start", {
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    }),
     ...catalogs,
     ...scenarios,
     ...categories,

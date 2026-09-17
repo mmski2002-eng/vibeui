@@ -522,6 +522,19 @@ export async function LandingPage({ locale }: { locale: Locale }) {
               </details>
             ))}
           </div>
+          {/* Новичок не найдёт ответ в FAQ: ему нужна не справка, а путь. */}
+          <p className="text-shell-muted mt-6 text-center text-sm">
+            {en ? "New to AI coding? " : "Только начинаете? "}
+            <Link
+              href={localePath(locale, "/start")}
+              className="text-shell-fg hover:text-shell-accent-text inline-flex items-center gap-1 font-medium transition-colors"
+            >
+              {en
+                ? "Step-by-step guide from setup to the first block"
+                : "Пошаговый гайд от установки до первого блока"}
+              <ArrowRight className="size-3.5" aria-hidden="true" />
+            </Link>
+          </p>
         </section>
 
         {/* Финальный CTA. Перед ним пауза шире обычной: это конец разговора,
@@ -602,6 +615,12 @@ export async function LandingPage({ locale }: { locale: Locale }) {
                 className="text-shell-muted hover:text-shell-fg text-sm transition-colors"
               >
                 {en ? "Pricing" : "Тарифы"}
+              </Link>
+              <Link
+                href={localePath(locale, "/start")}
+                className="text-shell-muted hover:text-shell-fg text-sm transition-colors"
+              >
+                {en ? "Getting started" : "Как начать"}
               </Link>
             </nav>
           </div>

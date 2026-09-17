@@ -32,12 +32,16 @@ export function VerifyPanel({ locale }: { locale: Locale }) {
   )
 
   if (state === "done" && !failure) {
+    // Первый вход после регистрации ведёт через гайд для новичка; куда
+    // человек шёл на самом деле, гайд помнит в `next` и отдаёт по «Пропустить».
+    const start = `${localePath(locale, "/start")}?next=${encodeURIComponent(next)}`
+
     return (
       <Panel
         title={t.verifyDone}
         lead={t.verifyDoneLead}
         action={
-          <Link href={next} className={`${SUBMIT_CLASS} no-underline`}>
+          <Link href={start} className={`${SUBMIT_CLASS} no-underline`}>
             {t.continueTo}
           </Link>
         }

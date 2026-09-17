@@ -1,0 +1,763 @@
+/* Ролик на странице /start. Один цикл `--sd-loop`, все keyframes считают
+   проценты от него: 30 с = 100 %, секунда = 3.333 %. Размеры в cqw, чтобы
+   сцена одинаково выглядела в карточке на телефоне и в кадре 1280×720 при
+   экспорте. Раскадровка (секунды): 0–3 заставка, 3–9 каталог, 9–16 страница
+   блока, 16–24 чат агента, 24–29 результат, 29–30 снова заставка. */
+
+.sd {
+  --sd-loop: 30s;
+}
+
+.sd-stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  container-type: inline-size;
+  overflow: hidden;
+  background: var(--shell-bg);
+  color: var(--shell-fg);
+  font-size: 2cqw;
+  line-height: 1.3;
+}
+
+.sd-scene {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5cqw;
+  padding: 4cqw 6cqw 3cqw;
+  opacity: 0;
+  animation: var(--sd-loop) linear infinite;
+}
+
+.sd-title {
+  animation-name: sd-scene-title;
+  gap: 1.5cqw;
+}
+.sd-catalog {
+  animation-name: sd-scene-catalog;
+}
+.sd-item {
+  animation-name: sd-scene-item;
+}
+.sd-chat {
+  animation-name: sd-scene-chat;
+}
+.sd-result {
+  animation-name: sd-scene-result;
+}
+
+.sd-caption {
+  /* На телефоне сцена ужимается до 340px: без нижней планки подпись
+     превращалась бы в 8px. */
+  font-size: max(2.4cqw, 0.75rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* Заставка */
+.sd-wordmark {
+  font-size: 7cqw;
+  line-height: 1;
+}
+.sd-wordmark b {
+  color: var(--shell-accent);
+  font-weight: inherit;
+}
+.sd-promise {
+  color: var(--shell-muted);
+  font-size: 2.8cqw;
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* Окно браузера и терминала */
+.sd-browser,
+.sd-terminal {
+  width: 100%;
+  max-width: 76cqw;
+  border: 0.15cqw solid var(--shell-border-strong);
+  border-radius: 1.4cqw;
+  background: var(--shell-panel);
+  box-shadow: 0 3cqw 6cqw -3cqw rgb(0 0 0 / 0.6);
+  overflow: hidden;
+}
+.sd-browser-bar,
+.sd-terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.7cqw;
+  padding: 1cqw 1.4cqw;
+  border-bottom: 0.15cqw solid var(--shell-border);
+  background: var(--shell-elevated);
+}
+.sd-dot {
+  width: 0.9cqw;
+  height: 0.9cqw;
+  border-radius: 999px;
+  background: var(--shell-muted);
+  opacity: 0.45;
+}
+.sd-url,
+.sd-terminal-title {
+  margin-left: 1cqw;
+  padding: 0.35cqw 1.2cqw;
+  border-radius: 999px;
+  background: var(--shell-bg);
+  color: var(--shell-muted);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 1.5cqw;
+}
+.sd-terminal-title {
+  background: transparent;
+}
+.sd-browser-body {
+  padding: 2cqw;
+  min-height: 38cqw;
+}
+
+/* Полоски вместо текста: фигуры не зависят от языка и не «плывут». */
+.sd-line {
+  display: block;
+  height: 0.9cqw;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--shell-fg) 22%, transparent);
+}
+.sd-line-title {
+  height: 1.6cqw;
+  width: 70%;
+  background: color-mix(in oklab, var(--shell-fg) 60%, transparent);
+}
+.sd-line-w40 {
+  width: 40%;
+}
+.sd-line-w60 {
+  width: 60%;
+}
+.sd-line-w80 {
+  width: 80%;
+}
+
+/* Hero: узнаваемая фигура блока во всех сценах */
+.sd-hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.3cqw;
+  width: 100%;
+  padding: 6.5cqw 6cqw;
+  border-radius: 1cqw;
+  background:
+    radial-gradient(
+      60% 80% at 50% 0%,
+      color-mix(in oklab, var(--shell-accent) 28%, transparent),
+      transparent 70%
+    ),
+    var(--shell-bg);
+  overflow: hidden;
+}
+.sd-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(
+      color-mix(in oklab, var(--shell-fg) 6%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--shell-fg) 6%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 4cqw 4cqw;
+  mask-image: radial-gradient(70% 70% at 50% 30%, #000, transparent);
+}
+.sd-hero > * {
+  position: relative;
+  max-width: 100%;
+}
+.sd-hero-pill {
+  width: 14cqw;
+  height: 1.6cqw;
+  border-radius: 999px;
+  border: 0.12cqw solid var(--shell-accent-line);
+  background: var(--shell-accent-soft);
+}
+.sd-hero-title {
+  width: 30cqw;
+  height: 2.6cqw;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--shell-fg) 82%, transparent);
+}
+.sd-hero-title.is-second {
+  width: 22cqw;
+}
+.sd-hero-lead {
+  width: 26cqw;
+  height: 1cqw;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--shell-fg) 30%, transparent);
+}
+.sd-hero-actions {
+  display: flex;
+  gap: 1cqw;
+  margin-top: 0.6cqw;
+}
+.sd-hero-btn {
+  width: 9cqw;
+  height: 2.6cqw;
+  border-radius: 999px;
+  border: 0.12cqw solid var(--shell-border-strong);
+}
+.sd-hero-btn.is-primary {
+  border-color: var(--shell-accent);
+  background: var(--shell-accent);
+}
+.sd-hero.is-compact {
+  justify-content: center;
+  gap: 0.6cqw;
+  height: 11.5cqw;
+  padding: 0 2cqw;
+}
+.sd-hero.is-compact .sd-hero-title {
+  width: 12cqw;
+}
+.sd-hero.is-compact .sd-hero-title.is-second {
+  width: 9cqw;
+}
+.sd-hero.is-compact .sd-hero-lead {
+  width: 10cqw;
+}
+.sd-hero.is-compact .sd-hero-pill {
+  width: 6cqw;
+  height: 0.8cqw;
+}
+.sd-hero.is-compact .sd-hero-title {
+  height: 1.2cqw;
+}
+.sd-hero.is-compact .sd-hero-lead {
+  height: 0.5cqw;
+}
+.sd-hero.is-compact .sd-hero-btn {
+  width: 4cqw;
+  height: 1.2cqw;
+}
+.sd-hero.is-compact::before {
+  background-size: 2cqw 2cqw;
+}
+
+/* Сцена «каталог» */
+.sd-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.6cqw;
+}
+.sd-card {
+  border: 0.15cqw solid var(--shell-card-border);
+  border-radius: 0.9cqw;
+  background: var(--shell-bg);
+  overflow: hidden;
+}
+.sd-card-abstract {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.9cqw;
+  height: 11.5cqw;
+  padding: 0 2.4cqw;
+}
+.sd-card-foot {
+  padding: 1cqw 1.2cqw;
+  border-top: 0.15cqw solid var(--shell-border);
+}
+.sd-card.is-target {
+  animation: sd-card-target var(--sd-loop) linear infinite;
+}
+
+/* Сцена «страница блока» */
+.sd-item-layout {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 2cqw;
+  align-items: start;
+}
+.sd-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4cqw;
+  padding-top: 1cqw;
+}
+.sd-copy {
+  position: relative;
+  display: grid;
+  place-items: center;
+  margin-top: 1.4cqw;
+  height: 4.2cqw;
+  border-radius: 0.8cqw;
+  background: var(--shell-accent);
+  color: var(--shell-accent-fg);
+  font-size: 1.7cqw;
+  font-weight: 600;
+  animation: sd-copy-press var(--sd-loop) linear infinite;
+}
+.sd-copy > span {
+  grid-area: 1 / 1;
+  animation: var(--sd-loop) linear infinite;
+}
+.sd-copy-idle {
+  animation-name: sd-copy-idle;
+}
+.sd-copy-done {
+  opacity: 0;
+  animation-name: sd-copy-done;
+}
+
+/* Сцена «чат агента» */
+.sd-terminal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6cqw;
+  min-height: 30cqw;
+  padding: 2.4cqw 2.6cqw;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: max(1.9cqw, 0.6rem);
+}
+.sd-user {
+  display: flex;
+  align-items: baseline;
+  gap: 1cqw;
+  min-height: 2.6cqw;
+}
+.sd-prompt {
+  color: var(--shell-accent);
+  font-weight: 700;
+}
+/* Ширина растёт по символам, а не clip-path: так каретка за ней едет,
+   а не ждёт в конце строки. Число символов приходит из разметки. */
+.sd-typed {
+  display: inline-block;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: bottom;
+  width: 0;
+  animation: sd-typed var(--sd-loop) steps(var(--sd-chars, 56), end) infinite;
+}
+.sd-link {
+  color: var(--shell-accent-text);
+  text-decoration: underline;
+  text-decoration-color: color-mix(
+    in oklab,
+    var(--shell-accent) 50%,
+    transparent
+  );
+  text-underline-offset: 0.3cqw;
+}
+.sd-caret {
+  display: inline-block;
+  width: 0.8cqw;
+  height: 2cqw;
+  background: var(--shell-fg);
+  animation: sd-caret var(--sd-loop) linear infinite;
+}
+.sd-agent {
+  display: flex;
+  gap: 1cqw;
+  color: var(--shell-muted);
+  opacity: 0;
+  animation: var(--sd-loop) linear infinite;
+}
+.sd-agent[data-step="0"] {
+  animation-name: sd-agent-0;
+}
+.sd-agent[data-step="1"] {
+  animation-name: sd-agent-1;
+}
+.sd-agent[data-step="2"] {
+  animation-name: sd-agent-2;
+  color: var(--shell-fg);
+}
+.sd-tick {
+  color: var(--shell-ok);
+}
+
+/* Сцена «результат» */
+.sd-result .sd-browser {
+  animation: sd-result-frame var(--sd-loop) linear infinite;
+}
+.sd-result-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2cqw;
+}
+.sd-result-rest {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.6cqw;
+}
+.sd-result-rest > span {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8cqw;
+  padding: 1.6cqw;
+  border: 0.15cqw solid var(--shell-card-border);
+  border-radius: 0.9cqw;
+}
+.sd-badge {
+  position: absolute;
+  top: 1.4cqw;
+  right: 1.4cqw;
+  display: grid;
+  place-items: center;
+  width: 4cqw;
+  height: 4cqw;
+  border-radius: 999px;
+  background: var(--shell-ok);
+  color: var(--shell-bg);
+  font-size: 2.2cqw;
+  font-weight: 700;
+  opacity: 0;
+  animation: sd-badge var(--sd-loop) linear infinite;
+}
+
+/* Курсор: один слой над всеми сценами. Позицией управляет обёртка,
+   нажатием — сама стрелка, кругом отклика — третий элемент: у каждого
+   свой таймлайн, но один цикл. Цвета стрелки фиксированы, как у системного
+   курсора: белая с чёрной обводкой видна на любой подложке. */
+.sd-cursor {
+  position: absolute;
+  left: 70%;
+  top: 80%;
+  width: 2.6cqw;
+  height: 2.6cqw;
+  opacity: 0;
+  animation: sd-cursor var(--sd-loop) linear infinite;
+}
+.sd-cursor svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0.25cqw 0.5cqw rgb(0 0 0 / 0.45));
+  transform-origin: 15% 10%;
+  animation: sd-cursor-press var(--sd-loop) linear infinite;
+}
+.sd-cursor-ring {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3.6cqw;
+  height: 3.6cqw;
+  margin: -1.8cqw 0 0 -1.8cqw;
+  border-radius: 999px;
+  border: 0.25cqw solid var(--shell-fg);
+  opacity: 0;
+  transform: scale(0.3);
+  animation: sd-cursor-ring var(--sd-loop) linear infinite;
+}
+
+/* Пауза и reduced motion: сцена замирает на результате */
+.sd[data-paused="true"] .sd-stage * {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sd .sd-stage * {
+    animation: none !important;
+  }
+  .sd-result {
+    opacity: 1;
+  }
+  .sd-result .sd-badge {
+    opacity: 1;
+  }
+}
+
+/* Раскадровка */
+@keyframes sd-scene-title {
+  0%,
+  9% {
+    opacity: 1;
+  }
+  10.5%,
+  95.5% {
+    opacity: 0;
+  }
+  97%,
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes sd-scene-catalog {
+  0%,
+  9.5% {
+    opacity: 0;
+  }
+  11%,
+  29% {
+    opacity: 1;
+  }
+  30.5%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes sd-scene-item {
+  0%,
+  29.5% {
+    opacity: 0;
+  }
+  31%,
+  52% {
+    opacity: 1;
+  }
+  53.5%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes sd-scene-chat {
+  0%,
+  52.5% {
+    opacity: 0;
+  }
+  54%,
+  79% {
+    opacity: 1;
+  }
+  80.5%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes sd-scene-result {
+  0%,
+  79.5% {
+    opacity: 0;
+  }
+  81%,
+  95.5% {
+    opacity: 1;
+  }
+  97%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Курсор: 4 с появляется в каталоге, к 6 с доезжает до карточки, 6.5 с
+   клик; 9.5 с едет к кнопке, 11.5 с клик; 13.5 с уходит. Перемещения
+   с замедлением на подходе — так двигается рука, а не робот. */
+@keyframes sd-cursor {
+  0%,
+  13% {
+    left: 72%;
+    top: 78%;
+    opacity: 0;
+  }
+  14.5% {
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.3, 0, 0.15, 1);
+  }
+  20%,
+  31.5% {
+    left: 50%;
+    top: 34%;
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.3, 0, 0.15, 1);
+  }
+  37%,
+  44% {
+    left: 72%;
+    top: 41%;
+    opacity: 1;
+  }
+  46%,
+  100% {
+    left: 72%;
+    top: 41%;
+    opacity: 0;
+  }
+}
+@keyframes sd-cursor-press {
+  0%,
+  21.3%,
+  22.4%,
+  38.1%,
+  39.2%,
+  100% {
+    transform: scale(1);
+  }
+  21.7%,
+  38.5% {
+    transform: scale(0.82);
+  }
+}
+@keyframes sd-cursor-ring {
+  0%,
+  21.5%,
+  24.5%,
+  38.3%,
+  41.3%,
+  100% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  21.8%,
+  38.6% {
+    opacity: 0.9;
+    transform: scale(0.4);
+  }
+  24%,
+  40.8% {
+    opacity: 0;
+    transform: scale(1.4);
+  }
+}
+
+@keyframes sd-card-target {
+  0%,
+  19% {
+    border-color: var(--shell-card-border);
+    transform: translateY(0);
+  }
+  21.3% {
+    border-color: var(--shell-accent);
+    transform: translateY(-0.4cqw);
+  }
+  21.8% {
+    transform: translateY(0.2cqw) scale(0.985);
+  }
+  22.6%,
+  100% {
+    border-color: var(--shell-accent);
+    transform: translateY(-0.4cqw);
+  }
+}
+
+@keyframes sd-copy-press {
+  0%,
+  38% {
+    transform: scale(1);
+  }
+  38.6% {
+    transform: scale(0.96);
+  }
+  39.3%,
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes sd-copy-idle {
+  0%,
+  38.6% {
+    opacity: 1;
+  }
+  39.3%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes sd-copy-done {
+  0%,
+  38.6% {
+    opacity: 0;
+  }
+  39.3%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Печать 16.5–20 с */
+@keyframes sd-typed {
+  0%,
+  55% {
+    width: 0;
+  }
+  66.5%,
+  100% {
+    width: calc(var(--sd-chars, 56) * 1ch);
+  }
+}
+@keyframes sd-caret {
+  0%,
+  54.5% {
+    opacity: 0;
+  }
+  55%,
+  67% {
+    opacity: 1;
+  }
+  67.5%,
+  100% {
+    opacity: 0;
+  }
+}
+/* Ответы агента: 21, 22, 23 с */
+@keyframes sd-agent-0 {
+  0%,
+  69.5% {
+    opacity: 0;
+    transform: translateY(0.6cqw);
+  }
+  71%,
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes sd-agent-1 {
+  0%,
+  73% {
+    opacity: 0;
+    transform: translateY(0.6cqw);
+  }
+  74.5%,
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes sd-agent-2 {
+  0%,
+  76.5% {
+    opacity: 0;
+    transform: translateY(0.6cqw);
+  }
+  78%,
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sd-result-frame {
+  0%,
+  80% {
+    transform: scale(0.96);
+  }
+  84%,
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes sd-badge {
+  0%,
+  86.5% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  88%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

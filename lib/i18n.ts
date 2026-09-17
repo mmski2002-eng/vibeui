@@ -175,6 +175,8 @@ type Dictionary = {
     steps: [string, string, string]
     example: string
     showFull: string
+    /** Ссылка на гайд для новичка под цепочкой «как это работает». */
+    startGuide: string
     fullNote: string
     copyFull: string
     dev: string
@@ -439,6 +441,7 @@ const RU: Dictionary = {
       "Агент откроет ссылку и поставит компонент из реестра.",
     ],
     example: "размести это в шапке:",
+    startGuide: "Не знаете, куда вставить? Пошаговый гайд",
     showFull: "Показать полную инструкцию",
     fullNote:
       "То, что лежит по ссылке в развёрнутом виде. Нужна, если агент не может открыть ссылку — тогда вставьте этот текст целиком.",
@@ -645,6 +648,7 @@ const EN: Dictionary = {
       "The agent opens the link and installs the component from the registry.",
     ],
     example: "put this in the header:",
+    startGuide: "Not sure where to paste it? Step-by-step guide",
     showFull: "Show the full instructions",
     fullNote:
       "What the link says, spelled out. Use it when your agent cannot open links — paste this text instead.",

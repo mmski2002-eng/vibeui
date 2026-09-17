@@ -88,5 +88,7 @@ jobs:
           # закрытость — маршрутом /c/<name>, который анониму отвечает 401.
           curl -fsS https://vibeui.ru/components/button-001 | grep -q "button-001"
           test "$(curl -s -o /dev/null -w '%{http_code}' https://vibeui.ru/c/button-001)" = "401"
+          curl -fsS https://vibeui.ru/start | grep -q 'id="paste"'
+          curl -fsS https://vibeui.ru/en/start | grep -q 'id="paste"'
           curl -fsS https://vibeui.ru/robots.txt | grep -q "Sitemap: https://vibeui.ru/sitemap.xml"
           curl -fsS https://vibeui.ru/sitemap.xml | grep -q "<loc>https://vibeui.ru/components</loc>"

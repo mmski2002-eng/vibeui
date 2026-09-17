@@ -1,5 +1,7 @@
 "use client"
 
+import Link from "next/link"
+import { ArrowRight } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 
 import { BlockPreview } from "@/components/block-preview"
@@ -18,7 +20,7 @@ import {
   type PreviewSurface,
 } from "@/lib/controls"
 import { useShellIsLight } from "@/components/catalog/theme-switch"
-import { getDictionary, type Locale } from "@/lib/i18n"
+import { getDictionary, localePath, type Locale } from "@/lib/i18n"
 import type { ItemKind } from "@/registry/categories"
 import type { CatalogItem } from "@/registry/meta"
 
@@ -206,6 +208,15 @@ export function ItemWorkbench({
         </div>
 
         <CopyFlow locale={locale} link={link} className="mt-6" />
+        <p className="text-shell-muted mt-3 text-xs">
+          <Link
+            href={`${localePath(locale, "/start")}#paste`}
+            className="hover:text-shell-fg inline-flex items-center gap-1 transition-colors"
+          >
+            {t.item.startGuide}
+            <ArrowRight className="size-3" aria-hidden="true" />
+          </Link>
+        </p>
 
         {/* Запасной путь: если агент не может открыть ссылку, инструкцию
             копируют целиком. Тело закрыто — как и сама ссылка /c. */}

@@ -1,0 +1,94 @@
+/* Движение на странице /start. Ключевые кадры — в терминах токенов оболочки,
+   чтобы тёмная и светлая темы получали одно и то же. */
+
+/* Панель вкладок сменилась: новый список проступает, не прыгая. */
+.start-fade {
+  animation: start-fade var(--motion-slow, 460ms) var(--ease-out) both;
+}
+
+@keyframes start-fade {
+  from {
+    opacity: 0;
+    transform: translateY(0.35rem);
+  }
+}
+
+/* Кольцо вокруг «Копировать для ИИ» в тестовом блоке: подсказка, куда
+   нажать, пока человек этого не сделал. Гаснет по data-copied. */
+.start-pulse {
+  position: relative;
+}
+
+.start-pulse::after {
+  content: "";
+  position: absolute;
+  inset: -0.35rem;
+  border-radius: 0.75rem;
+  border: 2px solid var(--shell-accent);
+  opacity: 0;
+  pointer-events: none;
+  animation: start-pulse 2.4s ease-out infinite;
+}
+
+.start-pulse[data-copied="true"]::after {
+  animation: none;
+}
+
+@keyframes start-pulse {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.9);
+  }
+  60%,
+  100% {
+    opacity: 0;
+    transform: scale(1.25);
+  }
+}
+
+/* Тёплое пятно за первым экраном и за финальным призывом. */
+.start-glow {
+  background:
+    radial-gradient(
+      60% 55% at 50% 0%,
+      color-mix(in oklab, var(--shell-accent) 18%, transparent),
+      transparent 70%
+    ),
+    transparent;
+}
+
+.start-glow-bottom {
+  background:
+    radial-gradient(
+      55% 60% at 50% 100%,
+      color-mix(in oklab, var(--shell-accent) 16%, transparent),
+      transparent 70%
+    ),
+    transparent;
+}
+
+/* Крупный номер в углу карточки: ориентир, не текст. */
+.start-index {
+  position: absolute;
+  top: -0.6rem;
+  right: 0.5rem;
+  font-size: 4.5rem;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: color-mix(in oklab, var(--shell-fg) 5%, transparent);
+  pointer-events: none;
+  user-select: none;
+  transition: color var(--motion-base, 220ms) ease;
+}
+
+.acc-lift:hover .start-index {
+  color: color-mix(in oklab, var(--shell-accent) 22%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .start-fade,
+  .start-pulse::after {
+    animation: none;
+  }
+}
