@@ -292,35 +292,38 @@ export async function AccountOverview({ locale }: { locale: Locale }) {
                   {t.savedAll}
                 </Link>
               </div>
-              <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {stats.saved.map((row, position) => {
-                  const item = getCatalogItem(row.itemName)
-                  const kind = getItemKind(row.itemName) ?? "component"
+              <Panel index={9} padded={false}>
+                <ul className="grid gap-0.5 p-2">
+                  {stats.saved.map((row) => {
+                    const item = getCatalogItem(row.itemName)
+                    const kind = getItemKind(row.itemName) ?? "component"
 
-                  return (
-                    <Panel
-                      key={row.itemName}
-                      as="li"
-                      index={9 + position}
-                      padded={false}
-                      className="acc-lift overflow-hidden"
-                    >
-                      <div className="bg-preview-surface flex min-h-40 flex-col">
-                        <CatalogThumbnail slug={row.itemName} locale={locale} />
-                      </div>
-                      <Link
-                        href={localePath(
-                          locale,
-                          `${itemBasePath(kind)}/${row.itemName}`,
-                        )}
-                        className="border-shell-divider text-shell-fg hover:text-shell-accent-text block truncate border-t px-3 py-2.5 text-sm transition-colors"
-                      >
-                        {item?.title ?? row.itemName}
-                      </Link>
-                    </Panel>
-                  )
-                })}
-              </ul>
+                    return (
+                      <li key={row.itemName}>
+                        <Link
+                          href={localePath(
+                            locale,
+                            `${itemBasePath(kind)}/${row.itemName}`,
+                          )}
+                          className="hover:bg-shell-elevated flex items-baseline justify-between gap-4 rounded-lg px-2 py-2 transition-colors"
+                        >
+                          <span className="min-w-0">
+                            <span className="text-shell-fg block truncate text-sm">
+                              {item?.title ?? row.itemName}
+                            </span>
+                            <span className="text-shell-muted block truncate font-mono text-xs">
+                              {row.itemName}
+                            </span>
+                          </span>
+                          <span className="text-shell-muted shrink-0 text-xs tabular-nums">
+                            {formatDay(row.createdAt, locale)}
+                          </span>
+                        </Link>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </Panel>
             </section>
           ) : null}
         </div>

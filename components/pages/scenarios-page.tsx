@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, ArrowUpRight } from "lucide-react"
 
 import { CatalogShell } from "@/components/catalog/catalog-shell"
 import { LiveCover } from "@/components/catalog/live-cover"
@@ -59,10 +59,10 @@ export function ScenariosPage({ locale }: { locale: Locale }) {
                     <p className="text-shell-muted text-sm text-pretty">
                       {text.summary}
                     </p>
-                    <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-1 pt-2 text-xs">
+                    <div className="mt-auto flex flex-wrap items-center gap-2 pt-3">
                       <Link
                         href={href}
-                        className="text-shell-fg hover:text-shell-accent inline-flex items-center gap-1.5 font-medium transition-colors"
+                        className="acc-press bg-shell-accent text-shell-accent-fg hover:bg-shell-accent-deep inline-flex h-9 items-center gap-1.5 rounded-full px-4 text-sm font-semibold transition-colors"
                       >
                         {t.openRecipe}
                         <ArrowRight className="size-3.5" aria-hidden="true" />
@@ -71,9 +71,10 @@ export function ScenariosPage({ locale }: { locale: Locale }) {
                         href={scenario.demo}
                         target="_blank"
                         rel="noopener"
-                        className="text-shell-muted hover:text-shell-fg transition-colors"
+                        className="acc-press border-shell-border-strong text-shell-fg hover:border-shell-accent inline-flex h-9 items-center gap-1.5 rounded-full border px-4 text-sm font-medium transition-colors"
                       >
                         {t.openDemo}
+                        <ArrowUpRight className="size-3.5" aria-hidden="true" />
                       </Link>
                     </div>
                   </div>

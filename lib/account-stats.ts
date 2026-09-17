@@ -43,7 +43,7 @@ export async function overviewStats(userId: string, now = new Date()) {
       .from(favorite)
       .where(eq(favorite.userId, userId))
       .orderBy(desc(favorite.createdAt))
-      .limit(3),
+      .limit(6),
     db
       .select({
         total: sql<string>`coalesce(sum(cast(${payment.amount} as numeric)), 0)`,

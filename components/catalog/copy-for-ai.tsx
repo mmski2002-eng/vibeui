@@ -7,6 +7,7 @@ import {
   GATE_BASE,
   GATE_VARIANTS,
   GatePopover,
+  type GateReason,
   LockedCopyButton,
 } from "@/components/catalog/pro-gate"
 import { useSession } from "@/lib/auth-client"
@@ -52,8 +53,12 @@ export function CopyForAi({
   // На закрытом item'е исходим из «нет Pro» и подтверждаем право запросом:
   // страница статична и на сервере сессию не знает. Ошибка — в пользу платящего.
   const [access, setAccess] = useState<"pro" | "nopro">(pro ? "nopro" : "pro")
-  // Прямоугольник кнопки, когда лимит исчерпан на лету: поповер у кнопки.
-  const [limit, setLimit] = useState<DOMRect | null>(null)
+  // Отказ сервера на лету (лимит, нет Pro, вышла сессия): поповер у кнопки
+  // с причиной из ответа.
+  const [denied, setDenied] = useState<{
+    anchor: DOMRect
+    reason: GateReason
+  } | null>(null)
   const button = useRef<HTMLButtonElement>(null)
   const en = locale === "en"
 
@@ -127,8 +132,13 @@ export function CopyForAi({
       )
 
       if (!response.ok) {
-        // Вошёл, но лимит исчерпан или item закрыт — поповер у кнопки.
-        setLimit(button.current?.getBoundingClientRect() ?? null)
+        const reason = await response
+          .json()
+          .then((data: { reason?: GateReason }) => data?.reason)
+          .catch(() => undefined)
+        const anchor = button.current?.getBoundingClientRect()
+
+        if (anchor) setDenied({ anchor, reason: reason ?? "limit" })
         setState("idle")
         return
       }
@@ -183,12 +193,12 @@ export function CopyForAi({
               : label}
         </span>
       </button>
-      {limit ? (
+      {denied ? (
         <GatePopover
-          anchor={limit}
-          reason="limit"
+          anchor={denied.anchor}
+          reason={denied.reason}
           locale={locale}
-          onClose={() => setLimit(null)}
+          onClose={() => setDenied(null)}
         />
       ) : null}
     </>

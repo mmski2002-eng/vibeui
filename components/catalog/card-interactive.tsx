@@ -729,6 +729,7 @@ export function CardInteractive({
             label={t.card.copy}
             copiedLabel={t.card.copied}
             locale={locale}
+            pro={pro}
             variant="secondary"
             className="h-7 px-3 text-xs"
           />
