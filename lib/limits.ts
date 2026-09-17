@@ -8,4 +8,4 @@
  */
 
 /** Сколько разных компонентов в месяц отдаём бесплатно вошедшему. */
-export const FREE_MONTHLY_LIMIT = 100
+export const FREE_MONTHLY_LIMIT = 20

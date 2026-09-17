@@ -157,7 +157,7 @@ export function PlanCards({
   manageHref,
   promo,
 }: PlanCardsProps) {
-  const [yearly, setYearly] = useState(false)
+  const [yearly, setYearly] = useState(true)
   const [applied, setApplied] = useState<AppliedPromo | null>(null)
   const listPro = yearly ? prices.yearly : prices.monthly
   const listEnterprise = yearly

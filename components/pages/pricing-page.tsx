@@ -120,9 +120,10 @@ const buildTexts = ({
         badge: "Популярный",
         plusAll: "Всё из бесплатного, плюс:",
         features: [
-          "Без лимита на компоненты",
+          "Готовые сценарии: целый сайт из блоков — одной ссылкой агенту",
+          "Закрытые блоки-showpiece: сложные секции только в Pro",
           `${ANIMATIONS} анимаций: курсоры, фоны, текст, стопки`,
-          "Закрытые блоки — те, что только в Pro",
+          "Без лимита на копирования",
         ],
         anchor: "Меньше часа работы верстальщика",
         cta: "Открыть Pro",
@@ -152,6 +153,14 @@ const buildTexts = ({
     proTitle: "Три вещи, ради которых берут Pro",
     proTiles: [
       {
+        title: "Готовые сценарии",
+        text: "Целые страницы, собранные из блоков: демо, точный состав и одна ссылка, по которой ИИ-агент соберёт такой же сайт у вас.",
+      },
+      {
+        title: "Закрытые блоки",
+        text: "Сложные секции-showpiece: их видно в превью, но код отдаётся только в Pro — первые экраны, меню, калькуляторы, многошаговые формы.",
+      },
+      {
         title: "Анимации",
         text: `${ANIMATIONS} живых сцен: курсоры, шейдерные фоны, текстовые эффекты, стопки карточек. Каждая — один файл без библиотек.`,
         chips: [
@@ -164,14 +173,6 @@ const buildTexts = ({
           "Портфолио",
           "Рукописный",
         ],
-      },
-      {
-        title: "Закрытые блоки",
-        text: "Секции, которые видно на витрине, но код которых отдаётся только в Pro: первые экраны, раскладки, шейдеры.",
-      },
-      {
-        title: "Без лимита",
-        text: "Сотни компонентов в месяц вместо ста. Собирайте сайты подряд, не считая копирования.",
       },
     ],
     stepsEyebrow: "Как это работает",
@@ -304,9 +305,10 @@ const buildTexts = ({
         badge: "Popular",
         plusAll: "Everything in Free, plus:",
         features: [
-          "No limit on components",
+          "Ready-made scenarios: a whole site from blocks — one link to your agent",
+          "Closed showpiece blocks: the complex sections, Pro-only",
           `${ANIMATIONS} animations: cursors, backgrounds, text, stacks`,
-          "Closed blocks — the ones only in Pro",
+          "No limit on copies",
         ],
         anchor: "Less than an hour of a front-end contractor",
         cta: "Get Pro",
@@ -336,6 +338,14 @@ const buildTexts = ({
     proTitle: "Three things people get Pro for",
     proTiles: [
       {
+        title: "Ready-made scenarios",
+        text: "Whole pages assembled from blocks: a demo, the exact composition and one link your AI agent uses to build the same site for you.",
+      },
+      {
+        title: "Closed blocks",
+        text: "Complex showpiece sections: visible in the preview, but the code is served only in Pro — heroes, menus, calculators, multi-step forms.",
+      },
+      {
         title: "Animations",
         text: `${ANIMATIONS} live scenes: cursors, shader backgrounds, text effects, card stacks. Each one a single file with no libraries.`,
         chips: [
@@ -348,14 +358,6 @@ const buildTexts = ({
           "Portfolio",
           "Hand-drawn",
         ],
-      },
-      {
-        title: "Closed blocks",
-        text: "Sections you can see in the showcase but whose code is served only in Pro: heroes, layouts, shaders.",
-      },
-      {
-        title: "No limit",
-        text: "Hundreds of components a month instead of a hundred. Build sites back to back without counting copies.",
       },
     ],
     stepsEyebrow: "How it works",
