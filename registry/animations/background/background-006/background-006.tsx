@@ -76,7 +76,13 @@ export function Background006({
 }: Background006Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const settings = useRef({ density, wind, speed, color, paused })
-  settings.current = { density, wind, speed, color, paused }
+
+  // Свежие значения для цикла анимации без перезапуска эффекта. Обновляем в
+  // эффекте, а не во время рендера: правка ref в рендере ломает конкурентный
+  // режим и запрещена react-hooks/refs.
+  useEffect(() => {
+    settings.current = { density, wind, speed, color, paused }
+  }, [density, wind, speed, color, paused])
 
   useEffect(() => {
     const canvas = canvasRef.current
