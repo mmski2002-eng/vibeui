@@ -366,6 +366,17 @@ export function PlanCards({
           <p className="text-shell-muted mt-1 min-h-5 text-sm">
             {discountNote ? discountNote : yearly ? t.yearlyNoteEnterprise : " "}
           </p>
+          {promo.eligible && !pro ? (
+            <PromoField
+              texts={t.promo}
+              // Автопроверка кода из адреса — только на Pro-поле: промокод один
+              // на все тарифы, второй автозапуск дублировал бы серверный вызов.
+              initialCode={null}
+              applied={applied}
+              onApplied={setApplied}
+              tone="surface"
+            />
+          ) : null}
           <ul className="text-shell-muted mt-6 grid gap-2.5">
             <li className="text-shell-fg text-sm font-medium">{t.enterprise.plusAll}</li>
             {t.enterprise.features.map((feature) => (

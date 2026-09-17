@@ -17,6 +17,43 @@ export type PromoTexts = {
   errors: Record<PromoFailure | "failed", string>
 }
 
+/**
+ * Палитра поля под карточку. `dark` — тёмная панель Pro (свои #f2f2f2/#ff5900),
+ * `surface` — светлая панель Энтерпрайса на токенах темы. Различаются только
+ * цвета, разметка и поведение общие.
+ */
+const TONE = {
+  dark: {
+    pill: "border-[#ff5900]/40 bg-[#ff5900]/10 text-[#f2f2f2] hover:bg-[#ff5900]/20 focus-visible:ring-[#ff5900]",
+    pillIcon: "text-[#ff5900]",
+    plash:
+      "border-[#ff5900]/50 bg-[#ff5900]/10 text-[#f2f2f2] focus-visible:ring-[#ff5900]",
+    plashIcon: "text-[#ff5900]",
+    plashPercent: "text-[#f2f2f2]/70",
+    remove: "text-[#f2f2f2]/60 hover:text-[#f2f2f2] focus-visible:ring-[#ff5900]",
+    input:
+      "border-[#f2f2f2]/25 bg-[#f2f2f2]/5 text-[#f2f2f2] placeholder:text-[#f2f2f2]/40 focus-visible:border-[#ff5900] focus-visible:ring-[#ff5900]/40",
+    apply:
+      "border-[#f2f2f2]/25 text-[#f2f2f2] hover:border-[#ff5900] focus-visible:ring-[#ff5900]",
+  },
+  surface: {
+    pill: "border-shell-accent-line bg-shell-accent-soft text-shell-fg hover:bg-shell-accent-soft focus-visible:ring-shell-accent",
+    pillIcon: "text-shell-accent-text",
+    plash:
+      "border-shell-accent-line bg-shell-accent-soft text-shell-fg focus-visible:ring-shell-accent",
+    plashIcon: "text-shell-accent-text",
+    plashPercent: "text-shell-muted",
+    remove:
+      "text-shell-muted hover:text-shell-fg focus-visible:ring-shell-accent",
+    input:
+      "border-shell-border bg-shell-elevated text-shell-fg placeholder:text-shell-muted focus-visible:border-shell-accent focus-visible:ring-shell-ring/40",
+    apply:
+      "border-shell-border text-shell-fg hover:border-shell-accent focus-visible:ring-shell-accent",
+  },
+} as const
+
+export type PromoTone = keyof typeof TONE
+
 /** Код держится на время визита: переключение месяц/год его не сбрасывает. */
 const STORAGE_KEY = "vibeui-promo"
 
@@ -47,13 +84,17 @@ export function PromoField({
   initialCode,
   applied,
   onApplied,
+  tone = "dark",
 }: {
   texts: PromoTexts
   /** Код из адреса или куки партнёра: применяется сам, без ввода. */
   initialCode: string | null
   applied: AppliedPromo | null
   onApplied: (next: AppliedPromo | null) => void
+  /** Под какую карточку красить поле: тёмная Pro или светлая Энтерпрайс. */
+  tone?: PromoTone
 }) {
+  const c = TONE[tone]
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState("")
   const [pending, setPending] = useState(false)
@@ -111,10 +152,15 @@ export function PromoField({
   if (applied) {
     return (
       <div className="promo-applied mt-4 flex flex-wrap items-center gap-2 text-sm">
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-[#ff5900]/50 bg-[#ff5900]/10 px-3 py-1 font-medium text-[#f2f2f2]">
-          <Check className="size-3.5 text-[#ff5900]" aria-hidden="true" />
+        <span
+          className={cn(
+            "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 font-medium",
+            c.plash,
+          )}
+        >
+          <Check className={cn("size-3.5", c.plashIcon)} aria-hidden="true" />
           <span className="font-mono">{applied.code}</span>
-          <span className="text-[#f2f2f2]/70">· −{applied.percent} %</span>
+          <span className={c.plashPercent}>· −{applied.percent} %</span>
         </span>
         <button
           type="button"
@@ -123,7 +169,10 @@ export function PromoField({
             store(null)
             setValue("")
           }}
-          className="inline-flex items-center gap-1 rounded-md px-1.5 py-1 text-xs text-[#f2f2f2]/60 transition-colors hover:text-[#f2f2f2] focus-visible:ring-2 focus-visible:ring-[#ff5900] focus-visible:outline-none"
+          className={cn(
+            "inline-flex cursor-pointer items-center gap-1 rounded-md px-1.5 py-1 text-xs transition-colors focus-visible:ring-2 focus-visible:outline-none",
+            c.remove,
+          )}
         >
           <X className="size-3.5" aria-hidden="true" />
           {t.remove}
@@ -137,9 +186,12 @@ export function PromoField({
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="mt-4 inline-flex items-center gap-1.5 rounded-md text-sm text-[#f2f2f2]/60 transition-colors hover:text-[#f2f2f2] focus-visible:ring-2 focus-visible:ring-[#ff5900] focus-visible:outline-none"
+        className={cn(
+          "promo-hint mt-4 inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-full border px-3.5 py-1.5 text-center text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none",
+          c.pill,
+        )}
       >
-        <Tag className="size-3.5" aria-hidden="true" />
+        <Tag className={cn("size-4", c.pillIcon)} aria-hidden="true" />
         {t.have}
       </button>
     )
@@ -169,14 +221,18 @@ export function PromoField({
           maxLength={24}
           aria-invalid={error ? true : undefined}
           className={cn(
-            "h-10 min-w-0 flex-1 rounded-lg border bg-[#f2f2f2]/5 px-3 font-mono text-sm text-[#f2f2f2] transition-colors outline-none placeholder:text-[#f2f2f2]/40 focus-visible:border-[#ff5900] focus-visible:ring-2 focus-visible:ring-[#ff5900]/40 disabled:opacity-60",
-            error ? "border-shell-danger" : "border-[#f2f2f2]/25",
+            "h-10 min-w-0 flex-1 rounded-lg border px-3 text-center font-mono text-sm transition-colors outline-none focus-visible:ring-2 disabled:opacity-60",
+            c.input,
+            error ? "border-shell-danger" : "",
           )}
         />
         <button
           type="submit"
           disabled={pending || !value.trim()}
-          className="inline-flex h-10 shrink-0 items-center gap-1.5 rounded-lg border border-[#f2f2f2]/25 px-3.5 text-sm font-medium text-[#f2f2f2] transition-colors hover:border-[#ff5900] focus-visible:ring-2 focus-visible:ring-[#ff5900] focus-visible:outline-none disabled:opacity-50"
+          className={cn(
+            "inline-flex h-10 shrink-0 cursor-pointer items-center gap-1.5 rounded-lg border px-3.5 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none disabled:cursor-default disabled:opacity-50",
+            c.apply,
+          )}
         >
           {pending ? (
             <Loader2 className="size-4 animate-spin" aria-hidden="true" />

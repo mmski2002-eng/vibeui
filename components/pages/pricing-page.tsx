@@ -87,7 +87,7 @@ const buildTexts = ({
       savingNote: `экономия ${number(MONTHLY * 12 - YEARLY)} ₽`,
       promo: {
         have: "Есть промокод?",
-        placeholder: "Ник блогера",
+        placeholder: "",
         apply: "Применить",
         remove: "Убрать",
         byCode: "по промокоду",
@@ -271,7 +271,7 @@ const buildTexts = ({
       savingNote: `save ${number(MONTHLY * 12 - YEARLY)} ₽`,
       promo: {
         have: "Have a promo code?",
-        placeholder: "Blogger's handle",
+        placeholder: "",
         apply: "Apply",
         remove: "Remove",
         byCode: "with promo code",
@@ -694,18 +694,31 @@ export async function PricingPage({
           />
         </div>
 
-        {/* Финальный призыв: оранжевая полоса — второе и последнее пятно цвета. */}
+        {/* Финальный призыв: тёмная карточка с оранжевыми акцентами — тот же
+            язык, что у Pro-карточки. Оранжевый как акцент, а не заливка. */}
         <Reveal className="pt-16 sm:pt-20">
-          <section className="rounded-3xl bg-[#ff5900] px-6 py-12 text-center text-[#151515] sm:px-10 sm:py-16">
+          <section className="relative isolate overflow-hidden rounded-3xl bg-[#151515] px-6 py-12 text-center text-[#f2f2f2] shadow-[0_30px_80px_-30px_rgba(255,89,0,0.5)] ring-1 ring-[#ff5900]/60 sm:px-10 sm:py-16">
+            <div
+              className="pointer-events-none absolute inset-x-12 -top-px h-px bg-gradient-to-r from-transparent via-[#ff5900] to-transparent"
+              aria-hidden="true"
+            />
             <h2 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-              {t.ctaTitle}
+              {t.ctaTitle.split(/(Pro)/).map((part, index) =>
+                part === "Pro" ? (
+                  <span key={index} className="text-[#ff5900]">
+                    Pro
+                  </span>
+                ) : (
+                  part
+                ),
+              )}
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-pretty text-[#151515]/75">
+            <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-pretty text-[#f2f2f2]/70">
               {t.ctaText}
             </p>
             <Link
               href={session ? catalogHref : signupHref}
-              className="mt-8 inline-flex h-12 items-center gap-2 rounded-full bg-[#151515] px-6 text-sm font-semibold text-[#f2f2f2] transition-colors hover:bg-[#2a2a2a] focus-visible:ring-2 focus-visible:ring-[#151515] focus-visible:ring-offset-2 focus-visible:ring-offset-[#ff5900] focus-visible:outline-none"
+              className="mt-8 inline-flex h-12 items-center gap-2 rounded-full bg-[#ff5900] px-6 text-sm font-semibold text-[#151515] transition-colors hover:bg-[#ff6a1a] focus-visible:ring-2 focus-visible:ring-[#ff5900] focus-visible:ring-offset-2 focus-visible:ring-offset-[#151515] focus-visible:outline-none"
             >
               {session ? t.ctaButtonSigned : t.ctaButton}
               <ArrowRight className="size-4" aria-hidden="true" />
