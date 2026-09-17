@@ -59,7 +59,7 @@ export async function AdminPartner({
     partnerId && code ? partnerStats(partnerId, code, 90) : null,
     partnerId
       ? promoStats(partnerId)
-      : { payments: 0, revenue: 0, discount: 0 },
+      : { payments: 0, revenue: 0, discount: 0, commission: 0, commissionPercent: 0 },
     defaultPromoPercent(),
   ])
 
@@ -134,7 +134,11 @@ export async function AdminPartner({
             {t.promoRevenue}:{" "}
             <span className="text-shell-fg">{t.rub(promo.revenue)}</span> ·{" "}
             {t.promoDiscount}:{" "}
-            <span className="text-shell-fg">{t.rub(promo.discount)}</span>
+            <span className="text-shell-fg">{t.rub(promo.discount)}</span> ·{" "}
+            {t.promoCommission}:{" "}
+            <span className="text-shell-fg">
+              {t.rub(promo.commission)} ({promo.commissionPercent} %)
+            </span>
           </span>
         }
       >

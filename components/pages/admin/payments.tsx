@@ -15,7 +15,12 @@ import { payment, user } from "@/lib/db/schema"
 import { formatDate, formatNumber } from "@/lib/format"
 import { getPlans } from "@/lib/plan-prices"
 import { PLANS } from "@/lib/plans"
-import { DEFAULT_PROMO_PERCENT, defaultPromoPercent } from "@/lib/promo"
+import {
+  commissionPercent,
+  DEFAULT_COMMISSION_PERCENT,
+  DEFAULT_PROMO_PERCENT,
+  defaultPromoPercent,
+} from "@/lib/promo"
 
 const PAGE = 50
 
@@ -71,7 +76,7 @@ export async function AdminPayments({
     ].filter(Boolean),
   )
 
-  const [rows, totalRows, plans, promoPercent] = await Promise.all([
+  const [rows, totalRows, plans, promoPercent, commission] = await Promise.all([
     db
       .select({
         id: payment.id,
@@ -99,6 +104,7 @@ export async function AdminPayments({
       .where(where),
     getPlans(),
     defaultPromoPercent(),
+    commissionPercent(),
   ])
 
   const rub = (price: string) => String(Math.round(Number(price)))
@@ -143,10 +149,12 @@ export async function AdminPayments({
         monthly={rub(plans.monthly.price)}
         yearly={rub(plans.yearly.price)}
         promoPercent={String(promoPercent)}
+        commissionPercent={String(commission)}
         defaults={{
           monthly: rub(PLANS.monthly.price),
           yearly: rub(PLANS.yearly.price),
           promoPercent: String(DEFAULT_PROMO_PERCENT),
+          commissionPercent: String(DEFAULT_COMMISSION_PERCENT),
         }}
       />
 

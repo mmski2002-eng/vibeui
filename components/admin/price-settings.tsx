@@ -8,21 +8,29 @@ import { INPUT_CLASS } from "@/components/admin/parts"
 import { ADMIN_TEXTS } from "@/components/admin/texts"
 import { setPlanPrices } from "@/lib/admin-actions"
 
-type Values = { monthly: string; yearly: string; promoPercent: string }
+type Values = {
+  monthly: string
+  yearly: string
+  promoPercent: string
+  commissionPercent: string
+}
 
 /**
- * Две цены Pro и скидка по промокоду. Сохраняются вместе: витрина считает
- * скидку года от месяца, а цену по промокоду — от обеих.
+ * Две цены Pro, скидка по промокоду и комиссия блогера. Сохраняются вместе:
+ * витрина считает скидку года от месяца, цену по промокоду — от обеих, а
+ * комиссия — доля партнёра от собранной суммы.
  */
 export function PriceSettings({
   monthly,
   yearly,
   promoPercent,
+  commissionPercent,
   defaults,
 }: {
   monthly: string
   yearly: string
   promoPercent: string
+  commissionPercent: string
   defaults: Values
 }) {
   const t = ADMIN_TEXTS.payments
@@ -31,6 +39,7 @@ export function PriceSettings({
     monthly,
     yearly,
     promoPercent,
+    commissionPercent,
   })
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState<string>()
@@ -85,6 +94,7 @@ export function PriceSettings({
         {field("monthly", t.priceMonthly, 1_000_000)}
         {field("yearly", t.priceYearly, 1_000_000)}
         {field("promoPercent", t.promoPercent, 90)}
+        {field("commissionPercent", t.commissionPercent, 90)}
         <button
           type="button"
           disabled={saving}

@@ -20,7 +20,12 @@ import { currentPeriod } from "@/lib/entitlements"
 import { createInvite, deleteInvite } from "@/lib/partners"
 import { applyPaymentEvent, grantDays } from "@/lib/payment-apply"
 import { PRICE_KEYS } from "@/lib/plan-prices"
-import { isPromoPercent, normalizePromo, PROMO_PERCENT_KEY } from "@/lib/promo"
+import {
+  COMMISSION_PERCENT_KEY,
+  isPromoPercent,
+  normalizePromo,
+  PROMO_PERCENT_KEY,
+} from "@/lib/promo"
 import { fetchPayment } from "@/lib/yookassa"
 
 /**
@@ -546,14 +551,23 @@ export async function setPlanPrices(input: {
   monthly: string
   yearly: string
   promoPercent?: string
+  commissionPercent?: string
 }) {
   const admin = await requireAdmin()
   const monthly = rublesOrThrow(input.monthly, "Месяц")
   const yearly = rublesOrThrow(input.yearly, "Год")
   const promoPercent = Number(input.promoPercent?.trim())
+  const commissionPercent = Number(input.commissionPercent?.trim())
 
   if (input.promoPercent !== undefined && !isPromoPercent(promoPercent)) {
     throw new Error("Скидка по промокоду: целое число процентов от 1 до 90")
+  }
+
+  if (
+    input.commissionPercent !== undefined &&
+    !isPromoPercent(commissionPercent)
+  ) {
+    throw new Error("Комиссия блогера: целое число процентов от 1 до 90")
   }
 
   const entries: (readonly [string, string])[] = [
@@ -563,6 +577,10 @@ export async function setPlanPrices(input: {
 
   if (input.promoPercent !== undefined) {
     entries.push([PROMO_PERCENT_KEY, String(promoPercent)])
+  }
+
+  if (input.commissionPercent !== undefined) {
+    entries.push([COMMISSION_PERCENT_KEY, String(commissionPercent)])
   }
 
   for (const [key, value] of entries) {
@@ -580,7 +598,12 @@ export async function setPlanPrices(input: {
     action: "setting.prices",
     targetType: "setting",
     targetId: "prices",
-    details: { monthly, yearly, promoPercent: input.promoPercent },
+    details: {
+      monthly,
+      yearly,
+      promoPercent: input.promoPercent,
+      commissionPercent: input.commissionPercent,
+    },
   })
 
   for (const path of ["/", "/en", "/pricing", "/en/pricing", "/account/admin/payments"]) {

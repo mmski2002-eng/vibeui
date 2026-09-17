@@ -24,6 +24,30 @@ export type { PromoCheck, PromoFailure } from "@/lib/promo.shared"
 export const PROMO_PERCENT_KEY = "promo.percent"
 export const DEFAULT_PROMO_PERCENT = 30
 
+/**
+ * Комиссия блогера: доля от собранной по его коду суммы, которую он
+ * зарабатывает. Отдельна от скидки покупателю (`promo.percent`): та уменьшает
+ * цену, эта — вознаграждение партнёра. Считается на первый платёж, потому что
+ * только он несёт `partner_id`.
+ */
+export const COMMISSION_PERCENT_KEY = "commission.percent"
+export const DEFAULT_COMMISSION_PERCENT = 30
+
+export async function commissionPercent(): Promise<number> {
+  try {
+    const [row] = await db
+      .select({ value: setting.value })
+      .from(setting)
+      .where(eq(setting.key, COMMISSION_PERCENT_KEY))
+      .limit(1)
+    const percent = Number(row?.value)
+
+    return isPromoPercent(percent) ? percent : DEFAULT_COMMISSION_PERCENT
+  } catch {
+    return DEFAULT_COMMISSION_PERCENT
+  }
+}
+
 /** Ник: латиница, цифры, «-» и «_», от 3 до 24 символов. Хранится в нижнем. */
 const CODE = /^[a-z0-9][a-z0-9_-]{2,23}$/
 
@@ -219,7 +243,10 @@ export async function partnerPromo(partnerId: string) {
   }
 }
 
-/** Оплаты по промокоду партнёра: сколько, на какую сумму, сколько скидок. */
+/**
+ * Оплаты по промокоду партнёра: сколько, на какую сумму, сколько скидок и
+ * заработанная комиссия (доля партнёра от собранной суммы).
+ */
 export async function promoStats(partnerId: string) {
   const [row] = await db
     .select({
@@ -232,9 +259,14 @@ export async function promoStats(partnerId: string) {
       and(eq(payment.partnerId, partnerId), eq(payment.status, "succeeded")),
     )
 
+  const revenue = Number(row?.revenue ?? 0)
+  const percent = await commissionPercent()
+
   return {
     payments: Number(row?.payments ?? 0),
-    revenue: Number(row?.revenue ?? 0),
+    revenue,
     discount: Number(row?.discount ?? 0),
+    commissionPercent: percent,
+    commission: Math.round((revenue * percent) / 100),
   }
 }

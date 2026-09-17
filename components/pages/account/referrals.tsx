@@ -135,6 +135,13 @@ export async function AccountReferrals({
               <span className="text-shell-muted text-sm">
                 {t.promoDiscount(promo.percent)}
               </span>
+              <span className="text-shell-fg text-sm font-medium">
+                {t.promoCommission}:{" "}
+                {promoTotals.commission.toLocaleString(
+                  locale === "en" ? "en-GB" : "ru-RU",
+                )}{" "}
+                ₽ ({promoTotals.commissionPercent} %)
+              </span>
             </div>
           ) : (
             <p className="text-shell-muted text-sm">{t.promoNone}</p>
