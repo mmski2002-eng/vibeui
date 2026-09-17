@@ -2572,7 +2572,8 @@
           "portfolio"
         ],
         "preview": {
-          "width": "natural",
+          "width": "section",
+          "aspect": "3/2",
           "props": {
             "image": "/demo/people/person-05.webp"
           }
@@ -2757,7 +2758,8 @@
           "tabs"
         ],
         "preview": {
-          "width": "natural",
+          "width": "section",
+          "aspect": "3/2",
           "props": {
             "works": [
               {
@@ -2995,7 +2997,8 @@
           "layout"
         ],
         "preview": {
-          "width": "natural",
+          "width": "section",
+          "aspect": "3/2",
           "props": {
             "labels": [
               "первое",
@@ -3370,6 +3373,8 @@
           "portfolio"
         ],
         "preview": {
+          "width": "section",
+          "aspect": "3/2",
           "props": {
             "image": "/demo/people/person-02.webp"
           }
@@ -3575,6 +3580,8 @@
           "call"
         ],
         "preview": {
+          "width": "section",
+          "aspect": "3/2",
           "props": {}
         },
         "ai": {
@@ -3770,6 +3777,8 @@
           "portfolio"
         ],
         "preview": {
+          "width": "section",
+          "aspect": "3/2",
           "props": {
             "image": "/demo/places/place-02.webp"
           }
