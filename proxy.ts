@@ -51,6 +51,18 @@ function prefersEnglish(header: string | null) {
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
+  // Партнёрская ссылка `/?ref=<код>`: внутренне переписываем на обработчик
+  // `/i/<код>`, он кладёт куку приглашения, пишет визит и уводит на витрину.
+  // Служебный `/i/` посетителю не виден; старые прямые `/i/`-ссылки работают.
+  const ref = request.nextUrl.searchParams.get("ref")
+  if (ref) {
+    const url = request.nextUrl.clone()
+    url.pathname = `/i/${ref}`
+    url.search = ""
+
+    return NextResponse.rewrite(url)
+  }
+
   if (pathname === "/") {
     const chosen = request.cookies.get(LOCALE_COOKIE)?.value
 
