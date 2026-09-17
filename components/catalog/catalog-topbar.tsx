@@ -109,7 +109,7 @@ export function CatalogTopbar({
                       className="bg-shell-accent text-shell-accent-fg ml-1.5 inline-flex shrink-0 items-center rounded px-1 text-[0.5625rem] leading-[1.5] font-bold uppercase"
                       aria-hidden="true"
                     >
-                      Pro
+                      PRO
                     </span>
                   ) : null}
                 </Link>

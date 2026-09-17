@@ -169,7 +169,7 @@ export async function LandingPage({ locale }: { locale: Locale }) {
           ],
         },
         {
-          name: "Pro",
+          name: "PRO",
           price: `${monthly} ₽ / mo`,
           note: "No copy limit",
           lines: [
@@ -191,7 +191,7 @@ export async function LandingPage({ locale }: { locale: Locale }) {
           ],
         },
         {
-          name: "Pro",
+          name: "PRO",
           price: `${monthly} ₽ / мес`,
           note: "Без лимита на копирование",
           lines: [

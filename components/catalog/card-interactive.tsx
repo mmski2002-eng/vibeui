@@ -282,7 +282,7 @@ export function CardInteractive({
               // Плашка стоит первой в шапке кадра: закрытый item виден в сетке
               // сразу, ещё до подписи и до нажатия «Копировать для ИИ».
               <span
-                title={locale === "en" ? "Pro only" : "Только по Pro"}
+                title={locale === "en" ? "PRO only" : "Только по PRO"}
                 className="bg-shell-accent text-shell-accent-fg mr-1 inline-flex h-5 shrink-0 items-center gap-1 rounded px-1.5 text-[0.6875rem] font-bold uppercase"
               >
                 <svg
@@ -297,7 +297,7 @@ export function CardInteractive({
                   <rect x="3.25" y="7" width="9.5" height="6.25" rx="1.6" />
                   <path d="M5.5 7V5.2a2.5 2.5 0 0 1 5 0V7" strokeLinecap="round" />
                 </svg>
-                Pro
+                PRO
               </span>
             ) : null}
             {cardControls.map((control) => {

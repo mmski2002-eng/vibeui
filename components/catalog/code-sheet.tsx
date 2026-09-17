@@ -42,7 +42,7 @@ export function CodeSheet({
   const [source, setSource] = useState<string | null>(null)
   const [install, setInstall] = useState<string | null>(null)
   const [failed, setFailed] = useState(false)
-  // 401 — не ошибка, а закрытая дверь: код есть, но нужен вход или Pro.
+  // 401 — не ошибка, а закрытая дверь: код есть, но нужен вход или PRO.
   const [denied, setDenied] = useState(false)
 
   useEffect(() => {
@@ -172,8 +172,8 @@ export function CodeSheet({
                 <p className="text-shell-fg text-sm">
                   {session
                     ? locale === "en"
-                      ? "Available on Pro."
-                      : "Доступно по подписке Pro."
+                      ? "Available on PRO."
+                      : "Доступно по подписке PRO."
                     : locale === "en"
                       ? "Sign in to open the code — free, no card."
                       : "Войдите, чтобы открыть код — бесплатно и без карты."}
@@ -184,8 +184,8 @@ export function CodeSheet({
                 >
                   {session
                     ? locale === "en"
-                      ? "Get Pro"
-                      : "Оформить Pro"
+                      ? "Get PRO"
+                      : "Оформить PRO"
                     : locale === "en"
                       ? "Sign in"
                       : "Войти"}

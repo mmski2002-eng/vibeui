@@ -74,7 +74,7 @@ const buildTexts = ({
       "Без автосписаний",
     ],
     plansEyebrow: "Тарифы",
-    plansTitle: "Бесплатно — чтобы попробовать. Pro — чтобы собирать.",
+    plansTitle: "Бесплатно — чтобы попробовать. PRO — чтобы собирать.",
     plans: {
       switchLabel: "Период оплаты",
       month: "Помесячно",
@@ -115,42 +115,42 @@ const buildTexts = ({
         under: "Без карты. Лимит обнуляется первого числа.",
       },
       pro: {
-        name: "Pro",
+        name: "PRO",
         eyebrow: "Чтобы собирать",
         badge: "Популярный",
         plusAll: "Всё из бесплатного, плюс:",
         features: [
           "Готовые сценарии: целый сайт из блоков — одной ссылкой агенту",
-          "Закрытые блоки-showpiece: сложные секции только в Pro",
+          "Закрытые блоки-showpiece: сложные секции только в PRO",
           `${ANIMATIONS} анимаций: курсоры, фоны, текст, стопки`,
           "Без лимита на копирования",
         ],
         anchor: "Меньше часа работы верстальщика",
-        cta: "Открыть Pro",
+        cta: "Открыть PRO",
         payMonth: "Оплатить месяц",
         payYear: "Оплатить год",
         under: "Разовая оплата. Карта не сохраняется, автосписаний нет.",
-        activeUntil: "Pro активен до",
+        activeUntil: "PRO активен до",
         manage: "Управлять подпиской",
       },
       enterprise: {
         name: "Энтерпрайз",
         eyebrow: "Чтобы поддержать",
         badge: "Респект",
-        plusAll: "Всё из Pro, плюс:",
+        plusAll: "Всё из PRO, плюс:",
         features: [
           "Личный респект от создателя",
           "Ваше имя — в голове автора, когда он пишет следующий блок",
           "Чувство, что проект стал лучше благодаря вам",
         ],
         cta: "Заслужить респект",
-        under: "Ровно вдвое дороже Pro. Так и задумано.",
+        under: "Ровно вдвое дороже PRO. Так и задумано.",
       },
     },
     usage: (used: number) =>
       `В этом месяце вы взяли ${used} из ${FREE_MONTHLY_LIMIT}.`,
-    proEyebrow: "Что открывает Pro",
-    proTitle: "Три вещи, ради которых берут Pro",
+    proEyebrow: "Что открывает PRO",
+    proTitle: "Три вещи, ради которых берут PRO",
     proTiles: [
       {
         title: "Готовые сценарии",
@@ -158,7 +158,7 @@ const buildTexts = ({
       },
       {
         title: "Закрытые блоки",
-        text: "Сложные секции-showpiece: их видно в превью, но код отдаётся только в Pro — первые экраны, меню, калькуляторы, многошаговые формы.",
+        text: "Сложные секции-showpiece: их видно в превью, но код отдаётся только в PRO — первые экраны, меню, калькуляторы, многошаговые формы.",
       },
       {
         title: "Анимации",
@@ -209,7 +209,7 @@ const buildTexts = ({
       },
       {
         question: "Как считается лимит на бесплатном тарифе?",
-        answer: `${FREE_MONTHLY_LIMIT} разных компонентов в месяц с аккаунтом. Компонент засчитывается, когда вы открываете его исходник или берёте ссылку на установку — ссылка действует 24 часа. Взять тот же компонент снова в том же месяце бесплатно, ссылка выдаётся заново. Pro снимает лимит целиком.`,
+        answer: `${FREE_MONTHLY_LIMIT} разных компонентов в месяц с аккаунтом. Компонент засчитывается, когда вы открываете его исходник или берёте ссылку на установку — ссылка действует 24 часа. Взять тот же компонент снова в том же месяце бесплатно, ссылка выдаётся заново. PRO снимает лимит целиком.`,
       },
       {
         question: "Будет ли чек?",
@@ -223,7 +223,7 @@ const buildTexts = ({
       {
         question: "Что такое Энтерпрайз?",
         answer:
-          "Ровно то же, что Pro, вдвое дороже — и личный респект от создателя. Это способ поддержать проект, если он вам сэкономил больше, чем стоит. Доступ у тарифов одинаковый.",
+          "Ровно то же, что PRO, вдвое дороже — и личный респект от создателя. Это способ поддержать проект, если он вам сэкономил больше, чем стоит. Доступ у тарифов одинаковый.",
       },
       {
         question: "Есть ли тариф для команд?",
@@ -233,7 +233,7 @@ const buildTexts = ({
     ],
     contactText: "Не нашли свой вопрос?",
     contactLabel: "Написать в поддержку",
-    ctaTitle: "Начните бесплатно. Pro — когда лимит станет тесен.",
+    ctaTitle: "Начните бесплатно. PRO — когда лимит станет тесен.",
     ctaText: `${FREE_MONTHLY_LIMIT} компонентов в месяц без карты. Потом — ${number(MONTHLY)} ₽ за месяц, без автосписаний.`,
     ctaButton: "Создать аккаунт",
     ctaButtonSigned: "Открыть каталог",
@@ -259,7 +259,7 @@ const buildTexts = ({
       "No auto-charges",
     ],
     plansEyebrow: "Plans",
-    plansTitle: "Free to try. Pro to build.",
+    plansTitle: "Free to try. PRO to build.",
     plans: {
       switchLabel: "Billing period",
       month: "Monthly",
@@ -300,42 +300,42 @@ const buildTexts = ({
         under: "No card. The limit resets on the first of the month.",
       },
       pro: {
-        name: "Pro",
+        name: "PRO",
         eyebrow: "To build",
         badge: "Popular",
         plusAll: "Everything in Free, plus:",
         features: [
           "Ready-made scenarios: a whole site from blocks — one link to your agent",
-          "Closed showpiece blocks: the complex sections, Pro-only",
+          "Closed showpiece blocks: the complex sections, PRO-only",
           `${ANIMATIONS} animations: cursors, backgrounds, text, stacks`,
           "No limit on copies",
         ],
         anchor: "Less than an hour of a front-end contractor",
-        cta: "Get Pro",
+        cta: "Get PRO",
         payMonth: "Pay for a month",
         payYear: "Pay for a year",
         under: "One-off payment. No card on file, no auto-charges.",
-        activeUntil: "Pro is active until",
+        activeUntil: "PRO is active until",
         manage: "Manage subscription",
       },
       enterprise: {
         name: "Enterprise",
         eyebrow: "To support",
         badge: "Respect",
-        plusAll: "Everything in Pro, plus:",
+        plusAll: "Everything in PRO, plus:",
         features: [
           "Personal respect from the creator",
           "Your name in the author's head while he writes the next block",
           "The feeling that the project got better because of you",
         ],
         cta: "Earn respect",
-        under: "Exactly twice the price of Pro. On purpose.",
+        under: "Exactly twice the price of PRO. On purpose.",
       },
     },
     usage: (used: number) =>
       `This month you have taken ${used} of ${FREE_MONTHLY_LIMIT}.`,
-    proEyebrow: "What Pro unlocks",
-    proTitle: "Three things people get Pro for",
+    proEyebrow: "What PRO unlocks",
+    proTitle: "Three things people get PRO for",
     proTiles: [
       {
         title: "Ready-made scenarios",
@@ -343,7 +343,7 @@ const buildTexts = ({
       },
       {
         title: "Closed blocks",
-        text: "Complex showpiece sections: visible in the preview, but the code is served only in Pro — heroes, menus, calculators, multi-step forms.",
+        text: "Complex showpiece sections: visible in the preview, but the code is served only in PRO — heroes, menus, calculators, multi-step forms.",
       },
       {
         title: "Animations",
@@ -394,7 +394,7 @@ const buildTexts = ({
       },
       {
         question: "How does the free limit work?",
-        answer: `${FREE_MONTHLY_LIMIT} different components a month with an account. A component counts when you open its source or take an install link — the link is valid for 24 hours. Taking the same component again in the same month is free and issues a fresh link. Pro removes the limit entirely.`,
+        answer: `${FREE_MONTHLY_LIMIT} different components a month with an account. A component counts when you open its source or take an install link — the link is valid for 24 hours. Taking the same component again in the same month is free and issues a fresh link. PRO removes the limit entirely.`,
       },
       {
         question: "Will I get a receipt?",
@@ -408,7 +408,7 @@ const buildTexts = ({
       {
         question: "What is Enterprise?",
         answer:
-          "Exactly the same as Pro at twice the price — plus personal respect from the creator. It is a way to support the project if it saved you more than it costs. Access is identical.",
+          "Exactly the same as PRO at twice the price — plus personal respect from the creator. It is a way to support the project if it saved you more than it costs. Access is identical.",
       },
       {
         question: "Is there a team plan?",
@@ -418,7 +418,7 @@ const buildTexts = ({
     ],
     contactText: "Did not find your question?",
     contactLabel: "Write to support",
-    ctaTitle: "Start for free. Go Pro when the limit gets tight.",
+    ctaTitle: "Start for free. Go PRO when the limit gets tight.",
     ctaText: `${FREE_MONTHLY_LIMIT} components a month with no card. Then ${number(MONTHLY)} ₽ for a month, no auto-charges.`,
     ctaButton: "Create an account",
     ctaButtonSigned: "Open the catalog",
@@ -440,7 +440,7 @@ function Eyebrow({ children }: { children: string }) {
 /**
  * Страница тарифов — витрина, а не справка. Первый экран продаёт результат
  * (сайт за вечер) поверх живого шлейфа из каталога, дальше три тарифа с
- * тёмным Pro в центре, три причины взять Pro, три шага до сайта, вопросы
+ * тёмным PRO в центре, три причины взять PRO, три шага до сайта, вопросы
  * об оплате и финальный призыв. Логика оплаты и сессии — как была.
  */
 export async function PricingPage({
@@ -697,7 +697,7 @@ export async function PricingPage({
         </div>
 
         {/* Финальный призыв: тёмная карточка с оранжевыми акцентами — тот же
-            язык, что у Pro-карточки. Оранжевый как акцент, а не заливка. */}
+            язык, что у PRO-карточки. Оранжевый как акцент, а не заливка. */}
         <Reveal className="pt-16 sm:pt-20">
           <section className="relative isolate overflow-hidden rounded-3xl bg-[#151515] px-6 py-12 text-center text-[#f2f2f2] shadow-[0_30px_80px_-30px_rgba(255,89,0,0.5)] ring-1 ring-[#ff5900]/60 sm:px-10 sm:py-16">
             <div
@@ -705,10 +705,10 @@ export async function PricingPage({
               aria-hidden="true"
             />
             <h2 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-              {t.ctaTitle.split(/(Pro)/).map((part, index) =>
-                part === "Pro" ? (
+              {t.ctaTitle.split(/(PRO)/).map((part, index) =>
+                part === "PRO" ? (
                   <span key={index} className="text-[#ff5900]">
-                    Pro
+                    PRO
                   </span>
                 ) : (
                   part

@@ -18,7 +18,7 @@ type RevealState = "idle" | "loading" | "ok" | "denied" | "error"
  * `issueFor` — режим исходника: панель дёргает выдачу, где один раз
  * проверяются вход, подписка и лимит, и получает код плюс команду установки
  * с подписью на сутки. `url` — простой текстовый источник (инструкция /c).
- * Без входа и без Pro — 401, тогда вместо кода показываем, куда идти.
+ * Без входа и без PRO — 401, тогда вместо кода показываем, куда идти.
  */
 export function GatedReveal({
   id,
@@ -142,8 +142,8 @@ export function GatedReveal({
             <p className="text-shell-fg text-sm">
               {session
                 ? en
-                  ? "Available on Pro."
-                  : "Доступно по подписке Pro."
+                  ? "Available on PRO."
+                  : "Доступно по подписке PRO."
                 : en
                   ? "Sign in to open it — free, no card."
                   : "Войдите, чтобы открыть — бесплатно и без карты."}
@@ -154,8 +154,8 @@ export function GatedReveal({
             >
               {session
                 ? en
-                  ? "Get Pro"
-                  : "Оформить Pro"
+                  ? "Get PRO"
+                  : "Оформить PRO"
                 : en
                   ? "Sign in"
                   : "Войти"}
