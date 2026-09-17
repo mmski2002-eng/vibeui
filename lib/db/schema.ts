@@ -247,6 +247,8 @@ export const partnerInvite = pgTable(
     payoutInn: text("payout_inn"),
     /** Реквизиты выплаты: номер карты или телефон для СБП. Заполняет блогер. */
     payoutDetails: text("payout_details"),
+    /** Ссылка на чек из «Мой налог» — блогер прикладывает её к выплате. */
+    payoutReceipt: text("payout_receipt"),
   },
   (table) => [index("partner_invite_created_idx").on(table.createdAt)],
 )

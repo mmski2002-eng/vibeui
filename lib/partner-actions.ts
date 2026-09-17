@@ -51,6 +51,7 @@ export async function savePartnerWord(input: { code: string }) {
 export async function savePayoutProfile(input: {
   inn: string
   details: string
+  receipt: string
 }) {
   const user = await requireUser()
 
@@ -65,10 +66,19 @@ export async function savePayoutProfile(input: {
   }
 
   const details = input.details.trim().slice(0, 200)
+  const receipt = input.receipt.trim().slice(0, 500)
+
+  if (receipt && !/^https?:\/\/\S+$/.test(receipt)) {
+    throw new Error("Чек — ссылка, начинается с http(s)://")
+  }
 
   await db
     .update(partnerInvite)
-    .set({ payoutInn: inn || null, payoutDetails: details || null })
+    .set({
+      payoutInn: inn || null,
+      payoutDetails: details || null,
+      payoutReceipt: receipt || null,
+    })
     .where(eq(partnerInvite.claimedBy, user.id))
 
   revalidatePath("/account/referrals")

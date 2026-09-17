@@ -8,9 +8,6 @@ import { Button } from "@/components/account/ui/button"
 import { useToast } from "@/components/account/ui/toast"
 import { savePartnerWord } from "@/lib/partner-actions"
 
-const INPUT =
-  "border-shell-border bg-shell-elevated text-shell-fg placeholder:text-shell-muted focus-visible:border-shell-accent focus-visible:ring-shell-ring h-11 min-w-0 flex-1 rounded-lg border px-3 font-mono text-sm outline-none transition-colors focus-visible:ring-2"
-
 export type PromoCodeLabels = {
   label: string
   placeholder: string
@@ -23,13 +20,17 @@ export type PromoCodeLabels = {
 
 /**
  * Блогер задаёт своё слово — реф-код ссылки `/?ref=<слово>` и промокод на
- * скидку одновременно. Уникальность и формат проверяет сервер.
+ * скидку одновременно. Префикс ссылки показан слева от поля, чтобы слово
+ * читалось как часть адреса. Уникальность и формат проверяет сервер.
  */
 export function PromoCodeForm({
   code,
+  prefix,
   labels: t,
 }: {
   code: string
+  /** Начало ссылки, напр. `vibeui.ru/?ref=`. Только для показа. */
+  prefix?: string
   labels: PromoCodeLabels
 }) {
   const router = useRouter()
@@ -59,10 +60,18 @@ export function PromoCodeForm({
         }
       }}
     >
-      <div className="flex flex-wrap items-end gap-3">
-        <label className="flex min-w-0 flex-1 flex-col gap-1">
-          <span className="text-shell-muted text-xs">{t.label}</span>
+      <label className="text-shell-muted text-xs" htmlFor="partner-word">
+        {t.label}
+      </label>
+      <div className="flex flex-wrap items-center gap-3">
+        <div className="border-shell-border bg-shell-elevated focus-within:border-shell-accent focus-within:ring-shell-ring flex h-11 w-full items-center overflow-hidden rounded-lg border pl-3 transition-colors focus-within:ring-2 sm:w-auto">
+          {prefix ? (
+            <span className="text-shell-muted shrink-0 font-mono text-sm select-none">
+              {prefix}
+            </span>
+          ) : null}
           <input
+            id="partner-word"
             value={value}
             onChange={(event) => setValue(event.target.value)}
             placeholder={t.placeholder}
@@ -70,11 +79,12 @@ export function PromoCodeForm({
             autoCapitalize="none"
             autoCorrect="off"
             spellCheck={false}
-            className={`${INPUT} sm:min-w-64`}
+            className="text-shell-fg placeholder:text-shell-muted h-full w-40 min-w-0 flex-1 bg-transparent px-1 font-mono text-sm font-medium outline-none"
           />
-        </label>
+        </div>
         <Button
           type="submit"
+          size="lg"
           pending={pending}
           icon={<Save className="size-4" aria-hidden="true" />}
         >

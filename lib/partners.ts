@@ -391,12 +391,17 @@ export async function payoutProfile(partnerId: string) {
     .select({
       inn: partnerInvite.payoutInn,
       details: partnerInvite.payoutDetails,
+      receipt: partnerInvite.payoutReceipt,
     })
     .from(partnerInvite)
     .where(eq(partnerInvite.claimedBy, partnerId))
     .limit(1)
 
-  return { inn: row?.inn ?? "", details: row?.details ?? "" }
+  return {
+    inn: row?.inn ?? "",
+    details: row?.details ?? "",
+    receipt: row?.receipt ?? "",
+  }
 }
 
 /** Сумма и число выплат блогеру: «выплачено» в реестре. */

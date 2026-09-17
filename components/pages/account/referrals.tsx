@@ -160,6 +160,7 @@ export async function AccountReferrals({
           <div className="grid gap-4">
             <PromoCodeForm
               code={code}
+              prefix={`${SITE_URL.replace(/^https?:\/\//, "")}/?ref=`}
               labels={{
                 label: t.promoCodeLabel,
                 placeholder: t.promoCodePlaceholder,
@@ -171,7 +172,7 @@ export async function AccountReferrals({
               }}
             />
             {promo?.code && promo.active ? (
-              <div className="flex flex-wrap items-center gap-3 text-sm">
+              <div className="grid gap-1 text-sm">
                 <span className="text-shell-muted">
                   {t.promoDiscount(promo.percent)}
                 </span>
@@ -258,11 +259,14 @@ export async function AccountReferrals({
               <PayoutProfileForm
                 inn={payoutInfo.inn}
                 details={payoutInfo.details}
+                receipt={payoutInfo.receipt}
                 labels={{
                   inn: t.payoutInn,
                   innPlaceholder: t.payoutInnPlaceholder,
                   details: t.payoutDetails,
                   detailsPlaceholder: t.payoutDetailsPlaceholder,
+                  receipt: t.payoutReceipt,
+                  receiptPlaceholder: t.payoutReceiptPlaceholder,
                   save: t.payoutSave,
                   saving: t.payoutSaving,
                   saved: t.payoutSaved,
