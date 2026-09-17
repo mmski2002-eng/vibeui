@@ -72,7 +72,7 @@ container-type:inline-size;
 [data-vibeui-block="testimonials-020"] [data-part="submit"]{display:inline-flex;align-items:center;height:2.8rem;padding:0 1.3rem;border:0;border-radius:999px;background:var(--vibeui-testimonials-020-accent);color:var(--vibeui-testimonials-020-on-accent);font:inherit;font-weight:600;font-size:.92rem;cursor:pointer;transition:transform .2s,background .25s}
 [data-vibeui-block="testimonials-020"] [data-part="submit"]:hover{transform:translateY(-1px);background:color-mix(in oklab,var(--vibeui-testimonials-020-accent) 88%,#000)}
 [data-vibeui-block="testimonials-020"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-testimonials-020-accent);outline-offset:3px}
-[data-vibeui-block="testimonials-020"] [data-part="board"]{display:grid;grid-template-columns:repeat(auto-fill,minmax(12rem,1fr));gap:1.6rem 1.2rem;margin:0;padding:1.75rem 1.5rem;list-style:none;border-radius:1.4rem;background:var(--vibeui-testimonials-020-board);box-shadow:inset 0 0 0 .6rem color-mix(in oklab,var(--vibeui-testimonials-020-board) 80%,#000),inset 0 30px 60px -30px rgb(43 26 36 / .3)}
+[data-vibeui-block="testimonials-020"] [data-part="board"]{display:grid;grid-template-columns:repeat(auto-fill,minmax(12rem,1fr));align-content:start;gap:1.6rem 1.2rem;margin:0;padding:1.75rem 1.5rem;list-style:none;border-radius:1.4rem;background:var(--vibeui-testimonials-020-board);box-shadow:inset 0 0 0 .6rem color-mix(in oklab,var(--vibeui-testimonials-020-board) 80%,#000),inset 0 30px 60px -30px rgb(43 26 36 / .3)}
 [data-vibeui-block="testimonials-020"] [data-part="note"]{position:relative;padding:1.6rem 1rem 1rem;background:var(--vibeui-testimonials-020-note);box-shadow:0 14px 24px -16px rgb(43 26 36 / .7);transform:rotate(var(--vibeui-testimonials-020-tilt,0deg));transition:transform .35s cubic-bezier(.2,.9,.3,1.3),box-shadow .35s}
 [data-vibeui-block="testimonials-020"] [data-part="board"] li:nth-child(4n+1) [data-part="note"]{--vibeui-testimonials-020-tilt:-2.4deg}
 [data-vibeui-block="testimonials-020"] [data-part="board"] li:nth-child(4n+2) [data-part="note"]{--vibeui-testimonials-020-tilt:1.8deg}
@@ -87,7 +87,7 @@ container-type:inline-size;
 [data-vibeui-block="testimonials-020"] [data-part="note"] footer b{display:block;font-weight:600;color:var(--vibeui-testimonials-020-accent)}
 @container (min-width:56rem){
 [data-vibeui-block="testimonials-020"] [data-part="shell"]{padding:5rem 2.5rem}
-[data-vibeui-block="testimonials-020"] [data-part="grid"]{grid-template-columns:minmax(16rem,.8fr) minmax(0,1.6fr);gap:3rem;align-items:start}
+[data-vibeui-block="testimonials-020"] [data-part="grid"]{grid-template-columns:minmax(16rem,.8fr) minmax(0,1.6fr);gap:3rem;align-items:stretch}
 [data-vibeui-block="testimonials-020"] [data-part="aside"]{position:sticky;top:5rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="testimonials-020"] *{animation:none!important;transition:none!important}}`
@@ -103,6 +103,7 @@ export function Testimonials020({
     { name: "Даниил", note: "брат", text: "Брат, ты выбрал лучшую. Трансфер за мной, тосты — за тобой." },
     { name: "Маша и Егор", text: "Ждём пятое сентября больше, чем свой отпуск. Везём вам саженец." },
     { name: "Полина", note: "организатор", text: "Всё будет вовремя. Даже дождь — по расписанию." },
+    { name: "Тётя Лена", text: "Плачу уже сейчас. Артём, ты обещал научить меня танцевать — помню." },
   ],
   formTitle = "Оставить пожелание",
   nameLabel = "Как вас подписать",

@@ -61,9 +61,10 @@ container-type:inline-size;
 [data-vibeui-block="event-009"] [data-part="eyebrow"]{margin:0 0 .6rem;font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--vibeui-event-009-accent)}
 [data-vibeui-block="event-009"] [data-part="title"]{margin:0;font-family:var(--vibeui-event-009-display);font-size:clamp(2rem,5cqi,3.6rem);font-weight:500;font-style:italic;line-height:1.05;color:var(--vibeui-event-009-plum);text-wrap:balance}
 [data-vibeui-block="event-009"] [data-part="lede"]{max-width:36rem;margin:.8rem 0 0;color:var(--vibeui-event-009-muted)}
-[data-vibeui-block="event-009"] [data-part="palette"]{display:flex;flex-wrap:wrap;gap:.75rem 0;margin:2.5rem 0 0;padding:0 .75rem 0 0;list-style:none}
+[data-vibeui-block="event-009"] [data-part="top"]{display:grid;gap:2rem;margin-top:2.5rem}
+[data-vibeui-block="event-009"] [data-part="palette"]{display:flex;flex-wrap:wrap;gap:.75rem 0;margin:0;padding:0 .75rem 0 0;list-style:none}
 [data-vibeui-block="event-009"] [data-part="swatch"]{position:relative;display:grid;gap:.5rem;justify-items:center;margin-right:-.75rem;padding:0;border:0;background:transparent;color:inherit;font:inherit;cursor:pointer}
-[data-vibeui-block="event-009"] [data-part="chip"]{display:block;width:clamp(4.5rem,14cqi,7.5rem);aspect-ratio:1;border-radius:50%;background:var(--vibeui-event-009-chip);box-shadow:0 0 0 .3rem var(--vibeui-event-009-bg),0 18px 30px -18px rgb(43 26 36 / .6);transition:transform .35s cubic-bezier(.2,.9,.3,1.4)}
+[data-vibeui-block="event-009"] [data-part="chip"]{display:block;width:clamp(4.5rem,14cqi,8.5rem);aspect-ratio:1;border-radius:50%;background:var(--vibeui-event-009-chip);box-shadow:0 0 0 .3rem var(--vibeui-event-009-bg),0 18px 30px -18px rgb(43 26 36 / .6);transition:transform .35s cubic-bezier(.2,.9,.3,1.4)}
 [data-vibeui-block="event-009"] [data-part="swatch"]:hover [data-part="chip"],[data-vibeui-block="event-009"] [data-part="swatch"]:focus-visible [data-part="chip"]{transform:translateY(-.5rem) scale(1.05)}
 [data-vibeui-block="event-009"] [data-part="swatch"][data-copied="true"] [data-part="chip"]{animation:vibeui-event-009-pop .5s cubic-bezier(.2,.9,.3,1.4)}
 @keyframes vibeui-event-009-pop{40%{transform:translateY(-.9rem) scale(1.1)}}
@@ -73,19 +74,20 @@ container-type:inline-size;
 [data-vibeui-block="event-009"] [data-part="swatch"] small code{font-family:inherit;font-variant-numeric:tabular-nums;text-transform:uppercase}
 [data-vibeui-block="event-009"] [data-part="swatch"][data-copied="true"] small code{color:var(--vibeui-event-009-accent)}
 [data-vibeui-block="event-009"] [data-part="hint"]{margin:1rem 0 0;font-size:.8rem;color:var(--vibeui-event-009-muted)}
-[data-vibeui-block="event-009"] [data-part="grid"]{display:grid;gap:1rem;margin-top:2.5rem}
+[data-vibeui-block="event-009"] [data-part="grid"]{display:grid;gap:1rem;margin-top:1.5rem}
 [data-vibeui-block="event-009"] [data-part="look"]{padding:1.5rem;border:1px solid var(--vibeui-event-009-line);border-radius:1.2rem;background:var(--vibeui-event-009-card)}
 [data-vibeui-block="event-009"] [data-part="look"] span{display:block;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-event-009-accent)}
 [data-vibeui-block="event-009"] [data-part="look"] h3{margin:.4rem 0 .5rem;font-family:var(--vibeui-event-009-display);font-size:1.5rem;font-weight:500;line-height:1.15;color:var(--vibeui-event-009-plum)}
 [data-vibeui-block="event-009"] [data-part="look"] p{margin:0;font-size:.95rem;color:var(--vibeui-event-009-muted)}
-[data-vibeui-block="event-009"] [data-part="avoid"]{padding:1.5rem;border-radius:1.2rem;background:color-mix(in oklab,var(--vibeui-event-009-accent) 8%,transparent)}
+[data-vibeui-block="event-009"] [data-part="avoid"]{align-self:center;padding:1.5rem;border-radius:1.2rem 1.2rem 3rem 1.2rem;background:color-mix(in oklab,var(--vibeui-event-009-accent) 8%,transparent)}
 [data-vibeui-block="event-009"] [data-part="avoid"] h3{margin:0 0 .6rem;font-family:var(--vibeui-event-009-display);font-size:1.4rem;font-weight:500;font-style:italic;color:var(--vibeui-event-009-plum)}
 [data-vibeui-block="event-009"] [data-part="avoid"] ul{margin:0;padding:0;list-style:none;display:grid;gap:.4rem;font-size:.95rem}
 [data-vibeui-block="event-009"] [data-part="avoid"] li{display:flex;gap:.6rem}
 [data-vibeui-block="event-009"] [data-part="avoid"] li::before{content:"—";color:var(--vibeui-event-009-accent)}
 @container (min-width:56rem){
 [data-vibeui-block="event-009"] [data-part="shell"]{padding:5rem 2.5rem}
-[data-vibeui-block="event-009"] [data-part="grid"]{grid-template-columns:1fr 1fr 1fr}
+[data-vibeui-block="event-009"] [data-part="top"]{grid-template-columns:minmax(0,1.5fr) minmax(16rem,.8fr);align-items:center;gap:3rem}
+[data-vibeui-block="event-009"] [data-part="grid"]{grid-template-columns:1fr 1fr}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="event-009"] *{animation:none!important;transition:none!important}}`
 
@@ -143,6 +145,8 @@ export function Event009({
           <p data-part="eyebrow">{eyebrow}</p>
           <h2 data-part="title">{title}</h2>
           {lede ? <p data-part="lede">{lede}</p> : null}
+          <div data-part="top">
+            <div>
           <ul data-part="palette">
             {swatches.map((swatch) => (
               <li key={swatch.hex}>
@@ -157,14 +161,7 @@ export function Event009({
             ))}
           </ul>
           {hint ? <p data-part="hint">{hint}</p> : null}
-          <div data-part="grid">
-            {looks.map((look) => (
-              <article key={look.who} data-part="look">
-                <span>{look.who}</span>
-                <h3>{look.title}</h3>
-                <p>{look.text}</p>
-              </article>
-            ))}
+            </div>
             {avoidItems.length > 0 ? (
               <aside data-part="avoid">
                 <h3>{avoidTitle}</h3>
@@ -175,6 +172,15 @@ export function Event009({
                 </ul>
               </aside>
             ) : null}
+          </div>
+          <div data-part="grid">
+            {looks.map((look) => (
+              <article key={look.who} data-part="look">
+                <span>{look.who}</span>
+                <h3>{look.title}</h3>
+                <p>{look.text}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>

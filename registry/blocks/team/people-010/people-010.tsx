@@ -70,7 +70,7 @@ container-type:inline-size;
 [data-vibeui-block="people-010"] [data-part="contact"]:focus-visible{outline:2px solid var(--vibeui-people-010-accent);outline-offset:3px}
 [data-vibeui-block="people-010"] [data-part="contact"] svg{width:.95rem;height:.95rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 @container (min-width:44rem){
-[data-vibeui-block="people-010"] [data-part="grid"]{grid-template-columns:repeat(auto-fit,minmax(15rem,18rem));justify-content:center;gap:2.5rem 2rem}
+[data-vibeui-block="people-010"] [data-part="grid"]{grid-template-columns:repeat(auto-fit,minmax(15rem,18rem));justify-content:start;justify-items:start;gap:2.5rem 2.5rem}
 }
 @container (min-width:64rem){
 [data-vibeui-block="people-010"] [data-part="shell"]{padding:5rem 2.5rem}

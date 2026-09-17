@@ -1548,7 +1548,7 @@
       "name": "event-009",
       "type": "registry:block",
       "title": "Дресс-код палитрой с копированием цвета",
-      "description": "Дресс-код для гостей палитрой: пять крупных кругов цвета внахлёст, как мазки на пробнике; клик копирует HEX, круг подпрыгивает и подпись меняется на «скопировано». Ниже два образа — «ей» и «ему» — и короткий список «чего лучше избежать» на терракотовой плашке.",
+      "description": "Дресс-код для гостей палитрой: пять крупных кругов цвета внахлёст, как мазки на пробнике; клик копирует HEX, круг подпрыгивает и подпись меняется на «скопировано». Справа от палитры — «чего лучше избежать» на терракотовой плашке, ниже два образа: «ей» и «ему».",
       "categories": [
         "events"
       ],
@@ -1561,7 +1561,7 @@
           "target": "@components/vibeui/event-009.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, состояние на 1.6 с). Круги — кнопки с --vibeui-event-009-chip из swatch.hex, диаметр clamp(4.5rem,14cqi,7.5rem), нахлёст через margin-right и кольцо box-shadow цвета фона; hover поднимает, data-copied запускает keyframes подскока. Подпись — имя и HEX моноширинными цифрами. Образы и «избегать» — сетка 1/1/1 от 56rem. Палитра --vibeui-event-009-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, состояние на 1.6 с). Круги — кнопки с --vibeui-event-009-chip из swatch.hex, диаметр clamp(4.5rem,14cqi,7.5rem), нахлёст через margin-right и кольцо box-shadow цвета фона; hover поднимает, data-copied запускает keyframes подскока. Подпись — имя и HEX моноширинными цифрами. От 56rem палитра и «избегать» стоят в два столбца (1.5fr/.8fr), образы — в две колонки под ними. Палитра --vibeui-event-009-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "tags": [
           "wedding",
@@ -1639,8 +1639,8 @@
         "i18n": {
           "en": {
             "title": "Dress code as a palette with colour copying",
-            "description": "A guest dress code as a palette: five large overlapping colour circles like dabs on a swatch card; a click copies the HEX, the circle hops and the caption turns to “copied”. Below, two looks — “her” and “him” — and a short “better avoid” list on a terracotta panel.",
-            "docs": "One file, zero dependencies, “use client” for copying (navigator.clipboard, 1.6 s state). Circles are buttons with --vibeui-event-009-chip from swatch.hex, diameter clamp(4.5rem,14cqi,7.5rem), overlap via margin-right and a box-shadow ring in the background colour; hover lifts, data-copied runs the hop keyframes. The caption is the name and the HEX in tabular figures. Looks and “avoid” form a 1/1/1 grid from 56rem. Palette --vibeui-event-009-*: cream #f6f1e8 / plum #2b1a24 via light-dark(), terracotta #b8552f accent, plum #4a1f36 for headings, sage #8a9a7b and sand #d9c5a5 for captions; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "description": "A guest dress code as a palette: five large overlapping colour circles like dabs on a swatch card; a click copies the HEX, the circle hops and the caption turns to “copied”. To the right of the palette a short “better avoid” list on a terracotta panel, below it two looks: “her” and “him”.",
+            "docs": "One file, zero dependencies, “use client” for copying (navigator.clipboard, 1.6 s state). Circles are buttons with --vibeui-event-009-chip from swatch.hex, diameter clamp(4.5rem,14cqi,7.5rem), overlap via margin-right and a box-shadow ring in the background colour; hover lifts, data-copied runs the hop keyframes. The caption is the name and the HEX in tabular figures. From 56rem the palette and “avoid” sit in two columns (1.5fr/.8fr), the looks in two columns beneath. Palette --vibeui-event-009-*: cream #f6f1e8 / plum #2b1a24 via light-dark(), terracotta #b8552f accent, plum #4a1f36 for headings, sage #8a9a7b and sand #d9c5a5 for captions; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained dress code palette: colour circles that copy their HEX on click, “her” and “him” looks, a “what to avoid” list. Colours and copy via props.",
               "preserve": [

@@ -43,9 +43,9 @@ export type Hero025Props = {
 // «В календарь» (.ics собирается на клиенте). Справа фото пары в арке с
 // печатью «save the date». Поверх всего экрана — конверт на тёмно-сливовом
 // фоне с огоньками и пульсирующей печатью: клик ломает печать, клапан
-// откидывается подкладкой наружу и уходит за конверт, письмо поднимается
-// из кармана (низ остаётся за передними складками), конверт оседает, фон
-// растворяется. Слои: задник 0, открытый клапан 0, письмо 1, передние
+// откидывается подкладкой наружу и уходит за конверт, конверт сразу плавно
+// опускается, освобождая место, письмо поднимается из кармана (низ остаётся
+// за передними складками), потом всё тает. Слои: задник 0, открытый клапан 0, письмо 1, передние
 // складки 2, закрытый клапан 3, печать 4. Reduced motion показывает письмо
 // сразу.
 const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700&display=swap"
@@ -132,9 +132,10 @@ container-type:inline-size;
 [data-vibeui-block="hero-025"] [data-part="bokeh"] i:nth-child(7){left:78%;animation-delay:-2s}
 [data-vibeui-block="hero-025"] [data-part="bokeh"] i:nth-child(8){left:90%;animation-delay:-11s;animation-duration:17s;width:.4rem;height:.4rem}
 @keyframes vibeui-hero-025-rise-dot{0%{transform:translateY(0);opacity:0}12%{opacity:.7}70%{opacity:.5}100%{transform:translateY(-60rem);opacity:0}}
-[data-vibeui-block="hero-025"] [data-part="paper"]{position:relative;z-index:1;width:min(100%,34rem);aspect-ratio:3/2;animation:vibeui-hero-025-bob 6s ease-in-out infinite;transition:transform 1.4s cubic-bezier(.4,0,.2,1) 2.8s,opacity 1.2s 3s}
+[data-vibeui-block="hero-025"] [data-part="paper"]{position:relative;z-index:1;width:min(100%,34rem);aspect-ratio:3/2;transition:transform 1.3s cubic-bezier(.3,0,.2,1) .1s,opacity 1.2s 3s}
+[data-vibeui-block="hero-025"] [data-part="float"]{position:absolute;inset:0;animation:vibeui-hero-025-bob 6s ease-in-out infinite}
 @keyframes vibeui-hero-025-bob{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-.6rem) rotate(.6deg)}}
-[data-vibeui-block="hero-025"] [data-part="envelope"][data-open="true"] [data-part="paper"]{animation:none;transform:translateY(6rem) scale(.96);opacity:0}
+[data-vibeui-block="hero-025"] [data-part="envelope"][data-open="true"] [data-part="paper"]{transform:translateY(7rem) scale(.97);opacity:0}
 [data-vibeui-block="hero-025"] [data-part="back"]{position:absolute;inset:0;z-index:0;border-radius:.7rem;background:linear-gradient(160deg,#efe6d6,#e3d6c0);box-shadow:0 50px 90px -30px rgb(0 0 0 / .75),0 0 0 1px rgb(255 255 255 / .05)}
 [data-vibeui-block="hero-025"] [data-part="card"]{position:absolute;left:6%;right:6%;bottom:6%;height:86%;display:grid;align-content:center;justify-items:center;gap:.4rem;padding:1.5rem;border-radius:.5rem;background:linear-gradient(180deg,#fffaf3,#f7efe3);box-shadow:0 -14px 40px -24px rgb(43 26 36 / .6);text-align:center;z-index:1;transition:transform 1.6s cubic-bezier(.2,.9,.3,1) 1.3s,opacity 1.2s 3.1s}
 [data-vibeui-block="hero-025"] [data-part="card"]::before{content:"";position:absolute;inset:.6rem;border:1px solid color-mix(in oklab,var(--vibeui-hero-025-accent) 35%,transparent);border-radius:.3rem;pointer-events:none}
@@ -354,6 +355,7 @@ export function Hero025({
               <i />
             </span>
             <div data-part="paper">
+              <div data-part="float">
               <div data-part="back" />
               <div data-part="card" aria-hidden="true">
                 <small>{envelopeLabel}</small>
@@ -371,6 +373,7 @@ export function Hero025({
               <span data-part="hint" aria-hidden="true">
                 {sealHint}
               </span>
+              </div>
             </div>
           </div>
         ) : null}
