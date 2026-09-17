@@ -1021,6 +1021,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. Сетка 5fr/6fr от 56rem (container query), колонки по центру. Медиа: портрет aspect-ratio 4/5, второе фото absolute справа внизу с рамкой цвета фона и тенью. Цитата — <blockquote> с кавычками через ::before/::after, росчерк — шрифт Caveat с rotate(-3deg), факты — flex со значениями серифом акцентом. Палитра --vibeui-about-007-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "restaurant",
           "cafe",
@@ -1195,6 +1196,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. Цитата — <p> с font-size до 2.5rem и text-wrap:balance; слово в *звёздочках* → <mark> с фоновым маркером background-size 0→100 % через animation-timeline:view() под @supports (в остальных браузерах маркер нарисован сразу). Подложка портрета — ::before с rotate(-2deg), по наведению +2deg. Бегущая строка — track с двумя копиями списка (вторая aria-hidden), @keyframes translateX(-50 %) 32 с, пауза по :hover, края растворяются mask-image. От 56rem (container query) портрет и текст 4fr/6fr. Палитра --vibeui-about-008-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "course",
           "education",
@@ -1378,6 +1380,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. Текст — <p> с font-size clamp(1.6rem, 4.2cqi, 3.25rem) и max-width 22ch; *фраза* становится <b>, _фраза_ — <mark> с фоновым маркером акцентного цвета. Капсулы фактов — <li> с fact.color в --chip и ink в --ink, по наведению приподнимаются с поворотом. Проявление — animation-timeline:view() под @supports (в старых браузерах текст виден сразу). Палитра --vibeui-about-009-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "festival",
           "event",
@@ -1547,6 +1550,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. Фраза в *звёздочках* → <mark> с text-shadow неона. Пункты — <li> с ::before-галочкой в циановом квадрате. Фото — два абсолютно позиционированных блока в media (min-height 26/34rem): hall на 85 % ширины сзади, desk 60 % спереди с неоновой рамкой; параллакс — animation-timeline:view() под @supports, translateY в разные стороны, в старых браузерах статично. От 60rem (container query) две колонки. Палитра --vibeui-about-010-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "tattoo",
           "neon",
@@ -1712,6 +1716,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради стрелок (scrollBy на ширину первого кадра) и колеса: вертикальный deltaY над лентой переводится в горизонтальную прокрутку, на краях ленты — отдаётся странице. Лента — <ul> с overflow-x:auto, scroll-snap-type:x mandatory, скрытым скроллбаром и отрицательными полями до края блока. Кадр — flex-basis min(78cqi,20rem); от 56rem flex:1 1 0 с min-width 15rem и max-width 22rem, так четыре кадра помещаются без прокрутки, а пять и больше уходят в ленту, наклон через --vibeui-about-011-tilt по nth-child, hover выпрямляет и поднимает. Перфорация — repeating-linear-gradient в ::before/::after тёмной плёнки, номер кадра «01A» в углу с mix-blend-mode. Фото 3:2 object-fit:cover с приглушённой насыщенностью. Шапка от 56rem — сетка заголовок/лид слева, стрелки справа. Палитра --vibeui-about-011-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "couple",
@@ -1911,6 +1916,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради прогресса и пинов. Линия — SVG viewBox 1000×260 с path из T-сегментов: концы сегментов — ровно точки остановок, поэтому пины стоят на кривой. Самолётик — path с offset-path:path(...) и offset-distance из --vibeui-about-012-p; пройденная часть — второй path с pathLength=1 и stroke-dashoffset из --vibeui-about-012-k. Обе переменные пишет rAF-обработчик scroll по положению секции в окне (0 при входе снизу, 1 когда центр прошёл), без ререндеров. Пины — <g role=button tabIndex> с data-active, карточки [data-part=stop] подсвечиваются рамкой и подъёмом. Сетка карточек — 4 в ряд от 56rem. Ровно четыре остановки: лишние отбрасываются. Палитра --vibeui-about-012-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "travel",

@@ -3297,6 +3297,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради кнопки меню. <header> с position:sticky и полупрозрачным фоном с blur, нижняя линия 1px. Ссылки — подчёркивание transform:scaleX по hover и у aria-current. Телефон — <a href=\"tel:\"> серифом. Ссылки и кнопка появляются от 64rem ширины (container query), телефон — от 72rem, подпись под именем прячется на 48–72rem, чтобы шапка всегда была в одну строку; уже 64rem — кнопка «Меню» с aria-expanded и список под шапкой. Палитра --vibeui-navbar-020-* с light-dark: песок/чернильно-зелёный, латунный акцент; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "real estate",
           "realty",
@@ -3495,6 +3496,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради скролла и меню. <header>: sticky по умолчанию; overlay=true — position:fixed поверх страницы, data-scrolled переключается после 40px (слушатель scroll, passive), фон и линия появляются переходом, отступы бара сжимаются. Ссылки — подчёркивание transform:scaleX. Часы — с зелёной точкой через ::before. Ссылки и кнопка от 64rem (container query), часы и телефон от 76rem; уже — кнопка «Меню» с aria-expanded и список под шапкой. Палитра --vibeui-navbar-021-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "restaurant",
           "cafe",
@@ -3696,6 +3698,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради прогресса и меню. <header> sticky с полупрозрачным фоном и blur. Прогресс — span с transform:scaleX(var(--progress)); значение пишется в CSS-переменную из requestAnimationFrame на scroll (passive), без ререндеров. Ссылки и кнопка от 60rem (container query); уже — кнопка «Меню» с aria-expanded и список под шапкой. Палитра --vibeui-navbar-022-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "course",
           "education",
@@ -3882,6 +3885,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради состояния прокрутки, каретки, скроллспая и меню. <header> sticky с pointer-events:none, кликабельны только островки. dock получает data-scrolled после 8px: у bar схлопываются gap и max-width, появляется плотное стекло с тенью, а у островков фон, рамка и тень гаснут — три капсулы становятся одной. Каретка — span с width и translate3d из CSS-переменных, которые пишутся из offsetLeft/offsetWidth: onMouseEnter ссылки ведёт её за курсором, onMouseLeave возвращает под aria-current; ResizeObserver пересчитывает при перестроении. Текущий раздел — IntersectionObserver по якорям ссылок (rootMargin -40 %/-55 %). Точка у ссылки — link.color в --dot, у активной масштаб 1.5. Ссылки от 60rem (container query); уже — бургер с aria-expanded, панель data-open под шапкой, Escape и клик снаружи закрывают. До 32rem у бургера прячется подпись. Палитра --vibeui-navbar-023-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "festival",
           "event",
@@ -4090,6 +4094,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради прогресса и скроллспая. <header> position:fixed: до 60rem — док по низу экрана (иконка + подпись, кнопка «+» справа, safe-area), от 60rem — рейка слева шириной --rail (5.5rem), по :hover/:focus-within раздвигается до 14rem и проявляет подписи. Логотип — writing-mode:vertical-rl с rotate(180deg), text-shadow неона и редкое мерцание. Прогресс — линейный градиент до --p на полоске у края (rAF на scroll, без ререндеров). Активный раздел — IntersectionObserver по якорям (rootMargin -40 %/-55 %), aria-current, иконка с drop-shadow и точка. Иконки — inline SVG по link.icon: works, artists, process, pricing, faq, about, reviews, contacts. placement=static кладёт док в поток для превью. Странице нужен padding-left:5.5rem от 60rem и padding-bottom под док ниже — как в usage. Палитра --vibeui-navbar-024-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "tattoo",
           "neon",
@@ -4278,6 +4283,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради прокрутки, счётчика, скроллспая и музыки. <header> position:fixed (placement=static — в потоке для превью); подложка [data-part=veil] с backdrop-filter проявляется по data-scrolled (scrollY>40, первое чтение из rAF) и при открытом меню. Сетка 1fr auto 1fr: дата с счётчиком дней (setInterval раз в минуту, на сервере пусто), монограмма (делится по « & », амперсанд — акцентом), инструменты; разделы — вторая строка через точки ::before. Складывание без перекладки сетки: центральная монограмма absolute по центру ряда и тает (opacity), [data-part=brand-small] слева проявляется на месте тающей даты, разделы поднимаются transform:translateY с отрицательным margin-bottom — всё transition, поэтому плавно. Активный раздел — IntersectionObserver по якорям (rootMargin -40 %/-55 %), aria-current и подчёркивание scaleX. Музыка — <audio loop preload=none>, play() только по клику (автоплей браузеры блокируют), aria-pressed, четыре линии в капсуле дышат keyframes с разными задержками, подпись меняется на «Играет». До 56rem ссылки и кнопка уходят в [data-part=sheet] по кнопке «Меню» (aria-expanded). Палитра --vibeui-navbar-025-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для монограммы; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "invitation",
@@ -4479,6 +4485,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради прокрутки, счётчика, скроллспая и музыки. <header> position:fixed (placement=static — в потоке для превью); подложка [data-part=veil] с backdrop-filter и перфорацией ::after проявляется по data-scrolled (scrollY>40, первое чтение из rAF) и при открытом меню. Счётчик дней — setInterval раз в минуту, на сервере пусто; при ужатии прячется через max-height. Разделы — capslock Oswald с подчёркиванием scaleX; активный — IntersectionObserver по якорям (rootMargin -40 %/-55 %), aria-current. Музыка — <audio loop preload=none>, play() только по клику, aria-pressed, четыре линии дышат keyframes. До 60rem имена и разделы уходят в [data-part=sheet] по кнопке «Меню». Палитра --vibeui-navbar-026-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "travel",

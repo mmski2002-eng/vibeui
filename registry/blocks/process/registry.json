@@ -20,6 +20,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради IntersectionObserver. Шаги — <li data-index> в <ol>, IO (threshold .4, rootMargin -25 % снизу) поднимает lit до максимального увиденного индекса; заливка линии — ::before rail с высотой/шириной из --p = lit/(n−1). Импульс — ::after rail с @keyframes по top (или left от 60rem), градиент циана с blur. Узел — span с номером, при data-lit неоновый box-shadow и scale 1.15. От 60rem (container query) сетка repeat(--count) колонок, rail горизонтальный над карточками. Палитра --vibeui-process-001-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "tattoo",
           "neon",

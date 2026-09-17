@@ -20,6 +20,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради активной плитки. <ul role=tablist> из <li> с flex:1; активная — flex-grow:3 и заливка fg, переход .6s cubic-bezier. Знак — span с font-size до 12rem и opacity .12 (.22 у активной). Кнопка role=tab с aria-selected занимает плитку, onMouseEnter/onFocus/onClick меняют индекс. Панель монтируется только у активной: @keyframes въезд и каскад пунктов --n×70ms. До 56rem (container query) плитки колонкой, активная растёт по высоте; от 56rem ряд высотой 26rem, подписи неактивных — writing-mode:vertical-rl. Палитра --vibeui-course-001-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "course",
           "education",
@@ -199,6 +200,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради IntersectionObserver и аккордеона. Недели — <article data-index> с ref; IO с rootMargin -35 %/-55 % ставит active, в колонке пункт с data-active и прогресс-линия scaleY((active+1)/n). Клик по пункту — scrollIntoView({block:start}), scroll-margin-top 6rem. Минуты считаются из length («35 мин», «1,5 ч») и печатаются в колонке и под уроками. Иконки — inline SVG по kind. До 60rem (container query) колонка скрыта, заголовок недели — кнопка с aria-expanded, панель grid-template-rows 0fr→1fr; от 60rem 17rem/1fr, aside position:sticky, панели всегда открыты, неактивные недели полупрозрачны. Палитра --vibeui-course-002-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "course",
           "education",
@@ -488,6 +490,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради drag, счётчиков и блика. Лента — <ul> с overflow-x:auto, scroll-snap-type:x mandatory, скрытым скроллбаром и отрицательными полями до края шелла. Drag — pointer capture для мыши: движение >4px переводит в data-drag (snap выключен, user-select:none), клик после драга гасится onClickCapture. Стрелки — scrollBy на ширину карточки. Счётчики — IntersectionObserver на секции и requestAnimationFrame 1,4 с с easeOut. Блик — ::after с radial-gradient в --mx/--my из pointermove. Стрелка — SVG path со stroke-dasharray, dashoffset→0 при data-seen (IO с root=лента, threshold .6). От 64rem (container query) карточка 56 % ширины. Палитра --vibeui-course-003-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "course",
           "education",
@@ -713,6 +716,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. Дни группируются по weekdays: каждая колонка — <li data-busy> с подписью дня и списком событий, пустая — заштрихованный span (repeating-linear-gradient). Событие — карточка с цветной полоской слева, мета-строкой «тип · время», заголовком и текстом; kind из набора «лайв/live/эфир/вебинар» даёт data-kind=live: заливка маркером и пульсирующая точка (@keyframes scale/opacity на ::after). Колонки — @keyframes с задержкой --n×80ms. До 48rem (container query) колонки — строки с днём слева (3.2rem/1fr); от 48rem семь колонок; от 64rem фото и форматы в два столбца. Палитра --vibeui-course-004-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "course",
           "education",

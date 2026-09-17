@@ -421,6 +421,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. <ul> с границами между строками; строка — grid 4.5rem/1fr, от 56rem (container query) 7rem/1fr/11rem с фото в третьей колонке. По hover подложка строки (::before с inset 0 −1rem) проявляется opacity и лёгким scale без изменения раскладки, фото opacity 0→1 с лёгким scale. День — серифом в нижнем регистре, время — tabular-nums. Палитра --vibeui-event-004-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "restaurant",
           "cafe",
@@ -656,6 +657,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. Сетка 2/3/4 колонки (container query 48rem и 68rem), от 68rem справа колонка 19rem с position:sticky. Карточка: фото в <a tabIndex=-1 aria-hidden> (ссылка дублирует заголовок), scale 1.05 по наведению, плашка с backdrop-filter. Капсула направления — tagColor в --tag, tagInk в --ink. Карточка «Выбор дня» — фото на всю высоту с z-index:-1 и медленным scale по наведению, градиент-затемнение, плашка и заголовок на стекле (backdrop-filter blur 14px). Появление карточек — @keyframes с задержкой --n×60ms. Палитра --vibeui-event-005-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "festival",
           "event",
@@ -888,6 +890,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради дня и фильтра. Дни — <ul role=tablist> с кнопками role=tab и aria-selected; day.color в --day, ink в --day-ink, активная — заливка, остальные — контур 2px. Фильтры собираются из slots автоматически (уникальные tag), кнопки с aria-pressed. Список — <ol key={day+tag}>, пересоздаётся и въезжает @keyframes с задержкой --n×40ms; полоска у времени — ::before цвета дня; от 56rem строка в три колонки 6rem/1fr/auto и подсветка строки градиентом цвета дня по наведению. Пустой фильтр — плашка emptyText. Палитра --vibeui-event-006-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "festival",
           "event",
@@ -1154,6 +1157,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. Рамка — <li> с padding .5rem и background venue.color (--color), по наведению padding .75rem; внутри карточка с background card. Факты — капсулы color-mix(var(--color) 45 %, card). До 68rem фото — квадрат 5.5rem справа от текста; от 68rem (container query) карточка в колонку, фото 3:2 сверху. Сетка 1/2/4 колонки. Появление — @keyframes с задержкой --n×70ms. Палитра --vibeui-event-007-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "festival",
           "event",
@@ -1361,6 +1365,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный. Сетка шага 3.6rem/3rem/1fr: время, кружок на линии (::before у списка — градиент от акцента к линии и обратно), тело. Иконки — inline SVG по step.icon: glass, rings, dinner, music, sparkles, cake, bus, camera. current — индекс подсвеченного шага (data-current, aria-current=step): кружок заливается акцентом с box-shadow-ореолом, тело получает фон 8 % акцента. От 56rem две колонки 1.5fr/.7fr, карточка «что взять» sticky top:5rem. Палитра --vibeui-event-008-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "schedule",
@@ -1563,6 +1568,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, состояние на 1.6 с). Круги — кнопки с --vibeui-event-009-chip из swatch.hex, диаметр clamp(4.5rem,14cqi,7.5rem), нахлёст через margin-right и кольцо box-shadow цвета фона; hover поднимает, data-copied запускает keyframes подскока. Подпись — имя и HEX моноширинными цифрами. От 56rem палитра и «избегать» стоят в два столбца (1.5fr/.8fr), образы — в две колонки под ними. Палитра --vibeui-event-009-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "dress code",
@@ -1747,6 +1753,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради табов (useState, старт на дне с main). Табы — <button role=tab aria-selected> сеткой 3 в ряд, с «дырочкой» слева ::before под цвет фона; data-main + aria-selected заливают коралловым. Панель — role=tabpanel с key по индексу, чтобы keyframes проступания срабатывали при каждой смене; расписание — <ol> с <time> и заголовками, место мелким капсом в акценте; фото дня на белом картоне и плашка «что надеть» — солнечная заливка с рукописной строкой, от 56rem справа колонкой .6fr. Палитра --vibeui-event-010-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "travel",
@@ -2072,6 +2079,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради чек-листа. Карточки — <ul> 2 в ряд от 56rem, перфорация слева ::before radial-gradient, иконки inline SVG по card.icon: plane, passport, cash, sim, shield, phone. Организатор — тёмная плашка с рукописным именем и коралловой кнопкой. Чек-лист — кнопки role=checkbox aria-checked, отметки читаются useSyncExternalStore из localStorage по storageKey (на сервере пусто, без расхождений гидрации), запись рассылает событие; отмеченные зачёркиваются коралловой линией, прогресс — полоска из --vibeui-event-011-done. От 56rem сетка 1.5fr/.8fr, чек-лист sticky top:5rem. Палитра --vibeui-event-011-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "travel",
@@ -2273,6 +2281,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 1.6 с состояния). Образцы — <ul> с li display:contents и кнопками flex:1, цвет из swatch.hex через --vibeui-event-012-chip, цвет подписи считается по яркости (ink); hover и data-copied расширяют полоску до flex:1.6. Образы — фото 4:5 на белом картоне со скотчем ::before, повёрнуты вразнобой; правила — плашка на песке с inline SVG по rule.icon: sun, sand, wind. От 56rem образы в две колонки, правила справа .7fr. Палитра --vibeui-event-012-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "dress code",

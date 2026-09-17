@@ -22,6 +22,7 @@
       ],
       "docs": "Один файл, зависимость только react-dom (createPortal), «use client». Типы выводятся из listings (уникальные kind), чип «все» — allLabel; активный чип залит цветом текста. Сетка 1/2/3 колонки по container query, li появляются @keyframes с задержкой --n×70ms. Карточка — div role=button: media с двумя <img> (imageHover поверх с opacity 0 → 1 по hover, оба scale 1.05), цена, параметры, чип-подсказка. По клику измеряется getBoundingClientRect, в body через портал рендерится слой position:fixed с perspective:1400px, подложкой и летуном: absolute в размере и позиции окна (карточка ×1.35 по центру, не больше экрана), transform-style:preserve-3d, стартовый transform translate/scale ставит его ровно на карточку; оригинал прячется. После reflow и requestAnimationFrame transform становится translate(0) scale(1) rotateY(180deg) за .5s cubic-bezier(.2,.9,.25,1) — перелёт, рост и переворот одним движением, анимируется только transform (композитный слой, без перерасчёта раскладки). Стороны — backface-visibility:hidden и translateZ(1px); лицевая — копия карточки, обратная несёт imageHover во весь кадр и стеклянную панель с ценой, названием, text, features и ссылкой openLabel; клик по стороне переворачивает окно, крестик есть на обеих сторонах, скрытая сторона inert. Закрытие — стартовый transform назад, фокус возвращается на карточку. Пока открыто: body overflow:hidden с компенсацией скроллбара, Escape закрывает, Tab зациклен в окне. При смене фильтра список пересобирается с новым key. Палитра --vibeui-realty-003-* с light-dark: песок/чернильно-зелёный, латунный акцент; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "real estate",
           "realty",
@@ -622,6 +623,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. <ol> с линией через ::before: на узком экране вертикальная слева от номеров, от 60rem (container query) горизонтальная над рядом из пяти колонок; номер — кружок с бордюром акцента на фоне секции, чтобы перекрывать линию. Срок — капитель акцентом. Фон по умолчанию тёмно-зелёный в обеих темах: секция задумана контрастной. Палитра --vibeui-realty-005-* с light-dark: песок/чернильно-зелёный, латунный акцент; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "real estate",
           "realty",
@@ -786,6 +788,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client». Четыре <input type=range> с закраской пройденной части через переменную --p; платёж считается функцией annuity (аннуитет: P·r/(1−(1+r)^−n)), формат — Intl.NumberFormat ru-RU. Число платежа едет к цели через requestAnimationFrame за 450ms с ease-out (useRolling). Результат — тёмная карточка с aria-live. От 56rem (container query) панель и результат в две колонки одной высоты (align-items:stretch, содержимое результата разведено space-between). Палитра --vibeui-realty-006-* с light-dark: песок/чернильно-зелёный, латунный акцент; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "real estate",
           "realty",

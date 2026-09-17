@@ -1691,6 +1691,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради состояния «готово». <form> с полями address, area (number), rooms (select), phone (tel), consent (checkbox required); action пустой — submit перехватывается и рендерится карточка done с role=status; с action — обычная отправка POST. Список обещаний с латунными точками через ::before. От 56rem (container query) две колонки одной высоты: левая — flex-колонка, фото добирает остаток (flex:1 1 0, min-height 12rem, object-fit:cover), форма тянется на ту же высоту с ровными промежутками (align-content:space-between). Палитра --vibeui-contact-015-* с light-dark: песок/чернильно-зелёный, латунный акцент; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "real estate",
           "realty",
@@ -1860,6 +1861,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client». Чипы — <button aria-pressed>, клик пишет time и, если пусто, date=сегодня. Поля: date (min=сегодня), time (step 900), скрытый guests из степпера с границами minGuests/maxGuests, name, phone (tel), note (textarea), consent (required). action пустой — submit перехватывается и рендерится карточка done с role=status; с action — обычная отправка POST. От 56rem (container query) две колонки 1fr/1.1fr. Палитра --vibeui-contact-016-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "restaurant",
           "cafe",
@@ -2023,6 +2025,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради шагов и выбора. Степпер — <ol> с полосками ::before, data-active и data-done красят их акцентом со свечением. Выбор — кнопки с aria-pressed; мастер красит капсулу своим цветом через --neon, слоты — data-free лаймом. Значения дублируются в hidden-полях artist, zone, date, time, поля третьего шага — name, phone, idea, reference (file). «Дальше» disabled, пока шаг не заполнен. Сводка — aside aria-live, от 60rem (container query) колонка 1fr справа, position:sticky. Палитра --vibeui-contact-017-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "tattoo",
           "neon",
@@ -2242,6 +2245,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client». Состояние — объект ответов и номер шага; шаги рендерятся по одному с fade-in, «Дальше» на первом шаге заблокировано без имени и ответа «буду/не смогу». Выборы — кнопки-капсулы с aria-pressed (одиночный) и role=checkbox/aria-checked (напитки). Имя из адреса читается useSyncExternalStore (на сервере пусто, гидрация без расхождений), greeting с {name} заменяет заголовок; lede принимает {deadline}. Форма — стекло: полупрозрачный крем с backdrop-filter и светлой кромкой, за ней шалфейное свечение ::before секции. Сводка — <dl> с aria-live=polite, пустые значения показывают «—». Отправка: без action — preventDefault и экран «спасибо», с action — обычный POST с hidden-полями guest и answers (JSON). Печать — radial-gradient со «штампом» keyframes. От 56rem сетка 1.4fr/.7fr, сводка sticky. Палитра --vibeui-contact-018-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "rsvp",
@@ -2455,6 +2459,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client». Состояние — объект ответов и номер шага; шаги по одному с fade-in, «Дальше» на первом заблокировано без имени и «лечу/не смогу». Выборы — кнопки с aria-pressed. Имя из адреса — useSyncExternalStore (на сервере пусто), greeting с {name} заменяет заголовок; lede принимает {deadline}. Сводка — <aside data-part=pass> с тёмной шапкой «SVO → HAV», <dl> в две колонки, штрих-кодом и штампом, который data-sent печатает keyframes с уменьшением. Отправка: без action — preventDefault и экран «вы на борту»; с action — POST с hidden-полями guest и answers (JSON). От 56rem сетка 1.4fr/.7fr, талон sticky. Палитра --vibeui-contact-019-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "travel",

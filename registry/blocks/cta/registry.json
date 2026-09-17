@@ -2475,6 +2475,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. <aside> с полосой: grid, от 52rem (container query) три колонки auto/1fr/auto. Блик — ::after с градиентом, skewX(-20deg) и @keyframes по left за 7s (60 % времени стоит за краем). Фото — маленький квадрат 3.5rem с тенью. Цвета плашки — акцент и on-accent, фон секции — фон страницы. Палитра --vibeui-cta-016-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "restaurant",
           "cafe",
@@ -2650,6 +2651,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради таймера и формы. Время берётся только на клиенте (useEffect + setInterval раз в секунду), на сервере таймер отдаётся нулями с aria-hidden — нет hydration mismatch. Каждая цифра — span с key=значение в плашке с perspective:600px: смена значения перемонтирует span с @keyframes rotateX(-80deg)→0, линия посередине — ::after. Halo — ::before обёртки wrap с inset:-.5rem, conic-gradient(from var(--a)) и blur(28px), угол — @property <angle>, 14 с; пятна — ::before/::after карточки с blur и @keyframes drift. Форма: <input type=email name=email required>, кнопка submit; action пустой — submit перехватывается, показывается done. От 60rem (container query) две колонки 1.1fr/1fr. Палитра --vibeui-cta-017-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "course",
           "education",
@@ -2976,6 +2978,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. Баннер — flex-колонка min-height 18rem (14rem от 60rem) с isolation:isolate; фото position:absolute z-index:-1 с @keyframes drift 24 с (scale и сдвиг), затемнение градиентом через ::before. Плашка и вторичная капсула — backdrop-filter blur, главная — акцент с on-accent. Необязательный title крупно слева внизу с text-shadow. Палитра --vibeui-cta-019-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "festival",
           "event",
@@ -3129,6 +3132,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. Табличка — span с border 3px акцента, text-shadow и box-shadow в три слоя (снаружи и inset), @keyframes flicker с редкими провалами. Пятна — ::before/::after секции с blur(90px) и @keyframes drift. Телефон — <a href=tel> в mono с text-shadow. Мессенджеры — inline SVG по kind (telegram, whatsapp, phone), незнакомый — без иконки. От 60rem (container query) табличка слева, текст справа. Палитра --vibeui-cta-020-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "tattoo",
           "neon",
@@ -3284,6 +3288,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 1.8 с состояния «скопировано» с зелёной сменой кнопки и иконки). Карточка — полупрозрачный крем с backdrop-filter, светлой верхней кромкой и тенью, реквизиты serif'ом в блоке с dashed-рамкой, печать absolute на верхнем правом углу radial-gradient с монограммой, transform scale(.92) по data-copied; свечение — ::before секции radial-gradient акцента. От 56rem две колонки 1fr/1fr по центру. Палитра --vibeui-cta-021-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b для «скопировано»; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "gifts",
@@ -3443,6 +3448,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 2.2 с состояния «скопировано» и штамп по data-copied). Билет — песочная карточка с морской полосой слева ::before и перфорацией ::after между кодами и телом; коды крупным Oswald с самолётиком; реквизиты в dashed-рамке; штамп «PAID» — рамка с keyframes уменьшения и mix-blend-mode:multiply. Свечение — ::before секции. От 56rem две колонки по центру. Палитра --vibeui-cta-022-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "travel",

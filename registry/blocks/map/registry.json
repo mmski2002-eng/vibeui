@@ -561,6 +561,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client». Без apiKey — <iframe> виджета Яндекс Карт (yandex.ru/map-widget/v1) с центром ll, зумом z, метками pt через «~» (стиль pm2dgm) и схемой theme; ключ не нужен. С apiKey — JS API v3: один <script> на адрес (loadScript), YMap с YMapDefaultSchemeLayer и YMapDefaultFeaturesLayer, метки YMapMarker — свои плашки <button>/<a> с ценой и названием; наведение на карточку и на метку выставляет общий active, метка получает data-active. Тема карты в режиме auto следует странице (класс dark, color-scheme, prefers-color-scheme) через MutationObserver. Центр — среднее точек, если latitude/longitude не заданы. Раскладка: карта и список карточек колонкой, от 56rem (container query) 1.4fr/1fr, список растянут по высоте карты. Палитра --vibeui-realty-005-* с light-dark: песок/чернильно-зелёный, латунный акцент; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "real estate",
           "realty",
@@ -793,6 +794,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client». Без apiKey — <iframe> виджета Яндекс Карт с меткой pt и схемой theme; с apiKey — JS API v3 (loadScript один раз на адрес, YMap, слои, YMapMarker с винной меткой). Тема карты в auto следует странице через MutationObserver. Карточка — на узком под картой, от 56rem (container query) absolute слева поверх карты с прокруткой. Часы — <dl> сеткой auto/1fr с tabular-nums, адрес в <address>. Палитра --vibeui-map-005-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "restaurant",
           "cafe",
@@ -968,6 +970,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. Виджет map-widget/v1 без ключа: центр — среднее координат points, метки — pt через «~» (pm2dgm), не кодировать; theme=light|dark, в auto следует за tone. Легенда — капсулы с point.color в --dot. Маршруты — <li> с route.color в --route и ink в --ink, стикер на квадрате color-mix(var(--route) 82 %, #000). От 60rem (container query) карта 1.5fr и колонка 1fr, кадр 16/11. Палитра --vibeui-map-006-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "festival",
           "event",
@@ -1180,6 +1183,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный. Карта — iframe yandex.ru/map-widget/v1 без ключа: центр и метка из latitude/longitude, theme по tone или явно; поверх filter saturate(.7) sepia(.15), чтобы карта не спорила с кремом. Верх от 56rem — сетка .9fr/1.1fr, карта min-height 26rem. Способы — <ul> карточек 3 в ряд от 56rem, иконки inline SVG по way.icon: car, bus, taxi, train. Отели — карточки с иконкой кровати, названием serif'ом и подписью, две в ряд от 56rem. Арка фото — border-radius 50%/30%. Палитра --vibeui-map-007-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "venue",
@@ -1373,6 +1377,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный. Карта — iframe yandex.ru/map-widget/v1 без ключа: центр — среднее по точкам, метки в pt через «~», theme по tone или явно; поверх filter saturate(.75) sepia(.2). От 56rem сетка 1.3fr/.7fr, карта min-height 30rem с бумажной рамкой box-shadow. Фото — на белом картоне со скотчем ::before, повёрнуто; точки — карточки с кодом слева; плашка трансфера — тёмно-синяя с иконкой автобуса. Палитра --vibeui-map-008-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "travel",

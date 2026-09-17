@@ -986,6 +986,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради фильтра и лайтбокса. Плитки — <button> с img в filter:grayscale(1) → 0 и scale 1.05 по :hover/:focus-visible, рамка — ::before с inset box-shadow акцента, подпись — translateY по наведению. Сетка 2/3/4 колонки (container query 44rem и 64rem), <ul key={filter}> пересоздаётся с @keyframes --n×45ms. Лайтбокс — <dialog> с showModal(): слева фото object-fit:contain, справа история (от 64rem колонка 22rem), стрелки листают по кругу, ArrowLeft/ArrowRight на dialog, клик по фону закрывает, onClose сбрасывает текущую. Палитра --vibeui-portfolio-007-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "tattoo",
           "neon",
@@ -1220,6 +1221,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради лайтбокса. Сетка — CSS columns: 2 до 40rem, 3 до 64rem, 4 выше; кадры — кнопки с break-inside:avoid и data-shape: rect 4:3, arch 4:5 с border-radius 50%/36%, tall 3:4. Фото filter grayscale(.55) saturate(.8), hover снимает фильтр и масштабирует 1.04. Лайтбокс — <dialog> showModal/close из эффекта по current, стрелки и ArrowLeft/ArrowRight листают по кругу, клик по backdrop закрывает; окно шириной до 52rem, фото object-fit:contain не выше 32rem в тёмной рамке; окно всплывает снизу с масштабом .94, подложка проявляется, каждое новое фото (key по src) мягко проступает с лёгким наездом. Зерно — SVG feTurbulence в ::after оболочки с multiply. Палитра --vibeui-portfolio-008-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "gallery",
@@ -1444,6 +1446,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради переворота (Set перевёрнутых индексов в state). Карточка — <button aria-pressed> с perspective, внутри [data-part=inner] с transform-style:preserve-3d и rotateY(180deg) по data-flipped; лицо и оборот — backface-visibility:hidden. Оборот — сетка 1.2fr/1fr с вертикальной линией ::before, текст рукописным, справа марка (рамка с пунктиром), SVG-штемпель с городом и датой и три линии адреса. Формы: wide 3:2, tall 4:5, square 1:1. Колонки CSS columns: 2 до 40rem, 3 до 64rem, 4 выше. Палитра --vibeui-portfolio-009-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "travel",

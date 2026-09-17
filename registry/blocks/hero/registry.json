@@ -3602,6 +3602,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. Фото — <img> position:absolute с object-fit:cover и анимацией drift (scale 1.04→1.12 за 24s, alternate); поверх — градиентное затемнение снизу вверх. Форма <form method=\"get\" action>: режимы — radio в капсуле, поля — <select name=type|district|budget>, кнопка submit. От 52rem (container query) поля в ряд, высота экрана 44rem. reduced-motion выключает наезд. Палитра --vibeui-hero-020-* с light-dark: песок/чернильно-зелёный, латунный акцент; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "real estate",
           "realty",
@@ -3794,6 +3795,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. Секция min-height:100svh, <img> absolute с анимацией drift (scale 1.02→1.12 за 28s, alternate) и градиентное затемнение снизу. Заголовок — строки в overflow:hidden, внутренний span поднимается translateY(110%)→0 с задержкой .3s + n×.14s; *слово* в строке превращается в <em> функцией emphasize без innerHTML. Подпись и кнопки — fade с задержками. Бегущая строка — лента, продублированная дважды, translateX(-50%) за 40s, края замаскированы mask-image. reduced-motion выключает всё. Палитра --vibeui-hero-021-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "restaurant",
           "cafe",
@@ -3954,6 +3956,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради наклона и счётчиков. Заголовок режется на слова: каждое — span с @keyframes blur(8px)→0 и задержкой --i×70ms; слово в *звёздочках* получает фоновый маркер, который растёт background-size 0→100 % после слов. Плитки — <ul data-part=bento>, у каждой pointermove пишет --rx/--ry/--mx/--my в style без ререндеров: rotateX/rotateY до 6° и блик через ::after. Mesh — три радиальных градиента на ::before секции с медленной анимацией transform. Факты — компонент с IntersectionObserver и requestAnimationFrame, число набегает за 1,4 с. От 60rem (container query) плитки 4 колонки: превью 2×2, остальные 1×1. Палитра --vibeui-hero-022-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "course",
           "education",
@@ -4150,6 +4153,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. Заголовок — <h1> с font-size clamp(3rem, 10.5cqi, 8.75rem), line-height .95 и letter-spacing -.045em, white-space:pre-line (перенос через \\n), фраза в *звёздочках* красится в акцент. Капсулы — <ul> с tag.color в --tag и tag.ink в --ink; стикер — квадрат color-mix(var(--tag) 82 %, #000) с эмодзи и drop-shadow. Появление — @keyframes pop с overshoot и задержкой --n×45ms; hover — translateY(-4px) rotate(-1.5deg). Капсула без emoji получает data-plain и левый отступ. Палитра --vibeui-hero-023-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "festival",
           "event",
@@ -4381,6 +4385,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради свечения за курсором и счётчиков. Заголовок режется на буквы: каждая — span с -webkit-text-stroke и @keyframes light (steps(2)) с задержкой --i×70ms, буква с индексом flicker получает вторую анимацию buzz с провалами opacity; aria-label на h1 даёт текст целиком. Фото — position:absolute с медленным scale и градиентами-затемнениями, зерно — SVG feTurbulence в data-URI с @keyframes steps(4). Свечение — radial-gradient в --mx/--my из pointermove (только мышь), пишется в style без ререндеров. Счётчики — IntersectionObserver и requestAnimationFrame 1,4 с; число разбирается из value, текст без цифр показывается как есть. Палитра --vibeui-hero-024-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "tattoo",
           "neon",
@@ -4566,6 +4571,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради конверта, отсчёта и .ics. Раскладка от ширины блока: до 56rem колонкой, от 56rem две колонки (текст 1.15fr / фото .85fr, min-height 40rem). Конверт — [data-part=envelope] position:fixed на весь экран поверх шапки (z-index 60), тёмно-сливовый radial-gradient с зерном и пульсирующим терракотовым свечением ::after: бумага с perspective, клапан clip-path polygon с rotateX(180deg), карман поверх письма, письмо translateY(-55%), печать radial-gradient с монограммой из первых букв и пульсацией box-shadow, на конверте подпись envelopeLabel и имена; клапан после открытия показывает сливовую полосатую подкладку; data-open запускает неторопливую цепочку transition'ов на пять секунд: печать (0.5 с), клапан (1.3 с с 0.35 с), письмо поднимается из кармана, низ остаётся за передними складками (1.6 с с 1.3 с); слои по z-index: задник 0, открытый клапан 0, письмо 1, передние складки 2, закрытый клапан 3, печать 4, конверт плавно опускается на 7rem сразу после клика (1.3 с), освобождая место письму, и тает с 3 с, задник выцветает 1.8 с с 3.1 с; первый экран под ним проявляется с задержкой 3.2 с (data-intro), так что смена — перекрёстное выцветание, а не рывок. envelope=false — без заставки; во вложенном кадре (window.self !== window.top: витрина сценария, превью) конверт не рендерится, потому что кликнуть по нему там нельзя — читается через useSyncExternalStore без расхождений гидрации; reduced-motion прячет конверт и показывает письмо сразу. Плитки отсчёта и «В календарь» — стекло: полупрозрачный крем с backdrop-filter и светлой верхней кромкой; за листом два свечения ::before (терракота слева сверху, шалфей справа снизу). Отсчёт — setInterval раз в секунду, первый кадр нули (совпадает с сервером), дни/часы/минуты/секунды из date (ISO). «В календарь» — Blob text/calendar с VEVENT на 9 часов и скачивание через временную ссылку. Арка фото — border-radius 50%/38% на внутреннем слое, печать-стикер плавает keyframes. Зерно — SVG feTurbulence в ::after с multiply. Палитра --vibeui-hero-025-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "invitation",
@@ -4762,6 +4768,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради заставки, отсчёта и .ics. Фон — <img> object-fit:cover под градиентом чернил и зерном (SVG feTurbulence). Раскладка от ширины: до 56rem колонкой, от 56rem две колонки 1.3fr/.7fr. Талон — [data-part=gate] position:fixed на весь экран (z-index 60) с песочным градиентом, пульсирующим солнечным пятном ::after и бумажным шумом; [data-part=pass] — сетка main/stub с перфорацией между ними, штрих-кодом из repeating-linear-gradient и самолётиком, который покачивается; data-open отрывает корешок (rotate+translate), поднимает талон и с задержкой растворяет задник, первый экран проявляется через 2.6 с (data-intro) — перекрёстное выцветание. Во вложенном кадре (window.self !== window.top) талон не рендерится — читается через useSyncExternalStore. Отсчёт — setInterval раз в секунду, первый кадр нули. «В календарь» — Blob text/calendar с VEVENT на трое суток. Штамп — SVG с текстом по кругу и датой из ISO. Палитра --vibeui-hero-026-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "travel",

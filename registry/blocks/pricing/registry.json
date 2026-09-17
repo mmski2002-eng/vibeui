@@ -3586,6 +3586,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради переключателя и блика. Переключатель — role=group с aria-pressed и плашкой ::before на translateX. Цена — span с key=значение: смена значения перемонтирует span с @keyframes въезда снизу (высота фиксирована, overflow:hidden). Рамка — ::before выделенного плана с inset:-2px и conic-gradient(from var(--a)), угол — @property <angle>, @keyframes 5 с; карточка isolation:isolate. Полоска мест — seatsTaken/seatsTotal → --fill, ::before шириной calc(var(--fill)×100 %) с @keyframes от нуля. Блик — ::after с radial-gradient в --mx/--my из pointermove. Числа — Intl.NumberFormat ru-RU. От 56rem (container query) три колонки, выделенный приподнят. Палитра --vibeui-pricing-020-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "course",
           "education",
@@ -3800,6 +3801,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради счётчика. Счётчик — role=group с кнопками «−»/«+» (disabled на границах 1…maxCount) и aria-live на числе. Карточка — <li> с ticket.color в --color и ink в --ink; data-dark переводит плашку и кнопку в тёмный режим, data-featured — scale(1.03) и чёрная кнопка. Цена — span с key=значение и @keyframes въезда снизу. Галочки — кружок currentColor с уголком цвета карточки через ::after. Формат чисел — Intl.NumberFormat ru-RU. От 56rem три колонки. Палитра --vibeui-pricing-021-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "festival",
           "event",
@@ -4002,6 +4004,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради размера и зоны. Ползунок — input type=range со стилизованным треком: заливка до --fill из значения, бегунок с неоновым box-shadow. Зоны — кнопки с aria-pressed и factor. Формула: max(minPrice, round(size² × ratePerCm × factor / 500) × 500), часы ≈ size²/60; итог — span с key=значение и @keyframes въезда, aria-live. Пакеты — <li> с pack.color в --neon (рамка, имя, точки), featured — ::before с conic-gradient(from var(--a)) через @property и маску-кольцо. От 60rem (container query) калькулятор в три колонки, пакеты в три. Палитра --vibeui-pricing-022-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "tattoo",
           "neon",

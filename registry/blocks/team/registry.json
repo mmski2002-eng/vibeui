@@ -1617,6 +1617,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. <ul> сеткой auto-fill minmax(14rem,1fr), от 64rem (container query) ровно четыре колонки. Карточка: media с aspect-ratio 4/5 и object-position:center top, плашка fact поверх фото, тело с именем серифом, ролью и строкой контактов через бордюр. По hover карточка translateY(-4px) с тенью, фото scale 1.04. Без изображения — подложка цвета песка. Палитра --vibeui-people-007-* с light-dark: песок/чернильно-зелёный, латунный акцент; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "real estate",
           "realty",
@@ -1843,6 +1844,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. Сетка 2/3 колонки (container query 48rem, от 68rem крупнее отступы и поля). person.color в --card, ink в --ink; data-dark переключает плашки на тёмные. Раскрытие — grid-template-rows 0fr→1fr по :hover и :focus-within (на тач-экранах — по тапу на ссылку имени). Появление — @keyframes scale с задержкой --n×60ms. Палитра --vibeui-people-008-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "festival",
           "event",
@@ -2048,6 +2050,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. Сцена — <li> с perspective:1400px, карточка — grid с transform-style:preserve-3d и rotateY(180deg) по :hover и :focus-within; лицо и оборот в одной grid-area с backface-visibility:hidden. Цвет обводки — artist.color в --neon: рамка, свечение и имя. Оборот aria-hidden, кнопка на нём с tabIndex=-1; для клавиатуры и ридеров есть скрытая ссылка записи. Сетка auto-fill 15rem, от 64rem (container query) четыре колонки. Появление — @keyframes с задержкой --n×90ms. Палитра --vibeui-people-009-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "tattoo",
           "neon",
@@ -2264,6 +2267,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный. Карточка — article шириной до 18rem с padding под полароид, наклон через --vibeui-people-010-tilt по nth-child(3n…), hover выпрямляет и поднимает с тенью. Кадр 1:1 object-fit:cover с приглушённой насыщенностью, песочная плашка без фото. Сетка от 44rem — auto-fit minmax(15rem,18rem) по центру. Контакт — ссылка с подчёркиванием акцентом; иконка по типу адреса: tel: — трубка, mailto: — конверт, остальное — самолётик мессенджера. Палитра --vibeui-people-010-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "wedding party",

@@ -2862,6 +2862,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. Сетка shell: колонкой на узком, от 56rem (container query) 1fr/1.5fr, левая колонка position:sticky. Список — <details name={useId()}>: браузер сам закрывает предыдущий ответ (эксклюзивный аккордеон без состояния). <summary> сеткой 2rem/1fr/1.5rem: номер капителью акцентом, вопрос серифом, плюс из двух псевдоэлементов с transform rotate(45deg) при [open]. Ответ с отступом под номер, max-width 40rem. Палитра --vibeui-realty-005-* с light-dark: песок/чернильно-зелёный, латунный акцент; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "real estate",
           "realty",
@@ -3038,6 +3039,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. <details name={useId()}> — открыт один ответ. summary сеткой 1fr/1.5rem; плюс из двух псевдоэлементов, при [open] rotate(45deg) и заливка акцентом; details[open] получает border-left акцента. Ответ появляется @keyframes .35s. От 56rem (container query) 1fr/1.5fr, левая колонка position:sticky. Палитра --vibeui-faq-017-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "course",
           "education",
@@ -3214,6 +3216,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. <details name={useId()}> — открыт один. summary сеткой 1.5rem/1fr/1.5rem: кружок item.color в --dot (scale 1.6 при [open]), текст, плюс из двух чёрточек (rotate 45deg при [open]). Ответ — <p> с @keyframes fade. От 56rem (container query) две колонки с align-items:start, чтобы открытый вопрос не растягивал соседа. Палитра --vibeui-faq-018-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "festival",
           "event",
@@ -3398,6 +3401,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. <details name={useId()}> — открыт один; линия — ::before details со scaleY 0→1 и неоновым box-shadow при [open]; summary сеткой 2.2rem/1fr/1.5rem: номер в mono, текст, плюс из двух чёрточек (rotate 45deg при [open]). Ответ — <p> с @keyframes fade. От 60rem (container query) две колонки 2fr/3fr, заголовок position:sticky. Палитра --vibeui-faq-019-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "tattoo",
           "neon",
@@ -3567,6 +3571,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный. details с общим name (useId) — открыт один за раз без JS; summary — сетка 2.6rem/1fr/1.6rem: номер, вопрос serif'ом, маркер из двух линий (::before/::after, поворот ::after 90→0). Ответ появляется keyframes fade. От 56rem сетка .8fr/1.4fr, шапка sticky top:5rem. Палитра --vibeui-faq-020-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "faq",
@@ -3740,6 +3745,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный. details с общим name (useId) — один открыт за раз без JS; summary — сетка 5rem/1fr/1.6rem: цветной хвостик с дырочкой ::after слева и темой мелким капсом, вопрос, маркер из двух линий (::after поворачивается 90→0). Хвостики чередуют море/коралл/солнце по nth-child(3n). Открытая бирка — transform и тень; ответ fade-in. Палитра --vibeui-faq-021-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "travel",

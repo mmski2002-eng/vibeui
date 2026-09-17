@@ -2550,6 +2550,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. <footer> с сеткой top: колонкой на узком, от 56rem (container query) 1.3fr/1fr/1.2fr. Адрес в <address>, часы с точкой акцента через ::before, телефон — <a href=tel:> серифом, почта — mailto. Мессенджеры — <ul> капсул: латунный кружок со встроенным SVG (Telegram, WhatsApp, VK — path внутри файла) или буквой short (Max), подпись рядом; ссылки target=_blank. Нижняя строка flex space-between: legal и список links. Фон тёмно-зелёный в обеих темах: подвал задуман контрастным. Палитра --vibeui-realty-005-* с light-dark: песок/чернильно-зелёный, латунный акцент; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "real estate",
           "realty",
@@ -2755,6 +2756,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. <footer> с сеткой top: колонкой на узком, от 60rem (container query) 1.4fr/1fr/1.2fr/.9fr. Часы — <dl> сеткой с tabular-nums, адрес в <address>, телефон — <a href=tel:> серифом. Мессенджеры — капсулы с винным кружком и встроенным SVG (Telegram, WhatsApp, VK — path внутри файла) или буквой short (Max), target=_blank. Фон тёмный в обеих темах: подвал задуман контрастным. Палитра --vibeui-footer-020-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "restaurant",
           "cafe",
@@ -2959,6 +2961,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. Сетка top до 56rem (container query) в колонку, от 56rem 1.6fr/1fr/1fr/1.2fr. Гигант — span aria-hidden с font-size clamp(3rem, 13.5cqi, 13rem), color:transparent и -webkit-text-stroke 1px, margin-bottom -.18em срезает нижнюю часть; animation-timeline:view() под @supports поднимает его translateY(40 %)→0 при входе в кадр, :hover подвала подкрашивает контур акцентом. giant=true печатает brand, строка — своё слово, false — без гиганта. Палитра --vibeui-footer-021-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "course",
           "education",
@@ -3150,6 +3153,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. Полоска — flex из <i> с flex:1, по наведению flex:3. Иконки — inline SVG для telegram, vk, youtube, instagram по kind; незнакомый kind рисует первую букву. Кружок по наведению приподнимается с поворотом и инвертируется. Колонки 2/5 (container query 60rem). Палитра --vibeui-footer-022-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "festival",
           "event",
@@ -3397,6 +3401,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. Линия — ::before с linear-gradient фуксия→фиолет и box-shadow. Логотип — text-shadow неона. Соцсети — inline SVG по kind (telegram, vk, instagram, youtube), незнакомый — первая буква. Значок 18+ — кружок с акцентной обводкой и свечением. Сетка top до 56rem (container query) в колонку, от 56rem 1.6fr/1fr/1fr/auto. Палитра --vibeui-footer-023-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "tattoo",
           "neon",
@@ -3586,6 +3591,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный. Две строки: верхняя — сетка auto/1fr/auto от 56rem (монограмма с именами, якоря, «ответьте до»), до 56rem столбиком по центру; нижняя — хэштег и подпись по краям над тонкой линией. Монограмма делится по « & », амперсанд акцентом, двойная рамка через ::before; хэштег — ссылка на страницу тега в Instagram (без #); якоря serif'ом с подчёркиванием scaleX по hover; «ответьте до» — ссылка на форму; сердце — SVG перед подписью. Фон всегда сливовый (light-dark даёт две глубины), текст кремовый. Палитра --vibeui-footer-024-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "footer",
@@ -3766,6 +3772,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный. Перфорация — ::before radial-gradient по верхнему краю. Верхняя строка — сетка 1fr/auto/1fr от 56rem (до — столбиком по центру): коды с самолётиком Oswald, имена капсом с рукописной строкой Lobster, координаты ui-monospace с подписью места. Нижняя строка — якоря капсом, хэштег-капсула на Instagram, «check-in до» с ссылкой. Фон всегда чернильный (light-dark даёт две глубины). Палитра --vibeui-footer-025-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "travel",

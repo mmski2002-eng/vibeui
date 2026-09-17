@@ -20,6 +20,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради IntersectionObserver и счётчиков. Кольцо — SVG circle r=42 со stroke-dasharray 264 и stroke-dashoffset от --fill при data-active, переход 1,6 с; свечение — drop-shadow цвета item.color в --neon. Счётчик — requestAnimationFrame 1,6 с с easeOut, Intl.NumberFormat ru-RU, суффикс отдельной строкой. IO на секции с threshold .3 включает всё разом. Сетка 2 колонки, от 56rem (container query) 4. Палитра --vibeui-stats-001-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "tattoo",
           "neon",

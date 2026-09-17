@@ -20,6 +20,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради табов и фото. Табы role=tab с aria-selected; под активным — плашка (li data-part=pill), её позиция и размер меряются в useLayoutEffect по offsetLeft/offsetWidth кнопки и пишутся прямо в style плашки (без состояния), переезд transform/width за .5s, ResizeObserver перемеряет на ресайз. Список пересобирается с новым key на смену раздела — @keyframes с задержкой --n×60ms. Строка блюда: название серифом, лидер — flex:1 с пунктирной нижней границей, цена nowrap. Метки получают data-kind по началу слова (вег/hot/шеф) и свой цвет. Фото — один <img> position:fixed, координаты курсора пишутся в CSS-переменные --x/--y на onMouseMove без ререндера; на устройствах без hover скрыт. Сетка блюд в две колонки от 48rem (container query). Палитра --vibeui-restaurant-003-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "restaurant",
           "cafe",
@@ -278,6 +279,7 @@
       ],
       "docs": "Один файл, зависимость только react-dom (createPortal), «use client». Фото раскладываются по трём колонкам с балансом высот: по убыванию высоты (из aspect) каждое идёт в самую короткую колонку, внутри колонки — в исходном порядке; параллакс — одна переменная прогресса секции во вьюпорте (−1…1), пишется в rAF на scroll без ререндера, колонки сдвигаются translateY(p × k) со своим k. Кадр — <button> с aspect-ratio из photo.aspect. Лайтбокс: слой position:fixed в портале, летун стартует из getBoundingClientRect кадра, после reflow и requestAnimationFrame едет к центрированной коробке (top/left/width/height с transition .55s), оригинал прячется; закрытие — обратно, фокус возвращается на кадр; скролл заперт с компенсацией скроллбара. reduced-motion выключает параллакс и переходы. Палитра --vibeui-restaurant-005-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "restaurant",
           "cafe",

@@ -3036,6 +3036,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. Шапка секции — flex с заголовком слева и общей оценкой справа. Карточки 1/2/3 колонки (container query 48rem и 64rem); появление @keyframes с задержкой --n×90ms. Кавычка — абсолютный серифный символ с opacity .35; звёзды — строка «★» по rating с aria-label; источник — пилюля справа в строке автора. Палитра --vibeui-testimonials-016-* с light-dark: песок/чернильно-зелёный, латунный акцент; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "real estate",
           "realty",
@@ -3213,6 +3214,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, серверный компонент. Фото — <img> absolute с blur(10px) и opacity .5, поверх градиентное затемнение. Сетка shell от 64rem (container query) 1fr/2.6fr, карточки в три колонки от 48rem с backdrop-filter и появлением @keyframes с задержкой --n×100ms. Звёзды — строка «★» по rating с aria-label. Секция всегда тёмная: цвета фиксированы под фото. Палитра --vibeui-testimonials-017-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "restaurant",
           "cafe",
@@ -3386,6 +3388,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради лайтбокса. Ряды — items пополам (при ≤3 отзывах оба ряда из всех); каждый ряд — track с двумя копиями <ul> (вторая aria-hidden, ссылки tabIndex=-1), @keyframes translateX(-50 %) длительностью max(30 с, n×14 с), второй ряд animation-direction:reverse, пауза по :hover и :focus-within, края — mask-image. Лайтбокс — <dialog> с showModal(): ссылка на mp4/webm/mov → <video controls autoplay>, иначе <iframe allow=autoplay>; клик по фону и Escape закрывают, onClose сбрасывает состояние. reduced-motion: ряды становятся переносимой сеткой без копий. Палитра --vibeui-testimonials-018-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
       "meta": {
+        "pro": true,
         "tags": [
           "course",
           "education",
@@ -3599,6 +3602,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради активного индекса. Каждая карточка — <button> с --d (сдвиг от активной) и --abs: transform translateX(d×60 %) translateZ(−abs×14rem) rotateY(−d×28deg), opacity и brightness по abs, z-index 10−abs, переход .7 с; карточки дальше двух скрыты. Сцена с perspective:1600px и фиксированной высотой. Активная — tabIndex 0, остальные aria-hidden; ArrowLeft/ArrowRight на сцене. От 60rem (container query) сдвиг 78 % и поворот 32°. Палитра --vibeui-testimonials-019-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "tattoo",
           "neon",
@@ -3778,6 +3782,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради формы. Доска — <ul> auto-fill minmax(12rem,1fr) с inset-тенью и «рамкой» через box-shadow; записка — article с наклоном --vibeui-testimonials-020-tilt по nth-child(4n…), hover выпрямляет и увеличивает; кнопка — radial-gradient латуни. Новые записки — state-массив, добавляются в начало с data-fresh и keyframes «приколоть». Форма — name + textarea (required), onSubmit без action — preventDefault, с action — POST. От 56rem сетка .8fr/1.6fr, левая колонка sticky. Палитра --vibeui-testimonials-020-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "guestbook",
@@ -3954,6 +3959,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, «use client» ради формы. Стена — <ul> auto-fill minmax(17rem,1fr), открытка — article с сеткой 1.5fr/1fr, вертикальной линией ::before, наклоном по nth-child(4n…) и подъёмом по hover; марка — рамка с пунктиром, штемпель — SVG-круг с текстом города (или «отправлено» у новых). Новые открытки — state-массив в начале с data-fresh и keyframes «приземления». Форма — имя, откуда, текст (required); без action — preventDefault. От 56rem сетка .8fr/1.7fr, левая колонка sticky. Палитра --vibeui-testimonials-021-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
+        "pro": true,
         "tags": [
           "wedding",
           "travel",
