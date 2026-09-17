@@ -3589,6 +3589,166 @@
           }
         }
       }
+    },
+    {
+      "name": "cta-023",
+      "type": "registry:block",
+      "title": "Подарки «на камин»: карточка-камин с живым огнём",
+      "description": "Подарки зимней свадьбы: слева «лучший подарок — вы у камина» и рукописная шутка про цветы, справа карточка-камин — полка с реквизитами и кнопкой «скопировать», под ней портал с кирпичом и живым огнём из четырёх язычков. По клику огонь вспыхивает ярче и на карточке печатается рукописный штамп «Спасибо!».",
+      "categories": [
+        "cta"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-023/cta-023.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-023.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 2.4 с состояния и штамп по data-copied). Камин — карточка: [data-part=mantel] полка с толстой нижней кромкой, реквизиты в dashed-рамке лайнинг-цифрами, кнопка со свечением; [data-part=fire] — тёмный портал с кирпичной кладкой repeating-linear-gradient, поленья из двух градиентов, четыре язычка на keyframes разной длительности, тёплое пятно ::after усиливается при копировании. Штамп — рукописный, keyframes уменьшения. От 56rem две колонки. Палитра --vibeui-cta-023-*: синяя ночь #0b1220 и индиго #131c2e / слоновая кость #f2eee6 через light-dark(), серебро #9fb0c8, свеча #f2b64f, огонь #ff9a3c; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "winter",
+          "gifts",
+          "fund",
+          "fireplace",
+          "fire",
+          "copy",
+          "stamp",
+          "cta",
+          "dark"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "cardControls": [
+          "title",
+          "requisite",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Cta023",
+          "usage": "<Cta023\n  title=\"Лучший подарок — вы у камина\"\n  fundTitle=\"На камин\"\n  fundText=\"Перевод по номеру телефона.\"\n  requisite=\"+7 900 000-00-00\"\n  requisiteLabel=\"СБП · Дмитрий В.\"\n  joke=\"Цветы в декабре замёрзнут по дороге.\"\n/>",
+          "summary": "Самодостаточный блок подарков зимней свадьбы: карточка-камин с живым огнём, реквизиты на полке, копирование ставит штамп «Спасибо!». Тексты и реквизиты пропсами.",
+          "preserve": [
+            "карточку-камин с полкой и живым огнём из язычков на keyframes",
+            "вспышку огня и рукописный штамп при копировании",
+            "рукописную шутливую строку под текстом"
+          ],
+          "adapt": [
+            "eyebrow, title (после « — » уходит в курсив), lede, joke, fundTitle, fundText",
+            "requisite, requisiteLabel, copyLabel, copiedLabel, stampLabel",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Реквизит копируется как есть — пробелы и дефисы банк-приложения понимают.",
+            "Огонь — чистый CSS: четыре элемента с blur и keyframes, без canvas."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Лучший подарок — вы у камина",
+            "maxLength": 50
+          },
+          {
+            "prop": "requisite",
+            "label": "Реквизиты",
+            "type": "text",
+            "default": "+7 900 000-00-00",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "“For the fireplace” gifts: a hearth card with a live fire",
+            "description": "Winter-wedding gifts: on the left “the best gift — you by the fire” and a handwritten flowers joke, on the right a hearth card — a mantel with the details and a “copy” button, below it a brick portal with a live fire of four flames. A click makes the fire flare and prints a handwritten “Thank you!” stamp on the card.",
+            "docs": "One file, zero dependencies, “use client” for copying (navigator.clipboard, a 2.4 s state and the stamp on data-copied). The hearth is a card: a [data-part=mantel] shelf with a thick bottom edge, details in a dashed frame with lining numerals, a glowing button; [data-part=fire] is a dark portal with a repeating-linear-gradient brick pattern, logs from two gradients, four flames on keyframes of different durations, a warm ::after pool that intensifies on copy. The stamp is handwritten with a shrinking keyframe. Two columns from 56rem. Palette --vibeui-cta-023-*: night blue #0b1220 and indigo #131c2e / ivory #f2eee6 via light-dark(), silver #9fb0c8, candle #f2b64f, fire #ff9a3c; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained winter-wedding gifts block: a hearth card with a live fire, details on the mantel, copying prints a “Thank you!” stamp. Copy and details via props.",
+              "preserve": [
+                "the hearth card with the mantel and the live fire of keyframe flames",
+                "the fire flare and the handwritten stamp on copy",
+                "the handwritten joke line under the text"
+              ],
+              "adapt": [
+                "eyebrow, title (after “ — ” turns italic), lede, joke, fundTitle, fundText",
+                "requisite, requisiteLabel, copyLabel, copiedLabel, stampLabel",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The detail is copied as is — banking apps understand spaces and dashes.",
+                "The fire is pure CSS: four blurred elements on keyframes, no canvas."
+              ],
+              "usage": "<Cta023\n  title=\"The best gift — you by the fire\"\n  fundTitle=\"For the fireplace\"\n  fundText=\"A transfer by phone number.\"\n  requisite=\"+7 900 000-00-00\"\n  requisiteLabel=\"Transfer · Dmitry V.\"\n  joke=\"Flowers freeze on the way in December.\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "The best gift — you by the fire"
+              },
+              "requisite": {
+                "label": "Details",
+                "default": "+7 900 000-00-00"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Gifts",
+                "title": "The best gift — you by the fire",
+                "lede": "Honestly: the main thing is to come. If you still want to — we're saving for a fireplace in our first own house. A real one, with logs.",
+                "fundTitle": "For the fireplace",
+                "fundText": "A transfer by phone number. Put your name in the comment — we'll thank you in person.",
+                "requisiteLabel": "Transfer · Dmitry V.",
+                "copyLabel": "Copy the number",
+                "copiedLabel": "Copied",
+                "stampLabel": "Thank you!",
+                "joke": "Flowers freeze on the way in December. Candles don't. But we don't need those either: we already have two hundred."
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

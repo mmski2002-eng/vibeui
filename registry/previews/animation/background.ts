@@ -14,4 +14,6 @@ export const PREVIEWS = {
     import("@/registry/animations/background/background-004/background-004").then((module) => module.Background004),
   "background-005": () =>
     import("@/registry/animations/background/background-005/background-005").then((module) => module.Background005),
+  "background-006": () =>
+    import("@/registry/animations/background/background-006/background-006").then((module) => module.Background006),
 } satisfies PreviewLoaderMap

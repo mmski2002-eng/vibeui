@@ -2110,6 +2110,202 @@
           }
         }
       }
+    },
+    {
+      "name": "about-013",
+      "type": "registry:block",
+      "title": "История пары гирляндой: лампочки зажигаются при прокрутке",
+      "description": "История как гирлянда: провисающий провод через секцию, на нём четыре лампочки — пока секцию прокручивают, они зажигаются одна за другой, под каждой кадр с датой рукописным, заголовком и историей. Зажжённый кадр теплеет и подсвечивается, текущий — ярче всех.",
+      "categories": [
+        "about"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "about-013/about-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/about-013.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради прогресса. Провод — SVG viewBox 1000×120 с четырьмя дугами (Q-сегменты), лампочки в провисах: ножка, цоколь, колба-эллипс; data-lit красит колбу в свечу с drop-shadow, data-now — в тёплый белый с «дыханием» keyframes. Прогресс считает rAF-обработчик scroll по положению секции в окне (0 при входе снизу, 1 когда центр прошёл), в state попадает только число зажжённых (0–4). Кадры — сетка 4 в ряд от 56rem (2 от 40rem), каждый с фото 3:2 и инеем по углам; незажжённые — приглушены и чуть ниже; на узких экранах вместо провода — точка-лампочка над карточкой. Ровно четыре кадра, лишние отбрасываются. Палитра --vibeui-about-013-*: синяя ночь #0b1220 и индиго #131c2e / слоновая кость #f2eee6 через light-dark(), серебро #9fb0c8, свеча #f2b64f, огонь #ff9a3c; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "winter",
+          "story",
+          "timeline",
+          "garland",
+          "lights",
+          "scroll",
+          "couple",
+          "frames",
+          "christmas",
+          "dark"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "frames": [
+              {
+                "date": "Декабрь 2023",
+                "title": "Каток",
+                "text": "Дима упал первым, Лера — второй. Встали вместе, так и держимся.",
+                "image": "/demo/wedding-winter/story-01.webp"
+              },
+              {
+                "date": "Январь 2025",
+                "title": "Ёлка на двоих",
+                "text": "Несли её через весь город. Игрушек хватило на одну ветку.",
+                "image": "/demo/wedding-winter/story-02.webp"
+              },
+              {
+                "date": "Февраль 2026",
+                "title": "Первая зима вместе",
+                "text": "Съехались в снегопад. Коробки разбирали до весны.",
+                "image": "/demo/wedding-winter/story-03.webp"
+              },
+              {
+                "date": "Ноябрь 2027",
+                "title": "Под ёлкой в лесу",
+                "text": "Дима спросил под большой елью с гирляндой. Лера сказала «да» и «холодно».",
+                "image": "/demo/wedding-winter/story-04.webp"
+              }
+            ]
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "About013",
+          "usage": "<About013\n  title=\"Четыре зимы «до»\"\n  frames={[\n    { date: \"Декабрь 2023\", title: \"Каток\", text: \"Дима упал первым.\", image: \"/photos/story-01.webp\" },\n    { date: \"Январь 2025\", title: \"Ёлка на двоих\", text: \"Несли через весь город.\", image: \"/photos/story-02.webp\" },\n    { date: \"Февраль 2026\", title: \"Первая зима вместе\", text: \"Съехались в снегопад.\", image: \"/photos/story-03.webp\" },\n    { date: \"Ноябрь 2027\", title: \"Под ёлкой\", text: \"Здесь и спросил.\", image: \"/photos/story-04.webp\" },\n  ]}\n/>",
+          "summary": "Самодостаточная история пары гирляндой: четыре лампочки зажигаются при прокрутке, под ними кадры с датой, заголовком и текстом. Кадры — массив пропсом.",
+          "preserve": [
+            "провисающий провод с четырьмя лампочками, которые зажигаются по прокрутке",
+            "приглушённые незажжённые кадры и тёплую подсветку текущего",
+            "иней по углам фото и рукописную дату"
+          ],
+          "adapt": [
+            "eyebrow, title (часть в «кавычках» уходит в курсив), lede",
+            "frames — ровно четыре: date, title, text, image",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Провод рассчитан на четыре лампочки: больше не поместится, меньше — оставит пустые.",
+            "Фото 3:2, обрезаются по центру."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Четыре зимы «до»",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Couple's story as a garland: bulbs light up on scroll",
+            "description": "The story as a garland: a sagging wire across the section with four bulbs — as the section scrolls they light one after another, under each a frame with a handwritten date, a title and the story. A lit frame warms up and glows, the current one brightest.",
+            "docs": "One file, zero dependencies, “use client” for the progress. The wire is an SVG viewBox 1000×120 with four arcs (Q segments), bulbs in the sags: a stem, a socket, an ellipse bulb; data-lit paints the bulb candle-gold with a drop-shadow, data-now warm white with a breathing keyframe. An rAF scroll handler computes progress from the section's position in the window (0 entering from below, 1 once the centre has passed); only the number of lit bulbs (0–4) enters state. Frames are a 4-per-row grid from 56rem (2 from 40rem), each with a 3:2 photo and corner frost; unlit ones are dimmed and slightly lower; on narrow screens a bulb dot above the card replaces the wire. Exactly four frames, extras are dropped. Palette --vibeui-about-013-*: night blue #0b1220 and indigo #131c2e / ivory #f2eee6 via light-dark(), silver #9fb0c8, candle #f2b64f, fire #ff9a3c; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained couple's story as a garland: four bulbs light up on scroll with frames underneath carrying a date, a title and text. Frames come as a prop array.",
+              "preserve": [
+                "the sagging wire with four bulbs lighting up on scroll",
+                "the dimmed unlit frames and the warm glow of the current one",
+                "the corner frost on photos and the handwritten date"
+              ],
+              "adapt": [
+                "eyebrow, title (the part in «quotes» turns italic), lede",
+                "frames — exactly four: date, title, text, image",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The wire is built for four bulbs: more won't fit, fewer leave empty ones.",
+                "Photos are 3:2, cropped to the centre."
+              ],
+              "usage": "<About013\n  title=\"Four winters «before»\"\n  frames={[\n    { date: \"December 2023\", title: \"The rink\", text: \"Dima fell first.\", image: \"/photos/story-01.webp\" },\n    { date: \"January 2025\", title: \"A tree for two\", text: \"Carried it across the city.\", image: \"/photos/story-02.webp\" },\n    { date: \"February 2026\", title: \"First winter together\", text: \"Moved in during a snowfall.\", image: \"/photos/story-03.webp\" },\n    { date: \"November 2027\", title: \"Under a fir\", text: \"That is where he asked.\", image: \"/photos/story-04.webp\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Four winters «before»"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Our story",
+                "title": "Four winters «before»",
+                "lede": "We met in winter and have counted the years by snow ever since. This one is the fourth.",
+                "frames": [
+                  {
+                    "date": "December 2023",
+                    "title": "The rink",
+                    "text": "Dima fell first, Lera second. We got up together and still hold on.",
+                    "image": "/demo/wedding-winter/story-01.webp"
+                  },
+                  {
+                    "date": "January 2025",
+                    "title": "A tree for two",
+                    "text": "Carried it across the city. The ornaments covered one branch.",
+                    "image": "/demo/wedding-winter/story-02.webp"
+                  },
+                  {
+                    "date": "February 2026",
+                    "title": "First winter together",
+                    "text": "Moved in during a snowfall. Unpacked the boxes by spring.",
+                    "image": "/demo/wedding-winter/story-03.webp"
+                  },
+                  {
+                    "date": "November 2027",
+                    "title": "Under a fir in the forest",
+                    "text": "Dima asked under a big fir strung with lights. Lera said “yes” and “cold”.",
+                    "image": "/demo/wedding-winter/story-04.webp"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

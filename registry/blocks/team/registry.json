@@ -2444,6 +2444,201 @@
           }
         }
       }
+    },
+    {
+      "name": "people-011",
+      "type": "registry:block",
+      "title": "Кто встречает: карточки со свечкой у каждого",
+      "description": "Свидетели и организатор в тёмных карточках на стекле: портрет в круге с серебряным ободком, в углу свечка с живым огоньком, роль рукописным, пара слов и ссылка «написать». Наведение — свечка ярче, карточка теплеет и поднимается.",
+      "categories": [
+        "team"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "people-011/people-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/people-011.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный. Карточки — <ul> 3 в ряд от 56rem (до — строкой портрет слева, текст справа); свечка — <i> со стеарином, фитилём ::before и огоньком ::after на keyframes мерцания, hover усиливает box-shadow огонька и красит рамку в свечу. Портрет — круг с двойным ободком через box-shadow. Ссылка контакта выбирает иконку по href: tel: — трубка, mailto: — конверт, иначе — самолётик. Палитра --vibeui-people-011-*: синяя ночь #0b1220 и индиго #131c2e / слоновая кость #f2eee6 через light-dark(), серебро #9fb0c8, свеча #f2b64f, огонь #ff9a3c; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "winter",
+          "people",
+          "team",
+          "witnesses",
+          "planner",
+          "contacts",
+          "candle",
+          "portraits",
+          "dark"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "people": [
+              {
+                "name": "Кристина",
+                "role": "Свидетельница",
+                "text": "Подруга Леры с первого класса. Знает про платья, шали и куда прятать телефоны на церемонии.",
+                "image": "/demo/wedding-winter/people-01.webp",
+                "contactLabel": "Написать в Telegram",
+                "contactHref": "#"
+              },
+              {
+                "name": "Игорь",
+                "role": "Свидетель",
+                "text": "Брат Димы. Отвечает за трансферы, дрова и фейерверк — в этом порядке.",
+                "image": "/demo/wedding-winter/people-02.webp",
+                "contactLabel": "Написать в Telegram",
+                "contactHref": "#"
+              },
+              {
+                "name": "Марина",
+                "role": "Организатор",
+                "text": "Собирает вечер по минутам. Комнаты, аллергии, детские стулья — это к ней.",
+                "image": "/demo/wedding-winter/people-03.webp",
+                "contactLabel": "Позвонить",
+                "contactHref": "tel:+70000000000"
+              }
+            ]
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "People011",
+          "usage": "<People011\n  title=\"Вас ждут у ворот\"\n  people={[\n    { name: \"Кристина\", role: \"Свидетельница\", text: \"Подруга с первого класса.\", image: \"/photos/people-01.webp\", contactLabel: \"Написать в Telegram\", contactHref: \"https://t.me/…\" },\n    { name: \"Игорь\", role: \"Свидетель\", text: \"Брат Димы.\", image: \"/photos/people-02.webp\", contactLabel: \"Написать в Telegram\", contactHref: \"https://t.me/…\" },\n    { name: \"Марина\", role: \"Организатор\", text: \"Собирает вечер по минутам.\", image: \"/photos/people-03.webp\", contactLabel: \"Позвонить\", contactHref: \"tel:+7…\" },\n  ]}\n/>",
+          "summary": "Самодостаточный блок «кто встречает»: свидетели и организатор в карточках со свечкой, портрет в круге, роль рукописным, контакт с иконкой по типу ссылки. Люди — массив пропсом.",
+          "preserve": [
+            "свечку с живым огоньком в углу каждой карточки, ярче по наведению",
+            "портрет в круге с серебряным ободком и роль рукописным",
+            "иконку контакта по типу ссылки"
+          ],
+          "adapt": [
+            "eyebrow, title, lede",
+            "people (name, role, text, image, contactLabel, contactHref)",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Портреты квадратные, обрезаются в круг.",
+            "От 56rem три карточки в ряд — четвёртая уйдёт на новую строку."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Вас ждут у ворот",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Who meets you: cards with a candle on each",
+            "description": "The wedding party and planner in dark cards on glass: a round portrait with a silver rim, a candle with a live flame in the corner, the role in handwriting, a few words and a “message” link. Hover — the candle brightens, the card warms and lifts.",
+            "docs": "One file, zero dependencies, server-rendered. Cards are a <ul>, 3 per row from 56rem (a row with the portrait left and text right below); the candle is an <i> with wax, a ::before wick and a ::after flame on flicker keyframes, hover boosts the flame's box-shadow and paints the border candle-gold. The portrait is a circle with a double rim via box-shadow. The contact link picks its icon by href: tel: — a handset, mailto: — an envelope, otherwise a paper plane. Palette --vibeui-people-011-*: night blue #0b1220 and indigo #131c2e / ivory #f2eee6 via light-dark(), silver #9fb0c8, candle #f2b64f, fire #ff9a3c; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained “who meets you” block: the wedding party and planner in cards with a candle, a round portrait, a handwritten role, a contact with an icon by link type. People come as a prop array.",
+              "preserve": [
+                "the candle with a live flame in the corner of each card, brighter on hover",
+                "the round portrait with a silver rim and the handwritten role",
+                "the contact icon by link type"
+              ],
+              "adapt": [
+                "eyebrow, title, lede",
+                "people (name, role, text, image, contactLabel, contactHref)",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Portraits are square, cropped to a circle.",
+                "Three cards per row from 56rem — a fourth wraps to a new row."
+              ],
+              "usage": "<People011\n  title=\"They'll meet you at the gate\"\n  people={[\n    { name: \"Kristina\", role: \"Maid of honour\", text: \"A friend since first grade.\", image: \"/photos/people-01.webp\", contactLabel: \"Message on Telegram\", contactHref: \"https://t.me/…\" },\n    { name: \"Igor\", role: \"Best man\", text: \"Dima's brother.\", image: \"/photos/people-02.webp\", contactLabel: \"Message on Telegram\", contactHref: \"https://t.me/…\" },\n    { name: \"Marina\", role: \"Planner\", text: \"Runs the evening by the minute.\", image: \"/photos/people-03.webp\", contactLabel: \"Call\", contactHref: \"tel:+7…\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "They'll meet you at the gate"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Who meets you",
+                "title": "They'll meet you at the gate",
+                "lede": "For any question before the wedding — ask them. They know where the parking is, who sits with whom and when the fireworks are.",
+                "people": [
+                  {
+                    "name": "Kristina",
+                    "role": "Maid of honour",
+                    "text": "Lera's friend since first grade. Knows about dresses, shawls and where to hide phones at the ceremony.",
+                    "image": "/demo/wedding-winter/people-01.webp",
+                    "contactLabel": "Message on Telegram",
+                    "contactHref": "#"
+                  },
+                  {
+                    "name": "Igor",
+                    "role": "Best man",
+                    "text": "Dima's brother. In charge of shuttles, firewood and fireworks — in that order.",
+                    "image": "/demo/wedding-winter/people-02.webp",
+                    "contactLabel": "Message on Telegram",
+                    "contactHref": "#"
+                  },
+                  {
+                    "name": "Marina",
+                    "role": "Planner",
+                    "text": "Runs the evening by the minute. Rooms, allergies, high chairs — she's the one.",
+                    "image": "/demo/wedding-winter/people-03.webp",
+                    "contactLabel": "Call",
+                    "contactHref": "tel:+70000000000"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

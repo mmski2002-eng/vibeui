@@ -4655,6 +4655,194 @@
           }
         }
       }
+    },
+    {
+      "name": "navbar-027",
+      "type": "registry:block",
+      "title": "Шапка с гирляндой лампочек и выключателем снега",
+      "description": "Шапка зимней свадьбы: по нижнему краю провисает гирлянда лампочек с редким тёплым мерцанием, слева монограмма со снежинкой и имена рукописным, по центру разделы капителями, справа выключатель снега, музыка по клику и «Ответить». Над фото первого экрана прозрачна, при прокрутке ложится на стекло с инеем, гирлянда гаснет.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-027/navbar-027.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-027.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради прокрутки, скроллспая, музыки и снега. <header> position:fixed (placement=static — в потоке для превью); подложка [data-part=veil] с backdrop-filter проявляется по data-scrolled (scrollY>40, первое чтение из rAF) и при открытом меню; до прокрутки текст кремовый с тенью. Гирлянда — два SVG viewBox 1000×20: провод дугами (Q-сегменты) и 28 лампочек в провисах, мерцание keyframes с разными задержками по nth-child; при прокрутке уходит вверх и гаснет. Монограмма — две буквы и SVG-снежинка, медленно вращается. Разделы — Cormorant капителями, активный — точка-свечка под ним по IntersectionObserver (rootMargin -40 %/-55 %), aria-current. Кнопка снега — aria-pressed, ставит data-vibeui-snow=\"off\" на <html> и шлёт событие vibeui-snow (его слушает background-006). Музыка — <audio loop preload=none>, play() только по клику, линии дышат keyframes. До 60rem имена и разделы уходят в [data-part=sheet] по кнопке «Меню». Палитра --vibeui-navbar-027-*: синяя ночь #0b1220 и индиго #131c2e / слоновая кость #f2eee6 через light-dark(), серебро #9fb0c8, свеча #f2b64f, огонь #ff9a3c; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "winter",
+          "navbar",
+          "garland",
+          "lights",
+          "snow",
+          "music",
+          "sticky",
+          "christmas",
+          "dark",
+          "candle"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "placement": "static",
+            "spy": false,
+            "music": "/demo/wedding-winter/music.mp3"
+          }
+        },
+        "cardControls": [
+          "names",
+          "actionLabel",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Navbar027",
+          "usage": "<Navbar027\n  initials={[\"В\", \"Д\"]}\n  names=\"Валерия и Дмитрий\"\n  links={[\n    { label: \"История\", href: \"#story\" },\n    { label: \"Вечер\", href: \"#evening\" },\n    { label: \"Дорога\", href: \"#place\" },\n    { label: \"Вопросы\", href: \"#faq\" },\n  ]}\n  actionLabel=\"Ответить\"\n  actionHref=\"#rsvp\"\n  music=\"/audio/waltz.mp3\"\n  snowToggle\n/>",
+          "summary": "Самодостаточная шапка зимней свадьбы: гирлянда лампочек по краю, монограмма со снежинкой, разделы капителями, выключатель снега, музыка по клику и «Ответить»; ужимается при прокрутке.",
+          "preserve": [
+            "гирлянду лампочек по нижнему краю с редким мерцанием, которая гаснет при прокрутке",
+            "кремовый текст с тенью над фото до прокрутки и стекло с инеем после",
+            "музыку и снег только по клику: aria-pressed, никакого автозапуска"
+          ],
+          "adapt": [
+            "initials, names, brandHref, links, actionLabel, actionHref",
+            "music, musicLabel, playingLabel, snowToggle, snowLabel, placement, spy",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Секциям нужны id, совпадающие с href ссылок.",
+            "Кнопка снега управляет слоем background-006: без него она просто переключает атрибут на <html>.",
+            "Первому экрану под шапкой нужен отступ сверху около 7rem."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "names",
+            "label": "Имена",
+            "type": "text",
+            "default": "Валерия и Дмитрий",
+            "maxLength": 30
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Ответить",
+            "maxLength": 20
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Header with a bulb garland and a snow switch",
+            "description": "A winter-wedding header: a garland of bulbs sags along the bottom edge with a rare warm twinkle, a snowflake monogram and handwritten names on the left, small-caps sections in the middle, a snow switch, click-to-play music and “RSVP” on the right. Transparent over the hero photo; on scroll it settles on frosted glass and the garland goes out.",
+            "docs": "One file, zero dependencies, “use client” for scroll, the scroll spy, music and snow. A position:fixed <header> (placement=static puts it in the flow for previews); the [data-part=veil] backdrop with backdrop-filter appears on data-scrolled (scrollY>40, first read from rAF) and when the menu is open; before scrolling the text is cream with a shadow. The garland is two SVGs viewBox 1000×20: the wire in arcs (Q segments) and 28 bulbs in the sags, twinkling via keyframes with nth-child delays; on scroll it lifts and fades. The monogram is two letters and an SVG snowflake slowly rotating. Sections are Cormorant small caps, the active one gets a candle dot underneath via IntersectionObserver (rootMargin -40 %/-55 %), aria-current. The snow button is aria-pressed, sets data-vibeui-snow=\"off\" on <html> and dispatches vibeui-snow (background-006 listens). Music is <audio loop preload=none>, play() only on click, lines breathe via keyframes. Below 60rem the names and sections move into [data-part=sheet] behind “Menu”. Palette --vibeui-navbar-027-*: night blue #0b1220 and indigo #131c2e / ivory #f2eee6 via light-dark(), silver #9fb0c8, candle #f2b64f, fire #ff9a3c; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained winter-wedding header: a bulb garland along the edge, a snowflake monogram, small-caps sections, a snow switch, click-to-play music and “RSVP”; shrinks on scroll.",
+              "preserve": [
+                "the bulb garland along the bottom edge with its rare twinkle, going out on scroll",
+                "cream text with a shadow over the photo before scrolling and frosted glass after",
+                "music and snow only on click: aria-pressed, no autoplay"
+              ],
+              "adapt": [
+                "initials, names, brandHref, links, actionLabel, actionHref",
+                "music, musicLabel, playingLabel, snowToggle, snowLabel, placement, spy",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Sections need ids matching the link hrefs.",
+                "The snow button drives the background-006 layer: without it, it only toggles the attribute on <html>.",
+                "The hero under the header needs about 7rem of top padding."
+              ],
+              "usage": "<Navbar027\n  initials={[\"V\", \"D\"]}\n  names=\"Valeria & Dmitry\"\n  links={[\n    { label: \"Story\", href: \"#story\" },\n    { label: \"Evening\", href: \"#evening\" },\n    { label: \"Getting there\", href: \"#place\" },\n    { label: \"FAQ\", href: \"#faq\" },\n  ]}\n  actionLabel=\"RSVP\"\n  actionHref=\"#rsvp\"\n  music=\"/audio/waltz.mp3\"\n  snowToggle\n/>"
+            },
+            "controls": {
+              "names": {
+                "label": "Names",
+                "default": "Valeria & Dmitry"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "RSVP"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "placement": "static",
+                "spy": false,
+                "music": "/demo/wedding-winter/music.mp3",
+                "initials": [
+                  "V",
+                  "D"
+                ],
+                "names": "Valeria & Dmitry",
+                "links": [
+                  {
+                    "label": "Story",
+                    "href": "#story"
+                  },
+                  {
+                    "label": "Evening",
+                    "href": "#evening"
+                  },
+                  {
+                    "label": "Getting there",
+                    "href": "#place"
+                  },
+                  {
+                    "label": "FAQ",
+                    "href": "#faq"
+                  }
+                ],
+                "actionLabel": "RSVP",
+                "musicLabel": "Our music",
+                "playingLabel": "Playing",
+                "snowLabel": "Snow"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

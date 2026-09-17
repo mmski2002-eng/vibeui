@@ -54,4 +54,6 @@ export const PREVIEWS = {
     import("@/registry/blocks/navbar/navbar-025/navbar-025").then((module) => module.Navbar025),
   "navbar-026": () =>
     import("@/registry/blocks/navbar/navbar-026/navbar-026").then((module) => module.Navbar026),
+  "navbar-027": () =>
+    import("@/registry/blocks/navbar/navbar-027/navbar-027").then((module) => module.Navbar027),
 } satisfies PreviewLoaderMap

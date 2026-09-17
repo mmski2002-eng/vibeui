@@ -4115,6 +4115,173 @@
           }
         }
       }
+    },
+    {
+      "name": "testimonials-022",
+      "type": "registry:block",
+      "title": "Пожелания как записки на запотевшем окне",
+      "description": "Стена пожеланий на запотевшем окне: стекло с инеем и каплями, каждая записка — полупрозрачная протёртая область с рукописным текстом и подписью. Слева форма «написать на стекле» — новая записка проявляется, как будто её протирают ладонью. Без бэкенда живёт до перезагрузки; с action — уходит POST'ом.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-022/testimonials-022.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-022.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради формы. Окно — блок с ледяным градиентом, ::before — капли radial-gradient; стена — <ul> auto-fill minmax(15rem,1fr), записка — <article> с неровными скруглениями, лёгким backdrop-blur, наклоном по nth-child у li и подъёмом по hover; текст рукописный с мягким свечением, подпись справа. Новые записки — state-массив в начале с data-fresh и keyframes clip-path:circle (протирание). Форма — имя и текст (required); без action — preventDefault. От 56rem сетка .8fr/1.7fr, левая колонка sticky. Палитра --vibeui-testimonials-022-*: синяя ночь #0b1220 и индиго #131c2e / слоновая кость #f2eee6 через light-dark(), серебро #9fb0c8, свеча #f2b64f, огонь #ff9a3c; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "winter",
+          "guestbook",
+          "wishes",
+          "wall",
+          "form",
+          "glass",
+          "frost",
+          "notes",
+          "dark"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Testimonials022",
+          "usage": "<Testimonials022\n  title=\"Напишите на стекле\"\n  notes={[\n    { name: \"Оля и Саша\", text: \"Тёплые ботинки куплены.\" },\n    { name: \"Марина\", text: \"Свечи привезли, снег заказали.\" },\n  ]}\n  submitLabel=\"Написать\"\n  action=\"/api/wishes\"\n/>",
+          "summary": "Самодостаточная стена пожеланий на запотевшем окне: полупрозрачные записки рукописным на стекле с каплями и форма, которая проявляет новую как протёртую ладонью. Записки — массив пропсом, отправка на action.",
+          "preserve": [
+            "стекло с инеем и каплями и полупрозрачные записки с неровными краями",
+            "проявление новой записки протиранием (clip-path по кругу)",
+            "рукописный текст с мягким свечением и подпись справа"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, notes (name, text)",
+            "formTitle, nameLabel, textLabel, submitLabel, action",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Без action новая записка живёт до перезагрузки — витрина, не хранилище.",
+            "Текст записки короткий — 2–3 строки рукописным."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Напишите на стекле",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Wishes as notes on a fogged window",
+            "description": "A wall of wishes on a fogged window: frosted glass with droplets, each note a translucent wiped patch with handwritten text and a signature. A “write on the glass” form on the left — a new note appears as if wiped by a palm. Without a backend it lives until reload; with action it POSTs.",
+            "docs": "One file, zero dependencies, “use client” for the form. The window is a block with an icy gradient, a ::before of radial-gradient droplets; the wall is a <ul> auto-fill minmax(15rem,1fr), a note is an <article> with uneven rounding, a light backdrop-blur, a tilt by nth-child on the li and a hover lift; handwritten text with a soft glow, the signature on the right. New notes are a state array prepended with data-fresh and a clip-path:circle keyframe (the wipe). The form is name and text (required); without action — preventDefault. From 56rem a .8fr/1.7fr grid, the left column sticky. Palette --vibeui-testimonials-022-*: night blue #0b1220 and indigo #131c2e / ivory #f2eee6 via light-dark(), silver #9fb0c8, candle #f2b64f, fire #ff9a3c; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained wishes wall on a fogged window: translucent handwritten notes on droplet-covered glass and a form that reveals a new one as if wiped by a palm. Notes via props, submission to action.",
+              "preserve": [
+                "the frosted, droplet-covered glass and the translucent notes with uneven edges",
+                "the wipe reveal of a new note (circular clip-path)",
+                "the handwritten text with a soft glow and the signature on the right"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, notes (name, text)",
+                "formTitle, nameLabel, textLabel, submitLabel, action",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Without action a new note lives until reload — a showcase, not storage.",
+                "Note text is short — 2–3 handwritten lines."
+              ],
+              "usage": "<Testimonials022\n  title=\"Write on the glass\"\n  notes={[\n    { name: \"Olya & Sasha\", text: \"Warm boots bought.\" },\n    { name: \"Marina\", text: \"Candles delivered, snow ordered.\" },\n  ]}\n  submitLabel=\"Write\"\n  action=\"/api/wishes\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Write on the glass"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Wishes",
+                "title": "Write on the glass",
+                "lede": "The living-room window will fog up by evening — that's where you'll write for real. For now — here: everyone coming will see it.",
+                "formTitle": "Write on the glass",
+                "nameLabel": "Who's writing",
+                "textLabel": "Wish",
+                "submitLabel": "Write",
+                "notes": [
+                  {
+                    "name": "Olya & Sasha",
+                    "text": "Warm boots bought, song requested. Dima, don't drop the ring in the snow."
+                  },
+                  {
+                    "name": "Grandma Vera",
+                    "text": "Lera, I'll bring my own shawl. Dima, can you chop wood? I'll check."
+                  },
+                  {
+                    "name": "Kristina",
+                    "text": "Four winters — and not one without you. May the fifth be the warmest."
+                  },
+                  {
+                    "name": "Igor",
+                    "text": "There will be fireworks. The rest — we'll see. Kidding. Love you."
+                  },
+                  {
+                    "name": "Marina",
+                    "text": "Candles delivered, fireplace checked, snow ordered. ❄"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

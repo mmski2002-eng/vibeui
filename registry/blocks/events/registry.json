@@ -2475,6 +2475,406 @@
           }
         }
       }
+    },
+    {
+      "name": "event-013",
+      "type": "registry:block",
+      "title": "Программа вечера с луной, которая ползёт по небу при прокрутке",
+      "description": "Программа зимнего вечера от заката до полуночи: слева липкое небо — луна ползёт по дуге, пока список прокручивают, закатная полоса гаснет, небо синеет до полуночного и проступают звёзды; справа пункты вечера с временем антиквой, местом курсивом и парой слов, текущий подсвечен свечой, пройденные — зажжёнными точками на линии.",
+      "categories": [
+        "events"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "event-013/event-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/event-013.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради прогресса. Небо — блок с закатным градиентом, поверх ::before ночной градиент с opacity из --vibeui-event-013-k, звёзды — radial-gradient-точки с той же opacity, силуэт елей — SVG path. Луна — точка в центре, повёрнутая на calc(-100deg + k·160deg), сама колба контрповорачивается, чтобы кратеры не крутились. Прогресс считает rAF-обработчик scroll по положению секции (0 при входе, 1 когда прошла), в CSS уходит переменная k, в state — только номер активного пункта. Линия слева от списка красится в свечу до k, пункты — data-active и data-done. От 56rem сетка .8fr/1.2fr, небо sticky top:6rem высотой 24rem. Палитра --vibeui-event-013-*: синяя ночь #0b1220 и индиго #131c2e / слоновая кость #f2eee6 через light-dark(), серебро #9fb0c8, свеча #f2b64f, огонь #ff9a3c; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "winter",
+          "schedule",
+          "timeline",
+          "evening",
+          "moon",
+          "sky",
+          "scroll",
+          "night",
+          "program",
+          "dark"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Event013",
+          "usage": "<Event013\n  title=\"От заката до полуночи\"\n  skyNote=\"закат в 16:04\"\n  slots={[\n    { time: \"15:30\", title: \"Сбор гостей\", place: \"у камина\", text: \"Чай, глинтвейн, пледы.\" },\n    { time: \"16:00\", title: \"Церемония\", place: \"большая гостиная\", text: \"На закате, при свечах.\" },\n    { time: \"21:00\", title: \"Танцы\", place: \"гостиная\" },\n    { time: \"00:00\", title: \"Полночь\", place: \"терраса\", text: \"Трансфер в 00:30.\" },\n  ]}\n/>",
+          "summary": "Самодостаточная программа вечера: луна ползёт по небу и небо темнеет при прокрутке, пункты с временем и местом подсвечиваются по ходу. Пункты — массив пропсом.",
+          "preserve": [
+            "липкое небо с луной по дуге и темнеющим закатом, привязанное к прокрутке",
+            "подсветку текущего пункта свечой и зажжённые точки пройденных",
+            "время антиквой лайнинг-цифрами и место курсивом"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, skyNote",
+            "slots (time, title, place, text) — сколько угодно пунктов",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Прогресс идёт от входа секции снизу до её ухода: длинный список — медленнее луна.",
+            "Ели на небе — декоративный path, менять не нужно."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "От заката до полуночи",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Evening schedule with a moon crawling across the sky on scroll",
+            "description": "A winter evening schedule from sunset to midnight: a sticky sky on the left — the moon crawls along an arc as the list scrolls, the sunset band fades, the sky deepens to midnight and stars appear; on the right the evening's items with serif times, italic places and a few words, the current one lit by a candle, passed ones as lit dots on the line.",
+            "docs": "One file, zero dependencies, “use client” for the progress. The sky is a block with a sunset gradient, a night gradient ::before on top with opacity from --vibeui-event-013-k, stars as radial-gradient dots with the same opacity, a fir silhouette as an SVG path. The moon is a point at the centre rotated by calc(-100deg + k·160deg), the disc counter-rotates so the craters stay put. An rAF scroll handler computes progress from the section's position (0 entering, 1 once passed); the k variable goes to CSS, only the active index enters state. The line left of the list paints candle-gold up to k, items get data-active and data-done. From 56rem a .8fr/1.2fr grid, the sky sticky top:6rem at 24rem tall. Palette --vibeui-event-013-*: night blue #0b1220 and indigo #131c2e / ivory #f2eee6 via light-dark(), silver #9fb0c8, candle #f2b64f, fire #ff9a3c; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained evening schedule: the moon crawls across the sky and the sky darkens on scroll, items with time and place light up as you go. Items come as a prop array.",
+              "preserve": [
+                "the sticky sky with the moon on an arc and the fading sunset, tied to scroll",
+                "the candle highlight of the current item and the lit dots of passed ones",
+                "serif lining-numeral times and italic places"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, skyNote",
+                "slots (time, title, place, text) — any number of items",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Progress runs from the section entering at the bottom to leaving: a longer list means a slower moon.",
+                "The firs in the sky are a decorative path, no need to change them."
+              ],
+              "usage": "<Event013\n  title=\"From sunset to midnight\"\n  skyNote=\"sunset at 16:04\"\n  slots={[\n    { time: \"15:30\", title: \"Guests arrive\", place: \"by the fireplace\", text: \"Tea, mulled wine, blankets.\" },\n    { time: \"16:00\", title: \"Ceremony\", place: \"the great room\", text: \"At sunset, by candlelight.\" },\n    { time: \"21:00\", title: \"Dancing\", place: \"the great room\" },\n    { time: \"00:00\", title: \"Midnight\", place: \"terrace\", text: \"Shuttle at 00:30.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "From sunset to midnight"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Evening",
+                "title": "From sunset to midnight",
+                "lede": "We start when the sun sets and finish when the moon is over the forest. In between — the fireplace, mulled wine and dancing.",
+                "skyNote": "sunset at 16:04",
+                "slots": [
+                  {
+                    "time": "15:30",
+                    "title": "Guests arrive",
+                    "place": "by the fireplace",
+                    "text": "Tea, mulled wine, blankets. The shuttle from the metro gets in by 15:15."
+                  },
+                  {
+                    "time": "16:00",
+                    "title": "Ceremony",
+                    "place": "the great room",
+                    "text": "At sunset, by candlelight, twenty minutes. Phones in pockets, the photographer has it."
+                  },
+                  {
+                    "time": "17:00",
+                    "title": "Mulled wine on the terrace",
+                    "place": "terrace",
+                    "text": "First snow on your shoulders, string lights, first photos outside."
+                  },
+                  {
+                    "time": "18:30",
+                    "title": "Dinner",
+                    "place": "the long table",
+                    "text": "Duck, fish or vegetarian — whatever you chose. Toasts are optional."
+                  },
+                  {
+                    "time": "21:00",
+                    "title": "Dancing",
+                    "place": "the great room",
+                    "text": "The first dance is a waltz, then everything you requested."
+                  },
+                  {
+                    "time": "23:00",
+                    "title": "Fireworks",
+                    "place": "forest clearing",
+                    "text": "Five minutes; warm shoes and coats are on the rack by the exit."
+                  },
+                  {
+                    "time": "00:00",
+                    "title": "Midnight",
+                    "place": "terrace",
+                    "text": "Shuttles back at 00:30 and 01:00. Rooms are ready for those who stay."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "event-014",
+      "type": "registry:block",
+      "title": "Дресс-код «бархат и шерсть» с лентами образцов ткани",
+      "description": "Дресс-код зимней свадьбы: образцы ткани висят лентами на серебряной планке — наведение опускает ленту ниже, клик копирует HEX; два образа «ей» и «ему» с фото в морозных рамах; правила вечера с иконками в светящихся кольцах — снег, свеча, сменная обувь.",
+      "categories": [
+        "events"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "event-014/event-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/event-014.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 1.6 с состояния). Планка — ::before с металлическим градиентом; ленты — кнопки flex:1 1 6rem с крючком ::before, цвет из swatch.hex через --vibeui-event-014-chip, лёгкий градиент ткани поверх, цвет подписи по яркости (ink); hover и data-copied удлиняют ленту через min-height. Образы — фото 4:5 в рамке с инеем по углам (radial-gradient, screen); правила — карточка с inline SVG по rule.icon: snow, flame, boot. От 56rem образы в две колонки, правила справа .7fr. Палитра --vibeui-event-014-*: синяя ночь #0b1220 и индиго #131c2e / слоновая кость #f2eee6 через light-dark(), серебро #9fb0c8, свеча #f2b64f, огонь #ff9a3c; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "winter",
+          "dress code",
+          "palette",
+          "swatches",
+          "fabric",
+          "velvet",
+          "copy",
+          "hex",
+          "outfit",
+          "dark"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "looks": [
+              {
+                "who": "Ей",
+                "title": "Длинное и тёплое",
+                "text": "Бархат, шерсть, плотный шёлк — в ночи, бордо или хвое. Шаль дадим на террасе.",
+                "image": "/demo/wedding-winter/look-her.webp"
+              },
+              {
+                "who": "Ему",
+                "title": "Тёмный костюм, водолазка или рубашка",
+                "text": "Синий, графит, бутылочный. Шарф приветствуется, галстук — по желанию.",
+                "image": "/demo/wedding-winter/look-him.webp"
+              }
+            ]
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Event014",
+          "usage": "<Event014\n  title=\"Бархат и шерсть — тепло и нарядно\"\n  swatches={[\n    { name: \"Ночь\", hex: \"#0b1220\" },\n    { name: \"Бордо\", hex: \"#7a2b35\" },\n    { name: \"Хвоя\", hex: \"#2f5d50\" },\n  ]}\n  looks={[\n    { who: \"Ей\", title: \"Длинное и тёплое\", text: \"Бархат или шерсть.\", image: \"/photos/look-her.webp\" },\n    { who: \"Ему\", title: \"Тёмный костюм\", text: \"Шарф приветствуется.\", image: \"/photos/look-him.webp\" },\n  ]}\n  rules={[{ icon: \"snow\", text: \"Сменная обувь для террасы.\" }]}\n/>",
+          "summary": "Самодостаточный дресс-код зимней свадьбы: ленты образцов ткани на планке с копированием HEX, образы «ей» и «ему» в морозных рамах, правила вечера. Цвета, образы и правила пропсами.",
+          "preserve": [
+            "ленты ткани на серебряной планке, которые опускаются по наведению и копируют цвет",
+            "морозные рамы фото с инеем по углам",
+            "правила с иконками в светящихся кольцах"
+          ],
+          "adapt": [
+            "eyebrow, title (после « — » уходит в курсив), lede, swatches (name, hex), copiedLabel",
+            "looks (who, title, text, image), rules (icon из набора, text)",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Цвет подписи на ленте считается по яркости hex — тёмные получают кремовый текст.",
+            "Без clipboard клик ничего не копирует, но лента остаётся доступной."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Бархат и шерсть — тепло и нарядно",
+            "maxLength": 60
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "“Velvet and wool” dress code with fabric swatch ribbons",
+            "description": "A winter-wedding dress code: fabric swatches hang as ribbons from a silver rail — hover lowers a ribbon, a click copies the HEX; two looks, “her” and “him”, with photos in frosted frames; evening rules with icons in glowing rings — snow, candle, spare shoes.",
+            "docs": "One file, zero dependencies, “use client” for copying (navigator.clipboard, 1.6 s state). The rail is a ::before with a metallic gradient; ribbons are flex:1 1 6rem buttons with a ::before hook, colour from swatch.hex via --vibeui-event-014-chip, a light fabric gradient on top, caption colour from luminance (ink); hover and data-copied lengthen the ribbon via min-height. Looks are 4:5 photos in a frame with corner frost (radial-gradient, screen); rules are a card with inline SVGs by rule.icon: snow, flame, boot. From 56rem looks in two columns, rules on the right at .7fr. Palette --vibeui-event-014-*: night blue #0b1220 and indigo #131c2e / ivory #f2eee6 via light-dark(), silver #9fb0c8, candle #f2b64f, fire #ff9a3c; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained winter-wedding dress code: fabric swatch ribbons on a rail with HEX copying, “her” and “him” looks in frosted frames, evening rules. Colours, looks and rules via props.",
+              "preserve": [
+                "the fabric ribbons on the silver rail that lower on hover and copy their colour",
+                "the frosted photo frames with corner frost",
+                "the rules with icons in glowing rings"
+              ],
+              "adapt": [
+                "eyebrow, title (after “ — ” turns italic), lede, swatches (name, hex), copiedLabel",
+                "looks (who, title, text, image), rules (icon from the set, text)",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The ribbon caption colour is computed from the hex luminance — dark ones get cream text.",
+                "Without clipboard the click copies nothing, but the ribbon stays accessible."
+              ],
+              "usage": "<Event014\n  title=\"Velvet and wool — warm and dressed up\"\n  swatches={[\n    { name: \"Night\", hex: \"#0b1220\" },\n    { name: \"Burgundy\", hex: \"#7a2b35\" },\n    { name: \"Pine\", hex: \"#2f5d50\" },\n  ]}\n  looks={[\n    { who: \"Her\", title: \"Long and warm\", text: \"Velvet or wool.\", image: \"/photos/look-her.webp\" },\n    { who: \"Him\", title: \"A dark suit\", text: \"A scarf is welcome.\", image: \"/photos/look-him.webp\" },\n  ]}\n  rules={[{ icon: \"snow\", text: \"Spare shoes for the terrace.\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Velvet and wool — warm and dressed up"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Dress code",
+                "title": "Velvet and wool — warm and dressed up",
+                "lede": "A candlelit evening in a country house: deep colours, heavy fabrics, nothing shiny. The fabrics are on this rail.",
+                "copiedLabel": "copied",
+                "swatches": [
+                  {
+                    "name": "Night",
+                    "hex": "#0b1220"
+                  },
+                  {
+                    "name": "Indigo",
+                    "hex": "#1c2740"
+                  },
+                  {
+                    "name": "Burgundy",
+                    "hex": "#7a2b35"
+                  },
+                  {
+                    "name": "Pine",
+                    "hex": "#2f5d50"
+                  },
+                  {
+                    "name": "Silver",
+                    "hex": "#9fb0c8"
+                  },
+                  {
+                    "name": "Candle",
+                    "hex": "#f2b64f"
+                  }
+                ],
+                "looks": [
+                  {
+                    "who": "Her",
+                    "title": "Long and warm",
+                    "text": "Velvet, wool, heavy silk — in night, burgundy or pine. We'll hand out shawls on the terrace. Heels are fine: parquet inside.",
+                    "image": "/demo/wedding-winter/look-her.webp"
+                  },
+                  {
+                    "who": "Him",
+                    "title": "A dark suit, a turtleneck or a shirt",
+                    "text": "Navy, graphite, bottle green. A scarf is welcome, a tie optional.",
+                    "image": "/demo/wedding-winter/look-him.webp"
+                  }
+                ],
+                "rules": [
+                  {
+                    "icon": "snow",
+                    "text": "Snow on the terrace and in the forest: spare shoes or warm boots — we'll keep them by the exit."
+                  },
+                  {
+                    "icon": "flame",
+                    "text": "A candlelit ceremony: nothing puffy and synthetic, please."
+                  },
+                  {
+                    "icon": "boot",
+                    "text": "Fireworks at 23:00 in the clearing — don't leave coats and hats in the car."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

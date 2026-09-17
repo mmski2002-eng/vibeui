@@ -42,4 +42,10 @@ export const PREVIEWS = {
   "event-012": dynamic(() =>
     import("@/registry/blocks/events/event-012/event-012").then((module) => module.Event012),
   ),
+  "event-013": dynamic(() =>
+    import("@/registry/blocks/events/event-013/event-013").then((module) => module.Event013),
+  ),
+  "event-014": dynamic(() =>
+    import("@/registry/blocks/events/event-014/event-014").then((module) => module.Event014),
+  ),
 } satisfies PreviewMap

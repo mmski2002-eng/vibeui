@@ -2628,6 +2628,193 @@
           }
         }
       }
+    },
+    {
+      "name": "contact-020",
+      "type": "registry:block",
+      "title": "Письмо-ответ: RSVP в пять шагов на бумаге с конвертом и сургучом",
+      "description": "RSVP зимней свадьбы как письмо: пять шагов на светлой бумаге — кто и с кем, ночуете ли в доме, трансфер или машина, меню и аллергии, песня и слова. Справа конверт-сводка с сургучной печатью, заполняется по ходу рукописным; финал — штамп «Ждём» со снежинкой. Имя гостя — из ?guest= в адресе.",
+      "categories": [
+        "contact"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-020/contact-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-020.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Состояние — объект ответов и номер шага; шаги по одному с fade-in, «Дальше» на первом заблокировано без имени и «приеду/не смогу». Выборы — кнопки-капсулы с aria-pressed; на шаге дороги при трансфере появляется выбор времени. Бумага — светлая карточка с внутренней рамкой (color-scheme:light, свои переменные), поля с рукописным шрифтом и подчёркиванием бордо. Имя из адреса — useSyncExternalStore (на сервере пусто), greeting с {name} заменяет заголовок; lede принимает {deadline}. Конверт — <aside> с клапаном (диагонали ::before/::after) и сургучом с инициалами, <dl> в две колонки рукописным, штамп по data-sent с keyframes уменьшения. Отправка: без action — preventDefault и экран «письмо получено»; с action — POST с hidden-полями guest и answers (JSON). От 56rem сетка 1.4fr/.7fr, конверт sticky. Палитра --vibeui-contact-020-*: синяя ночь #0b1220 и индиго #131c2e / слоновая кость #f2eee6 через light-dark(), серебро #9fb0c8, свеча #f2b64f, огонь #ff9a3c; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "winter",
+          "rsvp",
+          "form",
+          "multi-step",
+          "letter",
+          "envelope",
+          "wax seal",
+          "menu",
+          "song request",
+          "dark"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "guest": "Анна"
+          }
+        },
+        "cardControls": [
+          "title",
+          "guest",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Contact020",
+          "usage": "<Contact020\n  title=\"Напишите, что приедете\"\n  greeting=\"{name}, мы ждём ваш ответ\"\n  deadline=\"до 1 ноября\"\n  seal=\"В·Д\"\n  menu={[\n    { value: \"duck\", label: \"Утка с яблоками\" },\n    { value: \"fish\", label: \"Форель\" },\n    { value: \"veg\", label: \"Вегетарианское\" },\n  ]}\n  action=\"/api/rsvp\"\n/>\n{/* персональная ссылка: /?guest=Анна#rsvp */}",
+          "summary": "Самодостаточное письмо-ответ: пять шагов про гостей, ночёвку, дорогу, меню и песню на светлой бумаге, конверт-сводка с сургучом и штамп «Ждём». Имя гостя из ?guest= или пропсом, отправка POST'ом на action.",
+          "preserve": [
+            "светлую бумагу формы на тёмной странице — единственное светлое пятно",
+            "конверт-сводку с клапаном, сургучом и рукописными ответами",
+            "штамп «Ждём» со снежинкой при отправке"
+          ],
+          "adapt": [
+            "eyebrow, title, greeting ({name}), lede ({deadline}), deadline, guest, stepLabels, seal",
+            "menu (value/label), summaryTitle, submitLabel, thanksTitle, thanksText, stampLabel, action",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Ответы уходят одним hidden-полем answers (JSON) плюс guest — разбирайте на сервере.",
+            "Подсказки и плейсхолдеры внутри шагов — русские константы в файле: правьте там."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Напишите, что приедете",
+            "maxLength": 50
+          },
+          {
+            "prop": "guest",
+            "label": "Имя гостя",
+            "type": "text",
+            "default": "",
+            "maxLength": 30
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Reply letter: a five-step RSVP on paper with an envelope and wax seal",
+            "description": "A winter-wedding RSVP as a letter: five steps on light paper — who and with whom, staying in the house or not, shuttle or car, menu and allergies, a song and a few words. On the right an envelope summary with a wax seal fills in handwriting as you go; the finale is a “Waiting” stamp with a snowflake. The guest's name comes from ?guest= in the URL.",
+            "docs": "One file, zero dependencies, “use client”. State is the answers object and the step index; steps one at a time with a fade-in, “Next” on the first is disabled without a name and a coming/not choice. Choices are aria-pressed pill buttons; on the travel step a time choice appears for the shuttle. The paper is a light card with an inner frame (color-scheme:light, its own variables), fields in a handwritten font with a burgundy underline. The name from the URL is read via useSyncExternalStore (empty on the server); greeting with {name} replaces the title; lede accepts {deadline}. The envelope is an <aside> with a flap (::before/::after diagonals) and an initials wax seal, a two-column handwritten <dl>, a stamp on data-sent with a shrinking keyframe. Submission: without action — preventDefault and the “letter received” screen; with action — POST with hidden guest and answers (JSON). From 56rem a 1.4fr/.7fr grid, the envelope sticky. Palette --vibeui-contact-020-*: night blue #0b1220 and indigo #131c2e / ivory #f2eee6 via light-dark(), silver #9fb0c8, candle #f2b64f, fire #ff9a3c; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained reply letter: five steps about guests, staying over, travel, menu and song on light paper, an envelope summary with a wax seal and a “Waiting” stamp. Guest name from ?guest= or a prop, POSTs to action.",
+              "preserve": [
+                "the light paper form on the dark page — the only light spot",
+                "the envelope summary with the flap, wax seal and handwritten answers",
+                "the “Waiting” stamp with a snowflake on submit"
+              ],
+              "adapt": [
+                "eyebrow, title, greeting ({name}), lede ({deadline}), deadline, guest, stepLabels, seal",
+                "menu (value/label), summaryTitle, submitLabel, thanksTitle, thanksText, stampLabel, action",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Answers go as one hidden answers field (JSON) plus guest — parse them on the server.",
+                "Hints and placeholders inside the steps are Russian constants in the file: edit them there."
+              ],
+              "usage": "<Contact020\n  title=\"Tell us you're coming\"\n  greeting=\"{name}, we're waiting for your reply\"\n  deadline=\"by 1 November\"\n  seal=\"V·D\"\n  menu={[\n    { value: \"duck\", label: \"Duck with apples\" },\n    { value: \"fish\", label: \"Trout\" },\n    { value: \"veg\", label: \"Vegetarian\" },\n  ]}\n  action=\"/api/rsvp\"\n/>\n{/* personal link: /?guest=Anna#rsvp */}"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Tell us you're coming"
+              },
+              "guest": {
+                "label": "Guest name",
+                "default": ""
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "guest": "Anna",
+                "eyebrow": "Reply",
+                "title": "Tell us you're coming",
+                "greeting": "{name}, we're waiting for your reply",
+                "lede": "Five questions — and we know how many chairs to set, where to put you up and what to cook. Please answer {deadline}.",
+                "deadline": "by 1 November",
+                "stepLabels": [
+                  "Who",
+                  "Stay",
+                  "Travel",
+                  "Menu",
+                  "Song"
+                ],
+                "menu": [
+                  {
+                    "value": "duck",
+                    "label": "Duck with apples"
+                  },
+                  {
+                    "value": "fish",
+                    "label": "Trout"
+                  },
+                  {
+                    "value": "veg",
+                    "label": "Vegetarian"
+                  }
+                ],
+                "seal": "V·D",
+                "summaryTitle": "Your reply",
+                "submitLabel": "Send",
+                "thanksTitle": "Letter received",
+                "thanksText": "Thank you! Two weeks before the evening we'll write about the shuttle and rooms.",
+                "stampLabel": "Waiting"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

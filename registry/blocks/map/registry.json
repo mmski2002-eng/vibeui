@@ -1530,6 +1530,176 @@
           }
         }
       }
+    },
+    {
+      "name": "map-009",
+      "type": "registry:block",
+      "title": "Как доехать: тёмная карта, дом в морозной раме и четыре карточки дороги",
+      "description": "«Как доехать» зимней свадьбы: тёмная Яндекс Карта с одной меткой дома, рядом фото дома в морозной раме с рукописной подписью и адрес; ниже карточки «на машине», «трансфер», «ночёвка», «парковка» с иконками в светящихся кольцах.",
+      "categories": [
+        "map"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "map-009/map-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/map-009.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный. Карта — iframe yandex.ru/map-widget/v1 без ключа: ll и pt из latitude/longitude, theme по tone или явно; поверх filter saturate(.7) и внутренняя тень. От 56rem сетка 1.3fr/.7fr, карта min-height 28rem. Фото — в рамке с инеем по углам (radial-gradient, screen); адрес и ссылка «открыть в Яндекс Картах». Карточки дороги — inline SVG по way.icon: car, bus, bed, parking; 2 в ряд от 56rem, 4 от 72rem; наведение — золотая рамка. Палитра --vibeui-map-009-*: синяя ночь #0b1220 и индиго #131c2e / слоновая кость #f2eee6 через light-dark(), серебро #9fb0c8, свеча #f2b64f, огонь #ff9a3c; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "winter",
+          "map",
+          "yandex",
+          "directions",
+          "transfer",
+          "parking",
+          "hotel",
+          "venue",
+          "dark"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "image": "/demo/wedding-winter/venue.webp"
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Map009",
+          "usage": "<Map009\n  title=\"Лесная усадьба\"\n  address=\"Московская область, деревня Лесная, 12\"\n  latitude={55.9107}\n  longitude={36.8624}\n  zoom={11}\n  image=\"/photos/house.webp\"\n  imageCaption=\"дом, где всё случится\"\n  ways={[\n    { icon: \"car\", title: \"На машине\", text: \"Час от центра.\" },\n    { icon: \"bus\", title: \"Трансфер\", text: \"От метро в 14:30 и 15:15.\" },\n    { icon: \"bed\", title: \"Ночёвка\", text: \"Двенадцать комнат.\" },\n  ]}\n/>",
+          "summary": "Самодостаточный блок «как доехать»: тёмная Яндекс Карта с домом, фото в морозной раме, адрес и карточки «машина / трансфер / ночёвка / парковка». Координаты и тексты пропсами.",
+          "preserve": [
+            "тёмную карту с внутренней тенью рядом с фото в морозной раме",
+            "карточки дороги с иконками в светящихся кольцах",
+            "адрес и ссылку «открыть в Яндекс Картах» под фото"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, address, latitude, longitude, zoom",
+            "image, imageAlt, imageCaption, ways (icon из набора, title, text), openLabel, theme",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Виджет Яндекс Карт без ключа: ll/pt в адресе, кодировать нельзя.",
+            "Иконок четыре: car, bus, bed, parking; другое значение даст машину."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Лесная усадьба",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Getting there: a dark map, the house in a frosted frame and four travel cards",
+            "description": "“Getting there” for a winter wedding: a dark Yandex Map with a single house pin, a house photo in a frosted frame with a handwritten caption and the address; below, “by car”, “shuttle”, “staying over” and “parking” cards with icons in glowing rings.",
+            "docs": "One file, zero dependencies, server-rendered. The map is a yandex.ru/map-widget/v1 iframe without a key: ll and pt from latitude/longitude, theme by tone or explicit; a filter saturate(.7) and an inner shadow on top. From 56rem a 1.3fr/.7fr grid, the map min-height 28rem. The photo sits in a frame with corner frost (radial-gradient, screen); the address and an “open in Yandex Maps” link. Travel cards are inline SVGs by way.icon: car, bus, bed, parking; 2 per row from 56rem, 4 from 72rem; hover gives a gold border. Palette --vibeui-map-009-*: night blue #0b1220 and indigo #131c2e / ivory #f2eee6 via light-dark(), silver #9fb0c8, candle #f2b64f, fire #ff9a3c; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained “getting there” block: a dark Yandex Map with the house, a photo in a frosted frame, the address and “car / shuttle / stay / parking” cards. Coordinates and copy via props.",
+              "preserve": [
+                "the dark map with an inner shadow next to the photo in a frosted frame",
+                "the travel cards with icons in glowing rings",
+                "the address and the “open in Yandex Maps” link under the photo"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, address, latitude, longitude, zoom",
+                "image, imageAlt, imageCaption, ways (icon from the set, title, text), openLabel, theme",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The Yandex Maps widget needs no key: ll/pt go in the URL and must not be encoded.",
+                "Four icons: car, bus, bed, parking; any other value falls back to the car."
+              ],
+              "usage": "<Map009\n  title=\"Forest estate\"\n  address=\"Moscow region, Lesnaya village, 12\"\n  latitude={55.9107}\n  longitude={36.8624}\n  zoom={11}\n  image=\"/photos/house.webp\"\n  imageCaption=\"the house where it happens\"\n  ways={[\n    { icon: \"car\", title: \"By car\", text: \"An hour from the centre.\" },\n    { icon: \"bus\", title: \"Shuttle\", text: \"From the metro at 14:30 and 15:15.\" },\n    { icon: \"bed\", title: \"Staying over\", text: \"Twelve rooms.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Forest estate"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "image": "/demo/wedding-winter/venue.webp",
+                "eyebrow": "Getting there",
+                "title": "Forest estate",
+                "lede": "Forty kilometres from the ring road along the Novaya Riga highway, then ten minutes through the forest. The sat-nav is right, the snow is cleared.",
+                "address": "Moscow region, Istra district, Lesnaya village, 12",
+                "imageCaption": "the house where it happens",
+                "openLabel": "Open in Yandex Maps",
+                "ways": [
+                  {
+                    "icon": "car",
+                    "title": "By car",
+                    "text": "An hour from the centre without traffic. The pin is behind the button above. Enter through the gate, security knows about the wedding."
+                  },
+                  {
+                    "icon": "bus",
+                    "title": "Shuttle",
+                    "text": "From Tushinskaya metro at 14:30 and 15:15, buses with a “V ❄ D” sign. Back at 00:30 and 01:00."
+                  },
+                  {
+                    "icon": "bed",
+                    "title": "Staying over",
+                    "text": "Twelve rooms in the house: tick it in the form and we'll allocate and write to you."
+                  },
+                  {
+                    "icon": "parking",
+                    "title": "Parking",
+                    "text": "Under the canopy for twenty cars, as many again by the gate. Cars will be snowed in by morning — the brush is with security."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

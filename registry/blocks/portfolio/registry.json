@@ -1705,6 +1705,230 @@
           }
         }
       }
+    },
+    {
+      "name": "portfolio-010",
+      "type": "registry:block",
+      "title": "Галерея в оконных рамах: иней тает по наведению, лайтбокс",
+      "description": "Зимние кадры в «окнах»: каждое фото в раме с переплётом-крестом и инеем по краям; наведение отогревает окно — иней тает, переплёт уходит, кадр теплеет и приближается. Клик — лайтбокс на <dialog>: фото на ночном фоне, подпись рукописным, стрелки и Esc. Плотная сетка, широкий кадр на две колонки.",
+      "categories": [
+        "portfolio"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "portfolio-010/portfolio-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/portfolio-010.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради лайтбокса. Кадр — <button aria-label> с рамкой, внутри [data-part=pic] с aspect-ratio по shape (rect 3:2, tall 4:5, square 1:1, wide 2:1 на две колонки), поверх [data-part=bars] — крест переплёта из ::before/::after и [data-part=frost] — radial-gradient по углам с mix-blend-mode:screen; hover гасит оба, снимает saturate(.8) и масштабирует фото. Лайтбокс — <dialog> с showModal/close по state, Escape и клик по фону закрывают, стрелки клавиатуры листают. Сетка 2 колонки, 3 от 40rem, 4 от 64rem, align-items:start. Палитра --vibeui-portfolio-010-*: синяя ночь #0b1220 и индиго #131c2e / слоновая кость #f2eee6 через light-dark(), серебро #9fb0c8, свеча #f2b64f, огонь #ff9a3c; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "winter",
+          "gallery",
+          "photos",
+          "window",
+          "frost",
+          "lightbox",
+          "dialog",
+          "grid",
+          "dark"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "photos": [
+              {
+                "src": "/demo/wedding-winter/gallery-01.webp",
+                "caption": "Дорога в лес",
+                "shape": "wide"
+              },
+              {
+                "src": "/demo/wedding-winter/gallery-02.webp",
+                "caption": "Снег на ресницах",
+                "shape": "tall"
+              },
+              {
+                "src": "/demo/wedding-winter/gallery-03.webp",
+                "caption": "Глинтвейн",
+                "shape": "square"
+              },
+              {
+                "src": "/demo/wedding-winter/gallery-04.webp",
+                "caption": "Дрова",
+                "shape": "tall"
+              },
+              {
+                "src": "/demo/wedding-winter/gallery-05.webp",
+                "caption": "Снежные ангелы"
+              },
+              {
+                "src": "/demo/wedding-winter/gallery-06.webp",
+                "caption": "Сердце на стекле"
+              },
+              {
+                "src": "/demo/wedding-winter/gallery-07.webp",
+                "caption": "Фонарь",
+                "shape": "square"
+              },
+              {
+                "src": "/demo/wedding-winter/gallery-08.webp",
+                "caption": "Фейерверк"
+              }
+            ]
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Portfolio010",
+          "usage": "<Portfolio010\n  title=\"Четыре зимы в окнах\"\n  photos={[\n    { src: \"/photos/g-01.webp\", caption: \"Дорога в лес\", shape: \"wide\" },\n    { src: \"/photos/g-02.webp\", caption: \"Снег на ресницах\", shape: \"tall\" },\n    { src: \"/photos/g-03.webp\", caption: \"Глинтвейн\", shape: \"square\" },\n    { src: \"/photos/g-04.webp\", caption: \"Снежные ангелы\" },\n  ]}\n/>",
+          "summary": "Самодостаточная зимняя галерея: фото в оконных рамах с переплётом и инеем, наведение отогревает окно, клик открывает лайтбокс на <dialog>. Кадры — массив пропсом.",
+          "preserve": [
+            "переплёт и иней по краям каждого окна, тающие по наведению",
+            "лайтбокс на <dialog> с рукописной подписью и стрелками",
+            "четыре формы кадра — rect, tall, square и wide на две колонки"
+          ],
+          "adapt": [
+            "eyebrow, title, lede",
+            "photos (src, alt, caption, shape), closeLabel, prevLabel, nextLabel",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Пустой src показывает ночную плашку — раскладку можно собрать до фото.",
+            "wide занимает две колонки: ставьте его первым или в начале ряда."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Четыре зимы в окнах",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Gallery in window frames: frost melts on hover, lightbox",
+            "description": "Winter shots in “windows”: each photo in a frame with a cross mullion and frost along the edges; hover warms the window — the frost melts, the mullion fades, the shot warms and zooms in. A click opens a <dialog> lightbox: the photo on a night backdrop, a handwritten caption, arrows and Esc. A dense grid, the wide shot spans two columns.",
+            "docs": "One file, zero dependencies, “use client” for the lightbox. A shot is a <button aria-label> with a frame, inside [data-part=pic] with aspect-ratio by shape (rect 3:2, tall 4:5, square 1:1, wide 2:1 over two columns), on top [data-part=bars] — the mullion cross from ::before/::after and [data-part=frost] — corner radial-gradients with mix-blend-mode:screen; hover fades both, drops saturate(.8) and scales the photo. The lightbox is a <dialog> with showModal/close by state, Escape and a backdrop click close it, arrow keys navigate. The grid is 2 columns, 3 from 40rem, 4 from 64rem, align-items:start. Palette --vibeui-portfolio-010-*: night blue #0b1220 and indigo #131c2e / ivory #f2eee6 via light-dark(), silver #9fb0c8, candle #f2b64f, fire #ff9a3c; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained winter gallery: photos in window frames with mullions and frost, hover warms the window, a click opens a <dialog> lightbox. Shots come as a prop array.",
+              "preserve": [
+                "the mullion and edge frost on every window, melting on hover",
+                "the <dialog> lightbox with a handwritten caption and arrows",
+                "the four shot shapes — rect, tall, square and wide over two columns"
+              ],
+              "adapt": [
+                "eyebrow, title, lede",
+                "photos (src, alt, caption, shape), closeLabel, prevLabel, nextLabel",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "An empty src shows a night placeholder — the layout can be built before the photos.",
+                "wide spans two columns: put it first or at the start of a row."
+              ],
+              "usage": "<Portfolio010\n  title=\"Four winters in windows\"\n  photos={[\n    { src: \"/photos/g-01.webp\", caption: \"Road into the forest\", shape: \"wide\" },\n    { src: \"/photos/g-02.webp\", caption: \"Snow on eyelashes\", shape: \"tall\" },\n    { src: \"/photos/g-03.webp\", caption: \"Mulled wine\", shape: \"square\" },\n    { src: \"/photos/g-04.webp\", caption: \"Snow angels\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Four winters in windows"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Shots",
+                "title": "Four winters in windows",
+                "lede": "The best of our winters — the rink, the tree, the first snow and that fir. Warm up any window.",
+                "closeLabel": "Close",
+                "prevLabel": "Previous",
+                "nextLabel": "Next",
+                "photos": [
+                  {
+                    "src": "/demo/wedding-winter/gallery-01.webp",
+                    "caption": "Road into the forest",
+                    "shape": "wide"
+                  },
+                  {
+                    "src": "/demo/wedding-winter/gallery-02.webp",
+                    "caption": "Snow on eyelashes",
+                    "shape": "tall"
+                  },
+                  {
+                    "src": "/demo/wedding-winter/gallery-03.webp",
+                    "caption": "Mulled wine",
+                    "shape": "square"
+                  },
+                  {
+                    "src": "/demo/wedding-winter/gallery-04.webp",
+                    "caption": "Firewood",
+                    "shape": "tall"
+                  },
+                  {
+                    "src": "/demo/wedding-winter/gallery-05.webp",
+                    "caption": "Snow angels"
+                  },
+                  {
+                    "src": "/demo/wedding-winter/gallery-06.webp",
+                    "caption": "A heart on the glass"
+                  },
+                  {
+                    "src": "/demo/wedding-winter/gallery-07.webp",
+                    "caption": "Lantern",
+                    "shape": "square"
+                  },
+                  {
+                    "src": "/demo/wedding-winter/gallery-08.webp",
+                    "caption": "Fireworks"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

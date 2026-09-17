@@ -1157,6 +1157,165 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "background-006",
+      "type": "registry:component",
+      "title": "Снег на весь экран",
+      "description": "Снег поверх страницы: canvas на весь экран, снежинки трёх глубин — дальние мелкие и бледные, ближние крупнее и с мягким ореолом — падают со своей скоростью, покачиваются и сносятся ветром. Кладётся один раз в корень страницы и идёт от первого экрана до подвала; выключается кнопкой из любой шапки.",
+      "categories": [
+        "background"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "background-006/background-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/background-006.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Слой — <div> position:fixed inset:0 pointer-events:none (fixed=false — absolute внутри родителя, для превью и секций), внутри <canvas>. Снежинки сеются по площади (density=1 — около 140 на 1440×900), у каждой глубина: радиус, скорость, прозрачность и ореол зависят от неё. Ветер — общий сдвиг плюс медленное «дыхание» синусом; сход за край переносит снежинку на другую сторону. Цикл requestAnimationFrame с дельтой времени; стоит в скрытой вкладке (visibilitychange), когда слой не в кадре (IntersectionObserver) и при paused. Ретина — devicePixelRatio до 2, размер — ResizeObserver. Внешний выключатель: data-vibeui-snow=\"off\" на <html> и событие vibeui-snow на window — слой перечитывает атрибут и гасит или запускает цикл. prefers-reduced-motion — один статичный кадр редких снежинок. Цвет, плотность, ветер, скорость, подложка и z-index — пропсами.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "snow",
+          "winter",
+          "particles",
+          "canvas",
+          "overlay",
+          "fullscreen",
+          "ambient",
+          "christmas",
+          "wedding",
+          "decorative"
+        ],
+        "preview": {
+          "width": "section",
+          "aspect": "16 / 9",
+          "props": {
+            "fixed": false,
+            "backdrop": "#0b1220",
+            "density": 1.4
+          }
+        },
+        "cardControls": [
+          "density",
+          "wind",
+          "speed",
+          "color"
+        ],
+        "ai": {
+          "export": "Background006",
+          "usage": "{/* один раз в корне страницы, поверх всего */}\n<Background006 density={1} wind={0.25} zIndex={50} />\n\n{/* внутри секции, не на весь экран */}\n<section style={{ position: \"relative\" }}>\n  <Background006 fixed={false} backdrop=\"#0b1220\" />\n  …\n</section>",
+          "summary": "Самодостаточный снег на весь экран: canvas поверх страницы, три глубины снежинок, ветер, пауза вне кадра и в скрытой вкладке, внешний выключатель через data-vibeui-snow. Плотность, ветер, скорость и цвет — пропсами.",
+          "preserve": [
+            "три глубины снежинок — разный размер, скорость, прозрачность и ореол у ближних",
+            "паузу в скрытой вкладке и вне кадра, статичный кадр при prefers-reduced-motion",
+            "pointer-events:none — слой не перехватывает клики страницы"
+          ],
+          "adapt": [
+            "density, wind, speed, color, backdrop, zIndex",
+            "fixed — на весь экран или внутри родителя; paused — выключить не размонтируя",
+            "className и style"
+          ],
+          "notes": [
+            "Ставьте один раз в корне страницы: два слоя удвоят снег и нагрузку.",
+            "Кнопка «снег» в шапке (navbar-027) ставит data-vibeui-snow=\"off\" на <html> и шлёт событие vibeui-snow — слой слушает их сам.",
+            "zIndex выбирайте выше контента, но ниже фиксированной шапки и модалок."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "density",
+            "label": "Плотность",
+            "type": "number",
+            "default": 1,
+            "min": 0.2,
+            "max": 3
+          },
+          {
+            "prop": "wind",
+            "label": "Ветер",
+            "type": "number",
+            "default": 0.25,
+            "min": -1,
+            "max": 1
+          },
+          {
+            "prop": "speed",
+            "label": "Скорость",
+            "type": "number",
+            "default": 1,
+            "min": 0.2,
+            "max": 3
+          },
+          {
+            "prop": "color",
+            "label": "Цвет",
+            "type": "color",
+            "default": "#ffffff"
+          },
+          {
+            "prop": "backdrop",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Full-screen snow",
+            "description": "Snow over the page: a full-screen canvas with flakes at three depths — far ones small and pale, near ones bigger with a soft halo — falling at their own speed, swaying and drifting with the wind. Placed once at the page root, it runs from the hero to the footer and switches off from any header's button.",
+            "docs": "One file, zero dependencies, “use client”. The layer is a <div> position:fixed inset:0 pointer-events:none (fixed=false — absolute inside the parent, for previews and sections) with a <canvas>. Flakes are seeded by area (density=1 is about 140 per 1440×900), each with a depth that sets radius, speed, opacity and halo. Wind is a shared drift plus a slow sine “breath”; leaving one edge wraps to the other. A requestAnimationFrame loop with time delta; it stops in a hidden tab (visibilitychange), when the layer is out of view (IntersectionObserver) and on paused. Retina via devicePixelRatio up to 2, sizing via ResizeObserver. External switch: data-vibeui-snow=\"off\" on <html> and a vibeui-snow event on window — the layer re-reads the attribute and stops or restarts. prefers-reduced-motion draws one static frame of sparse flakes. Colour, density, wind, speed, backdrop and z-index are props.",
+            "ai": {
+              "summary": "Self-contained full-screen snow: a canvas over the page, three flake depths, wind, pause out of view and in hidden tabs, an external switch via data-vibeui-snow. Density, wind, speed and colour via props.",
+              "preserve": [
+                "three flake depths — different size, speed, opacity and a halo on the near ones",
+                "the pause in hidden tabs and out of view, the static frame under prefers-reduced-motion",
+                "pointer-events:none — the layer never intercepts page clicks"
+              ],
+              "adapt": [
+                "density, wind, speed, color, backdrop, zIndex",
+                "fixed — full screen or inside the parent; paused — off without unmounting",
+                "className and style"
+              ],
+              "notes": [
+                "Place it once at the page root: two layers double the snow and the load.",
+                "The “snow” button in the header (navbar-027) sets data-vibeui-snow=\"off\" on <html> and dispatches vibeui-snow — the layer listens on its own.",
+                "Pick a zIndex above the content but below the fixed header and modals."
+              ],
+              "usage": "{/* once at the page root, over everything */}\n<Background006 density={1} wind={0.25} zIndex={50} />\n\n{/* inside a section, not full screen */}\n<section style={{ position: \"relative\" }}>\n  <Background006 fixed={false} backdrop=\"#0b1220\" />\n  …\n</section>"
+            },
+            "controls": {
+              "density": {
+                "label": "Density"
+              },
+              "wind": {
+                "label": "Wind"
+              },
+              "speed": {
+                "label": "Speed"
+              },
+              "color": {
+                "label": "Colour"
+              },
+              "backdrop": {
+                "label": "Backdrop"
+              }
+            },
+            "preview": {
+              "width": "section",
+              "aspect": "16 / 9",
+              "props": {
+                "fixed": false,
+                "backdrop": "#0b1220",
+                "density": 1.4
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

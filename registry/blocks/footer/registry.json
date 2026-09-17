@@ -3929,6 +3929,188 @@
           }
         }
       }
+    },
+    {
+      "name": "footer-026",
+      "type": "registry:block",
+      "title": "Подвал с хвоей по углам и монограммой со снежинкой",
+      "description": "Подвал зимней свадьбы на синей ночи: ветки хвои по углам, по центру монограмма со снежинкой, имена антиквой и рукописное «до встречи в снегу», дата и место; ниже ряд якорей, хэштег и «ответьте до…». Невысокий.",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-026/footer-026.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-026.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный. Ветки — два SVG path по углам (правый зеркален scaleX(-1)), хвойный цвет с прозрачностью; на узких экранах меньше. Центр — монограмма с SVG-снежинкой в drop-shadow, имена Cormorant, рукописная строка Marck Script, дата и место капителями с точкой-свечкой. Нижняя строка — якоря капителями, хэштег-капсула на Instagram, «ответьте до» с ссылкой; от 56rem разъезжается по краям. Фон всегда ночной (light-dark даёт две глубины). Палитра --vibeui-footer-026-*: синяя ночь #0b1220 и индиго #131c2e / слоновая кость #f2eee6 через light-dark(), серебро #9fb0c8, свеча #f2b64f, огонь #ff9a3c; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "winter",
+          "footer",
+          "pine",
+          "snowflake",
+          "monogram",
+          "hashtag",
+          "dark",
+          "christmas"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "cardControls": [
+          "names",
+          "hashtag",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Footer026",
+          "usage": "<Footer026\n  initials={[\"В\", \"Д\"]}\n  names=\"Валерия и Дмитрий\"\n  script=\"до встречи в снегу\"\n  dateLabel=\"18 декабря 2027\"\n  place=\"Лесная усадьба\"\n  hashtag=\"#лераидимавснегу\"\n  links={[\n    { label: \"История\", href: \"#story\" },\n    { label: \"Ответить\", href: \"#rsvp\" },\n  ]}\n  rsvpLabel=\"до 1 ноября\"\n/>",
+          "summary": "Самодостаточный подвал зимней свадьбы: хвоя по углам, монограмма со снежинкой, имена и «до встречи в снегу», дата и место, якоря, хэштег и «ответьте до». Всё пропсами, фон всегда ночной.",
+          "preserve": [
+            "ветки хвои по углам и монограмму со светящейся снежинкой",
+            "рукописную строку под именами и точку-свечку между датой и местом",
+            "невысокие две строки — подвал завершает, а не повторяет страницу"
+          ],
+          "adapt": [
+            "initials, names, script, dateLabel, place, hashtag, links",
+            "rsvpText, rsvpLabel, rsvpHref",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Хэштег ведёт на Instagram по умолчанию — замените ссылку в файле при нужде.",
+            "Ветки — декоративный path: цвет через --vibeui-footer-026-pine."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "names",
+            "label": "Имена",
+            "type": "text",
+            "default": "Валерия и Дмитрий",
+            "maxLength": 30
+          },
+          {
+            "prop": "hashtag",
+            "label": "Хэштег",
+            "type": "text",
+            "default": "#лераидимавснегу",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Footer with pine branches in the corners and a snowflake monogram",
+            "description": "A winter-wedding footer on night blue: pine branches in the corners, a snowflake monogram in the centre, serif names and a handwritten “see you in the snow”, date and place; below a row of anchors, the hashtag and “reply by…”. Short.",
+            "docs": "One file, zero dependencies, server-rendered. The branches are two SVG paths in the corners (the right one mirrored with scaleX(-1)), pine-coloured with transparency; smaller on narrow screens. The centre has the monogram with an SVG snowflake in a drop-shadow, Cormorant names, a Marck Script line, date and place in small caps with a candle dot. The bottom row has small-caps anchors, an Instagram hashtag pill and “reply by” with a link; from 56rem it spreads to the edges. The background is always night (light-dark gives two depths). Palette --vibeui-footer-026-*: night blue #0b1220 and indigo #131c2e / ivory #f2eee6 via light-dark(), silver #9fb0c8, candle #f2b64f, fire #ff9a3c; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained winter-wedding footer: pine in the corners, a snowflake monogram, names and “see you in the snow”, date and place, anchors, hashtag and “reply by”. All via props, always night.",
+              "preserve": [
+                "the pine branches in the corners and the monogram with a glowing snowflake",
+                "the handwritten line under the names and the candle dot between date and place",
+                "two short rows — the footer closes rather than repeats the page"
+              ],
+              "adapt": [
+                "initials, names, script, dateLabel, place, hashtag, links",
+                "rsvpText, rsvpLabel, rsvpHref",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The hashtag links to Instagram by default — change the link in the file if needed.",
+                "The branches are a decorative path: colour via --vibeui-footer-026-pine."
+              ],
+              "usage": "<Footer026\n  initials={[\"V\", \"D\"]}\n  names=\"Valeria & Dmitry\"\n  script=\"see you in the snow\"\n  dateLabel=\"18 December 2027\"\n  place=\"Forest estate\"\n  hashtag=\"#leraanddimainthesnow\"\n  links={[\n    { label: \"Story\", href: \"#story\" },\n    { label: \"RSVP\", href: \"#rsvp\" },\n  ]}\n  rsvpLabel=\"by 1 November\"\n/>"
+            },
+            "controls": {
+              "names": {
+                "label": "Names",
+                "default": "Valeria & Dmitry"
+              },
+              "hashtag": {
+                "label": "Hashtag",
+                "default": "#leraanddimainthesnow"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "initials": [
+                  "V",
+                  "D"
+                ],
+                "names": "Valeria & Dmitry",
+                "script": "see you in the snow",
+                "dateLabel": "18 December 2027",
+                "place": "Forest estate",
+                "hashtag": "#leraanddimainthesnow",
+                "links": [
+                  {
+                    "label": "Story",
+                    "href": "#story"
+                  },
+                  {
+                    "label": "Evening",
+                    "href": "#evening"
+                  },
+                  {
+                    "label": "Getting there",
+                    "href": "#place"
+                  },
+                  {
+                    "label": "RSVP",
+                    "href": "#rsvp"
+                  },
+                  {
+                    "label": "FAQ",
+                    "href": "#faq"
+                  }
+                ],
+                "rsvpText": "Please reply",
+                "rsvpLabel": "by 1 November"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

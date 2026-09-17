@@ -22,4 +22,6 @@ export const PREVIEWS = {
     import("@/registry/blocks/portfolio/portfolio-008/portfolio-008").then((module) => module.Portfolio008),
   "portfolio-009": () =>
     import("@/registry/blocks/portfolio/portfolio-009/portfolio-009").then((module) => module.Portfolio009),
+  "portfolio-010": () =>
+    import("@/registry/blocks/portfolio/portfolio-010/portfolio-010").then((module) => module.Portfolio010),
 } satisfies PreviewLoaderMap
