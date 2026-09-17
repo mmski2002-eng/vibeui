@@ -5,5 +5,5 @@ import type { PreviewLoaderMap } from "@/registry/preview-types"
 
 export const PREVIEWS = {
   "process-001": () =>
-    import("@/registry/blocks/process/process-001/process-001").then((module) => module.Process001),
+    import("@/registry/animations/process/process-001/process-001").then((module) => module.Process001),
 } satisfies PreviewLoaderMap

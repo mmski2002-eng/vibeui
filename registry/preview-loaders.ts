@@ -71,8 +71,6 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/block/logos")).PREVIEWS
     case "block/newsletter":
       return (await import("@/registry/previews/block/newsletter")).PREVIEWS
-    case "block/process":
-      return (await import("@/registry/previews/block/process")).PREVIEWS
     case "block/stats":
       return (await import("@/registry/previews/block/stats")).PREVIEWS
     case "block/team":
@@ -253,6 +251,8 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/animation/status")).PREVIEWS
     case "animation/checklist":
       return (await import("@/registry/previews/animation/checklist")).PREVIEWS
+    case "animation/process":
+      return (await import("@/registry/previews/animation/process")).PREVIEWS
     case "animation/stacks":
       return (await import("@/registry/previews/animation/stacks")).PREVIEWS
     case "animation/cursor":
