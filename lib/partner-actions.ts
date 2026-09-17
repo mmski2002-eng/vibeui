@@ -20,6 +20,9 @@ import { requireUser } from "@/lib/session"
 /** ИНН физлица и самозанятого — двенадцать цифр. */
 const INN = /^\d{12}$/
 
+/** Номер карты: 16–19 цифр (Visa/MC/Мир и длинные номера). */
+const CARD = /^\d{16,19}$/
+
 /**
  * Блогер задаёт своё слово — оно же реф-код ссылки `/?ref=<слово>` и промокод
  * на скидку. Формат как у админа (`normalizePromo`), уникальность и запись в
@@ -48,10 +51,9 @@ export async function savePartnerWord(input: { code: string }) {
  * Блогер сохраняет реквизиты выплаты: ИНН самозанятого (по нему он закроет
  * выплату своим чеком) и куда переводить — карта или телефон для СБП.
  */
-export async function savePayoutProfile(input: {
+export async function savePayoutRequisites(input: {
   inn: string
-  details: string
-  receipt: string
+  card: string
 }) {
   const user = await requireUser()
 
@@ -59,13 +61,44 @@ export async function savePayoutProfile(input: {
     throw new Error("Раздел только для партнёров")
   }
 
+  // Write-once: сохранённые реквизиты меняет только поддержка. Проверяем на
+  // сервере — скрытой кнопки для защиты недостаточно.
+  const current = await payoutProfile(user.id)
+
+  if (current.inn && current.details) {
+    throw new Error("Реквизиты уже зафиксированы. Изменить — через поддержку.")
+  }
+
   const inn = input.inn.trim()
 
-  if (inn && !INN.test(inn)) {
+  if (!INN.test(inn)) {
     throw new Error("ИНН — 12 цифр")
   }
 
-  const details = input.details.trim().slice(0, 200)
+  const card = input.card.replace(/\s+/g, "")
+
+  if (!CARD.test(card)) {
+    throw new Error("Номер карты — 16–19 цифр")
+  }
+
+  await db
+    .update(partnerInvite)
+    .set({ payoutInn: inn, payoutDetails: card })
+    .where(eq(partnerInvite.claimedBy, user.id))
+
+  revalidatePath("/account/referrals")
+  revalidatePath("/en/account/referrals")
+}
+
+/** Ссылка на чек «Мой налог». Отдельно от реквизитов: чек меняется от выплаты
+ *  к выплате, реквизиты — нет. */
+export async function savePayoutReceipt(input: { receipt: string }) {
+  const user = await requireUser()
+
+  if (!(await isPartner(user.id))) {
+    throw new Error("Раздел только для партнёров")
+  }
+
   const receipt = input.receipt.trim().slice(0, 500)
 
   if (receipt && !/^https?:\/\/\S+$/.test(receipt)) {
@@ -74,11 +107,7 @@ export async function savePayoutProfile(input: {
 
   await db
     .update(partnerInvite)
-    .set({
-      payoutInn: inn || null,
-      payoutDetails: details || null,
-      payoutReceipt: receipt || null,
-    })
+    .set({ payoutReceipt: receipt || null })
     .where(eq(partnerInvite.claimedBy, user.id))
 
   revalidatePath("/account/referrals")

@@ -258,15 +258,18 @@ export async function AccountReferrals({
               </p>
               <PayoutProfileForm
                 inn={payoutInfo.inn}
-                details={payoutInfo.details}
+                card={payoutInfo.details}
                 receipt={payoutInfo.receipt}
+                locked={requisitesFilled}
                 labels={{
                   inn: t.payoutInn,
                   innPlaceholder: t.payoutInnPlaceholder,
-                  details: t.payoutDetails,
-                  detailsPlaceholder: t.payoutDetailsPlaceholder,
+                  card: t.payoutDetails,
+                  cardPlaceholder: t.payoutDetailsPlaceholder,
                   receipt: t.payoutReceipt,
                   receiptPlaceholder: t.payoutReceiptPlaceholder,
+                  warning: t.payoutWarning,
+                  locked: t.payoutLocked,
                   save: t.payoutSave,
                   saving: t.payoutSaving,
                   saved: t.payoutSaved,
