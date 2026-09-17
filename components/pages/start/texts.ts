@@ -242,7 +242,7 @@ const RU: StartTexts = {
       },
       {
         title: "Лимиты",
-        body: "Бесплатно — {limit} копирований в месяц, этого хватает на несколько сайтов. Pro снимает лимит и открывает закрытые блоки.",
+        body: "Бесплатно — {limit} копирований в месяц, этого хватает на несколько сайтов. PRO снимает лимит и открывает закрытые блоки.",
         link: { href: "/pricing", label: "Тарифы" },
       },
     ],
@@ -428,7 +428,7 @@ const EN: StartTexts = {
       },
       {
         title: "Limits",
-        body: "Free — {limit} copies a month, enough for several sites. Pro removes the limit and unlocks the gated blocks.",
+        body: "Free — {limit} copies a month, enough for several sites. PRO removes the limit and unlocks the gated blocks.",
         link: { href: "/pricing", label: "Pricing" },
       },
     ],

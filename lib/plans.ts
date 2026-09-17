@@ -8,14 +8,14 @@
 export const PLANS = {
   monthly: {
     id: "monthly",
-    title: "Pro на месяц",
+    title: "PRO на месяц",
     price: "690.00",
     period: "мес",
     days: 30,
   },
   yearly: {
     id: "yearly",
-    title: "Pro на год",
+    title: "PRO на год",
     price: "5900.00",
     period: "год",
     days: 365,

@@ -369,7 +369,7 @@ const RU: Dictionary = {
     title: "Сценарии",
     metaTitle: "Сценарии — готовые сайты из блоков",
     description:
-      "Готовые страницы, собранные из блоков каталога: смотрите демо, а в Pro — точный состав, код страницы и ссылка для ИИ-агента, чтобы собрать такую же у себя.",
+      "Готовые страницы, собранные из блоков каталога: смотрите демо, а в PRO — точный состав, код страницы и ссылка для ИИ-агента, чтобы собрать такую же у себя.",
     empty: "Сценариев пока нет.",
     blocksCount: (count) => {
       const tail = count % 100
@@ -390,10 +390,10 @@ const RU: Dictionary = {
     copyNote:
       "Ссылка на сутки: команды установки всех блоков и исходник страницы целиком. Вставьте её агенту в своём проекте — он поставит блоки и соберёт страницу как в демо.",
     signIn: "Войти",
-    proTitle: "Точный состав, код страницы и ссылка для агента — в Pro",
+    proTitle: "Точный состав, код страницы и ссылка для агента — в PRO",
     proText:
       "Демо и список блоков открыты всем. Подписчику показываются пропсы каждого блока как в демо, общие правила темы, промпты картинок и одна ссылка, по которой ИИ-агент собирает такую же страницу.",
-    proLink: "Открыть Pro",
+    proLink: "Открыть PRO",
     composition: "Из чего собрано",
     compositionNote: (count) =>
       `${count} блоков из каталога, в порядке появления на странице. Каждый ставится своей командой; ничего не пересоздаётся.`,
@@ -591,7 +591,7 @@ const EN: Dictionary = {
     title: "Scenarios",
     metaTitle: "Scenarios — finished sites built from blocks",
     description:
-      "Finished pages assembled from catalog blocks: see the demo, and in Pro — the exact composition, the page source and a link for your AI agent to build the same page in your project.",
+      "Finished pages assembled from catalog blocks: see the demo, and in PRO — the exact composition, the page source and a link for your AI agent to build the same page in your project.",
     empty: "No scenarios yet.",
     blocksCount: (count) => `${count} block${count === 1 ? "" : "s"}`,
     openRecipe: "What it is made of",
@@ -603,10 +603,10 @@ const EN: Dictionary = {
     copyNote:
       "A 24-hour link: install commands for every block and the whole page source. Paste it to your agent in your project — it installs the blocks and assembles the page as in the demo.",
     signIn: "Sign in",
-    proTitle: "The exact composition, page source and agent link are in Pro",
+    proTitle: "The exact composition, page source and agent link are in PRO",
     proText:
       "The demo and the block list are open to everyone. Subscribers see every block's props as in the demo, the theme rules, the image prompts and one link an AI agent uses to build the same page.",
-    proLink: "Get Pro",
+    proLink: "Get PRO",
     composition: "What it is made of",
     compositionNote: (count) =>
       `${count} catalog blocks in page order. Each one is installed with its own command; nothing is recreated.`,

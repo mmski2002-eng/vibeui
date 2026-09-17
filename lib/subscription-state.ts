@@ -64,7 +64,7 @@ export function isProState(state: SubscriptionState) {
 
 /** Название тарифа для показа. Бонус тарифом не считается. */
 export function planTitle(plan: PlanId | null) {
-  return plan ? PLANS[plan].title : "Pro"
+  return plan ? PLANS[plan].title : "PRO"
 }
 
 export async function getSubscriptionState(userId: string) {

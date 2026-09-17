@@ -6,7 +6,7 @@ export const metadata = pageMetadata({
   path: "/pricing",
   title: "Тарифы",
   description:
-    "Бесплатно — сто компонентов в месяц с аккаунтом. Pro снимает лимит и открывает анимации и закрытые блоки.",
+    "Бесплатно — сто компонентов в месяц с аккаунтом. PRO снимает лимит и открывает анимации и закрытые блоки.",
 })
 
 export default async function Page({
