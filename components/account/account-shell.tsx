@@ -41,6 +41,8 @@ export async function AccountShell({
   const planLabel =
     state.kind === "bonus" ? t.plan.bonus : pro ? t.plan.pro : t.plan.free
 
+  const roleLabel = admin ? t.role.admin : partner ? t.role.partner : t.role.user
+
   return (
     <CatalogShell locale={locale} className="account-shell">
       <ToastProvider>
@@ -66,18 +68,32 @@ export async function AccountShell({
                   <span className="text-shell-fg block truncate text-sm font-medium">
                     {user.name || user.email}
                   </span>
-                  <span
-                    className={cn(
-                      "flex items-center gap-1 text-xs",
-                      pro
-                        ? "text-shell-accent-text font-medium"
-                        : "text-shell-muted",
-                    )}
-                  >
-                    {pro ? (
-                      <Sparkles className="size-3" aria-hidden="true" />
-                    ) : null}
-                    {planLabel}
+                  <span className="mt-0.5 flex flex-wrap items-center gap-1.5">
+                    <span
+                      className={cn(
+                        "rounded px-1.5 py-0.5 text-[10px] font-semibold tracking-wide uppercase",
+                        admin
+                          ? "bg-shell-accent text-shell-accent-fg"
+                          : partner
+                            ? "bg-shell-elevated text-shell-accent-text"
+                            : "bg-shell-elevated text-shell-muted",
+                      )}
+                    >
+                      {roleLabel}
+                    </span>
+                    <span
+                      className={cn(
+                        "flex items-center gap-1 text-xs",
+                        pro
+                          ? "text-shell-accent-text font-medium"
+                          : "text-shell-muted",
+                      )}
+                    >
+                      {pro ? (
+                        <Sparkles className="size-3" aria-hidden="true" />
+                      ) : null}
+                      {planLabel}
+                    </span>
                   </span>
                 </span>
                 <SignOutButton locale={locale} compact />

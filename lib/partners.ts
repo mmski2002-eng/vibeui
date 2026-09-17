@@ -5,6 +5,7 @@ import { and, count, desc, eq, gte, inArray, isNull, lt, sql } from "drizzle-orm
 
 import { fillDays, lastDays } from "@/lib/days"
 import { db } from "@/lib/db"
+import { grantDays } from "@/lib/payment-apply"
 import {
   partnerInvite,
   partnerPayout,
@@ -24,6 +25,9 @@ import {
  * получает. Признак партнёра не хранится в `user`: он выводится из
  * `partner_invite.claimed_by`, и второго источника правды нет.
  */
+
+/** Блогеру при регистрации по приглашению — столько дней Pro бонусом. */
+export const PARTNER_TRIAL_DAYS = 30
 
 /** Восемь символов base64url: 48 бит, столкновение практически невозможно. */
 export function newCode() {
@@ -92,6 +96,10 @@ export async function claimInvite(inviteId: string, userId: string) {
     .insert(referral)
     .values({ code: newCode(), userId })
     .onConflictDoNothing()
+
+  // Стартовый бонус блогеру: 30 дней Pro. Внутри guard'а claim — значит
+  // ровно один раз на приглашение, даже при гонке двух регистраций.
+  await grantDays(userId, PARTNER_TRIAL_DAYS)
 }
 
 /** Код партнёра. Партнёру он заведён при регистрации; остальным — null. */

@@ -24,6 +24,7 @@ export const ACCOUNT_TEXTS = {
       catalog: "Открыть каталог",
     },
     plan: { free: "Бесплатный", pro: "Pro", bonus: "Бонусный Pro" },
+    role: { admin: "Админ", partner: "Партнёр", user: "Пользователь" },
     payments: {
       title: "Оплата",
       lead: "История платежей и чеки. Чек формируется в «Мой налог» после оплаты и появляется здесь ссылкой.",
@@ -323,6 +324,7 @@ export const ACCOUNT_TEXTS = {
       catalog: "Open the catalogue",
     },
     plan: { free: "Free", pro: "Pro", bonus: "Bonus Pro" },
+    role: { admin: "Admin", partner: "Partner", user: "User" },
     payments: {
       title: "Payments",
       lead: "Payment history and receipts. A receipt is issued through the tax service after payment and appears here as a link.",
