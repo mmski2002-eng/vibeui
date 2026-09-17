@@ -1891,6 +1891,219 @@
           }
         }
       }
+    },
+    {
+      "name": "about-012",
+      "type": "registry:block",
+      "title": "Маршрут пары: линия рейса с самолётиком и остановками",
+      "description": "«Наш маршрут» как карта в бортовом журнале: пунктирная линия рейса через четыре остановки с пинами-кодами городов, самолётик едет по линии и прорисовывает пройденную часть, пока секцию прокручивают. Под линией — карточки остановок с круглым фото, датой и историей; клик по пину подсвечивает карточку.",
+      "categories": [
+        "about"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "about-012/about-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/about-012.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради прогресса и пинов. Линия — SVG viewBox 1000×260 с path из T-сегментов: концы сегментов — ровно точки остановок, поэтому пины стоят на кривой. Самолётик — path с offset-path:path(...) и offset-distance из --vibeui-about-012-p; пройденная часть — второй path с pathLength=1 и stroke-dashoffset из --vibeui-about-012-k. Обе переменные пишет rAF-обработчик scroll по положению секции в окне (0 при входе снизу, 1 когда центр прошёл), без ререндеров. Пины — <g role=button tabIndex> с data-active, карточки [data-part=stop] подсвечиваются рамкой и подъёмом. Сетка карточек — 4 в ряд от 56rem. Ровно четыре остановки: лишние отбрасываются. Палитра --vibeui-about-012-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "travel",
+          "route",
+          "map",
+          "flight path",
+          "plane",
+          "scroll",
+          "offset-path",
+          "timeline",
+          "story",
+          "couple",
+          "retro"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "stops": [
+              {
+                "code": "MOW",
+                "city": "Москва",
+                "date": "Январь 2022",
+                "title": "Один стакан кофе",
+                "text": "Познакомились на мосту в снегопад.",
+                "image": "/demo/wedding-cuba/route-01.webp"
+              },
+              {
+                "code": "IST",
+                "city": "Стамбул",
+                "date": "Май 2023",
+                "title": "Первая пересадка",
+                "text": "Опоздали на стыковку и провели в городе сутки.",
+                "image": "/demo/wedding-cuba/route-04.webp"
+              },
+              {
+                "code": "LIS",
+                "city": "Лиссабон",
+                "date": "Октябрь 2025",
+                "title": "Трамвай 28",
+                "text": "Тот самый кадр в окне трамвая.",
+                "image": "/demo/wedding-cuba/route-02.webp"
+              },
+              {
+                "code": "HAV",
+                "city": "Гавана",
+                "date": "Февраль 2027",
+                "title": "Финиш — на пляже",
+                "text": "Здесь спросил, здесь ответила.",
+                "image": "/demo/wedding-cuba/route-03.webp"
+              }
+            ]
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "About012",
+          "usage": "<About012\n  title=\"Четыре города до «да»\"\n  stops={[\n    { code: \"MOW\", city: \"Москва\", date: \"Январь 2022\", title: \"Один стакан кофе\", text: \"Познакомились на мосту.\", image: \"/photos/route-01.webp\" },\n    { code: \"IST\", city: \"Стамбул\", date: \"Май 2023\", title: \"Первая пересадка\", text: \"Сутки в городе.\", image: \"/photos/route-02.webp\" },\n    { code: \"LIS\", city: \"Лиссабон\", date: \"Октябрь 2025\", title: \"Трамвай 28\", text: \"Тот самый кадр.\", image: \"/photos/route-03.webp\" },\n    { code: \"HAV\", city: \"Гавана\", date: \"Февраль 2027\", title: \"Финиш\", text: \"Здесь и поженимся.\", image: \"/photos/route-04.webp\" },\n  ]}\n/>",
+          "summary": "Самодостаточный маршрут пары для свадьбы-путешествия: линия рейса с четырьмя пинами, самолётик по прокрутке, карточки остановок с фото и историей. Остановки — массив пропсом.",
+          "preserve": [
+            "пунктирную линию рейса с пинами-кодами и самолётик, который едет по ней при прокрутке",
+            "прорисовку пройденной части линии сплошным кораллом",
+            "карточки остановок с круглым фото и кодом города в углу"
+          ],
+          "adapt": [
+            "eyebrow, title (часть в «кавычках» уходит в рукописный), lede",
+            "stops — ровно четыре: code, city, date, title, text, image",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Точки на линии фиксированы под четыре остановки: больше не поместится, меньше — оставит пустые пины.",
+            "Фото остановок квадратные, обрезаются в круг."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Четыре города до «да»",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Couple's route: a flight line with a plane and stops",
+            "description": "“Our route” like a map in an in-flight magazine: a dashed flight line through four stops with city-code pins; a plane travels the line and draws the covered part as the section scrolls. Under the line, stop cards with a round photo, a date and a story; clicking a pin highlights its card.",
+            "docs": "One file, zero dependencies, “use client” for the progress and pins. The line is an SVG viewBox 1000×260 with a path of T-segments: the segment ends are exactly the stop points, so pins sit on the curve. The plane is a path with offset-path:path(...) and offset-distance from --vibeui-about-012-p; the covered part is a second path with pathLength=1 and stroke-dashoffset from --vibeui-about-012-k. Both variables are written by an rAF scroll handler from the section's position in the window (0 entering from below, 1 once the centre has passed), without re-renders. Pins are <g role=button tabIndex> with data-active, [data-part=stop] cards highlight with a border and lift. The card grid is 4 per row from 56rem. Exactly four stops: extras are dropped. Palette --vibeui-about-012-*: paper #fffaf0 and sand #f3e9d2 / deep navy #14202a via light-dark(), ink #123a4b, coral #ff6b57 accent, sea #2aa7a0, sun #f2c14e; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained couple's route for a destination wedding: a flight line with four pins, a scroll-driven plane, stop cards with photos and story. Stops come as a prop array.",
+              "preserve": [
+                "the dashed flight line with code pins and the plane travelling it on scroll",
+                "the covered part of the line drawn in solid coral",
+                "the stop cards with a round photo and the city code in the corner"
+              ],
+              "adapt": [
+                "eyebrow, title (the part in «quotes» turns handwritten), lede",
+                "stops — exactly four: code, city, date, title, text, image",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The line points are fixed for four stops: more won't fit, fewer leave empty pins.",
+                "Stop photos are square, cropped to a circle."
+              ],
+              "usage": "<About012\n  title=\"Four cities to «yes»\"\n  stops={[\n    { code: \"MOW\", city: \"Moscow\", date: \"January 2022\", title: \"One cup of coffee\", text: \"We met on a bridge.\", image: \"/photos/route-01.webp\" },\n    { code: \"IST\", city: \"Istanbul\", date: \"May 2023\", title: \"The first layover\", text: \"A day in the city.\", image: \"/photos/route-02.webp\" },\n    { code: \"LIS\", city: \"Lisbon\", date: \"October 2025\", title: \"Tram 28\", text: \"That one shot.\", image: \"/photos/route-03.webp\" },\n    { code: \"HAV\", city: \"Havana\", date: \"February 2027\", title: \"Finish\", text: \"Where we marry.\", image: \"/photos/route-04.webp\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Four cities to “yes”"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Our route",
+                "title": "Four cities to «yes»",
+                "lede": "We met in one country, fell in love in another and decided to marry in a third. So we fly.",
+                "stops": [
+                  {
+                    "code": "MOW",
+                    "city": "Moscow",
+                    "date": "January 2022",
+                    "title": "One cup of coffee",
+                    "text": "We met on a bridge in a snowfall.",
+                    "image": "/demo/wedding-cuba/route-01.webp"
+                  },
+                  {
+                    "code": "IST",
+                    "city": "Istanbul",
+                    "date": "May 2023",
+                    "title": "The first layover",
+                    "text": "Missed a connection and spent a day in the city.",
+                    "image": "/demo/wedding-cuba/route-04.webp"
+                  },
+                  {
+                    "code": "LIS",
+                    "city": "Lisbon",
+                    "date": "October 2025",
+                    "title": "Tram 28",
+                    "text": "That one shot in the tram window.",
+                    "image": "/demo/wedding-cuba/route-02.webp"
+                  },
+                  {
+                    "code": "HAV",
+                    "city": "Havana",
+                    "date": "February 2027",
+                    "title": "Finish — on the beach",
+                    "text": "He asked here, she said yes here.",
+                    "image": "/demo/wedding-cuba/route-03.webp"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

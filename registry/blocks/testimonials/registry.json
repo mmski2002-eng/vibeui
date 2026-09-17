@@ -3934,6 +3934,181 @@
           }
         }
       }
+    },
+    {
+      "name": "testimonials-021",
+      "type": "registry:block",
+      "title": "Открытки от гостей со штемпелями",
+      "description": "Стена открыток от гостей оборотной стороной: разлиновка, марка, круглый штемпель с городом, текст рукописным, подпись. Слева форма «отправить открытку» — новая ложится первой со штемпелем «отправлено» и анимацией приземления. Без бэкенда живёт до перезагрузки; с action — уходит POST'ом.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-021/testimonials-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-021.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради формы. Стена — <ul> auto-fill minmax(17rem,1fr), открытка — article с сеткой 1.5fr/1fr, вертикальной линией ::before, наклоном по nth-child(4n…) и подъёмом по hover; марка — рамка с пунктиром, штемпель — SVG-круг с текстом города (или «отправлено» у новых). Новые открытки — state-массив в начале с data-fresh и keyframes «приземления». Форма — имя, откуда, текст (required); без action — preventDefault. От 56rem сетка .8fr/1.7fr, левая колонка sticky. Палитра --vibeui-testimonials-021-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "travel",
+          "guestbook",
+          "postcards",
+          "wishes",
+          "wall",
+          "form",
+          "stamp",
+          "postmark",
+          "cuba",
+          "retro"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Testimonials021",
+          "usage": "<Testimonials021\n  title=\"Напишите нам открытку\"\n  cards={[\n    { name: \"Оля и Саша\", from: \"Москва\", text: \"Билеты куплены, шляпы тоже.\" },\n    { name: \"Мариэла\", from: \"Гавана\", text: \"Всё готово, море тёплое. ¡Hasta la boda!\" },\n  ]}\n  submitLabel=\"Отправить\"\n  action=\"/api/postcards\"\n/>",
+          "summary": "Самодостаточная стена открыток для свадьбы-путешествия: открытки оборотом с марками и штемпелями городов и форма, которая кладёт новую первой со штемпелем «отправлено». Открытки — массив пропсом, отправка на action.",
+          "preserve": [
+            "открытки оборотной стороной: линия посередине, марка, круглый штемпель с городом",
+            "анимацию приземления новой открытки и штемпель «отправлено»",
+            "форму слева с полем «откуда», липкую от 56rem"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, cards (name, from, text)",
+            "formTitle, nameLabel, fromLabel, textLabel, submitLabel, sentLabel, action",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Без action новая открытка живёт до перезагрузки — витрина, не хранилище.",
+            "Текст открытки короткий — 2–4 строки рукописным."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Напишите нам открытку",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Guest postcards with postmarks",
+            "description": "A wall of guest postcards back-side up: ruled lines, a stamp, a round postmark with the city, handwritten text, a signature. On the left a “send a postcard” form — the new one lands first with a “sent” postmark and a landing animation. Without a backend it lives until reload; with action it POSTs.",
+            "docs": "One file, zero dependencies, “use client” for the form. The wall is a <ul> auto-fill minmax(17rem,1fr), a postcard is an article with a 1.5fr/1fr grid, a ::before vertical line, tilt by nth-child(4n…) and a hover lift; the stamp is a dashed frame, the postmark an SVG circle with the city (or “sent” on new ones). New postcards are a state array prepended with data-fresh and a “landing” keyframe. The form is name, from, text (required); without action — preventDefault. From 56rem a .8fr/1.7fr grid, the left column sticky. Palette --vibeui-testimonials-021-*: paper #fffaf0 and sand #f3e9d2 / deep navy #14202a via light-dark(), ink #123a4b, coral #ff6b57 accent, sea #2aa7a0, sun #f2c14e; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained postcard wall for a destination wedding: back-side postcards with stamps and city postmarks and a form that lands a new one first with a “sent” postmark. Postcards via props, submission to action.",
+              "preserve": [
+                "the back-side postcards: a centre line, a stamp, a round city postmark",
+                "the landing animation of a new postcard and the “sent” postmark",
+                "the form on the left with a “from” field, sticky from 56rem"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, cards (name, from, text)",
+                "formTitle, nameLabel, fromLabel, textLabel, submitLabel, sentLabel, action",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Without action a new postcard lives until reload — a showcase, not storage.",
+                "Postcard text is short — 2–4 handwritten lines."
+              ],
+              "usage": "<Testimonials021\n  title=\"Send us a postcard\"\n  cards={[\n    { name: \"Olya & Sasha\", from: \"Moscow\", text: \"Tickets bought, hats too.\" },\n    { name: \"Mariela\", from: \"Havana\", text: \"All set, the sea is warm. ¡Hasta la boda!\" },\n  ]}\n  submitLabel=\"Send\"\n  action=\"/api/postcards\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Send us a postcard"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Postcards",
+                "title": "Send us a postcard",
+                "lede": "We'll collect the real ones on the beach. But this wall already works — and everyone flying will see it.",
+                "formTitle": "Send a postcard",
+                "nameLabel": "Who's writing",
+                "fromLabel": "From",
+                "textLabel": "Postcard text",
+                "submitLabel": "Send",
+                "sentLabel": "sent",
+                "cards": [
+                  {
+                    "name": "Olya & Sasha",
+                    "from": "Moscow",
+                    "text": "Tickets bought, hats too. See you on the pier — just don't be late for your own wedding."
+                  },
+                  {
+                    "name": "Grandma Vera",
+                    "from": "Kazan",
+                    "text": "Timur, my first flight across the ocean. Sonya, I'm flying for you. Buy me rum."
+                  },
+                  {
+                    "name": "Dima",
+                    "from": "Berlin",
+                    "text": "Flying via Istanbul, like you did. If I get stuck for a day — you know whose fault it is."
+                  },
+                  {
+                    "name": "Mariela",
+                    "from": "Havana",
+                    "text": "All set, the sea is warm, the band is rehearsing. ¡Hasta la boda!"
+                  },
+                  {
+                    "name": "Kristina",
+                    "from": "St Petersburg",
+                    "text": "Leave approved, tan planned. Song already chosen — Chan Chan, of course."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

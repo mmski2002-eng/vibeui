@@ -1424,6 +1424,284 @@
           }
         }
       }
+    },
+    {
+      "name": "portfolio-009",
+      "type": "registry:block",
+      "title": "Галерея-открытки с переворотом на оборот",
+      "description": "Фото пары как открытки: на кремовом картоне с полоской скотча и рукописной подписью; клик переворачивает карточку — на обороте разлиновка, марка, круглый штемпель с городом и датой, текст открытки и адрес. Раскладка masonry, три формы карточек.",
+      "categories": [
+        "portfolio"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "portfolio-009/portfolio-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/portfolio-009.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради переворота (Set перевёрнутых индексов в state). Карточка — <button aria-pressed> с perspective, внутри [data-part=inner] с transform-style:preserve-3d и rotateY(180deg) по data-flipped; лицо и оборот — backface-visibility:hidden. Оборот — сетка 1.2fr/1fr с вертикальной линией ::before, текст рукописным, справа марка (рамка с пунктиром), SVG-штемпель с городом и датой и три линии адреса. Формы: wide 3:2, tall 4:5, square 1:1. Колонки CSS columns: 2 до 40rem, 3 до 64rem, 4 выше. Палитра --vibeui-portfolio-009-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "travel",
+          "gallery",
+          "postcards",
+          "flip",
+          "3d",
+          "masonry",
+          "stamp",
+          "postmark",
+          "photos",
+          "cuba",
+          "retro"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "cards": [
+              {
+                "src": "/demo/wedding-cuba/postcard-01.webp",
+                "caption": "Велосипед на двоих",
+                "back": "Соня едет на раме и командует. Я кручу.",
+                "from": "Trinidad",
+                "date": "03.2026",
+                "shape": "wide"
+              },
+              {
+                "src": "/demo/wedding-cuba/postcard-02.webp",
+                "caption": "Дверь в Гаване",
+                "back": "Синяя, облупленная, идеальная.",
+                "from": "La Habana",
+                "date": "10.2025",
+                "shape": "tall"
+              },
+              {
+                "src": "/demo/wedding-cuba/postcard-03.webp",
+                "caption": "Лежим",
+                "back": "Море +27, мы +100. Не звоните.",
+                "from": "Cayo Largo",
+                "date": "10.2025",
+                "shape": "wide"
+              },
+              {
+                "src": "/demo/wedding-cuba/postcard-04.webp",
+                "caption": "Кокос",
+                "back": "Один на двоих, две трубочки.",
+                "from": "Varadero",
+                "date": "10.2025",
+                "shape": "square"
+              },
+              {
+                "src": "/demo/wedding-cuba/postcard-05.webp",
+                "caption": "Сон на площади",
+                "back": "Нас научили за десять минут. Врут.",
+                "from": "La Habana",
+                "date": "10.2025",
+                "shape": "wide"
+              },
+              {
+                "src": "/demo/wedding-cuba/postcard-06.webp",
+                "caption": "Пирс",
+                "back": "Здесь он спросил. Тут я и ответила.",
+                "from": "Cayo Largo",
+                "date": "10.2025",
+                "shape": "tall"
+              },
+              {
+                "src": "/demo/wedding-cuba/postcard-07.webp",
+                "caption": "Маленький самолёт",
+                "back": "Сорок минут, восемь кресел, оба спали.",
+                "from": "над морем",
+                "date": "10.2025",
+                "shape": "wide"
+              },
+              {
+                "src": "/demo/wedding-cuba/postcard-08.webp",
+                "caption": "Закат",
+                "back": "Ничего не написали. Просто смотрели.",
+                "from": "Cayo Largo",
+                "date": "10.2025",
+                "shape": "wide"
+              }
+            ]
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Portfolio009",
+          "usage": "<Portfolio009\n  title=\"Что мы вам писали\"\n  addressee=\"Дорогим гостям\"\n  cards={[\n    { src: \"/photos/postcard-01.webp\", caption: \"Велосипед на двоих\", back: \"Соня едет на раме и командует.\", from: \"Trinidad\", date: \"03.2026\", shape: \"wide\" },\n    { src: \"/photos/postcard-02.webp\", caption: \"Дверь в Гаване\", back: \"Синяя, облупленная, идеальная.\", from: \"La Habana\", date: \"10.2025\", shape: \"tall\" },\n  ]}\n/>",
+          "summary": "Самодостаточная галерея-открытки: фото на картоне со скотчем, переворот на оборот с маркой, штемпелем и текстом, masonry с тремя формами. Открытки — массив пропсом.",
+          "preserve": [
+            "переворот карточки по клику и оборот открытки с маркой, штемпелем и разлиновкой",
+            "полоску скотча и рукописную подпись на лицевой стороне",
+            "masonry с тремя формами кадров — wide, tall, square"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, addressee",
+            "cards (src, alt, caption, back, from, date, shape)",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Текст оборота короткий: две-три строки, иначе обрежется.",
+            "Пустой src показывает песочную плашку — раскладку можно собрать до фото."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что мы вам писали",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Postcard gallery that flips to the back",
+            "description": "Couple photos as postcards: on cream card with a tape strip and a handwritten caption; a click flips the card — on the back, ruled lines, a stamp, a round postmark with the city and date, the postcard text and an address. A masonry layout with three card shapes.",
+            "docs": "One file, zero dependencies, “use client” for the flip (a Set of flipped indices in state). A card is a <button aria-pressed> with perspective, inside [data-part=inner] with transform-style:preserve-3d and rotateY(180deg) on data-flipped; front and back are backface-visibility:hidden. The back is a 1.2fr/1fr grid with a ::before vertical line, handwritten text, a stamp (dashed frame) on the right, an SVG postmark with city and date and three address lines. Shapes: wide 3:2, tall 4:5, square 1:1. CSS columns: 2 below 40rem, 3 below 64rem, 4 above. Palette --vibeui-portfolio-009-*: paper #fffaf0 and sand #f3e9d2 / deep navy #14202a via light-dark(), ink #123a4b, coral #ff6b57 accent, sea #2aa7a0, sun #f2c14e; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained postcard gallery: taped photos on card, flipping to a back with a stamp, postmark and text, masonry with three shapes. Postcards come as a prop array.",
+              "preserve": [
+                "the click flip and the postcard back with the stamp, postmark and ruled lines",
+                "the tape strip and handwritten caption on the front",
+                "masonry with three frame shapes — wide, tall, square"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, addressee",
+                "cards (src, alt, caption, back, from, date, shape)",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Back text is short: two or three lines, or it gets clipped.",
+                "An empty src shows a sand placeholder — the layout can be built before the photos."
+              ],
+              "usage": "<Portfolio009\n  title=\"What we wrote to you\"\n  addressee=\"Dear guests\"\n  cards={[\n    { src: \"/photos/postcard-01.webp\", caption: \"A bike for two\", back: \"Sonya rides the crossbar and gives orders.\", from: \"Trinidad\", date: \"03.2026\", shape: \"wide\" },\n    { src: \"/photos/postcard-02.webp\", caption: \"A door in Havana\", back: \"Blue, peeling, perfect.\", from: \"La Habana\", date: \"10.2025\", shape: \"tall\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What we wrote to you"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Postcards",
+                "title": "What we wrote to you",
+                "lede": "From every trip we sent each other postcards — even when sitting side by side. Flip any of them.",
+                "addressee": "Dear guests",
+                "cards": [
+                  {
+                    "src": "/demo/wedding-cuba/postcard-01.webp",
+                    "caption": "A bike for two",
+                    "back": "Sonya rides the crossbar and gives orders. I pedal.",
+                    "from": "Trinidad",
+                    "date": "03.2026",
+                    "shape": "wide"
+                  },
+                  {
+                    "src": "/demo/wedding-cuba/postcard-02.webp",
+                    "caption": "A door in Havana",
+                    "back": "Blue, peeling, perfect.",
+                    "from": "La Habana",
+                    "date": "10.2025",
+                    "shape": "tall"
+                  },
+                  {
+                    "src": "/demo/wedding-cuba/postcard-03.webp",
+                    "caption": "Floating",
+                    "back": "Sea +27, us +100. Don't call.",
+                    "from": "Cayo Largo",
+                    "date": "10.2025",
+                    "shape": "wide"
+                  },
+                  {
+                    "src": "/demo/wedding-cuba/postcard-04.webp",
+                    "caption": "Coconut",
+                    "back": "One for two, two straws.",
+                    "from": "Varadero",
+                    "date": "10.2025",
+                    "shape": "square"
+                  },
+                  {
+                    "src": "/demo/wedding-cuba/postcard-05.webp",
+                    "caption": "Son on the square",
+                    "back": "They taught us in ten minutes. Liars.",
+                    "from": "La Habana",
+                    "date": "10.2025",
+                    "shape": "wide"
+                  },
+                  {
+                    "src": "/demo/wedding-cuba/postcard-06.webp",
+                    "caption": "The pier",
+                    "back": "He asked here. I answered here.",
+                    "from": "Cayo Largo",
+                    "date": "10.2025",
+                    "shape": "tall"
+                  },
+                  {
+                    "src": "/demo/wedding-cuba/postcard-07.webp",
+                    "caption": "A small plane",
+                    "back": "Forty minutes, eight seats, both asleep.",
+                    "from": "над морем",
+                    "date": "10.2025",
+                    "shape": "wide"
+                  },
+                  {
+                    "src": "/demo/wedding-cuba/postcard-08.webp",
+                    "caption": "Sunset",
+                    "back": "Wrote nothing. Just watched.",
+                    "from": "Cayo Largo",
+                    "date": "10.2025",
+                    "shape": "wide"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

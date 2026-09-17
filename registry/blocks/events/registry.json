@@ -1727,6 +1727,745 @@
           }
         }
       }
+    },
+    {
+      "name": "event-010",
+      "type": "registry:block",
+      "title": "Программа трёх дней табами-билетами",
+      "description": "Программа свадьбы-путешествия на три дня: табы как билеты с числом крупно, подписью дня и рукописной строкой, главный день (церемония) — коралловый. Под табами расписание дня: время узким капсом, место, пара слов и плашка «что надеть». Переключение — с проступанием.",
+      "categories": [
+        "events"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "event-010/event-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/event-010.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради табов (useState, старт на дне с main). Табы — <button role=tab aria-selected> сеткой 3 в ряд, с «дырочкой» слева ::before под цвет фона; data-main + aria-selected заливают коралловым. Панель — role=tabpanel с key по индексу, чтобы keyframes проступания срабатывали при каждой смене; расписание — <ol> с <time> и заголовками, место мелким капсом в акценте; фото дня на белом картоне и плашка «что надеть» — солнечная заливка с рукописной строкой, от 56rem справа колонкой .6fr. Палитра --vibeui-event-010-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "travel",
+          "schedule",
+          "tabs",
+          "days",
+          "itinerary",
+          "timeline",
+          "ticket",
+          "cuba",
+          "beach",
+          "retro"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "days": [
+              {
+                "day": "12",
+                "label": "Гавана",
+                "note": "прилёт и мохито",
+                "wear": "Лён, кеды и что-нибудь от солнца",
+                "image": "/demo/wedding-cuba/havana-02.webp",
+                "slots": [
+                  {
+                    "time": "14:30",
+                    "title": "Прилёт",
+                    "place": "аэропорт Хосе Марти",
+                    "text": "Трансфер ждёт на выходе — ищите табличку с нашими именами."
+                  },
+                  {
+                    "time": "18:00",
+                    "title": "Прогулка",
+                    "place": "Старая Гавана",
+                    "text": "Малекон, старые машины, первое мороженое."
+                  },
+                  {
+                    "time": "20:30",
+                    "title": "Ужин на крыше",
+                    "place": "бар у собора",
+                    "text": "Знакомимся. Мохито за наш счёт."
+                  }
+                ]
+              },
+              {
+                "day": "13",
+                "label": "Пляж",
+                "note": "тот самый день",
+                "wear": "Beach formal: лён, песок, никаких каблуков",
+                "main": true,
+                "image": "/demo/wedding-cuba/beach-ceremony.webp",
+                "slots": [
+                  {
+                    "time": "09:00",
+                    "title": "Перелёт на Кайо-Ларго",
+                    "place": "маленький самолёт",
+                    "text": "Сорок минут над бирюзой — и мы на месте."
+                  },
+                  {
+                    "time": "16:30",
+                    "title": "Церемония",
+                    "place": "Playa Paraíso",
+                    "text": "Босиком, лицом к морю, двадцать минут."
+                  },
+                  {
+                    "time": "18:00",
+                    "title": "Ужин на песке",
+                    "place": "длинный стол у воды",
+                    "text": "Лобстер, ром, закат и тосты."
+                  },
+                  {
+                    "time": "21:00",
+                    "title": "Сон-кубано",
+                    "place": "там же",
+                    "text": "Живая группа из Гаваны. Танцевать умеют все — проверено."
+                  }
+                ]
+              },
+              {
+                "day": "14",
+                "label": "Прощание",
+                "note": "медленное утро",
+                "wear": "Что осталось чистым",
+                "image": "/demo/wedding-cuba/hotel.webp",
+                "slots": [
+                  {
+                    "time": "10:30",
+                    "title": "Поздний завтрак",
+                    "place": "терраса отеля",
+                    "text": "Кофе, папайя, обмен фотографиями."
+                  },
+                  {
+                    "time": "13:00",
+                    "title": "Море",
+                    "place": "пляж отеля",
+                    "text": "Последнее купание. Или первое — как пойдёт."
+                  },
+                  {
+                    "time": "17:00",
+                    "title": "Обратно в Гавану",
+                    "place": "самолёт",
+                    "text": "Вечером кто-то улетает домой, кто-то остаётся на неделю."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Event010",
+          "usage": "<Event010\n  title=\"Гавана, пляж, прощание\"\n  days={[\n    { day: \"12\", label: \"Гавана\", note: \"прилёт и мохито\", wear: \"Лён и кеды\", slots: [{ time: \"14:30\", title: \"Прилёт\", place: \"аэропорт\", text: \"Трансфер ждёт.\" }] },\n    { day: \"13\", label: \"Пляж\", note: \"тот самый день\", wear: \"Beach formal\", main: true, slots: [{ time: \"16:30\", title: \"Церемония\", place: \"Playa Paraíso\" }] },\n    { day: \"14\", label: \"Прощание\", note: \"медленное утро\", slots: [{ time: \"10:30\", title: \"Завтрак\", place: \"терраса\" }] },\n  ]}\n/>",
+          "summary": "Самодостаточная программа многодневной свадьбы: табы-билеты по дням с главным днём в акценте, расписание с временем и местом, «что надеть». Дни и слоты — пропсами.",
+          "preserve": [
+            "табы-билеты с числом крупно и «дырочкой» слева, главный день коралловый",
+            "расписание с временем узким капсом и местом мелким акцентом",
+            "плашку «что надеть» рукописным на солнечной заливке"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, wearLabel",
+            "days (day, label, note, wear, main, image, slots: time, title, place, text) — сколько угодно дней",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Стартовый таб — день с main; без него первый.",
+            "Три таба в ряд и на телефоне: подписи короткие, число — главное."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Гавана, пляж, прощание",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Three-day schedule as ticket tabs",
+            "description": "A three-day destination-wedding schedule: tabs like tickets with a big day number, a day label and a handwritten line, the main day (ceremony) in coral. Under the tabs the day's timetable: time in narrow caps, place, a few words and a “what to wear” panel. Switching fades in.",
+            "docs": "One file, zero dependencies, “use client” for the tabs (useState, starting on the main day). Tabs are <button role=tab aria-selected> in a 3-per-row grid with a background-coloured ::before punch hole on the left; data-main + aria-selected fill coral. The panel is role=tabpanel keyed by index so the fade-in keyframes replay on each switch; the timetable is an <ol> with <time> and headings, the place in small accent caps; the day photo on white card and the “what to wear” panel is a sun fill with a handwritten line, a .6fr column on the right from 56rem. Palette --vibeui-event-010-*: paper #fffaf0 and sand #f3e9d2 / deep navy #14202a via light-dark(), ink #123a4b, coral #ff6b57 accent, sea #2aa7a0, sun #f2c14e; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained multi-day wedding schedule: ticket tabs per day with the main day accented, a timetable with time and place, “what to wear”. Days and slots via props.",
+              "preserve": [
+                "the ticket tabs with the big number and the punch hole, the main day in coral",
+                "the timetable with narrow-caps time and the small accent place",
+                "the handwritten “what to wear” panel on a sun fill"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, wearLabel",
+                "days (day, label, note, wear, main, image, slots: time, title, place, text) — any number of days",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The initial tab is the day with main; otherwise the first.",
+                "Three tabs stay in a row on phones too: labels are short, the number leads."
+              ],
+              "usage": "<Event010\n  title=\"Havana, beach, farewell\"\n  days={[\n    { day: \"12\", label: \"Havana\", note: \"arrival and mojitos\", wear: \"Linen and sneakers\", slots: [{ time: \"14:30\", title: \"Arrival\", place: \"airport\", text: \"The shuttle is waiting.\" }] },\n    { day: \"13\", label: \"Beach\", note: \"the day\", wear: \"Beach formal\", main: true, slots: [{ time: \"16:30\", title: \"Ceremony\", place: \"Playa Paraíso\" }] },\n    { day: \"14\", label: \"Farewell\", note: \"a slow morning\", slots: [{ time: \"10:30\", title: \"Brunch\", place: \"terrace\" }] },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Havana, beach, farewell"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Three days",
+                "title": "Havana, beach, farewell",
+                "lede": "We arrive together and leave together. In between — one evening in the city, one ceremony on the sand and one morning to sleep in.",
+                "wearLabel": "What to wear",
+                "days": [
+                  {
+                    "day": "12",
+                    "label": "Havana",
+                    "note": "arrival and mojitos",
+                    "wear": "Linen, sneakers and something for the sun",
+                    "slots": [
+                      {
+                        "time": "14:30",
+                        "title": "Arrival",
+                        "place": "José Martí airport",
+                        "text": "The shuttle waits at the exit — look for the sign with our names."
+                      },
+                      {
+                        "time": "18:00",
+                        "title": "A walk",
+                        "place": "Old Havana",
+                        "text": "The Malecón, vintage cars, the first ice cream."
+                      },
+                      {
+                        "time": "20:30",
+                        "title": "Rooftop dinner",
+                        "place": "bar by the cathedral",
+                        "text": "Getting to know each other. Mojitos on us."
+                      }
+                    ],
+                    "image": "/demo/wedding-cuba/havana-02.webp"
+                  },
+                  {
+                    "day": "13",
+                    "label": "Beach",
+                    "note": "the day",
+                    "wear": "Beach formal: linen, sand, no heels",
+                    "main": true,
+                    "slots": [
+                      {
+                        "time": "09:00",
+                        "title": "Flight to Cayo Largo",
+                        "place": "a small plane",
+                        "text": "Forty minutes over turquoise — and we're there."
+                      },
+                      {
+                        "time": "16:30",
+                        "title": "Ceremony",
+                        "place": "Playa Paraíso",
+                        "text": "Barefoot, facing the sea, twenty minutes."
+                      },
+                      {
+                        "time": "18:00",
+                        "title": "Dinner on the sand",
+                        "place": "a long table by the water",
+                        "text": "Lobster, rum, sunset and toasts."
+                      },
+                      {
+                        "time": "21:00",
+                        "title": "Son cubano",
+                        "place": "same place",
+                        "text": "A live band from Havana. Everyone can dance — tested."
+                      }
+                    ],
+                    "image": "/demo/wedding-cuba/beach-ceremony.webp"
+                  },
+                  {
+                    "day": "14",
+                    "label": "Farewell",
+                    "note": "a slow morning",
+                    "wear": "Whatever's still clean",
+                    "slots": [
+                      {
+                        "time": "10:30",
+                        "title": "Late breakfast",
+                        "place": "hotel terrace",
+                        "text": "Coffee, papaya, swapping photos."
+                      },
+                      {
+                        "time": "13:00",
+                        "title": "The sea",
+                        "place": "hotel beach",
+                        "text": "The last swim. Or the first — depends."
+                      },
+                      {
+                        "time": "17:00",
+                        "title": "Back to Havana",
+                        "place": "plane",
+                        "text": "In the evening some fly home, some stay a week."
+                      }
+                    ],
+                    "image": "/demo/wedding-cuba/hotel.webp"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "event-011",
+      "type": "registry:block",
+      "title": "Дорожная информация с чек-листом «что взять»",
+      "description": "Всё для перелёта на свадьбу за границей: карточки-билеты с перфорацией — перелёт, виза, деньги, связь, страховка, розетки — с крупной цифрой и парой строк; карточка организатора на месте с кнопкой «написать». Справа липкий чек-лист «что взять» с галочками и прогрессом: отметки живут в localStorage, чемодан собирают в несколько подходов.",
+      "categories": [
+        "events"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "event-011/event-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/event-011.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради чек-листа. Карточки — <ul> 2 в ряд от 56rem, перфорация слева ::before radial-gradient, иконки inline SVG по card.icon: plane, passport, cash, sim, shield, phone. Организатор — тёмная плашка с рукописным именем и коралловой кнопкой. Чек-лист — кнопки role=checkbox aria-checked, отметки читаются useSyncExternalStore из localStorage по storageKey (на сервере пусто, без расхождений гидрации), запись рассылает событие; отмеченные зачёркиваются коралловой линией, прогресс — полоска из --vibeui-event-011-done. От 56rem сетка 1.5fr/.8fr, чек-лист sticky top:5rem. Палитра --vibeui-event-011-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "travel",
+          "info",
+          "flight",
+          "visa",
+          "money",
+          "checklist",
+          "packing",
+          "localstorage",
+          "ticket",
+          "cuba",
+          "retro"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "contactImage": "/demo/wedding-cuba/planner.webp"
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Event011",
+          "usage": "<Event011\n  title=\"Что знать до вылета\"\n  cards={[\n    { icon: \"plane\", title: \"Перелёт\", value: \"13 ч 20 мин\", text: \"Прямой рейс, багаж включён.\" },\n    { icon: \"passport\", title: \"Виза\", value: \"Не нужна\", text: \"До 90 дней без визы.\" },\n    { icon: \"cash\", title: \"Деньги\", value: \"Наличные\", text: \"Карты не работают.\" },\n  ]}\n  contactName=\"Мариэла\"\n  contactRole=\"организатор в Гаване\"\n  contactHref=\"https://wa.me/…\"\n  checklist={[\"Загранпаспорт\", \"Наличные\", \"Страховка\", \"Шляпа и крем\"]}\n  storageKey=\"my-wedding-packing\"\n/>",
+          "summary": "Самодостаточная дорожная информация для свадьбы за границей: карточки-билеты с фактами, организатор на месте и чек-лист «что взять» с галочками в localStorage. Всё пропсами.",
+          "preserve": [
+            "карточки-билеты с перфорацией слева и крупной цифрой",
+            "чек-лист с галочками, зачёркиванием и полоской прогресса, который помнит отметки",
+            "тёмную плашку организатора с рукописным именем"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, cards (icon из набора, title, value, text)",
+            "contactName, contactRole, contactLabel, contactHref, contactImage, checklistTitle, checklistNote, checklist, storageKey",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "storageKey задавайте свой — иначе отметки одного сайта видны на другом с тем же ключом.",
+            "Пустой checklist убирает правую колонку."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что знать до вылета",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Travel info with a “what to pack” checklist",
+            "description": "Everything for flying to a wedding abroad: perforated ticket cards — flight, visa, money, connectivity, insurance, sockets — with a big figure and a couple of lines; a local planner card with a “message” button. On the right a sticky “what to pack” checklist with ticks and progress: ticks live in localStorage, so the suitcase gets packed over several sittings.",
+            "docs": "One file, zero dependencies, “use client” for the checklist. Cards are a <ul>, 2 per row from 56rem, a ::before radial-gradient perforation on the left, inline SVG icons by card.icon: plane, passport, cash, sim, shield, phone. The planner is a dark panel with a handwritten name and a coral button. The checklist is role=checkbox aria-checked buttons; ticks are read via useSyncExternalStore from localStorage by storageKey (empty on the server, no hydration mismatch), writes dispatch an event; ticked items are struck through in coral, progress is a bar from --vibeui-event-011-done. From 56rem a 1.5fr/.8fr grid, the checklist sticky top:5rem. Palette --vibeui-event-011-*: paper #fffaf0 and sand #f3e9d2 / deep navy #14202a via light-dark(), ink #123a4b, coral #ff6b57 accent, sea #2aa7a0, sun #f2c14e; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "Self-contained travel info for a wedding abroad: ticket cards with facts, a local planner and a “what to pack” checklist with ticks in localStorage. All via props.",
+              "preserve": [
+                "the ticket cards with the left perforation and the big figure",
+                "the checklist with ticks, strike-through and a progress bar that remembers",
+                "the dark planner panel with the handwritten name"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, cards (icon from the set, title, value, text)",
+                "contactName, contactRole, contactLabel, contactHref, contactImage, checklistTitle, checklistNote, checklist, storageKey",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Set your own storageKey — otherwise ticks from one site show on another with the same key.",
+                "An empty checklist removes the right column."
+              ],
+              "usage": "<Event011\n  title=\"What to know before departure\"\n  cards={[\n    { icon: \"plane\", title: \"Flight\", value: \"13 h 20 min\", text: \"Direct, luggage included.\" },\n    { icon: \"passport\", title: \"Visa\", value: \"Not needed\", text: \"Up to 90 days visa-free.\" },\n    { icon: \"cash\", title: \"Money\", value: \"Cash\", text: \"Cards don't work.\" },\n  ]}\n  contactName=\"Mariela\"\n  contactRole=\"planner in Havana\"\n  contactHref=\"https://wa.me/…\"\n  checklist={[\"Passport\", \"Cash\", \"Insurance\", \"Hat and sunscreen\"]}\n  storageKey=\"my-wedding-packing\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What to know before departure"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Travel",
+                "title": "What to know before departure",
+                "lede": "Everything people ask a week before the flight — in one place. The rest is with Mariela, she's in Cuba and answers faster than we do.",
+                "cards": [
+                  {
+                    "icon": "plane",
+                    "title": "Flight",
+                    "value": "13 h 20 min",
+                    "text": "Direct Moscow — Havana, departing 12 February at 09:40, 23 kg luggage included."
+                  },
+                  {
+                    "icon": "passport",
+                    "title": "Visa",
+                    "value": "Not needed",
+                    "text": "Visa-free up to 90 days. The passport must be valid six more months."
+                  },
+                  {
+                    "icon": "cash",
+                    "title": "Money",
+                    "value": "Cash",
+                    "text": "Russian bank cards don't work. Bring dollars or euros, exchange at the hotel."
+                  },
+                  {
+                    "icon": "sim",
+                    "title": "Connectivity",
+                    "value": "Cubacel eSIM",
+                    "text": "Internet is slow and pricey. Get an eSIM in advance or take a break from it."
+                  },
+                  {
+                    "icon": "shield",
+                    "title": "Insurance",
+                    "value": "Required",
+                    "text": "Border control asks for a policy. Four days costs about a coffee."
+                  },
+                  {
+                    "icon": "phone",
+                    "title": "Sockets",
+                    "value": "110 V · type A",
+                    "text": "Bring an adapter; the hotel has hairdryers, irons are a question."
+                  }
+                ],
+                "contactName": "Mariela",
+                "contactRole": "planner in Havana, speaks Russian",
+                "contactLabel": "Message on WhatsApp",
+                "checklistTitle": "What to pack",
+                "checklistNote": "tick — the list remembers",
+                "checklist": [
+                  "Passport (valid 6+ months)",
+                  "Cash in dollars or euros",
+                  "Insurance for 4 days",
+                  "Linen for the beach and something for the evening",
+                  "Hat, sunglasses, SPF 50",
+                  "Type A socket adapter",
+                  "Mosquito repellent",
+                  "Swimsuit — in carry-on",
+                  "A good mood and that one song"
+                ],
+                "contactImage": "/demo/wedding-cuba/planner.webp"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "event-012",
+      "type": "registry:block",
+      "title": "Дресс-код «beach formal» с образцами ткани",
+      "description": "Дресс-код пляжной свадьбы: полоса выгоревших цветов как образцы ткани — наведение расширяет полоску, клик копирует HEX; два образа «ей» и «ему» с фото на скотче; три правила пляжа с иконками — солнце, песок, ветер. Никаких каблуков.",
+      "categories": [
+        "events"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "event-012/event-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/event-012.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 1.6 с состояния). Образцы — <ul> с li display:contents и кнопками flex:1, цвет из swatch.hex через --vibeui-event-012-chip, цвет подписи считается по яркости (ink); hover и data-copied расширяют полоску до flex:1.6. Образы — фото 4:5 на белом картоне со скотчем ::before, повёрнуты вразнобой; правила — плашка на песке с inline SVG по rule.icon: sun, sand, wind. От 56rem образы в две колонки, правила справа .7fr. Палитра --vibeui-event-012-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "dress code",
+          "beach",
+          "palette",
+          "swatches",
+          "fabric",
+          "copy",
+          "hex",
+          "outfit",
+          "cuba",
+          "retro"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "looks": [
+              {
+                "who": "Ей",
+                "title": "Лён, миди, плоская подошва",
+                "text": "Платье или комбинезон в песке, мяте или коралле.",
+                "image": "/demo/wedding-cuba/look-her.webp"
+              },
+              {
+                "who": "Ему",
+                "title": "Рубашка навыпуск, светлые брюки",
+                "text": "Лён или хлопок, рукав закатать. Шляпа — очень.",
+                "image": "/demo/wedding-cuba/look-him.webp"
+              }
+            ]
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Event012",
+          "usage": "<Event012\n  title=\"Beach formal — то есть «красиво, но босиком»\"\n  swatches={[\n    { name: \"Песок\", hex: \"#f3e9d2\" },\n    { name: \"Море\", hex: \"#2aa7a0\" },\n    { name: \"Коралл\", hex: \"#ff6b57\" },\n  ]}\n  looks={[\n    { who: \"Ей\", title: \"Лён, миди, плоская подошва\", text: \"Любой цвет из палитры.\", image: \"/photos/look-her.webp\" },\n    { who: \"Ему\", title: \"Рубашка навыпуск\", text: \"Пиджак не нужен.\", image: \"/photos/look-him.webp\" },\n  ]}\n  rules={[{ icon: \"sun\", text: \"Шляпа, очки, крем.\" }]}\n/>",
+          "summary": "Самодостаточный дресс-код пляжной свадьбы: полоса образцов ткани с копированием HEX, образы «ей» и «ему» с фото, три правила пляжа. Цвета, образы и правила пропсами.",
+          "preserve": [
+            "полосу образцов ткани, где полоска расширяется по наведению и копирует цвет",
+            "образы с фото на картоне со скотчем, повёрнутые вразнобой",
+            "три правила пляжа с круглыми иконками на песочной плашке"
+          ],
+          "adapt": [
+            "eyebrow, title (после « — » уходит в рукописный), lede, swatches (name, hex), copiedLabel",
+            "looks (who, title, text, image), rules (icon из набора, text)",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Цвет подписи на образце считается по яркости hex — тёмные получают кремовый текст.",
+            "Без clipboard клик ничего не копирует, но полоска остаётся доступной."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Beach formal — то есть «красиво, но босиком»",
+            "maxLength": 60
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "“Beach formal” dress code with fabric swatches",
+            "description": "A beach-wedding dress code: a strip of sun-bleached colours like fabric swatches — hover widens a strip, a click copies the HEX; two looks, “her” and “him”, with taped photos; three beach rules with icons — sun, sand, wind. No heels.",
+            "docs": "One file, zero dependencies, “use client” for copying (navigator.clipboard, 1.6 s state). Swatches are a <ul> with display:contents li and flex:1 buttons, the colour from swatch.hex via --vibeui-event-012-chip, the caption colour computed from luminance (ink); hover and data-copied widen the strip to flex:1.6. Looks are 4:5 photos on white card with a ::before tape, tilted unevenly; rules are a sand panel with inline SVGs by rule.icon: sun, sand, wind. From 56rem looks in two columns, rules on the right at .7fr. Palette --vibeui-event-012-*: paper #fffaf0 and sand #f3e9d2 / deep navy #14202a via light-dark(), ink #123a4b, coral #ff6b57 accent, sea #2aa7a0, sun #f2c14e; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained beach-wedding dress code: a fabric-swatch strip with HEX copying, “her” and “him” looks with photos, three beach rules. Colours, looks and rules via props.",
+              "preserve": [
+                "the fabric-swatch strip where a strip widens on hover and copies its colour",
+                "the looks with taped photos on card, tilted unevenly",
+                "the three beach rules with round icons on the sand panel"
+              ],
+              "adapt": [
+                "eyebrow, title (after “ — ” turns handwritten), lede, swatches (name, hex), copiedLabel",
+                "looks (who, title, text, image), rules (icon from the set, text)",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The swatch caption colour is computed from the hex luminance — dark ones get cream text.",
+                "Without clipboard the click copies nothing, but the strip stays accessible."
+              ],
+              "usage": "<Event012\n  title=\"Beach formal — that is “dressed up, barefoot”\"\n  swatches={[\n    { name: \"Sand\", hex: \"#f3e9d2\" },\n    { name: \"Sea\", hex: \"#2aa7a0\" },\n    { name: \"Coral\", hex: \"#ff6b57\" },\n  ]}\n  looks={[\n    { who: \"Her\", title: \"Linen, midi, flat soles\", text: \"Any colour from the palette.\", image: \"/photos/look-her.webp\" },\n    { who: \"Him\", title: \"Untucked shirt\", text: \"No jacket needed.\", image: \"/photos/look-him.webp\" },\n  ]}\n  rules={[{ icon: \"sun\", text: \"Hat, sunglasses, sunscreen.\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Beach formal — that is “dressed up, barefoot”"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Dress code",
+                "title": "Beach formal — that is “dressed up, barefoot”",
+                "lede": "Sand, sun and wind decide for us: linen, light colours, nothing complicated. The colours are from this beach.",
+                "copiedLabel": "copied",
+                "swatches": [
+                  {
+                    "name": "Sand",
+                    "hex": "#f3e9d2"
+                  },
+                  {
+                    "name": "Mint",
+                    "hex": "#bfe3d6"
+                  },
+                  {
+                    "name": "Sea",
+                    "hex": "#2aa7a0"
+                  },
+                  {
+                    "name": "Coral",
+                    "hex": "#ff6b57"
+                  },
+                  {
+                    "name": "Sun",
+                    "hex": "#f2c14e"
+                  },
+                  {
+                    "name": "Ink",
+                    "hex": "#123a4b"
+                  }
+                ],
+                "looks": [
+                  {
+                    "who": "Her",
+                    "title": "Linen, midi, flat soles",
+                    "text": "A dress or a jumpsuit in sand, mint or coral. Heels sink — sandals or barefoot.",
+                    "image": "/demo/wedding-cuba/look-her.webp"
+                  },
+                  {
+                    "who": "Him",
+                    "title": "Untucked shirt, light trousers",
+                    "text": "Linen or cotton, sleeves rolled. No jacket needed, a hat — very much.",
+                    "image": "/demo/wedding-cuba/look-him.webp"
+                  }
+                ],
+                "rules": [
+                  {
+                    "icon": "sun",
+                    "text": "Ceremony at 16:30 — the sun is still high. Hat, sunglasses, sunscreen."
+                  },
+                  {
+                    "icon": "sand",
+                    "text": "The sand is fine and hot: shoes come off at the beach entrance."
+                  },
+                  {
+                    "icon": "wind",
+                    "text": "By evening the sea breeze picks up — a light shirt or a wrap will help."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

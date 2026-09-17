@@ -3720,6 +3720,190 @@
           }
         }
       }
+    },
+    {
+      "name": "faq-021",
+      "type": "registry:block",
+      "title": "Вопросы гостей багажными бирками",
+      "description": "Вопросы о свадьбе за границей — багажные бирки: у каждой слева цветной хвостик с темой («виза», «деньги») и дырочкой под шнурок, вопрос узким капсом, крестик справа. Открытая бирка приподнимается и показывает ответ; открыта одна за раз. Две колонки от 56rem.",
+      "categories": [
+        "faq"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "faq-021/faq-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/faq-021.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный. details с общим name (useId) — один открыт за раз без JS; summary — сетка 5rem/1fr/1.6rem: цветной хвостик с дырочкой ::after слева и темой мелким капсом, вопрос, маркер из двух линий (::after поворачивается 90→0). Хвостики чередуют море/коралл/солнце по nth-child(3n). Открытая бирка — transform и тень; ответ fade-in. Палитра --vibeui-faq-021-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "travel",
+          "faq",
+          "questions",
+          "accordion",
+          "luggage tag",
+          "details",
+          "cuba",
+          "retro"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Faq021",
+          "usage": "<Faq021\n  title=\"Перед вылетом спрашивают\"\n  items={[\n    { tag: \"виза\", question: \"Нужна ли виза?\", answer: \"Нет, до 90 дней без визы.\" },\n    { tag: \"деньги\", question: \"Чем платить?\", answer: \"Наличными: доллары или евро.\" },\n    { tag: \"море\", question: \"Можно купаться после церемонии?\", answer: \"Нужно.\" },\n  ]}\n  askLabel=\"Напишите Мариэле\"\n  askHref=\"#travel\"\n/>",
+          "summary": "Самодостаточный блок вопросов для свадьбы за границей: бирки с темой на цветном хвостике, один открыт за раз, две колонки. Вопросы — массив пропсом.",
+          "preserve": [
+            "цветной хвостик с темой и дырочкой под шнурок — бирка, а не строка",
+            "чередование цветов хвостиков и подъём открытой бирки",
+            "один открытый вопрос за раз через name у details"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, items (tag, question, answer)",
+            "askText, askLabel, askHref",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Метка tag — одно короткое слово: хвостик узкий.",
+            "Ответ — обычный текст без разметки."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Перед вылетом спрашивают",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Guest FAQ as luggage tags",
+            "description": "Questions about a wedding abroad as luggage tags: each has a coloured stub on the left with the topic (“visa”, “money”) and a string hole, the question in narrow caps, a cross on the right. The open tag lifts and shows the answer; one open at a time. Two columns from 56rem.",
+            "docs": "One file, zero dependencies, server-rendered. details share a name (useId) — one open at a time without JS; summary is a 5rem/1fr/1.6rem grid: a coloured stub with a ::after hole on the left and the topic in small caps, the question, a two-line marker (::after rotates 90→0). Stubs alternate sea/coral/sun by nth-child(3n). The open tag gets a transform and shadow; the answer fades in. Palette --vibeui-faq-021-*: paper #fffaf0 and sand #f3e9d2 / deep navy #14202a via light-dark(), ink #123a4b, coral #ff6b57 accent, sea #2aa7a0, sun #f2c14e; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained FAQ block for a wedding abroad: tags with a topic on a coloured stub, one open at a time, two columns. Questions come as a prop array.",
+              "preserve": [
+                "the coloured stub with the topic and string hole — a tag, not a row",
+                "the alternating stub colours and the lift of the open tag",
+                "one open question at a time via name on details"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, items (tag, question, answer)",
+                "askText, askLabel, askHref",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The tag label is one short word: the stub is narrow.",
+                "Answers are plain text without markup."
+              ],
+              "usage": "<Faq021\n  title=\"Asked before departure\"\n  items={[\n    { tag: \"visa\", question: \"Do I need a visa?\", answer: \"No, up to 90 days visa-free.\" },\n    { tag: \"money\", question: \"How to pay?\", answer: \"Cash: dollars or euros.\" },\n    { tag: \"sea\", question: \"Can we swim after the ceremony?\", answer: \"You must.\" },\n  ]}\n  askLabel=\"Write to Mariela\"\n  askHref=\"#travel\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Asked before departure"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "FAQ",
+                "title": "Asked before departure",
+                "lede": "Everything we've been asked in the last month. No answer — Mariela is online.",
+                "askText": "Didn't find an answer?",
+                "askLabel": "Write to Mariela",
+                "items": [
+                  {
+                    "tag": "visa",
+                    "question": "Do I need a visa?",
+                    "answer": "No. Visa-free up to 90 days; you only need a passport valid six months after the trip."
+                  },
+                  {
+                    "tag": "money",
+                    "question": "How to pay?",
+                    "answer": "Cash: dollars or euros, exchanged bit by bit at the hotel. Our bank cards don't work, nor does Apple Pay."
+                  },
+                  {
+                    "tag": "wifi",
+                    "question": "Will there be internet?",
+                    "answer": "Slow and mostly at the hotel. Get a Cubacel eSIM in advance — or take three days off from it."
+                  },
+                  {
+                    "tag": "sun",
+                    "question": "How hot is it?",
+                    "answer": "February is the best month: +28° by day, +21° in the evening, almost no rain. SPF 50 and a hat are a must."
+                  },
+                  {
+                    "tag": "sea",
+                    "question": "Can we swim after the ceremony?",
+                    "answer": "You must. Dinner starts at 18:00; between the ceremony and dinner — the sea and the sunset."
+                  },
+                  {
+                    "tag": "kids",
+                    "question": "Can we bring kids?",
+                    "answer": "Yes. The beach is safe and shallow, the hotel has cots. Put their age in the form."
+                  },
+                  {
+                    "tag": "flight",
+                    "question": "How long is the flight?",
+                    "answer": "The direct flight is about 13 hours. There are options via Istanbul, but we fly direct."
+                  },
+                  {
+                    "tag": "gifts",
+                    "question": "What to bring as a gift?",
+                    "answer": "Yourself and a tan. If you insist — a contribution to our next flight, details in “Gifts”. Flowers won't survive the trip."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

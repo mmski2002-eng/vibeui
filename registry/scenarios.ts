@@ -914,6 +914,137 @@ export const SCENARIOS: Scenario[] = [
       },
     ],
   },
+  {
+    slug: "wedding-cuba",
+    label: "Свадьба на Кубе",
+    en: "Wedding in Cuba",
+    summary:
+      "Сайт свадьбы-путешествия: посадочный талон с отрывным корешком на входе, пляж на весь экран и отсчёт «до вылета», маршрут пары самолётиком по линии рейса, три дня табами-билетами, дорожная информация с чек-листом «что взять», дресс-код beach formal, карта отеля и пляжа, check-in вместо RSVP, вопросы багажными бирками, открытки с переворотом, подарки «на следующий рейс», открытки от гостей и подвал-талон. Бумага и песок, чернила и коралл, Oswald и Lobster.",
+    summaryEn:
+      "A destination-wedding site: a boarding pass with a tear-off stub at the door, a full-screen beach and a “to departure” countdown, the couple's route as a plane on a flight line, three days as ticket tabs, travel info with a packing checklist, a beach-formal dress code, a hotel and beach map, check-in instead of RSVP, FAQ as luggage tags, flipping postcards, “next flight” gifts, guest postcards and a boarding-pass footer. Paper and sand, ink and coral, Oswald and Lobster.",
+    demo: "/scenarios/wedding-cuba/demo",
+    source: "app/scenarios/wedding-cuba/demo/page.tsx",
+    images: "docs/scenarios/wedding-cuba/IMAGES.md",
+    theme: {
+      tone: "light",
+      accent: "#ff6b57",
+      ink: "#123a4b",
+      font: "Oswald, Lobster, Manrope",
+    },
+    sections: [
+      {
+        item: "navbar-026",
+        anchor: "",
+        role: "Шапка",
+        roleEn: "Header",
+        note: "Верх посадочного талона: код рейса, счётчик «до вылета», музыка и «Check-in».",
+        noteEn:
+          "The top of a boarding pass: flight code, a “to departure” counter, music and “Check-in”.",
+      },
+      {
+        item: "hero-026",
+        anchor: "hero",
+        role: "Талон и первый экран",
+        roleEn: "Pass and hero",
+        note: "Корешок отрывается, талон улетает, пляж на весь экран; имена, отсчёт, полароид, штамп.",
+        noteEn:
+          "The stub tears, the pass flies off, a full-screen beach; names, countdown, polaroid, stamp.",
+      },
+      {
+        item: "about-012",
+        anchor: "route",
+        role: "Маршрут",
+        roleEn: "Route",
+        note: "Линия рейса с четырьмя пинами и самолётик, который едет при прокрутке.",
+        noteEn: "A flight line with four pins and a plane that travels on scroll.",
+      },
+      {
+        item: "event-010",
+        anchor: "days",
+        role: "Три дня",
+        roleEn: "Three days",
+        note: "Табы-билеты по дням, главный день коралловый, расписание и «что надеть».",
+        noteEn:
+          "Ticket tabs per day, the main day in coral, a timetable and “what to wear”.",
+      },
+      {
+        item: "event-011",
+        anchor: "travel",
+        role: "Дорога",
+        roleEn: "Travel",
+        note: "Карточки-билеты: виза, деньги, связь; организатор; чек-лист «что взять».",
+        noteEn:
+          "Ticket cards: visa, money, connectivity; the planner; a packing checklist.",
+      },
+      {
+        item: "event-012",
+        anchor: "dresscode",
+        role: "Дресс-код",
+        roleEn: "Dress code",
+        note: "Образцы ткани с копированием HEX, образы «ей» и «ему», правила пляжа.",
+        noteEn:
+          "Fabric swatches with HEX copying, “her” and “him” looks, beach rules.",
+      },
+      {
+        item: "map-008",
+        anchor: "place",
+        role: "Где",
+        roleEn: "Where",
+        note: "Карта с отелем, пляжем и Гаваной, фото отеля на скотче, трансферы.",
+        noteEn: "A map with the hotel, beach and Havana, a taped hotel photo, transfers.",
+      },
+      {
+        item: "contact-019",
+        anchor: "checkin",
+        role: "Check-in",
+        roleEn: "Check-in",
+        note: "Пять шагов: летите ли, даты, отель, меню, песня; сводка-посадочный талон.",
+        noteEn:
+          "Five steps: flying, dates, hotel, menu, song; a boarding-pass summary.",
+      },
+      {
+        item: "faq-021",
+        anchor: "faq",
+        role: "Вопросы",
+        roleEn: "FAQ",
+        note: "Багажные бирки с темой на хвостике, один открыт за раз.",
+        noteEn: "Luggage tags with the topic on the stub, one open at a time.",
+      },
+      {
+        item: "portfolio-009",
+        anchor: "postcards",
+        role: "Открытки",
+        roleEn: "Postcards",
+        note: "Фото на картоне со скотчем, клик переворачивает на оборот со штемпелем.",
+        noteEn: "Taped photos on card; a click flips to a postmarked back.",
+      },
+      {
+        item: "cta-022",
+        anchor: "gifts",
+        role: "Подарки",
+        roleEn: "Gifts",
+        note: "Билет «HAV → ???» с реквизитами, копирование ставит штамп «PAID».",
+        noteEn: "A “HAV → ???” ticket with details; copying prints a “PAID” stamp.",
+      },
+      {
+        item: "testimonials-021",
+        anchor: "wishes",
+        role: "Открытки от гостей",
+        roleEn: "Guest postcards",
+        note: "Стена открыток оборотом и форма — новая ложится первой со штемпелем.",
+        noteEn: "A wall of postcard backs and a form — the new one lands first, postmarked.",
+      },
+      {
+        item: "footer-025",
+        anchor: "footer",
+        role: "Подвал",
+        roleEn: "Footer",
+        note: "Низ талона: коды рейса, имена, координаты пляжа, хэштег, «check-in до».",
+        noteEn:
+          "The bottom of the pass: flight codes, names, beach coordinates, hashtag, “check-in by”.",
+      },
+    ],
+  },
 ]
 
 // Опечатка в имени item'а здесь означала бы пустую карточку в рецепте,

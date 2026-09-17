@@ -4742,6 +4742,206 @@
           }
         }
       }
+    },
+    {
+      "name": "hero-026",
+      "type": "registry:block",
+      "title": "Первый экран-путешествие с посадочным талоном и пляжем",
+      "description": "Первый экран свадьбы за границей: поверх всего экрана лежит посадочный талон — коды аэропортов, штрих-код, жёлтый корешок; клик «оторвать корешок» — корешок отрывается и улетает, талон уходит вверх, песочный фон растворяется в пляж на весь экран. На пляже — плакатные имена узким капсом с рукописным «летят жениться», даты и место, отсчёт «до вылета» в стеклянных плитках, «Check-in» и «В календарь», полароид пары на скотче и круглый штамп паспорта.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-026/hero-026.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-026.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради заставки, отсчёта и .ics. Фон — <img> object-fit:cover под градиентом чернил и зерном (SVG feTurbulence). Раскладка от ширины: до 56rem колонкой, от 56rem две колонки 1.3fr/.7fr. Талон — [data-part=gate] position:fixed на весь экран (z-index 60) с песочным градиентом, пульсирующим солнечным пятном ::after и бумажным шумом; [data-part=pass] — сетка main/stub с перфорацией между ними, штрих-кодом из repeating-linear-gradient и самолётиком, который покачивается; data-open отрывает корешок (rotate+translate), поднимает талон и с задержкой растворяет задник, первый экран проявляется через 2.6 с (data-intro) — перекрёстное выцветание. Во вложенном кадре (window.self !== window.top) талон не рендерится — читается через useSyncExternalStore. Отсчёт — setInterval раз в секунду, первый кадр нули. «В календарь» — Blob text/calendar с VEVENT на трое суток. Штамп — SVG с текстом по кругу и датой из ISO. Палитра --vibeui-hero-026-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "travel",
+          "boarding pass",
+          "hero",
+          "beach",
+          "cuba",
+          "countdown",
+          "calendar",
+          "ics",
+          "polaroid",
+          "stamp",
+          "poster",
+          "retro"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "boardingPass": false,
+            "image": "/demo/wedding-cuba/hero.webp",
+            "photo": "/demo/wedding-cuba/hero-couple.webp"
+          }
+        },
+        "cardControls": [
+          "names",
+          "script",
+          "boardingPass",
+          "tone",
+          "accent"
+        ],
+        "ai": {
+          "export": "Hero026",
+          "usage": "<Hero026\n  names=\"Соня & Тимур\"\n  script=\"летят жениться\"\n  date=\"2027-02-12T09:40:00+03:00\"\n  dateLabel=\"12–14 февраля 2027\"\n  place=\"Кайо-Ларго · Гавана\"\n  image=\"/photos/beach.webp\"\n  photo=\"/photos/couple.webp\"\n  photoCaption=\"Havana, 2025\"\n  from=\"SVO\"\n  to=\"HAV\"\n  boardingPass\n/>",
+          "summary": "Самодостаточный первый экран свадьбы-путешествия: посадочный талон с отрывным корешком, пляж на весь экран, плакатные имена, отсчёт «до вылета», «в календарь», полароид и штамп паспорта. Всё пропсами, дата одна — в ISO.",
+          "preserve": [
+            "посадочный талон на весь экран с отрывом корешка и выцветанием в пляж — главный жест страницы",
+            "плакатный капс имён с рукописной строкой и стеклянные плитки отсчёта поверх фото",
+            "полароид на скотче и круглый штамп паспорта справа"
+          ],
+          "adapt": [
+            "names, script, eyebrow, date (ISO), dateLabel, place, lede, countdownCaption, countdownLabels",
+            "primaryLabel/Href, calendarLabel/Title/Location, image, photo, photoCaption, stamp, from, to, fromCity, toCity, passLabels, passValues, boardingPass",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "date — одна строка ISO: из неё считаются отсчёт, .ics, дата на талоне и штампе.",
+            "В iframe талон автоматически отключается — витрины и превью показывают сразу пляж."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "names",
+            "label": "Имена",
+            "type": "text",
+            "default": "Соня & Тимур",
+            "maxLength": 30
+          },
+          {
+            "prop": "script",
+            "label": "Рукописная строка",
+            "type": "text",
+            "default": "летят жениться",
+            "maxLength": 30
+          },
+          {
+            "prop": "boardingPass",
+            "label": "Талон-заставка",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Travel hero with a boarding pass and a beach",
+            "description": "A destination-wedding hero: a boarding pass lies over the whole screen — airport codes, a barcode, a yellow stub; a “tear the stub” click rips it off, the pass lifts away and the sand backdrop dissolves into a full-screen beach. On the beach: poster names in narrow caps with a handwritten “fly to get married”, dates and place, a “to departure” countdown in glass tiles, “Check-in” and “Add to calendar”, a taped polaroid of the couple and a round passport stamp.",
+            "docs": "One file, zero dependencies, “use client” for the intro, countdown and .ics. The background is an <img> object-fit:cover under an ink gradient and grain (SVG feTurbulence). Layout from width: a column below 56rem, two columns 1.3fr/.7fr from 56rem. The pass is [data-part=gate] position:fixed over the screen (z-index 60) with a sand gradient, a pulsing ::after sun and paper noise; [data-part=pass] is a main/stub grid with perforation between, a repeating-linear-gradient barcode and a rocking plane; data-open tears the stub (rotate+translate), lifts the pass and dissolves the backdrop with a delay, the hero fades in after 2.6 s (data-intro) — a cross-fade. Inside a nested frame (window.self !== window.top) the pass is not rendered — read via useSyncExternalStore. The countdown is a 1-second setInterval, zeros on the first frame. “Add to calendar” builds a text/calendar Blob with a three-day VEVENT. The stamp is an SVG with text on a circle and the date from the ISO string. Palette --vibeui-hero-026-*: paper #fffaf0 and sand #f3e9d2 / deep navy #14202a via light-dark(), ink #123a4b, coral #ff6b57 accent, sea #2aa7a0, sun #f2c14e; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained destination-wedding hero: a boarding pass with a tear-off stub, a full-screen beach, poster names, a “to departure” countdown, “add to calendar”, a polaroid and a passport stamp. All via props, one ISO date.",
+              "preserve": [
+                "the full-screen boarding pass with the stub tear and the fade into the beach — the page's main gesture",
+                "the poster caps names with the script line and glass countdown tiles over the photo",
+                "the taped polaroid and the round passport stamp on the right"
+              ],
+              "adapt": [
+                "names, script, eyebrow, date (ISO), dateLabel, place, lede, countdownCaption, countdownLabels",
+                "primaryLabel/Href, calendarLabel/Title/Location, image, photo, photoCaption, stamp, from, to, fromCity, toCity, passLabels, passValues, boardingPass",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "date is one ISO string: the countdown, .ics, pass date and stamp derive from it.",
+                "Inside an iframe the pass switches off automatically — showcases and previews show the beach right away."
+              ],
+              "usage": "<Hero026\n  names=\"Sonya & Timur\"\n  script=\"fly to get married\"\n  date=\"2027-02-12T09:40:00+03:00\"\n  dateLabel=\"12–14 February 2027\"\n  place=\"Cayo Largo · Havana\"\n  image=\"/photos/beach.webp\"\n  photo=\"/photos/couple.webp\"\n  photoCaption=\"Havana, 2025\"\n  from=\"SVO\"\n  to=\"HAV\"\n  boardingPass\n/>"
+            },
+            "controls": {
+              "names": {
+                "label": "Names",
+                "default": "Sonya & Timur"
+              },
+              "script": {
+                "label": "Script line",
+                "default": "fly to get married"
+              },
+              "boardingPass": {
+                "label": "Boarding-pass intro"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "boardingPass": false,
+                "image": "/demo/wedding-cuba/hero.webp",
+                "photo": "/demo/wedding-cuba/hero-couple.webp",
+                "names": "Sonya & Timur",
+                "script": "fly to get married",
+                "eyebrow": "Three days in Cuba",
+                "dateLabel": "12–14 February 2027",
+                "place": "Cayo Largo · Havana",
+                "lede": "Instead of a registry office — a flight. A ceremony on the beach, dinner under the palms, son cubano till morning. Fly with us.",
+                "primaryLabel": "Check-in",
+                "calendarLabel": "Add to calendar",
+                "countdownCaption": "To departure",
+                "countdownLabels": [
+                  "days",
+                  "hours",
+                  "minutes",
+                  "seconds"
+                ],
+                "fromCity": "Moscow",
+                "toCity": "Havana",
+                "passLabels": {
+                  "flight": "Flight",
+                  "gate": "Gate",
+                  "seat": "Seat",
+                  "cabin": "Class",
+                  "tear": "Tear the stub"
+                },
+                "passValues": {
+                  "flight": "ST 1402",
+                  "gate": "Beach",
+                  "seat": "Front row",
+                  "cabin": "Love"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

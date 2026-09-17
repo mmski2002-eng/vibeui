@@ -4459,6 +4459,195 @@
           }
         }
       }
+    },
+    {
+      "name": "navbar-026",
+      "type": "registry:block",
+      "title": "Шапка-посадочный талон с кодом рейса и музыкой",
+      "description": "Шапка свадьбы-путешествия как верх посадочного талона: код рейса «SVO → HAV» с самолётиком и живой счётчик «до вылета», имена рукописным, разделы узким капсом, капсула музыки со звуковыми линиями и коралловая «Check-in». Нижний край — линия отрыва с перфорацией; при прокрутке полоса ужимается и ложится на бумажное стекло.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-026/navbar-026.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-026.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради прокрутки, счётчика, скроллспая и музыки. <header> position:fixed (placement=static — в потоке для превью); подложка [data-part=veil] с backdrop-filter и перфорацией ::after проявляется по data-scrolled (scrollY>40, первое чтение из rAF) и при открытом меню. Счётчик дней — setInterval раз в минуту, на сервере пусто; при ужатии прячется через max-height. Разделы — capslock Oswald с подчёркиванием scaleX; активный — IntersectionObserver по якорям (rootMargin -40 %/-55 %), aria-current. Музыка — <audio loop preload=none>, play() только по клику, aria-pressed, четыре линии дышат keyframes. До 60rem имена и разделы уходят в [data-part=sheet] по кнопке «Меню». Палитра --vibeui-navbar-026-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "travel",
+          "boarding pass",
+          "navbar",
+          "flight",
+          "countdown",
+          "music",
+          "sticky",
+          "cuba",
+          "beach",
+          "retro"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "placement": "static",
+            "spy": false,
+            "music": "/demo/wedding-cuba/music.mp3"
+          }
+        },
+        "cardControls": [
+          "names",
+          "actionLabel",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Navbar026",
+          "usage": "<Navbar026\n  names=\"Соня & Тимур\"\n  from=\"SVO\"\n  to=\"HAV\"\n  date=\"2027-02-12T09:40:00+03:00\"\n  links={[\n    { label: \"Маршрут\", href: \"#route\" },\n    { label: \"Три дня\", href: \"#days\" },\n    { label: \"Дорога\", href: \"#travel\" },\n    { label: \"Вопросы\", href: \"#faq\" },\n  ]}\n  actionLabel=\"Check-in\"\n  actionHref=\"#checkin\"\n  music=\"/audio/son.mp3\"\n/>",
+          "summary": "Самодостаточная шапка свадьбы-путешествия в виде посадочного талона: код рейса, счётчик до вылета, имена, разделы, музыка по клику и «Check-in»; ужимается при прокрутке.",
+          "preserve": [
+            "код рейса с самолётиком и счётчик «до вылета» слева — главный образ шапки",
+            "перфорацию линии отрыва по нижнему краю и бумажное стекло при прокрутке",
+            "музыку только по клику: капсула с дышащими линиями, aria-pressed"
+          ],
+          "adapt": [
+            "names, from, to, date (ISO), daysCaption, daysLabels, brandHref, links, actionLabel, actionHref",
+            "music (путь к треку; пусто — капсулы нет), musicLabel, playingLabel, placement, spy",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Секциям нужны id, совпадающие с href ссылок.",
+            "Трек кладите в проект сами: preload=none не тянет его до клика.",
+            "Первому экрану под шапкой нужен отступ сверху около 7rem."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "names",
+            "label": "Имена",
+            "type": "text",
+            "default": "Соня & Тимур",
+            "maxLength": 30
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Check-in",
+            "maxLength": 20
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Boarding-pass header with a flight code and music",
+            "description": "A destination-wedding header like the top of a boarding pass: a “SVO → HAV” flight code with a plane and a live “days to departure” counter, handwritten names, sections in narrow caps, a music pill with sound lines and a coral “Check-in”. The bottom edge is a perforated tear line; on scroll the strip shrinks onto paper glass.",
+            "docs": "One file, zero dependencies, “use client” for scroll, the counter, the scroll spy and music. A position:fixed <header> (placement=static puts it in the flow for previews); the [data-part=veil] backdrop with backdrop-filter and a ::after perforation appears on data-scrolled (scrollY>40, first read from rAF) and when the menu is open. The day counter is a per-minute setInterval, empty on the server; it hides via max-height when shrunk. Sections are Oswald caps with a scaleX underline; the active one comes from an IntersectionObserver on the anchors (rootMargin -40 %/-55 %), aria-current. Music is <audio loop preload=none>, play() only on click, aria-pressed, four lines breathe via keyframes. Below 60rem the names and sections move into [data-part=sheet] behind “Menu”. Palette --vibeui-navbar-026-*: paper #fffaf0 and sand #f3e9d2 / deep navy #14202a via light-dark(), ink #123a4b, coral #ff6b57 accent, sea #2aa7a0, sun #f2c14e; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained destination-wedding header as a boarding pass: flight code, days-to-departure counter, names, sections, music on click and “Check-in”; shrinks on scroll.",
+              "preserve": [
+                "the flight code with the plane and the “days to departure” counter on the left — the header's main image",
+                "the perforated tear line along the bottom edge and the paper glass on scroll",
+                "music only on click: the pill with breathing lines, aria-pressed"
+              ],
+              "adapt": [
+                "names, from, to, date (ISO), daysCaption, daysLabels, brandHref, links, actionLabel, actionHref",
+                "music (track path; empty — no pill), musicLabel, playingLabel, placement, spy",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Sections need ids matching the link hrefs.",
+                "Ship the track in your project: preload=none does not fetch it before the click.",
+                "The hero under the header needs about 7rem of top padding."
+              ],
+              "usage": "<Navbar026\n  names=\"Sonya & Timur\"\n  from=\"SVO\"\n  to=\"HAV\"\n  date=\"2027-02-12T09:40:00+03:00\"\n  links={[\n    { label: \"Route\", href: \"#route\" },\n    { label: \"Three days\", href: \"#days\" },\n    { label: \"Travel\", href: \"#travel\" },\n    { label: \"FAQ\", href: \"#faq\" },\n  ]}\n  actionLabel=\"Check-in\"\n  actionHref=\"#checkin\"\n  music=\"/audio/son.mp3\"\n/>"
+            },
+            "controls": {
+              "names": {
+                "label": "Names",
+                "default": "Sonya & Timur"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Check-in"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "placement": "static",
+                "spy": false,
+                "music": "/demo/wedding-cuba/music.mp3",
+                "names": "Sonya & Timur",
+                "daysCaption": "to departure",
+                "daysLabels": [
+                  "day",
+                  "days",
+                  "days",
+                  "today"
+                ],
+                "links": [
+                  {
+                    "label": "Route",
+                    "href": "#route"
+                  },
+                  {
+                    "label": "Three days",
+                    "href": "#days"
+                  },
+                  {
+                    "label": "Travel",
+                    "href": "#travel"
+                  },
+                  {
+                    "label": "FAQ",
+                    "href": "#faq"
+                  }
+                ],
+                "musicLabel": "Son cubano",
+                "playingLabel": "Playing"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

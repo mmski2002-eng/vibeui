@@ -2435,6 +2435,194 @@
           }
         }
       }
+    },
+    {
+      "name": "contact-019",
+      "type": "registry:block",
+      "title": "Check-in: дорожная RSVP-анкета в пять шагов",
+      "description": "RSVP свадьбы-путешествия как регистрация на рейс: пять шагов — летите ли, даты прилёта и вылета с номером рейса, отель (забронировать за вас?), меню и аллергии, песня для пляжа. Справа сводка в виде посадочного талона, заполняется по ходу; финал — штамп «CHECKED IN». Имя гостя — из ?guest= в адресе.",
+      "categories": [
+        "contact"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-019/contact-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-019.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Состояние — объект ответов и номер шага; шаги по одному с fade-in, «Дальше» на первом заблокировано без имени и «лечу/не смогу». Выборы — кнопки с aria-pressed. Имя из адреса — useSyncExternalStore (на сервере пусто), greeting с {name} заменяет заголовок; lede принимает {deadline}. Сводка — <aside data-part=pass> с тёмной шапкой «SVO → HAV», <dl> в две колонки, штрих-кодом и штампом, который data-sent печатает keyframes с уменьшением. Отправка: без action — preventDefault и экран «вы на борту»; с action — POST с hidden-полями guest и answers (JSON). От 56rem сетка 1.4fr/.7fr, талон sticky. Палитра --vibeui-contact-019-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "travel",
+          "rsvp",
+          "check-in",
+          "form",
+          "multi-step",
+          "boarding pass",
+          "flight",
+          "hotel",
+          "menu",
+          "song request",
+          "cuba",
+          "retro"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "guest": "Ольга"
+          }
+        },
+        "cardControls": [
+          "title",
+          "guest",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Contact019",
+          "usage": "<Contact019\n  title=\"Зарегистрируйтесь на рейс\"\n  greeting=\"{name}, добро пожаловать на борт\"\n  deadline=\"до 1 декабря\"\n  from=\"SVO\"\n  to=\"HAV\"\n  menu={[\n    { value: \"fish\", label: \"Рыба и лобстер\" },\n    { value: \"chicken\", label: \"Курица\" },\n    { value: \"veg\", label: \"Вегетарианское\" },\n  ]}\n  action=\"/api/checkin\"\n/>\n{/* персональная ссылка: /?guest=Ольга#checkin */}",
+          "summary": "Самодостаточная дорожная RSVP-анкета: пять шагов про перелёт, даты, отель, меню и песню, сводка-посадочный талон и штамп «Checked in». Имя гостя из ?guest= или пропсом, отправка POST'ом на action.",
+          "preserve": [
+            "пять шагов по одному с полосками прогресса и подписями",
+            "сводку-посадочный талон с тёмной шапкой, штрих-кодом и штампом «Checked in»",
+            "дорожные вопросы: даты и рейс, отель, меню — вместо обычных «плюс один»"
+          ],
+          "adapt": [
+            "eyebrow, title, greeting ({name}), lede ({deadline}), deadline, guest, stepLabels, from, to",
+            "menu (value/label), summaryTitle, submitLabel, thanksTitle, thanksText, stampLabel, action",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Ответы уходят одним hidden-полем answers (JSON) плюс guest — разбирайте на сервере.",
+            "Подсказки и плейсхолдеры внутри шагов — русские константы в файле: правьте там."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Зарегистрируйтесь на рейс",
+            "maxLength": 50
+          },
+          {
+            "prop": "guest",
+            "label": "Имя гостя",
+            "type": "text",
+            "default": "",
+            "maxLength": 30
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Check-in: a five-step travel RSVP",
+            "description": "A destination-wedding RSVP as flight check-in: five steps — are you flying, arrival and departure dates with the flight number, hotel (book for you?), menu and allergies, a song for the beach. A boarding-pass summary on the right fills as you go; the finale is a “CHECKED IN” stamp. The guest's name comes from ?guest= in the URL.",
+            "docs": "One file, zero dependencies, “use client”. State is the answers object and the step index; steps one at a time with a fade-in, “Next” on the first is disabled without a name and a flying/not choice. Choices are aria-pressed buttons. The name from the URL is read via useSyncExternalStore (empty on the server); greeting with {name} replaces the title; lede accepts {deadline}. The summary is an <aside data-part=pass> with a dark “SVO → HAV” header, a two-column <dl>, a barcode and a stamp that data-sent prints with a shrinking keyframe. Submission: without action — preventDefault and the “on board” screen; with action — POST with hidden guest and answers (JSON). From 56rem a 1.4fr/.7fr grid, the pass sticky. Palette --vibeui-contact-019-*: paper #fffaf0 and sand #f3e9d2 / deep navy #14202a via light-dark(), ink #123a4b, coral #ff6b57 accent, sea #2aa7a0, sun #f2c14e; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained travel RSVP: five steps about the flight, dates, hotel, menu and song, a boarding-pass summary and a “Checked in” stamp. Guest name from ?guest= or a prop, POSTs to action.",
+              "preserve": [
+                "five steps shown one at a time with labelled progress bars",
+                "the boarding-pass summary with the dark header, barcode and “Checked in” stamp",
+                "the travel questions: dates and flight, hotel, menu — instead of the usual plus-one"
+              ],
+              "adapt": [
+                "eyebrow, title, greeting ({name}), lede ({deadline}), deadline, guest, stepLabels, from, to",
+                "menu (value/label), summaryTitle, submitLabel, thanksTitle, thanksText, stampLabel, action",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Answers go as one hidden answers field (JSON) plus guest — parse them on the server.",
+                "Hints and placeholders inside the steps are Russian constants in the file: edit them there."
+              ],
+              "usage": "<Contact019\n  title=\"Check in for the flight\"\n  greeting=\"{name}, welcome aboard\"\n  deadline=\"by 1 December\"\n  from=\"SVO\"\n  to=\"HAV\"\n  menu={[\n    { value: \"fish\", label: \"Fish and lobster\" },\n    { value: \"chicken\", label: \"Chicken\" },\n    { value: \"veg\", label: \"Vegetarian\" },\n  ]}\n  action=\"/api/checkin\"\n/>\n{/* personal link: /?guest=Olga#checkin */}"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Check in for the flight"
+              },
+              "guest": {
+                "label": "Guest name",
+                "default": ""
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "guest": "Olga",
+                "eyebrow": "Check-in",
+                "title": "Check in for the flight",
+                "greeting": "{name}, welcome aboard",
+                "lede": "Five questions — and we know when to meet you, where to put you up and what to cook. Please answer {deadline}.",
+                "deadline": "by 1 December",
+                "stepLabels": [
+                  "Flying?",
+                  "Dates",
+                  "Hotel",
+                  "Menu",
+                  "Song"
+                ],
+                "menu": [
+                  {
+                    "value": "fish",
+                    "label": "Fish and lobster"
+                  },
+                  {
+                    "value": "chicken",
+                    "label": "Chicken"
+                  },
+                  {
+                    "value": "veg",
+                    "label": "Vegetarian"
+                  }
+                ],
+                "summaryTitle": "Boarding pass",
+                "submitLabel": "Check-in",
+                "thanksTitle": "You're on board",
+                "thanksText": "Your answer is saved. Mariela will write two weeks before departure with transfer details.",
+                "stampLabel": "Checked in"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

@@ -1353,6 +1353,178 @@
           }
         }
       }
+    },
+    {
+      "name": "map-008",
+      "type": "registry:block",
+      "title": "Карта свадьбы за границей с отелем, пляжем и трансфером",
+      "description": "«Где всё будет» для свадьбы-путешествия: Яндекс Карта с метками отеля, пляжа и аэропорта в выцветших тонах, рядом фото отеля на скотче с рукописной подписью и список точек с кодами, как в бортовом журнале; внизу тёмная плашка «трансферы — на нас».",
+      "categories": [
+        "map"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "map-008/map-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/map-008.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный. Карта — iframe yandex.ru/map-widget/v1 без ключа: центр — среднее по точкам, метки в pt через «~», theme по tone или явно; поверх filter saturate(.75) sepia(.2). От 56rem сетка 1.3fr/.7fr, карта min-height 30rem с бумажной рамкой box-shadow. Фото — на белом картоне со скотчем ::before, повёрнуто; точки — карточки с кодом слева; плашка трансфера — тёмно-синяя с иконкой автобуса. Палитра --vibeui-map-008-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "travel",
+          "map",
+          "yandex",
+          "hotel",
+          "beach",
+          "airport",
+          "transfer",
+          "cuba",
+          "retro"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "image": "/demo/wedding-cuba/hotel.webp"
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Map008",
+          "usage": "<Map008\n  title=\"Кайо-Ларго и Гавана\"\n  points={[\n    { code: \"CYO\", title: \"Отель на Кайо-Ларго\", text: \"Бунгало у воды\", latitude: 21.6098, longitude: -81.5476 },\n    { code: \"PLY\", title: \"Playa Paraíso\", text: \"Церемония и ужин\", latitude: 21.6245, longitude: -81.5628 },\n    { code: \"HAV\", title: \"Гавана\", text: \"Первая и последняя ночь\", latitude: 23.1375, longitude: -82.3546 },\n  ]}\n  zoom={7}\n  image=\"/photos/hotel.webp\"\n  imageCaption=\"наш отель\"\n  transferTitle=\"Трансферы — на нас\"\n/>",
+          "summary": "Самодостаточная карта свадьбы за границей: Яндекс Карта с несколькими метками, фото отеля на скотче, точки с кодами и плашка про трансфер. Координаты и тексты пропсами.",
+          "preserve": [
+            "выцветшую карту в бумажной рамке рядом с фото на скотче",
+            "список точек с трёхбуквенными кодами, как в бортовом журнале",
+            "тёмную плашку «трансферы — на нас» с автобусом"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, points (code, title, text, latitude, longitude), zoom",
+            "image, imageAlt, imageCaption, transferTitle, transferText, openLabel, theme",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Виджет Яндекс Карт без ключа: ll/pt в адресе, кодировать нельзя.",
+            "Центр считается как среднее точек — далёкие друг от друга точки уменьшите zoom."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Кайо-Ларго и Гавана",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Wedding-abroad map with hotel, beach and transfer",
+            "description": "“Where it all happens” for a destination wedding: a muted Yandex Map with pins for the hotel, beach and airport, a taped hotel photo with a handwritten caption and a list of points with codes like an in-flight magazine; a dark “transfers on us” panel below.",
+            "docs": "One file, zero dependencies, server-rendered. The map is a yandex.ru/map-widget/v1 iframe without a key: centre is the mean of the points, pins in pt joined by “~”, theme by tone or explicit; a filter saturate(.75) sepia(.2) on top. From 56rem a 1.3fr/.7fr grid, the map min-height 30rem with a paper frame box-shadow. The photo is on white card with a ::before tape, tilted; points are cards with the code on the left; the transfer panel is deep navy with a bus icon. Palette --vibeui-map-008-*: paper #fffaf0 and sand #f3e9d2 / deep navy #14202a via light-dark(), ink #123a4b, coral #ff6b57 accent, sea #2aa7a0, sun #f2c14e; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained destination-wedding map: a Yandex Map with several pins, a taped hotel photo, coded points and a transfer panel. Coordinates and copy via props.",
+              "preserve": [
+                "the muted map in a paper frame next to the taped photo",
+                "the list of points with three-letter codes like an in-flight magazine",
+                "the dark “transfers on us” panel with the bus"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, points (code, title, text, latitude, longitude), zoom",
+                "image, imageAlt, imageCaption, transferTitle, transferText, openLabel, theme",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The Yandex Maps widget needs no key: ll/pt go in the URL and must not be encoded.",
+                "The centre is the mean of the points — lower the zoom for far-apart points."
+              ],
+              "usage": "<Map008\n  title=\"Cayo Largo and Havana\"\n  points={[\n    { code: \"CYO\", title: \"Hotel on Cayo Largo\", text: \"Bungalows by the water\", latitude: 21.6098, longitude: -81.5476 },\n    { code: \"PLY\", title: \"Playa Paraíso\", text: \"Ceremony and dinner\", latitude: 21.6245, longitude: -81.5628 },\n    { code: \"HAV\", title: \"Havana\", text: \"First and last night\", latitude: 23.1375, longitude: -82.3546 },\n  ]}\n  zoom={7}\n  image=\"/photos/hotel.webp\"\n  imageCaption=\"our hotel\"\n  transferTitle=\"Transfers on us\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Cayo Largo and Havana"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "image": "/demo/wedding-cuba/hotel.webp",
+                "eyebrow": "Where",
+                "title": "Cayo Largo and Havana",
+                "lede": "Two places, one island. We land in Havana; on day two — forty minutes on a small plane to the beach.",
+                "imageCaption": "our hotel on Cayo Largo",
+                "transferTitle": "Transfers on us",
+                "transferText": "Airport to hotel, Havana to Cayo Largo, back to the airport. Look for Mariela with a sign.",
+                "openLabel": "Open in Yandex Maps",
+                "points": [
+                  {
+                    "code": "CYO",
+                    "title": "Hotel on Cayo Largo",
+                    "text": "Bungalows by the water, all rooms ours for two nights",
+                    "latitude": 21.6098,
+                    "longitude": -81.5476
+                  },
+                  {
+                    "code": "PLY",
+                    "title": "Playa Paraíso",
+                    "text": "Ceremony and dinner, 10 minutes on foot from the hotel",
+                    "latitude": 21.6245,
+                    "longitude": -81.5628
+                  },
+                  {
+                    "code": "HAV",
+                    "title": "Havana, old-town hotel",
+                    "text": "First and last night, the Malecón nearby",
+                    "latitude": 23.1375,
+                    "longitude": -82.3546
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

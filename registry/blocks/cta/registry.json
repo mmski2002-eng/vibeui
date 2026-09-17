@@ -3423,6 +3423,166 @@
           }
         }
       }
+    },
+    {
+      "name": "cta-022",
+      "type": "registry:block",
+      "title": "Подарки: билет «на следующий рейс» со штампом",
+      "description": "Подарки для свадьбы-путешествия: слева «лучший подарок — вы на Кубе» и шутка про ром, справа карточка-билет «HAV → ???» с реквизитами и кнопкой «скопировать» — по клику ставится штамп «PAID». Солнечное свечение за карточкой.",
+      "categories": [
+        "cta"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-022/cta-022.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-022.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 2.2 с состояния «скопировано» и штамп по data-copied). Билет — песочная карточка с морской полосой слева ::before и перфорацией ::after между кодами и телом; коды крупным Oswald с самолётиком; реквизиты в dashed-рамке; штамп «PAID» — рамка с keyframes уменьшения и mix-blend-mode:multiply. Свечение — ::before секции. От 56rem две колонки по центру. Палитра --vibeui-cta-022-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "travel",
+          "gifts",
+          "honeymoon fund",
+          "ticket",
+          "copy",
+          "stamp",
+          "cta",
+          "cuba",
+          "retro"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "cardControls": [
+          "title",
+          "requisite",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Cta022",
+          "usage": "<Cta022\n  title=\"Лучший подарок — вы на Кубе\"\n  fundTitle=\"На следующий рейс\"\n  from=\"HAV\"\n  to=\"???\"\n  toCity=\"решим вместе\"\n  requisite=\"+7 900 000-00-00\"\n  requisiteLabel=\"СБП · Тимур К.\"\n  joke=\"Или привезите бутылку рома.\"\n/>",
+          "summary": "Самодостаточный блок подарков для свадьбы-путешествия: карточка-билет «на следующий рейс» с копированием реквизитов и штампом «PAID», шутка про ром. Тексты и реквизиты пропсами.",
+          "preserve": [
+            "карточку-билет с кодами «HAV → ???» и перфорацией",
+            "штамп «PAID», который печатается при копировании",
+            "рукописную шутливую строку под текстом"
+          ],
+          "adapt": [
+            "eyebrow, title (после « — » уходит в рукописный), lede, joke, fundTitle, fundText",
+            "from, to, toCity, requisite, requisiteLabel, copyLabel, copiedLabel",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Реквизит копируется как есть — пробелы и дефисы банк-приложения понимают.",
+            "Штамп читается только в светлой теме поверх песка: в тёмной multiply почти невидим."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Лучший подарок — вы на Кубе",
+            "maxLength": 50
+          },
+          {
+            "prop": "requisite",
+            "label": "Реквизиты",
+            "type": "text",
+            "default": "+7 900 000-00-00",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Gifts: a “next flight” ticket with a stamp",
+            "description": "Gifts for a destination wedding: on the left “the best gift — you in Cuba” and a rum joke, on the right a “HAV → ???” ticket card with the details and a “copy” button — a click prints a “PAID” stamp. A sun glow behind the card.",
+            "docs": "One file, zero dependencies, “use client” for copying (navigator.clipboard, a 2.2 s “copied” state and the stamp on data-copied). The ticket is a sand card with a sea stripe ::before on the left and a ::after perforation between codes and body; codes in big Oswald with a plane; details in a dashed frame; the “PAID” stamp is a frame with a shrinking keyframe and mix-blend-mode:multiply. The glow is the section's ::before. From 56rem two centred columns. Palette --vibeui-cta-022-*: paper #fffaf0 and sand #f3e9d2 / deep navy #14202a via light-dark(), ink #123a4b, coral #ff6b57 accent, sea #2aa7a0, sun #f2c14e; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained gifts block for a destination wedding: a “next flight” ticket card with copyable details and a “PAID” stamp, a rum joke. Copy and details via props.",
+              "preserve": [
+                "the ticket card with “HAV → ???” codes and perforation",
+                "the “PAID” stamp printed on copy",
+                "the handwritten joke line under the text"
+              ],
+              "adapt": [
+                "eyebrow, title (after “ — ” turns handwritten), lede, joke, fundTitle, fundText",
+                "from, to, toCity, requisite, requisiteLabel, copyLabel, copiedLabel",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The detail is copied as is — banking apps understand spaces and dashes.",
+                "The stamp reads only in the light theme over sand: in dark, multiply is nearly invisible."
+              ],
+              "usage": "<Cta022\n  title=\"The best gift — you in Cuba\"\n  fundTitle=\"For the next flight\"\n  from=\"HAV\"\n  to=\"???\"\n  toCity=\"we'll decide together\"\n  requisite=\"+7 900 000-00-00\"\n  requisiteLabel=\"Transfer · Timur K.\"\n  joke=\"Or bring a bottle of rum.\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "The best gift — you in Cuba"
+              },
+              "requisite": {
+                "label": "Details",
+                "default": "+7 900 000-00-00"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Gifts",
+                "title": "The best gift — you in Cuba",
+                "lede": "Honestly: you've already paid for a ticket. If you still want to — we're saving for the next flight. Where — undecided, hence the question mark.",
+                "fundTitle": "For the next flight",
+                "fundText": "A transfer by phone number. In the comment — your name and, if you like, where we should fly.",
+                "toCity": "we'll decide together",
+                "requisiteLabel": "Transfer · Timur K.",
+                "copyLabel": "Copy the number",
+                "copiedLabel": "Copied",
+                "joke": "Or bring a bottle of rum — there's none in Cuba. Kidding. There is."
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
