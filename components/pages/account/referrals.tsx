@@ -26,7 +26,7 @@ import {
   visitsByCode,
   type PartnerPeriod,
 } from "@/lib/partners"
-import { MIN_PAYOUT } from "@/lib/partner-actions"
+import { MIN_PAYOUT } from "@/lib/limits"
 import { partnerPromo, promoStats } from "@/lib/promo"
 import { PayoutProfileForm } from "@/components/account/payout-profile-form"
 import { RequestPayoutButton } from "@/components/account/request-payout-button"

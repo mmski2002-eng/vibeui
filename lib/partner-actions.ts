@@ -12,14 +12,12 @@ import {
   payoutProfile,
   payoutTotals,
 } from "@/lib/partners"
+import { MIN_PAYOUT } from "@/lib/limits"
 import { promoStats } from "@/lib/promo"
 import { requireUser } from "@/lib/session"
 
 /** ИНН физлица и самозанятого — двенадцать цифр. */
 const INN = /^\d{12}$/
-
-/** Минимальная сумма вывода: мелкие переводы вручную не окупаются. */
-export const MIN_PAYOUT = 500
 
 /**
  * Блогер сохраняет реквизиты выплаты: ИНН самозанятого (по нему он закроет
