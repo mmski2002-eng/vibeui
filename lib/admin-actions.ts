@@ -20,7 +20,12 @@ import {
   user,
 } from "@/lib/db/schema"
 import { currentPeriod } from "@/lib/entitlements"
-import { createInvite, deleteInvite } from "@/lib/partners"
+import {
+  assignPartnerWord,
+  createInvite,
+  deleteInvite,
+  wordTaken,
+} from "@/lib/partners"
 import { applyPaymentEvent, grantDays } from "@/lib/payment-apply"
 import { PRICE_KEYS } from "@/lib/plan-prices"
 import {
@@ -421,11 +426,21 @@ export async function createPartnerInvite(input: { name: string; promoCode?: str
     throw new Error("Имя обязательно")
   }
 
-  const promoCode = input.promoCode?.trim() ? promoCodeOrThrow(input.promoCode) : null
-  const invite = await createInvite(name, admin.email)
+  // НИК блогера — единое слово: и код реф-ссылки приглашения, и промокод.
+  // Уникально на всю программу. Без ника — случайный код приглашения.
+  const nick = input.promoCode?.trim() ? promoCodeOrThrow(input.promoCode) : null
 
-  if (promoCode) {
-    await setPromoCodeOrThrow(invite.id, promoCode)
+  if (nick && (await wordTaken(nick))) {
+    throw new Error("Такой код уже занят")
+  }
+
+  const invite = await createInvite(name, admin.email, nick ?? undefined)
+
+  if (nick) {
+    await db
+      .update(partnerInvite)
+      .set({ promoCode: nick })
+      .where(eq(partnerInvite.id, invite.id))
   }
 
   await logAdminAction({
@@ -433,7 +448,7 @@ export async function createPartnerInvite(input: { name: string; promoCode?: str
     action: "partner.create",
     targetType: "partner",
     targetId: invite.id,
-    details: { name, code: invite.code, promoCode },
+    details: { name, code: invite.code, promoCode: nick },
   })
 
   revalidatePath("/account/admin/partners")
@@ -452,7 +467,7 @@ export async function setPartnerPromo(input: {
   active: boolean
 }) {
   const admin = await requireAdmin()
-  const code = input.code.trim() ? promoCodeOrThrow(input.code) : null
+  const word = input.code.trim() ? promoCodeOrThrow(input.code) : null
   const percentRaw = input.percent.trim()
   const percent = percentRaw ? Number(percentRaw) : null
 
@@ -460,26 +475,56 @@ export async function setPartnerPromo(input: {
     throw new Error("Процент: целое число от 1 до 90")
   }
 
-  if (code) {
-    await setPromoCodeOrThrow(input.id, code)
-  }
-
-  const updated = await db
-    .update(partnerInvite)
-    .set({ promoCode: code, promoPercent: percent, promoActive: input.active })
+  const [invite] = await db
+    .select({
+      claimedBy: partnerInvite.claimedBy,
+      code: partnerInvite.code,
+      promoCode: partnerInvite.promoCode,
+    })
+    .from(partnerInvite)
     .where(eq(partnerInvite.id, input.id))
-    .returning({ id: partnerInvite.id })
+    .limit(1)
 
-  if (updated.length === 0) {
+  if (!invite) {
     throw new Error("Приглашение не найдено")
   }
+
+  // Слово блогера ведёт себя одинаково для блогера и админа: у занятого
+  // приглашения переименовывает реф-код и промокод, у незанятого — код
+  // приглашения и промокод. Пусто — снять промокод.
+  if (word) {
+    if (invite.claimedBy) {
+      await assignPartnerWord(invite.claimedBy, word)
+    } else {
+      const self = word === invite.code || word === invite.promoCode
+
+      if (!self && (await wordTaken(word))) {
+        throw new Error("Такой код уже занят другим блогером")
+      }
+
+      await db
+        .update(partnerInvite)
+        .set({ code: word, promoCode: word })
+        .where(eq(partnerInvite.id, input.id))
+    }
+  } else {
+    await db
+      .update(partnerInvite)
+      .set({ promoCode: null })
+      .where(eq(partnerInvite.id, input.id))
+  }
+
+  await db
+    .update(partnerInvite)
+    .set({ promoPercent: percent, promoActive: input.active })
+    .where(eq(partnerInvite.id, input.id))
 
   await logAdminAction({
     adminEmail: admin.email,
     action: "partner.promo",
     targetType: "partner",
     targetId: input.id,
-    details: { code, percent, active: input.active },
+    details: { code: word, percent, active: input.active },
   })
 
   revalidatePath("/account/admin/partners")
@@ -497,24 +542,6 @@ function promoCodeOrThrow(raw: string) {
   }
 
   return code
-}
-
-/** Код уникален на всю программу: чужой ник занять нельзя. */
-async function setPromoCodeOrThrow(inviteId: string, code: string) {
-  const [taken] = await db
-    .select({ id: partnerInvite.id })
-    .from(partnerInvite)
-    .where(eq(partnerInvite.promoCode, code))
-    .limit(1)
-
-  if (taken && taken.id !== inviteId) {
-    throw new Error("Такой промокод уже занят другим блогером")
-  }
-
-  await db
-    .update(partnerInvite)
-    .set({ promoCode: code })
-    .where(eq(partnerInvite.id, inviteId))
 }
 
 /**

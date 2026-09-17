@@ -1,7 +1,7 @@
 import "server-only"
 
 import { randomBytes, randomUUID } from "node:crypto"
-import { and, count, desc, eq, gte, inArray, isNull, lt, sql } from "drizzle-orm"
+import { and, count, desc, eq, gte, inArray, isNull, lt, or, sql } from "drizzle-orm"
 
 import { fillDays, lastDays } from "@/lib/days"
 import { db } from "@/lib/db"
@@ -86,20 +86,104 @@ export async function claimInvite(inviteId: string, userId: string) {
     .update(partnerInvite)
     .set({ claimedBy: userId, claimedAt: new Date() })
     .where(and(eq(partnerInvite.id, inviteId), isNull(partnerInvite.claimedBy)))
-    .returning({ id: partnerInvite.id })
+    .returning({ id: partnerInvite.id, promoCode: partnerInvite.promoCode })
 
   if (claimed.length === 0) {
     return
   }
 
-  await db
-    .insert(referral)
-    .values({ code: newCode(), userId })
-    .onConflictDoNothing()
+  // Слово блогера — и реф-код ссылки, и промокод. Если админ задал его на
+  // приглашении заранее и оно свободно как referral.code — ставим ссылку сразу
+  // красивой; иначе случайный код, блогер поменяет сам.
+  const preset = claimed[0]?.promoCode
+  let code = newCode()
+
+  if (preset) {
+    const [taken] = await db
+      .select({ userId: referral.userId })
+      .from(referral)
+      .where(eq(referral.code, preset))
+      .limit(1)
+
+    if (!taken) code = preset
+  }
+
+  await db.insert(referral).values({ code, userId }).onConflictDoNothing()
 
   // Стартовый бонус блогеру: 30 дней Pro. Внутри guard'а claim — значит
   // ровно один раз на приглашение, даже при гонке двух регистраций.
   await grantDays(userId, PARTNER_TRIAL_DAYS)
+}
+
+/**
+ * Одно слово блогера: и реф-код ссылки `/?ref=<слово>`, и промокод на скидку.
+ * Пишет его сразу в `referral.code` и `partner_invite.promo_code`. Слово уже
+ * нормализовано вызывающим (`normalizePromo`). Уникально на всю программу:
+ * чужой реф-код, чужой промокод и код незанятого приглашения занять нельзя.
+ */
+export async function assignPartnerWord(partnerId: string, word: string) {
+  const [refOwner] = await db
+    .select({ userId: referral.userId })
+    .from(referral)
+    .where(eq(referral.code, word))
+    .limit(1)
+
+  if (refOwner && refOwner.userId !== partnerId) {
+    throw new Error("Этот код уже занят")
+  }
+
+  const [promoOwner] = await db
+    .select({ claimedBy: partnerInvite.claimedBy })
+    .from(partnerInvite)
+    .where(eq(partnerInvite.promoCode, word))
+    .limit(1)
+
+  if (promoOwner && promoOwner.claimedBy !== partnerId) {
+    throw new Error("Этот код уже занят")
+  }
+
+  // Совпадение с кодом незанятого приглашения увело бы `/?ref=` на приглашение.
+  const [inviteCode] = await db
+    .select({ id: partnerInvite.id })
+    .from(partnerInvite)
+    .where(and(eq(partnerInvite.code, word), isNull(partnerInvite.claimedBy)))
+    .limit(1)
+
+  if (inviteCode) {
+    throw new Error("Этот код уже занят")
+  }
+
+  await db
+    .update(referral)
+    .set({ code: word })
+    .where(eq(referral.userId, partnerId))
+  await db
+    .update(partnerInvite)
+    .set({ promoCode: word })
+    .where(eq(partnerInvite.claimedBy, partnerId))
+}
+
+/**
+ * Занято ли слово хоть где-то в программе: реф-код, код приглашения или
+ * промокод. Для новых слов, у которых ещё нет своей строки-исключения
+ * (создание приглашения).
+ */
+export async function wordTaken(word: string): Promise<boolean> {
+  const [ref] = await db
+    .select({ code: referral.code })
+    .from(referral)
+    .where(eq(referral.code, word))
+    .limit(1)
+
+  if (ref) return true
+
+  const [invite] = await db
+    .select({ id: partnerInvite.id })
+    .from(partnerInvite)
+    .where(or(eq(partnerInvite.code, word), eq(partnerInvite.promoCode, word)))
+    .limit(1)
+
+  return Boolean(invite)
 }
 
 /** Код партнёра. Партнёру он заведён при регистрации; остальным — null. */
@@ -272,10 +356,14 @@ export async function getInvite(id: string) {
   return row ?? null
 }
 
-export async function createInvite(name: string, createdBy: string) {
+export async function createInvite(
+  name: string,
+  createdBy: string,
+  code: string = newCode(),
+) {
   const row = {
     id: randomUUID(),
-    code: newCode(),
+    code,
     name,
     createdBy,
   }

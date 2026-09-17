@@ -29,6 +29,7 @@ import {
 import { MIN_PAYOUT } from "@/lib/limits"
 import { partnerPromo, promoStats } from "@/lib/promo"
 import { PayoutProfileForm } from "@/components/account/payout-profile-form"
+import { PromoCodeForm } from "@/components/account/promo-code-form"
 import { RequestPayoutButton } from "@/components/account/request-payout-button"
 import { SITE_URL } from "@/lib/seo"
 import { requireUser } from "@/lib/session"
@@ -156,25 +157,36 @@ export async function AccountReferrals({
               ) : null
             }
           />
-          {promo?.code && promo.active ? (
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="border-shell-accent-line bg-shell-accent-soft text-shell-fg inline-flex h-11 items-center rounded-lg border px-4 font-mono text-lg font-semibold tracking-wide">
-                {promo.code}
-              </span>
-              <span className="text-shell-muted text-sm">
-                {t.promoDiscount(promo.percent)}
-              </span>
-              <span className="text-shell-fg text-sm font-medium">
-                {t.promoCommission}:{" "}
-                {promoTotals.commission.toLocaleString(
-                  locale === "en" ? "en-GB" : "ru-RU",
-                )}{" "}
-                ₽ ({promoTotals.commissionPercent} %)
-              </span>
-            </div>
-          ) : (
-            <p className="text-shell-muted text-sm">{t.promoNone}</p>
-          )}
+          <div className="grid gap-4">
+            <PromoCodeForm
+              code={code}
+              labels={{
+                label: t.promoCodeLabel,
+                placeholder: t.promoCodePlaceholder,
+                hint: t.promoCodeHint,
+                save: t.promoSave,
+                saving: t.promoSaving,
+                saved: t.promoSaved,
+                failed: t.promoFailed,
+              }}
+            />
+            {promo?.code && promo.active ? (
+              <div className="flex flex-wrap items-center gap-3 text-sm">
+                <span className="text-shell-muted">
+                  {t.promoDiscount(promo.percent)}
+                </span>
+                <span className="text-shell-fg font-medium">
+                  {t.promoCommission}:{" "}
+                  {promoTotals.commission.toLocaleString(
+                    locale === "en" ? "en-GB" : "ru-RU",
+                  )}{" "}
+                  ₽ ({promoTotals.commissionPercent} %)
+                </span>
+              </div>
+            ) : (
+              <p className="text-shell-muted text-sm">{t.promoNone}</p>
+            )}
+          </div>
         </Panel>
 
         <Panel index={2}>

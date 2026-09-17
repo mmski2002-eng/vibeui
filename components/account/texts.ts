@@ -220,7 +220,16 @@ export const ACCOUNT_TEXTS = {
       promoTitle: "Промокод",
       promoLead:
         "Ваш ник как промокод: зритель вводит его на тарифах и платит первый раз со скидкой, платёж закрепляется за вами.",
-      promoNone: "Промокод пока не назначен — напишите нам в поддержку.",
+      promoNone:
+        "Слово пока не задано — впишите его выше, оно станет ссылкой и кодом на скидку.",
+      promoCodeLabel: "Ваше слово (реф-ссылка и промокод)",
+      promoCodePlaceholder: "ваш-ник",
+      promoCodeHint:
+        "Латиница, цифры, «-» и «_», 3–24 символа. Оно же — ваша ссылка /?ref= и код на скидку. Должно быть свободным.",
+      promoSave: "Сохранить",
+      promoSaving: "Сохраняем…",
+      promoSaved: "Слово сохранено",
+      promoFailed: "Не удалось сохранить",
       promoDiscount: (percent: number) => `−${percent} % на первый платёж`,
       promoPayments: "Оплат по промокоду",
       promoRevenue: "на сумму",
@@ -520,7 +529,16 @@ export const ACCOUNT_TEXTS = {
       promoTitle: "Promo code",
       promoLead:
         "Your handle as a promo code: a viewer enters it on the pricing page, pays the first time with a discount, and the payment is attributed to you.",
-      promoNone: "No promo code assigned yet — contact support.",
+      promoNone:
+        "No word yet — set it above; it becomes your link and discount code.",
+      promoCodeLabel: "Your word (referral link and promo code)",
+      promoCodePlaceholder: "your-handle",
+      promoCodeHint:
+        "Latin letters, digits, “-” and “_”, 3–24 chars. It is also your /?ref= link and discount code. Must be free.",
+      promoSave: "Save",
+      promoSaving: "Saving…",
+      promoSaved: "Word saved",
+      promoFailed: "Could not save",
       promoDiscount: (percent: number) => `−${percent} % off the first payment`,
       promoPayments: "Payments with the code",
       promoRevenue: "totalling",

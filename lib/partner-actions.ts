@@ -7,17 +7,42 @@ import { eq } from "drizzle-orm"
 import { db } from "@/lib/db"
 import { partnerInvite, payoutRequest } from "@/lib/db/schema"
 import {
+  assignPartnerWord,
   isPartner,
   openPayoutRequest,
   payoutProfile,
   payoutTotals,
 } from "@/lib/partners"
 import { MIN_PAYOUT } from "@/lib/limits"
-import { promoStats } from "@/lib/promo"
+import { normalizePromo, promoStats } from "@/lib/promo"
 import { requireUser } from "@/lib/session"
 
 /** ИНН физлица и самозанятого — двенадцать цифр. */
 const INN = /^\d{12}$/
+
+/**
+ * Блогер задаёт своё слово — оно же реф-код ссылки `/?ref=<слово>` и промокод
+ * на скидку. Формат как у админа (`normalizePromo`), уникальность и запись в
+ * оба поля — в `assignPartnerWord`.
+ */
+export async function savePartnerWord(input: { code: string }) {
+  const user = await requireUser()
+
+  if (!(await isPartner(user.id))) {
+    throw new Error("Раздел только для партнёров")
+  }
+
+  const code = normalizePromo(input.code)
+
+  if (!code) {
+    throw new Error("Слово: латиница, цифры, «-» и «_», 3–24 символа")
+  }
+
+  await assignPartnerWord(user.id, code)
+
+  revalidatePath("/account/referrals")
+  revalidatePath("/en/account/referrals")
+}
 
 /**
  * Блогер сохраняет реквизиты выплаты: ИНН самозанятого (по нему он закроет
