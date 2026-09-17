@@ -13,3 +13,4 @@ registry/preview-loaders.ts
 registry/preview-loaders-lazy.ts
 registry/previews/
 registry/previews-lazy/
+registry/generated/

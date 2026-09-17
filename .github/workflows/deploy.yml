@@ -30,7 +30,11 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      # Вся история: sitemap берёт lastmod из даты последнего коммита файла
+      # (scripts/build-lastmod.mjs). Shallow-checkout дал бы всем одну дату.
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       # Та же мажорная версия, что и на сервере: standalone не несёт свой node.
       - uses: actions/setup-node@v5

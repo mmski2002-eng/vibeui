@@ -4,6 +4,7 @@ import { DEFAULT_LOCALE, LOCALES, type Locale, localePath } from "@/lib/i18n"
 import { getScenarios } from "@/lib/scenario"
 import { SITE_URL } from "@/lib/seo"
 import { KINDS } from "@/registry/categories"
+import lastmod from "@/registry/generated/lastmod.json"
 import {
   catalogBasePath,
   getCategoryCards,
@@ -13,6 +14,23 @@ import {
 } from "@/registry/index"
 
 type Entry = MetadataRoute.Sitemap[number]
+
+// Дата последнего изменения из git (scripts/build-lastmod.mjs): Google
+// перестаёт переобходить неизменные страницы. Отсутствующая запись (новый,
+// ещё не закоммиченный item) откатывается на дату сборки — прежнее поведение.
+const BUILD_DATE = new Date()
+const LASTMOD = lastmod as {
+  site: string | null
+  roots: Record<string, string>
+  categories: Record<string, string>
+  items: Record<string, string>
+}
+
+function at(iso: string | null | undefined): Date {
+  return iso ? new Date(iso) : BUILD_DATE
+}
+
+const siteDate = at(LASTMOD.site)
 
 /**
  * Один URL на каждый язык плюс перекрёстные hreflang: Яндекс и Google берут
@@ -38,15 +56,13 @@ function localized(path: string, rest: Omit<Entry, "url">): Entry[] {
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date()
-
   const kinds = KINDS.map((kind) => kind.slug).filter(
     (kind) => kind !== "template",
   )
 
   const catalogs = kinds.flatMap((kind) =>
     localized(catalogBasePath(kind), {
-      lastModified,
+      lastModified: at(LASTMOD.roots[kind]),
       changeFrequency: "weekly",
       priority: 0.9,
     }),
@@ -55,7 +71,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const categories = kinds.flatMap((kind) =>
     getCategoryCards(kind).flatMap((category) =>
       localized(`${catalogBasePath(kind)}/${category.slug}`, {
-        lastModified,
+        lastModified: at(LASTMOD.categories[`${kind}/${category.slug}`]),
         changeFrequency: "weekly",
         priority: 0.8,
       }),
@@ -69,29 +85,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
       const base = itemBasePath(getItemKind(item.name) ?? kind)
 
       return localized(`${base}/${item.name}`, {
-        lastModified,
+        lastModified: at(LASTMOD.items[item.name]),
         changeFrequency: "monthly",
         priority: 0.7,
       })
     }),
   )
 
+  // Сценарии и статические страницы двигаются вместе с сайтом, а не по своим
+  // файлам: их немного, и отдельная git-дата на каждую не стоит усложнения.
   const scenarios = [
     ...localized("/scenarios", {
-      lastModified,
+      lastModified: siteDate,
       changeFrequency: "monthly",
       priority: 0.8,
     }),
     ...getScenarios().flatMap((scenario) => [
       ...localized(`/scenarios/${scenario.slug}`, {
-        lastModified,
+        lastModified: siteDate,
         changeFrequency: "monthly",
         priority: 0.7,
       }),
       // Демо — одна страница без языковой пары: это и есть готовый сайт.
       {
         url: `${SITE_URL}${scenario.demo}`,
-        lastModified,
+        lastModified: siteDate,
         changeFrequency: "monthly" as const,
         priority: 0.6,
       },
@@ -100,12 +118,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     ...localized("/", {
-      lastModified,
+      lastModified: siteDate,
       changeFrequency: "weekly",
       priority: 1,
     }),
     ...localized("/start", {
-      lastModified,
+      lastModified: siteDate,
       changeFrequency: "monthly",
       priority: 0.8,
     }),
