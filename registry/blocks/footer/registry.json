@@ -3566,6 +3566,186 @@
           }
         }
       }
+    },
+    {
+      "name": "footer-024",
+      "type": "registry:block",
+      "title": "Подвал приглашения с монограммой и хэштегом",
+      "description": "Подвал свадебного сайта на сливовом фоне: крупная монограмма в круге с двойной рамкой, имена курсивным serif'ом, дата и место, хэштег капсулой для фото гостей, ряд якорей, напоминание «ответьте до…», линия с сердечком и подпись «с любовью».",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-024/footer-024.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-024.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный. Всё по центру одной колонкой: монограмма делится по « & », амперсанд акцентом, двойная рамка через ::before; хэштег — ссылка на страницу тега в Instagram (без #); якоря serif'ом с подчёркиванием scaleX по hover; «ответьте до» — ссылка на форму; разделитель — flex-линии по бокам от SVG-сердца. Фон всегда сливовый (light-dark даёт две глубины), текст кремовый. Палитра --vibeui-footer-024-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "footer",
+          "monogram",
+          "hashtag",
+          "rsvp",
+          "dark",
+          "plum",
+          "serif",
+          "invitation",
+          "signature"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "cardControls": [
+          "names",
+          "hashtag",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Footer024",
+          "usage": "<Footer024\n  monogram=\"В & А\"\n  names=\"Василиса и Артём\"\n  dateLabel=\"5 сентября 2027\"\n  place=\"усадьба Марфино\"\n  hashtag=\"#василисаартём2027\"\n  links={[\n    { label: \"История\", href: \"#story\" },\n    { label: \"Подтвердить\", href: \"#rsvp\" },\n  ]}\n  rsvpLabel=\"до 1 августа\"\n  rsvpHref=\"#rsvp\"\n  signature=\"С любовью, В. и А.\"\n/>",
+          "summary": "Самодостаточный подвал свадебного приглашения: монограмма, имена и дата, хэштег, якоря, «ответьте до» и подпись. Всё содержимое пропсами, фон всегда сливовый.",
+          "preserve": [
+            "монограмму в круге с двойной рамкой и акцентным амперсандом",
+            "сливовый фон с кремовым serif'ом — подвал завершает страницу, а не повторяет её",
+            "линию с сердечком перед подписью «с любовью»"
+          ],
+          "adapt": [
+            "monogram, names, dateLabel, place, hashtag, links, signature",
+            "rsvpText, rsvpLabel, rsvpHref",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Хэштег ведёт на Instagram по умолчанию — замените ссылку в файле, если гости в другой сети.",
+            "Пустой links убирает ряд якорей, пустой rsvpLabel — напоминание."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "names",
+            "label": "Имена",
+            "type": "text",
+            "default": "Василиса и Артём",
+            "maxLength": 40
+          },
+          {
+            "prop": "hashtag",
+            "label": "Хэштег",
+            "type": "text",
+            "default": "#василисаартём2027",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Invitation footer with a monogram and hashtag",
+            "description": "A wedding site footer on plum: a large monogram in a double-framed circle, the names in italic serif, date and place, a hashtag pill for guests' photos, a row of anchors, a “reply by…” reminder, a line with a heart and a “with love” signature.",
+            "docs": "One file, zero dependencies, server-rendered. Everything centred in one column: the monogram splits on “ & ”, the ampersand takes the accent, the double frame via ::before; the hashtag links to the tag page on Instagram (without #); anchors in serif with a scaleX underline on hover; “reply by” links to the form; the divider is flex lines either side of an SVG heart. The background is always plum (light-dark gives two depths), the text cream. Palette --vibeui-footer-024-*: cream #f6f1e8 / plum #2b1a24 via light-dark(), terracotta #b8552f accent, plum #4a1f36 for headings, sage #8a9a7b and sand #d9c5a5 for captions; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained wedding invitation footer: a monogram, names and date, hashtag, anchors, “reply by” and a signature. All content via props, always plum.",
+              "preserve": [
+                "the monogram in a double-framed circle with the accent ampersand",
+                "the plum background with cream serif — the footer closes the page rather than repeating it",
+                "the line with the heart before the “with love” signature"
+              ],
+              "adapt": [
+                "monogram, names, dateLabel, place, hashtag, links, signature",
+                "rsvpText, rsvpLabel, rsvpHref",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The hashtag links to Instagram by default — change the link in the file if guests live elsewhere.",
+                "An empty links removes the anchor row, an empty rsvpLabel the reminder."
+              ],
+              "usage": "<Footer024\n  monogram=\"V & A\"\n  names=\"Vasilisa & Artem\"\n  dateLabel=\"5 September 2027\"\n  place=\"Marfino estate\"\n  hashtag=\"#vasilisaartem2027\"\n  links={[\n    { label: \"Story\", href: \"#story\" },\n    { label: \"RSVP\", href: \"#rsvp\" },\n  ]}\n  rsvpLabel=\"by 1 August\"\n  rsvpHref=\"#rsvp\"\n  signature=\"With love, V. & A.\"\n/>"
+            },
+            "controls": {
+              "names": {
+                "label": "Names",
+                "default": "Vasilisa & Artem"
+              },
+              "hashtag": {
+                "label": "Hashtag",
+                "default": "#vasilisaartem2027"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "monogram": "V & A",
+                "names": "Vasilisa & Artem",
+                "dateLabel": "5 September 2027",
+                "place": "Marfino estate",
+                "hashtag": "#vasilisaartem2027",
+                "links": [
+                  {
+                    "label": "Story",
+                    "href": "#story"
+                  },
+                  {
+                    "label": "Schedule",
+                    "href": "#program"
+                  },
+                  {
+                    "label": "Venue",
+                    "href": "#place"
+                  },
+                  {
+                    "label": "RSVP",
+                    "href": "#rsvp"
+                  },
+                  {
+                    "label": "FAQ",
+                    "href": "#faq"
+                  }
+                ],
+                "rsvpText": "Please reply",
+                "rsvpLabel": "by 1 August",
+                "signature": "With love, V. & A."
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

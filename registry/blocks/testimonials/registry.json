@@ -3758,6 +3758,178 @@
           }
         }
       }
+    },
+    {
+      "name": "testimonials-020",
+      "type": "registry:block",
+      "title": "Стена пожеланий гостей на пробковой доске",
+      "description": "Стена пожеланий: кремовые записки на пробковой доске под разными углами, у каждой латунная кнопка сверху, текст рукописным serif'ом, подпись терракотой. Слева форма «оставить пожелание» — новая записка прикалывается первой с анимацией. Без бэкенда записка живёт до перезагрузки; с action — уходит POST'ом.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-020/testimonials-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-020.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради формы. Доска — <ul> auto-fill minmax(12rem,1fr) с inset-тенью и «рамкой» через box-shadow; записка — article с наклоном --vibeui-testimonials-020-tilt по nth-child(4n…), hover выпрямляет и увеличивает; кнопка — radial-gradient латуни. Новые записки — state-массив, добавляются в начало с data-fresh и keyframes «приколоть». Форма — name + textarea (required), onSubmit без action — preventDefault, с action — POST. От 56rem сетка .8fr/1.6fr, левая колонка sticky. Палитра --vibeui-testimonials-020-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "guestbook",
+          "wishes",
+          "wall",
+          "notes",
+          "cork board",
+          "pins",
+          "form",
+          "testimonials",
+          "serif",
+          "cream"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Testimonials020",
+          "usage": "<Testimonials020\n  title=\"Доска у входа — уже здесь\"\n  wishes={[\n    { name: \"Ксения\", note: \"свидетельница\", text: \"Я знала это с первого кофе. Готовьте танцпол.\" },\n    { name: \"Бабушка Нина\", text: \"Артём, береги её. Василиса, корми его.\" },\n  ]}\n  submitLabel=\"Приколоть на доску\"\n  action=\"/api/wishes\"\n/>",
+          "summary": "Самодостаточная стена пожеланий для свадебного сайта: записки на пробковой доске под углом с латунными кнопками и форма, которая прикалывает новую записку первой. Пожелания — массив пропсом, отправка на action.",
+          "preserve": [
+            "пробковую доску с записками под разными углами и латунными кнопками",
+            "анимацию «приколоть» у новой записки, которая встаёт первой",
+            "форму слева, липкую от 56rem"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, wishes (name, text, note)",
+            "formTitle, nameLabel, textLabel, submitLabel, freshNote, action",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Без action новая записка живёт до перезагрузки — витрина, не хранилище.",
+            "С action записки на доске не обновятся сами: перерисуйте wishes после ответа сервера."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Доска у входа — уже здесь",
+            "maxLength": 60
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Guest wishes wall on a cork board",
+            "description": "A wall of wishes: cream notes on a cork board at different angles, a brass pin on each, text in a handwritten-feel serif, the signature in terracotta. On the left a “leave a wish” form — the new note pins on first with an animation. Without a backend the note lives until reload; with action it POSTs.",
+            "docs": "One file, zero dependencies, “use client” for the form. The board is a <ul> auto-fill minmax(12rem,1fr) with an inset shadow and a “frame” via box-shadow; a note is an article tilted via --vibeui-testimonials-020-tilt by nth-child(4n…), hover straightens and scales; the pin is a brass radial-gradient. New notes are a state array prepended with data-fresh and a “pin” keyframe. The form is name + textarea (required), onSubmit without action — preventDefault, with action — POST. From 56rem a .8fr/1.6fr grid, the left column sticky. Palette --vibeui-testimonials-020-*: cream #f6f1e8 / plum #2b1a24 via light-dark(), terracotta #b8552f accent, plum #4a1f36 for headings, sage #8a9a7b and sand #d9c5a5 for captions; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained wishes wall for a wedding site: tilted notes on a cork board with brass pins and a form that pins a new note first. Wishes come as a prop array, submission goes to action.",
+              "preserve": [
+                "the cork board with notes at different angles and brass pins",
+                "the “pin” animation of a new note taking the first place",
+                "the form on the left, sticky from 56rem"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, wishes (name, text, note)",
+                "formTitle, nameLabel, textLabel, submitLabel, freshNote, action",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Without action a new note lives until reload — a showcase, not storage.",
+                "With action the board doesn't refresh itself: re-render wishes after the server responds."
+              ],
+              "usage": "<Testimonials020\n  title=\"The board by the door — already here\"\n  wishes={[\n    { name: \"Ksenia\", note: \"maid of honour\", text: \"I knew it from the first coffee. Get the dance floor ready.\" },\n    { name: \"Grandma Nina\", text: \"Artem, take care of her. Vasilisa, feed him.\" },\n  ]}\n  submitLabel=\"Pin to the board\"\n  action=\"/api/wishes\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "The board by the door — already here"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Wishes",
+                "title": "The board by the door — already here",
+                "lede": "There'll be a real one at the wedding, with paper and pins. But you can start now: the note appears on the board at once.",
+                "formTitle": "Leave a wish",
+                "nameLabel": "How to sign you",
+                "textLabel": "Wish",
+                "submitLabel": "Pin to the board",
+                "freshNote": "just now",
+                "wishes": [
+                  {
+                    "name": "Ksenia",
+                    "note": "maid of honour",
+                    "text": "Finally! I knew it from the first coffee. Love you both, get the dance floor ready."
+                  },
+                  {
+                    "name": "Grandma Nina",
+                    "text": "Artem, take care of her. Vasilisa, feed him. The rest will follow."
+                  },
+                  {
+                    "name": "Daniil",
+                    "note": "brother",
+                    "text": "Brother, you chose the best one. The shuttle is on me, the toasts on you."
+                  },
+                  {
+                    "name": "Masha & Egor",
+                    "text": "Waiting for 5 September more than for our holiday. Bringing you a sapling."
+                  },
+                  {
+                    "name": "Polina",
+                    "note": "planner",
+                    "text": "Everything will be on time. Even the rain — by schedule."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

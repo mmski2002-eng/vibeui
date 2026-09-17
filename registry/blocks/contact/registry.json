@@ -2222,6 +2222,219 @@
           }
         }
       }
+    },
+    {
+      "name": "contact-018",
+      "type": "registry:block",
+      "title": "RSVP-анкета свадьбы в пять шагов",
+      "description": "Подтверждение участия в пять шагов: кто и придёт ли, с кем (плюс один, дети), меню и напитки с аллергиями, нужен ли трансфер, песня для танцпола и пожелание. Сверху полоски прогресса, справа липкая сводка, которая заполняется по ходу, финал — «спасибо» с восковой печатью. Имя гостя подставляется из ?guest= в адресе — ссылку можно слать персональной.",
+      "categories": [
+        "contact"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-018/contact-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-018.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client». Состояние — объект ответов и номер шага; шаги рендерятся по одному с fade-in, «Дальше» на первом шаге заблокировано без имени и ответа «буду/не смогу». Выборы — кнопки-капсулы с aria-pressed (одиночный) и role=checkbox/aria-checked (напитки). Имя из адреса читается useSyncExternalStore (на сервере пусто, гидрация без расхождений), greeting с {name} заменяет заголовок; lede принимает {deadline}. Сводка — <dl> с aria-live=polite, пустые значения показывают «—». Отправка: без action — preventDefault и экран «спасибо», с action — обычный POST с hidden-полями guest и answers (JSON). Печать — radial-gradient со «штампом» keyframes. От 56rem сетка 1.4fr/.7fr, сводка sticky. Палитра --vibeui-contact-018-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "rsvp",
+          "form",
+          "multi-step",
+          "wizard",
+          "survey",
+          "poll",
+          "menu",
+          "guests",
+          "plus one",
+          "transfer",
+          "song request",
+          "serif",
+          "cream"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "guest": "Ольга"
+          }
+        },
+        "cardControls": [
+          "title",
+          "guest",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Contact018",
+          "usage": "<Contact018\n  title=\"Скажите, что придёте\"\n  greeting=\"{name}, привет!\"\n  deadline=\"до 1 августа\"\n  menu={[\n    { value: \"meat\", label: \"Мясо\" },\n    { value: \"fish\", label: \"Рыба\" },\n    { value: \"veg\", label: \"Вегетарианское\" },\n  ]}\n  drinks={[\n    { value: \"wine\", label: \"Вино\" },\n    { value: \"none\", label: \"Без алкоголя\" },\n  ]}\n  action=\"/api/rsvp\"\n/>\n{/* персональная ссылка: /?guest=Ольга#rsvp */}",
+          "summary": "Самодостаточная RSVP-анкета свадьбы: пять шагов с прогрессом, опросами по меню, напиткам, трансферу и песне, сводка справа и «спасибо» с печатью. Имя гостя — из ?guest= или пропсом, отправка POST'ом на action.",
+          "preserve": [
+            "пять шагов по одному с полосками прогресса и блокировкой «Дальше» без ответа",
+            "липкую сводку справа, которая заполняется по ходу",
+            "финал «спасибо» с восковой печатью и штампом"
+          ],
+          "adapt": [
+            "eyebrow, title, greeting ({name}), lede ({deadline}), deadline, guest, stepLabels",
+            "menu, drinks (value/label), summaryTitle, submitLabel, thanksTitle, thanksText, action",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Ответы уходят одним hidden-полем answers (JSON) плюс guest — разбирайте на сервере.",
+            "Тексты внутри шагов (подсказки, плейсхолдеры, трансфер) — русские константы в файле: правьте там."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Скажите, что придёте",
+            "maxLength": 60
+          },
+          {
+            "prop": "guest",
+            "label": "Имя гостя",
+            "type": "text",
+            "default": "",
+            "maxLength": 30
+          },
+          {
+            "prop": "deadline",
+            "label": "Срок",
+            "type": "text",
+            "default": "до 1 августа",
+            "maxLength": 30
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Five-step wedding RSVP form",
+            "description": "An RSVP in five steps: who and whether they're coming, with whom (plus one, children), menu and drinks with allergies, whether a shuttle is needed, a dance-floor song and a wish. Progress bars on top, a sticky summary on the right that fills as you go, and a “thank you” finale with a wax seal. The guest's name comes from ?guest= in the URL — the link can be sent personally.",
+            "docs": "One file, zero dependencies, “use client”. State is the answers object and the step index; steps render one at a time with a fade-in, “Next” on the first step is disabled without a name and a yes/no. Choices are pill buttons with aria-pressed (single) and role=checkbox/aria-checked (drinks). The name from the URL is read via useSyncExternalStore (empty on the server, hydration without mismatch); greeting with {name} replaces the title; lede accepts {deadline}. The summary is a <dl> with aria-live=polite, empty values show “—”. Submission: without action — preventDefault and the “thank you” screen; with action — a plain POST with hidden guest and answers (JSON) fields. The seal is a radial-gradient with a “stamp” keyframe. From 56rem a 1.4fr/.7fr grid, the summary sticky. Palette --vibeui-contact-018-*: cream #f6f1e8 / plum #2b1a24 via light-dark(), terracotta #b8552f accent, plum #4a1f36 for headings, sage #8a9a7b and sand #d9c5a5 for captions; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained wedding RSVP form: five steps with progress, polls on menu, drinks, shuttle and song, a summary on the right and a sealed “thank you”. The guest's name comes from ?guest= or a prop, submission POSTs to action.",
+              "preserve": [
+                "five steps shown one at a time with progress bars and “Next” disabled until answered",
+                "the sticky summary on the right that fills as you go",
+                "the “thank you” finale with the wax seal stamp"
+              ],
+              "adapt": [
+                "eyebrow, title, greeting ({name}), lede ({deadline}), deadline, guest, stepLabels",
+                "menu, drinks (value/label), summaryTitle, submitLabel, thanksTitle, thanksText, action",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Answers go as one hidden answers field (JSON) plus guest — parse them on the server.",
+                "In-step copy (hints, placeholders, shuttle times) are Russian constants in the file: edit them there."
+              ],
+              "usage": "<Contact018\n  title=\"Tell us you're coming\"\n  greeting=\"{name}, hi!\"\n  deadline=\"by 1 August\"\n  menu={[\n    { value: \"meat\", label: \"Meat\" },\n    { value: \"fish\", label: \"Fish\" },\n    { value: \"veg\", label: \"Vegetarian\" },\n  ]}\n  drinks={[\n    { value: \"wine\", label: \"Wine\" },\n    { value: \"none\", label: \"No alcohol\" },\n  ]}\n  action=\"/api/rsvp\"\n/>\n{/* personal link: /?guest=Olga#rsvp */}"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Tell us you're coming"
+              },
+              "guest": {
+                "label": "Guest name",
+                "default": ""
+              },
+              "deadline": {
+                "label": "Deadline",
+                "default": "by 1 August"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "guest": "Olga",
+                "eyebrow": "RSVP",
+                "title": "Tell us you're coming",
+                "greeting": "{name}, hi!",
+                "lede": "Five short questions — so we seat you next to the right people and forget nothing important. Please answer {deadline}.",
+                "deadline": "by 1 August",
+                "stepLabels": [
+                  "Who",
+                  "With whom",
+                  "Menu",
+                  "Travel",
+                  "Song"
+                ],
+                "menu": [
+                  {
+                    "value": "meat",
+                    "label": "Meat"
+                  },
+                  {
+                    "value": "fish",
+                    "label": "Fish"
+                  },
+                  {
+                    "value": "veg",
+                    "label": "Vegetarian"
+                  }
+                ],
+                "drinks": [
+                  {
+                    "value": "wine",
+                    "label": "Wine"
+                  },
+                  {
+                    "value": "strong",
+                    "label": "Spirits"
+                  },
+                  {
+                    "value": "none",
+                    "label": "No alcohol"
+                  }
+                ],
+                "summaryTitle": "Your answer",
+                "submitLabel": "Send the answer",
+                "thanksTitle": "Thank you, see you there!",
+                "thanksText": "Your answer is saved. If anything changes — just open this page again and write to us."
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

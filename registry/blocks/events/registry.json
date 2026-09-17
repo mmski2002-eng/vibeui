@@ -1341,6 +1341,392 @@
           }
         }
       }
+    },
+    {
+      "name": "event-008",
+      "type": "registry:block",
+      "title": "Программа свадебного дня вертикальной лентой",
+      "description": "Программа дня вертикальной лентой: слева время serif'ом, по центру линия с кружками-иконками (бокал, кольца, ужин, ноты, огни), справа название, место и пара слов. Подсвеченный шаг «сейчас» получает терракотовый кружок с ореолом и мягкую заливку. Справа липкая карточка «что взять с собой».",
+      "categories": [
+        "events"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "event-008/event-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/event-008.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный. Сетка шага 3.6rem/3rem/1fr: время, кружок на линии (::before у списка — градиент от акцента к линии и обратно), тело. Иконки — inline SVG по step.icon: glass, rings, dinner, music, sparkles, cake, bus, camera. current — индекс подсвеченного шага (data-current, aria-current=step): кружок заливается акцентом с box-shadow-ореолом, тело получает фон 8 % акцента. От 56rem две колонки 1.5fr/.7fr, карточка «что взять» sticky top:5rem. Палитра --vibeui-event-008-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "schedule",
+          "timeline",
+          "program",
+          "agenda",
+          "itinerary",
+          "day",
+          "icons",
+          "serif",
+          "cream",
+          "events",
+          "sticky"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "current": 1
+          }
+        },
+        "cardControls": [
+          "title",
+          "current",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Event008",
+          "usage": "<Event008\n  title=\"Как пройдёт 5 сентября\"\n  steps={[\n    { time: \"15:00\", title: \"Сбор гостей\", place: \"терраса\", text: \"Лимонад и первые объятия.\", icon: \"glass\" },\n    { time: \"16:00\", title: \"Церемония\", place: \"павильон\", icon: \"rings\" },\n    { time: \"17:00\", title: \"Ужин\", place: \"терраса\", icon: \"dinner\" },\n    { time: \"20:00\", title: \"Танцы\", place: \"лужайка\", icon: \"music\" },\n  ]}\n  current={-1}\n  asideItems={[\"Тёплую кофту\", \"Удобную обувь\"]}\n/>",
+          "summary": "Самодостаточная программа свадебного дня: вертикальная лента с временем, иконками, местом и подсветкой текущего шага, сбоку «что взять». Шаги — массив пропсом.",
+          "preserve": [
+            "время serif'ом слева и линию с кружками-иконками по центру",
+            "подсветку текущего шага: залитый кружок с ореолом и мягкий фон",
+            "липкую карточку «что взять» справа от 56rem"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, steps (time, title, place, text, icon из набора)",
+            "current (индекс или -1), asideTitle, asideItems",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Подсветка «сейчас» — статический индекс: посчитайте его на сервере или в родителе по дате.",
+            "asideItems пустым массивом убирает карточку — лента займёт всю ширину."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Как пройдёт 5 сентября",
+            "maxLength": 60
+          },
+          {
+            "prop": "current",
+            "label": "Текущий шаг",
+            "type": "number",
+            "default": -1,
+            "min": -1,
+            "max": 4
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Wedding day schedule as a vertical timeline",
+            "description": "The day's schedule as a vertical timeline: the time in serif on the left, a line with icon circles in the middle (glass, rings, dinner, notes, sparkles), the title, place and a few words on the right. The highlighted “now” step gets a terracotta circle with a halo and a soft fill. A sticky “what to bring” card on the right.",
+            "docs": "One file, zero dependencies, server-rendered. The step grid is 3.6rem/3rem/1fr: time, a circle on the line (the list's ::before is a gradient from accent to line and back), body. Icons are inline SVGs by step.icon: glass, rings, dinner, music, sparkles, cake, bus, camera. current is the index of the highlighted step (data-current, aria-current=step): the circle fills with the accent and a box-shadow halo, the body gets an 8 % accent background. From 56rem two columns 1.5fr/.7fr, the “what to bring” card is sticky top:5rem. Palette --vibeui-event-008-*: cream #f6f1e8 / plum #2b1a24 via light-dark(), terracotta #b8552f accent, plum #4a1f36 for headings, sage #8a9a7b and sand #d9c5a5 for captions; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained wedding day schedule: a vertical timeline with times, icons, places and a highlighted current step, plus a “what to bring” aside. Steps come as a prop array.",
+              "preserve": [
+                "the serif time on the left and the line with icon circles in the middle",
+                "the current step highlight: a filled circle with a halo and a soft background",
+                "the sticky “what to bring” card on the right from 56rem"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, steps (time, title, place, text, icon from the set)",
+                "current (index or -1), asideTitle, asideItems",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The “now” highlight is a static index: compute it on the server or in the parent from the date.",
+                "An empty asideItems removes the card — the timeline takes the full width."
+              ],
+              "usage": "<Event008\n  title=\"How 5 September goes\"\n  steps={[\n    { time: \"15:00\", title: \"Guests arrive\", place: \"terrace\", text: \"Lemonade and first hugs.\", icon: \"glass\" },\n    { time: \"16:00\", title: \"Ceremony\", place: \"garden pavilion\", icon: \"rings\" },\n    { time: \"17:00\", title: \"Dinner\", place: \"terrace\", icon: \"dinner\" },\n    { time: \"20:00\", title: \"Dancing\", place: \"lawn\", icon: \"music\" },\n  ]}\n  current={-1}\n  asideItems={[\"A warm jumper\", \"Comfortable shoes\"]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "How 5 September goes"
+              },
+              "current": {
+                "label": "Current step"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "current": 1,
+                "eyebrow": "Schedule",
+                "title": "How 5 September goes",
+                "lede": "One day, one place, no transfers. Arrive at three — and stay until the sparklers.",
+                "asideTitle": "What to bring",
+                "asideItems": [
+                  "A warm jumper — it gets cool by the pond",
+                  "Comfortable shoes: lawn and gravel",
+                  "A good mood and that one song"
+                ],
+                "steps": [
+                  {
+                    "time": "15:00",
+                    "title": "Guests arrive",
+                    "place": "terrace",
+                    "text": "Lemonade, home-made kvass and first hugs.",
+                    "icon": "glass"
+                  },
+                  {
+                    "time": "16:00",
+                    "title": "Ceremony",
+                    "place": "garden pavilion",
+                    "text": "Twenty minutes in the shade of the lindens.",
+                    "icon": "rings"
+                  },
+                  {
+                    "time": "17:00",
+                    "title": "Dinner",
+                    "place": "long table on the terrace",
+                    "text": "Family dishes on shared plates, toasts optional.",
+                    "icon": "dinner"
+                  },
+                  {
+                    "time": "20:00",
+                    "title": "Dancing",
+                    "place": "lawn",
+                    "text": "The first dance is ours, then your requests.",
+                    "icon": "music"
+                  },
+                  {
+                    "time": "23:00",
+                    "title": "Sparklers",
+                    "place": "by the pond",
+                    "text": "Sparklers to say goodbye. Transfer at 23:30.",
+                    "icon": "sparkles"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "event-009",
+      "type": "registry:block",
+      "title": "Дресс-код палитрой с копированием цвета",
+      "description": "Дресс-код для гостей палитрой: пять крупных кругов цвета внахлёст, как мазки на пробнике; клик копирует HEX, круг подпрыгивает и подпись меняется на «скопировано». Ниже два образа — «ей» и «ему» — и короткий список «чего лучше избежать» на терракотовой плашке.",
+      "categories": [
+        "events"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "event-009/event-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/event-009.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, состояние на 1.6 с). Круги — кнопки с --vibeui-event-009-chip из swatch.hex, диаметр clamp(4.5rem,14cqi,7.5rem), нахлёст через margin-right и кольцо box-shadow цвета фона; hover поднимает, data-copied запускает keyframes подскока. Подпись — имя и HEX моноширинными цифрами. Образы и «избегать» — сетка 1/1/1 от 56rem. Палитра --vibeui-event-009-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "dress code",
+          "palette",
+          "colors",
+          "swatches",
+          "copy",
+          "hex",
+          "outfit",
+          "guests",
+          "serif",
+          "cream"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Event009",
+          "usage": "<Event009\n  title=\"Тёплые нейтральные — и что-нибудь своё\"\n  swatches={[\n    { name: \"Крем\", hex: \"#f1e8d8\" },\n    { name: \"Шалфей\", hex: \"#8a9a7b\" },\n    { name: \"Терракота\", hex: \"#b8552f\" },\n    { name: \"Слива\", hex: \"#4a1f36\" },\n  ]}\n  looks={[\n    { who: \"Ей\", title: \"Платье, лён или шёлк\", text: \"Любая длина из палитры.\" },\n    { who: \"Ему\", title: \"Рубашка и брюки\", text: \"Без галстука, кеды — можно.\" },\n  ]}\n  avoidItems={[\"Белого — это оставим невесте\"]}\n/>",
+          "summary": "Самодостаточный дресс-код палитрой: круги цвета с копированием HEX по клику, образы «ей» и «ему», список «чего избегать». Цвета и тексты пропсами.",
+          "preserve": [
+            "круги цвета внахлёст с кольцом цвета фона — пробник, а не таблица",
+            "копирование HEX по клику с подскоком и подписью «скопировано»",
+            "терракотовую плашку «чего избегать» рядом с образами"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, swatches (name, hex), hint, copiedLabel",
+            "looks (who, title, text), avoidTitle, avoidItems",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Круги подписаны и именем, и кодом: без цвета в CSS гость всё равно поймёт, что искать.",
+            "Без clipboard (http без TLS) клик ничего не копирует, но кнопка остаётся доступной."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Тёплые нейтральные — и что-нибудь своё",
+            "maxLength": 60
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Dress code as a palette with colour copying",
+            "description": "A guest dress code as a palette: five large overlapping colour circles like dabs on a swatch card; a click copies the HEX, the circle hops and the caption turns to “copied”. Below, two looks — “her” and “him” — and a short “better avoid” list on a terracotta panel.",
+            "docs": "One file, zero dependencies, “use client” for copying (navigator.clipboard, 1.6 s state). Circles are buttons with --vibeui-event-009-chip from swatch.hex, diameter clamp(4.5rem,14cqi,7.5rem), overlap via margin-right and a box-shadow ring in the background colour; hover lifts, data-copied runs the hop keyframes. The caption is the name and the HEX in tabular figures. Looks and “avoid” form a 1/1/1 grid from 56rem. Palette --vibeui-event-009-*: cream #f6f1e8 / plum #2b1a24 via light-dark(), terracotta #b8552f accent, plum #4a1f36 for headings, sage #8a9a7b and sand #d9c5a5 for captions; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained dress code palette: colour circles that copy their HEX on click, “her” and “him” looks, a “what to avoid” list. Colours and copy via props.",
+              "preserve": [
+                "the overlapping colour circles with a background-colour ring — a swatch card, not a table",
+                "HEX copying on click with the hop and the “copied” caption",
+                "the terracotta “what to avoid” panel next to the looks"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, swatches (name, hex), hint, copiedLabel",
+                "looks (who, title, text), avoidTitle, avoidItems",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Circles carry both a name and a code: without CSS colour a guest still knows what to look for.",
+                "Without clipboard (plain http) the click copies nothing, but the button stays accessible."
+              ],
+              "usage": "<Event009\n  title=\"Warm neutrals — and something yours\"\n  swatches={[\n    { name: \"Cream\", hex: \"#f1e8d8\" },\n    { name: \"Sage\", hex: \"#8a9a7b\" },\n    { name: \"Terracotta\", hex: \"#b8552f\" },\n    { name: \"Plum\", hex: \"#4a1f36\" },\n  ]}\n  looks={[\n    { who: \"Her\", title: \"A dress, linen or silk\", text: \"Any length from the palette.\" },\n    { who: \"Him\", title: \"Shirt and trousers\", text: \"No tie, sneakers are fine.\" },\n  ]}\n  avoidItems={[\"White — we leave that to the bride\"]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Warm neutrals — and something yours"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Dress code",
+                "title": "Warm neutrals — and something yours",
+                "lede": "We're not asking for a uniform. We'd like everyone to look like one company in one light on the photos — here's a palette to start from.",
+                "hint": "Tap a colour — the code copies, show it in the shop.",
+                "copiedLabel": "copied",
+                "swatches": [
+                  {
+                    "name": "Cream",
+                    "hex": "#f1e8d8"
+                  },
+                  {
+                    "name": "Sand",
+                    "hex": "#d9c5a5"
+                  },
+                  {
+                    "name": "Sage",
+                    "hex": "#8a9a7b"
+                  },
+                  {
+                    "name": "Terracotta",
+                    "hex": "#b8552f"
+                  },
+                  {
+                    "name": "Plum",
+                    "hex": "#4a1f36"
+                  }
+                ],
+                "looks": [
+                  {
+                    "who": "Her",
+                    "title": "A midi dress, linen or silk",
+                    "text": "Any length and any colour from the palette. Heels sink into the lawn — go flat or block."
+                  },
+                  {
+                    "who": "Him",
+                    "title": "Shirt, trousers, jacket optional",
+                    "text": "A linen shirt in sand or sage, darker trousers. No tie needed, sneakers are fine."
+                  }
+                ],
+                "avoidTitle": "Better avoid",
+                "avoidItems": [
+                  "White and ivory — we leave that to Vasilisa",
+                  "Big prints and neon: they fight the light",
+                  "Stilettos — gravel and grass"
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

@@ -4258,6 +4258,197 @@
           }
         }
       }
+    },
+    {
+      "name": "navbar-025",
+      "type": "registry:block",
+      "title": "Шапка приглашения с монограммой и музыкой",
+      "description": "Шапка свадебного сайта: монограмма пары в круге с датой под ней, разделы тонким serif'ом с подчёркиванием текущего, значок музыки (по умолчанию выключено, играет только по клику) и терракотовая капсула «Подтвердить». Поверх первого экрана прозрачная, после прокрутки — кремовая с размытием. На узкой ширине разделы прячутся за «Меню».",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-025/navbar-025.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-025.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради скролла, скроллспая и музыки. <header> position:fixed (placement=static — в потоке для превью); подложка [data-part=veil] с backdrop-filter проявляется по data-scrolled (scrollY>24, первое чтение из rAF) и при открытом меню. Монограмма делится по « & », амперсанд — акцентом. Активный раздел — IntersectionObserver по якорям (rootMargin -40 %/-55 %), aria-current и подчёркивание scaleX. Музыка — <audio loop preload=none>, play() только по клику (автоплей браузеры блокируют), aria-pressed и три столбика-эквалайзера на анимации. До 52rem ссылки и кнопка уходят в [data-part=sheet] по кнопке «Меню» (aria-expanded). Палитра --vibeui-navbar-025-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "invitation",
+          "navbar",
+          "monogram",
+          "music",
+          "audio",
+          "sticky",
+          "transparent",
+          "serif",
+          "cream",
+          "elegant",
+          "rsvp"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "placement": "static",
+            "spy": false,
+            "music": "/demo/wedding/music.mp3"
+          }
+        },
+        "cardControls": [
+          "monogram",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Navbar025",
+          "usage": "<Navbar025\n  monogram=\"В & А\"\n  caption=\"5 · 09 · 2027\"\n  links={[\n    { label: \"История\", href: \"#story\" },\n    { label: \"Программа\", href: \"#program\" },\n    { label: \"Место\", href: \"#place\" },\n    { label: \"Вопросы\", href: \"#faq\" },\n  ]}\n  actionLabel=\"Подтвердить\"\n  actionHref=\"#rsvp\"\n  music=\"/audio/wedding.mp3\"\n/>",
+          "summary": "Самодостаточная шапка свадебного приглашения: монограмма, разделы, значок музыки с треком по клику и кнопка «Подтвердить»; прозрачная поверх первого экрана, кремовая при прокрутке.",
+          "preserve": [
+            "монограмму в круге с акцентным амперсандом и датой под ней",
+            "прозрачность поверх первого экрана и кремовую подложку с размытием после прокрутки",
+            "музыку только по клику: значок с эквалайзером, aria-pressed, никакого автоплея"
+          ],
+          "adapt": [
+            "monogram, caption, brandHref, links (подписи и якоря), actionLabel, actionHref",
+            "music (путь к треку; пусто — кнопки нет), musicLabel, placement, spy",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Секциям нужны id, совпадающие с href ссылок — по ним считается текущий раздел.",
+            "Трек кладите в проект сами: в реестре его нет, а preload=none не тянет его до клика."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "monogram",
+            "label": "Монограмма",
+            "type": "text",
+            "default": "В & А",
+            "maxLength": 8
+          },
+          {
+            "prop": "caption",
+            "label": "Дата под монограммой",
+            "type": "text",
+            "default": "5 · 09 · 2027",
+            "maxLength": 16
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Подтвердить",
+            "maxLength": 20
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Invitation header with a monogram and music",
+            "description": "A wedding site header: the couple's monogram in a circle with the date beneath, sections in a thin serif with the current one underlined, a music toggle (off by default, plays only on click) and a terracotta “RSVP” pill. Transparent over the hero, cream with blur after scrolling. On narrow widths the sections hide behind “Menu”.",
+            "docs": "One file, zero dependencies, “use client” for scroll, the scroll spy and music. A position:fixed <header> (placement=static puts it in the flow for previews); the [data-part=veil] backdrop with backdrop-filter appears on data-scrolled (scrollY>24, first read from rAF) and when the menu is open. The monogram splits on “ & ”, the ampersand takes the accent. The active section comes from an IntersectionObserver on the anchors (rootMargin -40 %/-55 %), aria-current and a scaleX underline. Music is <audio loop preload=none>, play() only on click (browsers block autoplay), aria-pressed and a three-bar animated equaliser. Below 52rem links and the button move into [data-part=sheet] behind the “Menu” button (aria-expanded). Palette --vibeui-navbar-025-*: cream #f6f1e8 / plum #2b1a24 via light-dark(), terracotta #b8552f accent, plum #4a1f36 for headings, sage #8a9a7b and sand #d9c5a5 for captions; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained wedding invitation header: a monogram, sections, a music toggle that plays a track on click and an “RSVP” button; transparent over the hero, cream when scrolled.",
+              "preserve": [
+                "the monogram in a circle with the accent ampersand and the date beneath",
+                "transparency over the hero and the blurred cream backdrop after scrolling",
+                "music only on click: the equaliser icon, aria-pressed, no autoplay"
+              ],
+              "adapt": [
+                "monogram, caption, brandHref, links (labels and anchors), actionLabel, actionHref",
+                "music (track path; empty — no button), musicLabel, placement, spy",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Sections need ids matching the link hrefs — the current section is derived from them.",
+                "Ship the track in your project: the registry has none, and preload=none does not fetch it before the click."
+              ],
+              "usage": "<Navbar025\n  monogram=\"V & A\"\n  caption=\"5 · 09 · 2027\"\n  links={[\n    { label: \"Story\", href: \"#story\" },\n    { label: \"Schedule\", href: \"#program\" },\n    { label: \"Venue\", href: \"#place\" },\n    { label: \"FAQ\", href: \"#faq\" },\n  ]}\n  actionLabel=\"RSVP\"\n  actionHref=\"#rsvp\"\n  music=\"/audio/wedding.mp3\"\n/>"
+            },
+            "controls": {
+              "monogram": {
+                "label": "Monogram",
+                "default": "V & A"
+              },
+              "caption": {
+                "label": "Date caption",
+                "default": "5 · 09 · 2027"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "RSVP"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "placement": "static",
+                "spy": false,
+                "music": "/demo/wedding/music.mp3",
+                "monogram": "V & A",
+                "links": [
+                  {
+                    "label": "Story",
+                    "href": "#story"
+                  },
+                  {
+                    "label": "Schedule",
+                    "href": "#program"
+                  },
+                  {
+                    "label": "Venue",
+                    "href": "#place"
+                  },
+                  {
+                    "label": "FAQ",
+                    "href": "#faq"
+                  }
+                ],
+                "actionLabel": "RSVP",
+                "musicLabel": "Music"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

@@ -2244,6 +2244,202 @@
           }
         }
       }
+    },
+    {
+      "name": "people-010",
+      "type": "registry:block",
+      "title": "Свидетели и организатор полароидами",
+      "description": "«С кем вы встретитесь»: свидетели и организатор свадьбы полароидами — белая рамка с толстым низом, квадратный кадр, имя курсивным serif'ом, роль капслоком и пара строк о том, с чем к этому человеку идти. Карточки повёрнуты вразнобой и выпрямляются по наведению, у каждой ссылка «написать».",
+      "categories": [
+        "team"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "people-010/people-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/people-010.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный. Карточка — article шириной до 18rem с padding под полароид, наклон через --vibeui-people-010-tilt по nth-child(3n…), hover выпрямляет и поднимает с тенью. Кадр 1:1 object-fit:cover с приглушённой насыщенностью, песочная плашка без фото. Сетка от 44rem — auto-fit minmax(15rem,18rem) по центру. Контакт — ссылка с иконкой самолётика и подчёркиванием акцентом; tel: и https: работают одинаково. Палитра --vibeui-people-010-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "wedding party",
+          "bridesmaid",
+          "best man",
+          "planner",
+          "team",
+          "people",
+          "polaroid",
+          "contacts",
+          "serif",
+          "cream"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "people": [
+              {
+                "name": "Ксения",
+                "role": "Свидетельница",
+                "text": "Лучшая подруга Василисы с первого курса. Знает, где сидеть, что дарить и кто с кем не разговаривает.",
+                "image": "/demo/wedding/people-01.webp",
+                "contactLabel": "Написать в Telegram",
+                "contactHref": "#"
+              },
+              {
+                "name": "Даниил",
+                "role": "Свидетель",
+                "text": "Брат Артёма. Отвечает за трансфер, парковку и тех, кто потерялся по дороге.",
+                "image": "/demo/wedding/people-02.webp",
+                "contactLabel": "Написать в Telegram",
+                "contactHref": "#"
+              },
+              {
+                "name": "Полина",
+                "role": "Организатор",
+                "text": "Собирает весь день по минутам. Аллергии, отели, детские стулья — это к ней.",
+                "image": "/demo/wedding/people-03.webp",
+                "contactLabel": "Позвонить",
+                "contactHref": "tel:+70000000000"
+              }
+            ]
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "People010",
+          "usage": "<People010\n  title=\"Три человека, к которым можно с любым вопросом\"\n  people={[\n    { name: \"Ксения\", role: \"Свидетельница\", text: \"Знает, где сидеть и что дарить.\", image: \"/photos/people-01.webp\", contactLabel: \"Написать в Telegram\", contactHref: \"https://t.me/…\" },\n    { name: \"Полина\", role: \"Организатор\", text: \"Аллергии, отели, детские стулья — к ней.\", image: \"/photos/people-03.webp\", contactLabel: \"Позвонить\", contactHref: \"tel:+7…\" },\n  ]}\n/>",
+          "summary": "Самодостаточный блок свадебной команды: свидетели и организатор полароидами вразнобой с ролью, описанием и ссылкой «написать». Люди — массив пропсом.",
+          "preserve": [
+            "полароидную рамку с толстым низом и квадратным кадром",
+            "разный наклон карточек и выпрямление по наведению",
+            "ссылку «написать» с подчёркиванием акцентом у каждого"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, people (name, role, text, image, imageAlt, contactLabel, contactHref)",
+            "число людей — сетка auto-fit подстроится",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Фото квадратные; другой формат обрежется по центру.",
+            "Без contactLabel/contactHref ссылки нет — карточка просто описание."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Три человека, к которым можно с любым вопросом",
+            "maxLength": 70
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Wedding party and planner as polaroids",
+            "description": "“Who you'll meet”: the wedding party and planner as polaroids — a white frame with a thick bottom, a square photo, the name in italic serif, the role in caps and a couple of lines on what to ask this person. Cards are tilted unevenly and straighten on hover, each with a “message” link.",
+            "docs": "One file, zero dependencies, server-rendered. A card is an article up to 18rem wide with polaroid padding, tilt via --vibeui-people-010-tilt by nth-child(3n…), hover straightens and lifts with a shadow. The photo is 1:1 object-fit:cover with muted saturation, a sand placeholder without a photo. From 44rem the grid is auto-fit minmax(15rem,18rem) centred. The contact is a link with a paper-plane icon and an accent underline; tel: and https: work alike. Palette --vibeui-people-010-*: cream #f6f1e8 / plum #2b1a24 via light-dark(), terracotta #b8552f accent, plum #4a1f36 for headings, sage #8a9a7b and sand #d9c5a5 for captions; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained wedding team block: the wedding party and planner as unevenly tilted polaroids with a role, a description and a “message” link. People come as a prop array.",
+              "preserve": [
+                "the polaroid frame with the thick bottom and the square photo",
+                "the uneven card tilt and straightening on hover",
+                "the accent-underlined “message” link on each card"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, people (name, role, text, image, imageAlt, contactLabel, contactHref)",
+                "the number of people — the auto-fit grid adjusts",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Photos are square; other ratios get centre-cropped.",
+                "Without contactLabel/contactHref there is no link — the card is just a description."
+              ],
+              "usage": "<People010\n  title=\"Three people you can ask anything\"\n  people={[\n    { name: \"Ksenia\", role: \"Maid of honour\", text: \"Knows where to sit and what to give.\", image: \"/photos/people-01.webp\", contactLabel: \"Message on Telegram\", contactHref: \"https://t.me/…\" },\n    { name: \"Polina\", role: \"Planner\", text: \"Allergies, hotels, high chairs — ask her.\", image: \"/photos/people-03.webp\", contactLabel: \"Call\", contactHref: \"tel:+7…\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Three people you can ask anything"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Who you'll meet",
+                "title": "Three people you can ask anything",
+                "lede": "We'll be busy with each other. So for anything organisational — go to them: they know more than we do.",
+                "people": [
+                  {
+                    "name": "Ksenia",
+                    "role": "Maid of honour",
+                    "text": "Vasilisa's best friend since first year. Knows where to sit, what to give and who isn't speaking to whom.",
+                    "image": "/demo/wedding/people-01.webp",
+                    "contactLabel": "Message on Telegram",
+                    "contactHref": "#"
+                  },
+                  {
+                    "name": "Daniil",
+                    "role": "Best man",
+                    "text": "Artem's brother. In charge of the shuttle, parking and anyone lost on the way.",
+                    "image": "/demo/wedding/people-02.webp",
+                    "contactLabel": "Message on Telegram",
+                    "contactHref": "#"
+                  },
+                  {
+                    "name": "Polina",
+                    "role": "Planner",
+                    "text": "Runs the whole day by the minute. Allergies, hotels, high chairs — that's her.",
+                    "image": "/demo/wedding/people-03.webp",
+                    "contactLabel": "Call",
+                    "contactHref": "tel:+70000000000"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

@@ -1200,6 +1200,230 @@
           }
         }
       }
+    },
+    {
+      "name": "portfolio-008",
+      "type": "registry:block",
+      "title": "Галерея пары masonry с арками и лайтбоксом",
+      "description": "Галерея фотографий пары: колонки masonry, часть кадров в арке, часть вытянутая; фото приглушены и полу-ч/б, по наведению — цвет и подъём с тенью. Клик открывает лайтбокс на dialog: фото на тёмном, подпись курсивом, стрелки, клавиатура и закрытие по фону. Зерно плёнки поверх сетки.",
+      "categories": [
+        "portfolio"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "portfolio-008/portfolio-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/portfolio-008.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради лайтбокса. Сетка — CSS columns: 2 до 40rem, 3 до 64rem, 4 выше; кадры — кнопки с break-inside:avoid и data-shape: rect 4:3, arch 4:5 с border-radius 50%/36%, tall 3:4. Фото filter grayscale(.55) saturate(.8), hover снимает фильтр и масштабирует 1.04. Лайтбокс — <dialog> showModal/close из эффекта по current, стрелки и ArrowLeft/ArrowRight листают по кругу, клик по backdrop закрывает; фото object-fit:contain с max-height 70cqi. Зерно — SVG feTurbulence в ::after оболочки с multiply. Палитра --vibeui-portfolio-008-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "gallery",
+          "photos",
+          "masonry",
+          "lightbox",
+          "dialog",
+          "arch",
+          "film",
+          "grain",
+          "couple",
+          "serif",
+          "cream"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "photos": [
+              {
+                "src": "/demo/wedding/gallery-01.webp",
+                "caption": "Воскресное утро",
+                "shape": "arch"
+              },
+              {
+                "src": "/demo/wedding/gallery-02.webp",
+                "caption": "Парк, май"
+              },
+              {
+                "src": "/demo/wedding/gallery-03.webp",
+                "caption": "Под одним зонтом",
+                "shape": "tall"
+              },
+              {
+                "src": "/demo/wedding/gallery-04.webp",
+                "caption": "Пикник"
+              },
+              {
+                "src": "/demo/wedding/gallery-05.webp",
+                "caption": "Лифт",
+                "shape": "arch"
+              },
+              {
+                "src": "/demo/wedding/gallery-06.webp",
+                "caption": "Набережная"
+              },
+              {
+                "src": "/demo/wedding/gallery-07.webp",
+                "caption": "Мороженое",
+                "shape": "tall"
+              },
+              {
+                "src": "/demo/wedding/gallery-08.webp",
+                "caption": "Дождь за окном"
+              }
+            ]
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Portfolio008",
+          "usage": "<Portfolio008\n  title=\"Мы до свадьбы\"\n  photos={[\n    { src: \"/photos/gallery-01.webp\", caption: \"Воскресное утро\", shape: \"arch\" },\n    { src: \"/photos/gallery-02.webp\", caption: \"Парк, май\" },\n    { src: \"/photos/gallery-03.webp\", caption: \"Под одним зонтом\", shape: \"tall\" },\n  ]}\n/>",
+          "summary": "Самодостаточная галерея пары: masonry-колонки с арками и вытянутыми кадрами, полу-ч/б → цвет по наведению, лайтбокс на dialog с клавиатурой. Фото — массив пропсом с формой.",
+          "preserve": [
+            "masonry-колонки с тремя формами кадров — прямой, арка, вытянутый",
+            "приглушённые полу-ч/б фото, оживающие цветом по наведению, и зерно плёнки",
+            "лайтбокс на dialog с подписью, стрелками и клавиатурой"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, photos (src, alt, caption, shape)",
+            "closeLabel, prevLabel, nextLabel",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Форма задаётся у каждого фото: чередуйте arch и tall, иначе сетка станет ровной и скучной.",
+            "Пустой src показывает песочную плашку — удобно собрать раскладку до фото."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Мы до свадьбы",
+            "maxLength": 60
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Couple's masonry gallery with arches and a lightbox",
+            "description": "A photo gallery of the couple: masonry columns, some frames arched, some tall; photos muted and half black-and-white, colour and a shadowed lift on hover. A click opens a dialog lightbox: the photo on dark, an italic caption, arrows, keyboard and backdrop close. Film grain over the grid.",
+            "docs": "One file, zero dependencies, “use client” for the lightbox. The grid is CSS columns: 2 below 40rem, 3 below 64rem, 4 above; frames are buttons with break-inside:avoid and data-shape: rect 4:3, arch 4:5 with border-radius 50%/36%, tall 3:4. Photos get filter grayscale(.55) saturate(.8), hover removes the filter and scales 1.04. The lightbox is a <dialog> with showModal/close from an effect on current, arrows and ArrowLeft/ArrowRight cycle, a backdrop click closes; the photo is object-fit:contain with max-height 70cqi. Grain is an SVG feTurbulence in the shell's ::after with multiply. Palette --vibeui-portfolio-008-*: cream #f6f1e8 / plum #2b1a24 via light-dark(), terracotta #b8552f accent, plum #4a1f36 for headings, sage #8a9a7b and sand #d9c5a5 for captions; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained couple's gallery: masonry columns with arched and tall frames, half b/w → colour on hover, a dialog lightbox with keyboard. Photos come as a prop array with a shape.",
+              "preserve": [
+                "masonry columns with three frame shapes — rect, arch, tall",
+                "the muted half-b/w photos coming alive in colour on hover, and the film grain",
+                "the dialog lightbox with a caption, arrows and keyboard"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, photos (src, alt, caption, shape)",
+                "closeLabel, prevLabel, nextLabel",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The shape is set per photo: alternate arch and tall, or the grid turns even and dull.",
+                "An empty src shows a sand placeholder — handy to lay out before the photos arrive."
+              ],
+              "usage": "<Portfolio008\n  title=\"Us before the wedding\"\n  photos={[\n    { src: \"/photos/gallery-01.webp\", caption: \"Sunday morning\", shape: \"arch\" },\n    { src: \"/photos/gallery-02.webp\", caption: \"Park, May\" },\n    { src: \"/photos/gallery-03.webp\", caption: \"Under one umbrella\", shape: \"tall\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Us before the wedding"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Gallery",
+                "title": "Us before the wedding",
+                "lede": "Film frames from six years: the kitchen, the road, the rain and one pier. Wedding ones come after 5 September.",
+                "closeLabel": "Close",
+                "prevLabel": "Previous",
+                "nextLabel": "Next",
+                "photos": [
+                  {
+                    "src": "/demo/wedding/gallery-01.webp",
+                    "caption": "Sunday morning",
+                    "shape": "arch"
+                  },
+                  {
+                    "src": "/demo/wedding/gallery-02.webp",
+                    "caption": "Park, May"
+                  },
+                  {
+                    "src": "/demo/wedding/gallery-03.webp",
+                    "caption": "Under one umbrella",
+                    "shape": "tall"
+                  },
+                  {
+                    "src": "/demo/wedding/gallery-04.webp",
+                    "caption": "Picnic"
+                  },
+                  {
+                    "src": "/demo/wedding/gallery-05.webp",
+                    "caption": "Lift",
+                    "shape": "arch"
+                  },
+                  {
+                    "src": "/demo/wedding/gallery-06.webp",
+                    "caption": "Embankment"
+                  },
+                  {
+                    "src": "/demo/wedding/gallery-07.webp",
+                    "caption": "Ice cream",
+                    "shape": "tall"
+                  },
+                  {
+                    "src": "/demo/wedding/gallery-08.webp",
+                    "caption": "Rain outside"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

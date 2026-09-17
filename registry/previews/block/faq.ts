@@ -42,4 +42,6 @@ export const PREVIEWS = {
     import("@/registry/blocks/faq/faq-018/faq-018").then((module) => module.Faq018),
   "faq-019": () =>
     import("@/registry/blocks/faq/faq-019/faq-019").then((module) => module.Faq019),
+  "faq-020": () =>
+    import("@/registry/blocks/faq/faq-020/faq-020").then((module) => module.Faq020),
 } satisfies PreviewLoaderMap

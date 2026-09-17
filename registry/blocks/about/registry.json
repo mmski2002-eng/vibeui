@@ -1692,6 +1692,205 @@
           }
         }
       }
+    },
+    {
+      "name": "about-011",
+      "type": "registry:block",
+      "title": "История пары плёночной лентой",
+      "description": "«Наша история» плёночной лентой: кадры с перфорацией по краям идут горизонтальной прокруткой со snap'ом, каждый чуть повёрнут по-своему и выпрямляется по наведению, под фото дата, название и пара строк. Слева заголовок курсивным serif'ом, стрелки листают на ширину кадра, свайп и колесо работают сами.",
+      "categories": [
+        "about"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "about-011/about-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/about-011.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» только ради стрелок (scrollBy на ширину первого кадра). Лента — <ul> с overflow-x:auto, scroll-snap-type:x mandatory, скрытым скроллбаром и отрицательными полями до края блока. Кадр — flex-basis min(78cqi,20rem) (22rem от 56rem), наклон через --vibeui-about-011-tilt по nth-child, hover выпрямляет и поднимает. Перфорация — repeating-linear-gradient в ::before/::after тёмной плёнки, номер кадра «01A» в углу с mix-blend-mode. Фото 3:2 object-fit:cover с приглушённой насыщенностью. Шапка от 56rem — сетка заголовок/лид слева, стрелки справа. Палитра --vibeui-about-011-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "couple",
+          "story",
+          "timeline",
+          "film",
+          "filmstrip",
+          "carousel",
+          "scroll snap",
+          "photos",
+          "serif",
+          "cream",
+          "about"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "frames": [
+              {
+                "date": "Октябрь 2021",
+                "title": "Кофе у окна",
+                "text": "Познакомились в очереди за кофе.",
+                "image": "/demo/wedding/story-01.webp"
+              },
+              {
+                "date": "Июль 2022",
+                "title": "Первая дорога",
+                "text": "Две тысячи километров на юг.",
+                "image": "/demo/wedding/story-02.webp"
+              },
+              {
+                "date": "Март 2024",
+                "title": "Коробки",
+                "text": "Съехались: пицца на полу.",
+                "image": "/demo/wedding/story-03.webp"
+              },
+              {
+                "date": "Май 2027",
+                "title": "Пирс на закате",
+                "text": "Артём встал на одно колено.",
+                "image": "/demo/wedding/story-04.webp"
+              }
+            ]
+          }
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "About011",
+          "usage": "<About011\n  eyebrow=\"Наша история\"\n  title=\"Шесть лет, четыре кадра\"\n  frames={[\n    { date: \"Октябрь 2021\", title: \"Кофе у окна\", text: \"Познакомились в очереди за кофе.\", image: \"/photos/story-01.webp\" },\n    { date: \"Май 2027\", title: \"Пирс на закате\", text: \"Артём встал на одно колено.\", image: \"/photos/story-04.webp\" },\n  ]}\n/>",
+          "summary": "Самодостаточная история пары в виде плёночной ленты: кадры с перфорацией, датами и подписями, горизонтальная прокрутка со snap'ом и стрелками. Кадры — массив пропсом.",
+          "preserve": [
+            "плёночные кадры с перфорацией и номером в углу — главный образ секции",
+            "разный наклон кадров по nth-child и выпрямление по наведению",
+            "горизонтальную прокрутку со snap'ом вместо сетки"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, frames (date, title, text, image, imageAlt)",
+            "prevLabel, nextLabel",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Фото 3:2; другой формат обрежется object-fit: cover.",
+            "Стрелки — дополнение: без JS лента всё равно прокручивается пальцем и колесом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Шесть лет, четыре кадра",
+            "maxLength": 60
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Couple's story as a film strip",
+            "description": "“Our story” as a film strip: frames with perforated edges scroll horizontally with snap, each tilted slightly differently and straightening on hover, with a date, title and a couple of lines under the photo. A heading in italic serif on the left, arrows scroll by one frame, swipe and wheel work on their own.",
+            "docs": "One file, zero dependencies, “use client” only for the arrows (scrollBy by the first frame's width). The strip is a <ul> with overflow-x:auto, scroll-snap-type:x mandatory, a hidden scrollbar and negative margins to the block edge. A frame is flex-basis min(78cqi,20rem) (22rem from 56rem), tilt via --vibeui-about-011-tilt by nth-child, hover straightens and lifts. Perforation is a repeating-linear-gradient in ::before/::after of the dark film, the frame number “01A” in a corner with mix-blend-mode. Photos are 3:2 object-fit:cover with muted saturation. From 56rem the head is a grid: heading/lede left, arrows right. Palette --vibeui-about-011-*: cream #f6f1e8 / plum #2b1a24 via light-dark(), terracotta #b8552f accent, plum #4a1f36 for headings, sage #8a9a7b and sand #d9c5a5 for captions; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained couple's story as a film strip: perforated frames with dates and captions, horizontal snap scrolling and arrows. Frames come as a prop array.",
+              "preserve": [
+                "the perforated film frames with the corner number — the section's main image",
+                "the varied tilt by nth-child and straightening on hover",
+                "horizontal snap scrolling instead of a grid"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, frames (date, title, text, image, imageAlt)",
+                "prevLabel, nextLabel",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Photos are 3:2; other ratios get cropped by object-fit: cover.",
+                "Arrows are an extra: without JS the strip still scrolls by touch and wheel."
+              ],
+              "usage": "<About011\n  eyebrow=\"Our story\"\n  title=\"Six years, four frames\"\n  frames={[\n    { date: \"October 2021\", title: \"Coffee by the window\", text: \"We met in a coffee queue.\", image: \"/photos/story-01.webp\" },\n    { date: \"May 2027\", title: \"Pier at sunset\", text: \"Artem went down on one knee.\", image: \"/photos/story-04.webp\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Six years, four frames"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "Our story",
+                "title": "Six years, four frames",
+                "lede": "We don't like long stories about ourselves, so — briefly and by frames. The rest at the table.",
+                "prevLabel": "Back",
+                "nextLabel": "Next",
+                "frames": [
+                  {
+                    "date": "October 2021",
+                    "title": "Coffee by the window",
+                    "text": "We met in a coffee queue.",
+                    "image": "/demo/wedding/story-01.webp"
+                  },
+                  {
+                    "date": "July 2022",
+                    "title": "First road trip",
+                    "text": "Two thousand kilometres south.",
+                    "image": "/demo/wedding/story-02.webp"
+                  },
+                  {
+                    "date": "March 2024",
+                    "title": "Boxes",
+                    "text": "Moved in: pizza on the floor.",
+                    "image": "/demo/wedding/story-03.webp"
+                  },
+                  {
+                    "date": "May 2027",
+                    "title": "Pier at sunset",
+                    "text": "Artem went down on one knee.",
+                    "image": "/demo/wedding/story-04.webp"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

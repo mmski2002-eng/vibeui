@@ -16,4 +16,6 @@ export const PREVIEWS = {
     import("@/registry/blocks/map/map-005/map-005").then((module) => module.Map005),
   "map-006": () =>
     import("@/registry/blocks/map/map-006/map-006").then((module) => module.Map006),
+  "map-007": () =>
+    import("@/registry/blocks/map/map-007/map-007").then((module) => module.Map007),
 } satisfies PreviewLoaderMap

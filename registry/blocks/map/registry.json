@@ -1160,6 +1160,199 @@
           }
         }
       }
+    },
+    {
+      "name": "map-007",
+      "type": "registry:block",
+      "title": "Как добраться до загородной свадьбы с картой и отелями",
+      "description": "«Место» для загородной свадьбы: слева фото усадьбы в арке, название, адрес и капсула «сбор гостей в 15:00», справа Яндекс Карта с одной меткой в приглушённых тонах. Ниже три способа доехать — машина, трансфер, такси — карточками с иконками и «где переночевать» с парой отелей рядом.",
+      "categories": [
+        "map"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "map-007/map-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/map-007.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный. Карта — iframe yandex.ru/map-widget/v1 без ключа: центр и метка из latitude/longitude, theme по tone или явно; поверх filter saturate(.7) sepia(.15), чтобы карта не спорила с кремом. Верх от 56rem — сетка .9fr/1.1fr, карта min-height 26rem. Способы — <ul> карточек 3 в ряд от 56rem, иконки inline SVG по way.icon: car, bus, taxi, train. Отели — список с пунктирными разделителями в две колонки. Арка фото — border-radius 50%/30%. Палитра --vibeui-map-007-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "venue",
+          "map",
+          "yandex",
+          "directions",
+          "transfer",
+          "parking",
+          "hotels",
+          "accommodation",
+          "estate",
+          "serif",
+          "cream"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "image": "/demo/wedding/venue-01.webp"
+          }
+        },
+        "cardControls": [
+          "title",
+          "timeNote",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Map007",
+          "usage": "<Map007\n  title=\"Усадьба Марфино, Подмосковье\"\n  venue=\"Усадьба Марфино\"\n  address=\"Московская область, село Марфино\"\n  timeNote=\"Сбор гостей в 15:00\"\n  latitude={56.07}\n  longitude={37.56}\n  image=\"/photos/venue-01.webp\"\n  ways={[\n    { mode: \"На машине\", text: \"45 минут от МКАД, парковка у ворот.\", icon: \"car\" },\n    { mode: \"Трансфер\", text: \"Автобус от метро в 13:30 и 14:15.\", icon: \"bus\" },\n  ]}\n  stays={[{ name: \"Гостевой дом «Липы»\", text: \"5 минут пешком\", href: \"#\" }]}\n/>",
+          "summary": "Самодостаточный блок «как добраться» для свадьбы за городом: фото места в арке, Яндекс Карта, три способа доехать и где переночевать. Координаты, способы и отели пропсами.",
+          "preserve": [
+            "фото места в арке рядом с приглушённой картой — пара «настроение + факты»",
+            "три способа доехать карточками с иконками в одну строку от 56rem",
+            "«где переночевать» пунктирным списком под способами"
+          ],
+          "adapt": [
+            "eyebrow, title, venue, address, timeNote, latitude, longitude, zoom, image",
+            "ways (mode, text, icon), waysTitle, stays (name, text, href), staysTitle, staysNote, openLabel, theme",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Виджет Яндекс Карт без API-ключа: ll/pt в адресе, кодировать нельзя.",
+            "Координаты в демо примерные — подставьте точку усадьбы."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Усадьба Марфино, Подмосковье",
+            "maxLength": 60
+          },
+          {
+            "prop": "timeNote",
+            "label": "Время сбора",
+            "type": "text",
+            "default": "Сбор гостей в 15:00",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Directions to a countryside wedding with a map and hotels",
+            "description": "“Venue” for a countryside wedding: on the left the estate photo in an arch, the name, address and a “guests arrive at 15:00” pill, on the right a muted Yandex Map with one pin. Below, three ways to get there — car, shuttle, taxi — as icon cards, and “where to stay” with a couple of nearby hotels.",
+            "docs": "One file, zero dependencies, server-rendered. The map is a yandex.ru/map-widget/v1 iframe without a key: centre and pin from latitude/longitude, theme by tone or explicit; a filter saturate(.7) sepia(.15) keeps the map from fighting the cream. From 56rem the top is a .9fr/1.1fr grid, the map min-height 26rem. Ways are a <ul> of cards, 3 in a row from 56rem, inline SVG icons by way.icon: car, bus, taxi, train. Hotels are a dashed-divider list in two columns. The photo arch is border-radius 50%/30%. Palette --vibeui-map-007-*: cream #f6f1e8 / plum #2b1a24 via light-dark(), terracotta #b8552f accent, plum #4a1f36 for headings, sage #8a9a7b and sand #d9c5a5 for captions; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained “how to get there” block for a countryside wedding: an arched venue photo, a Yandex Map, three ways to travel and where to stay. Coordinates, ways and hotels via props.",
+              "preserve": [
+                "the arched venue photo next to the muted map — a “mood + facts” pair",
+                "the three travel options as icon cards in one row from 56rem",
+                "“where to stay” as a dashed list under the options"
+              ],
+              "adapt": [
+                "eyebrow, title, venue, address, timeNote, latitude, longitude, zoom, image",
+                "ways (mode, text, icon), waysTitle, stays (name, text, href), staysTitle, staysNote, openLabel, theme",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "The Yandex Maps widget needs no API key: ll/pt go in the URL and must not be encoded.",
+                "Demo coordinates are approximate — put in the estate's real point."
+              ],
+              "usage": "<Map007\n  title=\"Marfino estate, Moscow region\"\n  venue=\"Marfino estate\"\n  address=\"Moscow region, Marfino village\"\n  timeNote=\"Guests arrive at 15:00\"\n  latitude={56.07}\n  longitude={37.56}\n  image=\"/photos/venue-01.webp\"\n  ways={[\n    { mode: \"By car\", text: \"45 minutes from the ring road, parking at the gate.\", icon: \"car\" },\n    { mode: \"Shuttle\", text: \"Bus from the metro at 13:30 and 14:15.\", icon: \"bus\" },\n  ]}\n  stays={[{ name: \"Lindens guest house\", text: \"5 minutes on foot\", href: \"#\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Marfino estate, Moscow region"
+              },
+              "timeNote": {
+                "label": "Arrival note",
+                "default": "Guests arrive at 15:00"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "image": "/demo/wedding/venue-01.webp",
+                "eyebrow": "Venue",
+                "title": "Marfino estate, Moscow region",
+                "venue": "Marfino estate",
+                "address": "Moscow region, Mytishchi district, Marfino village",
+                "timeNote": "Guests arrive at 15:00",
+                "openLabel": "Open in Yandex Maps",
+                "ways": [
+                  {
+                    "mode": "By car",
+                    "text": "45 minutes from the ring road along the Dmitrov highway. Free parking at the estate gate.",
+                    "icon": "car"
+                  },
+                  {
+                    "mode": "Shuttle",
+                    "text": "Bus from Altufyevo metro at 13:30 and 14:15, back at 23:30. Tick it in the RSVP — we'll keep a seat.",
+                    "icon": "bus"
+                  },
+                  {
+                    "mode": "Taxi",
+                    "text": "About 2 500 ₽ from the centre. “Marfino estate, main gate” is in every app.",
+                    "icon": "taxi"
+                  }
+                ],
+                "staysTitle": "Where to stay",
+                "staysNote": "We've held a few rooms until 1 August — write to Polina if you'd like to stay.",
+                "stays": [
+                  {
+                    "name": "Lindens guest house",
+                    "text": "5 minutes on foot, 12 rooms, say you're with us — breakfast included",
+                    "href": "#"
+                  },
+                  {
+                    "name": "Marfino Park hotel",
+                    "text": "10 minutes by car, a pool and a sauna for the morning after",
+                    "href": "#"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

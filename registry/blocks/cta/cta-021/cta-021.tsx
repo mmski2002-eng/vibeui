@@ -1,0 +1,186 @@
+"use client"
+
+import { useState, type CSSProperties } from "react"
+
+export type Cta021Wish = {
+  title: string
+  text?: string
+  href?: string
+}
+
+export type Cta021Props = {
+  eyebrow?: string
+  title?: string
+  lede?: string
+  /** Подпись над реквизитами: «Вклад в путешествие». */
+  fundTitle?: string
+  fundText?: string
+  /** Реквизиты: номер карты, телефон для СБП или ссылка. Копируются по клику. */
+  requisite?: string
+  requisiteLabel?: string
+  copyLabel?: string
+  copiedLabel?: string
+  /** Буквы на печати: «В&А». */
+  seal?: string
+  wishesTitle?: string
+  wishes?: readonly Cta021Wish[]
+  tone?: "auto" | "light" | "dark"
+  accent?: string
+  background?: string
+  className?: string
+  style?: CSSProperties
+}
+
+// Подарки без неловкости: слева «лучший подарок — вы», справа карточка
+// вклада в путешествие с реквизитами и кнопкой «скопировать»; на углу
+// карточки восковая печать с монограммой, при копировании она
+// «прижимается». Ниже короткий вишлист из трёх вещей со ссылками.
+const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700&display=swap"
+
+const STYLES = `
+:where([data-vibeui-block="cta-021"]){
+--vibeui-cta-021-bg:light-dark(#f6f1e8,#17131a);
+--vibeui-cta-021-fg:light-dark(#2b1a24,#f3ebe4);
+--vibeui-cta-021-muted:light-dark(#7a6a70,#b3a5aa);
+--vibeui-cta-021-line:light-dark(#e2d8ca,#372b31);
+--vibeui-cta-021-card:light-dark(#fffaf3,#211a25);
+--vibeui-cta-021-accent:#b8552f;
+--vibeui-cta-021-plum:light-dark(#4a1f36,#e9c7d6);
+--vibeui-cta-021-sage:#8a9a7b;
+--vibeui-cta-021-on-accent:#fff7ef;
+--vibeui-cta-021-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+--vibeui-cta-021-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
+container-type:inline-size;
+}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="cta-021"]{color-scheme:dark}
+:where([data-vibeui-block="cta-021"][data-tone="light"]){color-scheme:light}
+:where([data-vibeui-block="cta-021"][data-tone="dark"]){color-scheme:dark}
+[data-vibeui-block="cta-021"]{box-sizing:border-box;display:block;background:var(--vibeui-cta-021-bg);color:var(--vibeui-cta-021-fg);font-family:var(--vibeui-cta-021-font);font-size:1rem;line-height:1.5}
+[data-vibeui-block="cta-021"] *{box-sizing:border-box}
+[data-vibeui-block="cta-021"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:4rem 1.25rem}
+[data-vibeui-block="cta-021"] [data-part="grid"]{display:grid;gap:2rem}
+[data-vibeui-block="cta-021"] [data-part="eyebrow"]{margin:0 0 .6rem;font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--vibeui-cta-021-accent)}
+[data-vibeui-block="cta-021"] [data-part="title"]{margin:0;font-family:var(--vibeui-cta-021-display);font-size:clamp(2rem,5cqi,3.6rem);font-weight:500;font-style:italic;line-height:1.05;color:var(--vibeui-cta-021-plum);text-wrap:balance}
+[data-vibeui-block="cta-021"] [data-part="lede"]{max-width:32rem;margin:.8rem 0 0;color:var(--vibeui-cta-021-muted)}
+[data-vibeui-block="cta-021"] [data-part="fund"]{position:relative;padding:1.75rem;border:1px solid var(--vibeui-cta-021-line);border-radius:1.4rem;background:var(--vibeui-cta-021-card);box-shadow:0 30px 60px -40px rgb(43 26 36 / .5)}
+[data-vibeui-block="cta-021"] [data-part="fund"] h3{margin:0;font-family:var(--vibeui-cta-021-display);font-size:1.7rem;font-weight:500;line-height:1.15;color:var(--vibeui-cta-021-plum)}
+[data-vibeui-block="cta-021"] [data-part="fund"] > p{margin:.5rem 0 1.4rem;font-size:.95rem;color:var(--vibeui-cta-021-muted)}
+[data-vibeui-block="cta-021"] [data-part="req"]{display:grid;gap:.3rem;padding:1rem 1.1rem;border:1px dashed var(--vibeui-cta-021-line);border-radius:1rem;background:var(--vibeui-cta-021-bg)}
+[data-vibeui-block="cta-021"] [data-part="req"] span{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-cta-021-muted)}
+[data-vibeui-block="cta-021"] [data-part="req"] code{font-family:var(--vibeui-cta-021-display);font-size:1.5rem;font-weight:500;letter-spacing:.06em;color:var(--vibeui-cta-021-plum);overflow-wrap:anywhere}
+[data-vibeui-block="cta-021"] [data-part="copy"]{display:inline-flex;align-items:center;gap:.5rem;height:2.9rem;margin-top:1rem;padding:0 1.3rem;border:1px solid var(--vibeui-cta-021-accent);border-radius:999px;background:var(--vibeui-cta-021-accent);color:var(--vibeui-cta-021-on-accent);font:inherit;font-weight:600;font-size:.92rem;cursor:pointer;transition:transform .2s,background .25s}
+[data-vibeui-block="cta-021"] [data-part="copy"]:hover{transform:translateY(-1px);background:color-mix(in oklab,var(--vibeui-cta-021-accent) 88%,#000)}
+[data-vibeui-block="cta-021"] [data-part="copy"][data-copied="true"]{background:var(--vibeui-cta-021-sage);border-color:var(--vibeui-cta-021-sage)}
+[data-vibeui-block="cta-021"] [data-part="copy"]:focus-visible,[data-vibeui-block="cta-021"] [data-part="wish"] a:focus-visible{outline:2px solid var(--vibeui-cta-021-accent);outline-offset:3px}
+[data-vibeui-block="cta-021"] [data-part="copy"] svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+[data-vibeui-block="cta-021"] [data-part="seal"]{position:absolute;top:-1.4rem;right:1.4rem;display:grid;place-items:center;width:4.6rem;height:4.6rem;border-radius:50%;background:radial-gradient(circle at 35% 30%,color-mix(in oklab,var(--vibeui-cta-021-accent) 70%,#fff) 0,var(--vibeui-cta-021-accent) 35%,color-mix(in oklab,var(--vibeui-cta-021-accent) 70%,#000) 100%);color:var(--vibeui-cta-021-on-accent);font-family:var(--vibeui-cta-021-display);font-style:italic;font-size:1.25rem;box-shadow:0 10px 24px -10px rgb(43 26 36 / .6),inset 0 0 0 .3rem rgb(255 255 255 / .12);transform:rotate(-10deg);transition:transform .35s cubic-bezier(.2,.9,.3,1.4)}
+[data-vibeui-block="cta-021"] [data-part="fund"][data-copied="true"] [data-part="seal"]{transform:rotate(-10deg) scale(.92)}
+[data-vibeui-block="cta-021"] [data-part="wishes"]{margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--vibeui-cta-021-line)}
+[data-vibeui-block="cta-021"] [data-part="wishes"] h3{margin:0 0 1rem;font-family:var(--vibeui-cta-021-display);font-size:1.5rem;font-weight:500;font-style:italic;color:var(--vibeui-cta-021-plum)}
+[data-vibeui-block="cta-021"] [data-part="wishes"] ul{display:grid;gap:.8rem;margin:0;padding:0;list-style:none}
+[data-vibeui-block="cta-021"] [data-part="wish"]{display:grid;gap:.2rem;padding:1rem 1.1rem;border:1px solid var(--vibeui-cta-021-line);border-radius:1rem;transition:border-color .25s,transform .25s}
+[data-vibeui-block="cta-021"] [data-part="wish"]:hover{border-color:var(--vibeui-cta-021-accent);transform:translateY(-2px)}
+[data-vibeui-block="cta-021"] [data-part="wish"] a,[data-vibeui-block="cta-021"] [data-part="wish"] b{font-family:var(--vibeui-cta-021-display);font-size:1.3rem;font-weight:500;color:var(--vibeui-cta-021-fg);text-decoration:none}
+[data-vibeui-block="cta-021"] [data-part="wish"] a::after{content:" ↗";color:var(--vibeui-cta-021-accent)}
+[data-vibeui-block="cta-021"] [data-part="wish"] span{font-size:.9rem;color:var(--vibeui-cta-021-muted)}
+@container (min-width:56rem){
+[data-vibeui-block="cta-021"] [data-part="shell"]{padding:5rem 2.5rem}
+[data-vibeui-block="cta-021"] [data-part="grid"]{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4rem;align-items:center}
+[data-vibeui-block="cta-021"] [data-part="fund"]{padding:2.25rem}
+[data-vibeui-block="cta-021"] [data-part="wishes"] ul{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="cta-021"] *{animation:none!important;transition:none!important}}`
+
+/** Подарки на свадьбу без неловкости: вклад в путешествие с копированием реквизитов, печать и короткий вишлист. */
+export function Cta021({
+  eyebrow = "Подарки",
+  title = "Лучший подарок — вы",
+  lede = "Честно. Но если очень хочется — мы собираем на медовый месяц в Португалии. Любая сумма станет ужином у океана, и мы пришлём оттуда открытку.",
+  fundTitle = "Вклад в путешествие",
+  fundText = "Перевод по номеру телефона (СБП) или на карту — как удобнее. В комментарии напишите своё имя, чтобы мы знали, кого благодарить.",
+  requisite = "+7 900 000-00-00",
+  requisiteLabel = "Телефон для СБП · Артём З.",
+  copyLabel = "Скопировать номер",
+  copiedLabel = "Скопировано",
+  seal = "В&А",
+  wishesTitle = "Если хочется вещь",
+  wishes = [
+    { title: "Плёночный фотоаппарат", text: "Olympus mju II — чтобы галерея на этом сайте продолжалась", href: "#" },
+    { title: "Керамика для стола", text: "Набор тарелок из мастерской в Суздале", href: "#" },
+    { title: "Саженец липы", text: "Посадим в саду у дома — растёт медленно, как и надо", href: "#" },
+  ],
+  tone = "auto",
+  accent,
+  background,
+  className,
+  style,
+}: Cta021Props) {
+  const [copied, setCopied] = useState(false)
+  const palette = {
+    ...(accent ? { "--vibeui-cta-021-accent": accent } : null),
+    ...(background ? { "--vibeui-cta-021-bg": background } : null),
+    ...style,
+  } as CSSProperties
+
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(requisite)
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 1800)
+    } catch {
+      setCopied(false)
+    }
+  }
+
+  return (
+    <>
+      <link rel="stylesheet" href={FONTS} precedence="medium" />
+      <style href="vibeui-cta-021" precedence="medium">
+        {STYLES}
+      </style>
+      <section data-vibeui-block="cta-021" data-tone={tone === "auto" ? undefined : tone} className={className} style={palette}>
+        <div data-part="shell">
+          <div data-part="grid">
+            <div>
+              <p data-part="eyebrow">{eyebrow}</p>
+              <h2 data-part="title">{title}</h2>
+              {lede ? <p data-part="lede">{lede}</p> : null}
+            </div>
+            <div data-part="fund" data-copied={copied ? "true" : undefined}>
+              {seal ? (
+                <span data-part="seal" aria-hidden="true">
+                  {seal}
+                </span>
+              ) : null}
+              <h3>{fundTitle}</h3>
+              <p>{fundText}</p>
+              <div data-part="req">
+                <span>{requisiteLabel}</span>
+                <code>{requisite}</code>
+              </div>
+              <button type="button" data-part="copy" data-copied={copied ? "true" : undefined} onClick={copy} aria-live="polite">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  {copied ? <path d="M5 12l5 5L20 7" /> : <path d="M9 9h10v11H9zM5 15V4h11" />}
+                </svg>
+                {copied ? copiedLabel : copyLabel}
+              </button>
+            </div>
+          </div>
+          {wishes.length > 0 ? (
+            <div data-part="wishes">
+              <h3>{wishesTitle}</h3>
+              <ul>
+                {wishes.map((wish) => (
+                  <li key={wish.title} data-part="wish">
+                    {wish.href ? <a href={wish.href} target="_blank" rel="noopener noreferrer">{wish.title}</a> : <b>{wish.title}</b>}
+                    {wish.text ? <span>{wish.text}</span> : null}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+        </div>
+      </section>
+    </>
+  )
+}

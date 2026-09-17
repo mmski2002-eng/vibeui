@@ -4546,6 +4546,199 @@
           }
         }
       }
+    },
+    {
+      "name": "hero-025",
+      "type": "registry:block",
+      "title": "Первый экран приглашения с конвертом, отсчётом и «в календарь»",
+      "description": "Первый экран свадебного сайта: поверх кремового листа лежит конверт с восковой печатью — клик открывает клапан, письмо выезжает, конверт растворяется. Под ним имена курсивным serif'ом с акцентным амперсандом, дата и место, обратный отсчёт в четырёх плитках, кнопки «Подтвердить» и «В календарь» (.ics собирается на клиенте) и фото пары в арке с печатью «save the date». Зерно плёнки поверх.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-025/hero-025.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-025.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, «use client» ради конверта, отсчёта и .ics. Раскладка от ширины блока: до 56rem колонкой, от 56rem две колонки (текст 1.15fr / фото .85fr, min-height 40rem). Конверт — [data-part=envelope] absolute поверх секции: бумага с perspective, клапан clip-path polygon с rotateX(180deg), карман поверх письма, письмо translateY(-55%), печать radial-gradient с монограммой из первых букв; data-open запускает цепочку transition'ов, потом overlay уходит через opacity+visibility. envelope=false — без заставки; reduced-motion прячет конверт и показывает письмо сразу. Отсчёт — setInterval раз в секунду, первый кадр нули (совпадает с сервером), дни/часы/минуты/секунды из date (ISO). «В календарь» — Blob text/calendar с VEVENT на 9 часов и скачивание через временную ссылку. Арка фото — border-radius 50%/38% на внутреннем слое, печать-стикер плавает keyframes. Зерно — SVG feTurbulence в ::after с multiply. Палитра --vibeui-hero-025-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "invitation",
+          "hero",
+          "envelope",
+          "wax seal",
+          "countdown",
+          "save the date",
+          "calendar",
+          "ics",
+          "arch",
+          "serif",
+          "cream",
+          "film grain"
+        ],
+        "preview": {
+          "width": "natural",
+          "props": {
+            "envelope": false,
+            "image": "/demo/wedding/hero.webp"
+          }
+        },
+        "cardControls": [
+          "names",
+          "envelope",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Hero025",
+          "usage": "<Hero025\n  names=\"Василиса & Артём\"\n  date=\"2027-09-05T15:00:00+03:00\"\n  dateLabel=\"5 сентября 2027, суббота\"\n  place=\"усадьба Марфино\"\n  lede=\"Мы женимся и хотим отметить это с вами.\"\n  primaryLabel=\"Подтвердить участие\"\n  primaryHref=\"#rsvp\"\n  calendarTitle=\"Свадьба Василисы и Артёма\"\n  calendarLocation=\"Усадьба Марфино, Московская область\"\n  image=\"/photos/hero.webp\"\n  envelope\n/>",
+          "summary": "Самодостаточный первый экран свадебного приглашения: конверт с печатью, имена, дата, обратный отсчёт, «в календарь» и фото в арке. Всё содержимое пропсами, дата одна — в ISO.",
+          "preserve": [
+            "конверт с восковой печатью, который открывается по клику и растворяется — главный жест страницы",
+            "обратный отсчёт в плитках с закруглённым низом и курсивные имена с акцентным амперсандом",
+            "арку фото с плавающей печатью «save the date» и зерно плёнки"
+          ],
+          "adapt": [
+            "names (через « & »), eyebrow, date (ISO), dateLabel, place, lede, stamp, countdownLabels",
+            "primaryLabel/Href, calendarLabel/Title/Location, image, imageAlt, envelope, sealHint",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "date — одна строка ISO с часовым поясом: из неё считаются и отсчёт, и .ics.",
+            "На витрине конверт выключен (envelope=false), в проекте включите — он и есть приглашение."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "names",
+            "label": "Имена",
+            "type": "text",
+            "default": "Василиса & Артём",
+            "maxLength": 40
+          },
+          {
+            "prop": "dateLabel",
+            "label": "Дата словами",
+            "type": "text",
+            "default": "5 сентября 2027, суббота",
+            "maxLength": 40
+          },
+          {
+            "prop": "place",
+            "label": "Место",
+            "type": "text",
+            "default": "усадьба Марфино",
+            "maxLength": 40
+          },
+          {
+            "prop": "envelope",
+            "label": "Конверт",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Invitation hero with an envelope, countdown and “add to calendar”",
+            "description": "A wedding site hero: an envelope with a wax seal lies over the cream sheet — a click opens the flap, the letter slides out, the envelope dissolves. Beneath it the names in italic serif with an accent ampersand, date and place, a countdown in four tiles, “RSVP” and “Add to calendar” buttons (the .ics is built on the client) and the couple's photo in an arch with a “save the date” stamp. Film grain on top.",
+            "docs": "One file, zero dependencies, “use client” for the envelope, countdown and .ics. Layout from the block width: a column below 56rem, two columns from 56rem (text 1.15fr / photo .85fr, min-height 40rem). The envelope is [data-part=envelope] absolute over the section: paper with perspective, a clip-path polygon flap with rotateX(180deg), a pocket over the letter, the letter translateY(-55%), a radial-gradient seal with the initials; data-open runs the transition chain, then the overlay leaves via opacity+visibility. envelope=false skips the intro; reduced-motion hides the envelope and shows the letter at once. The countdown is a 1-second setInterval, the first frame shows zeros (matches the server), days/hours/minutes/seconds from date (ISO). “Add to calendar” builds a text/calendar Blob with a 9-hour VEVENT and downloads it via a temporary link. The photo arch is border-radius 50%/38% on an inner layer, the sticker stamp floats via keyframes. Grain is an SVG feTurbulence in ::after with multiply. Palette --vibeui-hero-025-*: cream #f6f1e8 / plum #2b1a24 via light-dark(), terracotta #b8552f accent, plum #4a1f36 for headings, sage #8a9a7b and sand #d9c5a5 for captions; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained wedding invitation hero: an envelope with a seal, names, date, countdown, “add to calendar” and an arched photo. All content via props, one ISO date.",
+              "preserve": [
+                "the wax-sealed envelope that opens on click and dissolves — the page's main gesture",
+                "the countdown tiles with rounded bottoms and the italic names with the accent ampersand",
+                "the photo arch with the floating “save the date” stamp and the film grain"
+              ],
+              "adapt": [
+                "names (with “ & ”), eyebrow, date (ISO), dateLabel, place, lede, stamp, countdownLabels",
+                "primaryLabel/Href, calendarLabel/Title/Location, image, imageAlt, envelope, sealHint",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "date is one ISO string with a timezone: both the countdown and the .ics derive from it.",
+                "The catalogue preview has the envelope off (envelope=false); turn it on in the project — it is the invitation."
+              ],
+              "usage": "<Hero025\n  names=\"Vasilisa & Artem\"\n  date=\"2027-09-05T15:00:00+03:00\"\n  dateLabel=\"5 September 2027, Saturday\"\n  place=\"Marfino estate\"\n  lede=\"We are getting married and want to celebrate with you.\"\n  primaryLabel=\"RSVP\"\n  primaryHref=\"#rsvp\"\n  calendarTitle=\"Vasilisa & Artem wedding\"\n  calendarLocation=\"Marfino estate, Moscow region\"\n  image=\"/photos/hero.webp\"\n  envelope\n/>"
+            },
+            "controls": {
+              "names": {
+                "label": "Names",
+                "default": "Vasilisa & Artem"
+              },
+              "dateLabel": {
+                "label": "Date label",
+                "default": "5 September 2027, Saturday"
+              },
+              "place": {
+                "label": "Place",
+                "default": "Marfino estate"
+              },
+              "envelope": {
+                "label": "Envelope"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "envelope": false,
+                "image": "/demo/wedding/hero.webp",
+                "names": "Vasilisa & Artem",
+                "eyebrow": "You are invited to the wedding of",
+                "dateLabel": "5 September 2027, Saturday",
+                "place": "Marfino estate",
+                "lede": "We are getting married and want to celebrate with you — intimately, outdoors, with a long dinner and dancing until the sparklers.",
+                "primaryLabel": "RSVP",
+                "calendarLabel": "Add to calendar",
+                "countdownLabels": [
+                  "days",
+                  "hours",
+                  "minutes",
+                  "seconds"
+                ],
+                "sealHint": "Tap the seal"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

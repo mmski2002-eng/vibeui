@@ -3547,6 +3547,179 @@
           }
         }
       }
+    },
+    {
+      "name": "faq-020",
+      "type": "registry:block",
+      "title": "Вопросы гостей аккордеоном с римскими номерами",
+      "description": "Вопросы гостей свадьбы: аккордеон на details в одну колонку, слева римский номер курсивом, справа крестик, который складывается в «−» у открытого вопроса, открытый подсвечивается кремовой плашкой. Открыт один за раз. Слева липкий заголовок с подписью «не нашли ответ — напишите организатору».",
+      "categories": [
+        "faq"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "faq-020/faq-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/faq-020.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный. details с общим name (useId) — открыт один за раз без JS; summary — сетка 2.6rem/1fr/1.6rem: номер, вопрос serif'ом, маркер из двух линий (::before/::after, поворот ::after 90→0). Ответ появляется keyframes fade. От 56rem сетка .8fr/1.4fr, шапка sticky top:5rem. Палитра --vibeui-faq-020-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "meta": {
+        "tags": [
+          "wedding",
+          "faq",
+          "questions",
+          "accordion",
+          "details",
+          "guests",
+          "roman numerals",
+          "serif",
+          "cream",
+          "sticky"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "ai": {
+          "export": "Faq020",
+          "usage": "<Faq020\n  title=\"Что обычно спрашивают\"\n  items={[\n    { question: \"Можно с детьми?\", answer: \"Да, будет игровой уголок с аниматором.\" },\n    { question: \"Что дарить?\", answer: \"Лучший подарок — вы. Реквизиты — в разделе «Подарки».\" },\n    { question: \"А если дождь?\", answer: \"Церемония переедет под крышу павильона.\" },\n  ]}\n  askLabel=\"Напишите Полине\"\n  askHref=\"#people\"\n/>",
+          "summary": "Самодостаточный блок вопросов для свадебного сайта: аккордеон с римскими номерами, один открыт за раз, липкий заголовок и ссылка «спросите организатора». Вопросы — массив пропсом.",
+          "preserve": [
+            "римские номера курсивом слева от вопроса",
+            "маркер-крестик, складывающийся в минус, и кремовую плашку открытого",
+            "один открытый вопрос за раз через name у details"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, items (question, answer)",
+            "askText, askLabel, askHref",
+            "accent и background, tone"
+          ],
+          "notes": [
+            "Больше двенадцати вопросов — номера пойдут арабскими цифрами.",
+            "Ответ — обычный текст: без разметки и ссылок внутри."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что обычно спрашивают",
+            "maxLength": 60
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Guest FAQ accordion with roman numerals",
+            "description": "Wedding guest questions: a single-column details accordion, an italic roman numeral on the left, a cross on the right that folds into a “−” on the open question, the open one highlighted with a cream panel. One open at a time. A sticky heading on the left with “didn't find an answer — write to the planner”.",
+            "docs": "One file, zero dependencies, server-rendered. details share a name (useId) — one open at a time without JS; summary is a 2.6rem/1fr/1.6rem grid: number, the question in serif, a two-line marker (::before/::after, ::after rotates 90→0). The answer fades in via keyframes. From 56rem a .8fr/1.4fr grid, the head sticky top:5rem. Palette --vibeui-faq-020-*: cream #f6f1e8 / plum #2b1a24 via light-dark(), terracotta #b8552f accent, plum #4a1f36 for headings, sage #8a9a7b and sand #d9c5a5 for captions; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "ai": {
+              "summary": "A self-contained FAQ block for a wedding site: an accordion with roman numerals, one open at a time, a sticky heading and an “ask the planner” link. Questions come as a prop array.",
+              "preserve": [
+                "the italic roman numerals to the left of each question",
+                "the cross marker folding into a minus and the cream panel on the open item",
+                "one open question at a time via name on details"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, items (question, answer)",
+                "askText, askLabel, askHref",
+                "accent and background, tone"
+              ],
+              "notes": [
+                "Beyond twelve questions the numbers fall back to arabic digits.",
+                "Answers are plain text: no markup or links inside."
+              ],
+              "usage": "<Faq020\n  title=\"What people usually ask\"\n  items={[\n    { question: \"Can we bring kids?\", answer: \"Yes, there will be a play corner with an entertainer.\" },\n    { question: \"What to give?\", answer: \"The best gift is you. Details are in “Gifts”.\" },\n    { question: \"What if it rains?\", answer: \"The ceremony moves under the pavilion roof.\" },\n  ]}\n  askLabel=\"Write to Polina\"\n  askHref=\"#people\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What people usually ask"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "width": "natural",
+              "props": {
+                "eyebrow": "FAQ",
+                "title": "What people usually ask",
+                "lede": "If your question isn't here — write to us, we answer fast.",
+                "askText": "Didn't find an answer?",
+                "askLabel": "Write to Polina, our planner",
+                "items": [
+                  {
+                    "question": "Can we bring kids?",
+                    "answer": "Yes, and we'd love that. There'll be a play corner on the lawn with an entertainer from 17:00 to 21:00. Put their age in the RSVP — we'll prepare a kids' menu."
+                  },
+                  {
+                    "question": "What to give?",
+                    "answer": "The best gift is you. If you want more, we're saving for a trip — the details are in “Gifts”. Please, no flowers: nowhere to take them."
+                  },
+                  {
+                    "question": "Where to park?",
+                    "answer": "At the estate gate, free, room for everyone. If you'd like a drink — there's a shuttle to the metro at 23:30."
+                  },
+                  {
+                    "question": "Will there be “kiss, kiss”?",
+                    "answer": "No. And no MC either. There'll be toasts from those who want to speak, and plenty of time just to talk."
+                  },
+                  {
+                    "question": "Can we take photos?",
+                    "answer": "Of course. At the ceremony we ask you to put phones away for twenty minutes — that's what the photographer is for. After that shoot anything and tag #vasilisaartem2027."
+                  },
+                  {
+                    "question": "What if it rains?",
+                    "answer": "The ceremony moves under the pavilion roof, dinner into the orangery. Bring an umbrella anyway: the pond is a walk through the garden."
+                  },
+                  {
+                    "question": "When does it end?",
+                    "answer": "Sparklers at 23:00, shuttle at 23:30. Those staying in the guest house may take their time."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
