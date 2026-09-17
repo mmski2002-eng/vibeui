@@ -254,6 +254,10 @@ function NavLink({
       href={localePath(locale, section.href)}
       aria-current={active ? "page" : undefined}
       onClick={onNavigate}
+      // Без скролла в начало: колонка меню короче контента и «липнет»
+      // сверху, а прыжок страницы вверх при переходе читался как
+      // перезагрузка. Меняется только правая область.
+      scroll={false}
       className={cn(
         "focus-visible:ring-shell-ring relative isolate flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none",
         active
