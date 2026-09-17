@@ -27,10 +27,9 @@ export type Footer024Props = {
   style?: CSSProperties
 }
 
-// Подвал приглашения: крупная монограмма в круге с двойной рамкой, под
-// ней имена, дата и место serif'ом, хэштег капсулой, ряд якорей и
-// напоминание «ответьте до…». Тонкая линия с сердечком-разделителем и
-// подпись «с любовью». Серверный.
+// Подвал приглашения в две строки: монограмма в круге с именами и датой,
+// ряд якорей по центру, «ответьте до…» справа; ниже тонкая линия, хэштег
+// капсулой и подпись «с любовью» с сердечком. Серверный.
 const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700&display=swap"
 
 const STYLES = `
@@ -52,27 +51,30 @@ container-type:inline-size;
 [data-vibeui-block="footer-024"] *{box-sizing:border-box}
 [data-vibeui-block="footer-024"] a{color:inherit;text-decoration:none}
 [data-vibeui-block="footer-024"] a:focus-visible{outline:2px solid var(--vibeui-footer-024-accent);outline-offset:3px;border-radius:.4rem}
-[data-vibeui-block="footer-024"] [data-part="shell"]{display:grid;justify-items:center;gap:1.2rem;max-width:80rem;margin:0 auto;padding:4rem 1.25rem 2.5rem;text-align:center}
-[data-vibeui-block="footer-024"] [data-part="seal"]{position:relative;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;width:6.5rem;height:6.5rem;border:1px solid var(--vibeui-footer-024-sand);border-radius:50%;font-family:var(--vibeui-footer-024-display);font-style:italic;font-size:2.2rem;font-weight:500;color:var(--vibeui-footer-024-sand)}
-[data-vibeui-block="footer-024"] [data-part="seal"]::before{content:"";position:absolute;inset:.4rem;border:1px solid var(--vibeui-footer-024-line);border-radius:50%}
+[data-vibeui-block="footer-024"] [data-part="shell"]{display:grid;gap:1.25rem;max-width:80rem;margin:0 auto;padding:2.5rem 1.25rem 1.5rem}
+[data-vibeui-block="footer-024"] [data-part="top"]{display:grid;gap:1.25rem;align-items:center;justify-items:center;text-align:center}
+[data-vibeui-block="footer-024"] [data-part="who"]{display:flex;align-items:center;gap:1rem;text-align:left}
+[data-vibeui-block="footer-024"] [data-part="seal"]{position:relative;display:inline-flex;flex:none;align-items:center;justify-content:center;white-space:nowrap;width:3.6rem;height:3.6rem;border:1px solid var(--vibeui-footer-024-sand);border-radius:50%;font-family:var(--vibeui-footer-024-display);font-style:italic;font-size:1.3rem;font-weight:500;color:var(--vibeui-footer-024-sand)}
+[data-vibeui-block="footer-024"] [data-part="seal"]::before{content:"";position:absolute;inset:.25rem;border:1px solid var(--vibeui-footer-024-line);border-radius:50%}
 [data-vibeui-block="footer-024"] [data-part="seal"] em{color:var(--vibeui-footer-024-accent);font-style:italic;margin:0 .05em}
-[data-vibeui-block="footer-024"] [data-part="names"]{margin:.4rem 0 0;font-family:var(--vibeui-footer-024-display);font-style:italic;font-size:clamp(1.8rem,4cqi,2.6rem);font-weight:500;line-height:1.1}
-[data-vibeui-block="footer-024"] [data-part="when"]{margin:0;font-family:var(--vibeui-footer-024-display);font-size:1.15rem;color:var(--vibeui-footer-024-muted)}
-[data-vibeui-block="footer-024"] [data-part="tag"]{display:inline-flex;align-items:center;height:2.2rem;padding:0 .9rem;border:1px solid var(--vibeui-footer-024-line);border-radius:999px;font-size:.82rem;font-weight:600;letter-spacing:.02em;color:var(--vibeui-footer-024-sand);transition:border-color .25s,color .25s}
-[data-vibeui-block="footer-024"] [data-part="tag"]:hover{border-color:var(--vibeui-footer-024-accent);color:var(--vibeui-footer-024-accent)}
-[data-vibeui-block="footer-024"] [data-part="links"]{display:flex;flex-wrap:wrap;justify-content:center;gap:.25rem 1.4rem;margin:.6rem 0 0;padding:0;list-style:none}
-[data-vibeui-block="footer-024"] [data-part="links"] a{position:relative;font-family:var(--vibeui-footer-024-display);font-size:1.15rem;color:var(--vibeui-footer-024-fg);opacity:.85;transition:opacity .25s}
+[data-vibeui-block="footer-024"] [data-part="names"]{margin:0;font-family:var(--vibeui-footer-024-display);font-style:italic;font-size:1.5rem;font-weight:500;line-height:1.1}
+[data-vibeui-block="footer-024"] [data-part="when"]{margin:.15rem 0 0;font-family:var(--vibeui-footer-024-display);font-size:1rem;color:var(--vibeui-footer-024-muted)}
+[data-vibeui-block="footer-024"] [data-part="links"]{display:flex;flex-wrap:wrap;justify-content:center;gap:.25rem 1.2rem;margin:0;padding:0;list-style:none}
+[data-vibeui-block="footer-024"] [data-part="links"] a{position:relative;font-family:var(--vibeui-footer-024-display);font-size:1.1rem;color:var(--vibeui-footer-024-fg);opacity:.85;transition:opacity .25s}
 [data-vibeui-block="footer-024"] [data-part="links"] a::after{content:"";position:absolute;left:0;right:0;bottom:-.1rem;height:1px;background:var(--vibeui-footer-024-accent);transform:scaleX(0);transition:transform .3s cubic-bezier(.2,.9,.3,1)}
 [data-vibeui-block="footer-024"] [data-part="links"] a:hover{opacity:1}
 [data-vibeui-block="footer-024"] [data-part="links"] a:hover::after{transform:scaleX(1)}
-[data-vibeui-block="footer-024"] [data-part="rsvp"]{margin:.4rem 0 0;font-size:.92rem;color:var(--vibeui-footer-024-muted)}
+[data-vibeui-block="footer-024"] [data-part="rsvp"]{margin:0;font-size:.88rem;color:var(--vibeui-footer-024-muted);white-space:nowrap}
 [data-vibeui-block="footer-024"] [data-part="rsvp"] a{font-weight:600;color:var(--vibeui-footer-024-fg);border-bottom:1px solid var(--vibeui-footer-024-accent)}
-[data-vibeui-block="footer-024"] [data-part="rule"]{display:flex;align-items:center;gap:1rem;width:100%;max-width:28rem;margin-top:1.5rem;color:var(--vibeui-footer-024-accent)}
-[data-vibeui-block="footer-024"] [data-part="rule"]::before,[data-vibeui-block="footer-024"] [data-part="rule"]::after{content:"";flex:1;height:1px;background:var(--vibeui-footer-024-line)}
-[data-vibeui-block="footer-024"] [data-part="rule"] svg{width:1rem;height:1rem;fill:currentColor}
-[data-vibeui-block="footer-024"] [data-part="sign"]{margin:0;font-family:var(--vibeui-footer-024-display);font-style:italic;font-size:1.05rem;color:var(--vibeui-footer-024-muted)}
+[data-vibeui-block="footer-024"] [data-part="bottom"]{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.6rem 1rem;padding-top:1rem;border-top:1px solid var(--vibeui-footer-024-line)}
+[data-vibeui-block="footer-024"] [data-part="tag"]{display:inline-flex;align-items:center;height:2rem;padding:0 .8rem;border:1px solid var(--vibeui-footer-024-line);border-radius:999px;font-size:.78rem;font-weight:600;letter-spacing:.02em;color:var(--vibeui-footer-024-sand);transition:border-color .25s,color .25s}
+[data-vibeui-block="footer-024"] [data-part="tag"]:hover{border-color:var(--vibeui-footer-024-accent);color:var(--vibeui-footer-024-accent)}
+[data-vibeui-block="footer-024"] [data-part="sign"]{display:inline-flex;align-items:center;gap:.5rem;margin:0;font-family:var(--vibeui-footer-024-display);font-style:italic;font-size:1rem;color:var(--vibeui-footer-024-muted)}
+[data-vibeui-block="footer-024"] [data-part="sign"] svg{width:.9rem;height:.9rem;fill:var(--vibeui-footer-024-accent)}
 @container (min-width:56rem){
-[data-vibeui-block="footer-024"] [data-part="shell"]{padding:5rem 2.5rem 3rem}
+[data-vibeui-block="footer-024"] [data-part="shell"]{padding:2.75rem 2.5rem 1.5rem}
+[data-vibeui-block="footer-024"] [data-part="top"]{grid-template-columns:auto 1fr auto;justify-items:stretch;text-align:left}
+[data-vibeui-block="footer-024"] [data-part="links"]{justify-content:center}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-024"] *{animation:none!important;transition:none!important}}`
 
@@ -115,40 +117,50 @@ export function Footer024({
       </style>
       <footer data-vibeui-block="footer-024" data-tone={tone === "auto" ? undefined : tone} className={className} style={palette}>
         <div data-part="shell">
-          <span data-part="seal" aria-hidden="true">
-            {left}
-            <em>&amp;</em>
-            {right}
-          </span>
-          <p data-part="names">{names}</p>
-          <p data-part="when">
-            {dateLabel} · {place}
-          </p>
-          {hashtag ? (
-            <a data-part="tag" href={`https://www.instagram.com/explore/tags/${hashtag.replace(/^#/, "")}/`} target="_blank" rel="noopener noreferrer">
-              {hashtag}
-            </a>
-          ) : null}
-          {links.length > 0 ? (
-            <ul data-part="links">
-              {links.map((link) => (
-                <li key={link.label}>
-                  <a href={link.href}>{link.label}</a>
-                </li>
-              ))}
-            </ul>
-          ) : null}
-          {rsvpLabel ? (
-            <p data-part="rsvp">
-              {rsvpText} <a href={rsvpHref}>{rsvpLabel}</a>
-            </p>
-          ) : null}
-          <span data-part="rule" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="M12 21s-7.5-4.6-9.5-9A5.5 5.5 0 0 1 12 6.3 5.5 5.5 0 0 1 21.5 12c-2 4.4-9.5 9-9.5 9z" />
-            </svg>
-          </span>
-          {signature ? <p data-part="sign">{signature}</p> : null}
+          <div data-part="top">
+            <div data-part="who">
+              <span data-part="seal" aria-hidden="true">
+                {left}
+                <em>&amp;</em>
+                {right}
+              </span>
+              <div>
+                <p data-part="names">{names}</p>
+                <p data-part="when">
+                  {dateLabel} · {place}
+                </p>
+              </div>
+            </div>
+            {links.length > 0 ? (
+              <ul data-part="links">
+                {links.map((link) => (
+                  <li key={link.label}>
+                    <a href={link.href}>{link.label}</a>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+            {rsvpLabel ? (
+              <p data-part="rsvp">
+                {rsvpText} <a href={rsvpHref}>{rsvpLabel}</a>
+              </p>
+            ) : null}
+          </div>
+          <div data-part="bottom">
+            {hashtag ? (
+              <a data-part="tag" href={`https://www.instagram.com/explore/tags/${hashtag.replace(/^#/, "")}/`} target="_blank" rel="noopener noreferrer">
+                {hashtag}
+              </a>
+            ) : null}
+            {signature ? (
+              <p data-part="sign">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 21s-7.5-4.6-9.5-9A5.5 5.5 0 0 1 12 6.3 5.5 5.5 0 0 1 21.5 12c-2 4.4-9.5 9-9.5 9z" />
+                </svg>
+                {signature}
+              </p>
+            ) : null}
+          </div>
         </div>
       </footer>
     </>

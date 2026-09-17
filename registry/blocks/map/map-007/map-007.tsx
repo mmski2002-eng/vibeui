@@ -93,16 +93,19 @@ container-type:inline-size;
 [data-vibeui-block="map-007"] [data-part="stays"]{margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--vibeui-map-007-line)}
 [data-vibeui-block="map-007"] [data-part="stays"] h3{margin:0;font-family:var(--vibeui-map-007-display);font-size:1.6rem;font-weight:500;font-style:italic;color:var(--vibeui-map-007-plum)}
 [data-vibeui-block="map-007"] [data-part="stays"] > p{margin:.3rem 0 1rem;font-size:.92rem;color:var(--vibeui-map-007-muted)}
-[data-vibeui-block="map-007"] [data-part="stays"] ul{display:grid;gap:.6rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="map-007"] [data-part="stay"]{display:flex;flex-wrap:wrap;align-items:baseline;gap:.2rem .8rem;padding:.8rem 0;border-bottom:1px dashed var(--vibeui-map-007-line)}
-[data-vibeui-block="map-007"] [data-part="stay"] a,[data-vibeui-block="map-007"] [data-part="stay"] b{font-weight:600;text-decoration:none;border-bottom:1px solid var(--vibeui-map-007-accent)}
+[data-vibeui-block="map-007"] [data-part="stays"] ul{display:grid;gap:1rem;margin:0;padding:0;list-style:none}
+[data-vibeui-block="map-007"] [data-part="stay"]{display:grid;grid-template-columns:2.6rem minmax(0,1fr);gap:.15rem .9rem;padding:1.2rem;border:1px solid var(--vibeui-map-007-line);border-radius:1rem;background:var(--vibeui-map-007-card);transition:transform .25s,border-color .25s}
+[data-vibeui-block="map-007"] [data-part="stay"]:hover{transform:translateY(-2px);border-color:var(--vibeui-map-007-accent)}
+[data-vibeui-block="map-007"] [data-part="stay"] svg{grid-row:1 / span 2;width:2.6rem;height:2.6rem;padding:.6rem;border-radius:50%;background:color-mix(in oklab,var(--vibeui-map-007-accent) 12%,transparent);color:var(--vibeui-map-007-accent);fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+[data-vibeui-block="map-007"] [data-part="stay"] a,[data-vibeui-block="map-007"] [data-part="stay"] b{font-family:var(--vibeui-map-007-display);font-size:1.3rem;font-weight:500;line-height:1.15;text-decoration:none;width:max-content;max-width:100%;border-bottom:1px solid transparent;transition:border-color .25s}
+[data-vibeui-block="map-007"] [data-part="stay"] a:hover{border-bottom-color:var(--vibeui-map-007-accent)}
 [data-vibeui-block="map-007"] [data-part="stay"] span{font-size:.9rem;color:var(--vibeui-map-007-muted)}
 @container (min-width:56rem){
 [data-vibeui-block="map-007"] [data-part="shell"]{padding:5rem 2.5rem}
 [data-vibeui-block="map-007"] [data-part="top"]{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:2.5rem}
 [data-vibeui-block="map-007"] [data-part="map"]{min-height:26rem}
 [data-vibeui-block="map-007"] [data-part="ways"]{grid-template-columns:repeat(3,minmax(0,1fr))}
-[data-vibeui-block="map-007"] [data-part="stays"] ul{grid-template-columns:1fr 1fr;gap:0 2.5rem}
+[data-vibeui-block="map-007"] [data-part="stays"] ul{grid-template-columns:1fr 1fr;gap:1rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="map-007"] *{animation:none!important;transition:none!important}}`
 
@@ -204,6 +207,9 @@ export function Map007({
               <ul>
                 {stays.map((stay) => (
                   <li key={stay.name} data-part="stay">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M3 18V8M3 12h18v6M3 16h18M7 12V9.5A1.5 1.5 0 0 1 8.5 8h3A1.5 1.5 0 0 1 13 9.5V12" />
+                    </svg>
                     {stay.href ? (
                       <a href={stay.href}>{stay.name}</a>
                     ) : (

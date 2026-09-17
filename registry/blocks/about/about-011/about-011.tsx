@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, type CSSProperties } from "react"
+import { useRef, type CSSProperties, type WheelEvent } from "react"
 
 export type About011Frame = {
   /** Подпись даты: «Май 2021». */
@@ -62,14 +62,14 @@ container-type:inline-size;
 [data-vibeui-block="about-011"] [data-part="nav"] button:hover{border-color:var(--vibeui-about-011-accent);color:var(--vibeui-about-011-accent);transform:translateY(-1px)}
 [data-vibeui-block="about-011"] [data-part="nav"] button:focus-visible{outline:2px solid var(--vibeui-about-011-accent);outline-offset:3px}
 [data-vibeui-block="about-011"] [data-part="nav"] svg{width:1.1rem;height:1.1rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-[data-vibeui-block="about-011"] [data-part="track"]{display:flex;gap:1.5rem;margin:0 -1.25rem;padding:1.5rem 1.25rem 2rem;list-style:none;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+[data-vibeui-block="about-011"] [data-part="track"]{display:flex;gap:1.25rem;margin:0 -1.25rem;padding:1.5rem 1.25rem 2rem;list-style:none;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 [data-vibeui-block="about-011"] [data-part="track"]::-webkit-scrollbar{display:none}
 [data-vibeui-block="about-011"] [data-part="frame"]{flex:0 0 min(78cqi,20rem);scroll-snap-align:center;transform:rotate(var(--vibeui-about-011-tilt,0deg));transition:transform .4s cubic-bezier(.2,.9,.3,1)}
 [data-vibeui-block="about-011"] [data-part="frame"]:nth-child(odd){--vibeui-about-011-tilt:-2deg}
 [data-vibeui-block="about-011"] [data-part="frame"]:nth-child(even){--vibeui-about-011-tilt:1.6deg}
 [data-vibeui-block="about-011"] [data-part="frame"]:nth-child(3n){--vibeui-about-011-tilt:-1deg}
 [data-vibeui-block="about-011"] [data-part="frame"]:hover{transform:rotate(0) translateY(-.35rem)}
-[data-vibeui-block="about-011"] [data-part="film"]{position:relative;padding:1.1rem .6rem;border-radius:.4rem;background:var(--vibeui-about-011-film);box-shadow:0 24px 40px -24px rgb(43 26 36 / .6)}
+[data-vibeui-block="about-011"] [data-part="film"]{position:relative;padding:1.1rem .6rem;border-radius:.4rem;background:var(--vibeui-about-011-film);box-shadow:0 24px 40px -24px rgb(43 26 36 / .6),0 0 0 1px rgb(255 255 255 / .06)}
 [data-vibeui-block="about-011"] [data-part="film"]::before,[data-vibeui-block="about-011"] [data-part="film"]::after{content:"";position:absolute;left:.6rem;right:.6rem;height:.5rem;background:repeating-linear-gradient(90deg,var(--vibeui-about-011-bg) 0 .55rem,transparent .55rem 1.1rem);border-radius:2px;opacity:.85}
 [data-vibeui-block="about-011"] [data-part="film"]::before{top:.3rem}
 [data-vibeui-block="about-011"] [data-part="film"]::after{bottom:.3rem}
@@ -86,7 +86,7 @@ container-type:inline-size;
 [data-vibeui-block="about-011"] [data-part="head"] [data-part="lede"]{grid-column:1}
 [data-vibeui-block="about-011"] [data-part="nav"]{grid-column:2;grid-row:1 / span 3;align-self:end}
 [data-vibeui-block="about-011"] [data-part="track"]{margin:0 -2.5rem;padding:1.5rem 2.5rem 2rem}
-[data-vibeui-block="about-011"] [data-part="frame"]{flex-basis:22rem}
+[data-vibeui-block="about-011"] [data-part="frame"]{flex:1 1 0;min-width:15rem;max-width:22rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="about-011"] *{animation:none!important;transition:none!important}[data-vibeui-block="about-011"] [data-part="track"]{scroll-behavior:auto}}`
 
@@ -115,6 +115,19 @@ export function About011({
     ...(background ? { "--vibeui-about-011-bg": background } : null),
     ...style,
   } as CSSProperties
+
+  // Колесо мыши листает ленту вбок: вертикальный жест над кадрами иначе
+  // просто прокручивает страницу, и лента кажется «не работающей».
+  function onWheel(event: WheelEvent<HTMLUListElement>) {
+    const node = event.currentTarget
+    if (node.scrollWidth <= node.clientWidth) return
+    if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return
+    const atStart = node.scrollLeft <= 0 && event.deltaY < 0
+    const atEnd = node.scrollLeft + node.clientWidth >= node.scrollWidth - 1 && event.deltaY > 0
+    if (atStart || atEnd) return
+    event.preventDefault()
+    node.scrollLeft += event.deltaY
+  }
 
   function scroll(direction: -1 | 1) {
     const node = track.current
@@ -148,7 +161,7 @@ export function About011({
               </button>
             </div>
           </div>
-          <ul ref={track} data-part="track">
+          <ul ref={track} data-part="track" onWheel={onWheel}>
             {frames.map((frame, index) => (
               <li key={frame.title} data-part="frame">
                 <div data-part="film">

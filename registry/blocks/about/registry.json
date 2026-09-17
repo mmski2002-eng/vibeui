@@ -1710,7 +1710,7 @@
           "target": "@components/vibeui/about-011.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» только ради стрелок (scrollBy на ширину первого кадра). Лента — <ul> с overflow-x:auto, scroll-snap-type:x mandatory, скрытым скроллбаром и отрицательными полями до края блока. Кадр — flex-basis min(78cqi,20rem) (22rem от 56rem), наклон через --vibeui-about-011-tilt по nth-child, hover выпрямляет и поднимает. Перфорация — repeating-linear-gradient в ::before/::after тёмной плёнки, номер кадра «01A» в углу с mix-blend-mode. Фото 3:2 object-fit:cover с приглушённой насыщенностью. Шапка от 56rem — сетка заголовок/лид слева, стрелки справа. Палитра --vibeui-about-011-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Один файл, ноль зависимостей, «use client» ради стрелок (scrollBy на ширину первого кадра) и колеса: вертикальный deltaY над лентой переводится в горизонтальную прокрутку, на краях ленты — отдаётся странице. Лента — <ul> с overflow-x:auto, scroll-snap-type:x mandatory, скрытым скроллбаром и отрицательными полями до края блока. Кадр — flex-basis min(78cqi,20rem); от 56rem flex:1 1 0 с min-width 15rem и max-width 22rem, так четыре кадра помещаются без прокрутки, а пять и больше уходят в ленту, наклон через --vibeui-about-011-tilt по nth-child, hover выпрямляет и поднимает. Перфорация — repeating-linear-gradient в ::before/::after тёмной плёнки, номер кадра «01A» в углу с mix-blend-mode. Фото 3:2 object-fit:cover с приглушённой насыщенностью. Шапка от 56rem — сетка заголовок/лид слева, стрелки справа. Палитра --vibeui-about-011-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "tags": [
           "wedding",
@@ -1779,7 +1779,7 @@
           ],
           "notes": [
             "Фото 3:2; другой формат обрежется object-fit: cover.",
-            "Стрелки — дополнение: без JS лента всё равно прокручивается пальцем и колесом."
+            "Колесо мыши над лентой листает её вбок; без JS лента всё равно прокручивается пальцем и полосой."
           ]
         },
         "controls": [
@@ -1818,7 +1818,7 @@
           "en": {
             "title": "Couple's story as a film strip",
             "description": "“Our story” as a film strip: frames with perforated edges scroll horizontally with snap, each tilted slightly differently and straightening on hover, with a date, title and a couple of lines under the photo. A heading in italic serif on the left, arrows scroll by one frame, swipe and wheel work on their own.",
-            "docs": "One file, zero dependencies, “use client” only for the arrows (scrollBy by the first frame's width). The strip is a <ul> with overflow-x:auto, scroll-snap-type:x mandatory, a hidden scrollbar and negative margins to the block edge. A frame is flex-basis min(78cqi,20rem) (22rem from 56rem), tilt via --vibeui-about-011-tilt by nth-child, hover straightens and lifts. Perforation is a repeating-linear-gradient in ::before/::after of the dark film, the frame number “01A” in a corner with mix-blend-mode. Photos are 3:2 object-fit:cover with muted saturation. From 56rem the head is a grid: heading/lede left, arrows right. Palette --vibeui-about-011-*: cream #f6f1e8 / plum #2b1a24 via light-dark(), terracotta #b8552f accent, plum #4a1f36 for headings, sage #8a9a7b and sand #d9c5a5 for captions; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "One file, zero dependencies, “use client” for the arrows (scrollBy by the first frame's width) and the wheel: vertical deltaY over the strip turns into horizontal scrolling, at the strip's edges it goes to the page. The strip is a <ul> with overflow-x:auto, scroll-snap-type:x mandatory, a hidden scrollbar and negative margins to the block edge. A frame is flex-basis min(78cqi,20rem); from 56rem flex:1 1 0 with min-width 15rem and max-width 22rem, so four frames fit without scrolling and five or more become a strip, tilt via --vibeui-about-011-tilt by nth-child, hover straightens and lifts. Perforation is a repeating-linear-gradient in ::before/::after of the dark film, the frame number “01A” in a corner with mix-blend-mode. Photos are 3:2 object-fit:cover with muted saturation. From 56rem the head is a grid: heading/lede left, arrows right. Palette --vibeui-about-011-*: cream #f6f1e8 / plum #2b1a24 via light-dark(), terracotta #b8552f accent, plum #4a1f36 for headings, sage #8a9a7b and sand #d9c5a5 for captions; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained couple's story as a film strip: perforated frames with dates and captions, horizontal snap scrolling and arrows. Frames come as a prop array.",
               "preserve": [
@@ -1833,7 +1833,7 @@
               ],
               "notes": [
                 "Photos are 3:2; other ratios get cropped by object-fit: cover.",
-                "Arrows are an extra: without JS the strip still scrolls by touch and wheel."
+                "The mouse wheel over the strip scrolls it sideways; without JS the strip still scrolls by touch and scrollbar."
               ],
               "usage": "<About011\n  eyebrow=\"Our story\"\n  title=\"Six years, four frames\"\n  frames={[\n    { date: \"October 2021\", title: \"Coffee by the window\", text: \"We met in a coffee queue.\", image: \"/photos/story-01.webp\" },\n    { date: \"May 2027\", title: \"Pier at sunset\", text: \"Artem went down on one knee.\", image: \"/photos/story-04.webp\" },\n  ]}\n/>"
             },

@@ -3268,8 +3268,8 @@
     {
       "name": "cta-021",
       "type": "registry:block",
-      "title": "Подарки: вклад в путешествие с печатью и вишлист",
-      "description": "Подарки без неловкости: слева «лучший подарок — вы» и честный абзац про медовый месяц, справа карточка вклада в путешествие с реквизитами в пунктирной рамке и кнопкой «скопировать», на углу — восковая печать с монограммой, которая прижимается при копировании. Ниже вишлист из трёх вещей со ссылками.",
+      "title": "Подарки: вклад в путешествие с печатью",
+      "description": "Подарки без неловкости: слева «лучший подарок — вы» и честный абзац про медовый месяц, справа стеклянная карточка вклада в путешествие с реквизитами в пунктирной рамке и кнопкой «скопировать», на углу — восковая печать с монограммой, которая прижимается при копировании. За карточкой мягкое терракотовое свечение.",
       "categories": [
         "cta"
       ],
@@ -3282,16 +3282,16 @@
           "target": "@components/vibeui/cta-021.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 1.8 с состояния «скопировано» с зелёной сменой кнопки и иконки). Карточка — border-radius 1.4rem с тенью, реквизиты serif'ом в блоке с dashed-рамкой, печать absolute на верхнем правом углу radial-gradient с монограммой, transform scale(.92) по data-copied. От 56rem две колонки 1fr/1fr по центру, вишлист — три карточки в ряд с «↗» у ссылок. Палитра --vibeui-cta-021-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 1.8 с состояния «скопировано» с зелёной сменой кнопки и иконки). Карточка — полупрозрачный крем с backdrop-filter, светлой верхней кромкой и тенью, реквизиты serif'ом в блоке с dashed-рамкой, печать absolute на верхнем правом углу radial-gradient с монограммой, transform scale(.92) по data-copied; свечение — ::before секции radial-gradient акцента. От 56rem две колонки 1fr/1fr по центру. Палитра --vibeui-cta-021-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b для «скопировано»; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "tags": [
           "wedding",
           "gifts",
           "registry",
-          "wishlist",
           "honeymoon fund",
           "copy",
           "wax seal",
+          "glass",
           "cta",
           "serif",
           "cream"
@@ -3308,21 +3308,21 @@
         ],
         "ai": {
           "export": "Cta021",
-          "usage": "<Cta021\n  title=\"Лучший подарок — вы\"\n  lede=\"Если очень хочется — мы собираем на медовый месяц в Португалии.\"\n  fundTitle=\"Вклад в путешествие\"\n  requisite=\"+7 900 000-00-00\"\n  requisiteLabel=\"Телефон для СБП · Артём З.\"\n  seal=\"В&А\"\n  wishes={[\n    { title: \"Плёночный фотоаппарат\", text: \"Olympus mju II\", href: \"https://…\" },\n    { title: \"Керамика для стола\", text: \"Набор тарелок\", href: \"https://…\" },\n  ]}\n/>",
-          "summary": "Самодостаточный блок подарков для свадебного сайта: вклад в путешествие с копированием реквизитов по клику, восковая печать и короткий вишлист со ссылками. Тексты и реквизиты пропсами.",
+          "usage": "<Cta021\n  title=\"Лучший подарок — вы\"\n  lede=\"Если очень хочется — мы собираем на медовый месяц в Португалии.\"\n  fundTitle=\"Вклад в путешествие\"\n  requisite=\"+7 900 000-00-00\"\n  requisiteLabel=\"Телефон для СБП · Артём З.\"\n  seal=\"В&А\"\n/>",
+          "summary": "Самодостаточный блок подарков для свадебного сайта: вклад в путешествие с копированием реквизитов по клику, стеклянная карточка и восковая печать. Тексты и реквизиты пропсами.",
           "preserve": [
-            "карточку вклада с реквизитами в пунктирной рамке и печатью на углу",
+            "стеклянную карточку вклада с реквизитами в пунктирной рамке и печатью на углу",
             "кнопку «скопировать», зеленеющую на 1.8 с с галочкой",
-            "вишлист тремя карточками со стрелкой «↗» у ссылок"
+            "мягкое терракотовое свечение за карточкой"
           ],
           "adapt": [
-            "eyebrow, title, lede, fundTitle, fundText, requisite, requisiteLabel, copyLabel, copiedLabel, seal",
-            "wishesTitle, wishes (title, text, href)",
+            "eyebrow, title, lede, fundTitle, fundText",
+            "requisite, requisiteLabel, copyLabel, copiedLabel, seal",
             "accent и background, tone"
           ],
           "notes": [
             "Реквизит копируется как есть — пробелы и дефисы в номере телефона банк-приложения понимают.",
-            "Пустой wishes убирает нижний список целиком."
+            "Пустой seal убирает печать с угла."
           ]
         },
         "controls": [
@@ -3366,26 +3366,26 @@
         ],
         "i18n": {
           "en": {
-            "title": "Gifts: a honeymoon fund with a seal and a wishlist",
-            "description": "Gifts without awkwardness: on the left “the best gift is you” and an honest paragraph about the honeymoon, on the right a travel-fund card with the details in a dashed frame and a “copy” button, a wax seal with the monogram on the corner that presses down when copying. Below, a three-item wishlist with links.",
-            "docs": "One file, zero dependencies, “use client” for copying (navigator.clipboard, a 1.8 s “copied” state with the button and icon turning green). The card is border-radius 1.4rem with a shadow, the details in serif inside a dashed-border box, the seal absolute on the top-right corner as a radial-gradient with the monogram, transform scale(.92) on data-copied. From 56rem two centred 1fr/1fr columns, the wishlist is three cards in a row with “↗” on links. Palette --vibeui-cta-021-*: cream #f6f1e8 / plum #2b1a24 via light-dark(), terracotta #b8552f accent, plum #4a1f36 for headings, sage #8a9a7b and sand #d9c5a5 for captions; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "title": "Gifts: a honeymoon fund with a seal",
+            "description": "Gifts without awkwardness: on the left “the best gift is you” and an honest paragraph about the honeymoon, on the right a glass travel-fund card with the details in a dashed frame and a “copy” button, a wax seal with the monogram on the corner that presses down when copying. A soft terracotta glow behind the card.",
+            "docs": "One file, zero dependencies, “use client” for copying (navigator.clipboard, a 1.8 s “copied” state with the button and icon turning green). The card is translucent cream with backdrop-filter, a light top edge and a shadow, the details in serif inside a dashed-border box, the seal absolute on the top-right corner as a radial-gradient with the monogram, transform scale(.92) on data-copied; the glow is the section's ::before accent radial-gradient. From 56rem two centred 1fr/1fr columns. Palette --vibeui-cta-021-*: cream #f6f1e8 / plum #2b1a24 via light-dark(), terracotta #b8552f accent, plum #4a1f36 for headings, sage #8a9a7b for “copied”; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
-              "summary": "A self-contained gifts block for a wedding site: a honeymoon fund with one-click copying of the details, a wax seal and a short linked wishlist. Copy and details via props.",
+              "summary": "A self-contained gifts block for a wedding site: a honeymoon fund with one-click copying of the details, a glass card and a wax seal. Copy and details via props.",
               "preserve": [
-                "the fund card with the details in a dashed frame and the seal on the corner",
+                "the glass fund card with the details in a dashed frame and the seal on the corner",
                 "the “copy” button turning green for 1.8 s with a tick",
-                "the wishlist as three cards with “↗” on links"
+                "the soft terracotta glow behind the card"
               ],
               "adapt": [
-                "eyebrow, title, lede, fundTitle, fundText, requisite, requisiteLabel, copyLabel, copiedLabel, seal",
-                "wishesTitle, wishes (title, text, href)",
+                "eyebrow, title, lede, fundTitle, fundText",
+                "requisite, requisiteLabel, copyLabel, copiedLabel, seal",
                 "accent and background, tone"
               ],
               "notes": [
                 "The detail is copied as is — banking apps understand spaces and dashes in a phone number.",
-                "An empty wishes removes the bottom list entirely."
+                "An empty seal removes it from the corner."
               ],
-              "usage": "<Cta021\n  title=\"The best gift is you\"\n  lede=\"If you really want to — we're saving for a honeymoon in Portugal.\"\n  fundTitle=\"Honeymoon fund\"\n  requisite=\"+7 900 000-00-00\"\n  requisiteLabel=\"Phone for transfers · Artem Z.\"\n  seal=\"V&A\"\n  wishes={[\n    { title: \"A film camera\", text: \"Olympus mju II\", href: \"https://…\" },\n    { title: \"Table ceramics\", text: \"A plate set\", href: \"https://…\" },\n  ]}\n/>"
+              "usage": "<Cta021\n  title=\"The best gift is you\"\n  lede=\"If you really want to — we're saving for a honeymoon in Portugal.\"\n  fundTitle=\"Honeymoon fund\"\n  requisite=\"+7 900 000-00-00\"\n  requisiteLabel=\"Phone for transfers · Artem Z.\"\n  seal=\"V&A\"\n/>"
             },
             "controls": {
               "title": {
@@ -3417,25 +3417,7 @@
                 "requisiteLabel": "Phone for transfers · Artem Z.",
                 "copyLabel": "Copy the number",
                 "copiedLabel": "Copied",
-                "seal": "V&A",
-                "wishesTitle": "If you'd rather give a thing",
-                "wishes": [
-                  {
-                    "title": "A film camera",
-                    "text": "Olympus mju II — so the gallery on this site goes on",
-                    "href": "#"
-                  },
-                  {
-                    "title": "Table ceramics",
-                    "text": "A plate set from a workshop in Suzdal",
-                    "href": "#"
-                  },
-                  {
-                    "title": "A linden sapling",
-                    "text": "We'll plant it by the house — grows slowly, as it should",
-                    "href": "#"
-                  }
-                ]
+                "seal": "V&A"
               }
             }
           }

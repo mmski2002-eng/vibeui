@@ -9,18 +9,24 @@ export type Navbar025Link = {
 }
 
 export type Navbar025Props = {
-  /** Две буквы монограммы: «В & А». */
+  /** Монограмма по центру: «В & А». Амперсанд подкрашивается. */
   monogram?: string
-  /** Подпись под монограммой: дата. */
-  caption?: string
   brandHref?: string
+  /** Дата слева: «05 · 09 · 2027». */
+  caption?: string
+  /** Дата свадьбы в ISO — под подписью считаются дни до неё. Пусто — без счётчика. */
+  date?: string
+  /** Склонение «дней»: подписи для 1, 2–4, 5+ и «сегодня». */
+  daysLabels?: readonly [string, string, string, string]
   links?: readonly Navbar025Link[]
   actionLabel?: string
   actionHref?: string
-  /** Путь к треку. Пусто — кнопки музыки нет. По умолчанию выключено. */
+  /** Путь к треку. Пусто — капсулы музыки нет. По умолчанию выключено. */
   music?: string
   musicLabel?: string
-  /** fixed — поверх первого экрана, белеет при прокрутке; static — в потоке. */
+  /** Подпись, пока играет: «играет». */
+  playingLabel?: string
+  /** fixed — поверх страницы, складывается при прокрутке; static — в потоке (превью). */
   placement?: "fixed" | "static"
   spy?: boolean
   tone?: "auto" | "light" | "dark"
@@ -30,19 +36,20 @@ export type Navbar025Props = {
   style?: CSSProperties
 }
 
-// Шапка приглашения: монограмма пары в круге с датой под ней, разделы
-// тонким serif'ом, справа значок музыки (по умолчанию выключено, играет
-// только по клику) и капсула «Подтвердить». Поверх первого экрана шапка
-// прозрачная, после прокрутки — кремовая с размытием. На узкой ширине
-// разделы прячутся за кнопку «Меню» и раскрываются списком.
+// Шапка приглашения как верх открытки: два яруса. В первом слева дата и
+// живой счётчик «до свадьбы 352 дня», по центру монограмма курсивным
+// serif'ом с акцентным амперсандом, справа тихая капсула «Музыка» с четырьмя
+// тонкими линиями, которые оживают пока играет (только по клику) и капсула «Подтвердить». Во втором —
+// разделы через тонкие точки. При прокрутке ярусы складываются в одну
+// компактную шапку на кремовом стекле — плавно, без перекладки. На узкой ширине разделы — за кнопкой «Меню».
 const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700&display=swap"
 
 const STYLES = `
 :where([data-vibeui-block="navbar-025"]){
---vibeui-navbar-025-bg:light-dark(rgb(246 241 232 / .92),rgb(23 19 26 / .9));
+--vibeui-navbar-025-bg:light-dark(rgb(246 241 232 / .85),rgb(23 19 26 / .85));
 --vibeui-navbar-025-fg:light-dark(#2b1a24,#f3ebe4);
 --vibeui-navbar-025-muted:light-dark(#7a6a70,#b3a5aa);
---vibeui-navbar-025-line:light-dark(#e2d8ca,#372b31);
+--vibeui-navbar-025-line:light-dark(rgb(43 26 36 / .12),rgb(243 235 228 / .14));
 --vibeui-navbar-025-accent:#b8552f;
 --vibeui-navbar-025-plum:light-dark(#4a1f36,#e9c7d6);
 --vibeui-navbar-025-on-accent:#fff7ef;
@@ -58,51 +65,75 @@ container-type:inline-size;
 [data-vibeui-block="navbar-025"][data-placement="fixed"]{position:fixed;top:0;left:0;right:0;z-index:40}
 [data-vibeui-block="navbar-025"] a{color:inherit;text-decoration:none}
 [data-vibeui-block="navbar-025"] a:focus-visible,[data-vibeui-block="navbar-025"] button:focus-visible{outline:2px solid var(--vibeui-navbar-025-accent);outline-offset:3px;border-radius:999px}
-[data-vibeui-block="navbar-025"] [data-part="bar"]{position:relative;display:flex;align-items:center;gap:1rem;max-width:80rem;margin:0 auto;padding:.9rem 1.25rem;transition:background .35s,box-shadow .35s}
-[data-vibeui-block="navbar-025"] [data-part="veil"]{position:absolute;inset:0;z-index:-1;background:var(--vibeui-navbar-025-bg);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--vibeui-navbar-025-line);opacity:0;transition:opacity .35s}
+[data-vibeui-block="navbar-025"] [data-part="veil"]{position:absolute;inset:0;z-index:-1;background:var(--vibeui-navbar-025-bg);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid var(--vibeui-navbar-025-line);opacity:0;transition:opacity .35s}
+[data-vibeui-block="navbar-025"]{position:relative}
 [data-vibeui-block="navbar-025"][data-placement="static"] [data-part="veil"],[data-vibeui-block="navbar-025"][data-scrolled="true"] [data-part="veil"],[data-vibeui-block="navbar-025"][data-open="true"] [data-part="veil"]{opacity:1}
-[data-vibeui-block="navbar-025"] [data-part="brand"]{display:flex;align-items:center;gap:.7rem;margin-right:auto}
-[data-vibeui-block="navbar-025"] [data-part="seal"]{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;width:2.9rem;height:2.9rem;border:1px solid var(--vibeui-navbar-025-plum);border-radius:50%;font-family:var(--vibeui-navbar-025-display);font-size:1.15rem;font-weight:500;font-style:italic;letter-spacing:.02em;color:var(--vibeui-navbar-025-plum);transition:transform .4s cubic-bezier(.2,.9,.3,1.3)}
-[data-vibeui-block="navbar-025"] [data-part="brand"]:hover [data-part="seal"]{transform:rotate(-8deg)}
-[data-vibeui-block="navbar-025"] [data-part="seal"] em{color:var(--vibeui-navbar-025-accent);font-style:italic;margin:0 .1em}
-[data-vibeui-block="navbar-025"] [data-part="caption"]{display:none;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-navbar-025-muted)}
-[data-vibeui-block="navbar-025"] [data-part="links"]{display:none;gap:.25rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="navbar-025"] [data-part="link"]{position:relative;display:inline-flex;align-items:center;height:2.4rem;padding:0 .8rem;border-radius:999px;font-family:var(--vibeui-navbar-025-display);font-size:1.15rem;font-weight:500;letter-spacing:.01em;color:var(--vibeui-navbar-025-fg);transition:color .25s}
-[data-vibeui-block="navbar-025"] [data-part="link"]::after{content:"";position:absolute;left:.8rem;right:.8rem;bottom:.35rem;height:1px;background:var(--vibeui-navbar-025-accent);transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.2,.9,.3,1)}
-[data-vibeui-block="navbar-025"] [data-part="link"]:hover::after,[data-vibeui-block="navbar-025"] [data-part="link"][aria-current="true"]::after{transform:scaleX(1)}
-[data-vibeui-block="navbar-025"] [data-part="link"][aria-current="true"]{color:var(--vibeui-navbar-025-accent)}
-[data-vibeui-block="navbar-025"] [data-part="music"]{display:inline-flex;align-items:center;gap:.45rem;height:2.4rem;padding:0 .7rem;border:1px solid var(--vibeui-navbar-025-line);border-radius:999px;background:transparent;color:var(--vibeui-navbar-025-muted);font:inherit;font-size:.78rem;cursor:pointer;transition:color .25s,border-color .25s}
-[data-vibeui-block="navbar-025"] [data-part="music"]:hover,[data-vibeui-block="navbar-025"] [data-part="music"][aria-pressed="true"]{color:var(--vibeui-navbar-025-accent);border-color:var(--vibeui-navbar-025-accent)}
+[data-vibeui-block="navbar-025"] [data-part="shell"]{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:.5rem 1rem;max-width:80rem;margin:0 auto;padding:1rem 1.25rem .9rem;transition:padding .45s cubic-bezier(.2,.9,.3,1),gap .45s cubic-bezier(.2,.9,.3,1)}
+[data-vibeui-block="navbar-025"][data-scrolled="true"] [data-part="shell"]{padding:.5rem 1.25rem .45rem;gap:.15rem 1rem}
+[data-vibeui-block="navbar-025"][data-scrolled="true"] [data-part="link"]{font-size:1.02rem}
+[data-vibeui-block="navbar-025"] [data-part="date"]{display:grid;gap:.1rem;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-navbar-025-muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+[data-vibeui-block="navbar-025"] [data-part="days"]{font-family:var(--vibeui-navbar-025-display);font-style:italic;font-size:.95rem;letter-spacing:0;text-transform:none;color:var(--vibeui-navbar-025-accent);transition:opacity .35s,max-height .45s cubic-bezier(.2,.9,.3,1);max-height:1.4rem;overflow:hidden}
+[data-vibeui-block="navbar-025"][data-scrolled="true"] [data-part="days"]{opacity:0;max-height:0}
+[data-vibeui-block="navbar-025"] [data-part="brand"]{justify-self:center;font-family:var(--vibeui-navbar-025-display);font-style:italic;font-weight:500;font-size:2rem;line-height:1;letter-spacing:.01em;color:var(--vibeui-navbar-025-plum);white-space:nowrap;transition:font-size .45s cubic-bezier(.2,.9,.3,1)}
+[data-vibeui-block="navbar-025"][data-scrolled="true"] [data-part="brand"]{font-size:1.5rem}
+[data-vibeui-block="navbar-025"] [data-part="brand"] em{color:var(--vibeui-navbar-025-accent);font-style:italic;margin:0 .12em}
+[data-vibeui-block="navbar-025"] [data-part="tools"]{display:flex;align-items:center;justify-content:flex-end;gap:.5rem}
+[data-vibeui-block="navbar-025"] [data-part="music"]{display:inline-flex;align-items:center;gap:.55rem;height:2.5rem;padding:0 .95rem 0 .8rem;border:1px solid var(--vibeui-navbar-025-line);border-radius:999px;background:transparent;color:var(--vibeui-navbar-025-muted);font-family:var(--vibeui-navbar-025-display);font-style:italic;font-size:1.05rem;line-height:1;cursor:pointer;transition:color .25s,border-color .25s,background .25s}
+[data-vibeui-block="navbar-025"] [data-part="music"]:hover{color:var(--vibeui-navbar-025-plum);border-color:var(--vibeui-navbar-025-plum)}
+[data-vibeui-block="navbar-025"] [data-part="music"][aria-pressed="true"]{color:var(--vibeui-navbar-025-accent);border-color:color-mix(in oklab,var(--vibeui-navbar-025-accent) 50%,transparent);background:color-mix(in oklab,var(--vibeui-navbar-025-accent) 7%,transparent)}
+[data-vibeui-block="navbar-025"] [data-part="wave"]{display:inline-flex;align-items:center;gap:2px;height:1rem}
+[data-vibeui-block="navbar-025"] [data-part="wave"] i{display:block;width:1px;height:.35rem;background:currentColor;border-radius:1px;transform-origin:center;transition:height .3s}
+[data-vibeui-block="navbar-025"] [data-part="wave"] i:nth-child(2){height:.7rem}
+[data-vibeui-block="navbar-025"] [data-part="wave"] i:nth-child(3){height:.5rem}
+[data-vibeui-block="navbar-025"] [data-part="wave"] i:nth-child(4){height:.85rem}
+[data-vibeui-block="navbar-025"] [data-part="music"][aria-pressed="true"] [data-part="wave"] i{animation:vibeui-navbar-025-wave 1.1s ease-in-out infinite alternate}
+[data-vibeui-block="navbar-025"] [data-part="music"][aria-pressed="true"] [data-part="wave"] i:nth-child(2){animation-delay:-.25s}
+[data-vibeui-block="navbar-025"] [data-part="music"][aria-pressed="true"] [data-part="wave"] i:nth-child(3){animation-delay:-.55s}
+[data-vibeui-block="navbar-025"] [data-part="music"][aria-pressed="true"] [data-part="wave"] i:nth-child(4){animation-delay:-.8s}
+@keyframes vibeui-navbar-025-wave{from{transform:scaleY(.35)}to{transform:scaleY(1)}}
 [data-vibeui-block="navbar-025"] [data-part="music-label"]{display:none}
-[data-vibeui-block="navbar-025"] [data-part="bars"]{display:inline-flex;align-items:flex-end;gap:3px;width:1.1rem;height:.9rem}
-[data-vibeui-block="navbar-025"] [data-part="bars"] i{display:block;width:3px;height:30%;border-radius:2px;background:currentColor;transform-origin:bottom}
-[data-vibeui-block="navbar-025"] [data-part="music"][aria-pressed="true"] [data-part="bars"] i{animation:vibeui-navbar-025-eq .9s ease-in-out infinite alternate}
-[data-vibeui-block="navbar-025"] [data-part="bars"] i:nth-child(2){animation-delay:-.3s;height:60%}
-[data-vibeui-block="navbar-025"] [data-part="bars"] i:nth-child(3){animation-delay:-.6s;height:45%}
-@keyframes vibeui-navbar-025-eq{from{transform:scaleY(.35)}to{transform:scaleY(1)}}
-[data-vibeui-block="navbar-025"] [data-part="action"]{display:none;align-items:center;height:2.5rem;padding:0 1.1rem;border-radius:999px;background:var(--vibeui-navbar-025-accent);color:var(--vibeui-navbar-025-on-accent);font-weight:600;font-size:.88rem;white-space:nowrap;transition:transform .2s,background .25s}
+[data-vibeui-block="navbar-025"] [data-part="action"]{display:none;align-items:center;height:2.5rem;padding:0 1.1rem;border-radius:999px;background:var(--vibeui-navbar-025-accent);color:var(--vibeui-navbar-025-on-accent);font-weight:600;font-size:.86rem;white-space:nowrap;box-shadow:0 10px 24px -14px color-mix(in oklab,var(--vibeui-navbar-025-accent) 90%,transparent);transition:transform .2s,background .25s}
 [data-vibeui-block="navbar-025"] [data-part="action"]:hover{transform:translateY(-1px);background:color-mix(in oklab,var(--vibeui-navbar-025-accent) 88%,#000)}
 [data-vibeui-block="navbar-025"] [data-part="toggle"]{display:inline-flex;align-items:center;justify-content:center;width:2.5rem;height:2.5rem;border:1px solid var(--vibeui-navbar-025-line);border-radius:50%;background:transparent;color:inherit;cursor:pointer}
-[data-vibeui-block="navbar-025"] [data-part="toggle"] svg{width:1.15rem;height:1.15rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
-[data-vibeui-block="navbar-025"] [data-part="sheet"]{display:none;flex-direction:column;gap:.25rem;margin:0;padding:.5rem 1.25rem 1.25rem;list-style:none;background:var(--vibeui-navbar-025-bg);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--vibeui-navbar-025-line)}
+[data-vibeui-block="navbar-025"] [data-part="toggle"] svg{width:1.1rem;height:1.1rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+[data-vibeui-block="navbar-025"] [data-part="links"]{display:none;grid-column:1 / -1;justify-content:center;align-items:center;gap:0;margin:0;padding:.15rem 0 0;list-style:none;overflow:hidden;max-height:3rem;transition:max-height .45s cubic-bezier(.2,.9,.3,1),padding .45s cubic-bezier(.2,.9,.3,1)}
+[data-vibeui-block="navbar-025"][data-scrolled="true"] [data-part="links"]{max-height:2.2rem;padding:0}
+[data-vibeui-block="navbar-025"] [data-part="links"] li{display:flex;align-items:center}
+[data-vibeui-block="navbar-025"] [data-part="links"] li+li::before{content:"";width:.25rem;height:.25rem;margin:0 .9rem;border-radius:50%;background:var(--vibeui-navbar-025-accent);opacity:.6}
+[data-vibeui-block="navbar-025"] [data-part="link"]{position:relative;display:inline-flex;align-items:center;height:2.2rem;font-family:var(--vibeui-navbar-025-display);font-size:1.15rem;transition:color .25s,font-size .35s cubic-bezier(.2,.9,.3,1);font-weight:500;letter-spacing:.01em;color:var(--vibeui-navbar-025-fg);transition:color .25s}
+[data-vibeui-block="navbar-025"] [data-part="link"]::after{content:"";position:absolute;left:0;right:0;bottom:.3rem;height:1px;background:var(--vibeui-navbar-025-accent);transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.2,.9,.3,1)}
+[data-vibeui-block="navbar-025"] [data-part="link"]:hover::after,[data-vibeui-block="navbar-025"] [data-part="link"][aria-current="true"]::after{transform:scaleX(1)}
+[data-vibeui-block="navbar-025"] [data-part="link"][aria-current="true"]{color:var(--vibeui-navbar-025-accent)}
+[data-vibeui-block="navbar-025"] [data-part="sheet"]{display:none;flex-direction:column;gap:.1rem;margin:0;padding:.25rem 1.25rem 1.25rem;list-style:none;background:var(--vibeui-navbar-025-bg);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid var(--vibeui-navbar-025-line)}
 [data-vibeui-block="navbar-025"][data-open="true"] [data-part="sheet"]{display:flex;animation:vibeui-navbar-025-drop .3s cubic-bezier(.2,.9,.3,1) both}
 @keyframes vibeui-navbar-025-drop{from{opacity:0;transform:translateY(-.5rem)}}
-[data-vibeui-block="navbar-025"] [data-part="sheet"] a{display:block;padding:.6rem 0;border-bottom:1px solid var(--vibeui-navbar-025-line);font-family:var(--vibeui-navbar-025-display);font-size:1.35rem;font-weight:500}
-[data-vibeui-block="navbar-025"] [data-part="sheet"] [data-part="action"]{display:inline-flex;margin-top:.75rem;align-self:flex-start}
-@container (min-width:52rem){
-[data-vibeui-block="navbar-025"] [data-part="caption"]{display:block}
+[data-vibeui-block="navbar-025"] [data-part="sheet"] a{display:block;padding:.55rem 0;border-bottom:1px solid var(--vibeui-navbar-025-line);font-family:var(--vibeui-navbar-025-display);font-size:1.35rem;font-weight:500}
+[data-vibeui-block="navbar-025"] [data-part="sheet"] [data-part="action"]{display:inline-flex;margin-top:.75rem;align-self:flex-start;border-bottom:0}
+@container (min-width:56rem){
 [data-vibeui-block="navbar-025"] [data-part="links"]{display:flex}
-[data-vibeui-block="navbar-025"] [data-part="bar"] [data-part="action"]{display:inline-flex}
-[data-vibeui-block="navbar-025"] [data-part="toggle"],[data-vibeui-block="navbar-025"] [data-part="sheet"]{display:none!important}
 [data-vibeui-block="navbar-025"] [data-part="music-label"]{display:inline}
+[data-vibeui-block="navbar-025"] [data-part="shell"] [data-part="action"]{display:inline-flex}
+[data-vibeui-block="navbar-025"] [data-part="toggle"],[data-vibeui-block="navbar-025"] [data-part="sheet"]{display:none!important}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-025"] *{animation:none!important;transition:none!important}}`
 
-/** Шапка свадебного приглашения: монограмма пары, разделы, значок музыки и «Подтвердить»; поверх первого экрана прозрачная. */
+const DAY = 86400000
+
+function plural(count: number, labels: readonly [string, string, string, string]): string {
+  const mod10 = count % 10
+  const mod100 = count % 100
+  if (mod10 === 1 && mod100 !== 11) return labels[0]
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return labels[1]
+  return labels[2]
+}
+
+/** Шапка свадебного приглашения в два яруса: дата и счётчик дней, монограмма по центру, капсула музыки со звуковыми линиями и «Подтвердить»; разделы через точки. */
 export function Navbar025({
   monogram = "В & А",
-  caption = "5 · 09 · 2027",
   brandHref = "#",
+  caption = "05 · 09 · 2027",
+  date = "2027-09-05T15:00:00+03:00",
+  daysLabels = ["день", "дня", "дней", "сегодня"],
   links = [
     { label: "История", href: "#story" },
     { label: "Программа", href: "#program" },
@@ -113,6 +144,7 @@ export function Navbar025({
   actionHref = "#rsvp",
   music,
   musicLabel = "Музыка",
+  playingLabel = "Играет",
   placement = "fixed",
   spy = true,
   tone = "auto",
@@ -126,18 +158,17 @@ export function Navbar025({
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const [playing, setPlaying] = useState(false)
+  const [days, setDays] = useState<number | null>(null)
   const palette = {
     ...(accent ? { "--vibeui-navbar-025-accent": accent } : null),
     ...(background ? { "--vibeui-navbar-025-bg": background } : null),
     ...style,
   } as CSSProperties
-
-  // Монограмма: амперсанд подкрашивается акцентом, буквы — сливой.
   const [left, right] = monogram.split(/\s*&\s*/)
 
   useEffect(() => {
     if (placement === "static") return
-    const onScroll = () => setScrolled(window.scrollY > 24)
+    const onScroll = () => setScrolled(window.scrollY > 40)
     // Первое чтение — из кадра, а не из тела эффекта: страница могла
     // открыться уже прокрученной (якорь в адресе).
     const frame = requestAnimationFrame(onScroll)
@@ -147,6 +178,20 @@ export function Navbar025({
       window.removeEventListener("scroll", onScroll)
     }
   }, [placement])
+
+  // Дни считаются на клиенте: на сервере «сегодня» неизвестно, первый кадр
+  // без счётчика, чтобы разметка совпала.
+  useEffect(() => {
+    const target = Date.parse(date)
+    if (Number.isNaN(target)) return
+    const tick = () => setDays(Math.ceil((target - Date.now()) / DAY))
+    const frame = requestAnimationFrame(tick)
+    const timer = window.setInterval(tick, 60_000)
+    return () => {
+      cancelAnimationFrame(frame)
+      window.clearInterval(timer)
+    }
+  }, [date])
 
   useEffect(() => {
     if (!spy || placement === "static" || typeof IntersectionObserver === "undefined") return
@@ -182,6 +227,8 @@ export function Navbar025({
     </a>
   ) : null
 
+  const countdown = days === null || days < 0 ? null : days === 0 ? daysLabels[3] : `${days} ${plural(days, daysLabels)}`
+
   return (
     <>
       <link rel="stylesheet" href={FONTS} precedence="medium" />
@@ -189,16 +236,41 @@ export function Navbar025({
         {STYLES}
       </style>
       <header data-vibeui-block="navbar-025" data-tone={tone === "auto" ? undefined : tone} data-placement={placement} data-scrolled={scrolled ? "true" : undefined} data-open={open ? "true" : undefined} className={className} style={palette}>
-        <div data-part="bar">
-          <span data-part="veil" aria-hidden="true" />
-          <a data-part="brand" href={brandHref} aria-label={`${monogram} — ${caption}`}>
-            <span data-part="seal" aria-hidden="true">
-              {left}
-              <em>&amp;</em>
-              {right}
+        <span data-part="veil" aria-hidden="true" />
+        <div data-part="shell">
+          <div data-part="date">
+            <span>{caption}</span>
+            <span data-part="days" aria-live="off">
+              {countdown}
             </span>
-            <span data-part="caption">{caption}</span>
+          </div>
+          <a data-part="brand" href={brandHref} aria-label={monogram}>
+            {left}
+            <em>&amp;</em>
+            {right}
           </a>
+          <div data-part="tools">
+            {music ? (
+              <>
+                <audio ref={audio} src={music} loop preload="none" onEnded={() => setPlaying(false)} />
+                <button type="button" data-part="music" aria-pressed={playing} aria-label={musicLabel} title={musicLabel} onClick={toggleMusic}>
+                  <span data-part="wave" aria-hidden="true">
+                    <i />
+                    <i />
+                    <i />
+                    <i />
+                  </span>
+                  <span data-part="music-label">{playing ? playingLabel : musicLabel}</span>
+                </button>
+              </>
+            ) : null}
+            {action}
+            <button type="button" data-part="toggle" aria-expanded={open} aria-label={open ? "Закрыть меню" : "Меню"} onClick={() => setOpen((value) => !value)}>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
+              </svg>
+            </button>
+          </div>
           <ul data-part="links">
             {links.map((link) => (
               <li key={link.label}>
@@ -208,25 +280,6 @@ export function Navbar025({
               </li>
             ))}
           </ul>
-          {music ? (
-            <>
-              <audio ref={audio} src={music} loop preload="none" onEnded={() => setPlaying(false)} />
-              <button type="button" data-part="music" aria-pressed={playing} aria-label={musicLabel} onClick={toggleMusic}>
-                <span data-part="bars" aria-hidden="true">
-                  <i />
-                  <i />
-                  <i />
-                </span>
-                <span data-part="music-label">{musicLabel}</span>
-              </button>
-            </>
-          ) : null}
-          {action}
-          <button type="button" data-part="toggle" aria-expanded={open} aria-label={open ? "Закрыть меню" : "Меню"} onClick={() => setOpen((value) => !value)}>
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
-            </svg>
-          </button>
         </div>
         <ul data-part="sheet">
           {links.map((link) => (

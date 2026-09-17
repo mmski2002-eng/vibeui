@@ -123,7 +123,13 @@ export function People010({
                   {person.contactLabel && person.contactHref ? (
                     <a data-part="contact" href={person.contactHref}>
                       <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M4 12l16-7-4 14-4-5zM12 14l8-9" />
+                        {person.contactHref.startsWith("tel:") ? (
+                          <path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2 3.6.8v3.2A1.5 1.5 0 0 1 17.5 21 16 16 0 0 1 3 6.5 1.5 1.5 0 0 1 4.8 5H8l.8 3.6z" />
+                        ) : person.contactHref.startsWith("mailto:") ? (
+                          <path d="M4 6h16v12H4zM4 7l8 6 8-6" />
+                        ) : (
+                          <path d="M4 12l16-7-4 14-4-5zM12 14l8-9" />
+                        )}
                       </svg>
                       {person.contactLabel}
                     </a>

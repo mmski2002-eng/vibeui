@@ -77,13 +77,15 @@ container-type:inline-size;
 :where([data-vibeui-block="contact-018"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="contact-018"]{box-sizing:border-box;display:block;background:var(--vibeui-contact-018-bg);color:var(--vibeui-contact-018-fg);font-family:var(--vibeui-contact-018-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="contact-018"] *{box-sizing:border-box}
-[data-vibeui-block="contact-018"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:4rem 1.25rem}
+[data-vibeui-block="contact-018"]{position:relative;overflow:hidden}
+[data-vibeui-block="contact-018"]::before{content:"";position:absolute;right:-10%;top:10%;width:34rem;height:34rem;border-radius:50%;background:radial-gradient(circle,color-mix(in oklab,var(--vibeui-contact-018-sage) 28%,transparent),transparent 65%);pointer-events:none}
+[data-vibeui-block="contact-018"] [data-part="shell"]{position:relative;max-width:80rem;margin:0 auto;padding:4rem 1.25rem}
 [data-vibeui-block="contact-018"] [data-part="eyebrow"]{margin:0 0 .6rem;font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--vibeui-contact-018-accent)}
 [data-vibeui-block="contact-018"] [data-part="title"]{margin:0;font-family:var(--vibeui-contact-018-display);font-size:clamp(2rem,5cqi,3.6rem);font-weight:500;font-style:italic;line-height:1.05;color:var(--vibeui-contact-018-plum);text-wrap:balance}
 [data-vibeui-block="contact-018"] [data-part="lede"]{max-width:36rem;margin:.8rem 0 0;color:var(--vibeui-contact-018-muted)}
 [data-vibeui-block="contact-018"] [data-part="lede"] b{color:var(--vibeui-contact-018-accent);font-weight:600}
 [data-vibeui-block="contact-018"] [data-part="grid"]{display:grid;gap:1.5rem;margin-top:2.5rem}
-[data-vibeui-block="contact-018"] [data-part="form"]{padding:1.5rem;border:1px solid var(--vibeui-contact-018-line);border-radius:1.4rem;background:var(--vibeui-contact-018-card)}
+[data-vibeui-block="contact-018"] [data-part="form"]{position:relative;padding:1.5rem;border:1px solid color-mix(in oklab,var(--vibeui-contact-018-line) 70%,transparent);border-radius:1.4rem;background:color-mix(in oklab,var(--vibeui-contact-018-card) 70%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 30px 60px -40px rgb(43 26 36 / .45),inset 0 1px 0 rgb(255 255 255 / .5)}
 [data-vibeui-block="contact-018"] [data-part="progress"]{display:flex;align-items:center;gap:.4rem;margin:0 0 1.5rem;padding:0;list-style:none}
 [data-vibeui-block="contact-018"] [data-part="progress"] li{flex:1;height:3px;border-radius:2px;background:var(--vibeui-contact-018-line);overflow:hidden}
 [data-vibeui-block="contact-018"] [data-part="progress"] li::after{content:"";display:block;height:100%;background:var(--vibeui-contact-018-accent);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.2,.9,.3,1)}
@@ -199,7 +201,7 @@ export function Contact018({
   }
 
   const choice = (pressed: boolean, label: string, onClick: () => void, role: "button" | "checkbox" = "button") => (
-    <button type="button" data-part="choice" role={role === "checkbox" ? "checkbox" : undefined} aria-checked={role === "checkbox" ? pressed : undefined} aria-pressed={role === "button" ? pressed : undefined} onClick={onClick}>
+    <button key={label} type="button" data-part="choice" role={role === "checkbox" ? "checkbox" : undefined} aria-checked={role === "checkbox" ? pressed : undefined} aria-pressed={role === "button" ? pressed : undefined} onClick={onClick}>
       {label}
     </button>
   )

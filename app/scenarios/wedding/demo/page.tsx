@@ -69,6 +69,7 @@ export default function Page() {
           { label: "Место", href: "#place" },
           { label: "Вопросы", href: "#faq" },
         ]}
+        date="2027-09-05T15:00:00+03:00"
         music="/demo/wedding/music.mp3"
       />
 

@@ -2,12 +2,6 @@
 
 import { useState, type CSSProperties } from "react"
 
-export type Cta021Wish = {
-  title: string
-  text?: string
-  href?: string
-}
-
 export type Cta021Props = {
   eyebrow?: string
   title?: string
@@ -22,8 +16,6 @@ export type Cta021Props = {
   copiedLabel?: string
   /** Буквы на печати: «В&А». */
   seal?: string
-  wishesTitle?: string
-  wishes?: readonly Cta021Wish[]
   tone?: "auto" | "light" | "dark"
   accent?: string
   background?: string
@@ -34,7 +26,7 @@ export type Cta021Props = {
 // Подарки без неловкости: слева «лучший подарок — вы», справа карточка
 // вклада в путешествие с реквизитами и кнопкой «скопировать»; на углу
 // карточки восковая печать с монограммой, при копировании она
-// «прижимается». Ниже короткий вишлист из трёх вещей со ссылками.
+// «прижимается».
 const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700&display=swap"
 
 const STYLES = `
@@ -62,7 +54,10 @@ container-type:inline-size;
 [data-vibeui-block="cta-021"] [data-part="eyebrow"]{margin:0 0 .6rem;font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--vibeui-cta-021-accent)}
 [data-vibeui-block="cta-021"] [data-part="title"]{margin:0;font-family:var(--vibeui-cta-021-display);font-size:clamp(2rem,5cqi,3.6rem);font-weight:500;font-style:italic;line-height:1.05;color:var(--vibeui-cta-021-plum);text-wrap:balance}
 [data-vibeui-block="cta-021"] [data-part="lede"]{max-width:32rem;margin:.8rem 0 0;color:var(--vibeui-cta-021-muted)}
-[data-vibeui-block="cta-021"] [data-part="fund"]{position:relative;padding:1.75rem;border:1px solid var(--vibeui-cta-021-line);border-radius:1.4rem;background:var(--vibeui-cta-021-card);box-shadow:0 30px 60px -40px rgb(43 26 36 / .5)}
+[data-vibeui-block="cta-021"]{position:relative;overflow:hidden}
+[data-vibeui-block="cta-021"]::before{content:"";position:absolute;right:-8%;top:-20%;width:30rem;height:30rem;border-radius:50%;background:radial-gradient(circle,color-mix(in oklab,var(--vibeui-cta-021-accent) 18%,transparent),transparent 65%);pointer-events:none}
+[data-vibeui-block="cta-021"] [data-part="shell"]{position:relative}
+[data-vibeui-block="cta-021"] [data-part="fund"]{position:relative;padding:1.75rem;border:1px solid color-mix(in oklab,var(--vibeui-cta-021-line) 70%,transparent);border-radius:1.4rem;background:color-mix(in oklab,var(--vibeui-cta-021-card) 72%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 30px 60px -40px rgb(43 26 36 / .5),inset 0 1px 0 rgb(255 255 255 / .5)}
 [data-vibeui-block="cta-021"] [data-part="fund"] h3{margin:0;font-family:var(--vibeui-cta-021-display);font-size:1.7rem;font-weight:500;line-height:1.15;color:var(--vibeui-cta-021-plum)}
 [data-vibeui-block="cta-021"] [data-part="fund"] > p{margin:.5rem 0 1.4rem;font-size:.95rem;color:var(--vibeui-cta-021-muted)}
 [data-vibeui-block="cta-021"] [data-part="req"]{display:grid;gap:.3rem;padding:1rem 1.1rem;border:1px dashed var(--vibeui-cta-021-line);border-radius:1rem;background:var(--vibeui-cta-021-bg)}
@@ -71,27 +66,18 @@ container-type:inline-size;
 [data-vibeui-block="cta-021"] [data-part="copy"]{display:inline-flex;align-items:center;gap:.5rem;height:2.9rem;margin-top:1rem;padding:0 1.3rem;border:1px solid var(--vibeui-cta-021-accent);border-radius:999px;background:var(--vibeui-cta-021-accent);color:var(--vibeui-cta-021-on-accent);font:inherit;font-weight:600;font-size:.92rem;cursor:pointer;transition:transform .2s,background .25s}
 [data-vibeui-block="cta-021"] [data-part="copy"]:hover{transform:translateY(-1px);background:color-mix(in oklab,var(--vibeui-cta-021-accent) 88%,#000)}
 [data-vibeui-block="cta-021"] [data-part="copy"][data-copied="true"]{background:var(--vibeui-cta-021-sage);border-color:var(--vibeui-cta-021-sage)}
-[data-vibeui-block="cta-021"] [data-part="copy"]:focus-visible,[data-vibeui-block="cta-021"] [data-part="wish"] a:focus-visible{outline:2px solid var(--vibeui-cta-021-accent);outline-offset:3px}
+[data-vibeui-block="cta-021"] [data-part="copy"]:focus-visible{outline:2px solid var(--vibeui-cta-021-accent);outline-offset:3px}
 [data-vibeui-block="cta-021"] [data-part="copy"] svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 [data-vibeui-block="cta-021"] [data-part="seal"]{position:absolute;top:-1.4rem;right:1.4rem;display:grid;place-items:center;width:4.6rem;height:4.6rem;border-radius:50%;background:radial-gradient(circle at 35% 30%,color-mix(in oklab,var(--vibeui-cta-021-accent) 70%,#fff) 0,var(--vibeui-cta-021-accent) 35%,color-mix(in oklab,var(--vibeui-cta-021-accent) 70%,#000) 100%);color:var(--vibeui-cta-021-on-accent);font-family:var(--vibeui-cta-021-display);font-style:italic;font-size:1.25rem;box-shadow:0 10px 24px -10px rgb(43 26 36 / .6),inset 0 0 0 .3rem rgb(255 255 255 / .12);transform:rotate(-10deg);transition:transform .35s cubic-bezier(.2,.9,.3,1.4)}
 [data-vibeui-block="cta-021"] [data-part="fund"][data-copied="true"] [data-part="seal"]{transform:rotate(-10deg) scale(.92)}
-[data-vibeui-block="cta-021"] [data-part="wishes"]{margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--vibeui-cta-021-line)}
-[data-vibeui-block="cta-021"] [data-part="wishes"] h3{margin:0 0 1rem;font-family:var(--vibeui-cta-021-display);font-size:1.5rem;font-weight:500;font-style:italic;color:var(--vibeui-cta-021-plum)}
-[data-vibeui-block="cta-021"] [data-part="wishes"] ul{display:grid;gap:.8rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="cta-021"] [data-part="wish"]{display:grid;gap:.2rem;padding:1rem 1.1rem;border:1px solid var(--vibeui-cta-021-line);border-radius:1rem;transition:border-color .25s,transform .25s}
-[data-vibeui-block="cta-021"] [data-part="wish"]:hover{border-color:var(--vibeui-cta-021-accent);transform:translateY(-2px)}
-[data-vibeui-block="cta-021"] [data-part="wish"] a,[data-vibeui-block="cta-021"] [data-part="wish"] b{font-family:var(--vibeui-cta-021-display);font-size:1.3rem;font-weight:500;color:var(--vibeui-cta-021-fg);text-decoration:none}
-[data-vibeui-block="cta-021"] [data-part="wish"] a::after{content:" ↗";color:var(--vibeui-cta-021-accent)}
-[data-vibeui-block="cta-021"] [data-part="wish"] span{font-size:.9rem;color:var(--vibeui-cta-021-muted)}
 @container (min-width:56rem){
 [data-vibeui-block="cta-021"] [data-part="shell"]{padding:5rem 2.5rem}
 [data-vibeui-block="cta-021"] [data-part="grid"]{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4rem;align-items:center}
 [data-vibeui-block="cta-021"] [data-part="fund"]{padding:2.25rem}
-[data-vibeui-block="cta-021"] [data-part="wishes"] ul{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="cta-021"] *{animation:none!important;transition:none!important}}`
 
-/** Подарки на свадьбу без неловкости: вклад в путешествие с копированием реквизитов, печать и короткий вишлист. */
+/** Подарки на свадьбу без неловкости: вклад в путешествие с копированием реквизитов и восковой печатью. */
 export function Cta021({
   eyebrow = "Подарки",
   title = "Лучший подарок — вы",
@@ -103,12 +89,6 @@ export function Cta021({
   copyLabel = "Скопировать номер",
   copiedLabel = "Скопировано",
   seal = "В&А",
-  wishesTitle = "Если хочется вещь",
-  wishes = [
-    { title: "Плёночный фотоаппарат", text: "Olympus mju II — чтобы галерея на этом сайте продолжалась", href: "#" },
-    { title: "Керамика для стола", text: "Набор тарелок из мастерской в Суздале", href: "#" },
-    { title: "Саженец липы", text: "Посадим в саду у дома — растёт медленно, как и надо", href: "#" },
-  ],
   tone = "auto",
   accent,
   background,
@@ -166,19 +146,6 @@ export function Cta021({
               </button>
             </div>
           </div>
-          {wishes.length > 0 ? (
-            <div data-part="wishes">
-              <h3>{wishesTitle}</h3>
-              <ul>
-                {wishes.map((wish) => (
-                  <li key={wish.title} data-part="wish">
-                    {wish.href ? <a href={wish.href} target="_blank" rel="noopener noreferrer">{wish.title}</a> : <b>{wish.title}</b>}
-                    {wish.text ? <span>{wish.text}</span> : null}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
         </div>
       </section>
     </>
