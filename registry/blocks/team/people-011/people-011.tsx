@@ -19,6 +19,7 @@ export type People011Props = {
   people?: readonly People011Person[]
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -32,12 +33,12 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,
 
 const STYLES = `
 :where([data-vibeui-block="people-011"]){
---vibeui-people-011-bg:light-dark(#f2eee6,#0b1220);
---vibeui-people-011-card:light-dark(#ffffff,#131c2e);
---vibeui-people-011-fg:light-dark(#1c2740,#f2eee6);
---vibeui-people-011-muted:light-dark(#5b6880,#9fb0c8);
---vibeui-people-011-line:light-dark(rgb(28 39 64 / .16),rgb(159 176 200 / .24));
---vibeui-people-011-accent:#f2b64f;
+--vibeui-people-011-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-people-011-card:light-dark(#ffffff,#242424);
+--vibeui-people-011-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-people-011-muted:light-dark(#6b6b6b,#a3a3a3);
+--vibeui-people-011-line:light-dark(color-mix(in oklab,var(--vibeui-people-011-fg) 16%,transparent),color-mix(in oklab,var(--vibeui-people-011-fg) 24%,transparent));
+--vibeui-people-011-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-people-011-fire:#ff9a3c;
 --vibeui-people-011-silver:#9fb0c8;
 --vibeui-people-011-display:"Cormorant Garamond",Georgia,serif;
@@ -94,12 +95,14 @@ export function People011({
   ],
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
 }: People011Props) {
   const palette = {
     ...(accent ? { "--vibeui-people-011-accent": accent } : null),
+    ...(ink ? { "--vibeui-people-011-fg": ink } : null),
     ...(background ? { "--vibeui-people-011-bg": background } : null),
     ...style,
   } as CSSProperties

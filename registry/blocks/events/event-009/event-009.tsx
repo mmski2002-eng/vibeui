@@ -28,6 +28,7 @@ export type Event009Props = {
   avoidItems?: readonly string[]
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -41,13 +42,13 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,
 
 const STYLES = `
 :where([data-vibeui-block="event-009"]){
---vibeui-event-009-bg:light-dark(#fffaf3,#1d1620);
---vibeui-event-009-fg:light-dark(#2b1a24,#f3ebe4);
---vibeui-event-009-muted:light-dark(#7a6a70,#b3a5aa);
---vibeui-event-009-line:light-dark(#e2d8ca,#372b31);
---vibeui-event-009-card:light-dark(#f6f1e8,#17131a);
---vibeui-event-009-accent:#b8552f;
---vibeui-event-009-plum:light-dark(#4a1f36,#e9c7d6);
+--vibeui-event-009-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-event-009-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-event-009-muted:light-dark(#7a6a70,#a3a3a3);
+--vibeui-event-009-line:light-dark(#e2d8ca,#2e2e2e);
+--vibeui-event-009-card:light-dark(#f6f1e8,#1a1a1a);
+--vibeui-event-009-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-event-009-plum:var(--vibeui-event-009-fg);
 --vibeui-event-009-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
 --vibeui-event-009-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -113,6 +114,7 @@ export function Event009({
   avoidItems = ["Белого и айвори — это оставим Василисе", "Крупных принтов и неона: спорят со светом", "Шпилек — гравий и трава"],
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -120,6 +122,7 @@ export function Event009({
   const [copied, setCopied] = useState<string | null>(null)
   const palette = {
     ...(accent ? { "--vibeui-event-009-accent": accent } : null),
+    ...(ink ? { "--vibeui-event-009-fg": ink } : null),
     ...(background ? { "--vibeui-event-009-bg": background } : null),
     ...style,
   } as CSSProperties

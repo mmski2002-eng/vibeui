@@ -34,7 +34,10 @@ const page: CSSProperties = {
   fontFamily: '"Manrope",ui-sans-serif,system-ui,sans-serif',
 }
 
-const light = { tone: "light" } as const
+// Тема страницы: блоки каталога по умолчанию нейтральные, цвета задаёт сценарий.
+const light = { tone: "light", background: "#fffaf0", ink: "#123a4b", accent: "#ff6b57" } as const
+// Чередующиеся секции на песке.
+const sand = { ...light, background: "#f3e9d2" } as const
 
 const IMG = "/demo/wedding-cuba/"
 
@@ -52,10 +55,14 @@ const POSTCARDS = [
 export default function Page() {
   return (
     <div style={page} className="min-h-dvh" data-demo="wedding-cuba">
+      {/* Песочные плашки внутри блоков: в каталоге они серые, оттенок задаёт сценарий. */}
+      <style href="vibeui-demo-cuba-sand" precedence="medium">
+        {`[data-vibeui-block]{--vibeui-hero-026-sand:#f3e9d2;--vibeui-about-012-sand:#f3e9d2;--vibeui-event-011-sand:#f3e9d2;--vibeui-event-012-sand:#f3e9d2;--vibeui-faq-021-sand:#f3e9d2;--vibeui-cta-022-sand:#f3e9d2;}`}
+      </style>
       <style href="vibeui-demo-scroll" precedence="medium">
         {`html{scroll-behavior:smooth;scroll-padding-top:5rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}`}
       </style>
-      <Navbar026 {...light} brandHref="#hero" date="2027-02-12T09:40:00+03:00" music={`${IMG}music.mp3`} />
+      <Navbar026 {...light} background="rgb(255 250 240 / .9)" brandHref="#hero" date="2027-02-12T09:40:00+03:00" music={`${IMG}music.mp3`} />
 
       <div id="hero">
         <Hero026
@@ -109,7 +116,7 @@ export default function Page() {
 
       <div id="days">
         <Event010
-          {...light}
+          {...sand}
           days={[
             {
               day: "12",
@@ -168,11 +175,11 @@ export default function Page() {
       </div>
 
       <div id="place">
-        <Map008 {...light} image={`${IMG}hotel.webp`} imageAlt="Белые бунгало с бирюзовыми дверями и гамаки между пальм" />
+        <Map008 {...sand} image={`${IMG}hotel.webp`} imageAlt="Белые бунгало с бирюзовыми дверями и гамаки между пальм" />
       </div>
 
       <div id="checkin">
-        <Contact019 {...light} />
+        <Contact019 {...sand} />
       </div>
 
       <div id="faq">
@@ -180,7 +187,7 @@ export default function Page() {
       </div>
 
       <div id="postcards">
-        <Portfolio009 {...light} cards={POSTCARDS} />
+        <Portfolio009 {...sand} cards={POSTCARDS} />
       </div>
 
       <div id="gifts">
@@ -188,11 +195,11 @@ export default function Page() {
       </div>
 
       <div id="wishes">
-        <Testimonials021 {...light} />
+        <Testimonials021 {...sand} />
       </div>
 
       <div id="footer">
-        <Footer025 {...light} />
+        <Footer025 {...light} background="#123a4b" ink="#fffaf0" />
       </div>
     </div>
   )

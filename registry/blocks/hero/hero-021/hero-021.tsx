@@ -16,6 +16,7 @@ export type Hero021Props = {
   ticker?: readonly string[]
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -30,12 +31,12 @@ const FONTS =
 
 const STYLES = `
 :where([data-vibeui-block="hero-021"]){
---vibeui-hero-021-bg:#141110;
---vibeui-hero-021-fg:#f2ebe0;
---vibeui-hero-021-accent:#7d2a3a;
---vibeui-hero-021-glow:0 0 24px rgb(125 42 58 / .7),0 0 70px rgb(125 42 58 / .35);
---vibeui-hero-021-accent-ink:color-mix(in oklab,var(--vibeui-hero-021-accent) 55%,#f2ebe0);
---vibeui-hero-021-on-accent:#fff4ee;
+--vibeui-hero-021-bg:#1a1a1a;
+--vibeui-hero-021-fg:#f2f2f2;
+--vibeui-hero-021-accent:#f2f2f2;
+--vibeui-hero-021-glow:0 0 24px color-mix(in oklab,var(--vibeui-hero-021-accent) 70%,transparent),0 0 70px color-mix(in oklab,var(--vibeui-hero-021-accent) 35%,transparent);
+--vibeui-hero-021-accent-ink:color-mix(in oklab,var(--vibeui-hero-021-accent) 55%,var(--vibeui-hero-021-fg));
+--vibeui-hero-021-on-accent:oklch(from var(--vibeui-hero-021-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-021-display:"Playfair Display",Georgia,"Times New Roman",serif;
 --vibeui-hero-021-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -91,12 +92,14 @@ export function Hero021({
   ticker = ["Сезонное меню — осень", "Устрицы по средам", "Бранчи в выходные с 11:00", "Джаз по пятницам"],
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
 }: Hero021Props) {
   const palette = {
     ...(accent ? { "--vibeui-hero-021-accent": accent } : null),
+    ...(ink ? { "--vibeui-hero-021-fg": ink } : null),
     ...(background ? { "--vibeui-hero-021-bg": background } : null),
     ...style,
   } as CSSProperties

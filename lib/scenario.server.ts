@@ -39,6 +39,20 @@ export function agentSource(source: string): string {
 }
 
 /**
+ * Объекты темы страницы из исходника: `const light = { tone, background, ink,
+ * accent } as const` и производные от него (`{ ...light, background }`).
+ * Блоки каталога по умолчанию нейтральные, поэтому именно эти строки
+ * отвечают на вопрос «что передать блоку, чтобы он стал как в демо».
+ */
+export function extractThemeConsts(source: string): string | null {
+  // Многострочный объект (фотограф) не ловится: там тема собрана из
+  // констант и читается прямо в исходнике брифа.
+  const lines = source.match(/^(?:\/\/[^\n]*\n)?const \w+ = \{ (?:tone:|\.\.\.\w+,)[^\n]*\} as const$/gm)
+
+  return lines?.length ? lines.join("\n") : null
+}
+
+/**
  * Первое использование компонента в исходнике: открывающий тег с пропсами.
  * Скобки и кавычки считаются, чтобы `>` внутри выражения не оборвал тег.
  */

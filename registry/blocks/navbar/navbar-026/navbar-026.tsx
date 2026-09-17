@@ -31,6 +31,7 @@ export type Navbar026Props = {
   spy?: boolean
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -46,14 +47,14 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;
 
 const STYLES = `
 :where([data-vibeui-block="navbar-026"]){
---vibeui-navbar-026-bg:light-dark(rgb(255 250 240 / .9),rgb(20 32 42 / .9));
---vibeui-navbar-026-fg:light-dark(#123a4b,#eef4f2);
---vibeui-navbar-026-muted:light-dark(#5b6f78,#9fb2b8);
---vibeui-navbar-026-line:light-dark(#e3d7bf,#2c3f4a);
---vibeui-navbar-026-accent:#ff6b57;
+--vibeui-navbar-026-bg:light-dark(rgb(255 255 255 / .9),rgb(26 26 26 / .9));
+--vibeui-navbar-026-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-navbar-026-muted:light-dark(#5b6f78,#a3a3a3);
+--vibeui-navbar-026-line:light-dark(#e3d7bf,#2e2e2e);
+--vibeui-navbar-026-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-navbar-026-sea:#2aa7a0;
 --vibeui-navbar-026-sun:#f2c14e;
---vibeui-navbar-026-on-accent:#fffaf0;
+--vibeui-navbar-026-on-accent:oklch(from var(--vibeui-navbar-026-accent) clamp(0,(0.72 - l) * 100,1) 0 0);
 --vibeui-navbar-026-display:"Oswald","Arial Narrow",Impact,sans-serif;
 --vibeui-navbar-026-script:"Lobster","Brush Script MT",cursive;
 --vibeui-navbar-026-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
@@ -65,7 +66,7 @@ container-type:inline-size;
 [data-vibeui-block="navbar-026"]{box-sizing:border-box;position:relative;display:block;color:var(--vibeui-navbar-026-fg);font-family:var(--vibeui-navbar-026-font);font-size:1rem;line-height:1.3}
 [data-vibeui-block="navbar-026"] *{box-sizing:border-box}
 [data-vibeui-block="navbar-026"][data-placement="fixed"]{position:fixed;top:0;left:0;right:0;z-index:40}
-[data-vibeui-block="navbar-026"][data-placement="fixed"]:not([data-scrolled="true"]):not([data-open="true"]){--vibeui-navbar-026-fg:#fffaf0;--vibeui-navbar-026-muted:rgb(255 250 240 / .78);--vibeui-navbar-026-line:rgb(255 250 240 / .4);text-shadow:0 1px 12px rgb(18 58 75 / .45)}
+[data-vibeui-block="navbar-026"][data-placement="fixed"]:not([data-scrolled="true"]):not([data-open="true"]){--vibeui-navbar-026-fg:#fffaf0!important;--vibeui-navbar-026-muted:rgb(255 250 240 / .78);--vibeui-navbar-026-line:rgb(255 250 240 / .4);text-shadow:0 1px 12px rgb(18 58 75 / .45)}
 [data-vibeui-block="navbar-026"] a{color:inherit;text-decoration:none}
 [data-vibeui-block="navbar-026"] a:focus-visible,[data-vibeui-block="navbar-026"] button:focus-visible{outline:2px solid var(--vibeui-navbar-026-accent);outline-offset:3px;border-radius:.5rem}
 [data-vibeui-block="navbar-026"] [data-part="veil"]{position:absolute;inset:0;z-index:-1;background:var(--vibeui-navbar-026-bg);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);opacity:0;transition:opacity .35s}
@@ -154,6 +155,7 @@ export function Navbar026({
   spy = true,
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -166,6 +168,7 @@ export function Navbar026({
   const [days, setDays] = useState<number | null>(null)
   const palette = {
     ...(accent ? { "--vibeui-navbar-026-accent": accent } : null),
+    ...(ink ? { "--vibeui-navbar-026-fg": ink } : null),
     ...(background ? { "--vibeui-navbar-026-bg": background } : null),
     ...style,
   } as CSSProperties

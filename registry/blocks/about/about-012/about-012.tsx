@@ -21,6 +21,7 @@ export type About012Props = {
   stops?: readonly About012Stop[]
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -45,12 +46,12 @@ const POINTS = [
 
 const STYLES = `
 :where([data-vibeui-block="about-012"]){
---vibeui-about-012-bg:light-dark(#fffaf0,#14202a);
---vibeui-about-012-sand:light-dark(#f3e9d2,#1c2a34);
---vibeui-about-012-fg:light-dark(#123a4b,#eef4f2);
---vibeui-about-012-muted:light-dark(#5b6f78,#9fb2b8);
---vibeui-about-012-line:light-dark(#e3d7bf,#2c3f4a);
---vibeui-about-012-accent:#ff6b57;
+--vibeui-about-012-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-about-012-sand:light-dark(#f4f4f4,#242424);
+--vibeui-about-012-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-about-012-muted:light-dark(#5b6f78,#a3a3a3);
+--vibeui-about-012-line:light-dark(#e3d7bf,#2e2e2e);
+--vibeui-about-012-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-about-012-sea:#2aa7a0;
 --vibeui-about-012-sun:#f2c14e;
 --vibeui-about-012-display:"Oswald","Arial Narrow",Impact,sans-serif;
@@ -108,6 +109,7 @@ export function About012({
   ],
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -116,6 +118,7 @@ export function About012({
   const [active, setActive] = useState(-1)
   const palette = {
     ...(accent ? { "--vibeui-about-012-accent": accent } : null),
+    ...(ink ? { "--vibeui-about-012-fg": ink } : null),
     ...(background ? { "--vibeui-about-012-bg": background } : null),
     ...style,
   } as CSSProperties

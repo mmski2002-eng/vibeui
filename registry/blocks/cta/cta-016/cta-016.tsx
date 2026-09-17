@@ -13,6 +13,7 @@ export type Cta016Props = {
   image?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -26,11 +27,12 @@ const FONTS =
 
 const STYLES = `
 :where([data-vibeui-block="cta-016"]){
---vibeui-cta-016-bg:light-dark(#f6f1ea,#141110);
---vibeui-cta-016-accent:#7d2a3a;
---vibeui-cta-016-glow:0 0 24px rgb(125 42 58 / .7),0 0 70px rgb(125 42 58 / .35);
---vibeui-cta-016-accent-ink:light-dark(var(--vibeui-cta-016-accent),color-mix(in oklab,var(--vibeui-cta-016-accent) 55%,#f2ebe0));
---vibeui-cta-016-on-accent:#fff4ee;
+--vibeui-cta-016-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-cta-016-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-cta-016-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-cta-016-glow:0 0 24px color-mix(in oklab,var(--vibeui-cta-016-accent) 70%,transparent),0 0 70px color-mix(in oklab,var(--vibeui-cta-016-accent) 35%,transparent);
+--vibeui-cta-016-accent-ink:light-dark(var(--vibeui-cta-016-accent),color-mix(in oklab,var(--vibeui-cta-016-accent) 55%,var(--vibeui-cta-016-fg)));
+--vibeui-cta-016-on-accent:oklch(from var(--vibeui-cta-016-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-cta-016-display:"Playfair Display",Georgia,"Times New Roman",serif;
 --vibeui-cta-016-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -51,9 +53,9 @@ container-type:inline-size;
 [data-vibeui-block="cta-016"] [data-part="text"]{margin:.2rem 0 0;font-size:.85rem;opacity:.85}
 [data-vibeui-block="cta-016"] [data-part="tail"]{display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap}
 [data-vibeui-block="cta-016"] [data-part="price"]{font-family:var(--vibeui-cta-016-display);font-size:1.75rem;line-height:1;white-space:nowrap}
-[data-vibeui-block="cta-016"] [data-part="action"]{display:inline-flex;align-items:center;height:2.6rem;padding:0 1.1rem;border-radius:999px;background:#141110;color:#f2ebe0;text-decoration:none;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;transition:transform .2s}
+[data-vibeui-block="cta-016"] [data-part="action"]{display:inline-flex;align-items:center;height:2.6rem;padding:0 1.1rem;border-radius:999px;background:var(--vibeui-cta-016-bg);color:var(--vibeui-cta-016-fg);text-decoration:none;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;transition:transform .2s}
 [data-vibeui-block="cta-016"] [data-part="action"]:hover{transform:translateY(-1px)}
-[data-vibeui-block="cta-016"] [data-part="action"]:focus-visible{outline:2px solid #f2ebe0;outline-offset:2px}
+[data-vibeui-block="cta-016"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-cta-016-fg);outline-offset:2px}
 @container (min-width: 52rem){
 [data-vibeui-block="cta-016"] [data-part="shell"]{padding:0 2rem}
 [data-vibeui-block="cta-016"] [data-part="band"]{grid-template-columns:auto minmax(0,1fr) auto;gap:2rem;padding:1.25rem 2rem}
@@ -72,12 +74,14 @@ export function Cta016({
   image = "",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
 }: Cta016Props) {
   const palette = {
     ...(accent ? { "--vibeui-cta-016-accent": accent } : null),
+    ...(ink ? { "--vibeui-cta-016-fg": ink } : null),
     ...(background ? { "--vibeui-cta-016-bg": background } : null),
     ...style,
   } as CSSProperties

@@ -36,6 +36,7 @@ export type Hero022Props = {
   logos?: readonly string[]
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -51,13 +52,13 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;7
 
 const STYLES = `
 :where([data-vibeui-block="hero-022"]){
---vibeui-hero-022-bg:light-dark(#ffffff,#0f1117);
---vibeui-hero-022-fg:light-dark(#111827,#f3f4f6);
---vibeui-hero-022-muted:light-dark(#6b7280,#9ca3af);
---vibeui-hero-022-card:light-dark(#ffffff,#161a23);
---vibeui-hero-022-line:light-dark(#e5e7eb,#262b36);
---vibeui-hero-022-accent:#4f46e5;
---vibeui-hero-022-on-accent:#ffffff;
+--vibeui-hero-022-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-hero-022-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-hero-022-muted:light-dark(#6b7280,#a3a3a3);
+--vibeui-hero-022-card:light-dark(var(--vibeui-hero-022-bg),#242424);
+--vibeui-hero-022-line:light-dark(#e5e7eb,#2e2e2e);
+--vibeui-hero-022-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-hero-022-on-accent:oklch(from var(--vibeui-hero-022-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-022-marker:light-dark(#d9f99d,rgb(163 230 53 / .3));
 --vibeui-hero-022-display:"Unbounded","Manrope",ui-sans-serif,system-ui,sans-serif;
 --vibeui-hero-022-font:"Inter",ui-sans-serif,system-ui,sans-serif;
@@ -221,6 +222,7 @@ export function Hero022({
   logos = ["Ozon", "Тинькофф", "Яндекс", "Авито", "Самокат"],
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -229,6 +231,7 @@ export function Hero022({
   const [active, setActive] = useState(false)
   const palette = {
     ...(accent ? { "--vibeui-hero-022-accent": accent } : null),
+    ...(ink ? { "--vibeui-hero-022-fg": ink } : null),
     ...(background ? { "--vibeui-hero-022-bg": background } : null),
     ...style,
   } as CSSProperties

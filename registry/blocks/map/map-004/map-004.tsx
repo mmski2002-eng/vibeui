@@ -30,6 +30,7 @@ export type Map004Props = {
   /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -54,14 +55,14 @@ const FONTS =
 
 const STYLES = `
 :where([data-vibeui-block="map-004"]){
---vibeui-map-004-bg:light-dark(#f3ede3,#14211b);
---vibeui-map-004-fg:light-dark(#173b2e,#eef0ea);
---vibeui-map-004-muted:light-dark(color-mix(in oklab,#173b2e 62%,#f3ede3),color-mix(in oklab,#eef0ea 62%,#14211b));
---vibeui-map-004-card:light-dark(#fffdf9,#1b2c24);
---vibeui-map-004-line:light-dark(color-mix(in oklab,#173b2e 14%,#f3ede3),color-mix(in oklab,#eef0ea 14%,#14211b));
---vibeui-map-004-canvas:light-dark(#e7dfd2,#243830);
---vibeui-map-004-accent:#b8925a;
---vibeui-map-004-on-accent:#14211b;
+--vibeui-map-004-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-map-004-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-map-004-muted:color-mix(in oklab,var(--vibeui-map-004-fg) 62%,var(--vibeui-map-004-bg));
+--vibeui-map-004-card:light-dark(#fffdf9,#242424);
+--vibeui-map-004-line:color-mix(in oklab,var(--vibeui-map-004-fg) 14%,var(--vibeui-map-004-bg));
+--vibeui-map-004-canvas:light-dark(#e7dfd2,#2a2a2a);
+--vibeui-map-004-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-map-004-on-accent:oklch(from var(--vibeui-map-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-map-004-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
 --vibeui-map-004-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -157,6 +158,7 @@ export function Map004({
   providerLabel = "Яндекс Карты",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -238,6 +240,7 @@ export function Map004({
 
   const palette = {
     ...(accent ? { "--vibeui-map-004-accent": accent } : null),
+    ...(ink ? { "--vibeui-map-004-fg": ink } : null),
     ...(background ? { "--vibeui-map-004-bg": background } : null),
     ...style,
   } as CSSProperties

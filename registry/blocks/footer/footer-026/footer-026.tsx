@@ -17,6 +17,7 @@ export type Footer026Props = {
   rsvpHref?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -30,11 +31,11 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,
 
 const STYLES = `
 :where([data-vibeui-block="footer-026"]){
---vibeui-footer-026-bg:light-dark(#131c2e,#070c15);
---vibeui-footer-026-fg:#f2eee6;
---vibeui-footer-026-muted:rgb(242 238 230 / .6);
---vibeui-footer-026-line:rgb(159 176 200 / .2);
---vibeui-footer-026-accent:#f2b64f;
+--vibeui-footer-026-bg:light-dark(#1a1a1a,#0f0f0f);
+--vibeui-footer-026-fg:#f2f2f2;
+--vibeui-footer-026-muted:color-mix(in oklab,var(--vibeui-footer-026-fg) 60%,transparent);
+--vibeui-footer-026-line:color-mix(in oklab,var(--vibeui-footer-026-fg) 20%,transparent);
+--vibeui-footer-026-accent:#f2f2f2;
 --vibeui-footer-026-silver:#9fb0c8;
 --vibeui-footer-026-pine:#2f5d50;
 --vibeui-footer-026-display:"Cormorant Garamond",Georgia,serif;
@@ -96,12 +97,14 @@ export function Footer026({
   rsvpHref = "#rsvp",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
 }: Footer026Props) {
   const palette = {
     ...(accent ? { "--vibeui-footer-026-accent": accent } : null),
+    ...(ink ? { "--vibeui-footer-026-fg": ink } : null),
     ...(background ? { "--vibeui-footer-026-bg": background } : null),
     ...style,
   } as CSSProperties

@@ -53,8 +53,8 @@ const STYLES = `
 --vibeui-navbar-023-glide:light-dark(rgb(17 17 17 / .07),rgb(255 255 255 / .12));
 --vibeui-navbar-023-lift:0 .375rem 1.25rem rgb(0 0 0 / .1);
 --vibeui-navbar-023-lift-strong:0 .75rem 2.25rem rgb(0 0 0 / .16);
---vibeui-navbar-023-accent:#d3f43a;
---vibeui-navbar-023-on-accent:#111111;
+--vibeui-navbar-023-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-navbar-023-on-accent:oklch(from var(--vibeui-navbar-023-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-navbar-023-inset:1.25rem;
 --vibeui-navbar-023-display:"Inter Tight","Inter",ui-sans-serif,system-ui,sans-serif;
 --vibeui-navbar-023-font:"Inter",ui-sans-serif,system-ui,sans-serif;

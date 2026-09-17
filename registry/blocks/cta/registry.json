@@ -2460,7 +2460,7 @@
       "name": "cta-016",
       "type": "registry:block",
       "title": "Плашка «вино недели» с бликом",
-      "description": "Узкая винная плашка между секциями: капитель «Вино недели» и фото слева, название и описание по центру, цена серифом и ссылка справа. По полосе раз в семь секунд проходит блик.",
+      "description": "Узкая акцентная плашка между секциями: капитель «Вино недели» и фото слева, название и описание по центру, цена серифом и ссылка справа. По полосе раз в семь секунд проходит блик.",
       "categories": [
         "cta"
       ],
@@ -2473,7 +2473,7 @@
           "target": "@components/vibeui/cta-016.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. <aside> с полосой: grid, от 52rem (container query) три колонки auto/1fr/auto. Блик — ::after с градиентом, skewX(-20deg) и @keyframes по left за 7s (60 % времени стоит за краем). Фото — маленький квадрат 3.5rem с тенью. Цвета плашки — акцент и on-accent, фон секции — фон страницы. Палитра --vibeui-cta-016-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, серверный компонент. <aside> с полосой: grid, от 52rem (container query) три колонки auto/1fr/auto. Блик — ::after с градиентом, skewX(-20deg) и @keyframes по left за 7s (60 % времени стоит за краем). Фото — маленький квадрат 3.5rem с тенью. Цвета плашки — акцент и on-accent, фон секции — фон страницы. Палитра --vibeui-cta-016-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -2503,7 +2503,7 @@
           "summary": "Самодостаточная плашка спецпредложения для ресторана, бара или магазина: одна строка между секциями с ценой и ссылкой. Всё содержимое пропсами.",
           "preserve": [
             "одну строку между секциями вместо целого блока — предложение, а не секция",
-            "блик, проходящий по винной полосе раз в несколько секунд",
+            "блик, проходящий по акцентной полосе раз в несколько секунд",
             "цену серифом и кнопку контрастного цвета справа"
           ],
           "adapt": [
@@ -2565,13 +2565,13 @@
         "i18n": {
           "en": {
             "title": "“Wine of the week” band with a shine",
-            "description": "A narrow wine-red band between sections: a small-caps “Wine of the week” and a photo on the left, name and description in the centre, a serif price and a link on the right. A shine sweeps the band every seven seconds.",
-            "docs": "One file, zero dependencies, a server component. An <aside> with a band: grid, from 52rem (container query) three columns auto/1fr/auto. The shine is an ::after with a gradient, skewX(-20deg) and a @keyframes on left over 7s (parked beyond the edge 60 % of the time). The photo is a small 3.5rem square with a shadow. Band colours are accent and on-accent, the section background is the page background. Palette --vibeui-cta-016-* with light-dark: ivory on dark wood, a dark wine accent with a glow (the -glow variable) and its lighter -accent-ink tint for text on dark; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "description": "A narrow accent band between sections: a small-caps “Wine of the week” and a photo on the left, name and description in the centre, a serif price and a link on the right. A shine sweeps the band every seven seconds.",
+            "docs": "One file, zero dependencies, a server component. An <aside> with a band: grid, from 52rem (container query) three columns auto/1fr/auto. The shine is an ::after with a gradient, skewX(-20deg) and a @keyframes on left over 7s (parked beyond the edge 60 % of the time). The photo is a small 3.5rem square with a shadow. Band colours are accent and on-accent, the section background is the page background. Palette --vibeui-cta-016-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained special-offer band for a restaurant, bar or shop: one line between sections with a price and a link. All content via props.",
               "preserve": [
                 "one line between sections instead of a whole block — an offer, not a section",
-                "the shine sweeping the wine-red band every few seconds",
+                "the shine sweeping the accent band every few seconds",
                 "the serif price and the contrasting button on the right"
               ],
               "adapt": [
@@ -2649,7 +2649,7 @@
           "target": "@components/vibeui/cta-017.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради таймера и формы. Время берётся только на клиенте (useEffect + setInterval раз в секунду), на сервере таймер отдаётся нулями с aria-hidden — нет hydration mismatch. Каждая цифра — span с key=значение в плашке с perspective:600px: смена значения перемонтирует span с @keyframes rotateX(-80deg)→0, линия посередине — ::after. Halo — ::before обёртки wrap с inset:-.5rem, conic-gradient(from var(--a)) и blur(28px), угол — @property <angle>, 14 с; пятна — ::before/::after карточки с blur и @keyframes drift. Форма: <input type=email name=email required>, кнопка submit; action пустой — submit перехватывается, показывается done. От 60rem (container query) две колонки 1.1fr/1fr. Палитра --vibeui-cta-017-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, «use client» ради таймера и формы. Время берётся только на клиенте (useEffect + setInterval раз в секунду), на сервере таймер отдаётся нулями с aria-hidden — нет hydration mismatch. Каждая цифра — span с key=значение в плашке с perspective:600px: смена значения перемонтирует span с @keyframes rotateX(-80deg)→0, линия посередине — ::after. Halo — ::before обёртки wrap с inset:-.5rem, conic-gradient(from var(--a)) и blur(28px), угол — @property <angle>, 14 с; пятна — ::before/::after карточки с blur и @keyframes drift. Форма: <input type=email name=email required>, кнопка submit; action пустой — submit перехватывается, показывается done. От 60rem (container query) две колонки 1.1fr/1fr. Палитра --vibeui-cta-017-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -2738,7 +2738,7 @@
           "en": {
             "title": "Final call with flip clock and glow",
             "description": "The course's final call: a dark card in a coloured halo — a conic glow behind the card and two drifting spots inside, a countdown as a flip clock (days, hours, minutes, seconds flip on the X axis), a “seats left” tag, a form with email and a button. With action it POSTs, without it shows “your seat is reserved”.",
-            "docs": "One file, zero dependencies, “use client” for the timer and the form. Time is read only on the client (useEffect + setInterval every second); on the server the timer renders zeros with aria-hidden — no hydration mismatch. Each figure is a span keyed by value inside a tile with perspective:600px: a change remounts it with @keyframes rotateX(-80deg)→0, the middle line is an ::after. The halo is the wrap's ::before with inset:-.5rem, conic-gradient(from var(--a)) and blur(28px), the angle an @property <angle> over 14 s; the spots are the card's ::before/::after with blur and a drift @keyframes. The form: <input type=email name=email required>, a submit button; with an empty action submit is intercepted and done is shown. From 60rem (container query) two columns 1.1fr/1fr. Palette --vibeui-cta-017-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "docs": "One file, zero dependencies, “use client” for the timer and the form. Time is read only on the client (useEffect + setInterval every second); on the server the timer renders zeros with aria-hidden — no hydration mismatch. Each figure is a span keyed by value inside a tile with perspective:600px: a change remounts it with @keyframes rotateX(-80deg)→0, the middle line is an ::after. The halo is the wrap's ::before with inset:-.5rem, conic-gradient(from var(--a)) and blur(28px), the angle an @property <angle> over 14 s; the spots are the card's ::before/::after with blur and a drift @keyframes. The form: <input type=email name=email required>, a submit button; with an empty action submit is intercepted and done is shown. From 60rem (container query) two columns 1.1fr/1fr. Palette --vibeui-cta-017-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained final call for a course, webinar or launch: a countdown to a date, seats and an email form. The start date comes in as an ISO prop.",
               "preserve": [
@@ -2813,7 +2813,7 @@
           "target": "@components/vibeui/cta-018.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради видимости. Корень — position:fixed внизу с safe-area, pointer-events:none; плашка — pointer-events:auto, translateY(100 %)→0 за .55 с при data-show. showAfter — селектор порога: IntersectionObserver ставит passed, когда элемент выше вьюпорта; hideNear — селекторы блоков, при пересечении которых (rootMargin -20 % снизу) кнопка прячется; hideAtBottom прячет у низа страницы. Без showAfter кнопка видна сразу. placement=static кладёт кнопку в поток (для превью и документации). Подпись показывается от 40rem (container query). Скрытая плашка — aria-hidden и tabIndex=-1 у ссылки. Палитра --vibeui-cta-018-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, «use client» ради видимости. Корень — position:fixed внизу с safe-area, pointer-events:none; плашка — pointer-events:auto, translateY(100 %)→0 за .55 с при data-show. showAfter — селектор порога: IntersectionObserver ставит passed, когда элемент выше вьюпорта; hideNear — селекторы блоков, при пересечении которых (rootMargin -20 % снизу) кнопка прячется; hideAtBottom прячет у низа страницы. Без showAfter кнопка видна сразу. placement=static кладёт кнопку в поток (для превью и документации). Подпись показывается от 40rem (container query). Скрытая плашка — aria-hidden и tabIndex=-1 у ссылки. Палитра --vibeui-cta-018-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "tags": [
           "course",
@@ -2902,7 +2902,7 @@
           "en": {
             "title": "Floating enroll button with a price",
             "description": "A floating enroll button: pinned to the bottom of the screen, it slides up once the first screen has scrolled out of view and hides while pricing or the final call are on screen — so the button isn't duplicated next to prices. A caption with a green dot on the left, the price in a pill on the right.",
-            "docs": "One file, zero dependencies, “use client” for visibility. The root is position:fixed at the bottom with safe-area, pointer-events:none; the bar is pointer-events:auto, translateY(100 %)→0 over .55 s on data-show. showAfter is the threshold selector: an IntersectionObserver sets passed once the element is above the viewport; hideNear lists selectors whose intersection (rootMargin -20 % at the bottom) hides the button; hideAtBottom hides it near the page bottom. Without showAfter the button is visible at once. placement=static puts the button in the flow (for previews and docs). The caption shows from 40rem (container query). A hidden bar is aria-hidden with tabIndex=-1 on the link. Palette --vibeui-cta-018-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "docs": "One file, zero dependencies, “use client” for visibility. The root is position:fixed at the bottom with safe-area, pointer-events:none; the bar is pointer-events:auto, translateY(100 %)→0 over .55 s on data-show. showAfter is the threshold selector: an IntersectionObserver sets passed once the element is above the viewport; hideNear lists selectors whose intersection (rootMargin -20 % at the bottom) hides the button; hideAtBottom hides it near the page bottom. Without showAfter the button is visible at once. placement=static puts the button in the flow (for previews and docs). The caption shows from 40rem (container query). A hidden bar is aria-hidden with tabIndex=-1 on the link. Palette --vibeui-cta-018-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained floating button for a course, webinar or single-goal product landing: appears after the first screen, hides near pricing and the footer, the price in a pill.",
               "preserve": [
@@ -2963,7 +2963,7 @@
       "name": "cta-019",
       "type": "registry:block",
       "title": "Фото-баннер с двумя капсулами действий",
-      "description": "Баннер-призыв: фото на всю ширину со скруглением, матовая плашка с датами в левом верхнем углу, справа снизу две капсулы — стеклянная вторичная «Программа» и лаймовая главная «Купить билет →». Фото медленно плывёт, капсулы приподнимаются по наведению.",
+      "description": "Баннер-призыв: фото на всю ширину со скруглением, матовая плашка с датами в левом верхнем углу, справа снизу две капсулы — стеклянная вторичная «Программа» и акцентная главная «Купить билет →». Фото медленно плывёт, капсулы приподнимаются по наведению.",
       "categories": [
         "cta"
       ],
@@ -2976,7 +2976,7 @@
           "target": "@components/vibeui/cta-019.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. Баннер — flex-колонка min-height 18rem (14rem от 60rem) с isolation:isolate; фото position:absolute z-index:-1 с @keyframes drift 24 с (scale и сдвиг), затемнение градиентом через ::before. Плашка и вторичная капсула — backdrop-filter blur, главная — акцент с on-accent. Необязательный title крупно слева внизу с text-shadow. Палитра --vibeui-cta-019-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Баннер — flex-колонка min-height 18rem (14rem от 60rem) с isolation:isolate; фото position:absolute z-index:-1 с @keyframes drift 24 с (scale и сдвиг), затемнение градиентом через ::before. Плашка и вторичная капсула — backdrop-filter blur, главная — акцент с on-accent. Необязательный title крупно слева внизу с text-shadow. Палитра --vibeui-cta-019-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3061,8 +3061,8 @@
         "i18n": {
           "en": {
             "title": "Photo banner with two action pills",
-            "description": "A call-to-action banner: a full-width rounded photo, a frosted label with dates top left, two pills bottom right — a glass secondary “Programme” and a lime primary “Buy a ticket →”. The photo drifts slowly, pills lift on hover.",
-            "docs": "One file, zero dependencies, a server component. The banner is a flex column with min-height 18rem (14rem from 60rem) and isolation:isolate; the photo is position:absolute z-index:-1 with a 24 s drift @keyframes (scale and shift), darkened by a ::before gradient. The label and secondary pill use backdrop-filter blur, the primary is the accent with on-accent. An optional title large bottom left with a text-shadow. Palette --vibeui-cta-019-* with light-dark: a white background, black text, a lime accent #d3f43a; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "description": "A call-to-action banner: a full-width rounded photo, a frosted label with dates top left, two pills bottom right — a glass secondary “Programme” and an accent primary “Buy a ticket →”. The photo drifts slowly, pills lift on hover.",
+            "docs": "One file, zero dependencies, a server component. The banner is a flex column with min-height 18rem (14rem from 60rem) and isolation:isolate; the photo is position:absolute z-index:-1 with a 24 s drift @keyframes (scale and shift), darkened by a ::before gradient. The label and secondary pill use backdrop-filter blur, the primary is the accent with on-accent. An optional title large bottom left with a text-shadow. Palette --vibeui-cta-019-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained call-to-action banner for a festival, media or product: a full-width photo, a frosted label and two pills. All content via props.",
               "preserve": [
@@ -3273,7 +3273,7 @@
       "name": "cta-021",
       "type": "registry:block",
       "title": "Подарки: вклад в путешествие с печатью",
-      "description": "Подарки без неловкости: слева «лучший подарок — вы» и честный абзац про медовый месяц, справа стеклянная карточка вклада в путешествие с реквизитами в пунктирной рамке и кнопкой «скопировать», на углу — восковая печать с монограммой, которая прижимается при копировании. За карточкой мягкое терракотовое свечение.",
+      "description": "Подарки без неловкости: слева «лучший подарок — вы» и честный абзац про медовый месяц, справа стеклянная карточка вклада в путешествие с реквизитами в пунктирной рамке и кнопкой «скопировать», на углу — восковая печать с монограммой, которая прижимается при копировании. За карточкой мягкое акцентное свечение.",
       "categories": [
         "cta"
       ],
@@ -3286,7 +3286,7 @@
           "target": "@components/vibeui/cta-021.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 1.8 с состояния «скопировано» с зелёной сменой кнопки и иконки). Карточка — полупрозрачный крем с backdrop-filter, светлой верхней кромкой и тенью, реквизиты serif'ом в блоке с dashed-рамкой, печать absolute на верхнем правом углу radial-gradient с монограммой, transform scale(.92) по data-copied; свечение — ::before секции radial-gradient акцента. От 56rem две колонки 1fr/1fr по центру. Палитра --vibeui-cta-021-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b для «скопировано»; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 1.8 с состояния «скопировано» с зелёной сменой кнопки и иконки). Карточка — полупрозрачный крем с backdrop-filter, светлой верхней кромкой и тенью, реквизиты serif'ом в блоке с dashed-рамкой, печать absolute на верхнем правом углу radial-gradient с монограммой, transform scale(.92) по data-copied; свечение — ::before секции radial-gradient акцента. От 56rem две колонки 1fr/1fr по центру. Палитра --vibeui-cta-021-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3318,7 +3318,7 @@
           "preserve": [
             "стеклянную карточку вклада с реквизитами в пунктирной рамке и печатью на углу",
             "кнопку «скопировать», зеленеющую на 1.8 с с галочкой",
-            "мягкое терракотовое свечение за карточкой"
+            "мягкое акцентное свечение за карточкой"
           ],
           "adapt": [
             "eyebrow, title, lede, fundTitle, fundText",
@@ -3372,14 +3372,14 @@
         "i18n": {
           "en": {
             "title": "Gifts: a honeymoon fund with a seal",
-            "description": "Gifts without awkwardness: on the left “the best gift is you” and an honest paragraph about the honeymoon, on the right a glass travel-fund card with the details in a dashed frame and a “copy” button, a wax seal with the monogram on the corner that presses down when copying. A soft terracotta glow behind the card.",
-            "docs": "One file, zero dependencies, “use client” for copying (navigator.clipboard, a 1.8 s “copied” state with the button and icon turning green). The card is translucent cream with backdrop-filter, a light top edge and a shadow, the details in serif inside a dashed-border box, the seal absolute on the top-right corner as a radial-gradient with the monogram, transform scale(.92) on data-copied; the glow is the section's ::before accent radial-gradient. From 56rem two centred 1fr/1fr columns. Palette --vibeui-cta-021-*: cream #f6f1e8 / plum #2b1a24 via light-dark(), terracotta #b8552f accent, plum #4a1f36 for headings, sage #8a9a7b for “copied”; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "description": "Gifts without awkwardness: on the left “the best gift is you” and an honest paragraph about the honeymoon, on the right a glass travel-fund card with the details in a dashed frame and a “copy” button, a wax seal with the monogram on the corner that presses down when copying. A soft accent glow behind the card.",
+            "docs": "One file, zero dependencies, “use client” for copying (navigator.clipboard, a 1.8 s “copied” state with the button and icon turning green). The card is translucent cream with backdrop-filter, a light top edge and a shadow, the details in serif inside a dashed-border box, the seal absolute on the top-right corner as a radial-gradient with the monogram, transform scale(.92) on data-copied; the glow is the section's ::before accent radial-gradient. From 56rem two centred 1fr/1fr columns. Palette --vibeui-cta-021-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained gifts block for a wedding site: a honeymoon fund with one-click copying of the details, a glass card and a wax seal. Copy and details via props.",
               "preserve": [
                 "the glass fund card with the details in a dashed frame and the seal on the corner",
                 "the “copy” button turning green for 1.8 s with a tick",
-                "the soft terracotta glow behind the card"
+                "the soft accent glow behind the card"
               ],
               "adapt": [
                 "eyebrow, title, lede, fundTitle, fundText",
@@ -3446,7 +3446,7 @@
           "target": "@components/vibeui/cta-022.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 2.2 с состояния «скопировано» и штамп по data-copied). Билет — песочная карточка с морской полосой слева ::before и перфорацией ::after между кодами и телом; коды крупным Oswald с самолётиком; реквизиты в dashed-рамке; штамп «PAID» — рамка с keyframes уменьшения и mix-blend-mode:multiply. Свечение — ::before секции. От 56rem две колонки по центру. Палитра --vibeui-cta-022-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 2.2 с состояния «скопировано» и штамп по data-copied). Билет — карточка с морской полосой слева ::before и перфорацией ::after между кодами и телом; коды крупным Oswald с самолётиком; реквизиты в dashed-рамке; штамп «PAID» — рамка с keyframes уменьшения и mix-blend-mode:multiply. Свечение — ::before секции. От 56rem две колонки по центру. Палитра --vibeui-cta-022-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3533,7 +3533,7 @@
           "en": {
             "title": "Gifts: a “next flight” ticket with a stamp",
             "description": "Gifts for a destination wedding: on the left “the best gift — you in Cuba” and a rum joke, on the right a “HAV → ???” ticket card with the details and a “copy” button — a click prints a “PAID” stamp. A sun glow behind the card.",
-            "docs": "One file, zero dependencies, “use client” for copying (navigator.clipboard, a 2.2 s “copied” state and the stamp on data-copied). The ticket is a sand card with a sea stripe ::before on the left and a ::after perforation between codes and body; codes in big Oswald with a plane; details in a dashed frame; the “PAID” stamp is a frame with a shrinking keyframe and mix-blend-mode:multiply. The glow is the section's ::before. From 56rem two centred columns. Palette --vibeui-cta-022-*: paper #fffaf0 and sand #f3e9d2 / deep navy #14202a via light-dark(), ink #123a4b, coral #ff6b57 accent, sea #2aa7a0, sun #f2c14e; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "One file, zero dependencies, “use client” for copying (navigator.clipboard, a 2.2 s “copied” state and the stamp on data-copied). The ticket is a card with a sea stripe ::before on the left and a ::after perforation between codes and body; codes in big Oswald with a plane; details in a dashed frame; the “PAID” stamp is a frame with a shrinking keyframe and mix-blend-mode:multiply. The glow is the section's ::before. From 56rem two centred columns. Palette --vibeui-cta-022-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained gifts block for a destination wedding: a “next flight” ticket card with copyable details and a “PAID” stamp, a rum joke. Copy and details via props.",
               "preserve": [
@@ -3607,7 +3607,7 @@
           "target": "@components/vibeui/cta-023.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 2.4 с состояния и штамп по data-copied). Камин — карточка: [data-part=mantel] полка с толстой нижней кромкой, реквизиты в dashed-рамке лайнинг-цифрами, кнопка со свечением; [data-part=fire] — тёмный портал с кирпичной кладкой repeating-linear-gradient, поленья из двух градиентов, четыре язычка на keyframes разной длительности, тёплое пятно ::after усиливается при копировании. Штамп — рукописный, keyframes уменьшения. От 56rem две колонки. Палитра --vibeui-cta-023-*: синяя ночь #0b1220 и индиго #131c2e / слоновая кость #f2eee6 через light-dark(), серебро #9fb0c8, свеча #f2b64f, огонь #ff9a3c; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 2.4 с состояния и штамп по data-copied). Камин — карточка: [data-part=mantel] полка с толстой нижней кромкой, реквизиты в dashed-рамке лайнинг-цифрами, кнопка со свечением; [data-part=fire] — тёмный портал с кирпичной кладкой repeating-linear-gradient, поленья из двух градиентов, четыре язычка на keyframes разной длительности, тёплое пятно ::after усиливается при копировании. Штамп — рукописный, keyframes уменьшения. От 56rem две колонки. Палитра --vibeui-cta-023-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "tags": [
           "wedding",
@@ -3693,7 +3693,7 @@
           "en": {
             "title": "“For the fireplace” gifts: a hearth card with a live fire",
             "description": "Winter-wedding gifts: on the left “the best gift — you by the fire” and a handwritten flowers joke, on the right a hearth card — a mantel with the details and a “copy” button, below it a brick portal with a live fire of four flames. A click makes the fire flare and prints a handwritten “Thank you!” stamp on the card.",
-            "docs": "One file, zero dependencies, “use client” for copying (navigator.clipboard, a 2.4 s state and the stamp on data-copied). The hearth is a card: a [data-part=mantel] shelf with a thick bottom edge, details in a dashed frame with lining numerals, a glowing button; [data-part=fire] is a dark portal with a repeating-linear-gradient brick pattern, logs from two gradients, four flames on keyframes of different durations, a warm ::after pool that intensifies on copy. The stamp is handwritten with a shrinking keyframe. Two columns from 56rem. Palette --vibeui-cta-023-*: night blue #0b1220 and indigo #131c2e / ivory #f2eee6 via light-dark(), silver #9fb0c8, candle #f2b64f, fire #ff9a3c; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "One file, zero dependencies, “use client” for copying (navigator.clipboard, a 2.4 s state and the stamp on data-copied). The hearth is a card: a [data-part=mantel] shelf with a thick bottom edge, details in a dashed frame with lining numerals, a glowing button; [data-part=fire] is a dark portal with a repeating-linear-gradient brick pattern, logs from two gradients, four flames on keyframes of different durations, a warm ::after pool that intensifies on copy. The stamp is handwritten with a shrinking keyframe. Two columns from 56rem. Palette --vibeui-cta-023-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained winter-wedding gifts block: a hearth card with a live fire, details on the mantel, copying prints a “Thank you!” stamp. Copy and details via props.",
               "preserve": [

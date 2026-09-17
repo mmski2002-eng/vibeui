@@ -26,6 +26,7 @@ export type Map008Props = {
   theme?: "auto" | "light" | "dark"
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -39,12 +40,12 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;
 
 const STYLES = `
 :where([data-vibeui-block="map-008"]){
---vibeui-map-008-bg:light-dark(#f3e9d2,#1c2a34);
---vibeui-map-008-paper:light-dark(#fffaf0,#14202a);
---vibeui-map-008-fg:light-dark(#123a4b,#eef4f2);
---vibeui-map-008-muted:light-dark(#5b6f78,#9fb2b8);
---vibeui-map-008-line:light-dark(#e3d7bf,#2c3f4a);
---vibeui-map-008-accent:#ff6b57;
+--vibeui-map-008-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-map-008-paper:light-dark(#fffaf0,#1a1a1a);
+--vibeui-map-008-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-map-008-muted:light-dark(#5b6f78,#a3a3a3);
+--vibeui-map-008-line:light-dark(#e3d7bf,#2e2e2e);
+--vibeui-map-008-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-map-008-sea:#2aa7a0;
 --vibeui-map-008-sun:#f2c14e;
 --vibeui-map-008-display:"Oswald","Arial Narrow",Impact,sans-serif;
@@ -110,12 +111,14 @@ export function Map008({
   theme = "auto",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
 }: Map008Props) {
   const palette = {
     ...(accent ? { "--vibeui-map-008-accent": accent } : null),
+    ...(ink ? { "--vibeui-map-008-fg": ink } : null),
     ...(background ? { "--vibeui-map-008-bg": background } : null),
     ...style,
   } as CSSProperties

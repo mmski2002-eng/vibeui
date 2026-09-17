@@ -17,6 +17,7 @@ export type Faq021Props = {
   askHref?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -30,12 +31,12 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;
 
 const STYLES = `
 :where([data-vibeui-block="faq-021"]){
---vibeui-faq-021-bg:light-dark(#fffaf0,#14202a);
---vibeui-faq-021-sand:light-dark(#f3e9d2,#1c2a34);
---vibeui-faq-021-fg:light-dark(#123a4b,#eef4f2);
---vibeui-faq-021-muted:light-dark(#5b6f78,#9fb2b8);
---vibeui-faq-021-line:light-dark(#e3d7bf,#2c3f4a);
---vibeui-faq-021-accent:#ff6b57;
+--vibeui-faq-021-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-faq-021-sand:light-dark(#f4f4f4,#242424);
+--vibeui-faq-021-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-faq-021-muted:light-dark(#5b6f78,#a3a3a3);
+--vibeui-faq-021-line:light-dark(#e3d7bf,#2e2e2e);
+--vibeui-faq-021-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-faq-021-sea:#2aa7a0;
 --vibeui-faq-021-sun:#f2c14e;
 --vibeui-faq-021-display:"Oswald","Arial Narrow",Impact,sans-serif;
@@ -99,6 +100,7 @@ export function Faq021({
   askHref = "#travel",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -106,6 +108,7 @@ export function Faq021({
   const group = useId()
   const palette = {
     ...(accent ? { "--vibeui-faq-021-accent": accent } : null),
+    ...(ink ? { "--vibeui-faq-021-fg": ink } : null),
     ...(background ? { "--vibeui-faq-021-bg": background } : null),
     ...style,
   } as CSSProperties

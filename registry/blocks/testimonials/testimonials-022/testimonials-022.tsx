@@ -20,6 +20,7 @@ export type Testimonials022Props = {
   action?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -34,15 +35,15 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,
 
 const STYLES = `
 :where([data-vibeui-block="testimonials-022"]){
---vibeui-testimonials-022-bg:light-dark(#e9e3d8,#0b1220);
---vibeui-testimonials-022-glass:light-dark(#d6dde6,#1c2740);
---vibeui-testimonials-022-card:light-dark(#ffffff,#131c2e);
---vibeui-testimonials-022-fg:light-dark(#1c2740,#f2eee6);
---vibeui-testimonials-022-muted:light-dark(#5b6880,#9fb0c8);
---vibeui-testimonials-022-line:light-dark(rgb(28 39 64 / .16),rgb(159 176 200 / .24));
---vibeui-testimonials-022-accent:#f2b64f;
+--vibeui-testimonials-022-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-testimonials-022-glass:light-dark(#d6dde6,var(--vibeui-testimonials-022-fg));
+--vibeui-testimonials-022-card:light-dark(#ffffff,#242424);
+--vibeui-testimonials-022-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-testimonials-022-muted:light-dark(#6b6b6b,#a3a3a3);
+--vibeui-testimonials-022-line:light-dark(color-mix(in oklab,var(--vibeui-testimonials-022-fg) 16%,transparent),color-mix(in oklab,var(--vibeui-testimonials-022-fg) 24%,transparent));
+--vibeui-testimonials-022-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-testimonials-022-silver:#9fb0c8;
---vibeui-testimonials-022-on-accent:#0b1220;
+--vibeui-testimonials-022-on-accent:oklch(from var(--vibeui-testimonials-022-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-testimonials-022-display:"Cormorant Garamond",Georgia,serif;
 --vibeui-testimonials-022-script:"Marck Script","Segoe Script",cursive;
 --vibeui-testimonials-022-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
@@ -108,6 +109,7 @@ export function Testimonials022({
   action,
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -117,6 +119,7 @@ export function Testimonials022({
   const [text, setText] = useState("")
   const palette = {
     ...(accent ? { "--vibeui-testimonials-022-accent": accent } : null),
+    ...(ink ? { "--vibeui-testimonials-022-fg": ink } : null),
     ...(background ? { "--vibeui-testimonials-022-bg": background } : null),
     ...style,
   } as CSSProperties

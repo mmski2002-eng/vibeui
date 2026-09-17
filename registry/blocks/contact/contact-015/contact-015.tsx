@@ -21,6 +21,7 @@ export type Contact015Props = {
   /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -34,13 +35,13 @@ const FONTS =
 
 const STYLES = `
 :where([data-vibeui-block="contact-015"]){
---vibeui-contact-015-bg:light-dark(#f3ede3,#14211b);
---vibeui-contact-015-fg:light-dark(#173b2e,#eef0ea);
---vibeui-contact-015-muted:light-dark(color-mix(in oklab,#173b2e 62%,#f3ede3),color-mix(in oklab,#eef0ea 62%,#14211b));
---vibeui-contact-015-card:light-dark(#fffdf9,#1b2c24);
---vibeui-contact-015-line:light-dark(color-mix(in oklab,#173b2e 16%,#f3ede3),color-mix(in oklab,#eef0ea 16%,#14211b));
---vibeui-contact-015-accent:#b8925a;
---vibeui-contact-015-on-accent:#14211b;
+--vibeui-contact-015-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-contact-015-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-contact-015-muted:color-mix(in oklab,var(--vibeui-contact-015-fg) 62%,var(--vibeui-contact-015-bg));
+--vibeui-contact-015-card:light-dark(#fffdf9,#242424);
+--vibeui-contact-015-line:color-mix(in oklab,var(--vibeui-contact-015-fg) 16%,var(--vibeui-contact-015-bg));
+--vibeui-contact-015-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-contact-015-on-accent:oklch(from var(--vibeui-contact-015-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-contact-015-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
 --vibeui-contact-015-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -57,7 +58,7 @@ container-type:inline-size;
 [data-vibeui-block="contact-015"] [data-part="promises"]{margin:1.5rem 0 0;padding:0;list-style:none;display:grid;gap:.6rem}
 [data-vibeui-block="contact-015"] [data-part="promises"] li{display:flex;gap:.7rem;align-items:flex-start}
 [data-vibeui-block="contact-015"] [data-part="promises"] li::before{content:"";flex:none;width:.5rem;height:.5rem;margin-top:.5rem;border-radius:50%;background:var(--vibeui-contact-015-accent)}
-[data-vibeui-block="contact-015"] [data-part="picture"]{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:1rem;margin-top:1.75rem;background:light-dark(#e7dfd2,#243830)}
+[data-vibeui-block="contact-015"] [data-part="picture"]{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:1rem;margin-top:1.75rem;background:light-dark(#e7dfd2,#2a2a2a)}
 [data-vibeui-block="contact-015"] [data-part="intro"]{display:flex;flex-direction:column}
 [data-vibeui-block="contact-015"] [data-part="form"]{display:grid;gap:1rem;align-content:start;padding:1.5rem;border-radius:1rem;background:var(--vibeui-contact-015-card);border:1px solid var(--vibeui-contact-015-line)}
 [data-vibeui-block="contact-015"] [data-part="field"]{display:grid;gap:.35rem}
@@ -99,6 +100,7 @@ export function Contact015({
   action = "",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -107,6 +109,7 @@ export function Contact015({
   const [done, setDone] = useState(false)
   const palette = {
     ...(accent ? { "--vibeui-contact-015-accent": accent } : null),
+    ...(ink ? { "--vibeui-contact-015-fg": ink } : null),
     ...(background ? { "--vibeui-contact-015-bg": background } : null),
     ...style,
   } as CSSProperties

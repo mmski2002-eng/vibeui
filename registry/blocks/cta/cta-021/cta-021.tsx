@@ -18,6 +18,7 @@ export type Cta021Props = {
   seal?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -31,15 +32,15 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,
 
 const STYLES = `
 :where([data-vibeui-block="cta-021"]){
---vibeui-cta-021-bg:light-dark(#f6f1e8,#17131a);
---vibeui-cta-021-fg:light-dark(#2b1a24,#f3ebe4);
---vibeui-cta-021-muted:light-dark(#7a6a70,#b3a5aa);
---vibeui-cta-021-line:light-dark(#e2d8ca,#372b31);
---vibeui-cta-021-card:light-dark(#fffaf3,#211a25);
---vibeui-cta-021-accent:#b8552f;
---vibeui-cta-021-plum:light-dark(#4a1f36,#e9c7d6);
+--vibeui-cta-021-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-cta-021-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-cta-021-muted:light-dark(#7a6a70,#a3a3a3);
+--vibeui-cta-021-line:light-dark(#e2d8ca,#2e2e2e);
+--vibeui-cta-021-card:light-dark(#fffaf3,#242424);
+--vibeui-cta-021-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-cta-021-plum:var(--vibeui-cta-021-fg);
 --vibeui-cta-021-sage:#8a9a7b;
---vibeui-cta-021-on-accent:#fff7ef;
+--vibeui-cta-021-on-accent:oklch(from var(--vibeui-cta-021-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-cta-021-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
 --vibeui-cta-021-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -91,6 +92,7 @@ export function Cta021({
   seal = "В&А",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -98,6 +100,7 @@ export function Cta021({
   const [copied, setCopied] = useState(false)
   const palette = {
     ...(accent ? { "--vibeui-cta-021-accent": accent } : null),
+    ...(ink ? { "--vibeui-cta-021-fg": ink } : null),
     ...(background ? { "--vibeui-cta-021-bg": background } : null),
     ...style,
   } as CSSProperties

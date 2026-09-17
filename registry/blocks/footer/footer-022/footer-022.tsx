@@ -45,7 +45,8 @@ const STYLES = `
 --vibeui-footer-022-muted:light-dark(#6b6b70,#a1a1aa);
 --vibeui-footer-022-line:light-dark(#e8e8ea,#26272d);
 --vibeui-footer-022-chip:light-dark(#f1f1f3,#1f2026);
---vibeui-footer-022-accent:#d3f43a;
+--vibeui-footer-022-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-footer-022-on-accent:oklch(from var(--vibeui-footer-022-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-footer-022-display:"Inter Tight","Inter",ui-sans-serif,system-ui,sans-serif;
 --vibeui-footer-022-font:"Inter",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;

@@ -25,6 +25,7 @@ export type Contact019Props = {
   action?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -54,16 +55,16 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;
 
 const STYLES = `
 :where([data-vibeui-block="contact-019"]){
---vibeui-contact-019-bg:light-dark(#f3e9d2,#1c2a34);
---vibeui-contact-019-paper:light-dark(#fffaf0,#14202a);
---vibeui-contact-019-field:light-dark(#ffffff,#0f1a22);
---vibeui-contact-019-fg:light-dark(#123a4b,#eef4f2);
---vibeui-contact-019-muted:light-dark(#5b6f78,#9fb2b8);
---vibeui-contact-019-line:light-dark(#e3d7bf,#2c3f4a);
---vibeui-contact-019-accent:#ff6b57;
+--vibeui-contact-019-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-contact-019-paper:light-dark(#fffaf0,#1a1a1a);
+--vibeui-contact-019-field:light-dark(#ffffff,#151515);
+--vibeui-contact-019-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-contact-019-muted:light-dark(#5b6f78,#a3a3a3);
+--vibeui-contact-019-line:light-dark(#e3d7bf,#2e2e2e);
+--vibeui-contact-019-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-contact-019-sea:#2aa7a0;
 --vibeui-contact-019-sun:#f2c14e;
---vibeui-contact-019-on-accent:#fffaf0;
+--vibeui-contact-019-on-accent:oklch(from var(--vibeui-contact-019-accent) clamp(0,(0.72 - l) * 100,1) 0 0);
 --vibeui-contact-019-display:"Oswald","Arial Narrow",Impact,sans-serif;
 --vibeui-contact-019-script:"Lobster","Brush Script MT",cursive;
 --vibeui-contact-019-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
@@ -170,6 +171,7 @@ export function Contact019({
   action,
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -181,6 +183,7 @@ export function Contact019({
   const [sent, setSent] = useState(false)
   const palette = {
     ...(accent ? { "--vibeui-contact-019-accent": accent } : null),
+    ...(ink ? { "--vibeui-contact-019-fg": ink } : null),
     ...(background ? { "--vibeui-contact-019-bg": background } : null),
     ...style,
   } as CSSProperties

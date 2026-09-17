@@ -31,7 +31,10 @@ const page: CSSProperties = {
   fontFamily: '"Manrope",ui-sans-serif,system-ui,sans-serif',
 }
 
-const realty = { tone: "light" } as const
+// Тема страницы: блоки каталога по умолчанию нейтральные, цвета задаёт сценарий.
+const realty = { tone: "light", background: "#f3ede3", ink: "#173b2e", accent: "#b8925a" } as const
+// Инверсные секции: чернильно-зелёная плита со светлым текстом.
+const realtyDark = { ...realty, background: "#173b2e", ink: "#eef0ea" } as const
 
 const PHOTOS = "/demo/realty"
 
@@ -143,7 +146,7 @@ export default function Page() {
       </div>
 
       <div id="process">
-        <Realty005 {...realty} />
+        <Realty005 {...realtyDark} />
       </div>
 
       <div id="mortgage">
@@ -198,7 +201,7 @@ export default function Page() {
 
       <div id="footer">
         <Footer019
-          {...realty}
+          {...realtyDark}
           brand="Дом на Неве"
           caption="Агентство недвижимости · Петербург"
           address="Санкт-Петербург, наб. реки Фонтанки, 24, первый этаж"

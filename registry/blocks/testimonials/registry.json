@@ -3021,7 +3021,7 @@
       "name": "testimonials-016",
       "type": "registry:block",
       "title": "Отзывы после сделки",
-      "description": "Отзывы клиентов агентства: серифные цитаты курсивом с большой латунной кавычкой, звёзды, кто и какую сделку провёл, источник отзыва плашкой. В шапке справа общая оценка крупно. Карточки появляются каскадом.",
+      "description": "Отзывы клиентов агентства: серифные цитаты курсивом с большой акцентной кавычкой, звёзды, кто и какую сделку провёл, источник отзыва плашкой. В шапке справа общая оценка крупно. Карточки появляются каскадом.",
       "categories": [
         "testimonials"
       ],
@@ -3034,7 +3034,7 @@
           "target": "@components/vibeui/testimonials-016.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. Шапка секции — flex с заголовком слева и общей оценкой справа. Карточки 1/2/3 колонки (container query 48rem и 64rem); появление @keyframes с задержкой --n×90ms. Кавычка — абсолютный серифный символ с opacity .35; звёзды — строка «★» по rating с aria-label; источник — пилюля справа в строке автора. Палитра --vibeui-testimonials-016-* с light-dark: песок/чернильно-зелёный, латунный акцент; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Шапка секции — flex с заголовком слева и общей оценкой справа. Карточки 1/2/3 колонки (container query 48rem и 64rem); появление @keyframes с задержкой --n×90ms. Кавычка — абсолютный серифный символ с opacity .35; звёзды — строка «★» по rating с aria-label; источник — пилюля справа в строке автора. Палитра --vibeui-testimonials-016-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3113,8 +3113,8 @@
         "i18n": {
           "en": {
             "title": "Post-deal reviews",
-            "description": "Agency client reviews: italic serif quotes with a large brass quotation mark, stars, who did which deal, the review source as a tag. A large overall score on the right of the head. Cards cascade in.",
-            "docs": "One file, zero dependencies, a server component. The section head is a flex row with the heading left and the overall score right. Cards in 1/2/3 columns (container queries 48rem and 64rem); appearance via @keyframes with a --n×90ms delay. The quotation mark is an absolutely positioned serif glyph at opacity .35; stars are a “★” string by rating with an aria-label; the source is a pill on the right of the author row. Palette --vibeui-testimonials-016-* with light-dark: sand / ink green, brass accent; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "description": "Agency client reviews: italic serif quotes with a large accent quotation mark, stars, who did which deal, the review source as a tag. A large overall score on the right of the head. Cards cascade in.",
+            "docs": "One file, zero dependencies, a server component. The section head is a flex row with the heading left and the overall score right. Cards in 1/2/3 columns (container queries 48rem and 64rem); appearance via @keyframes with a --n×90ms delay. The quotation mark is an absolutely positioned serif glyph at opacity .35; stars are a “★” string by rating with an aria-label; the source is a pill on the right of the author row. Palette --vibeui-testimonials-016-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained reviews section for an agency, developer or law firm: serif quotes, stars, the deal and the source, an overall score. Reviews come in as a prop array.",
               "preserve": [
@@ -3199,7 +3199,7 @@
       "name": "testimonials-017",
       "type": "registry:block",
       "title": "Отзывы поверх мутного фото",
-      "description": "Отзывы ресторана поверх размытого фото зала под тёплым затемнением: стеклянные карточки с курсивной серифной цитатой, звёзды винным свечением, имя, повод и источник. Слева общая оценка крупно.",
+      "description": "Отзывы ресторана поверх размытого фото зала под тёплым затемнением: стеклянные карточки с курсивной серифной цитатой, звёзды акцентным свечением, имя, повод и источник. Слева общая оценка крупно.",
       "categories": [
         "testimonials"
       ],
@@ -3212,7 +3212,7 @@
           "target": "@components/vibeui/testimonials-017.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. Фото — <img> absolute с blur(10px) и opacity .5, поверх градиентное затемнение. Сетка shell от 64rem (container query) 1fr/2.6fr, карточки в три колонки от 48rem с backdrop-filter и появлением @keyframes с задержкой --n×100ms. Звёзды — строка «★» по rating с aria-label. Секция всегда тёмная: цвета фиксированы под фото. Палитра --vibeui-testimonials-017-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Фото — <img> absolute с blur(10px) и opacity .5, поверх градиентное затемнение. Сетка shell от 64rem (container query) 1fr/2.6fr, карточки в три колонки от 48rem с backdrop-filter и появлением @keyframes с задержкой --n×100ms. Звёзды — строка «★» по rating с aria-label. Секция всегда тёмная: цвета фиксированы под фото. Палитра --vibeui-testimonials-017-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3288,8 +3288,8 @@
         "i18n": {
           "en": {
             "title": "Reviews over a blurred photo",
-            "description": "Restaurant reviews over a blurred photo of the hall under a warm shade: glass cards with an italic serif quote, wine-red stars, name, occasion and source. A large overall score on the left.",
-            "docs": "One file, zero dependencies, a server component. The photo is an absolute <img> with blur(10px) and opacity .5, a gradient shade on top. The shell grid from 64rem (container query) is 1fr/2.6fr, cards in three columns from 48rem with backdrop-filter and a @keyframes appearance with a --n×100ms delay. Stars are a “★” string by rating with an aria-label. The section is always dark: colours are fixed for the photo. Palette --vibeui-testimonials-017-* with light-dark: ivory on dark wood, a dark wine accent with a glow (the -glow variable) and its lighter -accent-ink tint for text on dark; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "description": "Restaurant reviews over a blurred photo of the hall under a warm shade: glass cards with an italic serif quote, accent stars, name, occasion and source. A large overall score on the left.",
+            "docs": "One file, zero dependencies, a server component. The photo is an absolute <img> with blur(10px) and opacity .5, a gradient shade on top. The shell grid from 64rem (container query) is 1fr/2.6fr, cards in three columns from 48rem with backdrop-filter and a @keyframes appearance with a --n×100ms delay. Stars are a “★” string by rating with an aria-label. The section is always dark: colours are fixed for the photo. Palette --vibeui-testimonials-017-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained reviews section for a restaurant, bar or hotel: glass cards over a blurred photo, stars, source and an overall score. Reviews come in as a prop array.",
               "preserve": [
@@ -3386,7 +3386,7 @@
           "target": "@components/vibeui/testimonials-018.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради лайтбокса. Ряды — items пополам (при ≤3 отзывах оба ряда из всех); каждый ряд — track с двумя копиями <ul> (вторая aria-hidden, ссылки tabIndex=-1), @keyframes translateX(-50 %) длительностью max(30 с, n×14 с), второй ряд animation-direction:reverse, пауза по :hover и :focus-within, края — mask-image. Лайтбокс — <dialog> с showModal(): ссылка на mp4/webm/mov → <video controls autoplay>, иначе <iframe allow=autoplay>; клик по фону и Escape закрывают, onClose сбрасывает состояние. reduced-motion: ряды становятся переносимой сеткой без копий. Палитра --vibeui-testimonials-018-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, «use client» ради лайтбокса. Ряды — items пополам (при ≤3 отзывах оба ряда из всех); каждый ряд — track с двумя копиями <ul> (вторая aria-hidden, ссылки tabIndex=-1), @keyframes translateX(-50 %) длительностью max(30 с, n×14 с), второй ряд animation-direction:reverse, пауза по :hover и :focus-within, края — mask-image. Лайтбокс — <dialog> с showModal(): ссылка на mp4/webm/mov → <video controls autoplay>, иначе <iframe allow=autoplay>; клик по фону и Escape закрывают, onClose сбрасывает состояние. reduced-motion: ряды становятся переносимой сеткой без копий. Палитра --vibeui-testimonials-018-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3502,7 +3502,7 @@
           "en": {
             "title": "Reviews as two opposing tickers with video",
             "description": "Reviews as an endless ticker: two rows of cards travel toward each other, paused on hover, edges dissolve. A card with a video review opens a lightbox with a player. A total score with stars top left. The name links to a profile, the cohort as a tag.",
-            "docs": "One file, zero dependencies, “use client” for the lightbox. Rows are items split in half (with ≤3 reviews both rows show all); each row is a track with two <ul> copies (the second aria-hidden, links tabIndex=-1), @keyframes translateX(-50 %) lasting max(30 s, n×14 s), the second row animation-direction:reverse, paused on :hover and :focus-within, edges via mask-image. The lightbox is a <dialog> with showModal(): a link to mp4/webm/mov → <video controls autoplay>, otherwise <iframe allow=autoplay>; a click on the backdrop and Escape close it, onClose resets state. reduced-motion: rows become a wrapping grid without copies. Palette --vibeui-testimonials-018-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "docs": "One file, zero dependencies, “use client” for the lightbox. Rows are items split in half (with ≤3 reviews both rows show all); each row is a track with two <ul> copies (the second aria-hidden, links tabIndex=-1), @keyframes translateX(-50 %) lasting max(30 s, n×14 s), the second row animation-direction:reverse, paused on :hover and :focus-within, edges via mask-image. The lightbox is a <dialog> with showModal(): a link to mp4/webm/mov → <video controls autoplay>, otherwise <iframe allow=autoplay>; a click on the backdrop and Escape close it, onClose resets state. reduced-motion: rows become a wrapping grid without copies. Palette --vibeui-testimonials-018-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "Self-contained reviews for a course, school or service: two opposing tickers paused on hover, video in a lightbox, a star score, profile links. Reviews come in as a prop array.",
               "preserve": [
@@ -3767,7 +3767,7 @@
       "name": "testimonials-020",
       "type": "registry:block",
       "title": "Стена пожеланий гостей на пробковой доске",
-      "description": "Стена пожеланий: кремовые записки на пробковой доске под разными углами, у каждой латунная кнопка сверху, текст рукописным serif'ом, подпись терракотой. Слева форма «оставить пожелание» — новая записка прикалывается первой с анимацией. Без бэкенда записка живёт до перезагрузки; с action — уходит POST'ом.",
+      "description": "Стена пожеланий: кремовые записки на пробковой доске под разными углами, у каждой акцентная кнопка сверху, текст рукописным serif'ом, подпись акцентом. Слева форма «оставить пожелание» — новая записка прикалывается первой с анимацией. Без бэкенда записка живёт до перезагрузки; с action — уходит POST'ом.",
       "categories": [
         "testimonials"
       ],
@@ -3780,7 +3780,7 @@
           "target": "@components/vibeui/testimonials-020.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради формы. Доска — <ul> auto-fill minmax(12rem,1fr) с inset-тенью и «рамкой» через box-shadow; записка — article с наклоном --vibeui-testimonials-020-tilt по nth-child(4n…), hover выпрямляет и увеличивает; кнопка — radial-gradient латуни. Новые записки — state-массив, добавляются в начало с data-fresh и keyframes «приколоть». Форма — name + textarea (required), onSubmit без action — preventDefault, с action — POST. От 56rem сетка .8fr/1.6fr, левая колонка sticky. Палитра --vibeui-testimonials-020-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Один файл, ноль зависимостей, «use client» ради формы. Доска — <ul> auto-fill minmax(12rem,1fr) с inset-тенью и «рамкой» через box-shadow; записка — article с наклоном --vibeui-testimonials-020-tilt по nth-child(4n…), hover выпрямляет и увеличивает; кнопка — radial-gradient латуни. Новые записки — state-массив, добавляются в начало с data-fresh и keyframes «приколоть». Форма — name + textarea (required), onSubmit без action — preventDefault, с action — POST. От 56rem сетка .8fr/1.6fr, левая колонка sticky. Палитра --vibeui-testimonials-020-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3808,9 +3808,9 @@
         "ai": {
           "export": "Testimonials020",
           "usage": "<Testimonials020\n  title=\"Доска у входа — уже здесь\"\n  wishes={[\n    { name: \"Ксения\", note: \"свидетельница\", text: \"Я знала это с первого кофе. Готовьте танцпол.\" },\n    { name: \"Бабушка Нина\", text: \"Артём, береги её. Василиса, корми его.\" },\n  ]}\n  submitLabel=\"Приколоть на доску\"\n  action=\"/api/wishes\"\n/>",
-          "summary": "Самодостаточная стена пожеланий для свадебного сайта: записки на пробковой доске под углом с латунными кнопками и форма, которая прикалывает новую записку первой. Пожелания — массив пропсом, отправка на action.",
+          "summary": "Самодостаточная стена пожеланий для свадебного сайта: записки на пробковой доске под углом с акцентными кнопками и форма, которая прикалывает новую записку первой. Пожелания — массив пропсом, отправка на action.",
           "preserve": [
-            "пробковую доску с записками под разными углами и латунными кнопками",
+            "пробковую доску с записками под разными углами и акцентными кнопками",
             "анимацию «приколоть» у новой записки, которая встаёт первой",
             "форму слева, липкую от 56rem"
           ],
@@ -3859,12 +3859,12 @@
         "i18n": {
           "en": {
             "title": "Guest wishes wall on a cork board",
-            "description": "A wall of wishes: cream notes on a cork board at different angles, a brass pin on each, text in a handwritten-feel serif, the signature in terracotta. On the left a “leave a wish” form — the new note pins on first with an animation. Without a backend the note lives until reload; with action it POSTs.",
-            "docs": "One file, zero dependencies, “use client” for the form. The board is a <ul> auto-fill minmax(12rem,1fr) with an inset shadow and a “frame” via box-shadow; a note is an article tilted via --vibeui-testimonials-020-tilt by nth-child(4n…), hover straightens and scales; the pin is a brass radial-gradient. New notes are a state array prepended with data-fresh and a “pin” keyframe. The form is name + textarea (required), onSubmit without action — preventDefault, with action — POST. From 56rem a .8fr/1.6fr grid, the left column sticky. Palette --vibeui-testimonials-020-*: cream #f6f1e8 / plum #2b1a24 via light-dark(), terracotta #b8552f accent, plum #4a1f36 for headings, sage #8a9a7b and sand #d9c5a5 for captions; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "description": "A wall of wishes: cream notes on a cork board at different angles, an accent pin on each, text in a handwritten-feel serif, the signature in accent. On the left a “leave a wish” form — the new note pins on first with an animation. Without a backend the note lives until reload; with action it POSTs.",
+            "docs": "One file, zero dependencies, “use client” for the form. The board is a <ul> auto-fill minmax(12rem,1fr) with an inset shadow and a “frame” via box-shadow; a note is an article tilted via --vibeui-testimonials-020-tilt by nth-child(4n…), hover straightens and scales; the pin is an accent radial-gradient. New notes are a state array prepended with data-fresh and a “pin” keyframe. The form is name + textarea (required), onSubmit without action — preventDefault, with action — POST. From 56rem a .8fr/1.6fr grid, the left column sticky. Palette --vibeui-testimonials-020-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
-              "summary": "A self-contained wishes wall for a wedding site: tilted notes on a cork board with brass pins and a form that pins a new note first. Wishes come as a prop array, submission goes to action.",
+              "summary": "A self-contained wishes wall for a wedding site: tilted notes on a cork board with accent pins and a form that pins a new note first. Wishes come as a prop array, submission goes to action.",
               "preserve": [
-                "the cork board with notes at different angles and brass pins",
+                "the cork board with notes at different angles and accent pins",
                 "the “pin” animation of a new note taking the first place",
                 "the form on the left, sticky from 56rem"
               ],
@@ -3957,7 +3957,7 @@
           "target": "@components/vibeui/testimonials-021.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради формы. Стена — <ul> auto-fill minmax(17rem,1fr), открытка — article с сеткой 1.5fr/1fr, вертикальной линией ::before, наклоном по nth-child(4n…) и подъёмом по hover; марка — рамка с пунктиром, штемпель — SVG-круг с текстом города (или «отправлено» у новых). Новые открытки — state-массив в начале с data-fresh и keyframes «приземления». Форма — имя, откуда, текст (required); без action — preventDefault. От 56rem сетка .8fr/1.7fr, левая колонка sticky. Палитра --vibeui-testimonials-021-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Один файл, ноль зависимостей, «use client» ради формы. Стена — <ul> auto-fill minmax(17rem,1fr), открытка — article с сеткой 1.5fr/1fr, вертикальной линией ::before, наклоном по nth-child(4n…) и подъёмом по hover; марка — рамка с пунктиром, штемпель — SVG-круг с текстом города (или «отправлено» у новых). Новые открытки — state-массив в начале с data-fresh и keyframes «приземления». Форма — имя, откуда, текст (required); без action — preventDefault. От 56rem сетка .8fr/1.7fr, левая колонка sticky. Палитра --vibeui-testimonials-021-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -4037,7 +4037,7 @@
           "en": {
             "title": "Guest postcards with postmarks",
             "description": "A wall of guest postcards back-side up: ruled lines, a stamp, a round postmark with the city, handwritten text, a signature. On the left a “send a postcard” form — the new one lands first with a “sent” postmark and a landing animation. Without a backend it lives until reload; with action it POSTs.",
-            "docs": "One file, zero dependencies, “use client” for the form. The wall is a <ul> auto-fill minmax(17rem,1fr), a postcard is an article with a 1.5fr/1fr grid, a ::before vertical line, tilt by nth-child(4n…) and a hover lift; the stamp is a dashed frame, the postmark an SVG circle with the city (or “sent” on new ones). New postcards are a state array prepended with data-fresh and a “landing” keyframe. The form is name, from, text (required); without action — preventDefault. From 56rem a .8fr/1.7fr grid, the left column sticky. Palette --vibeui-testimonials-021-*: paper #fffaf0 and sand #f3e9d2 / deep navy #14202a via light-dark(), ink #123a4b, coral #ff6b57 accent, sea #2aa7a0, sun #f2c14e; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "One file, zero dependencies, “use client” for the form. The wall is a <ul> auto-fill minmax(17rem,1fr), a postcard is an article with a 1.5fr/1fr grid, a ::before vertical line, tilt by nth-child(4n…) and a hover lift; the stamp is a dashed frame, the postmark an SVG circle with the city (or “sent” on new ones). New postcards are a state array prepended with data-fresh and a “landing” keyframe. The form is name, from, text (required); without action — preventDefault. From 56rem a .8fr/1.7fr grid, the left column sticky. Palette --vibeui-testimonials-021-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained postcard wall for a destination wedding: back-side postcards with stamps and city postmarks and a form that lands a new one first with a “sent” postmark. Postcards via props, submission to action.",
               "preserve": [
@@ -4133,7 +4133,7 @@
           "target": "@components/vibeui/testimonials-022.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради формы. Окно — блок с ледяным градиентом, ::before — капли radial-gradient; стена — <ul> auto-fill minmax(15rem,1fr), записка — <article> с неровными скруглениями, лёгким backdrop-blur, наклоном по nth-child у li и подъёмом по hover; текст рукописный с мягким свечением, подпись справа. Новые записки — state-массив в начале с data-fresh и keyframes clip-path:circle (протирание). Форма — имя и текст (required); без action — preventDefault. От 56rem сетка .8fr/1.7fr, левая колонка sticky. Палитра --vibeui-testimonials-022-*: синяя ночь #0b1220 и индиго #131c2e / слоновая кость #f2eee6 через light-dark(), серебро #9fb0c8, свеча #f2b64f, огонь #ff9a3c; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Один файл, ноль зависимостей, «use client» ради формы. Окно — блок с ледяным градиентом, ::before — капли radial-gradient; стена — <ul> auto-fill minmax(15rem,1fr), записка — <article> с неровными скруглениями, лёгким backdrop-blur, наклоном по nth-child у li и подъёмом по hover; текст рукописный с мягким свечением, подпись справа. Новые записки — state-массив в начале с data-fresh и keyframes clip-path:circle (протирание). Форма — имя и текст (required); без action — preventDefault. От 56rem сетка .8fr/1.7fr, левая колонка sticky. Палитра --vibeui-testimonials-022-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "tags": [
           "wedding",
@@ -4211,7 +4211,7 @@
           "en": {
             "title": "Wishes as notes on a fogged window",
             "description": "A wall of wishes on a fogged window: frosted glass with droplets, each note a translucent wiped patch with handwritten text and a signature. A “write on the glass” form on the left — a new note appears as if wiped by a palm. Without a backend it lives until reload; with action it POSTs.",
-            "docs": "One file, zero dependencies, “use client” for the form. The window is a block with an icy gradient, a ::before of radial-gradient droplets; the wall is a <ul> auto-fill minmax(15rem,1fr), a note is an <article> with uneven rounding, a light backdrop-blur, a tilt by nth-child on the li and a hover lift; handwritten text with a soft glow, the signature on the right. New notes are a state array prepended with data-fresh and a clip-path:circle keyframe (the wipe). The form is name and text (required); without action — preventDefault. From 56rem a .8fr/1.7fr grid, the left column sticky. Palette --vibeui-testimonials-022-*: night blue #0b1220 and indigo #131c2e / ivory #f2eee6 via light-dark(), silver #9fb0c8, candle #f2b64f, fire #ff9a3c; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "One file, zero dependencies, “use client” for the form. The window is a block with an icy gradient, a ::before of radial-gradient droplets; the wall is a <ul> auto-fill minmax(15rem,1fr), a note is an <article> with uneven rounding, a light backdrop-blur, a tilt by nth-child on the li and a hover lift; handwritten text with a soft glow, the signature on the right. New notes are a state array prepended with data-fresh and a clip-path:circle keyframe (the wipe). The form is name and text (required); without action — preventDefault. From 56rem a .8fr/1.7fr grid, the left column sticky. Palette --vibeui-testimonials-022-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained wishes wall on a fogged window: translucent handwritten notes on droplet-covered glass and a form that reveals a new one as if wiped by a palm. Notes via props, submission to action.",
               "preserve": [

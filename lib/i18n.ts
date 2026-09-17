@@ -147,6 +147,7 @@ type Dictionary = {
     proLink: string
     composition: string
     compositionNote: (count: number) => string
+    themeNote: string
     rules: string
     ruleTheme: (tone: string, accent: string, ink: string) => string
     ruleFont: (font: string) => string
@@ -396,6 +397,8 @@ const RU: Dictionary = {
     composition: "Из чего собрано",
     compositionNote: (count) =>
       `${count} блоков из каталога, в порядке появления на странице. Каждый ставится своей командой; ничего не пересоздаётся.`,
+    themeNote:
+      "Блоки в каталоге нейтральные: цвета страницы — эти пропсы, они уходят каждому блоку через spread.",
     rules: "Общие правила страницы",
     ruleTheme: (tone, accent, ink) =>
       `Одна тема на все блоки: tone="${tone}", accent="${accent}", ink="${ink}" — передаются каждому блоку пропсами.`,
@@ -607,6 +610,8 @@ const EN: Dictionary = {
     composition: "What it is made of",
     compositionNote: (count) =>
       `${count} catalog blocks in page order. Each one is installed with its own command; nothing is recreated.`,
+    themeNote:
+      "Catalog blocks are neutral: these props are the page colours, spread into every block.",
     rules: "Page rules",
     ruleTheme: (tone, accent, ink) =>
       `One theme for every block: tone="${tone}", accent="${accent}", ink="${ink}" — passed to each block as props.`,

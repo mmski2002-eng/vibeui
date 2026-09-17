@@ -15,6 +15,7 @@ export type Realty005Props = {
   /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -28,11 +29,11 @@ const FONTS =
 
 const STYLES = `
 :where([data-vibeui-block="realty-005"]){
---vibeui-realty-005-bg:light-dark(#173b2e,#0f1a15);
---vibeui-realty-005-fg:light-dark(#eef0ea,#eef0ea);
---vibeui-realty-005-muted:color-mix(in oklab,#eef0ea 68%,transparent);
---vibeui-realty-005-line:color-mix(in oklab,#eef0ea 18%,transparent);
---vibeui-realty-005-accent:#b8925a;
+--vibeui-realty-005-bg:light-dark(#1a1a1a,#0f0f0f);
+--vibeui-realty-005-fg:#f2f2f2;
+--vibeui-realty-005-muted:color-mix(in oklab,var(--vibeui-realty-005-fg) 68%,transparent);
+--vibeui-realty-005-line:color-mix(in oklab,var(--vibeui-realty-005-fg) 18%,transparent);
+--vibeui-realty-005-accent:#f2f2f2;
 --vibeui-realty-005-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
 --vibeui-realty-005-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -76,12 +77,14 @@ export function Realty005({
   steps = DEFAULT_STEPS,
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
 }: Realty005Props) {
   const palette = {
     ...(accent ? { "--vibeui-realty-005-accent": accent } : null),
+    ...(ink ? { "--vibeui-realty-005-fg": ink } : null),
     ...(background ? { "--vibeui-realty-005-bg": background } : null),
     ...style,
   } as CSSProperties

@@ -20,6 +20,7 @@ export type Portfolio010Props = {
   nextLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -34,12 +35,12 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,
 
 const STYLES = `
 :where([data-vibeui-block="portfolio-010"]){
---vibeui-portfolio-010-bg:light-dark(#f2eee6,#0b1220);
---vibeui-portfolio-010-card:light-dark(#ffffff,#131c2e);
---vibeui-portfolio-010-fg:light-dark(#1c2740,#f2eee6);
---vibeui-portfolio-010-muted:light-dark(#5b6880,#9fb0c8);
---vibeui-portfolio-010-line:light-dark(rgb(28 39 64 / .2),rgb(159 176 200 / .35));
---vibeui-portfolio-010-accent:#f2b64f;
+--vibeui-portfolio-010-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-portfolio-010-card:light-dark(#ffffff,#242424);
+--vibeui-portfolio-010-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-portfolio-010-muted:light-dark(#6b6b6b,#a3a3a3);
+--vibeui-portfolio-010-line:light-dark(color-mix(in oklab,var(--vibeui-portfolio-010-fg) 20%,transparent),color-mix(in oklab,var(--vibeui-portfolio-010-fg) 35%,transparent));
+--vibeui-portfolio-010-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-portfolio-010-silver:#9fb0c8;
 --vibeui-portfolio-010-display:"Cormorant Garamond",Georgia,serif;
 --vibeui-portfolio-010-script:"Marck Script","Segoe Script",cursive;
@@ -119,6 +120,7 @@ export function Portfolio010({
   nextLabel = "Следующее",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -127,6 +129,7 @@ export function Portfolio010({
   const [current, setCurrent] = useState<number | null>(null)
   const palette = {
     ...(accent ? { "--vibeui-portfolio-010-accent": accent } : null),
+    ...(ink ? { "--vibeui-portfolio-010-fg": ink } : null),
     ...(background ? { "--vibeui-portfolio-010-bg": background } : null),
     ...style,
   } as CSSProperties

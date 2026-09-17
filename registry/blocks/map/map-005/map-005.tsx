@@ -25,6 +25,7 @@ export type Map005Props = {
   providerLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -49,16 +50,16 @@ const FONTS =
 
 const STYLES = `
 :where([data-vibeui-block="map-005"]){
---vibeui-map-005-bg:light-dark(#f6f1ea,#141110);
---vibeui-map-005-fg:light-dark(#1c1714,#f2ebe0);
---vibeui-map-005-muted:light-dark(color-mix(in oklab,#1c1714 60%,#f6f1ea),color-mix(in oklab,#f2ebe0 58%,#141110));
+--vibeui-map-005-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-map-005-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-map-005-muted:light-dark(color-mix(in oklab,var(--vibeui-map-005-fg) 60%,var(--vibeui-map-005-bg)),color-mix(in oklab,var(--vibeui-map-005-fg) 58%,var(--vibeui-map-005-bg)));
 --vibeui-map-005-card:light-dark(#fffaf3,#1d1917);
---vibeui-map-005-line:light-dark(color-mix(in oklab,#1c1714 14%,#f6f1ea),color-mix(in oklab,#f2ebe0 14%,#141110));
+--vibeui-map-005-line:color-mix(in oklab,var(--vibeui-map-005-fg) 14%,var(--vibeui-map-005-bg));
 --vibeui-map-005-canvas:light-dark(#e7dfd2,#231d1a);
---vibeui-map-005-accent:#7d2a3a;
---vibeui-map-005-glow:0 0 24px rgb(125 42 58 / .7),0 0 70px rgb(125 42 58 / .35);
---vibeui-map-005-accent-ink:light-dark(var(--vibeui-map-005-accent),color-mix(in oklab,var(--vibeui-map-005-accent) 55%,#f2ebe0));
---vibeui-map-005-on-accent:#fff4ee;
+--vibeui-map-005-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-map-005-glow:0 0 24px color-mix(in oklab,var(--vibeui-map-005-accent) 70%,transparent),0 0 70px color-mix(in oklab,var(--vibeui-map-005-accent) 35%,transparent);
+--vibeui-map-005-accent-ink:light-dark(var(--vibeui-map-005-accent),color-mix(in oklab,var(--vibeui-map-005-accent) 55%,var(--vibeui-map-005-fg)));
+--vibeui-map-005-on-accent:oklch(from var(--vibeui-map-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-map-005-display:"Playfair Display",Georgia,"Times New Roman",serif;
 --vibeui-map-005-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -152,6 +153,7 @@ export function Map005({
   providerLabel = "Яндекс Карты",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -209,6 +211,7 @@ export function Map005({
 
   const palette = {
     ...(accent ? { "--vibeui-map-005-accent": accent } : null),
+    ...(ink ? { "--vibeui-map-005-fg": ink } : null),
     ...(background ? { "--vibeui-map-005-bg": background } : null),
     ...style,
   } as CSSProperties

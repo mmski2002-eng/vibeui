@@ -24,6 +24,7 @@ export type Event014Props = {
   rules?: readonly { icon?: string; text: string }[]
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -37,12 +38,12 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,
 
 const STYLES = `
 :where([data-vibeui-block="event-014"]){
---vibeui-event-014-bg:light-dark(#f2eee6,#0b1220);
---vibeui-event-014-card:light-dark(#ffffff,#131c2e);
---vibeui-event-014-fg:light-dark(#1c2740,#f2eee6);
---vibeui-event-014-muted:light-dark(#5b6880,#9fb0c8);
---vibeui-event-014-line:light-dark(rgb(28 39 64 / .16),rgb(159 176 200 / .24));
---vibeui-event-014-accent:#f2b64f;
+--vibeui-event-014-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-event-014-card:light-dark(#ffffff,#242424);
+--vibeui-event-014-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-event-014-muted:light-dark(#6b6b6b,#a3a3a3);
+--vibeui-event-014-line:light-dark(color-mix(in oklab,var(--vibeui-event-014-fg) 16%,transparent),color-mix(in oklab,var(--vibeui-event-014-fg) 24%,transparent));
+--vibeui-event-014-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-event-014-silver:#9fb0c8;
 --vibeui-event-014-display:"Cormorant Garamond",Georgia,serif;
 --vibeui-event-014-script:"Marck Script","Segoe Script",cursive;
@@ -100,7 +101,7 @@ const ICONS: Record<string, string> = {
   boot: "M6 3h6v8l6 3v3H6zM6 17h12v3H6zM9 6h3",
 }
 
-function ink(hex: string): string {
+function inkFor(hex: string): string {
   const value = hex.replace("#", "")
   if (value.length !== 6) return "#f2eee6"
   const r = parseInt(value.slice(0, 2), 16)
@@ -134,6 +135,7 @@ export function Event014({
   ],
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -141,6 +143,7 @@ export function Event014({
   const [copied, setCopied] = useState<string | null>(null)
   const palette = {
     ...(accent ? { "--vibeui-event-014-accent": accent } : null),
+    ...(ink ? { "--vibeui-event-014-fg": ink } : null),
     ...(background ? { "--vibeui-event-014-bg": background } : null),
     ...style,
   } as CSSProperties
@@ -175,7 +178,7 @@ export function Event014({
             <ul data-part="swatches">
               {swatches.map((swatch) => (
                 <li key={swatch.hex}>
-                  <button type="button" data-part="swatch" data-copied={copied === swatch.hex ? "true" : undefined} onClick={() => copy(swatch.hex)} aria-label={`${swatch.name} ${swatch.hex}`} style={{ "--vibeui-event-014-chip": swatch.hex, "--vibeui-event-014-ink": ink(swatch.hex) } as CSSProperties}>
+                  <button type="button" data-part="swatch" data-copied={copied === swatch.hex ? "true" : undefined} onClick={() => copy(swatch.hex)} aria-label={`${swatch.name} ${swatch.hex}`} style={{ "--vibeui-event-014-chip": swatch.hex, "--vibeui-event-014-ink": inkFor(swatch.hex) } as CSSProperties}>
                     <b>{swatch.name}</b>
                     <code>{copied === swatch.hex ? copiedLabel : swatch.hex}</code>
                   </button>

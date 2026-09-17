@@ -51,7 +51,8 @@ const STYLES = `
 --vibeui-pricing-021-muted:light-dark(#6b6b70,#a1a1aa);
 --vibeui-pricing-021-line:light-dark(#e8e8ea,#26272d);
 --vibeui-pricing-021-chip:light-dark(#f1f1f3,#1f2026);
---vibeui-pricing-021-accent:#d3f43a;
+--vibeui-pricing-021-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-pricing-021-on-accent:oklch(from var(--vibeui-pricing-021-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-pricing-021-display:"Inter Tight","Inter",ui-sans-serif,system-ui,sans-serif;
 --vibeui-pricing-021-font:"Inter",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;

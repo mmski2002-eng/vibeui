@@ -39,6 +39,7 @@ export type Course003Props = {
   linkLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -53,12 +54,12 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;7
 
 const STYLES = `
 :where([data-vibeui-block="course-003"]){
---vibeui-course-003-bg:light-dark(#f8fafc,#12151c);
---vibeui-course-003-fg:light-dark(#111827,#f3f4f6);
---vibeui-course-003-muted:light-dark(#6b7280,#9ca3af);
---vibeui-course-003-card:light-dark(#ffffff,#161a23);
---vibeui-course-003-line:light-dark(#e5e7eb,#262b36);
---vibeui-course-003-accent:#4f46e5;
+--vibeui-course-003-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-course-003-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-course-003-muted:light-dark(#6b7280,#a3a3a3);
+--vibeui-course-003-card:light-dark(#ffffff,#242424);
+--vibeui-course-003-line:light-dark(#e5e7eb,#2e2e2e);
+--vibeui-course-003-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-course-003-marker:light-dark(#d9f99d,rgb(163 230 53 / .3));
 --vibeui-course-003-display:"Unbounded","Manrope",ui-sans-serif,system-ui,sans-serif;
 --vibeui-course-003-font:"Inter",ui-sans-serif,system-ui,sans-serif;
@@ -160,6 +161,7 @@ export function Course003({
   linkLabel = "Смотреть кейс",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -172,6 +174,7 @@ export function Course003({
   const [visible, setVisible] = useState<Record<number, boolean>>({})
   const palette = {
     ...(accent ? { "--vibeui-course-003-accent": accent } : null),
+    ...(ink ? { "--vibeui-course-003-fg": ink } : null),
     ...(background ? { "--vibeui-course-003-bg": background } : null),
     ...style,
   } as CSSProperties

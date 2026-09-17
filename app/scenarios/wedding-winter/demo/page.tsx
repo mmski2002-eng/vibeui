@@ -34,7 +34,8 @@ const page: CSSProperties = {
   fontFamily: '"Manrope",ui-sans-serif,system-ui,sans-serif',
 }
 
-const dark = { tone: "dark" } as const
+// Тема страницы: блоки каталога по умолчанию нейтральные, цвета задаёт сценарий.
+const dark = { tone: "dark", background: "#0b1220", ink: "#f2eee6", accent: "#f2b64f" } as const
 
 const IMG = "/demo/wedding-winter/"
 
@@ -52,11 +53,15 @@ const GALLERY = [
 export default function Page() {
   return (
     <div style={page} className="dark min-h-dvh" data-demo="wedding-winter">
+      {/* Ночная синева карточек, линий и приглушённого текста: в каталоге блоки серые, оттенок задаёт сценарий. */}
+      <style href="vibeui-demo-winter-night" precedence="medium">
+        {`[data-vibeui-block]{--vibeui-navbar-027-muted:#9fb0c8;--vibeui-navbar-027-line:rgb(159 176 200 / .28);--vibeui-about-013-card:#131c2e;--vibeui-about-013-muted:#9fb0c8;--vibeui-about-013-line:rgb(159 176 200 / .22);--vibeui-event-013-card:#131c2e;--vibeui-event-013-muted:#9fb0c8;--vibeui-event-013-line:rgb(159 176 200 / .22);--vibeui-event-014-card:#131c2e;--vibeui-event-014-muted:#9fb0c8;--vibeui-event-014-line:rgb(159 176 200 / .24);--vibeui-map-009-card:#131c2e;--vibeui-map-009-muted:#9fb0c8;--vibeui-map-009-line:rgb(159 176 200 / .24);--vibeui-contact-020-muted:#9fb0c8;--vibeui-contact-020-line:rgb(159 176 200 / .24);--vibeui-faq-022-card:#131c2e;--vibeui-faq-022-muted:#9fb0c8;--vibeui-faq-022-line:rgb(159 176 200 / .24);--vibeui-portfolio-010-card:#131c2e;--vibeui-portfolio-010-muted:#9fb0c8;--vibeui-portfolio-010-line:rgb(159 176 200 / .35);--vibeui-people-011-card:#131c2e;--vibeui-people-011-muted:#9fb0c8;--vibeui-people-011-line:rgb(159 176 200 / .24);--vibeui-cta-023-card:#131c2e;--vibeui-cta-023-muted:#9fb0c8;--vibeui-cta-023-line:rgb(159 176 200 / .24);--vibeui-testimonials-022-card:#131c2e;--vibeui-testimonials-022-muted:#9fb0c8;--vibeui-testimonials-022-line:rgb(159 176 200 / .24);--vibeui-hero-027-line:rgb(159 176 200 / .35);--vibeui-footer-026-line:rgb(159 176 200 / .2);}`}
+      </style>
       <style href="vibeui-demo-scroll" precedence="medium">
         {`html{scroll-behavior:smooth;scroll-padding-top:5rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}`}
       </style>
       <Background006 density={0.9} wind={0.2} zIndex={30} />
-      <Navbar027 {...dark} brandHref="#hero" music={`${IMG}music.mp3`} />
+      <Navbar027 {...dark} background="rgb(11 18 32 / .78)" brandHref="#hero" music={`${IMG}music.mp3`} />
 
       <div id="hero">
         <Hero027
@@ -130,7 +135,7 @@ export default function Page() {
       </div>
 
       <div id="footer">
-        <Footer026 {...dark} />
+        <Footer026 {...dark} background="#070c15" />
       </div>
     </div>
   )

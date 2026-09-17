@@ -30,6 +30,7 @@ export type Event011Props = {
   storageKey?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -44,15 +45,15 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;
 
 const STYLES = `
 :where([data-vibeui-block="event-011"]){
---vibeui-event-011-bg:light-dark(#fffaf0,#14202a);
---vibeui-event-011-sand:light-dark(#f3e9d2,#1c2a34);
---vibeui-event-011-fg:light-dark(#123a4b,#eef4f2);
---vibeui-event-011-muted:light-dark(#5b6f78,#9fb2b8);
---vibeui-event-011-line:light-dark(#e3d7bf,#2c3f4a);
---vibeui-event-011-accent:#ff6b57;
+--vibeui-event-011-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-event-011-sand:light-dark(#f4f4f4,#242424);
+--vibeui-event-011-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-event-011-muted:light-dark(#5b6f78,#a3a3a3);
+--vibeui-event-011-line:light-dark(#e3d7bf,#2e2e2e);
+--vibeui-event-011-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-event-011-sea:#2aa7a0;
 --vibeui-event-011-sun:#f2c14e;
---vibeui-event-011-on-accent:#fffaf0;
+--vibeui-event-011-on-accent:oklch(from var(--vibeui-event-011-accent) clamp(0,(0.72 - l) * 100,1) 0 0);
 --vibeui-event-011-display:"Oswald","Arial Narrow",Impact,sans-serif;
 --vibeui-event-011-script:"Lobster","Brush Script MT",cursive;
 --vibeui-event-011-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
@@ -150,6 +151,7 @@ export function Event011({
   storageKey = "vibeui-wedding-cuba-packing",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -190,6 +192,7 @@ export function Event011({
   const checked = checklist.filter((item) => done.has(item)).length
   const palette = {
     ...(accent ? { "--vibeui-event-011-accent": accent } : null),
+    ...(ink ? { "--vibeui-event-011-fg": ink } : null),
     ...(background ? { "--vibeui-event-011-bg": background } : null),
     "--vibeui-event-011-done": `${checklist.length ? (checked / checklist.length) * 100 : 0}%`,
     ...style,

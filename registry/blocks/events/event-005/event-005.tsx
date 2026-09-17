@@ -56,8 +56,8 @@ const STYLES = `
 --vibeui-event-005-fg:light-dark(#111111,#f4f4f5);
 --vibeui-event-005-muted:light-dark(#6b6b70,#a1a1aa);
 --vibeui-event-005-line:light-dark(#e8e8ea,#26272d);
---vibeui-event-005-accent:#d3f43a;
---vibeui-event-005-on-accent:#111111;
+--vibeui-event-005-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-event-005-on-accent:oklch(from var(--vibeui-event-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-event-005-display:"Inter Tight","Inter",ui-sans-serif,system-ui,sans-serif;
 --vibeui-event-005-font:"Inter",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;

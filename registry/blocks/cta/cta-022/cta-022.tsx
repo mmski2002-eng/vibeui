@@ -21,6 +21,7 @@ export type Cta022Props = {
   joke?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -33,15 +34,15 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;
 
 const STYLES = `
 :where([data-vibeui-block="cta-022"]){
---vibeui-cta-022-bg:light-dark(#fffaf0,#14202a);
---vibeui-cta-022-sand:light-dark(#f3e9d2,#1c2a34);
---vibeui-cta-022-fg:light-dark(#123a4b,#eef4f2);
---vibeui-cta-022-muted:light-dark(#5b6f78,#9fb2b8);
---vibeui-cta-022-line:light-dark(#e3d7bf,#2c3f4a);
---vibeui-cta-022-accent:#ff6b57;
+--vibeui-cta-022-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-cta-022-sand:light-dark(#f4f4f4,#242424);
+--vibeui-cta-022-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-cta-022-muted:light-dark(#5b6f78,#a3a3a3);
+--vibeui-cta-022-line:light-dark(#e3d7bf,#2e2e2e);
+--vibeui-cta-022-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-cta-022-sea:#2aa7a0;
 --vibeui-cta-022-sun:#f2c14e;
---vibeui-cta-022-on-accent:#fffaf0;
+--vibeui-cta-022-on-accent:oklch(from var(--vibeui-cta-022-accent) clamp(0,(0.72 - l) * 100,1) 0 0);
 --vibeui-cta-022-display:"Oswald","Arial Narrow",Impact,sans-serif;
 --vibeui-cta-022-script:"Lobster","Brush Script MT",cursive;
 --vibeui-cta-022-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
@@ -106,6 +107,7 @@ export function Cta022({
   joke = "Или привезите бутылку рома — у нас на Кубе его нет. Шутка. Есть.",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -113,6 +115,7 @@ export function Cta022({
   const [copied, setCopied] = useState(false)
   const palette = {
     ...(accent ? { "--vibeui-cta-022-accent": accent } : null),
+    ...(ink ? { "--vibeui-cta-022-fg": ink } : null),
     ...(background ? { "--vibeui-cta-022-bg": background } : null),
     ...style,
   } as CSSProperties

@@ -21,6 +21,7 @@ export type About011Props = {
   nextLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -34,15 +35,15 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,
 
 const STYLES = `
 :where([data-vibeui-block="about-011"]){
---vibeui-about-011-bg:light-dark(#f6f1e8,#17131a);
---vibeui-about-011-fg:light-dark(#2b1a24,#f3ebe4);
---vibeui-about-011-muted:light-dark(#7a6a70,#b3a5aa);
---vibeui-about-011-line:light-dark(#e2d8ca,#372b31);
---vibeui-about-011-card:light-dark(#fffaf3,#211a25);
---vibeui-about-011-accent:#b8552f;
---vibeui-about-011-plum:light-dark(#4a1f36,#e9c7d6);
+--vibeui-about-011-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-about-011-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-about-011-muted:light-dark(#7a6a70,#a3a3a3);
+--vibeui-about-011-line:light-dark(#e2d8ca,#2e2e2e);
+--vibeui-about-011-card:light-dark(#fffaf3,#242424);
+--vibeui-about-011-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-about-011-plum:var(--vibeui-about-011-fg);
 --vibeui-about-011-sand:light-dark(#d9c5a5,#5a4a3a);
---vibeui-about-011-film:light-dark(#2b1a24,#0c090e);
+--vibeui-about-011-film:light-dark(var(--vibeui-about-011-fg),#0c0c0c);
 --vibeui-about-011-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
 --vibeui-about-011-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -105,6 +106,7 @@ export function About011({
   nextLabel = "Дальше",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -112,6 +114,7 @@ export function About011({
   const track = useRef<HTMLUListElement>(null)
   const palette = {
     ...(accent ? { "--vibeui-about-011-accent": accent } : null),
+    ...(ink ? { "--vibeui-about-011-fg": ink } : null),
     ...(background ? { "--vibeui-about-011-bg": background } : null),
     ...style,
   } as CSSProperties

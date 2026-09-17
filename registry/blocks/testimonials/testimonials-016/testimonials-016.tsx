@@ -23,6 +23,7 @@ export type Testimonials016Props = {
   /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -36,12 +37,12 @@ const FONTS =
 
 const STYLES = `
 :where([data-vibeui-block="testimonials-016"]){
---vibeui-testimonials-016-bg:light-dark(#f3ede3,#14211b);
---vibeui-testimonials-016-fg:light-dark(#173b2e,#eef0ea);
---vibeui-testimonials-016-muted:light-dark(color-mix(in oklab,#173b2e 62%,#f3ede3),color-mix(in oklab,#eef0ea 62%,#14211b));
---vibeui-testimonials-016-card:light-dark(#fffdf9,#1b2c24);
---vibeui-testimonials-016-line:light-dark(color-mix(in oklab,#173b2e 14%,#f3ede3),color-mix(in oklab,#eef0ea 14%,#14211b));
---vibeui-testimonials-016-accent:#b8925a;
+--vibeui-testimonials-016-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-testimonials-016-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-testimonials-016-muted:color-mix(in oklab,var(--vibeui-testimonials-016-fg) 62%,var(--vibeui-testimonials-016-bg));
+--vibeui-testimonials-016-card:light-dark(#fffdf9,#242424);
+--vibeui-testimonials-016-line:color-mix(in oklab,var(--vibeui-testimonials-016-fg) 14%,var(--vibeui-testimonials-016-bg));
+--vibeui-testimonials-016-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-testimonials-016-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
 --vibeui-testimonials-016-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -66,7 +67,7 @@ container-type:inline-size;
 [data-vibeui-block="testimonials-016"] [data-part="stars"]{display:flex;gap:.15rem;color:var(--vibeui-testimonials-016-accent);font-size:.9rem;letter-spacing:.05em}
 [data-vibeui-block="testimonials-016"] [data-part="quote"]{margin:0;font-family:var(--vibeui-testimonials-016-display);font-size:1.35rem;font-weight:500;line-height:1.3;font-style:italic}
 [data-vibeui-block="testimonials-016"] [data-part="who"]{display:flex;align-items:center;gap:.75rem;margin-top:auto;padding-top:1rem;border-top:1px solid var(--vibeui-testimonials-016-line)}
-[data-vibeui-block="testimonials-016"] [data-part="who"] img{width:2.5rem;height:2.5rem;border-radius:50%;object-fit:cover;flex:none;background:light-dark(#e7dfd2,#243830)}
+[data-vibeui-block="testimonials-016"] [data-part="who"] img{width:2.5rem;height:2.5rem;border-radius:50%;object-fit:cover;flex:none;background:light-dark(#e7dfd2,#2a2a2a)}
 [data-vibeui-block="testimonials-016"] [data-part="who"] b{display:block;font-size:.9rem}
 [data-vibeui-block="testimonials-016"] [data-part="who"] span{display:block;font-size:.8rem;color:var(--vibeui-testimonials-016-muted)}
 [data-vibeui-block="testimonials-016"] [data-part="source"]{margin-left:auto;flex:none;padding:.25rem .6rem;border:1px solid var(--vibeui-testimonials-016-line);border-radius:999px;font-size:.7rem;font-weight:600;color:var(--vibeui-testimonials-016-muted)}
@@ -90,12 +91,14 @@ export function Testimonials016({
   scoreLabel = "средняя оценка по 312 отзывам",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
 }: Testimonials016Props) {
   const palette = {
     ...(accent ? { "--vibeui-testimonials-016-accent": accent } : null),
+    ...(ink ? { "--vibeui-testimonials-016-fg": ink } : null),
     ...(background ? { "--vibeui-testimonials-016-bg": background } : null),
     ...style,
   } as CSSProperties

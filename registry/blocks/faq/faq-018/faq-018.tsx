@@ -34,7 +34,8 @@ const STYLES = `
 --vibeui-faq-018-muted:light-dark(#6b6b70,#a1a1aa);
 --vibeui-faq-018-line:light-dark(#e8e8ea,#26272d);
 --vibeui-faq-018-chip:light-dark(#f1f1f3,#1f2026);
---vibeui-faq-018-accent:#d3f43a;
+--vibeui-faq-018-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-faq-018-on-accent:oklch(from var(--vibeui-faq-018-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-faq-018-display:"Inter Tight","Inter",ui-sans-serif,system-ui,sans-serif;
 --vibeui-faq-018-font:"Inter",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -48,7 +49,7 @@ container-type:inline-size;
 [data-vibeui-block="faq-018"] [data-part="head"]{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;padding-top:1.25rem;border-top:1px solid var(--vibeui-faq-018-line)}
 [data-vibeui-block="faq-018"] [data-part="eyebrow"]{margin:0;font-size:1.05rem}
 [data-vibeui-block="faq-018"] [data-part="ask"]{display:inline-flex;align-items:center;gap:.6rem;font-size:.95rem;color:var(--vibeui-faq-018-muted)}
-[data-vibeui-block="faq-018"] [data-part="ask"] a{display:inline-flex;align-items:center;height:2.4rem;padding:0 1rem;border-radius:999px;background:var(--vibeui-faq-018-accent);color:#111;font-weight:600;text-decoration:none;transition:transform .2s}
+[data-vibeui-block="faq-018"] [data-part="ask"] a{display:inline-flex;align-items:center;height:2.4rem;padding:0 1rem;border-radius:999px;background:var(--vibeui-faq-018-accent);color:var(--vibeui-faq-018-on-accent);font-weight:600;text-decoration:none;transition:transform .2s}
 [data-vibeui-block="faq-018"] [data-part="ask"] a:hover{transform:translateY(-2px)}
 [data-vibeui-block="faq-018"] [data-part="ask"] a:focus-visible,[data-vibeui-block="faq-018"] summary:focus-visible{outline:2px solid var(--vibeui-faq-018-fg);outline-offset:3px;border-radius:1rem}
 [data-vibeui-block="faq-018"] [data-part="title"]{margin:.5rem 0 1.5rem;font-family:var(--vibeui-faq-018-display);font-size:clamp(1.6rem,3.4cqi,2.4rem);font-weight:600;letter-spacing:-.03em;line-height:1.1}
@@ -123,7 +124,7 @@ export function Faq018({
           <h2 data-part="title">{title}</h2>
           <div data-part="grid">
             {items.map((item) => (
-              <details key={item.question} name={group} style={{ ["--vibeui-faq-018-dot" as string]: item.color ?? "#d3f43a" }}>
+              <details key={item.question} name={group} style={{ ["--vibeui-faq-018-dot" as string]: item.color ?? "var(--vibeui-faq-018-accent)" }}>
                 <summary>
                   <span data-part="dot" aria-hidden="true" />
                   <span>{item.question}</span>

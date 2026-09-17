@@ -34,6 +34,7 @@ export type Hero027Props = {
   candleHint?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -49,15 +50,15 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,
 
 const STYLES = `
 :where([data-vibeui-block="hero-027"]){
---vibeui-hero-027-night:#0b1220;
+--vibeui-hero-027-night:#0f0f0f;
 --vibeui-hero-027-indigo:#131c2e;
---vibeui-hero-027-ink:#f2eee6;
---vibeui-hero-027-muted:rgb(242 238 230 / .72);
+--vibeui-hero-027-ink:#f2f2f2;
+--vibeui-hero-027-muted:color-mix(in oklab,var(--vibeui-hero-027-ink) 72%,transparent);
 --vibeui-hero-027-silver:#9fb0c8;
---vibeui-hero-027-line:rgb(159 176 200 / .35);
---vibeui-hero-027-accent:#f2b64f;
+--vibeui-hero-027-line:color-mix(in oklab,var(--vibeui-hero-027-ink) 35%,transparent);
+--vibeui-hero-027-accent:#f2f2f2;
 --vibeui-hero-027-fire:#ff9a3c;
---vibeui-hero-027-on-accent:#0b1220;
+--vibeui-hero-027-on-accent:oklch(from var(--vibeui-hero-027-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-027-display:"Cormorant Garamond",Georgia,serif;
 --vibeui-hero-027-script:"Marck Script","Segoe Script",cursive;
 --vibeui-hero-027-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
@@ -188,6 +189,7 @@ export function Hero027({
   candleHint = "нажмите на фитиль",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -199,6 +201,7 @@ export function Hero027({
   const [ticks, setTicks] = useState<readonly [string, string, string, string]>(ZERO)
   const palette = {
     ...(accent ? { "--vibeui-hero-027-accent": accent } : null),
+    ...(ink ? { "--vibeui-hero-027-ink": ink } : null),
     ...(background ? { "--vibeui-hero-027-night": background } : null),
     ...style,
   } as CSSProperties

@@ -22,6 +22,7 @@ export type Footer024Props = {
   signature?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -34,11 +35,11 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,
 
 const STYLES = `
 :where([data-vibeui-block="footer-024"]){
---vibeui-footer-024-bg:light-dark(#2b1a24,#0f0b11);
---vibeui-footer-024-fg:#f3ebe4;
+--vibeui-footer-024-bg:light-dark(#1a1a1a,#0f0f0f);
+--vibeui-footer-024-fg:#f2f2f2;
 --vibeui-footer-024-muted:#b3a5aa;
---vibeui-footer-024-line:rgb(243 235 228 / .14);
---vibeui-footer-024-accent:#d9784f;
+--vibeui-footer-024-line:color-mix(in oklab,var(--vibeui-footer-024-fg) 14%,transparent);
+--vibeui-footer-024-accent:#f2f2f2;
 --vibeui-footer-024-sand:#d9c5a5;
 --vibeui-footer-024-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
 --vibeui-footer-024-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
@@ -98,12 +99,14 @@ export function Footer024({
   signature = "С любовью, В. и А.",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
 }: Footer024Props) {
   const palette = {
     ...(accent ? { "--vibeui-footer-024-accent": accent } : null),
+    ...(ink ? { "--vibeui-footer-024-fg": ink } : null),
     ...(background ? { "--vibeui-footer-024-bg": background } : null),
     ...style,
   } as CSSProperties

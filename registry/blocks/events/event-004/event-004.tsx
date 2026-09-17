@@ -22,6 +22,7 @@ export type Event004Props = {
   events?: readonly Event004Event[]
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -35,14 +36,14 @@ const FONTS =
 
 const STYLES = `
 :where([data-vibeui-block="event-004"]){
---vibeui-event-004-bg:light-dark(#f6f1ea,#141110);
---vibeui-event-004-fg:light-dark(#1c1714,#f2ebe0);
---vibeui-event-004-muted:light-dark(color-mix(in oklab,#1c1714 60%,#f6f1ea),color-mix(in oklab,#f2ebe0 58%,#141110));
---vibeui-event-004-line:light-dark(color-mix(in oklab,#1c1714 16%,#f6f1ea),color-mix(in oklab,#f2ebe0 16%,#141110));
+--vibeui-event-004-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-event-004-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-event-004-muted:light-dark(color-mix(in oklab,var(--vibeui-event-004-fg) 60%,var(--vibeui-event-004-bg)),color-mix(in oklab,var(--vibeui-event-004-fg) 58%,var(--vibeui-event-004-bg)));
+--vibeui-event-004-line:color-mix(in oklab,var(--vibeui-event-004-fg) 16%,var(--vibeui-event-004-bg));
 --vibeui-event-004-hover:light-dark(#efe7dc,#1d1917);
---vibeui-event-004-accent:#7d2a3a;
---vibeui-event-004-glow:0 0 24px rgb(125 42 58 / .7),0 0 70px rgb(125 42 58 / .35);
---vibeui-event-004-accent-ink:light-dark(var(--vibeui-event-004-accent),color-mix(in oklab,var(--vibeui-event-004-accent) 55%,#f2ebe0));
+--vibeui-event-004-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-event-004-glow:0 0 24px color-mix(in oklab,var(--vibeui-event-004-accent) 70%,transparent),0 0 70px color-mix(in oklab,var(--vibeui-event-004-accent) 35%,transparent);
+--vibeui-event-004-accent-ink:light-dark(var(--vibeui-event-004-accent),color-mix(in oklab,var(--vibeui-event-004-accent) 55%,var(--vibeui-event-004-fg)));
 --vibeui-event-004-display:"Playfair Display",Georgia,"Times New Roman",serif;
 --vibeui-event-004-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -97,12 +98,14 @@ export function Event004({
   events = DEFAULT_EVENTS,
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
 }: Event004Props) {
   const palette = {
     ...(accent ? { "--vibeui-event-004-accent": accent } : null),
+    ...(ink ? { "--vibeui-event-004-fg": ink } : null),
     ...(background ? { "--vibeui-event-004-bg": background } : null),
     ...style,
   } as CSSProperties

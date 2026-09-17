@@ -31,7 +31,8 @@ const page: CSSProperties = {
   fontFamily: '"Manrope",ui-sans-serif,system-ui,sans-serif',
 }
 
-const dark = { tone: "dark" } as const
+// Тема страницы: блоки каталога по умолчанию нейтральные, цвета задаёт сценарий.
+const dark = { tone: "dark", background: "#141110", ink: "#f2ebe0", accent: "#7d2a3a" } as const
 
 const PHOTOS = "/demo/restaurant"
 
@@ -191,6 +192,7 @@ export default function Page() {
       <div id="book">
         <Contact016
           {...dark}
+          background="#1a1614"
           eyebrow="Бронь"
           title="Оставьте стол за собой"
           lede="Подтверждаем в течение пятнадцати минут в рабочее время. Компании от восьми человек — по телефону."
@@ -231,6 +233,7 @@ export default function Page() {
       <div id="footer">
         <Footer020
           {...dark}
+          background="#0e0c0b"
           brand="Сойка"
           caption="Северная кухня · Петроградская"
           address="Санкт-Петербург, Большая Пушкарская, 20, вход со двора"

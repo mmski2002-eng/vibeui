@@ -17,6 +17,7 @@ export type Faq017Props = {
   askHref?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -29,13 +30,13 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;7
 
 const STYLES = `
 :where([data-vibeui-block="faq-017"]){
---vibeui-faq-017-bg:light-dark(#ffffff,#0f1117);
---vibeui-faq-017-fg:light-dark(#111827,#f3f4f6);
---vibeui-faq-017-muted:light-dark(#6b7280,#9ca3af);
---vibeui-faq-017-card:light-dark(#f8fafc,#161a23);
---vibeui-faq-017-line:light-dark(#e5e7eb,#262b36);
---vibeui-faq-017-accent:#4f46e5;
---vibeui-faq-017-on-accent:#ffffff;
+--vibeui-faq-017-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-faq-017-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-faq-017-muted:light-dark(#6b7280,#a3a3a3);
+--vibeui-faq-017-card:light-dark(#f8fafc,#242424);
+--vibeui-faq-017-line:light-dark(#e5e7eb,#2e2e2e);
+--vibeui-faq-017-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-faq-017-on-accent:oklch(from var(--vibeui-faq-017-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-faq-017-display:"Unbounded","Manrope",ui-sans-serif,system-ui,sans-serif;
 --vibeui-faq-017-font:"Inter",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -94,6 +95,7 @@ export function Faq017({
   askHref = "https://t.me/",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -101,6 +103,7 @@ export function Faq017({
   const group = useId()
   const palette = {
     ...(accent ? { "--vibeui-faq-017-accent": accent } : null),
+    ...(ink ? { "--vibeui-faq-017-fg": ink } : null),
     ...(background ? { "--vibeui-faq-017-bg": background } : null),
     ...style,
   } as CSSProperties

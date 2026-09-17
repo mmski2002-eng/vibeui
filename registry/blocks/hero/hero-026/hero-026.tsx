@@ -40,6 +40,7 @@ export type Hero026Props = {
   passValues?: { flight: string; gate: string; seat: string; cabin: string }
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -58,17 +59,17 @@ const GRAIN = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg
 
 const STYLES = `
 :where([data-vibeui-block="hero-026"]){
---vibeui-hero-026-bg:light-dark(#fffaf0,#14202a);
---vibeui-hero-026-sand:light-dark(#f3e9d2,#1c2a34);
---vibeui-hero-026-fg:light-dark(#123a4b,#eef4f2);
---vibeui-hero-026-muted:light-dark(#5b6f78,#9fb2b8);
---vibeui-hero-026-line:light-dark(#e3d7bf,#2c3f4a);
---vibeui-hero-026-accent:#ff6b57;
+--vibeui-hero-026-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-hero-026-sand:light-dark(#f4f4f4,#242424);
+--vibeui-hero-026-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-hero-026-muted:light-dark(#5b6f78,#a3a3a3);
+--vibeui-hero-026-line:light-dark(#e3d7bf,#2e2e2e);
+--vibeui-hero-026-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-hero-026-sea:#2aa7a0;
 --vibeui-hero-026-sun:#f2c14e;
 --vibeui-hero-026-ink:#123a4b;
 --vibeui-hero-026-paper:#fffaf0;
---vibeui-hero-026-on-accent:#fffaf0;
+--vibeui-hero-026-on-accent:oklch(from var(--vibeui-hero-026-accent) clamp(0,(0.72 - l) * 100,1) 0 0);
 --vibeui-hero-026-display:"Oswald","Arial Narrow",Impact,sans-serif;
 --vibeui-hero-026-script:"Lobster","Brush Script MT",cursive;
 --vibeui-hero-026-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
@@ -244,6 +245,7 @@ export function Hero026({
   passValues = { flight: "ST 1402", gate: "Пляж", seat: "Первый ряд", cabin: "Любовь" },
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -255,6 +257,7 @@ export function Hero026({
   const [ticks, setTicks] = useState<readonly [string, string, string, string]>(ZERO)
   const palette = {
     ...(accent ? { "--vibeui-hero-026-accent": accent } : null),
+    ...(ink ? { "--vibeui-hero-026-fg": ink } : null),
     ...(background ? { "--vibeui-hero-026-sand": background } : null),
     ...style,
   } as CSSProperties

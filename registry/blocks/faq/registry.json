@@ -2860,7 +2860,7 @@
           "target": "@components/vibeui/faq-016.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. Сетка shell: колонкой на узком, от 56rem (container query) 1fr/1.5fr, левая колонка position:sticky. Список — <details name={useId()}>: браузер сам закрывает предыдущий ответ (эксклюзивный аккордеон без состояния). <summary> сеткой 2rem/1fr/1.5rem: номер капителью акцентом, вопрос серифом, плюс из двух псевдоэлементов с transform rotate(45deg) при [open]. Ответ с отступом под номер, max-width 40rem. Палитра --vibeui-realty-005-* с light-dark: песок/чернильно-зелёный, латунный акцент; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Сетка shell: колонкой на узком, от 56rem (container query) 1fr/1.5fr, левая колонка position:sticky. Список — <details name={useId()}>: браузер сам закрывает предыдущий ответ (эксклюзивный аккордеон без состояния). <summary> сеткой 2rem/1fr/1.5rem: номер капителью акцентом, вопрос серифом, плюс из двух псевдоэлементов с transform rotate(45deg) при [open]. Ответ с отступом под номер, max-width 40rem. Палитра --vibeui-realty-005-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -2941,7 +2941,7 @@
           "en": {
             "title": "Questions before the meeting",
             "description": "Questions before the first meeting in two columns: heading and an “ask” link on the left, an accordion on the right with serif questions, small-caps numbers and a plus that rotates into a cross. Built on details with a shared name — one answer open.",
-            "docs": "One file, zero dependencies, a server component. The shell grid: a column when narrow, 1fr/1.5fr from 56rem (container query), the left column position:sticky. The list is <details name={useId()}>: the browser closes the previous answer itself (an exclusive accordion without state). <summary> is a 2rem/1fr/1.5rem grid: a small-caps accent number, a serif question, a plus of two pseudo-elements rotating 45deg when [open]. The answer is indented under the number, max-width 40rem. Palette --vibeui-realty-005-* with light-dark: sand / ink green, brass accent; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "docs": "One file, zero dependencies, a server component. The shell grid: a column when narrow, 1fr/1.5fr from 56rem (container query), the left column position:sticky. The list is <details name={useId()}>: the browser closes the previous answer itself (an exclusive accordion without state). <summary> is a 2rem/1fr/1.5rem grid: a small-caps accent number, a serif question, a plus of two pseudo-elements rotating 45deg when [open]. The answer is indented under the number, max-width 40rem. Palette --vibeui-realty-005-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained Q&A section for an agency, developer or law firm: a serif details accordion in two columns with a sticky heading. Questions come in as a prop array.",
               "preserve": [
@@ -3037,7 +3037,7 @@
           "target": "@components/vibeui/faq-017.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. <details name={useId()}> — открыт один ответ. summary сеткой 1fr/1.5rem; плюс из двух псевдоэлементов, при [open] rotate(45deg) и заливка акцентом; details[open] получает border-left акцента. Ответ появляется @keyframes .35s. От 56rem (container query) 1fr/1.5fr, левая колонка position:sticky. Палитра --vibeui-faq-017-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, серверный компонент. <details name={useId()}> — открыт один ответ. summary сеткой 1fr/1.5rem; плюс из двух псевдоэлементов, при [open] rotate(45deg) и заливка акцентом; details[open] получает border-left акцента. Ответ появляется @keyframes .35s. От 56rem (container query) 1fr/1.5fr, левая колонка position:sticky. Палитра --vibeui-faq-017-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3122,7 +3122,7 @@
           "en": {
             "title": "Pre-purchase FAQ with an “ask” card",
             "description": "Course questions: a sticky heading and a “no answer — ask on Telegram” card on the left, a details accordion with a shared name on the right, a plus rotating into a cross, the open question highlighted with an accent bar on the left.",
-            "docs": "One file, zero dependencies, a server component. <details name={useId()}> — one answer open. A summary grid 1fr/1.5rem; a plus of two pseudo-elements, rotate(45deg) and accent fill when [open]; details[open] gets an accent border-left. The answer appears via a .35s @keyframes. From 56rem (container query) 1fr/1.5fr, the left column position:sticky. Palette --vibeui-faq-017-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "docs": "One file, zero dependencies, a server component. <details name={useId()}> — one answer open. A summary grid 1fr/1.5rem; a plus of two pseudo-elements, rotate(45deg) and accent fill when [open]; details[open] gets an accent border-left. The answer appears via a .35s @keyframes. From 56rem (container query) 1fr/1.5fr, the left column position:sticky. Palette --vibeui-faq-017-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained FAQ section for a course, subscription or service: a details accordion, a sticky heading and an “ask” card. Questions come in as a prop array.",
               "preserve": [
@@ -3201,7 +3201,7 @@
       "name": "faq-018",
       "type": "registry:block",
       "title": "Вопросы в две колонки с цветными маркерами",
-      "description": "Вопросы фестиваля: две колонки раскрывающихся вопросов, у каждого цветной кружок-маркер, открытый вопрос заливается светло-серым, кружок растёт, плюс поворачивается в крестик. Открыт один за раз. Справа сверху «Не нашли ответ?» и лаймовая капсула.",
+      "description": "Вопросы фестиваля: две колонки раскрывающихся вопросов, у каждого цветной кружок-маркер, открытый вопрос заливается светло-серым, кружок растёт, плюс поворачивается в крестик. Открыт один за раз. Справа сверху «Не нашли ответ?» и акцентная капсула.",
       "categories": [
         "faq"
       ],
@@ -3214,7 +3214,7 @@
           "target": "@components/vibeui/faq-018.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. <details name={useId()}> — открыт один. summary сеткой 1.5rem/1fr/1.5rem: кружок item.color в --dot (scale 1.6 при [open]), текст, плюс из двух чёрточек (rotate 45deg при [open]). Ответ — <p> с @keyframes fade. От 56rem (container query) две колонки с align-items:start, чтобы открытый вопрос не растягивал соседа. Палитра --vibeui-faq-018-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, серверный компонент. <details name={useId()}> — открыт один. summary сеткой 1.5rem/1fr/1.5rem: кружок item.color в --dot (scale 1.6 при [open]), текст, плюс из двух чёрточек (rotate 45deg при [open]). Ответ — <p> с @keyframes fade. От 56rem (container query) две колонки с align-items:start, чтобы открытый вопрос не растягивал соседа. Палитра --vibeui-faq-018-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3292,8 +3292,8 @@
         "i18n": {
           "en": {
             "title": "FAQ in two columns with colour markers",
-            "description": "Festival FAQ: two columns of expandable questions, each with a colour dot marker, the open question fills light grey, the dot grows and the plus rotates into a cross. One open at a time. Top right a “Didn’t find an answer?” line and a lime pill.",
-            "docs": "One file, zero dependencies, a server component. <details name={useId()}> — one open. The summary is a 1.5rem/1fr/1.5rem grid: a dot with item.color in --dot (scale 1.6 when [open]), the text, a plus made of two bars (rotate 45deg when [open]). The answer is a <p> with a fade @keyframes. From 56rem (container query) two columns with align-items:start so an open question does not stretch its neighbour. Palette --vibeui-faq-018-* with light-dark: a white background, black text, a lime accent #d3f43a; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "description": "Festival FAQ: two columns of expandable questions, each with a colour dot marker, the open question fills light grey, the dot grows and the plus rotates into a cross. One open at a time. Top right a “Didn’t find an answer?” line and an accent pill.",
+            "docs": "One file, zero dependencies, a server component. <details name={useId()}> — one open. The summary is a 1.5rem/1fr/1.5rem grid: a dot with item.color in --dot (scale 1.6 when [open]), the text, a plus made of two bars (rotate 45deg when [open]). The answer is a <p> with a fade @keyframes. From 56rem (container query) two columns with align-items:start so an open question does not stretch its neighbour. Palette --vibeui-faq-018-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained FAQ for a festival, product or service: two columns of details with colour markers and a “Write to us” pill. Questions come in as a prop array with a colour each.",
               "preserve": [
@@ -3569,7 +3569,7 @@
           "target": "@components/vibeui/faq-020.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный. details с общим name (useId) — открыт один за раз без JS; summary — сетка 2.6rem/1fr/1.6rem: номер, вопрос serif'ом, маркер из двух линий (::before/::after, поворот ::after 90→0). Ответ появляется keyframes fade. От 56rem сетка .8fr/1.4fr, шапка sticky top:5rem. Палитра --vibeui-faq-020-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Один файл, ноль зависимостей, серверный. details с общим name (useId) — открыт один за раз без JS; summary — сетка 2.6rem/1fr/1.6rem: номер, вопрос serif'ом, маркер из двух линий (::before/::after, поворот ::after 90→0). Ответ появляется keyframes fade. От 56rem сетка .8fr/1.4fr, шапка sticky top:5rem. Палитра --vibeui-faq-020-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3648,7 +3648,7 @@
           "en": {
             "title": "Guest FAQ accordion with roman numerals",
             "description": "Wedding guest questions: a single-column details accordion, an italic roman numeral on the left, a cross on the right that folds into a “−” on the open question, the open one highlighted with a cream panel. One open at a time. A sticky heading on the left with “didn't find an answer — write to the planner”.",
-            "docs": "One file, zero dependencies, server-rendered. details share a name (useId) — one open at a time without JS; summary is a 2.6rem/1fr/1.6rem grid: number, the question in serif, a two-line marker (::before/::after, ::after rotates 90→0). The answer fades in via keyframes. From 56rem a .8fr/1.4fr grid, the head sticky top:5rem. Palette --vibeui-faq-020-*: cream #f6f1e8 / plum #2b1a24 via light-dark(), terracotta #b8552f accent, plum #4a1f36 for headings, sage #8a9a7b and sand #d9c5a5 for captions; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "One file, zero dependencies, server-rendered. details share a name (useId) — one open at a time without JS; summary is a 2.6rem/1fr/1.6rem grid: number, the question in serif, a two-line marker (::before/::after, ::after rotates 90→0). The answer fades in via keyframes. From 56rem a .8fr/1.4fr grid, the head sticky top:5rem. Palette --vibeui-faq-020-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained FAQ block for a wedding site: an accordion with roman numerals, one open at a time, a sticky heading and an “ask the planner” link. Questions come as a prop array.",
               "preserve": [
@@ -3743,7 +3743,7 @@
           "target": "@components/vibeui/faq-021.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный. details с общим name (useId) — один открыт за раз без JS; summary — сетка 5rem/1fr/1.6rem: цветной хвостик с дырочкой ::after слева и темой мелким капсом, вопрос, маркер из двух линий (::after поворачивается 90→0). Хвостики чередуют море/коралл/солнце по nth-child(3n). Открытая бирка — transform и тень; ответ fade-in. Палитра --vibeui-faq-021-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Один файл, ноль зависимостей, серверный. details с общим name (useId) — один открыт за раз без JS; summary — сетка 5rem/1fr/1.6rem: цветной хвостик с дырочкой ::after слева и темой мелким капсом, вопрос, маркер из двух линий (::after поворачивается 90→0). Хвостики чередуют море/коралл/солнце по nth-child(3n). Открытая бирка — transform и тень; ответ fade-in. Палитра --vibeui-faq-021-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3821,7 +3821,7 @@
           "en": {
             "title": "Guest FAQ as luggage tags",
             "description": "Questions about a wedding abroad as luggage tags: each has a coloured stub on the left with the topic (“visa”, “money”) and a string hole, the question in narrow caps, a cross on the right. The open tag lifts and shows the answer; one open at a time. Two columns from 56rem.",
-            "docs": "One file, zero dependencies, server-rendered. details share a name (useId) — one open at a time without JS; summary is a 5rem/1fr/1.6rem grid: a coloured stub with a ::after hole on the left and the topic in small caps, the question, a two-line marker (::after rotates 90→0). Stubs alternate sea/coral/sun by nth-child(3n). The open tag gets a transform and shadow; the answer fades in. Palette --vibeui-faq-021-*: paper #fffaf0 and sand #f3e9d2 / deep navy #14202a via light-dark(), ink #123a4b, coral #ff6b57 accent, sea #2aa7a0, sun #f2c14e; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "One file, zero dependencies, server-rendered. details share a name (useId) — one open at a time without JS; summary is a 5rem/1fr/1.6rem grid: a coloured stub with a ::after hole on the left and the topic in small caps, the question, a two-line marker (::after rotates 90→0). Stubs alternate sea/accent/sun by nth-child(3n). The open tag gets a transform and shadow; the answer fades in. Palette --vibeui-faq-021-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained FAQ block for a wedding abroad: tags with a topic on a coloured stub, one open at a time, two columns. Questions come as a prop array.",
               "preserve": [
@@ -3928,7 +3928,7 @@
           "target": "@components/vibeui/faq-022.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный. details с общим name (useId) — один открыт за раз без JS; summary — сетка 1.6rem/1fr: SVG-снежинка и вопрос антиквой; details[open] красит рамку в свечу и добавляет свечение, снежинка поворачивается на 90° и получает drop-shadow. Иней — ::before с radial-gradient по углам. Ответ — fade-in. Палитра --vibeui-faq-022-*: синяя ночь #0b1220 и индиго #131c2e / слоновая кость #f2eee6 через light-dark(), серебро #9fb0c8, свеча #f2b64f, огонь #ff9a3c; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Один файл, ноль зависимостей, серверный. details с общим name (useId) — один открыт за раз без JS; summary — сетка 1.6rem/1fr: SVG-снежинка и вопрос антиквой; details[open] красит рамку в свечу и добавляет свечение, снежинка поворачивается на 90° и получает drop-shadow. Иней — ::before с radial-gradient по углам. Ответ — fade-in. Палитра --vibeui-faq-022-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "tags": [
           "wedding",
@@ -4005,7 +4005,7 @@
           "en": {
             "title": "FAQ on frosted glass with a snowflake marker",
             "description": "Winter-wedding questions: an accordion of cards on frosted glass, the marker a snowflake that rotates and warms up when opened; the open card glows like a window. One open at a time, two columns from 56rem.",
-            "docs": "One file, zero dependencies, server-rendered. details share a name (useId) — one open at a time without JS; summary is a 1.6rem/1fr grid: an SVG snowflake and the serif question; details[open] paints the border candle-gold and adds a glow, the snowflake rotates 90° and gets a drop-shadow. Frost is a ::before with corner radial-gradients. The answer fades in. Palette --vibeui-faq-022-*: night blue #0b1220 and indigo #131c2e / ivory #f2eee6 via light-dark(), silver #9fb0c8, candle #f2b64f, fire #ff9a3c; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "One file, zero dependencies, server-rendered. details share a name (useId) — one open at a time without JS; summary is a 1.6rem/1fr grid: an SVG snowflake and the serif question; details[open] paints the border candle-accent and adds a glow, the snowflake rotates 90° and gets a drop-shadow. Frost is a ::before with corner radial-gradients. The answer fades in. Palette --vibeui-faq-022-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained winter-wedding FAQ: cards on frosted glass, a snowflake marker that rotates and lights up, one open at a time, two columns. Questions come as a prop array.",
               "preserve": [
@@ -4050,7 +4050,7 @@
                 "items": [
                   {
                     "question": "Will it be cold?",
-                    "answer": "The house is warm: a fireplace and a stove. The terrace and forest are below zero, but there are blankets, mulled wine and twenty minutes at a time. Warm shoes and a coat are only needed for the fireworks."
+                    "answer": "The house is warm: a fireplace and a stove. The terrace and forest are below zero, but there are blankets, mulled accent and twenty minutes at a time. Warm shoes and a coat are only needed for the fireworks."
                   },
                   {
                     "question": "Can we bring kids?",

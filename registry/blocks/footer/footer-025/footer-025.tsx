@@ -19,6 +19,7 @@ export type Footer025Props = {
   rsvpHref?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -32,11 +33,11 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;
 
 const STYLES = `
 :where([data-vibeui-block="footer-025"]){
---vibeui-footer-025-bg:light-dark(#123a4b,#0c1a22);
---vibeui-footer-025-fg:#fffaf0;
---vibeui-footer-025-muted:rgb(255 250 240 / .62);
---vibeui-footer-025-line:rgb(255 250 240 / .16);
---vibeui-footer-025-accent:#ff6b57;
+--vibeui-footer-025-bg:light-dark(#1a1a1a,#0f0f0f);
+--vibeui-footer-025-fg:#f2f2f2;
+--vibeui-footer-025-muted:color-mix(in oklab,var(--vibeui-footer-025-fg) 62%,transparent);
+--vibeui-footer-025-line:color-mix(in oklab,var(--vibeui-footer-025-fg) 16%,transparent);
+--vibeui-footer-025-accent:#f2f2f2;
 --vibeui-footer-025-sea:#2aa7a0;
 --vibeui-footer-025-sun:#f2c14e;
 --vibeui-footer-025-display:"Oswald","Arial Narrow",Impact,sans-serif;
@@ -101,12 +102,14 @@ export function Footer025({
   rsvpHref = "#checkin",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
 }: Footer025Props) {
   const palette = {
     ...(accent ? { "--vibeui-footer-025-accent": accent } : null),
+    ...(ink ? { "--vibeui-footer-025-fg": ink } : null),
     ...(background ? { "--vibeui-footer-025-bg": background } : null),
     ...style,
   } as CSSProperties

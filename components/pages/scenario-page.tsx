@@ -1,14 +1,16 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowUpRight, Lock } from "lucide-react"
+import { ArrowUpRight } from "lucide-react"
 
 import { CatalogShell } from "@/components/catalog/catalog-shell"
+import { LockedCopyButton } from "@/components/catalog/pro-gate"
 import { ScenarioCopy } from "@/components/catalog/scenario-copy"
 import { ScenarioTour } from "@/components/catalog/scenario-tour"
 import { isPro } from "@/lib/entitlements"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
 import { getScenario, scenarioSections, scenarioText } from "@/lib/scenario"
 import {
+  extractThemeConsts,
   extractUsage,
   readScenarioImages,
   readScenarioSource,
@@ -46,6 +48,7 @@ export async function ScenarioPage({
         readScenarioImages(scenario),
       ])
     : [null, null]
+  const themeCode = source ? extractThemeConsts(source) : null
 
   return (
     <CatalogShell locale={locale}>
@@ -89,13 +92,12 @@ export async function ScenarioPage({
                 labels={{ copy: t.copy, copied: t.copied, signIn: t.signIn }}
               />
             ) : (
-              <Link
-                href={localePath(locale, "/pricing")}
-                className="acc-press bg-shell-accent text-shell-accent-fg hover:bg-shell-accent-deep inline-flex h-11 items-center gap-2 rounded-full px-5 text-sm font-semibold transition-colors"
-              >
-                <Lock className="size-4" aria-hidden="true" />
-                {t.proLink}
-              </Link>
+              <LockedCopyButton
+                label={t.copy}
+                reason={session ? "pro" : "signin"}
+                locale={locale}
+                className="acc-press h-11 gap-2 rounded-full px-5 font-semibold"
+              />
             )}
           </div>
           {pro ? (
@@ -112,6 +114,14 @@ export async function ScenarioPage({
           <p className="text-shell-muted mt-2 max-w-2xl text-sm">
             {t.compositionNote(sections.length)}
           </p>
+          {themeCode ? (
+            <div className="mt-4 max-w-2xl">
+              <p className="text-shell-muted text-sm">{t.themeNote}</p>
+              <pre className="bg-shell-elevated border-shell-border text-shell-fg mt-2 overflow-auto rounded-lg border p-3 font-mono text-[11px] leading-relaxed whitespace-pre">
+                {themeCode}
+              </pre>
+            </div>
+          ) : null}
           <div className="mt-6">
             <ScenarioTour
               demo={scenario.demo}

@@ -40,7 +40,8 @@ const STYLES = `
 --vibeui-event-007-muted:light-dark(#6b6b70,#a1a1aa);
 --vibeui-event-007-card:light-dark(#ffffff,#15161b);
 --vibeui-event-007-line:light-dark(#e8e8ea,#26272d);
---vibeui-event-007-accent:#d3f43a;
+--vibeui-event-007-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-event-007-on-accent:oklch(from var(--vibeui-event-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-event-007-display:"Inter Tight","Inter",ui-sans-serif,system-ui,sans-serif;
 --vibeui-event-007-font:"Inter",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;

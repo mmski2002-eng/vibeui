@@ -18,6 +18,7 @@ export type Cta023Props = {
   joke?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -32,15 +33,15 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,
 
 const STYLES = `
 :where([data-vibeui-block="cta-023"]){
---vibeui-cta-023-bg:light-dark(#f2eee6,#0b1220);
---vibeui-cta-023-card:light-dark(#ffffff,#131c2e);
---vibeui-cta-023-fg:light-dark(#1c2740,#f2eee6);
---vibeui-cta-023-muted:light-dark(#5b6880,#9fb0c8);
---vibeui-cta-023-line:light-dark(rgb(28 39 64 / .16),rgb(159 176 200 / .24));
---vibeui-cta-023-accent:#f2b64f;
+--vibeui-cta-023-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-cta-023-card:light-dark(#ffffff,#242424);
+--vibeui-cta-023-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-cta-023-muted:light-dark(#6b6b6b,#a3a3a3);
+--vibeui-cta-023-line:light-dark(color-mix(in oklab,var(--vibeui-cta-023-fg) 16%,transparent),color-mix(in oklab,var(--vibeui-cta-023-fg) 24%,transparent));
+--vibeui-cta-023-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-cta-023-fire:#ff9a3c;
 --vibeui-cta-023-silver:#9fb0c8;
---vibeui-cta-023-on-accent:#0b1220;
+--vibeui-cta-023-on-accent:oklch(from var(--vibeui-cta-023-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-cta-023-display:"Cormorant Garamond",Georgia,serif;
 --vibeui-cta-023-script:"Marck Script","Segoe Script",cursive;
 --vibeui-cta-023-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
@@ -105,6 +106,7 @@ export function Cta023({
   joke = "Цветы в декабре замёрзнут по дороге. Свечи — нет. Но и они не нужны: у нас их уже двести.",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -112,6 +114,7 @@ export function Cta023({
   const [copied, setCopied] = useState(false)
   const palette = {
     ...(accent ? { "--vibeui-cta-023-accent": accent } : null),
+    ...(ink ? { "--vibeui-cta-023-fg": ink } : null),
     ...(background ? { "--vibeui-cta-023-bg": background } : null),
     ...style,
   } as CSSProperties

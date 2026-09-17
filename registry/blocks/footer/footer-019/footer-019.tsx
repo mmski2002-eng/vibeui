@@ -28,6 +28,7 @@ export type Footer019Props = {
   /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -41,12 +42,12 @@ const FONTS =
 
 const STYLES = `
 :where([data-vibeui-block="footer-019"]){
---vibeui-footer-019-bg:light-dark(#173b2e,#0f1a15);
---vibeui-footer-019-fg:#eef0ea;
---vibeui-footer-019-muted:color-mix(in oklab,#eef0ea 66%,transparent);
---vibeui-footer-019-line:color-mix(in oklab,#eef0ea 16%,transparent);
---vibeui-footer-019-chip:color-mix(in oklab,#eef0ea 8%,transparent);
---vibeui-footer-019-accent:#b8925a;
+--vibeui-footer-019-bg:light-dark(#1a1a1a,#0f0f0f);
+--vibeui-footer-019-fg:#f2f2f2;
+--vibeui-footer-019-muted:color-mix(in oklab,var(--vibeui-footer-019-fg) 66%,transparent);
+--vibeui-footer-019-line:color-mix(in oklab,var(--vibeui-footer-019-fg) 16%,transparent);
+--vibeui-footer-019-chip:color-mix(in oklab,var(--vibeui-footer-019-fg) 8%,transparent);
+--vibeui-footer-019-accent:#f2f2f2;
 --vibeui-footer-019-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
 --vibeui-footer-019-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -119,12 +120,14 @@ export function Footer019({
   legal = "© 2007–2026 ООО «Дом на Неве». Лицензия РГР № 0412. Не оферта.",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
 }: Footer019Props) {
   const palette = {
     ...(accent ? { "--vibeui-footer-019-accent": accent } : null),
+    ...(ink ? { "--vibeui-footer-019-fg": ink } : null),
     ...(background ? { "--vibeui-footer-019-bg": background } : null),
     ...style,
   } as CSSProperties

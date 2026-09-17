@@ -21,6 +21,7 @@ export type About007Props = {
   signature?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -34,13 +35,13 @@ const FONTS =
 
 const STYLES = `
 :where([data-vibeui-block="about-007"]){
---vibeui-about-007-bg:light-dark(#f6f1ea,#141110);
---vibeui-about-007-fg:light-dark(#1c1714,#f2ebe0);
---vibeui-about-007-muted:light-dark(color-mix(in oklab,#1c1714 60%,#f6f1ea),color-mix(in oklab,#f2ebe0 58%,#141110));
---vibeui-about-007-line:light-dark(color-mix(in oklab,#1c1714 14%,#f6f1ea),color-mix(in oklab,#f2ebe0 14%,#141110));
---vibeui-about-007-accent:#7d2a3a;
---vibeui-about-007-glow:0 0 24px rgb(125 42 58 / .7),0 0 70px rgb(125 42 58 / .35);
---vibeui-about-007-accent-ink:light-dark(var(--vibeui-about-007-accent),color-mix(in oklab,var(--vibeui-about-007-accent) 55%,#f2ebe0));
+--vibeui-about-007-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-about-007-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-about-007-muted:light-dark(color-mix(in oklab,var(--vibeui-about-007-fg) 60%,var(--vibeui-about-007-bg)),color-mix(in oklab,var(--vibeui-about-007-fg) 58%,var(--vibeui-about-007-bg)));
+--vibeui-about-007-line:color-mix(in oklab,var(--vibeui-about-007-fg) 14%,var(--vibeui-about-007-bg));
+--vibeui-about-007-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-about-007-glow:0 0 24px color-mix(in oklab,var(--vibeui-about-007-accent) 70%,transparent),0 0 70px color-mix(in oklab,var(--vibeui-about-007-accent) 35%,transparent);
+--vibeui-about-007-accent-ink:light-dark(var(--vibeui-about-007-accent),color-mix(in oklab,var(--vibeui-about-007-accent) 55%,var(--vibeui-about-007-fg)));
 --vibeui-about-007-display:"Playfair Display",Georgia,"Times New Roman",serif;
 --vibeui-about-007-hand:"Caveat","Segoe Print",cursive;
 --vibeui-about-007-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
@@ -88,12 +89,14 @@ export function About007({
   signature,
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
 }: About007Props) {
   const palette = {
     ...(accent ? { "--vibeui-about-007-accent": accent } : null),
+    ...(ink ? { "--vibeui-about-007-fg": ink } : null),
     ...(background ? { "--vibeui-about-007-bg": background } : null),
     ...style,
   } as CSSProperties

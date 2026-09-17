@@ -37,6 +37,7 @@ export type Map007Props = {
   theme?: "auto" | "light" | "dark"
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -50,13 +51,13 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,
 
 const STYLES = `
 :where([data-vibeui-block="map-007"]){
---vibeui-map-007-bg:light-dark(#f6f1e8,#17131a);
---vibeui-map-007-fg:light-dark(#2b1a24,#f3ebe4);
---vibeui-map-007-muted:light-dark(#7a6a70,#b3a5aa);
---vibeui-map-007-line:light-dark(#e2d8ca,#372b31);
---vibeui-map-007-card:light-dark(#fffaf3,#211a25);
---vibeui-map-007-accent:#b8552f;
---vibeui-map-007-plum:light-dark(#4a1f36,#e9c7d6);
+--vibeui-map-007-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-map-007-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-map-007-muted:light-dark(#7a6a70,#a3a3a3);
+--vibeui-map-007-line:light-dark(#e2d8ca,#2e2e2e);
+--vibeui-map-007-card:light-dark(#fffaf3,#242424);
+--vibeui-map-007-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-map-007-plum:var(--vibeui-map-007-fg);
 --vibeui-map-007-sage:#8a9a7b;
 --vibeui-map-007-sand:light-dark(#d9c5a5,#5a4a3a);
 --vibeui-map-007-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
@@ -144,12 +145,14 @@ export function Map007({
   theme = "auto",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
 }: Map007Props) {
   const palette = {
     ...(accent ? { "--vibeui-map-007-accent": accent } : null),
+    ...(ink ? { "--vibeui-map-007-fg": ink } : null),
     ...(background ? { "--vibeui-map-007-bg": background } : null),
     ...style,
   } as CSSProperties

@@ -23,6 +23,7 @@ export type Navbar022Props = {
   sticky?: boolean
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -36,12 +37,12 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;7
 
 const STYLES = `
 :where([data-vibeui-block="navbar-022"]){
---vibeui-navbar-022-bg:light-dark(#ffffff,#0f1117);
---vibeui-navbar-022-fg:light-dark(#111827,#f3f4f6);
---vibeui-navbar-022-muted:light-dark(#6b7280,#9ca3af);
---vibeui-navbar-022-line:light-dark(#e5e7eb,#262b36);
---vibeui-navbar-022-accent:#4f46e5;
---vibeui-navbar-022-on-accent:#ffffff;
+--vibeui-navbar-022-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-navbar-022-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-navbar-022-muted:light-dark(#6b7280,#a3a3a3);
+--vibeui-navbar-022-line:light-dark(#e5e7eb,#2e2e2e);
+--vibeui-navbar-022-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-navbar-022-on-accent:oklch(from var(--vibeui-navbar-022-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-navbar-022-display:"Unbounded","Manrope",ui-sans-serif,system-ui,sans-serif;
 --vibeui-navbar-022-font:"Inter",ui-sans-serif,system-ui,sans-serif;
 --vibeui-navbar-022-progress:0;
@@ -98,6 +99,7 @@ export function Navbar022({
   sticky = true,
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -106,6 +108,7 @@ export function Navbar022({
   const [open, setOpen] = useState(false)
   const palette = {
     ...(accent ? { "--vibeui-navbar-022-accent": accent } : null),
+    ...(ink ? { "--vibeui-navbar-022-fg": ink } : null),
     ...(background ? { "--vibeui-navbar-022-bg": background } : null),
     ...style,
   } as CSSProperties

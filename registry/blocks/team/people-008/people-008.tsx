@@ -43,7 +43,8 @@ const STYLES = `
 --vibeui-people-008-fg:light-dark(#111111,#f4f4f5);
 --vibeui-people-008-muted:light-dark(#6b6b70,#a1a1aa);
 --vibeui-people-008-line:light-dark(#e8e8ea,#26272d);
---vibeui-people-008-accent:#d3f43a;
+--vibeui-people-008-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-people-008-on-accent:oklch(from var(--vibeui-people-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-people-008-display:"Inter Tight","Inter",ui-sans-serif,system-ui,sans-serif;
 --vibeui-people-008-font:"Inter",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;

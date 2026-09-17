@@ -16,6 +16,7 @@ export type Faq020Props = {
   askHref?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -29,13 +30,13 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,
 
 const STYLES = `
 :where([data-vibeui-block="faq-020"]){
---vibeui-faq-020-bg:light-dark(#f6f1e8,#17131a);
---vibeui-faq-020-fg:light-dark(#2b1a24,#f3ebe4);
---vibeui-faq-020-muted:light-dark(#7a6a70,#b3a5aa);
---vibeui-faq-020-line:light-dark(#e2d8ca,#372b31);
---vibeui-faq-020-card:light-dark(#fffaf3,#211a25);
---vibeui-faq-020-accent:#b8552f;
---vibeui-faq-020-plum:light-dark(#4a1f36,#e9c7d6);
+--vibeui-faq-020-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-faq-020-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-faq-020-muted:light-dark(#7a6a70,#a3a3a3);
+--vibeui-faq-020-line:light-dark(#e2d8ca,#2e2e2e);
+--vibeui-faq-020-card:light-dark(#fffaf3,#242424);
+--vibeui-faq-020-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-faq-020-plum:var(--vibeui-faq-020-fg);
 --vibeui-faq-020-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
 --vibeui-faq-020-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -94,6 +95,7 @@ export function Faq020({
   askHref = "#people",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -101,6 +103,7 @@ export function Faq020({
   const group = useId()
   const palette = {
     ...(accent ? { "--vibeui-faq-020-accent": accent } : null),
+    ...(ink ? { "--vibeui-faq-020-fg": ink } : null),
     ...(background ? { "--vibeui-faq-020-bg": background } : null),
     ...style,
   } as CSSProperties

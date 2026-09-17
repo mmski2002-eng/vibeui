@@ -33,6 +33,7 @@ export type Footer020Props = {
   legal?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -46,14 +47,14 @@ const FONTS =
 
 const STYLES = `
 :where([data-vibeui-block="footer-020"]){
---vibeui-footer-020-bg:light-dark(#1c1714,#0e0c0b);
---vibeui-footer-020-fg:#f2ebe0;
---vibeui-footer-020-muted:rgb(242 235 224 / .62);
---vibeui-footer-020-line:rgb(242 235 224 / .14);
---vibeui-footer-020-chip:rgb(242 235 224 / .07);
---vibeui-footer-020-accent:#7d2a3a;
---vibeui-footer-020-glow:0 0 24px rgb(125 42 58 / .7),0 0 70px rgb(125 42 58 / .35);
---vibeui-footer-020-accent-ink:light-dark(var(--vibeui-footer-020-accent),color-mix(in oklab,var(--vibeui-footer-020-accent) 55%,#f2ebe0));
+--vibeui-footer-020-bg:light-dark(#1a1a1a,#0f0f0f);
+--vibeui-footer-020-fg:#f2f2f2;
+--vibeui-footer-020-muted:color-mix(in oklab,var(--vibeui-footer-020-fg) 62%,transparent);
+--vibeui-footer-020-line:color-mix(in oklab,var(--vibeui-footer-020-fg) 14%,transparent);
+--vibeui-footer-020-chip:color-mix(in oklab,var(--vibeui-footer-020-fg) 7%,transparent);
+--vibeui-footer-020-accent:#f2f2f2;
+--vibeui-footer-020-glow:0 0 24px color-mix(in oklab,var(--vibeui-footer-020-accent) 70%,transparent),0 0 70px color-mix(in oklab,var(--vibeui-footer-020-accent) 35%,transparent);
+--vibeui-footer-020-accent-ink:light-dark(var(--vibeui-footer-020-accent),color-mix(in oklab,var(--vibeui-footer-020-accent) 55%,var(--vibeui-footer-020-fg)));
 --vibeui-footer-020-display:"Playfair Display",Georgia,"Times New Roman",serif;
 --vibeui-footer-020-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -130,12 +131,14 @@ export function Footer020({
   legal = "© 2019–2026 ООО «Сойка». ИНН 7813000000. Меню не является публичной офертой.",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
 }: Footer020Props) {
   const palette = {
     ...(accent ? { "--vibeui-footer-020-accent": accent } : null),
+    ...(ink ? { "--vibeui-footer-020-fg": ink } : null),
     ...(background ? { "--vibeui-footer-020-bg": background } : null),
     ...style,
   } as CSSProperties

@@ -21,6 +21,7 @@ export type Contact016Props = {
   action?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -35,15 +36,15 @@ const FONTS =
 
 const STYLES = `
 :where([data-vibeui-block="contact-016"]){
---vibeui-contact-016-bg:light-dark(#efe7dc,#1a1614);
---vibeui-contact-016-fg:light-dark(#1c1714,#f2ebe0);
---vibeui-contact-016-muted:light-dark(color-mix(in oklab,#1c1714 60%,#efe7dc),color-mix(in oklab,#f2ebe0 58%,#1a1614));
+--vibeui-contact-016-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-contact-016-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-contact-016-muted:light-dark(color-mix(in oklab,var(--vibeui-contact-016-fg) 60%,var(--vibeui-contact-016-bg)),color-mix(in oklab,var(--vibeui-contact-016-fg) 58%,var(--vibeui-contact-016-bg)));
 --vibeui-contact-016-card:light-dark(#fffaf3,#141110);
---vibeui-contact-016-line:light-dark(color-mix(in oklab,#1c1714 16%,#efe7dc),color-mix(in oklab,#f2ebe0 16%,#1a1614));
---vibeui-contact-016-accent:#7d2a3a;
---vibeui-contact-016-glow:0 0 24px rgb(125 42 58 / .7),0 0 70px rgb(125 42 58 / .35);
---vibeui-contact-016-accent-ink:light-dark(var(--vibeui-contact-016-accent),color-mix(in oklab,var(--vibeui-contact-016-accent) 55%,#f2ebe0));
---vibeui-contact-016-on-accent:#fff4ee;
+--vibeui-contact-016-line:color-mix(in oklab,var(--vibeui-contact-016-fg) 16%,var(--vibeui-contact-016-bg));
+--vibeui-contact-016-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-contact-016-glow:0 0 24px color-mix(in oklab,var(--vibeui-contact-016-accent) 70%,transparent),0 0 70px color-mix(in oklab,var(--vibeui-contact-016-accent) 35%,transparent);
+--vibeui-contact-016-accent-ink:light-dark(var(--vibeui-contact-016-accent),color-mix(in oklab,var(--vibeui-contact-016-accent) 55%,var(--vibeui-contact-016-fg)));
+--vibeui-contact-016-on-accent:oklch(from var(--vibeui-contact-016-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-contact-016-display:"Playfair Display",Georgia,"Times New Roman",serif;
 --vibeui-contact-016-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -124,6 +125,7 @@ export function Contact016({
   action = "",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -138,6 +140,7 @@ export function Contact016({
   const minDate = useSyncExternalStore(subscribeNever, today, noMinDate)
   const palette = {
     ...(accent ? { "--vibeui-contact-016-accent": accent } : null),
+    ...(ink ? { "--vibeui-contact-016-fg": ink } : null),
     ...(background ? { "--vibeui-contact-016-bg": background } : null),
     ...style,
   } as CSSProperties

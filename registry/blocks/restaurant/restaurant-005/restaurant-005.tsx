@@ -19,6 +19,7 @@ export type Restaurant005Props = {
   closeLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -33,13 +34,13 @@ const FONTS =
 
 const STYLES = `
 :where([data-vibeui-block="restaurant-005"]){
---vibeui-restaurant-005-bg:light-dark(#f6f1ea,#141110);
---vibeui-restaurant-005-fg:light-dark(#1c1714,#f2ebe0);
---vibeui-restaurant-005-muted:light-dark(color-mix(in oklab,#1c1714 60%,#f6f1ea),color-mix(in oklab,#f2ebe0 58%,#141110));
---vibeui-restaurant-005-line:light-dark(color-mix(in oklab,#1c1714 14%,#f6f1ea),color-mix(in oklab,#f2ebe0 14%,#141110));
---vibeui-restaurant-005-accent:#7d2a3a;
---vibeui-restaurant-005-glow:0 0 24px rgb(125 42 58 / .7),0 0 70px rgb(125 42 58 / .35);
---vibeui-restaurant-005-accent-ink:light-dark(var(--vibeui-restaurant-005-accent),color-mix(in oklab,var(--vibeui-restaurant-005-accent) 55%,#f2ebe0));
+--vibeui-restaurant-005-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-restaurant-005-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-restaurant-005-muted:light-dark(color-mix(in oklab,var(--vibeui-restaurant-005-fg) 60%,var(--vibeui-restaurant-005-bg)),color-mix(in oklab,var(--vibeui-restaurant-005-fg) 58%,var(--vibeui-restaurant-005-bg)));
+--vibeui-restaurant-005-line:color-mix(in oklab,var(--vibeui-restaurant-005-fg) 14%,var(--vibeui-restaurant-005-bg));
+--vibeui-restaurant-005-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-restaurant-005-glow:0 0 24px color-mix(in oklab,var(--vibeui-restaurant-005-accent) 70%,transparent),0 0 70px color-mix(in oklab,var(--vibeui-restaurant-005-accent) 35%,transparent);
+--vibeui-restaurant-005-accent-ink:light-dark(var(--vibeui-restaurant-005-accent),color-mix(in oklab,var(--vibeui-restaurant-005-accent) 55%,var(--vibeui-restaurant-005-fg)));
 --vibeui-restaurant-005-display:"Playfair Display",Georgia,"Times New Roman",serif;
 --vibeui-restaurant-005-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 --vibeui-restaurant-005-p:0;
@@ -123,6 +124,7 @@ export function Restaurant005({
   closeLabel = "Закрыть",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -135,6 +137,7 @@ export function Restaurant005({
   const [box, setBox] = useState<Box | null>(null)
   const palette = {
     ...(accent ? { "--vibeui-restaurant-005-accent": accent } : null),
+    ...(ink ? { "--vibeui-restaurant-005-fg": ink } : null),
     ...(background ? { "--vibeui-restaurant-005-bg": background } : null),
     ...style,
   } as CSSProperties

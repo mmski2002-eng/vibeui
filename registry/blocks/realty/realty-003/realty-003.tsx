@@ -41,6 +41,7 @@ export type Realty003Props = {
   /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -61,13 +62,13 @@ const FONTS =
 
 const STYLES = `
 :where([data-vibeui-block="realty-003"]){
---vibeui-realty-003-bg:light-dark(#f3ede3,#14211b);
---vibeui-realty-003-fg:light-dark(#173b2e,#eef0ea);
---vibeui-realty-003-muted:light-dark(color-mix(in oklab,#173b2e 62%,#f3ede3),color-mix(in oklab,#eef0ea 62%,#14211b));
---vibeui-realty-003-card:light-dark(#fffdf9,#1b2c24);
---vibeui-realty-003-line:light-dark(color-mix(in oklab,#173b2e 14%,#f3ede3),color-mix(in oklab,#eef0ea 14%,#14211b));
---vibeui-realty-003-accent:#b8925a;
---vibeui-realty-003-on-accent:#14211b;
+--vibeui-realty-003-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-realty-003-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-realty-003-muted:color-mix(in oklab,var(--vibeui-realty-003-fg) 62%,var(--vibeui-realty-003-bg));
+--vibeui-realty-003-card:light-dark(#fffdf9,#242424);
+--vibeui-realty-003-line:color-mix(in oklab,var(--vibeui-realty-003-fg) 14%,var(--vibeui-realty-003-bg));
+--vibeui-realty-003-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-realty-003-on-accent:oklch(from var(--vibeui-realty-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-realty-003-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
 --vibeui-realty-003-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -94,7 +95,7 @@ container-type:inline-size;
 [data-vibeui-block="realty-003"] [data-part="card"]:hover{transform:translateY(-4px);box-shadow:0 30px 40px -28px rgb(20 33 27 / .5)}
 [data-vibeui-block="realty-003"] [data-part="card"]:focus-visible{outline:2px solid var(--vibeui-realty-003-accent);outline-offset:3px}
 [data-vibeui-block="realty-003"] [data-part="card"][data-hidden="true"]{visibility:hidden}
-[data-vibeui-block="realty-003"] [data-part="media"]{position:relative;aspect-ratio:3/2;overflow:hidden;background:light-dark(#e7dfd2,#243830)}
+[data-vibeui-block="realty-003"] [data-part="media"]{position:relative;aspect-ratio:3/2;overflow:hidden;background:light-dark(#e7dfd2,#2a2a2a)}
 [data-vibeui-block="realty-003"] [data-part="media"] img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .6s ease,transform 1.2s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="realty-003"] [data-part="media"] img[data-hover]{opacity:0}
 [data-vibeui-block="realty-003"] [data-part="card"]:hover [data-part="media"] img{transform:scale(1.05)}
@@ -210,6 +211,7 @@ export function Realty003({
   closeLabel = "Закрыть",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -326,6 +328,7 @@ export function Realty003({
   const visible = listings.filter((item) => active === null || item.kind === active)
   const palette = {
     ...(accent ? { "--vibeui-realty-003-accent": accent } : null),
+    ...(ink ? { "--vibeui-realty-003-fg": ink } : null),
     ...(background ? { "--vibeui-realty-003-bg": background } : null),
     ...style,
   } as CSSProperties

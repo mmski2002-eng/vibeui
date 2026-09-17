@@ -24,6 +24,7 @@ export type About008Props = {
   linkHref?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -38,12 +39,12 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;7
 
 const STYLES = `
 :where([data-vibeui-block="about-008"]){
---vibeui-about-008-bg:light-dark(#ffffff,#0f1117);
---vibeui-about-008-fg:light-dark(#111827,#f3f4f6);
---vibeui-about-008-muted:light-dark(#6b7280,#9ca3af);
---vibeui-about-008-card:light-dark(#f8fafc,#161a23);
---vibeui-about-008-line:light-dark(#e5e7eb,#262b36);
---vibeui-about-008-accent:#4f46e5;
+--vibeui-about-008-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-about-008-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-about-008-muted:light-dark(#6b7280,#a3a3a3);
+--vibeui-about-008-card:light-dark(#f8fafc,#242424);
+--vibeui-about-008-line:light-dark(#e5e7eb,#2e2e2e);
+--vibeui-about-008-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-about-008-marker:light-dark(#d9f99d,rgb(163 230 53 / .3));
 --vibeui-about-008-display:"Unbounded","Manrope",ui-sans-serif,system-ui,sans-serif;
 --vibeui-about-008-font:"Inter",ui-sans-serif,system-ui,sans-serif;
@@ -120,12 +121,14 @@ export function About008({
   linkHref = "#",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
 }: About008Props) {
   const palette = {
     ...(accent ? { "--vibeui-about-008-accent": accent } : null),
+    ...(ink ? { "--vibeui-about-008-fg": ink } : null),
     ...(background ? { "--vibeui-about-008-bg": background } : null),
     ...style,
   } as CSSProperties

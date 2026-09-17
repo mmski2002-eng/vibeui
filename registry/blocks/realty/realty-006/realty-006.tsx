@@ -21,6 +21,7 @@ export type Realty006Props = {
   /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -78,13 +79,15 @@ function useRolling(target: number) {
 
 const STYLES = `
 :where([data-vibeui-block="realty-006"]){
---vibeui-realty-006-bg:light-dark(#f3ede3,#14211b);
---vibeui-realty-006-fg:light-dark(#173b2e,#eef0ea);
---vibeui-realty-006-muted:light-dark(color-mix(in oklab,#173b2e 62%,#f3ede3),color-mix(in oklab,#eef0ea 62%,#14211b));
---vibeui-realty-006-card:light-dark(#fffdf9,#1b2c24);
---vibeui-realty-006-line:light-dark(color-mix(in oklab,#173b2e 14%,#f3ede3),color-mix(in oklab,#eef0ea 14%,#14211b));
---vibeui-realty-006-accent:#b8925a;
---vibeui-realty-006-on-accent:#14211b;
+--vibeui-realty-006-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-realty-006-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-realty-006-muted:color-mix(in oklab,var(--vibeui-realty-006-fg) 62%,var(--vibeui-realty-006-bg));
+--vibeui-realty-006-card:light-dark(#fffdf9,#242424);
+--vibeui-realty-006-line:color-mix(in oklab,var(--vibeui-realty-006-fg) 14%,var(--vibeui-realty-006-bg));
+--vibeui-realty-006-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-realty-006-on-accent:oklch(from var(--vibeui-realty-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
+--vibeui-realty-006-plate-accent:oklch(from var(--vibeui-realty-006-accent) calc(l + clamp(0,(0.02 - c) * 100,1) * (clamp(0,(0.5 - l) * 100,1) * (0.92 - l) - clamp(0,(l - 0.5) * 100,1) * (l - 0.15))) c h);
+--vibeui-realty-006-plate-on-accent:oklch(from var(--vibeui-realty-006-plate-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-realty-006-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
 --vibeui-realty-006-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -111,10 +114,10 @@ container-type:inline-size;
 [data-vibeui-block="realty-006"] input[type="range"]:focus-visible{outline:2px solid var(--vibeui-realty-006-accent);outline-offset:4px;border-radius:2px}
 [data-vibeui-block="realty-006"] [data-part="result"]{display:grid;gap:1.25rem;align-content:space-between;padding:1.75rem;border-radius:1rem;background:var(--vibeui-realty-006-fg);color:var(--vibeui-realty-006-bg)}
 [data-vibeui-block="realty-006"] [data-part="result"] small{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;opacity:.7}
-[data-vibeui-block="realty-006"] [data-part="payment"]{font-family:var(--vibeui-realty-006-display);font-size:clamp(2.5rem,6cqi,4rem);font-weight:600;line-height:1;font-variant-numeric:tabular-nums;color:var(--vibeui-realty-006-accent)}
+[data-vibeui-block="realty-006"] [data-part="payment"]{font-family:var(--vibeui-realty-006-display);font-size:clamp(2.5rem,6cqi,4rem);font-weight:600;line-height:1;font-variant-numeric:tabular-nums;color:var(--vibeui-realty-006-plate-accent)}
 [data-vibeui-block="realty-006"] [data-part="row"]{display:flex;justify-content:space-between;gap:1rem;padding-top:.75rem;border-top:1px solid color-mix(in oklab,currentColor 18%,transparent);font-variant-numeric:tabular-nums}
 [data-vibeui-block="realty-006"] [data-part="row"] b{font-weight:600}
-[data-vibeui-block="realty-006"] [data-part="action"]{display:inline-flex;justify-content:center;align-items:center;margin-top:.5rem;padding:.85rem 1.5rem;border-radius:999px;background:var(--vibeui-realty-006-accent);color:var(--vibeui-realty-006-on-accent);font-weight:700;text-decoration:none;transition:transform .2s}
+[data-vibeui-block="realty-006"] [data-part="action"]{display:inline-flex;justify-content:center;align-items:center;margin-top:.5rem;padding:.85rem 1.5rem;border-radius:999px;background:var(--vibeui-realty-006-plate-accent);color:var(--vibeui-realty-006-plate-on-accent);font-weight:700;text-decoration:none;transition:transform .2s}
 [data-vibeui-block="realty-006"] [data-part="action"]:hover{transform:translateY(-1px)}
 [data-vibeui-block="realty-006"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-realty-006-bg);outline-offset:2px}
 [data-vibeui-block="realty-006"] [data-part="note"]{margin:0;font-size:.78rem;opacity:.7}
@@ -143,6 +146,7 @@ export function Realty006({
   note = "Расчёт предварительный и не является офертой банка.",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -159,6 +163,7 @@ export function Realty006({
   const progress = (value: number, [min, max]: readonly [number, number]) => `${((value - min) / (max - min)) * 100}%`
   const palette = {
     ...(accent ? { "--vibeui-realty-006-accent": accent } : null),
+    ...(ink ? { "--vibeui-realty-006-fg": ink } : null),
     ...(background ? { "--vibeui-realty-006-bg": background } : null),
     ...style,
   } as CSSProperties

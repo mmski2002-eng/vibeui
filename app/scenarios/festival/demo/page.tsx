@@ -31,7 +31,8 @@ const page: CSSProperties = {
   fontFamily: '"Inter",ui-sans-serif,system-ui,sans-serif',
 }
 
-const light = { tone: "light" } as const
+// Тема страницы: блоки каталога по умолчанию нейтральные, лаймовый акцент задаёт сценарий.
+const light = { tone: "light", accent: "#d3f43a" } as const
 
 export default function Page() {
   return (

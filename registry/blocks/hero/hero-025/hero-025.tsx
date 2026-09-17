@@ -33,6 +33,7 @@ export type Hero025Props = {
   envelopeLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -54,18 +55,18 @@ const GRAIN = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg
 
 const STYLES = `
 :where([data-vibeui-block="hero-025"]){
---vibeui-hero-025-bg:light-dark(#f6f1e8,#17131a);
---vibeui-hero-025-fg:light-dark(#2b1a24,#f3ebe4);
---vibeui-hero-025-muted:light-dark(#7a6a70,#b3a5aa);
---vibeui-hero-025-line:light-dark(#e2d8ca,#372b31);
---vibeui-hero-025-card:light-dark(#fffaf3,#211a25);
---vibeui-hero-025-accent:#b8552f;
---vibeui-hero-025-plum:light-dark(#4a1f36,#e9c7d6);
+--vibeui-hero-025-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-hero-025-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-hero-025-muted:light-dark(#7a6a70,#a3a3a3);
+--vibeui-hero-025-line:light-dark(#e2d8ca,#2e2e2e);
+--vibeui-hero-025-card:light-dark(#fffaf3,#242424);
+--vibeui-hero-025-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-hero-025-plum:var(--vibeui-hero-025-fg);
 --vibeui-hero-025-sand:light-dark(#d9c5a5,#5a4a3a);
 --vibeui-hero-025-sage:#8a9a7b;
 --vibeui-hero-025-night:#2b1a24;
---vibeui-hero-025-envelope:light-dark(#efe6d8,#241c28);
---vibeui-hero-025-on-accent:#fff7ef;
+--vibeui-hero-025-envelope:light-dark(#efe6d8,#242424);
+--vibeui-hero-025-on-accent:oklch(from var(--vibeui-hero-025-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-025-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
 --vibeui-hero-025-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -222,6 +223,7 @@ export function Hero025({
   envelopeLabel = "Дорогим гостям",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -233,6 +235,7 @@ export function Hero025({
   const [ticks, setTicks] = useState<readonly [string, string, string, string]>(ZERO)
   const palette = {
     ...(accent ? { "--vibeui-hero-025-accent": accent } : null),
+    ...(ink ? { "--vibeui-hero-025-fg": ink } : null),
     ...(background ? { "--vibeui-hero-025-bg": background } : null),
     ...style,
   } as CSSProperties

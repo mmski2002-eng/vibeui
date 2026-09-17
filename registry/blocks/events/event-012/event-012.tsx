@@ -23,6 +23,7 @@ export type Event012Props = {
   rules?: readonly { icon?: string; text: string }[]
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -35,12 +36,12 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;
 
 const STYLES = `
 :where([data-vibeui-block="event-012"]){
---vibeui-event-012-bg:light-dark(#fffaf0,#14202a);
---vibeui-event-012-sand:light-dark(#f3e9d2,#1c2a34);
---vibeui-event-012-fg:light-dark(#123a4b,#eef4f2);
---vibeui-event-012-muted:light-dark(#5b6f78,#9fb2b8);
---vibeui-event-012-line:light-dark(#e3d7bf,#2c3f4a);
---vibeui-event-012-accent:#ff6b57;
+--vibeui-event-012-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-event-012-sand:light-dark(#f4f4f4,#242424);
+--vibeui-event-012-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-event-012-muted:light-dark(#5b6f78,#a3a3a3);
+--vibeui-event-012-line:light-dark(#e3d7bf,#2e2e2e);
+--vibeui-event-012-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-event-012-sea:#2aa7a0;
 --vibeui-event-012-sun:#f2c14e;
 --vibeui-event-012-display:"Oswald","Arial Narrow",Impact,sans-serif;
@@ -95,7 +96,7 @@ const ICONS: Record<string, string> = {
   wind: "M3 8h10a2.5 2.5 0 1 0-2.5-2.5M3 13h14a3 3 0 1 1-3 3M3 18h7a2 2 0 1 1-2 2",
 }
 
-function ink(hex: string): string {
+function inkFor(hex: string): string {
   const value = hex.replace("#", "")
   if (value.length !== 6) return "#123a4b"
   const r = parseInt(value.slice(0, 2), 16)
@@ -129,6 +130,7 @@ export function Event012({
   ],
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -136,6 +138,7 @@ export function Event012({
   const [copied, setCopied] = useState<string | null>(null)
   const palette = {
     ...(accent ? { "--vibeui-event-012-accent": accent } : null),
+    ...(ink ? { "--vibeui-event-012-fg": ink } : null),
     ...(background ? { "--vibeui-event-012-bg": background } : null),
     ...style,
   } as CSSProperties
@@ -169,7 +172,7 @@ export function Event012({
           <ul data-part="swatches">
             {swatches.map((swatch) => (
               <li key={swatch.hex}>
-                <button type="button" data-part="swatch" data-copied={copied === swatch.hex ? "true" : undefined} onClick={() => copy(swatch.hex)} aria-label={`${swatch.name} ${swatch.hex}`} style={{ "--vibeui-event-012-chip": swatch.hex, "--vibeui-event-012-ink": ink(swatch.hex) } as CSSProperties}>
+                <button type="button" data-part="swatch" data-copied={copied === swatch.hex ? "true" : undefined} onClick={() => copy(swatch.hex)} aria-label={`${swatch.name} ${swatch.hex}`} style={{ "--vibeui-event-012-chip": swatch.hex, "--vibeui-event-012-ink": inkFor(swatch.hex) } as CSSProperties}>
                   <b>{swatch.name}</b>
                   <code>{copied === swatch.hex ? copiedLabel : swatch.hex}</code>
                 </button>

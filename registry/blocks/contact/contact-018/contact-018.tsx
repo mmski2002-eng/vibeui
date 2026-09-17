@@ -27,6 +27,7 @@ export type Contact018Props = {
   action?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -58,16 +59,16 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,
 
 const STYLES = `
 :where([data-vibeui-block="contact-018"]){
---vibeui-contact-018-bg:light-dark(#fffaf3,#1d1620);
---vibeui-contact-018-fg:light-dark(#2b1a24,#f3ebe4);
---vibeui-contact-018-muted:light-dark(#7a6a70,#b3a5aa);
---vibeui-contact-018-line:light-dark(#e2d8ca,#372b31);
---vibeui-contact-018-card:light-dark(#f6f1e8,#17131a);
---vibeui-contact-018-field:light-dark(#ffffff,#241c28);
---vibeui-contact-018-accent:#b8552f;
---vibeui-contact-018-plum:light-dark(#4a1f36,#e9c7d6);
+--vibeui-contact-018-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-contact-018-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-contact-018-muted:light-dark(#7a6a70,#a3a3a3);
+--vibeui-contact-018-line:light-dark(#e2d8ca,#2e2e2e);
+--vibeui-contact-018-card:light-dark(#f6f1e8,#1a1a1a);
+--vibeui-contact-018-field:light-dark(#ffffff,#242424);
+--vibeui-contact-018-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-contact-018-plum:var(--vibeui-contact-018-fg);
 --vibeui-contact-018-sage:#8a9a7b;
---vibeui-contact-018-on-accent:#fff7ef;
+--vibeui-contact-018-on-accent:oklch(from var(--vibeui-contact-018-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-contact-018-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
 --vibeui-contact-018-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -166,6 +167,7 @@ export function Contact018({
   action,
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -177,6 +179,7 @@ export function Contact018({
   const [sent, setSent] = useState(false)
   const palette = {
     ...(accent ? { "--vibeui-contact-018-accent": accent } : null),
+    ...(ink ? { "--vibeui-contact-018-fg": ink } : null),
     ...(background ? { "--vibeui-contact-018-bg": background } : null),
     ...style,
   } as CSSProperties

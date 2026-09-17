@@ -24,6 +24,7 @@ export type Contact020Props = {
   action?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -52,16 +53,16 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,
 
 const STYLES = `
 :where([data-vibeui-block="contact-020"]){
---vibeui-contact-020-bg:light-dark(#e9e3d8,#0b1220);
+--vibeui-contact-020-bg:light-dark(#ffffff,#1a1a1a);
 --vibeui-contact-020-paper:#f7f3ea;
 --vibeui-contact-020-field:#ffffff;
 --vibeui-contact-020-ink:#1c2740;
---vibeui-contact-020-fg:light-dark(#1c2740,#f2eee6);
---vibeui-contact-020-muted:light-dark(#5b6880,#9fb0c8);
+--vibeui-contact-020-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-contact-020-muted:light-dark(#6b6b6b,#a3a3a3);
 --vibeui-contact-020-paper-muted:#6b7488;
---vibeui-contact-020-line:light-dark(rgb(28 39 64 / .16),rgb(159 176 200 / .24));
+--vibeui-contact-020-line:light-dark(color-mix(in oklab,var(--vibeui-contact-020-fg) 16%,transparent),color-mix(in oklab,var(--vibeui-contact-020-fg) 24%,transparent));
 --vibeui-contact-020-paper-line:#d9d2c4;
---vibeui-contact-020-accent:#f2b64f;
+--vibeui-contact-020-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-contact-020-wax:#7a2b35;
 --vibeui-contact-020-silver:#9fb0c8;
 --vibeui-contact-020-envelope:light-dark(#ffffff,#131c2e);
@@ -178,6 +179,7 @@ export function Contact020({
   action,
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -189,6 +191,7 @@ export function Contact020({
   const [sent, setSent] = useState(false)
   const palette = {
     ...(accent ? { "--vibeui-contact-020-accent": accent } : null),
+    ...(ink ? { "--vibeui-contact-020-fg": ink } : null),
     ...(background ? { "--vibeui-contact-020-bg": background } : null),
     ...style,
   } as CSSProperties

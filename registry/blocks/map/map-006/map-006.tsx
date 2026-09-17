@@ -51,7 +51,8 @@ const STYLES = `
 --vibeui-map-006-muted:light-dark(#6b6b70,#a1a1aa);
 --vibeui-map-006-line:light-dark(#e8e8ea,#26272d);
 --vibeui-map-006-chip:light-dark(#f1f1f3,#1f2026);
---vibeui-map-006-accent:#d3f43a;
+--vibeui-map-006-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-map-006-on-accent:oklch(from var(--vibeui-map-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-map-006-display:"Inter Tight","Inter",ui-sans-serif,system-ui,sans-serif;
 --vibeui-map-006-font:"Inter",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -79,7 +80,7 @@ container-type:inline-size;
 [data-vibeui-block="map-006"] [data-part="emoji"]{display:grid;place-items:center;width:3rem;height:3rem;border-radius:.8rem;background:color-mix(in oklab,var(--vibeui-map-006-route) 82%,#000);font-size:1.5rem;line-height:1;filter:drop-shadow(0 4px 4px rgb(0 0 0 / .2))}
 [data-vibeui-block="map-006"] [data-part="mode"]{display:block;font-family:var(--vibeui-map-006-display);font-weight:600;letter-spacing:-.01em}
 [data-vibeui-block="map-006"] [data-part="route"] span span{display:block;font-size:.88rem;opacity:.8}
-[data-vibeui-block="map-006"] [data-part="open"]{display:inline-flex;align-items:center;height:2.6rem;padding:0 1.15rem;margin-top:1.25rem;border-radius:999px;background:var(--vibeui-map-006-accent);color:#111;font-weight:600;transition:transform .2s}
+[data-vibeui-block="map-006"] [data-part="open"]{display:inline-flex;align-items:center;height:2.6rem;padding:0 1.15rem;margin-top:1.25rem;border-radius:999px;background:var(--vibeui-map-006-accent);color:var(--vibeui-map-006-on-accent);font-weight:600;transition:transform .2s}
 [data-vibeui-block="map-006"] [data-part="open"]:hover{transform:translateY(-2px)}
 [data-vibeui-block="map-006"] [data-part="open"]:focus-visible{outline:2px solid var(--vibeui-map-006-fg);outline-offset:3px}
 @container (min-width: 60rem){

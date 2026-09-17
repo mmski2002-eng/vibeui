@@ -25,6 +25,7 @@ export type Navbar021Props = {
   sticky?: boolean
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -39,14 +40,14 @@ const FONTS =
 
 const STYLES = `
 :where([data-vibeui-block="navbar-021"]){
---vibeui-navbar-021-bg:light-dark(#f6f1ea,#141110);
---vibeui-navbar-021-fg:light-dark(#1c1714,#f2ebe0);
---vibeui-navbar-021-muted:light-dark(color-mix(in oklab,#1c1714 60%,#f6f1ea),color-mix(in oklab,#f2ebe0 58%,#141110));
---vibeui-navbar-021-line:light-dark(color-mix(in oklab,#1c1714 14%,#f6f1ea),color-mix(in oklab,#f2ebe0 14%,#141110));
---vibeui-navbar-021-accent:#7d2a3a;
---vibeui-navbar-021-glow:0 0 24px rgb(125 42 58 / .7),0 0 70px rgb(125 42 58 / .35);
---vibeui-navbar-021-accent-ink:light-dark(var(--vibeui-navbar-021-accent),color-mix(in oklab,var(--vibeui-navbar-021-accent) 55%,#f2ebe0));
---vibeui-navbar-021-on-accent:#fff4ee;
+--vibeui-navbar-021-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-navbar-021-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-navbar-021-muted:light-dark(color-mix(in oklab,var(--vibeui-navbar-021-fg) 60%,var(--vibeui-navbar-021-bg)),color-mix(in oklab,var(--vibeui-navbar-021-fg) 58%,var(--vibeui-navbar-021-bg)));
+--vibeui-navbar-021-line:color-mix(in oklab,var(--vibeui-navbar-021-fg) 14%,var(--vibeui-navbar-021-bg));
+--vibeui-navbar-021-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-navbar-021-glow:0 0 24px color-mix(in oklab,var(--vibeui-navbar-021-accent) 70%,transparent),0 0 70px color-mix(in oklab,var(--vibeui-navbar-021-accent) 35%,transparent);
+--vibeui-navbar-021-accent-ink:light-dark(var(--vibeui-navbar-021-accent),color-mix(in oklab,var(--vibeui-navbar-021-accent) 55%,var(--vibeui-navbar-021-fg)));
+--vibeui-navbar-021-on-accent:oklch(from var(--vibeui-navbar-021-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-navbar-021-display:"Playfair Display",Georgia,"Times New Roman",serif;
 --vibeui-navbar-021-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -113,6 +114,7 @@ export function Navbar021({
   sticky = true,
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -121,6 +123,7 @@ export function Navbar021({
   const [scrolled, setScrolled] = useState(false)
   const palette = {
     ...(accent ? { "--vibeui-navbar-021-accent": accent } : null),
+    ...(ink ? { "--vibeui-navbar-021-fg": ink } : null),
     ...(background ? { "--vibeui-navbar-021-bg": background } : null),
     ...style,
   } as CSSProperties

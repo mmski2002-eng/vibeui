@@ -21,6 +21,7 @@ export type Event008Props = {
   asideItems?: readonly string[]
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -34,15 +35,15 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,
 
 const STYLES = `
 :where([data-vibeui-block="event-008"]){
---vibeui-event-008-bg:light-dark(#f6f1e8,#17131a);
---vibeui-event-008-fg:light-dark(#2b1a24,#f3ebe4);
---vibeui-event-008-muted:light-dark(#7a6a70,#b3a5aa);
---vibeui-event-008-line:light-dark(#e2d8ca,#372b31);
---vibeui-event-008-card:light-dark(#fffaf3,#211a25);
---vibeui-event-008-accent:#b8552f;
---vibeui-event-008-plum:light-dark(#4a1f36,#e9c7d6);
+--vibeui-event-008-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-event-008-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-event-008-muted:light-dark(#7a6a70,#a3a3a3);
+--vibeui-event-008-line:light-dark(#e2d8ca,#2e2e2e);
+--vibeui-event-008-card:light-dark(#fffaf3,#242424);
+--vibeui-event-008-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-event-008-plum:var(--vibeui-event-008-fg);
 --vibeui-event-008-sage:#8a9a7b;
---vibeui-event-008-on-accent:#fff7ef;
+--vibeui-event-008-on-accent:oklch(from var(--vibeui-event-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-event-008-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
 --vibeui-event-008-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -110,12 +111,14 @@ export function Event008({
   asideItems = ["Тёплую кофту — вечером у пруда прохладно", "Удобную обувь: лужайка и гравий", "Хорошее настроение и ту самую песню"],
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
 }: Event008Props) {
   const palette = {
     ...(accent ? { "--vibeui-event-008-accent": accent } : null),
+    ...(ink ? { "--vibeui-event-008-fg": ink } : null),
     ...(background ? { "--vibeui-event-008-bg": background } : null),
     ...style,
   } as CSSProperties

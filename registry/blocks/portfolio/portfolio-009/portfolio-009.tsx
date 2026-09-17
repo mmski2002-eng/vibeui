@@ -25,6 +25,7 @@ export type Portfolio009Props = {
   addressee?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -39,13 +40,13 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;
 
 const STYLES = `
 :where([data-vibeui-block="portfolio-009"]){
---vibeui-portfolio-009-bg:light-dark(#f3e9d2,#1c2a34);
+--vibeui-portfolio-009-bg:light-dark(#ffffff,#1a1a1a);
 --vibeui-portfolio-009-paper:#fffaf0;
---vibeui-portfolio-009-fg:light-dark(#123a4b,#eef4f2);
+--vibeui-portfolio-009-fg:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-portfolio-009-ink:#123a4b;
---vibeui-portfolio-009-muted:light-dark(#5b6f78,#9fb2b8);
---vibeui-portfolio-009-line:light-dark(#e3d7bf,#2c3f4a);
---vibeui-portfolio-009-accent:#ff6b57;
+--vibeui-portfolio-009-muted:light-dark(#5b6f78,#a3a3a3);
+--vibeui-portfolio-009-line:light-dark(#e3d7bf,#2e2e2e);
+--vibeui-portfolio-009-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-portfolio-009-sea:#2aa7a0;
 --vibeui-portfolio-009-sun:#f2c14e;
 --vibeui-portfolio-009-display:"Oswald","Arial Narrow",Impact,sans-serif;
@@ -124,6 +125,7 @@ export function Portfolio009({
   addressee = "Дорогим гостям",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -131,6 +133,7 @@ export function Portfolio009({
   const [flipped, setFlipped] = useState<Set<number>>(() => new Set())
   const palette = {
     ...(accent ? { "--vibeui-portfolio-009-accent": accent } : null),
+    ...(ink ? { "--vibeui-portfolio-009-fg": ink } : null),
     ...(background ? { "--vibeui-portfolio-009-bg": background } : null),
     ...style,
   } as CSSProperties

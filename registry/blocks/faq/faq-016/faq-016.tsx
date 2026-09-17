@@ -16,6 +16,7 @@ export type Faq016Props = {
   /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -30,11 +31,11 @@ const FONTS =
 
 const STYLES = `
 :where([data-vibeui-block="faq-016"]){
---vibeui-faq-016-bg:light-dark(#f3ede3,#14211b);
---vibeui-faq-016-fg:light-dark(#173b2e,#eef0ea);
---vibeui-faq-016-muted:light-dark(color-mix(in oklab,#173b2e 62%,#f3ede3),color-mix(in oklab,#eef0ea 62%,#14211b));
---vibeui-faq-016-line:light-dark(color-mix(in oklab,#173b2e 16%,#f3ede3),color-mix(in oklab,#eef0ea 16%,#14211b));
---vibeui-faq-016-accent:#b8925a;
+--vibeui-faq-016-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-faq-016-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-faq-016-muted:color-mix(in oklab,var(--vibeui-faq-016-fg) 62%,var(--vibeui-faq-016-bg));
+--vibeui-faq-016-line:color-mix(in oklab,var(--vibeui-faq-016-fg) 16%,var(--vibeui-faq-016-bg));
+--vibeui-faq-016-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-faq-016-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
 --vibeui-faq-016-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -85,6 +86,7 @@ export function Faq016({
   noteHref = "#",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -92,6 +94,7 @@ export function Faq016({
   const group = useId()
   const palette = {
     ...(accent ? { "--vibeui-faq-016-accent": accent } : null),
+    ...(ink ? { "--vibeui-faq-016-fg": ink } : null),
     ...(background ? { "--vibeui-faq-016-bg": background } : null),
     ...style,
   } as CSSProperties

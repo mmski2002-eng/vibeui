@@ -36,6 +36,7 @@ export type Pricing020Props = {
   currency?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -50,13 +51,13 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;7
 const STYLES = `
 @property --vibeui-pricing-020-a{syntax:"<angle>";inherits:false;initial-value:0deg}
 :where([data-vibeui-block="pricing-020"]){
---vibeui-pricing-020-bg:light-dark(#f8fafc,#12151c);
---vibeui-pricing-020-fg:light-dark(#111827,#f3f4f6);
---vibeui-pricing-020-muted:light-dark(#6b7280,#9ca3af);
---vibeui-pricing-020-card:light-dark(#ffffff,#161a23);
---vibeui-pricing-020-line:light-dark(#e5e7eb,#262b36);
---vibeui-pricing-020-accent:#4f46e5;
---vibeui-pricing-020-on-accent:#ffffff;
+--vibeui-pricing-020-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-pricing-020-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-pricing-020-muted:light-dark(#6b7280,#a3a3a3);
+--vibeui-pricing-020-card:light-dark(#ffffff,#242424);
+--vibeui-pricing-020-line:light-dark(#e5e7eb,#2e2e2e);
+--vibeui-pricing-020-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-pricing-020-on-accent:oklch(from var(--vibeui-pricing-020-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-pricing-020-marker:light-dark(#d9f99d,rgb(163 230 53 / .3));
 --vibeui-pricing-020-display:"Unbounded","Manrope",ui-sans-serif,system-ui,sans-serif;
 --vibeui-pricing-020-font:"Inter",ui-sans-serif,system-ui,sans-serif;
@@ -141,6 +142,7 @@ export function Pricing020({
   currency = "₽",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -149,6 +151,7 @@ export function Pricing020({
   const format = new Intl.NumberFormat("ru-RU")
   const palette = {
     ...(accent ? { "--vibeui-pricing-020-accent": accent } : null),
+    ...(ink ? { "--vibeui-pricing-020-fg": ink } : null),
     ...(background ? { "--vibeui-pricing-020-bg": background } : null),
     ...style,
   } as CSSProperties

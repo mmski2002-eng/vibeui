@@ -2535,7 +2535,7 @@
       "name": "footer-019",
       "type": "registry:block",
       "title": "Подвал с мессенджерами",
-      "description": "Подвал агентства на тёмно-зелёном: имя серифом, адрес и часы, телефон крупно, почта и мессенджеры настоящими значками — Telegram, WhatsApp, VK, Max — с подписями. Внизу лицензия и ссылки на документы.",
+      "description": "Подвал агентства на тёмном: имя серифом, адрес и часы, телефон крупно, почта и мессенджеры настоящими значками — Telegram, WhatsApp, VK, Max — с подписями. Внизу лицензия и ссылки на документы.",
       "categories": [
         "footer"
       ],
@@ -2548,7 +2548,7 @@
           "target": "@components/vibeui/footer-019.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. <footer> с сеткой top: колонкой на узком, от 56rem (container query) 1.3fr/1fr/1.2fr. Адрес в <address>, часы с точкой акцента через ::before, телефон — <a href=tel:> серифом, почта — mailto. Мессенджеры — <ul> капсул: латунный кружок со встроенным SVG (Telegram, WhatsApp, VK — path внутри файла) или буквой short (Max), подпись рядом; ссылки target=_blank. Нижняя строка flex space-between: legal и список links. Фон тёмно-зелёный в обеих темах: подвал задуман контрастным. Палитра --vibeui-realty-005-* с light-dark: песок/чернильно-зелёный, латунный акцент; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, серверный компонент. <footer> с сеткой top: колонкой на узком, от 56rem (container query) 1.3fr/1fr/1.2fr. Адрес в <address>, часы с точкой акцента через ::before, телефон — <a href=tel:> серифом, почта — mailto. Мессенджеры — <ul> капсул: акцентный кружок со встроенным SVG (Telegram, WhatsApp, VK — path внутри файла) или буквой short (Max), подпись рядом; ссылки target=_blank. Нижняя строка flex space-between: legal и список links. Фон тёмный в обеих темах: подвал задуман контрастным. Палитра --vibeui-realty-005-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -2576,7 +2576,7 @@
           "preserve": [
             "телефон серифом крупно — в недвижимости звонят",
             "мессенджеры капсулами со значками и подписями, а не голыми иконками: понятно, куда писать",
-            "контрастный тёмно-зелёный фон и адрес в <address>"
+            "контрастный тёмный фон и адрес в <address>"
           ],
           "adapt": [
             "brand, caption, address, hours, phone, phoneHref, email, legal",
@@ -2637,14 +2637,14 @@
         "i18n": {
           "en": {
             "title": "Footer with messengers",
-            "description": "An agency footer on dark green: a serif name, address and hours, a large phone, email and messengers with real icons — Telegram, WhatsApp, VK, Max — with labels. Licence and document links at the bottom.",
-            "docs": "One file, zero dependencies, a server component. A <footer> with a top grid: a column when narrow, 1.3fr/1fr/1.2fr from 56rem (container query). The address is an <address>, hours with an accent dot via ::before, the phone a serif <a href=tel:>, email a mailto. Messengers are a <ul> of pills: a brass circle with an inline SVG (Telegram, WhatsApp, VK — paths inside the file) or a short letter (Max), a label beside; links target=_blank. The bottom row is flex space-between: legal and the links list. The background is dark green in both themes: the footer is meant to contrast. Palette --vibeui-realty-005-* with light-dark: sand / ink green, brass accent; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "description": "An agency footer on a dark ground: a serif name, address and hours, a large phone, email and messengers with real icons — Telegram, WhatsApp, VK, Max — with labels. Licence and document links at the bottom.",
+            "docs": "One file, zero dependencies, a server component. A <footer> with a top grid: a column when narrow, 1.3fr/1fr/1.2fr from 56rem (container query). The address is an <address>, hours with an accent dot via ::before, the phone a serif <a href=tel:>, email a mailto. Messengers are a <ul> of pills: an accent circle with an inline SVG (Telegram, WhatsApp, VK — paths inside the file) or a short letter (Max), a label beside; links target=_blank. The bottom row is flex space-between: legal and the links list. The background is dark in both themes: the footer is meant to contrast. Palette --vibeui-realty-005-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained footer for an agency, developer or service with live contacts: address, hours, phone, email, messengers with icons and documents. All content via props.",
               "preserve": [
                 "the large serif phone — in real estate people call",
                 "messengers as pills with icons and labels, not bare icons: it is clear where to write",
-                "the contrasting dark green background and the address in <address>"
+                "the contrasting dark background and the address in <address>"
               ],
               "adapt": [
                 "brand, caption, address, hours, phone, phoneHref, email, legal",
@@ -2754,7 +2754,7 @@
           "target": "@components/vibeui/footer-020.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. <footer> с сеткой top: колонкой на узком, от 60rem (container query) 1.4fr/1fr/1.2fr/.9fr. Часы — <dl> сеткой с tabular-nums, адрес в <address>, телефон — <a href=tel:> серифом. Мессенджеры — капсулы с винным кружком и встроенным SVG (Telegram, WhatsApp, VK — path внутри файла) или буквой short (Max), target=_blank. Фон тёмный в обеих темах: подвал задуман контрастным. Палитра --vibeui-footer-020-* с light-dark: слоновая кость на тёмном дереве, тёмный винный акцент со свечением (переменная -glow) и его светлый оттенок -accent-ink для текста на тёмном; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, серверный компонент. <footer> с сеткой top: колонкой на узком, от 60rem (container query) 1.4fr/1fr/1.2fr/.9fr. Часы — <dl> сеткой с tabular-nums, адрес в <address>, телефон — <a href=tel:> серифом. Мессенджеры — капсулы с акцентным кружком и встроенным SVG (Telegram, WhatsApp, VK — path внутри файла) или буквой short (Max), target=_blank. Фон тёмный в обеих темах: подвал задуман контрастным. Палитра --vibeui-footer-020-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -2836,7 +2836,7 @@
           "en": {
             "title": "Restaurant footer with hours and messengers",
             "description": "A restaurant footer on dark: a serif wordmark and address, hours by day as a table, a large phone, email and messengers with icons and labels, a links column — gift cards, banquets, jobs. Legal details at the bottom.",
-            "docs": "One file, zero dependencies, a server component. A <footer> with a top grid: a column when narrow, 1.4fr/1fr/1.2fr/.9fr from 60rem (container query). Hours are a <dl> grid with tabular-nums, the address in <address>, the phone a serif <a href=tel:>. Messengers are pills with a wine-red circle and an inline SVG (Telegram, WhatsApp, VK — paths inside the file) or a short letter (Max), target=_blank. The background is dark in both themes: the footer is meant to contrast. Palette --vibeui-footer-020-* with light-dark: ivory on dark wood, a dark wine accent with a glow (the -glow variable) and its lighter -accent-ink tint for text on dark; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "docs": "One file, zero dependencies, a server component. A <footer> with a top grid: a column when narrow, 1.4fr/1fr/1.2fr/.9fr from 60rem (container query). Hours are a <dl> grid with tabular-nums, the address in <address>, the phone a serif <a href=tel:>. Messengers are pills with an accent circle and an inline SVG (Telegram, WhatsApp, VK — paths inside the file) or a short letter (Max), target=_blank. The background is dark in both themes: the footer is meant to contrast. Palette --vibeui-footer-020-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained footer for a restaurant, bar or cafe: address, hours by day, phone, email, messengers with icons and links. All content via props.",
               "preserve": [
@@ -2959,7 +2959,7 @@
           "target": "@components/vibeui/footer-021.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. Сетка top до 56rem (container query) в колонку, от 56rem 1.6fr/1fr/1fr/1.2fr. Гигант — span aria-hidden с font-size clamp(3rem, 13.5cqi, 13rem), color:transparent и -webkit-text-stroke 1px, margin-bottom -.18em срезает нижнюю часть; animation-timeline:view() под @supports поднимает его translateY(40 %)→0 при входе в кадр, :hover подвала подкрашивает контур акцентом. giant=true печатает brand, строка — своё слово, false — без гиганта. Палитра --vibeui-footer-021-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Сетка top до 56rem (container query) в колонку, от 56rem 1.6fr/1fr/1fr/1.2fr. Гигант — span aria-hidden с font-size clamp(3rem, 13.5cqi, 13rem), color:transparent и -webkit-text-stroke 1px, margin-bottom -.18em срезает нижнюю часть; animation-timeline:view() под @supports поднимает его translateY(40 %)→0 при входе в кадр, :hover подвала подкрашивает контур акцентом. giant=true печатает brand, строка — своё слово, false — без гиганта. Палитра --vibeui-footer-021-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3044,7 +3044,7 @@
           "en": {
             "title": "Course footer with a giant outlined brand",
             "description": "A course landing footer: a wordmark with a caption, the author and email, two link columns, socials as pills, sole-trader details and the licence. At the very bottom the brand name as a giant full-width outline — it rises from below on scroll and fills with the accent when the footer is hovered.",
-            "docs": "One file, zero dependencies, a server component. The top grid stacks below 56rem (container query), from 56rem 1.6fr/1fr/1fr/1.2fr. The giant is an aria-hidden span with font-size clamp(3rem, 13.5cqi, 13rem), color:transparent and a 1px -webkit-text-stroke, margin-bottom -.18em crops its lower part; animation-timeline:view() under @supports lifts it translateY(40 %)→0 as it enters the viewport, the footer's :hover tints the outline with the accent. giant=true prints brand, a string prints your own word, false removes the giant. Palette --vibeui-footer-021-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "docs": "One file, zero dependencies, a server component. The top grid stacks below 56rem (container query), from 56rem 1.6fr/1fr/1fr/1.2fr. The giant is an aria-hidden span with font-size clamp(3rem, 13.5cqi, 13rem), color:transparent and a 1px -webkit-text-stroke, margin-bottom -.18em crops its lower part; animation-timeline:view() under @supports lifts it translateY(40 %)→0 as it enters the viewport, the footer's :hover tints the outline with the accent. giant=true prints brand, a string prints your own word, false removes the giant. Palette --vibeui-footer-021-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained footer for a course, school or expert: a wordmark, the author, link columns, socials and legal details with a licence. All content via props.",
               "preserve": [
@@ -3151,7 +3151,7 @@
           "target": "@components/vibeui/footer-022.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. Полоска — flex из <i> с flex:1, по наведению flex:3. Иконки — inline SVG для telegram, vk, youtube, instagram по kind; незнакомый kind рисует первую букву. Кружок по наведению приподнимается с поворотом и инвертируется. Колонки 2/5 (container query 60rem). Палитра --vibeui-footer-022-* с light-dark: белый фон, чёрный текст, лаймовый акцент #d3f43a; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent и background переопределяют цвета.",
+      "docs": "Один файл, ноль зависимостей, серверный компонент. Полоска — flex из <i> с flex:1, по наведению flex:3. Иконки — inline SVG для telegram, vk, youtube, instagram по kind; незнакомый kind рисует первую букву. Кружок по наведению приподнимается с поворотом и инвертируется. Колонки 2/5 (container query 60rem). Палитра --vibeui-footer-022-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3230,7 +3230,7 @@
           "en": {
             "title": "Footer with a colour stripe and social icons",
             "description": "A festival footer: a thin colour stripe on top from the strand colours (segments stretch on hover), a wordmark with a dot on the left and round social icons on the right, five link columns, the organiser and year at the bottom.",
-            "docs": "One file, zero dependencies, a server component. The stripe is a flex of <i> with flex:1, flex:3 on hover. Icons are inline SVGs for telegram, vk, youtube, instagram by kind; an unknown kind draws the first letter. The circle lifts with a tilt and inverts on hover. Columns 2/5 (container query 60rem). Palette --vibeui-footer-022-* with light-dark: a white background, black text, a lime accent #d3f43a; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent and background override colours.",
+            "docs": "One file, zero dependencies, a server component. The stripe is a flex of <i> with flex:1, flex:3 on hover. Icons are inline SVGs for telegram, vk, youtube, instagram by kind; an unknown kind draws the first letter. The circle lifts with a tilt and inverts on hover. Columns 2/5 (container query 60rem). Palette --vibeui-footer-022-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained footer for a festival, media or community site: a colour stripe, a wordmark, social icons, five columns and the organiser. All content via props.",
               "preserve": [
@@ -3576,7 +3576,7 @@
       "name": "footer-024",
       "type": "registry:block",
       "title": "Компактный подвал приглашения с монограммой и хэштегом",
-      "description": "Подвал свадебного сайта на сливовом фоне в две строки: монограмма в круге с именами и датой, ряд якорей по центру, «ответьте до…» справа; ниже тонкая линия, хэштег капсулой и подпись «с любовью» с сердечком. Невысокий, чтобы страница заканчивалась точкой, а не ещё одним экраном.",
+      "description": "Подвал свадебного сайта на тёмном фоне в две строки: монограмма в круге с именами и датой, ряд якорей по центру, «ответьте до…» справа; ниже тонкая линия, хэштег капсулой и подпись «с любовью» с сердечком. Невысокий, чтобы страница заканчивалась точкой, а не ещё одним экраном.",
       "categories": [
         "footer"
       ],
@@ -3589,7 +3589,7 @@
           "target": "@components/vibeui/footer-024.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный. Две строки: верхняя — сетка auto/1fr/auto от 56rem (монограмма с именами, якоря, «ответьте до»), до 56rem столбиком по центру; нижняя — хэштег и подпись по краям над тонкой линией. Монограмма делится по « & », амперсанд акцентом, двойная рамка через ::before; хэштег — ссылка на страницу тега в Instagram (без #); якоря serif'ом с подчёркиванием scaleX по hover; «ответьте до» — ссылка на форму; сердце — SVG перед подписью. Фон всегда сливовый (light-dark даёт две глубины), текст кремовый. Палитра --vibeui-footer-024-*: крем #f6f1e8 / слива #2b1a24 через light-dark(), акцент терракота #b8552f, слива #4a1f36 для заголовков, шалфей #8a9a7b и песок #d9c5a5 для подписей; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Один файл, ноль зависимостей, серверный. Две строки: верхняя — сетка auto/1fr/auto от 56rem (монограмма с именами, якоря, «ответьте до»), до 56rem столбиком по центру; нижняя — хэштег и подпись по краям над тонкой линией. Монограмма делится по « & », амперсанд акцентом, двойная рамка через ::before; хэштег — ссылка на страницу тега в Instagram (без #); якоря serif'ом с подчёркиванием scaleX по hover; «ответьте до» — ссылка на форму; сердце — SVG перед подписью. Фон всегда тёмный (light-dark даёт две глубины), текст кремовый. Палитра --vibeui-footer-024-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3617,11 +3617,11 @@
         "ai": {
           "export": "Footer024",
           "usage": "<Footer024\n  monogram=\"В & А\"\n  names=\"Василиса и Артём\"\n  dateLabel=\"5 сентября 2027\"\n  place=\"усадьба Марфино\"\n  hashtag=\"#василисаартём2027\"\n  links={[\n    { label: \"История\", href: \"#story\" },\n    { label: \"Подтвердить\", href: \"#rsvp\" },\n  ]}\n  rsvpLabel=\"до 1 августа\"\n  rsvpHref=\"#rsvp\"\n  signature=\"С любовью, В. и А.\"\n/>",
-          "summary": "Самодостаточный подвал свадебного приглашения: монограмма, имена и дата, хэштег, якоря, «ответьте до» и подпись. Всё содержимое пропсами, фон всегда сливовый.",
+          "summary": "Самодостаточный подвал свадебного приглашения: монограмма, имена и дата, хэштег, якоря, «ответьте до» и подпись. Всё содержимое пропсами, фон всегда тёмный.",
           "preserve": [
             "монограмму в круге с двойной рамкой рядом с именами и датой",
             "две невысокие строки: якоря по центру, хэштег и подпись по краям",
-            "сливовый фон с кремовым serif'ом — подвал завершает страницу, а не повторяет её"
+            "тёмный фон с кремовым serif'ом — подвал завершает страницу, а не повторяет её"
           ],
           "adapt": [
             "monogram, names, dateLabel, place, hashtag, links, signature",
@@ -3675,14 +3675,14 @@
         "i18n": {
           "en": {
             "title": "Compact invitation footer with a monogram and hashtag",
-            "description": "A wedding site footer on plum in two rows: a monogram in a circle with the names and date, a centred row of anchors, “reply by…” on the right; below a thin line, a hashtag pill and a “with love” signature with a heart. Short, so the page ends with a full stop rather than another screen.",
-            "docs": "One file, zero dependencies, server-rendered. Two rows: the top is an auto/1fr/auto grid from 56rem (monogram with names, anchors, “reply by”), a centred column below 56rem; the bottom has the hashtag and signature at the edges above a thin line. The monogram splits on “ & ”, the ampersand takes the accent, the double frame via ::before; the hashtag links to the tag page on Instagram (without #); anchors in serif with a scaleX underline on hover; “reply by” links to the form; the heart is an SVG before the signature. The background is always plum (light-dark gives two depths), the text cream. Palette --vibeui-footer-024-*: cream #f6f1e8 / plum #2b1a24 via light-dark(), terracotta #b8552f accent, plum #4a1f36 for headings, sage #8a9a7b and sand #d9c5a5 for captions; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "description": "A wedding site footer on a dark ground in two rows: a monogram in a circle with the names and date, a centred row of anchors, “reply by…” on the right; below a thin line, a hashtag pill and a “with love” signature with a heart. Short, so the page ends with a full stop rather than another screen.",
+            "docs": "One file, zero dependencies, server-rendered. Two rows: the top is an auto/1fr/auto grid from 56rem (monogram with names, anchors, “reply by”), a centred column below 56rem; the bottom has the hashtag and signature at the edges above a thin line. The monogram splits on “ & ”, the ampersand takes the accent, the double frame via ::before; the hashtag links to the tag page on Instagram (without #); anchors in serif with a scaleX underline on hover; “reply by” links to the form; the heart is an SVG before the signature. The background is always dark (light-dark gives two depths), the text cream. Palette --vibeui-footer-024-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
-              "summary": "A self-contained wedding invitation footer: a monogram, names and date, hashtag, anchors, “reply by” and a signature. All content via props, always plum.",
+              "summary": "A self-contained wedding invitation footer: a monogram, names and date, hashtag, anchors, “reply by” and a signature. All content via props, always dark.",
               "preserve": [
                 "the monogram in a double-framed circle next to the names and date",
                 "two short rows: anchors centred, hashtag and signature at the edges",
-                "the plum background with cream serif — the footer closes the page rather than repeating it"
+                "the dark background with cream serif — the footer closes the page rather than repeating it"
               ],
               "adapt": [
                 "monogram, names, dateLabel, place, hashtag, links, signature",
@@ -3770,7 +3770,7 @@
           "target": "@components/vibeui/footer-025.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный. Перфорация — ::before radial-gradient по верхнему краю. Верхняя строка — сетка 1fr/auto/1fr от 56rem (до — столбиком по центру): коды с самолётиком Oswald, имена капсом с рукописной строкой Lobster, координаты ui-monospace с подписью места. Нижняя строка — якоря капсом, хэштег-капсула на Instagram, «check-in до» с ссылкой. Фон всегда чернильный (light-dark даёт две глубины). Палитра --vibeui-footer-025-*: бумага #fffaf0 и песок #f3e9d2 / тёмно-синие #14202a через light-dark(), чернила #123a4b, акцент коралл #ff6b57, море #2aa7a0, солнце #f2c14e; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Один файл, ноль зависимостей, серверный. Перфорация — ::before radial-gradient по верхнему краю. Верхняя строка — сетка 1fr/auto/1fr от 56rem (до — столбиком по центру): коды с самолётиком Oswald, имена капсом с рукописной строкой Lobster, координаты ui-monospace с подписью места. Нижняя строка — якоря капсом, хэштег-капсула на Instagram, «check-in до» с ссылкой. Фон всегда чернильный (light-dark даёт две глубины). Палитра --vibeui-footer-025-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3857,7 +3857,7 @@
           "en": {
             "title": "Boarding-pass footer with beach coordinates",
             "description": "A destination-wedding footer like the bottom of a boarding pass on ink blue: a perforated tear line on top, flight codes and date on the left, names with a handwritten “¡Hasta la boda!” in the centre, beach coordinates in monospace on the right; below a row of anchors, the hashtag and “check-in by…”. Short.",
-            "docs": "One file, zero dependencies, server-rendered. The perforation is a ::before radial-gradient along the top edge. The top row is a 1fr/auto/1fr grid from 56rem (a centred column below): Oswald codes with a plane, caps names with a Lobster script line, ui-monospace coordinates with the place label. The bottom row has caps anchors, an Instagram hashtag pill and “check-in by” with a link. The background is always ink (light-dark gives two depths). Palette --vibeui-footer-025-*: paper #fffaf0 and sand #f3e9d2 / deep navy #14202a via light-dark(), ink #123a4b, coral #ff6b57 accent, sea #2aa7a0, sun #f2c14e; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "One file, zero dependencies, server-rendered. The perforation is a ::before radial-gradient along the top edge. The top row is a 1fr/auto/1fr grid from 56rem (a centred column below): Oswald codes with a plane, caps names with a Lobster script line, ui-monospace coordinates with the place label. The bottom row has caps anchors, an Instagram hashtag pill and “check-in by” with a link. The background is always ink (light-dark gives two depths). Palette --vibeui-footer-025-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained destination-wedding footer: flight codes, names with “¡Hasta la boda!”, beach coordinates, anchors, hashtag and “check-in by”. All via props, always ink.",
               "preserve": [
@@ -3947,7 +3947,7 @@
           "target": "@components/vibeui/footer-026.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный. Ветки — два SVG path по углам (правый зеркален scaleX(-1)), хвойный цвет с прозрачностью; на узких экранах меньше. Центр — монограмма с SVG-снежинкой в drop-shadow, имена Cormorant, рукописная строка Marck Script, дата и место капителями с точкой-свечкой. Нижняя строка — якоря капителями, хэштег-капсула на Instagram, «ответьте до» с ссылкой; от 56rem разъезжается по краям. Фон всегда ночной (light-dark даёт две глубины). Палитра --vibeui-footer-026-*: синяя ночь #0b1220 и индиго #131c2e / слоновая кость #f2eee6 через light-dark(), серебро #9fb0c8, свеча #f2b64f, огонь #ff9a3c; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Один файл, ноль зависимостей, серверный. Ветки — два SVG path по углам (правый зеркален scaleX(-1)), хвойный цвет с прозрачностью; на узких экранах меньше. Центр — монограмма с SVG-снежинкой в drop-shadow, имена Cormorant, рукописная строка Marck Script, дата и место капителями с точкой-свечкой. Нижняя строка — якоря капителями, хэштег-капсула на Instagram, «ответьте до» с ссылкой; от 56rem разъезжается по краям. Фон всегда тёмный (light-dark даёт две глубины). Палитра --vibeui-footer-026-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "tags": [
           "wedding",
@@ -3973,7 +3973,7 @@
         "ai": {
           "export": "Footer026",
           "usage": "<Footer026\n  initials={[\"В\", \"Д\"]}\n  names=\"Валерия и Дмитрий\"\n  script=\"до встречи в снегу\"\n  dateLabel=\"18 декабря 2027\"\n  place=\"Лесная усадьба\"\n  hashtag=\"#лераидимавснегу\"\n  links={[\n    { label: \"История\", href: \"#story\" },\n    { label: \"Ответить\", href: \"#rsvp\" },\n  ]}\n  rsvpLabel=\"до 1 ноября\"\n/>",
-          "summary": "Самодостаточный подвал зимней свадьбы: хвоя по углам, монограмма со снежинкой, имена и «до встречи в снегу», дата и место, якоря, хэштег и «ответьте до». Всё пропсами, фон всегда ночной.",
+          "summary": "Самодостаточный подвал зимней свадьбы: хвоя по углам, монограмма со снежинкой, имена и «до встречи в снегу», дата и место, якоря, хэштег и «ответьте до». Всё пропсами, фон всегда тёмный.",
           "preserve": [
             "ветки хвои по углам и монограмму со светящейся снежинкой",
             "рукописную строку под именами и точку-свечку между датой и местом",
@@ -4032,9 +4032,9 @@
           "en": {
             "title": "Footer with pine branches in the corners and a snowflake monogram",
             "description": "A winter-wedding footer on night blue: pine branches in the corners, a snowflake monogram in the centre, serif names and a handwritten “see you in the snow”, date and place; below a row of anchors, the hashtag and “reply by…”. Short.",
-            "docs": "One file, zero dependencies, server-rendered. The branches are two SVG paths in the corners (the right one mirrored with scaleX(-1)), pine-coloured with transparency; smaller on narrow screens. The centre has the monogram with an SVG snowflake in a drop-shadow, Cormorant names, a Marck Script line, date and place in small caps with a candle dot. The bottom row has small-caps anchors, an Instagram hashtag pill and “reply by” with a link; from 56rem it spreads to the edges. The background is always night (light-dark gives two depths). Palette --vibeui-footer-026-*: night blue #0b1220 and indigo #131c2e / ivory #f2eee6 via light-dark(), silver #9fb0c8, candle #f2b64f, fire #ff9a3c; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "One file, zero dependencies, server-rendered. The branches are two SVG paths in the corners (the right one mirrored with scaleX(-1)), pine-coloured with transparency; smaller on narrow screens. The centre has the monogram with an SVG snowflake in a drop-shadow, Cormorant names, a Marck Script line, date and place in small caps with a candle dot. The bottom row has small-caps anchors, an Instagram hashtag pill and “reply by” with a link; from 56rem it spreads to the edges. The background is always dark (light-dark gives two depths). Palette --vibeui-footer-026-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
-              "summary": "A self-contained winter-wedding footer: pine in the corners, a snowflake monogram, names and “see you in the snow”, date and place, anchors, hashtag and “reply by”. All via props, always night.",
+              "summary": "A self-contained winter-wedding footer: pine in the corners, a snowflake monogram, names and “see you in the snow”, date and place, anchors, hashtag and “reply by”. All via props, always dark.",
               "preserve": [
                 "the pine branches in the corners and the monogram with a glowing snowflake",
                 "the handwritten line under the names and the candle dot between date and place",

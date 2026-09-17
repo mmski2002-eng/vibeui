@@ -28,6 +28,7 @@ export type Testimonials018Props = {
   closeLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -41,12 +42,12 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;7
 
 const STYLES = `
 :where([data-vibeui-block="testimonials-018"]){
---vibeui-testimonials-018-bg:light-dark(#ffffff,#0f1117);
---vibeui-testimonials-018-fg:light-dark(#111827,#f3f4f6);
---vibeui-testimonials-018-muted:light-dark(#6b7280,#9ca3af);
---vibeui-testimonials-018-card:light-dark(#f8fafc,#161a23);
---vibeui-testimonials-018-line:light-dark(#e5e7eb,#262b36);
---vibeui-testimonials-018-accent:#4f46e5;
+--vibeui-testimonials-018-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-testimonials-018-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-testimonials-018-muted:light-dark(#6b7280,#a3a3a3);
+--vibeui-testimonials-018-card:light-dark(#f8fafc,#242424);
+--vibeui-testimonials-018-line:light-dark(#e5e7eb,#2e2e2e);
+--vibeui-testimonials-018-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-testimonials-018-marker:light-dark(#d9f99d,rgb(163 230 53 / .3));
 --vibeui-testimonials-018-display:"Unbounded","Manrope",ui-sans-serif,system-ui,sans-serif;
 --vibeui-testimonials-018-font:"Inter",ui-sans-serif,system-ui,sans-serif;
@@ -124,6 +125,7 @@ export function Testimonials018({
   closeLabel = "Закрыть",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -132,6 +134,7 @@ export function Testimonials018({
   const [current, setCurrent] = useState<Testimonials018Item | null>(null)
   const palette = {
     ...(accent ? { "--vibeui-testimonials-018-accent": accent } : null),
+    ...(ink ? { "--vibeui-testimonials-018-fg": ink } : null),
     ...(background ? { "--vibeui-testimonials-018-bg": background } : null),
     ...style,
   } as CSSProperties

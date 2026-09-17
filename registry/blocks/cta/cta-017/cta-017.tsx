@@ -21,6 +21,7 @@ export type Cta017Props = {
   action?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -36,14 +37,16 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;7
 const STYLES = `
 @property --vibeui-cta-017-a{syntax:"<angle>";inherits:false;initial-value:0deg}
 :where([data-vibeui-block="cta-017"]){
---vibeui-cta-017-bg:light-dark(#ffffff,#0f1117);
---vibeui-cta-017-fg:light-dark(#111827,#f3f4f6);
---vibeui-cta-017-card:#111827;
---vibeui-cta-017-on-card:#f8fafc;
---vibeui-cta-017-muted:rgb(248 250 252 / .65);
---vibeui-cta-017-line:rgb(248 250 252 / .16);
---vibeui-cta-017-accent:#4f46e5;
---vibeui-cta-017-on-accent:#ffffff;
+--vibeui-cta-017-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-cta-017-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-cta-017-card:#111111;
+--vibeui-cta-017-on-card:#f2f2f2;
+--vibeui-cta-017-muted:color-mix(in oklab,var(--vibeui-cta-017-on-card) 65%,transparent);
+--vibeui-cta-017-line:color-mix(in oklab,var(--vibeui-cta-017-on-card) 16%,transparent);
+--vibeui-cta-017-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-cta-017-on-accent:oklch(from var(--vibeui-cta-017-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
+--vibeui-cta-017-plate-accent:oklch(from var(--vibeui-cta-017-accent) calc(l + clamp(0,(0.02 - c) * 100,1) * (0.92 - l)) c h);
+--vibeui-cta-017-plate-on-accent:oklch(from var(--vibeui-cta-017-plate-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-cta-017-marker:#d9f99d;
 --vibeui-cta-017-display:"Unbounded","Manrope",ui-sans-serif,system-ui,sans-serif;
 --vibeui-cta-017-font:"Inter",ui-sans-serif,system-ui,sans-serif;
@@ -80,8 +83,8 @@ container-type:inline-size;
 [data-vibeui-block="cta-017"] input[type="email"]{height:3.25rem;padding:0 1.1rem;border-radius:999px;border:1px solid var(--vibeui-cta-017-line);background:rgb(248 250 252 / .06);color:inherit;font:inherit}
 [data-vibeui-block="cta-017"] input[type="email"]::placeholder{color:var(--vibeui-cta-017-muted)}
 [data-vibeui-block="cta-017"] input:focus-visible,[data-vibeui-block="cta-017"] button:focus-visible{outline:2px solid var(--vibeui-cta-017-marker);outline-offset:2px}
-[data-vibeui-block="cta-017"] [data-part="submit"]{height:3.25rem;padding:0 1.5rem;border:0;border-radius:999px;background:var(--vibeui-cta-017-accent);color:var(--vibeui-cta-017-on-accent);font:inherit;font-weight:600;cursor:pointer;white-space:nowrap;transition:transform .2s,box-shadow .3s}
-[data-vibeui-block="cta-017"] [data-part="submit"]:hover{transform:translateY(-1px);box-shadow:0 14px 30px -14px var(--vibeui-cta-017-accent)}
+[data-vibeui-block="cta-017"] [data-part="submit"]{height:3.25rem;padding:0 1.5rem;border:0;border-radius:999px;background:var(--vibeui-cta-017-plate-accent);color:var(--vibeui-cta-017-plate-on-accent);font:inherit;font-weight:600;cursor:pointer;white-space:nowrap;transition:transform .2s,box-shadow .3s}
+[data-vibeui-block="cta-017"] [data-part="submit"]:hover{transform:translateY(-1px);box-shadow:0 14px 30px -14px var(--vibeui-cta-017-plate-accent)}
 [data-vibeui-block="cta-017"] [data-part="seats"]{display:inline-flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--vibeui-cta-017-muted)}
 [data-vibeui-block="cta-017"] [data-part="seats"]::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:var(--vibeui-cta-017-marker);box-shadow:0 0 0 3px rgb(217 249 157 / .25)}
 [data-vibeui-block="cta-017"] [data-part="consent"]{margin:0;font-size:.72rem;color:var(--vibeui-cta-017-muted)}
@@ -126,6 +129,7 @@ export function Cta017({
   action = "",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -135,6 +139,7 @@ export function Cta017({
   const [done, setDone] = useState(false)
   const palette = {
     ...(accent ? { "--vibeui-cta-017-accent": accent } : null),
+    ...(ink ? { "--vibeui-cta-017-fg": ink } : null),
     ...(background ? { "--vibeui-cta-017-bg": background } : null),
     ...style,
   } as CSSProperties

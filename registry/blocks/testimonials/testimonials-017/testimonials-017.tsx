@@ -21,6 +21,8 @@ export type Testimonials017Props = {
   image?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -33,14 +35,14 @@ const FONTS =
 
 const STYLES = `
 :where([data-vibeui-block="testimonials-017"]){
---vibeui-testimonials-017-bg:#141110;
---vibeui-testimonials-017-fg:#f2ebe0;
---vibeui-testimonials-017-muted:rgb(242 235 224 / .68);
---vibeui-testimonials-017-glass:rgb(20 17 16 / .55);
---vibeui-testimonials-017-line:rgb(242 235 224 / .16);
---vibeui-testimonials-017-accent:#7d2a3a;
---vibeui-testimonials-017-glow:0 0 24px rgb(125 42 58 / .7),0 0 70px rgb(125 42 58 / .35);
---vibeui-testimonials-017-accent-ink:color-mix(in oklab,var(--vibeui-testimonials-017-accent) 55%,#f2ebe0);
+--vibeui-testimonials-017-bg:#1a1a1a;
+--vibeui-testimonials-017-fg:#f2f2f2;
+--vibeui-testimonials-017-muted:color-mix(in oklab,var(--vibeui-testimonials-017-fg) 68%,transparent);
+--vibeui-testimonials-017-glass:color-mix(in oklab,var(--vibeui-testimonials-017-bg) 55%,transparent);
+--vibeui-testimonials-017-line:color-mix(in oklab,var(--vibeui-testimonials-017-fg) 16%,transparent);
+--vibeui-testimonials-017-accent:#f2f2f2;
+--vibeui-testimonials-017-glow:0 0 24px color-mix(in oklab,var(--vibeui-testimonials-017-accent) 70%,transparent),0 0 70px color-mix(in oklab,var(--vibeui-testimonials-017-accent) 35%,transparent);
+--vibeui-testimonials-017-accent-ink:color-mix(in oklab,var(--vibeui-testimonials-017-accent) 55%,var(--vibeui-testimonials-017-fg));
 --vibeui-testimonials-017-display:"Playfair Display",Georgia,"Times New Roman",serif;
 --vibeui-testimonials-017-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -48,7 +50,7 @@ container-type:inline-size;
 [data-vibeui-block="testimonials-017"]{box-sizing:border-box;position:relative;display:block;overflow:hidden;background:var(--vibeui-testimonials-017-bg);color:var(--vibeui-testimonials-017-fg);font-family:var(--vibeui-testimonials-017-font);font-size:.9375rem;line-height:1.5;color-scheme:dark}
 [data-vibeui-block="testimonials-017"] *{box-sizing:border-box}
 [data-vibeui-block="testimonials-017"] [data-part="picture"]{position:absolute;inset:-4%;width:108%;height:108%;object-fit:cover;filter:blur(10px) saturate(.8);opacity:.5}
-[data-vibeui-block="testimonials-017"] [data-part="shade"]{position:absolute;inset:0;background:linear-gradient(to bottom,rgb(20 17 16 / .7),rgb(20 17 16 / .9))}
+[data-vibeui-block="testimonials-017"] [data-part="shade"]{position:absolute;inset:0;background:linear-gradient(to bottom,color-mix(in oklab,var(--vibeui-testimonials-017-bg) 70%,transparent),color-mix(in oklab,var(--vibeui-testimonials-017-bg) 90%,transparent))}
 [data-vibeui-block="testimonials-017"] [data-part="shell"]{position:relative;z-index:1;max-width:76rem;margin:0 auto;padding:4rem 1.25rem;display:grid;gap:2.5rem}
 [data-vibeui-block="testimonials-017"] [data-part="eyebrow"]{margin:0 0 .75rem;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--vibeui-testimonials-017-accent-ink);font-weight:600}
 [data-vibeui-block="testimonials-017"] [data-part="title"]{margin:0;font-family:var(--vibeui-testimonials-017-display);font-weight:400;font-size:clamp(2.25rem,5cqi,3.5rem);line-height:1.05;letter-spacing:-.01em}
@@ -84,11 +86,15 @@ export function Testimonials017({
   image = "",
   tone = "auto",
   accent,
+  ink,
+  background,
   className,
   style,
 }: Testimonials017Props) {
   const palette = {
     ...(accent ? { "--vibeui-testimonials-017-accent": accent } : null),
+    ...(ink ? { "--vibeui-testimonials-017-fg": ink } : null),
+    ...(background ? { "--vibeui-testimonials-017-bg": background } : null),
     ...style,
   } as CSSProperties
 

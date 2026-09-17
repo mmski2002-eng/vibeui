@@ -34,7 +34,8 @@ const page: CSSProperties = {
   fontFamily: '"Inter",ui-sans-serif,system-ui,sans-serif',
 }
 
-const light = { tone: "light" } as const
+// Тема страницы: блоки каталога по умолчанию нейтральные, цвета задаёт сценарий.
+const light = { tone: "light", background: "#ffffff", ink: "#111827", accent: "#4f46e5" } as const
 
 const SOFT = "linear-gradient(180deg,#ffffff 0%,#eef2ff 40%,#f5f3ff 100%)"
 
@@ -120,7 +121,7 @@ export default function Page() {
       </div>
 
       <div id="pricing" data-reveal>
-        <Pricing020 {...light} />
+        <Pricing020 {...light} background="#f8fafc" />
       </div>
 
       <div id="reviews" data-reveal>
@@ -136,7 +137,7 @@ export default function Page() {
       </div>
 
       <div id="footer">
-        <Footer021 {...light} email="hello@figmapro.school" />
+        <Footer021 {...light} background="#f8fafc" email="hello@figmapro.school" />
       </div>
 
       <Cta018 {...light} price="49 000 ₽" href="#pricing" caption="Старт 6 октября" showAfter="#hero" hideNear="#pricing, #enroll, #footer" />

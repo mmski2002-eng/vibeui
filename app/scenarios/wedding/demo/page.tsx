@@ -33,7 +33,10 @@ const page: CSSProperties = {
   fontFamily: '"Manrope",ui-sans-serif,system-ui,sans-serif',
 }
 
-const light = { tone: "light" } as const
+// Тема страницы: блоки каталога по умолчанию нейтральные, цвета задаёт сценарий.
+const light = { tone: "light", background: "#f6f1e8", ink: "#2b1a24", accent: "#b8552f" } as const
+// Чередующиеся секции на более светлой бумаге.
+const paper = { ...light, background: "#fffaf3" } as const
 
 const GALLERY = [
   {
@@ -57,11 +60,16 @@ const GALLERY = [
 export default function Page() {
   return (
     <div style={page} className="min-h-dvh" data-demo="wedding">
+      {/* Заголовки сливой: в каталоге блоки рисуют их чернилами, оттенок задаёт сценарий. */}
+      <style href="vibeui-demo-wedding-plum" precedence="medium">
+        {`[data-vibeui-block]{--vibeui-navbar-025-plum:#4a1f36;--vibeui-hero-025-plum:#4a1f36;--vibeui-about-011-plum:#4a1f36;--vibeui-event-008-plum:#4a1f36;--vibeui-event-009-plum:#4a1f36;--vibeui-map-007-plum:#4a1f36;--vibeui-contact-018-plum:#4a1f36;--vibeui-faq-020-plum:#4a1f36;--vibeui-portfolio-008-plum:#4a1f36;--vibeui-people-010-plum:#4a1f36;--vibeui-cta-021-plum:#4a1f36;--vibeui-testimonials-020-plum:#4a1f36;}`}
+      </style>
       <style href="vibeui-demo-scroll" precedence="medium">
         {`html{scroll-behavior:smooth;scroll-padding-top:5rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}`}
       </style>
       <Navbar025
         {...light}
+        background="rgb(246 241 232 / .85)"
         brandHref="#hero"
         links={[
           { label: "История", href: "#story" },
@@ -118,7 +126,7 @@ export default function Page() {
       </div>
 
       <div id="dresscode">
-        <Event009 {...light} />
+        <Event009 {...paper} />
       </div>
 
       <div id="place">
@@ -130,7 +138,7 @@ export default function Page() {
       </div>
 
       <div id="rsvp">
-        <Contact018 {...light} />
+        <Contact018 {...paper} />
       </div>
 
       <div id="faq">
@@ -143,7 +151,7 @@ export default function Page() {
 
       <div id="people">
         <People010
-          {...light}
+          {...paper}
           people={[
             {
               name: "Ксения",
@@ -178,11 +186,11 @@ export default function Page() {
       </div>
 
       <div id="wishes">
-        <Testimonials020 {...light} />
+        <Testimonials020 {...paper} />
       </div>
 
       <div id="footer">
-        <Footer024 {...light} />
+        <Footer024 {...light} background="#2b1a24" ink="#f3ebe4" accent="#d9784f" />
       </div>
     </div>
   )

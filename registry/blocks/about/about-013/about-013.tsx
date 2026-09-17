@@ -19,6 +19,7 @@ export type About013Props = {
   frames?: readonly About013Frame[]
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -36,12 +37,12 @@ const BULBS = [125, 375, 625, 875] as const
 
 const STYLES = `
 :where([data-vibeui-block="about-013"]){
---vibeui-about-013-bg:light-dark(#f2eee6,#0b1220);
---vibeui-about-013-card:light-dark(#ffffff,#131c2e);
---vibeui-about-013-fg:light-dark(#1c2740,#f2eee6);
---vibeui-about-013-muted:light-dark(#5b6880,#9fb0c8);
---vibeui-about-013-line:light-dark(rgb(28 39 64 / .16),rgb(159 176 200 / .22));
---vibeui-about-013-accent:#f2b64f;
+--vibeui-about-013-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-about-013-card:light-dark(#ffffff,#242424);
+--vibeui-about-013-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-about-013-muted:light-dark(#6b6b6b,#a3a3a3);
+--vibeui-about-013-line:light-dark(color-mix(in oklab,var(--vibeui-about-013-fg) 16%,transparent),color-mix(in oklab,var(--vibeui-about-013-fg) 22%,transparent));
+--vibeui-about-013-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-about-013-fire:#ff9a3c;
 --vibeui-about-013-silver:#9fb0c8;
 --vibeui-about-013-display:"Cormorant Garamond",Georgia,serif;
@@ -105,6 +106,7 @@ export function About013({
   ],
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -113,6 +115,7 @@ export function About013({
   const [lit, setLit] = useState(0)
   const palette = {
     ...(accent ? { "--vibeui-about-013-accent": accent } : null),
+    ...(ink ? { "--vibeui-about-013-fg": ink } : null),
     ...(background ? { "--vibeui-about-013-bg": background } : null),
     ...style,
   } as CSSProperties

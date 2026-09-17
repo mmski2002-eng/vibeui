@@ -18,6 +18,7 @@ export type Event013Props = {
   skyNote?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -33,12 +34,12 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,
 
 const STYLES = `
 :where([data-vibeui-block="event-013"]){
---vibeui-event-013-bg:light-dark(#f2eee6,#0b1220);
---vibeui-event-013-card:light-dark(#ffffff,#131c2e);
---vibeui-event-013-fg:light-dark(#1c2740,#f2eee6);
---vibeui-event-013-muted:light-dark(#5b6880,#9fb0c8);
---vibeui-event-013-line:light-dark(rgb(28 39 64 / .16),rgb(159 176 200 / .22));
---vibeui-event-013-accent:#f2b64f;
+--vibeui-event-013-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-event-013-card:light-dark(#ffffff,#242424);
+--vibeui-event-013-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-event-013-muted:light-dark(#6b6b6b,#a3a3a3);
+--vibeui-event-013-line:light-dark(color-mix(in oklab,var(--vibeui-event-013-fg) 16%,transparent),color-mix(in oklab,var(--vibeui-event-013-fg) 22%,transparent));
+--vibeui-event-013-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-event-013-fire:#ff9a3c;
 --vibeui-event-013-silver:#9fb0c8;
 --vibeui-event-013-display:"Cormorant Garamond",Georgia,serif;
@@ -105,6 +106,7 @@ export function Event013({
   ],
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -113,6 +115,7 @@ export function Event013({
   const [active, setActive] = useState(0)
   const palette = {
     ...(accent ? { "--vibeui-event-013-accent": accent } : null),
+    ...(ink ? { "--vibeui-event-013-fg": ink } : null),
     ...(background ? { "--vibeui-event-013-bg": background } : null),
     ...style,
   } as CSSProperties

@@ -21,6 +21,7 @@ export type Portfolio008Props = {
   nextLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -36,12 +37,12 @@ const GRAIN = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg
 
 const STYLES = `
 :where([data-vibeui-block="portfolio-008"]){
---vibeui-portfolio-008-bg:light-dark(#f6f1e8,#17131a);
---vibeui-portfolio-008-fg:light-dark(#2b1a24,#f3ebe4);
---vibeui-portfolio-008-muted:light-dark(#7a6a70,#b3a5aa);
---vibeui-portfolio-008-line:light-dark(#e2d8ca,#372b31);
---vibeui-portfolio-008-accent:#b8552f;
---vibeui-portfolio-008-plum:light-dark(#4a1f36,#e9c7d6);
+--vibeui-portfolio-008-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-portfolio-008-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-portfolio-008-muted:light-dark(#7a6a70,#a3a3a3);
+--vibeui-portfolio-008-line:light-dark(#e2d8ca,#2e2e2e);
+--vibeui-portfolio-008-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-portfolio-008-plum:var(--vibeui-portfolio-008-fg);
 --vibeui-portfolio-008-sand:light-dark(#d9c5a5,#5a4a3a);
 --vibeui-portfolio-008-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
 --vibeui-portfolio-008-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
@@ -114,6 +115,7 @@ export function Portfolio008({
   nextLabel = "Следующее",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -122,6 +124,7 @@ export function Portfolio008({
   const [current, setCurrent] = useState<number | null>(null)
   const palette = {
     ...(accent ? { "--vibeui-portfolio-008-accent": accent } : null),
+    ...(ink ? { "--vibeui-portfolio-008-fg": ink } : null),
     ...(background ? { "--vibeui-portfolio-008-bg": background } : null),
     ...style,
   } as CSSProperties

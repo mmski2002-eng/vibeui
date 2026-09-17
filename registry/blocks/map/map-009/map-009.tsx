@@ -24,6 +24,7 @@ export type Map009Props = {
   theme?: "auto" | "light" | "dark"
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -37,12 +38,12 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,
 
 const STYLES = `
 :where([data-vibeui-block="map-009"]){
---vibeui-map-009-bg:light-dark(#f2eee6,#0b1220);
---vibeui-map-009-card:light-dark(#ffffff,#131c2e);
---vibeui-map-009-fg:light-dark(#1c2740,#f2eee6);
---vibeui-map-009-muted:light-dark(#5b6880,#9fb0c8);
---vibeui-map-009-line:light-dark(rgb(28 39 64 / .16),rgb(159 176 200 / .24));
---vibeui-map-009-accent:#f2b64f;
+--vibeui-map-009-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-map-009-card:light-dark(#ffffff,#242424);
+--vibeui-map-009-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-map-009-muted:light-dark(#6b6b6b,#a3a3a3);
+--vibeui-map-009-line:light-dark(color-mix(in oklab,var(--vibeui-map-009-fg) 16%,transparent),color-mix(in oklab,var(--vibeui-map-009-fg) 24%,transparent));
+--vibeui-map-009-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-map-009-silver:#9fb0c8;
 --vibeui-map-009-display:"Cormorant Garamond",Georgia,serif;
 --vibeui-map-009-script:"Marck Script","Segoe Script",cursive;
@@ -120,12 +121,14 @@ export function Map009({
   theme = "auto",
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
 }: Map009Props) {
   const palette = {
     ...(accent ? { "--vibeui-map-009-accent": accent } : null),
+    ...(ink ? { "--vibeui-map-009-fg": ink } : null),
     ...(background ? { "--vibeui-map-009-bg": background } : null),
     ...style,
   } as CSSProperties

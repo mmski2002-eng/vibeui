@@ -19,6 +19,7 @@ export type People010Props = {
   people?: readonly People010Person[]
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -32,13 +33,13 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,
 
 const STYLES = `
 :where([data-vibeui-block="people-010"]){
---vibeui-people-010-bg:light-dark(#fffaf3,#1d1620);
---vibeui-people-010-fg:light-dark(#2b1a24,#f3ebe4);
---vibeui-people-010-muted:light-dark(#7a6a70,#b3a5aa);
---vibeui-people-010-line:light-dark(#e2d8ca,#372b31);
---vibeui-people-010-paper:light-dark(#ffffff,#2a2230);
---vibeui-people-010-accent:#b8552f;
---vibeui-people-010-plum:light-dark(#4a1f36,#e9c7d6);
+--vibeui-people-010-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-people-010-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-people-010-muted:light-dark(#7a6a70,#a3a3a3);
+--vibeui-people-010-line:light-dark(#e2d8ca,#2e2e2e);
+--vibeui-people-010-paper:light-dark(#ffffff,#2a2a2a);
+--vibeui-people-010-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-people-010-plum:var(--vibeui-people-010-fg);
 --vibeui-people-010-sand:light-dark(#d9c5a5,#5a4a3a);
 --vibeui-people-010-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
 --vibeui-people-010-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
@@ -89,12 +90,14 @@ export function People010({
   ],
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
 }: People010Props) {
   const palette = {
     ...(accent ? { "--vibeui-people-010-accent": accent } : null),
+    ...(ink ? { "--vibeui-people-010-fg": ink } : null),
     ...(background ? { "--vibeui-people-010-bg": background } : null),
     ...style,
   } as CSSProperties

@@ -24,6 +24,7 @@ export type Testimonials020Props = {
   action?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -37,17 +38,17 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,
 
 const STYLES = `
 :where([data-vibeui-block="testimonials-020"]){
---vibeui-testimonials-020-bg:light-dark(#fffaf3,#1d1620);
---vibeui-testimonials-020-fg:light-dark(#2b1a24,#f3ebe4);
---vibeui-testimonials-020-muted:light-dark(#7a6a70,#b3a5aa);
---vibeui-testimonials-020-line:light-dark(#e2d8ca,#372b31);
---vibeui-testimonials-020-board:light-dark(#e6d5bd,#2a2230);
---vibeui-testimonials-020-note:light-dark(#fffdf8,#3a2f40);
---vibeui-testimonials-020-field:light-dark(#ffffff,#241c28);
---vibeui-testimonials-020-accent:#b8552f;
---vibeui-testimonials-020-plum:light-dark(#4a1f36,#e9c7d6);
+--vibeui-testimonials-020-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-testimonials-020-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-testimonials-020-muted:light-dark(#7a6a70,#a3a3a3);
+--vibeui-testimonials-020-line:light-dark(#e2d8ca,#2e2e2e);
+--vibeui-testimonials-020-board:light-dark(#e6d5bd,#2a2a2a);
+--vibeui-testimonials-020-note:light-dark(#fffdf8,#3a3a3a);
+--vibeui-testimonials-020-field:light-dark(#ffffff,#242424);
+--vibeui-testimonials-020-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-testimonials-020-plum:var(--vibeui-testimonials-020-fg);
 --vibeui-testimonials-020-brass:#c9a35a;
---vibeui-testimonials-020-on-accent:#fff7ef;
+--vibeui-testimonials-020-on-accent:oklch(from var(--vibeui-testimonials-020-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-testimonials-020-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
 --vibeui-testimonials-020-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -113,6 +114,7 @@ export function Testimonials020({
   action,
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -122,6 +124,7 @@ export function Testimonials020({
   const [text, setText] = useState("")
   const palette = {
     ...(accent ? { "--vibeui-testimonials-020-accent": accent } : null),
+    ...(ink ? { "--vibeui-testimonials-020-fg": ink } : null),
     ...(background ? { "--vibeui-testimonials-020-bg": background } : null),
     ...style,
   } as CSSProperties

@@ -23,6 +23,7 @@ export type Navbar027Props = {
   spy?: boolean
   tone?: "auto" | "light" | "dark"
   accent?: string
+  ink?: string
   background?: string
   className?: string
   style?: CSSProperties
@@ -37,14 +38,14 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,
 
 const STYLES = `
 :where([data-vibeui-block="navbar-027"]){
---vibeui-navbar-027-bg:light-dark(rgb(242 238 230 / .88),rgb(11 18 32 / .78));
---vibeui-navbar-027-fg:light-dark(#1c2740,#f2eee6);
---vibeui-navbar-027-muted:light-dark(#5b6880,#9fb0c8);
---vibeui-navbar-027-line:light-dark(rgb(28 39 64 / .18),rgb(159 176 200 / .28));
---vibeui-navbar-027-accent:#f2b64f;
+--vibeui-navbar-027-bg:light-dark(rgb(255 255 255 / .88),rgb(26 26 26 / .78));
+--vibeui-navbar-027-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-navbar-027-muted:light-dark(#6b6b6b,#a3a3a3);
+--vibeui-navbar-027-line:light-dark(color-mix(in oklab,var(--vibeui-navbar-027-fg) 18%,transparent),color-mix(in oklab,var(--vibeui-navbar-027-fg) 28%,transparent));
+--vibeui-navbar-027-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-navbar-027-silver:#9fb0c8;
 --vibeui-navbar-027-fire:#ff9a3c;
---vibeui-navbar-027-on-accent:#0b1220;
+--vibeui-navbar-027-on-accent:oklch(from var(--vibeui-navbar-027-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-navbar-027-display:"Cormorant Garamond",Georgia,serif;
 --vibeui-navbar-027-script:"Marck Script","Segoe Script",cursive;
 --vibeui-navbar-027-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
@@ -151,6 +152,7 @@ export function Navbar027({
   spy = true,
   tone = "auto",
   accent,
+  ink,
   background,
   className,
   style,
@@ -163,6 +165,7 @@ export function Navbar027({
   const [snowing, setSnowing] = useState(true)
   const palette = {
     ...(accent ? { "--vibeui-navbar-027-accent": accent } : null),
+    ...(ink ? { "--vibeui-navbar-027-fg": ink } : null),
     ...(background ? { "--vibeui-navbar-027-bg": background } : null),
     ...style,
   } as CSSProperties
