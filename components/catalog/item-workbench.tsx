@@ -35,6 +35,7 @@ export function ItemWorkbench({
   category,
   locale,
   docUrl,
+  pro,
   initialTheme,
   initialValues,
 }: {
@@ -43,6 +44,8 @@ export function ItemWorkbench({
   category: string
   locale: Locale
   docUrl: string | null
+  /** Закрытый item: у не-Pro кнопка «Копировать» превращается в «Доступно с Pro». */
+  pro: boolean
   initialTheme: PreviewSurface
   initialValues: ControlValues
 }) {
@@ -105,6 +108,7 @@ export function ItemWorkbench({
           label={t.card.copy}
           copiedLabel={t.card.copied}
           locale={locale}
+          pro={pro}
           className="h-11 shrink-0 px-5"
           onCopied={noteCopied}
         />
@@ -197,6 +201,7 @@ export function ItemWorkbench({
             label={t.card.copy}
             copiedLabel={t.card.copied}
             locale={locale}
+            pro={pro}
             className="h-11 px-5"
             onCopied={noteCopied}
           />

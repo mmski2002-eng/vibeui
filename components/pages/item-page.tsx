@@ -18,6 +18,7 @@ import {
   getCatalogItem,
   getCategoryLabel,
   getItemKind,
+  isProItem,
 } from "@/registry/index"
 
 /**
@@ -178,6 +179,7 @@ export async function ItemPage({
             category={category ?? ""}
             locale={locale}
             docUrl={docUrl}
+            pro={isProItem(block.name)}
             initialTheme={initialTheme}
             initialValues={initialValues}
           />

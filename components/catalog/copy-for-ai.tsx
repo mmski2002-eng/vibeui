@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Check, Loader2 } from "lucide-react"
-import { useState, type MouseEvent } from "react"
+import { useEffect, useState, type MouseEvent } from "react"
 
 import { useSession } from "@/lib/auth-client"
 import { localePath, type Locale } from "@/lib/i18n"
@@ -36,6 +36,7 @@ export function CopyForAi({
   locale,
   variant = "primary",
   className,
+  pro = false,
   onCopied,
 }: {
   name: string
@@ -46,12 +47,36 @@ export function CopyForAi({
   locale: Locale
   variant?: "primary" | "secondary"
   className?: string
+  /** Закрытый item: у не-Pro кнопка сразу зовёт на тариф, а не копирует. */
+  pro?: boolean
   onCopied?: () => void
 }) {
   const { data: session } = useSession()
   const router = useRouter()
   const [state, setState] = useState<CopyState>("idle")
+  // На закрытом item'е исходим из «нет Pro» и подтверждаем право запросом:
+  // страница статична и на сервере сессию не знает. Ошибка — в пользу платящего.
+  const [access, setAccess] = useState<"pro" | "nopro">(pro ? "nopro" : "pro")
   const en = locale === "en"
+
+  useEffect(() => {
+    if (!pro || !session) return
+
+    let live = true
+
+    fetch("/api/entitlement")
+      .then((response) => response.json())
+      .then((data) => {
+        if (live) setAccess(data?.pro ? "pro" : "nopro")
+      })
+      .catch(() => {
+        if (live) setAccess("pro")
+      })
+
+    return () => {
+      live = false
+    }
+  }, [pro, session])
 
   if (!session) {
     return (
@@ -60,6 +85,17 @@ export function CopyForAi({
         className={cn(BASE, VARIANTS[variant], className)}
       >
         {en ? "Sign in" : "Войти"}
+      </Link>
+    )
+  }
+
+  if (access === "nopro") {
+    return (
+      <Link
+        href={localePath(locale, "/pricing")}
+        className={cn(BASE, VARIANTS[variant], className)}
+      >
+        {en ? "Available on Pro" : "Доступно с Pro"}
       </Link>
     )
   }
