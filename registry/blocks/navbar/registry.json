@@ -3308,10 +3308,10 @@
           "realty"
         ],
         "preview": {
+          "aspect": "1280 / 80",
           "props": {
             "sticky": false
-          },
-          "width": "natural"
+          }
         },
         "ai": {
           "export": "Navbar020",
@@ -3510,10 +3510,10 @@
           "overlay"
         ],
         "preview": {
+          "aspect": "1280 / 83",
           "props": {
             "sticky": false
-          },
-          "width": "natural"
+          }
         },
         "ai": {
           "export": "Navbar021",
