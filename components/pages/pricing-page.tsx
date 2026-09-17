@@ -477,9 +477,48 @@ export async function PricingPage({
   return (
     <CatalogShell locale={locale}>
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:py-8 lg:px-6">
+        {/* Тарифы — первым экраном: страница о цене, её и показываем сразу. */}
+        <section id="plans" className="scroll-mt-24">
+          <Reveal className="mx-auto max-w-2xl text-center">
+            <Eyebrow>{t.plansEyebrow}</Eyebrow>
+            <h2 className="text-shell-fg mt-3 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+              {t.plansTitle}
+            </h2>
+          </Reveal>
+          <Reveal delay={120} className="mt-8 text-center">
+            <PlanCards
+              locale={locale}
+              texts={{
+                ...t.plans,
+                pro: {
+                  ...t.plans.pro,
+                  activeUntil: until ? `${t.plans.pro.activeUntil} ${until}` : null,
+                },
+              }}
+              prices={{
+                monthly: MONTHLY,
+                yearly: YEARLY,
+                enterpriseMonthly: ENTERPRISE_MONTHLY,
+                enterpriseYearly: ENTERPRISE_YEARLY,
+              }}
+              signed={Boolean(session)}
+              pro={pro}
+              signupHref={signupHref}
+              accountHref={localePath(locale, "/account")}
+              manageHref={localePath(locale, "/account/subscription")}
+              promo={{ initialCode: initialPromo, eligible: firstPayment }}
+            />
+          </Reveal>
+          {session && !pro ? (
+            <p className="text-shell-muted mt-5 text-center text-sm tabular-nums">
+              {t.usage(used)}
+            </p>
+          ) : null}
+        </section>
+
         {/* Первый экран: шлейф картинок из каталога живёт под текстом, текст
             не ловит курсор — движение доходит до поля. */}
-        <section className="border-shell-border text-shell-fg relative isolate overflow-hidden rounded-3xl border bg-[light-dark(#ffffff,#151515)]">
+        <section className="border-shell-border text-shell-fg relative isolate mt-20 overflow-hidden rounded-3xl border bg-[light-dark(#ffffff,#151515)] sm:mt-24">
           <Cursor005
             caption=""
             size={150}
@@ -546,45 +585,6 @@ export async function PricingPage({
             </li>
           ))}
         </ul>
-
-        {/* Тарифы */}
-        <section id="plans" className="scroll-mt-24 pt-20 sm:pt-24">
-          <Reveal className="mx-auto max-w-2xl text-center">
-            <Eyebrow>{t.plansEyebrow}</Eyebrow>
-            <h2 className="text-shell-fg mt-3 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-              {t.plansTitle}
-            </h2>
-          </Reveal>
-          <Reveal delay={120} className="mt-8 text-center">
-            <PlanCards
-              locale={locale}
-              texts={{
-                ...t.plans,
-                pro: {
-                  ...t.plans.pro,
-                  activeUntil: until ? `${t.plans.pro.activeUntil} ${until}` : null,
-                },
-              }}
-              prices={{
-                monthly: MONTHLY,
-                yearly: YEARLY,
-                enterpriseMonthly: ENTERPRISE_MONTHLY,
-                enterpriseYearly: ENTERPRISE_YEARLY,
-              }}
-              signed={Boolean(session)}
-              pro={pro}
-              signupHref={signupHref}
-              accountHref={localePath(locale, "/account")}
-              manageHref={localePath(locale, "/account/subscription")}
-              promo={{ initialCode: initialPromo, eligible: firstPayment }}
-            />
-          </Reveal>
-          {session && !pro ? (
-            <p className="text-shell-muted mt-5 text-center text-sm tabular-nums">
-              {t.usage(used)}
-            </p>
-          ) : null}
-        </section>
 
         {/* Три причины */}
         <section className="pt-20 sm:pt-24">
