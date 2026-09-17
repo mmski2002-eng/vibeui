@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useId, useState, type CSSProperties } from "react"
+import { useEffect, useId, useState, useSyncExternalStore, type CSSProperties } from "react"
 
 export type Hero025Props = {
   /** Имена через « & »: «Василиса & Артём». Амперсанд подкрашивается. */
@@ -168,6 +168,20 @@ container-type:inline-size;
 
 const ZERO = ["00", "00", "00", "00"] as const
 
+function subscribeNoop() {
+  return () => {}
+}
+
+// Во вложенном кадре (витрина, превью) конверт не показываем: кликнуть по
+// нему там нельзя, а страницу за ним — не увидеть.
+function readEmbedded(): boolean {
+  try {
+    return window.self !== window.top
+  } catch {
+    return true
+  }
+}
+
 function pad(value: number): string {
   return String(Math.max(0, value)).padStart(2, "0")
 }
@@ -212,7 +226,10 @@ export function Hero025({
   className,
   style,
 }: Hero025Props) {
+  const embedded = useSyncExternalStore(subscribeNoop, readEmbedded, () => false)
+  const intro = envelope && !embedded
   const [open, setOpen] = useState(!envelope)
+  const opened = open || !intro
   const [ticks, setTicks] = useState<readonly [string, string, string, string]>(ZERO)
   const palette = {
     ...(accent ? { "--vibeui-hero-025-accent": accent } : null),
@@ -272,7 +289,7 @@ export function Hero025({
       <style href="vibeui-hero-025" precedence="medium">
         {STYLES}
       </style>
-      <section data-vibeui-block="hero-025" data-tone={tone === "auto" ? undefined : tone} data-sealed={open ? undefined : "true"} data-intro={envelope ? "true" : undefined} className={className} style={palette}>
+      <section data-vibeui-block="hero-025" data-tone={tone === "auto" ? undefined : tone} data-sealed={opened ? undefined : "true"} data-intro={intro ? "true" : undefined} className={className} style={palette}>
         <div data-part="frame">
           <div data-part="letter">
             <p data-part="eyebrow">{eyebrow}</p>
@@ -342,7 +359,7 @@ export function Hero025({
             ) : null}
           </figure>
         </div>
-        {envelope ? (
+        {intro ? (
           <div data-part="envelope" data-open={open ? "true" : undefined} aria-hidden={open}>
             <span data-part="bokeh" aria-hidden="true">
               <i />
