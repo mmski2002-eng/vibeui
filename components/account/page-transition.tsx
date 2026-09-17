@@ -1,27 +1,23 @@
 "use client"
 
 import { usePathname } from "next/navigation"
-import { ViewTransition, type ReactNode } from "react"
+import type { ReactNode } from "react"
 
 /**
- * Смена раздела: старая рабочая область гаснет, новая поднимается.
+ * Смена раздела: меняется только рабочая область, колонка разделов и шапка
+ * стоят на месте. Ключ по адресу перезапускает анимацию входа при переходе.
  *
- * Ключ по адресу: при переходе старое дерево размонтируется (exit), новое
- * монтируется (enter) — и обе стороны получают свою анимацию, а колонка
- * разделов и шапка остаются на месте. Один компонент в layout вместо
- * обёртки в каждой из двадцати страниц.
+ * Общий view-transition документа здесь не запускаем: его снимок захватывал
+ * и колонку разделов, и шапку — всё, что вне именованной границы, — и смена
+ * раздела читалась как перезагрузка страницы. Обычная CSS-анимация трогает
+ * только правую область.
  */
 export function PageTransition({ children }: { children: ReactNode }) {
   const pathname = usePathname()
 
   return (
-    <ViewTransition
-      key={pathname}
-      enter="acc-page"
-      exit="acc-page"
-      default="none"
-    >
-      <div className="min-w-0">{children}</div>
-    </ViewTransition>
+    <div key={pathname} className="acc-page-in min-w-0">
+      {children}
+    </div>
   )
 }

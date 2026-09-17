@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useEffect, useRef, useState, ViewTransition } from "react"
+import { useEffect, useRef, useState } from "react"
 import {
   BarChart3,
   ChevronDown,
@@ -261,18 +261,16 @@ function NavLink({
           : "text-shell-muted hover:bg-shell-elevated/60 hover:text-shell-fg",
       )}
     >
-      {/* Подложка активного пункта — один элемент на всё меню: при
-          переходе браузер перемещает её к новому пункту, а не рисует
-          заново. Оранжевая риска слева — знак «вы здесь». */}
+      {/* Подложка активного пункта. Оранжевая риска слева — знак «вы здесь».
+          Без общего view-transition: он запускал снимок всего документа и
+          колонка разделов мигала как при перезагрузке. */}
       {active ? (
-        <ViewTransition name="acc-nav-pill" share="acc-pill" default="none">
-          <span
-            aria-hidden="true"
-            className="bg-shell-elevated absolute inset-0 -z-10 rounded-lg"
-          >
-            <span className="bg-shell-accent absolute top-2 bottom-2 left-0 w-0.5 rounded-full" />
-          </span>
-        </ViewTransition>
+        <span
+          aria-hidden="true"
+          className="bg-shell-elevated absolute inset-0 -z-10 rounded-lg"
+        >
+          <span className="bg-shell-accent absolute top-2 bottom-2 left-0 w-0.5 rounded-full" />
+        </span>
       ) : null}
       <Icon
         className={cn(

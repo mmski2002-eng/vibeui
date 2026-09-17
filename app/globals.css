@@ -1475,22 +1475,16 @@
   animation: acc-fade var(--motion-fast, 140ms) var(--ease-out) both;
 }
 
-/* Переходы между разделами: рабочая область плавно сменяется, колонка
-   разделов и шапка стоят на месте. Активный пункт меню и «таблетка»
-   переключателя периода переезжают к новому положению. */
-::view-transition-old(.acc-page) {
-  animation: 120ms ease-in both acc-fade reverse;
+/* Смена раздела кабинета: проявляется только правая рабочая область (ключ
+   по адресу перезапускает анимацию). Колонку разделов и шапку не трогаем —
+   никакого общего view-transition документа, иначе они мигают как при
+   перезагрузке. */
+.acc-page-in {
+  animation: acc-fade var(--motion-base, 220ms) var(--ease-out) both;
 }
 
-::view-transition-new(.acc-page) {
-  /* Только мягкое проявление контента: панели поднимаются сами (acc-reveal),
-     а вся правая область целиком не «переезжает» — иначе смена раздела
-     читается как перезагрузка страницы, а не как обновление содержимого. */
-  animation: 220ms ease-out 60ms both acc-fade;
-}
-
-/* Каталог: рабочая область сменяется так же, как в кабинете, шапка и
-   колонка категорий стоят на месте. */
+/* Каталог: рабочая область сменяется так же, шапка и колонка категорий
+   стоят на месте. */
 ::view-transition-old(.catalog-page) {
   animation: 120ms ease-in both acc-fade reverse;
 }
@@ -1499,18 +1493,14 @@
   animation: 220ms ease-out 60ms both acc-fade;
 }
 
-::view-transition-group(.acc-pill) {
-  animation-duration: 260ms;
-  animation-timing-function: var(--ease-out);
-}
-
 @media (prefers-reduced-motion: reduce) {
   .acc-reveal,
   .acc-draw,
   .acc-fade-late,
   .acc-grow-y,
   .acc-grow-x,
-  .acc-toast {
+  .acc-toast,
+  .acc-page-in {
     animation: none;
   }
 
