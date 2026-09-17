@@ -334,7 +334,7 @@ container-type:inline-size;
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="sketch-019"]{color-scheme:dark}
 :where([data-vibeui-block="sketch-019"][data-tone="light"]){color-scheme:light}
 :where([data-vibeui-block="sketch-019"][data-tone="dark"]){color-scheme:dark}
-[data-vibeui-block="sketch-019"]{position:relative;z-index:20;box-sizing:border-box;display:block;background:color-mix(in oklab,var(--vibeui-sketch-019-paper) 92%,transparent);backdrop-filter:blur(6px);color:var(--vibeui-sketch-019-ink);font-family:var(--vibeui-sketch-019-font);font-size:1.125rem;line-height:1.2}
+[data-vibeui-block="sketch-019"]{position:relative;z-index:20;box-sizing:border-box;display:block;width:100%;background:color-mix(in oklab,var(--vibeui-sketch-019-paper) 92%,transparent);backdrop-filter:blur(6px);color:var(--vibeui-sketch-019-ink);font-family:var(--vibeui-sketch-019-font);font-size:1.125rem;line-height:1.2}
 [data-vibeui-block="sketch-019"][data-sticky]{position:sticky;top:0}
 [data-vibeui-block="sketch-019"] *{box-sizing:border-box}
 [data-vibeui-block="sketch-019"] [data-part="ink"]{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:-1}

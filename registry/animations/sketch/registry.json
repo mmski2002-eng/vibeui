@@ -3154,6 +3154,8 @@
           "logo"
         ],
         "preview": {
+          "width": "section",
+          "aspect": "3/2",
           "props": {
             "sticky": false
           }

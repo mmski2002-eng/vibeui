@@ -243,6 +243,46 @@ const STYLES = `
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="sketch-018"] *{transition:none!important;animation:none!important}[data-vibeui-block="sketch-018"] [data-part="sheet"]{transform:none;opacity:1}[data-vibeui-block="sketch-018"] [data-part="thread"] path,[data-vibeui-block="sketch-018"] [data-part="doodle"] path{stroke-dashoffset:0}}`
 
+/** Демо-секции для превью: показываются, когда блок вставлен без своих. */
+const DEMO_SHEETS = [
+  { title: "Работы", text: "Живые кадры со съёмок: свет, эмоции, детали." },
+  { title: "Как проходит съёмка", text: "От заявки до готовой галереи — шаг за шагом." },
+  { title: "Обо мне", text: "Пара слов о подходе и любимых историях." },
+].map((sheet) => (
+  <section key={sheet.title} style={{ padding: "1.25rem 0" }}>
+    <h3
+      style={{
+        margin: 0,
+        fontFamily: "var(--vibeui-sketch-018-display)",
+        fontSize: "2.25rem",
+        fontWeight: 700,
+        lineHeight: 1,
+      }}
+    >
+      {sheet.title}
+    </h3>
+    <p
+      style={{
+        margin: "0.6rem 0 0",
+        maxWidth: "42ch",
+        color: "var(--vibeui-sketch-018-muted)",
+      }}
+    >
+      {sheet.text}
+    </p>
+    <div
+      aria-hidden="true"
+      style={{
+        marginTop: "1.1rem",
+        height: 160,
+        borderRadius: 14,
+        background: "var(--vibeui-sketch-018-muted)",
+        opacity: 0.14,
+      }}
+    />
+  </section>
+))
+
 /** Стопка листов: секции въезжают на стол, нитка карандашом тянется по краю. */
 export function Sketch018({
   children,
@@ -261,7 +301,11 @@ export function Sketch018({
   const host = useRef<HTMLDivElement>(null)
   const roughness = ROUGH[rough] ?? ROUGH.loose
   const shake = BOIL[boil] ?? BOIL.soft
-  const sheets = Children.toArray(children)
+  // Без своих секций блок показывает демо-листы — иначе он пуст (это обёртка
+  // прокрутки, содержимое приносит пользователь). Как только появятся дети,
+  // демо исчезает.
+  const provided = Children.toArray(children)
+  const sheets = provided.length > 0 ? provided : DEMO_SHEETS
   const [height, setHeight] = useState(0)
   const [progress, setProgress] = useState(0)
   const [knots, setKnots] = useState<number[]>([])
