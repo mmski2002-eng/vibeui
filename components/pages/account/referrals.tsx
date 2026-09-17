@@ -132,7 +132,7 @@ export async function AccountReferrals({
               </span>
             }
           />
-          <CopyLink url={`${SITE_URL}/i/${code}`} locale={locale} />
+          <CopyLink url={`${SITE_URL}/?ref=${code}`} locale={locale} />
         </Panel>
 
         <Panel index={1}>

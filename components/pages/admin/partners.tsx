@@ -79,7 +79,7 @@ export async function AdminPartners() {
                   {invite.claimedAt ? ` · ${formatDate(invite.claimedAt)}` : null}
                 </p>
               ) : (
-                <CopyLink url={`${SITE_URL}/i/${invite.code}`} />
+                <CopyLink url={`${SITE_URL}/?ref=${invite.code}`} />
               )}
             </Panel>
           ))}

@@ -211,12 +211,12 @@ export async function AdminPartner({
       </Section>
 
       <Section title={t.inviteLink}>
-        <CopyLink url={`${SITE_URL}/i/${invite.code}`} />
+        <CopyLink url={`${SITE_URL}/?ref=${invite.code}`} />
       </Section>
 
       {code ? (
         <Section title={t.partnerLink}>
-          <CopyLink url={`${SITE_URL}/i/${code}`} />
+          <CopyLink url={`${SITE_URL}/?ref=${code}`} />
         </Section>
       ) : null}
 

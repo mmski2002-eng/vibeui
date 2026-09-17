@@ -4,6 +4,7 @@ import { cookies } from "next/headers"
 import { db } from "@/lib/db"
 import { referralVisit } from "@/lib/db/schema"
 import { resolveCode } from "@/lib/partners"
+import { SITE_URL } from "@/lib/seo"
 
 /** Сколько живёт привязка к пригласившему: два месяца на раздумья. */
 const REF_COOKIE_DAYS = 60
@@ -17,11 +18,13 @@ export const REF_COOKIE = "vibeui_ref"
  * приглашение и чужой код ведут на главную без куки.
  */
 export async function GET(
-  request: Request,
+  _request: Request,
   { params }: { params: Promise<{ code: string }> },
 ) {
   const { code } = await params
-  const home = new URL("/", request.url)
+  // Публичный домен, а не request.url: за nginx запрос приходит на
+  // localhost:3003, и редирект уводил бы посетителя туда.
+  const home = new URL("/", SITE_URL)
 
   if (!(await resolveCode(code))) {
     return Response.redirect(home, 302)
