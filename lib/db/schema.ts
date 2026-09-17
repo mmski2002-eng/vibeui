@@ -243,8 +243,35 @@ export const partnerInvite = pgTable(
     /** Свой процент; null — общий из настройки `promo.percent`. */
     promoPercent: integer("promo_percent"),
     promoActive: boolean("promo_active").notNull().default(true),
+    /** ИНН самозанятого блогера: по нему выплата закрывается его чеком. */
+    payoutInn: text("payout_inn"),
+    /** Реквизиты выплаты: номер карты или телефон для СБП. Заполняет блогер. */
+    payoutDetails: text("payout_details"),
   },
   (table) => [index("partner_invite_created_idx").on(table.createdAt)],
+)
+
+/**
+ * Выплата комиссии блогеру. Реестр учёта: сами деньги уходят вне платформы
+ * (перевод/СБП), а сюда администратор вносит факт выплаты. «К выплате» —
+ * это заработанная комиссия минус сумма этих записей.
+ */
+export const partnerPayout = pgTable(
+  "partner_payout",
+  {
+    id: text("id").primaryKey(),
+    partnerId: text("partner_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    /** Рубли без копеек, как у платежа. */
+    amount: text("amount").notNull(),
+    note: text("note"),
+    createdBy: text("created_by").notNull(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (table) => [
+    index("partner_payout_partner_idx").on(table.partnerId, table.createdAt),
+  ],
 )
 
 /**

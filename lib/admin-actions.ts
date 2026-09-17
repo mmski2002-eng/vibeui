@@ -1,5 +1,6 @@
 "use server"
 
+import { randomUUID } from "node:crypto"
 import { revalidatePath } from "next/cache"
 import { and, eq, isNull } from "drizzle-orm"
 
@@ -8,6 +9,7 @@ import { logAdminAction, requireAdmin } from "@/lib/admin"
 import { db } from "@/lib/db"
 import {
   partnerInvite,
+  partnerPayout,
   payment,
   registryToken,
   session,
@@ -512,6 +514,40 @@ async function setPromoCodeOrThrow(inviteId: string, code: string) {
     .update(partnerInvite)
     .set({ promoCode: code })
     .where(eq(partnerInvite.id, inviteId))
+}
+
+/**
+ * Записать выплату комиссии блогеру. Деньги уходят вне платформы (перевод по
+ * реквизитам), сюда вносится факт: реестр показывает блогеру «выплачено» и
+ * «к выплате». Требует partnerId — аккаунт зарегистрировавшегося блогера.
+ */
+export async function recordPartnerPayout(input: {
+  partnerId: string
+  amount: string
+  note: string
+}) {
+  const admin = await requireAdmin()
+  const amount = rublesOrThrow(input.amount, "Сумма выплаты")
+  const note = input.note.trim().slice(0, 500) || null
+
+  await db.insert(partnerPayout).values({
+    id: randomUUID(),
+    partnerId: input.partnerId,
+    amount,
+    note,
+    createdBy: admin.email,
+  })
+
+  await logAdminAction({
+    adminEmail: admin.email,
+    action: "partner.payout",
+    targetType: "partner",
+    targetId: input.partnerId,
+    details: { amount, note },
+  })
+
+  revalidatePath("/account/admin/partners")
+  revalidatePath("/account/referrals")
 }
 
 /** Удалить незанятое приглашение: занятое хранит аккаунт и его рефералов. */

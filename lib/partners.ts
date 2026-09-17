@@ -7,6 +7,7 @@ import { fillDays, lastDays } from "@/lib/days"
 import { db } from "@/lib/db"
 import {
   partnerInvite,
+  partnerPayout,
   payment,
   referral,
   referralVisit,
@@ -283,6 +284,48 @@ export async function deleteInvite(id: string) {
     .returning({ id: partnerInvite.id })
 
   return deleted.length > 0
+}
+
+export type PayoutRow = typeof partnerPayout.$inferSelect
+
+/** Реквизиты выплаты блогера для его кабинета. */
+export async function payoutProfile(partnerId: string) {
+  const [row] = await db
+    .select({
+      inn: partnerInvite.payoutInn,
+      details: partnerInvite.payoutDetails,
+    })
+    .from(partnerInvite)
+    .where(eq(partnerInvite.claimedBy, partnerId))
+    .limit(1)
+
+  return { inn: row?.inn ?? "", details: row?.details ?? "" }
+}
+
+/** Сумма и число выплат блогеру: «выплачено» в реестре. */
+export async function payoutTotals(partnerId: string) {
+  const [row] = await db
+    .select({
+      paid: sql<string>`coalesce(sum(${partnerPayout.amount}::numeric), 0)`,
+      count: count(),
+    })
+    .from(partnerPayout)
+    .where(eq(partnerPayout.partnerId, partnerId))
+
+  return { paid: Number(row?.paid ?? 0), count: Number(row?.count ?? 0) }
+}
+
+/** Список выплат блогеру, новые сверху. */
+export async function listPayouts(
+  partnerId: string,
+  limit = 50,
+): Promise<PayoutRow[]> {
+  return db
+    .select()
+    .from(partnerPayout)
+    .where(eq(partnerPayout.partnerId, partnerId))
+    .orderBy(desc(partnerPayout.createdAt))
+    .limit(limit)
 }
 
 export type PartnerPeriod = 30 | 90

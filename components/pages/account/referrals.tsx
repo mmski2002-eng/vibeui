@@ -14,15 +14,19 @@ import { StatusPill } from "@/components/account/ui/status-pill"
 import { formatDate } from "@/lib/format"
 import { localePath, type Locale } from "@/lib/i18n"
 import {
+  listPayouts,
   maskEmail,
   partnerCode,
   partnerStats,
+  payoutProfile,
+  payoutTotals,
   referralsOf,
   referralTotals,
   visitsByCode,
   type PartnerPeriod,
 } from "@/lib/partners"
 import { partnerPromo, promoStats } from "@/lib/promo"
+import { PayoutProfileForm } from "@/components/account/payout-profile-form"
 import { SITE_URL } from "@/lib/seo"
 import { requireUser } from "@/lib/session"
 
@@ -55,14 +59,22 @@ export async function AccountReferrals({
   const validCursor =
     cursor && !Number.isNaN(cursor.getTime()) ? cursor : undefined
 
-  const [clicks, totals, rows, stats, promo, promoTotals] = await Promise.all([
-    visitsByCode(code),
-    referralTotals(user.id),
-    referralsOf(user.id, { before: validCursor, limit: PAGE + 1 }),
-    partnerStats(user.id, code, period),
-    partnerPromo(user.id),
-    promoStats(user.id),
-  ])
+  const [clicks, totals, rows, stats, promo, promoTotals, paidOut, payouts, payoutInfo] =
+    await Promise.all([
+      visitsByCode(code),
+      referralTotals(user.id),
+      referralsOf(user.id, { before: validCursor, limit: PAGE + 1 }),
+      partnerStats(user.id, code, period),
+      partnerPromo(user.id),
+      promoStats(user.id),
+      payoutTotals(user.id),
+      listPayouts(user.id),
+      payoutProfile(user.id),
+    ])
+
+  const money = (value: number) =>
+    value.toLocaleString(locale === "en" ? "en-GB" : "ru-RU")
+  const pendingPayout = Math.max(0, promoTotals.commission - paidOut.paid)
 
   const page = rows.slice(0, PAGE)
   const next = rows.length > PAGE ? page[page.length - 1]?.createdAt : null
@@ -146,6 +158,87 @@ export async function AccountReferrals({
           ) : (
             <p className="text-shell-muted text-sm">{t.promoNone}</p>
           )}
+        </Panel>
+
+        <Panel index={2}>
+          <PanelHeader
+            title={
+              <span className="flex items-center gap-2">
+                <Wallet className="text-shell-accent-text size-4" aria-hidden="true" />
+                {t.payoutTitle}
+              </span>
+            }
+            note={t.payoutLead}
+          />
+          <div className="grid gap-5">
+            <div className="grid gap-3 sm:grid-cols-3">
+              {[
+                { label: t.payoutEarned, value: promoTotals.commission, accent: false },
+                { label: t.payoutPaid, value: paidOut.paid, accent: false },
+                { label: t.payoutPending, value: pendingPayout, accent: true },
+              ].map((cell) => (
+                <div
+                  key={cell.label}
+                  className="border-shell-border bg-shell-panel rounded-xl border p-4"
+                >
+                  <p className="text-shell-muted text-xs">{cell.label}</p>
+                  <p
+                    className={`mt-1 text-2xl font-semibold tabular-nums ${cell.accent ? "text-shell-accent-text" : "text-shell-fg"}`}
+                  >
+                    {money(cell.value)} ₽
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div>
+              <p className="text-shell-muted mb-2 text-sm">
+                {t.payoutProfileTitle}
+              </p>
+              <PayoutProfileForm
+                inn={payoutInfo.inn}
+                details={payoutInfo.details}
+                labels={{
+                  inn: t.payoutInn,
+                  innPlaceholder: t.payoutInnPlaceholder,
+                  details: t.payoutDetails,
+                  detailsPlaceholder: t.payoutDetailsPlaceholder,
+                  save: t.payoutSave,
+                  saving: t.payoutSaving,
+                  saved: t.payoutSaved,
+                  failed: t.payoutFailed,
+                }}
+              />
+            </div>
+
+            <div>
+              <p className="text-shell-muted mb-2 text-sm">{t.payoutsTitle}</p>
+              {payouts.length === 0 ? (
+                <p className="text-shell-muted text-sm">{t.payoutsEmpty}</p>
+              ) : (
+                <ul className="border-shell-border divide-shell-divider divide-y rounded-xl border">
+                  {payouts.map((row) => (
+                    <li
+                      key={row.id}
+                      className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 px-4 py-2.5 text-sm"
+                    >
+                      <span className="text-shell-fg font-medium tabular-nums">
+                        {money(Number(row.amount))} ₽
+                      </span>
+                      {row.note ? (
+                        <span className="text-shell-muted min-w-0 flex-1 truncate text-xs">
+                          {row.note}
+                        </span>
+                      ) : null}
+                      <span className="text-shell-muted shrink-0 text-xs tabular-nums">
+                        {formatDate(row.createdAt, locale)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
         </Panel>
 
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">

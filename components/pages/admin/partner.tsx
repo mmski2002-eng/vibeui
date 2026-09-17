@@ -10,14 +10,17 @@ import { CopyLink } from "@/components/account/copy-link"
 import { requireAdmin } from "@/lib/admin"
 import {
   getInvite,
+  listPayouts,
   partnerCode,
   partnerStats,
+  payoutTotals,
   referralsOf,
   referralTotals,
   visitsByCode,
   type ReferralRow,
 } from "@/lib/partners"
 import { defaultPromoPercent, promoStats } from "@/lib/promo"
+import { RecordPayoutForm } from "@/components/admin/payout-actions"
 import { SITE_URL } from "@/lib/seo"
 import { resolveSubscription } from "@/lib/subscription-state"
 
@@ -54,14 +57,19 @@ export async function AdminPartner({
       ? referralsOf(partnerId, { before: validCursor, limit: PAGE + 1 })
       : [],
   ])
-  const [partnerVisits, stats, promo, promoDefault] = await Promise.all([
-    code ? visitsByCode(code) : 0,
-    partnerId && code ? partnerStats(partnerId, code, 90) : null,
-    partnerId
-      ? promoStats(partnerId)
-      : { payments: 0, revenue: 0, discount: 0, commission: 0, commissionPercent: 0 },
-    defaultPromoPercent(),
-  ])
+  const [partnerVisits, stats, promo, promoDefault, paidOut, payouts] =
+    await Promise.all([
+      code ? visitsByCode(code) : 0,
+      partnerId && code ? partnerStats(partnerId, code, 90) : null,
+      partnerId
+        ? promoStats(partnerId)
+        : { payments: 0, revenue: 0, discount: 0, commission: 0, commissionPercent: 0 },
+      defaultPromoPercent(),
+      partnerId ? payoutTotals(partnerId) : { paid: 0, count: 0 },
+      partnerId ? listPayouts(partnerId) : [],
+    ])
+
+  const pendingPayout = Math.max(0, promo.commission - paidOut.paid)
 
   const page = rows.slice(0, PAGE)
   const next = rows.length > PAGE ? page[page.length - 1]?.createdAt : null
@@ -152,6 +160,54 @@ export async function AdminPartner({
           active={invite.promoActive}
           defaultPercent={promoDefault}
         />
+      </Section>
+
+      <Section
+        title={t.payoutTitle}
+        action={
+          <span className="text-shell-muted text-xs tabular-nums">
+            {t.payoutEarned}:{" "}
+            <span className="text-shell-fg">{t.rub(promo.commission)}</span> ·{" "}
+            {t.payoutPaid}:{" "}
+            <span className="text-shell-fg">{t.rub(paidOut.paid)}</span> ·{" "}
+            {t.payoutPending}:{" "}
+            <span className="text-shell-accent-text">{t.rub(pendingPayout)}</span>
+          </span>
+        }
+      >
+        <p className="text-shell-muted mb-3 text-sm">
+          {t.payoutInn}:{" "}
+          <span className="text-shell-fg">{invite.payoutInn ?? t.payoutNone}</span>{" "}
+          · {t.payoutDetails}:{" "}
+          <span className="text-shell-fg">
+            {invite.payoutDetails ?? t.payoutNone}
+          </span>
+        </p>
+        {partnerId ? <RecordPayoutForm partnerId={partnerId} /> : null}
+        {payouts.length > 0 ? (
+          <ul className="border-shell-border divide-shell-divider mt-4 divide-y rounded-xl border">
+            {payouts.map((row) => (
+              <li
+                key={row.id}
+                className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 px-4 py-2.5 text-sm"
+              >
+                <span className="text-shell-fg font-medium tabular-nums">
+                  {t.rub(Number(row.amount))}
+                </span>
+                {row.note ? (
+                  <span className="text-shell-muted min-w-0 flex-1 truncate text-xs">
+                    {row.note}
+                  </span>
+                ) : null}
+                <span className="text-shell-muted shrink-0 text-xs tabular-nums">
+                  {row.createdAt.toLocaleDateString("ru-RU")}
+                </span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-shell-muted mt-4 text-sm">{t.payoutsEmpty}</p>
+        )}
       </Section>
 
       <Section title={t.inviteLink}>
