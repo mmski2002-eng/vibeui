@@ -51,16 +51,13 @@ function prefersEnglish(header: string | null) {
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Партнёрская ссылка `/?ref=<код>`: внутренне переписываем на обработчик
-  // `/i/<код>`, он кладёт куку приглашения, пишет визит и уводит на витрину.
-  // Служебный `/i/` посетителю не виден; старые прямые `/i/`-ссылки работают.
+  // Партнёрская ссылка `/?ref=<код>`: уводим на обработчик `/i/<код>`, он
+  // кладёт куку приглашения, пишет визит и возвращает на витрину. Redirect, а
+  // не rewrite: rewrite на route-handler в Next 16 отдаёт 500. Прямые
+  // `/i/`-ссылки продолжают работать.
   const ref = request.nextUrl.searchParams.get("ref")
   if (ref) {
-    const url = request.nextUrl.clone()
-    url.pathname = `/i/${ref}`
-    url.search = ""
-
-    return NextResponse.rewrite(url)
+    return NextResponse.redirect(new URL(`/i/${ref}`, request.url))
   }
 
   if (pathname === "/") {
