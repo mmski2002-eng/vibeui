@@ -31,7 +31,7 @@ export const DEFAULT_PROMO_PERCENT = 30
  * только он несёт `partner_id`.
  */
 export const COMMISSION_PERCENT_KEY = "commission.percent"
-export const DEFAULT_COMMISSION_PERCENT = 30
+export const DEFAULT_COMMISSION_PERCENT = 25
 
 export async function commissionPercent(): Promise<number> {
   try {
