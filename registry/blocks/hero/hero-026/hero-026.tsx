@@ -133,9 +133,10 @@ container-type:inline-size;
 [data-vibeui-block="hero-026"] [data-part="gate"]::after{content:"";position:absolute;left:50%;top:18%;width:34rem;height:34rem;margin-left:-17rem;border-radius:50%;background:radial-gradient(circle,rgb(242 193 78 / .55),transparent 62%);filter:blur(26px);pointer-events:none;animation:vibeui-hero-026-sun 6s ease-in-out infinite}
 @keyframes vibeui-hero-026-sun{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
 [data-vibeui-block="hero-026"] [data-part="gate"][data-open="true"]{opacity:0;visibility:hidden}
-[data-vibeui-block="hero-026"] [data-part="pass"]{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr) 9.5rem;width:min(100%,40rem);color:var(--vibeui-hero-026-ink);filter:drop-shadow(0 40px 60px rgb(18 58 75 / .35));animation:vibeui-hero-026-bob 6s ease-in-out infinite;transition:transform 1.1s cubic-bezier(.4,0,.2,1) 1.1s,opacity .8s 1.6s}
+[data-vibeui-block="hero-026"] [data-part="float"]{position:relative;z-index:1;width:min(100%,40rem);animation:vibeui-hero-026-bob 6s ease-in-out infinite}
+[data-vibeui-block="hero-026"] [data-part="pass"]{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr) 9.5rem;color:var(--vibeui-hero-026-ink);filter:drop-shadow(0 40px 60px rgb(18 58 75 / .35));transition:transform 1.1s cubic-bezier(.4,0,.2,1) 1.1s,opacity .8s 1.6s}
 @keyframes vibeui-hero-026-bob{0%,100%{transform:translateY(0) rotate(-.6deg)}50%{transform:translateY(-.5rem) rotate(.4deg)}}
-[data-vibeui-block="hero-026"] [data-part="gate"][data-open="true"] [data-part="pass"]{animation:none;transform:translateY(-6rem) rotate(-2deg);opacity:0}
+[data-vibeui-block="hero-026"] [data-part="gate"][data-open="true"] [data-part="pass"]{transform:translateY(-6rem) rotate(-2deg);opacity:0}
 [data-vibeui-block="hero-026"] [data-part="main"]{position:relative;padding:1.4rem 1.6rem 1.5rem;border-radius:.9rem 0 0 .9rem;background:var(--vibeui-hero-026-paper);background-image:linear-gradient(90deg,var(--vibeui-hero-026-sea) 0,var(--vibeui-hero-026-sea) .5rem,transparent .5rem)}
 [data-vibeui-block="hero-026"] [data-part="main"]::after{content:"";position:absolute;top:0;bottom:0;right:-1px;width:2px;background:radial-gradient(circle,#e6d6b3 0 2px,transparent 2.5px) 0 0/2px 10px repeat-y}
 [data-vibeui-block="hero-026"] [data-part="head"]{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0 0 .8rem .8rem;border-bottom:1px solid var(--vibeui-hero-026-line)}
@@ -373,7 +374,8 @@ export function Hero026({
         </div>
         {intro ? (
           <div data-part="gate" data-open={open ? "true" : undefined} aria-hidden={open}>
-            <div data-part="pass">
+            <div data-part="float">
+              <div data-part="pass">
               <div data-part="main">
                 <div data-part="head">
                   <b>Boarding pass</b>
@@ -424,6 +426,7 @@ export function Hero026({
                   </svg>
                   {passLabels.tear}
                 </button>
+              </div>
               </div>
               <span data-part="hint" aria-hidden="true">
                 {passLabels.tear}

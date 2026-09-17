@@ -1834,7 +1834,7 @@
               },
               {
                 "day": "14",
-                "label": "Прощание",
+                "label": "Отдых",
                 "note": "медленное утро",
                 "wear": "Что осталось чистым",
                 "image": "/demo/wedding-cuba/hotel.webp",
@@ -1870,7 +1870,7 @@
         ],
         "ai": {
           "export": "Event010",
-          "usage": "<Event010\n  title=\"Гавана, пляж, прощание\"\n  days={[\n    { day: \"12\", label: \"Гавана\", note: \"прилёт и мохито\", wear: \"Лён и кеды\", slots: [{ time: \"14:30\", title: \"Прилёт\", place: \"аэропорт\", text: \"Трансфер ждёт.\" }] },\n    { day: \"13\", label: \"Пляж\", note: \"тот самый день\", wear: \"Beach formal\", main: true, slots: [{ time: \"16:30\", title: \"Церемония\", place: \"Playa Paraíso\" }] },\n    { day: \"14\", label: \"Прощание\", note: \"медленное утро\", slots: [{ time: \"10:30\", title: \"Завтрак\", place: \"терраса\" }] },\n  ]}\n/>",
+          "usage": "<Event010\n  title=\"Гавана, пляж, отдых\"\n  days={[\n    { day: \"12\", label: \"Гавана\", note: \"прилёт и мохито\", wear: \"Лён и кеды\", slots: [{ time: \"14:30\", title: \"Прилёт\", place: \"аэропорт\", text: \"Трансфер ждёт.\" }] },\n    { day: \"13\", label: \"Пляж\", note: \"тот самый день\", wear: \"Beach formal\", main: true, slots: [{ time: \"16:30\", title: \"Церемония\", place: \"Playa Paraíso\" }] },\n    { day: \"14\", label: \"Отдых\", note: \"медленное утро\", slots: [{ time: \"10:30\", title: \"Завтрак\", place: \"терраса\" }] },\n  ]}\n/>",
           "summary": "Самодостаточная программа многодневной свадьбы: табы-билеты по дням с главным днём в акценте, расписание с временем и местом, «что надеть». Дни и слоты — пропсами.",
           "preserve": [
             "табы-билеты с числом крупно и «дырочкой» слева, главный день коралловый",
@@ -1892,7 +1892,7 @@
             "prop": "title",
             "label": "Заголовок",
             "type": "text",
-            "default": "Гавана, пляж, прощание",
+            "default": "Гавана, пляж, отдых",
             "maxLength": 50
           },
           {
@@ -1940,12 +1940,12 @@
                 "The initial tab is the day with main; otherwise the first.",
                 "Three tabs stay in a row on phones too: labels are short, the number leads."
               ],
-              "usage": "<Event010\n  title=\"Havana, beach, farewell\"\n  days={[\n    { day: \"12\", label: \"Havana\", note: \"arrival and mojitos\", wear: \"Linen and sneakers\", slots: [{ time: \"14:30\", title: \"Arrival\", place: \"airport\", text: \"The shuttle is waiting.\" }] },\n    { day: \"13\", label: \"Beach\", note: \"the day\", wear: \"Beach formal\", main: true, slots: [{ time: \"16:30\", title: \"Ceremony\", place: \"Playa Paraíso\" }] },\n    { day: \"14\", label: \"Farewell\", note: \"a slow morning\", slots: [{ time: \"10:30\", title: \"Brunch\", place: \"terrace\" }] },\n  ]}\n/>"
+              "usage": "<Event010\n  title=\"Havana, beach, rest\"\n  days={[\n    { day: \"12\", label: \"Havana\", note: \"arrival and mojitos\", wear: \"Linen and sneakers\", slots: [{ time: \"14:30\", title: \"Arrival\", place: \"airport\", text: \"The shuttle is waiting.\" }] },\n    { day: \"13\", label: \"Beach\", note: \"the day\", wear: \"Beach formal\", main: true, slots: [{ time: \"16:30\", title: \"Ceremony\", place: \"Playa Paraíso\" }] },\n    { day: \"14\", label: \"Rest\", note: \"a slow morning\", slots: [{ time: \"10:30\", title: \"Brunch\", place: \"terrace\" }] },\n  ]}\n/>"
             },
             "controls": {
               "title": {
                 "label": "Title",
-                "default": "Havana, beach, farewell"
+                "default": "Havana, beach, rest"
               },
               "tone": {
                 "label": "Theme"
@@ -1961,7 +1961,7 @@
               "width": "natural",
               "props": {
                 "eyebrow": "Three days",
-                "title": "Havana, beach, farewell",
+                "title": "Havana, beach, rest",
                 "lede": "We arrive together and leave together. In between — one evening in the city, one ceremony on the sand and one morning to sleep in.",
                 "wearLabel": "What to wear",
                 "days": [
@@ -2028,7 +2028,7 @@
                   },
                   {
                     "day": "14",
-                    "label": "Farewell",
+                    "label": "Rest",
                     "note": "a slow morning",
                     "wear": "Whatever's still clean",
                     "slots": [

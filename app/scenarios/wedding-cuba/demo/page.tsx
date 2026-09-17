@@ -139,7 +139,7 @@ export default function Page() {
             },
             {
               day: "14",
-              label: "Прощание",
+              label: "Отдых",
               note: "медленное утро",
               wear: "Что осталось чистым",
               image: `${IMG}beach-dinner.webp`,
