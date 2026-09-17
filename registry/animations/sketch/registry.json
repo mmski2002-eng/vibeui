@@ -2572,6 +2572,7 @@
           "portfolio"
         ],
         "preview": {
+          "width": "natural",
           "props": {
             "image": "/demo/people/person-05.webp"
           }
@@ -2756,6 +2757,7 @@
           "tabs"
         ],
         "preview": {
+          "width": "natural",
           "props": {
             "works": [
               {
@@ -2993,6 +2995,7 @@
           "layout"
         ],
         "preview": {
+          "width": "natural",
           "props": {
             "labels": [
               "первое",
