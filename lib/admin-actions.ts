@@ -10,6 +10,7 @@ import { db } from "@/lib/db"
 import {
   partnerInvite,
   partnerPayout,
+  payoutRequest,
   payment,
   registryToken,
   session,
@@ -546,6 +547,98 @@ export async function recordPartnerPayout(input: {
     details: { amount, note },
   })
 
+  revalidatePath("/account/admin/partners")
+  revalidatePath("/account/referrals")
+}
+
+/**
+ * Заявка блогера на вывод проходит три шага у администратора:
+ *
+ * - `approve` — согласовать (pending → approved): деньги ещё не ушли;
+ * - `pay` — отметить выплату (approved → paid), обязательно приложив ссылку
+ *   на чек блогера из «Мой налог»; создаётся запись partner_payout;
+ * - `reject` — отклонить (из pending или approved).
+ *
+ * Переходы защищены проверкой текущего статуса в WHERE: параллельное решение
+ * второй вкладкой ничего не сломает.
+ */
+export async function resolvePayoutRequest(input: {
+  id: string
+  action: "approve" | "pay" | "reject"
+  receipt?: string
+  note: string
+}) {
+  const admin = await requireAdmin()
+  const note = input.note.trim().slice(0, 500) || null
+
+  const [request] = await db
+    .select()
+    .from(payoutRequest)
+    .where(eq(payoutRequest.id, input.id))
+    .limit(1)
+
+  if (!request) {
+    throw new Error("Заявка не найдена")
+  }
+
+  if (input.action === "approve") {
+    if (request.status !== "pending") {
+      throw new Error("Согласовать можно только новую заявку")
+    }
+
+    await db
+      .update(payoutRequest)
+      .set({ status: "approved", approvedAt: new Date(), approvedBy: admin.email, note })
+      .where(and(eq(payoutRequest.id, input.id), eq(payoutRequest.status, "pending")))
+  } else if (input.action === "pay") {
+    if (request.status !== "approved") {
+      throw new Error("Сначала согласуйте заявку")
+    }
+
+    const receipt = (input.receipt ?? "").trim()
+
+    if (!/^https:\/\/[^\s]+$/i.test(receipt)) {
+      throw new Error("Приложите ссылку на чек (https://)")
+    }
+
+    await db.insert(partnerPayout).values({
+      id: randomUUID(),
+      partnerId: request.partnerId,
+      amount: request.amount,
+      note: note ?? receipt,
+      createdBy: admin.email,
+    })
+
+    await db
+      .update(payoutRequest)
+      .set({
+        status: "paid",
+        receiptUrl: receipt,
+        note,
+        resolvedAt: new Date(),
+        resolvedBy: admin.email,
+      })
+      .where(and(eq(payoutRequest.id, input.id), eq(payoutRequest.status, "approved")))
+  } else {
+    if (request.status !== "pending" && request.status !== "approved") {
+      throw new Error("Заявка уже закрыта")
+    }
+
+    await db
+      .update(payoutRequest)
+      .set({ status: "rejected", note, resolvedAt: new Date(), resolvedBy: admin.email })
+      .where(eq(payoutRequest.id, input.id))
+  }
+
+  await logAdminAction({
+    adminEmail: admin.email,
+    action: `partner.payout_${input.action}`,
+    targetType: "partner",
+    targetId: request.partnerId,
+    details: { requestId: request.id, amount: request.amount, note },
+  })
+
+  revalidatePath("/account/admin/payouts")
   revalidatePath("/account/admin/partners")
   revalidatePath("/account/referrals")
 }

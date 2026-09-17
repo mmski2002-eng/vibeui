@@ -16,6 +16,7 @@ import { localePath, type Locale } from "@/lib/i18n"
 import {
   listPayouts,
   maskEmail,
+  openPayoutRequest,
   partnerCode,
   partnerStats,
   payoutProfile,
@@ -25,8 +26,10 @@ import {
   visitsByCode,
   type PartnerPeriod,
 } from "@/lib/partners"
+import { MIN_PAYOUT } from "@/lib/partner-actions"
 import { partnerPromo, promoStats } from "@/lib/promo"
 import { PayoutProfileForm } from "@/components/account/payout-profile-form"
+import { RequestPayoutButton } from "@/components/account/request-payout-button"
 import { SITE_URL } from "@/lib/seo"
 import { requireUser } from "@/lib/session"
 
@@ -59,8 +62,18 @@ export async function AccountReferrals({
   const validCursor =
     cursor && !Number.isNaN(cursor.getTime()) ? cursor : undefined
 
-  const [clicks, totals, rows, stats, promo, promoTotals, paidOut, payouts, payoutInfo] =
-    await Promise.all([
+  const [
+    clicks,
+    totals,
+    rows,
+    stats,
+    promo,
+    promoTotals,
+    paidOut,
+    payouts,
+    payoutInfo,
+    openRequest,
+  ] = await Promise.all([
       visitsByCode(code),
       referralTotals(user.id),
       referralsOf(user.id, { before: validCursor, limit: PAGE + 1 }),
@@ -70,11 +83,15 @@ export async function AccountReferrals({
       payoutTotals(user.id),
       listPayouts(user.id),
       payoutProfile(user.id),
+      openPayoutRequest(user.id),
     ])
 
   const money = (value: number) =>
     value.toLocaleString(locale === "en" ? "en-GB" : "ru-RU")
   const pendingPayout = Math.max(0, promoTotals.commission - paidOut.paid)
+  const requisitesFilled = Boolean(payoutInfo.inn && payoutInfo.details)
+  const canRequest =
+    !openRequest && pendingPayout >= MIN_PAYOUT && requisitesFilled
 
   const page = rows.slice(0, PAGE)
   const next = rows.length > PAGE ? page[page.length - 1]?.createdAt : null
@@ -190,6 +207,37 @@ export async function AccountReferrals({
                 </div>
               ))}
             </div>
+
+            {openRequest ? (
+              <div className="border-shell-accent-line bg-shell-accent-soft rounded-xl border px-4 py-3 text-sm">
+                <span className="text-shell-fg font-medium tabular-nums">
+                  {t.requestOnReview}: {money(Number(openRequest.amount))} ₽
+                </span>{" "}
+                <span className="text-shell-muted">
+                  —{" "}
+                  {openRequest.status === "approved"
+                    ? t.requestStatusApproved
+                    : t.requestStatusPending}
+                </span>
+              </div>
+            ) : (
+              <div className="flex flex-wrap items-center gap-3">
+                <RequestPayoutButton
+                  disabled={!canRequest}
+                  labels={{
+                    button: t.requestButton,
+                    sending: t.requestSending,
+                    done: t.requestDone,
+                    failed: t.requestFailed,
+                  }}
+                />
+                <span className="text-shell-muted text-xs">
+                  {!requisitesFilled
+                    ? t.requestNeedRequisites
+                    : t.requestMinHint(MIN_PAYOUT)}
+                </span>
+              </div>
+            )}
 
             <div>
               <p className="text-shell-muted mb-2 text-sm">

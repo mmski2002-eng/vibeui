@@ -275,6 +275,37 @@ export const partnerPayout = pgTable(
 )
 
 /**
+ * Заявка блогера на вывод комиссии. Путь: блогер подаёт заявку (`pending`),
+ * администратор её `approved` (согласовывает), затем переводит деньги и
+ * отмечает `paid`, приложив ссылку на чек блогера из «Мой налог» (создаётся
+ * запись partner_payout). `rejected` — отказ. Открытая заявка у блогера одна.
+ */
+export const payoutRequest = pgTable(
+  "payout_request",
+  {
+    id: text("id").primaryKey(),
+    partnerId: text("partner_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    amount: text("amount").notNull(),
+    /** pending | approved | paid | rejected. */
+    status: text("status").notNull().default("pending"),
+    note: text("note"),
+    /** Ссылка на чек блогера из «Мой налог», прикладывается при выплате. */
+    receiptUrl: text("receipt_url"),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    approvedAt: timestamp("approved_at"),
+    approvedBy: text("approved_by"),
+    resolvedAt: timestamp("resolved_at"),
+    resolvedBy: text("resolved_by"),
+  },
+  (table) => [
+    index("payout_request_status_idx").on(table.status, table.createdAt),
+    index("payout_request_partner_idx").on(table.partnerId),
+  ],
+)
+
+/**
  * Реферальный код партнёра: один на аккаунт, живёт вечно. Заводится в
  * момент, когда блогер регистрируется по приглашению; у остальных его нет.
  */

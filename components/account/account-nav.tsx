@@ -7,6 +7,7 @@ import {
   BarChart3,
   ChevronDown,
   Clock,
+  Coins,
   CreditCard,
   Handshake,
   Heart,
@@ -112,6 +113,11 @@ export function AccountNav({
           href: "/account/admin/partners",
           label: ADMIN_TEXTS.nav.partners,
           icon: Handshake,
+        },
+        {
+          href: "/account/admin/payouts",
+          label: ADMIN_TEXTS.nav.payouts,
+          icon: Coins,
         },
         {
           href: "/account/admin/log",

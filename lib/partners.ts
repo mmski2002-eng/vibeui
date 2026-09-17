@@ -1,13 +1,14 @@
 import "server-only"
 
 import { randomBytes, randomUUID } from "node:crypto"
-import { and, count, desc, eq, gte, isNull, lt, sql } from "drizzle-orm"
+import { and, count, desc, eq, gte, inArray, isNull, lt, sql } from "drizzle-orm"
 
 import { fillDays, lastDays } from "@/lib/days"
 import { db } from "@/lib/db"
 import {
   partnerInvite,
   partnerPayout,
+  payoutRequest,
   payment,
   referral,
   referralVisit,
@@ -326,6 +327,73 @@ export async function listPayouts(
     .where(eq(partnerPayout.partnerId, partnerId))
     .orderBy(desc(partnerPayout.createdAt))
     .limit(limit)
+}
+
+export type PayoutRequestRow = typeof payoutRequest.$inferSelect
+
+/** Незакрытая заявка блогера на вывод (ожидает решения или согласована). */
+export async function openPayoutRequest(partnerId: string) {
+  const [row] = await db
+    .select()
+    .from(payoutRequest)
+    .where(
+      and(
+        eq(payoutRequest.partnerId, partnerId),
+        inArray(payoutRequest.status, ["pending", "approved"]),
+      ),
+    )
+    .orderBy(desc(payoutRequest.createdAt))
+    .limit(1)
+
+  return row ?? null
+}
+
+export type AdminPayoutRequest = PayoutRequestRow & {
+  partnerName: string | null
+  partnerEmail: string | null
+  payoutInn: string | null
+  payoutDetails: string | null
+}
+
+/** Заявки на вывод для админской страницы, с данными блогера и реквизитами. */
+export async function listPayoutRequests(
+  statuses: string[],
+  order: "asc" | "desc" = "asc",
+  limit = 100,
+): Promise<AdminPayoutRequest[]> {
+  const rows = await db
+    .select({
+      request: payoutRequest,
+      partnerName: user.name,
+      partnerEmail: user.email,
+      payoutInn: partnerInvite.payoutInn,
+      payoutDetails: partnerInvite.payoutDetails,
+    })
+    .from(payoutRequest)
+    .leftJoin(user, eq(user.id, payoutRequest.partnerId))
+    .leftJoin(partnerInvite, eq(partnerInvite.claimedBy, payoutRequest.partnerId))
+    .where(inArray(payoutRequest.status, statuses))
+    // Активные — старые сверху (очередь), решённые — новые сверху.
+    .orderBy(order === "asc" ? payoutRequest.createdAt : desc(payoutRequest.createdAt))
+    .limit(limit)
+
+  return rows.map((row) => ({
+    ...row.request,
+    partnerName: row.partnerName,
+    partnerEmail: row.partnerEmail,
+    payoutInn: row.payoutInn,
+    payoutDetails: row.payoutDetails,
+  }))
+}
+
+/** Сколько заявок ждёт решения: для бейджа в навигации. */
+export async function pendingPayoutCount() {
+  const [row] = await db
+    .select({ value: count() })
+    .from(payoutRequest)
+    .where(eq(payoutRequest.status, "pending"))
+
+  return Number(row?.value ?? 0)
 }
 
 export type PartnerPeriod = 30 | 90
