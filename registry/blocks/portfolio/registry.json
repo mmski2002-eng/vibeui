@@ -28,7 +28,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "works": [
               {
@@ -195,7 +195,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "works": [
               {
@@ -366,7 +366,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Portfolio003",
@@ -497,7 +497,7 @@
           "freelance"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "works": [
               {
@@ -698,7 +698,7 @@
           "works"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Portfolio005",
@@ -840,7 +840,7 @@
           "works"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "feature": {
               "title": "Ребрендинг сети пекарен",
@@ -1000,7 +1000,7 @@
           "grayscale"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "tone": "dark"
           }
@@ -1237,7 +1237,7 @@
           "cream"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "photos": [
               {
@@ -1462,7 +1462,7 @@
           "retro"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "cards": [
               {
@@ -1738,7 +1738,7 @@
           "dark"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "photos": [
               {

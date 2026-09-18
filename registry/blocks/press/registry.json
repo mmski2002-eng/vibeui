@@ -28,7 +28,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Pres001",
@@ -159,7 +159,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "assets": [
               {
@@ -312,7 +312,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Pres003",

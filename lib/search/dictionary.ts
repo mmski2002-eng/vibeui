@@ -341,11 +341,6 @@ export const SYNONYMS: Synonym[] = [
     terms: ["about"],
   },
   {
-    say: ["вакансии", "работа у нас", "карьера"],
-    categories: ["careers"],
-    terms: ["careers"],
-  },
-  {
     say: ["блог", "статьи", "публикации", "новости"],
     categories: ["blog", "blog-post"],
     terms: ["blog"],

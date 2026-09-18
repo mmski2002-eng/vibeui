@@ -35,7 +35,7 @@
         ],
         "preview": {
           "props": {},
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Restaurant003",
@@ -327,7 +327,7 @@
               }
             ]
           },
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Restaurant005",

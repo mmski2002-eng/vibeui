@@ -1,7 +1,9 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
+import { CatalogCard } from "@/components/catalog/catalog-card"
 import { CatalogGrid } from "@/components/catalog/catalog-grid"
+import { FilterableGrid } from "@/components/catalog/filterable-grid"
 import { JsonLd } from "@/components/json-ld"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
 import { breadcrumbs } from "@/lib/seo"
@@ -41,6 +43,10 @@ export function CategoryPage({
         ? t.topbar.animations
         : t.topbar.components
   const label = getCategoryLabel(category, locale)
+  const single = kind === "block" || isWideCategory(category)
+  // Фильтр по форме включается только там, где блоки размечены слотами:
+  // без разметки чипы нечем наполнить.
+  const hasSlots = items.some((item) => item.meta?.slots)
 
   const heading = (
     <div key="heading" className="border-shell-border mb-6 border-b pb-6">
@@ -80,11 +86,26 @@ export function CategoryPage({
       />
       {heading}
       <div className="order-2">
-        <CatalogGrid
-          items={items}
-          locale={locale}
-          single={kind === "block" || isWideCategory(category)}
-        />
+        {hasSlots ? (
+          <FilterableGrid
+            single={single}
+            lead={t.item.filterLead}
+            densityLabel={t.item.densityLabel}
+            needsLabel={t.item.needsLabel}
+            densityText={t.item.density}
+            needsText={t.item.needs}
+            facets={items.map((item) => ({
+              density: item.meta?.slots?.density,
+              needs: item.meta?.slots?.needs ?? [],
+            }))}
+          >
+            {items.map((item) => (
+              <CatalogCard key={item.name} item={item} locale={locale} />
+            ))}
+          </FilterableGrid>
+        ) : (
+          <CatalogGrid items={items} locale={locale} single={single} />
+        )}
       </div>
     </>
   )

@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Классическая подписка",
       "description": "Центрированная подписка на рассылку: заголовок, поле e-mail, акцентная кнопка и строка «раз в неделю, без спама». Самодостаточна: один файл, без зависимостей.",
-      "categories": ["newsletter"],
+      "categories": [
+        "newsletter"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,9 +20,15 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-subscribe-001-*. Клиентский компонент: бэкенда нет, submit гасится заглушкой, и aria-live-обёртка показывает строку успеха вместо формы. Поле подписано скрытым <label>, а не одним placeholder. Форма складывается в колонку и разворачивается в строку по собственной ширине блока (container queries), тема берётся из color-scheme окружения через light-dark(). Единственное поле e-mail — осознанно: каждый лишний инпут снижает конверсию подписки.",
       "meta": {
-        "tags": ["newsletter", "signup", "email", "form", "cta"],
+        "tags": [
+          "newsletter",
+          "signup",
+          "email",
+          "form",
+          "cta"
+        ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Subscribe001",
@@ -126,7 +134,11 @@
             }
           }
         },
-        "cardControls": ["title", "accent", "background"]
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -134,7 +146,9 @@
       "type": "registry:block",
       "title": "Подписка с превью письма",
       "description": "Слева форма подписки, справа CSS-макет письма-дайджеста: видно, что придёт в ящик, ещё до ввода адреса. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["newsletter"],
+      "categories": [
+        "newsletter"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -146,9 +160,15 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-subscribe-002-*. Клиентский компонент: submit гасится заглушкой, aria-live показывает строку успеха. Раскладка — грид из одной колонки, который разворачивается в две по собственной ширине блока (container queries). Макет письма собран чистым CSS из настоящих заголовков выпуска, а не серых полос: конкретика убеждает сильнее абстракции. Макет помечен aria-hidden — для скринридера это иллюстрация, дублирующая подводку. Тема — через light-dark() от color-scheme окружения.",
       "meta": {
-        "tags": ["newsletter", "email preview", "signup", "two column", "form"],
+        "tags": [
+          "newsletter",
+          "email preview",
+          "signup",
+          "two column",
+          "form"
+        ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Subscribe002",
@@ -276,7 +296,12 @@
             }
           }
         },
-        "cardControls": ["title", "eyebrow", "accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -284,7 +309,9 @@
       "type": "registry:block",
       "title": "Полоса подписки",
       "description": "Узкая горизонтальная лента для середины лендинга: текст слева, инлайн-форма справа, тёплый тинт из акцента. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["newsletter"],
+      "categories": [
+        "newsletter"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -296,9 +323,15 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-subscribe-003-*. Клиентский компонент: submit гасится заглушкой, aria-live показывает строку успеха. Лента подкрашена тёплым тинтом из акцента через color-mix — фон пересчитывается сам при смене accent. Раскладка от собственной ширины: на узкой колонке всё складывается в столбик, с 30rem форма встаёт в строку, с 46rem вся лента вытягивается в горизонталь. Полоса рассчитана на постановку между контентными секциями, поэтому вертикальные отступы малые.",
       "meta": {
-        "tags": ["newsletter", "strip", "inline form", "cta", "banner"],
+        "tags": [
+          "newsletter",
+          "strip",
+          "inline form",
+          "cta",
+          "banner"
+        ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Subscribe003",
@@ -399,7 +432,11 @@
             }
           }
         },
-        "cardControls": ["title", "accent", "background"]
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -407,7 +444,9 @@
       "type": "registry:block",
       "title": "Подписка с выбором тем",
       "description": "Форма подписки с чипами-чекбоксами тем — продукт, дизайн, релизы: обещание присылать только выбранное. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["newsletter"],
+      "categories": [
+        "newsletter"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -419,9 +458,15 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-subscribe-004-*. Клиентский компонент: submit гасится заглушкой, aria-live показывает строку успеха. Темы — настоящие <input type=\"checkbox\"> внутри чипов-«лейблов», сгруппированные в <fieldset> с <legend>: клавиатура и скринридер работают как с обычной формой. Выбранное состояние рисует CSS-селектор :has() без единой строки JS; галочка занимает место всегда, поэтому чипы не прыгают по ширине. Раскладка от собственной ширины блока, тема — через light-dark().",
       "meta": {
-        "tags": ["newsletter", "topics", "checkbox", "preferences", "form"],
+        "tags": [
+          "newsletter",
+          "topics",
+          "checkbox",
+          "preferences",
+          "form"
+        ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Subscribe004",
@@ -520,9 +565,17 @@
                 "lead": "Tick what to write about: the product, the design or releases only. We send exactly what you chose — and nothing on top.",
                 "topicsLabel": "What to send",
                 "topics": [
-                  { "label": "Product", "on": true },
-                  { "label": "Design" },
-                  { "label": "Releases", "on": true }
+                  {
+                    "label": "Product",
+                    "on": true
+                  },
+                  {
+                    "label": "Design"
+                  },
+                  {
+                    "label": "Releases",
+                    "on": true
+                  }
                 ],
                 "emailLabel": "Email address",
                 "placeholder": "you@company.com",
@@ -533,7 +586,11 @@
             }
           }
         },
-        "cardControls": ["title", "accent", "background"]
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -541,7 +598,9 @@
       "type": "registry:block",
       "title": "Подписка с социальным числом",
       "description": "Форма подписки с социальным доказательством: стопка аватаров-инициалов и «12 400 подписчиков» над заголовком. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["newsletter"],
+      "categories": [
+        "newsletter"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -553,9 +612,15 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-subscribe-005-*. Клиентский компонент: submit гасится заглушкой, aria-live показывает строку успеха. Стопка аватаров собрана из инициалов имён (readers): фото не нужны, стоковые лица рушат доверие. Каждый аватар получает свой тинт из одного акцента через color-mix и кольцо в цвет подложки, которое разрезает стопку на отдельные головы. Число набрано tabular-nums и подкрашено акцент-цветом. Раскладка от собственной ширины блока, тема — через light-dark().",
       "meta": {
-        "tags": ["newsletter", "social proof", "avatars", "signup", "form"],
+        "tags": [
+          "newsletter",
+          "social proof",
+          "avatars",
+          "signup",
+          "form"
+        ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Subscribe005",
@@ -669,7 +734,11 @@
             }
           }
         },
-        "cardControls": ["title", "accent", "background"]
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -677,7 +746,9 @@
       "type": "registry:block",
       "title": "Тёмная карточка подписки",
       "description": "Компактная тёмная панель с акцентным градиент-свечением из угла: собственная подложка выделяет подписку на любом фоне страницы. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["newsletter"],
+      "categories": [
+        "newsletter"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -689,9 +760,15 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-subscribe-006-*. Карточка осознанно не следует теме страницы: у неё собственная почти чёрная подложка без light-dark(), а акцентное свечение собрано из двух radial-gradient через color-mix от акцента — при смене accent оно пересчитывается само. Внутри карточки принудительный color-scheme: dark, чтобы нативные поля темнели вместе с ней на светлой странице. Клиентский компонент: submit гасится заглушкой, aria-live показывает строку успеха. Раскладка от собственной ширины блока.",
       "meta": {
-        "tags": ["newsletter", "dark", "card", "glow", "signup"],
+        "tags": [
+          "newsletter",
+          "dark",
+          "card",
+          "glow",
+          "signup"
+        ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Subscribe006",
@@ -809,7 +886,12 @@
             }
           }
         },
-        "cardControls": ["title", "eyebrow", "accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

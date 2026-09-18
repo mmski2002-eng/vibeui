@@ -12,6 +12,17 @@ import path from "node:path"
 
 const CONTROL_TYPES = ["text", "select", "color", "boolean", "number"]
 
+const SLOT_TYPES = ["text", "stat", "image", "link", "quote"]
+const SLOT_DENSITY = ["light", "medium", "heavy"]
+const SLOT_NEEDS = ["photo", "video", "logo", "avatar", "form"]
+
+/**
+ * Категории, где слоты вместимости обязательны. Раскатка идёт по одной
+ * категории: остальным `slots` пока опциональны, чтобы правило не роняло
+ * сборку на ещё не размеченных блоках (изоляция проверки по категории).
+ */
+const SLOTS_REQUIRED = new Set(["testimonials"])
+
 /**
  * Токены темы проекта-хозяина. Registry-компонент обязан быть безразличен
  * к чужой теме: он несёт собственную палитру `--vibeui-*`, иначе после
@@ -204,6 +215,24 @@ function validateI18n(where, item) {
 
     if (ai.usage && !translated.ai?.usage) {
       errors.push(`${at}: не переведён ai.usage`)
+    }
+
+    // `slots.shape` — видимый текст на английской витрине. Роли слотов
+    // переводятся по индексу, поэтому число элементов обязано совпасть.
+    const slots = item.meta?.slots
+
+    if (slots) {
+      if (!translated.slots?.shape) {
+        errors.push(`${at}: не переведён slots.shape`)
+      }
+
+      const copyItems = translated.slots?.items
+
+      if (Array.isArray(copyItems) && copyItems.length !== slots.items.length) {
+        errors.push(
+          `${at}: в slots.items ${copyItems.length} против ${slots.items.length} в оригинале`,
+        )
+      }
     }
 
     for (const control of item.meta?.controls ?? []) {
@@ -479,15 +508,82 @@ function validatePreviewStates(where, item) {
   }
 }
 
+/**
+ * Вместимость блока: форма и слоты контента. Вход со стороны идеи — блок
+ * выбирают по тому, влезет ли контент, а не по чужой истории в дефолтах.
+ * Обязательна в пилотных категориях, опциональна в остальных до раскатки.
+ */
+function validateSlots(where, item, category) {
+  const slots = item.meta?.slots
+
+  if (slots === undefined) {
+    if (SLOTS_REQUIRED.has(category)) {
+      errors.push(`${where}: нет meta.slots (обязательно в категории ${category})`)
+    }
+    return
+  }
+
+  if (!slots.shape || typeof slots.shape !== "string") {
+    errors.push(`${where}: meta.slots.shape пустой или не строка`)
+  }
+
+  if (!SLOT_DENSITY.includes(slots.density)) {
+    errors.push(`${where}: meta.slots.density "${slots.density}" не из ${SLOT_DENSITY.join("/")}`)
+  }
+
+  if (slots.needs !== undefined) {
+    if (!Array.isArray(slots.needs)) {
+      errors.push(`${where}: meta.slots.needs должен быть массивом`)
+    } else {
+      for (const need of slots.needs) {
+        if (!SLOT_NEEDS.includes(need)) {
+          errors.push(`${where}: meta.slots.needs "${need}" не из ${SLOT_NEEDS.join("/")}`)
+        }
+      }
+    }
+  }
+
+  if (!Array.isArray(slots.items) || slots.items.length === 0) {
+    errors.push(`${where}: meta.slots.items пуст`)
+    return
+  }
+
+  for (const slot of slots.items) {
+    const at = `${where} → слот ${slot.role ?? "(без role)"}`
+
+    if (!slot.role || typeof slot.role !== "string") {
+      errors.push(`${at}: нет role`)
+    }
+
+    if (!SLOT_TYPES.includes(slot.type)) {
+      errors.push(`${at}: type "${slot.type}" не из ${SLOT_TYPES.join("/")}`)
+    }
+
+    if (
+      slot.count !== undefined &&
+      typeof slot.count !== "number" &&
+      typeof slot.count !== "string"
+    ) {
+      errors.push(`${at}: count должен быть числом или строкой-диапазоном`)
+    }
+
+    if (slot.required !== undefined && typeof slot.required !== "boolean") {
+      errors.push(`${at}: required должен быть boolean`)
+    }
+  }
+}
+
 function validateItem(file, item, { requireApi }) {
   const where = `${path.relative(process.cwd(), file)} → ${item.name}`
   const ai = item.meta?.ai
   const controls = item.meta?.controls
+  const category = path.basename(path.dirname(file))
 
   validateBase(where, item)
   validateI18n(where, item)
   validateSource(where, path.dirname(file), item)
   validatePreviewStates(where, item)
+  validateSlots(where, item, category)
 
   if (requireApi) {
     if (!ai?.export) {

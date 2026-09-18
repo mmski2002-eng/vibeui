@@ -8,6 +8,7 @@ import {
   type CSSProperties,
 } from "react"
 
+import { FitFrame } from "@/components/catalog/fit-frame"
 import { holdPreviewLink } from "@/lib/preview-links"
 import { loadLazyPreviewMap } from "@/registry/preview-loaders-lazy"
 import type { ItemKind } from "@/registry/categories"
@@ -63,6 +64,7 @@ export function LazyThumbnail({
   full,
   half,
   natural,
+  fit,
   props,
   states,
   aspect,
@@ -76,6 +78,8 @@ export function LazyThumbnail({
   half?: boolean
   /** Блок в натуральную величину: во всю ширину кадра, без полей и масштаба. */
   natural?: boolean
+  /** Блок целиком: вписан масштабом по ширине и потолку высоты, без скролла. */
+  fit?: boolean
   props?: Record<string, unknown>
   states?: Record<string, unknown>[]
   aspect?: string
@@ -224,6 +228,26 @@ export function LazyThumbnail({
   // по ширине кадра. Container query внутри блока сам сворачивает его в узкую
   // раскладку, поэтому масштаб не нужен. Что не влезло по высоте — уходит во
   // внутренний вертикальный скролл, а не ужимается в нечитаемую мелочь.
+  // Блок целиком: вписан масштабом по ширине и потолку высоты. Кадр без полей
+  // (data-frame="section"), масштаб и высоту считает сам FitFrame — в том
+  // числе после смены пропсов контролом.
+  if (fit) {
+    return (
+      <div
+        ref={frameRef}
+        data-part="frame"
+        data-frame="section"
+        className="preview-frame preview-frame-top bg-preview-surface relative flex w-full flex-1"
+        onClick={holdPreviewLink}
+      >
+        {skeleton}
+        <FitFrame>
+          <div className="preview-fade w-full">{content}</div>
+        </FitFrame>
+      </div>
+    )
+  }
+
   if (natural) {
     return (
       <div

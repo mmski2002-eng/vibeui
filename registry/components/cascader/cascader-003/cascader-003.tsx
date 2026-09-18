@@ -120,7 +120,7 @@ transition:opacity .14s ease,display .14s allow-discrete,overlay .14s allow-disc
 @supports (anchor-name: --a){
 [data-vibeui-block="cascader-003"] [data-part="flyout"]{
 top:auto;left:auto;translate:none;
-position-area:right span-block-end;margin-left:0.25rem;
+position-area:inline-end span-block-end;margin-left:0.25rem;
 position-try-fallbacks:flip-inline,flip-block;
 }
 }

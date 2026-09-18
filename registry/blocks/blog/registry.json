@@ -27,7 +27,7 @@
           "articles"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "posts": [
               {
@@ -239,7 +239,7 @@
           "longread"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "avatarImage": "/demo/avatars/anna-256.webp"
           }
@@ -426,7 +426,7 @@
           "author"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "coverImage": "/demo/scenes/scene-17.webp",
             "avatarImage": "/demo/avatars/maria-256.webp"
@@ -591,7 +591,7 @@
           "form"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Blog004",
@@ -739,7 +739,7 @@
           "list"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Blog005",
@@ -937,7 +937,7 @@
           "cards"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Blog006",
@@ -1111,7 +1111,7 @@
           "grid"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "posts": [
               {
@@ -1315,7 +1315,7 @@
           "magazine"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Blog008",
@@ -1498,7 +1498,7 @@
           "links"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "avatarImage": "/demo/avatars/oleg-256.webp"
           }
@@ -1682,7 +1682,7 @@
           "navigation"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Blog010",
@@ -1868,7 +1868,7 @@
           "list"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Blog011",
@@ -2067,7 +2067,7 @@
           "tiles"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Blog012",
@@ -2247,7 +2247,7 @@
           "progress"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "avatarImage": "/demo/avatars/petr-256.webp"
           }
@@ -2406,7 +2406,7 @@
           "recirculation"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Blog014",
@@ -2570,7 +2570,7 @@
           "list"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Blog015",

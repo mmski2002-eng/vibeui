@@ -55,6 +55,20 @@ export function localizeItem(item: CatalogItem, locale: Locale): CatalogItem {
             },
           }
         : null),
+      ...(translation.slots && item.meta.slots
+        ? {
+            slots: {
+              ...item.meta.slots,
+              ...(translation.slots.shape
+                ? { shape: translation.slots.shape }
+                : null),
+              items: item.meta.slots.items.map((slot, index) => {
+                const role = translation.slots?.items?.[index]?.role
+                return role ? { ...slot, role } : slot
+              }),
+            },
+          }
+        : null),
     },
   }
 }

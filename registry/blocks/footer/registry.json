@@ -27,7 +27,7 @@
           "status"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Footer002",
@@ -273,7 +273,7 @@
           "address"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Footer006",
@@ -475,7 +475,7 @@
           "delivery"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Footer007",
@@ -755,7 +755,7 @@
           "cookies"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Footer008",
@@ -955,7 +955,7 @@
           "mega"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Footer009",
@@ -1235,7 +1235,7 @@
           "typography"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Footer010",
@@ -1446,7 +1446,7 @@
           "landing"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Footer013",
@@ -1632,7 +1632,7 @@
           "content"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Footer014",
@@ -1870,7 +1870,7 @@
           "action"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Footer015",
@@ -2115,7 +2115,7 @@
           "lesson"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 300"
         },
         "ai": {
@@ -2269,7 +2269,7 @@
           "studio"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 520",
           "props": {
             "src": "/demo/foundations/arch-slope-wide.webp",
@@ -2416,7 +2416,7 @@
           "photo"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 620",
           "props": {
             "src": "/demo/foundations/finale-evening.webp",
@@ -2567,7 +2567,7 @@
         ],
         "preview": {
           "props": {},
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Footer019",
@@ -2772,7 +2772,7 @@
         ],
         "preview": {
           "props": {},
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Footer020",
@@ -2974,7 +2974,7 @@
           "wordmark"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {}
         },
         "cardControls": [
@@ -3166,7 +3166,7 @@
           "columns"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {}
         },
         "cardControls": [
@@ -3414,7 +3414,7 @@
           "age"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "tone": "dark"
           }
@@ -3605,7 +3605,7 @@
           "signature"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "cardControls": [
           "names",
@@ -3786,7 +3786,7 @@
           "retro"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "cardControls": [
           "names",
@@ -3961,7 +3961,7 @@
           "christmas"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "cardControls": [
           "names",

@@ -28,7 +28,7 @@
           "typography"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Errorpage001",
@@ -192,7 +192,7 @@
           "server"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Errorpage002",
@@ -339,7 +339,7 @@
           "status"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "usage": "<Errorpage003\n  finishTime=\"сегодня к 14:00 МСК\"\n  progress={68}\n  notifyAction=\"/notify\"\n/>",
@@ -489,7 +489,7 @@
           "permissions"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Errorpage004",
@@ -636,7 +636,7 @@
           "retry"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Errorpage005",
@@ -787,7 +787,7 @@
           "suggestions"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Errorpage006",

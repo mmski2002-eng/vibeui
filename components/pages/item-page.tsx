@@ -59,6 +59,7 @@ export async function ItemPage({
   // Три пункта — верхняя граница читаемого списка в шапке: дальше человек
   // перестаёт их различать и просто пролистывает.
   const adapt = (block.meta?.ai?.adapt ?? []).slice(0, 3)
+  const slots = block.meta?.slots
 
   const rootLabel =
     kind === "block"
@@ -172,6 +173,60 @@ export async function ItemPage({
               </div>
             ) : null}
           </header>
+
+          {/* Анатомия: форма и слоты контента. Вход со стороны идеи — человек
+              видит, влезет ли его контент, до того как рассматривает чужой
+              текст в превью. */}
+          {slots ? (
+            <section
+              aria-labelledby="anatomy-heading"
+              className="border-shell-border mb-10 rounded-xl border p-5"
+            >
+              <h2
+                id="anatomy-heading"
+                className="text-shell-muted mb-3 text-xs font-medium tracking-wide uppercase"
+              >
+                {t.item.anatomy}
+              </h2>
+              <p className="text-shell-fg max-w-2xl text-base text-pretty">
+                {slots.shape}
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <span className="border-shell-border text-shell-muted rounded-full border px-2.5 py-1 text-xs">
+                  {t.item.densityLabel}: {t.item.density[slots.density]}
+                </span>
+                {(slots.needs ?? []).map((need) => (
+                  <span
+                    key={need}
+                    className="border-shell-accent-line text-shell-accent rounded-full border px-2.5 py-1 text-xs"
+                  >
+                    {t.item.needsLabel}: {t.item.needs[need]}
+                  </span>
+                ))}
+              </div>
+              <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+                {slots.items.map((slot) => (
+                  <li
+                    key={slot.role}
+                    className="text-shell-fg flex items-baseline gap-2 text-sm"
+                  >
+                    <span aria-hidden="true" className="text-shell-accent">
+                      ·
+                    </span>
+                    <span className="text-pretty">
+                      {slot.role}
+                      {slot.count !== undefined ? (
+                        <span className="text-shell-muted"> ×{slot.count}</span>
+                      ) : null}
+                      {slot.required ? (
+                        <span className="text-shell-muted"> *</span>
+                      ) : null}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
 
           <ItemWorkbench
             item={block}

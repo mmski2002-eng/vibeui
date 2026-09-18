@@ -28,7 +28,7 @@
           "people"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "members": [
               {
@@ -453,7 +453,7 @@
           "people"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "members": [
               {
@@ -716,7 +716,7 @@
           "founders"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "leaders": [
               {
@@ -901,7 +901,7 @@
           "people"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "members": [
               {
@@ -1221,7 +1221,7 @@
           "grid"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "members": [
               {
@@ -1449,7 +1449,7 @@
           "about"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "People006",
@@ -1674,7 +1674,7 @@
               }
             ]
           },
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "People007",
@@ -1858,7 +1858,7 @@
           "reveal"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {}
         },
         "cardControls": [
@@ -2064,7 +2064,7 @@
           "polaroid"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "tone": "dark"
           }
@@ -2282,7 +2282,7 @@
           "cream"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "people": [
               {
@@ -2477,7 +2477,7 @@
           "dark"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "people": [
               {

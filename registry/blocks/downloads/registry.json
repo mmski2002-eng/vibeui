@@ -28,7 +28,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Download001",
@@ -161,7 +161,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Download002",
@@ -294,7 +294,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Download003",
@@ -428,7 +428,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "screenshot": "/demo/screens/screen-03.webp"
           }
@@ -582,7 +582,7 @@
           "update"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Download005",
@@ -739,7 +739,7 @@
           "checksum"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Download006",

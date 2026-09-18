@@ -145,7 +145,7 @@
               }
             ]
           },
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Realty003",
@@ -457,7 +457,7 @@
               }
             ]
           },
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Realty004",
@@ -635,7 +635,7 @@
         ],
         "preview": {
           "props": {},
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Realty005",
@@ -800,7 +800,7 @@
         ],
         "preview": {
           "props": {},
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Realty006",

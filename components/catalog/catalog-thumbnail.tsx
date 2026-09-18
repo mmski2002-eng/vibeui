@@ -44,6 +44,8 @@ export function CatalogThumbnail({
   // Блок в натуральную величину: не масштабируется в 1280px, а рендерится в
   // ширину карточки, где container query сворачивает его в узкую раскладку.
   const natural = preview?.width === "natural"
+  // Блок целиком: вписан масштабом по ширине и потолку высоты, без скролла.
+  const fit = preview?.width === "fit"
 
   return (
     <LazyThumbnail
@@ -60,6 +62,7 @@ export function CatalogThumbnail({
       full={preview?.width === "full"}
       half={preview?.width === "section"}
       natural={natural}
+      fit={fit}
       props={preview?.props}
       states={preview?.states}
       aspect={preview?.aspect}

@@ -29,7 +29,7 @@
           "atmosphere"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 640",
           "props": {
             "src": "/demo/foundations/atmosphere-ridge.webp",
@@ -177,7 +177,7 @@
           "studio"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 560"
         },
         "ai": {
@@ -382,7 +382,7 @@
           }
         },
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 560"
         },
         "controls": [
@@ -462,7 +462,7 @@
           "premium"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 560"
         },
         "ai": {
@@ -617,7 +617,7 @@
           "devtools"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 560"
         },
         "ai": {
@@ -771,7 +771,7 @@
           "ai"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 560"
         },
         "ai": {
@@ -926,7 +926,7 @@
           "data"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 560"
         },
         "ai": {
@@ -1080,7 +1080,7 @@
           "webgl"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 560"
         },
         "ai": {
@@ -1236,7 +1236,7 @@
           "biotech"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 560"
         },
         "ai": {
@@ -1391,7 +1391,7 @@
           "raycast"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 560"
         },
         "ai": {
@@ -1545,7 +1545,7 @@
           "motion"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 560"
         },
         "ai": {
@@ -1700,7 +1700,7 @@
           "devtools"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 560"
         },
         "ai": {
@@ -1855,7 +1855,7 @@
           "fashion"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 560"
         },
         "ai": {
@@ -2010,7 +2010,7 @@
           "webgl"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 560"
         },
         "ai": {
@@ -2165,7 +2165,7 @@
           "minimal"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 560"
         },
         "ai": {
@@ -2320,7 +2320,7 @@
           "data"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 560"
         },
         "ai": {
@@ -2475,7 +2475,7 @@
           "webgl"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 560"
         },
         "ai": {
@@ -2630,7 +2630,7 @@
           "premium"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 560"
         },
         "ai": {
@@ -2785,7 +2785,7 @@
           "webgl"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 560"
         },
         "ai": {
@@ -2940,7 +2940,7 @@
           "webgl"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 560"
         },
         "ai": {
@@ -3096,7 +3096,7 @@
           "wrapper"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 560",
           "props": {
             "margin": true

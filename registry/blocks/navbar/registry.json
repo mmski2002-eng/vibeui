@@ -27,7 +27,7 @@
           "dark"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 121"
         },
         "ai": {
@@ -211,7 +211,7 @@
           "universal"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 128"
         },
         "ai": {
@@ -378,7 +378,7 @@
           "navigation"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 128"
         },
         "ai": {
@@ -628,7 +628,7 @@
           "cart"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 160"
         },
         "ai": {
@@ -814,7 +814,7 @@
           "version"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 120"
         },
         "ai": {
@@ -1006,7 +1006,7 @@
           "breadcrumbs"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 110"
         },
         "ai": {
@@ -1195,7 +1195,7 @@
           "transparent"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 520"
         },
         "ai": {
@@ -1360,7 +1360,7 @@
           "clinic"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 150"
         },
         "ai": {
@@ -1535,7 +1535,7 @@
           "ai"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 480"
         },
         "ai": {
@@ -1709,7 +1709,7 @@
           "booking"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 340"
         },
         "ai": {
@@ -1874,7 +1874,7 @@
           "newspaper"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 240"
         },
         "ai": {
@@ -2065,7 +2065,7 @@
           "props": {
             "demo": true
           },
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 520"
         },
         "ai": {
@@ -2252,7 +2252,7 @@
           "photographer"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 560"
         },
         "ai": {
@@ -2419,7 +2419,7 @@
           "luxury"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 140"
         },
         "ai": {
@@ -2588,7 +2588,7 @@
           "university"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 150"
         },
         "ai": {
@@ -2788,7 +2788,7 @@
           "tickets"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 140"
         },
         "ai": {
@@ -2981,7 +2981,7 @@
           "progress"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 104"
         },
         "ai": {
@@ -3156,7 +3156,7 @@
           "app"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 210"
         },
         "ai": {
@@ -3311,7 +3311,8 @@
           "aspect": "1280 / 80",
           "props": {
             "sticky": false
-          }
+          },
+          "width": "fit"
         },
         "ai": {
           "export": "Navbar020",
@@ -3513,7 +3514,8 @@
           "aspect": "1280 / 83",
           "props": {
             "sticky": false
-          }
+          },
+          "width": "fit"
         },
         "ai": {
           "export": "Navbar021",
@@ -3710,7 +3712,7 @@
           "sticky"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "sticky": false
           }
@@ -3902,7 +3904,7 @@
           "glass"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "spy": false
           }
@@ -4110,7 +4112,7 @@
           "progress"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "tone": "dark",
             "placement": "static",
@@ -4300,7 +4302,7 @@
           "sound wave"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "placement": "static",
             "spy": false,
@@ -4500,7 +4502,7 @@
           "retro"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "placement": "static",
             "spy": false,
@@ -4689,7 +4691,7 @@
           "candle"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "placement": "static",
             "spy": false,

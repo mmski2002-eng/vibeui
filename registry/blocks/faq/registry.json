@@ -165,7 +165,7 @@
           "background"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         }
       }
     },
@@ -195,7 +195,7 @@
           "no-js"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Faq002",
@@ -375,7 +375,7 @@
           "no-js"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Faq003",
@@ -596,7 +596,7 @@
           "exclusive"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Faq004",
@@ -774,7 +774,7 @@
           "client"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Faq005",
@@ -976,7 +976,7 @@
           "sticky"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Faq006",
@@ -1178,7 +1178,7 @@
           "no-js"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Faq007",
@@ -1377,7 +1377,7 @@
           "no-js"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Faq008",
@@ -1571,7 +1571,7 @@
           "no-js"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Faq009",
@@ -1750,7 +1750,7 @@
           "no-js"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Faq010",
@@ -1951,7 +1951,7 @@
           "no-js"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Faq011",
@@ -2154,7 +2154,7 @@
           "schema"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Faq012",
@@ -2333,7 +2333,7 @@
           "no-js"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Faq013",
@@ -2523,7 +2523,7 @@
           "no-js"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Faq014",
@@ -2692,7 +2692,7 @@
           "no-js"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Faq015",
@@ -2877,7 +2877,7 @@
         ],
         "preview": {
           "props": {},
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Faq016",
@@ -3051,7 +3051,7 @@
           "telegram"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {}
         },
         "cardControls": [
@@ -3229,7 +3229,7 @@
           "columns"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {}
         },
         "cardControls": [
@@ -3413,7 +3413,7 @@
           "questions"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "tone": "dark"
           }
@@ -3585,7 +3585,7 @@
           "sticky"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "cardControls": [
           "title",
@@ -3758,7 +3758,7 @@
           "retro"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "cardControls": [
           "title",
@@ -3942,7 +3942,7 @@
           "dark"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "cardControls": [
           "title",

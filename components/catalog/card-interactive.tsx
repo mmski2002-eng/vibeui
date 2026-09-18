@@ -11,6 +11,7 @@ import { useSession } from "@/lib/auth-client"
 import { useEffect, useId, useRef, useState, type ReactNode } from "react"
 
 import { CopyForAi } from "@/components/catalog/copy-for-ai"
+import { FitFrame } from "@/components/catalog/fit-frame"
 import { SHELL_THEME_EVENT } from "@/components/catalog/theme-switch"
 import {
   cardControlIcon,
@@ -75,6 +76,7 @@ export function CardInteractive({
   cardControls,
   full,
   natural,
+  fit,
   locale,
   itemUrl,
   title,
@@ -95,6 +97,9 @@ export function CardInteractive({
   /** Блок natural-режима: настраиваемое превью тоже рисуется в том же
       полноширинном поле, что и статичная миниатюра, а не узким по центру. */
   natural: boolean
+  /** Блок fit-режима: настраиваемое превью вписывается тем же FitFrame, что и
+      статичная миниатюра, — иначе смена контрола схлопывала кадр. */
+  fit: boolean
   locale: Locale
   itemUrl: string
   title: string
@@ -629,7 +634,28 @@ export function CardInteractive({
         </div>
 
         {configured ? (
-          natural ? (
+          fit ? (
+            // Fit: тот же FitFrame, что у статичной миниатюры. Смена контрола
+            // меняет высоту блока — ResizeObserver внутри FitFrame пересчитает
+            // масштаб, кадр не схлопнется.
+            <div
+              data-part="frame"
+              data-frame="section"
+              className="preview-frame preview-frame-top bg-preview-surface flex w-full flex-1"
+            >
+              <FitFrame>
+                <ConfigurablePreview
+                  slug={name}
+                  kind={kind}
+                  category={category}
+                  full={full}
+                  controls={controls}
+                  values={values}
+                  previewProps={previewProps}
+                />
+              </FitFrame>
+            </div>
+          ) : natural ? (
             // Natural: то же поле, что у статичной миниатюры (полная ширина,
             // фикс-высота 380→620 со скроллом), иначе смена контрола ужимала
             // блок в узкий центрированный прямоугольник.

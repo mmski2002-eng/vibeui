@@ -39,8 +39,6 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/block/cases")).PREVIEWS
     case "block/changelog":
       return (await import("@/registry/previews/block/changelog")).PREVIEWS
-    case "block/careers":
-      return (await import("@/registry/previews/block/careers")).PREVIEWS
     case "block/comparison":
       return (await import("@/registry/previews/block/comparison")).PREVIEWS
     case "block/waitlist":

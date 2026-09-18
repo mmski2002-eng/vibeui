@@ -162,7 +162,7 @@
           "background"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         }
       }
     },
@@ -335,7 +335,7 @@
           "background"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         }
       }
     },
@@ -495,7 +495,7 @@
           "background"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         }
       }
     },
@@ -650,7 +650,7 @@
           "background"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         }
       }
     },
@@ -680,7 +680,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Auth005",
@@ -999,7 +999,7 @@
           "background"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "avatarImage": "/demo/avatars/anna-256.webp"
           }
@@ -1032,7 +1032,7 @@
           "validation"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Auth007",
@@ -1196,7 +1196,7 @@
           "providers"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Auth008",
@@ -1370,7 +1370,7 @@
           "terms"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Auth009",
@@ -1533,7 +1533,7 @@
           "cooldown"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Auth010",

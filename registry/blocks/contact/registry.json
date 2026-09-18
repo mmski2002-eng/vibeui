@@ -27,7 +27,7 @@
           "topics"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Contact001",
@@ -220,7 +220,7 @@
           "hours"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "image": "/demo/places/place-03.webp"
           }
@@ -408,7 +408,7 @@
           "form"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Contact003",
@@ -593,7 +593,7 @@
           "form"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Contact004",
@@ -780,7 +780,7 @@
           "phone"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Contact006",
@@ -995,7 +995,7 @@
           "phone"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Contact007",
@@ -1170,7 +1170,7 @@
           "locations"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Contact009",
@@ -1346,7 +1346,7 @@
           "attachment"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Contact012",
@@ -1512,7 +1512,7 @@
           "channels"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Contact014",
@@ -1705,7 +1705,7 @@
           "props": {
             "image": "/demo/places/place-03.webp"
           },
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Contact015",
@@ -1876,7 +1876,7 @@
         ],
         "preview": {
           "props": {},
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Contact016",
@@ -2038,7 +2038,7 @@
           "slots"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "tone": "dark"
           }
@@ -2263,7 +2263,7 @@
           "cream"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "guest": "Ольга"
           }
@@ -2476,7 +2476,7 @@
           "retro"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "guest": "Ольга"
           }
@@ -2662,7 +2662,7 @@
           "dark"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "guest": "Анна"
           }

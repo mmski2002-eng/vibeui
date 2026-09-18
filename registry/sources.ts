@@ -18,7 +18,6 @@ import errorsRegistry from "@/registry/blocks/errors/registry.json"
 import aboutRegistry from "@/registry/blocks/about/registry.json"
 import casesRegistry from "@/registry/blocks/cases/registry.json"
 import changelogRegistry from "@/registry/blocks/changelog/registry.json"
-import careersRegistry from "@/registry/blocks/careers/registry.json"
 import comparisonRegistry from "@/registry/blocks/comparison/registry.json"
 import waitlistRegistry from "@/registry/blocks/waitlist/registry.json"
 import consentRegistry from "@/registry/blocks/consent/registry.json"
@@ -217,11 +216,6 @@ export const SOURCES = [
     directory: "registry/blocks/changelog",
     kind: "block",
     items: changelogRegistry.items,
-  },
-  {
-    directory: "registry/blocks/careers",
-    kind: "block",
-    items: careersRegistry.items,
   },
   {
     directory: "registry/blocks/comparison",

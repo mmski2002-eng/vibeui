@@ -146,12 +146,6 @@ export const CATEGORIES = [
     group: "marketing",
   },
   {
-    slug: "careers",
-    label: "Вакансии",
-    en: "Careers",
-    group: "marketing",
-  },
-  {
     slug: "comparison",
     label: "Сравнение",
     en: "Comparison",

@@ -314,6 +314,7 @@ const metadata = {
           ],
         }
       : null),
+    ...(tree.kind === "block" ? { preview: { width: "fit" } } : null),
     i18n: {
       en: {
         description: "TODO",

@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Таблица «мы против них»",
       "description": "Сравнительная таблица возможностей: строки функций и две колонки галочек, наша колонка выделена брендовым фоном. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["comparison"],
+      "categories": [
+        "comparison"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,9 +20,15 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-comparison-001-*. Серверный компонент. Настоящая table с thead/tbody и scope у заголовков. Галочка нарисована бордюрами без иконочного шрифта, отсутствие — приглушённое тире с aria-label. Наша колонка выделена брендовым фоном шапки и лёгкой заливкой ячеек.",
       "meta": {
-        "tags": ["comparison", "table", "features", "versus", "marketing"],
+        "tags": [
+          "comparison",
+          "table",
+          "features",
+          "versus",
+          "marketing"
+        ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Comparison001",
@@ -72,7 +80,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A feature comparison table: feature rows and two check columns, our column highlighted with a brand background. Self-contained — one file, no dependencies.",
@@ -124,7 +137,9 @@
       "type": "registry:block",
       "title": "Три подхода",
       "description": "Сравнение тремя колонками-подходами: свой способ выделен брендовой рамкой и стоит по центру, соседи приглушены. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["comparison"],
+      "categories": [
+        "comparison"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -136,9 +151,15 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-comparison-002-*. Серверный компонент. Три колонки целых подходов вместо таблицы галочек: выделенная колонка (data-highlight) получает брендовую рамку, остальные приглушены opacity. Число колонок считает container query.",
       "meta": {
-        "tags": ["comparison", "approaches", "columns", "versus", "marketing"],
+        "tags": [
+          "comparison",
+          "approaches",
+          "columns",
+          "versus",
+          "marketing"
+        ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Comparison002",
@@ -190,7 +211,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A comparison of three whole approaches: your way is highlighted with a brand border and sits in the middle, the neighbours dimmed. Self-contained — one file, no dependencies.",
@@ -242,7 +268,9 @@
       "type": "registry:block",
       "title": "Было и стало",
       "description": "Сравнение «было — стало» парами строк: прошлое приглушено, будущее набрано акцентом. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["comparison"],
+      "categories": [
+        "comparison"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -262,7 +290,7 @@
           "service"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Comparison003",
@@ -330,7 +358,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["title", "eyebrow", "beforeLabel", "afterLabel"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "beforeLabel",
+          "afterLabel"
+        ],
         "i18n": {
           "en": {
             "title": "Before and after",
@@ -392,7 +425,9 @@
       "type": "registry:block",
       "title": "Матрица возможностей",
       "description": "Таблица сравнения редакций: строки сгруппированы по разделам, выбранная колонка подсвечена, первая колонка держится при прокрутке вбок. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["comparison"],
+      "categories": [
+        "comparison"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -413,7 +448,7 @@
           "plans"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Comparison004",
@@ -467,7 +502,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "title": "Feature matrix",
@@ -521,7 +561,9 @@
       "type": "registry:block",
       "title": "Разбор возражений",
       "description": "Сравнение парами «обычно говорят — как на самом деле»: возражение и ответ в одной карточке. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["comparison"],
+      "categories": [
+        "comparison"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -533,9 +575,15 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-comparison-005-*. Серверный компонент. Таблицы нет намеренно: сравниваются утверждения, а не характеристики, поэтому каждая пара читается сама по себе и в любом порядке. Кавычки у возражения нарисованы псевдоэлементами на самом тексте, а не на абзаце — в абзаце ещё подпись стороны. Галочка ответа тоже рисуется CSS, без иконочного шрифта и SVG.",
       "meta": {
-        "tags": ["comparison", "objections", "faq", "marketing", "pairs"],
+        "tags": [
+          "comparison",
+          "objections",
+          "faq",
+          "marketing",
+          "pairs"
+        ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Comparison005",
@@ -595,7 +643,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["title", "eyebrow", "lead", "accent"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "lead",
+          "accent"
+        ],
         "i18n": {
           "en": {
             "title": "Objections answered",

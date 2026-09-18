@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Лента версий",
       "description": "История изменений хронологической осью: релизы от нового к старому, у каждого номер версии, дата, тег типа и список правок. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["changelog"],
+      "categories": [
+        "changelog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,8 +20,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-changelog-001-*. Серверный компонент. Вертикальная ось — border-left у каждой строки, точки на оси — псевдоэлементы с брендовой заливкой; у последней строки линия обнулена, чтобы ось не свисала. Разметка: ol/li, версия в моношрифте.",
       "meta": {
-        "tags": ["changelog", "timeline", "releases", "versions", "marketing"],
-        "preview": { "width": "natural" },
+        "tags": [
+          "changelog",
+          "timeline",
+          "releases",
+          "versions",
+          "marketing"
+        ],
+        "preview": {
+          "width": "fit"
+        },
         "ai": {
           "export": "Changelog001",
           "usage": "<Changelog001\n  title=\"Что нового\"\n  entries={[{ version: \"v2.4.0\", date: \"6 сентября\", tag: \"Новое\", title: \"Каталог вырос\", points: [\"Новые разделы\"] }]}\n/>",
@@ -50,12 +60,39 @@
           ]
         },
         "controls": [
-          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Что нового в каталоге", "maxLength": 48 },
-          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "История изменений", "maxLength": 24 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что нового в каталоге",
+            "maxLength": 48
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "История изменений",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A changelog on a chronological axis: releases newest-first, each with a version number, date, type tag and a list of edits. Self-contained — one file, no dependencies.",
@@ -88,10 +125,20 @@
               "usage": "<Changelog001\n  title=\"What's new\"\n  entries={[{ version: \"v2.4.0\", date: \"Sep 6\", tag: \"New\", title: \"Catalog grew\", points: [\"New sections\"] }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Title", "default": "What's new in the catalog" },
-              "eyebrow": { "label": "Eyebrow", "default": "Changelog" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Title",
+                "default": "What's new in the catalog"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Changelog"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "Version Timeline",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-changelog-001-* variables. A server component. The vertical axis is a border-left on each row, the axis dots are pseudo-elements with a brand fill; the last row's line is cleared so the axis does not dangle. Markup: ol/li, version in a monospace font."
@@ -104,7 +151,9 @@
       "type": "registry:block",
       "title": "Хайлайт релиза",
       "description": "Анонс одной версии: крупный номер, дата, резюме и разбивка изменений по типам — Добавлено, Изменено, Исправлено. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["changelog"],
+      "categories": [
+        "changelog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -116,8 +165,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-changelog-002-*. Серверный компонент. Формат для свежего релиза наверху страницы: одна версия крупно, резюме и список изменений, где тип каждого пункта подписан тегом фиксированной ширины слева. Сетка grid-template-columns:auto 1fr держит теги в столбец.",
       "meta": {
-        "tags": ["changelog", "release", "announcement", "versions", "marketing"],
-        "preview": { "width": "natural" },
+        "tags": [
+          "changelog",
+          "release",
+          "announcement",
+          "versions",
+          "marketing"
+        ],
+        "preview": {
+          "width": "fit"
+        },
         "ai": {
           "export": "Changelog002",
           "usage": "<Changelog002\n  version=\"v2.4.0\"\n  title=\"Крупное обновление\"\n  changes={[{ tag: \"Добавлено\", text: \"Новые блоки\" }]}\n/>",
@@ -148,12 +205,39 @@
           ]
         },
         "controls": [
-          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Каталог блоков и фирменная палитра", "maxLength": 52 },
-          { "prop": "version", "label": "Версия", "type": "text", "default": "v2.4.0", "maxLength": 16 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Каталог блоков и фирменная палитра",
+            "maxLength": 52
+          },
+          {
+            "prop": "version",
+            "label": "Версия",
+            "type": "text",
+            "default": "v2.4.0",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["title", "version", "accent", "background"],
+        "cardControls": [
+          "title",
+          "version",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A single-release announcement: large version number, date, summary and changes grouped by type — Added, Changed, Fixed. Self-contained — one file, no dependencies.",
@@ -186,10 +270,20 @@
               "usage": "<Changelog002\n  version=\"v2.4.0\"\n  title=\"Major update\"\n  changes={[{ tag: \"Added\", text: \"New blocks\" }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Title", "default": "Block catalog and brand palette" },
-              "version": { "label": "Version", "default": "v2.4.0" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Title",
+                "default": "Block catalog and brand palette"
+              },
+              "version": {
+                "label": "Version",
+                "default": "v2.4.0"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "Release Highlight",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-changelog-002-* variables. A server component. A format for a fresh release at the top of the page: one version large, a summary and a change list where each item's type is labelled by a fixed-width tag on the left. The grid-template-columns:auto 1fr keeps tags in a column."
@@ -202,7 +296,9 @@
       "type": "registry:block",
       "title": "Лента с фильтром",
       "description": "История изменений с фильтром по типу: чипы «Все, Новое, Исправления» прячут ненужные записи. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["changelog"],
+      "categories": [
+        "changelog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -214,8 +310,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-changelog-003-*. Клиентский компонент: чипы фильтруют список по типу записи через состояние активного чипа и атрибут hidden на строках. Чипы объявлены через aria-pressed, набор типов выводится из данных, поэтому лишних чипов не появляется.",
       "meta": {
-        "tags": ["changelog", "filter", "releases", "versions", "marketing"],
-        "preview": { "width": "natural" },
+        "tags": [
+          "changelog",
+          "filter",
+          "releases",
+          "versions",
+          "marketing"
+        ],
+        "preview": {
+          "width": "fit"
+        },
         "ai": {
           "export": "Changelog003",
           "usage": "<Changelog003\n  title=\"Все обновления\"\n  entries={[{ version: \"v2.4.0\", date: \"6 сен\", type: \"Новое\", text: \"Новые блоки\" }]}\n/>",
@@ -246,12 +350,39 @@
           ]
         },
         "controls": [
-          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Все обновления каталога", "maxLength": 48 },
-          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "История изменений", "maxLength": 24 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Все обновления каталога",
+            "maxLength": 48
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "История изменений",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A changelog with a type filter: chips — All, New, Fixes — hide the entries you don't want. Self-contained — one file, no dependencies.",
@@ -284,10 +415,20 @@
               "usage": "<Changelog003\n  title=\"All updates\"\n  entries={[{ version: \"v2.4.0\", date: \"Sep 6\", type: \"New\", text: \"New blocks\" }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Title", "default": "All catalog updates" },
-              "eyebrow": { "label": "Eyebrow", "default": "Changelog" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Title",
+                "default": "All catalog updates"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Changelog"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "Filtered Changelog",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-changelog-003-* variables. A client component: chips filter the list by entry type via the active-chip state and the hidden attribute on rows. Chips are announced through aria-pressed, and the type set is derived from the data, so no stray chips appear."

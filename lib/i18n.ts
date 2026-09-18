@@ -171,6 +171,18 @@ type Dictionary = {
     flowSteps: [string, string, string]
     flowChat: string
     adapt: string
+    anatomy: string
+    filterLead: string
+    densityLabel: string
+    density: { light: string; medium: string; heavy: string }
+    needsLabel: string
+    needs: {
+      photo: string
+      video: string
+      logo: string
+      avatar: string
+      form: string
+    }
     tags: string
     notes: string
     steps: [string, string, string]
@@ -436,6 +448,18 @@ const RU: Dictionary = {
     ],
     flowChat: "добавь это на главную первым экраном:",
     adapt: "Что можно поменять",
+    anatomy: "Анатомия",
+    filterLead: "Подобрать под свой контент",
+    densityLabel: "Плотность текста",
+    density: { light: "лёгкий", medium: "средний", heavy: "плотный" },
+    needsLabel: "Нужно",
+    needs: {
+      photo: "фото",
+      video: "видео",
+      logo: "логотипы",
+      avatar: "аватары",
+      form: "форма",
+    },
     tags: "Теги",
     notes: "Технические заметки",
     steps: [
@@ -645,6 +669,18 @@ const EN: Dictionary = {
     flowSteps: ["Pick it here", "Paste into the chat", "Get it in your project"],
     flowChat: "put this on the home page as the hero:",
     adapt: "What you can change",
+    anatomy: "Anatomy",
+    filterLead: "Match to your content",
+    densityLabel: "Text density",
+    density: { light: "light", medium: "medium", heavy: "heavy" },
+    needsLabel: "Needs",
+    needs: {
+      photo: "photo",
+      video: "video",
+      logo: "logos",
+      avatar: "avatars",
+      form: "form",
+    },
     tags: "Tags",
     notes: "Technical notes",
     steps: [

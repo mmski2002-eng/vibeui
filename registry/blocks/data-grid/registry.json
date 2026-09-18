@@ -27,7 +27,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid001",
@@ -235,7 +235,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid002",
@@ -447,7 +447,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid003",
@@ -685,7 +685,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid004",
@@ -934,7 +934,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid005",
@@ -1134,7 +1134,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid006",
@@ -1353,7 +1353,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid007",
@@ -1562,7 +1562,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid008",
@@ -1803,7 +1803,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid009",
@@ -1995,7 +1995,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid010",
@@ -2322,7 +2322,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid011",
@@ -2541,7 +2541,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid012",
@@ -2749,7 +2749,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid013",
@@ -2961,7 +2961,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid014",
@@ -3183,7 +3183,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid015",
@@ -3387,7 +3387,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid016",
@@ -3615,7 +3615,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid017",
@@ -3833,7 +3833,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid018",
@@ -4051,7 +4051,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid019",
@@ -4310,7 +4310,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid020",
@@ -4573,7 +4573,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid021",
@@ -4785,7 +4785,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid022",
@@ -4992,7 +4992,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid023",
@@ -5180,7 +5180,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid024",
@@ -5416,7 +5416,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid025",
@@ -5755,7 +5755,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid026",
@@ -5966,7 +5966,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid027",
@@ -6183,7 +6183,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid028",
@@ -6394,7 +6394,7 @@
           "schedule"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid030",
@@ -6647,7 +6647,7 @@
           "table"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid029",
@@ -6853,7 +6853,7 @@
           "matrix"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Datagrid031",

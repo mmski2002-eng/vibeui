@@ -107,7 +107,7 @@
           }
         },
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 800"
         },
         "controls": [
@@ -179,7 +179,7 @@
           "landing"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 720"
         },
         "ai": {
@@ -313,7 +313,7 @@
           "swiss"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 820"
         },
         "ai": {
@@ -443,7 +443,7 @@
           "sections"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 900"
         },
         "ai": {
@@ -588,7 +588,7 @@
           "storytelling"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 900"
         },
         "ai": {
@@ -718,7 +718,7 @@
           "story"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 900"
         },
         "ai": {
@@ -852,7 +852,7 @@
           "studio"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 760"
         },
         "ai": {
@@ -988,7 +988,7 @@
           "workspace"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 760"
         },
         "ai": {
@@ -1133,7 +1133,7 @@
           "portfolio"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 720"
         },
         "ai": {
@@ -1267,7 +1267,7 @@
           "portfolio"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 820"
         },
         "ai": {
@@ -1401,7 +1401,7 @@
           "ecosystem"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 760"
         },
         "ai": {
@@ -1546,7 +1546,7 @@
           "changelog"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 900"
         },
         "ai": {
@@ -1681,7 +1681,7 @@
           "personal"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 760"
         },
         "ai": {
@@ -1827,7 +1827,7 @@
           "marketplace"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "aspect": "1280 / 760"
         },
         "ai": {

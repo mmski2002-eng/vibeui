@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Ранний доступ",
       "description": "Форма листа ожидания со счётчиком записавшихся: почта, кнопка и подпись «уже в очереди», после отправки поле сменяется сообщением. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["waitlist"],
+      "categories": [
+        "waitlist"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,8 +20,17 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-waitlist-001-*. Клиентский компонент: отправка формы — заглушка, по submit поле сменяется сообщением об успехе через состояние. Счётчик под формой подтверждает живость списка. Сообщение выводится с role=\"status\".",
       "meta": {
-        "tags": ["waitlist", "signup", "early-access", "email", "marketing"],
-        "preview": { "width": "natural", "surface": "light" },
+        "tags": [
+          "waitlist",
+          "signup",
+          "early-access",
+          "email",
+          "marketing"
+        ],
+        "preview": {
+          "width": "fit",
+          "surface": "light"
+        },
         "ai": {
           "export": "Waitlist001",
           "usage": "<Waitlist001\n  title=\"Список ожидания\"\n  count={2400}\n  countNote=\"уже в очереди\"\n/>",
@@ -43,12 +54,39 @@
           ]
         },
         "controls": [
-          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Соберите список ожидания", "maxLength": 40 },
-          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Ранний доступ", "maxLength": 24 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Соберите список ожидания",
+            "maxLength": 40
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Ранний доступ",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A waitlist form with a signup counter: email, button and an already-in-line note; after submitting the field turns into a message. Self-contained — one file, no dependencies.",
@@ -74,10 +112,20 @@
               "usage": "<Waitlist001\n  title=\"Waitlist\"\n  count={2400}\n  countNote=\"already in line\"\n/>"
             },
             "controls": {
-              "title": { "label": "Title", "default": "Build a waitlist" },
-              "eyebrow": { "label": "Eyebrow", "default": "Early access" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Title",
+                "default": "Build a waitlist"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Early access"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "Early Access",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-waitlist-001-* variables. A client component: form submission is a stub, on submit the field turns into a success message via state. The counter below confirms the list is live. The message uses role=\"status\"."
@@ -90,7 +138,9 @@
       "type": "registry:block",
       "title": "Скоро запуск с отсчётом",
       "description": "Экран «скоро запуск» с отсчётом до даты на плитках дни-часы-минуты и формой записи ниже. Цифры отсчёта статичные, тиканье подключает приложение. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["waitlist"],
+      "categories": [
+        "waitlist"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -102,8 +152,17 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-waitlist-002-*. Клиентский компонент (форма гасит submit). Отсчёт — статичные плитки из пропса units, без JS-тикания: реальный таймер подключает приложение. Цифры моноширинные, единицы подписаны.",
       "meta": {
-        "tags": ["waitlist", "countdown", "coming-soon", "launch", "marketing"],
-        "preview": { "width": "natural", "surface": "light" },
+        "tags": [
+          "waitlist",
+          "countdown",
+          "coming-soon",
+          "launch",
+          "marketing"
+        ],
+        "preview": {
+          "width": "fit",
+          "surface": "light"
+        },
         "ai": {
           "export": "Waitlist002",
           "usage": "<Waitlist002\n  title=\"Мы почти готовы\"\n  units={[{ value: \"12\", label: \"дней\" }]}\n/>",
@@ -127,12 +186,39 @@
           ]
         },
         "controls": [
-          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Мы почти готовы", "maxLength": 40 },
-          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Скоро запуск", "maxLength": 24 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Мы почти готовы",
+            "maxLength": 40
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Скоро запуск",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A coming-soon screen with a countdown to the date on day-hour-minute tiles and a signup form below. Countdown digits are static; ticking is wired by the app. Self-contained — one file, no dependencies.",
@@ -158,10 +244,20 @@
               "usage": "<Waitlist002\n  title=\"Almost ready\"\n  units={[{ value: \"12\", label: \"days\" }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Title", "default": "Almost ready" },
-              "eyebrow": { "label": "Eyebrow", "default": "Coming soon" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Title",
+                "default": "Almost ready"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Coming soon"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "Coming Soon Countdown",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-waitlist-002-* variables. A client component (the form suppresses submit). The countdown is static tiles from the units prop, no JS ticking: a real timer is wired by the app. Digits are monospace, units are labelled."
@@ -174,7 +270,9 @@
       "type": "registry:block",
       "title": "Позиция в очереди",
       "description": "Экран после записи: место в очереди крупной цифрой, полоса прогресса до начала списка и реферальный код для подъёма вверх. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["waitlist"],
+      "categories": [
+        "waitlist"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -186,8 +284,17 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-waitlist-003-*. Серверный компонент. Прогресс считается от (total - position) / total и выражается шириной заливки, у полосы role=\"progressbar\" с aria-valuenow. Ниже — реферальный код в пунктирной рамке с кнопкой копирования.",
       "meta": {
-        "tags": ["waitlist", "queue", "referral", "position", "marketing"],
-        "preview": { "width": "natural", "surface": "light" },
+        "tags": [
+          "waitlist",
+          "queue",
+          "referral",
+          "position",
+          "marketing"
+        ],
+        "preview": {
+          "width": "fit",
+          "surface": "light"
+        },
         "ai": {
           "export": "Waitlist003",
           "usage": "<Waitlist003\n  position={1284}\n  total={5000}\n  referralCode=\"VIBE-1284\"\n/>",
@@ -212,12 +319,39 @@
           ]
         },
         "controls": [
-          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Ваше место в очереди", "maxLength": 40 },
-          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Вы в списке", "maxLength": 24 },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ваше место в очереди",
+            "maxLength": 40
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Вы в списке",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "description": "A post-signup screen: queue position in a large number, a progress bar to the front of the list and a referral code to move up. Self-contained — one file, no dependencies.",
@@ -244,10 +378,20 @@
               "usage": "<Waitlist003\n  position={1284}\n  total={5000}\n  referralCode=\"VIBE-1284\"\n/>"
             },
             "controls": {
-              "title": { "label": "Title", "default": "Your place in line" },
-              "eyebrow": { "label": "Eyebrow", "default": "You're in" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Title",
+                "default": "Your place in line"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "You're in"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "title": "Queue Position",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-waitlist-003-* variables. A server component. Progress is computed from (total - position) / total and expressed as fill width, the bar has role=\"progressbar\" with aria-valuenow. Below is a referral code in a dashed frame with a copy button."

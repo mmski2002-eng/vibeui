@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Строка логотипов",
       "description": "Полоса доверия: подпись «Нам доверяют» и ряд приглушённых текстовых wordmark, которые загораются акцентным под курсором. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["logos"],
+      "categories": [
+        "logos"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,8 +20,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-logocloud-001-*. Серверный компонент. Логотипы — текстовые wordmark в разных гарнитурах (data-style: sans, serif, mono, wide, slab): одинаковый шрифт сразу выдал бы, что логотипы ненастоящие. В покое ряд приглушён серым и читается фоном, под курсором wordmark загорается акцентом. В узкой колонке подпись и ряд центрированы стопкой, от 52cqi подпись уходит влево, ряд — вправо (container queries).",
       "meta": {
-        "tags": ["logos", "trust", "social proof", "wordmark", "hover"],
-        "preview": { "width": "natural" },
+        "tags": [
+          "logos",
+          "trust",
+          "social proof",
+          "wordmark",
+          "hover"
+        ],
+        "preview": {
+          "width": "fit"
+        },
         "ai": {
           "export": "Logocloud001",
           "usage": "<Logocloud001\n  eyebrow=\"Нам доверяют\"\n  items={[{ name: \"Nordwind\", style: \"wide\" }, { name: \"Sturm\", style: \"slab\" }]}\n/>",
@@ -55,10 +65,24 @@
             "default": "Нам доверяют",
             "maxLength": 32
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["eyebrow", "accent", "background"],
+        "cardControls": [
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "title": "Logo Strip",
@@ -91,11 +115,22 @@
               "usage": "<Logocloud001\n  eyebrow=\"Trusted by\"\n  items={[{ name: \"Nordwind\", style: \"wide\" }, { name: \"Sturm\", style: \"slab\" }]}\n/>"
             },
             "controls": {
-              "eyebrow": { "label": "Caption", "default": "Trusted by" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "eyebrow": {
+                "label": "Caption",
+                "default": "Trusted by"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
-            "preview": { "props": { "eyebrow": "Trusted by" } }
+            "preview": {
+              "props": {
+                "eyebrow": "Trusted by"
+              }
+            }
           }
         }
       }
@@ -105,7 +140,9 @@
       "type": "registry:block",
       "title": "Бегущая строка логотипов",
       "description": "CSS-marquee в одну строку: лента wordmark бесконечно едет, останавливается под курсором и складывается в статичный ряд при reduced-motion. Самодостаточна: один файл, без зависимостей и клиентского JS.",
-      "categories": ["logos"],
+      "categories": [
+        "logos"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -117,8 +154,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-logocloud-002-*. Серверный компонент. Дорожка состоит из двух одинаковых групп логотипов; keyframes уводит её на translateX(-50%), поэтому цикл бесшовный. Дубль скрыт от скринридеров через aria-hidden. Под курсором animation-play-state: paused — движущийся текст нельзя прочитать. При prefers-reduced-motion анимация выключается, дорожка складывается в обычный ряд с переносами, дубль прячется. Края вьюпорта растворяются mask-image. Скорость — переменная --vibeui-logocloud-002-speed.",
       "meta": {
-        "tags": ["logos", "marquee", "animation", "social proof", "wordmark"],
-        "preview": { "width": "natural" },
+        "tags": [
+          "logos",
+          "marquee",
+          "animation",
+          "social proof",
+          "wordmark"
+        ],
+        "preview": {
+          "width": "fit"
+        },
         "ai": {
           "export": "Logocloud002",
           "usage": "<Logocloud002\n  eyebrow=\"Каталогом пользуются\"\n  items={[{ name: \"Nordwind\", style: \"wide\" }, { name: \"Plot\", style: \"serif\" }]}\n/>",
@@ -155,10 +200,24 @@
             "default": "Каталогом пользуются",
             "maxLength": 36
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["eyebrow", "accent", "background"],
+        "cardControls": [
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "title": "Logo Marquee",
@@ -192,11 +251,22 @@
               "usage": "<Logocloud002\n  eyebrow=\"Used by teams at\"\n  items={[{ name: \"Nordwind\", style: \"wide\" }, { name: \"Plot\", style: \"serif\" }]}\n/>"
             },
             "controls": {
-              "eyebrow": { "label": "Caption", "default": "Used by teams at" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "eyebrow": {
+                "label": "Caption",
+                "default": "Used by teams at"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
-            "preview": { "props": { "eyebrow": "Used by teams at" } }
+            "preview": {
+              "props": {
+                "eyebrow": "Used by teams at"
+              }
+            }
           }
         }
       }
@@ -206,7 +276,9 @@
       "type": "registry:block",
       "title": "Сетка логотипов с числом",
       "description": "Сетка 3×2: пять wordmark-плиток и шестая плитка-счётчик «и ещё 200+ команд» акцентным — число превращает короткий список в верхушку айсберга. Самодостаточна: один файл, без зависимостей.",
-      "categories": ["logos"],
+      "categories": [
+        "logos"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -218,8 +290,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-logocloud-003-*. Серверный компонент. Пять логотипов-плиток и шестая плитка-счётчик, набранная акцентом: счётчик стоит в сетке на правах логотипа, а не подписью под ней — подпись под сеткой никто не читает. На hover плитка получает тёплый тинт через color-mix и wordmark загорается акцентом. Сетка 2 колонки, от 40cqi — 3 (container queries). Wordmark в разных гарнитурах через data-style.",
       "meta": {
-        "tags": ["logos", "grid", "counter", "social proof", "tiles"],
-        "preview": { "width": "natural" },
+        "tags": [
+          "logos",
+          "grid",
+          "counter",
+          "social proof",
+          "tiles"
+        ],
+        "preview": {
+          "width": "fit"
+        },
         "ai": {
           "export": "Logocloud003",
           "usage": "<Logocloud003\n  title=\"Эти команды уже собирают сайты быстрее\"\n  moreText=\"и ещё 200+ команд\"\n  items={[{ name: \"Nordwind\", style: \"wide\" }, { name: \"Sturm\", style: \"slab\" }]}\n/>",
@@ -262,10 +342,25 @@
             "default": "Клиенты",
             "maxLength": 20
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "title": "Logo Grid with a Counter",
@@ -302,9 +397,16 @@
                 "label": "Heading",
                 "default": "These teams already ship sites faster"
               },
-              "eyebrow": { "label": "Eyebrow", "default": "Clients" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Clients"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
@@ -322,7 +424,9 @@
       "type": "registry:block",
       "title": "Логотипы с цитатой",
       "description": "Одна цитата клиента по центру и ряд wordmark под ней; логотип цитируемой компании подсвечен акцентным, связывая ряд и цитату в одну историю. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["logos"],
+      "categories": [
+        "logos"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -334,8 +438,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-logocloud-004-*. Серверный компонент. По центру — одна цитата в figure/blockquote/figcaption, кавычки добавляются псевдоэлементами. Под разделительной линией — ряд wordmark; логотип цитируемой компании помечен highlight и постоянно горит акцентом, остальные приглушены и окрашиваются в акцентный цвет только на hover. Одна цитата вместо карусели — сознательно: ряд логотипов отвечает за «сколько», цитата — за «почему».",
       "meta": {
-        "tags": ["logos", "quote", "testimonial", "social proof", "wordmark"],
-        "preview": { "width": "natural" },
+        "tags": [
+          "logos",
+          "quote",
+          "testimonial",
+          "social proof",
+          "wordmark"
+        ],
+        "preview": {
+          "width": "fit"
+        },
         "ai": {
           "export": "Logocloud004",
           "usage": "<Logocloud004\n  quote=\"Собрали лендинг за два дня вместе с текстами.\"\n  author=\"Мария Соболева\"\n  role=\"Продюсер, Vetra\"\n  items={[{ name: \"Vetra\", highlight: true }, { name: \"Sturm\", style: \"slab\" }]}\n/>",
@@ -372,10 +484,24 @@
             "default": "Нам доверяют",
             "maxLength": 24
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["eyebrow", "accent", "background"],
+        "cardControls": [
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "title": "Logos with a Quote",
@@ -409,9 +535,16 @@
               "usage": "<Logocloud004\n  quote=\"We built the landing page in two days, copy included.\"\n  author=\"Maria Soboleva\"\n  role=\"Producer, Vetra\"\n  items={[{ name: \"Vetra\", highlight: true }, { name: \"Sturm\", style: \"slab\" }]}\n/>"
             },
             "controls": {
-              "eyebrow": { "label": "Caption", "default": "Trusted by" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "eyebrow": {
+                "label": "Caption",
+                "default": "Trusted by"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
@@ -430,7 +563,9 @@
       "type": "registry:block",
       "title": "Логотипы по отраслям",
       "description": "Табы Финтех / Ритейл / Медиа на скрытых radio: каждая отрасль показывает свой набор логотипов без клиентского JS. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["logos"],
+      "categories": [
+        "logos"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -442,8 +577,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-logocloud-005-*. Серверный компонент: табы работают на скрытых radio внутри label и селекторах :has(:checked) — стейт не нужен, стрелки клавиатуры переключают вкладки нативно. Активный таб получает акцентную заливку с почти чёрным текстом, фокус-кольцо рисуется через :has(:focus-visible). CSS переключения панелей написан на фиксированные позиции nth-of-type — вкладок может быть до четырёх. Разбивка по отраслям сознательная: «нам доверяют все» не убеждает никого, посетитель ищет компании, похожие на свою.",
       "meta": {
-        "tags": ["logos", "tabs", "industries", "css-only", "social proof"],
-        "preview": { "width": "natural" },
+        "tags": [
+          "logos",
+          "tabs",
+          "industries",
+          "css-only",
+          "social proof"
+        ],
+        "preview": {
+          "width": "fit"
+        },
         "ai": {
           "export": "Logocloud005",
           "usage": "<Logocloud005\n  title=\"Свои команды найдутся в каждой отрасли\"\n  groups={[{ label: \"Финтех\", logos: [{ name: \"Sturm\", style: \"slab\" }] }, { label: \"Ритейл\", logos: [{ name: \"Plot\", style: \"serif\" }] }]}\n/>",
@@ -487,10 +630,25 @@
             "default": "Клиенты",
             "maxLength": 20
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "title": "Logos by Industry",
@@ -528,9 +686,16 @@
                 "label": "Heading",
                 "default": "Teams like yours in every industry"
               },
-              "eyebrow": { "label": "Eyebrow", "default": "Clients" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Clients"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
@@ -540,31 +705,76 @@
                   {
                     "label": "Fintech",
                     "logos": [
-                      { "name": "Sturm", "style": "slab" },
-                      { "name": "Vexel", "style": "serif" },
-                      { "name": "Oktava", "style": "sans" },
-                      { "name": "Kopim", "style": "mono" },
-                      { "name": "Sejf", "style": "wide" }
+                      {
+                        "name": "Sturm",
+                        "style": "slab"
+                      },
+                      {
+                        "name": "Vexel",
+                        "style": "serif"
+                      },
+                      {
+                        "name": "Oktava",
+                        "style": "sans"
+                      },
+                      {
+                        "name": "Kopim",
+                        "style": "mono"
+                      },
+                      {
+                        "name": "Sejf",
+                        "style": "wide"
+                      }
                     ]
                   },
                   {
                     "label": "Retail",
                     "logos": [
-                      { "name": "Plot", "style": "serif" },
-                      { "name": "Korzina", "style": "sans" },
-                      { "name": "Marlow", "style": "wide" },
-                      { "name": "Vitrina", "style": "slab" },
-                      { "name": "Kupol", "style": "sans" }
+                      {
+                        "name": "Plot",
+                        "style": "serif"
+                      },
+                      {
+                        "name": "Korzina",
+                        "style": "sans"
+                      },
+                      {
+                        "name": "Marlow",
+                        "style": "wide"
+                      },
+                      {
+                        "name": "Vitrina",
+                        "style": "slab"
+                      },
+                      {
+                        "name": "Kupol",
+                        "style": "sans"
+                      }
                     ]
                   },
                   {
                     "label": "Media",
                     "logos": [
-                      { "name": "Umbra", "style": "wide" },
-                      { "name": "Fjord", "style": "mono" },
-                      { "name": "Ekran", "style": "slab" },
-                      { "name": "Talvi", "style": "serif" },
-                      { "name": "Granum", "style": "sans" }
+                      {
+                        "name": "Umbra",
+                        "style": "wide"
+                      },
+                      {
+                        "name": "Fjord",
+                        "style": "mono"
+                      },
+                      {
+                        "name": "Ekran",
+                        "style": "slab"
+                      },
+                      {
+                        "name": "Talvi",
+                        "style": "serif"
+                      },
+                      {
+                        "name": "Granum",
+                        "style": "sans"
+                      }
                     ]
                   }
                 ]
@@ -579,7 +789,9 @@
       "type": "registry:block",
       "title": "Плитки кейс-ссылок",
       "description": "Каждый логотип — ссылка на кейс: в покое тихая стена wordmark, при наведении или фокусе плитка раскрывает акцентное «читать кейс →». Самодостаточен: один файл, без зависимостей.",
-      "categories": ["logos"],
+      "categories": [
+        "logos"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -591,8 +803,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-logocloud-006-*. Серверный компонент. Каждая плитка — ссылка <a> с wordmark и подписью «читать кейс →»: подпись всегда лежит в DOM (скринридер читает её вместе с именем, ссылка не остаётся безымянной), визуально она всплывает на hover и :focus-visible. При prefers-reduced-motion подпись видима постоянно — всплытие было единственным способом её увидеть. На hover логотип темнеет до основного цвета текста, а акцентной становится подпись: один акцент на плитке. Сетка 2 колонки, от 40cqi — 3 (container queries).",
       "meta": {
-        "tags": ["logos", "case studies", "links", "hover", "tiles"],
-        "preview": { "width": "natural" },
+        "tags": [
+          "logos",
+          "case studies",
+          "links",
+          "hover",
+          "tiles"
+        ],
+        "preview": {
+          "width": "fit"
+        },
         "ai": {
           "export": "Logocloud006",
           "usage": "<Logocloud006\n  title=\"Как команды переезжают на VibeUI\"\n  ctaText=\"читать кейс →\"\n  items={[{ name: \"Nordwind\", style: \"wide\", href: \"/cases/nordwind\" }]}\n/>",
@@ -635,10 +855,25 @@
             "default": "Кейсы",
             "maxLength": 20
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "i18n": {
           "en": {
             "title": "Case Study Logo Tiles",
@@ -675,9 +910,16 @@
                 "label": "Heading",
                 "default": "How teams move to VibeUI"
               },
-              "eyebrow": { "label": "Eyebrow", "default": "Case studies" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Case studies"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {

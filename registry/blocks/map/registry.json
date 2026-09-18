@@ -29,7 +29,7 @@
           "contacts"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Map001",
@@ -213,7 +213,7 @@
           "contacts"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Map002",
@@ -396,7 +396,7 @@
           "branch"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Map003",
@@ -616,7 +616,7 @@
               }
             ]
           },
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Map004",
@@ -810,7 +810,7 @@
         ],
         "preview": {
           "props": {},
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Map005",
@@ -983,7 +983,7 @@
           "legend"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {}
         },
         "cardControls": [
@@ -1199,7 +1199,7 @@
           "cream"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "image": "/demo/wedding/venue-01.webp"
           }
@@ -1391,7 +1391,7 @@
           "retro"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "image": "/demo/wedding-cuba/hotel.webp"
           }
@@ -1563,7 +1563,7 @@
           "dark"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "image": "/demo/wedding-winter/venue.webp"
           }

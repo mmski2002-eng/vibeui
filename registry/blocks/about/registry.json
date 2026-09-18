@@ -28,7 +28,7 @@
           "statement"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "About001",
@@ -189,7 +189,7 @@
           "story"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "image": "/demo/places/place-02.webp"
           }
@@ -362,7 +362,7 @@
           "culture"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "About003",
@@ -531,7 +531,7 @@
           "numbers"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "image": "/demo/places/place-01.webp"
           }
@@ -704,7 +704,7 @@
           "culture"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "About005",
@@ -865,7 +865,7 @@
           "team"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "images": [
               "/demo/places/place-05.webp",
@@ -1039,7 +1039,7 @@
             "image": "/demo/people/person-09.webp",
             "imageSecondary": "/demo/places/place-02.webp"
           },
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "About007",
@@ -1209,7 +1209,7 @@
           "ticker"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "image": "/demo/people/person-02.webp"
           }
@@ -1393,7 +1393,7 @@
           "statement"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {}
         },
         "cardControls": [
@@ -1563,7 +1563,7 @@
           "sterility"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "tone": "dark"
           }
@@ -1732,7 +1732,7 @@
           "about"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "frames": [
               {
@@ -1932,7 +1932,7 @@
           "retro"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "stops": [
               {
@@ -2144,7 +2144,7 @@
           "dark"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "frames": [
               {

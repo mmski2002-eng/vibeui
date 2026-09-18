@@ -28,7 +28,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Event001",
@@ -159,7 +159,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "image": "/demo/scenes/scene-08.webp"
           }
@@ -298,7 +298,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Event003",
@@ -483,7 +483,7 @@
               }
             ]
           },
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Event004",
@@ -671,7 +671,7 @@
           "editorial"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {}
         },
         "cardControls": [
@@ -904,7 +904,7 @@
           "days"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {}
         },
         "cardControls": [
@@ -1170,7 +1170,7 @@
           "frames"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {}
         },
         "cardControls": [
@@ -1381,7 +1381,7 @@
           "sticky"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "current": 1
           }
@@ -1583,7 +1583,7 @@
           "cream"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "cardControls": [
           "title",
@@ -1768,7 +1768,7 @@
           "retro"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "days": [
               {
@@ -2095,7 +2095,7 @@
           "retro"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "contactImage": "/demo/wedding-cuba/planner.webp"
           }
@@ -2296,7 +2296,7 @@
           "retro"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "looks": [
               {
@@ -2509,7 +2509,7 @@
           "dark"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "cardControls": [
           "title",
@@ -2696,7 +2696,7 @@
           "dark"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "looks": [
               {

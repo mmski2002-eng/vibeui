@@ -39,8 +39,6 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/block/cases")).PREVIEWS
     case "block/changelog":
       return (await import("@/registry/previews-lazy/block/changelog")).PREVIEWS
-    case "block/careers":
-      return (await import("@/registry/previews-lazy/block/careers")).PREVIEWS
     case "block/comparison":
       return (await import("@/registry/previews-lazy/block/comparison")).PREVIEWS
     case "block/waitlist":

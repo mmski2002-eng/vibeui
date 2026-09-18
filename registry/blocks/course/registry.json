@@ -32,7 +32,7 @@
           "tiles"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {}
         },
         "cardControls": [
@@ -213,7 +213,7 @@
           "program"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {}
         },
         "cardControls": [
@@ -503,7 +503,7 @@
           "before-after"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "cases": [
               {
@@ -729,7 +729,7 @@
           "live"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "image": "/demo/places/place-02.webp"
           }

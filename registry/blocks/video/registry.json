@@ -28,7 +28,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "poster": "/demo/features/feature-02.webp",
             "posterAlt": "Двое у доски с раскадровкой на фоне закатного окна"
@@ -167,7 +167,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "image": "/demo/scenes/scene-16.webp"
           }
@@ -306,7 +306,7 @@
           "marketing"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "videos": [
               {

@@ -2,7 +2,7 @@ import { CardInteractive } from "@/components/catalog/card-interactive"
 import { CatalogThumbnail } from "@/components/catalog/catalog-thumbnail"
 import { pickCardControls } from "@/lib/card-controls"
 import { getControls } from "@/lib/controls"
-import { localePath, type Locale } from "@/lib/i18n"
+import { getDictionary, localePath, type Locale } from "@/lib/i18n"
 import { localizeItem } from "@/lib/localize"
 import { getItemKind, itemBasePath } from "@/registry/index"
 import type { CatalogItem } from "@/registry/meta"
@@ -30,6 +30,8 @@ export function CatalogCard({
   // Три тега: больше не помещается в строку под мелким кадром, а меньше не
   // даёт отличить вариант от соседнего.
   const tags = (localized.meta?.tags ?? []).slice(0, 3)
+  const slots = localized.meta?.slots
+  const t = getDictionary(locale)
 
   return (
     // Кадр превью не ведёт на страницу item'а: внутри живой компонент, и
@@ -50,6 +52,7 @@ export function CatalogCard({
           localized.meta?.preview?.width === "natural"
         }
         natural={localized.meta?.preview?.width === "natural"}
+        fit={localized.meta?.preview?.width === "fit"}
         previewProps={localized.meta?.preview?.props}
         locale={locale}
         itemUrl={localePath(locale, `${itemBasePath(kind)}/${localized.name}`)}
@@ -62,11 +65,32 @@ export function CatalogCard({
         <CatalogThumbnail slug={localized.name} locale={locale} />
       </CardInteractive>
 
+      {/* Форма контента: что за блок и влезет ли сюда идея человека —
+          до того, как он вчитается в чужой текст превью. */}
+      {slots ? (
+        <p className="text-shell-muted px-2 pt-2 text-[0.6875rem] text-pretty">
+          {slots.shape}
+        </p>
+      ) : null}
+
       {/* Признаки варианта. В крупном режиме скрыты: там всё видно на самом
           превью. В обзоре это единственное, чем один из семидесяти вариантов
           отличается от соседа на глаз. */}
-      {tags.length > 0 ? (
+      {tags.length > 0 || slots ? (
         <ul data-part="facts" className="flex-wrap gap-1 px-2 pb-2">
+          {slots ? (
+            <li className="border-shell-accent-line text-shell-accent rounded border px-1.5 py-0.5 text-[0.6875rem]">
+              {t.item.density[slots.density]}
+            </li>
+          ) : null}
+          {(slots?.needs ?? []).map((need) => (
+            <li
+              key={need}
+              className="border-shell-accent-line text-shell-accent rounded border px-1.5 py-0.5 text-[0.6875rem]"
+            >
+              {t.item.needs[need]}
+            </li>
+          ))}
           {tags.map((tag) => (
             <li
               key={tag}

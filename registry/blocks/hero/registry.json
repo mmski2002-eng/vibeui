@@ -168,7 +168,7 @@
           "background"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         }
       }
     },
@@ -365,7 +365,7 @@
           "background"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         }
       }
     },
@@ -563,7 +563,7 @@
           "background"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         }
       }
     },
@@ -593,7 +593,7 @@
           "typographic"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Hero004",
@@ -769,7 +769,7 @@
           "mockup"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "image": "/demo/hero/hero-01.webp"
           }
@@ -968,7 +968,7 @@
           "email"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "avatarImage": "/demo/avatars/nina-256.webp"
           }
@@ -1152,7 +1152,7 @@
           "media"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "poster": "/demo/scenes/scene-16.webp"
           }
@@ -1345,7 +1345,7 @@
           "wordmark"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Hero008",
@@ -1528,7 +1528,7 @@
           "numbers"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Hero009",
@@ -1720,7 +1720,7 @@
           "figure"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "image": "/demo/hero/hero-06.webp"
           }
@@ -1907,7 +1907,7 @@
           "grid"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Hero011",
@@ -2093,7 +2093,7 @@
           "release"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Hero012",
@@ -2278,7 +2278,7 @@
           "light"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Hero013",
@@ -2470,7 +2470,7 @@
           "dark"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Hero014",
@@ -2661,7 +2661,7 @@
           "minimal"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Hero015",
@@ -2860,7 +2860,7 @@
           "light"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Hero016",
@@ -3054,7 +3054,7 @@
           "animated"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Hero017",
@@ -3247,7 +3247,7 @@
           "landing"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "image": "/demo/hero/hero-03.webp"
           }
@@ -3426,7 +3426,7 @@
           "landing"
         ],
         "preview": {
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Hero019",
@@ -3616,7 +3616,7 @@
           "props": {
             "image": "/demo/places/place-05.webp"
           },
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Hero020",
@@ -3812,7 +3812,7 @@
           "props": {
             "image": "/demo/places/place-03.webp"
           },
-          "width": "natural"
+          "width": "fit"
         },
         "ai": {
           "export": "Hero021",
@@ -3969,7 +3969,7 @@
           "counter"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "poster": "/demo/places/place-03.webp"
           }
@@ -4167,7 +4167,7 @@
           "emoji"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {}
         },
         "cardControls": [
@@ -4399,7 +4399,7 @@
           "counter"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "tone": "dark"
           }
@@ -4588,7 +4588,7 @@
           "film grain"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "envelope": false,
             "image": "/demo/wedding/hero.webp"
@@ -4785,7 +4785,7 @@
           "retro"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "boardingPass": false,
             "image": "/demo/wedding-cuba/hero.webp",
@@ -4984,7 +4984,7 @@
           "dark"
         ],
         "preview": {
-          "width": "natural",
+          "width": "fit",
           "props": {
             "candle": false,
             "image": "/demo/wedding-winter/hero.webp",

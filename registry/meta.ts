@@ -34,6 +34,30 @@ export type ItemControl = {
 
 export type ControlValue = string | number | boolean
 
+/**
+ * Слот контента блока — одна вместимость: «заголовок», «метрика», «фото
+ * автора». Отвечает на вопрос человека с идеей, а не с готовым сайтом:
+ * влезет ли сюда мой контент. Форма блока, не его текст (см. docs/SLOTS.md).
+ */
+export type CatalogSlot = {
+  /** Роль как назовёт человек: «цитата», «автор», а не имя пропа. */
+  role: string
+  type: "text" | "stat" | "image" | "link" | "quote"
+  /** Сколько таких слотов: число или диапазон «3–6». */
+  count?: number | string
+  required?: boolean
+}
+
+export type CatalogSlots = {
+  /** Форма блока одной строкой: «отзывы сеткой: цитата + автор + фото». */
+  shape: string
+  /** Сколько текста держит блок: выбор по объёму контента. */
+  density: "light" | "medium" | "heavy"
+  /** Жёсткие требования к контенту: без них блок теряет смысл. */
+  needs?: ("photo" | "video" | "logo" | "avatar" | "form")[]
+  items: CatalogSlot[]
+}
+
 /** Переопределения контрола на другом языке. Тип контрола не меняется. */
 export type LocalizedControl = {
   label?: string
@@ -61,6 +85,14 @@ export type LocalizedMeta = {
     usage?: string
   }
   controls?: Record<string, LocalizedControl>
+  /**
+   * Перевод слотов. `shape` — строкой, роли слотов — по индексу: число
+   * элементов совпадает с оригиналом, иначе перевод не применяется.
+   */
+  slots?: {
+    shape?: string
+    items?: { role?: string }[]
+  }
   /**
    * Демо-содержимое превью на другом языке. Устанавливаемый файл остаётся
    * как есть: русский текст внутри него — это дефолты компонента, а витрина
@@ -177,6 +209,13 @@ export type CatalogMeta = {
      */
     aspect?: string
   }
+  /**
+   * Вместимость блока: форма и слоты контента. Вход со стороны идеи —
+   * человек выбирает блок по тому, влезет ли его контент, а не по чужой
+   * истории в дефолтах (см. docs/SLOTS.md). На установку и сборку сценария
+   * не влияет: это только витрина.
+   */
+  slots?: CatalogSlots
   kind?: ItemKind
   group?: ItemGroup
   internal?: boolean
