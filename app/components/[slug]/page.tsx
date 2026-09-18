@@ -40,10 +40,8 @@ export function generateStaticParams() {
 
 export default async function ComponentDetailPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ slug: string }>
-  searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
   const { slug } = await params
 
@@ -51,5 +49,5 @@ export default async function ComponentDetailPage({
     return <CategoryPage locale="ru" kind="component" category={slug} />
   }
 
-  return <ItemPage locale="ru" slug={slug} query={await searchParams} />
+  return <ItemPage locale="ru" slug={slug} />
 }

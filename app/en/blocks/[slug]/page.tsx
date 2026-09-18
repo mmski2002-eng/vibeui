@@ -30,10 +30,8 @@ export function generateStaticParams() {
 
 export default async function EnBlockDetailPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ slug: string }>
-  searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
   const { slug } = await params
 
@@ -41,5 +39,5 @@ export default async function EnBlockDetailPage({
     return <CategoryPage locale="en" kind="block" category={slug} />
   }
 
-  return <ItemPage locale="en" slug={slug} query={await searchParams} />
+  return <ItemPage locale="en" slug={slug} />
 }

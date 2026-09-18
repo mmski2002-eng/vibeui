@@ -34,10 +34,8 @@ export function generateStaticParams() {
 
 export default async function BlockDetailPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ slug: string }>
-  searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
   const { slug } = await params
 
@@ -45,5 +43,5 @@ export default async function BlockDetailPage({
     return <CategoryPage locale="ru" kind="block" category={slug} />
   }
 
-  return <ItemPage locale="ru" slug={slug} query={await searchParams} />
+  return <ItemPage locale="ru" slug={slug} />
 }

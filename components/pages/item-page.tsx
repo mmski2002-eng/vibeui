@@ -8,7 +8,6 @@ import { ItemWorkbench } from "@/components/catalog/item-workbench"
 import { GatedReveal } from "@/components/catalog/gated-reveal"
 import { JsonLd } from "@/components/json-ld"
 import { ReportDialog } from "@/components/report/report-dialog"
-import { resolveControlValues, resolvePreviewSurface } from "@/lib/controls"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
 import { localizeItem } from "@/lib/localize"
 import { breadcrumbs, SITE_URL } from "@/lib/seo"
@@ -23,17 +22,15 @@ import {
 
 /**
  * Страница item'а. Подложка и значения контролов приезжают с витрины через
- * query: переход по карточке не должен сбрасывать то, что человек уже
- * выставил (см. docs/CONTROLS.md).
+ * query, но читает его `ItemWorkbench` на клиенте (см. docs/CONTROLS.md):
+ * страница остаётся статической.
  */
 export async function ItemPage({
   locale,
   slug,
-  query,
 }: {
   locale: Locale
   slug: string
-  query: Record<string, string | string[] | undefined>
 }) {
   const found = getCatalogItem(slug)
 
@@ -43,14 +40,6 @@ export async function ItemPage({
 
   const t = getDictionary(locale)
   const block = localizeItem(found, locale)
-
-  const flat = new URLSearchParams(
-    Object.entries(query).flatMap(([key, value]) =>
-      typeof value === "string" ? [[key, value] as [string, string]] : [],
-    ),
-  )
-  const initialTheme = resolvePreviewSurface(flat.get("theme") ?? undefined)
-  const initialValues = resolveControlValues(block, flat)
 
   const docUrl = getItemDocUrl(block.name)
   const kind = getItemKind(block.name) ?? "block"
@@ -235,8 +224,6 @@ export async function ItemPage({
             locale={locale}
             docUrl={docUrl}
             pro={isProItem(block.name)}
-            initialTheme={initialTheme}
-            initialValues={initialValues}
           />
 
           {/* Вторичное: developer / inspection. Не путь установки. */}

@@ -15,7 +15,7 @@ import { SearchBox } from "@/components/catalog/search-box"
 import { ScrollArea } from "@/components/catalog/scroll-area"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
 import { POPULAR_CATEGORIES, type ItemKind } from "@/registry/categories"
-import { catalogBasePath } from "@/registry/index"
+import { catalogBasePath } from "@/registry/paths"
 
 export type NavCategory = {
   slug: string

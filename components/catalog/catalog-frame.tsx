@@ -7,7 +7,7 @@ import { CatalogChrome, type NavCategory } from "@/components/catalog/catalog-ch
 import { CatalogTransition } from "@/components/catalog/catalog-transition"
 import type { Locale } from "@/lib/i18n"
 import type { ItemKind } from "@/registry/categories"
-import { catalogBasePath } from "@/registry/index"
+import { catalogBasePath } from "@/registry/paths"
 
 /**
  * Живёт в layout раздела, поэтому переживает переходы между категориями:

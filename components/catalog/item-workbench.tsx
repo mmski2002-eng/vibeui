@@ -15,6 +15,8 @@ import { GatedReveal } from "@/components/catalog/gated-reveal"
 import {
   defaultValues,
   getControls,
+  resolveControlValues,
+  resolvePreviewSurface,
   toSearchParams,
   type ControlValues,
   type PreviewSurface,
@@ -28,6 +30,10 @@ import type { CatalogItem } from "@/registry/meta"
  * Превью и выдача на странице item'а. Состояние — подложка и значения
  * контролов — приходит с витрины через query и живёт здесь: обе секции
  * должны показывать одну и ту же настройку, и она же уезжает в ссылку.
+ *
+ * Query читается на клиенте после монтирования, а не из `searchParams`
+ * страницы: серверное чтение переводило все страницы items в динамический
+ * рендер на каждый запрос, а так они остаются статическими.
  */
 export function ItemWorkbench({
   item,
@@ -36,8 +42,6 @@ export function ItemWorkbench({
   locale,
   docUrl,
   pro,
-  initialTheme,
-  initialValues,
 }: {
   item: CatalogItem
   kind: ItemKind
@@ -46,17 +50,28 @@ export function ItemWorkbench({
   docUrl: string | null
   /** Закрытый item: у не-Pro кнопка «Копировать» превращается в «Доступно с Pro». */
   pro: boolean
-  initialTheme: PreviewSurface
-  initialValues: ControlValues
 }) {
   const t = getDictionary(locale)
-  const [theme, setTheme] = useState<PreviewSurface>(initialTheme)
+  const [theme, setTheme] = useState<PreviewSurface>("auto")
   const shellLight = useShellIsLight()
   // Фрейм превью грузится по ссылке с конкретной темой, «как у оболочки» в
   // ней не выразить — поэтому здесь выбор доводится до dark/light.
   const frameTheme = theme === "auto" ? (shellLight ? "light" : "dark") : theme
-  const [values, setValues] = useState<ControlValues>(initialValues)
   const controls = getControls(item)
+  const [values, setValues] = useState<ControlValues>(() =>
+    defaultValues(controls),
+  )
+
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search)
+
+    if (query.size === 0) {
+      return
+    }
+
+    setTheme(resolvePreviewSurface(query.get("theme") ?? undefined))
+    setValues(resolveControlValues(item, query))
+  }, [item])
   // Подсказка живёт дольше, чем «Скопировано» на кнопке: человек в этот
   // момент уже переключается в свой редактор и читает её там краем глаза.
   const [copied, setCopied] = useState(false)

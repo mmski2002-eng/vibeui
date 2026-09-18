@@ -44,25 +44,7 @@ const ITEMS: CatalogEntry[] = ALL_ITEMS.filter(
 // превью на своей вкладке должны работать, просто в списки каталога они не идут.
 const BY_SLUG = new Map(ALL_ITEMS.map((entry) => [entry.item.name, entry]))
 
-/**
- * База URL каталога (браузер категорий) для типа: блоки, компоненты и
- * анимации живут на разных маршрутах верхнего уровня.
- */
-export function catalogBasePath(kind: ItemKind): string {
-  return kind === "block"
-    ? "/blocks"
-    : kind === "animation"
-      ? "/animations"
-      : "/components"
-}
-
-/**
- * База URL страницы item'а. Каждый тип держит детали в своём разделе —
- * блоки, компоненты и анимации независимы. Совпадает с catalogBasePath.
- */
-export function itemBasePath(kind: ItemKind): string {
-  return catalogBasePath(kind)
-}
+export { catalogBasePath, itemBasePath } from "@/registry/paths"
 
 export function getCatalogItems(): CatalogItem[] {
   return ITEMS.map((entry) => entry.item)
