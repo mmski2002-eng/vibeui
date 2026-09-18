@@ -33,6 +33,9 @@ export function LiveCover({
   const [scale, setScale] = useState(0)
   const [live, setLive] = useState(!poster)
   const [loaded, setLoaded] = useState(false)
+  const reveal = useRef<number | undefined>(undefined)
+
+  useEffect(() => () => window.clearTimeout(reveal.current), [])
 
   useEffect(() => {
     const element = host.current
@@ -63,9 +66,12 @@ export function LiveCover({
           alt=""
           loading="lazy"
           decoding="async"
+          // Поверх iframe: тот до загрузки белый, а после load ещё
+          // отыгрывает появление первого экрана — постер прикрывает и то,
+          // и другое, и уходит только когда под ним уже готовая страница.
           className={cn(
-            "absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-500",
-            loaded && "opacity-0",
+            "absolute inset-0 z-10 h-full w-full object-cover object-top transition-opacity duration-700",
+            loaded && "pointer-events-none opacity-0",
           )}
         />
       ) : null}
@@ -76,7 +82,9 @@ export function LiveCover({
           loading="lazy"
           tabIndex={-1}
           aria-hidden="true"
-          onLoad={() => setLoaded(true)}
+          onLoad={() => {
+            reveal.current = window.setTimeout(() => setLoaded(true), 1200)
+          }}
           style={{
             position: "absolute",
             inset: 0,
