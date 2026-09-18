@@ -39,8 +39,13 @@ export function ScenariosPage({ locale }: { locale: Locale }) {
             return (
               <li key={scenario.slug}>
                 <div className="border-shell-border bg-shell-panel acc-lift flex h-full flex-col overflow-hidden rounded-xl border">
-                  {/* Обложка вне ссылки: внутри iframe со своими ссылками. */}
-                  <LiveCover src={scenario.demo} title={text.label} />
+                  {/* Обложка вне ссылки: внутри iframe со своими ссылками.
+                      Постер — scripts/scenario-covers.mjs. */}
+                  <LiveCover
+                    src={scenario.demo}
+                    title={text.label}
+                    poster={`/demo/scenarios/${scenario.slug}.webp`}
+                  />
 
                   <div className="flex flex-1 flex-col gap-2 p-4">
                     <div className="flex items-baseline justify-between gap-2">
