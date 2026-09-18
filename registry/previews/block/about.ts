@@ -30,4 +30,6 @@ export const PREVIEWS = {
     import("@/registry/blocks/about/about-012/about-012").then((module) => module.About012),
   "about-013": () =>
     import("@/registry/blocks/about/about-013/about-013").then((module) => module.About013),
+  "about-014": () =>
+    import("@/registry/blocks/about/about-014/about-014").then((module) => module.About014),
 } satisfies PreviewLoaderMap

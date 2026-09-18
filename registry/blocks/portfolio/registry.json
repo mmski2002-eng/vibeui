@@ -2077,6 +2077,210 @@
           }
         }
       }
+    },
+    {
+      "name": "portfolio-012",
+      "type": "registry:block",
+      "title": "Проекты стопкой sticky-карточек",
+      "description": "Каждая карточка — sticky с нарастающим отступом сверху: при прокрутке следующая наезжает на предыдущую, а та уменьшается и темнеет (масштаб в rAF по положению следующей, в переменную — без ререндера). Номер, год, роль, теги, обложка с наездом, стрелка «открыть» поворачивается по наведению.",
+      "categories": [
+        "portfolio"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "portfolio-012/portfolio-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/portfolio-012.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "portfolio",
+          "projects",
+          "cases",
+          "sticky",
+          "stack",
+          "scroll",
+          "cards",
+          "work"
+        ],
+        "preview": {
+          "props": {
+            "projects": [
+              {
+                "title": "Панель для сервиса доставки",
+                "role": "дизайн и фронтенд",
+                "year": "2026",
+                "text": "Переделал панель диспетчера: с 14 экранов до 3. Среднее время на заказ упало вдвое.",
+                "tags": [
+                  "React",
+                  "дизайн-система",
+                  "карты"
+                ],
+                "image": "/demo/portfolio/project-01.webp",
+                "href": "#"
+              },
+              {
+                "title": "Приложение прогулок по городу",
+                "role": "продуктовый дизайн",
+                "year": "2025",
+                "text": "Маршруты по интересам, офлайн-карта, дневник. 120 тысяч установок за первый сезон.",
+                "tags": [
+                  "iOS",
+                  "Android",
+                  "карты"
+                ],
+                "image": "/demo/portfolio/project-02.webp",
+                "href": "#"
+              }
+            ]
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Portfolio012",
+          "usage": "<Portfolio012\n  title=\"Проекты, за которые не стыдно\"\n  projects={[\n    { title: \"Панель для сервиса доставки\", role: \"дизайн и фронтенд\", year: \"2026\", tags: [\"React\"], image: \"/photos/project-01.webp\", href: \"#\" },\n    { title: \"Приложение прогулок\", role: \"продуктовый дизайн\", year: \"2025\", tags: [\"iOS\"], image: \"/photos/project-02.webp\", href: \"#\" },\n  ]}\n/>",
+          "summary": "Список работ, который листается как колода: для портфолио, кейсов агентства, продуктовых релизов.",
+          "preserve": [
+            "sticky top = 5rem + индекс × 1.2rem через переменную; масштаб и яркость — переменные, которые пишет rAF на scroll",
+            "перекрытие считается по разнице top текущей и следующей карточки относительно высоты",
+            "reduced-motion возвращает карточки в обычный поток без масштаба"
+          ],
+          "adapt": [
+            "projects: title, role, year, text, tags, image, imageAlt, href, color",
+            "eyebrow, title, openLabel",
+            "порядок — порядок массива",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Проекты, за которые не стыдно",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Projects as a stack of sticky cards",
+            "description": "Every card is sticky with a growing top offset: on scroll the next one slides over the previous, which shrinks and darkens (scale in rAF from the next card's position, into a variable — no re-render). Number, year, role, tags, a zooming cover, an “open” arrow that rotates on hover.",
+            "ai": {
+              "summary": "A list of works that scrolls like a deck: for a portfolio, agency cases or product releases.",
+              "preserve": [
+                "sticky top = 5rem + index × 1.2rem via a variable; scale and brightness are variables written by rAF on scroll",
+                "overlap is the top difference between the current and next card relative to height",
+                "reduced-motion returns the cards to normal flow with no scaling"
+              ],
+              "adapt": [
+                "projects: title, role, year, text, tags, image, imageAlt, href, color",
+                "eyebrow, title, openLabel",
+                "order is array order",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Portfolio012\n  title=\"Work I'm not ashamed of\"\n  projects={[\n    { title: \"Dashboard for a delivery service\", role: \"design and frontend\", year: \"2026\", tags: [\"React\"], image: \"/photos/project-01.webp\", href: \"#\" },\n    { title: \"City walks app\", role: \"product design\", year: \"2025\", tags: [\"iOS\"], image: \"/photos/project-02.webp\", href: \"#\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Work I'm not ashamed of"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "selected · 2024—2026",
+                "title": "Work I'm not ashamed of",
+                "openLabel": "open",
+                "projects": [
+                  {
+                    "title": "Dashboard for a delivery service",
+                    "role": "design and frontend",
+                    "year": "2026",
+                    "text": "Rebuilt the dispatcher panel: from 14 screens to 3. Average time per order halved.",
+                    "tags": [
+                      "React",
+                      "design system",
+                      "maps"
+                    ],
+                    "image": "/demo/portfolio/project-01.webp",
+                    "href": "#"
+                  },
+                  {
+                    "title": "City walks app",
+                    "role": "product design",
+                    "year": "2025",
+                    "text": "Routes by interest, an offline map, a diary. 120k installs in the first season.",
+                    "tags": [
+                      "iOS",
+                      "Android",
+                      "maps"
+                    ],
+                    "image": "/demo/portfolio/project-02.webp",
+                    "href": "#"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

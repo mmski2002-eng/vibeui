@@ -4698,6 +4698,167 @@
           }
         }
       }
+    },
+    {
+      "name": "footer-030",
+      "type": "registry:block",
+      "title": "Подвал личного сайта в одну полосу",
+      "description": "Имя плотным гротеском с подписью, ссылки в ряд по центру, год и «сделано руками», справа круглая кнопка «наверх», стрелка которой при наведении уезжает вверх и возвращается снизу. Линия сверху, ничего лишнего.",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-030/footer-030.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-030.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "footer",
+          "portfolio",
+          "personal",
+          "minimal",
+          "to top",
+          "links"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Footer030",
+          "usage": "<Footer030 name=\"Даня Лунёв\" caption=\"дизайн и фронтенд · Тбилиси\" year=\"2026\" links={[{ label: \"Проекты\", href: \"#work\" }]} />",
+          "summary": "Минимальный подвал для портфолио или личного сайта: имя, ссылки, год, «наверх».",
+          "preserve": [
+            "стрелка «наверх» — keyframes: уезжает на -140%, появляется с +140%, возвращается",
+            "три колонки auto 1fr auto от 56rem, ссылки по центру",
+            "кнопка по hover заливается акцентом"
+          ],
+          "adapt": [
+            "name, caption, links",
+            "sign, year",
+            "topLabel, topHref",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "name",
+            "label": "Имя",
+            "type": "text",
+            "default": "Даня Лунёв",
+            "maxLength": 30
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "One-row personal site footer",
+            "description": "A name in a tight grotesque with a caption, centred links, the year and “made by hand”, a round “to top” button on the right whose arrow flies up and returns from below on hover. A hairline on top, nothing else.",
+            "ai": {
+              "summary": "A minimal footer for a portfolio or personal site: name, links, year, “to top”.",
+              "preserve": [
+                "the “to top” arrow is keyframes: leaves at -140%, appears from +140%, returns",
+                "three columns auto 1fr auto from 56rem, links centred",
+                "the button fills with the accent on hover"
+              ],
+              "adapt": [
+                "name, caption, links",
+                "sign, year",
+                "topLabel, topHref",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Footer030 name=\"Danya Lunev\" caption=\"design and frontend · Tbilisi\" year=\"2026\" links={[{ label: \"Work\", href: \"#work\" }]} />"
+            },
+            "controls": {
+              "name": {
+                "label": "Name",
+                "default": "Danya Lunev"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "name": "Danya Lunev",
+                "caption": "design and frontend · Tbilisi",
+                "sign": "made by hand, no templates",
+                "topLabel": "To top",
+                "links": [
+                  {
+                    "label": "Work",
+                    "href": "#work"
+                  },
+                  {
+                    "label": "About",
+                    "href": "#about"
+                  },
+                  {
+                    "label": "Words",
+                    "href": "#words"
+                  },
+                  {
+                    "label": "Contact",
+                    "href": "#contact"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

@@ -2306,6 +2306,190 @@
           }
         }
       }
+    },
+    {
+      "name": "about-014",
+      "type": "registry:block",
+      "title": "«Обо мне» с фото ч/б → цвет, фактами и навыками",
+      "description": "Фото чёрно-белое, по наведению — в цвет с лёгким наездом; рядом крупный заголовок и текст, три факта цифрами акцентом, навыки тегами, которые по наведению заливаются акцентом, и короткая линия карьеры «годы — место — роль». Без состояния.",
+      "categories": [
+        "about"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "about-014/about-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/about-014.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "about",
+          "bio",
+          "portfolio",
+          "personal",
+          "skills",
+          "career",
+          "photo",
+          "facts"
+        ],
+        "preview": {
+          "props": {
+            "image": "/demo/portfolio/portrait.webp"
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "About014",
+          "usage": "<About014\n  image=\"/photos/portrait.webp\"\n  title=\"Дизайнер, который умеет в код\"\n  facts={[{ value: \"7\", label: \"лет в продуктах\" }, { value: \"40+\", label: \"проектов\" }]}\n  skills={[\"Figma\", \"React\", \"TypeScript\"]}\n/>",
+          "summary": "Раздел «обо мне» для портфолио или личного сайта: одно фото, три цифры, навыки и путь — всё, что спрашивают на первом созвоне.",
+          "preserve": [
+            "фото — filter: grayscale(1) → none по :hover обёртки с transition .6s и scale(1.03)",
+            "факты — сетка 3 колонки, цифры акцентом плотным гротеском",
+            "навыки — теги с заливкой акцентом по hover; путь — grid 7rem + текст на линиях"
+          ],
+          "adapt": [
+            "image, imageAlt, imageNote, eyebrow, title, text",
+            "facts: value, label; skillsLabel, skills",
+            "pathLabel, path: years, place, role",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Дизайнер, который умеет в код. Или наоборот",
+            "maxLength": 60
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "“About me” with a B/W → colour photo, facts and skills",
+            "description": "A black-and-white photo that turns to colour with a slight zoom on hover; next to it a big headline and text, three accent-coloured number facts, skill tags that fill with the accent on hover, and a short “years — place — role” career line. No state.",
+            "ai": {
+              "summary": "An “about me” section for a portfolio or personal site: one photo, three numbers, skills and a path — everything asked on the first call.",
+              "preserve": [
+                "the photo is filter: grayscale(1) → none on wrapper :hover with a .6s transition and scale(1.03)",
+                "facts are a 3-column grid, numbers in the accent in a tight grotesque",
+                "skills are tags with an accent fill on hover; the path is a 7rem + text grid on hairlines"
+              ],
+              "adapt": [
+                "image, imageAlt, imageNote, eyebrow, title, text",
+                "facts: value, label; skillsLabel, skills",
+                "pathLabel, path: years, place, role",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<About014\n  image=\"/photos/portrait.webp\"\n  title=\"A designer who can code\"\n  facts={[{ value: \"7\", label: \"years in product\" }, { value: \"40+\", label: \"projects\" }]}\n  skills={[\"Figma\", \"React\", \"TypeScript\"]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "A designer who can code. Or the other way round"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "image": "/demo/portfolio/portrait.webp",
+                "eyebrow": "about me",
+                "title": "A designer who can code. Or the other way round",
+                "text": "Seven years of building products: from a weekend landing page to a design system for four teams. I like early stages, where building matters more than aligning, and I'm not afraid to open a terminal myself.",
+                "imageNote": "Tbilisi, 2026",
+                "facts": [
+                  {
+                    "value": "7",
+                    "label": "years in product"
+                  },
+                  {
+                    "value": "40+",
+                    "label": "shipped projects"
+                  },
+                  {
+                    "value": "3",
+                    "label": "teams grew out of my mockups"
+                  }
+                ],
+                "skillsLabel": "tools",
+                "pathLabel": "path",
+                "path": [
+                  {
+                    "years": "2024 — now",
+                    "place": "freelance and partnerships",
+                    "role": "design + development for startups"
+                  },
+                  {
+                    "years": "2021 — 2024",
+                    "place": "Tochka",
+                    "role": "lead product designer"
+                  },
+                  {
+                    "years": "2019 — 2021",
+                    "place": "Smena agency",
+                    "role": "interface designer"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

@@ -931,6 +931,172 @@
           }
         }
       }
+    },
+    {
+      "name": "logocloud-007",
+      "type": "registry:block",
+      "title": "«Работал с» текстом бегущей строкой",
+      "description": "Названия компаний текстом вместо логотипов, которые вечно не в том цвете: бегущая строка, где начертания чередуются — жирный гротеск, лёгкий, моноширинный капителью, курсив, — между ними точка акцентом. По наведению останавливается. Всё на CSS.",
+      "categories": [
+        "logos"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "logocloud-007/logocloud-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/logocloud-007.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "logos",
+          "clients",
+          "marquee",
+          "typography",
+          "portfolio",
+          "social proof",
+          "ticker"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Logocloud007",
+          "usage": "<Logocloud007 label=\"работал с\" names={[\"Яндекс Лавка\", \"Точка\", \"Skyeng\", \"Ozon\", \"Самокат\"]} />",
+          "summary": "Список клиентов или партнёров без единого SVG: типографика вместо логотипов. Для портфолио, агентства, фрилансера.",
+          "preserve": [
+            "четыре начертания по индексу через data-kind, чтобы ряд не был монотонным",
+            "лента max-content с дублем и translateX(-50%), скорость из переменной",
+            "reduced-motion разворачивает ленту в перенос и прячет дубли"
+          ],
+          "adapt": [
+            "names",
+            "label",
+            "speed — секунд на круг",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "работал с",
+            "maxLength": 30
+          },
+          {
+            "prop": "speed",
+            "label": "Скорость, с",
+            "type": "number",
+            "default": 40,
+            "min": 10,
+            "max": 120
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "“Worked with” as a text marquee",
+            "description": "Company names as text instead of logos that are always the wrong colour: a marquee where weights alternate — bold grotesque, light, monospace caps, italic — with an accent dot between. Pauses on hover. All CSS.",
+            "ai": {
+              "summary": "A client or partner list without a single SVG: typography instead of logos. For a portfolio, agency or freelancer.",
+              "preserve": [
+                "four styles by index via data-kind so the row isn't monotonous",
+                "a max-content lane with a duplicate and translateX(-50%), speed from a variable",
+                "reduced-motion unwraps the lane and hides duplicates"
+              ],
+              "adapt": [
+                "names",
+                "label",
+                "speed — seconds per loop",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Logocloud007 label=\"worked with\" names={[\"Stripe\", \"Linear\", \"Notion\", \"Vercel\", \"Figma\"]} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "worked with"
+              },
+              "speed": {
+                "label": "Speed, s"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "worked with",
+                "names": [
+                  "Stripe",
+                  "Linear",
+                  "Notion",
+                  "Vercel",
+                  "Figma",
+                  "Framer",
+                  "Raycast",
+                  "Arc",
+                  "Loom",
+                  "Pitch"
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

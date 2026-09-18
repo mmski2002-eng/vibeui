@@ -39,4 +39,7 @@ export const PREVIEWS = {
   "portfolio-011": dynamic(() =>
     import("@/registry/blocks/portfolio/portfolio-011/portfolio-011").then((module) => module.Portfolio011),
   ),
+  "portfolio-012": dynamic(() =>
+    import("@/registry/blocks/portfolio/portfolio-012/portfolio-012").then((module) => module.Portfolio012),
+  ),
 } satisfies PreviewMap

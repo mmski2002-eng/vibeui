@@ -5372,6 +5372,178 @@
           }
         }
       }
+    },
+    {
+      "name": "navbar-031",
+      "type": "registry:block",
+      "title": "Шапка личного сайта с чипом доступности и часами города",
+      "description": "Имя, чип «открыт к проектам с октября» с зелёной или серой точкой, живые часы города («Тбилиси · 14:02», раз в полминуты, на сервере — без времени), ссылки и кнопка «Написать». Липкая, при прокрутке — тонкая линия и стекло.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-031/navbar-031.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-031.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "navbar",
+          "header",
+          "portfolio",
+          "personal",
+          "availability",
+          "clock",
+          "freelance",
+          "sticky"
+        ],
+        "preview": {
+          "aspect": "1280 / 64",
+          "props": {
+            "sticky": false
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Navbar031",
+          "usage": "<Navbar031\n  name=\"Даня Лунёв\"\n  status=\"открыт к проектам с октября\"\n  city=\"Тбилиси\"\n  timeZone=\"Asia/Tbilisi\"\n  links={[{ label: \"Проекты\", href: \"#work\" }, { label: \"Обо мне\", href: \"#about\" }]}\n/>",
+          "summary": "Шапка для портфолио или личного сайта фрилансера: статус доступности и местное время без сервера.",
+          "preserve": [
+            "часы — useSyncExternalStore с серверным null и Intl.DateTimeFormat по timeZone; неверный пояс откатывается к локальному",
+            "чип доступности — точка зелёная (available) или серая",
+            "чип и разделы появляются контейнерными запросами; стекло после 12px прокрутки"
+          ],
+          "adapt": [
+            "name, nameHref, status, available",
+            "city, timeZone, links",
+            "actionLabel, actionHref, sticky",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "name",
+            "label": "Имя",
+            "type": "text",
+            "default": "Даня Лунёв",
+            "maxLength": 30
+          },
+          {
+            "prop": "available",
+            "label": "Доступен",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Personal site header with an availability chip and city clock",
+            "description": "A name, an “open to projects from October” chip with a green or grey dot, a live city clock (“Tbilisi · 14:02”, every half minute, none on the server), links and a “Write” button. Sticky, with a hairline and glass on scroll.",
+            "ai": {
+              "summary": "A header for a portfolio or a freelancer's personal site: availability status and local time with no server.",
+              "preserve": [
+                "the clock is useSyncExternalStore with a null server snapshot and Intl.DateTimeFormat by timeZone; an invalid zone falls back to local",
+                "the availability chip dot is green (available) or grey",
+                "the chip and sections appear via container queries; glass after 12px of scroll"
+              ],
+              "adapt": [
+                "name, nameHref, status, available",
+                "city, timeZone, links",
+                "actionLabel, actionHref, sticky",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Navbar031\n  name=\"Danya Lunev\"\n  status=\"open to projects from October\"\n  city=\"Tbilisi\"\n  timeZone=\"Asia/Tbilisi\"\n  links={[{ label: \"Work\", href: \"#work\" }, { label: \"About\", href: \"#about\" }]}\n/>"
+            },
+            "controls": {
+              "name": {
+                "label": "Name",
+                "default": "Danya Lunev"
+              },
+              "available": {
+                "label": "Available"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "sticky": false,
+                "name": "Danya Lunev",
+                "status": "open to projects from October",
+                "city": "Tbilisi",
+                "actionLabel": "Write",
+                "links": [
+                  {
+                    "label": "Work",
+                    "href": "#work"
+                  },
+                  {
+                    "label": "About",
+                    "href": "#about"
+                  },
+                  {
+                    "label": "Words",
+                    "href": "#words"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

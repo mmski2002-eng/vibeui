@@ -5670,6 +5670,162 @@
           }
         }
       }
+    },
+    {
+      "name": "hero-031",
+      "type": "registry:block",
+      "title": "Первый экран личного сайта: печатающиеся роли и свет за курсором",
+      "description": "Огромное имя плотным гротеском, под ним роль, которая печатается по буквам и стирается, чтобы напечатать следующую; за курсором по фону ходит мягкое пятно света (переменные, без ререндера); кнопки «магнитные» — тянутся к курсору. Внизу «листайте» с падающей чертой.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-031/hero-031.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-031.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "hero",
+          "portfolio",
+          "personal",
+          "typewriter",
+          "spotlight",
+          "cursor",
+          "magnetic",
+          "developer",
+          "designer"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Hero031",
+          "usage": "<Hero031\n  name=\"Даня Лунёв\"\n  roles={[\"делаю интерфейсы\", \"пишу фронтенд\", \"рисую дизайн-системы\"]}\n  primaryLabel=\"Смотреть проекты\"\n  primaryHref=\"#work\"\n/>",
+          "summary": "Первый экран для портфолио дизайнера или разработчика: три живых приёма вместо фотографии — печать, свет, магнит.",
+          "preserve": [
+            "печать ролей — цикл setTimeout: набор 55 мс на символ, пауза 1,6 с, стирание 28 мс; курсор мигает",
+            "свет — radial-gradient от --x/--y, которые пишутся на pointermove в стиль секции",
+            "магнит — смещение кнопки на 18% расстояния до курсора через переменные, сброс на pointerleave"
+          ],
+          "adapt": [
+            "greeting, name, roles, lede",
+            "primaryLabel/Href, secondaryLabel/Href",
+            "scrollHint",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "name",
+            "label": "Имя",
+            "type": "text",
+            "default": "Даня Лунёв",
+            "maxLength": 30
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Personal hero: typing roles and a cursor spotlight",
+            "description": "A huge name in a tight grotesque, below it a role typed letter by letter and erased to type the next; a soft spotlight follows the cursor across the background (variables, no re-render); the buttons are “magnetic” — they lean towards the cursor. A “scroll” hint with a dropping line at the bottom.",
+            "ai": {
+              "summary": "A hero for a designer's or developer's portfolio: three live tricks instead of a photo — typing, light, magnet.",
+              "preserve": [
+                "role typing is a setTimeout loop: 55 ms per character, a 1.6 s pause, 28 ms erasing; the caret blinks",
+                "the light is a radial-gradient from --x/--y written on pointermove into the section style",
+                "the magnet shifts a button by 18% of the cursor distance via variables, reset on pointerleave"
+              ],
+              "adapt": [
+                "greeting, name, roles, lede",
+                "primaryLabel/Href, secondaryLabel/Href",
+                "scrollHint",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Hero031\n  name=\"Danya Lunev\"\n  roles={[\"design interfaces\", \"write frontend\", \"draw design systems\"]}\n  primaryLabel=\"See the work\"\n  primaryHref=\"#work\"\n/>"
+            },
+            "controls": {
+              "name": {
+                "label": "Name",
+                "default": "Danya Lunev"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "greeting": "hi, I'm",
+                "name": "Danya Lunev",
+                "roles": [
+                  "designing interfaces",
+                  "writing frontend",
+                  "drawing design systems",
+                  "building products from scratch"
+                ],
+                "lede": "Designer and developer in one: from the first sketch to production. I work with early-stage teams — where building matters more than aligning.",
+                "primaryLabel": "See the work",
+                "secondaryLabel": "Write",
+                "scrollHint": "scroll"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

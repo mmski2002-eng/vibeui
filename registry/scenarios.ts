@@ -1273,6 +1273,34 @@ export const SCENARIOS: Scenario[] = [
       { item: "footer-029", anchor: "footer", role: "Подвал", roleEn: "Footer", note: "Версия, лицензия, ссылки, статус CI.", noteEn: "Version, licence, links, CI status." },
     ],
   },
+  {
+    slug: "portfolio",
+    label: "Портфолио разработчика / дизайнера",
+    en: "Developer / designer portfolio",
+    summary:
+      "Личный сайт дизайнера-разработчика на бумаге с ультрафиолетом: шапка с чипом доступности и живыми часами города, первый экран с печатающимися ролями, светом за курсором и магнитными кнопками, проекты стопкой sticky-карточек, «работал с» текстом бегущей строкой, «обо мне» с фото ч/б → цвет, отзывы по одному с автопрокруткой, контакт с копируемой почтой и подвал в одну полосу. Inter Tight, Golos Text и IBM Plex Mono.",
+    summaryEn:
+      "A designer-developer's personal site on paper with ultraviolet: a header with an availability chip and a live city clock, a hero with typing roles, a cursor spotlight and magnetic buttons, projects as a stack of sticky cards, “worked with” as a text marquee, “about me” with a B/W → colour photo, one-at-a-time autoplay reviews, a contact with a copyable email and a one-row footer. Inter Tight, Golos Text and IBM Plex Mono.",
+    demo: "/scenarios/portfolio/demo",
+    source: "app/scenarios/portfolio/demo/page.tsx",
+    images: "docs/scenarios/portfolio/IMAGES.md",
+    theme: {
+      tone: "light",
+      accent: "#5b3df5",
+      ink: "#141414",
+      font: "Inter Tight, Golos Text, IBM Plex Mono",
+    },
+    sections: [
+      { item: "navbar-031", anchor: "", role: "Шапка", roleEn: "Header", note: "Имя, чип «открыт к проектам», живые часы города, кнопка «Написать».", noteEn: "Name, an “open to projects” chip, a live city clock, a “Write” button." },
+      { item: "hero-031", anchor: "top", role: "Первый экран", roleEn: "First screen", note: "Огромное имя, роли печатаются, свет за курсором, магнитные кнопки.", noteEn: "A huge name, typing roles, a cursor spotlight, magnetic buttons." },
+      { item: "portfolio-012", anchor: "work", role: "Проекты", roleEn: "Work", note: "Стопка sticky-карточек: следующая наезжает, предыдущая уменьшается.", noteEn: "A stack of sticky cards: the next slides over, the previous shrinks." },
+      { item: "logocloud-007", anchor: "", role: "Работал с", roleEn: "Worked with", note: "Названия компаний текстом бегущей строкой, начертания чередуются.", noteEn: "Company names as a text marquee with alternating styles." },
+      { item: "about-014", anchor: "about", role: "Обо мне", roleEn: "About", note: "Фото ч/б → цвет, три факта, навыки тегами, линия карьеры.", noteEn: "A B/W → colour photo, three facts, skill tags, a career line." },
+      { item: "testimonials-024", anchor: "words", role: "Отзывы", roleEn: "Words", note: "По одной цитате крупно, автопрокрутка с полосой, стрелки и клавиши.", noteEn: "One big quote at a time, autoplay with a bar, arrows and keys." },
+      { item: "contact-021", anchor: "contact", role: "Контакт", roleEn: "Contact", note: "Почта копируется кликом, местное время, соцсети с никами, фото.", noteEn: "Email copies on click, local time, socials with handles, a photo." },
+      { item: "footer-030", anchor: "footer", role: "Подвал", roleEn: "Footer", note: "Имя, ссылки, год, кнопка «наверх» со стрелкой.", noteEn: "Name, links, year, a “to top” arrow button." },
+    ],
+  },
 ]
 
 // Опечатка в имени item'а здесь означала бы пустую карточку в рецепте,

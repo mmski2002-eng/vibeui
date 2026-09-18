@@ -5460,6 +5460,207 @@
           ]
         }
       }
+    },
+    {
+      "name": "testimonials-024",
+      "type": "registry:block",
+      "title": "Цитаты по одной с автопрокруткой и полосой прогресса",
+      "description": "Отзыв крупно во всю ширину, под ним имя, роль и чип проекта, справа стрелки. Автопрокрутка: полоски-точки заполняются акцентом за время интервала (keyframes), пауза по наведению и фокусу, клавиши ← →. Смена — мягкий сдвиг вверх с затуханием.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-024/testimonials-024.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-024.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "testimonials",
+          "quotes",
+          "carousel",
+          "autoplay",
+          "portfolio",
+          "reviews",
+          "slider",
+          "clients"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Testimonials024",
+          "usage": "<Testimonials024\n  interval={7}\n  quotes={[\n    { text: \"Сделал за три недели то, на что у нас ушло бы полгода.\", name: \"Марина Соколова\", role: \"СЕО\", project: \"магазин\" },\n    { text: \"Дизайнер, который понимает, что такое стейт.\", name: \"Игорь Черных\", role: \"CTO\" },\n  ]}\n/>",
+          "summary": "Отзывы для портфолио, агентства, сервиса: по одному, крупно, с честной полосой времени и клавиатурой.",
+          "preserve": [
+            "автопрокрутка — setTimeout на interval, перезапускается от индекса; пауза — data-paused по pointerenter/focus",
+            "полоса активной точки — keyframes fill на время интервала; пройденные точки залиты через data-done",
+            "смена цитаты — key на blockquote, чтобы анимация появления сработала заново"
+          ],
+          "adapt": [
+            "quotes: text, name, role, project",
+            "interval — секунд на цитату, 0 — без автопрокрутки",
+            "eyebrow, prevLabel, nextLabel",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "interval",
+            "label": "Интервал, с",
+            "type": "number",
+            "default": 7,
+            "min": 0,
+            "max": 30
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "One quote at a time with autoplay and a progress bar",
+            "description": "A big full-width quote, below it the name, role and a project chip, arrows on the right. Autoplay: dash-dots fill with the accent over the interval (keyframes), paused on hover and focus, ← → keys. Switching is a soft slide-up fade.",
+            "ai": {
+              "summary": "Reviews for a portfolio, agency or service: one at a time, big, with an honest time bar and keyboard support.",
+              "preserve": [
+                "autoplay is a setTimeout on interval, restarted from the index; pause is data-paused on pointerenter/focus",
+                "the active dot bar is fill keyframes over the interval; passed dots are filled via data-done",
+                "a key on blockquote so the appear animation re-runs on change"
+              ],
+              "adapt": [
+                "quotes: text, name, role, project",
+                "interval — seconds per quote, 0 — no autoplay",
+                "eyebrow, prevLabel, nextLabel",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Testimonials024\n  interval={7}\n  quotes={[\n    { text: \"Did in three weeks what would have taken us half a year.\", name: \"Marina Sokolova\", role: \"CEO\", project: \"shop\" },\n    { text: \"A designer who understands what state is.\", name: \"Igor Chernykh\", role: \"CTO\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "interval": {
+                "label": "Interval, s"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "what they say",
+                "prevLabel": "Previous",
+                "nextLabel": "Next",
+                "quotes": [
+                  {
+                    "text": "Danya did in three weeks what would have taken us half a year of alignment. And it still works.",
+                    "name": "Marina Sokolova",
+                    "role": "CEO, ceramics shop",
+                    "project": "shop"
+                  },
+                  {
+                    "text": "A rare case of a designer who knows what state is and a developer who knows what a margin is.",
+                    "name": "Igor Chernykh",
+                    "role": "CTO, Tochka",
+                    "project": "design system"
+                  },
+                  {
+                    "text": "The dispatcher panel stopped being a place people are afraid to open. They open it on their own now.",
+                    "name": "Alina Guseva",
+                    "role": "head of operations",
+                    "project": "delivery"
+                  }
+                ]
+              }
+            },
+            "slots": {
+              "shape": "one big quote, name, role and project",
+              "items": [
+                {
+                  "role": "quote"
+                },
+                {
+                  "role": "name"
+                },
+                {
+                  "role": "role and project"
+                }
+              ]
+            }
+          }
+        },
+        "slots": {
+          "shape": "одна цитата крупно, имя, роль и проект",
+          "density": "light",
+          "items": [
+            {
+              "role": "цитата",
+              "type": "quote",
+              "count": "2–5",
+              "required": true
+            },
+            {
+              "role": "имя",
+              "type": "text",
+              "required": true
+            },
+            {
+              "role": "роль и проект",
+              "type": "text"
+            }
+          ]
+        }
+      }
     }
   ]
 }

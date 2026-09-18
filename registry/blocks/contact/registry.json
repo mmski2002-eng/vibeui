@@ -2815,6 +2815,179 @@
           }
         }
       }
+    },
+    {
+      "name": "contact-021",
+      "type": "registry:block",
+      "title": "Контакт с почтой, которая копируется кликом",
+      "description": "Адрес почты огромной кнопкой: клик копирует его в буфер и на две секунды показывает «скопировано» (если буфер недоступен — открывает mailto). Рядом живое местное время города и «отвечу в течение дня», список соцсетей с никами, справа повёрнутое фото, которое выравнивается по наведению.",
+      "categories": [
+        "contact"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-021/contact-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-021.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "contact",
+          "email",
+          "copy",
+          "portfolio",
+          "personal",
+          "social",
+          "clock",
+          "freelance"
+        ],
+        "preview": {
+          "props": {
+            "image": "/demo/portfolio/portrait-02.webp"
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Contact021",
+          "usage": "<Contact021\n  email=\"hi@lunev.design\"\n  city=\"Тбилиси\"\n  timeZone=\"Asia/Tbilisi\"\n  links={[{ label: \"Телеграм\", href: \"#\", handle: \"@lunev\" }]}\n  image=\"/photos/portrait-02.webp\"\n/>",
+          "summary": "Контакт для личного сайта без формы: почта одним кликом, время, обещание и соцсети.",
+          "preserve": [
+            "копирование через navigator.clipboard, откат — mailto; подпись под адресом меняется на 2 с",
+            "часы — useSyncExternalStore с серверным null и Intl по timeZone",
+            "ссылки соцсетей сдвигаются влево-вправо по hover через padding-left"
+          ],
+          "adapt": [
+            "email, copyLabel, copiedLabel, promise",
+            "city, timeZone, links: label, href, handle",
+            "eyebrow, title, text, image, imageAlt",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "email",
+            "label": "Почта",
+            "type": "text",
+            "default": "hi@lunev.design",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Contact with an email that copies on click",
+            "description": "The email as a huge button: a click copies it to the clipboard and shows “copied” for two seconds (falls back to mailto if the clipboard is unavailable). Next to it the live local city time and “I reply within a day”, a social list with handles, and a tilted photo on the right that straightens on hover.",
+            "ai": {
+              "summary": "A contact section for a personal site with no form: one-click email, time, a promise and socials.",
+              "preserve": [
+                "copying via navigator.clipboard, mailto fallback; the caption under the address changes for 2 s",
+                "the clock is useSyncExternalStore with a null server snapshot and Intl by timeZone",
+                "social links nudge via padding-left on hover"
+              ],
+              "adapt": [
+                "email, copyLabel, copiedLabel, promise",
+                "city, timeZone, links: label, href, handle",
+                "eyebrow, title, text, image, imageAlt",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Contact021\n  email=\"hi@lunev.design\"\n  city=\"Tbilisi\"\n  timeZone=\"Asia/Tbilisi\"\n  links={[{ label: \"Telegram\", href: \"#\", handle: \"@lunev\" }]}\n  image=\"/photos/portrait-02.webp\"\n/>"
+            },
+            "controls": {
+              "email": {
+                "label": "Email",
+                "default": "hi@lunev.design"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "image": "/demo/portfolio/portrait-02.webp",
+                "eyebrow": "contact",
+                "title": "Got a task? Write",
+                "text": "No forms or managers: an email or a message — and we'll talk this week. I take two projects at a time, no more.",
+                "copyLabel": "click — it copies",
+                "copiedLabel": "copied",
+                "promise": "I reply within a day",
+                "city": "Tbilisi",
+                "links": [
+                  {
+                    "label": "Telegram",
+                    "href": "#",
+                    "handle": "@lunev"
+                  },
+                  {
+                    "label": "GitHub",
+                    "href": "#",
+                    "handle": "danyalunev"
+                  },
+                  {
+                    "label": "Behance",
+                    "href": "#",
+                    "handle": "lunev"
+                  },
+                  {
+                    "label": "LinkedIn",
+                    "href": "#",
+                    "handle": "danya-lunev"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
