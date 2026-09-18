@@ -15,4 +15,7 @@ export const PREVIEWS = {
   "changelog-003": dynamic(() =>
     import("@/registry/blocks/changelog/changelog-003/changelog-003").then((module) => module.Changelog003),
   ),
+  "changelog-004": dynamic(() =>
+    import("@/registry/blocks/changelog/changelog-004/changelog-004").then((module) => module.Changelog004),
+  ),
 } satisfies PreviewMap

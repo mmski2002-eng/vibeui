@@ -194,6 +194,12 @@ export const CATEGORIES = [
     group: "commerce",
   },
   {
+    slug: "opensource",
+    label: "Open source",
+    en: "Open source",
+    group: "application",
+  },
+  {
     slug: "course",
     label: "Онлайн-курс",
     en: "Online course",

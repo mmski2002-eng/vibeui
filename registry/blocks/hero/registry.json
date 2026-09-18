@@ -5504,6 +5504,172 @@
           }
         }
       }
+    },
+    {
+      "name": "hero-030",
+      "type": "registry:block",
+      "title": "Первый экран библиотеки с установкой и живым терминалом",
+      "description": "Заголовок с акцентным словом, команда установки с вкладками npm / pnpm / yarn / bun и кнопкой «скопировать» (Clipboard API, «скопировано» на две секунды), кнопки и строка фактов, справа тёмный терминал, который печатает вывод сам — символ за символом, с мигающим курсором. Клетчатая подложка на CSS.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-030/hero-030.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-030.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "hero",
+          "open source",
+          "install",
+          "terminal",
+          "npm",
+          "developer",
+          "docs",
+          "typing",
+          "copy"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Hero030",
+          "usage": "<Hero030\n  title=\"Таблица, которая *весит меньше*, чем ваш favicon\"\n  managers={[{ name: \"npm\", command: \"npm i tabl\" }, { name: \"pnpm\", command: \"pnpm add tabl\" }]}\n  terminal={[\"$ npm i tabl\", \"added 1 package in 412ms\"]}\n  facts={[\"4 КБ gzip\", \"TypeScript\", \"MIT\"]}\n/>",
+          "summary": "Первый экран для библиотеки, CLI или SDK: копируемая команда установки и терминал, печатающий сам.",
+          "preserve": [
+            "печать терминала — setTimeout по символу с паузой на переносе строки, старт через 600 мс",
+            "копирование через navigator.clipboard с откатом подписи через 2 с; ошибка буфера глотается",
+            "слово в *звёздочках* в title красится акцентом; сетка подложки — два linear-gradient 24px с маской"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, facts",
+            "managers: name, command; copyLabel, copiedLabel; terminal",
+            "primaryLabel/Href, secondaryLabel/Href",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "eyebrow",
+            "label": "Надпись",
+            "type": "text",
+            "default": "v2.4 · headless-таблица для React",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Library hero with install command and a live terminal",
+            "description": "A headline with an accent word, an install command with npm / pnpm / yarn / bun tabs and a copy button (Clipboard API, “copied” for two seconds), buttons and a facts line, on the right a dark terminal that types its own output character by character with a blinking cursor. A CSS grid-paper backdrop.",
+            "ai": {
+              "summary": "A hero for a library, CLI or SDK: a copyable install command and a self-typing terminal.",
+              "preserve": [
+                "terminal typing is a per-character setTimeout with a pause on newline, starting after 600 ms",
+                "copying via navigator.clipboard with the label reverting after 2 s; clipboard errors are swallowed",
+                "the *starred* word in title takes the accent; the backdrop grid is two 24px linear-gradients with a mask"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, facts",
+                "managers: name, command; copyLabel, copiedLabel; terminal",
+                "primaryLabel/Href, secondaryLabel/Href",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Hero030\n  title=\"A table that *weighs less* than your favicon\"\n  managers={[{ name: \"npm\", command: \"npm i tabl\" }, { name: \"pnpm\", command: \"pnpm add tabl\" }]}\n  terminal={[\"$ npm i tabl\", \"added 1 package in 412ms\"]}\n  facts={[\"4 KB gzip\", \"TypeScript\", \"MIT\"]}\n/>"
+            },
+            "controls": {
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "v2.4 · headless table for React"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "v2.4 · headless table for React",
+                "title": "A table that *weighs less* than your favicon",
+                "lede": "Sorting, grouping, virtualisation and types — without a single style. tabl gives you data and behaviour; you draw the markup.",
+                "copyLabel": "copy",
+                "copiedLabel": "copied",
+                "primaryLabel": "Documentation",
+                "secondaryLabel": "Open the playground",
+                "facts": [
+                  "4 KB gzip",
+                  "TypeScript",
+                  "0 dependencies",
+                  "MIT"
+                ],
+                "terminal": [
+                  "$ npm i tabl",
+                  "added 1 package in 412ms",
+                  "$ npx tabl init",
+                  "✓ tabl.config.ts created",
+                  "✓ column types inferred from data: 6 columns",
+                  "✓ virtualisation: on (rows > 200)",
+                  "done — 4.1 kB gzip, 0 dependencies"
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

@@ -1244,6 +1244,35 @@ export const SCENARIOS: Scenario[] = [
       { item: "podcast-007", anchor: "", role: "Мини-плеер", roleEn: "Mini-player", note: "Полоса у нижнего края: появляется по событию из ленты, рассылает состояние.", noteEn: "A bottom bar: appears on an event from the list, broadcasts state." },
     ],
   },
+  {
+    slug: "opensource",
+    label: "Open-source проект",
+    en: "Open-source project",
+    summary:
+      "Сайт open-source библиотеки в светлой инженерной теме на линиях: шапка с чипом звёзд GitHub, первый экран с копируемой командой установки и терминалом, который печатает сам, песочница, где переключатели меняют и код, и живую таблицу, возможности bento-плитками с CSS-микродемо, сравнение размера бандла растущими полосами, сообщество со стеной контрибьюторов из инициалов, история версий с метками breaking, призыв поставить звезду и минимальный подвал. Onest и JetBrains Mono, электрик-синий акцент.",
+    summaryEn:
+      "An open-source library site in a light engineering hairline theme: a header with a GitHub stars chip, a hero with a copyable install command and a self-typing terminal, a playground where toggles change both the code and a live table, features as bento tiles with CSS micro-demos, a bundle-size comparison with growing bars, a community with an initials contributors wall, a version history with breaking tags, a star-us call to action and a minimal footer. Onest and JetBrains Mono, an electric blue accent.",
+    demo: "/scenarios/opensource/demo",
+    source: "app/scenarios/opensource/demo/page.tsx",
+    images: "docs/scenarios/opensource/IMAGES.md",
+    theme: {
+      tone: "light",
+      accent: "#2f5bff",
+      ink: "#111111",
+      font: "Onest, JetBrains Mono",
+    },
+    sections: [
+      { item: "navbar-030", anchor: "", role: "Шапка", roleEn: "Header", note: "Имя пакета, версия, разделы, чип звёзд GitHub с count-up.", noteEn: "Package name, version, sections, a GitHub stars chip with count-up." },
+      { item: "hero-030", anchor: "top", role: "Первый экран", roleEn: "First screen", note: "Заголовок, установка с вкладками и копированием, терминал печатает сам.", noteEn: "Headline, install with tabs and copy, a self-typing terminal." },
+      { item: "opensource-001", anchor: "playground", role: "Песочница", roleEn: "Playground", note: "Переключатели меняют код и живую таблицу одновременно.", noteEn: "Toggles change the code and the live table at once." },
+      { item: "bento-001", anchor: "docs", role: "Возможности", roleEn: "Features", note: "Bento-плитки с CSS-микродемо: виртуализация, сортировка, группировка, типы, размер.", noteEn: "Bento tiles with CSS micro-demos: virtualisation, sorting, grouping, types, size." },
+      { item: "comparison-006", anchor: "compare", role: "Сравнение", roleEn: "Comparison", note: "Размер бандла полосами, растут при появлении, числа считают вверх.", noteEn: "Bundle size as bars growing on appear, numbers counting up." },
+      { item: "stats-002", anchor: "community", role: "Сообщество", roleEn: "Community", note: "Числа count-up и стена контрибьюторов из инициалов.", noteEn: "Count-up numbers and an initials contributors wall." },
+      { item: "changelog-004", anchor: "changelog", role: "История версий", roleEn: "Changelog", note: "Аккордеон релизов с метками latest и breaking.", noteEn: "A release accordion with latest and breaking tags." },
+      { item: "cta-024", anchor: "star", role: "Звезда", roleEn: "Star", note: "Звезда заливается по наведению, кнопки GitHub и npm, спонсоры.", noteEn: "A star that fills on hover, GitHub and npm buttons, sponsors." },
+      { item: "footer-029", anchor: "footer", role: "Подвал", roleEn: "Footer", note: "Версия, лицензия, ссылки, статус CI.", noteEn: "Version, licence, links, CI status." },
+    ],
+  },
 ]
 
 // Опечатка в имени item'а здесь означала бы пустую карточку в рецепте,

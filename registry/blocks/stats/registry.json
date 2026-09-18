@@ -173,6 +173,170 @@
           }
         }
       }
+    },
+    {
+      "name": "stats-002",
+      "type": "registry:block",
+      "title": "Сообщество: count-up числа и стена контрибьюторов",
+      "description": "Три числа считают вверх при появлении, рядом стена контрибьюторов — кружки с инициалами, размер которых зависит от числа коммитов, а цвет — от хеша имени; по наведению всплывает имя и число коммитов. Без фото и внешних сервисов.",
+      "categories": [
+        "stats"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stats-002/stats-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stats-002.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "stats",
+          "community",
+          "contributors",
+          "open source",
+          "avatars",
+          "counter",
+          "github",
+          "social proof"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Stats002",
+          "usage": "<Stats002\n  stats={[{ value: 214, label: \"контрибьюторов\" }, { value: 12480, label: \"звёзд\" }]}\n  contributors={[{ name: \"Аня Кравец\", commits: 420 }, { name: \"Bart Meyer\", commits: 180 }]}\n/>",
+          "summary": "Социальное доказательство для open-source проекта или сообщества: цифры и десятки людей без единой картинки.",
+          "preserve": [
+            "размер кружка — calc от доли коммитов через переменную k; цвет — oklch с hue из хеша имени",
+            "подсказка — span над кружком, появляется по hover и focus-visible",
+            "счётчики стартуют по IntersectionObserver один раз"
+          ],
+          "adapt": [
+            "stats: value, label, suffix",
+            "contributors: name, commits, href; wallLabel, moreLabel, moreHref",
+            "eyebrow, title, lede",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Сделано 214 людьми из 31 страны",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Community: count-up numbers and a contributors wall",
+            "description": "Three numbers count up on appear, next to a contributors wall — initials in circles sized by commit count and coloured by a name hash; hover reveals the name and commits. No photos or external services.",
+            "ai": {
+              "summary": "Social proof for an open-source project or community: numbers and dozens of people without a single image.",
+              "preserve": [
+                "circle size is a calc from the commit share via a k variable; colour is oklch with a hue from the name hash",
+                "the tooltip is a span above the circle, shown on hover and focus-visible",
+                "counters start once via IntersectionObserver"
+              ],
+              "adapt": [
+                "stats: value, label, suffix",
+                "contributors: name, commits, href; wallLabel, moreLabel, moreHref",
+                "eyebrow, title, lede",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Stats002\n  stats={[{ value: 214, label: \"contributors\" }, { value: 12480, label: \"stars\" }]}\n  contributors={[{ name: \"Anya Kravets\", commits: 420 }, { name: \"Bart Meyer\", commits: 180 }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Made by 214 people from 31 countries"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "// community",
+                "title": "Made by 214 people from 31 countries",
+                "lede": "Every pull request is reviewed by two maintainers, every release passes 1,900 tests. Join us — there's always a good first issue.",
+                "wallLabel": "Contributors · size is contribution",
+                "moreLabel": "+190 on GitHub →",
+                "stats": [
+                  {
+                    "value": 214,
+                    "label": "contributors"
+                  },
+                  {
+                    "value": 12480,
+                    "label": "GitHub stars"
+                  },
+                  {
+                    "value": 3.2,
+                    "label": "M installs per month",
+                    "suffix": "M"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

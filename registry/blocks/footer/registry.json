@@ -4489,6 +4489,215 @@
           }
         }
       }
+    },
+    {
+      "name": "footer-029",
+      "type": "registry:block",
+      "title": "Минимальный подвал open-source проекта",
+      "description": "Подвал на линиях: имя пакета моноширинным с «~/», чипы версии и лицензии, три колонки ссылок, строка статуса с зелёной точкой, копирайт и «сделано контрибьюторами из N стран». Без теней, всё на одной сетке.",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-029/footer-029.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-029.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "footer",
+          "open source",
+          "developer",
+          "docs",
+          "license",
+          "status",
+          "links",
+          "minimal"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Footer029",
+          "usage": "<Footer029\n  brand=\"tabl\"\n  version=\"v2.4.1\"\n  license=\"MIT\"\n  columns={[{ title: \"Проект\", links: [{ label: \"Документация\", href: \"#docs\" }] }]}\n/>",
+          "summary": "Подвал для документации библиотеки, CLI, API: версия, лицензия, статус и ссылки в инженерном стиле.",
+          "preserve": [
+            "чипы версии и лицензии — моноширинные, на линии, без заливки",
+            "статус — зелёная точка с мягким кольцом box-shadow",
+            "колонки 2 → 3 контейнерным запросом"
+          ],
+          "adapt": [
+            "brand, tagline, version, license",
+            "columns: title, links",
+            "status, copyright, madeBy",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Пакет",
+            "type": "text",
+            "default": "tabl",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Minimal open-source project footer",
+            "description": "A hairline footer: the package name in monospace with “~/”, version and licence chips, three link columns, a status line with a green dot, copyright and “made by contributors from N countries”. No shadows, one grid.",
+            "ai": {
+              "summary": "A footer for library, CLI or API docs: version, licence, status and links in an engineering style.",
+              "preserve": [
+                "version and licence chips are monospace, on hairlines, no fill",
+                "status is a green dot with a soft box-shadow ring",
+                "columns 2 → 3 via a container query"
+              ],
+              "adapt": [
+                "brand, tagline, version, license",
+                "columns: title, links",
+                "status, copyright, madeBy",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Footer029\n  brand=\"tabl\"\n  version=\"v2.4.1\"\n  license=\"MIT\"\n  columns={[{ title: \"Project\", links: [{ label: \"Docs\", href: \"#docs\" }] }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Package",
+                "default": "tabl"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "tagline": "A headless table for React. Data and behaviour from us, markup from you.",
+                "status": "all systems operational · CI green",
+                "madeBy": "made by contributors from 31 countries",
+                "columns": [
+                  {
+                    "title": "Project",
+                    "links": [
+                      {
+                        "label": "Docs",
+                        "href": "#docs"
+                      },
+                      {
+                        "label": "Playground",
+                        "href": "#playground"
+                      },
+                      {
+                        "label": "Changelog",
+                        "href": "#changelog"
+                      },
+                      {
+                        "label": "Roadmap",
+                        "href": "#"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Community",
+                    "links": [
+                      {
+                        "label": "GitHub",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Discussions",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Telegram",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Good first issue",
+                        "href": "#"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "More",
+                    "links": [
+                      {
+                        "label": "npm",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Sponsors",
+                        "href": "#star"
+                      },
+                      {
+                        "label": "Code of conduct",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Security",
+                        "href": "#"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

@@ -21,4 +21,7 @@ export const PREVIEWS = {
   "comparison-005": dynamic(() =>
     import("@/registry/blocks/comparison/comparison-005/comparison-005").then((module) => module.Comparison005),
   ),
+  "comparison-006": dynamic(() =>
+    import("@/registry/blocks/comparison/comparison-006/comparison-006").then((module) => module.Comparison006),
+  ),
 } satisfies PreviewMap

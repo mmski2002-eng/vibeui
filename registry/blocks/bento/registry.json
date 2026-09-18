@@ -1,0 +1,180 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "bento-001",
+      "type": "registry:block",
+      "title": "Возможности bento-плитками с CSS-микродемо",
+      "description": "Плитки возможностей на линиях без теней, в каждой — микродемо на чистом CSS: бесконечно бегущие строки (виртуализация), три строки, меняющиеся местами по наведению (сортировка), сворачивающаяся группа, всплывающая подсказка типов, линейка размера. Широкая плитка занимает две колонки.",
+      "categories": [
+        "bento"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "bento-001/bento-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/bento-001.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "bento",
+          "features",
+          "grid",
+          "open source",
+          "developer",
+          "micro demo",
+          "hover",
+          "product"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Bento001",
+          "usage": "<Bento001\n  title=\"Всё, что нужно таблице\"\n  features={[\n    { title: \"Виртуализация\", text: \"48 000 строк как 12.\", demo: \"rows\", wide: true },\n    { title: \"Сортировка\", text: \"По любой колонке.\", demo: \"sort\" },\n    { title: \"Группировка\", text: \"Один ключ.\", demo: \"group\" },\n  ]}\n/>",
+          "summary": "Сетка возможностей для библиотеки или dev-инструмента: каждая плитка показывает фичу движением, а не иконкой.",
+          "preserve": [
+            "сетка — gap 1px на фоне линии, плитки закрашены фоном: линии между ними без бордеров",
+            "микродемо по типу demo: rows — keyframes скролла, sort — translateY по :hover плитки, group — grid-template-rows 0fr",
+            "widths плиток: 1 → 2 → 3 колонки контейнерными запросами; data-wide — две колонки"
+          ],
+          "adapt": [
+            "features: title, text, demo (rows | sort | group | types | size | none), wide",
+            "eyebrow, title, lede",
+            "порядок плиток — порядок массива",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Всё, что нужно таблице. Ничего, что не нужно",
+            "maxLength": 60
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Features as bento tiles with CSS micro-demos",
+            "description": "Feature tiles on hairlines with no shadows, each with a pure-CSS micro-demo: endlessly scrolling rows (virtualisation), three rows swapping on hover (sorting), a collapsing group, a type tooltip, a size ruler. A wide tile spans two columns.",
+            "ai": {
+              "summary": "A feature grid for a library or dev tool: every tile shows the feature with motion, not an icon.",
+              "preserve": [
+                "the grid is a 1px gap over the line colour with tiles painted over it: hairlines without borders",
+                "micro-demos by demo type: rows — scroll keyframes, sort — translateY on tile :hover, group — grid-template-rows 0fr",
+                "tile widths: 1 → 2 → 3 columns via container queries; data-wide spans two"
+              ],
+              "adapt": [
+                "features: title, text, demo (rows | sort | group | types | size | none), wide",
+                "eyebrow, title, lede",
+                "tile order is array order",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Bento001\n  title=\"Everything a table needs\"\n  features={[\n    { title: \"Virtualisation\", text: \"48,000 rows as 12.\", demo: \"rows\", wide: true },\n    { title: \"Sorting\", text: \"By any column.\", demo: \"sort\" },\n    { title: \"Grouping\", text: \"One key.\", demo: \"group\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Everything a table needs. Nothing it doesn't"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "// features",
+                "title": "Everything a table needs. Nothing it doesn't",
+                "lede": "Five things you usually write yourself and then fix. Here they're written once.",
+                "features": [
+                  {
+                    "title": "Virtualisation out of the box",
+                    "text": "48,000 rows render as 12: only what's in the window is in the DOM. Turns on by itself past two hundred rows.",
+                    "demo": "rows",
+                    "wide": true
+                  },
+                  {
+                    "title": "Sorting",
+                    "text": "By any column, with a custom comparator and a stable order.",
+                    "demo": "sort"
+                  },
+                  {
+                    "title": "Grouping",
+                    "text": "One key — and rows fold into expandable groups with totals.",
+                    "demo": "group"
+                  },
+                  {
+                    "title": "Types inferred from data",
+                    "text": "Columns know their cell types: the editor hints, TypeScript checks.",
+                    "demo": "types"
+                  },
+                  {
+                    "title": "4 KB and zero dependencies",
+                    "text": "Smaller than an icon. Tree-shaking: you take only what you use.",
+                    "demo": "size"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

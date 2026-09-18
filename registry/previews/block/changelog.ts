@@ -10,4 +10,6 @@ export const PREVIEWS = {
     import("@/registry/blocks/changelog/changelog-002/changelog-002").then((module) => module.Changelog002),
   "changelog-003": () =>
     import("@/registry/blocks/changelog/changelog-003/changelog-003").then((module) => module.Changelog003),
+  "changelog-004": () =>
+    import("@/registry/blocks/changelog/changelog-004/changelog-004").then((module) => module.Changelog004),
 } satisfies PreviewLoaderMap

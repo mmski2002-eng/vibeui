@@ -435,6 +435,198 @@
           }
         }
       }
+    },
+    {
+      "name": "changelog-004",
+      "type": "registry:block",
+      "title": "История версий с раскрытием и метками breaking",
+      "description": "Вертикальная линия с точками — у последнего релиза пульс; версия моноширинным тегом, дата, чипы «latest» и «breaking», заголовок. Первый релиз раскрыт, остальные раскрываются по клику (grid-template-rows, aria-expanded); пункты с «!» — ломающие, с красной меткой.",
+      "categories": [
+        "changelog"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "changelog-004/changelog-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/changelog-004.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "changelog",
+          "releases",
+          "versions",
+          "timeline",
+          "open source",
+          "accordion",
+          "semver",
+          "developer"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Changelog004",
+          "usage": "<Changelog004\n  releases={[\n    { version: \"2.4.1\", date: \"18 сен 2026\", title: \"Виртуализация с переменной высотой\", items: [\"строки разной высоты\", \"scrollTo(rowIndex)\"] },\n    { version: \"2.0.0\", date: \"1 июн 2026\", title: \"Headless по-настоящему\", breaking: true, items: [\"!удалён <Table>\", \"4,1 КБ вместо 11\"] },\n  ]}\n/>",
+          "summary": "Changelog для библиотеки, приложения, API: аккордеон релизов с честными метками ломающих изменений.",
+          "preserve": [
+            "раскрытие — grid-template-rows 0fr → 1fr, состояние — индекс открытого релиза, кнопка с aria-expanded",
+            "точка последнего релиза пульсирует keyframes box-shadow",
+            "пункт с префиксом «!» получает data-breaking и красную метку"
+          ],
+          "adapt": [
+            "releases: version, date, title, items, breaking",
+            "breakingLabel, latestLabel, allLabel, allHref",
+            "eyebrow, title, lede",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что менялось",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Version history with expansion and breaking tags",
+            "description": "A vertical line with dots — the latest release pulses; a monospace version tag, date, “latest” and “breaking” chips, a title. The first release is open, others expand on click (grid-template-rows, aria-expanded); items starting with “!” are breaking, with a red marker.",
+            "ai": {
+              "summary": "A changelog for a library, app or API: a release accordion with honest breaking-change markers.",
+              "preserve": [
+                "expansion is grid-template-rows 0fr → 1fr, state is the open release index, a button with aria-expanded",
+                "the latest release dot pulses with box-shadow keyframes",
+                "an item prefixed with “!” gets data-breaking and a red marker"
+              ],
+              "adapt": [
+                "releases: version, date, title, items, breaking",
+                "breakingLabel, latestLabel, allLabel, allHref",
+                "eyebrow, title, lede",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Changelog004\n  releases={[\n    { version: \"2.4.1\", date: \"Sep 18, 2026\", title: \"Variable-height virtualisation\", items: [\"rows of different heights\", \"scrollTo(rowIndex)\"] },\n    { version: \"2.0.0\", date: \"Jun 1, 2026\", title: \"Truly headless\", breaking: true, items: [\"!removed <Table>\", \"4.1 KB instead of 11\"] },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What changed"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "// changelog",
+                "title": "What changed",
+                "lede": "Semantic versions, breaking changes marked. The full list is in CHANGELOG.md.",
+                "allLabel": "Full changelog →",
+                "releases": [
+                  {
+                    "version": "2.4.1",
+                    "date": "Sep 18, 2026",
+                    "title": "Variable-height virtualisation",
+                    "items": [
+                      "rows of different heights without measuring ahead — ResizeObserver as they appear",
+                      "`table.scrollTo(rowIndex)` for programmatic scrolling",
+                      "fixed jitter on fast trackpad scrolling"
+                    ]
+                  },
+                  {
+                    "version": "2.4.0",
+                    "date": "Sep 2, 2026",
+                    "title": "Grouping with totals",
+                    "items": [
+                      "`groupBy` accepts a function, not just a key",
+                      "`sum`, `avg`, `count` aggregates in the group row",
+                      "`onGroupToggle` events with state"
+                    ]
+                  },
+                  {
+                    "version": "2.3.0",
+                    "date": "Aug 12, 2026",
+                    "title": "Function columns and types",
+                    "items": [
+                      "a column can be a function of the row — the type is inferred",
+                      "`ColumnDef<T>` exported for external definitions",
+                      "types docs rewritten"
+                    ]
+                  },
+                  {
+                    "version": "2.0.0",
+                    "date": "Jun 1, 2026",
+                    "title": "Truly headless",
+                    "breaking": true,
+                    "items": [
+                      "!removed the styled `<Table>` component — only the `useTable` hook",
+                      "!`onSort` now receives `{ by, dir }` instead of two arguments",
+                      "bundle size 4.1 KB instead of 11",
+                      "React 19 and Server Components"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

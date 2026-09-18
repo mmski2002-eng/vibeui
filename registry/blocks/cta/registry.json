@@ -3749,6 +3749,155 @@
           }
         }
       }
+    },
+    {
+      "name": "cta-024",
+      "type": "registry:block",
+      "title": "Призыв поставить звезду с заливающейся звездой",
+      "description": "Большая контурная звезда заливается акцентом снизу вверх (clip-path) и покачивается при наведении на карточку; справа заголовок, кнопки «Star on GitHub» и «npm», команда установки пунктиром и строка спонсоров с «стать спонсором».",
+      "categories": [
+        "cta"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-024/cta-024.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-024.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "cta",
+          "github",
+          "star",
+          "open source",
+          "sponsors",
+          "call to action",
+          "developer",
+          "hover"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Cta024",
+          "usage": "<Cta024\n  title=\"Одна звезда — плюс один мейнтейнер\"\n  primaryLabel=\"Star on GitHub\"\n  primaryHref=\"https://github.com/…\"\n  command=\"npm i tabl\"\n  sponsors={[{ name: \"Vercel\" }, { name: \"Selectel\" }]}\n/>",
+          "summary": "Финальный призыв для open-source проекта: звезда, кнопки и спонсоры — всё на CSS, без состояния.",
+          "preserve": [
+            "заливка звезды — второй path с clip-path inset(100% 0 0 0) → inset(0) по :hover карточки",
+            "покачивание — keyframes wiggle на обёртке звезды при hover",
+            "спонсоры — текстовые ссылки с нижней линией, «стать спонсором» — акцентом"
+          ],
+          "adapt": [
+            "title, text, command",
+            "primaryLabel/Href, secondaryLabel/Href",
+            "sponsorsLabel, sponsors, sponsorHref, sponsorLabel",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Одна звезда — плюс один мейнтейнер",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Star-us call to action with a filling star",
+            "description": "A big outlined star fills with the accent from the bottom up (clip-path) and wiggles when the card is hovered; on the right a headline, “Star on GitHub” and “npm” buttons, a dashed install command and a sponsors line with “become a sponsor”.",
+            "ai": {
+              "summary": "A closing call to action for an open-source project: a star, buttons and sponsors — all CSS, no state.",
+              "preserve": [
+                "the star fill is a second path with clip-path inset(100% 0 0 0) → inset(0) on card :hover",
+                "the wiggle is keyframes on the star wrapper on hover",
+                "sponsors are text links with an underline, “become a sponsor” in the accent"
+              ],
+              "adapt": [
+                "title, text, command",
+                "primaryLabel/Href, secondaryLabel/Href",
+                "sponsorsLabel, sponsors, sponsorHref, sponsorLabel",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Cta024\n  title=\"One star — one more maintainer\"\n  primaryLabel=\"Star on GitHub\"\n  primaryHref=\"https://github.com/…\"\n  command=\"npm i tabl\"\n  sponsors={[{ name: \"Vercel\" }, { name: \"Selectel\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "One star — one more maintainer"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "One star — one more maintainer",
+                "text": "GitHub stars are the only metric that gets a project into lists and in front of people. If tabl saved you an evening — give a minute back.",
+                "secondaryLabel": "Open on npm",
+                "sponsorsLabel": "Sponsors",
+                "sponsorLabel": "become a sponsor"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

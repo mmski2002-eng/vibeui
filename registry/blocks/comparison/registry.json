@@ -699,6 +699,156 @@
           }
         }
       }
+    },
+    {
+      "name": "comparison-006",
+      "type": "registry:block",
+      "title": "Сравнение размера бандла растущими полосами",
+      "description": "Горизонтальные полосы размера пакетов, честно пропорциональные максимуму, растут при появлении в кадре с задержкой по строке, числа считают вверх синхронно; наш пакет — акцентом и меткой «это мы». Сноска про метод измерения.",
+      "categories": [
+        "comparison"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "comparison-006/comparison-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/comparison-006.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "comparison",
+          "bundle size",
+          "chart",
+          "bars",
+          "open source",
+          "benchmark",
+          "performance",
+          "developer"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Comparison006",
+          "usage": "<Comparison006\n  unit=\"КБ\"\n  metric=\"gzip, минимальный импорт\"\n  rows={[\n    { name: \"tabl\", value: 4.1, self: true },\n    { name: \"react-table\", value: 15.6 },\n    { name: \"ag-grid\", value: 238 },\n  ]}\n/>",
+          "summary": "Сравнение по одной метрике для библиотеки, сервиса, тарифа: полосы и числа оживают при прокрутке.",
+          "preserve": [
+            "ширина полосы = value / max через переменную; рост — scaleX от 0 с transition и задержкой по индексу",
+            "числа считают вверх rAF с ease-out; дробные — с одним знаком",
+            "старт по IntersectionObserver один раз, rootMargin -15%"
+          ],
+          "adapt": [
+            "rows: name, value, note, self",
+            "unit, metric, footnote",
+            "eyebrow, title, lede",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Меньше — значит быстрее",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Bundle size comparison with growing bars",
+            "description": "Horizontal package-size bars honestly proportional to the maximum, growing as they enter the viewport with a per-row delay, numbers counting up in sync; our package in the accent with an “it's us” tag. A footnote on the measurement method.",
+            "ai": {
+              "summary": "A one-metric comparison for a library, service or plan: bars and numbers come alive on scroll.",
+              "preserve": [
+                "bar width = value / max via a variable; growth is scaleX from 0 with a transition and per-index delay",
+                "numbers count up in rAF with ease-out; decimals with one digit",
+                "starts once via IntersectionObserver, rootMargin -15%"
+              ],
+              "adapt": [
+                "rows: name, value, note, self",
+                "unit, metric, footnote",
+                "eyebrow, title, lede",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Comparison006\n  unit=\"KB\"\n  metric=\"gzip, minimal import\"\n  rows={[\n    { name: \"tabl\", value: 4.1, self: true },\n    { name: \"react-table\", value: 15.6 },\n    { name: \"ag-grid\", value: 238 },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Smaller means faster"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "// comparison",
+                "title": "Smaller means faster",
+                "lede": "Gzipped size of headless tables for React. Data from bundlephobia on the 2.4 release day.",
+                "unit": "KB",
+                "metric": "gzip, minimal import",
+                "footnote": "Measured with `import { useTable }` and no styles. The full tabl feature set is 6.8 KB."
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

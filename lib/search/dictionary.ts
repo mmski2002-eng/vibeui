@@ -543,6 +543,11 @@ export const SYNONYMS: Synonym[] = [
     terms: ["bakery", "cafe", "coffee", "bread", "pastry", "croissant", "loaf", "barista", "oven", "shelf", "box", "preorder"],
   },
   {
+    say: ["опенсорс", "open source", "библиотека", "документация", "песочница", "npm", "гитхаб"],
+    categories: ["opensource"],
+    terms: ["open source", "library", "docs", "playground", "sandbox", "github", "npm", "package", "developer", "sdk", "cli"],
+  },
+  {
     say: [
       "онлайн-курс",
       "онлайн курс",

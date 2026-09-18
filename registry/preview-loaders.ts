@@ -55,6 +55,8 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/block/restaurant")).PREVIEWS
     case "block/bakery":
       return (await import("@/registry/previews/block/bakery")).PREVIEWS
+    case "block/opensource":
+      return (await import("@/registry/previews/block/opensource")).PREVIEWS
     case "block/course":
       return (await import("@/registry/previews/block/course")).PREVIEWS
     case "block/events":
@@ -67,6 +69,8 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/block/press")).PREVIEWS
     case "block/data-grid":
       return (await import("@/registry/previews/block/data-grid")).PREVIEWS
+    case "block/bento":
+      return (await import("@/registry/previews/block/bento")).PREVIEWS
     case "block/logos":
       return (await import("@/registry/previews/block/logos")).PREVIEWS
     case "block/newsletter":

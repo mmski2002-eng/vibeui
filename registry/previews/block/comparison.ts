@@ -14,4 +14,6 @@ export const PREVIEWS = {
     import("@/registry/blocks/comparison/comparison-004/comparison-004").then((module) => module.Comparison004),
   "comparison-005": () =>
     import("@/registry/blocks/comparison/comparison-005/comparison-005").then((module) => module.Comparison005),
+  "comparison-006": () =>
+    import("@/registry/blocks/comparison/comparison-006/comparison-006").then((module) => module.Comparison006),
 } satisfies PreviewLoaderMap

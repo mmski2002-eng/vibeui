@@ -26,12 +26,14 @@ import portfolioRegistry from "@/registry/blocks/portfolio/registry.json"
 import realtyRegistry from "@/registry/blocks/realty/registry.json"
 import restaurantRegistry from "@/registry/blocks/restaurant/registry.json"
 import bakeryRegistry from "@/registry/blocks/bakery/registry.json"
+import opensourceRegistry from "@/registry/blocks/opensource/registry.json"
 import courseRegistry from "@/registry/blocks/course/registry.json"
 import eventsRegistry from "@/registry/blocks/events/registry.json"
 import videoRegistry from "@/registry/blocks/video/registry.json"
 import podcastRegistry from "@/registry/blocks/podcast/registry.json"
 import pressRegistry from "@/registry/blocks/press/registry.json"
 import dataGridRegistry from "@/registry/blocks/data-grid/registry.json"
+import bentoRegistry from "@/registry/blocks/bento/registry.json"
 import logosRegistry from "@/registry/blocks/logos/registry.json"
 import newsletterRegistry from "@/registry/blocks/newsletter/registry.json"
 import statsRegistry from "@/registry/blocks/stats/registry.json"
@@ -259,6 +261,11 @@ export const SOURCES = [
     items: bakeryRegistry.items,
   },
   {
+    directory: "registry/blocks/opensource",
+    kind: "block",
+    items: opensourceRegistry.items,
+  },
+  {
     directory: "registry/blocks/course",
     kind: "block",
     items: courseRegistry.items,
@@ -287,6 +294,11 @@ export const SOURCES = [
     directory: "registry/blocks/data-grid",
     kind: "block",
     items: dataGridRegistry.items,
+  },
+  {
+    directory: "registry/blocks/bento",
+    kind: "block",
+    items: bentoRegistry.items,
   },
   {
     directory: "registry/blocks/logos",

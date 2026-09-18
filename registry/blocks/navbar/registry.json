@@ -5196,6 +5196,182 @@
           }
         }
       }
+    },
+    {
+      "name": "navbar-030",
+      "type": "registry:block",
+      "title": "Шапка open-source проекта с чипом звёзд",
+      "description": "Шапка библиотеки: имя пакета моноширинным с префиксом «~/», чип версии, разделы, чип звёзд GitHub, который считает вверх при загрузке, и кнопка «Начать». Липкая, при прокрутке — линия снизу и стекло. Острые углы, без теней.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-030/navbar-030.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-030.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "navbar",
+          "header",
+          "open source",
+          "github",
+          "stars",
+          "developer",
+          "docs",
+          "sticky"
+        ],
+        "preview": {
+          "aspect": "1280 / 60",
+          "props": {
+            "sticky": false
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Navbar030",
+          "usage": "<Navbar030\n  brand=\"tabl\"\n  version=\"v2.4.1\"\n  stars={12480}\n  links={[{ label: \"Документация\", href: \"#docs\" }, { label: \"Песочница\", href: \"#playground\" }]}\n/>",
+          "summary": "Шапка для документации библиотеки или CLI: звёзды GitHub считаются вверх, версия чипом, разделы.",
+          "preserve": [
+            "счётчик звёзд — rAF с ease-out cubic, один раз за монтирование (ref-защёлка)",
+            "линия снизу появляется после 8px прокрутки, фон — стекло на backdrop-filter",
+            "разделы и подпись звёзд появляются контейнерными запросами"
+          ],
+          "adapt": [
+            "brand, brandHref, version, links",
+            "stars, starsLabel, githubHref",
+            "actionLabel, actionHref, sticky",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Пакет",
+            "type": "text",
+            "default": "tabl",
+            "maxLength": 24
+          },
+          {
+            "prop": "stars",
+            "label": "Звёзды",
+            "type": "number",
+            "default": 12480,
+            "min": 0,
+            "max": 999999
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Open-source project header with a stars chip",
+            "description": "A library header: the package name in monospace with a “~/” prefix, a version chip, sections, a GitHub stars chip that counts up on load, and a “Get started” button. Sticky, with a hairline and glass on scroll. Sharp corners, no shadows.",
+            "ai": {
+              "summary": "A header for a library or CLI docs site: GitHub stars count up, version as a chip, sections.",
+              "preserve": [
+                "the stars counter is rAF with an ease-out cubic, once per mount (ref latch)",
+                "the bottom hairline appears after 8px of scroll, the background is backdrop-filter glass",
+                "sections and the stars caption appear via container queries"
+              ],
+              "adapt": [
+                "brand, brandHref, version, links",
+                "stars, starsLabel, githubHref",
+                "actionLabel, actionHref, sticky",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Navbar030\n  brand=\"tabl\"\n  version=\"v2.4.1\"\n  stars={12480}\n  links={[{ label: \"Docs\", href: \"#docs\" }, { label: \"Playground\", href: \"#playground\" }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Package",
+                "default": "tabl"
+              },
+              "stars": {
+                "label": "Stars"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "sticky": false,
+                "starsLabel": "stars",
+                "actionLabel": "Get started",
+                "links": [
+                  {
+                    "label": "Docs",
+                    "href": "#docs"
+                  },
+                  {
+                    "label": "Playground",
+                    "href": "#playground"
+                  },
+                  {
+                    "label": "Compare",
+                    "href": "#compare"
+                  },
+                  {
+                    "label": "Changelog",
+                    "href": "#changelog"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
