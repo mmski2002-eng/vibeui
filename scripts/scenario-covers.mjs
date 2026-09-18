@@ -3,6 +3,10 @@
 // поднимает только по наведению — девять полных страниц в iframes весили
 // 14 МБ и грузились минутами.
 //
+// Интро-заставки (конверт, билет, свеча у свадеб) на постере не нужны:
+// человек должен видеть сам сайт. Заставка раскрывается кликом по её
+// кнопке, постер снимается уже с первого экрана.
+//
 // Запуск: node scripts/scenario-covers.mjs [https://vibeui.ru] [slug ...]
 // Playwright в проекте не стоит: путь к пакету — через PLAYWRIGHT_MODULE,
 // иначе берётся глобальный `playwright`.
@@ -28,6 +32,10 @@ const modulePath = process.env.PLAYWRIGHT_MODULE
   : createRequire(import.meta.url).resolve("playwright")
 const { chromium } = await import(modulePath)
 
+// Кнопки заставок: печать конверта (hero-025), корешок билета (hero-026),
+// фитиль свечи (hero-027).
+const GATE_BUTTONS = '[data-part="seal"], [data-part="tear"], [data-part="candle"]'
+
 const browser = await chromium.launch({
   executablePath: process.env.PLAYWRIGHT_CHROMIUM,
 })
@@ -41,6 +49,14 @@ for (const slug of slugs) {
   // Анимации появления первого экрана должны отыграть, иначе на постере
   // пустые места вместо блоков.
   await page.waitForTimeout(5000)
+  const gate = page.locator(GATE_BUTTONS).first()
+  if (await gate.count()) {
+    // Кнопка заставки всё время покачивается — стабильности Playwright не дождётся.
+    await gate.click({ force: true })
+    // Заставка уходит с задержкой до ~5 с, потом первый экран отыгрывает
+    // своё появление.
+    await page.waitForTimeout(8000)
+  }
   const png = await page.screenshot({ type: "png" })
   const webp = await sharp(png).resize({ width: 960 }).webp({ quality: 80 }).toBuffer()
   const file = path.join(outputDirectory, `${slug}.webp`)
