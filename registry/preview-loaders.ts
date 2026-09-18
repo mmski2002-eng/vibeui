@@ -53,6 +53,8 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/block/realty")).PREVIEWS
     case "block/restaurant":
       return (await import("@/registry/previews/block/restaurant")).PREVIEWS
+    case "block/bakery":
+      return (await import("@/registry/previews/block/bakery")).PREVIEWS
     case "block/course":
       return (await import("@/registry/previews/block/course")).PREVIEWS
     case "block/events":

@@ -1181,6 +1181,39 @@ export const SCENARIOS: Scenario[] = [
       },
     ],
   },
+  {
+    slug: "bakery",
+    label: "Кофейня-пекарня",
+    en: "Café-bakery",
+    summary:
+      "Сайт кофейни-пекарни, который живёт по часам печи: шапка с живым «открыто / откроемся через», первый экран с таймером печи и лентой партий, полка с перетаскиванием и остатками, шкала крепости кофе с наполняющимся стаканом, конструктор коробки к утру, scroll-история «36 часов до буханки» с ночью и утром, люди с записками, перфокарта со штампами, bento-галерея, отзывы на чеках, карта с очередью по часам, хлебный будильник и подвал с полосой дня. Светлая тема: молоко, корка и мак, Unbounded и Caveat.",
+    summaryEn:
+      "A café-bakery site that lives by the oven clock: a header with a live “open / opens in”, a hero with an oven timer and a batch ribbon, a draggable shelf with stock, a coffee strength slider with a filling cup, a morning box builder, a “36 hours to a loaf” scroll story from night to morning, people with notes, a punch card with stamps, a bento gallery, receipt reviews, a map with an hourly queue, a bread alarm and a footer with a day bar. Light theme: milk, crust and poppy, Unbounded and Caveat.",
+    demo: "/scenarios/bakery/demo",
+    source: "app/scenarios/bakery/demo/page.tsx",
+    images: "docs/scenarios/bakery/IMAGES.md",
+    theme: {
+      tone: "light",
+      accent: "#e4572e",
+      ink: "#1f1a17",
+      font: "Unbounded, Golos Text, Caveat",
+    },
+    sections: [
+      { item: "navbar-028", anchor: "", role: "Шапка", roleEn: "Header", note: "Словомарка, разделы, живой чип «открыто · до 21:00» по часам посетителя, стекло при прокрутке.", noteEn: "Wordmark, sections, a live “open · until 21:00” chip on the visitor's clock, glass on scroll." },
+      { item: "hero-028", anchor: "top", role: "Первый экран", roleEn: "First screen", note: "Фото витрины, заголовок поднимается как тесто, таймер печи и лента партий дня.", noteEn: "A shop photo, a headline rising like dough, an oven timer and the day's batch ribbon." },
+      { item: "bakery-001", anchor: "shelf", role: "Витрина", roleEn: "Shelf", note: "Полка с перетаскиванием, «испечено в», остаток, кнопка «в коробку».", noteEn: "A draggable shelf, “baked at”, stock, an “add to box” button." },
+      { item: "bakery-002", anchor: "coffee", role: "Кофе", roleEn: "Coffee", note: "Ползунок крепости, стакан наполняется слоями, зерно недели.", noteEn: "A strength slider, the cup fills with layers, the bean of the week." },
+      { item: "bakery-003", anchor: "box", role: "Коробка к утру", roleEn: "Morning box", note: "Четыре ячейки, крышка со штампом, форма заказа к выбранному времени.", noteEn: "Four cells, a stamped lid, an order form for the chosen time." },
+      { item: "bakery-004", anchor: "story", role: "36 часов до буханки", roleEn: "36 hours to a loaf", note: "Sticky-история по прокрутке: кадры, табло часов, ночь и утро.", noteEn: "A sticky scroll story: frames, a clock board, night and morning." },
+      { item: "people-012", anchor: "people", role: "Люди", roleEn: "People", note: "Плитки пекаря и бариста, записка «что в 5 утра» по наведению.", noteEn: "Baker and barista tiles, a “what's at 5 a.m.” note on hover." },
+      { item: "bakery-005", anchor: "loyalty", role: "Постоянным", roleEn: "Regulars", note: "Перфокарта со штампами и подписка на хлеб по субботам.", noteEn: "A punch card with stamps and a Saturday bread subscription." },
+      { item: "portfolio-011", anchor: "gallery", role: "Галерея", roleEn: "Gallery", note: "Bento из десяти кадров одного утра с подписями по наведению.", noteEn: "A bento of ten shots from one morning with hover captions." },
+      { item: "testimonials-023", anchor: "reviews", role: "Отзывы", roleEn: "Reviews", note: "Чеки, которые допечатываются построчно при появлении.", noteEn: "Receipts that print line by line as they appear." },
+      { item: "map-010", anchor: "where", role: "Где мы", roleEn: "Find us", note: "Карта, часы и очередь по часам с подсветкой «сейчас».", noteEn: "A map, hours and an hourly queue with a “now” highlight." },
+      { item: "subscribe-007", anchor: "newsletter", role: "Хлебный будильник", roleEn: "Bread alarm", note: "Выбор выпечки и напоминание за пять минут до выхода, на крафт-пакете.", noteEn: "Pick a pastry and get a reminder five minutes before it's out, on a kraft bag." },
+      { item: "footer-027", anchor: "footer", role: "Подвал", roleEn: "Footer", note: "Колонки ссылок и полоса рабочего дня, залитая до текущего часа.", noteEn: "Link columns and a working-day bar filled to the current hour." },
+    ],
+  },
 ]
 
 // Опечатка в имени item'а здесь означала бы пустую карточку в рецепте,

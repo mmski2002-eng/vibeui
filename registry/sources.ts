@@ -25,6 +25,7 @@ import downloadsRegistry from "@/registry/blocks/downloads/registry.json"
 import portfolioRegistry from "@/registry/blocks/portfolio/registry.json"
 import realtyRegistry from "@/registry/blocks/realty/registry.json"
 import restaurantRegistry from "@/registry/blocks/restaurant/registry.json"
+import bakeryRegistry from "@/registry/blocks/bakery/registry.json"
 import courseRegistry from "@/registry/blocks/course/registry.json"
 import eventsRegistry from "@/registry/blocks/events/registry.json"
 import videoRegistry from "@/registry/blocks/video/registry.json"
@@ -251,6 +252,11 @@ export const SOURCES = [
     directory: "registry/blocks/restaurant",
     kind: "block",
     items: restaurantRegistry.items,
+  },
+  {
+    directory: "registry/blocks/bakery",
+    kind: "block",
+    items: bakeryRegistry.items,
   },
   {
     directory: "registry/blocks/course",

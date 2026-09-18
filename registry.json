@@ -25,6 +25,7 @@
     "registry/blocks/portfolio/registry.json",
     "registry/blocks/realty/registry.json",
     "registry/blocks/restaurant/registry.json",
+    "registry/blocks/bakery/registry.json",
     "registry/blocks/course/registry.json",
     "registry/blocks/events/registry.json",
     "registry/blocks/video/registry.json",

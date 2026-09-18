@@ -2639,6 +2639,172 @@
           }
         }
       }
+    },
+    {
+      "name": "people-012",
+      "type": "registry:block",
+      "title": "Команда bento-плитками с запиской на обороте",
+      "description": "Люди как активные плитки: крупное фото, имя, роль и цитата рукописным шрифтом. По наведению или фокусу фото сдвигается, а справа выезжает «записка» на пергаменте со скотчем — короткая история про пять утра. На устройствах без hover записка раскрыта под фото.",
+      "categories": [
+        "team"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "people-012/people-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/people-012.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "team",
+          "people",
+          "about",
+          "bento",
+          "hover",
+          "cards",
+          "cafe",
+          "staff",
+          "portrait"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "People012",
+          "usage": "<People012\n  title=\"Нас двое, и мы не спим\"\n  people={[\n    { name: \"Ольга\", role: \"Пекарь\", quote: \"Хлеб не терпит спешки.\", note: \"В 5 утра я одна в пекарне.\", image: \"/photos/olga.webp\" },\n    { name: \"Тимур\", role: \"Бариста\", quote: \"Эспрессо — это 25 секунд.\", note: \"Мой стандарт: 18 грамм в 36.\", image: \"/photos/timur.webp\" },\n  ]}\n/>",
+          "summary": "Команда из двух–четырёх человек с характером: не сетка аватаров, а плитки с цитатой и запиской по наведению. Для кафе, студии, мастерской.",
+          "preserve": [
+            "записка выезжает transform: translateX(100%) → 0 по :hover и :focus-within; плитка фокусируемая (tabIndex)",
+            "фото сдвигается на -18% и увеличивается, чтобы уступить место записке",
+            "@media (hover:none) переводит плитку в две строки: фото сверху, записка снизу"
+          ],
+          "adapt": [
+            "people: name, role, quote, note, image, imageAlt",
+            "eyebrow, title, lede",
+            "peekLabel, noteLabel",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Нас двое, и мы не спим",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Team as bento tiles with a note on the back",
+            "description": "People as active tiles: a big photo, name, role and a handwritten quote. On hover or focus the photo slides and a taped “note” on parchment slides in from the right — a short story about five in the morning. On devices without hover the note is shown under the photo.",
+            "ai": {
+              "summary": "A team of two to four with character: not an avatar grid but tiles with a quote and a hover note. For a café, a studio, a workshop.",
+              "preserve": [
+                "the note slides transform: translateX(100%) → 0 on :hover and :focus-within; the tile is focusable (tabIndex)",
+                "the photo shifts by -18% and scales to make room for the note",
+                "@media (hover:none) turns the tile into two rows: photo on top, note below"
+              ],
+              "adapt": [
+                "people: name, role, quote, note, image, imageAlt",
+                "eyebrow, title, lede",
+                "peekLabel, noteLabel",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<People012\n  title=\"Two of us, and we don't sleep\"\n  people={[\n    { name: \"Olga\", role: \"Baker\", quote: \"Bread hates hurry.\", note: \"At 5 a.m. I'm alone in the bakery.\", image: \"/photos/olga.webp\" },\n    { name: \"Timur\", role: \"Barista\", quote: \"Espresso is 25 seconds.\", note: \"My standard: 18 grams in 36.\", image: \"/photos/timur.webp\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Two of us, and we don't sleep"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "People",
+                "title": "Two of us, and we don't sleep",
+                "lede": "Hover a card — we'll tell you what happens at five in the morning.",
+                "peekLabel": "what's at 5 a.m.?",
+                "noteLabel": "Note",
+                "people": [
+                  {
+                    "name": "Olga",
+                    "role": "Baker, six-year-old starter",
+                    "quote": "Bread hates hurry. All I do is stay out of its way.",
+                    "note": "At 5 a.m. I'm alone in the bakery. I turn on the oven, put the kettle on and listen to the first batch crackle.",
+                    "image": "/demo/bakery/olga.webp"
+                  },
+                  {
+                    "name": "Timur",
+                    "role": "Barista, roasting on Thursdays",
+                    "quote": "Espresso is 25 seconds. Everything else is milk and mood.",
+                    "note": "My standard: 18 grams in 36, 93 degrees, and if the guest smiles before the first sip — the shift went well.",
+                    "image": "/demo/bakery/timur.webp"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

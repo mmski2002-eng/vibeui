@@ -1,0 +1,911 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "bakery-001",
+      "type": "registry:block",
+      "title": "Полка выпечки с перетаскиванием и остатками",
+      "description": "Витрина-полка пекарни: горизонтальная лента карточек, которую тянут мышью или пальцем, карточки стоят на деревянной полке, на каждой — «испечено в 08:30» и «осталось 6» (рукописное «последние 4»). Кнопка «в коробку» шлёт событие блоку коробки и показывает «в коробке · 2 шт».",
+      "categories": [
+        "bakery"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "bakery-001/bakery-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/bakery-001.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "bakery",
+          "shop",
+          "products",
+          "carousel",
+          "drag",
+          "shelf",
+          "menu",
+          "cafe",
+          "food",
+          "cards"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Bakery001",
+          "usage": "<Bakery001\n  title=\"Что на полке сейчас\"\n  products={[\n    { id: \"tartine\", name: \"Тартин\", price: \"420 ₽\", image: \"/photos/item-01.webp\", bakedAt: \"08:30\", left: 6 },\n    { id: \"croissant\", name: \"Круассан\", price: \"190 ₽\", image: \"/photos/item-02.webp\", bakedAt: \"07:00\", left: 11 },\n  ]}\n/>",
+          "summary": "Товарная полка для пекарни, кофейни или лавки: лента карточек с перетаскиванием, временем выпечки и остатком; кнопка кладёт позицию в коробку через событие window.",
+          "preserve": [
+            "drag-to-scroll без setPointerCapture — иначе клик уходил бы в ленту, а не в кнопку; scroll-padding совпадает с отступом ленты",
+            "«испечено в / будет в» и «последние N» считаются от часов посетителя через useSyncExternalStore",
+            "события vibeui-box:add и vibeui-box:state связывают полку с блоком коробки без общего состояния"
+          ],
+          "adapt": [
+            "products: id, name, text, price, image, bakedAt, left",
+            "eyebrow, title, lede, hint, addLabel, inBoxLabel, fullLabel",
+            "boxSize — сколько влезает в коробку",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что на полке сейчас",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Pastry shelf with drag-to-scroll and stock counts",
+            "description": "A bakery shelf showcase: a horizontal strip of cards you drag with a mouse or finger, cards standing on a wooden shelf, each with “baked at 08:30” and “6 left” (a handwritten “last 4”). The “add to box” button emits an event for the box block and shows “in the box · 2”.",
+            "ai": {
+              "summary": "A product shelf for a bakery, café or deli: a draggable card strip with baking time and stock; the button drops an item into the box via a window event.",
+              "preserve": [
+                "drag-to-scroll without setPointerCapture — otherwise the click would land on the strip, not the button; scroll-padding matches the strip padding",
+                "“baked at / coming at” and “last N” run on the visitor's clock via useSyncExternalStore",
+                "the vibeui-box:add and vibeui-box:state events link the shelf to the box block without shared state"
+              ],
+              "adapt": [
+                "products: id, name, text, price, image, bakedAt, left",
+                "eyebrow, title, lede, hint, addLabel, inBoxLabel, fullLabel",
+                "boxSize — how many fit in the box",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Bakery001\n  title=\"On the shelf right now\"\n  products={[\n    { id: \"tartine\", name: \"Tartine\", price: \"$6\", image: \"/photos/item-01.webp\", bakedAt: \"08:30\", left: 6 },\n    { id: \"croissant\", name: \"Croissant\", price: \"$3\", image: \"/photos/item-02.webp\", bakedAt: \"07:00\", left: 11 },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "On the shelf right now"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Shelf",
+                "title": "On the shelf right now",
+                "lede": "Every card knows when it was baked and how many are left. Put it in the box — we'll have it ready by morning.",
+                "hint": "drag the shelf",
+                "addLabel": "add to box",
+                "inBoxLabel": "in the box",
+                "fullLabel": "box is full"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bakery-002",
+      "type": "registry:block",
+      "title": "Шкала крепости кофе с наполняющимся стаканом",
+      "description": "Ползунок «мягче — крепче» переключает напитки от латте до эспрессо, а нарисованный стакан наполняется слоями — кофе, молоко, пена — с плавным переходом высот; у эспрессо стакан ниже. Пар над чашкой на CSS. Справа карточка: название, состав в процентах, объём, цена и зерно недели.",
+      "categories": [
+        "bakery"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "bakery-002/bakery-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/bakery-002.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "coffee",
+          "cafe",
+          "bakery",
+          "slider",
+          "menu",
+          "interactive",
+          "drink",
+          "range",
+          "illustration"
+        ],
+        "preview": {
+          "props": {
+            "beanImage": "/demo/bakery/beans.webp"
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Bakery002",
+          "usage": "<Bakery002\n  title=\"Насколько крепко?\"\n  drinks={[\n    { name: \"Латте\", price: \"290 ₽\", coffee: 20, milk: 62, foam: 10, volume: \"350 мл\" },\n    { name: \"Эспрессо\", price: \"160 ₽\", coffee: 30, milk: 0, foam: 0, volume: \"60 мл\" },\n  ]}\n  beanImage=\"/photos/beans.webp\"\n/>",
+          "summary": "Интерактивное кофейное меню: один ползунок вместо списка, стакан показывает состав напитка. Подходит кофейне, обжарщику, бару.",
+          "preserve": [
+            "слои стакана — абсолютные блоки с высотой в процентах и transition по height и bottom",
+            "высота стакана уменьшается к крепким напиткам: 10rem + шаг 1.75rem на позицию",
+            "пар — три размытых пятна на keyframes, выключается prefers-reduced-motion"
+          ],
+          "adapt": [
+            "drinks: name, text, price, coffee, milk, foam, volume, water",
+            "eyebrow, title, lede, softLabel, strongLabel, initial",
+            "beanImage, beanTitle, beanText",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Насколько крепко?",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Coffee strength slider with a filling cup",
+            "description": "A “softer — stronger” slider switches drinks from latte to espresso while a drawn cup fills with layers — coffee, milk, foam — with smooth height transitions; the espresso cup is shorter. CSS steam above the cup. On the right: name, composition in percent, volume, price and the bean of the week.",
+            "ai": {
+              "summary": "An interactive coffee menu: one slider instead of a list, the cup shows what is inside. Fits a café, a roaster, a bar.",
+              "preserve": [
+                "cup layers are absolute blocks with percentage heights and transitions on height and bottom",
+                "the cup gets shorter towards strong drinks: 10rem + a 1.75rem step per position",
+                "steam is three blurred blobs on keyframes, disabled by prefers-reduced-motion"
+              ],
+              "adapt": [
+                "drinks: name, text, price, coffee, milk, foam, volume, water",
+                "eyebrow, title, lede, softLabel, strongLabel, initial",
+                "beanImage, beanTitle, beanText",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Bakery002\n  title=\"How strong?\"\n  drinks={[\n    { name: \"Latte\", price: \"$4.5\", coffee: 20, milk: 62, foam: 10, volume: \"12 oz\" },\n    { name: \"Espresso\", price: \"$3\", coffee: 30, milk: 0, foam: 0, volume: \"2 oz\" },\n  ]}\n  beanImage=\"/photos/beans.webp\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "How strong?"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "beanImage": "/demo/bakery/beans.webp",
+                "eyebrow": "Coffee",
+                "title": "How strong?",
+                "lede": "Move the slider — the cup shows what is inside. Farm milk, beans roasted in-house once a week.",
+                "softLabel": "softer",
+                "strongLabel": "stronger",
+                "beanTitle": "Bean of the week: Ethiopia, Guji",
+                "beanText": "Washed, light roast. Blackcurrant, jasmine, a long sweet finish.",
+                "drinks": [
+                  {
+                    "name": "Latte",
+                    "text": "lots of milk, coffee as a hint",
+                    "price": "$4.5",
+                    "milk": 62,
+                    "foam": 10,
+                    "coffee": 20,
+                    "volume": "12 oz"
+                  },
+                  {
+                    "name": "Flat white",
+                    "text": "double shot, silky milk",
+                    "price": "$4.2",
+                    "milk": 48,
+                    "foam": 6,
+                    "coffee": 36,
+                    "volume": "7 oz"
+                  },
+                  {
+                    "name": "Cappuccino",
+                    "text": "a third of foam, the classic",
+                    "price": "$4",
+                    "milk": 34,
+                    "foam": 28,
+                    "coffee": 30,
+                    "volume": "7 oz"
+                  },
+                  {
+                    "name": "Americano",
+                    "text": "espresso and hot water",
+                    "price": "$3.2",
+                    "milk": 0,
+                    "foam": 0,
+                    "coffee": 70,
+                    "volume": "8 oz",
+                    "water": true
+                  },
+                  {
+                    "name": "Espresso",
+                    "text": "double, 18 g in 36 g",
+                    "price": "$2.8",
+                    "milk": 0,
+                    "foam": 0,
+                    "coffee": 30,
+                    "volume": "2 oz"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bakery-003",
+      "type": "registry:block",
+      "title": "Конструктор коробки к завтраку",
+      "description": "Конструктор коробки: четыре ячейки заполняются фото выпечки чипами или событием от полки, сумма считается, крышка закрывается 3D-поворотом со штампом «собрано» — и только тогда оживает кнопка заказа. Форма: имя, телефон, время выдачи; после отправки — «спасибо, что рано встали».",
+      "categories": [
+        "bakery"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "bakery-003/bakery-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/bakery-003.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "bakery",
+          "order",
+          "cart",
+          "builder",
+          "box",
+          "form",
+          "checkout",
+          "cafe",
+          "preorder",
+          "interactive"
+        ],
+        "preview": {
+          "props": {
+            "howImage": "/demo/bakery/box.webp"
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Bakery003",
+          "usage": "<Bakery003\n  title=\"Соберите коробку к утру\"\n  products={[\n    { id: \"tartine\", name: \"Тартин\", price: 420, image: \"/photos/item-01.webp\" },\n    { id: \"croissant\", name: \"Круассан\", price: 190, image: \"/photos/item-02.webp\" },\n  ]}\n  howImage=\"/photos/box.webp\"\n/>",
+          "summary": "Предзаказ набора без корзины: человек собирает коробку глазами, видит сумму и заказывает к утру. Для пекарни, цветочной, сырной лавки.",
+          "preserve": [
+            "крышка — rotateX от -100deg к 0 с perspective на сцене, штамп вылетает с перелётом после закрытия",
+            "события vibeui-box:add (вход) и vibeui-box:state (выход) — связь с полкой без общего состояния",
+            "кнопка заказа заблокирована, пока коробка не полна; карточка тянется на высоту колонки, подсказка прижата к низу"
+          ],
+          "adapt": [
+            "products: id, name, price, image; size",
+            "eyebrow, title, lede, pickLabel, emptyHints, emptyLine, stampTitle, stampNote, resetLabel",
+            "nameLabel, phoneLabel, slotLabel, slots, submitLabel, moreLabel, howTitle, howText, howImage, doneTitle, doneText, currency",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Соберите коробку к утру",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Breakfast box builder",
+            "description": "A box builder: four cells fill with pastry photos via chips or an event from the shelf, the total adds up, the lid closes with a 3D flip and a “packed” stamp — only then the order button wakes up. A form: name, phone, pickup time; after submit — a thank-you card.",
+            "ai": {
+              "summary": "A set preorder without a cart: the person fills a box visually, sees the total and orders for the morning. For a bakery, a flower shop, a cheese deli.",
+              "preserve": [
+                "the lid is rotateX from -100deg to 0 with perspective on the scene, the stamp pops in with overshoot after closing",
+                "the vibeui-box:add (in) and vibeui-box:state (out) events link it to the shelf without shared state",
+                "the order button stays disabled until the box is full; the card stretches to the column height with the note pinned to the bottom"
+              ],
+              "adapt": [
+                "products: id, name, price, image; size",
+                "eyebrow, title, lede, pickLabel, emptyHints, emptyLine, stampTitle, stampNote, resetLabel",
+                "nameLabel, phoneLabel, slotLabel, slots, submitLabel, moreLabel, howTitle, howText, howImage, doneTitle, doneText, currency",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Bakery003\n  title=\"Build a morning box\"\n  products={[\n    { id: \"tartine\", name: \"Tartine\", price: 6, image: \"/photos/item-01.webp\" },\n    { id: \"croissant\", name: \"Croissant\", price: 3, image: \"/photos/item-02.webp\" },\n  ]}\n  howImage=\"/photos/box.webp\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Build a morning box"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "howImage": "/demo/bakery/box.webp",
+                "eyebrow": "Breakfast box",
+                "title": "Build a morning box",
+                "lede": "Pastry goes into the box warm, right before pickup. Order by 22:00 — the box waits for you at the counter in the morning.",
+                "pickLabel": "Put in the box",
+                "emptyHints": [
+                  "something here",
+                  "…",
+                  "…",
+                  "and more"
+                ],
+                "emptyLine": "the box is still empty",
+                "stampTitle": "Crust",
+                "stampNote": "by 8:00 · packed",
+                "resetLabel": "Start over",
+                "nameLabel": "Name",
+                "phoneLabel": "Phone",
+                "slotLabel": "Pick up at",
+                "submitLabel": "Order for morning",
+                "moreLabel": "{n} more to go",
+                "howTitle": "Packing from 7:30",
+                "howText": "Pastry goes in warm, we close the lid right before pickup. Pay at the counter or via the link in the message.",
+                "doneTitle": "thanks for waking up early",
+                "doneText": "The box will be at the counter by the chosen time. We'll remind you half an hour before.",
+                "currency": "$",
+                "products": [
+                  {
+                    "id": "tartine",
+                    "name": "Tartine",
+                    "price": 6,
+                    "image": "/demo/bakery/item-01.webp"
+                  },
+                  {
+                    "id": "croissant",
+                    "name": "Croissant",
+                    "price": 3,
+                    "image": "/demo/bakery/item-02.webp"
+                  },
+                  {
+                    "id": "cinnamon",
+                    "name": "Cinnamon bun",
+                    "price": 4,
+                    "image": "/demo/bakery/item-03.webp"
+                  },
+                  {
+                    "id": "focaccia",
+                    "name": "Focaccia",
+                    "price": 3.5,
+                    "image": "/demo/bakery/item-04.webp"
+                  },
+                  {
+                    "id": "rye",
+                    "name": "Rye",
+                    "price": 5.5,
+                    "image": "/demo/bakery/item-05.webp"
+                  },
+                  {
+                    "id": "cardamom",
+                    "name": "Cardamom knot",
+                    "price": 4,
+                    "image": "/demo/bakery/item-06.webp"
+                  },
+                  {
+                    "id": "baguette",
+                    "name": "Baguette",
+                    "price": 2.5,
+                    "image": "/demo/bakery/item-07.webp"
+                  },
+                  {
+                    "id": "chocolat",
+                    "name": "Pain au chocolat",
+                    "price": 3.5,
+                    "image": "/demo/bakery/item-08.webp"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bakery-004",
+      "type": "registry:block",
+      "title": "Scroll-история «36 часов до буханки»",
+      "description": "Scroll-driven история: секция высотой в шесть экранов с липкой сценой. По прокрутке меняется кадр, часы листаются как табло — каждая цифра едет в своей колонке, — а фон и текст плавно уходят в ночь и возвращаются к утру. Прогресс пишется в CSS-переменную без ререндера.",
+      "categories": [
+        "bakery"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "bakery-004/bakery-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/bakery-004.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "story",
+          "scroll",
+          "sticky",
+          "timeline",
+          "bakery",
+          "process",
+          "clock",
+          "day night",
+          "narrative"
+        ],
+        "preview": {
+          "props": {
+            "frames": [
+              {
+                "time": "05:00",
+                "title": "Печь",
+                "text": "Первый человек в пекарне включает подовую печь. 250 градусов, пар, надрез лезвием.",
+                "image": "/demo/bakery/story-03.webp",
+                "night": 0.85
+              }
+            ]
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Bakery004",
+          "usage": "<Bakery004\n  eyebrow=\"36 часов до буханки\"\n  frames={[\n    { time: \"18:00\", title: \"Замес\", text: \"Мука, вода, соль и закваска.\", image: \"/photos/story-01.webp\", night: 0.15 },\n    { time: \"01:30\", title: \"Холод\", text: \"Ночь в холодильнике.\", image: \"/photos/story-02.webp\", night: 1 },\n    { time: \"07:40\", title: \"На полке\", text: \"Хлеб дошёл до вас.\", image: \"/photos/story-05.webp\", night: 0 },\n  ]}\n/>",
+          "summary": "Рассказ о процессе по прокрутке — для пекарни, обжарщика, винодела, любого «сделано за N часов»: кадры, табло времени и смена дня и ночи.",
+          "preserve": [
+            "высота секции = число кадров × 100svh, сцена sticky с min/max-height 100svh",
+            "ночь интерполируется между соседними кадрами и пишется в --vibeui-bakery-004-n; фон и цвет текста — color-mix от неё",
+            "цифры табло — колонка 0–9 с translateY на -N em и transition; двоеточие мигает"
+          ],
+          "adapt": [
+            "frames: time, title, text, image, night",
+            "eyebrow",
+            "night — цвет ночи",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Scroll story “36 hours to a loaf”",
+            "description": "A scroll-driven story: a six-screen-tall section with a sticky stage. Scrolling switches the frame, the clock flips like a split-flap board — each digit slides in its own column — and the background and text fade into night and back to morning. Progress is written to a CSS variable without re-rendering.",
+            "ai": {
+              "summary": "A scroll-driven process story — for a bakery, a roaster, a winery, any “made in N hours”: frames, a time board and a day-to-night shift.",
+              "preserve": [
+                "section height = frames × 100svh, the stage is sticky with min/max-height 100svh",
+                "night is interpolated between neighbouring frames and written to --vibeui-bakery-004-n; background and text colour are color-mix from it",
+                "board digits are a 0–9 column with translateY to -N em and a transition; the colon blinks"
+              ],
+              "adapt": [
+                "frames: time, title, text, image, night",
+                "eyebrow",
+                "night — the night colour",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Bakery004\n  eyebrow=\"36 hours to a loaf\"\n  frames={[\n    { time: \"18:00\", title: \"Mixing\", text: \"Flour, water, salt and starter.\", image: \"/photos/story-01.webp\", night: 0.15 },\n    { time: \"01:30\", title: \"Cold\", text: \"A night in the fridge.\", image: \"/photos/story-02.webp\", night: 1 },\n    { time: \"07:40\", title: \"On the shelf\", text: \"The bread reached you.\", image: \"/photos/story-05.webp\", night: 0 },\n  ]}\n/>"
+            },
+            "controls": {
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "36 hours to a loaf",
+                "frames": [
+                  {
+                    "time": "05:00",
+                    "title": "Oven",
+                    "text": "The first person in the bakery turns on the deck oven. 250 degrees, steam, a razor score.",
+                    "image": "/demo/bakery/story-03.webp",
+                    "night": 0.85
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bakery-005",
+      "type": "registry:block",
+      "title": "Перфокарта со штампами и подписка на хлеб",
+      "description": "Программа лояльности: перфокарта «шестой кофе — наш», на которой при появлении в кадре штампы шлёпаются один за другим с перелётом и поворотом, последняя ячейка — рукописное «даром». Рядом карточка подписки на хлеб: условия строками, цена, кнопка.",
+      "categories": [
+        "bakery"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "bakery-005/bakery-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/bakery-005.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "loyalty",
+          "pricing",
+          "subscription",
+          "stamps",
+          "punch card",
+          "cafe",
+          "bakery",
+          "membership",
+          "offer"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Bakery005",
+          "usage": "<Bakery005\n  title=\"Шестой кофе — наш\"\n  stamps={5}\n  subPrice=\"1 390 ₽\"\n  subLines={[{ label: \"Тартин или ржаной\", value: \"4 буханки\" }]}\n/>",
+          "summary": "Лояльность и подписка в двух карточках для кафе или лавки: анимированная перфокарта и абонемент с ценой.",
+          "preserve": [
+            "штампы стартуют по IntersectionObserver с rootMargin -20% и идут с шагом .25s через переменную индекса",
+            "штамп — неровный круг (border-radius по четырём осям) с keyframes перелёта scale 1.6 → 1",
+            "обе карточки — flex-колонки, кнопки прижаты к низу margin-top:auto"
+          ],
+          "adapt": [
+            "cardTitle, cardText, stamps, freeLabel, fine, cardAction, cardHref",
+            "subTitle, subText, subLines, subPrice, subNote, subAction, subHref",
+            "eyebrow, title, lede",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Шестой кофе — наш",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Punch card with stamps and a bread subscription",
+            "description": "A loyalty section: a “sixth coffee is on us” punch card where stamps slam down one by one with overshoot and a tilt as it enters the viewport, the last cell reads a handwritten “free”. Next to it a bread subscription card: terms as lines, a price, a button.",
+            "ai": {
+              "summary": "Loyalty and subscription in two cards for a café or deli: an animated punch card and a priced plan.",
+              "preserve": [
+                "stamps start via IntersectionObserver with rootMargin -20% and stagger by .25s through an index variable",
+                "a stamp is an uneven circle (four-axis border-radius) with overshoot keyframes scale 1.6 → 1",
+                "both cards are flex columns with buttons pinned to the bottom via margin-top:auto"
+              ],
+              "adapt": [
+                "cardTitle, cardText, stamps, freeLabel, fine, cardAction, cardHref",
+                "subTitle, subText, subLines, subPrice, subNote, subAction, subHref",
+                "eyebrow, title, lede",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Bakery005\n  title=\"The sixth coffee is on us\"\n  stamps={5}\n  subPrice=\"$19\"\n  subLines={[{ label: \"Tartine or rye\", value: \"4 loaves\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "The sixth coffee is on us"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Regulars",
+                "title": "The sixth coffee is on us",
+                "lede": "No app: a card in your wallet, a stamp at the till. Bread by subscription so Saturdays take no thought.",
+                "cardTitle": "Punch card",
+                "cardText": "Five stamps — the sixth drink is free. Any, even a large latte.",
+                "freeLabel": "free",
+                "fine": [
+                  "stamps never expire — even a year later",
+                  "hand the card to a friend along with the coffee",
+                  "takeaway coffee gets a stamp too"
+                ],
+                "cardAction": "Get a card at the till",
+                "subTitle": "Bread on Saturdays",
+                "subText": "A monthly plan: a loaf of your choice waits for you every Saturday from 8:00 until closing.",
+                "subLines": [
+                  {
+                    "label": "Tartine or rye",
+                    "value": "4 loaves"
+                  },
+                  {
+                    "label": "A croissant gift on the first Saturday",
+                    "value": "+1"
+                  },
+                  {
+                    "label": "Skip a week — with one message",
+                    "value": "yes"
+                  }
+                ],
+                "subPrice": "$19",
+                "subNote": "per month · save $3",
+                "subAction": "Subscribe"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

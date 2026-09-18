@@ -538,6 +538,11 @@ export const SYNONYMS: Synonym[] = [
     terms: ["restaurant", "cafe", "bar", "bistro", "menu", "dish", "chef", "reservation", "booking", "table", "wine", "food"],
   },
   {
+    say: ["пекарня", "кофейня", "хлеб", "выпечка", "булочная", "кофе", "круассан"],
+    categories: ["bakery"],
+    terms: ["bakery", "cafe", "coffee", "bread", "pastry", "croissant", "loaf", "barista", "oven", "shelf", "box", "preorder"],
+  },
+  {
     say: [
       "онлайн-курс",
       "онлайн курс",

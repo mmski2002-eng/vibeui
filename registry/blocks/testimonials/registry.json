@@ -5226,6 +5226,240 @@
           ]
         }
       }
+    },
+    {
+      "name": "testimonials-023",
+      "type": "registry:block",
+      "title": "Отзывы на термочеках с построчной печатью",
+      "description": "Отзывы на кассовых чеках: узкие карточки с зубчатым низом, моноширинный текст, номер и время, «ИТОГО» и рукописное «спасибо». При появлении в кадре строки допечатываются сверху вниз, как из принтера; чеки чуть повёрнуты вразнобой.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-023/testimonials-023.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-023.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "testimonials",
+          "reviews",
+          "receipt",
+          "cafe",
+          "bakery",
+          "restaurant",
+          "print",
+          "monospace",
+          "quotes"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Testimonials023",
+          "usage": "<Testimonials023\n  brand=\"Корка\"\n  place=\"Хамовники\"\n  reviews={[\n    { no: \"0412\", time: \"08:14\", name: \"Марина\", lines: [\"Тартин ещё тёплый,\", \"корка хрустит на весь\", \"трамвай.\"], sum: \"420 ₽\" },\n  ]}\n/>",
+          "summary": "Отзывы гостей в форме чеков — короткие, честные, с суммой заказа. Для кафе, пекарни, бара, лавки.",
+          "preserve": [
+            "печать — animation steps(3) на каждом ребёнке с задержкой от индекса строки и индекса чека",
+            "зубчатый низ — clip-path polygon из 40 точек, сгенерированных при загрузке модуля",
+            "поворот каждого чека — из массива углов по индексу, переменной --vibeui-testimonials-023-r"
+          ],
+          "adapt": [
+            "reviews: no, time, name, lines, sum",
+            "brand, place, totalLabel, guestLabel, thanks",
+            "eyebrow, title, lede",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что печатает касса",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Reviews on thermal receipts printed line by line",
+            "description": "Reviews on till receipts: narrow cards with a serrated bottom, monospace text, a number and time, “TOTAL” and a handwritten “thank you”. As they enter the viewport the lines print top to bottom like from a printer; the receipts are tilted slightly at random.",
+            "ai": {
+              "summary": "Guest reviews as receipts — short, honest, with the order total. For a café, bakery, bar or deli.",
+              "preserve": [
+                "printing is a steps(3) animation on each child with a delay from the line index and the receipt index",
+                "the serrated bottom is a clip-path polygon of 40 points generated at module load",
+                "each receipt's tilt comes from an angle array by index via --vibeui-testimonials-023-r"
+              ],
+              "adapt": [
+                "reviews: no, time, name, lines, sum",
+                "brand, place, totalLabel, guestLabel, thanks",
+                "eyebrow, title, lede",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Testimonials023\n  brand=\"Crust\"\n  place=\"Khamovniki\"\n  reviews={[\n    { no: \"0412\", time: \"08:14\", name: \"Marina\", lines: [\"Tartine still warm,\", \"the crust crackles\", \"across the tram.\"], sum: \"$6\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What the till prints"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Reviews",
+                "title": "What the till prints",
+                "lede": "Real words from guests — on receipts, the way they leave them: short, before the coffee gets cold.",
+                "brand": "Crust",
+                "place": "Khamovniki",
+                "totalLabel": "TOTAL",
+                "guestLabel": "guest",
+                "thanks": "thank you, come for the hot one",
+                "reviews": [
+                  {
+                    "no": "0412",
+                    "time": "08:14",
+                    "name": "Marina",
+                    "lines": [
+                      "Tartine still warm,",
+                      "the crust crackles",
+                      "across the whole tram."
+                    ],
+                    "sum": "$6"
+                  },
+                  {
+                    "no": "0587",
+                    "time": "07:32",
+                    "name": "Ilya",
+                    "lines": [
+                      "Flat white beats",
+                      "three places nearby.",
+                      "I checked all three."
+                    ],
+                    "sum": "$4.2"
+                  },
+                  {
+                    "no": "0633",
+                    "time": "11:06",
+                    "name": "Katya & Lev",
+                    "lines": [
+                      "The cinnamon bun",
+                      "was gone in our hands",
+                      "in four minutes."
+                    ],
+                    "sum": "$8"
+                  },
+                  {
+                    "no": "0701",
+                    "time": "16:48",
+                    "name": "Pyotr",
+                    "lines": [
+                      "Ordered a box",
+                      "for eight — at 7:58 it was",
+                      "at the counter. No questions."
+                    ],
+                    "sum": "$17"
+                  }
+                ]
+              }
+            },
+            "slots": {
+              "shape": "reviews on receipts: 3–4 lines, a name and a total",
+              "items": [
+                {
+                  "role": "review lines"
+                },
+                {
+                  "role": "guest name"
+                },
+                {
+                  "role": "receipt total"
+                }
+              ]
+            }
+          }
+        },
+        "slots": {
+          "shape": "отзывы на чеках: 3–4 строки, имя и сумма",
+          "density": "light",
+          "items": [
+            {
+              "role": "строки отзыва",
+              "type": "quote",
+              "count": "3–4",
+              "required": true
+            },
+            {
+              "role": "имя гостя",
+              "type": "text",
+              "required": true
+            },
+            {
+              "role": "сумма чека",
+              "type": "stat"
+            }
+          ]
+        }
+      }
     }
   ]
 }

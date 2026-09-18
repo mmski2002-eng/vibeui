@@ -893,6 +893,205 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "subscribe-007",
+      "type": "registry:block",
+      "title": "Хлебный будильник на крафт-пакете",
+      "description": "Не рассылка, а напоминание: человек выбирает выпечку, и строка «напишем в 08:25 — 36 часов, как положено» меняется сразу. Форма лежит на крафт-пакете с пунктирной линией отрыва и штампом в углу; после отправки — подтверждение и «добавить ещё».",
+      "categories": [
+        "newsletter"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "subscribe-007/subscribe-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/subscribe-007.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "newsletter",
+          "subscribe",
+          "reminder",
+          "form",
+          "bakery",
+          "cafe",
+          "notification",
+          "kraft",
+          "signup"
+        ],
+        "preview": {
+          "props": {
+            "texture": "/demo/bakery/bag.webp"
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Subscribe007",
+          "usage": "<Subscribe007\n  title=\"Напишем, когда выйдет ваш хлеб\"\n  texture=\"/photos/bag.webp\"\n  options={[\n    { id: \"tartine\", label: \"Тартин\", time: \"08:25\", note: \"36 часов, как положено\" },\n    { id: \"croissant\", label: \"Круассан\", time: \"06:55\", note: \"первая партия\" },\n  ]}\n/>",
+          "summary": "Подписка с конкретной пользой — «напишем, когда выйдет ваш хлеб»: выбор позиции, контакт, живая строка со временем. Для пекарни, кофейни, лавки.",
+          "preserve": [
+            "строка whenLine подставляет {time} и {note} выбранного варианта без отправки формы",
+            "пакет — фон крафт-цвета с необязательной фактурой texture, линия отрыва ::before и полосы ::after",
+            "после отправки форма заменяется подтверждением с кнопкой «добавить ещё»"
+          ],
+          "adapt": [
+            "options: id, label, time, note",
+            "eyebrow, title, lede, stamp, formTitle, formText, optionLabel, contactLabel, contactPlaceholder",
+            "whenLine, submitLabel, doneLine, againLabel, texture",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Напишем, когда выйдет ваш хлеб",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Bread alarm on a kraft bag",
+            "description": "Not a newsletter but a reminder: the person picks a pastry and the line “we'll text at 08:25 — 36 hours, as it should be” updates instantly. The form sits on a kraft bag with a dashed tear line and a corner stamp; after submit — a confirmation and “add another”.",
+            "ai": {
+              "summary": "A signup with a concrete benefit — “we'll text when your bread is out”: an item pick, a contact, a live time line. For a bakery, café or deli.",
+              "preserve": [
+                "the whenLine string substitutes {time} and {note} of the chosen option without submitting",
+                "the bag is a kraft-coloured background with an optional texture image, a ::before tear line and ::after stripes",
+                "after submit the form is replaced with a confirmation and an “add another” button"
+              ],
+              "adapt": [
+                "options: id, label, time, note",
+                "eyebrow, title, lede, stamp, formTitle, formText, optionLabel, contactLabel, contactPlaceholder",
+                "whenLine, submitLabel, doneLine, againLabel, texture",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Subscribe007\n  title=\"We'll text when your bread is out\"\n  texture=\"/photos/bag.webp\"\n  options={[\n    { id: \"tartine\", label: \"Tartine\", time: \"08:25\", note: \"36 hours, as it should be\" },\n    { id: \"croissant\", label: \"Croissant\", time: \"06:55\", note: \"first batch\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "We'll text when your bread is out"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "texture": "/demo/bakery/bag.webp",
+                "eyebrow": "Reminder",
+                "title": "We'll text when your bread is out",
+                "lede": "Not a newsletter — one message five minutes before your favourite pastry lands on the shelf.",
+                "stamp": "Crust · since 2019",
+                "formTitle": "Bread alarm",
+                "formText": "Pick what you love — we'll work out when it's in the oven and text you. Unsubscribe with one word: “enough”.",
+                "optionLabel": "What you love",
+                "contactLabel": "Phone or email",
+                "contactPlaceholder": "+1 … or name@mail",
+                "whenLine": "we'll text at {time} — {note}",
+                "submitLabel": "Set the alarm",
+                "doneLine": "noted: {label}, {time}",
+                "againLabel": "Add another",
+                "options": [
+                  {
+                    "id": "tartine",
+                    "label": "Tartine",
+                    "time": "08:25",
+                    "note": "36 hours, as it should be"
+                  },
+                  {
+                    "id": "croissant",
+                    "label": "Croissant",
+                    "time": "06:55",
+                    "note": "first batch, 40 pcs"
+                  },
+                  {
+                    "id": "cinnamon",
+                    "label": "Cinnamon bun",
+                    "time": "10:55",
+                    "note": "glazed, still warm"
+                  },
+                  {
+                    "id": "focaccia",
+                    "label": "Focaccia",
+                    "time": "12:55",
+                    "note": "for lunch, cut on the spot"
+                  },
+                  {
+                    "id": "rye",
+                    "label": "Rye",
+                    "time": "14:55",
+                    "note": "dark crust, caraway"
+                  },
+                  {
+                    "id": "baguette",
+                    "label": "Baguette",
+                    "time": "16:55",
+                    "note": "for dinner, last bread of the day"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

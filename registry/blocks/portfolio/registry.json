@@ -1929,6 +1929,154 @@
           }
         }
       }
+    },
+    {
+      "name": "portfolio-011",
+      "type": "registry:block",
+      "title": "Bento-галерея с подписями-каракулями",
+      "description": "Галерея «одно утро по часам»: плитки трёх размеров в плотной сетке (grid-auto-flow: dense) без дырок, по наведению плитка вырастает и всплывает над соседями, фото наезжает, снизу проявляется рукописная подпись со временем. Без hover подписи видны всегда.",
+      "categories": [
+        "portfolio"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "portfolio-011/portfolio-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/portfolio-011.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "gallery",
+          "bento",
+          "photos",
+          "grid",
+          "portfolio",
+          "hover",
+          "masonry",
+          "cafe",
+          "instagram"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Portfolio011",
+          "usage": "<Portfolio011\n  title=\"Как это выглядит\"\n  shots={[\n    { src: \"/photos/hands.webp\", note: \"5:40, формовка\", span: \"big\" },\n    { src: \"/photos/bread.webp\", note: \"7:12, первый тартин\" },\n    { src: \"/photos/coffee.webp\", note: \"7:30, первый флэт\" },\n    { src: \"/photos/queue.webp\", note: \"7:55, очередь\", span: \"wide\" },\n  ]}\n/>",
+          "summary": "Фотогалерея bento для кафе, студии, мастерской: 8–12 кадров, три размера плиток, подписи по наведению.",
+          "preserve": [
+            "сетка 2 колонки, от 56rem — 4; big = 2×2, wide = 2×1, tall = 1×2, dense заполняет дырки",
+            "по наведению плитка scale(1.04), z-index 2 и тень — она всплывает над соседями",
+            "подпись — figcaption рукописным шрифтом с поворотом -3deg, @media (hover:none) показывает всегда"
+          ],
+          "adapt": [
+            "shots: src, alt, note, span",
+            "eyebrow, title, lede",
+            "число плиток — кратно четырём заполняет сетку без дырок",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Как это выглядит",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Bento gallery with scribbled captions",
+            "description": "A “one morning by the clock” gallery: tiles of three sizes in a dense grid with no holes; on hover a tile grows and floats above its neighbours, the photo zooms, a handwritten time caption fades in at the bottom. Without hover the captions are always visible.",
+            "ai": {
+              "summary": "A bento photo gallery for a café, studio or workshop: 8–12 shots, three tile sizes, hover captions.",
+              "preserve": [
+                "2 columns, 4 from 56rem; big = 2×2, wide = 2×1, tall = 1×2, dense fills the holes",
+                "on hover the tile gets scale(1.04), z-index 2 and a shadow — it floats above its neighbours",
+                "the caption is a handwritten figcaption rotated -3deg; @media (hover:none) shows it always"
+              ],
+              "adapt": [
+                "shots: src, alt, note, span",
+                "eyebrow, title, lede",
+                "tile count — a multiple of four fills the grid without holes",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Portfolio011\n  title=\"What it looks like\"\n  shots={[\n    { src: \"/photos/hands.webp\", note: \"5:40, shaping\", span: \"big\" },\n    { src: \"/photos/bread.webp\", note: \"7:12, first tartine\" },\n    { src: \"/photos/coffee.webp\", note: \"7:30, first flat white\" },\n    { src: \"/photos/queue.webp\", note: \"7:55, the queue\", span: \"wide\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What it looks like"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "This morning",
+                "title": "What it looks like",
+                "lede": "One ordinary Tuesday, shot by the clock. Hover — we'll tell you when."
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

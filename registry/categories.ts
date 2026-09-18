@@ -188,6 +188,12 @@ export const CATEGORIES = [
     group: "commerce",
   },
   {
+    slug: "bakery",
+    label: "Пекарня и кофейня",
+    en: "Bakery & café",
+    group: "commerce",
+  },
+  {
     slug: "course",
     label: "Онлайн-курс",
     en: "Online course",

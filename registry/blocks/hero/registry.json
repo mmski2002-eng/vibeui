@@ -5135,6 +5135,198 @@
           }
         }
       }
+    },
+    {
+      "name": "hero-028",
+      "type": "registry:block",
+      "title": "Первый экран пекарни с таймером печи",
+      "description": "Первый экран пекарни «хлеб по часам»: фото витрины на всю высоту с рукописной пометкой, заголовок, поднимающийся как тесто, кольцо-таймер «достанем через 14 мин» и лента партий дня — прошедшие с галочкой, текущая пульсирует. Всё считается от часов посетителя; ночью — «тесто на расстойке, печь в 05:00».",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-028/hero-028.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-028.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "hero",
+          "bakery",
+          "cafe",
+          "coffee",
+          "timer",
+          "live",
+          "schedule",
+          "food",
+          "handwritten"
+        ],
+        "preview": {
+          "props": {
+            "image": "/demo/bakery/hero.webp"
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Hero028",
+          "usage": "<Hero028\n  image=\"/photos/hero.webp\"\n  words={[\"Хлеб\", \"по\", \"часам\"]}\n  batches={[\n    { time: \"07:00\", name: \"Круассаны\", note: \"первая партия\" },\n    { time: \"08:30\", name: \"Тартин\", note: \"36 часов\" },\n  ]}\n/>",
+          "summary": "Первый экран для пекарни или кофейни, который живёт по расписанию печи: показывает, что печётся сейчас и когда достанут, от реального времени посетителя.",
+          "preserve": [
+            "таймер и лента партий считаются от часов посетителя через useSyncExternalStore; до гидрации — за 14 минут до первой партии",
+            "заголовок «поднимается» по словам через scaleY с задержкой на слово",
+            "кольцо — conic-gradient от переменной прогресса, стрелка-каракуля рисуется stroke-dashoffset"
+          ],
+          "adapt": [
+            "image, imageAlt, sticker, words, lede",
+            "batches: time, name, note; ovenHour",
+            "primaryLabel/Href, secondaryLabel/Href, bakingLabel, nightLabel, nightTitle, nightText",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "lede",
+            "label": "Подзаголовок",
+            "type": "text",
+            "default": "Замешиваем вечером, печём в пять утра, достаём партиями весь день. Сайт показывает, что в печи прямо сейчас, — чтобы вы приходили к горячему.",
+            "maxLength": 200
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Bakery hero with a live oven timer",
+            "description": "A “bread by the clock” bakery hero: a full-height shop photo with a handwritten sticker, a headline that rises like dough, a ring timer “out in 14 min” and the day's batch ribbon — past ones ticked, the current one pulsing. Everything runs on the visitor's clock; at night it says “dough proofing, oven at 05:00”.",
+            "ai": {
+              "summary": "A hero for a bakery or café that lives by the oven schedule: shows what is baking now and when it comes out, from the visitor's real time.",
+              "preserve": [
+                "the timer and batch ribbon run on the visitor's clock via useSyncExternalStore; before hydration — 14 minutes before the first batch",
+                "the headline “rises” word by word via scaleY with a per-word delay",
+                "the ring is a conic-gradient from a progress variable, the scribble arrow draws with stroke-dashoffset"
+              ],
+              "adapt": [
+                "image, imageAlt, sticker, words, lede",
+                "batches: time, name, note; ovenHour",
+                "primaryLabel/Href, secondaryLabel/Href, bakingLabel, nightLabel, nightTitle, nightText",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Hero028\n  image=\"/photos/hero.webp\"\n  words={[\"Bread\", \"by the\", \"clock\"]}\n  batches={[\n    { time: \"07:00\", name: \"Croissants\", note: \"first batch\" },\n    { time: \"08:30\", name: \"Tartine\", note: \"36 hours\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "lede": {
+                "label": "Lede",
+                "default": "Mixed in the evening, baked at five, pulled out in batches all day. The site shows what is in the oven right now — so you come for the hot one."
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "image": "/demo/bakery/hero.webp",
+                "sticker": "hot!",
+                "words": [
+                  "Bread",
+                  "by the",
+                  "clock"
+                ],
+                "lede": "Mixed in the evening, baked at five, pulled out in batches all day. The site shows what is in the oven right now — so you come for the hot one.",
+                "bakingLabel": "In the oven now",
+                "nightLabel": "Night at the bakery",
+                "nightTitle": "Quiet, the dough is rising",
+                "nightText": "dough proofing · oven at 05:00",
+                "primaryLabel": "Build a morning box",
+                "secondaryLabel": "What's on the shelf",
+                "batches": [
+                  {
+                    "time": "07:00",
+                    "name": "Croissants",
+                    "note": "first batch, 40 pcs"
+                  },
+                  {
+                    "time": "08:30",
+                    "name": "Sourdough tartine",
+                    "note": "36 hours, as it should be"
+                  },
+                  {
+                    "time": "11:00",
+                    "name": "Cinnamon buns",
+                    "note": "glazed, still warm"
+                  },
+                  {
+                    "time": "13:00",
+                    "name": "Rosemary focaccia",
+                    "note": "for lunch, cut on the spot"
+                  },
+                  {
+                    "time": "15:00",
+                    "name": "Rye",
+                    "note": "dark crust, caraway"
+                  },
+                  {
+                    "time": "17:00",
+                    "name": "Baguettes",
+                    "note": "for dinner, last bread of the day"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

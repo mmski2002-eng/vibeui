@@ -4111,6 +4111,212 @@
           }
         }
       }
+    },
+    {
+      "name": "footer-027",
+      "type": "registry:block",
+      "title": "Подвал с полосой рабочего дня",
+      "description": "Подвал заведения: словомарка, три колонки ссылок, а между ними «день пекарни» — полоса рабочего дня, залитая до текущего часа по часам посетителя, с бегунком и подписями часов. Внизу копирайт и рукописная подпись.",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-027/footer-027.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-027.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "footer",
+          "cafe",
+          "bakery",
+          "hours",
+          "progress",
+          "links",
+          "contacts",
+          "dark"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Footer027",
+          "usage": "<Footer027\n  brand=\"Корка\"\n  caption=\"кофейня-пекарня · печём с 2019\"\n  openHour={7}\n  closeHour={21}\n  columns={[{ title: \"Разделы\", links: [{ label: \"Витрина\", href: \"#shelf\" }] }]}\n/>",
+          "summary": "Тёмный подвал для заведения с часами работы: живая полоса дня показывает, сколько ещё открыто. Для кафе, пекарни, салона.",
+          "preserve": [
+            "прогресс дня считается от часов посетителя через useSyncExternalStore; до гидрации — 9:00",
+            "заливка полосы — ::before с width из --vibeui-footer-027-p и transition 1.2s, бегунок — <b> на той же переменной",
+            "подписи часов — псевдоэлементы делений через attr(data-h), шаг два часа"
+          ],
+          "adapt": [
+            "brand, caption, columns: title, links",
+            "dayLabel, openLabel, closedLabel, sleepLabel, openHour, closeHour",
+            "copyright, sign",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Имя",
+            "type": "text",
+            "default": "Корка",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Footer with a working-day bar",
+            "description": "A venue footer: a wordmark, three link columns, and between them the “bakery day” — a working-day bar filled up to the current hour by the visitor's clock, with a knob and hour labels. Copyright and a handwritten sign-off at the bottom.",
+            "ai": {
+              "summary": "A dark venue footer with opening hours: a live day bar shows how much longer it's open. For a café, bakery or salon.",
+              "preserve": [
+                "day progress runs on the visitor's clock via useSyncExternalStore; before hydration — 9:00",
+                "the bar fill is a ::before with width from --vibeui-footer-027-p and a 1.2s transition, the knob is a <b> on the same variable",
+                "hour labels are tick pseudo-elements via attr(data-h), every two hours"
+              ],
+              "adapt": [
+                "brand, caption, columns: title, links",
+                "dayLabel, openLabel, closedLabel, sleepLabel, openHour, closeHour",
+                "copyright, sign",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Footer027\n  brand=\"Crust\"\n  caption=\"café-bakery · baking since 2019\"\n  openHour={7}\n  closeHour={21}\n  columns={[{ title: \"Sections\", links: [{ label: \"Shelf\", href: \"#shelf\" }] }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Crust"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Crust",
+                "caption": "café-bakery · baking since 2019",
+                "dayLabel": "bakery day",
+                "openLabel": "open",
+                "closedLabel": "closed till morning",
+                "sleepLabel": "still asleep",
+                "copyright": "© Crust, 2026",
+                "sign": "thanks for waking up early",
+                "columns": [
+                  {
+                    "title": "Sections",
+                    "links": [
+                      {
+                        "label": "Shelf",
+                        "href": "#shelf"
+                      },
+                      {
+                        "label": "Coffee",
+                        "href": "#coffee"
+                      },
+                      {
+                        "label": "Morning box",
+                        "href": "#box"
+                      },
+                      {
+                        "label": "36 hours to a loaf",
+                        "href": "#story"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Address",
+                    "links": [
+                      {
+                        "label": "Moscow, Khamovniki",
+                        "href": "#where"
+                      },
+                      {
+                        "label": "in the courtyard by the square",
+                        "href": "#where"
+                      },
+                      {
+                        "label": "+7 000 000-00-00",
+                        "href": "tel:+70000000000"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Social",
+                    "links": [
+                      {
+                        "label": "Telegram channel",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Morning stories",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Bread alarm",
+                        "href": "#newsletter"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

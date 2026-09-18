@@ -1,0 +1,212 @@
+"use client"
+
+import { useEffect, useRef, useState, type CSSProperties } from "react"
+
+export type Bakery005Line = {
+  label: string
+  value: string
+}
+
+export type Bakery005Props = {
+  eyebrow?: string
+  title?: string
+  lede?: string
+  cardTitle?: string
+  cardText?: string
+  /** Сколько штампов до бесплатного (шестой — подарок). */
+  stamps?: number
+  freeLabel?: string
+  fine?: readonly string[]
+  cardAction?: string
+  cardHref?: string
+  subTitle?: string
+  subText?: string
+  subLines?: readonly Bakery005Line[]
+  subPrice?: string
+  subNote?: string
+  subAction?: string
+  subHref?: string
+  tone?: "auto" | "light" | "dark"
+  accent?: string
+  ink?: string
+  background?: string
+  className?: string
+  style?: CSSProperties
+}
+
+// Программа лояльности пекарни: перфокарта «шестой кофе — наш», на которой
+// при появлении в кадре штампы «шлёпаются» один за другим (scale с
+// перелётом и лёгким поворотом), последняя ячейка — рукописное «даром».
+// Рядом карточка подписки на хлеб: строки условий, цена, кнопка.
+const FONTS =
+  "https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Golos+Text:wght@400;500;600&family=Caveat:wght@600&display=swap"
+
+const STYLES = `
+:where([data-vibeui-block="bakery-005"]){
+--vibeui-bakery-005-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-bakery-005-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-bakery-005-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-bakery-005-on-accent:oklch(from var(--vibeui-bakery-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
+--vibeui-bakery-005-muted:color-mix(in oklab,var(--vibeui-bakery-005-fg) 60%,var(--vibeui-bakery-005-bg));
+--vibeui-bakery-005-panel:color-mix(in oklab,var(--vibeui-bakery-005-fg) 5%,var(--vibeui-bakery-005-bg));
+--vibeui-bakery-005-line:color-mix(in oklab,var(--vibeui-bakery-005-fg) 12%,transparent);
+--vibeui-bakery-005-card:light-dark(#fff,color-mix(in oklab,var(--vibeui-bakery-005-bg) 88%,var(--vibeui-bakery-005-fg)));
+--vibeui-bakery-005-display:"Unbounded",ui-sans-serif,system-ui,sans-serif;
+--vibeui-bakery-005-font:"Golos Text",ui-sans-serif,system-ui,sans-serif;
+--vibeui-bakery-005-hand:"Caveat",cursive;
+container-type:inline-size;
+}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="bakery-005"]{color-scheme:dark}
+:where([data-vibeui-block="bakery-005"][data-tone="light"]){color-scheme:light}
+:where([data-vibeui-block="bakery-005"][data-tone="dark"]){color-scheme:dark}
+[data-vibeui-block="bakery-005"]{box-sizing:border-box;padding:5.5rem 0;background:var(--vibeui-bakery-005-panel);color:var(--vibeui-bakery-005-fg);font-family:var(--vibeui-bakery-005-font);font-size:1rem;line-height:1.55}
+[data-vibeui-block="bakery-005"] *{box-sizing:border-box}
+[data-vibeui-block="bakery-005"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem}
+[data-vibeui-block="bakery-005"] [data-part="eyebrow"]{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--vibeui-bakery-005-accent);font-weight:600;margin:0 0 1.1rem}
+[data-vibeui-block="bakery-005"] [data-part="eyebrow"]::before{content:"";width:1.4rem;height:2px;background:var(--vibeui-bakery-005-accent);border-radius:2px}
+[data-vibeui-block="bakery-005"] [data-part="title"]{margin:0;font-family:var(--vibeui-bakery-005-display);font-weight:600;letter-spacing:-.02em;line-height:1.02;font-size:clamp(2rem,4.6cqi,3.6rem)}
+[data-vibeui-block="bakery-005"] [data-part="lede"]{font-size:1.06rem;color:var(--vibeui-bakery-005-muted);max-width:34rem;margin:1rem 0 0}
+[data-vibeui-block="bakery-005"] [data-part="grid"]{display:grid;gap:2rem;margin-top:2.5rem}
+[data-vibeui-block="bakery-005"] [data-part="card"]{padding:1.75rem;display:flex;flex-direction:column;gap:1.2rem;border-radius:1.4rem;background:var(--vibeui-bakery-005-card);box-shadow:0 1px 0 rgb(255 255 255 / .5) inset,0 24px 48px -32px rgb(0 0 0 / .35),0 1px 2px rgb(0 0 0 / .06)}
+[data-vibeui-block="bakery-005"] [data-part="card"] h3{margin:0;font-family:var(--vibeui-bakery-005-display);font-size:1.4rem;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+[data-vibeui-block="bakery-005"] [data-part="card"] p{margin:0;color:var(--vibeui-bakery-005-muted)}
+[data-vibeui-block="bakery-005"] [data-part="punch"]{display:grid;grid-template-columns:repeat(var(--vibeui-bakery-005-cells),1fr);gap:.6rem;padding:1.1rem;border-radius:1rem;background:repeating-linear-gradient(0deg,var(--vibeui-bakery-005-card) 0 2px,color-mix(in oklab,var(--vibeui-bakery-005-card) 96%,var(--vibeui-bakery-005-fg)) 2px 4px);box-shadow:0 0 0 1px var(--vibeui-bakery-005-line),0 2px 4px rgb(0 0 0 / .06) inset}
+[data-vibeui-block="bakery-005"] [data-part="punch"] i{position:relative;aspect-ratio:1;border-radius:50%;border:2px dashed color-mix(in oklab,var(--vibeui-bakery-005-fg) 25%,transparent);display:grid;place-items:center}
+[data-vibeui-block="bakery-005"] [data-part="punch"] i::after{content:"";position:absolute;inset:.2rem;background:radial-gradient(circle at 40% 35%,color-mix(in oklab,var(--vibeui-bakery-005-accent) 75%,white),var(--vibeui-bakery-005-accent) 60%,color-mix(in oklab,var(--vibeui-bakery-005-accent) 75%,black));opacity:0;transform:scale(0) rotate(-20deg);border-radius:48% 52% 50% 50% / 50% 48% 52% 50%;box-shadow:0 0 0 2px color-mix(in oklab,var(--vibeui-bakery-005-accent) 35%,transparent) inset}
+[data-vibeui-block="bakery-005"] [data-part="punch"][data-shown="true"] i::after{animation:vibeui-bakery-005-stamp .45s cubic-bezier(.2,1.5,.4,1) forwards;animation-delay:calc(var(--vibeui-bakery-005-i) * .25s)}
+[data-vibeui-block="bakery-005"] [data-part="punch"] i:last-child{border-style:solid;border-color:var(--vibeui-bakery-005-accent)}
+[data-vibeui-block="bakery-005"] [data-part="punch"] i:last-child::after{content:none}
+[data-vibeui-block="bakery-005"] [data-part="punch"] i:last-child::before{content:attr(data-free);font-family:var(--vibeui-bakery-005-hand);font-size:1rem;color:var(--vibeui-bakery-005-accent);font-weight:600;transform:rotate(-10deg)}
+[data-vibeui-block="bakery-005"] [data-part="fine"]{display:grid;gap:.4rem;font-size:.88rem;color:var(--vibeui-bakery-005-muted);margin:0;padding:0;list-style:none}
+[data-vibeui-block="bakery-005"] [data-part="fine"] li{display:flex;gap:.5rem}
+[data-vibeui-block="bakery-005"] [data-part="fine"] li::before{content:"·";color:var(--vibeui-bakery-005-accent);font-weight:700}
+[data-vibeui-block="bakery-005"] [data-part="sub"]{display:grid;gap:.6rem;margin:0;padding:0;list-style:none}
+[data-vibeui-block="bakery-005"] [data-part="sub"] li{display:flex;justify-content:space-between;gap:1rem;padding:.8rem 1rem;border-radius:.9rem;background:var(--vibeui-bakery-005-panel);font-size:.95rem}
+[data-vibeui-block="bakery-005"] [data-part="sub"] b{font-family:var(--vibeui-bakery-005-display);font-weight:600;white-space:nowrap}
+[data-vibeui-block="bakery-005"] [data-part="price"]{display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap}
+[data-vibeui-block="bakery-005"] [data-part="price"] b{font-family:var(--vibeui-bakery-005-display);font-size:2.2rem;font-weight:700;letter-spacing:-.04em}
+[data-vibeui-block="bakery-005"] [data-part="price"] span{color:var(--vibeui-bakery-005-muted)}
+[data-vibeui-block="bakery-005"] [data-part="action"]{margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;border-radius:999px;padding:.95rem 1.5rem;font-weight:600;font-size:.95rem;text-decoration:none;color:var(--vibeui-bakery-005-on-accent);background:var(--vibeui-bakery-005-accent);box-shadow:0 1px 0 rgb(255 255 255 / .35) inset,0 10px 24px -12px color-mix(in oklab,var(--vibeui-bakery-005-accent) 70%,transparent);transition:transform .18s,filter .18s}
+[data-vibeui-block="bakery-005"] [data-part="action"][data-ghost="true"]{color:var(--vibeui-bakery-005-fg);background:var(--vibeui-bakery-005-panel);box-shadow:0 1px 0 rgb(255 255 255 / .6) inset,0 2px 4px rgb(0 0 0 / .08)}
+[data-vibeui-block="bakery-005"] [data-part="action"]:hover{transform:translateY(-1px);filter:brightness(1.04)}
+[data-vibeui-block="bakery-005"] a:focus-visible{outline:2px solid var(--vibeui-bakery-005-accent);outline-offset:3px}
+@keyframes vibeui-bakery-005-stamp{0%{transform:scale(1.6) rotate(-20deg);opacity:0}60%{opacity:.95}100%{transform:scale(1) rotate(-12deg);opacity:.9}}
+@container (min-width: 56rem){[data-vibeui-block="bakery-005"] [data-part="grid"]{grid-template-columns:1fr 1fr}}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="bakery-005"] *{animation:none!important;transition:none!important}[data-vibeui-block="bakery-005"] [data-part="punch"] i::after{opacity:.9;transform:rotate(-12deg)}}`
+
+/** Перфокарта со штампами и подписка на хлеб. */
+export function Bakery005({
+  eyebrow = "Постоянным",
+  title = "Шестой кофе — наш",
+  lede = "Без приложения: карточка в кошельке, штамп у кассы. Хлеб — по подписке, чтобы не думать по субботам.",
+  cardTitle = "Перфокарта",
+  cardText = "Пять штампов — шестой напиток бесплатно. Любой, хоть большой латте.",
+  stamps = 5,
+  freeLabel = "даром",
+  fine = ["штампы не сгорают — хоть через год", "карточку можно передать другу вместе с кофе", "на «кофе с собой» штамп ставим тоже"],
+  cardAction = "Забрать карточку у кассы",
+  cardHref = "#where",
+  subTitle = "Хлеб по субботам",
+  subText = "Абонемент на месяц: буханка на выбор ждёт вас каждую субботу с 8:00 до закрытия.",
+  subLines = [
+    { label: "Тартин или ржаной", value: "4 буханки" },
+    { label: "Круассан в подарок в первую субботу", value: "+1" },
+    { label: "Отложить неделю — одним сообщением", value: "да" },
+  ],
+  subPrice = "1 390 ₽",
+  subNote = "в месяц · выгода 210 ₽",
+  subAction = "Оформить подписку",
+  subHref = "#newsletter",
+  tone = "auto",
+  accent,
+  ink,
+  background,
+  className,
+  style,
+}: Bakery005Props) {
+  const punch = useRef<HTMLDivElement>(null)
+  const [shown, setShown] = useState(false)
+
+  useEffect(() => {
+    const element = punch.current
+    if (!element) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setShown(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: "-20% 0px" },
+    )
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [])
+
+  const palette = {
+    ...(accent ? { "--vibeui-bakery-005-accent": accent } : null),
+    ...(ink ? { "--vibeui-bakery-005-fg": ink } : null),
+    ...(background ? { "--vibeui-bakery-005-bg": background } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <link rel="stylesheet" href={FONTS} precedence="medium" />
+      <style href="vibeui-bakery-005" precedence="medium">
+        {STYLES}
+      </style>
+      <section data-vibeui-block="bakery-005" data-tone={tone === "auto" ? undefined : tone} className={className} style={palette}>
+        <div data-part="shell">
+          {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
+          <h2 data-part="title">{title}</h2>
+          {lede ? <p data-part="lede">{lede}</p> : null}
+          <div data-part="grid">
+            <div data-part="card">
+              <h3>{cardTitle}</h3>
+              {cardText ? <p>{cardText}</p> : null}
+              <div ref={punch} data-part="punch" data-shown={shown} role="img" aria-label={`${stamps} штампов, ${stamps + 1}-й — бесплатно`} style={{ ["--vibeui-bakery-005-cells" as string]: stamps + 1 }}>
+                {Array.from({ length: stamps }, (_, i) => (
+                  <i key={i} style={{ ["--vibeui-bakery-005-i" as string]: i }} />
+                ))}
+                <i data-free={freeLabel} />
+              </div>
+              {fine.length > 0 ? (
+                <ul data-part="fine">
+                  {fine.map((line) => (
+                    <li key={line}>{line}</li>
+                  ))}
+                </ul>
+              ) : null}
+              {cardAction ? (
+                <a data-part="action" data-ghost="true" href={cardHref}>
+                  {cardAction}
+                </a>
+              ) : null}
+            </div>
+            <div data-part="card">
+              <h3>{subTitle}</h3>
+              {subText ? <p>{subText}</p> : null}
+              <ul data-part="sub">
+                {subLines.map((line) => (
+                  <li key={line.label}>
+                    {line.label} <b>{line.value}</b>
+                  </li>
+                ))}
+              </ul>
+              <div data-part="price">
+                <b>{subPrice}</b>
+                {subNote ? <span>{subNote}</span> : null}
+              </div>
+              {subAction ? (
+                <a data-part="action" href={subHref}>
+                  {subAction}
+                </a>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  )
+}

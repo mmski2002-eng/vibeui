@@ -4845,6 +4845,190 @@
           }
         }
       }
+    },
+    {
+      "name": "navbar-028",
+      "type": "registry:block",
+      "title": "Шапка кофейни с живым статусом «открыто»",
+      "description": "Шапка кофейни или пекарни: словомарка с точкой, разделы, живой чип «открыто · до 21:00» или «откроемся в 7:00 · через 5 часов», который считается от часов посетителя и обновляется раз в полминуты, и кнопка заказа. При прокрутке становится стеклом с «мучной» кромкой.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-028/navbar-028.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-028.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "navbar",
+          "header",
+          "cafe",
+          "bakery",
+          "coffee",
+          "open hours",
+          "live status",
+          "sticky",
+          "glass"
+        ],
+        "preview": {
+          "aspect": "1280 / 68",
+          "props": {
+            "sticky": false
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Navbar028",
+          "usage": "<Navbar028\n  brand=\"Корка\"\n  openHour={7}\n  closeHour={21}\n  links={[{ label: \"Витрина\", href: \"#shelf\" }, { label: \"Кофе\", href: \"#coffee\" }]}\n  actionLabel=\"Заказать к утру\"\n  actionHref=\"#box\"\n/>",
+          "summary": "Липкая шапка для заведения с часами работы: чип статуса сам считает «открыто / откроемся через …» по часам посетителя, без сервера.",
+          "preserve": [
+            "чип статуса считается через useSyncExternalStore с серверным снимком null — разметка совпадает при гидрации",
+            "стекло и мучная кромка появляются после 24px прокрутки",
+            "на узком экране подпись чипа и хвост кнопки скрываются контейнерным запросом"
+          ],
+          "adapt": [
+            "brand, links, actionLabel, actionShort, actionHref",
+            "openHour, closeHour, openLabel, closedLabel",
+            "sticky",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Имя",
+            "type": "text",
+            "default": "Корка",
+            "maxLength": 24
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Заказать к утру",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Café header with a live “open now” chip",
+            "description": "A café or bakery header: a wordmark with a dot, sections, a live chip “open · until 21:00” or “opens at 7:00 · in 5 hours” computed from the visitor's clock and refreshed every half minute, and an order button. On scroll it turns into glass with a “floury” edge.",
+            "ai": {
+              "summary": "A sticky header for a venue with opening hours: the status chip computes “open / opens in …” from the visitor's clock, no server needed.",
+              "preserve": [
+                "the status chip runs on useSyncExternalStore with a null server snapshot — markup matches on hydration",
+                "glass and the floury edge appear after 24px of scroll",
+                "on narrow widths the chip caption and the button tail hide via a container query"
+              ],
+              "adapt": [
+                "brand, links, actionLabel, actionShort, actionHref",
+                "openHour, closeHour, openLabel, closedLabel",
+                "sticky",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Navbar028\n  brand=\"Crust\"\n  openHour={7}\n  closeHour={21}\n  links={[{ label: \"Shelf\", href: \"#shelf\" }, { label: \"Coffee\", href: \"#coffee\" }]}\n  actionLabel=\"Order for morning\"\n  actionHref=\"#box\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Crust"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Order for morning"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "sticky": false,
+                "brand": "Crust",
+                "openLabel": "open",
+                "closedLabel": "opens at",
+                "actionLabel": "Order for morning",
+                "actionShort": "Order",
+                "links": [
+                  {
+                    "label": "Shelf",
+                    "href": "#shelf"
+                  },
+                  {
+                    "label": "Coffee",
+                    "href": "#coffee"
+                  },
+                  {
+                    "label": "Bread",
+                    "href": "#story"
+                  },
+                  {
+                    "label": "People",
+                    "href": "#people"
+                  },
+                  {
+                    "label": "Find us",
+                    "href": "#where"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
