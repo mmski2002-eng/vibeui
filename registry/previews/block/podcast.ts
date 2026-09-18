@@ -10,4 +10,12 @@ export const PREVIEWS = {
     import("@/registry/blocks/podcast/podcast-002/podcast-002").then((module) => module.Podcast002),
   "podcast-003": () =>
     import("@/registry/blocks/podcast/podcast-003/podcast-003").then((module) => module.Podcast003),
+  "podcast-004": () =>
+    import("@/registry/blocks/podcast/podcast-004/podcast-004").then((module) => module.Podcast004),
+  "podcast-005": () =>
+    import("@/registry/blocks/podcast/podcast-005/podcast-005").then((module) => module.Podcast005),
+  "podcast-006": () =>
+    import("@/registry/blocks/podcast/podcast-006/podcast-006").then((module) => module.Podcast006),
+  "podcast-007": () =>
+    import("@/registry/blocks/podcast/podcast-007/podcast-007").then((module) => module.Podcast007),
 } satisfies PreviewLoaderMap

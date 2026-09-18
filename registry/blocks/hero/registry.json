@@ -5327,6 +5327,183 @@
           }
         }
       }
+    },
+    {
+      "name": "hero-029",
+      "type": "registry:block",
+      "title": "Первый экран подкаста с плеером и живой волной",
+      "description": "Плеер эпизода недели: обложка с акцентной рамкой при воспроизведении, плакатный заголовок, кнопка play, волна из 64 полосок, которая оживает и заливается по прогрессу, таймер, кликабельные главы. Звука нет — витрина поведения; подключить <audio> — дело одного ref.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-029/hero-029.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-029.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "hero",
+          "podcast",
+          "player",
+          "audio",
+          "waveform",
+          "chapters",
+          "media",
+          "radio"
+        ],
+        "preview": {
+          "props": {
+            "cover": "/demo/podcast/cover.webp"
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Hero029",
+          "usage": "<Hero029\n  number=\"№ 112\"\n  title=\"Человек, который зажигает маяк\"\n  guest=\"Сергей Волков — смотритель маяка\"\n  cover=\"/photos/cover.webp\"\n  duration={5412}\n  chapters={[{ at: 0, title: \"Как попасть на маяк\" }, { at: 780, title: \"Одиночество и радио\" }]}\n/>",
+          "summary": "Первый экран для подкаста, радио или аудиокурса: играющий плеер с волной и главами вместо статичной обложки.",
+          "preserve": [
+            "высоты полосок псевдослучайные от индекса — одинаковые на сервере и клиенте",
+            "таймер — setInterval при playing, главы ставят elapsed и включают воспроизведение",
+            "клик по волне перематывает по доле ширины; прошедшие полоски красятся акцентом"
+          ],
+          "adapt": [
+            "number, title, guest, lede, cover, coverAlt, duration",
+            "chapters: at, title",
+            "eyebrow, playLabel, pauseLabel, chaptersLabel, allLabel, allHref",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Человек, который зажигает маяк",
+            "maxLength": 60
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Podcast hero with a player and a live waveform",
+            "description": "An episode-of-the-week player: a cover with an accent frame while playing, a poster headline, a play button, a 64-bar waveform that comes alive and fills with progress, a timer, clickable chapters. No audio — a behaviour showcase; wiring <audio> is one ref away.",
+            "ai": {
+              "summary": "A hero for a podcast, radio show or audio course: a playing player with a waveform and chapters instead of a static cover.",
+              "preserve": [
+                "bar heights are pseudo-random by index — identical on server and client",
+                "the timer is a setInterval while playing; chapters set elapsed and start playback",
+                "clicking the wave seeks by width fraction; past bars are painted with the accent"
+              ],
+              "adapt": [
+                "number, title, guest, lede, cover, coverAlt, duration",
+                "chapters: at, title",
+                "eyebrow, playLabel, pauseLabel, chaptersLabel, allLabel, allHref",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Hero029\n  number=\"№ 112\"\n  title=\"The man who lights the lighthouse\"\n  guest=\"Sergey Volkov — lighthouse keeper\"\n  cover=\"/photos/cover.webp\"\n  duration={5412}\n  chapters={[{ at: 0, title: \"Getting to the lighthouse\" }, { at: 780, title: \"Solitude and the radio\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "The man who lights the lighthouse"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "cover": "/demo/podcast/cover.webp",
+                "eyebrow": "Episode of the week",
+                "title": "The man who lights the lighthouse",
+                "guest": "Sergey Volkov — lighthouse keeper on the White Sea",
+                "lede": "Ninety minutes about a day with nobody in it but you, the wind and a lamp reaching forty kilometres.",
+                "playLabel": "Listen",
+                "pauseLabel": "Pause",
+                "chaptersLabel": "Chapters",
+                "allLabel": "All episodes",
+                "chapters": [
+                  {
+                    "at": 0,
+                    "title": "Getting to the lighthouse"
+                  },
+                  {
+                    "at": 780,
+                    "title": "Solitude and the radio"
+                  },
+                  {
+                    "at": 1860,
+                    "title": "The storm of 2019"
+                  },
+                  {
+                    "at": 3240,
+                    "title": "What to read in winter"
+                  },
+                  {
+                    "at": 4500,
+                    "title": "Leave or stay"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

@@ -4317,6 +4317,178 @@
           }
         }
       }
+    },
+    {
+      "name": "footer-028",
+      "type": "registry:block",
+      "title": "Подвал подкаста с огромной словомаркой",
+      "description": "Подвал: карточка ведущей с портретом и двумя строками, колонки платформ и разделов, RSS моноширинным, а ниже — словомарка на всю ширину узким гротеском, которая при наведении заливается акцентом через background-clip. Внизу копирайт и «до следующего эфира».",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-028/footer-028.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-028.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "footer",
+          "podcast",
+          "wordmark",
+          "typography",
+          "links",
+          "host",
+          "rss",
+          "media"
+        ],
+        "preview": {
+          "props": {
+            "hostImage": "/demo/podcast/host.webp"
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Footer028",
+          "usage": "<Footer028\n  brand=\"Тихий час\"\n  hostName=\"Вера Ильина\"\n  hostRole=\"ведущая и продюсер\"\n  hostImage=\"/photos/host.webp\"\n  platforms={[{ label: \"Spotify\", href: \"#\" }]}\n/>",
+          "summary": "Подвал для подкаста, канала, медиа: карточка автора, ссылки и словомарка-плакат на всю ширину.",
+          "preserve": [
+            "словомарка — clamp(4rem,19cqi,15rem) от ширины контейнера, background-clip: text, заливка акцентом по hover",
+            "карточка ведущей — grid 5rem + текст, портрет со скруглением",
+            "колонки — контейнерный запрос: одна колонка → две"
+          ],
+          "adapt": [
+            "brand, caption, hostName, hostRole, hostImage, hostText",
+            "platformsLabel, platforms, linksLabel, links, rssLabel, rssHref",
+            "copyright, sign",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Имя",
+            "type": "text",
+            "default": "Тихий час",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Podcast footer with a giant wordmark",
+            "description": "A footer: a host card with a portrait and two lines, platform and section columns, a monospace RSS link, and below — a full-width condensed wordmark that fills with the accent on hover via background-clip. Copyright and “until the next show” at the bottom.",
+            "ai": {
+              "summary": "A footer for a podcast, channel or media: an author card, links and a poster-size wordmark across the width.",
+              "preserve": [
+                "the wordmark is clamp(4rem,19cqi,15rem) from container width, background-clip: text, accent fill on hover",
+                "the host card is a 5rem + text grid with a rounded portrait",
+                "columns via a container query: one → two"
+              ],
+              "adapt": [
+                "brand, caption, hostName, hostRole, hostImage, hostText",
+                "platformsLabel, platforms, linksLabel, links, rssLabel, rssHref",
+                "copyright, sign",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Footer028\n  brand=\"Quiet Hour\"\n  hostName=\"Vera Ilyina\"\n  hostRole=\"host and producer\"\n  hostImage=\"/photos/host.webp\"\n  platforms={[{ label: \"Spotify\", href: \"#\" }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Quiet Hour"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "hostImage": "/demo/podcast/host.webp",
+                "brand": "Quiet Hour",
+                "caption": "a podcast about how people work",
+                "hostName": "Vera Ilyina",
+                "hostRole": "host and producer",
+                "hostText": "I record on Wednesdays, edit at night, publish on Thursday. Write if there's a person worth listening to.",
+                "platformsLabel": "Listen",
+                "linksLabel": "Sections",
+                "rssLabel": "rss feed",
+                "copyright": "© Quiet Hour, 2026",
+                "sign": "until the next show",
+                "links": [
+                  {
+                    "label": "Episodes",
+                    "href": "#episodes"
+                  },
+                  {
+                    "label": "Guests",
+                    "href": "#guests"
+                  },
+                  {
+                    "label": "Support",
+                    "href": "#support"
+                  },
+                  {
+                    "label": "Letter",
+                    "href": "#letter"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

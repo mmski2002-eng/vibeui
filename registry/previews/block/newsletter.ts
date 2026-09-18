@@ -18,4 +18,6 @@ export const PREVIEWS = {
     import("@/registry/blocks/newsletter/subscribe-006/subscribe-006").then((module) => module.Subscribe006),
   "subscribe-007": () =>
     import("@/registry/blocks/newsletter/subscribe-007/subscribe-007").then((module) => module.Subscribe007),
+  "subscribe-008": () =>
+    import("@/registry/blocks/newsletter/subscribe-008/subscribe-008").then((module) => module.Subscribe008),
 } satisfies PreviewLoaderMap

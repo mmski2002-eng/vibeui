@@ -27,4 +27,7 @@ export const PREVIEWS = {
   "subscribe-007": dynamic(() =>
     import("@/registry/blocks/newsletter/subscribe-007/subscribe-007").then((module) => module.Subscribe007),
   ),
+  "subscribe-008": dynamic(() =>
+    import("@/registry/blocks/newsletter/subscribe-008/subscribe-008").then((module) => module.Subscribe008),
+  ),
 } satisfies PreviewMap

@@ -1214,6 +1214,36 @@ export const SCENARIOS: Scenario[] = [
       { item: "footer-027", anchor: "footer", role: "Подвал", roleEn: "Footer", note: "Колонки ссылок и полоса рабочего дня, залитая до текущего часа.", noteEn: "Link columns and a working-day bar filled to the current hour." },
     ],
   },
+  {
+    slug: "podcast",
+    label: "Подкаст",
+    en: "Podcast",
+    summary:
+      "Сайт подкаста в тёмной теме с кислотным индикатором записи: шапка с чипом «сейчас играет», плеер эпизода недели с живой волной и главами, лента эпизодов, где длительность — длина полосы, цитаты бегущими строками навстречу друг другу, гости бесконечной лентой, статистика count-up и платформы с наклоном, уровни поддержки на фоне студии, письмо после выпуска с переворотом конверта, подвал с огромной словомаркой и мини-плеер, который выезжает снизу и связывает всё событиями. Sofia Sans Extra Condensed, Inter Tight и IBM Plex Mono.",
+    summaryEn:
+      "A dark-theme podcast site with an acid recording light: a header with a “now playing” chip, an episode-of-the-week player with a live waveform and chapters, an episode list where duration is bar length, quote marquees running towards each other, guests as an endless lane, count-up stats and tilting platforms, support tiers over the studio photo, a post-episode letter with an envelope flip, a footer with a giant wordmark and a bottom mini-player that ties everything together with events. Sofia Sans Extra Condensed, Inter Tight and IBM Plex Mono.",
+    demo: "/scenarios/podcast/demo",
+    source: "app/scenarios/podcast/demo/page.tsx",
+    images: "docs/scenarios/podcast/IMAGES.md",
+    theme: {
+      tone: "dark",
+      accent: "#c8f542",
+      ink: "#f3efe6",
+      font: "Sofia Sans Extra Condensed, Inter Tight, IBM Plex Mono",
+    },
+    sections: [
+      { item: "navbar-029", anchor: "", role: "Шапка", roleEn: "Header", note: "Словомарка, разделы, чип «сейчас играет» от мини-плеера, стекло при прокрутке.", noteEn: "Wordmark, sections, a “now playing” chip fed by the mini-player, glass on scroll." },
+      { item: "hero-029", anchor: "top", role: "Эпизод недели", roleEn: "Episode of the week", note: "Обложка, плакатный заголовок, play, волна из полосок, таймер и главы.", noteEn: "Cover, poster headline, play, a bar waveform, a timer and chapters." },
+      { item: "podcast-004", anchor: "episodes", role: "Эпизоды", roleEn: "Episodes", note: "Длительность — длина полосы, hover раскрывает описание, play шлёт событие плееру.", noteEn: "Duration as bar length, hover expands the description, play emits an event to the player." },
+      { item: "podcast-005", anchor: "", role: "Цитаты", roleEn: "Quotes", note: "Две бегущие строки навстречу друг другу, пауза по наведению.", noteEn: "Two marquees running towards each other, paused on hover." },
+      { item: "people-013", anchor: "guests", role: "Гости", roleEn: "Guests", note: "Бесконечная лента портретов с номером эпизода, остановка под курсором.", noteEn: "An endless lane of portraits with episode numbers, stopping under the cursor." },
+      { item: "podcast-006", anchor: "listen", role: "Где слушать", roleEn: "Where to listen", note: "Статистика считает вверх, плитки платформ наклоняются к курсору.", noteEn: "Stats count up, platform tiles tilt towards the cursor." },
+      { item: "pricing-023", anchor: "support", role: "Поддержать", roleEn: "Support", note: "Три уровня на фоне студии, переключатель месяц/год.", noteEn: "Three tiers over the studio photo, a monthly/yearly switch." },
+      { item: "subscribe-008", anchor: "letter", role: "Письмо", roleEn: "Letter", note: "Одно поле, «что внутри» и переворот в «записали».", noteEn: "One field, “what's inside” and a flip into “noted”." },
+      { item: "footer-028", anchor: "footer", role: "Подвал", roleEn: "Footer", note: "Карточка ведущей, платформы, RSS и словомарка на всю ширину.", noteEn: "A host card, platforms, RSS and a full-width wordmark." },
+      { item: "podcast-007", anchor: "", role: "Мини-плеер", roleEn: "Mini-player", note: "Полоса у нижнего края: появляется по событию из ленты, рассылает состояние.", noteEn: "A bottom bar: appears on an event from the list, broadcasts state." },
+    ],
+  },
 ]
 
 // Опечатка в имени item'а здесь означала бы пустую карточку в рецепте,

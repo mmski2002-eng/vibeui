@@ -69,4 +69,7 @@ export const PREVIEWS = {
   "pricing-022": dynamic(() =>
     import("@/registry/blocks/pricing/pricing-022/pricing-022").then((module) => module.Pricing022),
   ),
+  "pricing-023": dynamic(() =>
+    import("@/registry/blocks/pricing/pricing-023/pricing-023").then((module) => module.Pricing023),
+  ),
 } satisfies PreviewMap

@@ -5029,6 +5029,173 @@
           }
         }
       }
+    },
+    {
+      "name": "navbar-029",
+      "type": "registry:block",
+      "title": "Шапка подкаста с чипом «сейчас играет»",
+      "description": "Шапка подкаста: словомарка узким плакатным гротеском, разделы, чип «сейчас играет» с прыгающими полосками, который подписан на событие мини-плеера и показывает название текущего эпизода, и кнопка «Слушать». При прокрутке — тёмное стекло и линия.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-029/navbar-029.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-029.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "navbar",
+          "header",
+          "podcast",
+          "audio",
+          "now playing",
+          "sticky",
+          "media"
+        ],
+        "preview": {
+          "aspect": "1280 / 68",
+          "props": {
+            "sticky": false
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Navbar029",
+          "usage": "<Navbar029\n  brand=\"Тихий час\"\n  caption=\"подкаст о работе\"\n  links={[{ label: \"Эпизоды\", href: \"#episodes\" }, { label: \"Гости\", href: \"#guests\" }]}\n  actionLabel=\"Слушать\"\n/>",
+          "summary": "Липкая шапка для подкаста или радио: чип «сейчас играет» оживает от события плеера, в тишине показывает расписание.",
+          "preserve": [
+            "чип слушает window-событие vibeui-player:state — без общего состояния с плеером",
+            "эквалайзер — три полоски на keyframes с отрицательными задержками, крутятся только при data-playing",
+            "стекло после 24px прокрутки; подпись бренда и разделы появляются контейнерными запросами"
+          ],
+          "adapt": [
+            "brand, brandHref, caption, links",
+            "idleLabel, playingLabel, actionLabel, actionHref",
+            "sticky",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Имя",
+            "type": "text",
+            "default": "Тихий час",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Podcast header with a “now playing” chip",
+            "description": "A podcast header: a condensed poster wordmark, sections, a “now playing” chip with bouncing bars that subscribes to the mini-player event and shows the current episode title, and a “Listen” button. Glass and a hairline on scroll.",
+            "ai": {
+              "summary": "A sticky header for a podcast or radio: the “now playing” chip comes alive from the player event and shows the schedule when idle.",
+              "preserve": [
+                "the chip listens to the vibeui-player:state window event — no shared state with the player",
+                "the equaliser is three bars on keyframes with negative delays, running only with data-playing",
+                "glass after 24px of scroll; the brand caption and sections appear via container queries"
+              ],
+              "adapt": [
+                "brand, brandHref, caption, links",
+                "idleLabel, playingLabel, actionLabel, actionHref",
+                "sticky",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Navbar029\n  brand=\"Quiet Hour\"\n  caption=\"a podcast about work\"\n  links={[{ label: \"Episodes\", href: \"#episodes\" }, { label: \"Guests\", href: \"#guests\" }]}\n  actionLabel=\"Listen\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Quiet Hour"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "sticky": false,
+                "brand": "Quiet Hour",
+                "caption": "a podcast about work",
+                "idleLabel": "on air on Thursdays",
+                "playingLabel": "now",
+                "actionLabel": "Listen",
+                "links": [
+                  {
+                    "label": "Episodes",
+                    "href": "#episodes"
+                  },
+                  {
+                    "label": "Guests",
+                    "href": "#guests"
+                  },
+                  {
+                    "label": "Where to listen",
+                    "href": "#listen"
+                  },
+                  {
+                    "label": "Support",
+                    "href": "#support"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

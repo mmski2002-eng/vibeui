@@ -1092,6 +1092,163 @@
           }
         }
       }
+    },
+    {
+      "name": "subscribe-008",
+      "type": "registry:block",
+      "title": "Письмо после каждого выпуска с «конвертом»",
+      "description": "Подписка на письмо ведущей: слева плакатный заголовок и «что внутри» тремя строками, справа одно поле и кнопка, которая на фокусе поля подсвечивается волной; после отправки форма переворачивается (rotateX) в подтверждение. Внизу обещание частоты моноширинным.",
+      "categories": [
+        "newsletter"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "subscribe-008/subscribe-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/subscribe-008.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "newsletter",
+          "subscribe",
+          "email",
+          "podcast",
+          "form",
+          "signup",
+          "letter",
+          "flip"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Subscribe008",
+          "usage": "<Subscribe008\n  title=\"После каждого выпуска — письмо\"\n  inside={[\"три цитаты, которые не вошли в эфир\", \"ссылка на полную версию\"]}\n  promise=\"раз в неделю · после выпуска\"\n/>",
+          "summary": "Подписка на письмо для подкаста, автора, медиа: одно поле, честное «что внутри» и переворот в «записали».",
+          "preserve": [
+            "переворот — форма rotateX(90deg) и подтверждение из rotateX(-90deg) с задержкой .25s, perspective на карточке",
+            "кнопка подсвечивается box-shadow при form:focus-within",
+            "мягкое пятно акцента в углу карточки — radial-gradient с blur"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, inside",
+            "placeholder, submitLabel, promise",
+            "doneTitle, doneText",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "После каждого выпуска — письмо",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "A letter after every episode, with an envelope flip",
+            "description": "A host-letter signup: a poster headline and a three-line “what's inside” on the left, one field and a button on the right that glows when the field is focused; after submit the form flips (rotateX) into a confirmation. A monospace frequency promise at the bottom.",
+            "ai": {
+              "summary": "A letter signup for a podcast, author or media: one field, an honest “what's inside” and a flip into “noted”.",
+              "preserve": [
+                "the flip is the form at rotateX(90deg) and the confirmation from rotateX(-90deg) with a .25s delay, perspective on the card",
+                "the button glows with box-shadow on form:focus-within",
+                "a soft accent blob in the card corner — radial-gradient with blur"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, inside",
+                "placeholder, submitLabel, promise",
+                "doneTitle, doneText",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Subscribe008\n  title=\"A letter after every episode\"\n  inside={[\"three quotes that didn't make it on air\", \"a link to the uncut version\"]}\n  promise=\"once a week · after the release\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "A letter after every episode"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Letter",
+                "title": "A letter after every episode",
+                "lede": "Not a digest and not “studio news”. One letter from the host: what stayed off air and what to listen to next.",
+                "placeholder": "email",
+                "submitLabel": "Get it",
+                "promise": "once a week · after the release · one-click unsubscribe",
+                "inside": [
+                  "three quotes that didn't make it on air",
+                  "a link to the uncut version",
+                  "a question for the guest you can answer"
+                ],
+                "doneTitle": "Noted",
+                "doneText": "The first letter arrives next Thursday, right after the release."
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

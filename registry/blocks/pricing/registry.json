@@ -4221,6 +4221,204 @@
           }
         }
       }
+    },
+    {
+      "name": "pricing-023",
+      "type": "registry:block",
+      "title": "Уровни поддержки подкаста с переключателем месяц/год",
+      "description": "Три уровня поддержки на фоне фото студии с затемнением: переключатель месяц/год с пометкой выгоды, цены-табло, которые меняются со сдвигом, выделенный уровень приподнят и обведён акцентом, кнопки как «купить билет».",
+      "categories": [
+        "pricing"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-023/pricing-023.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-023.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "pricing",
+          "support",
+          "membership",
+          "podcast",
+          "tiers",
+          "patreon",
+          "donate",
+          "subscription"
+        ],
+        "preview": {
+          "props": {
+            "image": "/demo/podcast/studio-01.webp"
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Pricing023",
+          "usage": "<Pricing023\n  image=\"/photos/studio.webp\"\n  tiers={[\n    { name: \"Слушатель\", monthly: \"0 ₽\", yearly: \"0 ₽\", perks: [\"эпизод каждый четверг\"], action: \"Так и оставить\" },\n    { name: \"Друг студии\", monthly: \"290 ₽\", yearly: \"2 900 ₽\", perks: [\"эпизоды на день раньше\", \"полные версии\"], action: \"Стать другом\", featured: true },\n  ]}\n/>",
+          "summary": "Тарифы поддержки для подкаста, канала, сообщества: месяц/год, три уровня, выделенный посередине.",
+          "preserve": [
+            "переключатель — два button с aria-pressed; цена перерисовывается с key и keyframes сдвига",
+            "фото подложки — opacity .35 и градиентная тень сверху и снизу; карточки на backdrop-filter",
+            "выделенный уровень — translateY(-1rem) на широком экране и кольцо акцента"
+          ],
+          "adapt": [
+            "tiers: name, monthly, yearly, text, perks, action, href, featured",
+            "monthlyLabel, yearlyLabel, yearlyNote, perLabel, image",
+            "eyebrow, title, lede",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Эфир держится на слушателях",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Podcast support tiers with a monthly/yearly switch",
+            "description": "Three support tiers over a darkened studio photo: a monthly/yearly switch with a savings note, board-style prices that change with a slide, the featured tier lifted and ringed with the accent, buttons like “buy a ticket”.",
+            "ai": {
+              "summary": "Support plans for a podcast, channel or community: monthly/yearly, three tiers, the featured one in the middle.",
+              "preserve": [
+                "the switch is two buttons with aria-pressed; the price re-renders with a key and slide keyframes",
+                "the backdrop photo is opacity .35 with gradient shade top and bottom; cards on backdrop-filter",
+                "the featured tier gets translateY(-1rem) on wide screens and an accent ring"
+              ],
+              "adapt": [
+                "tiers: name, monthly, yearly, text, perks, action, href, featured",
+                "monthlyLabel, yearlyLabel, yearlyNote, perLabel, image",
+                "eyebrow, title, lede",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Pricing023\n  image=\"/photos/studio.webp\"\n  tiers={[\n    { name: \"Listener\", monthly: \"$0\", yearly: \"$0\", perks: [\"an episode every Thursday\"], action: \"Keep it\" },\n    { name: \"Studio friend\", monthly: \"$5\", yearly: \"$50\", perks: [\"episodes a day early\", \"uncut versions\"], action: \"Become a friend\", featured: true },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "The show runs on listeners"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "image": "/demo/podcast/studio-01.webp",
+                "eyebrow": "Support",
+                "title": "The show runs on listeners",
+                "lede": "No ads, no sponsors: every episode is paid for by the people waiting for it. Choose how much you're with us.",
+                "monthlyLabel": "monthly",
+                "yearlyLabel": "yearly",
+                "yearlyNote": "−2 months",
+                "perLabel": "/ mo",
+                "tiers": [
+                  {
+                    "name": "Listener",
+                    "monthly": "$0",
+                    "yearly": "$0",
+                    "text": "Everything that goes on air.",
+                    "perks": [
+                      "a new episode every Thursday",
+                      "a letter after each release",
+                      "the listeners' chat"
+                    ],
+                    "action": "Keep it",
+                    "href": "#"
+                  },
+                  {
+                    "name": "Studio friend",
+                    "monthly": "$5",
+                    "yearly": "$50",
+                    "text": "More talk than fit on air.",
+                    "perks": [
+                      "episodes a day early",
+                      "uncut versions",
+                      "vote for guests",
+                      "your name in the credits once a season"
+                    ],
+                    "action": "Become a friend",
+                    "href": "#",
+                    "featured": true
+                  },
+                  {
+                    "name": "Co-host",
+                    "monthly": "$20",
+                    "yearly": "$200",
+                    "text": "For those who want into the studio.",
+                    "perks": [
+                      "everything in Studio friend",
+                      "a call with the host every quarter",
+                      "an invitation to a live recording",
+                      "a tape signed by the guest"
+                    ],
+                    "action": "Enter the studio",
+                    "href": "#"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

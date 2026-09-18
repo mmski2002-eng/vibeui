@@ -2805,6 +2805,153 @@
           }
         }
       }
+    },
+    {
+      "name": "people-013",
+      "type": "registry:block",
+      "title": "Гости бесконечной лентой с остановкой по наведению",
+      "description": "Круглые портреты с именем, ролью и номером эпизода едут бесконечной строкой; чётные карточки чуть опущены для ритма, по наведению лента останавливается, а карточка под курсором вырастает, обводится акцентом и фото теряет серость. Дубль ленты — для бесшовности.",
+      "categories": [
+        "team"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "people-013/people-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/people-013.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "team",
+          "guests",
+          "people",
+          "marquee",
+          "avatars",
+          "podcast",
+          "carousel",
+          "community"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "People013",
+          "usage": "<People013\n  title=\"Кто был в студии\"\n  guests={[\n    { name: \"Сергей Волков\", role: \"смотритель маяка\", episode: \"№ 112\", image: \"/photos/guest-01.webp\" },\n    { name: \"Аня Резник\", role: \"керамист\", episode: \"№ 111\", image: \"/photos/guest-02.webp\" },\n  ]}\n/>",
+          "summary": "Лента людей для подкаста, конференции, сообщества: десятки лиц без сетки, движение и остановка под курсором.",
+          "preserve": [
+            "лента max-content с дублем и translateX(-50%); скорость из переменной",
+            "чётные карточки translateY(1.2rem); hover — scale(1.06), обводка и снятие grayscale",
+            "reduced-motion разворачивает ленту в обычный перенос и прячет дубли"
+          ],
+          "adapt": [
+            "guests: name, role, image, episode, href",
+            "eyebrow, title, lede",
+            "speed — секунд на круг",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Кто был в студии",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Guests as an endless lane that pauses on hover",
+            "description": "Round portraits with name, role and episode number run in an endless line; even cards sit a bit lower for rhythm, the lane pauses on hover, and the hovered card grows, gets an accent ring and its photo loses the grey tint. A duplicate lane makes the loop seamless.",
+            "ai": {
+              "summary": "A lane of people for a podcast, conference or community: dozens of faces without a grid, motion and a pause under the cursor.",
+              "preserve": [
+                "a max-content lane with a duplicate and translateX(-50%); speed from a variable",
+                "even cards get translateY(1.2rem); hover — scale(1.06), a ring and grayscale removed",
+                "reduced-motion unwraps the lane into normal flow and hides the duplicates"
+              ],
+              "adapt": [
+                "guests: name, role, image, episode, href",
+                "eyebrow, title, lede",
+                "speed — seconds per loop",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<People013\n  title=\"Who's been in the studio\"\n  guests={[\n    { name: \"Sergey Volkov\", role: \"lighthouse keeper\", episode: \"№ 112\", image: \"/photos/guest-01.webp\" },\n    { name: \"Anya Reznik\", role: \"ceramicist\", episode: \"№ 111\", image: \"/photos/guest-02.webp\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Who's been in the studio"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Guests",
+                "title": "Who's been in the studio",
+                "lede": "A hundred and twelve people who do their work with hands and head. Hover — the lane stops."
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
