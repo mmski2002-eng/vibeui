@@ -2,7 +2,8 @@
 
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
-import { useEffect, useRef, useState } from "react"
+import { useSearchParams } from "next/navigation"
+import { Suspense, useEffect, useRef, useState } from "react"
 
 import { BlockPreview } from "@/components/block-preview"
 import { CopyFlow } from "@/components/catalog/copy-flow"
@@ -26,23 +27,7 @@ import { getDictionary, localePath, type Locale } from "@/lib/i18n"
 import type { ItemKind } from "@/registry/categories"
 import type { CatalogItem } from "@/registry/meta"
 
-/**
- * Превью и выдача на странице item'а. Состояние — подложка и значения
- * контролов — приходит с витрины через query и живёт здесь: обе секции
- * должны показывать одну и ту же настройку, и она же уезжает в ссылку.
- *
- * Query читается на клиенте после монтирования, а не из `searchParams`
- * страницы: серверное чтение переводило все страницы items в динамический
- * рендер на каждый запрос, а так они остаются статическими.
- */
-export function ItemWorkbench({
-  item,
-  kind,
-  category,
-  locale,
-  docUrl,
-  pro,
-}: {
+type WorkbenchProps = {
   item: CatalogItem
   kind: ItemKind
   category: string
@@ -50,28 +35,67 @@ export function ItemWorkbench({
   docUrl: string | null
   /** Закрытый item: у не-Pro кнопка «Копировать» превращается в «Доступно с Pro». */
   pro: boolean
+}
+
+/**
+ * Превью и выдача на странице item'а. Состояние — подложка и значения
+ * контролов — приходит с витрины через query и живёт здесь: обе секции
+ * должны показывать одну и ту же настройку, и она же уезжает в ссылку.
+ *
+ * Query читается на клиенте через `useSearchParams`, а не из `searchParams`
+ * страницы: серверное чтение переводило все страницы items в динамический
+ * рендер на каждый запрос. Suspense — требование Next для статических
+ * страниц; в fallback та же выдача с дефолтами, чтобы HTML не терял разметку.
+ */
+export function ItemWorkbench(props: WorkbenchProps) {
+  return (
+    <Suspense
+      fallback={
+        <Workbench
+          {...props}
+          initialTheme="auto"
+          initialValues={defaultValues(getControls(props.item))}
+        />
+      }
+    >
+      <QueryWorkbench {...props} />
+    </Suspense>
+  )
+}
+
+function QueryWorkbench(props: WorkbenchProps) {
+  const query = useSearchParams()
+
+  return (
+    <Workbench
+      {...props}
+      initialTheme={resolvePreviewSurface(query.get("theme") ?? undefined)}
+      initialValues={resolveControlValues(props.item, query)}
+    />
+  )
+}
+
+function Workbench({
+  item,
+  kind,
+  category,
+  locale,
+  docUrl,
+  pro,
+  initialTheme,
+  initialValues,
+}: WorkbenchProps & {
+  initialTheme: PreviewSurface
+  initialValues: ControlValues
 }) {
   const t = getDictionary(locale)
-  const [theme, setTheme] = useState<PreviewSurface>("auto")
+  const [theme, setTheme] = useState<PreviewSurface>(initialTheme)
   const shellLight = useShellIsLight()
   // Фрейм превью грузится по ссылке с конкретной темой, «как у оболочки» в
   // ней не выразить — поэтому здесь выбор доводится до dark/light.
   const frameTheme = theme === "auto" ? (shellLight ? "light" : "dark") : theme
+  const [values, setValues] = useState<ControlValues>(initialValues)
   const controls = getControls(item)
-  const [values, setValues] = useState<ControlValues>(() =>
-    defaultValues(controls),
-  )
-
-  useEffect(() => {
-    const query = new URLSearchParams(window.location.search)
-
-    if (query.size === 0) {
-      return
-    }
-
-    setTheme(resolvePreviewSurface(query.get("theme") ?? undefined))
-    setValues(resolveControlValues(item, query))
-  }, [item])
   // Подсказка живёт дольше, чем «Скопировано» на кнопке: человек в этот
   // момент уже переключается в свой редактор и читает её там краем глаза.
   const [copied, setCopied] = useState(false)
