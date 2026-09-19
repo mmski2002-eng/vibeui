@@ -5,6 +5,8 @@ import { useRef, useState, useSyncExternalStore, type CSSProperties, type FormEv
 export type Gadget003Swatch = {
   name: string
   color: string
+  /** Рендер лампы в этом цвете (PNG без фона, один ракурс у всех). Есть у всех свотчей — вместо CSS-лампы. */
+  image?: string
 }
 
 export type Gadget003Kit = {
@@ -36,13 +38,14 @@ export type Gadget003Props = {
   style?: CSSProperties
 }
 
-// Предзаказ гаджета: слева CSS-лампа, цвет корпуса которой меняют три
-// свотча (переменная --shell уходит в градиенты корпуса и основания),
-// справа выбор комплекта радио-карточками, обратный отсчёт до отгрузки
+// Предзаказ гаджета: слева рендер лампы (PNG без фона), свотч цвета
+// переключает рендер кроссфейдом с лёгким поворотом; без рендеров —
+// CSS-лампа, цвет корпуса которой меняется через переменную --shell.
+// Справа выбор комплекта радио-карточками, обратный отсчёт до отгрузки
 // (дата считается от текущей, время тикает через useSyncExternalStore
 // с серверным снимком null — без гидрационных расхождений), полоса
 // «осталось N из партии» и магнитная кнопка: она тянется к курсору
-// через transform, надпись — чуть сильнее. После отправки — номер места
+// через transform, надпись — чуть сильнее. После отправки — номер
 // в партии с прорисованной галочкой. Форма ничего не отправляет.
 const FONTS = "https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
 
@@ -124,6 +127,9 @@ container-type:inline-size;
 [data-vibeui-block="gadget-003"] [data-part="done"] p{margin:0;color:var(--vibeui-gadget-003-muted)}
 @keyframes vibeui-gadget-003-grow{from{transform:scaleX(0)}}
 @keyframes vibeui-gadget-003-draw{to{stroke-dashoffset:0}}
+[data-vibeui-block="gadget-003"] [data-part="lamp"][data-photo="true"]{width:15rem;height:19rem}
+[data-vibeui-block="gadget-003"] [data-part="render"]{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:50% 100%;display:block;pointer-events:none;opacity:0;transform:scale(.96) rotate(-2deg);transition:opacity .5s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.3,1.3,.4,1);filter:drop-shadow(0 24px 24px rgb(0 0 0 / .45))}
+[data-vibeui-block="gadget-003"] [data-part="render"][data-active="true"]{opacity:1;transform:none}
 @container (min-width: 60rem){[data-vibeui-block="gadget-003"] [data-part="stage"]{grid-template-columns:1fr 1.1fr;gap:3rem;align-items:start}[data-vibeui-block="gadget-003"] [data-part="preview"]{position:sticky;top:5rem;padding:3rem 2rem 2rem}[data-vibeui-block="gadget-003"] [data-part="lamp"]{width:16rem;height:23rem}[data-vibeui-block="gadget-003"] [data-part="body"]{width:12rem;height:15.4rem}[data-vibeui-block="gadget-003"] [data-part="dome"]{width:12rem;height:3.8rem;top:3.7rem}[data-vibeui-block="gadget-003"] [data-part="base"]{width:14rem}[data-vibeui-block="gadget-003"] [data-part="foot"]{width:15rem}[data-vibeui-block="gadget-003"] [data-part="body"]::after{top:7.4rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="gadget-003"] *{animation:none!important;transition:none!important}[data-vibeui-block="gadget-003"] [data-part="done"] circle,[data-vibeui-block="gadget-003"] [data-part="done"] path{stroke-dashoffset:0}}`
 
@@ -162,9 +168,9 @@ function formatMoney(value: number, currency: string) {
 }
 
 const DEFAULT_SWATCHES: Gadget003Swatch[] = [
-  { name: "Графит", color: "#2b2b2b" },
-  { name: "Песок", color: "#cdb994" },
-  { name: "Шалфей", color: "#7d8c76" },
+  { name: "Графит", color: "#2b2b2b", image: "/demo/gadget/lamp-front.png" },
+  { name: "Песок", color: "#cdb994", image: "/demo/gadget/lamp-sand.png" },
+  { name: "Слоновая кость", color: "#e9e2d2", image: "/demo/gadget/lamp-white.png" },
 ]
 
 const DEFAULT_KITS: Gadget003Kit[] = [
@@ -196,6 +202,7 @@ export function Gadget003({
   style,
 }: Gadget003Props) {
   const [swatch, setSwatch] = useState(0)
+  const renders = swatches.length > 0 && swatches.every((item) => item.image)
   const [kit, setKit] = useState(0)
   const [done, setDone] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
@@ -262,11 +269,17 @@ export function Gadget003({
           </div>
           <div data-part="stage">
             <div data-part="preview">
-              <div data-part="lamp" aria-hidden="true">
-                <i data-part="foot" />
-                <i data-part="base" />
-                <i data-part="body" />
-                <i data-part="dome" />
+              <div data-part="lamp" data-photo={renders} aria-hidden="true">
+                {renders ? (
+                  swatches.map((item, index) => <img key={item.name} data-part="render" src={item.image} alt="" data-active={index === swatch} />)
+                ) : (
+                  <>
+                    <i data-part="foot" />
+                    <i data-part="base" />
+                    <i data-part="body" />
+                    <i data-part="dome" />
+                  </>
+                )}
               </div>
               <ul data-part="swatches" aria-label="Цвет корпуса">
                 {swatches.map((item, index) => (

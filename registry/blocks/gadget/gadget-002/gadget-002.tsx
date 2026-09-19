@@ -15,6 +15,9 @@ export type Gadget002Props = {
   parts?: readonly Gadget002Part[]
   /** Разобрать самостоятельно, когда секция появляется на экране. */
   autoExplode?: boolean
+  /** Рендеры: собранная лампа и взрыв-схема (PNG без фона, один ракурс). Заданы оба — вместо CSS-деталей. */
+  assembledImage?: string
+  explodedImage?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -23,13 +26,13 @@ export type Gadget002Props = {
   style?: CSSProperties
 }
 
-// Взрыв-схема гаджета: пять деталей (диффузор, плата, динамик, корпус,
-// основание) нарисованы CSS и в собранном виде складываются в лампу. Один
-// ползунок «разбор» раздвигает их по вертикали — каждая деталь сдвигается
-// на свой offset × степень разбора через transform, к деталям тянутся
-// подписи-линии (scaleX) с номерами. При появлении в viewport схема
-// разбирается сама (IntersectionObserver), кнопка собирает обратно.
-// Наведение на пункт списка подсвечивает деталь.
+// Взрыв-схема гаджета: два рендера (PNG без фона) — собранная лампа и
+// разобранная на пять деталей — лежат друг на друге, ползунок «разбор»
+// проявляет разобранную через opacity и лёгкий масштаб, а подписи-линии с
+// номерами съезжаются к своим деталям (transform по степени разбора). Без
+// рендеров детали рисуются CSS и раздвигаются по вертикали. При появлении
+// в viewport схема разбирается сама (IntersectionObserver), кнопка
+// собирает обратно. Наведение на пункт списка подсвечивает подпись.
 const FONTS = "https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
 
 const STYLES = `
@@ -97,6 +100,18 @@ container-type:inline-size;
 [data-vibeui-block="gadget-002"] [data-part="item"]::before{counter-increment:vibeui-gadget-002;content:"0" counter(vibeui-gadget-002);grid-row:span 2;font-family:var(--vibeui-gadget-002-mono);font-size:.8rem;color:var(--vibeui-gadget-002-accent);padding-top:.2rem}
 [data-vibeui-block="gadget-002"] [data-part="item"] h3{margin:0;font-family:var(--vibeui-gadget-002-display);font-weight:700;font-size:1rem;letter-spacing:-.01em}
 [data-vibeui-block="gadget-002"] [data-part="item"] p{margin:0;font-size:.9rem;color:var(--vibeui-gadget-002-muted)}
+[data-vibeui-block="gadget-002"] [data-part="renders"]{position:absolute;left:8%;top:1.5rem;bottom:1.5rem;width:56%}
+[data-vibeui-block="gadget-002"] [data-part="renders"] img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:50% 50%;display:block;filter:drop-shadow(0 20px 24px rgb(0 0 0 / .45))}
+[data-vibeui-block="gadget-002"] [data-part="assembled"]{opacity:calc(1 - var(--vibeui-gadget-002-e));transform:scale(calc(.82 + (1 - var(--vibeui-gadget-002-e)) * .06))}
+[data-vibeui-block="gadget-002"] [data-part="exploded"]{opacity:var(--vibeui-gadget-002-e);transform:scale(calc(.94 + var(--vibeui-gadget-002-e) * .06))}
+[data-vibeui-block="gadget-002"] [data-scene-smooth="true"] [data-part="renders"] img{transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+[data-vibeui-block="gadget-002"] [data-part="renders"] [data-part="tag"]{left:calc(100% - 4rem);transform:translateY(-50%) translateY(calc((1 - var(--vibeui-gadget-002-e)) * var(--vibeui-gadget-002-ty)))}
+[data-vibeui-block="gadget-002"] [data-part="renders"] [data-part="tag"][data-kind="dome"]{top:11%;--vibeui-gadget-002-ty:9rem}
+[data-vibeui-block="gadget-002"] [data-part="renders"] [data-part="tag"][data-kind="board"]{top:23%;--vibeui-gadget-002-ty:6rem}
+[data-vibeui-block="gadget-002"] [data-part="renders"] [data-part="tag"][data-kind="speaker"]{top:33%;--vibeui-gadget-002-ty:3rem}
+[data-vibeui-block="gadget-002"] [data-part="renders"] [data-part="tag"][data-kind="body"]{top:60%;--vibeui-gadget-002-ty:0rem}
+[data-vibeui-block="gadget-002"] [data-part="renders"] [data-part="tag"][data-kind="base"]{top:90%;--vibeui-gadget-002-ty:-5rem}
+[data-vibeui-block="gadget-002"] [data-part="renders"] [data-part="tag"][data-hot="true"]{color:var(--vibeui-gadget-002-light)}
 @container (min-width: 60rem){[data-vibeui-block="gadget-002"] [data-part="stage"]{grid-template-columns:1.15fr .85fr;align-items:center;gap:3rem}[data-vibeui-block="gadget-002"] [data-part="scene"]{height:38rem}[data-vibeui-block="gadget-002"] [data-part="piece"]{left:42%}[data-vibeui-block="gadget-002"] [data-part="piece"][data-kind="dome"]{top:14rem}[data-vibeui-block="gadget-002"] [data-part="piece"][data-kind="board"]{top:15.9rem}[data-vibeui-block="gadget-002"] [data-part="piece"][data-kind="speaker"]{top:17.6rem}[data-vibeui-block="gadget-002"] [data-part="piece"][data-kind="body"]{top:15.4rem}[data-vibeui-block="gadget-002"] [data-part="piece"][data-kind="base"]{top:28.6rem}[data-vibeui-block="gadget-002"] [data-part="tag"]::before{width:4rem}[data-vibeui-block="gadget-002"] [data-part="controls"]{left:1.5rem;right:auto;width:22rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="gadget-002"] *{animation:none!important;transition:none!important}}`
 
@@ -117,6 +132,8 @@ export function Gadget002({
   lede = "Разберите Луч, не снимая ни одного винта: потяните ползунок или просто долистайте — схема разложится сама.",
   parts = DEFAULT_PARTS,
   autoExplode = true,
+  assembledImage = "/demo/gadget/lamp-front.png",
+  explodedImage = "/demo/gadget/exploded.png",
   tone = "auto",
   accent,
   ink,
@@ -129,6 +146,7 @@ export function Gadget002({
   const [explode, setExplode] = useState(0)
   const [smooth, setSmooth] = useState(true)
   const [hot, setHot] = useState<number | null>(null)
+  const renders = Boolean(assembledImage && explodedImage)
 
   useEffect(() => {
     const scene = sceneRef.current
@@ -169,15 +187,28 @@ export function Gadget002({
           </div>
           <div data-part="stage">
             <div data-part="scene" data-scene-smooth={smooth} ref={sceneRef}>
-              {KINDS.map((kind, index) => (
-                <div key={kind} data-part="piece" data-kind={kind} data-hot={hot === index ? "true" : undefined} aria-hidden="true">
-                  <i />
-                  <span data-part="tag">
-                    <b>{index + 1}</b>
-                    {parts[index]?.name}
-                  </span>
+              {renders ? (
+                <div data-part="renders" aria-hidden="true">
+                  <img data-part="assembled" src={assembledImage} alt="" />
+                  <img data-part="exploded" src={explodedImage} alt="" />
+                  {KINDS.map((kind, index) => (
+                    <span key={kind} data-part="tag" data-kind={kind} data-hot={hot === index ? "true" : undefined}>
+                      <b>{index + 1}</b>
+                      {parts[index]?.name}
+                    </span>
+                  ))}
                 </div>
-              ))}
+              ) : (
+                KINDS.map((kind, index) => (
+                  <div key={kind} data-part="piece" data-kind={kind} data-hot={hot === index ? "true" : undefined} aria-hidden="true">
+                    <i />
+                    <span data-part="tag">
+                      <b>{index + 1}</b>
+                      {parts[index]?.name}
+                    </span>
+                  </div>
+                ))
+              )}
               <div data-part="controls">
                 <label>
                   Разбор

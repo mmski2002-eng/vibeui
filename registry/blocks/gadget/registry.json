@@ -41,7 +41,7 @@
         },
         "ai": {
           "export": "Gadget001",
-          "usage": "<Gadget001\n  title=\"Рассвет за тридцать минут — прямо на столе\"\n  startTime=\"05:30\"\n  endTime=\"06:00\"\n  steps={[{ at: 0, label: \"05:30 · 1 %\", text: \"Тусклый красный, как угли.\" }]}\n/>",
+          "usage": "<Gadget001\n  image=\"/photos/lamp-front.png\"\n  title=\"Рассвет за тридцать минут — прямо на столе\"\n  startTime=\"05:30\"\n  endTime=\"06:00\"\n  steps={[{ at: 0, label: \"05:30 · 1 %\", text: \"Тусклый красный, как угли.\" }]}\n/>",
           "summary": "Sticky-сцена по прокрутке: комната светлеет от ночи к утру, лампа разгорается, часы идут.",
           "preserve": [
             "прогресс = -rect.top / (высота трека − высота окна), считается в requestAnimationFrame по scroll/resize и уходит в переменные -p, -night, -dawn, -day",
@@ -49,6 +49,7 @@
             "трек min-height: screens × 100svh, сцена position:sticky с min/max-height 100svh; время считается из startTime/endTime по прогрессу"
           ],
           "adapt": [
+            "image — рендер лампы спереди; пусто — CSS-лампа",
             "eyebrow, title, alarmLabel",
             "startTime, endTime, steps: at, label, text",
             "screens",
@@ -122,6 +123,7 @@
                 "the track is min-height: screens × 100svh, the stage is position:sticky with min/max-height 100svh; the time is derived from startTime/endTime by progress"
               ],
               "adapt": [
+                "image — the front lamp render; empty — a CSS lamp",
                 "eyebrow, title, alarmLabel",
                 "startTime, endTime, steps: at, label, text",
                 "screens",
@@ -130,7 +132,7 @@
                 "ink — ink",
                 "background — background"
               ],
-              "usage": "<Gadget001\n  title=\"A thirty-minute sunrise — right on your desk\"\n  startTime=\"05:30\"\n  endTime=\"06:00\"\n  steps={[{ at: 0, label: \"05:30 · 1 %\", text: \"Dim red, like embers.\" }]}\n/>"
+              "usage": "<Gadget001\n  image=\"/photos/lamp-front.png\"\n  title=\"A thirty-minute sunrise — right on your desk\"\n  startTime=\"05:30\"\n  endTime=\"06:00\"\n  steps={[{ at: 0, label: \"05:30 · 1 %\", text: \"Dim red, like embers.\" }]}\n/>"
             },
             "controls": {
               "title": {
@@ -186,7 +188,7 @@
       "name": "gadget-002",
       "type": "registry:block",
       "title": "Взрыв-схема гаджета: детали разъезжаются по ползунку и в viewport",
-      "description": "Exploded view лампы из CSS: диффузор, плата, динамик, корпус и основание в собранном виде складываются в устройство, ползунок «разбор» раздвигает их по вертикали — каждая деталь уходит на свой offset через transform, к ним тянутся линии-подписи с номерами. При появлении в viewport схема разбирается сама, кнопка собирает обратно, наведение на пункт списка справа подсвечивает деталь.",
+      "description": "Взрыв-схема гаджета: два рендера — собранная лампа и разобранная на пять деталей — лежат друг на друге, ползунок «разбор» проявляет разобранную, а подписи-линии с номерами съезжаются к своим деталям. Без рендеров детали рисуются CSS и раздвигаются по вертикали. При появлении в viewport схема разбирается сама, кнопка собирает обратно; наведение на пункт списка подсвечивает подпись.",
       "categories": [
         "gadget"
       ],
@@ -219,14 +221,16 @@
         },
         "ai": {
           "export": "Gadget002",
-          "usage": "<Gadget002\n  title=\"Пять деталей. Ни одной лишней\"\n  parts={[\n    { name: \"Диффузор\", text: \"Опаловый поликарбонат, 2 мм.\" },\n    { name: \"Плата\", text: \"ESP32-S3 и датчики.\" },\n    { name: \"Динамик\", text: \"5 Вт, 360°.\" },\n    { name: \"Корпус\", text: \"Анодированный алюминий.\" },\n    { name: \"Основание\", text: \"Стальной блин 480 г.\" },\n  ]}\n/>",
+          "usage": "<Gadget002\n  assembledImage=\"/photos/lamp-front.png\"\n  explodedImage=\"/photos/lamp-exploded.png\"\n  title=\"Пять деталей. Ни одной лишней\"\n  parts={[\n    { name: \"Диффузор\", text: \"Опаловый поликарбонат, 2 мм.\" },\n    { name: \"Плата\", text: \"ESP32-S3 и датчики.\" },\n    { name: \"Динамик\", text: \"5 Вт, 360°.\" },\n    { name: \"Корпус\", text: \"Анодированный алюминий.\" },\n    { name: \"Основание\", text: \"Стальной блин 480 г.\" },\n  ]}\n/>",
           "summary": "Взрыв-схема железки: пять CSS-деталей разъезжаются по ползунку, подписи-линии проявляются, список подсвечивает деталь.",
           "preserve": [
+            "с рендерами: opacity assembled = 1 − e, exploded = e; подписи [data-part=tag][data-kind] сдвигаются на --ty × (1 − e)",
             "каждая деталь — data-part=piece с собственным -o, transform: translate(-50%, calc(-o × -e)); переход .9 с включается только через data-scene-smooth",
             "подписи — data-part=tag внутри детали: линия ::before scaleX(-e), opacity = -e",
             "IntersectionObserver с threshold .45 ставит explode=100 один раз, пока пользователь не трогал ползунок или кнопку (touched ref)"
           ],
           "adapt": [
+            "assembledImage, explodedImage — два рендера в одном ракурсе; top подписей подгоняется под схему",
             "eyebrow, title, lede",
             "parts: name, text (ровно пять, сверху вниз)",
             "autoExplode",
@@ -290,15 +294,17 @@
         "i18n": {
           "en": {
             "title": "Gadget exploded view: parts spread apart by a slider and in the viewport",
-            "description": "A CSS exploded view of a lamp: diffuser, board, speaker, body and base assemble into the device; the “explode” slider spreads them vertically — each part moves by its own offset through transform, leader lines with numbers stretch to them. The view explodes on its own when it enters the viewport, a button reassembles it, hovering a list item on the right highlights the part.",
+            "description": "A gadget exploded view: two renders — the assembled lamp and the one split into five parts — stacked on top of each other; the “disassemble” slider fades in the exploded one and the numbered label lines slide to their parts. Without renders the parts are drawn in CSS and spread vertically. On entering the viewport the scheme explodes by itself, a button reassembles it; hovering a list item highlights its label.",
             "ai": {
               "summary": "A hardware exploded view: five CSS parts spread apart by a slider, leader labels appear, the list highlights a part.",
               "preserve": [
+                "with renders: assembled opacity = 1 − e, exploded = e; [data-part=tag][data-kind] labels shift by --ty × (1 − e)",
                 "each part is a data-part=piece with its own -o, transform: translate(-50%, calc(-o × -e)); the .9 s transition is enabled only via data-scene-smooth",
                 "labels are data-part=tag inside the part: the ::before line is scaleX(-e), opacity = -e",
                 "an IntersectionObserver with threshold .45 sets explode=100 once, until the user touches the slider or the button (touched ref)"
               ],
               "adapt": [
+                "assembledImage, explodedImage — two renders in the same framing; label tops are tuned to the scheme",
                 "eyebrow, title, lede",
                 "parts: name, text (exactly five, top to bottom)",
                 "autoExplode",
@@ -307,7 +313,7 @@
                 "ink — ink",
                 "background — background"
               ],
-              "usage": "<Gadget002\n  title=\"Five parts. Not one to spare\"\n  parts={[\n    { name: \"Diffuser\", text: \"Opal polycarbonate, 2 mm.\" },\n    { name: \"Board\", text: \"ESP32-S3 and sensors.\" },\n    { name: \"Speaker\", text: \"5 W, 360°.\" },\n    { name: \"Body\", text: \"Anodised aluminium.\" },\n    { name: \"Base\", text: \"A 480 g steel puck.\" },\n  ]}\n/>"
+              "usage": "<Gadget002\n  assembledImage=\"/photos/lamp-front.png\"\n  explodedImage=\"/photos/lamp-exploded.png\"\n  title=\"Five parts. Not one to spare\"\n  parts={[\n    { name: \"Diffuser\", text: \"Opal polycarbonate, 2 mm.\" },\n    { name: \"Board\", text: \"ESP32-S3 and sensors.\" },\n    { name: \"Speaker\", text: \"5 W, 360°.\" },\n    { name: \"Body\", text: \"Anodised aluminium.\" },\n    { name: \"Base\", text: \"A 480 g steel puck.\" },\n  ]}\n/>"
             },
             "controls": {
               "title": {
@@ -402,7 +408,7 @@
         },
         "ai": {
           "export": "Gadget003",
-          "usage": "<Gadget003\n  title=\"Место в партии стоит тысячу рублей\"\n  swatches={[{ name: \"Графит\", color: \"#2b2b2b\" }, { name: \"Песок\", color: \"#cdb994\" }]}\n  kits={[{ name: \"Луч\", price: 14900, note: \"Лампа и кабель\" }]}\n  shipInDays={21}\n  batchLeft={312}\n/>",
+          "usage": "<Gadget003\n  title=\"Место в партии стоит тысячу рублей\"\n  swatches={[{ name: \"Графит\", color: \"#2b2b2b\", image: \"/photos/lamp-black.png\" }, { name: \"Песок\", color: \"#cdb994\" }]}\n  kits={[{ name: \"Луч\", price: 14900, note: \"Лампа и кабель\" }]}\n  shipInDays={21}\n  batchLeft={312}\n/>",
           "summary": "Предзаказ железки: цвет лампы по свотчам, комплект, отсчёт до отгрузки, полоса партии, магнитная кнопка.",
           "preserve": [
             "цвет корпуса — переменная -shell на корне, все градиенты корпуса и основания собраны из color-mix от неё",
@@ -499,7 +505,7 @@
                 "ink — ink",
                 "background — background"
               ],
-              "usage": "<Gadget003\n  title=\"A slot in the batch costs ten dollars\"\n  swatches={[{ name: \"Graphite\", color: \"#2b2b2b\" }, { name: \"Sand\", color: \"#cdb994\" }]}\n  kits={[{ name: \"Ray\", price: 149, note: \"Lamp and cable\" }]}\n  shipInDays={21}\n  batchLeft={312}\n/>"
+              "usage": "<Gadget003\n  title=\"A slot in the batch costs ten dollars\"\n  swatches={[{ name: \"Graphite\", color: \"#2b2b2b\", image: \"/photos/lamp-black.png\" }, { name: \"Sand\", color: \"#cdb994\" }]}\n  kits={[{ name: \"Ray\", price: 149, note: \"Lamp and cable\" }]}\n  shipInDays={21}\n  batchLeft={312}\n/>"
             },
             "controls": {
               "title": {
@@ -535,15 +541,18 @@
                 "swatches": [
                   {
                     "name": "Graphite",
-                    "color": "#2b2b2b"
+                    "color": "#2b2b2b",
+                    "image": "/demo/gadget/lamp-front.png"
                   },
                   {
                     "name": "Sand",
-                    "color": "#cdb994"
+                    "color": "#cdb994",
+                    "image": "/demo/gadget/lamp-sand.png"
                   },
                   {
-                    "name": "Sage",
-                    "color": "#7d8c76"
+                    "name": "Ivory",
+                    "color": "#e9e2d2",
+                    "image": "/demo/gadget/lamp-white.png"
                   }
                 ],
                 "kits": [

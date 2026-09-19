@@ -20,6 +20,8 @@ export type Gadget001Props = {
   steps?: readonly Gadget001Step[]
   /** Длина прокрутки сцены в экранах (svh). */
   screens?: number
+  /** Рендер лампы спереди (PNG без фона). Пусто — лампа рисуется CSS. */
+  image?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -30,11 +32,13 @@ export type Gadget001Props = {
 
 // «Рассвет за 30 минут»: sticky-сцена, где по прокрутке комната светлеет
 // от ночи к утру. Комната — CSS-слои: стена, окно с тремя небами (ночь со
-// звёздами, заря, день) и солнцем, которое поднимается, стол, лампа из
-// градиентов. Прогресс прокрутки считается один раз за кадр и уходит в
-// переменные: ночные слои гаснут, дневные проявляются (только opacity и
-// transform), лампа разгорается от углей до белого, часы в углу идут
-// 05:30 → 06:00, подпись сменяется по порогам.
+// звёздами, заря, день) и солнцем, которое поднимается, стол из
+// градиентов. Лампа — рендер (PNG без фона), поверх диффузора цветовой
+// слой (mix-blend-mode:color) и затемняющий (multiply): она разгорается от
+// углей до белого; без рендера рисуется CSS. Прогресс прокрутки считается
+// один раз за кадр в переменные: ночные слои гаснут, дневные проявляются
+// (только opacity и transform), часы в углу идут 05:30 → 06:00, подпись
+// сменяется по порогам.
 const FONTS = "https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
 
 const STYLES = `
@@ -96,7 +100,11 @@ container-type:inline-size;
 [data-vibeui-block="gadget-001"] [data-part="step"] b{font-family:var(--vibeui-gadget-001-mono);font-weight:500;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:color-mix(in oklab,var(--vibeui-gadget-001-ember) 60%,var(--vibeui-gadget-001-text))}
 [data-vibeui-block="gadget-001"] [data-part="step"] p{margin:0;font-size:1rem;opacity:.85;animation:vibeui-gadget-001-fade .5s ease-out}
 @keyframes vibeui-gadget-001-fade{from{opacity:0;transform:translateY(.4rem)}}
-@container (min-width: 60rem){[data-vibeui-block="gadget-001"] [data-part="stage"]{--vibeui-gadget-001-desk:30%;padding:6rem 3rem 3rem}[data-vibeui-block="gadget-001"] [data-part="lamp"]{width:14rem;height:21rem}[data-vibeui-block="gadget-001"] [data-part="body"]{width:10rem;height:13rem}[data-vibeui-block="gadget-001"] [data-part="dome"]{width:10rem;height:3.4rem;top:5.3rem}[data-vibeui-block="gadget-001"] [data-part="window"]{left:8%;top:8%;width:min(26%,18rem)}[data-vibeui-block="gadget-001"] [data-part="rail"]{right:3rem}}
+[data-vibeui-block="gadget-001"] [data-part="render"]{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:50% 100%;display:block}
+[data-vibeui-block="gadget-001"] [data-part="tint"]{position:absolute;left:20%;right:20%;top:7%;height:24%;border-radius:50% 50% 48% 48% / 28% 28% 42% 42%;background:var(--vibeui-gadget-001-light);mix-blend-mode:color;opacity:calc(.4 + var(--vibeui-gadget-001-pk) * .6);pointer-events:none}
+[data-vibeui-block="gadget-001"] [data-part="dim"]{position:absolute;left:20%;right:20%;top:7%;height:24%;border-radius:50% 50% 48% 48% / 28% 28% 42% 42%;background:#000;mix-blend-mode:multiply;opacity:calc((1 - var(--vibeui-gadget-001-b)) * .9);pointer-events:none}
+[data-vibeui-block="gadget-001"] [data-part="lamp"][data-photo="true"]{width:12rem;height:15rem}
+@container (min-width: 60rem){[data-vibeui-block="gadget-001"] [data-part="stage"]{--vibeui-gadget-001-desk:30%;padding:6rem 3rem 3rem}[data-vibeui-block="gadget-001"] [data-part="lamp"]{width:14rem;height:21rem}[data-vibeui-block="gadget-001"] [data-part="lamp"][data-photo="true"]{width:17rem;height:21rem}[data-vibeui-block="gadget-001"] [data-part="body"]{width:10rem;height:13rem}[data-vibeui-block="gadget-001"] [data-part="dome"]{width:10rem;height:3.4rem;top:5.3rem}[data-vibeui-block="gadget-001"] [data-part="window"]{left:8%;top:8%;width:min(26%,18rem)}[data-vibeui-block="gadget-001"] [data-part="rail"]{right:3rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="gadget-001"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_STEPS: Gadget001Step[] = [
@@ -125,6 +133,7 @@ export function Gadget001({
   alarmLabel = "будильник 06:00",
   steps = DEFAULT_STEPS,
   screens = 3.2,
+  image = "/demo/gadget/lamp-front.png",
   tone = "auto",
   accent,
   ink,
@@ -205,10 +214,20 @@ export function Gadget001({
               <i data-part="desk" />
               <i data-part="desk-day" />
               <i data-part="cast" />
-              <div data-part="lamp">
-                <i data-part="foot" />
-                <i data-part="body" />
-                <i data-part="dome" />
+              <div data-part="lamp" data-photo={Boolean(image)}>
+                {image ? (
+                  <>
+                    <img data-part="render" src={image} alt="" />
+                    <i data-part="tint" />
+                    <i data-part="dim" />
+                  </>
+                ) : (
+                  <>
+                    <i data-part="foot" />
+                    <i data-part="body" />
+                    <i data-part="dome" />
+                  </>
+                )}
               </div>
             </div>
             <div data-part="hud">

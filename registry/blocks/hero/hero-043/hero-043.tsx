@@ -18,6 +18,9 @@ export type Hero043Props = {
   defaultKelvin?: number
   /** Яркость по умолчанию, %. */
   defaultBrightness?: number
+  /** Рендер лампы спереди (PNG без фона) с горящим диффузором. Пусто — лампа рисуется CSS. */
+  image?: string
+  imageAlt?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -26,12 +29,13 @@ export type Hero043Props = {
   style?: CSSProperties
 }
 
-// Хиро гаджета: лампа-цилиндр нарисована CSS (градиенты корпуса, светящийся
-// диффузор-эллипс, ореол radial-gradient, отсвет на столе). Два ползунка —
-// «тёплый ↔ холодный» и «яркость» — меняют свет по-настоящему: цвет
+// Хиро гаджета: рендер лампы (PNG без фона) на столе, поверх диффузора два
+// слоя — цветовой (mix-blend-mode:color) для температуры и затемняющий
+// (multiply) для яркости, плюс ореол и отсвет на столе. Два ползунка
+// «тёплый ↔ холодный» и «яркость» меняют свет по-настоящему: цвет
 // считается через color-mix из двух переменных, яркость — opacity ореола
-// и brightness диффузора. Заголовок проявляется вместе со светом: его
-// прозрачность привязана к той же переменной. Строки въезжают масками.
+// и затемнения. Без рендера лампа рисуется CSS. Заголовок проявляется
+// вместе со светом: прозрачность привязана к той же переменной.
 const FONTS = "https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
 
 const STYLES = `
@@ -96,6 +100,11 @@ container-type:inline-size;
 [data-vibeui-block="hero-043"] [data-part="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:1.3rem;height:1.3rem;border-radius:50%;background:var(--vibeui-hero-043-bg);border:3px solid var(--vibeui-hero-043-fg);box-shadow:0 2px 8px rgb(0 0 0/.4);cursor:grab}
 [data-vibeui-block="hero-043"] [data-part="range"]::-moz-range-thumb{width:1.3rem;height:1.3rem;border-radius:50%;background:var(--vibeui-hero-043-bg);border:3px solid var(--vibeui-hero-043-fg);box-shadow:0 2px 8px rgb(0 0 0/.4);cursor:grab}
 @keyframes vibeui-hero-043-rise{from{transform:translateY(110%)}to{transform:none}}
+[data-vibeui-block="hero-043"] [data-part="lamp"][data-photo="true"]{width:18rem;height:22.5rem}
+[data-vibeui-block="hero-043"] [data-part="render"]{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
+[data-vibeui-block="hero-043"] [data-part="tint"]{position:absolute;left:20%;right:20%;top:7%;height:24%;border-radius:50% 50% 48% 48% / 28% 28% 42% 42%;background:var(--vibeui-hero-043-light);mix-blend-mode:color;opacity:calc(.35 + var(--vibeui-hero-043-kn) * .65);transition:opacity .4s,background .4s;pointer-events:none}
+[data-vibeui-block="hero-043"] [data-part="dim"]{position:absolute;left:20%;right:20%;top:7%;height:24%;border-radius:50% 50% 48% 48% / 28% 28% 42% 42%;background:#000;mix-blend-mode:multiply;opacity:calc((1 - var(--vibeui-hero-043-b)) * .85);transition:opacity .4s;pointer-events:none}
+[data-vibeui-block="hero-043"] [data-part="lamp"][data-photo="true"] [data-part="halo"]{top:4rem}
 @keyframes vibeui-hero-043-in{from{opacity:0;transform:translateY(2rem) scale(.96)}to{opacity:1;transform:none}}
 @container (min-width: 60rem){[data-vibeui-block="hero-043"] [data-part="shell"]{grid-template-columns:1.1fr .9fr;gap:3rem}[data-vibeui-block="hero-043"] [data-part="scene"]{order:2}[data-vibeui-block="hero-043"] [data-part="lamp"]{width:18rem;height:28rem}[data-vibeui-block="hero-043"] [data-part="body"]{width:13rem;height:16.5rem}[data-vibeui-block="hero-043"] [data-part="dome"]{width:13rem;height:4.2rem;top:7.4rem}[data-vibeui-block="hero-043"] [data-part="halo"]{top:8rem;width:44rem;height:44rem}[data-vibeui-block="hero-043"] [data-part="dial"]{top:17.4rem}[data-vibeui-block="hero-043"] [data-part="grill"]{top:12rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="hero-043"] *{animation:none!important;transition:none!important}}`
@@ -114,6 +123,8 @@ export function Hero043({
   maxKelvin = 6500,
   defaultKelvin = 2700,
   defaultBrightness = 90,
+  image = "/demo/gadget/lamp-front.png",
+  imageAlt = "Лампа-будильник Луч",
   tone = "auto",
   accent,
   ink,
@@ -186,14 +197,24 @@ export function Hero043({
             ) : null}
           </div>
           <div data-part="scene">
-            <div data-part="lamp" aria-hidden="true">
+            <div data-part="lamp" data-photo={Boolean(image)} aria-hidden="true">
               <i data-part="halo" />
               <i data-part="cast" />
-              <i data-part="foot" />
-              <i data-part="body" />
-              <i data-part="grill" />
-              <i data-part="dial" />
-              <i data-part="dome" />
+              {image ? (
+                <>
+                  <img data-part="render" src={image} alt={imageAlt} />
+                  <i data-part="tint" />
+                  <i data-part="dim" />
+                </>
+              ) : (
+                <>
+                  <i data-part="foot" />
+                  <i data-part="body" />
+                  <i data-part="grill" />
+                  <i data-part="dial" />
+                  <i data-part="dome" />
+                </>
+              )}
             </div>
             <div data-part="panel">
               <label data-part="control">

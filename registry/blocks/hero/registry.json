@@ -8096,7 +8096,7 @@
       "name": "hero-043",
       "type": "registry:block",
       "title": "Хиро гаджета: CSS-лампа, свет которой меняют ползунки",
-      "description": "Первый экран продуктового лендинга: лампа-цилиндр нарисована CSS — градиенты корпуса, светящийся диффузор, ореол и отсвет на столе. Два ползунка «температура 2700–6500 K» и «яркость» меняют свет по-настоящему через color-mix и переменные, а заголовок проявляется вместе со светом. Строки въезжают масками, колесо на корпусе поворачивается за температурой.",
+      "description": "Первый экран продуктового лендинга: рендер лампы (PNG без фона), свет поверх диффузора — CSS-слои; без рендера лампа рисуется CSS — градиенты корпуса, светящийся диффузор, ореол и отсвет на столе. Два ползунка «температура 2700–6500 K» и «яркость» меняют свет по-настоящему через color-mix и переменные, а заголовок проявляется вместе со светом. Строки въезжают масками, колесо на корпусе поворачивается за температурой.",
       "categories": [
         "hero"
       ],
@@ -8130,14 +8130,16 @@
         },
         "ai": {
           "export": "Hero043",
-          "usage": "<Hero043\n  title=\"Просыпайтесь от света, а не от звука\"\n  primaryLabel=\"Предзаказ — 14 900 ₽\"\n  facts={[\"1 200 лм\", \"CRI 97\"]}\n  defaultKelvin={2700}\n/>",
+          "usage": "<Hero043\n  image=\"/photos/lamp-front.png\"\n  title=\"Просыпайтесь от света, а не от звука\"\n  primaryLabel=\"Предзаказ — 14 900 ₽\"\n  facts={[\"1 200 лм\", \"CRI 97\"]}\n  defaultKelvin={2700}\n/>",
           "summary": "Хиро для железки: объект нарисован CSS и реально светит, ползунки меняют цвет и яркость, заголовок проявляется со светом.",
           "preserve": [
+            "с image: [data-part=tint] (mix-blend-mode:color, цвет --light) и [data-part=dim] (multiply, opacity от --b) лежат на области диффузора рендера",
             "цвет света — color-mix(in oklab, warm, cold k%) из переменной -k, яркость -b управляет opacity ореола, brightness диффузора и opacity заголовка",
             "лампа собрана из абсолютных слоёв: halo, cast, foot, body, grill, dial, dome — порядок важен для перекрытий",
             "строки копии — обёртки data-part=mask с overflow:hidden, дочерний элемент въезжает translateY(110%) с задержкой по -i"
           ],
           "adapt": [
+            "image, imageAlt — рендер лампы спереди",
             "eyebrow, title, lede, facts",
             "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
             "minKelvin, maxKelvin, defaultKelvin, defaultBrightness",
@@ -8210,15 +8212,17 @@
         "i18n": {
           "en": {
             "title": "Gadget hero: a CSS lamp whose light is driven by sliders",
-            "description": "First screen of a product landing: a cylinder lamp drawn in CSS — body gradients, a glowing diffuser, a halo and a cast on the desk. Two sliders, “temperature 2700–6500 K” and “brightness”, change the light for real through color-mix and variables, and the headline fades in with the light. Lines slide in through masks, the dial on the body turns with the temperature.",
+            "description": "First screen of a product landing: a lamp render (transparent PNG) with CSS light layers over the diffuser; without it the lamp is drawn in CSS — body gradients, a glowing diffuser, a halo and a cast on the desk. Two sliders, “temperature 2700–6500 K” and “brightness”, change the light for real through color-mix and variables, and the headline fades in with the light. Lines slide in through masks, the dial on the body turns with the temperature.",
             "ai": {
               "summary": "Hero for hardware: the object is drawn in CSS and really glows, sliders change colour and brightness, the headline appears with the light.",
               "preserve": [
+                "with image: [data-part=tint] (mix-blend-mode:color, the --light colour) and [data-part=dim] (multiply, opacity from --b) sit over the render's diffuser area",
                 "the light colour is color-mix(in oklab, warm, cold k%) from the -k variable; brightness -b drives the halo opacity, diffuser brightness and headline opacity",
                 "the lamp is absolute layers: halo, cast, foot, body, grill, dial, dome — the order matters for overlaps",
                 "copy lines are data-part=mask wrappers with overflow:hidden; the child slides in from translateY(110%) with a delay by -i"
               ],
               "adapt": [
+                "image, imageAlt — the front lamp render",
                 "eyebrow, title, lede, facts",
                 "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
                 "minKelvin, maxKelvin, defaultKelvin, defaultBrightness",
@@ -8227,7 +8231,7 @@
                 "ink — ink",
                 "background — background"
               ],
-              "usage": "<Hero043\n  title=\"Wake up to light, not to noise\"\n  primaryLabel=\"Preorder — $149\"\n  facts={[\"1,200 lm\", \"CRI 97\"]}\n  defaultKelvin={2700}\n/>"
+              "usage": "<Hero043\n  image=\"/photos/lamp-front.png\"\n  title=\"Wake up to light, not to noise\"\n  primaryLabel=\"Preorder — $149\"\n  facts={[\"1,200 lm\", \"CRI 97\"]}\n  defaultKelvin={2700}\n/>"
             },
             "controls": {
               "title": {
@@ -8269,7 +8273,8 @@
                   "5 W speaker",
                   "CO₂ and light sensors"
                 ]
-              }
+              },
+              "imageAlt": "Ray sunrise alarm lamp"
             }
           }
         }
