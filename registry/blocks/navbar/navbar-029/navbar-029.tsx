@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, type CSSProperties } from "react"
+import { useEffect, useState, type CSSProperties, type PointerEvent } from "react"
 
 export type Navbar029Link = {
   label: string
@@ -29,8 +29,10 @@ export type Navbar029Props = {
 // Шапка подкаста: словомарка узким плакатным гротеском, разделы, чип «сейчас
 // играет» с тремя прыгающими полосками — он подписан на событие
 // `vibeui-player:state` от мини-плеера (podcast-007) и показывает название
-// текущего эпизода; в тишине — «в эфире по четвергам». Справа кнопка
-// «Слушать». При прокрутке — тёмное стекло и тонкая линия.
+// текущего эпизода; в тишине — «в эфире по четвергам». Справа магнитная
+// кнопка «Слушать» — тянется к курсору на несколько пикселей. Разделы
+// подчёркиваются «резиновой» линией слева направо. При прокрутке — тёмное
+// стекло и тонкая линия, шапка при загрузке опускается сверху.
 const FONTS =
   "https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@700;800&family=Inter+Tight:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
 
@@ -50,17 +52,20 @@ container-type:inline-size;
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="navbar-029"]{color-scheme:dark}
 :where([data-vibeui-block="navbar-029"][data-tone="light"]){color-scheme:light}
 :where([data-vibeui-block="navbar-029"][data-tone="dark"]){color-scheme:dark}
-[data-vibeui-block="navbar-029"]{box-sizing:border-box;position:relative;z-index:50;font-family:var(--vibeui-navbar-029-font);color:var(--vibeui-navbar-029-fg);font-size:.95rem;line-height:1.4;transition:background .3s,box-shadow .3s}
+[data-vibeui-block="navbar-029"]{box-sizing:border-box;position:relative;z-index:50;font-family:var(--vibeui-navbar-029-font);color:var(--vibeui-navbar-029-fg);font-size:.95rem;line-height:1.4;transition:background .3s,box-shadow .3s;animation:vibeui-navbar-029-drop .8s cubic-bezier(.2,.8,.2,1) both}
 [data-vibeui-block="navbar-029"][data-sticky="true"]{position:sticky;top:0}
 [data-vibeui-block="navbar-029"] *{box-sizing:border-box}
 [data-vibeui-block="navbar-029"][data-scrolled="true"]{background:color-mix(in oklab,var(--vibeui-navbar-029-bg) 80%,transparent);backdrop-filter:blur(14px) saturate(1.2);box-shadow:0 1px 0 var(--vibeui-navbar-029-line)}
 [data-vibeui-block="navbar-029"] [data-part="row"]{display:flex;align-items:center;justify-content:space-between;gap:.6rem;height:4.25rem;max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="navbar-029"] [data-part="brand"]{display:inline-flex;align-items:baseline;gap:.6rem;text-decoration:none;color:inherit;white-space:nowrap}
-[data-vibeui-block="navbar-029"] [data-part="brand"] b{font-family:var(--vibeui-navbar-029-display);font-weight:800;font-size:1.7rem;line-height:1;text-transform:uppercase;letter-spacing:.01em}
+[data-vibeui-block="navbar-029"] [data-part="brand"] b{font-family:var(--vibeui-navbar-029-display);font-weight:800;font-size:1.7rem;line-height:1;text-transform:uppercase;letter-spacing:.01em;transition:letter-spacing .4s cubic-bezier(.2,.8,.2,1),color .3s}
+[data-vibeui-block="navbar-029"] [data-part="brand"]:hover b{letter-spacing:.06em;color:var(--vibeui-navbar-029-accent)}
 [data-vibeui-block="navbar-029"] [data-part="brand"] small{font-family:var(--vibeui-navbar-029-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--vibeui-navbar-029-muted);display:none}
 [data-vibeui-block="navbar-029"] [data-part="nav"]{display:none;gap:1.4rem}
-[data-vibeui-block="navbar-029"] [data-part="nav"] a{text-decoration:none;color:inherit;font-weight:500;font-size:.9rem;opacity:.85;transition:opacity .2s,color .2s}
+[data-vibeui-block="navbar-029"] [data-part="nav"] a{position:relative;text-decoration:none;color:inherit;font-weight:500;font-size:.9rem;opacity:.85;padding:.2rem 0;transition:opacity .2s,color .2s}
+[data-vibeui-block="navbar-029"] [data-part="nav"] a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:2px;background:var(--vibeui-navbar-029-accent);transform:scaleX(0);transform-origin:right;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="navbar-029"] [data-part="nav"] a:hover{opacity:1;color:var(--vibeui-navbar-029-accent)}
+[data-vibeui-block="navbar-029"] [data-part="nav"] a:hover::after{transform:none;transform-origin:left}
 [data-vibeui-block="navbar-029"] [data-part="right"]{display:flex;align-items:center;gap:.6rem;min-width:0}
 [data-vibeui-block="navbar-029"] [data-part="now"]{display:inline-flex;align-items:center;gap:.55rem;max-width:16rem;padding:.45rem .8rem;border-radius:999px;border:1px solid var(--vibeui-navbar-029-line);font-family:var(--vibeui-navbar-029-mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--vibeui-navbar-029-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 [data-vibeui-block="navbar-029"] [data-part="now"][data-playing="true"]{color:var(--vibeui-navbar-029-fg);border-color:var(--vibeui-navbar-029-accent)}
@@ -70,10 +75,12 @@ container-type:inline-size;
 [data-vibeui-block="navbar-029"] [data-part="eq"] i:nth-child(2){animation-delay:-.25s}
 [data-vibeui-block="navbar-029"] [data-part="eq"] i:nth-child(3){animation-delay:-.5s}
 [data-vibeui-block="navbar-029"] [data-part="now"] span{overflow:hidden;text-overflow:ellipsis}
-[data-vibeui-block="navbar-029"] [data-part="action"]{display:inline-flex;align-items:center;border-radius:999px;padding:.6rem 1rem;font-weight:600;font-size:.88rem;text-decoration:none;color:var(--vibeui-navbar-029-on-accent);background:var(--vibeui-navbar-029-accent);white-space:nowrap;transition:transform .18s}
-[data-vibeui-block="navbar-029"] [data-part="action"]:hover{transform:translateY(-1px)}
+[data-vibeui-block="navbar-029"] [data-part="action"]{display:inline-flex;align-items:center;border-radius:999px;padding:.6rem 1rem;font-weight:600;font-size:.88rem;text-decoration:none;color:var(--vibeui-navbar-029-on-accent);background:var(--vibeui-navbar-029-accent);white-space:nowrap;translate:var(--vibeui-navbar-029-mx,0) var(--vibeui-navbar-029-my,0);transition:translate .3s cubic-bezier(.2,.8,.2,1),scale .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
+[data-vibeui-block="navbar-029"] [data-part="action"]:hover{scale:1.04;box-shadow:0 10px 24px -10px var(--vibeui-navbar-029-accent)}
+[data-vibeui-block="navbar-029"] [data-part="action"]:active{scale:.97}
 [data-vibeui-block="navbar-029"] a:focus-visible{outline:2px solid var(--vibeui-navbar-029-accent);outline-offset:3px}
 @keyframes vibeui-navbar-029-eq{from{height:30%}to{height:100%}}
+@keyframes vibeui-navbar-029-drop{from{opacity:0;translate:0 -100%}}
 @container (min-width: 40rem){[data-vibeui-block="navbar-029"] [data-part="brand"] small{display:inline}}
 @container (min-width: 56rem){[data-vibeui-block="navbar-029"] [data-part="nav"]{display:flex}}
 @container (max-width: 34rem){[data-vibeui-block="navbar-029"] [data-part="now"] span{display:none}[data-vibeui-block="navbar-029"] [data-part="now"]{padding:.45rem .6rem}}
@@ -90,7 +97,7 @@ container-type:inline-size;
 [data-vibeui-block="navbar-029"] [data-part="menu"] a[data-cta]{margin-top:.4rem;text-align:center;background:var(--vibeui-navbar-029-accent);color:var(--vibeui-navbar-029-on-accent)}
 @keyframes vibeui-navbar-029-menu{from{opacity:0;transform:translateY(-6px)}}
 @container (min-width: 56rem){[data-vibeui-block="navbar-029"] [data-part="burger"],[data-vibeui-block="navbar-029"] [data-part="menu"]{display:none}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-029"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-029"],[data-vibeui-block="navbar-029"] *,[data-vibeui-block="navbar-029"] *::after{animation:none!important;transition:none!important}}`
 
 /** Шапка подкаста с чипом «сейчас играет», подписанным на плеер. */
 export function Navbar029({
@@ -133,6 +140,19 @@ export function Navbar029({
     }
   }, [])
 
+  const magnet = (event: PointerEvent<HTMLAnchorElement>) => {
+    if (event.pointerType === "touch") return
+    const rect = event.currentTarget.getBoundingClientRect()
+    const dx = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / rect.width) * 2 - 1)) * 5
+    const dy = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / rect.height) * 2 - 1)) * 4
+    event.currentTarget.style.setProperty("--vibeui-navbar-029-mx", `${dx.toFixed(1)}px`)
+    event.currentTarget.style.setProperty("--vibeui-navbar-029-my", `${dy.toFixed(1)}px`)
+  }
+  const unmagnet = (event: PointerEvent<HTMLAnchorElement>) => {
+    event.currentTarget.style.setProperty("--vibeui-navbar-029-mx", "0px")
+    event.currentTarget.style.setProperty("--vibeui-navbar-029-my", "0px")
+  }
+
   const palette = {
     ...(accent ? { "--vibeui-navbar-029-accent": accent } : null),
     ...(ink ? { "--vibeui-navbar-029-fg": ink } : null),
@@ -169,7 +189,7 @@ export function Navbar029({
               <span>{now.playing && now.title ? `${playingLabel}: ${now.title}` : idleLabel}</span>
             </div>
             {actionLabel ? (
-              <a data-part="action" href={actionHref}>
+              <a data-part="action" href={actionHref} onPointerMove={magnet} onPointerLeave={unmagnet}>
                 {actionLabel}
               </a>
             ) : null}

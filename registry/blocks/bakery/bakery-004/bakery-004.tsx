@@ -28,11 +28,18 @@ export type Bakery004Props = {
 // Scroll-driven история хлеба «36 часов до буханки»: секция высотой в шесть
 // экранов, внутри липкая сцена. По мере прокрутки меняется кадр (фото с
 // плавной сменой), часы листаются как табло — каждая цифра едет в своей
-// колонке, а фон и текст плавно уходят в ночь и возвращаются к утру. Прогресс
-// считается в rAF на scroll и пишется в CSS-переменные без ререндера; индекс
-// кадра — единственное состояние.
+// колонке, заголовок кадра поднимается из-под маски, а фон и текст плавно
+// уходят в ночь и возвращаются к утру: солнце садится, встают луна и звёзды,
+// фото темнеет. Ту же «ночь» блок отдаёт странице — пишет `--vibeui-night`
+// на <html> и шлёт `vibeui-night:change` на window, чтобы фон всей страницы
+// и шапка темнели вместе со сценой. Прогресс считается в rAF на scroll и
+// пишется в CSS-переменные без ререндера; индекс кадра — единственное
+// состояние. Поверх сцены — зерно бумаги.
 const FONTS =
   "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Golos+Text:wght@400;500;600&display=swap"
+
+const GRAIN =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")"
 
 const STYLES = `
 :where([data-vibeui-block="bakery-004"]){
@@ -44,6 +51,7 @@ const STYLES = `
 --vibeui-bakery-004-display:"Playfair Display",ui-serif,Georgia,serif;
 --vibeui-bakery-004-font:"Golos Text",ui-sans-serif,system-ui,sans-serif;
 --vibeui-bakery-004-n:0;
+--vibeui-bakery-004-ease:cubic-bezier(.2,.8,.2,1);
 container-type:inline-size;
 }
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="bakery-004"]{color-scheme:dark}
@@ -52,11 +60,17 @@ container-type:inline-size;
 [data-vibeui-block="bakery-004"]{box-sizing:border-box;position:relative;min-height:calc(var(--vibeui-bakery-004-frames) * 100svh);background:var(--vibeui-bakery-004-bg);color:var(--vibeui-bakery-004-fg);font-family:var(--vibeui-bakery-004-font);font-size:1rem;line-height:1.55}
 [data-vibeui-block="bakery-004"] *{box-sizing:border-box}
 [data-vibeui-block="bakery-004"] [data-part="stage"]{position:sticky;top:0;min-height:100svh;max-height:100svh;overflow:hidden;display:grid;align-items:center;background:color-mix(in oklab,var(--vibeui-bakery-004-night) calc(var(--vibeui-bakery-004-n) * 100%),var(--vibeui-bakery-004-bg));color:color-mix(in oklab,var(--vibeui-bakery-004-night-fg) calc(var(--vibeui-bakery-004-n) * 100%),var(--vibeui-bakery-004-fg))}
-[data-vibeui-block="bakery-004"] [data-part="stars"]{position:absolute;inset:0;pointer-events:none;opacity:var(--vibeui-bakery-004-n);background-image:radial-gradient(1.5px 1.5px at 12% 18%,#fff,transparent),radial-gradient(1px 1px at 30% 40%,#fff,transparent),radial-gradient(2px 2px at 56% 12%,#fff,transparent),radial-gradient(1px 1px at 72% 30%,#fff,transparent),radial-gradient(1.5px 1.5px at 88% 22%,#fff,transparent),radial-gradient(1px 1px at 44% 70%,#fff,transparent),radial-gradient(1.5px 1.5px at 92% 76%,#fff,transparent)}
+[data-vibeui-block="bakery-004"] [data-part="grain"]{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.07;mix-blend-mode:multiply;background-image:${GRAIN}}
+[data-vibeui-block="bakery-004"] [data-part="sun"]{position:absolute;right:8%;bottom:-6rem;width:22rem;height:22rem;border-radius:50%;pointer-events:none;background:radial-gradient(closest-side,color-mix(in oklab,var(--vibeui-bakery-004-accent) 55%,#ffc46b),color-mix(in oklab,var(--vibeui-bakery-004-accent) 30%,transparent) 45%,transparent 72%);filter:blur(24px);opacity:calc(1 - var(--vibeui-bakery-004-n));transform:translateY(calc(var(--vibeui-bakery-004-n) * 14rem))}
+[data-vibeui-block="bakery-004"] [data-part="moon"]{position:absolute;left:10%;top:8%;width:6rem;height:6rem;border-radius:50%;pointer-events:none;background:radial-gradient(circle at 40% 35%,#fff9ea,#d9cfb8 70%,#b9ad94);box-shadow:0 0 60px 20px rgb(255 245 220 / .18),0 0 0 1px rgb(255 255 255 / .25) inset;opacity:calc(var(--vibeui-bakery-004-n) * var(--vibeui-bakery-004-n));transform:translateY(calc((1 - var(--vibeui-bakery-004-n)) * 8rem)) scale(calc(.8 + var(--vibeui-bakery-004-n) * .2))}
+[data-vibeui-block="bakery-004"] [data-part="moon"]::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 70% 60%,rgb(0 0 0 / .08) 0 .5rem,transparent .55rem),radial-gradient(circle at 35% 70%,rgb(0 0 0 / .07) 0 .35rem,transparent .4rem)}
+[data-vibeui-block="bakery-004"] [data-part="stars"]{position:absolute;inset:0;pointer-events:none;opacity:var(--vibeui-bakery-004-n);animation:vibeui-bakery-004-twinkle 4s ease-in-out infinite;background-image:radial-gradient(1.5px 1.5px at 12% 18%,#fff,transparent),radial-gradient(1px 1px at 30% 40%,#fff,transparent),radial-gradient(2px 2px at 56% 12%,#fff,transparent),radial-gradient(1px 1px at 72% 30%,#fff,transparent),radial-gradient(1.5px 1.5px at 88% 22%,#fff,transparent),radial-gradient(1px 1px at 44% 70%,#fff,transparent),radial-gradient(1.5px 1.5px at 92% 76%,#fff,transparent)}
 [data-vibeui-block="bakery-004"] [data-part="shell"]{position:relative;display:grid;gap:2rem;align-items:center;width:100%;max-width:80rem;margin:0 auto;padding:4.5rem 1.25rem}
 [data-vibeui-block="bakery-004"] [data-part="frame"]{position:relative;aspect-ratio:3 / 2;border-radius:1.4rem;overflow:hidden;box-shadow:0 40px 80px -40px rgb(0 0 0 / .6);background:color-mix(in oklab,currentColor 8%,transparent)}
 [data-vibeui-block="bakery-004"] [data-part="frame"] img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.06);transition:opacity .7s,transform 1.4s cubic-bezier(.2,.7,.2,1)}
 [data-vibeui-block="bakery-004"] [data-part="frame"] img[data-active="true"]{opacity:1;transform:none}
+[data-vibeui-block="bakery-004"] [data-part="frame"]::after{content:"";position:absolute;inset:0;pointer-events:none;background:var(--vibeui-bakery-004-night);opacity:calc(var(--vibeui-bakery-004-n) * .35);mix-blend-mode:multiply}
+[data-vibeui-block="bakery-004"] [data-part="frame"]{transform:perspective(60rem) rotateY(calc((.5 - var(--vibeui-bakery-004-n)) * 4deg))}
 [data-vibeui-block="bakery-004"] [data-part="count"]{position:absolute;left:1rem;top:1rem;padding:.35rem .7rem;border-radius:999px;background:rgb(0 0 0 / .45);color:#fff;font-size:.75rem;font-weight:600;letter-spacing:.12em;backdrop-filter:blur(6px)}
 [data-vibeui-block="bakery-004"] [data-part="copy"]{display:grid;gap:1rem}
 [data-vibeui-block="bakery-004"] [data-part="eyebrow"]{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;opacity:.7;margin:0}
@@ -66,14 +80,19 @@ container-type:inline-size;
 [data-vibeui-block="bakery-004"] [data-part="clock"] span i b{display:block;font-weight:inherit}
 [data-vibeui-block="bakery-004"] [data-part="clock"] span[data-sep]{width:.45em;text-align:center}
 [data-vibeui-block="bakery-004"] [data-part="clock"] span[data-sep] i{animation:vibeui-bakery-004-blink 1.4s steps(1) infinite}
-[data-vibeui-block="bakery-004"] [data-part="copy"] h3{margin:0;font-family:var(--vibeui-bakery-004-display);font-size:clamp(1.6rem,3.4cqi,2.4rem);font-weight:600;letter-spacing:-.02em;line-height:1.05}
-[data-vibeui-block="bakery-004"] [data-part="copy"] p{margin:0;max-width:30rem;font-size:1.06rem;opacity:.85}
+[data-vibeui-block="bakery-004"] [data-part="text"]{display:grid;gap:1rem}
+[data-vibeui-block="bakery-004"] [data-part="copy"] h3{margin:0;font-family:var(--vibeui-bakery-004-display);font-size:clamp(1.8rem,3.8cqi,2.8rem);font-weight:600;letter-spacing:-.025em;line-height:1.05;overflow:clip;padding-bottom:.12em;margin-bottom:-.12em}
+[data-vibeui-block="bakery-004"] [data-part="copy"] h3 span{display:block;animation:vibeui-bakery-004-rise .8s var(--vibeui-bakery-004-ease) both}
+[data-vibeui-block="bakery-004"] [data-part="copy"] p{margin:0;max-width:30rem;font-size:1.06rem;opacity:.85;animation:vibeui-bakery-004-in .8s var(--vibeui-bakery-004-ease) .15s both}
 [data-vibeui-block="bakery-004"] [data-part="dots"]{display:flex;gap:.45rem;margin-top:.6rem}
 [data-vibeui-block="bakery-004"] [data-part="dots"] i{width:.5rem;height:.5rem;border-radius:50%;background:currentColor;opacity:.25;transition:opacity .3s,transform .3s}
 [data-vibeui-block="bakery-004"] [data-part="dots"] i[data-active="true"]{opacity:1;transform:scale(1.3);background:var(--vibeui-bakery-004-accent)}
 @keyframes vibeui-bakery-004-blink{50%{opacity:.25}}
+@keyframes vibeui-bakery-004-twinkle{0%,100%{filter:brightness(1)}50%{filter:brightness(1.6)}}
+@keyframes vibeui-bakery-004-rise{from{transform:translateY(110%)}to{transform:none}}
+@keyframes vibeui-bakery-004-in{from{opacity:0;translate:0 .8rem}to{opacity:.85;translate:0 0}}
 @container (min-width: 60rem){[data-vibeui-block="bakery-004"] [data-part="shell"]{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:4rem}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="bakery-004"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="bakery-004"] *{animation:none!important;transition:none!important}[data-vibeui-block="bakery-004"] [data-part="frame"]{transform:none}}`
 
 const DEFAULT_FRAMES: Bakery004Frame[] = [
   { time: "18:00", title: "Замес", text: "Мука, вода, соль и закваска, которой шесть лет. Никаких дрожжей — только время.", image: "/demo/bakery/story-01.webp", night: 0.15 },
@@ -113,7 +132,11 @@ export function Bakery004({
       const pos = progress * (frames.length - 1)
       const a = frames[Math.floor(pos)].night ?? 0
       const b = frames[Math.min(frames.length - 1, Math.ceil(pos))].night ?? 0
-      element.style.setProperty("--vibeui-bakery-004-n", (a + (b - a) * (pos - Math.floor(pos))).toFixed(3))
+      const night = (a + (b - a) * (pos - Math.floor(pos))).toFixed(3)
+      element.style.setProperty("--vibeui-bakery-004-n", night)
+      // Страница темнеет вместе со сценой: переменная на <html> и событие для обёрток.
+      document.documentElement.style.setProperty("--vibeui-night", night)
+      window.dispatchEvent(new CustomEvent("vibeui-night:change", { detail: { night: Number(night), progress } }))
     }
     const onScroll = () => {
       if (!raf) raf = window.requestAnimationFrame(update)
@@ -125,6 +148,8 @@ export function Bakery004({
       window.removeEventListener("scroll", onScroll)
       window.removeEventListener("resize", onScroll)
       window.cancelAnimationFrame(raf)
+      document.documentElement.style.removeProperty("--vibeui-night")
+      window.dispatchEvent(new CustomEvent("vibeui-night:change", { detail: { night: 0, progress: 0 } }))
     }
   }, [frames])
 
@@ -146,7 +171,10 @@ export function Bakery004({
       </style>
       <section ref={root} data-vibeui-block="bakery-004" data-tone={tone === "auto" ? undefined : tone} className={className} style={palette} aria-label={eyebrow}>
         <div data-part="stage">
+          <div data-part="sun" aria-hidden="true" />
           <div data-part="stars" aria-hidden="true" />
+          <div data-part="moon" aria-hidden="true" />
+          <div data-part="grain" aria-hidden="true" />
           <div data-part="shell">
             <div data-part="frame">
               {frames.map((item, i) => (item.image ? <img key={i} src={item.image} alt={i === index ? item.title : ""} data-active={i === index} /> : null))}
@@ -173,8 +201,12 @@ export function Bakery004({
                   ),
                 )}
               </div>
-              <h3>{frame.title}</h3>
-              {frame.text ? <p>{frame.text}</p> : null}
+              <div key={index} data-part="text">
+                <h3>
+                  <span>{frame.title}</span>
+                </h3>
+                {frame.text ? <p>{frame.text}</p> : null}
+              </div>
               <div data-part="dots" aria-hidden="true">
                 {frames.map((_, i) => (
                   <i key={i} data-active={i === index} />

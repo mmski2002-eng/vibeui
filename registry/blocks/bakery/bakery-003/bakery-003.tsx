@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, type CSSProperties, type FormEvent } from "react"
+import { useEffect, useRef, useState, type CSSProperties, type FormEvent, type PointerEvent } from "react"
 
 export type Bakery003Product = {
   id: string
@@ -47,9 +47,12 @@ export type Bakery003Props = {
 // Конструктор коробки к завтраку: четыре ячейки заполняются фото выпечки
 // (чипы под коробкой или событие `vibeui-box:add` от полки bakery-001),
 // сумма считается, крышка закрывается 3D-поворотом со штампом «собрано», и
-// только тогда оживает кнопка заказа. Форма — имя, телефон, время выдачи;
-// после отправки карточка показывает «спасибо». Состояние блок рассылает
-// событием `vibeui-box:state` — полка по нему подписывает кнопки.
+// только тогда оживает кнопка заказа. Коробка наклоняется за курсором
+// (3D-tilt по --rx/--ry), карточка заказа ловит блик под указателем, чипы и
+// ячейки появляются каскадом, когда секция попадает в кадр, заголовок
+// поднимается из-под маски. Форма — имя, телефон, время выдачи; после
+// отправки карточка показывает «спасибо». Состояние блок рассылает событием
+// `vibeui-box:state` — полка по нему подписывает кнопки.
 const FONTS =
   "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Golos+Text:wght@400;500;600&family=Caveat:wght@600&display=swap"
 
@@ -66,25 +69,36 @@ const STYLES = `
 --vibeui-bakery-003-display:"Playfair Display",ui-serif,Georgia,serif;
 --vibeui-bakery-003-font:"Golos Text",ui-sans-serif,system-ui,sans-serif;
 --vibeui-bakery-003-hand:"Caveat",cursive;
+--vibeui-bakery-003-ease:cubic-bezier(.2,.8,.2,1);
 container-type:inline-size;
 }
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="bakery-003"]{color-scheme:dark}
 :where([data-vibeui-block="bakery-003"][data-tone="light"]){color-scheme:light}
 :where([data-vibeui-block="bakery-003"][data-tone="dark"]){color-scheme:dark}
-[data-vibeui-block="bakery-003"]{box-sizing:border-box;overflow:hidden;padding:5.5rem 0;background:var(--vibeui-bakery-003-panel);color:var(--vibeui-bakery-003-fg);font-family:var(--vibeui-bakery-003-font);font-size:1rem;line-height:1.55}
+[data-vibeui-block="bakery-003"]{box-sizing:border-box;position:relative;overflow:clip;padding:5.5rem 0;background:var(--vibeui-bakery-003-panel);color:var(--vibeui-bakery-003-fg);font-family:var(--vibeui-bakery-003-font);font-size:1rem;line-height:1.55}
 [data-vibeui-block="bakery-003"] *{box-sizing:border-box}
-[data-vibeui-block="bakery-003"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem}
+[data-vibeui-block="bakery-003"] [data-part="glow"]{position:absolute;left:-6rem;top:10rem;width:50rem;height:34rem;border-radius:50%;background:radial-gradient(closest-side,color-mix(in oklab,var(--vibeui-bakery-003-accent) 13%,transparent),transparent 70%);filter:blur(40px);pointer-events:none}
+[data-vibeui-block="bakery-003"] [data-part="shell"]{position:relative;max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="bakery-003"] [data-part="eyebrow"]{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--vibeui-bakery-003-accent);font-weight:600;margin:0 0 1.1rem}
 [data-vibeui-block="bakery-003"] [data-part="eyebrow"]::before{content:"";width:1.4rem;height:2px;background:var(--vibeui-bakery-003-accent);border-radius:2px}
-[data-vibeui-block="bakery-003"] [data-part="title"]{margin:0;font-family:var(--vibeui-bakery-003-display);font-weight:600;letter-spacing:-.02em;line-height:1.02;font-size:clamp(2rem,4.6cqi,3.6rem)}
+[data-vibeui-block="bakery-003"] [data-part="title"]{margin:0;font-family:var(--vibeui-bakery-003-display);font-weight:600;letter-spacing:-.025em;line-height:1.02;font-size:clamp(2.2rem,5cqi,4rem)}
+[data-vibeui-block="bakery-003"] [data-part="word"]{display:inline-block;overflow:clip;vertical-align:top;padding:.04em .06em .14em 0;margin:-.04em 0 -.14em}
+[data-vibeui-block="bakery-003"] [data-part="word"] i{display:inline-block;font-style:normal;transform:translateY(112%)}
+[data-vibeui-block="bakery-003"][data-shown="true"] [data-part="word"] i{animation:vibeui-bakery-003-rise .9s var(--vibeui-bakery-003-ease) both;animation-delay:calc(var(--vibeui-bakery-003-n) * .09s)}
 [data-vibeui-block="bakery-003"] [data-part="lede"]{font-size:1.06rem;color:var(--vibeui-bakery-003-muted);max-width:34rem;margin:1rem 0 0}
+[data-vibeui-block="bakery-003"] [data-part="lede"],[data-vibeui-block="bakery-003"] [data-part="scene"],[data-vibeui-block="bakery-003"] [data-part="order"],[data-vibeui-block="bakery-003"][data-shown="false"] [data-part="picker"] button{opacity:0;translate:0 1.5rem}
+[data-vibeui-block="bakery-003"][data-shown="true"] [data-part="lede"]{animation:vibeui-bakery-003-in .8s var(--vibeui-bakery-003-ease) .3s both}
+[data-vibeui-block="bakery-003"][data-shown="true"] [data-part="scene"]{animation:vibeui-bakery-003-in 1s var(--vibeui-bakery-003-ease) .35s both}
+[data-vibeui-block="bakery-003"][data-shown="true"] [data-part="order"]{animation:vibeui-bakery-003-in 1s var(--vibeui-bakery-003-ease) .5s both}
+[data-vibeui-block="bakery-003"][data-shown="true"] [data-part="picker"] button{animation:vibeui-bakery-003-in .7s var(--vibeui-bakery-003-ease) backwards;animation-delay:calc(.7s + var(--vibeui-bakery-003-i) * .06s)}
 [data-vibeui-block="bakery-003"] [data-part="grid"]{display:grid;gap:3rem;align-items:start;margin-top:2.5rem}
 [data-vibeui-block="bakery-003"] [data-part="scene"]{position:relative;perspective:1400px;max-width:30rem;margin:0 auto}
-[data-vibeui-block="bakery-003"] [data-part="carton"]{position:relative;padding:1rem;border-radius:1.6rem;background:linear-gradient(180deg,color-mix(in oklab,var(--vibeui-bakery-003-card) 80%,#fbf8f2),color-mix(in oklab,var(--vibeui-bakery-003-card) 85%,#d9c9a8));box-shadow:0 1px 0 rgb(255 255 255 / .6) inset,0 40px 70px -40px rgb(0 0 0 / .55),0 0 0 1px var(--vibeui-bakery-003-line);transform-style:preserve-3d}
+[data-vibeui-block="bakery-003"] [data-part="carton"]{position:relative;padding:1rem;transform:rotateX(var(--vibeui-bakery-003-rx,0deg)) rotateY(var(--vibeui-bakery-003-ry,0deg));transition:transform .5s var(--vibeui-bakery-003-ease);border-radius:1.6rem;background:linear-gradient(180deg,color-mix(in oklab,var(--vibeui-bakery-003-card) 80%,#fbf8f2),color-mix(in oklab,var(--vibeui-bakery-003-card) 85%,#d9c9a8));box-shadow:0 1px 0 rgb(255 255 255 / .6) inset,0 40px 70px -40px rgb(0 0 0 / .55),0 0 0 1px var(--vibeui-bakery-003-line);transform-style:preserve-3d}
 [data-vibeui-block="bakery-003"] [data-part="cells"]{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem}
 [data-vibeui-block="bakery-003"] [data-part="cell"]{position:relative;aspect-ratio:1;border-radius:1rem;border:2px dashed color-mix(in oklab,var(--vibeui-bakery-003-fg) 18%,transparent);background:color-mix(in oklab,var(--vibeui-bakery-003-card) 50%,transparent);display:grid;place-items:center;overflow:hidden;transition:border-color .3s,background .3s}
 [data-vibeui-block="bakery-003"] [data-part="cell"][data-filled="true"]{border-style:solid;border-color:transparent;background:var(--vibeui-bakery-003-card);box-shadow:0 8px 16px -10px rgb(0 0 0 / .4) inset}
-[data-vibeui-block="bakery-003"] [data-part="cell"] img{width:100%;height:100%;object-fit:cover;display:block;animation:vibeui-bakery-003-drop .55s cubic-bezier(.2,.8,.2,1) both}
+[data-vibeui-block="bakery-003"] [data-part="cell"] img{width:100%;height:100%;object-fit:cover;display:block;animation:vibeui-bakery-003-drop .7s cubic-bezier(.2,1.4,.4,1) both}
+[data-vibeui-block="bakery-003"] [data-part="cell"][data-filled="true"]{animation:vibeui-bakery-003-land .5s cubic-bezier(.2,1.6,.4,1)}
 [data-vibeui-block="bakery-003"] [data-part="empty"]{font-family:var(--vibeui-bakery-003-hand);font-size:1.25rem;color:var(--vibeui-bakery-003-muted);transform:rotate(-5deg);text-align:center;padding:1rem}
 [data-vibeui-block="bakery-003"] [data-part="out"]{position:absolute;right:.4rem;top:.4rem;width:1.8rem;height:1.8rem;border-radius:50%;border:0;background:rgb(0 0 0 / .7);color:#fff;font-size:1rem;line-height:1;cursor:pointer;opacity:0;transition:opacity .2s}
 [data-vibeui-block="bakery-003"] [data-part="cell"]:hover [data-part="out"],[data-vibeui-block="bakery-003"] [data-part="cell"]:focus-within [data-part="out"]{opacity:1}
@@ -102,10 +116,10 @@ container-type:inline-size;
 [data-vibeui-block="bakery-003"] [data-part="picker"] button:hover{transform:translateY(-1px);box-shadow:0 0 0 1px var(--vibeui-bakery-003-line),0 8px 16px -10px rgb(0 0 0 / .4)}
 [data-vibeui-block="bakery-003"] [data-part="picker"] button:disabled{opacity:.45;cursor:not-allowed;transform:none}
 [data-vibeui-block="bakery-003"] [data-part="picker"] img{width:1.8rem;height:1.8rem;border-radius:50%;object-fit:cover;display:block}
-[data-vibeui-block="bakery-003"] [data-part="order"]{padding:1.75rem;display:flex;flex-direction:column;border-radius:1.4rem;background:var(--vibeui-bakery-003-card);box-shadow:0 1px 0 rgb(255 255 255 / .5) inset,0 24px 48px -32px rgb(0 0 0 / .35),0 1px 2px rgb(0 0 0 / .06)}
+[data-vibeui-block="bakery-003"] [data-part="order"]{padding:1.75rem;display:flex;flex-direction:column;border-radius:1.4rem;background:radial-gradient(18rem circle at var(--vibeui-bakery-003-x,50%) var(--vibeui-bakery-003-y,0%),color-mix(in oklab,var(--vibeui-bakery-003-accent) 10%,transparent),transparent 65%),var(--vibeui-bakery-003-card);box-shadow:0 1px 0 rgb(255 255 255 / .5) inset,0 24px 48px -32px rgb(0 0 0 / .35),0 1px 2px rgb(0 0 0 / .06)}
 [data-vibeui-block="bakery-003"] [data-part="order"] form{display:flex;flex-direction:column;flex:1}
 [data-vibeui-block="bakery-003"] [data-part="sum"]{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--vibeui-bakery-003-line);padding-bottom:1rem;margin-bottom:1.2rem}
-[data-vibeui-block="bakery-003"] [data-part="sum"] b{font-family:var(--vibeui-bakery-003-display);font-size:1.8rem;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+[data-vibeui-block="bakery-003"] [data-part="sum"] b{font-family:var(--vibeui-bakery-003-display);font-size:1.8rem;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums;display:inline-block;animation:vibeui-bakery-003-tick .45s cubic-bezier(.2,1.4,.4,1)}
 [data-vibeui-block="bakery-003"] [data-part="sum"] span{color:var(--vibeui-bakery-003-muted);font-size:.9rem}
 [data-vibeui-block="bakery-003"] [data-part="lines"]{list-style:none;margin:0 0 1.2rem;padding:0;display:grid;gap:.35rem;font-size:.92rem}
 [data-vibeui-block="bakery-003"] [data-part="lines"] li{display:flex;justify-content:space-between;gap:1rem;color:var(--vibeui-bakery-003-muted)}
@@ -116,7 +130,8 @@ container-type:inline-size;
 [data-vibeui-block="bakery-003"] [data-part="fields"]{display:grid;gap:.8rem;grid-template-columns:1fr 1fr}
 [data-vibeui-block="bakery-003"] [data-part="fields"] label:first-child{grid-column:1 / -1}
 [data-vibeui-block="bakery-003"] [data-part="submit"]{width:100%;margin-top:1rem;display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:999px;padding:.95rem 1.5rem;font:inherit;font-weight:600;font-size:.95rem;cursor:pointer;color:var(--vibeui-bakery-003-on-accent);background:var(--vibeui-bakery-003-accent);box-shadow:0 1px 0 rgb(255 255 255 / .35) inset,0 10px 24px -12px color-mix(in oklab,var(--vibeui-bakery-003-accent) 70%,transparent);transition:transform .18s,filter .18s}
-[data-vibeui-block="bakery-003"] [data-part="submit"]:hover{transform:translateY(-1px);filter:brightness(1.05)}
+[data-vibeui-block="bakery-003"] [data-part="submit"]:hover{transform:translateY(-2px);filter:brightness(1.05);box-shadow:0 1px 0 rgb(255 255 255 / .35) inset,0 16px 30px -12px color-mix(in oklab,var(--vibeui-bakery-003-accent) 85%,transparent)}
+[data-vibeui-block="bakery-003"] [data-part="submit"]:active{transform:translateY(1px) scale(.97)}
 [data-vibeui-block="bakery-003"] [data-part="submit"]:disabled{opacity:.5;cursor:not-allowed;transform:none}
 [data-vibeui-block="bakery-003"] [data-part="how"]{margin-top:auto;padding-top:1.4rem;display:grid;grid-template-columns:4.5rem 1fr;gap:1rem;align-items:center;border-top:1px dashed var(--vibeui-bakery-003-line);color:var(--vibeui-bakery-003-muted);font-size:.86rem}
 [data-vibeui-block="bakery-003"] [data-part="how"] img{width:4.5rem;height:4.5rem;object-fit:cover;border-radius:.8rem;display:block}
@@ -126,9 +141,34 @@ container-type:inline-size;
 [data-vibeui-block="bakery-003"] [data-part="done"] img{width:10rem;border-radius:1rem;display:block}
 [data-vibeui-block="bakery-003"] [data-part="done"] h3{margin:0;font-family:var(--vibeui-bakery-003-hand);font-size:1.8rem;font-weight:600;color:var(--vibeui-bakery-003-accent)}
 [data-vibeui-block="bakery-003"] [data-part="done"] p{margin:0;color:var(--vibeui-bakery-003-muted)}
-@keyframes vibeui-bakery-003-drop{from{transform:translateY(-30%) scale(1.1);opacity:0}to{transform:none;opacity:1}}
+@keyframes vibeui-bakery-003-drop{from{transform:translateY(-40%) scale(1.15);opacity:0}to{transform:none;opacity:1}}
+@keyframes vibeui-bakery-003-land{0%{scale:1}40%{scale:1.04 .96}100%{scale:1}}
+@keyframes vibeui-bakery-003-tick{from{transform:translateY(.35em);opacity:0}to{transform:none;opacity:1}}
+@keyframes vibeui-bakery-003-rise{0%{transform:translateY(112%) scaleY(.8)}70%{transform:translateY(-2%)}100%{transform:none}}
+@keyframes vibeui-bakery-003-in{from{opacity:0;translate:0 1.5rem}to{opacity:1;translate:0 0}}
 @container (min-width: 60rem){[data-vibeui-block="bakery-003"] [data-part="grid"]{grid-template-columns:30rem minmax(0,1fr);gap:4rem;align-items:stretch}[data-vibeui-block="bakery-003"] [data-part="scene"],[data-vibeui-block="bakery-003"] [data-part="picker"]{margin-left:0;margin-right:0}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="bakery-003"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="bakery-003"] *{animation:none!important;transition:none!important}[data-vibeui-block="bakery-003"] [data-part="word"] i{transform:none}[data-vibeui-block="bakery-003"] [data-part="lede"],[data-vibeui-block="bakery-003"] [data-part="scene"],[data-vibeui-block="bakery-003"] [data-part="order"],[data-vibeui-block="bakery-003"] [data-part="picker"] button{opacity:1;translate:none}[data-vibeui-block="bakery-003"] [data-part="carton"]{transform:none}}`
+
+// Наклон коробки за курсором: не больше 7° по каждой оси; уход курсора — обратно.
+function tilt(event: PointerEvent<HTMLElement>) {
+  if (event.pointerType === "touch") return
+  const rect = event.currentTarget.getBoundingClientRect()
+  const x = (event.clientX - rect.left) / rect.width - 0.5
+  const y = (event.clientY - rect.top) / rect.height - 0.5
+  event.currentTarget.style.setProperty("--vibeui-bakery-003-ry", `${(x * 14).toFixed(2)}deg`)
+  event.currentTarget.style.setProperty("--vibeui-bakery-003-rx", `${(-y * 14).toFixed(2)}deg`)
+}
+
+function untilt(event: PointerEvent<HTMLElement>) {
+  event.currentTarget.style.removeProperty("--vibeui-bakery-003-rx")
+  event.currentTarget.style.removeProperty("--vibeui-bakery-003-ry")
+}
+
+function spotlight(event: PointerEvent<HTMLElement>) {
+  const rect = event.currentTarget.getBoundingClientRect()
+  event.currentTarget.style.setProperty("--vibeui-bakery-003-x", `${event.clientX - rect.left}px`)
+  event.currentTarget.style.setProperty("--vibeui-bakery-003-y", `${event.clientY - rect.top}px`)
+}
 
 const DEFAULT_PRODUCTS: Bakery003Product[] = [
   { id: "tartine", name: "Тартин", price: 420, image: "/demo/bakery/item-01.webp" },
@@ -173,8 +213,26 @@ export function Bakery003({
   className,
   style,
 }: Bakery003Props) {
+  const root = useRef<HTMLElement>(null)
+  const [shown, setShown] = useState(false)
   const [items, setItems] = useState<Bakery003Product[]>([])
   const [sent, setSent] = useState(false)
+
+  useEffect(() => {
+    const element = root.current
+    if (!element) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setShown(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: "-10% 0px" },
+    )
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [])
   const full = items.length >= size
   const total = items.reduce((sum, item) => sum + item.price, 0)
 
@@ -212,14 +270,24 @@ export function Bakery003({
       <style href="vibeui-bakery-003" precedence="medium">
         {STYLES}
       </style>
-      <section data-vibeui-block="bakery-003" data-tone={tone === "auto" ? undefined : tone} className={className} style={palette}>
+      <section ref={root} data-vibeui-block="bakery-003" data-tone={tone === "auto" ? undefined : tone} data-shown={shown} className={className} style={palette}>
+        <div data-part="glow" aria-hidden="true" />
         <div data-part="shell">
           {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-          <h2 data-part="title">{title}</h2>
+          <h2 data-part="title">
+            {title.split(" ").map((word, index, all) => (
+              <span key={`${word}-${index}`}>
+                <span data-part="word" style={{ ["--vibeui-bakery-003-n" as string]: index }}>
+                  <i>{word}</i>
+                </span>
+                {index < all.length - 1 ? " " : ""}
+              </span>
+            ))}
+          </h2>
           {lede ? <p data-part="lede">{lede}</p> : null}
           <div data-part="grid">
             <div>
-              <div data-part="scene">
+              <div data-part="scene" onPointerMove={tilt} onPointerLeave={untilt}>
                 <div data-part="carton" data-full={full}>
                   <div data-part="cells">
                     {Array.from({ length: size }, (_, i) => {
@@ -259,15 +327,15 @@ export function Bakery003({
               </div>
               <div data-part="picker" aria-label={pickLabel}>
                 <span>{pickLabel}</span>
-                {products.map((product) => (
-                  <button key={product.id} type="button" disabled={full} onClick={() => setItems((current) => (current.length >= size ? current : [...current, product]))}>
+                {products.map((product, index) => (
+                  <button key={product.id} type="button" disabled={full} style={{ ["--vibeui-bakery-003-i" as string]: index }} onClick={() => setItems((current) => (current.length >= size ? current : [...current, product]))}>
                     {product.image ? <img src={product.image} alt="" /> : null}
                     {product.name}
                   </button>
                 ))}
               </div>
             </div>
-            <div data-part="order">
+            <div data-part="order" onPointerMove={spotlight}>
               {sent ? (
                 <div data-part="done">
                   {howImage ? <img src={howImage} alt="" /> : null}
@@ -280,7 +348,7 @@ export function Bakery003({
                     <span>
                       {items.length} из {size}
                     </span>
-                    <b>
+                    <b key={total}>
                       {total} {currency}
                     </b>
                   </div>

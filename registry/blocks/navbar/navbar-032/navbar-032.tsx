@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, type CSSProperties } from "react"
+import { useEffect, useState, type CSSProperties, type PointerEvent } from "react"
 
 export type Navbar032Link = {
   label: string
@@ -24,9 +24,11 @@ export type Navbar032Props = {
   style?: CSSProperties
 }
 
-// Шапка сайта приложения: лого с мягкой точкой-«дыханием» (медленно
-// пульсирует), разделы, чип рейтинга «4,9 ★ · App Store» и кнопка
-// «Скачать». Липкая, при прокрутке — стекло и тонкая линия.
+// Шапка сайта приложения: лого с мягкой точкой-«дыханием» — сама по себе
+// медленно пульсирует, а если на странице есть hero-032, дышит в его ритме
+// (слушает событие `vibeui-hero-032:phase`). Разделы с подчёркиванием-въездом,
+// чип рейтинга «4,9 ★ · App Store» и магнитная кнопка «Скачать». Липкая,
+// при прокрутке — стекло и тонкая линия.
 const FONTS = "https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap"
 
 const STYLES = `
@@ -49,16 +51,21 @@ container-type:inline-size;
 [data-vibeui-block="navbar-032"] *{box-sizing:border-box}
 [data-vibeui-block="navbar-032"] [data-part="row"]{display:flex;align-items:center;gap:.8rem;height:4rem;max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="navbar-032"] [data-part="brand"]{display:inline-flex;align-items:center;gap:.55rem;font-weight:800;font-size:1.15rem;letter-spacing:-.02em;text-decoration:none;color:inherit}
-[data-vibeui-block="navbar-032"] [data-part="brand"] i{width:.9rem;height:.9rem;border-radius:50%;background:var(--vibeui-navbar-032-accent);animation:vibeui-navbar-032-breath 4s ease-in-out infinite}
+[data-vibeui-block="navbar-032"] [data-part="brand"] i{width:.9rem;height:.9rem;border-radius:50%;background:var(--vibeui-navbar-032-accent);box-shadow:0 0 12px color-mix(in oklab,var(--vibeui-navbar-032-accent) 60%,transparent);animation:vibeui-navbar-032-breath 4s ease-in-out infinite}
+[data-vibeui-block="navbar-032"][data-breath] [data-part="brand"] i{animation:none;transition:transform var(--vibeui-navbar-032-d,1s) cubic-bezier(.4,0,.2,1)}
+[data-vibeui-block="navbar-032"][data-breath="0"] [data-part="brand"] i,[data-vibeui-block="navbar-032"][data-breath="1"] [data-part="brand"] i{transform:scale(1.2)}
+[data-vibeui-block="navbar-032"][data-breath="2"] [data-part="brand"] i{transform:scale(.75)}
 [data-vibeui-block="navbar-032"] [data-part="nav"]{display:none;gap:1.2rem;margin-left:1rem}
-[data-vibeui-block="navbar-032"] [data-part="nav"] a{color:var(--vibeui-navbar-032-muted);text-decoration:none;font-weight:600;transition:color .2s}
+[data-vibeui-block="navbar-032"] [data-part="nav"] a{position:relative;color:var(--vibeui-navbar-032-muted);text-decoration:none;font-weight:600;transition:color .2s}
+[data-vibeui-block="navbar-032"] [data-part="nav"] a::after{content:"";position:absolute;left:0;right:0;bottom:-.3rem;height:2px;border-radius:2px;background:var(--vibeui-navbar-032-accent);transform:scaleX(0);transform-origin:right;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="navbar-032"] [data-part="nav"] a:hover{color:var(--vibeui-navbar-032-fg)}
+[data-vibeui-block="navbar-032"] [data-part="nav"] a:hover::after{transform:none;transform-origin:left}
 [data-vibeui-block="navbar-032"] [data-part="right"]{margin-left:auto;display:flex;align-items:center;gap:.6rem}
 [data-vibeui-block="navbar-032"] [data-part="rating"]{display:none;align-items:center;gap:.35rem;font-size:.8rem;color:var(--vibeui-navbar-032-muted)}
 [data-vibeui-block="navbar-032"] [data-part="rating"] b{color:var(--vibeui-navbar-032-fg)}
 [data-vibeui-block="navbar-032"] [data-part="rating"] i{color:var(--vibeui-navbar-032-accent);font-style:normal}
-[data-vibeui-block="navbar-032"] [data-part="action"]{display:inline-flex;align-items:center;padding:.6rem 1.1rem;border-radius:999px;background:var(--vibeui-navbar-032-accent);color:var(--vibeui-navbar-032-on-accent);text-decoration:none;font-weight:700;font-size:.88rem;white-space:nowrap;transition:transform .18s,filter .2s}
-[data-vibeui-block="navbar-032"] [data-part="action"]:hover{transform:translateY(-1px);filter:brightness(1.05)}
+[data-vibeui-block="navbar-032"] [data-part="action"]{display:inline-flex;align-items:center;padding:.6rem 1.1rem;border-radius:999px;background:var(--vibeui-navbar-032-accent);color:var(--vibeui-navbar-032-on-accent);text-decoration:none;font-weight:700;font-size:.88rem;white-space:nowrap;transform:translate(var(--vibeui-navbar-032-mx,0px),var(--vibeui-navbar-032-my,0px));transition:transform .35s cubic-bezier(.2,.8,.2,1),filter .2s,box-shadow .35s}
+[data-vibeui-block="navbar-032"] [data-part="action"]:hover{filter:brightness(1.06);box-shadow:0 12px 24px -12px var(--vibeui-navbar-032-accent)}
 [data-vibeui-block="navbar-032"] a:focus-visible{outline:2px solid var(--vibeui-navbar-032-accent);outline-offset:2px}
 @keyframes vibeui-navbar-032-breath{0%,100%{transform:scale(.8);opacity:.8}50%{transform:scale(1.15);opacity:1}}
 @container (min-width: 40rem){[data-vibeui-block="navbar-032"] [data-part="rating"]{display:inline-flex}}
@@ -103,13 +110,38 @@ export function Navbar032({
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
+  const [breath, setBreath] = useState<{ phase: number; duration: number } | null>(null)
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
+  useEffect(() => {
+    const onPhase = (event: Event) => {
+      const detail = (event as CustomEvent<{ phase: number; duration: number }>).detail
+      if (detail && typeof detail.phase === "number") setBreath({ phase: detail.phase, duration: Math.max(0.4, detail.duration) })
+    }
+    window.addEventListener("vibeui-hero-032:phase", onPhase)
+    return () => window.removeEventListener("vibeui-hero-032:phase", onPhase)
+  }, [])
+
+  const magnet = (event: PointerEvent<HTMLAnchorElement>) => {
+    if (event.pointerType !== "mouse") return
+    const rect = event.currentTarget.getBoundingClientRect()
+    const x = (event.clientX - rect.left) / rect.width - 0.5
+    const y = (event.clientY - rect.top) / rect.height - 0.5
+    event.currentTarget.style.setProperty("--vibeui-navbar-032-mx", `${(x * 8).toFixed(1)}px`)
+    event.currentTarget.style.setProperty("--vibeui-navbar-032-my", `${(y * 6 - 1).toFixed(1)}px`)
+  }
+  const unmagnet = (event: PointerEvent<HTMLAnchorElement>) => {
+    event.currentTarget.style.removeProperty("--vibeui-navbar-032-mx")
+    event.currentTarget.style.removeProperty("--vibeui-navbar-032-my")
+  }
+
   const palette = {
+    ...(breath ? { "--vibeui-navbar-032-d": `${breath.duration}s` } : null),
     ...(accent ? { "--vibeui-navbar-032-accent": accent } : null),
     ...(ink ? { "--vibeui-navbar-032-fg": ink } : null),
     ...(background ? { "--vibeui-navbar-032-bg": background } : null),
@@ -122,7 +154,7 @@ export function Navbar032({
       <style href="vibeui-navbar-032" precedence="medium">
         {STYLES}
       </style>
-      <header data-vibeui-block="navbar-032" data-tone={tone === "auto" ? undefined : tone} data-sticky={sticky} data-scrolled={scrolled} className={className} style={palette}>
+      <header data-vibeui-block="navbar-032" data-tone={tone === "auto" ? undefined : tone} data-sticky={sticky} data-scrolled={scrolled} data-breath={breath ? breath.phase : undefined} className={className} style={palette}>
         <div data-part="row">
           <a data-part="brand" href={brandHref}>
             <i aria-hidden="true" />
@@ -144,7 +176,7 @@ export function Navbar032({
               </span>
             ) : null}
             {actionLabel ? (
-              <a data-part="action" href={actionHref}>
+              <a data-part="action" href={actionHref} onPointerMove={magnet} onPointerLeave={unmagnet}>
                 {actionLabel}
               </a>
             ) : null}

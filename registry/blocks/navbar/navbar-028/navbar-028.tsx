@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useSyncExternalStore, type CSSProperties } from "react"
+import { useEffect, useState, useSyncExternalStore, type CSSProperties, type PointerEvent } from "react"
 
 export type Navbar028Link = {
   label: string
@@ -29,11 +29,13 @@ export type Navbar028Props = {
   style?: CSSProperties
 }
 
-// Шапка кофейни: словомарка с точкой, разделы, живой чип «открыто · до 21:00»
-// или «откроемся в 7:00 · через 5 часов» — считается от часов посетителя и
-// обновляется раз в полминуты; при прокрутке шапка становится стеклом с
-// «мучной» кромкой. Часы посетителя серверу неизвестны, поэтому до гидрации
-// чип показывает «открыто» — разметка обязана совпасть.
+// Шапка кофейни: словомарка с точкой (точка «дышит»), разделы с подчёркиванием,
+// живой чип «открыто · до 21:00» или «откроемся в 7:00 · через 5 часов» —
+// считается от часов посетителя и обновляется раз в полминуты; при прокрутке
+// шапка становится стеклом с «мучной» кромкой, а при первом показе выезжает
+// сверху. Кнопка заказа магнитится к курсору. Часы посетителя серверу
+// неизвестны, поэтому до гидрации чип показывает «открыто» — разметка
+// обязана совпасть.
 const FONTS =
   "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Golos+Text:wght@400;500;600&display=swap"
 
@@ -50,21 +52,24 @@ const STYLES = `
 --vibeui-navbar-028-wait:#f2c94c;
 --vibeui-navbar-028-display:"Playfair Display",ui-serif,Georgia,serif;
 --vibeui-navbar-028-font:"Golos Text",ui-sans-serif,system-ui,sans-serif;
+--vibeui-navbar-028-ease:cubic-bezier(.2,.8,.2,1);
 container-type:inline-size;
 }
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="navbar-028"]{color-scheme:dark}
 :where([data-vibeui-block="navbar-028"][data-tone="light"]){color-scheme:light}
 :where([data-vibeui-block="navbar-028"][data-tone="dark"]){color-scheme:dark}
-[data-vibeui-block="navbar-028"]{box-sizing:border-box;position:relative;z-index:50;font-family:var(--vibeui-navbar-028-font);color:var(--vibeui-navbar-028-fg);font-size:.95rem;line-height:1.4;transition:background .3s,box-shadow .3s}
+[data-vibeui-block="navbar-028"]{box-sizing:border-box;position:relative;z-index:50;font-family:var(--vibeui-navbar-028-font);color:var(--vibeui-navbar-028-fg);font-size:.95rem;line-height:1.4;transition:background .5s,box-shadow .3s,color .5s;animation:vibeui-navbar-028-drop .8s var(--vibeui-navbar-028-ease) both}
 [data-vibeui-block="navbar-028"][data-sticky="true"]{position:sticky;top:0}
 [data-vibeui-block="navbar-028"] *{box-sizing:border-box}
 [data-vibeui-block="navbar-028"][data-scrolled="true"]{background:color-mix(in oklab,var(--vibeui-navbar-028-bg) 82%,transparent);backdrop-filter:blur(14px) saturate(1.2);box-shadow:0 1px 0 var(--vibeui-navbar-028-line),0 12px 30px -24px rgb(0 0 0 / .4)}
 [data-vibeui-block="navbar-028"][data-scrolled="true"]::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:6px;background:radial-gradient(4px 3px at 10% 0,rgb(255 255 255 / .9),transparent 70%),radial-gradient(3px 2px at 35% 30%,rgb(255 255 255 / .8),transparent 70%),radial-gradient(5px 3px at 62% 10%,rgb(255 255 255 / .9),transparent 70%),radial-gradient(3px 2px at 88% 40%,rgb(255 255 255 / .8),transparent 70%);opacity:.9;pointer-events:none}
 [data-vibeui-block="navbar-028"] [data-part="row"]{display:flex;align-items:center;justify-content:space-between;gap:.5rem;height:4.25rem;max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="navbar-028"] [data-part="brand"]{font-family:var(--vibeui-navbar-028-display);font-weight:700;font-size:1.3rem;letter-spacing:-.03em;text-decoration:none;color:inherit;display:inline-flex;align-items:center;gap:.5rem;white-space:nowrap}
-[data-vibeui-block="navbar-028"] [data-part="dot"]{width:.6rem;height:.6rem;border-radius:50%;background:var(--vibeui-navbar-028-accent);box-shadow:0 0 0 4px color-mix(in oklab,var(--vibeui-navbar-028-accent) 18%,transparent)}
+[data-vibeui-block="navbar-028"] [data-part="dot"]{width:.6rem;height:.6rem;border-radius:50%;background:var(--vibeui-navbar-028-accent);box-shadow:0 0 0 4px color-mix(in oklab,var(--vibeui-navbar-028-accent) 18%,transparent);animation:vibeui-navbar-028-breathe 3s ease-in-out infinite}
+[data-vibeui-block="navbar-028"] [data-part="brand"]:hover [data-part="dot"]{animation-duration:.8s}
 [data-vibeui-block="navbar-028"] [data-part="nav"]{display:none;gap:1.6rem}
-[data-vibeui-block="navbar-028"] [data-part="nav"] a{text-decoration:none;color:inherit;font-weight:500;font-size:.92rem;position:relative}
+[data-vibeui-block="navbar-028"] [data-part="nav"] a{text-decoration:none;color:inherit;font-weight:500;font-size:.92rem;position:relative;transition:transform .3s var(--vibeui-navbar-028-ease)}
+[data-vibeui-block="navbar-028"] [data-part="nav"] a:hover{transform:translateY(-1px)}
 [data-vibeui-block="navbar-028"] [data-part="nav"] a::after{content:"";position:absolute;left:0;right:0;bottom:-.35rem;height:2px;border-radius:2px;background:var(--vibeui-navbar-028-accent);transform:scaleX(0);transform-origin:left;transition:transform .25s}
 [data-vibeui-block="navbar-028"] [data-part="nav"] a:hover::after{transform:scaleX(1)}
 [data-vibeui-block="navbar-028"] [data-part="right"]{display:flex;align-items:center;gap:.5rem}
@@ -72,12 +77,14 @@ container-type:inline-size;
 [data-vibeui-block="navbar-028"] [data-part="status"] i{width:.55rem;height:.55rem;border-radius:50%;background:var(--vibeui-navbar-028-open);box-shadow:0 0 0 0 color-mix(in oklab,var(--vibeui-navbar-028-open) 50%,transparent);animation:vibeui-navbar-028-pulse 2.4s ease-out infinite}
 [data-vibeui-block="navbar-028"] [data-part="status"][data-open="false"] i{background:var(--vibeui-navbar-028-wait);animation:none}
 [data-vibeui-block="navbar-028"] [data-part="status"] span{color:var(--vibeui-navbar-028-muted);display:none}
-[data-vibeui-block="navbar-028"] [data-part="action"]{display:inline-flex;align-items:center;border-radius:999px;padding:.65rem .9rem;font-weight:600;font-size:.88rem;text-decoration:none;color:var(--vibeui-navbar-028-on-accent);background:var(--vibeui-navbar-028-accent);box-shadow:0 1px 0 rgb(255 255 255 / .35) inset,0 10px 24px -12px color-mix(in oklab,var(--vibeui-navbar-028-accent) 70%,transparent);white-space:nowrap;transition:transform .18s,filter .18s}
-[data-vibeui-block="navbar-028"] [data-part="action"]:hover{transform:translateY(-1px);filter:brightness(1.05)}
-[data-vibeui-block="navbar-028"] [data-part="action"]:active{transform:translateY(1px) scale(.985)}
+[data-vibeui-block="navbar-028"] [data-part="action"]{display:inline-flex;align-items:center;border-radius:999px;padding:.65rem .9rem;font-weight:600;font-size:.88rem;text-decoration:none;color:var(--vibeui-navbar-028-on-accent);background:var(--vibeui-navbar-028-accent);box-shadow:0 1px 0 rgb(255 255 255 / .35) inset,0 10px 24px -12px color-mix(in oklab,var(--vibeui-navbar-028-accent) 70%,transparent);white-space:nowrap;transform:translate(var(--vibeui-navbar-028-mx,0px),var(--vibeui-navbar-028-my,0px));transition:transform .35s var(--vibeui-navbar-028-ease),filter .18s,box-shadow .35s}
+[data-vibeui-block="navbar-028"] [data-part="action"]:hover{filter:brightness(1.05);box-shadow:0 1px 0 rgb(255 255 255 / .35) inset,0 14px 28px -12px color-mix(in oklab,var(--vibeui-navbar-028-accent) 90%,transparent)}
+[data-vibeui-block="navbar-028"] [data-part="action"]:active{transform:translate(var(--vibeui-navbar-028-mx,0px),var(--vibeui-navbar-028-my,0px)) scale(.97)}
 [data-vibeui-block="navbar-028"] [data-part="action"] span{display:none}
 [data-vibeui-block="navbar-028"] a:focus-visible{outline:2px solid var(--vibeui-navbar-028-accent);outline-offset:3px}
 @keyframes vibeui-navbar-028-pulse{0%{box-shadow:0 0 0 0 color-mix(in oklab,var(--vibeui-navbar-028-open) 50%,transparent)}100%{box-shadow:0 0 0 10px transparent}}
+@keyframes vibeui-navbar-028-breathe{0%,100%{box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-navbar-028-accent) 14%,transparent)}50%{box-shadow:0 0 0 6px color-mix(in oklab,var(--vibeui-navbar-028-accent) 26%,transparent)}}
+@keyframes vibeui-navbar-028-drop{from{opacity:0;transform:translateY(-100%)}to{opacity:1;transform:none}}
 @container (min-width: 40rem){
 [data-vibeui-block="navbar-028"] [data-part="status"] span{display:inline}
 [data-vibeui-block="navbar-028"] [data-part="action"] span{display:inline}
@@ -98,7 +105,7 @@ container-type:inline-size;
 [data-vibeui-block="navbar-028"] [data-part="menu"] a[data-cta]{margin-top:.4rem;text-align:center;background:var(--vibeui-navbar-028-accent);color:var(--vibeui-navbar-028-on-accent)}
 @keyframes vibeui-navbar-028-menu{from{opacity:0;transform:translateY(-6px)}}
 @container (min-width: 52rem){[data-vibeui-block="navbar-028"] [data-part="burger"],[data-vibeui-block="navbar-028"] [data-part="menu"]{display:none}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-028"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-028"],[data-vibeui-block="navbar-028"] *{animation:none!important;transition:none!important}}`
 
 const listeners = new Set<() => void>()
 let timer: number | undefined
@@ -121,6 +128,21 @@ function useMinutes(): number | null {
   if (tick === null) return null
   const now = new Date()
   return now.getHours() * 60 + now.getMinutes()
+}
+
+// Магнит: кнопка тянется к курсору не дальше 5px; на тач — ничего.
+function magnet(event: PointerEvent<HTMLElement>) {
+  if (event.pointerType === "touch") return
+  const rect = event.currentTarget.getBoundingClientRect()
+  const dx = event.clientX - (rect.left + rect.width / 2)
+  const dy = event.clientY - (rect.top + rect.height / 2)
+  event.currentTarget.style.setProperty("--vibeui-navbar-028-mx", `${Math.max(-5, Math.min(5, dx * 0.2))}px`)
+  event.currentTarget.style.setProperty("--vibeui-navbar-028-my", `${Math.max(-5, Math.min(5, dy * 0.2))}px`)
+}
+
+function unmagnet(event: PointerEvent<HTMLElement>) {
+  event.currentTarget.style.removeProperty("--vibeui-navbar-028-mx")
+  event.currentTarget.style.removeProperty("--vibeui-navbar-028-my")
 }
 
 function plural(n: number, one: string, few: string, many: string) {
@@ -225,7 +247,7 @@ export function Navbar028({
               {main} <span>· {extra}</span>
             </div>
             {actionLabel ? (
-              <a data-part="action" href={actionHref}>
+              <a data-part="action" href={actionHref} onPointerMove={magnet} onPointerLeave={unmagnet}>
                 {actionShort}
                 <span>{" "}{(actionLabel.startsWith(actionShort) ? actionLabel.slice(actionShort.length) : actionLabel).trim()}</span>
               </a>

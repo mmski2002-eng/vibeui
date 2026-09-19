@@ -30,7 +30,9 @@ export type Navbar030Props = {
 // Шапка open-source проекта: имя пакета моноширинным с префиксом «~/», чип
 // версии, разделы, чип звёзд GitHub, который считает вверх при первом
 // показе (rAF, ease-out), и кнопка «Начать». Липкая, при прокрутке — линия
-// снизу и лёгкое стекло. Острые углы, без теней — инженерная эстетика.
+// снизу, лёгкое стекло и тонкая полоса прогресса прокрутки на
+// animation-timeline: scroll() (в браузерах без поддержки её просто нет).
+// Ссылки подчёркиваются «выездом» слева, кнопка приподнимается с цветной тенью.
 const FONTS = "https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
 
 const STYLES = `
@@ -58,15 +60,20 @@ container-type:inline-size;
 [data-vibeui-block="navbar-030"] [data-part="brand"] i{color:var(--vibeui-navbar-030-accent);font-style:normal}
 [data-vibeui-block="navbar-030"] [data-part="ver"]{font-family:var(--vibeui-navbar-030-mono);font-size:.68rem;padding:.2rem .45rem;border-radius:4px;border:1px solid var(--vibeui-navbar-030-line);color:var(--vibeui-navbar-030-muted)}
 [data-vibeui-block="navbar-030"] [data-part="nav"]{display:none;gap:1.2rem;margin-left:1rem}
-[data-vibeui-block="navbar-030"] [data-part="nav"] a{color:var(--vibeui-navbar-030-muted);text-decoration:none;font-weight:500;transition:color .2s}
-[data-vibeui-block="navbar-030"] [data-part="nav"] a:hover{color:var(--vibeui-navbar-030-fg)}
+[data-vibeui-block="navbar-030"] [data-part="nav"] a{position:relative;color:var(--vibeui-navbar-030-muted);text-decoration:none;font-weight:500;padding:.2rem 0;transition:color .2s,transform .3s cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="navbar-030"] [data-part="nav"] a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1.5px;background:var(--vibeui-navbar-030-accent);transform:scaleX(0);transform-origin:right;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="navbar-030"] [data-part="nav"] a:hover{color:var(--vibeui-navbar-030-fg);transform:translateY(-1px)}
+[data-vibeui-block="navbar-030"] [data-part="nav"] a:hover::after{transform:scaleX(1);transform-origin:left}
+[data-vibeui-block="navbar-030"] [data-part="progress"]{position:absolute;left:0;bottom:-1px;width:100%;height:2px;background:linear-gradient(90deg,var(--vibeui-navbar-030-accent),oklch(from var(--vibeui-navbar-030-accent) l c calc(h + 60)));transform:scaleX(0);transform-origin:left;pointer-events:none;display:none}
+@supports (animation-timeline: scroll()){[data-vibeui-block="navbar-030"] [data-part="progress"]{display:block;animation:vibeui-navbar-030-progress linear both;animation-timeline:scroll(root)}}
+@keyframes vibeui-navbar-030-progress{to{transform:scaleX(1)}}
 [data-vibeui-block="navbar-030"] [data-part="right"]{margin-left:auto;display:flex;align-items:center;gap:.5rem}
-[data-vibeui-block="navbar-030"] [data-part="stars"]{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .7rem;border-radius:6px;border:1px solid var(--vibeui-navbar-030-line);background:var(--vibeui-navbar-030-panel);color:inherit;text-decoration:none;font-family:var(--vibeui-navbar-030-mono);font-size:.78rem;font-variant-numeric:tabular-nums;transition:border-color .2s}
-[data-vibeui-block="navbar-030"] [data-part="stars"]:hover{border-color:var(--vibeui-navbar-030-accent)}
+[data-vibeui-block="navbar-030"] [data-part="stars"]{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .7rem;border-radius:6px;border:1px solid var(--vibeui-navbar-030-line);background:var(--vibeui-navbar-030-panel);color:inherit;text-decoration:none;font-family:var(--vibeui-navbar-030-mono);font-size:.78rem;font-variant-numeric:tabular-nums;transition:border-color .2s,transform .3s cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="navbar-030"] [data-part="stars"]:hover{border-color:var(--vibeui-navbar-030-accent);transform:translateY(-1px)}
 [data-vibeui-block="navbar-030"] [data-part="stars"] svg{width:.9rem;height:.9rem;fill:var(--vibeui-navbar-030-accent)}
 [data-vibeui-block="navbar-030"] [data-part="stars"] span{display:none;color:var(--vibeui-navbar-030-muted)}
-[data-vibeui-block="navbar-030"] [data-part="action"]{display:inline-flex;align-items:center;padding:.5rem .9rem;border-radius:6px;background:var(--vibeui-navbar-030-accent);color:var(--vibeui-navbar-030-on-accent);text-decoration:none;font-weight:600;font-size:.85rem;white-space:nowrap;transition:filter .2s}
-[data-vibeui-block="navbar-030"] [data-part="action"]:hover{filter:brightness(1.08)}
+[data-vibeui-block="navbar-030"] [data-part="action"]{display:inline-flex;align-items:center;padding:.5rem .9rem;border-radius:6px;background:var(--vibeui-navbar-030-accent);color:var(--vibeui-navbar-030-on-accent);text-decoration:none;font-weight:600;font-size:.85rem;white-space:nowrap;transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
+[data-vibeui-block="navbar-030"] [data-part="action"]:hover{transform:translateY(-1px);box-shadow:0 8px 20px -8px color-mix(in oklab,var(--vibeui-navbar-030-accent) 70%,transparent)}
 [data-vibeui-block="navbar-030"] a:focus-visible{outline:2px solid var(--vibeui-navbar-030-accent);outline-offset:2px}
 @container (min-width: 40rem){[data-vibeui-block="navbar-030"] [data-part="stars"] span{display:inline}}
 @container (min-width: 56rem){[data-vibeui-block="navbar-030"] [data-part="nav"]{display:flex}}
@@ -83,7 +90,7 @@ container-type:inline-size;
 [data-vibeui-block="navbar-030"] [data-part="menu"] a[data-cta]{margin-top:.4rem;text-align:center;background:var(--vibeui-navbar-030-accent);color:var(--vibeui-navbar-030-on-accent)}
 @keyframes vibeui-navbar-030-menu{from{opacity:0;transform:translateY(-6px)}}
 @container (min-width: 56rem){[data-vibeui-block="navbar-030"] [data-part="burger"],[data-vibeui-block="navbar-030"] [data-part="menu"]{display:none}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-030"] *{transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-030"] *{animation:none!important;transition:none!important}}`
 
 /** Шапка open-source проекта с чипом звёзд GitHub. */
 export function Navbar030({
@@ -189,6 +196,7 @@ export function Navbar030({
           ))}
           {actionLabel ? <a data-cta="" href={actionHref}>{actionLabel}</a> : null}
         </nav>
+        <i data-part="progress" aria-hidden="true" />
       </header>
     </>
   )

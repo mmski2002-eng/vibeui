@@ -29,9 +29,11 @@ export type Footer029Props = {
 }
 
 // Минимальный подвал open-source проекта: имя моноширинным с «~/», чипы
-// версии и лицензии, три колонки ссылок, строка статуса с зелёной точкой,
-// внизу — копирайт и «сделано контрибьюторами из N стран». Линии вместо
-// теней, всё на одной сетке.
+// версии и лицензии, три колонки ссылок, строка статуса с пульсирующей
+// зелёной точкой, внизу — копирайт и «сделано контрибьюторами из N стран».
+// Линии вместо теней, всё на одной сетке. Колонки проявляются каскадом по
+// прокрутке (animation-timeline: view() с фолбэком «видно всегда»), ссылки
+// на наведении сдвигаются вправо, за именем мигает курсор.
 const FONTS = "https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
 
 const STYLES = `
@@ -42,6 +44,7 @@ const STYLES = `
 --vibeui-footer-029-muted:color-mix(in oklab,var(--vibeui-footer-029-fg) 60%,var(--vibeui-footer-029-bg));
 --vibeui-footer-029-line:color-mix(in oklab,var(--vibeui-footer-029-fg) 12%,transparent);
 --vibeui-footer-029-ok:#3fa35b;
+--vibeui-footer-029-ease:cubic-bezier(.2,.8,.2,1);
 --vibeui-footer-029-font:"Onest",ui-sans-serif,system-ui,sans-serif;
 --vibeui-footer-029-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
 container-type:inline-size;
@@ -55,19 +58,24 @@ container-type:inline-size;
 [data-vibeui-block="footer-029"] [data-part="top"]{display:grid;gap:2rem}
 [data-vibeui-block="footer-029"] [data-part="brand"]{font-family:var(--vibeui-footer-029-mono);font-weight:600;font-size:1.1rem}
 [data-vibeui-block="footer-029"] [data-part="brand"] i{color:var(--vibeui-footer-029-accent);font-style:normal}
+[data-vibeui-block="footer-029"] [data-part="brand"] b{display:inline-block;width:.55em;height:1em;margin-left:.15em;vertical-align:text-bottom;background:var(--vibeui-footer-029-accent);animation:vibeui-footer-029-cursor 1s steps(1) infinite}
 [data-vibeui-block="footer-029"] [data-part="tag"]{margin:.5rem 0 0;color:var(--vibeui-footer-029-muted);max-width:22rem}
 [data-vibeui-block="footer-029"] [data-part="chips"]{display:flex;gap:.4rem;margin-top:.9rem}
 [data-vibeui-block="footer-029"] [data-part="chips"] span{font-family:var(--vibeui-footer-029-mono);font-size:.68rem;padding:.2rem .45rem;border-radius:4px;border:1px solid var(--vibeui-footer-029-line);color:var(--vibeui-footer-029-muted)}
 [data-vibeui-block="footer-029"] [data-part="cols"]{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
 [data-vibeui-block="footer-029"] [data-part="cols"] h4{margin:0 0 .6rem;font-family:var(--vibeui-footer-029-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-footer-029-muted)}
-[data-vibeui-block="footer-029"] [data-part="cols"] a{display:block;color:inherit;text-decoration:none;padding:.15rem 0;opacity:.85;transition:color .2s,opacity .2s}
-[data-vibeui-block="footer-029"] [data-part="cols"] a:hover{opacity:1;color:var(--vibeui-footer-029-accent)}
+[data-vibeui-block="footer-029"] [data-part="cols"] a{display:block;width:fit-content;color:inherit;text-decoration:none;padding:.15rem 0;opacity:.85;transition:color .2s,opacity .2s,transform .3s var(--vibeui-footer-029-ease)}
+[data-vibeui-block="footer-029"] [data-part="cols"] a:hover{opacity:1;color:var(--vibeui-footer-029-accent);transform:translateX(4px)}
+@supports (animation-timeline: view()){[data-vibeui-block="footer-029"] [data-part="col"]{animation:vibeui-footer-029-up linear both;animation-timeline:view();animation-range:entry calc(var(--vibeui-footer-029-i) * 8%) entry calc(45% + var(--vibeui-footer-029-i) * 8%)}[data-vibeui-block="footer-029"] [data-part="intro"]{animation:vibeui-footer-029-up linear both;animation-timeline:view();animation-range:entry 0% entry 40%}}
+@keyframes vibeui-footer-029-up{from{opacity:0;transform:translateY(18px)}}
+@keyframes vibeui-footer-029-cursor{50%{opacity:0}}
+@keyframes vibeui-footer-029-ping{70%,100%{box-shadow:0 0 0 .5rem transparent}}
 [data-vibeui-block="footer-029"] [data-part="bottom"]{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:2.5rem;padding-top:1.2rem;border-top:1px solid var(--vibeui-footer-029-line);font-family:var(--vibeui-footer-029-mono);font-size:.72rem;color:var(--vibeui-footer-029-muted)}
 [data-vibeui-block="footer-029"] [data-part="status"]{display:inline-flex;align-items:center;gap:.4rem}
-[data-vibeui-block="footer-029"] [data-part="status"] i{width:.5rem;height:.5rem;border-radius:50%;background:var(--vibeui-footer-029-ok);box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-footer-029-ok) 25%,transparent)}
+[data-vibeui-block="footer-029"] [data-part="status"] i{width:.5rem;height:.5rem;border-radius:50%;background:var(--vibeui-footer-029-ok);box-shadow:0 0 0 0 color-mix(in oklab,var(--vibeui-footer-029-ok) 50%,transparent);animation:vibeui-footer-029-ping 2.4s ease-out infinite}
 [data-vibeui-block="footer-029"] a:focus-visible{outline:2px solid var(--vibeui-footer-029-accent);outline-offset:2px}
 @container (min-width: 56rem){[data-vibeui-block="footer-029"] [data-part="top"]{grid-template-columns:minmax(0,1fr) minmax(0,1.5fr)}[data-vibeui-block="footer-029"] [data-part="cols"]{grid-template-columns:repeat(3,1fr)}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-029"] *{transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-029"] *{animation:none!important;transition:none!important}}`
 
 /** Минимальный подвал open-source проекта. */
 export function Footer029({
@@ -106,10 +114,11 @@ export function Footer029({
       <footer data-vibeui-block="footer-029" data-tone={tone === "auto" ? undefined : tone} className={className} style={palette}>
         <div data-part="shell">
           <div data-part="top">
-            <div>
+            <div data-part="intro">
               <div data-part="brand">
                 <i>~/</i>
                 {brand}
+                <b aria-hidden="true" />
               </div>
               {tagline ? <p data-part="tag">{tagline}</p> : null}
               <div data-part="chips">
@@ -118,8 +127,8 @@ export function Footer029({
               </div>
             </div>
             <div data-part="cols">
-              {columns.map((column) => (
-                <div key={column.title}>
+              {columns.map((column, index) => (
+                <div key={column.title} data-part="col" style={{ ["--vibeui-footer-029-i" as string]: index }}>
                   <h4>{column.title}</h4>
                   {column.links.map((link) => (
                     <a key={link.label} href={link.href}>

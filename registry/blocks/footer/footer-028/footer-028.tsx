@@ -32,12 +32,16 @@ export type Footer028Props = {
 // Подвал подкаста: огромная словомарка на всю ширину узким гротеском, слева
 // карточка ведущей с портретом и двумя строками, справа платформы и разделы,
 // ссылка на RSS моноширинным «∿ rss», внизу копирайт и «до следующего
-// эфира». Словомарка при наведении подсвечивается акцентом по буквам через
-// background-clip — без JS.
+// эфира». Словомарка заливается акцентом слева направо по мере прокрутки
+// к низу страницы — scroll-driven через `animation-timeline: view()` и
+// зарегистрированную `@property`, без JS, с фолбэком «залита всегда»;
+// при наведении вспыхивает целиком. Карточка ведущей и колонки въезжают
+// каскадом, сама словомарка поднимается из-под маски.
 const FONTS =
   "https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@700;800&family=Inter+Tight:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
 
 const STYLES = `
+@property --vibeui-footer-028-x{syntax:"<percentage>";inherits:true;initial-value:100%}
 :where([data-vibeui-block="footer-028"]){
 --vibeui-footer-028-bg:light-dark(#ffffff,#1a1a1a);
 --vibeui-footer-028-fg:light-dark(#1a1a1a,#f2f2f2);
@@ -48,31 +52,48 @@ const STYLES = `
 --vibeui-footer-028-display:"Sofia Sans Extra Condensed",Impact,"Arial Narrow",sans-serif;
 --vibeui-footer-028-font:"Inter Tight",ui-sans-serif,system-ui,sans-serif;
 --vibeui-footer-028-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+--vibeui-footer-028-ease:cubic-bezier(.2,.8,.2,1);
 container-type:inline-size;
 }
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="footer-028"]{color-scheme:dark}
 :where([data-vibeui-block="footer-028"][data-tone="light"]){color-scheme:light}
 :where([data-vibeui-block="footer-028"][data-tone="dark"]){color-scheme:dark}
-[data-vibeui-block="footer-028"]{box-sizing:border-box;padding:4rem 0 2rem;background:var(--vibeui-footer-028-bg);color:var(--vibeui-footer-028-fg);font-family:var(--vibeui-footer-028-font);font-size:.95rem;line-height:1.5;border-top:1px solid var(--vibeui-footer-028-line)}
+[data-vibeui-block="footer-028"]{box-sizing:border-box;position:relative;overflow:hidden;padding:5rem 0 2rem;background:var(--vibeui-footer-028-bg);color:var(--vibeui-footer-028-fg);font-family:var(--vibeui-footer-028-font);font-size:.95rem;line-height:1.5;border-top:1px solid var(--vibeui-footer-028-line)}
 [data-vibeui-block="footer-028"] *{box-sizing:border-box}
-[data-vibeui-block="footer-028"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem}
+[data-vibeui-block="footer-028"]::before{content:"";position:absolute;left:50%;bottom:-40%;width:80%;aspect-ratio:2/1;translate:-50% 0;border-radius:50%;background:radial-gradient(ellipse,color-mix(in oklab,var(--vibeui-footer-028-accent) 14%,transparent),transparent 65%);filter:blur(50px);pointer-events:none}
+[data-vibeui-block="footer-028"] [data-part="shell"]{position:relative;max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="footer-028"] [data-part="grid"]{display:grid;gap:2rem}
-[data-vibeui-block="footer-028"] [data-part="host"]{display:grid;grid-template-columns:5rem 1fr;gap:1rem;align-items:center;padding:1.2rem;border-radius:1.2rem;background:var(--vibeui-footer-028-panel)}
-[data-vibeui-block="footer-028"] [data-part="host"] img{width:5rem;height:5rem;border-radius:1rem;object-fit:cover;display:block}
-[data-vibeui-block="footer-028"] [data-part="host"] b{display:block;font-family:var(--vibeui-footer-028-display);font-weight:700;font-size:1.4rem;line-height:1;text-transform:uppercase}
+[data-vibeui-block="footer-028"] [data-part="host"]{position:relative;display:grid;grid-template-columns:5.5rem 1fr;gap:1.2rem;align-items:center;padding:1.3rem;border-radius:1.3rem;background:var(--vibeui-footer-028-panel);box-shadow:0 0 0 1px var(--vibeui-footer-028-line);overflow:hidden;transition:transform .4s var(--vibeui-footer-028-ease),box-shadow .4s}
+[data-vibeui-block="footer-028"] [data-part="host"]::before{content:"";position:absolute;right:-4rem;top:-4rem;width:10rem;height:10rem;border-radius:50%;background:radial-gradient(circle,color-mix(in oklab,var(--vibeui-footer-028-accent) 25%,transparent),transparent 70%);filter:blur(12px);pointer-events:none}
+[data-vibeui-block="footer-028"] [data-part="host"]:hover{transform:translateY(-.25rem);box-shadow:0 0 0 1px color-mix(in oklab,var(--vibeui-footer-028-accent) 50%,transparent),0 30px 50px -30px rgb(0 0 0 / .8)}
+[data-vibeui-block="footer-028"] [data-part="host"] img{position:relative;width:5.5rem;height:5.5rem;border-radius:1rem;object-fit:cover;display:block;filter:grayscale(.4);transition:filter .5s,transform .6s var(--vibeui-footer-028-ease)}
+[data-vibeui-block="footer-028"] [data-part="host"]:hover img{filter:none;transform:rotate(-3deg) scale(1.04)}
+[data-vibeui-block="footer-028"] [data-part="host"] > div{position:relative}
+[data-vibeui-block="footer-028"] [data-part="host"] b{display:block;font-family:var(--vibeui-footer-028-display);font-weight:700;font-size:1.6rem;line-height:1;text-transform:uppercase}
 [data-vibeui-block="footer-028"] [data-part="host"] small{display:block;font-family:var(--vibeui-footer-028-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--vibeui-footer-028-accent);margin:.3rem 0}
 [data-vibeui-block="footer-028"] [data-part="host"] p{margin:0;font-size:.86rem;color:var(--vibeui-footer-028-muted)}
 [data-vibeui-block="footer-028"] [data-part="cols"]{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
 [data-vibeui-block="footer-028"] [data-part="cols"] h4{margin:0 0 .6rem;font-family:var(--vibeui-footer-028-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-footer-028-muted)}
-[data-vibeui-block="footer-028"] [data-part="cols"] a{display:block;color:inherit;text-decoration:none;padding:.15rem 0;opacity:.85;transition:opacity .2s,color .2s}
-[data-vibeui-block="footer-028"] [data-part="cols"] a:hover{opacity:1;color:var(--vibeui-footer-028-accent)}
+[data-vibeui-block="footer-028"] [data-part="cols"] a{display:block;color:inherit;text-decoration:none;padding:.15rem 0;opacity:.85;transition:opacity .2s,color .2s,translate .3s var(--vibeui-footer-028-ease)}
+[data-vibeui-block="footer-028"] [data-part="cols"] a:hover{opacity:1;color:var(--vibeui-footer-028-accent);translate:.3rem 0}
 [data-vibeui-block="footer-028"] [data-part="rss"]{display:inline-flex;align-items:center;gap:.4rem;margin-top:.8rem;font-family:var(--vibeui-footer-028-mono);font-size:.78rem;color:var(--vibeui-footer-028-accent);text-decoration:none}
-[data-vibeui-block="footer-028"] [data-part="mark"]{margin:3rem 0 0;font-family:var(--vibeui-footer-028-display);font-weight:800;font-size:clamp(4rem,19cqi,15rem);line-height:.85;text-transform:uppercase;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;background:linear-gradient(90deg,var(--vibeui-footer-028-accent) 0 var(--vibeui-footer-028-x,0%),color-mix(in oklab,var(--vibeui-footer-028-fg) 18%,transparent) var(--vibeui-footer-028-x,0%));-webkit-background-clip:text;background-clip:text;color:transparent;transition:color .3s}
-[data-vibeui-block="footer-028"] [data-part="mark"]:hover{background:var(--vibeui-footer-028-accent);-webkit-background-clip:text;background-clip:text}
+[data-vibeui-block="footer-028"] [data-part="rss"] i{font-style:normal;display:inline-block;animation:vibeui-footer-028-wiggle 2.4s ease-in-out infinite}
+[data-vibeui-block="footer-028"] [data-part="markwrap"]{margin:3.5rem 0 0;overflow:hidden;padding:.1em 0 .08em}
+[data-vibeui-block="footer-028"] [data-part="mark"]{font-family:var(--vibeui-footer-028-display);font-weight:800;font-size:clamp(4.6rem,19cqi,15.5rem);line-height:.85;text-transform:uppercase;letter-spacing:-.01em;white-space:nowrap;background:linear-gradient(90deg,var(--vibeui-footer-028-accent) 0 var(--vibeui-footer-028-x),color-mix(in oklab,var(--vibeui-footer-028-fg) 18%,transparent) var(--vibeui-footer-028-x));-webkit-background-clip:text;background-clip:text;color:transparent;transition:--vibeui-footer-028-x .4s var(--vibeui-footer-028-ease);cursor:default}
+[data-vibeui-block="footer-028"] [data-part="mark"]:hover{--vibeui-footer-028-x:100%!important}
 [data-vibeui-block="footer-028"] [data-part="bottom"]{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid var(--vibeui-footer-028-line);font-family:var(--vibeui-footer-028-mono);font-size:.72rem;letter-spacing:.06em;color:var(--vibeui-footer-028-muted)}
 [data-vibeui-block="footer-028"] a:focus-visible{outline:2px solid var(--vibeui-footer-028-accent);outline-offset:3px}
+@keyframes vibeui-footer-028-wiggle{0%,100%{translate:0 0}50%{translate:0 -2px}}
+@keyframes vibeui-footer-028-up{from{opacity:0;translate:0 1.6rem}}
+@keyframes vibeui-footer-028-rise{from{translate:0 105%}}
+@keyframes vibeui-footer-028-fill{from{--vibeui-footer-028-x:0%}to{--vibeui-footer-028-x:100%}}
+@supports (animation-timeline: view()){
+[data-vibeui-block="footer-028"] [data-part="host"],[data-vibeui-block="footer-028"] [data-part="cols"] > div{animation:vibeui-footer-028-up linear both;animation-timeline:view();animation-range:entry 0% entry 50%}
+[data-vibeui-block="footer-028"] [data-part="cols"] > div:nth-child(2){animation-range:entry 10% entry 60%}
+[data-vibeui-block="footer-028"] [data-part="mark"]{animation:vibeui-footer-028-rise linear both,vibeui-footer-028-fill linear both;animation-timeline:view();animation-range:entry 0% entry 70%,entry 40% entry 100%}
+}
 @container (min-width: 56rem){[data-vibeui-block="footer-028"] [data-part="grid"]{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:3rem}[data-vibeui-block="footer-028"] [data-part="cols"]{grid-template-columns:1fr 1fr}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-028"] *{transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-028"] *{transition:none!important;animation:none!important}}`
 
 /** Подвал подкаста с огромной словомаркой и карточкой ведущей. */
 export function Footer028({
@@ -141,7 +162,7 @@ export function Footer028({
                 ))}
                 {rssLabel ? (
                   <a data-part="rss" href={rssHref}>
-                    ∿ {rssLabel}
+                    <i aria-hidden="true">∿</i> {rssLabel}
                   </a>
                 ) : null}
               </div>
@@ -155,8 +176,8 @@ export function Footer028({
               </div>
             </div>
           </div>
-          <div data-part="mark" aria-hidden="true">
-            {brand}
+          <div data-part="markwrap" aria-hidden="true">
+            <div data-part="mark">{brand}</div>
           </div>
           <div data-part="bottom">
             <span>

@@ -18,7 +18,10 @@ import { Footer027 } from "@/registry/blocks/footer/footer-027/footer-027"
  * Сценарий «Кофейня-пекарня»: сайт живёт по часам пекарни — что в печи
  * сейчас, что достанут через двадцать минут, сколько осталось. Тринадцать
  * блоков, светлая тема «молоко и мак»; полка и коробка связаны событиями
- * window. Витрина результата, не шаблон.
+ * window. История «36 часов» (bakery-004) пишет `--vibeui-night` на <html>,
+ * и фон всей страницы вместе с шапкой уходит в ночь и возвращается к утру по
+ * прокрутке: цвета страницы считаются через color-mix от этой переменной.
+ * Витрина результата, не шаблон.
  */
 export const metadata = {
   title: "Корка — кофейня-пекарня в Хамовниках",
@@ -26,12 +29,16 @@ export const metadata = {
     "Демо сценария «Кофейня-пекарня» VibeUI: хлеб по часам, витрина с остатками, кофе по крепости, коробка к утру и история буханки за 36 часов.",
 }
 
-const page: CSSProperties = {
+// Ночь сцены → цвета страницы: 0 — «молоко», 1 — тёмная ночь пекарни.
+const page = {
   colorScheme: "light",
-  background: "#f6f1e8",
-  color: "#1f1a17",
+  "--vibeui-page-bg": "color-mix(in oklab, #17130f calc(var(--vibeui-night, 0) * 100%), #f6f1e8)",
+  "--vibeui-page-ink": "color-mix(in oklab, #f6f1e8 calc(var(--vibeui-night, 0) * 100%), #1f1a17)",
+  "--vibeui-page-chip": "color-mix(in oklab, var(--vibeui-page-ink) 8%, var(--vibeui-page-bg))",
+  background: "var(--vibeui-page-bg)",
+  color: "var(--vibeui-page-ink)",
   fontFamily: '"Golos Text",ui-sans-serif,system-ui,sans-serif',
-}
+} as CSSProperties
 
 // Тема страницы: блоки каталога по умолчанию нейтральные, цвета задаёт сценарий.
 const bakery = { tone: "light", accent: "#e4572e", ink: "#1f1a17", background: "#f6f1e8" } as const
@@ -41,11 +48,11 @@ const PHOTOS = "/demo/bakery"
 
 export default function BakeryDemo() {
   return (
-    <div style={page} className="min-h-dvh">
+    <div style={page} className="min-h-dvh" data-vibeui-demo="bakery">
       <style href="vibeui-demo-scroll" precedence="medium">
-        {`html{scroll-behavior:smooth;scroll-padding-top:4.5rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}`}
+        {`html{scroll-behavior:smooth;scroll-padding-top:4.5rem}[data-vibeui-demo="bakery"]{transition:background .3s,color .3s}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}[data-vibeui-demo="bakery"]{transition:none}}`}
       </style>
-      <Navbar028 {...bakery} />
+      <Navbar028 {...bakery} background="var(--vibeui-page-bg)" ink="var(--vibeui-page-ink)" style={{ ["--vibeui-navbar-028-chip" as string]: "var(--vibeui-page-chip)" }} />
       <div id="top">
         <Hero028 {...bakery} image={`${PHOTOS}/hero.webp`} imageAlt="Витрина пекарни утром: круассаны за стеклом, хлеб на полках, бариста у машины" />
       </div>

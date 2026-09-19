@@ -8,34 +8,39 @@ import { About014 } from "@/registry/blocks/about/about-014/about-014"
 import { Testimonials024 } from "@/registry/blocks/testimonials/testimonials-024/testimonials-024"
 import { Contact021 } from "@/registry/blocks/contact/contact-021/contact-021"
 import { Footer030 } from "@/registry/blocks/footer/footer-030/footer-030"
+import { TintShell } from "./tint-shell"
 
 /**
  * Сценарий «Портфолио разработчика / дизайнера»: страница ведёт себя как
- * живой человек — свет за курсором, печатающиеся роли, местное время,
- * проекты стопкой по прокрутке. Бумага, чернила и ультрафиолет. Витрина
- * результата, не шаблон.
+ * живой человек — имя антиквой из-под маски, свет за курсором с инерцией,
+ * печатающиеся роли, местное время с секундами, проекты стопкой по прокрутке,
+ * и вся страница подкрашивается под наведённый проект (событие
+ * `vibeui-page:tint` → TintShell). Бумага с зерном, чернила и ультрафиолет.
  */
 export const metadata = {
   title: "Даня Лунёв — дизайн и фронтенд",
   description:
-    "Демо сценария «Портфолио» VibeUI: печатающиеся роли и свет за курсором, проекты стопкой, «работал с» бегущей строкой, обо мне, отзывы, контакт с копируемой почтой.",
+    "Демо сценария «Портфолио» VibeUI: имя антиквой, печатающиеся роли и свет за курсором, проекты стопкой с подкраской страницы, бегущая строка навыков, отзывы-заметки, форма с плавающими ярлыками.",
 }
+
+const PAPER = "#efeee9"
 
 const page: CSSProperties = {
   colorScheme: "light",
-  background: "#efeee9",
+  background: "var(--vibeui-page-bg)",
   color: "#141414",
   fontFamily: '"Golos Text",ui-sans-serif,system-ui,sans-serif',
 }
 
 // Тема страницы: блоки каталога по умолчанию нейтральные, цвета задаёт сценарий.
-const paper = { tone: "light", accent: "#5b3df5", ink: "#141414", background: "#efeee9" } as const
+// Фон блоков — переменная страницы, чтобы подкраска от проектов дошла до каждой секции.
+const paper = { tone: "light", accent: "#5b3df5", ink: "#141414", background: "var(--vibeui-page-bg)" } as const
 
 const PHOTOS = "/demo/portfolio"
 
 export default function PortfolioDemo() {
   return (
-    <div style={page} className="min-h-dvh">
+    <TintShell base={PAPER} style={page} className="min-h-dvh">
       <style href="vibeui-demo-scroll" precedence="medium">
         {`html{scroll-behavior:smooth;scroll-padding-top:4rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}`}
       </style>
@@ -57,6 +62,6 @@ export default function PortfolioDemo() {
         <Contact021 {...paper} image={`${PHOTOS}/portrait-02.webp`} imageAlt="Даня рисует маркером на бумаге" />
       </div>
       <Footer030 {...paper} />
-    </div>
+    </TintShell>
   )
 }

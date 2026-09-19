@@ -27,11 +27,15 @@ export type Bento002Props = {
   style?: CSSProperties
 }
 
-// Интеграции орбитами: в центре стеклянный кружок с именем продукта, вокруг
-// на двух кольцах кружат сервисы-марки — внутреннее кольцо по часовой,
-// внешнее против и медленнее; сами марки контрвращаются, чтобы буквы стояли
-// прямо. По наведению на секцию орбиты останавливаются, марка под курсором
-// подсвечивается. Справа список «что подключается». Всё на CSS.
+// Интеграции орбитами: в центре кружок с именем продукта пульсирует
+// кольцами-«пингами», вокруг на двух кольцах кружат сервисы-марки —
+// внутреннее кольцо по часовой, внешнее против и медленнее; за каждой
+// маркой по орбите тянется светящийся хвост (conic-gradient в маске-кольце),
+// сами марки контрвращаются, чтобы буквы стояли прямо. По наведению на
+// секцию орбиты останавливаются, марка под курсором подсвечивается. Справа
+// список «что подключается». Заголовок въезжает словами через маску, список
+// проявляется каскадом — на scroll-driven animation-timeline: view() с
+// фолбэком «видно всегда». Всё на CSS, без клиентского кода.
 const FONTS = "https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@600;700;800&family=Golos+Text:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
 
 const STYLES = `
@@ -43,6 +47,8 @@ const STYLES = `
 --vibeui-bento-002-muted:color-mix(in oklab,var(--vibeui-bento-002-fg) 60%,var(--vibeui-bento-002-bg));
 --vibeui-bento-002-line:color-mix(in oklab,var(--vibeui-bento-002-fg) 14%,transparent);
 --vibeui-bento-002-glass:color-mix(in oklab,var(--vibeui-bento-002-fg) 6%,transparent);
+--vibeui-bento-002-a2:color-mix(in oklab,var(--vibeui-bento-002-accent) 40%,#a855f7);
+--vibeui-bento-002-ease:cubic-bezier(.2,.8,.2,1);
 --vibeui-bento-002-display:"Wix Madefor Display",ui-sans-serif,system-ui,sans-serif;
 --vibeui-bento-002-font:"Golos Text",ui-sans-serif,system-ui,sans-serif;
 --vibeui-bento-002-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
@@ -51,30 +57,51 @@ container-type:inline-size;
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="bento-002"]{color-scheme:dark}
 :where([data-vibeui-block="bento-002"][data-tone="light"]){color-scheme:light}
 :where([data-vibeui-block="bento-002"][data-tone="dark"]){color-scheme:dark}
-[data-vibeui-block="bento-002"]{box-sizing:border-box;padding:5rem 0;background:var(--vibeui-bento-002-bg);color:var(--vibeui-bento-002-fg);font-family:var(--vibeui-bento-002-font);font-size:1rem;line-height:1.5}
+[data-vibeui-block="bento-002"]{box-sizing:border-box;position:relative;overflow:hidden;padding:5rem 0;background:var(--vibeui-bento-002-bg);color:var(--vibeui-bento-002-fg);font-family:var(--vibeui-bento-002-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="bento-002"] *{box-sizing:border-box}
-[data-vibeui-block="bento-002"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem;display:grid;gap:3rem;align-items:center}
+[data-vibeui-block="bento-002"] [data-part="glow"]{position:absolute;left:-10%;top:10%;width:55%;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,color-mix(in oklab,var(--vibeui-bento-002-accent) 26%,transparent),transparent);filter:blur(60px);pointer-events:none;animation:vibeui-bento-002-breathe 9s ease-in-out infinite alternate}
+[data-vibeui-block="bento-002"] [data-part="glow"]:nth-child(2){left:auto;right:-15%;top:40%;width:45%;background:radial-gradient(closest-side,color-mix(in oklab,var(--vibeui-bento-002-a2) 24%,transparent),transparent);animation-delay:-4s}
+[data-vibeui-block="bento-002"] [data-part="shell"]{position:relative;max-width:80rem;margin:0 auto;padding:0 1.25rem;display:grid;gap:3rem;align-items:center}
 [data-vibeui-block="bento-002"] [data-part="eyebrow"]{margin:0 0 .8rem;font-family:var(--vibeui-bento-002-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-bento-002-accent)}
-[data-vibeui-block="bento-002"] [data-part="title"]{margin:0;font-family:var(--vibeui-bento-002-display);font-weight:800;font-size:clamp(2rem,4.8cqi,3.4rem);line-height:1.05;letter-spacing:-.03em}
+[data-vibeui-block="bento-002"] [data-part="title"]{margin:0;font-family:var(--vibeui-bento-002-display);font-weight:800;font-size:clamp(2.2rem,5.4cqi,4rem);line-height:1;letter-spacing:-.04em;text-wrap:balance}
+[data-vibeui-block="bento-002"] [data-part="w"]{display:inline-block;overflow:hidden;vertical-align:bottom;padding:.06em .04em 0;margin:0 -.04em}
+[data-vibeui-block="bento-002"] [data-part="w"] span{display:inline-block}
 [data-vibeui-block="bento-002"] [data-part="lede"]{margin:1rem 0 0;max-width:30rem;color:var(--vibeui-bento-002-muted)}
 [data-vibeui-block="bento-002"] [data-part="facts"]{margin:1.6rem 0 0;padding:0;list-style:none;display:grid;gap:.6rem}
-[data-vibeui-block="bento-002"] [data-part="facts"] li{display:flex;gap:.6rem;align-items:baseline;padding:.7rem 1rem;border-radius:.9rem;background:var(--vibeui-bento-002-glass);border:1px solid var(--vibeui-bento-002-line)}
+[data-vibeui-block="bento-002"] [data-part="facts"] li{display:flex;gap:.6rem;align-items:baseline;padding:.7rem 1rem;border-radius:.9rem;background:var(--vibeui-bento-002-glass);border:1px solid var(--vibeui-bento-002-line);transition:transform .4s var(--vibeui-bento-002-ease),border-color .4s,background .4s}
+[data-vibeui-block="bento-002"] [data-part="facts"] li:hover{transform:translateX(6px);border-color:color-mix(in oklab,var(--vibeui-bento-002-accent) 40%,transparent);background:color-mix(in oklab,var(--vibeui-bento-002-accent) 8%,transparent)}
 [data-vibeui-block="bento-002"] [data-part="facts"] li::before{content:"→";font-family:var(--vibeui-bento-002-mono);color:var(--vibeui-bento-002-accent)}
 [data-vibeui-block="bento-002"] [data-part="space"]{position:relative;width:min(100%,26rem);aspect-ratio:1;margin:0 auto;display:grid;place-items:center;container-type:inline-size}
 [data-vibeui-block="bento-002"] [data-part="space"]:hover [data-part="ring"],[data-vibeui-block="bento-002"] [data-part="space"]:hover [data-part="sat"]{animation-play-state:paused}
-[data-vibeui-block="bento-002"] [data-part="core"]{position:relative;z-index:2;width:25cqi;height:25cqi;border-radius:50%;display:grid;place-items:center;font-family:var(--vibeui-bento-002-display);font-weight:800;font-size:1.05rem;background:var(--vibeui-bento-002-accent);color:var(--vibeui-bento-002-on-accent);box-shadow:0 0 0 10px color-mix(in oklab,var(--vibeui-bento-002-accent) 15%,transparent),0 0 60px -10px var(--vibeui-bento-002-accent)}
+[data-vibeui-block="bento-002"] [data-part="core"]{position:relative;z-index:2;width:25cqi;height:25cqi;border-radius:50%;display:grid;place-items:center;font-family:var(--vibeui-bento-002-display);font-weight:800;font-size:1.05rem;background:var(--vibeui-bento-002-accent);color:var(--vibeui-bento-002-on-accent);box-shadow:0 0 0 10px color-mix(in oklab,var(--vibeui-bento-002-accent) 15%,transparent),0 0 60px -10px var(--vibeui-bento-002-accent);animation:vibeui-bento-002-heart 2.4s ease-in-out infinite}
+[data-vibeui-block="bento-002"] [data-part="core"]::before,[data-vibeui-block="bento-002"] [data-part="core"]::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1.5px solid var(--vibeui-bento-002-accent);opacity:0;animation:vibeui-bento-002-ping 2.4s var(--vibeui-bento-002-ease) infinite;pointer-events:none}
+[data-vibeui-block="bento-002"] [data-part="core"]::after{animation-delay:1.2s}
 [data-vibeui-block="bento-002"] [data-part="ring"]{position:absolute;left:50%;top:50%;width:calc(var(--vibeui-bento-002-r) * 2);height:calc(var(--vibeui-bento-002-r) * 2);margin:calc(var(--vibeui-bento-002-r) * -1) 0 0 calc(var(--vibeui-bento-002-r) * -1);border-radius:50%;border:1px dashed var(--vibeui-bento-002-line);animation:vibeui-bento-002-spin var(--vibeui-bento-002-t) linear infinite}
 [data-vibeui-block="bento-002"] [data-part="ring"][data-dir="ccw"]{animation-direction:reverse}
 [data-vibeui-block="bento-002"] [data-part="hold"]{position:absolute;left:50%;top:0;width:2.8rem;height:2.8rem;margin:-1.4rem 0 0 -1.4rem;transform:rotate(calc(var(--vibeui-bento-002-a) * -1deg))}
 [data-vibeui-block="bento-002"] [data-part="sat"]{position:relative;width:100%;height:100%;border-radius:50%;display:grid;place-items:center;background:var(--vibeui-bento-002-bg);border:1px solid var(--vibeui-bento-002-line);box-shadow:0 10px 24px -12px rgb(0 0 0 / .5);font-family:var(--vibeui-bento-002-mono);font-weight:500;font-size:.75rem;animation:vibeui-bento-002-spin var(--vibeui-bento-002-t) linear infinite reverse;transition:background .2s,color .2s,border-color .2s}
 [data-vibeui-block="bento-002"] [data-part="ring"][data-dir="ccw"] [data-part="sat"]{animation-direction:normal}
 [data-vibeui-block="bento-002"] [data-part="slot"]{position:absolute;inset:0;transform:rotate(calc(var(--vibeui-bento-002-a) * 1deg))}
-[data-vibeui-block="bento-002"] [data-part="sat"]:hover{background:var(--vibeui-bento-002-accent);color:var(--vibeui-bento-002-on-accent);border-color:transparent}
+[data-vibeui-block="bento-002"] [data-part="slot"]::before{content:"";position:absolute;inset:-1px;border-radius:50%;background:conic-gradient(from 0deg,transparent 0deg 290deg,color-mix(in oklab,var(--vibeui-bento-002-accent) 0%,transparent) 290deg,var(--vibeui-bento-002-accent) 360deg);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px));mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px));opacity:.85;pointer-events:none}
+[data-vibeui-block="bento-002"] [data-part="ring"][data-dir="ccw"] [data-part="slot"]::before{background:conic-gradient(from 0deg,var(--vibeui-bento-002-accent) 0deg,color-mix(in oklab,var(--vibeui-bento-002-accent) 0%,transparent) 70deg,transparent 70deg 360deg)}
+[data-vibeui-block="bento-002"] [data-part="sat"]:hover{background:var(--vibeui-bento-002-accent);color:var(--vibeui-bento-002-on-accent);border-color:transparent;box-shadow:0 0 24px -4px var(--vibeui-bento-002-accent)}
 [data-vibeui-block="bento-002"] [data-part="sat"] span{position:absolute;top:calc(100% + .35rem);left:50%;transform:translateX(-50%);white-space:nowrap;font-family:var(--vibeui-bento-002-font);font-size:.68rem;color:var(--vibeui-bento-002-muted);opacity:0;transition:opacity .2s}
 [data-vibeui-block="bento-002"] [data-part="sat"]:hover span{opacity:1}
 @keyframes vibeui-bento-002-spin{to{transform:rotate(360deg)}}
+@keyframes vibeui-bento-002-heart{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+@keyframes vibeui-bento-002-ping{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.6);opacity:0}}
+@keyframes vibeui-bento-002-breathe{from{opacity:.6;transform:scale(1)}to{opacity:1;transform:scale(1.2)}}
+@keyframes vibeui-bento-002-mask{from{translate:0 112%}to{translate:0 0}}
+@keyframes vibeui-bento-002-up{from{opacity:0;translate:0 18px}to{opacity:1;translate:0 0}}
+@keyframes vibeui-bento-002-pop{from{opacity:0;scale:.9}to{opacity:1;scale:1}}
+@supports (animation-timeline: view()){
+[data-vibeui-block="bento-002"] [data-part="w"] span{animation:vibeui-bento-002-mask linear both;animation-timeline:view();animation-range:entry calc(5% + var(--vibeui-bento-002-i) * 4%) entry calc(35% + var(--vibeui-bento-002-i) * 4%)}
+[data-vibeui-block="bento-002"] [data-part="eyebrow"],[data-vibeui-block="bento-002"] [data-part="lede"]{animation:vibeui-bento-002-up linear both;animation-timeline:view();animation-range:entry 0% entry 40%}
+[data-vibeui-block="bento-002"] [data-part="facts"] li{animation:vibeui-bento-002-up linear both;animation-timeline:view();animation-range:entry 0% entry 60%}
+[data-vibeui-block="bento-002"] [data-part="space"]{animation:vibeui-bento-002-pop linear both;animation-timeline:view();animation-range:entry 0% entry 45%}
+}
 @container (min-width: 60rem){[data-vibeui-block="bento-002"] [data-part="shell"]{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4rem}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="bento-002"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="bento-002"] *{animation:none!important;transition:none!important}[data-vibeui-block="bento-002"] [data-part="slot"]::before{display:none}}`
 
 function Ring({ items, radius, seconds, dir }: { items: readonly Bento002Item[]; radius: string; seconds: number; dir: "cw" | "ccw" }) {
   return (
@@ -127,6 +154,8 @@ export function Bento002({
         {STYLES}
       </style>
       <section data-vibeui-block="bento-002" data-tone={tone === "auto" ? undefined : tone} className={className} style={palette}>
+        <i data-part="glow" aria-hidden="true" />
+        <i data-part="glow" aria-hidden="true" />
         <div data-part="shell">
           <div data-part="space" aria-label={`${core}: интеграции`}>
             <div data-part="core">{core}</div>
@@ -135,7 +164,17 @@ export function Bento002({
           </div>
           <div>
             {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-            <h2 data-part="title">{title}</h2>
+            <h2 data-part="title">
+              {title
+                .split(" ")
+                .filter(Boolean)
+                .map((word, index) => (
+                  <span key={index} data-part="w">
+                    <span style={{ ["--vibeui-bento-002-i" as string]: index }}>{word}</span>
+                  </span>
+                ))
+                .flatMap((node, index) => (index ? [" ", node] : [node]))}
+            </h2>
             {lede ? <p data-part="lede">{lede}</p> : null}
             {facts.length > 0 ? (
               <ul data-part="facts">

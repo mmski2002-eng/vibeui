@@ -15,7 +15,10 @@ import { Footer032 } from "@/registry/blocks/footer/footer-032/footer-032"
  * Сценарий «AI-инструмент / SaaS»: сайт сам является демо продукта —
  * ассистент печатает сводку на первом экране, в песочнице можно нажать
  * кнопку и увидеть ответ, интеграции кружат по орбитам, цена считается
- * ползунком мест. Тёмная аврора, стекло, без единой фотографии.
+ * ползунком мест. Тёмная аврора, стекло, без единой фотографии. Поверх
+ * всего — плёнка зерна (feTurbulence), интенсивность авроры меняется от
+ * секции к секции внутри самих блоков: хиро и интеграции яркие, конвейер
+ * и тарифы приглушённые, призыв снова яркий.
  */
 export const metadata = {
   title: "Сводка — AI, который превращает созвоны в решения",
@@ -47,6 +50,10 @@ export default function SaasDemo() {
       <style href="vibeui-demo-scroll" precedence="medium">
         {`html{scroll-behavior:smooth;scroll-padding-top:4rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}`}
       </style>
+      <style href="vibeui-demo-saas-grain" precedence="medium">
+        {`[data-demo-grain]{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;mix-blend-mode:soft-light;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:220px}`}
+      </style>
+      <div data-demo-grain="" aria-hidden="true" />
       <Navbar033 {...aurora} />
       <div id="top">
         <Hero033 {...aurora} />

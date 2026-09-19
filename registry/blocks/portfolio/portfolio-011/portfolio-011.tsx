@@ -26,6 +26,10 @@ export type Portfolio011Props = {
 // сетке (grid-auto-flow: dense), по наведению плитка чуть вырастает и
 // всплывает над соседями, фото наезжает, а снизу проявляется рукописная
 // подпись со временем. На устройствах без hover подписи видны всегда.
+// Появление — scroll-driven (`animation-timeline: view()`, без поддержки —
+// просто видно): заголовок поднимается словами из-под маски, плитки
+// всплывают каскадом, а фото внутри едут медленнее прокрутки — параллакс
+// глубины. Без состояния: всё на CSS.
 const FONTS =
   "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Golos+Text:wght@400;500;600&family=Caveat:wght@600&display=swap"
 
@@ -39,31 +43,45 @@ const STYLES = `
 --vibeui-portfolio-011-display:"Playfair Display",ui-serif,Georgia,serif;
 --vibeui-portfolio-011-font:"Golos Text",ui-sans-serif,system-ui,sans-serif;
 --vibeui-portfolio-011-hand:"Caveat",cursive;
+--vibeui-portfolio-011-ease:cubic-bezier(.2,.8,.2,1);
 container-type:inline-size;
 }
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="portfolio-011"]{color-scheme:dark}
 :where([data-vibeui-block="portfolio-011"][data-tone="light"]){color-scheme:light}
 :where([data-vibeui-block="portfolio-011"][data-tone="dark"]){color-scheme:dark}
-[data-vibeui-block="portfolio-011"]{box-sizing:border-box;padding:5.5rem 0;background:var(--vibeui-portfolio-011-bg);color:var(--vibeui-portfolio-011-fg);font-family:var(--vibeui-portfolio-011-font);font-size:1rem;line-height:1.55}
+[data-vibeui-block="portfolio-011"]{box-sizing:border-box;position:relative;overflow:clip;padding:5.5rem 0;background:var(--vibeui-portfolio-011-bg);color:var(--vibeui-portfolio-011-fg);font-family:var(--vibeui-portfolio-011-font);font-size:1rem;line-height:1.55}
 [data-vibeui-block="portfolio-011"] *{box-sizing:border-box}
 [data-vibeui-block="portfolio-011"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="portfolio-011"] [data-part="eyebrow"]{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--vibeui-portfolio-011-accent);font-weight:600;margin:0 0 1.1rem}
 [data-vibeui-block="portfolio-011"] [data-part="eyebrow"]::before{content:"";width:1.4rem;height:2px;background:var(--vibeui-portfolio-011-accent);border-radius:2px}
-[data-vibeui-block="portfolio-011"] [data-part="title"]{margin:0;font-family:var(--vibeui-portfolio-011-display);font-weight:600;letter-spacing:-.02em;line-height:1.02;font-size:clamp(2rem,4.6cqi,3.6rem)}
+[data-vibeui-block="portfolio-011"] [data-part="title"]{margin:0;font-family:var(--vibeui-portfolio-011-display);font-weight:600;letter-spacing:-.025em;line-height:1.02;font-size:clamp(2.2rem,5cqi,4rem)}
+[data-vibeui-block="portfolio-011"] [data-part="word"]{display:inline-block;overflow:clip;vertical-align:top;padding:.04em .06em .14em 0;margin:-.04em 0 -.14em}
+[data-vibeui-block="portfolio-011"] [data-part="word"] i{display:inline-block;font-style:normal}
 [data-vibeui-block="portfolio-011"] [data-part="lede"]{font-size:1.06rem;color:var(--vibeui-portfolio-011-muted);max-width:34rem;margin:1rem 0 0}
 [data-vibeui-block="portfolio-011"] [data-part="bento"]{display:grid;grid-template-columns:repeat(2,1fr);grid-auto-rows:10rem;grid-auto-flow:dense;gap:.8rem;margin-top:2.5rem}
-[data-vibeui-block="portfolio-011"] figure{position:relative;margin:0;border-radius:1.2rem;overflow:hidden;background:var(--vibeui-portfolio-011-panel);transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s;z-index:0}
-[data-vibeui-block="portfolio-011"] figure img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
-[data-vibeui-block="portfolio-011"] figure:hover{transform:scale(1.04);z-index:2;box-shadow:0 30px 60px -30px rgb(0 0 0 / .6)}
-[data-vibeui-block="portfolio-011"] figure:hover img{transform:scale(1.08)}
+[data-vibeui-block="portfolio-011"] figure{position:relative;margin:0;border-radius:1.2rem;overflow:clip;background:var(--vibeui-portfolio-011-panel);transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s;z-index:0}
+[data-vibeui-block="portfolio-011"] figure img{position:absolute;left:0;right:0;top:-7%;width:100%;height:114%;object-fit:cover;display:block;transition:scale .8s cubic-bezier(.2,.7,.2,1)}
+[data-vibeui-block="portfolio-011"] figure:hover{transform:scale(1.04);z-index:2;box-shadow:0 30px 60px -30px color-mix(in oklab,var(--vibeui-portfolio-011-accent) 40%,rgb(0 0 0 / .7))}
+[data-vibeui-block="portfolio-011"] figure:hover img{scale:1.08}
+[data-vibeui-block="portfolio-011"] figure::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(60% 60% at 30% 20%,rgb(255 255 255 / .18),transparent 70%);opacity:0;transition:opacity .45s}
+[data-vibeui-block="portfolio-011"] figure:hover::after{opacity:1}
 [data-vibeui-block="portfolio-011"] figcaption{position:absolute;left:.8rem;bottom:.7rem;font-family:var(--vibeui-portfolio-011-hand);font-size:1.3rem;color:#fff;text-shadow:0 1px 10px rgb(0 0 0 / .55);transform:rotate(-3deg) translateY(.4rem);opacity:0;transition:opacity .3s,transform .3s}
 [data-vibeui-block="portfolio-011"] figure:hover figcaption{opacity:1;transform:rotate(-3deg)}
 [data-vibeui-block="portfolio-011"] figure[data-span="big"]{grid-column:span 2;grid-row:span 2}
 [data-vibeui-block="portfolio-011"] figure[data-span="wide"]{grid-column:span 2}
 [data-vibeui-block="portfolio-011"] figure[data-span="tall"]{grid-row:span 2}
+@keyframes vibeui-portfolio-011-rise{from{transform:translateY(112%)}to{transform:none}}
+@keyframes vibeui-portfolio-011-in{from{opacity:0;translate:0 2.5rem;scale:.94}to{opacity:1;translate:0 0;scale:1}}
+@keyframes vibeui-portfolio-011-drift{from{translate:0 -5%}to{translate:0 5%}}
+@supports (animation-timeline: view()){
+[data-vibeui-block="portfolio-011"] [data-part="word"] i{animation:vibeui-portfolio-011-rise linear both;animation-timeline:view();animation-range:entry 0% entry 60%}
+[data-vibeui-block="portfolio-011"] [data-part="lede"]{animation:vibeui-portfolio-011-in linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
+[data-vibeui-block="portfolio-011"] figure{animation:vibeui-portfolio-011-in linear both;animation-timeline:view();animation-range:entry 0% entry 55%}
+[data-vibeui-block="portfolio-011"] figure img{animation:vibeui-portfolio-011-drift linear both;animation-timeline:view();animation-range:cover 0% cover 100%}
+}
 @container (min-width: 56rem){[data-vibeui-block="portfolio-011"] [data-part="bento"]{grid-template-columns:repeat(4,1fr);grid-auto-rows:12rem}}
 @media (hover:none){[data-vibeui-block="portfolio-011"] figcaption{opacity:1;transform:rotate(-3deg)}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="portfolio-011"] *{transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="portfolio-011"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_SHOTS: Portfolio011Shot[] = [
   { src: "/demo/bakery/hands-flour.webp", note: "5:40, формовка", alt: "Руки формуют тесто на столе в муке", span: "big" },
@@ -107,7 +125,16 @@ export function Portfolio011({
       <section data-vibeui-block="portfolio-011" data-tone={tone === "auto" ? undefined : tone} className={className} style={palette}>
         <div data-part="shell">
           {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-          <h2 data-part="title">{title}</h2>
+          <h2 data-part="title">
+            {title.split(" ").map((word, index, all) => (
+              <span key={`${word}-${index}`}>
+                <span data-part="word">
+                  <i>{word}</i>
+                </span>
+                {index < all.length - 1 ? " " : ""}
+              </span>
+            ))}
+          </h2>
           {lede ? <p data-part="lede">{lede}</p> : null}
           <div data-part="bento">
             {shots.map((shot) => (

@@ -29,7 +29,11 @@ export type People012Props = {
 // рукописным шрифтом снизу. По наведению (или фокусу) фото сдвигается, а
 // справа выезжает «записка» — короткая история на пергаменте с полоской
 // скотча. На устройствах без hover записка всегда раскрыта под фото.
-// Без состояния: всё на CSS.
+// Появление — scroll-driven: заголовок поднимается словами из-под маски,
+// плитки въезжают и распрямляются по мере входа в кадр
+// (`animation-timeline: view()`; без поддержки — просто видно). Фото
+// медленно едет внутри плитки при прокрутке — параллакс. Без состояния:
+// всё на CSS.
 const FONTS =
   "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Golos+Text:wght@400;500;600&family=Caveat:wght@600&display=swap"
 
@@ -44,21 +48,26 @@ const STYLES = `
 --vibeui-people-012-display:"Playfair Display",ui-serif,Georgia,serif;
 --vibeui-people-012-font:"Golos Text",ui-sans-serif,system-ui,sans-serif;
 --vibeui-people-012-hand:"Caveat",cursive;
+--vibeui-people-012-ease:cubic-bezier(.2,.8,.2,1);
 container-type:inline-size;
 }
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="people-012"]{color-scheme:dark}
 :where([data-vibeui-block="people-012"][data-tone="light"]){color-scheme:light}
 :where([data-vibeui-block="people-012"][data-tone="dark"]){color-scheme:dark}
-[data-vibeui-block="people-012"]{box-sizing:border-box;padding:5.5rem 0;background:var(--vibeui-people-012-bg);color:var(--vibeui-people-012-fg);font-family:var(--vibeui-people-012-font);font-size:1rem;line-height:1.55}
+[data-vibeui-block="people-012"]{box-sizing:border-box;position:relative;overflow:clip;padding:5.5rem 0;background:var(--vibeui-people-012-bg);color:var(--vibeui-people-012-fg);font-family:var(--vibeui-people-012-font);font-size:1rem;line-height:1.55}
 [data-vibeui-block="people-012"] *{box-sizing:border-box}
-[data-vibeui-block="people-012"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem}
+[data-vibeui-block="people-012"] [data-part="glow"]{position:absolute;left:30%;top:-4rem;width:46rem;height:26rem;border-radius:50%;background:radial-gradient(closest-side,color-mix(in oklab,var(--vibeui-people-012-accent) 12%,transparent),transparent 70%);filter:blur(40px);pointer-events:none}
+[data-vibeui-block="people-012"] [data-part="shell"]{position:relative;max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="people-012"] [data-part="eyebrow"]{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--vibeui-people-012-accent);font-weight:600;margin:0 0 1.1rem}
 [data-vibeui-block="people-012"] [data-part="eyebrow"]::before{content:"";width:1.4rem;height:2px;background:var(--vibeui-people-012-accent);border-radius:2px}
-[data-vibeui-block="people-012"] [data-part="title"]{margin:0;font-family:var(--vibeui-people-012-display);font-weight:600;letter-spacing:-.02em;line-height:1.02;font-size:clamp(2rem,4.6cqi,3.6rem)}
+[data-vibeui-block="people-012"] [data-part="title"]{margin:0;font-family:var(--vibeui-people-012-display);font-weight:600;letter-spacing:-.025em;line-height:1.02;font-size:clamp(2.2rem,5cqi,4rem)}
+[data-vibeui-block="people-012"] [data-part="word"]{display:inline-block;overflow:clip;vertical-align:top;padding:.04em .06em .14em 0;margin:-.04em 0 -.14em}
+[data-vibeui-block="people-012"] [data-part="word"] i{display:inline-block;font-style:normal}
 [data-vibeui-block="people-012"] [data-part="lede"]{font-size:1.06rem;color:var(--vibeui-people-012-muted);max-width:34rem;margin:1rem 0 0}
 [data-vibeui-block="people-012"] [data-part="tiles"]{display:grid;gap:1.25rem;margin-top:2.5rem}
-[data-vibeui-block="people-012"] [data-part="tile"]{position:relative;display:grid;border-radius:1.4rem;overflow:hidden;min-height:28rem;background:var(--vibeui-people-012-panel);box-shadow:0 30px 60px -40px rgb(0 0 0 / .5),0 0 0 1px var(--vibeui-people-012-line)}
-[data-vibeui-block="people-012"] [data-part="tile"] img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 12%;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+[data-vibeui-block="people-012"] [data-part="tile"]{position:relative;display:grid;border-radius:1.4rem;overflow:clip;min-height:28rem;background:var(--vibeui-people-012-panel);box-shadow:0 30px 60px -40px rgb(0 0 0 / .5),0 0 0 1px var(--vibeui-people-012-line);transition:box-shadow .5s,transform .5s var(--vibeui-people-012-ease)}
+[data-vibeui-block="people-012"] [data-part="tile"]:hover{transform:translateY(-.4rem);box-shadow:0 40px 70px -40px color-mix(in oklab,var(--vibeui-people-012-accent) 40%,rgb(0 0 0 / .6)),0 0 0 1px var(--vibeui-people-012-line)}
+[data-vibeui-block="people-012"] [data-part="tile"] img{position:absolute;inset:-6% 0;width:100%;height:112%;object-fit:cover;object-position:50% 12%;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
 [data-vibeui-block="people-012"] [data-part="tile"]:hover img,[data-vibeui-block="people-012"] [data-part="tile"]:focus-within img{transform:translateX(-18%) scale(1.04)}
 [data-vibeui-block="people-012"] [data-part="front"]{position:relative;z-index:1;align-self:end;padding:1.5rem;background:linear-gradient(180deg,transparent,rgb(0 0 0 / .72));color:#fff}
 [data-vibeui-block="people-012"] [data-part="front"] h3{margin:0;font-family:var(--vibeui-people-012-display);font-size:1.7rem;font-weight:600;letter-spacing:-.02em;line-height:1.05}
@@ -69,11 +78,21 @@ container-type:inline-size;
 [data-vibeui-block="people-012"] [data-part="back"] small{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--vibeui-people-012-accent)}
 [data-vibeui-block="people-012"] [data-part="back"] p{margin:0;font-family:var(--vibeui-people-012-hand);font-size:1.45rem;line-height:1.15}
 [data-vibeui-block="people-012"] [data-part="back"]::before{content:"";position:absolute;left:.9rem;top:.9rem;width:2.4rem;height:.9rem;background:color-mix(in oklab,var(--vibeui-people-012-accent) 50%,transparent);transform:rotate(-8deg);border-radius:2px}
-[data-vibeui-block="people-012"] [data-part="peek"]{position:absolute;right:1rem;top:1rem;z-index:3;padding:.4rem .7rem;border-radius:999px;background:rgb(255 255 255 / .85);backdrop-filter:blur(6px);font-size:.72rem;font-weight:600;color:#1a1a1a}
+[data-vibeui-block="people-012"] [data-part="peek"]{position:absolute;right:1rem;top:1rem;z-index:3;padding:.4rem .7rem;border-radius:999px;background:rgb(255 255 255 / .85);backdrop-filter:blur(6px);font-size:.72rem;font-weight:600;color:#1a1a1a;animation:vibeui-people-012-nudge 2.6s ease-in-out infinite}
+@keyframes vibeui-people-012-nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(-.25rem)}}
+@keyframes vibeui-people-012-rise{from{transform:translateY(112%)}to{transform:none}}
+@keyframes vibeui-people-012-in{from{opacity:0;translate:0 3rem;rotate:var(--vibeui-people-012-r,0deg)}to{opacity:1;translate:0 0;rotate:0deg}}
+@keyframes vibeui-people-012-drift{from{translate:0 -4%}to{translate:0 4%}}
+@supports (animation-timeline: view()){
+[data-vibeui-block="people-012"] [data-part="word"] i{animation:vibeui-people-012-rise linear both;animation-timeline:view();animation-range:entry 0% entry 60%}
+[data-vibeui-block="people-012"] [data-part="lede"]{animation:vibeui-people-012-in linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
+[data-vibeui-block="people-012"] [data-part="tile"]{animation:vibeui-people-012-in linear both;animation-timeline:view();animation-range:entry 0% entry 45%}
+[data-vibeui-block="people-012"] [data-part="tile"] img{animation:vibeui-people-012-drift linear both;animation-timeline:view();animation-range:cover 0% cover 100%}
+}
 [data-vibeui-block="people-012"] [data-part="tile"]:focus-visible{outline:2px solid var(--vibeui-people-012-accent);outline-offset:3px}
 @container (min-width: 52rem){[data-vibeui-block="people-012"] [data-part="tiles"]{grid-template-columns:1fr 1fr}}
-@media (hover:none){[data-vibeui-block="people-012"] [data-part="back"]{position:relative;width:auto;transform:none;box-shadow:none}[data-vibeui-block="people-012"] [data-part="tile"]{grid-template-rows:20rem auto}[data-vibeui-block="people-012"] [data-part="tile"] img{position:relative;height:20rem}[data-vibeui-block="people-012"] [data-part="front"]{position:absolute;left:0;right:0;top:0;height:20rem;align-content:end;display:grid}[data-vibeui-block="people-012"] [data-part="peek"]{display:none}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="people-012"] *{transition:none!important}}`
+@media (hover:none){[data-vibeui-block="people-012"] [data-part="back"]{position:relative;width:auto;transform:none;box-shadow:none}[data-vibeui-block="people-012"] [data-part="tile"]{grid-template-rows:20rem auto}[data-vibeui-block="people-012"] [data-part="tile"] img{position:relative;height:20rem;inset:auto;animation:none}[data-vibeui-block="people-012"] [data-part="front"]{position:absolute;left:0;right:0;top:0;height:20rem;align-content:end;display:grid}[data-vibeui-block="people-012"] [data-part="peek"]{display:none}}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="people-012"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_PEOPLE: People012Person[] = [
   { name: "Ольга", role: "Пекарь, закваске шесть лет", quote: "Хлеб не терпит спешки. Всё, что я делаю, — не мешаю ему.", note: "В 5 утра я одна в пекарне. Включаю печь, ставлю чайник и слушаю, как потрескивает первая партия.", image: "/demo/bakery/olga.webp" },
@@ -109,13 +128,23 @@ export function People012({
         {STYLES}
       </style>
       <section data-vibeui-block="people-012" data-tone={tone === "auto" ? undefined : tone} className={className} style={palette}>
+        <div data-part="glow" aria-hidden="true" />
         <div data-part="shell">
           {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-          <h2 data-part="title">{title}</h2>
+          <h2 data-part="title">
+            {title.split(" ").map((word, index, all) => (
+              <span key={`${word}-${index}`}>
+                <span data-part="word">
+                  <i>{word}</i>
+                </span>
+                {index < all.length - 1 ? " " : ""}
+              </span>
+            ))}
+          </h2>
           {lede ? <p data-part="lede">{lede}</p> : null}
           <div data-part="tiles">
-            {people.map((person) => (
-              <article key={person.name} data-part="tile" tabIndex={person.note ? 0 : undefined}>
+            {people.map((person, index) => (
+              <article key={person.name} data-part="tile" tabIndex={person.note ? 0 : undefined} style={{ ["--vibeui-people-012-r" as string]: `${index % 2 === 0 ? -1.5 : 1.5}deg` }}>
                 {person.image ? <img src={person.image} alt={person.imageAlt ?? `${person.name}${person.role ? `, ${person.role.toLowerCase()}` : ""}`} /> : null}
                 {person.note && peekLabel ? (
                   <span data-part="peek" aria-hidden="true">

@@ -11,10 +11,14 @@ import { Subscribe008 } from "@/registry/blocks/newsletter/subscribe-008/subscri
 import { Footer028 } from "@/registry/blocks/footer/footer-028/footer-028"
 import { Podcast007 } from "@/registry/blocks/podcast/podcast-007/podcast-007"
 
+import { Atmosphere } from "./atmosphere"
+
 /**
  * Сценарий «Подкаст»: тёмная студия с кислотным индикатором записи. Всё,
  * что звучит, — видно: волна эпизода, бегущие цитаты, счётчики. Лента
- * эпизодов, мини-плеер и шапка связаны событиями window. Витрина
+ * эпизодов, хиро, мини-плеер и шапка связаны событиями window. Первый экран
+ * — sticky-сцена: при прокрутке уезжает вниз и гаснет, а секции наезжают
+ * сверху; по странице следует сияние акцента и лежит зерно. Витрина
  * результата, не шаблон.
  */
 export const metadata = {
@@ -39,29 +43,39 @@ export default function PodcastDemo() {
   return (
     <div style={page} className="min-h-dvh">
       <style href="vibeui-demo-scroll" precedence="medium">
-        {`html{scroll-behavior:smooth;scroll-padding-top:4.5rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}`}
+        {`html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+[data-scene]{position:relative;z-index:1}
+[data-scene="hero"]{z-index:0}
+@supports (animation-timeline: scroll()){@media (min-width: 64rem){[data-scene="hero"]>*{animation:vibeui-demo-hero-away linear both;animation-timeline:scroll(root);animation-range:0 100vh}}}
+@keyframes vibeui-demo-hero-away{to{translate:0 38%;scale:.94;opacity:.15}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}[data-scene="hero"]>*{animation:none!important}}`}
       </style>
+      <Atmosphere accent={dark.accent} />
       <Navbar029 {...dark} />
-      <div id="top">
-        <Hero029 {...dark} cover={`${PHOTOS}/cover.webp`} coverAlt="Обложка эпизода: микрофон на фоне тёплого окна" />
+      <div id="top" data-scene="hero">
+        <Hero029 {...dark} cover={`${PHOTOS}/cover.webp`} coverAlt="Обложка эпизода: микрофон на фоне тёплого окна" outline="маяк" />
       </div>
-      <div id="episodes">
+      <div id="episodes" data-scene="episodes">
         <Podcast004 {...dark} />
       </div>
-      <Podcast005 {...dark} />
-      <div id="guests">
+      <div data-scene="quotes">
+        <Podcast005 {...dark} />
+      </div>
+      <div id="guests" data-scene="guests">
         <People013 {...dark} />
       </div>
-      <div id="listen">
+      <div id="listen" data-scene="listen">
         <Podcast006 {...dark} />
       </div>
-      <div id="support">
+      <div id="support" data-scene="support">
         <Pricing023 {...dark} image={`${PHOTOS}/studio-01.webp`} />
       </div>
-      <div id="letter">
+      <div id="letter" data-scene="letter">
         <Subscribe008 {...dark} />
       </div>
-      <Footer028 {...dark} hostImage={`${PHOTOS}/host.webp`} />
+      <div data-scene="footer">
+        <Footer028 {...dark} hostImage={`${PHOTOS}/host.webp`} />
+      </div>
       <Podcast007 {...dark} />
     </div>
   )

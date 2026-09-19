@@ -9,12 +9,15 @@ import { Pricing024 } from "@/registry/blocks/pricing/pricing-024/pricing-024"
 import { Faq023 } from "@/registry/blocks/faq/faq-023/faq-023"
 import { Cta025 } from "@/registry/blocks/cta/cta-025/cta-025"
 import { Footer031 } from "@/registry/blocks/footer/footer-031/footer-031"
+import { Scene } from "./scene"
 
 /**
  * Сценарий «Мобильное приложение»: сайт показывает не скриншоты, а живой
  * телефон из CSS — круг дышит, экраны переключаются по прокрутке, график
- * сна двигается ползунком «до / после». Светлая ночь с лавандой. Витрина
- * результата, не шаблон.
+ * сна двигается ползунком «до / после». Страница проживает сутки: от
+ * лавандового дня через сумерки к ночи и обратно к утру — фон, чернила и
+ * акцент перетекают по прокрутке (обёртка `Scene`). Витрина результата,
+ * не шаблон.
  */
 export const metadata = {
   title: "Тише — приложение для сна и дыхания",
@@ -24,45 +27,48 @@ export const metadata = {
 
 const page: CSSProperties = {
   colorScheme: "light",
-  background: "#f4f2fb",
-  color: "#1c1b2e",
   fontFamily: '"Manrope",ui-sans-serif,system-ui,sans-serif',
 }
 
 // Тема страницы: блоки каталога по умолчанию нейтральные, цвета задаёт сценарий.
-const lavender = { tone: "light", accent: "#7c5cff", ink: "#1c1b2e", background: "#f4f2fb" } as const
+// Цвета — переменные обёртки Scene, которые перетекают между фазами суток.
+const scene = { accent: "var(--vibeui-scene-accent)", ink: "var(--vibeui-scene-ink)", background: "var(--vibeui-scene-bg)" } as const
+const light = { ...scene, tone: "light" } as const
+const dark = { ...scene, tone: "dark" } as const
 
 const PHOTOS = "/demo/app"
 
 export default function AppDemo() {
   return (
-    <div style={page} className="min-h-dvh">
+    <Scene style={page} className="min-h-dvh">
       <style href="vibeui-demo-scroll" precedence="medium">
         {`html{scroll-behavior:smooth;scroll-padding-top:4rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}`}
       </style>
-      <Navbar032 {...lavender} />
-      <div id="top">
-        <Hero032 {...lavender} />
+      <Navbar032 {...light} />
+      <div id="top" data-scene="day">
+        <Hero032 {...light} />
       </div>
-      <div id="features">
-        <App001 {...lavender} />
+      <div id="features" data-scene="dusk">
+        <App001 {...dark} />
       </div>
-      <div id="results">
-        <App002 {...lavender} />
+      <div id="results" data-scene="night">
+        <App002 {...dark} />
       </div>
-      <div id="reviews">
-        <Testimonials025 {...lavender} image={`${PHOTOS}/evening.webp`} />
+      <div id="reviews" data-scene="night">
+        <Testimonials025 {...dark} image={`${PHOTOS}/evening.webp`} />
       </div>
-      <div id="pricing">
-        <Pricing024 {...lavender} />
+      <div id="pricing" data-scene="night">
+        <Pricing024 {...dark} />
       </div>
-      <div id="faq">
-        <Faq023 {...lavender} />
+      <div id="faq" data-scene="night">
+        <Faq023 {...dark} />
       </div>
-      <div id="download">
-        <Cta025 {...lavender} image={`${PHOTOS}/night.webp`} />
+      <div id="download" data-scene="dawn">
+        <Cta025 {...light} image={`${PHOTOS}/night.webp`} />
       </div>
-      <Footer031 {...lavender} />
-    </div>
+      <div data-scene="dawn">
+        <Footer031 {...light} />
+      </div>
+    </Scene>
   )
 }
