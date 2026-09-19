@@ -211,7 +211,7 @@
         },
         "ai": {
           "export": "Vet002",
-          "usage": "<Vet002\n  title=\"Ткните туда, где болит\"\n  spots={[\n    { key: \"teeth\", label: \"Зубы\", x: 90, y: 38, service: \"Чистка зубов\", price: \"от 6 900 ₽\", duration: \"≈ 1 час\", text: \"Под седацией, с полировкой.\" },\n    { key: \"ears\", label: \"Уши\", x: 73, y: 17, service: \"Чистка ушей\", price: \"900 ₽\", text: \"Осмотр и мазок.\" },\n  ]}\n/>",
+          "usage": "<Vet002\n  image=\"/photos/dog-profile.png\"\n  title=\"Ткните туда, где болит\"\n  spots={[\n    { key: \"teeth\", label: \"Зубы\", x: 90, y: 38, service: \"Чистка зубов\", price: \"от 6 900 ₽\", duration: \"≈ 1 час\", text: \"Под седацией, с полировкой.\" },\n    { key: \"ears\", label: \"Уши\", x: 73, y: 17, service: \"Чистка ушей\", price: \"900 ₽\", text: \"Осмотр и мазок.\" },\n  ]}\n/>",
           "summary": "Схема тела питомца с кликабельными точками: часть тела → услуга и цена.",
           "preserve": [
             "хотспоты — button с position:absolute в процентах от контейнера aspect-ratio 600/420, кольцо-пульс ::before с задержкой по индексу",
@@ -220,6 +220,7 @@
           ],
           "adapt": [
             "eyebrow, title, lede",
+            "image, imageAlt — фото животного в профиль; координаты spots подгоняются под фото",
             "spots: key, label, x, y (проценты), service, price, duration, text; defaultSpot",
             "actionLabel, actionHref",
             "tone — тема",
@@ -292,6 +293,7 @@
               ],
               "adapt": [
                 "eyebrow, title, lede",
+                "image, imageAlt — the animal's side-profile photo; spot coordinates are tuned to the photo",
                 "spots: key, label, x, y (percent), service, price, duration, text; defaultSpot",
                 "actionLabel, actionHref",
                 "tone — theme",
@@ -299,7 +301,7 @@
                 "ink — ink",
                 "background — background"
               ],
-              "usage": "<Vet002\n  title=\"Tap where it hurts\"\n  spots={[\n    { key: \"teeth\", label: \"Teeth\", x: 90, y: 38, service: \"Dental cleaning\", price: \"from $170\", duration: \"≈ 1 hour\", text: \"Under sedation, with polishing.\" },\n    { key: \"ears\", label: \"Ears\", x: 73, y: 17, service: \"Ear cleaning\", price: \"$22\", text: \"Exam and swab.\" },\n  ]}\n/>"
+              "usage": "<Vet002\n  image=\"/photos/dog-profile.png\"\n  title=\"Tap where it hurts\"\n  spots={[\n    { key: \"teeth\", label: \"Teeth\", x: 90, y: 38, service: \"Dental cleaning\", price: \"from $170\", duration: \"≈ 1 hour\", text: \"Under sedation, with polishing.\" },\n    { key: \"ears\", label: \"Ears\", x: 73, y: 17, service: \"Ear cleaning\", price: \"$22\", text: \"Exam and swab.\" },\n  ]}\n/>"
             },
             "controls": {
               "title": {
@@ -402,7 +404,8 @@
                 ],
                 "defaultSpot": "teeth",
                 "actionLabel": "Book"
-              }
+              },
+              "imageAlt": "Beagle in profile"
             }
           }
         }
@@ -692,15 +695,17 @@
         },
         "ai": {
           "export": "Vet004",
-          "usage": "<Vet004\n  title=\"Покрутите — и увидите, что получится\"\n  defaultLength={12}\n  sizes={[{ key: \"s\", label: \"S\", note: \"до 5 кг\", price: 2200 }, { key: \"m\", label: \"M\", note: \"5–15 кг\", price: 3200 }, { key: \"l\", label: \"L\", note: \"от 15 кг\", price: 4500 }]}\n  extras={[{ key: \"wash\", label: \"Мытьё и сушка\", price: 900 }, { key: \"nails\", label: \"Когти\", price: 350 }]}\n/>",
+          "usage": "<Vet004\n  beforeImage=\"/photos/dog-fluffy.png\"\n  afterImage=\"/photos/dog-trimmed.png\"\n  title=\"Покрутите — и увидите, что получится\"\n  defaultLength={12}\n  sizes={[{ key: \"s\", label: \"S\", note: \"до 5 кг\", price: 2200 }, { key: \"m\", label: \"M\", note: \"5–15 кг\", price: 3200 }, { key: \"l\", label: \"L\", note: \"от 15 кг\", price: 4500 }]}\n  extras={[{ key: \"wash\", label: \"Мытьё и сушка\", price: 900 }, { key: \"nails\", label: \"Когти\", price: 350 }]}\n/>",
           "summary": "Калькулятор стрижки с ползунком длины и живой CSS-иллюстрацией, которая стрижётся вместе с бегунком.",
           "preserve": [
+            "фото: img[data-part=before] получает opacity = ratio и scale 0.92–1 прямо из стиля, «после» лежит снизу",
             "шерсть — --len в cqi (1…10) ставится на stage из ratio, кольца fur считают размер calc(44cqi + len*2), пилот pile масштабируется обратно ratio",
             "ползунок — input type=range с заливкой через --fill в linear-gradient, thumb стилизован для webkit и moz",
             "цена — size.price + сумма выбранных extras, время 45 + длина/2 + 10 мин за допуслугу; число в tabular-nums"
           ],
           "adapt": [
             "eyebrow, title, lede, currency",
+            "beforeImage, afterImage, imageAlt — два фото в одном ракурсе",
             "minLength, maxLength, defaultLength; sizes: key, label, note, price; defaultSize; extras: key, label, price; marks: upTo, label",
             "actionLabel, actionHref",
             "tone — тема",
@@ -767,12 +772,14 @@
             "ai": {
               "summary": "A haircut calculator with a length slider and a live CSS illustration that gets trimmed along with the thumb.",
               "preserve": [
+                "photos: img[data-part=before] gets opacity = ratio and scale 0.92–1 straight from style, the “after” photo sits underneath",
                 "fur: --len in cqi (1…10) is set on the stage from ratio, the fur rings size calc(44cqi + len*2), the pile scales inversely to ratio",
                 "the slider is an input type=range filled via --fill in a linear-gradient, thumb styled for webkit and moz",
                 "price = size.price + the sum of chosen extras, time 45 + length/2 + 10 min per add-on; numbers in tabular-nums"
               ],
               "adapt": [
                 "eyebrow, title, lede, currency",
+                "beforeImage, afterImage, imageAlt — two photos in the same framing",
                 "minLength, maxLength, defaultLength; sizes: key, label, note, price; defaultSize; extras: key, label, price; marks: upTo, label",
                 "actionLabel, actionHref",
                 "tone — theme",
@@ -780,7 +787,7 @@
                 "ink — ink",
                 "background — background"
               ],
-              "usage": "<Vet004\n  title=\"Drag it — and see what you get\"\n  defaultLength={12}\n  currency=\"$\"\n  sizes={[{ key: \"s\", label: \"S\", note: \"up to 5 kg\", price: 55 }, { key: \"m\", label: \"M\", note: \"5–15 kg\", price: 80 }, { key: \"l\", label: \"L\", note: \"over 15 kg\", price: 110 }]}\n  extras={[{ key: \"wash\", label: \"Wash & dry\", price: 22 }, { key: \"nails\", label: \"Nails\", price: 9 }]}\n/>"
+              "usage": "<Vet004\n  beforeImage=\"/photos/dog-fluffy.png\"\n  afterImage=\"/photos/dog-trimmed.png\"\n  title=\"Drag it — and see what you get\"\n  defaultLength={12}\n  currency=\"$\"\n  sizes={[{ key: \"s\", label: \"S\", note: \"up to 5 kg\", price: 55 }, { key: \"m\", label: \"M\", note: \"5–15 kg\", price: 80 }, { key: \"l\", label: \"L\", note: \"over 15 kg\", price: 110 }]}\n  extras={[{ key: \"wash\", label: \"Wash & dry\", price: 22 }, { key: \"nails\", label: \"Nails\", price: 9 }]}\n/>"
             },
             "controls": {
               "defaultLength": {
@@ -875,7 +882,8 @@
                   }
                 ],
                 "actionLabel": "Book a groom"
-              }
+              },
+              "imageAlt": "Pomeranian before and after grooming"
             }
           }
         }

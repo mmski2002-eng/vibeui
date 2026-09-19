@@ -264,7 +264,7 @@
       "name": "delivery-002",
       "type": "registry:block",
       "title": "Конструктор боула: слои падают в миску, калории и цена считаются",
-      "description": "Конструктор блюда для доставки: группы ингредиентов чипами с цветной точкой — основа и соус по одному, белок и добавки сколько угодно. Справа CSS-миска, в которую с отскоком падают цветные слои выбранных ингредиентов, каждый на своём месте; под ней калории, вес и цена пересчитываются на лету, а строка состава читается вслух. Кнопка «В корзину» шлёт vibeui-cart:add и на пару секунд зеленеет.",
+      "description": "Конструктор блюда для доставки: группы ингредиентов чипами с цветной точкой — основа и соус по одному, белок и добавки сколько угодно. Справа фото миски: каждый выбранный белок — своё фото той же миски, обрезанное сектором, соус — блик поверх, добавки — цветные горошины с отскоком; без фото — CSS-миска со слоями. Под ней калории, вес и цена пересчитываются на лету, а строка состава читается вслух. Кнопка «В корзину» шлёт vibeui-cart:add и на пару секунд зеленеет.",
       "categories": [
         "delivery"
       ],
@@ -298,17 +298,17 @@
         },
         "ai": {
           "export": "Delivery002",
-          "usage": "<Delivery002\n  title=\"Собери свой боул\"\n  basePrice={290}\n  groups={[\n    { id: \"base\", title: \"Основа\", mode: \"single\", options: [{ id: \"rice\", name: \"Рис\", price: 0, kcal: 210, color: \"#f4efe2\" }] },\n    { id: \"protein\", title: \"Белок\", mode: \"multi\", options: [{ id: \"salmon\", name: \"Лосось\", price: 220, kcal: 180, color: \"#ff8a6b\" }] },\n  ]}\n/>",
+          "usage": "<Delivery002\n  title=\"Собери свой боул\"\n  basePrice={290}\n  bowlImage=\"/photos/bowl-rice.png\"\n  groups={[\n    { id: \"base\", title: \"Основа\", mode: \"single\", options: [{ id: \"rice\", name: \"Рис\", price: 0, kcal: 210, color: \"#f4efe2\" }] },\n    { id: \"protein\", title: \"Белок\", mode: \"multi\", options: [{ id: \"salmon\", name: \"Лосось\", price: 220, kcal: 180, color: \"#ff8a6b\", image: \"/photos/bowl-salmon.png\" }] },\n  ]}\n/>",
           "summary": "Конструктор боула или пиццы: выбираешь ингредиенты — миска наполняется, цена и калории считаются.",
           "preserve": [
             "picked — массив id в порядке выбора; single-группы заменяют свой вариант, multi — переключают",
-            "слои в миске: base и sauce — растянутые по stack с keyframes fill, остальные — по таблице SPOTS с keyframes drop (cubic-bezier с отскоком)",
+            "с bowlImage: белки с image режутся clip-path polygon сектором через wedge(i, n), добавки без фото — горошины по кругу с золотым углом; без bowlImage — слои по таблице SPOTS с keyframes drop",
             "add шлёт vibeui-cart:add с detail { id: bowl-<ids>, name, price, qty: 1 } и ставит data-done на 2.2 с"
           ],
           "adapt": [
             "eyebrow, title, lede, addLabel, addedLabel",
-            "groups: id, title, mode (single | multi), options: id, name, price, kcal, color",
-            "basePrice, currency",
+            "groups: id, title, mode (single | multi), options: id, name, price, kcal, color, image (фото миски с этим ингредиентом)",
+            "bowlImage, basePrice, currency",
             "tone — тема",
             "accent — акцент",
             "ink — текст",
@@ -370,24 +370,24 @@
         "i18n": {
           "en": {
             "title": "Bowl builder: layers drop into a bowl, calories and price add up",
-            "description": "A dish builder for delivery: ingredient groups as chips with a colour dot — base and sauce pick one, protein and toppings pick any. On the right a CSS bowl into which coloured layers of the chosen ingredients drop with a bounce, each in its own spot; below it calories, weight and price recalculate live and the recipe line is read aloud. The “Add to cart” button emits vibeui-cart:add and turns green for a couple of seconds.",
+            "description": "A dish builder for delivery: ingredient groups as chips with a colour dot — base and sauce pick one, protein and toppings pick any. On the right a bowl photo: each chosen protein is its own photo of the same bowl clipped to a sector, the sauce a glow on top, toppings bouncing colour dots; without photos a CSS bowl with layers. Below it calories, weight and price recalculate live and the recipe line is read aloud. The “Add to cart” button emits vibeui-cart:add and turns green for a couple of seconds.",
             "ai": {
               "summary": "A bowl or pizza builder: pick ingredients — the bowl fills up, price and calories add up.",
               "preserve": [
                 "picked is an array of ids in pick order; single groups replace their option, multi groups toggle",
-                "bowl layers: base and sauce stretch across the stack with fill keyframes, the rest use the SPOTS table with drop keyframes (bouncy cubic-bezier)",
+                "with bowlImage: proteins with image are clipped to a sector by clip-path polygon via wedge(i, n), toppings without a photo are dots around a circle at the golden angle; without bowlImage — layers from the SPOTS table with drop keyframes",
                 "add emits vibeui-cart:add with detail { id: bowl-<ids>, name, price, qty: 1 } and sets data-done for 2.2 s"
               ],
               "adapt": [
                 "eyebrow, title, lede, addLabel, addedLabel",
-                "groups: id, title, mode (single | multi), options: id, name, price, kcal, color",
-                "basePrice, currency",
+                "groups: id, title, mode (single | multi), options: id, name, price, kcal, color, image (a photo of the bowl with this ingredient)",
+                "bowlImage, basePrice, currency",
                 "tone — theme",
                 "accent — accent",
                 "ink — ink",
                 "background — background"
               ],
-              "usage": "<Delivery002\n  title=\"Build your bowl\"\n  basePrice={5}\n  currency=\"$\"\n  groups={[\n    { id: \"base\", title: \"Base\", mode: \"single\", options: [{ id: \"rice\", name: \"Rice\", price: 0, kcal: 210, color: \"#f4efe2\" }] },\n    { id: \"protein\", title: \"Protein\", mode: \"multi\", options: [{ id: \"salmon\", name: \"Salmon\", price: 4, kcal: 180, color: \"#ff8a6b\" }] },\n  ]}\n/>"
+              "usage": "<Delivery002\n  title=\"Build your bowl\"\n  basePrice={5}\n  currency=\"$\"\n  groups={[\n    { id: \"base\", title: \"Base\", mode: \"single\", options: [{ id: \"rice\", name: \"Rice\", price: 0, kcal: 210, color: \"#f4efe2\" }] },\n    { id: \"protein\", title: \"Protein\", mode: \"multi\", options: [{ id: \"salmon\", name: \"Salmon\", price: 4, kcal: 180, color: \"#ff8a6b\", image: \"/photos/bowl-salmon.png\" }] },\n  ]}\n/>"
             },
             "controls": {
               "title": {
@@ -466,21 +466,24 @@
                         "name": "Salmon",
                         "price": 4,
                         "kcal": 180,
-                        "color": "#ff8a6b"
+                        "color": "#ff8a6b",
+                        "image": "/demo/delivery/bowl-salmon.png"
                       },
                       {
                         "id": "chicken",
                         "name": "Grilled chicken",
                         "price": 3,
                         "kcal": 165,
-                        "color": "#e6b380"
+                        "color": "#e6b380",
+                        "image": "/demo/delivery/bowl-chicken.png"
                       },
                       {
                         "id": "shrimp",
                         "name": "Shrimps",
                         "price": 4,
                         "kcal": 95,
-                        "color": "#ffb0a0"
+                        "color": "#ffb0a0",
+                        "image": "/demo/delivery/bowl-shrimp.png"
                       },
                       {
                         "id": "tofu",

@@ -32,6 +32,10 @@ export type Vet004Props = {
   defaultSize?: string
   extras?: readonly Vet004Extra[]
   marks?: readonly Vet004Mark[]
+  /** Фото «до» (пушистая) и «после» (стриженая) в одном ракурсе, PNG без фона. Заданы оба — вместо CSS-собаки. */
+  beforeImage?: string
+  afterImage?: string
+  imageAlt?: string
   currency?: string
   actionLabel?: string
   actionHref?: string
@@ -43,11 +47,13 @@ export type Vet004Props = {
   style?: CSSProperties
 }
 
-// Груминг с ползунком: длина стрижки 3–40 мм крутит CSS-питомца — два
-// кольца «шерсти» из repeating-conic-gradient растут и опадают вместе с
-// бегунком, а кучка на полу растёт, когда стрижёте короче. Размер S/M/L
-// и допуслуги чипами — цена и время считаются на лету, число в цене не
-// прыгает благодаря tabular-nums.
+// Груминг с ползунком: длина стрижки 3–40 мм двигает бегунок, а фото
+// собаки «до» (пушистая) проявляется поверх «после» (стриженая) ровно
+// на долю ползунка и чуть увеличивается — шерсть будто растёт и опадает;
+// кучка на полу растёт, когда стрижёте короче. Без фото — CSS-питомец с
+// кольцами шерсти из repeating-conic-gradient. Размер S/M/L и допуслуги
+// чипами — цена и время считаются на лету, число в цене не прыгает
+// благодаря tabular-nums.
 const FONTS = "https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Golos+Text:wght@400;500;600&display=swap"
 
 const STYLES = `
@@ -123,6 +129,8 @@ container-type:inline-size;
 @keyframes vibeui-vet-004-pant{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.8)}}
 @keyframes vibeui-vet-004-snip{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(10deg)}}
 @container (min-width: 60rem){[data-vibeui-block="vet-004"] [data-part="shell"]{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:3rem}}
+[data-vibeui-block="vet-004"] [data-part="dog"]{position:absolute;left:10%;right:10%;top:4%;bottom:20cqi;z-index:2;filter:drop-shadow(0 16px 16px rgb(0 0 0 / .22))}
+[data-vibeui-block="vet-004"] [data-vibeui-block="vet-004"] [data-part="dog"] img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:50% 100%;transform-origin:50% 100%;transition:opacity .35s ease-out,transform .5s cubic-bezier(.34,1.4,.64,1)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="vet-004"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_SIZES: Vet004Size[] = [
@@ -162,6 +170,9 @@ export function Vet004({
   defaultSize = "m",
   extras = DEFAULT_EXTRAS,
   marks = DEFAULT_MARKS,
+  beforeImage = "/demo/vet/dog-fluffy.png",
+  afterImage = "/demo/vet/dog-trimmed.png",
+  imageAlt = "Шпиц до и после стрижки",
   currency = "₽",
   actionLabel = "Записать на стрижку",
   actionHref = "#contacts",
@@ -182,6 +193,7 @@ export function Vet004({
   const total = (size?.price ?? 0) + extrasTotal
   const minutes = 45 + Math.round(length / 2) + chosen.length * 10
   const ratio = (length - minLength) / Math.max(1, maxLength - minLength)
+  const photos = Boolean(beforeImage && afterImage)
 
   const toggleExtra = (key: string) => {
     setChosen((current) => (current.includes(key) ? current.filter((item) => item !== key) : [...current, key]))
@@ -208,7 +220,7 @@ export function Vet004({
             {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
             <h2 data-part="title">{title}</h2>
             {lede ? <p data-part="lede">{lede}</p> : null}
-            <div data-part="stage" style={stageStyle} role="img" aria-label={`Собака со стрижкой ${length} мм`}>
+            <div data-part="stage" style={stageStyle} role="img" aria-label={photos ? `${imageAlt}: ${length} мм` : `Собака со стрижкой ${length} мм`}>
               <span data-part="badge">{mark?.label}</span>
               <svg data-part="scissors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <circle cx="6" cy="6" r="3" />
@@ -216,16 +228,25 @@ export function Vet004({
                 <path d="M20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12" />
               </svg>
               <i data-part="floor" />
-              <i data-part="pile" />
-              <i data-part="fur" data-layer="1" />
-              <i data-part="fur" data-layer="2" />
-              <i data-part="ear" data-side="l" />
-              <i data-part="ear" data-side="r" />
-              <i data-part="head" />
-              <i data-part="eye" data-side="l" />
-              <i data-part="eye" data-side="r" />
-              <i data-part="tongue" />
-              <i data-part="nose" />
+              {photos ? (
+                <div data-part="dog">
+                  <img data-part="after" src={afterImage} alt="" />
+                  <img data-part="before" src={beforeImage} alt="" style={{ opacity: ratio, transform: `scale(${(0.92 + ratio * 0.08).toFixed(3)})` }} />
+                </div>
+              ) : (
+                <>
+                  <i data-part="pile" />
+                  <i data-part="fur" data-layer="1" />
+                  <i data-part="fur" data-layer="2" />
+                  <i data-part="ear" data-side="l" />
+                  <i data-part="ear" data-side="r" />
+                  <i data-part="head" />
+                  <i data-part="eye" data-side="l" />
+                  <i data-part="eye" data-side="r" />
+                  <i data-part="tongue" />
+                  <i data-part="nose" />
+                </>
+              )}
             </div>
           </div>
           <div data-part="panel">

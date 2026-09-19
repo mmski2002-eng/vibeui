@@ -9,6 +9,8 @@ export type Delivery002Option = {
   kcal: number
   /** Цвет слоя в миске. */
   color: string
+  /** Фото миски с этим ингредиентом (тот же ракурс, что bowlImage) — показывается сектором. */
+  image?: string
 }
 
 export type Delivery002Group = {
@@ -26,6 +28,8 @@ export type Delivery002Props = {
   groups?: readonly Delivery002Group[]
   /** Цена миски без добавок. */
   basePrice?: number
+  /** Фото пустой миски с основой (PNG без фона). Задан — миска рисуется фото, иначе цветными слоями. */
+  bowlImage?: string
   currency?: string
   addLabel?: string
   addedLabel?: string
@@ -38,12 +42,14 @@ export type Delivery002Props = {
 }
 
 // Конструктор боула: слева группы ингредиентов чипами (основа и соус —
-// один из, остальное — сколько угодно), справа CSS-миска, в которую
-// падают слои: каждый выбранный ингредиент — цветной блоб со своим
-// положением, ложится сверху с отскоком, снимается — исчезает. Под
-// миской бегущие цифры: калории, вес и цена считаются на лету. Кнопка
-// «в корзину» шлёт vibeui-cart:add — блок меню добавляет боул в общую
-// корзину, а кнопка на пару секунд становится зелёной.
+// один из, остальное — сколько угодно), справа миска. С фото (bowlImage):
+// пустая миска с рисом, каждый выбранный белок — своё фото той же миски,
+// обрезанное сектором (два белка — по половине, три — по трети), соус —
+// цветной блик поверх, добавки — цветные горошины с отскоком. Без фото —
+// CSS-миска, в которую падают цветные слои. Под миской бегущие цифры:
+// калории, вес и цена считаются на лету. Кнопка «в корзину» шлёт
+// vibeui-cart:add — блок меню добавляет боул в общую корзину, а кнопка
+// на пару секунд становится зелёной.
 const FONTS = "https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Onest:wght@400;500;600;700&display=swap"
 
 const STYLES = `
@@ -101,10 +107,32 @@ container-type:inline-size;
 [data-vibeui-block="delivery-002"] [data-part="add"]:hover{transform:translateY(-2px);box-shadow:0 14px 34px -12px var(--vibeui-delivery-002-accent)}
 [data-vibeui-block="delivery-002"] [data-part="add"][data-done="true"]{background:#22c55e;color:#fff}
 [data-vibeui-block="delivery-002"] [data-part="add"] svg{width:1.1rem;height:1.1rem}
+[data-vibeui-block="delivery-002"] [data-part="dish"]{position:relative;width:min(100%,22rem);aspect-ratio:1;margin:0 auto;container-type:inline-size;filter:drop-shadow(0 24px 24px rgb(0 0 0 / .35))}
+[data-vibeui-block="delivery-002"] [data-part="dish"] img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .4s,filter .5s}
+[data-vibeui-block="delivery-002"] [data-part="dish"][data-empty="true"] [data-part="plate"]{filter:grayscale(.6) brightness(.7);opacity:.55}
+[data-vibeui-block="delivery-002"] [data-part="wedge"]{animation:vibeui-delivery-002-fill .5s cubic-bezier(.3,1.4,.4,1) both;transform-origin:50% 50%}
+[data-vibeui-block="delivery-002"] [data-part="drizzle"]{position:absolute;left:24%;top:24%;width:52%;height:52%;border-radius:50%;background:radial-gradient(circle,color-mix(in oklab,var(--vibeui-delivery-002-c) 70%,transparent),transparent 65%);mix-blend-mode:soft-light;opacity:.95;animation:vibeui-delivery-002-fill .5s cubic-bezier(.3,1.4,.4,1) both;pointer-events:none}
+[data-vibeui-block="delivery-002"] [data-part="dot"]{position:absolute;width:7cqi;height:7cqi;margin:-3.5cqi 0 0 -3.5cqi;border-radius:50%;background:radial-gradient(circle at 35% 30%,color-mix(in oklab,var(--vibeui-delivery-002-c) 60%,#fff),var(--vibeui-delivery-002-c) 70%);box-shadow:0 .6cqi 1cqi rgb(0 0 0 / .35);animation:vibeui-delivery-002-drop .5s cubic-bezier(.3,1.4,.4,1) both}
+[data-vibeui-block="delivery-002"] [data-part="dish"] [data-part="empty"]{inset:auto 0 -2.4rem}
 @keyframes vibeui-delivery-002-drop{from{transform:translateY(-120%) scale(.6);opacity:0}to{transform:none;opacity:1}}
 @keyframes vibeui-delivery-002-fill{from{transform:scale(.3);opacity:0}to{transform:none;opacity:1}}
 @container (min-width: 56rem){[data-vibeui-block="delivery-002"] [data-part="layout"]{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:3rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="delivery-002"] *{animation:none!important;transition:none!important}}`
+
+// Сектор миски для i-го из n белков: многоугольник от центра по дуге,
+// чтобы два-три ингредиента легли рядом, а не друг на друга.
+function wedge(index: number, count: number) {
+  if (count <= 1) return "none"
+  const steps = 12
+  const from = (index / count) * Math.PI * 2 - Math.PI / 2
+  const to = ((index + 1) / count) * Math.PI * 2 - Math.PI / 2
+  const points = ["50% 50%"]
+  for (let step = 0; step <= steps; step++) {
+    const angle = from + ((to - from) * step) / steps
+    points.push(`${(50 + Math.cos(angle) * 80).toFixed(1)}% ${(50 + Math.sin(angle) * 80).toFixed(1)}%`)
+  }
+  return `polygon(${points.join(",")})`
+}
 
 const DEFAULT_GROUPS: Delivery002Group[] = [
   {
@@ -123,9 +151,9 @@ const DEFAULT_GROUPS: Delivery002Group[] = [
     title: "Белок",
     mode: "multi",
     options: [
-      { id: "salmon", name: "Лосось", price: 220, kcal: 180, color: "#ff8a6b" },
-      { id: "chicken", name: "Курица на гриле", price: 150, kcal: 165, color: "#e6b380" },
-      { id: "shrimp", name: "Креветки", price: 240, kcal: 95, color: "#ffb0a0" },
+      { id: "salmon", name: "Лосось", price: 220, kcal: 180, color: "#ff8a6b", image: "/demo/delivery/bowl-salmon.png" },
+      { id: "chicken", name: "Курица на гриле", price: 150, kcal: 165, color: "#e6b380", image: "/demo/delivery/bowl-chicken.png" },
+      { id: "shrimp", name: "Креветки", price: 240, kcal: 95, color: "#ffb0a0", image: "/demo/delivery/bowl-shrimp.png" },
       { id: "tofu", name: "Тофу", price: 110, kcal: 120, color: "#f0e6c8" },
     ],
   },
@@ -182,6 +210,7 @@ export function Delivery002({
   title = "Собери свой боул",
   lede = "Основа, белок, добавки, соус. Миска справа собирается по мере выбора, калории и цена — честно и сразу.",
   groups = DEFAULT_GROUPS,
+  bowlImage = "/demo/delivery/bowl-base.png",
   basePrice = 290,
   currency = "₽",
   addLabel = "В корзину",
@@ -239,6 +268,8 @@ export function Delivery002({
   const base = chosen.find((option) => option.role === "base")
   const sauce = chosen.find((option) => option.role === "sauce")
   const pieces = chosen.filter((option) => option.role !== "base" && option.role !== "sauce")
+  const wedges = pieces.filter((option) => option.image)
+  const dots = pieces.filter((option) => !option.image)
 
   return (
     <>
@@ -284,19 +315,36 @@ export function Delivery002({
               ))}
             </ul>
             <div data-part="stage">
-              <div data-part="bowl" aria-hidden="true">
-                <div data-part="body" />
-                <div data-part="rim" />
-                <div data-part="stack">
-                  {base ? <i key={base.id} data-part="layer" data-role="base" style={{ ["--vibeui-delivery-002-c" as string]: base.color } as CSSProperties} /> : null}
-                  {pieces.map((option, index) => {
-                    const spot = SPOTS[index % SPOTS.length]
-                    return <i key={option.id} data-part="layer" style={{ left: `${spot.x}%`, top: `${spot.y}%`, width: `${spot.w}%`, height: `${spot.h}%`, ["--vibeui-delivery-002-c" as string]: option.color, animationDelay: `${(index % 3) * 60}ms` } as CSSProperties} />
+              {bowlImage ? (
+                <div data-part="dish" aria-hidden="true" data-empty={!base}>
+                  <img data-part="plate" src={bowlImage} alt="" />
+                  {wedges.map((option, index) => (
+                    <img key={option.id} data-part="wedge" src={option.image} alt="" style={{ clipPath: wedge(index, wedges.length), animationDelay: `${(index % 3) * 60}ms` }} />
+                  ))}
+                  {sauce ? <i key={sauce.id} data-part="drizzle" style={{ ["--vibeui-delivery-002-c" as string]: sauce.color } as CSSProperties} /> : null}
+                  {dots.map((option, index) => {
+                    // горошины по кругу внутри миски, шаг — золотой угол, без Math.random
+                    const angle = ((index * 137.5) % 360) * (Math.PI / 180)
+                    const radius = 22 + (index % 3) * 6
+                    return <i key={option.id} data-part="dot" style={{ left: `${(50 + Math.cos(angle) * radius).toFixed(1)}%`, top: `${(50 + Math.sin(angle) * radius).toFixed(1)}%`, ["--vibeui-delivery-002-c" as string]: option.color, animationDelay: `${(index % 3) * 60}ms` } as CSSProperties} />
                   })}
-                  {sauce ? <i key={sauce.id} data-part="layer" data-role="sauce" style={{ ["--vibeui-delivery-002-c" as string]: sauce.color } as CSSProperties} /> : null}
+                  {chosen.length === 0 ? <p data-part="empty">Выберите основу — миска наполнится</p> : null}
                 </div>
-                {chosen.length === 0 ? <p data-part="empty">Выберите основу — миска наполнится</p> : null}
-              </div>
+              ) : (
+                <div data-part="bowl" aria-hidden="true">
+                  <div data-part="body" />
+                  <div data-part="rim" />
+                  <div data-part="stack">
+                    {base ? <i key={base.id} data-part="layer" data-role="base" style={{ ["--vibeui-delivery-002-c" as string]: base.color } as CSSProperties} /> : null}
+                    {pieces.map((option, index) => {
+                      const spot = SPOTS[index % SPOTS.length]
+                      return <i key={option.id} data-part="layer" style={{ left: `${spot.x}%`, top: `${spot.y}%`, width: `${spot.w}%`, height: `${spot.h}%`, ["--vibeui-delivery-002-c" as string]: option.color, animationDelay: `${(index % 3) * 60}ms` } as CSSProperties} />
+                    })}
+                    {sauce ? <i key={sauce.id} data-part="layer" data-role="sauce" style={{ ["--vibeui-delivery-002-c" as string]: sauce.color } as CSSProperties} /> : null}
+                  </div>
+                  {chosen.length === 0 ? <p data-part="empty">Выберите основу — миска наполнится</p> : null}
+                </div>
+              )}
               <ul data-part="facts">
                 <li>
                   <b>{kcal}</b>

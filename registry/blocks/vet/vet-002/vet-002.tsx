@@ -6,7 +6,7 @@ export type Vet002Spot = {
   key: string
   /** Часть тела: «Уши», «Зубы». */
   label: string
-  /** Координаты хотспота в процентах от схемы 600×420. */
+  /** Координаты хотспота в процентах от схемы (3:2). */
   x: number
   y: number
   service: string
@@ -20,6 +20,9 @@ export type Vet002Props = {
   title?: string
   lede?: string
   spots?: readonly Vet002Spot[]
+  /** Фото животного в профиль (PNG без фона). Пусто — рисованный силуэт. */
+  image?: string
+  imageAlt?: string
   defaultSpot?: string
   actionLabel?: string
   actionHref?: string
@@ -31,11 +34,11 @@ export type Vet002Props = {
   style?: CSSProperties
 }
 
-// Карта питомца: SVG-силуэт собаки из простых фигур, поверх — кнопки-
-// хотспоты в процентах от схемы, каждая пульсирует кольцом. Клик по
-// точке — справа карточка услуги с ценой, временем и текстом; карточка
-// перерисовывается с подскоком через key. Хотспоты — настоящие кнопки с
-// aria-pressed, ходят с клавиатуры.
+// Карта питомца: фото собаки в профиль (PNG без фона; без фото —
+// SVG-силуэт из простых фигур), поверх — кнопки-хотспоты в процентах от
+// схемы, каждая пульсирует кольцом. Клик по точке — справа карточка услуги
+// с ценой, временем и текстом; карточка перерисовывается с подскоком через
+// key. Хотспоты — настоящие кнопки с aria-pressed, ходят с клавиатуры.
 const FONTS = "https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Golos+Text:wght@400;500;600&display=swap"
 
 const STYLES = `
@@ -66,6 +69,7 @@ container-type:inline-size;
 [data-vibeui-block="vet-002"] [data-part="board"]{display:grid;gap:1.5rem;margin:2.2rem 0 0;align-items:center}
 [data-vibeui-block="vet-002"] [data-part="scheme"]{position:relative;width:100%;aspect-ratio:600/420;border-radius:1.6rem;background:color-mix(in oklab,var(--vibeui-vet-002-fg) 4%,transparent);border:1px solid var(--vibeui-vet-002-line);overflow:visible}
 [data-vibeui-block="vet-002"] [data-part="scheme"] svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+[data-vibeui-block="vet-002"] [data-part="photo"]{position:absolute;inset:4%;width:92%;height:92%;object-fit:contain;filter:drop-shadow(0 18px 20px rgb(0 0 0 / .22))}
 [data-vibeui-block="vet-002"] [data-part="spot"]{position:absolute;z-index:2;width:2.2rem;height:2.2rem;margin:-1.1rem 0 0 -1.1rem;padding:0;border:2px solid var(--vibeui-vet-002-accent);border-radius:50%;background:var(--vibeui-vet-002-card);color:var(--vibeui-vet-002-accent);font-family:var(--vibeui-vet-002-display);font-weight:900;font-size:.85rem;cursor:pointer;transition:transform .25s cubic-bezier(.34,1.56,.64,1),background .2s,color .2s}
 [data-vibeui-block="vet-002"] [data-part="spot"]::before{content:"";position:absolute;inset:-2px;border-radius:50%;border:2px solid var(--vibeui-vet-002-accent);opacity:0;animation:vibeui-vet-002-pulse 2.4s ease-out infinite;animation-delay:calc(var(--vibeui-vet-002-i) * .3s)}
 [data-vibeui-block="vet-002"] [data-part="spot"]:hover{transform:scale(1.15)}
@@ -95,13 +99,13 @@ container-type:inline-size;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="vet-002"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_SPOTS: Vet002Spot[] = [
-  { key: "ears", label: "Уши", x: 73, y: 17, service: "Чистка ушей и осмотр отоскопом", price: "900 ₽", duration: "15 минут", text: "Трясёт головой, чешет, пахнет — смотрим канал, берём мазок, чистим. Капли подберём под то, что найдём, а не «на всякий случай»." },
-  { key: "eyes", label: "Глаза", x: 81.5, y: 26.5, service: "Приём офтальмолога", price: "1 800 ₽", duration: "30 минут", text: "Слезятся, покраснели, третье веко — осмотр со щелевой лампой, тест Ширмера и флюоресцеин. Без «покапайте чем-нибудь»." },
-  { key: "teeth", label: "Зубы", x: 90, y: 38, service: "Чистка зубов ультразвуком", price: "от 6 900 ₽", duration: "≈ 1 час", text: "Под седацией, с полировкой и снимками. Запах изо рта — это не «порода такая», это камень. Уходит за один приём." },
-  { key: "coat", label: "Шерсть и кожа", x: 50, y: 46, service: "Приём дерматолога", price: "1 600 ₽", duration: "30 минут", text: "Чешется, лысеет, перхоть — соскоб и лампа Вуда на месте. Если аллергия, поможем найти, на что именно." },
-  { key: "belly", label: "Живот", x: 52, y: 68, service: "УЗИ брюшной полости", price: "2 300 ₽", duration: "25 минут", text: "Не ест, рвёт, странно сидит — смотрим сразу, без записи на завтра. Заключение и снимки пришлём в мессенджер." },
-  { key: "paws", label: "Лапы и когти", x: 67, y: 90, service: "Стрижка когтей + осмотр подушечек", price: "400 ₽", duration: "10 минут", text: "Пока ждёте приём — бесплатно. Хромает — тогда к ортопеду, снимок в тот же день." },
-  { key: "tail", label: "Хвост", x: 20, y: 31, service: "Приём хирурга", price: "1 500 ₽", duration: "20 минут", text: "Прищемили дверью, не поднимает, «висит» — осмотр, снимок, если надо. Хвост в порядке — всё в порядке." },
+  { key: "ears", label: "Уши", x: 31, y: 22, service: "Чистка ушей и осмотр отоскопом", price: "900 ₽", duration: "15 минут", text: "Трясёт головой, чешет, пахнет — смотрим канал, берём мазок, чистим. Капли подберём под то, что найдём, а не «на всякий случай»." },
+  { key: "eyes", label: "Глаза", x: 24, y: 17, service: "Приём офтальмолога", price: "1 800 ₽", duration: "30 минут", text: "Слезятся, покраснели, третье веко — осмотр со щелевой лампой, тест Ширмера и флюоресцеин. Без «покапайте чем-нибудь»." },
+  { key: "teeth", label: "Зубы", x: 17, y: 32, service: "Чистка зубов ультразвуком", price: "от 6 900 ₽", duration: "≈ 1 час", text: "Под седацией, с полировкой и снимками. Запах изо рта — это не «порода такая», это камень. Уходит за один приём." },
+  { key: "coat", label: "Шерсть и кожа", x: 52, y: 36, service: "Приём дерматолога", price: "1 600 ₽", duration: "30 минут", text: "Чешется, лысеет, перхоть — соскоб и лампа Вуда на месте. Если аллергия, поможем найти, на что именно." },
+  { key: "belly", label: "Живот", x: 48, y: 60, service: "УЗИ брюшной полости", price: "2 300 ₽", duration: "25 минут", text: "Не ест, рвёт, странно сидит — смотрим сразу, без записи на завтра. Заключение и снимки пришлём в мессенджер." },
+  { key: "paws", label: "Лапы и когти", x: 31, y: 86, service: "Стрижка когтей + осмотр подушечек", price: "400 ₽", duration: "10 минут", text: "Пока ждёте приём — бесплатно. Хромает — тогда к ортопеду, снимок в тот же день." },
+  { key: "tail", label: "Хвост", x: 86, y: 16, service: "Приём хирурга", price: "1 500 ₽", duration: "20 минут", text: "Прищемили дверью, не поднимает, «висит» — осмотр, снимок, если надо. Хвост в порядке — всё в порядке." },
 ]
 
 /** Интерактивная схема тела с хотспотами услуг. */
@@ -110,6 +114,8 @@ export function Vet002({
   title = "Ткните туда, где болит",
   lede = "Точка на схеме — услуга и цена. Не нашли своё — пишите администратору, разберёмся, к кому вести.",
   spots = DEFAULT_SPOTS,
+  image = "/demo/vet/dog-profile.png",
+  imageAlt = "Бигль в профиль",
   defaultSpot = "teeth",
   actionLabel = "Записаться",
   actionHref = "#contacts",
@@ -147,25 +153,29 @@ export function Vet002({
           <div data-part="board">
             <div>
               <div data-part="scheme">
-                <svg viewBox="0 0 600 420" aria-hidden="true">
-                  <ellipse cx="310" cy="402" rx="230" ry="12" fill="currentColor" opacity=".07" />
-                  <path d="M150 210 C 105 190, 96 140, 128 108" fill="none" stroke="var(--vibeui-vet-002-fur)" strokeWidth="26" strokeLinecap="round" />
-                  <rect x="182" y="272" width="42" height="122" rx="20" fill="var(--vibeui-vet-002-fur-dark)" />
-                  <rect x="404" y="272" width="42" height="122" rx="20" fill="var(--vibeui-vet-002-fur-dark)" />
-                  <ellipse cx="300" cy="235" rx="162" ry="92" fill="var(--vibeui-vet-002-fur)" />
-                  <rect x="238" y="286" width="40" height="110" rx="19" fill="var(--vibeui-vet-002-fur)" />
-                  <rect x="352" y="286" width="40" height="110" rx="19" fill="var(--vibeui-vet-002-fur)" />
-                  <circle cx="430" cy="192" r="72" fill="var(--vibeui-vet-002-fur)" />
-                  <path d="M398 172 q46 34 96 6" fill="none" stroke="var(--vibeui-vet-002-accent)" strokeWidth="12" strokeLinecap="round" />
-                  <circle cx="448" cy="190" r="8" fill="var(--vibeui-vet-002-accent)" />
-                  <circle cx="478" cy="125" r="62" fill="var(--vibeui-vet-002-fur)" />
-                  <ellipse cx="528" cy="150" rx="42" ry="28" fill="color-mix(in oklab,var(--vibeui-vet-002-fur) 70%,#fff)" />
-                  <ellipse cx="440" cy="92" rx="22" ry="44" transform="rotate(-24 440 92)" fill="var(--vibeui-vet-002-fur-dark)" />
-                  <circle cx="562" cy="140" r="11" fill="var(--vibeui-vet-002-fg)" />
-                  <circle cx="492" cy="112" r="6.5" fill="var(--vibeui-vet-002-fg)" />
-                  <circle cx="494" cy="110" r="2" fill="#fff" />
-                  <path d="M540 168 q10 8 22 0" fill="none" stroke="var(--vibeui-vet-002-fg)" strokeWidth="3" strokeLinecap="round" />
-                </svg>
+                {image ? (
+                  <img data-part="photo" src={image} alt={imageAlt} />
+                ) : (
+                  <svg viewBox="0 0 600 420" aria-hidden="true">
+                    <ellipse cx="310" cy="402" rx="230" ry="12" fill="currentColor" opacity=".07" />
+                    <path d="M150 210 C 105 190, 96 140, 128 108" fill="none" stroke="var(--vibeui-vet-002-fur)" strokeWidth="26" strokeLinecap="round" />
+                    <rect x="182" y="272" width="42" height="122" rx="20" fill="var(--vibeui-vet-002-fur-dark)" />
+                    <rect x="404" y="272" width="42" height="122" rx="20" fill="var(--vibeui-vet-002-fur-dark)" />
+                    <ellipse cx="300" cy="235" rx="162" ry="92" fill="var(--vibeui-vet-002-fur)" />
+                    <rect x="238" y="286" width="40" height="110" rx="19" fill="var(--vibeui-vet-002-fur)" />
+                    <rect x="352" y="286" width="40" height="110" rx="19" fill="var(--vibeui-vet-002-fur)" />
+                    <circle cx="430" cy="192" r="72" fill="var(--vibeui-vet-002-fur)" />
+                    <path d="M398 172 q46 34 96 6" fill="none" stroke="var(--vibeui-vet-002-accent)" strokeWidth="12" strokeLinecap="round" />
+                    <circle cx="448" cy="190" r="8" fill="var(--vibeui-vet-002-accent)" />
+                    <circle cx="478" cy="125" r="62" fill="var(--vibeui-vet-002-fur)" />
+                    <ellipse cx="528" cy="150" rx="42" ry="28" fill="color-mix(in oklab,var(--vibeui-vet-002-fur) 70%,#fff)" />
+                    <ellipse cx="440" cy="92" rx="22" ry="44" transform="rotate(-24 440 92)" fill="var(--vibeui-vet-002-fur-dark)" />
+                    <circle cx="562" cy="140" r="11" fill="var(--vibeui-vet-002-fg)" />
+                    <circle cx="492" cy="112" r="6.5" fill="var(--vibeui-vet-002-fg)" />
+                    <circle cx="494" cy="110" r="2" fill="#fff" />
+                    <path d="M540 168 q10 8 22 0" fill="none" stroke="var(--vibeui-vet-002-fg)" strokeWidth="3" strokeLinecap="round" />
+                  </svg>
+                )}
                 {spots.map((item, index) => (
                   <button key={item.key} data-part="spot" type="button" aria-pressed={item.key === spot.key} aria-label={`${item.label}: ${item.service}`} onClick={() => setActive(item.key)} style={{ left: `${item.x}%`, top: `${item.y}%`, ["--vibeui-vet-002-i" as string]: index }}>
                     {index + 1}
