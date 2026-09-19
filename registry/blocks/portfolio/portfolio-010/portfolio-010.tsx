@@ -6,7 +6,7 @@ export type Portfolio010Photo = {
   src: string
   alt?: string
   caption?: string
-  /** Форма окна: rect (3:2), tall (4:5), square, wide (большое, 2 колонки). */
+  /** Форма карточки: rect (3:2), tall (4:5), square, wide (большая, 2 колонки). */
   shape?: "rect" | "tall" | "square" | "wide"
 }
 
@@ -26,11 +26,11 @@ export type Portfolio010Props = {
   style?: CSSProperties
 }
 
-// Зимние кадры в «окнах»: каждое фото в раме с переплётом — крест из
-// тонких серебряных линий — и инеем по краям (радиальные пятна поверх,
-// screen). Наведение «отогревает» окно: иней тает, переплёт уходит, кадр
-// теплеет. Клик — лайтбокс на <dialog>: фото на ночном фоне, подпись,
-// стрелки, Esc. Сетка плотная, wide-кадр занимает две колонки.
+// Bento-галерея зимних кадров: чистые фото в скруглённых карточках-паспарту,
+// без наложений поверх снимка. Наведение — мягкий подъём карточки и лёгкий
+// zoom кадра, подпись рукописным Marck Script серебром под фото. Клик —
+// лайтбокс на <dialog>: фото на ночном фоне, подпись, стрелки, Esc.
+// Раскладка плотная, wide-кадр занимает две колонки.
 const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Marck+Script&family=Manrope:wght@400;500;600;700&display=swap"
 
 const STYLES = `
@@ -65,16 +65,10 @@ container-type:inline-size;
 [data-vibeui-block="portfolio-010"] [data-part="item"][data-shape="tall"] [data-part="pic"]{aspect-ratio:4/5}
 [data-vibeui-block="portfolio-010"] [data-part="item"][data-shape="square"] [data-part="pic"]{aspect-ratio:1}
 [data-vibeui-block="portfolio-010"] [data-part="item"][data-shape="wide"] [data-part="pic"]{aspect-ratio:2/1}
-[data-vibeui-block="portfolio-010"] [data-part="pic"] img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(.8) brightness(.9);transform:scale(1.02);transition:filter .7s,transform .9s cubic-bezier(.2,.9,.3,1)}
-[data-vibeui-block="portfolio-010"] [data-part="item"]:hover img{filter:none;transform:scale(1.06)}
-[data-vibeui-block="portfolio-010"] [data-part="frost"]{position:absolute;inset:0;background:radial-gradient(40% 40% at 0 0,rgb(242 238 230 / .75),transparent 70%),radial-gradient(35% 35% at 100% 0,rgb(242 238 230 / .6),transparent 70%),radial-gradient(45% 40% at 0 100%,rgb(242 238 230 / .7),transparent 70%),radial-gradient(35% 35% at 100% 100%,rgb(242 238 230 / .6),transparent 70%);mix-blend-mode:screen;opacity:.9;transition:opacity .9s ease;pointer-events:none}
-[data-vibeui-block="portfolio-010"] [data-part="item"]:hover [data-part="frost"]{opacity:.15}
-[data-vibeui-block="portfolio-010"] [data-part="bars"]{position:absolute;inset:0;pointer-events:none;transition:opacity .6s}
-[data-vibeui-block="portfolio-010"] [data-part="bars"]::before,[data-vibeui-block="portfolio-010"] [data-part="bars"]::after{content:"";position:absolute;background:var(--vibeui-portfolio-010-card);opacity:.85;box-shadow:0 0 6px rgb(0 0 0 / .35)}
-[data-vibeui-block="portfolio-010"] [data-part="bars"]::before{left:50%;top:0;bottom:0;width:4px;margin-left:-2px}
-[data-vibeui-block="portfolio-010"] [data-part="bars"]::after{top:50%;left:0;right:0;height:4px;margin-top:-2px}
-[data-vibeui-block="portfolio-010"] [data-part="item"]:hover [data-part="bars"]{opacity:0}
-[data-vibeui-block="portfolio-010"] [data-part="cap"]{display:block;padding:.55rem .3rem .2rem;font-family:var(--vibeui-portfolio-010-script);font-size:1.15rem;color:var(--vibeui-portfolio-010-silver);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+[data-vibeui-block="portfolio-010"] [data-part="pic"] img{display:block;width:100%;height:100%;object-fit:cover;transform:scale(1);transition:transform .8s cubic-bezier(.2,.9,.3,1)}
+[data-vibeui-block="portfolio-010"] [data-part="item"]:hover img{transform:scale(1.06)}
+[data-vibeui-block="portfolio-010"] [data-part="cap"]{display:block;padding:.6rem .3rem .2rem;font-family:var(--vibeui-portfolio-010-script);font-size:1.15rem;color:var(--vibeui-portfolio-010-silver);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.75;transition:opacity .35s}
+[data-vibeui-block="portfolio-010"] [data-part="item"]:hover [data-part="cap"]{opacity:1}
 [data-vibeui-block="portfolio-010"] dialog{width:min(100%,56rem);max-width:calc(100% - 2rem);max-height:calc(100% - 2rem);margin:auto;padding:0;border:1px solid rgb(159 176 200 / .25);border-radius:1rem;background:#0b1220;color:#f2eee6;box-shadow:0 40px 90px -30px rgb(0 0 0 / .9)}
 [data-vibeui-block="portfolio-010"] dialog::backdrop{background:rgb(5 9 15 / .82);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);animation:vibeui-portfolio-010-veil .5s ease both}
 @keyframes vibeui-portfolio-010-veil{from{opacity:0}}
@@ -100,7 +94,7 @@ container-type:inline-size;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="portfolio-010"] *{animation:none!important;transition:none!important}}`
 
-/** Зимние кадры в оконных рамах с инеем: наведение отогревает окно, клик открывает лайтбокс на <dialog>. */
+/** Bento-галерея зимних кадров: чистые фото, мягкий hover-подъём, клик открывает лайтбокс на <dialog>. */
 export function Portfolio010({
   eyebrow = "Кадры",
   title = "Четыре зимы в окнах",
@@ -163,8 +157,6 @@ export function Portfolio010({
               <button key={photo.src + index} type="button" data-part="item" data-shape={photo.shape ?? "rect"} onClick={() => setCurrent(index)} aria-label={photo.caption ?? photo.alt ?? `${index + 1}`}>
                 <span data-part="pic">
                   {photo.src ? <img src={photo.src} alt={photo.alt ?? ""} loading="lazy" /> : null}
-                  <span data-part="bars" aria-hidden="true" />
-                  <span data-part="frost" aria-hidden="true" />
                 </span>
                 {photo.caption ? <span data-part="cap">{photo.caption}</span> : null}
               </button>

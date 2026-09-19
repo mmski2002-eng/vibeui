@@ -36,6 +36,9 @@ const page: CSSProperties = {
 
 // Тема страницы: блоки каталога по умолчанию нейтральные, цвета задаёт сценарий.
 const dark = { tone: "dark", background: "#0b1220", ink: "#f2eee6", accent: "#f2b64f" } as const
+// Второй тон для ритма: чётные секции чуть светлее — банды глубины разбивают
+// монотонное полотно, страница «дышит», а не тянется одним синим фоном.
+const lift = { ...dark, background: "#101d33" } as const
 
 const IMG = "/demo/wedding-winter/"
 
@@ -60,12 +63,13 @@ export default function Page() {
       <style href="vibeui-demo-scroll" precedence="medium">
         {`html{scroll-behavior:smooth;scroll-padding-top:5rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}`}
       </style>
-      <Background006 density={0.9} wind={0.2} zIndex={30} />
+      <Background006 density={0.6} wind={0.2} shape="star" zIndex={30} />
       <Navbar027 {...dark} background="rgb(11 18 32 / .78)" brandHref="#hero" music={`${IMG}music.mp3`} />
 
       <div id="hero">
         <Hero027
           {...dark}
+          candle={false}
           image={`${IMG}hero.webp`}
           imageAlt="Дом в снежном лесу с тёплыми окнами"
           photo={`${IMG}hero-couple.webp`}
@@ -86,7 +90,7 @@ export default function Page() {
       </div>
 
       <div id="evening">
-        <Event013 {...dark} />
+        <Event013 {...lift} />
       </div>
 
       <div id="dresscode">
@@ -100,7 +104,7 @@ export default function Page() {
       </div>
 
       <div id="place">
-        <Map009 {...dark} image={`${IMG}venue.webp`} imageAlt="Дом с тёплыми окнами и фонарями у подъезда" />
+        <Map009 {...lift} image={`${IMG}venue.webp`} imageAlt="Дом с тёплыми окнами и фонарями у подъезда" />
       </div>
 
       <div id="rsvp">
@@ -108,7 +112,7 @@ export default function Page() {
       </div>
 
       <div id="faq">
-        <Faq022 {...dark} />
+        <Faq022 {...lift} />
       </div>
 
       <div id="gallery">
@@ -117,7 +121,7 @@ export default function Page() {
 
       <div id="people">
         <People011
-          {...dark}
+          {...lift}
           people={[
             { name: "Кристина", role: "Свидетельница", text: "Подруга Леры с первого класса. Знает про платья, шали и куда прятать телефоны на церемонии.", image: `${IMG}people-01.webp`, contactLabel: "Написать в Telegram", contactHref: "#" },
             { name: "Игорь", role: "Свидетель", text: "Брат Димы. Отвечает за трансферы, дрова и фейерверк — в этом порядке.", image: `${IMG}people-02.webp`, contactLabel: "Написать в Telegram", contactHref: "#" },
@@ -131,7 +135,7 @@ export default function Page() {
       </div>
 
       <div id="wishes">
-        <Testimonials022 {...dark} />
+        <Testimonials022 {...lift} />
       </div>
 
       <div id="footer">

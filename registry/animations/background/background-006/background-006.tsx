@@ -11,6 +11,8 @@ export type Background006Props = {
   speed?: number
   /** Цвет снежинок. */
   color?: string
+  /** Форма: "dot" — мягкие точки, "star" — шестилучевые снежинки-кристаллы. */
+  shape?: "dot" | "star"
   /** Подложка слоя; пусто — прозрачный, снег ложится на страницу. */
   backdrop?: string
   /** Слой на весь экран поверх страницы (fixed) или внутри родителя (absolute). */
@@ -67,6 +69,7 @@ export function Background006({
   wind = 0.25,
   speed = 1,
   color = "#ffffff",
+  shape = "dot",
   backdrop,
   fixed = true,
   paused = false,
@@ -75,14 +78,14 @@ export function Background006({
   style,
 }: Background006Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const settings = useRef({ density, wind, speed, color, paused })
+  const settings = useRef({ density, wind, speed, color, shape, paused })
 
   // Свежие значения для цикла анимации без перезапуска эффекта. Обновляем в
   // эффекте, а не во время рендера: правка ref в рендере ломает конкурентный
   // режим и запрещена react-hooks/refs.
   useEffect(() => {
-    settings.current = { density, wind, speed, color, paused }
-  }, [density, wind, speed, color, paused])
+    settings.current = { density, wind, speed, color, shape, paused }
+  }, [density, wind, speed, color, shape, paused])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -102,6 +105,47 @@ export function Background006({
     // data-vibeui-snow="off" на <html> и шлёт событие vibeui-snow.
     let muted = document.documentElement.dataset.vibeuiSnow === "off"
 
+    // Снежинка рисуется ОДИН раз в offscreen-спрайт, дальше на каждый кадр —
+    // дешёвый drawImage с поворотом. Пути на 140 частиц ежекадрово повесили бы
+    // слабую машину. Спрайт пересобирается, только если сменился цвет.
+    const SPRITE = 40
+    let sprite: HTMLCanvasElement | null = null
+    let spriteColor = ""
+    const buildSprite = (ink: string): HTMLCanvasElement => {
+      const off = document.createElement("canvas")
+      off.width = SPRITE
+      off.height = SPRITE
+      const c = off.getContext("2d")
+      if (!c) return off
+      const arm = SPRITE * 0.42
+      const branch = arm * 0.26
+      const angle = Math.PI / 5
+      c.translate(SPRITE / 2, SPRITE / 2)
+      c.strokeStyle = ink
+      c.fillStyle = ink
+      c.lineCap = "round"
+      c.lineJoin = "round"
+      c.lineWidth = SPRITE * 0.045
+      for (let i = 0; i < 6; i++) {
+        c.beginPath()
+        c.moveTo(0, 0)
+        c.lineTo(0, -arm)
+        for (const t of [0.52, 0.76]) {
+          const by = -arm * t
+          c.moveTo(0, by)
+          c.lineTo(Math.sin(angle) * branch, by - Math.cos(angle) * branch)
+          c.moveTo(0, by)
+          c.lineTo(-Math.sin(angle) * branch, by - Math.cos(angle) * branch)
+        }
+        c.stroke()
+        c.rotate(Math.PI / 3)
+      }
+      c.beginPath()
+      c.arc(0, 0, SPRITE * 0.05, 0, Math.PI * 2)
+      c.fill()
+      return off
+    }
+
     const resize = () => {
       const rect = canvas.getBoundingClientRect()
       const ratio = Math.min(window.devicePixelRatio || 1, 2)
@@ -115,9 +159,17 @@ export function Background006({
     }
 
     const draw = (delta: number) => {
-      const { wind: gust, speed: pace, color: ink } = settings.current
+      const { wind: gust, speed: pace, color: ink, shape: form } = settings.current
       context.clearRect(0, 0, width, height)
-      context.fillStyle = ink
+      const star = form === "star"
+      if (star) {
+        if (!sprite || spriteColor !== ink) {
+          sprite = buildSprite(ink)
+          spriteColor = ink
+        }
+      } else {
+        context.fillStyle = ink
+      }
       const breeze = gust * 26 + Math.sin(time * 0.35) * 10
       for (const flake of flakes) {
         if (delta > 0) {
@@ -131,15 +183,26 @@ export function Background006({
           if (flake.x > width + 6) flake.x = -6
           else if (flake.x < -6) flake.x = width + 6
         }
-        context.globalAlpha = 0.28 + flake.depth * 0.6
-        context.beginPath()
-        context.arc(flake.x, flake.y, flake.r, 0, Math.PI * 2)
-        context.fill()
-        if (flake.depth > 0.8) {
-          context.globalAlpha = 0.12
+        if (star && sprite) {
+          const size = flake.r * 4.2
+          context.globalAlpha = 0.3 + flake.depth * 0.55
+          context.save()
+          context.translate(flake.x, flake.y)
+          context.rotate(flake.phase * 0.3)
+          context.scale(size / SPRITE, size / SPRITE)
+          context.drawImage(sprite, -SPRITE / 2, -SPRITE / 2)
+          context.restore()
+        } else {
+          context.globalAlpha = 0.28 + flake.depth * 0.6
           context.beginPath()
-          context.arc(flake.x, flake.y, flake.r * 2.2, 0, Math.PI * 2)
+          context.arc(flake.x, flake.y, flake.r, 0, Math.PI * 2)
           context.fill()
+          if (flake.depth > 0.8) {
+            context.globalAlpha = 0.12
+            context.beginPath()
+            context.arc(flake.x, flake.y, flake.r * 2.2, 0, Math.PI * 2)
+            context.fill()
+          }
         }
       }
       context.globalAlpha = 1

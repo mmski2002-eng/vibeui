@@ -62,23 +62,13 @@ container-type:inline-size;
 [data-vibeui-block="navbar-027"] a:focus-visible,[data-vibeui-block="navbar-027"] button:focus-visible{outline:2px solid var(--vibeui-navbar-027-accent);outline-offset:3px;border-radius:.5rem}
 [data-vibeui-block="navbar-027"] [data-part="veil"]{position:absolute;inset:0;z-index:-1;background:var(--vibeui-navbar-027-bg);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid var(--vibeui-navbar-027-line);opacity:0;transition:opacity .35s}
 [data-vibeui-block="navbar-027"][data-placement="static"] [data-part="veil"],[data-vibeui-block="navbar-027"][data-scrolled="true"] [data-part="veil"],[data-vibeui-block="navbar-027"][data-open="true"] [data-part="veil"]{opacity:1}
-[data-vibeui-block="navbar-027"] [data-part="garland"]{position:absolute;left:0;right:0;bottom:-.9rem;height:1.4rem;pointer-events:none;overflow:visible;transition:opacity .4s,transform .4s}
-[data-vibeui-block="navbar-027"][data-scrolled="true"] [data-part="garland"]{opacity:0;transform:translateY(-.4rem)}
-[data-vibeui-block="navbar-027"] [data-part="garland"] svg{display:block;width:100%;height:100%}
-[data-vibeui-block="navbar-027"] [data-part="garland"] svg+svg{position:absolute;inset:0}
-[data-vibeui-block="navbar-027"] [data-part="garland"] path{fill:none;stroke:rgb(159 176 200 / .45);stroke-width:1;vector-effect:non-scaling-stroke}
-[data-vibeui-block="navbar-027"] [data-part="garland"] circle{fill:var(--vibeui-navbar-027-accent);filter:drop-shadow(0 0 3px var(--vibeui-navbar-027-accent));animation:vibeui-navbar-027-twinkle 4s ease-in-out infinite}
-[data-vibeui-block="navbar-027"] [data-part="garland"] circle:nth-child(3n){animation-delay:-1.3s;fill:var(--vibeui-navbar-027-fire)}
-[data-vibeui-block="navbar-027"] [data-part="garland"] circle:nth-child(3n+1){animation-delay:-2.6s}
-[data-vibeui-block="navbar-027"] [data-part="garland"] circle:nth-child(5n){animation-delay:-.7s;fill:#f2eee6}
-@keyframes vibeui-navbar-027-twinkle{0%,100%{opacity:.85}50%{opacity:.35}}
 [data-vibeui-block="navbar-027"] [data-part="row"]{position:relative;z-index:1;display:flex;align-items:center;gap:1rem;max-width:80rem;margin:0 auto;padding:.9rem 1.25rem;transition:padding .45s cubic-bezier(.2,.9,.3,1)}
 [data-vibeui-block="navbar-027"][data-scrolled="true"] [data-part="row"]{padding:.55rem 1.25rem}
 [data-vibeui-block="navbar-027"] [data-part="brand"]{display:flex;align-items:center;gap:.8rem;margin-right:auto;min-width:0}
 [data-vibeui-block="navbar-027"] [data-part="mono"]{display:inline-flex;align-items:center;gap:.3rem;font-family:var(--vibeui-navbar-027-display);font-size:1.5rem;font-weight:500;letter-spacing:.08em;line-height:1;color:var(--vibeui-navbar-027-fg)}
 [data-vibeui-block="navbar-027"] [data-part="mono"] svg{width:.95rem;height:.95rem;fill:none;stroke:var(--vibeui-navbar-027-silver);stroke-width:1.4;stroke-linecap:round;animation:vibeui-navbar-027-spin 24s linear infinite}
 @keyframes vibeui-navbar-027-spin{to{transform:rotate(360deg)}}
-[data-vibeui-block="navbar-027"] [data-part="names"]{display:none;font-family:var(--vibeui-navbar-027-script);font-size:1.25rem;line-height:1;color:var(--vibeui-navbar-027-muted);white-space:nowrap;padding-left:.8rem;border-left:1px solid var(--vibeui-navbar-027-line)}
+[data-vibeui-block="navbar-027"] [data-part="names"]{display:none;min-width:0;overflow:hidden;text-overflow:ellipsis;font-family:var(--vibeui-navbar-027-script);font-size:1.25rem;line-height:1;color:var(--vibeui-navbar-027-muted);white-space:nowrap;padding-left:.8rem;border-left:1px solid var(--vibeui-navbar-027-line)}
 [data-vibeui-block="navbar-027"] [data-part="links"]{display:none;gap:.1rem;margin:0;padding:0;list-style:none}
 [data-vibeui-block="navbar-027"] [data-part="link"]{position:relative;display:inline-flex;align-items:center;height:2.3rem;padding:0 .8rem;font-family:var(--vibeui-navbar-027-display);font-size:1.02rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-navbar-027-fg);opacity:.78;transition:opacity .25s,color .25s}
 [data-vibeui-block="navbar-027"] [data-part="link"]::after{content:"";position:absolute;left:50%;bottom:.3rem;width:.25rem;height:.25rem;margin-left:-.125rem;border-radius:50%;background:var(--vibeui-navbar-027-accent);box-shadow:0 0 6px var(--vibeui-navbar-027-accent);opacity:0;transform:scale(0);transition:transform .3s cubic-bezier(.2,.9,.3,1),opacity .3s}
@@ -112,15 +102,18 @@ container-type:inline-size;
 [data-vibeui-block="navbar-027"] [data-part="sheet"] a{display:block;padding:.65rem 0;border-bottom:1px solid var(--vibeui-navbar-027-line);font-family:var(--vibeui-navbar-027-display);font-size:1.2rem;letter-spacing:.14em;text-transform:uppercase}
 [data-vibeui-block="navbar-027"] [data-part="sheet"] [data-part="action"]{display:inline-flex;margin-top:.75rem;align-self:flex-start;border-bottom:0}
 @container (min-width:60rem){
-[data-vibeui-block="navbar-027"] [data-part="names"]{display:block}
 [data-vibeui-block="navbar-027"] [data-part="links"]{display:flex}
 [data-vibeui-block="navbar-027"] [data-part="row"] [data-part="action"]{display:inline-flex}
 [data-vibeui-block="navbar-027"] [data-part="music-label"]{display:inline}
 [data-vibeui-block="navbar-027"] [data-part="toggle"],[data-vibeui-block="navbar-027"] [data-part="sheet"]{display:none!important}
 }
+/* Имена — только когда рядом с монограммой, разделами и кнопками есть реальный
+   запас: у скриптового «Валерия и Дмитрий» nowrap-ширина большая, и на средней
+   ширине он налезал на первый раздел. Порог выше разделов (60rem). */
+@container (min-width:70rem){
+[data-vibeui-block="navbar-027"] [data-part="names"]{display:block}
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-027"] *{animation:none!important;transition:none!important}}`
-
-const BULBS = 28
 
 function Snowflake() {
   return (
@@ -222,10 +215,6 @@ export function Navbar027({
     </a>
   ) : null
 
-  // Гирлянда: провод провисает дугами между точками крепления, лампочки в нижних точках дуг.
-  const segments = Array.from({ length: BULBS }, (_, index) => index)
-  const step = 1000 / BULBS
-
   return (
     <>
       <link rel="stylesheet" href={FONTS} precedence="medium" />
@@ -234,16 +223,6 @@ export function Navbar027({
       </style>
       <header data-vibeui-block="navbar-027" data-tone={tone === "auto" ? undefined : tone} data-placement={placement} data-scrolled={scrolled ? "true" : undefined} data-open={open ? "true" : undefined} className={className} style={palette}>
         <span data-part="veil" aria-hidden="true" />
-        <span data-part="garland" aria-hidden="true">
-          <svg viewBox="0 0 1000 20" preserveAspectRatio="none">
-            <path d={`M0 2 ${segments.map((index) => `Q${(index * step + step / 2).toFixed(1)} 14 ${((index + 1) * step).toFixed(1)} 2`).join(" ")}`} />
-          </svg>
-          <svg viewBox="0 0 1000 20" preserveAspectRatio="none">
-            {segments.map((index) => (
-              <circle key={index} cx={(index * step + step / 2).toFixed(1)} cy={9.5} r={2.4} />
-            ))}
-          </svg>
-        </span>
         <div data-part="row">
           <a data-part="brand" href={brandHref} aria-label={names}>
             <span data-part="mono">
