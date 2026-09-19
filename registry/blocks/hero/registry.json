@@ -5979,6 +5979,199 @@
           }
         }
       }
+    },
+    {
+      "name": "hero-033",
+      "type": "registry:block",
+      "title": "Хиро AI-сервиса: ассистент печатает сводку по расшифровке",
+      "description": "Первый экран SaaS на аврора-пятнах: заголовок с градиентным словом, две кнопки и строка доверия слева; справа стеклянное окно — расшифровка созвона с ролями, а в соседней панели ассистент печатает сводку по токенам с курсором и зацикливается. Решения, задачи, риски выделены заголовками.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-033/hero-033.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-033.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "hero",
+          "saas",
+          "ai",
+          "assistant",
+          "typing",
+          "streaming",
+          "aurora",
+          "glass",
+          "meeting",
+          "transcript",
+          "summary"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Hero033",
+          "usage": "<Hero033\n  title=\"Созвон закончился — *решения уже в трекере*\"\n  transcript={[{ who: \"Лена\", text: \"Релиз переносим на четверг.\" }]}\n  summary={[\"# Решения\", \"Релиз перенесён на четверг.\"]}\n/>",
+          "summary": "Хиро для AI-продукта: продукт показывает себя сам — сводка печатается по токенам рядом с расшифровкой.",
+          "preserve": [
+            "печать идёт по токенам из summary с useMemo и setTimeout, курсор мигает, после паузы цикл начинается заново",
+            "звёздочки в title (*слово*) рендерятся градиентным span, остальное — обычный текст",
+            "аврора — три размытых круга с медленным float, при reduce-motion стоят на месте"
+          ],
+          "adapt": [
+            "eyebrow, title (со *звёздочками* для градиента), lede, trust",
+            "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+            "transcriptTitle, transcript: who, text; summaryTitle, summary (строки, # — заголовок)",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Созвон закончился — *решения уже в трекере*",
+            "maxLength": 80
+          },
+          {
+            "prop": "trust",
+            "label": "Строка доверия",
+            "type": "text",
+            "default": "4 200 команд уже перестали писать протоколы",
+            "maxLength": 60
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "AI service hero: the assistant types a recap from a transcript",
+            "description": "SaaS first screen on aurora blobs: a headline with a gradient word, two buttons and a trust line on the left; on the right a glass window — a call transcript with roles, and in the neighbouring panel the assistant types a recap token by token with a cursor and loops. Decisions, tasks and risks are marked with headings.",
+            "ai": {
+              "summary": "Hero for an AI product: the product shows itself — a recap types out token by token next to the transcript.",
+              "preserve": [
+                "typing walks the summary tokens with useMemo and setTimeout, the cursor blinks, after a pause the loop restarts",
+                "asterisks in title (*word*) render as a gradient span, the rest is plain text",
+                "the aurora is three blurred circles with a slow float, still under reduce-motion"
+              ],
+              "adapt": [
+                "eyebrow, title (with *asterisks* for the gradient), lede, trust",
+                "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+                "transcriptTitle, transcript: who, text; summaryTitle, summary (lines, # is a heading)",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Hero033\n  title=\"The call ended — *decisions are already in the tracker*\"\n  transcript={[{ who: \"Lena\", text: \"We move the release to Thursday.\" }]}\n  summary={[\"# Decisions\", \"Release moved to Thursday.\"]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "The call ended — *decisions are already in the tracker*"
+              },
+              "trust": {
+                "label": "Trust line",
+                "default": "4,200 teams stopped writing minutes"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "AI for meetings · no minutes",
+                "title": "The call ended — *decisions are already in the tracker*",
+                "lede": "Recap listens to the meeting, extracts decisions, tasks and risks and files them into Jira, Notion and Telegram. While you pour your coffee.",
+                "primaryLabel": "Start free",
+                "secondaryLabel": "Try the sandbox",
+                "trust": "4,200 teams stopped writing minutes",
+                "transcriptTitle": "transcript · 42:10",
+                "transcript": [
+                  {
+                    "who": "Lena",
+                    "text": "Let's move the release to Thursday, tests won't make it."
+                  },
+                  {
+                    "who": "Mark",
+                    "text": "Ok, then I take the database migration by Wednesday."
+                  },
+                  {
+                    "who": "Olya",
+                    "text": "I need final icons from design by Tuesday, otherwise everything slips."
+                  },
+                  {
+                    "who": "Lena",
+                    "text": "Risk: the payment provider has a maintenance window Wednesday night."
+                  }
+                ],
+                "summaryTitle": "recap",
+                "summary": [
+                  "# Decisions",
+                  "Release moved to Thursday.",
+                  "# Tasks",
+                  "Mark — database migration by Wednesday.",
+                  "Design — icons for Olya by Tuesday.",
+                  "# Risks",
+                  "Provider maintenance window Wednesday night."
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

@@ -23,6 +23,8 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/block/cta")).PREVIEWS
     case "block/footer":
       return (await import("@/registry/previews/block/footer")).PREVIEWS
+    case "block/ai":
+      return (await import("@/registry/previews/block/ai")).PREVIEWS
     case "block/auth":
       return (await import("@/registry/previews/block/auth")).PREVIEWS
     case "block/blog":

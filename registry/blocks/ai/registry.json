@@ -1,0 +1,349 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "ai-001",
+      "type": "registry:block",
+      "title": "Как работает AI: конвейер из трёх узлов с бегущими точками",
+      "description": "Секция «как это работает» для AI-сервиса: три стеклянных узла — звук, текст, задачи — соединены линиями, по которым бежит акцентный блик. Внутри каждого узла своя микроанимация на CSS: волна из полосок, строки, которые проявляются, галочки, которые ставятся по очереди. На узком — вертикально.",
+      "categories": [
+        "ai"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-001/ai-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-001.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "ai",
+          "how-it-works",
+          "steps",
+          "pipeline",
+          "process",
+          "flow",
+          "glass",
+          "animation",
+          "saas"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Ai001",
+          "usage": "<Ai001\n  title=\"Три шага, ни одного вашего\"\n  steps={[\n    { title: \"Слушает\", text: \"Заходит на созвон участником.\", kind: \"wave\", meta: \"во время\" },\n    { title: \"Понимает\", text: \"Решения, задачи, риски.\", kind: \"text\" },\n    { title: \"Раскладывает\", text: \"Задачи — в трекер.\", kind: \"tasks\" },\n  ]}\n/>",
+          "summary": "Три шага AI-продукта как живой конвейер: каждый узел анимирован, между ними бегут точки.",
+          "preserve": [
+            "шаг — li с display:contents, чтобы узлы и линии легли в одну сетку 1fr auto 1fr auto 1fr",
+            "линия — блок с ::after, keyframes flow-v на узком и flow-h от 56rem контейнера",
+            "kind узла задаёт микроанимацию: wave — 24 полоски, text — три строки scaleX, tasks — галочки с задержкой"
+          ],
+          "adapt": [
+            "eyebrow, title, lede",
+            "steps: title, text, kind (wave | text | tasks), meta",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Три шага, ни одного вашего",
+            "maxLength": 60
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "How the AI works: a three-node pipeline with running dots",
+            "description": "A “how it works” section for an AI service: three glass nodes — audio, text, tasks — joined by lines with a running accent glint. Each node has its own CSS micro-animation: a bar wave, lines that appear, ticks that check off in turn. Vertical on narrow screens.",
+            "ai": {
+              "summary": "Three steps of an AI product as a live pipeline: every node animated, dots running between them.",
+              "preserve": [
+                "a step is an li with display:contents so nodes and links share one 1fr auto 1fr auto 1fr grid",
+                "the link is a block with ::after, flow-v keyframes on narrow and flow-h from a 56rem container",
+                "the node kind picks the micro-animation: wave — 24 bars, text — three scaleX lines, tasks — delayed ticks"
+              ],
+              "adapt": [
+                "eyebrow, title, lede",
+                "steps: title, text, kind (wave | text | tasks), meta",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Ai001\n  title=\"Three steps, none of them yours\"\n  steps={[\n    { title: \"Listens\", text: \"Joins the call as a participant.\", kind: \"wave\", meta: \"during\" },\n    { title: \"Understands\", text: \"Decisions, tasks, risks.\", kind: \"text\" },\n    { title: \"Files\", text: \"Tasks go to the tracker.\", kind: \"tasks\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Three steps, none of them yours"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "How it works",
+                "title": "Three steps, none of them yours",
+                "lede": "You just end the call. Everything else happens while you go get coffee.",
+                "steps": [
+                  {
+                    "title": "Listens to the meeting",
+                    "text": "Joins Zoom, Meet or Teams as a participant. Or takes the recording.",
+                    "kind": "wave",
+                    "meta": "during the call"
+                  },
+                  {
+                    "title": "Understands what's going on",
+                    "text": "Transcript with roles, decisions, tasks, deadlines and risks highlighted.",
+                    "kind": "text",
+                    "meta": "≈ 40 seconds after"
+                  },
+                  {
+                    "title": "Files everything",
+                    "text": "Tasks to Jira or Notion, the recap to Telegram, decisions to the knowledge base.",
+                    "kind": "tasks",
+                    "meta": "without a single click"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-002",
+      "type": "registry:block",
+      "title": "Песочница AI: вставьте текст — сводка печатается секциями",
+      "description": "Интерактивная витрина AI-продукта: слева поле с расшифровкой (можно править), кнопка «Сделать сводку», справа ответ печатается по токенам секциями — решения, задачи, риски — с курсором и кнопкой «Скопировать». Ответ заранее задан пропсом, модели нет: блок показывает поведение, не думает.",
+      "categories": [
+        "ai"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-002/ai-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-002.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "ai",
+          "sandbox",
+          "demo",
+          "playground",
+          "typing",
+          "streaming",
+          "textarea",
+          "copy",
+          "saas",
+          "interactive"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Ai002",
+          "usage": "<Ai002\n  sample=\"Лена: релиз переносим на четверг.\"\n  result={[\"# Решения\", \"Релиз перенесён на четверг.\", \"# Задачи\", \"Марк — миграция до среды.\"]}\n  runLabel=\"Сделать сводку\"\n/>",
+          "summary": "Песочница для сайта AI-сервиса: посетитель нажимает кнопку и видит, как ответ печатается по секциям.",
+          "preserve": [
+            "фазы idle → running → done; в running токены result выводятся setTimeout'ом, tokens мемоизированы",
+            "строки result, начинающиеся с #, становятся заголовками секций с акцентной меткой",
+            "копирование — navigator.clipboard с подписью copiedLabel на две секунды; «Заново» возвращает idle"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, inputLabel, outputLabel, placeholder",
+            "sample — текст в поле, result — строки ответа (# — заголовок)",
+            "runLabel, runningLabel, resetLabel, copyLabel, copiedLabel",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Попробуйте на своём созвоне",
+            "maxLength": 60
+          },
+          {
+            "prop": "runLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Сделать сводку",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "AI sandbox: paste text — the recap types out in sections",
+            "description": "An interactive showcase for an AI product: a transcript field on the left (editable), a “Make a recap” button, on the right the answer types out token by token in sections — decisions, tasks, risks — with a cursor and a “Copy” button. The answer is a preset prop, there's no model: the block shows behaviour, it doesn't think.",
+            "ai": {
+              "summary": "A sandbox for an AI service site: the visitor presses a button and watches the answer type out in sections.",
+              "preserve": [
+                "phases idle → running → done; in running the result tokens print via setTimeout, tokens are memoised",
+                "result lines starting with # become section headings with an accent mark",
+                "copying uses navigator.clipboard with copiedLabel shown for two seconds; “Reset” returns to idle"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, inputLabel, outputLabel, placeholder",
+                "sample — the field text, result — answer lines (# is a heading)",
+                "runLabel, runningLabel, resetLabel, copyLabel, copiedLabel",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Ai002\n  sample=\"Lena: we move the release to Thursday.\"\n  result={[\"# Decisions\", \"Release moved to Thursday.\", \"# Tasks\", \"Mark — migration by Wednesday.\"]}\n  runLabel=\"Make a recap\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Try it on your own call"
+              },
+              "runLabel": {
+                "label": "Button",
+                "default": "Make a recap"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Sandbox",
+                "title": "Try it on your own call",
+                "lede": "Paste a piece of a transcript — any. The answer below is pre-generated: it's a showcase of behaviour, not a model.",
+                "inputLabel": "transcript",
+                "sample": "Lena: Let's move the release to Thursday, tests won't make it.\nMark: Ok, then I take the database migration by Wednesday.\nOlya: I need final icons from design by Tuesday, otherwise everything slips.\nLena: Risk — the payment provider has a maintenance window Wednesday night.\nMark: Then we deploy Thursday morning, after the window.",
+                "runLabel": "Make a recap",
+                "runningLabel": "Thinking…",
+                "resetLabel": "Reset",
+                "copyLabel": "Copy",
+                "copiedLabel": "Copied",
+                "outputLabel": "recap",
+                "placeholder": "Paste a meeting transcript…",
+                "result": [
+                  "# Decisions",
+                  "Release moves to Thursday; deploy Thursday morning, after the provider window.",
+                  "# Tasks",
+                  "Mark — database migration by Wednesday.",
+                  "Design — final icons for Olya by Tuesday.",
+                  "# Risks",
+                  "Payment provider maintenance window Wednesday night — check status Thursday at 9:00."
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

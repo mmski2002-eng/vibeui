@@ -81,4 +81,7 @@ export const PREVIEWS = {
   "cta-025": dynamic(() =>
     import("@/registry/blocks/cta/cta-025/cta-025").then((module) => module.Cta025),
   ),
+  "cta-026": dynamic(() =>
+    import("@/registry/blocks/cta/cta-026/cta-026").then((module) => module.Cta026),
+  ),
 } satisfies PreviewMap

@@ -6,10 +6,10 @@ import dynamic from "next/dynamic"
 import type { PreviewMap } from "@/registry/preview-types"
 
 export const PREVIEWS = {
-  "bento-001": dynamic(() =>
-    import("@/registry/blocks/bento/bento-001/bento-001").then((module) => module.Bento001),
+  "ai-001": dynamic(() =>
+    import("@/registry/blocks/ai/ai-001/ai-001").then((module) => module.Ai001),
   ),
-  "bento-002": dynamic(() =>
-    import("@/registry/blocks/bento/bento-002/bento-002").then((module) => module.Bento002),
+  "ai-002": dynamic(() =>
+    import("@/registry/blocks/ai/ai-002/ai-002").then((module) => module.Ai002),
   ),
 } satisfies PreviewMap

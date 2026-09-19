@@ -175,6 +175,223 @@
           }
         }
       }
+    },
+    {
+      "name": "bento-002",
+      "type": "registry:block",
+      "title": "Интеграции орбитами вокруг продукта",
+      "description": "Секция интеграций: в центре кружок с именем продукта в свечении, вокруг два пунктирных кольца — внутреннее кружит по часовой, внешнее против и медленнее, марки сервисов контрвращаются и стоят прямо. Наведение останавливает орбиты, марка под курсором заливается акцентом и показывает имя. Справа заголовок и список «что подключается».",
+      "categories": [
+        "bento"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "bento-002/bento-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/bento-002.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "bento",
+          "integrations",
+          "orbit",
+          "logos",
+          "services",
+          "connect",
+          "saas",
+          "ai",
+          "animation"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Bento002",
+          "usage": "<Bento002\n  core=\"Сводка\"\n  inner={[{ name: \"Zoom\", mark: \"Z\" }, { name: \"Meet\", mark: \"M\" }]}\n  outer={[{ name: \"Jira\", mark: \"J\" }, { name: \"Notion\", mark: \"N\" }, { name: \"Telegram\", mark: \"TG\" }]}\n/>",
+          "summary": "Интеграции как орбиты: сервисы кружат вокруг продукта, наведение останавливает и подписывает.",
+          "preserve": [
+            "кольцо крутится keyframes spin за speed секунд, внешнее — speed × 1.5 в обратную сторону",
+            "марка — slot повёрнут на угол, sat контрвращается той же анимацией reverse, буквы остаются прямыми",
+            ":hover на space ставит animation-play-state:paused всем кольцам и маркам"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, core — имя в центре",
+            "inner, outer: name, mark (1–2 буквы)",
+            "speed — секунд на оборот; facts — список справа",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "core",
+            "label": "Центр",
+            "type": "text",
+            "default": "Сводка",
+            "maxLength": 16
+          },
+          {
+            "prop": "speed",
+            "label": "Секунд на оборот",
+            "type": "number",
+            "default": 40,
+            "min": 10,
+            "max": 120
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Integrations orbiting the product",
+            "description": "An integrations section: a glowing circle with the product name in the centre, two dashed rings around it — the inner spins clockwise, the outer counter-clockwise and slower, service marks counter-rotate and stay upright. Hover pauses the orbits, the mark under the cursor fills with the accent and shows its name. On the right a heading and a “what connects” list.",
+            "ai": {
+              "summary": "Integrations as orbits: services circle the product, hover pauses and labels them.",
+              "preserve": [
+                "a ring spins with spin keyframes over speed seconds, the outer one over speed × 1.5 in reverse",
+                "a mark is a slot rotated by its angle, sat counter-rotates with the same animation reversed so letters stay upright",
+                ":hover on space sets animation-play-state:paused on every ring and mark"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, core — the name in the centre",
+                "inner, outer: name, mark (1–2 letters)",
+                "speed — seconds per turn; facts — the list on the right",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Bento002\n  core=\"Recap\"\n  inner={[{ name: \"Zoom\", mark: \"Z\" }, { name: \"Meet\", mark: \"M\" }]}\n  outer={[{ name: \"Jira\", mark: \"J\" }, { name: \"Notion\", mark: \"N\" }, { name: \"Telegram\", mark: \"TG\" }]}\n/>"
+            },
+            "controls": {
+              "core": {
+                "label": "Core",
+                "default": "Recap"
+              },
+              "speed": {
+                "label": "Seconds per turn"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Integrations",
+                "title": "Lives where your team already lives",
+                "lede": "Connects to what you have: calls, tracker, knowledge base, messenger. No “go to our app”.",
+                "core": "Recap",
+                "inner": [
+                  {
+                    "name": "Zoom",
+                    "mark": "Z"
+                  },
+                  {
+                    "name": "Google Meet",
+                    "mark": "M"
+                  },
+                  {
+                    "name": "Webex",
+                    "mark": "W"
+                  },
+                  {
+                    "name": "Teams",
+                    "mark": "T"
+                  }
+                ],
+                "outer": [
+                  {
+                    "name": "Jira",
+                    "mark": "J"
+                  },
+                  {
+                    "name": "Notion",
+                    "mark": "N"
+                  },
+                  {
+                    "name": "Telegram",
+                    "mark": "TG"
+                  },
+                  {
+                    "name": "Slack",
+                    "mark": "S"
+                  },
+                  {
+                    "name": "Linear",
+                    "mark": "L"
+                  },
+                  {
+                    "name": "Confluence",
+                    "mark": "C"
+                  },
+                  {
+                    "name": "Google Docs",
+                    "mark": "D"
+                  },
+                  {
+                    "name": "Trello",
+                    "mark": "Tr"
+                  }
+                ],
+                "facts": [
+                  "Calls: the bot joins as a participant or takes the recording",
+                  "Trackers: tasks get an assignee and a due date",
+                  "Messengers: the recap lands a minute after the meeting",
+                  "Knowledge bases: decisions pile up in one place"
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

@@ -5709,6 +5709,183 @@
           }
         }
       }
+    },
+    {
+      "name": "navbar-033",
+      "type": "registry:block",
+      "title": "Шапка AI-сервиса с искрой и аврора-линией",
+      "description": "Липкая шапка SaaS: лого с четырёхлучевой искрой, которая мерцает, разделы, тихая ссылка «Войти» и кнопка «Начать бесплатно». При прокрутке — стекло с блюром и тонкая градиентная линия по низу.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-033/navbar-033.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-033.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "navbar",
+          "header",
+          "saas",
+          "ai",
+          "sticky",
+          "glass",
+          "aurora",
+          "login",
+          "cta"
+        ],
+        "preview": {
+          "props": {
+            "sticky": false
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Navbar033",
+          "usage": "<Navbar033\n  brand=\"Сводка\"\n  links={[{ label: \"Как работает\", href: \"#how\" }, { label: \"Цены\", href: \"#pricing\" }]}\n  actionLabel=\"Начать бесплатно\"\n/>",
+          "summary": "Шапка для AI-продукта или SaaS: искра в лого, войти и начать бесплатно, стекло при прокрутке.",
+          "preserve": [
+            "искра — svg-звезда с keyframes scale+rotate, 3 секунды, без сдвига макета",
+            "аврора-линия — ::after с градиентом, opacity растёт вместе с data-scrolled",
+            "ссылки скрыты до 56rem контейнера, «Войти» — до 40rem, кнопка всегда видна"
+          ],
+          "adapt": [
+            "brand, brandHref, links: label, href",
+            "loginLabel, loginHref, actionLabel, actionHref",
+            "sticky",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "Сводка",
+            "maxLength": 24
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Начать бесплатно",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "AI service navbar with a spark and an aurora line",
+            "description": "Sticky SaaS header: a logo with a twinkling four-point spark, sections, a quiet “Log in” link and a “Start free” button. On scroll — blurred glass and a thin gradient line along the bottom.",
+            "ai": {
+              "summary": "Header for an AI product or SaaS: a spark in the logo, log in and start free, glass on scroll.",
+              "preserve": [
+                "the spark is an svg star with scale+rotate keyframes, 3 seconds, no layout shift",
+                "the aurora line is an ::after with a gradient whose opacity grows with data-scrolled",
+                "links are hidden below a 56rem container, “Log in” below 40rem, the button is always visible"
+              ],
+              "adapt": [
+                "brand, brandHref, links: label, href",
+                "loginLabel, loginHref, actionLabel, actionHref",
+                "sticky",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Navbar033\n  brand=\"Recap\"\n  links={[{ label: \"How it works\", href: \"#how\" }, { label: \"Pricing\", href: \"#pricing\" }]}\n  actionLabel=\"Start free\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Recap"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Start free"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Recap",
+                "links": [
+                  {
+                    "label": "How it works",
+                    "href": "#how"
+                  },
+                  {
+                    "label": "Try it",
+                    "href": "#sandbox"
+                  },
+                  {
+                    "label": "Integrations",
+                    "href": "#integrations"
+                  },
+                  {
+                    "label": "Pricing",
+                    "href": "#pricing"
+                  }
+                ],
+                "loginLabel": "Log in",
+                "actionLabel": "Start free",
+                "sticky": false
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

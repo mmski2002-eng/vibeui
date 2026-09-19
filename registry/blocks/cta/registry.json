@@ -4048,6 +4048,174 @@
           }
         }
       }
+    },
+    {
+      "name": "cta-026",
+      "type": "registry:block",
+      "title": "Стеклянный призыв с полем почты на плавающей авроре",
+      "description": "Финальный призыв SaaS: три размытых аврора-пятна медленно плавают под стеклянной карточкой; внутри заголовок, поле рабочей почты и кнопка «Начать бесплатно», под ними три галочки — без карты, бесплатные встречи, отключить в клик. После отправки карточка показывает «письмо ушло» с галочкой, которая прорисовывается по кругу. Форма — заглушка.",
+      "categories": [
+        "cta"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-026/cta-026.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-026.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "cta",
+          "signup",
+          "email",
+          "form",
+          "glass",
+          "aurora",
+          "saas",
+          "ai",
+          "free-trial"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Cta026",
+          "usage": "<Cta026\n  title=\"Следующий созвон уже можно не конспектировать\"\n  actionLabel=\"Начать бесплатно\"\n  fine={[\"Без карты\", \"5 встреч бесплатно\"]}\n/>",
+          "summary": "Призыв для AI-сервиса: одно поле почты на стекле поверх аврор, после отправки — прорисованная галочка.",
+          "preserve": [
+            "пятна — три i с blur(60px) и keyframes float в alternate, разные задержки; isolation:isolate на рамке",
+            "submit делает preventDefault и переключает done; карточка с aria-live сообщает смену состояния",
+            "галочка — svg circle и path с stroke-dasharray, прорисовка keyframes draw последовательно"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, placeholder, actionLabel",
+            "fine — подписи под полем",
+            "doneTitle, doneText — состояние после отправки",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Следующий созвон уже можно не конспектировать",
+            "maxLength": 70
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Начать бесплатно",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Glass call to action with an email field on a floating aurora",
+            "description": "A SaaS closing call: three blurred aurora blobs float slowly under a glass card; inside, a headline, a work-email field and a “Start free” button, three ticks below — no card, free meetings, cancel in a click. After submit the card shows “email sent” with a tick that draws itself around a circle. The form is a stub.",
+            "ai": {
+              "summary": "A call to action for an AI service: one email field on glass over auroras, a drawn tick after submit.",
+              "preserve": [
+                "the blobs are three i with blur(60px) and alternate float keyframes, different delays; isolation:isolate on the frame",
+                "submit calls preventDefault and flips done; the card has aria-live to announce the state change",
+                "the tick is an svg circle and path with stroke-dasharray, drawn by draw keyframes in sequence"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, placeholder, actionLabel",
+                "fine — the notes under the field",
+                "doneTitle, doneText — the state after submit",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Cta026\n  title=\"Your next call needs no note-taker\"\n  actionLabel=\"Start free\"\n  fine={[\"No card\", \"5 meetings free\"]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Your next call needs no note-taker"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Start free"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Get started",
+                "title": "Your next call needs no note-taker",
+                "lede": "Leave your email — we'll send a link to your workspace. First five meetings are free, no card needed.",
+                "placeholder": "Work email",
+                "actionLabel": "Start free",
+                "fine": [
+                  "No card",
+                  "5 meetings free",
+                  "Cancel in one click"
+                ],
+                "doneTitle": "Email sent",
+                "doneText": "The workspace link arrives in a minute. Check spam, just in case."
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

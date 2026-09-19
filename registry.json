@@ -10,6 +10,7 @@
     "registry/blocks/faq/registry.json",
     "registry/blocks/cta/registry.json",
     "registry/blocks/footer/registry.json",
+    "registry/blocks/ai/registry.json",
     "registry/blocks/auth/registry.json",
     "registry/blocks/blog/registry.json",
     "registry/blocks/contact/registry.json",

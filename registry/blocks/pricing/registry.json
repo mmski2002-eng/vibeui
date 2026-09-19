@@ -4609,6 +4609,220 @@
           }
         }
       }
+    },
+    {
+      "name": "pricing-025",
+      "type": "registry:block",
+      "title": "Тарифы с ползунком мест и годовым переключателем",
+      "description": "Тарифы SaaS, где цена считается от команды: сверху стеклянная панель с ползунком «человек в команде» и переключателем месяц/год со скидкой, ниже три карточки — бесплатная с потолком мест, средняя с аврора-рамкой и бейджем «выбирают чаще», корпоративная. Итог в карточке пересчитывается на лету: за место × мест.",
+      "categories": [
+        "pricing"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-025/pricing-025.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-025.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "pricing",
+          "seats",
+          "slider",
+          "range",
+          "per-seat",
+          "yearly",
+          "saas",
+          "plans",
+          "calculator",
+          "glass"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Pricing025",
+          "usage": "<Pricing025\n  currency=\"₽\"\n  defaultSeats={12}\n  yearlyDiscount={20}\n  plans={[\n    { name: \"Старт\", perSeat: 0, seatsIncluded: 3, note: \"До трёх человек.\", features: [\"5 встреч в месяц\"] },\n    { name: \"Команда\", perSeat: 890, note: \"Для команды до 50.\", features: [\"Безлимит встреч\"], featured: true, actionLabel: \"Попробовать\" },\n  ]}\n/>",
+          "summary": "Тарифы для SaaS по местам: ползунок команды и переключатель года пересчитывают цену в карточках.",
+          "preserve": [
+            "range с заливкой через --fill в градиенте фона, output рядом склоняет «место / места / мест»",
+            "yearly — button role=switch с aria-checked, factor = 1 − yearlyDiscount/100, чип «−20%»",
+            "бесплатный тариф (perSeat 0): при seats выше seatsIncluded цена остаётся «0», подпись меняется на «только до N человек»"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, currency",
+            "plans: name, perSeat, seatsIncluded, note, features, featured, actionLabel, actionHref",
+            "minSeats, maxSeats, defaultSeats, yearlyDiscount",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Платите за людей, не за минуты",
+            "maxLength": 60
+          },
+          {
+            "prop": "defaultSeats",
+            "label": "Мест по умолчанию",
+            "type": "number",
+            "default": 12,
+            "min": 1,
+            "max": 100
+          },
+          {
+            "prop": "yearlyDiscount",
+            "label": "Скидка за год, %",
+            "type": "number",
+            "default": 20,
+            "min": 0,
+            "max": 60
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Pricing with a seats slider and a yearly switch",
+            "description": "SaaS pricing where the price follows the team: a glass panel on top with a “people on the team” slider and a monthly/yearly switch with a discount, three cards below — a free one with a seat cap, a middle one with an aurora border and a “most popular” badge, an enterprise one. The card total recalculates live: per seat × seats.",
+            "ai": {
+              "summary": "Per-seat SaaS pricing: a team slider and a yearly switch recalculate the price in the cards.",
+              "preserve": [
+                "a range filled through --fill in the background gradient, the output next to it pluralises seats",
+                "yearly is a button role=switch with aria-checked, factor = 1 − yearlyDiscount/100, a “−20%” chip",
+                "the free plan (perSeat 0): when seats exceed seatsIncluded the price stays “0” and the note changes to “only up to N people”"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, currency",
+                "plans: name, perSeat, seatsIncluded, note, features, featured, actionLabel, actionHref",
+                "minSeats, maxSeats, defaultSeats, yearlyDiscount",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Pricing025\n  currency=\"$\"\n  defaultSeats={12}\n  yearlyDiscount={20}\n  plans={[\n    { name: \"Starter\", perSeat: 0, seatsIncluded: 3, note: \"Up to three people.\", features: [\"5 meetings a month\"] },\n    { name: \"Team\", perSeat: 12, note: \"For teams up to 50.\", features: [\"Unlimited meetings\"], featured: true, actionLabel: \"Try it\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Pay for people, not minutes"
+              },
+              "defaultSeats": {
+                "label": "Default seats"
+              },
+              "yearlyDiscount": {
+                "label": "Yearly discount, %"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Pricing",
+                "title": "Pay for people, not minutes",
+                "lede": "Move the slider to your team size — the price recalculates. Yearly billing is a fifth cheaper.",
+                "currency": "$",
+                "plans": [
+                  {
+                    "name": "Starter",
+                    "perSeat": 0,
+                    "seatsIncluded": 3,
+                    "note": "Up to three people, 5 meetings a month, recap in Telegram.",
+                    "features": [
+                      "Transcript and recap",
+                      "5 meetings a month",
+                      "Markdown export"
+                    ],
+                    "actionLabel": "Start free",
+                    "actionHref": "#start"
+                  },
+                  {
+                    "name": "Team",
+                    "perSeat": 12,
+                    "note": "Everything a team up to 50 needs. Integrations and tasks in the tracker.",
+                    "features": [
+                      "Unlimited meetings",
+                      "Tasks in Jira, Notion, Linear",
+                      "Search across all decisions",
+                      "12 months of history"
+                    ],
+                    "featured": true,
+                    "actionLabel": "Try 14 days",
+                    "actionHref": "#start"
+                  },
+                  {
+                    "name": "Company",
+                    "perSeat": 19,
+                    "note": "SSO, your own data perimeter, a contract and SLA support.",
+                    "features": [
+                      "Everything in Team",
+                      "SSO and SCIM",
+                      "Data in your perimeter",
+                      "A manager and SLA"
+                    ],
+                    "actionLabel": "Talk to us",
+                    "actionHref": "#contact"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

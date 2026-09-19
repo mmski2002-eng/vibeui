@@ -5038,6 +5038,241 @@
           }
         }
       }
+    },
+    {
+      "name": "footer-032",
+      "type": "registry:block",
+      "title": "Подвал SaaS со статусом систем и колонками",
+      "description": "Подвал AI-сервиса: сверху тонкая аврора-линия, лого с искрой и подпись, чип статуса с зелёной точкой-пульсом «все системы работают», три колонки ссылок, внизу копирайт, правовые ссылки и соцсети-чипы. На узком колонки в две, от 60rem — бренд слева, колонки справа.",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-032/footer-032.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-032.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "footer",
+          "saas",
+          "status",
+          "columns",
+          "links",
+          "legal",
+          "socials",
+          "aurora"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Footer032",
+          "usage": "<Footer032\n  brand=\"Сводка\"\n  status=\"Все системы работают\"\n  columns={[{ title: \"Продукт\", links: [{ label: \"Цены\", href: \"#pricing\" }] }]}\n/>",
+          "summary": "Подвал для SaaS: статус «все системы работают» с пульсом, колонки ссылок, правовые ссылки и соцсети.",
+          "preserve": [
+            "статус — ссылка-чип, точка с ::after и keyframes pulse (scale + opacity), цвет --ok",
+            "аврора-линия — ::before высотой 1px с градиентом от прозрачного к акценту и обратно",
+            "колонки: 2 до 44rem, 3 выше; от 60rem shell двухколоночный, bottom растянут на всю ширину"
+          ],
+          "adapt": [
+            "brand, caption, status, statusHref, copyright",
+            "columns: title, links: label, href",
+            "socials, legal: label, href",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "Сводка",
+            "maxLength": 24
+          },
+          {
+            "prop": "status",
+            "label": "Статус",
+            "type": "text",
+            "default": "Все системы работают",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "SaaS footer with a system status and columns",
+            "description": "An AI service footer: a thin aurora line on top, a logo with a spark and a caption, a status chip with a pulsing green dot “all systems operational”, three link columns, at the bottom the copyright, legal links and social chips. Two columns on narrow, from 60rem — brand on the left, columns on the right.",
+            "ai": {
+              "summary": "A SaaS footer: an “all systems operational” status with a pulse, link columns, legal links and socials.",
+              "preserve": [
+                "the status is a chip link, a dot with ::after and pulse keyframes (scale + opacity), colour --ok",
+                "the aurora line is a 1px ::before with a gradient from transparent to the accent and back",
+                "columns: 2 below 44rem, 3 above; from 60rem the shell is two-column and bottom spans the full width"
+              ],
+              "adapt": [
+                "brand, caption, status, statusHref, copyright",
+                "columns: title, links: label, href",
+                "socials, legal: label, href",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Footer032\n  brand=\"Recap\"\n  status=\"All systems operational\"\n  columns={[{ title: \"Product\", links: [{ label: \"Pricing\", href: \"#pricing\" }] }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Recap"
+              },
+              "status": {
+                "label": "Status",
+                "default": "All systems operational"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Recap",
+                "caption": "AI that listens to calls and files decisions where they belong.",
+                "status": "All systems operational",
+                "columns": [
+                  {
+                    "title": "Product",
+                    "links": [
+                      {
+                        "label": "How it works",
+                        "href": "#how"
+                      },
+                      {
+                        "label": "Integrations",
+                        "href": "#integrations"
+                      },
+                      {
+                        "label": "Pricing",
+                        "href": "#pricing"
+                      },
+                      {
+                        "label": "Changelog",
+                        "href": "#changelog"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Company",
+                    "links": [
+                      {
+                        "label": "About",
+                        "href": "#about"
+                      },
+                      {
+                        "label": "Blog",
+                        "href": "#blog"
+                      },
+                      {
+                        "label": "Careers",
+                        "href": "#jobs"
+                      },
+                      {
+                        "label": "Contact",
+                        "href": "#contact"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Help",
+                    "links": [
+                      {
+                        "label": "Docs",
+                        "href": "#docs"
+                      },
+                      {
+                        "label": "API",
+                        "href": "#api"
+                      },
+                      {
+                        "label": "Security",
+                        "href": "#security"
+                      },
+                      {
+                        "label": "Support",
+                        "href": "#support"
+                      }
+                    ]
+                  }
+                ],
+                "legal": [
+                  {
+                    "label": "Privacy",
+                    "href": "#privacy"
+                  },
+                  {
+                    "label": "Terms",
+                    "href": "#terms"
+                  },
+                  {
+                    "label": "DPA",
+                    "href": "#dpa"
+                  }
+                ],
+                "copyright": "© 2026 Recap"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

@@ -1330,6 +1330,36 @@ export const SCENARIOS: Scenario[] = [
       { item: "footer-031", anchor: "footer", role: "Подвал", roleEn: "Footer", note: "Лого, ссылки, магазины, правовые пункты.", noteEn: "Logo, links, stores, legal items." },
     ],
   },
+  {
+    slug: "saas",
+    label: "AI-инструмент / SaaS",
+    en: "AI tool / SaaS",
+    summary:
+      "Сайт AI-сервиса для встреч в тёмной «авроре» со стеклом — сайт сам является демо: шапка с искрой и аврора-линией, первый экран, где ассистент печатает сводку по расшифровке созвона, «как работает» конвейером из трёх анимированных узлов, песочница с кнопкой и ответом по секциям, интеграции на двух орбитах, бегущая строка клиентов, тарифы с ползунком мест и годовой скидкой, вопросы о данных аккордеоном, стеклянный призыв с полем почты и подвал со статусом систем. Ни одной фотографии. Wix Madefor Display, Golos Text и IBM Plex Mono.",
+    summaryEn:
+      "An AI meeting-assistant site in a dark aurora with glass — the site is the demo: a header with a spark and an aurora line, a hero where the assistant types a recap from a call transcript, a “how it works” pipeline of three animated nodes, a sandbox with a button and a sectioned answer, integrations on two orbits, a client marquee, pricing with a seats slider and a yearly discount, a data FAQ accordion, a glass email call to action and a footer with a system status. Not a single photo. Wix Madefor Display, Golos Text and IBM Plex Mono.",
+    demo: "/scenarios/saas/demo",
+    source: "app/scenarios/saas/demo/page.tsx",
+    images: "docs/scenarios/saas/IMAGES.md",
+    theme: {
+      tone: "dark",
+      accent: "#5ee7ff",
+      ink: "#eef2ff",
+      font: "Wix Madefor Display, Golos Text, IBM Plex Mono",
+    },
+    sections: [
+      { item: "navbar-033", anchor: "", role: "Шапка", roleEn: "Header", note: "Лого с мерцающей искрой, разделы, «Войти», «Начать бесплатно», аврора-линия при прокрутке.", noteEn: "A logo with a twinkling spark, sections, “Log in”, “Start free”, an aurora line on scroll." },
+      { item: "hero-033", anchor: "top", role: "Первый экран", roleEn: "First screen", note: "Градиентное слово в заголовке, расшифровка созвона и ассистент, который печатает сводку по токенам.", noteEn: "A gradient word in the headline, a call transcript and an assistant typing the recap token by token." },
+      { item: "ai-001", anchor: "how", role: "Как работает", roleEn: "How it works", note: "Три узла — звук, текст, задачи — с микроанимациями и бегущими точками между ними.", noteEn: "Three nodes — audio, text, tasks — with micro-animations and dots running between them." },
+      { item: "ai-002", anchor: "sandbox", role: "Песочница", roleEn: "Sandbox", note: "Поле с расшифровкой, кнопка «Сделать сводку», ответ печатается секциями, «Скопировать».", noteEn: "A transcript field, a “Make a recap” button, the answer types out in sections, “Copy”." },
+      { item: "bento-002", anchor: "integrations", role: "Интеграции", roleEn: "Integrations", note: "Сервисы кружат на двух орбитах вокруг продукта, наведение останавливает и подписывает.", noteEn: "Services circle the product on two orbits, hover pauses and labels them." },
+      { item: "logocloud-007", anchor: "", role: "Доверяют", roleEn: "Trusted by", note: "Бегущая строка названий клиентов.", noteEn: "A marquee of client names." },
+      { item: "pricing-025", anchor: "pricing", role: "Тарифы", roleEn: "Pricing", note: "Ползунок «человек в команде», переключатель года, три карточки с пересчётом.", noteEn: "A “people on the team” slider, a yearly switch, three cards that recalculate." },
+      { item: "faq-023", anchor: "security", role: "Данные", roleEn: "Data", note: "Аккордеон о хранении, обучении модели и своём контуре.", noteEn: "An accordion on storage, model training and on-premise." },
+      { item: "cta-026", anchor: "start", role: "Начать", roleEn: "Get started", note: "Стеклянная карточка на плавающих аврорах, поле почты, «без карты».", noteEn: "A glass card on floating auroras, an email field, “no card”." },
+      { item: "footer-032", anchor: "footer", role: "Подвал", roleEn: "Footer", note: "Статус «все системы работают» с пульсом, колонки ссылок, правовые пункты, соцсети.", noteEn: "An “all systems operational” status with a pulse, link columns, legal items, socials." },
+    ],
+  },
 ]
 
 // Опечатка в имени item'а здесь означала бы пустую карточку в рецепте,

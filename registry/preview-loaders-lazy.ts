@@ -23,6 +23,8 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/block/cta")).PREVIEWS
     case "block/footer":
       return (await import("@/registry/previews-lazy/block/footer")).PREVIEWS
+    case "block/ai":
+      return (await import("@/registry/previews-lazy/block/ai")).PREVIEWS
     case "block/auth":
       return (await import("@/registry/previews-lazy/block/auth")).PREVIEWS
     case "block/blog":
