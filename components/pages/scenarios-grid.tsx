@@ -135,7 +135,7 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
       className={cn(
         "acc-press inline-flex h-8 items-center gap-1.5 rounded-full border px-3 text-xs font-medium transition-colors",
         active
-          ? "border-shell-fg bg-shell-fg text-shell-panel"
+          ? "border-shell-accent bg-shell-accent text-shell-accent-fg"
           : "border-shell-border text-shell-fg hover:border-shell-border-strong",
       )}
     >

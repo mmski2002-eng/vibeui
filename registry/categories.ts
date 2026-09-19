@@ -260,12 +260,6 @@ export const CATEGORIES = [
     group: "commerce",
   },
   {
-    slug: "api",
-    label: "API и dev-tools",
-    en: "API & dev tools",
-    group: "application",
-  },
-  {
     slug: "gadget",
     label: "Гаджет и хардвер",
     en: "Gadget & hardware",
