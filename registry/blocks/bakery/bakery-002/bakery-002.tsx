@@ -13,6 +13,9 @@ export type Bakery002Drink = {
   volume?: string
   /** Американо: кофе разбавлен водой — слой светлее. */
   water?: boolean
+  /** Фото напитка; если есть хотя бы у одного — вместо рисованного стакана показываются фото с кроссфейдом. */
+  image?: string
+  imageAlt?: string
 }
 
 export type Bakery002Props = {
@@ -36,13 +39,13 @@ export type Bakery002Props = {
 }
 
 // Шкала крепости кофе: ползунок «мягче — крепче» переключает напитки, а
-// нарисованный стакан наполняется слоями — кофе, молоко, пена — с плавным
-// переходом высот; стакан у эспрессо ниже, у латте выше и чуть наклоняется
-// в сторону выбора, слои «плещутся» при смене. Пар над чашкой — четыре
-// размытых пятна на CSS-анимации, за чашкой тёплое пятно света. Справа
-// карточка с бликом под курсором: название, состав в процентах, объём, цена
-// и зерно недели. Заголовок поднимается из-под маски, стакан и карточка
-// въезжают, когда секция попадает в кадр.
+// фото стакана меняется кроссфейдом с лёгким «глотком» (пружинный scale
+// и наклон), стакан чуть наклоняется в сторону выбора. Если у напитков нет
+// фото — рисованный стакан наполняется слоями кофе, молоко, пена с плавным
+// переходом высот. Пар над чашкой — четыре размытых пятна на CSS-анимации,
+// за чашкой тёплое пятно света. Справа карточка с бликом под курсором:
+// название, состав в процентах, объём, цена и зерно недели. Заголовок
+// поднимается из-под маски, стакан и карточка въезжают в кадре.
 const FONTS =
   "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Golos+Text:wght@400;500;600&display=swap"
 
@@ -128,6 +131,11 @@ container-type:inline-size;
 @keyframes vibeui-bakery-002-word{from{transform:translateY(110%)}to{transform:none}}
 @keyframes vibeui-bakery-002-in{from{opacity:0;translate:0 1rem}to{opacity:1;translate:0 0}}
 @container (min-width: 56rem){[data-vibeui-block="bakery-002"] [data-part="grid"]{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:4rem}}
+[data-vibeui-block="bakery-002"] [data-part="photos"]{position:relative;width:min(100%,24rem);aspect-ratio:4/5}
+[data-vibeui-block="bakery-002"] [data-part="photos"] img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:1.4rem;opacity:0;transform:scale(.94) translateY(1rem);transition:opacity .6s var(--vibeui-bakery-002-ease),transform .7s cubic-bezier(.3,1.3,.4,1);box-shadow:0 30px 50px -30px rgb(0 0 0 / .45)}
+[data-vibeui-block="bakery-002"] [data-part="photos"] img[data-active="true"]{opacity:1;transform:none}
+[data-vibeui-block="bakery-002"] [data-part="photos"][data-slosh="true"] img[data-active="true"]{animation:vibeui-bakery-002-sip .7s cubic-bezier(.3,1.3,.4,1)}
+@keyframes vibeui-bakery-002-sip{0%{transform:scale(.97) rotate(-1.5deg)}60%{transform:scale(1.02) rotate(1deg)}100%{transform:none}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="bakery-002"] *{animation:none!important;transition:none!important}[data-vibeui-block="bakery-002"] [data-part="word"] i{transform:none}[data-vibeui-block="bakery-002"] [data-part="lede"],[data-vibeui-block="bakery-002"] [data-part="cupwrap"],[data-vibeui-block="bakery-002"] [data-part="control"]{opacity:1;translate:none}[data-vibeui-block="bakery-002"] [data-part="steam"] i{opacity:.5}}`
 
 function spotlight(event: PointerEvent<HTMLElement>) {
@@ -137,11 +145,11 @@ function spotlight(event: PointerEvent<HTMLElement>) {
 }
 
 const DEFAULT_DRINKS: Bakery002Drink[] = [
-  { name: "Латте", text: "много молока, кофе — намёком", price: "290 ₽", milk: 62, foam: 10, coffee: 20, volume: "350 мл" },
-  { name: "Флэт уайт", text: "двойной шот, шёлковое молоко", price: "270 ₽", milk: 48, foam: 6, coffee: 36, volume: "220 мл" },
-  { name: "Капучино", text: "треть пены, классика", price: "250 ₽", milk: 34, foam: 28, coffee: 30, volume: "200 мл" },
-  { name: "Американо", text: "эспрессо и горячая вода", price: "190 ₽", milk: 0, foam: 0, coffee: 70, volume: "250 мл", water: true },
-  { name: "Эспрессо", text: "двойной, 18 г в 36 г", price: "160 ₽", milk: 0, foam: 0, coffee: 30, volume: "60 мл" },
+  { name: "Латте", text: "много молока, кофе — намёком", price: "290 ₽", milk: 62, foam: 10, coffee: 20, volume: "350 мл", image: "/demo/bakery/coffee-flat.webp", imageAlt: "Латте в стеклянном стакане" },
+  { name: "Флэт уайт", text: "двойной шот, шёлковое молоко", price: "270 ₽", milk: 48, foam: 6, coffee: 36, volume: "220 мл", image: "/demo/bakery/coffee-flat.webp", imageAlt: "Флэт уайт" },
+  { name: "Капучино", text: "треть пены, классика", price: "250 ₽", milk: 34, foam: 28, coffee: 30, volume: "200 мл", image: "/demo/bakery/coffee-flat.webp", imageAlt: "Капучино" },
+  { name: "Американо", text: "эспрессо и горячая вода", price: "190 ₽", milk: 0, foam: 0, coffee: 70, volume: "250 мл", water: true, image: "/demo/bakery/coffee-espresso.webp", imageAlt: "Американо" },
+  { name: "Эспрессо", text: "двойной, 18 г в 36 г", price: "160 ₽", milk: 0, foam: 0, coffee: 30, volume: "60 мл", image: "/demo/bakery/coffee-espresso.webp", imageAlt: "Двойной эспрессо" },
 ]
 
 /** Шкала крепости: ползунок переключает напитки, стакан наполняется слоями. */
@@ -171,6 +179,7 @@ export function Bakery002({
   const last = drinks.length - 1
   const height = 10 + (last - index) * 1.75
   const lean = last > 0 ? (index - last / 2) / (last / 2) : 0
+  const photos = drinks.some((item) => item.image)
 
   useEffect(() => {
     const element = root.current
@@ -231,14 +240,22 @@ export function Bakery002({
                     <i />
                     <i />
                   </div>
-                  <div data-part="cup" data-slosh={slosh} style={{ height: `${height}rem` }}>
-                    <div data-part="layer" data-layer="coffee" data-water={drink.water ?? false} style={{ height: `${drink.coffee}%` }} />
-                    <div data-part="layer" data-layer="milk" style={{ bottom: `${drink.coffee}%`, height: `${drink.milk}%` }} />
-                    <div data-part="layer" data-layer="foam" style={{ bottom: `${drink.coffee + drink.milk}%`, height: `${drink.foam}%` }} />
-                  </div>
-                  <div data-part="handle" />
+                  {photos ? (
+                    <div data-part="photos" data-slosh={slosh}>
+                      {drinks.map((item, position) =>
+                        item.image ? <img key={item.name} src={item.image} alt={item.imageAlt ?? item.name} data-active={position === index} loading={position === initial ? "eager" : "lazy"} /> : null,
+                      )}
+                    </div>
+                  ) : (
+                    <div data-part="cup" data-slosh={slosh} style={{ height: `${height}rem` }}>
+                      <div data-part="layer" data-layer="coffee" data-water={drink.water ?? false} style={{ height: `${drink.coffee}%` }} />
+                      <div data-part="layer" data-layer="milk" style={{ bottom: `${drink.coffee}%`, height: `${drink.milk}%` }} />
+                      <div data-part="layer" data-layer="foam" style={{ bottom: `${drink.coffee + drink.milk}%`, height: `${drink.foam}%` }} />
+                    </div>
+                  )}
+                  {photos ? null : <div data-part="handle" />}
                 </div>
-                <div data-part="saucer" />
+                {photos ? null : <div data-part="saucer" />}
               </div>
             </div>
             <div data-part="control" onPointerMove={spotlight}>

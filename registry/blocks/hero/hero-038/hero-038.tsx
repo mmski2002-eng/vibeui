@@ -17,6 +17,9 @@ export type Hero038Props = {
   /** Фото блюда в «капле» рядом с бургером. Пусто — без фото. */
   image?: string
   imageAlt?: string
+  /** Второе блюдо в «капле» со стикером. */
+  sideImage?: string
+  sideImageAlt?: string
   /** Подпись стикера на фото: «хит недели · том-ям 490 ₽». */
   sticker?: string
   /** Бегущая строка блюд. */
@@ -30,11 +33,11 @@ export type Hero038Props = {
 }
 
 // Хиро дарк-китчена: заголовок с живым обратным отсчётом «привезём за
-// 28:00» (тикает по секунде, на нуле начинает заново), справа бургер из
-// шести CSS-слоёв на томатном круге — слои падают сверху по очереди при
-// загрузке и потом «дышат» каждый со своей фазой, над ним поднимается
-// пар. Рядом фото в форме капли со стикером «хит недели». Понизу
-// бегущая строка блюд с наклоном, дублируется для бесшовного цикла.
+// 28:00» (тикает по секунде, на нуле начинает заново), справа фото блюда в
+// круглой «тарелке» на томатном круге — тарелка выезжает при загрузке и
+// медленно «томится» (лёгкий зум и покачивание), над ней поднимается пар.
+// Рядом второе фото в форме капли со стикером «хит недели». Понизу бегущая
+// строка блюд с наклоном, дублируется для бесшовного цикла.
 const FONTS = "https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Russo+One&family=Onest:wght@400;500;600;700&display=swap"
 
 const STYLES = `
@@ -48,12 +51,6 @@ const STYLES = `
 --vibeui-hero-038-display:"Unbounded",ui-sans-serif,system-ui,sans-serif;
 --vibeui-hero-038-accent-font:"Russo One",ui-sans-serif,system-ui,sans-serif;
 --vibeui-hero-038-font:"Onest",ui-sans-serif,system-ui,sans-serif;
---vibeui-hero-038-bun:#e8a24a;
---vibeui-hero-038-bun-dark:#c77f2f;
---vibeui-hero-038-lettuce:#6fbf4a;
---vibeui-hero-038-tomato:#e63b2e;
---vibeui-hero-038-cheese:#ffcc33;
---vibeui-hero-038-patty:#5a2f1b;
 container-type:inline-size;
 }
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="hero-038"]{color-scheme:dark}
@@ -88,24 +85,7 @@ container-type:inline-size;
 [data-vibeui-block="hero-038"] [data-part="steam"] i:nth-child(1){left:20%}
 [data-vibeui-block="hero-038"] [data-part="steam"] i:nth-child(2){left:48%;animation-delay:.8s}
 [data-vibeui-block="hero-038"] [data-part="steam"] i:nth-child(3){left:74%;animation-delay:1.6s}
-[data-vibeui-block="hero-038"] [data-part="burger"]{position:absolute;left:50%;top:24%;width:58cqi;height:56cqi;transform:translateX(-50%)}
-[data-vibeui-block="hero-038"] [data-part="layer"]{position:absolute;left:50%;transform:translateX(-50%);animation:vibeui-hero-038-drop .9s cubic-bezier(.2,.8,.2,1) var(--vibeui-hero-038-d) both}
-[data-vibeui-block="hero-038"] [data-part="layer"] i{display:block;position:relative;width:100%;height:100%;animation:vibeui-hero-038-breathe 3.8s ease-in-out calc(var(--vibeui-hero-038-d) + .9s) infinite}
-[data-vibeui-block="hero-038"] [data-part="layer"][data-kind="bun-top"]{width:100%;height:36%;top:0;z-index:7;--vibeui-hero-038-d:1.05s}
-[data-vibeui-block="hero-038"] [data-part="layer"][data-kind="bun-top"] i{border-radius:50% 50% 12% 12% / 85% 85% 14% 14%;background:radial-gradient(circle at 30% 30%,var(--vibeui-hero-038-bun),var(--vibeui-hero-038-bun-dark) 85%);box-shadow:inset 0 -6px 0 rgb(0 0 0 / .12)}
-[data-vibeui-block="hero-038"] [data-part="layer"][data-kind="bun-top"] i::after{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(ellipse 1.6cqi 1cqi at 28% 42%,#fff3d6 90%,transparent 100%),radial-gradient(ellipse 1.6cqi 1cqi at 48% 30%,#fff3d6 90%,transparent 100%),radial-gradient(ellipse 1.6cqi 1cqi at 66% 40%,#fff3d6 90%,transparent 100%),radial-gradient(ellipse 1.6cqi 1cqi at 40% 58%,#fff3d6 90%,transparent 100%),radial-gradient(ellipse 1.6cqi 1cqi at 58% 60%,#fff3d6 90%,transparent 100%);transform:rotate(-12deg)}
-[data-vibeui-block="hero-038"] [data-part="layer"][data-kind="lettuce"]{width:106%;height:14%;top:30%;z-index:6;--vibeui-hero-038-d:.85s}
-[data-vibeui-block="hero-038"] [data-part="layer"][data-kind="lettuce"] i{border-radius:40% 60% 45% 55% / 60% 50% 50% 40%;background:linear-gradient(to bottom,#8cd65e,var(--vibeui-hero-038-lettuce));box-shadow:inset 0 -5px 0 rgb(0 0 0 / .12)}
-[data-vibeui-block="hero-038"] [data-part="layer"][data-kind="tomato"]{width:88%;height:11%;top:40%;z-index:5;--vibeui-hero-038-d:.65s}
-[data-vibeui-block="hero-038"] [data-part="layer"][data-kind="tomato"] i{border-radius:50%;background:linear-gradient(to bottom,#ff5a4a,var(--vibeui-hero-038-tomato));box-shadow:inset 0 -4px 0 rgb(0 0 0 / .18)}
-[data-vibeui-block="hero-038"] [data-part="layer"][data-kind="cheese"]{width:96%;height:10%;top:47%;z-index:4;--vibeui-hero-038-d:.45s}
-[data-vibeui-block="hero-038"] [data-part="layer"][data-kind="cheese"] i{border-radius:12% 8% 14% 10% / 50%;background:linear-gradient(to bottom,#ffe066,var(--vibeui-hero-038-cheese));transform:rotate(-2deg);box-shadow:inset 0 -4px 0 rgb(0 0 0 / .1)}
-[data-vibeui-block="hero-038"] [data-part="layer"][data-kind="patty"]{width:90%;height:16%;top:52%;z-index:3;--vibeui-hero-038-d:.25s}
-[data-vibeui-block="hero-038"] [data-part="layer"][data-kind="patty"] i{border-radius:50% / 40%;background:radial-gradient(circle at 40% 30%,#7a4327,var(--vibeui-hero-038-patty) 70%);box-shadow:inset 0 -6px 0 rgb(0 0 0 / .25)}
-[data-vibeui-block="hero-038"] [data-part="layer"][data-kind="bun-bottom"]{width:100%;height:22%;top:64%;z-index:2;--vibeui-hero-038-d:.05s}
-[data-vibeui-block="hero-038"] [data-part="layer"][data-kind="bun-bottom"] i{border-radius:14% 14% 50% 50% / 20% 20% 80% 80%;background:linear-gradient(to bottom,var(--vibeui-hero-038-bun),var(--vibeui-hero-038-bun-dark));box-shadow:inset 0 -8px 0 rgb(0 0 0 / .18)}
-[data-vibeui-block="hero-038"] [data-part="shadow"]{position:absolute;left:50%;top:84%;width:56cqi;height:6cqi;transform:translateX(-50%);border-radius:50%;background:rgb(0 0 0 / .28);filter:blur(6px);animation:vibeui-hero-038-shadow 3.8s ease-in-out 1.9s infinite}
-[data-vibeui-block="hero-038"] [data-part="photo"]{position:absolute;left:-4%;bottom:-2%;width:42%;aspect-ratio:1;z-index:8;animation:vibeui-hero-038-pop 1s cubic-bezier(.2,.8,.2,1) 1.2s both}
+[data-vibeui-block="hero-038"] [data-part="photo"]{position:absolute;left:-6%;bottom:0;width:38%;aspect-ratio:1;z-index:8;animation:vibeui-hero-038-pop 1s cubic-bezier(.2,.8,.2,1) 1.2s both}
 [data-vibeui-block="hero-038"] [data-part="photo"] img{display:block;width:100%;height:100%;object-fit:cover;border-radius:62% 38% 55% 45% / 48% 60% 40% 52%;border:4px solid var(--vibeui-hero-038-bg);box-shadow:0 24px 50px -20px rgb(0 0 0 / .6);animation:vibeui-hero-038-morph 9s ease-in-out infinite alternate}
 [data-vibeui-block="hero-038"] [data-part="sticker"]{position:absolute;right:-8%;bottom:-4%;padding:.45rem .8rem;border-radius:.6rem;background:var(--vibeui-hero-038-fg);color:var(--vibeui-hero-038-bg);font-family:var(--vibeui-hero-038-accent-font);font-size:.72rem;letter-spacing:.02em;text-transform:uppercase;white-space:nowrap;transform:rotate(-6deg);box-shadow:0 10px 24px -12px rgb(0 0 0 / .5)}
 [data-vibeui-block="hero-038"] [data-part="ticker"]{position:relative;left:-3%;width:106%;margin-top:-1rem;padding:.7rem 0;background:var(--vibeui-hero-038-accent);color:var(--vibeui-hero-038-on-accent);transform:rotate(-2deg);overflow:hidden;white-space:nowrap;font-family:var(--vibeui-hero-038-accent-font);font-size:clamp(1rem,2.4cqi,1.5rem);text-transform:uppercase;letter-spacing:.04em}
@@ -113,15 +93,18 @@ container-type:inline-size;
 [data-vibeui-block="hero-038"] [data-part="ticker"]:hover [data-part="track"]{animation-play-state:paused}
 [data-vibeui-block="hero-038"] [data-part="track"] span{display:inline-flex;align-items:center;gap:1.4rem;padding-right:1.4rem}
 [data-vibeui-block="hero-038"] [data-part="track"] span::after{content:"";width:.55em;height:.55em;border-radius:50%;background:var(--vibeui-hero-038-on-accent);opacity:.7}
+[data-vibeui-block="hero-038"] [data-part="dish"]{position:absolute;left:50%;top:50%;width:84%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;overflow:hidden;z-index:3;box-shadow:0 40px 80px -30px rgb(0 0 0 / .7),0 0 0 1px rgb(255 255 255 / .06) inset;animation:vibeui-hero-038-serve 1.1s cubic-bezier(.2,.8,.2,1) .25s both}
+[data-vibeui-block="hero-038"] [data-part="dish"] img{display:block;width:100%;height:100%;object-fit:cover;transform:scale(1.04);animation:vibeui-hero-038-simmer 7s ease-in-out infinite}
+[data-vibeui-block="hero-038"] [data-part="dish"]::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 30% 20%,rgb(255 255 255 / .14),transparent 45%),linear-gradient(to top,rgb(0 0 0 / .35),transparent 55%);pointer-events:none}
+[data-vibeui-block="hero-038"] [data-part="steam"]{z-index:4}
+@keyframes vibeui-hero-038-serve{from{transform:translate(-50%,-30%) scale(.7) rotate(-14deg);opacity:0}to{transform:translate(-50%,-50%) scale(1) rotate(0);opacity:1}}
+@keyframes vibeui-hero-038-simmer{0%,100%{transform:scale(1.04) rotate(0)}50%{transform:scale(1.09) rotate(2deg)}}
 @keyframes vibeui-hero-038-rise{from{transform:translateY(110%)}to{transform:translateY(0)}}
 @keyframes vibeui-hero-038-blink{50%{opacity:.2}}
 @keyframes vibeui-hero-038-pulse{to{box-shadow:0 0 0 .55rem transparent}}
 @keyframes vibeui-hero-038-disc{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}
 @keyframes vibeui-hero-038-spin{to{transform:scale(1.08) rotate(360deg)}}
 @keyframes vibeui-hero-038-steam{0%{transform:translateY(40%) scaleX(1);opacity:0}30%{opacity:.7}100%{transform:translateY(-70%) scaleX(1.6);opacity:0}}
-@keyframes vibeui-hero-038-drop{from{transform:translate(-50%,-140%);opacity:0}60%{opacity:1}to{transform:translate(-50%,0);opacity:1}}
-@keyframes vibeui-hero-038-breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-6%)}}
-@keyframes vibeui-hero-038-shadow{0%,100%{transform:translateX(-50%) scaleX(1);opacity:1}50%{transform:translateX(-50%) scaleX(.9);opacity:.7}}
 @keyframes vibeui-hero-038-pop{from{transform:scale(.4) rotate(-20deg);opacity:0}to{transform:none;opacity:1}}
 @keyframes vibeui-hero-038-morph{to{border-radius:45% 55% 40% 60% / 55% 45% 55% 45%}}
 @keyframes vibeui-hero-038-marquee{to{transform:translateX(-50%)}}
@@ -143,7 +126,9 @@ export function Hero038({
   trust = "4,8 из 5 · 12 400 заказов в месяц · бесплатно от 1 500 ₽",
   image = "/demo/delivery/hero.webp",
   imageAlt = "Том-ям с креветками в чёрной миске",
-  sticker = "хит недели · том-ям 490 ₽",
+  sideImage = "/demo/delivery/dish-01.webp",
+  sideImageAlt = "Двойной смэш-бургер",
+  sticker = "хит недели · смэш-бургер 590 ₽",
   ticker = ["Смэш-бургер", "Том-ям", "Поке с лососем", "Пад-тай", "Картошка с трюфелем", "Чизкейк «Сан-Себастьян»", "Рамен тонкоцу", "Шаурма на углях"],
   tone = "auto",
   accent,
@@ -226,18 +211,12 @@ export function Hero038({
               <i />
               <i />
             </div>
-            <div data-part="burger">
-              <div data-part="layer" data-kind="bun-top"><i /></div>
-              <div data-part="layer" data-kind="lettuce"><i /></div>
-              <div data-part="layer" data-kind="tomato"><i /></div>
-              <div data-part="layer" data-kind="cheese"><i /></div>
-              <div data-part="layer" data-kind="patty"><i /></div>
-              <div data-part="layer" data-kind="bun-bottom"><i /></div>
+            <div data-part="dish">
+              <img src={image} alt={imageAlt} loading="eager" />
             </div>
-            <div data-part="shadow" />
-            {image ? (
+            {sideImage ? (
               <figure data-part="photo">
-                <img src={image} alt={imageAlt} loading="eager" />
+                <img src={sideImage} alt={sideImageAlt} loading="lazy" />
                 {sticker ? <figcaption data-part="sticker">{sticker}</figcaption> : null}
               </figure>
             ) : null}

@@ -158,7 +158,7 @@
       "name": "bakery-002",
       "type": "registry:block",
       "title": "Шкала крепости кофе с наполняющимся стаканом",
-      "description": "Ползунок «мягче — крепче» переключает напитки от латте до эспрессо, а нарисованный стакан наполняется слоями — кофе, молоко, пена — с плавным переходом высот; у эспрессо стакан ниже. Пар над чашкой на CSS. Справа карточка: название, состав в процентах, объём, цена и зерно недели.",
+      "description": "Ползунок «мягче — крепче» переключает напитки от латте до эспрессо, а фото стакана меняется кроссфейдом с лёгким «глотком»; если у напитков нет фото — рисованный стакан наполняется слоями кофе, молоко, пена с плавным переходом высот. Пар над чашкой на CSS. Справа карточка: название, состав в процентах, объём, цена и зерно недели.",
       "categories": [
         "bakery"
       ],
@@ -195,12 +195,12 @@
           "usage": "<Bakery002\n  title=\"Насколько крепко?\"\n  drinks={[\n    { name: \"Латте\", price: \"290 ₽\", coffee: 20, milk: 62, foam: 10, volume: \"350 мл\" },\n    { name: \"Эспрессо\", price: \"160 ₽\", coffee: 30, milk: 0, foam: 0, volume: \"60 мл\" },\n  ]}\n  beanImage=\"/photos/beans.webp\"\n/>",
           "summary": "Интерактивное кофейное меню: один ползунок вместо списка, стакан показывает состав напитка. Подходит кофейне, обжарщику, бару.",
           "preserve": [
-            "слои стакана — абсолютные блоки с высотой в процентах и transition по height и bottom",
+            "фото напитков лежат стопкой img[data-active], активное — opacity 1 и scale 1, смена с keyframes sip; без фото — слои стакана с transition по height и bottom",
             "высота стакана уменьшается к крепким напиткам: 10rem + шаг 1.75rem на позицию",
             "пар — три размытых пятна на keyframes, выключается prefers-reduced-motion"
           ],
           "adapt": [
-            "drinks: name, text, price, coffee, milk, foam, volume, water",
+            "drinks: name, text, price, coffee, milk, foam, volume, water, image, imageAlt",
             "eyebrow, title, lede, softLabel, strongLabel, initial",
             "beanImage, beanTitle, beanText",
             "tone — тема",
@@ -255,16 +255,16 @@
         "i18n": {
           "en": {
             "title": "Coffee strength slider with a filling cup",
-            "description": "A “softer — stronger” slider switches drinks from latte to espresso while a drawn cup fills with layers — coffee, milk, foam — with smooth height transitions; the espresso cup is shorter. CSS steam above the cup. On the right: name, composition in percent, volume, price and the bean of the week.",
+            "description": "A “softer — stronger” slider switches drinks from latte to espresso while the cup photo crossfades with a slight “sip”; when the drinks have no photos a drawn cup fills with layers — coffee, milk, foam — with smooth height transitions. CSS steam above the cup. On the right: name, composition in percent, volume, price and the bean of the week.",
             "ai": {
               "summary": "An interactive coffee menu: one slider instead of a list, the cup shows what is inside. Fits a café, a roaster, a bar.",
               "preserve": [
-                "cup layers are absolute blocks with percentage heights and transitions on height and bottom",
+                "drink photos are stacked img[data-active], the active one has opacity 1 and scale 1, switching runs the sip keyframes; without photos the cup layers transition height and bottom",
                 "the cup gets shorter towards strong drinks: 10rem + a 1.75rem step per position",
                 "steam is three blurred blobs on keyframes, disabled by prefers-reduced-motion"
               ],
               "adapt": [
-                "drinks: name, text, price, coffee, milk, foam, volume, water",
+                "drinks: name, text, price, coffee, milk, foam, volume, water, image, imageAlt",
                 "eyebrow, title, lede, softLabel, strongLabel, initial",
                 "beanImage, beanTitle, beanText",
                 "tone — theme",

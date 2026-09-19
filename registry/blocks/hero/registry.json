@@ -6382,7 +6382,7 @@
       "name": "hero-035",
       "type": "registry:block",
       "title": "Хиро ветклиники: CSS-морда следит за курсором, переключатель питомца",
-      "description": "Первый экран клиники или зоомагазина: справа морда питомца из CSS-фигур — зрачки следят за курсором по всему экрану, ухо дёргается по наведению, глаза моргают. Переключатель «кот / собака / кролик» меняет форму ушей, окрас, реплику в пузыре и заголовок слева, а в window летит CustomEvent, чтобы другие блоки переключились вслед. Внизу счётчики докручиваются в viewport.",
+      "description": "Первый экран клиники или зоомагазина: справа фото питомца в «капле», которая медленно меняет форму, фото чуть уходит от курсора. Переключатель «кот / собака / кролик» меняет фото кроссфейдом, реплику в пузыре и заголовок слева, а в window летит CustomEvent, чтобы другие блоки переключились вслед. Внизу счётчики докручиваются в viewport.",
       "categories": [
         "hero"
       ],
@@ -6417,15 +6417,15 @@
         },
         "ai": {
           "export": "Hero035",
-          "usage": "<Hero035\n  defaultPet=\"dog\"\n  pets={[\n    { key: \"cat\", label: \"Кот\", eyebrow: \"Ветклиника\", title: \"Лечим так, что *кот не заметит*\", lede: \"Тихие кабинеты.\", bubble: \"Мя.\" },\n    { key: \"dog\", label: \"Собака\", eyebrow: \"Ветклиника\", title: \"Лечим так, что *хвост не перестаёт*\", lede: \"Отдельный вход.\", bubble: \"Гав.\" },\n  ]}\n  stats={[{ value: 12480, label: \"хвостов вылечили\" }]}\n/>",
+          "usage": "<Hero035\n  defaultPet=\"dog\"\n  pets={[\n    { key: \"cat\", label: \"Кот\", eyebrow: \"Ветклиника\", title: \"Лечим так, что *кот не заметит*\", lede: \"Тихие кабинеты.\", bubble: \"Мя.\", image: \"/photos/cat.webp\" },\n    { key: \"dog\", label: \"Собака\", eyebrow: \"Ветклиника\", title: \"Лечим так, что *хвост не перестаёт*\", lede: \"Отдельный вход.\", bubble: \"Гав.\", image: \"/photos/dog.webp\" },\n  ]}\n  stats={[{ value: 12480, label: \"хвостов вылечили\" }]}\n/>",
           "summary": "Хиро с игровой CSS-иллюстрацией: морда питомца реагирует на курсор, переключатель меняет питомца и тексты.",
           "preserve": [
-            "зрачки — unitless --ex/--ey от −1 до 1, ставятся через ref на pointermove секции, без стейта и ререндеров",
-            "формы питомцев задаются [data-pet] на контейнере face: уши clip-path/border-radius, зрачки, нос, язык, зубы — всё через transition .55s",
+            "параллакс фото — unitless --ex/--ey от −1 до 1, ставятся через ref на pointermove секции, без стейта и ререндеров",
+            "фото питомцев лежат стопкой img[data-active] внутри face с overflow:hidden и keyframes morph на border-radius; активное — opacity 1, смена — transition .6s",
             "счётчики — IntersectionObserver ставит seen, useCountUp крутит progress через requestAnimationFrame с ease-out"
           ],
           "adapt": [
-            "pets: key (cat | dog | rabbit), label, eyebrow, title (*слово* — акцент), lede, bubble; defaultPet",
+            "pets: key (cat | dog | rabbit), label, eyebrow, title (*слово* — акцент), lede, bubble, image, imageAlt; defaultPet",
             "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
             "stats: value, suffix, label; eventName",
             "tone — тема",
@@ -6487,16 +6487,16 @@
         "i18n": {
           "en": {
             "title": "Vet clinic hero: a CSS pet face follows the cursor, pet switcher",
-            "description": "First screen for a clinic or pet shop: on the right a pet face built from CSS shapes — the pupils follow the cursor across the whole screen, an ear twitches on hover, the eyes blink. The “cat / dog / rabbit” switcher changes ear shape, fur colour, the speech bubble and the headline, and dispatches a window CustomEvent so other blocks can follow. Counters below count up in the viewport.",
+            "description": "First screen for a clinic or pet shop: on the right a pet photo in a slowly morphing blob that drifts slightly away from the cursor. The “cat / dog / rabbit” switcher crossfades the photo, changes the speech bubble and the headline, and dispatches a window CustomEvent so other blocks can follow. Counters below count up in the viewport.",
             "ai": {
               "summary": "Hero with a playful CSS illustration: the pet face reacts to the cursor, the switcher changes the pet and the copy.",
               "preserve": [
-                "the pupils are unitless --ex/--ey from −1 to 1, set through a ref on the section's pointermove, no state or re-renders",
-                "pet shapes come from [data-pet] on the face container: ear clip-path/border-radius, pupils, nose, tongue, teeth — all via a .55s transition",
+                "the photo parallax is unitless --ex/--ey from −1 to 1, set through a ref on the section's pointermove, no state or re-renders",
+                "pet photos are stacked img[data-active] inside face with overflow:hidden and morph keyframes on border-radius; the active one has opacity 1, switching is a .6s transition",
                 "counters: IntersectionObserver sets seen, useCountUp drives progress through requestAnimationFrame with ease-out"
               ],
               "adapt": [
-                "pets: key (cat | dog | rabbit), label, eyebrow, title (*word* is the accent), lede, bubble; defaultPet",
+                "pets: key (cat | dog | rabbit), label, eyebrow, title (*word* — accent), lede, bubble, image, imageAlt; defaultPet",
                 "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
                 "stats: value, suffix, label; eventName",
                 "tone — theme",
@@ -6504,7 +6504,7 @@
                 "ink — ink",
                 "background — background"
               ],
-              "usage": "<Hero035\n  defaultPet=\"dog\"\n  pets={[\n    { key: \"cat\", label: \"Cat\", eyebrow: \"Vet clinic\", title: \"Treated so gently *the cat won't notice*\", lede: \"Quiet rooms.\", bubble: \"Meow.\" },\n    { key: \"dog\", label: \"Dog\", eyebrow: \"Vet clinic\", title: \"Treated so well *the tail keeps wagging*\", lede: \"Separate entrance.\", bubble: \"Woof.\" },\n  ]}\n  stats={[{ value: 12480, label: \"tails treated\" }]}\n/>"
+              "usage": "<Hero035\n  defaultPet=\"dog\"\n  pets={[\n    { key: \"cat\", label: \"Cat\", eyebrow: \"Vet clinic\", title: \"Treated so gently *the cat won't notice*\", lede: \"Quiet rooms.\", bubble: \"Meow.\", image: \"/photos/cat.webp\" },\n    { key: \"dog\", label: \"Dog\", eyebrow: \"Vet clinic\", title: \"Treated so well *the tail keeps wagging*\", lede: \"Separate entrance.\", bubble: \"Woof.\", image: \"/photos/dog.webp\" },\n  ]}\n  stats={[{ value: 12480, label: \"tails treated\" }]}\n/>"
             },
             "controls": {
               "primaryLabel": {
@@ -6537,7 +6537,9 @@
                     "eyebrow": "Vet clinic & grooming in Sokol · 24/7",
                     "title": "Treated so gently *the cat won't notice*",
                     "lede": "Quiet rooms with no barking, appointments without a queue, and doctors who pet first and examine second. Vaccines, teeth, spaying — all in one place.",
-                    "bubble": "Meow. Nobody even held me."
+                    "bubble": "Meow. Nobody even held me.",
+                    "image": "/demo/vet/diary-01.webp",
+                    "imageAlt": "Ginger cat in a blanket"
                   },
                   {
                     "key": "dog",
@@ -6545,7 +6547,9 @@
                     "eyebrow": "Vet clinic & grooming in Sokol · 24/7",
                     "title": "Treated so well *the tail keeps wagging*",
                     "lede": "A separate entrance for dogs, scales right in the lobby and a treat after every shot. Orthopaedist, dentist, grooming — nobody strokes against the fur.",
-                    "bubble": "Woof. They have treats here."
+                    "bubble": "Woof. They have treats here.",
+                    "image": "/demo/vet/diary-04.webp",
+                    "imageAlt": "Corgi on a walk"
                   },
                   {
                     "key": "rabbit",
@@ -6553,7 +6557,9 @@
                     "eyebrow": "Vet clinic & grooming in Sokol · 24/7",
                     "title": "Treated so calmly *the ears stay up*",
                     "lede": "An exotics vet every day, not just on Thursdays. Teeth, digestion, nail trims — fast, quiet and stress-free for the long-eared.",
-                    "bubble": "Brought my own carrot."
+                    "bubble": "Brought my own carrot.",
+                    "image": "/demo/vet/diary-03.webp",
+                    "imageAlt": "Lop-eared rabbit"
                   }
                 ],
                 "primaryLabel": "Book a visit",
@@ -6583,7 +6589,7 @@
       "name": "hero-036",
       "type": "registry:block",
       "title": "Хиро с букетом из слоёв: собирается при загрузке, разъезжается на прокрутке",
-      "description": "Первый экран цветочной мастерской: справа букет из пяти SVG-слоёв — ваза, листья, стебли, задние и передние бутоны — по очереди встаёт в вазу при загрузке, а при прокрутке слои расходятся параллаксом по одной CSS-переменной. Слева заголовок въезжает строками сквозь маску, курсивное слово-акцент, две кнопки и три факта. Рукописная пометка со стрелкой у букета. Ни одной картинки — всё нарисовано кодом.",
+      "description": "Первый экран цветочной мастерской: справа фото букета в арке-«окне» и полароид мастерской с рукописной подписью — при загрузке поднимаются по очереди, а при прокрутке расходятся параллаксом по одной CSS-переменной; сверху сыплются лепестки. Слева заголовок въезжает строками сквозь маску, курсивное слово-акцент, две кнопки и три факта. Рукописная пометка со стрелкой у букета.",
       "categories": [
         "hero"
       ],
@@ -6617,15 +6623,15 @@
         },
         "ai": {
           "export": "Hero036",
-          "usage": "<Hero036\n  title=\"Букеты,|которые собирают|как *письмо*\"\n  lede=\"Сезонные цветы с ферм, доставка к часу.\"\n  note=\"сегодня: пионы и мак\"\n  facts={[{ value: \"с 2014\", label: \"мастерская\" }]}\n/>",
+          "usage": "<Hero036\n  title=\"Букеты,|которые собирают|как *письмо*\"\n  lede=\"Сезонные цветы с ферм, доставка к часу.\"\n  image=\"/photos/bouquet.webp\"\n  sideImage=\"/photos/workshop.webp\"\n  sideCaption=\"мастерская, утро\"\n  note=\"сегодня: пионы и мак\"\n/>",
           "summary": "Хиро для цветочной мастерской: букет-иллюстрация собирается из слоёв и живёт на прокрутке, заголовок въезжает строками.",
           "preserve": [
             "слои — div[data-part=layer] с --vibeui-hero-036-d (глубина), transform считается из --vibeui-hero-036-y, которую эффект пишет из scroll через rAF",
-            "появление — keyframes rise на svg[data-part=sheet] с задержкой по --vibeui-hero-036-i, строки заголовка — translateY(110%) → 0 внутри overflow:hidden",
+            "появление — keyframes rise на figure[data-part=arch] и [data-part=card] с задержкой по --vibeui-hero-036-i, строки заголовка — translateY(110%) → 0 внутри overflow:hidden; лепестки — три i[data-part=petal] с бесконечным падением",
             "title делится на строки по «|», *слово* становится курсивным em цветом акцента"
           ],
           "adapt": [
-            "eyebrow, title (строки через |, *акцент*), lede, note",
+            "eyebrow, title (строки через |, *акцент*), lede, note, image, imageAlt, sideImage, sideImageAlt, sideCaption",
             "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
             "facts: value, label",
             "tone — тема",
@@ -6688,16 +6694,16 @@
         "i18n": {
           "en": {
             "title": "Hero with a layered bouquet: assembles on load, drifts apart on scroll",
-            "description": "First screen of a flower workshop: on the right a bouquet of five SVG layers — vase, leaves, stems, back and front blooms — rises into the vase one by one on load, and on scroll the layers drift apart with parallax driven by one CSS variable. On the left the headline slides in line by line through a mask, an italic accent word, two buttons and three facts. A handwritten note with an arrow next to the bouquet. No images — everything is drawn in code.",
+            "description": "First screen of a flower workshop: on the right a bouquet photo in an arched “window” and a polaroid of the workshop with a handwritten caption — they rise one by one on load and drift apart with parallax on scroll driven by one CSS variable; petals fall from the top. On the left the headline slides in line by line through a mask, an italic accent word, two buttons and three facts. A handwritten note with an arrow next to the bouquet.",
             "ai": {
               "summary": "Hero for a flower workshop: an illustrated bouquet assembles from layers and lives on scroll, the headline slides in line by line.",
               "preserve": [
                 "layers are div[data-part=layer] with --vibeui-hero-036-d (depth); transform derives from --vibeui-hero-036-y, written by the scroll effect via rAF",
-                "entrance is the rise keyframes on svg[data-part=sheet] delayed by --vibeui-hero-036-i, headline lines go translateY(110%) → 0 inside overflow:hidden",
+                "entrance is the rise keyframes on figure[data-part=arch] and [data-part=card] delayed by --vibeui-hero-036-i, headline lines go translateY(110%) → 0 inside overflow:hidden; petals are three i[data-part=petal] falling on loop",
                 "title splits into lines on “|”, *word* becomes an italic em in the accent colour"
               ],
               "adapt": [
-                "eyebrow, title (lines via |, *accent*), lede, note",
+                "eyebrow, title (lines via |, *accent*), lede, note, image, imageAlt, sideImage, sideImageAlt, sideCaption",
                 "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
                 "facts: value, label",
                 "tone — theme",
@@ -6705,7 +6711,7 @@
                 "ink — ink",
                 "background — background"
               ],
-              "usage": "<Hero036\n  title=\"Bouquets|put together|like a *letter*\"\n  lede=\"Seasonal farm flowers, delivered to the hour.\"\n  note=\"today: peonies and poppies\"\n  facts={[{ value: \"since 2014\", label: \"the workshop\" }]}\n/>"
+              "usage": "<Hero036\n  title=\"Bouquets|put together|like a *letter*\"\n  lede=\"Seasonal farm flowers, delivered to the hour.\"\n  image=\"/photos/bouquet.webp\"\n  sideImage=\"/photos/workshop.webp\"\n  sideCaption=\"the workshop, morning\"\n  note=\"today: peonies and poppies\"\n/>"
             },
             "controls": {
               "title": {
@@ -6751,7 +6757,10 @@
                   }
                 ],
                 "note": "today: peonies, poppies and daisies"
-              }
+              },
+              "sideCaption": "the workshop, morning",
+              "imageAlt": "Bouquet of the week: peonies, poppies and chamomile in kraft paper",
+              "sideImageAlt": "The workshop on Pestelya street"
             }
           }
         }
@@ -7015,7 +7024,7 @@
       "name": "hero-038",
       "type": "registry:block",
       "title": "Хиро доставки: живой таймер «привезём за 28:00», CSS-бургер и бегущая строка",
-      "description": "Первый экран доставки еды: заголовок с обратным отсчётом, который тикает по секунде и на нуле начинает заново; справа бургер из шести CSS-слоёв на акцентном круге — слои падают сверху по очереди при загрузке и потом «дышат», над ними поднимается пар; рядом фото блюда в капле со стикером «хит недели». Понизу бегущая строка блюд с наклоном, две кнопки и строка доверия.",
+      "description": "Первый экран доставки еды: заголовок с обратным отсчётом, который тикает по секунде и на нуле начинает заново; справа фото блюда в круглой «тарелке» на акцентном круге — тарелка выезжает при загрузке и медленно «томится», над ней поднимается пар; рядом второе фото в капле со стикером «хит недели». Понизу бегущая строка блюд с наклоном, две кнопки и строка доверия.",
       "categories": [
         "hero"
       ],
@@ -7049,17 +7058,17 @@
         },
         "ai": {
           "export": "Hero038",
-          "usage": "<Hero038\n  title=\"Горячее привезём за\"\n  minutes={28}\n  image=\"/photos/tom-yum.webp\"\n  sticker=\"хит недели · том-ям 490 ₽\"\n  ticker={[\"Смэш-бургер\", \"Том-ям\", \"Поке\"]}\n/>",
+          "usage": "<Hero038\n  title=\"Горячее привезём за\"\n  minutes={28}\n  image=\"/photos/tom-yum.webp\"\n  sideImage=\"/photos/burger.webp\"\n  sticker=\"хит недели · смэш-бургер 590 ₽\"\n  ticker={[\"Смэш-бургер\", \"Том-ям\", \"Поке\"]}\n/>",
           "summary": "Хиро для доставки еды: обещание по времени тикает, бургер собирается из CSS-слоёв, блюда бегут строкой.",
           "preserve": [
             "таймер — useState(minutes × 60) и setInterval в useEffect; на сервере рендерится «28:00», на нуле цикл начинается заново",
-            "слои бургера — data-kind с --vibeui-hero-038-d: внешний div делает drop, внутренний i — breathe с задержкой calc(d + .9s)",
+            "тарелка — круг с overflow:hidden, keyframes serve при загрузке и simmer (лёгкий зум и покачивание фото) по кругу; капля — второе фото с morph border-radius",
             "бегущая строка дублирует список и едет translateX(-50%) за 28 с, при hover останавливается"
           ],
           "adapt": [
             "eyebrow, title, minutes, lede, trust",
             "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
-            "image, imageAlt, sticker, ticker",
+            "image, imageAlt, sideImage, sideImageAlt, sticker, ticker",
             "tone — тема",
             "accent — акцент",
             "ink — текст",
@@ -7086,7 +7095,7 @@
             "prop": "sticker",
             "label": "Стикер",
             "type": "text",
-            "default": "хит недели · том-ям 490 ₽",
+            "default": "хит недели · смэш-бургер 590 ₽",
             "maxLength": 40
           },
           {
@@ -7128,24 +7137,24 @@
         "i18n": {
           "en": {
             "title": "Delivery hero: a live “delivered in 28:00” timer, a CSS burger and a marquee",
-            "description": "Food delivery first screen: a headline with a countdown that ticks every second and restarts at zero; on the right a burger made of six CSS layers on an accent disc — the layers drop in one by one on load and then “breathe”, steam rises above them; next to it a dish photo in a drop shape with a “hit of the week” sticker. A tilted marquee of dishes along the bottom, two buttons and a trust line.",
+            "description": "Food delivery first screen: a headline with a countdown that ticks every second and restarts at zero; on the right a dish photo in a round “plate” on an accent disc — the plate slides in on load and slowly “simmers”, steam rises above it; next to it a second photo in a drop shape with a “hit of the week” sticker. A tilted marquee of dishes along the bottom, two buttons and a trust line.",
             "ai": {
               "summary": "Hero for food delivery: the time promise ticks, a burger assembles from CSS layers, dishes run in a marquee.",
               "preserve": [
                 "the timer is useState(minutes × 60) plus setInterval in useEffect; the server renders “28:00”, at zero the loop restarts",
-                "burger layers are data-kind with --vibeui-hero-038-d: the outer div drops, the inner i breathes with a calc(d + .9s) delay",
+                "the plate is a circle with overflow:hidden, serve keyframes on load and simmer (a slight zoom and sway of the photo) on loop; the drop is a second photo with a morphing border-radius",
                 "the marquee duplicates the list and moves translateX(-50%) over 28 s, pausing on hover"
               ],
               "adapt": [
                 "eyebrow, title, minutes, lede, trust",
                 "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
-                "image, imageAlt, sticker, ticker",
+                "image, imageAlt, sideImage, sideImageAlt, sticker, ticker",
                 "tone — theme",
                 "accent — accent",
                 "ink — ink",
                 "background — background"
               ],
-              "usage": "<Hero038\n  title=\"Hot food delivered in\"\n  minutes={28}\n  image=\"/photos/tom-yum.webp\"\n  sticker=\"hit of the week · tom yum $9\"\n  ticker={[\"Smash burger\", \"Tom yum\", \"Poke\"]}\n/>"
+              "usage": "<Hero038\n  title=\"Hot food delivered in\"\n  minutes={28}\n  image=\"/photos/tom-yum.webp\"\n  sideImage=\"/photos/burger.webp\"\n  sticker=\"hit of the week · smash burger $9\"\n  ticker={[\"Smash burger\", \"Tom yum\", \"Poke\"]}\n/>"
             },
             "controls": {
               "title": {
@@ -7157,7 +7166,7 @@
               },
               "sticker": {
                 "label": "Sticker",
-                "default": "hit of the week · tom yum $9"
+                "default": "hit of the week · smash burger $9"
               },
               "tone": {
                 "label": "Theme"

@@ -13,6 +13,9 @@ export type Hero035Pet = {
   lede: string
   /** Реплика в пузыре у морды. */
   bubble: string
+  /** Фото питомца — квадрат, морда по центру. */
+  image: string
+  imageAlt?: string
 }
 
 export type Hero035Stat = {
@@ -39,13 +42,12 @@ export type Hero035Props = {
   style?: CSSProperties
 }
 
-// Хиро ветклиники: справа морда питомца, собранная из CSS-фигур — голова,
-// уши, глаза, нос, усы. Зрачки следят за курсором по всему первому экрану
-// (unitless --ex/--ey от −1 до 1 через ref, без ререндеров), ухо дёргается
-// по наведению, глаза моргают. Переключатель «кот / собака / кролик» меняет
-// форму ушей, окрас, зрачки, реплику в пузыре и тексты слева; наружу летит
-// CustomEvent, чтобы прайс переключился вслед. Внизу счётчики докручиваются,
-// когда попадают в viewport.
+// Хиро ветклиники: справа фото питомца в «капле», которая медленно меняет
+// форму; фото чуть уходит от курсора (unitless --ex/--ey от −1 до 1 через
+// ref, без ререндеров). Переключатель «кот / собака / кролик» меняет фото
+// кроссфейдом, реплику в пузыре и тексты слева; наружу летит CustomEvent,
+// чтобы прайс переключился вслед. Внизу счётчики докручиваются, когда
+// попадают в viewport.
 const FONTS = "https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Golos+Text:wght@400;500;600&display=swap"
 
 const STYLES = `
@@ -58,14 +60,6 @@ const STYLES = `
 --vibeui-hero-035-line:color-mix(in oklab,var(--vibeui-hero-035-fg) 12%,transparent);
 --vibeui-hero-035-card:light-dark(#fff,color-mix(in oklab,var(--vibeui-hero-035-bg) 88%,#fff));
 --vibeui-hero-035-leaf:#4f8f45;
---vibeui-hero-035-pink:#f2a49b;
---vibeui-hero-035-cat:#c9bfb2;
---vibeui-hero-035-cat-ear:#b3a698;
---vibeui-hero-035-dog:#d9a15f;
---vibeui-hero-035-dog-ear:#a86f36;
---vibeui-hero-035-rabbit:#efe6da;
---vibeui-hero-035-rabbit-ear:#e4d6c6;
---vibeui-hero-035-eye:#2b241f;
 --vibeui-hero-035-display:"Nunito",ui-rounded,ui-sans-serif,system-ui,sans-serif;
 --vibeui-hero-035-font:"Golos Text",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
@@ -103,83 +97,24 @@ container-type:inline-size;
 [data-vibeui-block="hero-035"] [data-part="stats"] span{display:block;margin-top:.25rem;font-size:.82rem;color:var(--vibeui-hero-035-muted)}
 [data-vibeui-block="hero-035"] [data-part="stage"]{position:relative;width:min(100%,26rem);margin:0 auto}
 [data-vibeui-block="hero-035"] [data-part="bubble"]{position:absolute;z-index:3;top:-.4rem;right:-.2rem;max-width:12rem;padding:.7rem 1rem;border-radius:1.2rem 1.2rem 1.2rem .3rem;background:var(--vibeui-hero-035-card);border:1px solid var(--vibeui-hero-035-line);box-shadow:0 14px 30px -18px rgb(0 0 0 / .35);font-family:var(--vibeui-hero-035-display);font-weight:800;font-size:.92rem;line-height:1.3;transform-origin:bottom left;animation:vibeui-hero-035-pop .45s cubic-bezier(.34,1.56,.64,1) both}
-[data-vibeui-block="hero-035"] [data-part="face"]{position:relative;width:100%;aspect-ratio:1;container-type:inline-size;--vibeui-hero-035-ex:0;--vibeui-hero-035-ey:0;--vibeui-hero-035-fur:var(--vibeui-hero-035-cat)}
-[data-vibeui-block="hero-035"] [data-part="face"] > *{position:absolute;transition:all .55s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="hero-035"] [data-part="ear"]{top:2cqi;width:26cqi;height:32cqi;z-index:1;transform-origin:50% 100%;transform:rotate(var(--vibeui-hero-035-rot));cursor:pointer}
-[data-vibeui-block="hero-035"] [data-part="ear"][data-side="l"]{left:8cqi;--vibeui-hero-035-rot:-14deg}
-[data-vibeui-block="hero-035"] [data-part="ear"][data-side="r"]{right:8cqi;--vibeui-hero-035-rot:14deg}
-[data-vibeui-block="hero-035"] [data-part="ear"]::after{content:"";position:absolute;inset:38% 28% 6%;background:var(--vibeui-hero-035-pink);clip-path:inherit;border-radius:inherit;opacity:.85;transition:inherit}
-[data-vibeui-block="hero-035"] [data-part="ear"]:hover{animation:vibeui-hero-035-twitch .6s ease-in-out}
-[data-vibeui-block="hero-035"] [data-part="head"]{inset:14cqi 6cqi 4cqi;z-index:2;background:var(--vibeui-hero-035-fur);border-radius:48% 48% 46% 46% / 50% 50% 46% 46%;box-shadow:inset -14cqi -10cqi 26cqi -20cqi rgb(0 0 0 / .18),0 30px 60px -30px rgb(0 0 0 / .35)}
-[data-vibeui-block="hero-035"] [data-part="muzzle"]{z-index:3;left:50%;top:56cqi;width:34cqi;height:26cqi;margin-left:-17cqi;border-radius:50%;background:color-mix(in oklab,#fff 45%,transparent);opacity:0;transform:scale(.6)}
-[data-vibeui-block="hero-035"] [data-part="cheek"]{z-index:3;top:57cqi;width:10cqi;height:7cqi;border-radius:50%;background:var(--vibeui-hero-035-pink);opacity:.55;filter:blur(2px)}
-[data-vibeui-block="hero-035"] [data-part="cheek"][data-side="l"]{left:14cqi}
-[data-vibeui-block="hero-035"] [data-part="cheek"][data-side="r"]{right:14cqi}
-[data-vibeui-block="hero-035"] [data-part="eye"]{z-index:4;top:38cqi;width:14cqi;height:16cqi;border-radius:50%;background:#fff;overflow:hidden;box-shadow:inset 0 3px 6px rgb(0 0 0 / .12)}
-[data-vibeui-block="hero-035"] [data-part="eye"][data-side="l"]{left:26cqi}
-[data-vibeui-block="hero-035"] [data-part="eye"][data-side="r"]{right:26cqi}
-[data-vibeui-block="hero-035"] [data-part="pupil"]{position:absolute;left:24%;top:24%;width:52%;height:52%;border-radius:50%;background:var(--vibeui-hero-035-eye);transform:translate(calc(var(--vibeui-hero-035-ex) * 36%),calc(var(--vibeui-hero-035-ey) * 34%));transition:transform .15s ease-out,width .5s,height .5s,left .5s,top .5s}
-[data-vibeui-block="hero-035"] [data-part="pupil"]::after{content:"";position:absolute;left:18%;top:14%;width:30%;height:30%;border-radius:50%;background:#fff;opacity:.9}
-[data-vibeui-block="hero-035"] [data-part="lid"]{position:absolute;inset:-2px;background:var(--vibeui-hero-035-fur);transform:scaleY(0);transform-origin:50% 0;animation:vibeui-hero-035-blink 5.5s ease-in-out infinite}
-[data-vibeui-block="hero-035"] [data-part="eye"][data-side="r"] [data-part="lid"]{animation-delay:.05s}
-[data-vibeui-block="hero-035"] [data-part="nose"]{z-index:5;left:50%;top:60cqi;width:8cqi;height:6cqi;margin-left:-4cqi;background:var(--vibeui-hero-035-pink);clip-path:polygon(0 0,100% 0,50% 100%);border-radius:0}
-[data-vibeui-block="hero-035"] [data-part="mouth"]{z-index:5;left:50%;top:65cqi;width:16cqi;height:8cqi;margin-left:-8cqi}
-[data-vibeui-block="hero-035"] [data-part="mouth"]::before,[data-vibeui-block="hero-035"] [data-part="mouth"]::after{content:"";position:absolute;top:0;width:50%;height:100%;border:2.5px solid var(--vibeui-hero-035-eye);border-top:0;border-radius:0 0 50% 50% / 0 0 100% 100%;transition:all .55s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="hero-035"] [data-part="mouth"]::before{left:0;border-right:0}
-[data-vibeui-block="hero-035"] [data-part="mouth"]::after{right:0;border-left:0}
-[data-vibeui-block="hero-035"] [data-part="tongue"]{z-index:4;left:50%;top:70cqi;width:9cqi;height:10cqi;margin-left:-4.5cqi;border-radius:40% 40% 50% 50% / 30% 30% 50% 50%;background:var(--vibeui-hero-035-pink);transform:scaleY(0);transform-origin:50% 0}
-[data-vibeui-block="hero-035"] [data-part="teeth"]{z-index:6;left:50%;top:69cqi;width:8cqi;height:6cqi;margin-left:-4cqi;display:flex;gap:.6cqi;opacity:0;transform:translateY(-40%)}
-[data-vibeui-block="hero-035"] [data-part="teeth"] i{flex:1;background:#fff;border-radius:0 0 1cqi 1cqi;box-shadow:inset 0 -1px 0 rgb(0 0 0 / .15)}
-[data-vibeui-block="hero-035"] [data-part="whiskers"]{z-index:5;inset:0;pointer-events:none}
-[data-vibeui-block="hero-035"] [data-part="whiskers"] i{position:absolute;top:63cqi;width:22cqi;height:2px;border-radius:2px;background:var(--vibeui-hero-035-eye);opacity:.55;transition:transform .55s cubic-bezier(.2,.8,.2,1),opacity .4s}
-[data-vibeui-block="hero-035"] [data-part="whiskers"] i:nth-child(-n+3){left:4cqi;transform-origin:100% 50%}
-[data-vibeui-block="hero-035"] [data-part="whiskers"] i:nth-child(n+4){right:4cqi;transform-origin:0 50%}
-[data-vibeui-block="hero-035"] [data-part="whiskers"] i:nth-child(1){transform:rotate(12deg)}
-[data-vibeui-block="hero-035"] [data-part="whiskers"] i:nth-child(2){transform:rotate(0deg)}
-[data-vibeui-block="hero-035"] [data-part="whiskers"] i:nth-child(3){transform:rotate(-12deg)}
-[data-vibeui-block="hero-035"] [data-part="whiskers"] i:nth-child(4){transform:rotate(-12deg)}
-[data-vibeui-block="hero-035"] [data-part="whiskers"] i:nth-child(5){transform:rotate(0deg)}
-[data-vibeui-block="hero-035"] [data-part="whiskers"] i:nth-child(6){transform:rotate(12deg)}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="cat"]{--vibeui-hero-035-fur:var(--vibeui-hero-035-cat)}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="cat"] [data-part="ear"]{background:var(--vibeui-hero-035-cat-ear);clip-path:polygon(50% 0,100% 100%,0 100%)}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="cat"] [data-part="pupil"]{left:35%;top:12%;width:30%;height:76%}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="dog"]{--vibeui-hero-035-fur:var(--vibeui-hero-035-dog)}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="dog"] [data-part="head"]{border-radius:46% 46% 48% 48% / 48% 48% 50% 50%}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="dog"] [data-part="ear"]{top:16cqi;width:19cqi;height:40cqi;z-index:3;background:var(--vibeui-hero-035-dog-ear);border-radius:45% 45% 50% 50% / 25% 25% 50% 50%;clip-path:none;transform-origin:50% 8%}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="dog"] [data-part="ear"][data-side="l"]{left:2cqi;--vibeui-hero-035-rot:10deg}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="dog"] [data-part="ear"][data-side="r"]{right:2cqi;--vibeui-hero-035-rot:-10deg}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="dog"] [data-part="ear"]::after{opacity:0}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="dog"] [data-part="muzzle"]{opacity:1;transform:scale(1)}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="dog"] [data-part="nose"]{width:12cqi;height:9cqi;margin-left:-6cqi;top:58cqi;background:var(--vibeui-hero-035-eye);clip-path:none;border-radius:50% 50% 55% 55% / 45% 45% 60% 60%}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="dog"] [data-part="mouth"]{width:22cqi;margin-left:-11cqi;top:66cqi;height:7cqi}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="dog"] [data-part="tongue"]{transform:scaleY(1);animation:vibeui-hero-035-pant 1.1s ease-in-out infinite}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="dog"] [data-part="whiskers"] i{opacity:0;transform:scaleX(0)}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="dog"] [data-part="cheek"]{opacity:0}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="rabbit"]{--vibeui-hero-035-fur:var(--vibeui-hero-035-rabbit)}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="rabbit"] [data-part="head"]{inset:20cqi 8cqi 4cqi;border-radius:50% 50% 46% 46% / 52% 52% 46% 46%}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="rabbit"] [data-part="ear"]{top:-12cqi;width:17cqi;height:46cqi;background:var(--vibeui-hero-035-rabbit-ear);border-radius:50%;clip-path:none}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="rabbit"] [data-part="ear"][data-side="l"]{left:22cqi;--vibeui-hero-035-rot:-9deg}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="rabbit"] [data-part="ear"][data-side="r"]{right:22cqi;--vibeui-hero-035-rot:9deg}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="rabbit"] [data-part="ear"]::after{inset:14% 30% 22%;border-radius:50%}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="rabbit"] [data-part="eye"]{top:42cqi;width:11cqi;height:13cqi}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="rabbit"] [data-part="eye"][data-side="l"]{left:29cqi}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="rabbit"] [data-part="eye"][data-side="r"]{right:29cqi}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="rabbit"] [data-part="nose"]{width:6cqi;height:4.5cqi;margin-left:-3cqi;top:62cqi;clip-path:polygon(0 0,100% 0,50% 100%);border-radius:0}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="rabbit"] [data-part="mouth"]{width:12cqi;margin-left:-6cqi;top:66cqi;height:5cqi}
-[data-vibeui-block="hero-035"] [data-part="face"][data-pet="rabbit"] [data-part="teeth"]{opacity:1;transform:translateY(0)}
+[data-vibeui-block="hero-035"] [data-part="face"]{position:relative;width:100%;aspect-ratio:1;--vibeui-hero-035-ex:0;--vibeui-hero-035-ey:0;border-radius:58% 42% 55% 45% / 48% 56% 44% 52%;overflow:hidden;background:var(--vibeui-hero-035-card);box-shadow:0 40px 80px -40px rgb(0 0 0 / .45);animation:vibeui-hero-035-morph 12s ease-in-out infinite alternate}
 @keyframes vibeui-hero-035-float{from{transform:translate(0,0)}to{transform:translate(6%,10%) scale(1.1)}}
 @keyframes vibeui-hero-035-rise{from{opacity:0;transform:translateY(14px)}}
 @keyframes vibeui-hero-035-pop{from{opacity:0;transform:scale(.6) rotate(-6deg)}}
-@keyframes vibeui-hero-035-blink{0%,93%,100%{transform:scaleY(0)}96.5%{transform:scaleY(1)}}
-@keyframes vibeui-hero-035-twitch{0%,100%{transform:rotate(var(--vibeui-hero-035-rot))}30%{transform:rotate(calc(var(--vibeui-hero-035-rot) - 14deg))}60%{transform:rotate(calc(var(--vibeui-hero-035-rot) + 7deg))}}
 @keyframes vibeui-hero-035-pant{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.82)}}
+[data-vibeui-block="hero-035"] [data-part="face"] img{position:absolute;inset:-4%;width:108%;height:108%;object-fit:cover;opacity:0;transform:translate(calc(var(--vibeui-hero-035-ex) * -1.5%),calc(var(--vibeui-hero-035-ey) * -1.5%)) scale(1.06);transition:opacity .6s cubic-bezier(.2,.8,.2,1),transform .5s ease-out}
+[data-vibeui-block="hero-035"] [data-part="face"] img[data-active="true"]{opacity:1;transform:translate(calc(var(--vibeui-hero-035-ex) * -1.5%),calc(var(--vibeui-hero-035-ey) * -1.5%)) scale(1)}
+[data-vibeui-block="hero-035"] [data-part="paw"]{position:absolute;right:8%;bottom:7%;width:2.6rem;height:2.6rem;border-radius:50%;background:var(--vibeui-hero-035-accent);box-shadow:0 0 0 .6rem color-mix(in oklab,var(--vibeui-hero-035-accent) 22%,transparent);animation:vibeui-hero-035-pulse 2.2s ease-out infinite}
+[data-vibeui-block="hero-035"] [data-part="paw"]::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 62%,var(--vibeui-hero-035-on-accent) 26%,transparent 27%),radial-gradient(circle at 26% 34%,var(--vibeui-hero-035-on-accent) 11%,transparent 12%),radial-gradient(circle at 50% 22%,var(--vibeui-hero-035-on-accent) 11%,transparent 12%),radial-gradient(circle at 74% 34%,var(--vibeui-hero-035-on-accent) 11%,transparent 12%)}
+@keyframes vibeui-hero-035-morph{to{border-radius:44% 56% 47% 53% / 55% 45% 55% 45%}}
+@keyframes vibeui-hero-035-pulse{to{box-shadow:0 0 0 1.2rem transparent}}
 @container (min-width: 60rem){[data-vibeui-block="hero-035"] [data-part="shell"]{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:3rem}[data-vibeui-block="hero-035"] [data-part="stage"]{width:min(100%,30rem)}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="hero-035"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_PETS: Hero035Pet[] = [
-  { key: "cat", label: "Кот", eyebrow: "Ветклиника и груминг на Соколе · 24/7", title: "Лечим так, что *кот не заметит*", lede: "Тихие кабинеты без собачьего лая, приём по записи без очереди и врачи, которые сначала гладят, потом смотрят. Прививки, зубы, стерилизация — всё в одном месте.", bubble: "Мя. Меня даже не держали." },
-  { key: "dog", label: "Собака", eyebrow: "Ветклиника и груминг на Соколе · 24/7", title: "Лечим так, что *хвост не перестаёт*", lede: "Отдельный вход для собак, весы прямо в холле и лакомство после укола. Ортопед, стоматолог, груминг — и никто не будет гладить против шерсти.", bubble: "Гав. Тут дают вкусняшки." },
-  { key: "rabbit", label: "Кролик", eyebrow: "Ветклиника и груминг на Соколе · 24/7", title: "Лечим так, что *уши не вянут*", lede: "Врач по грызунам и кроликам каждый день, а не «по четвергам». Зубы, ЖКТ, стрижка когтей — быстро, тихо и без стресса для длинноухих.", bubble: "Морковку взяла с собой." },
+  { key: "cat", label: "Кот", eyebrow: "Ветклиника и груминг на Соколе · 24/7", title: "Лечим так, что *кот не заметит*", lede: "Тихие кабинеты без собачьего лая, приём по записи без очереди и врачи, которые сначала гладят, потом смотрят. Прививки, зубы, стерилизация — всё в одном месте.", bubble: "Мя. Меня даже не держали.", image: "/demo/vet/diary-01.webp", imageAlt: "Рыжий кот в пледе" },
+  { key: "dog", label: "Собака", eyebrow: "Ветклиника и груминг на Соколе · 24/7", title: "Лечим так, что *хвост не перестаёт*", lede: "Отдельный вход для собак, весы прямо в холле и лакомство после укола. Ортопед, стоматолог, груминг — и никто не будет гладить против шерсти.", bubble: "Гав. Тут дают вкусняшки.", image: "/demo/vet/diary-04.webp", imageAlt: "Корги на прогулке" },
+  { key: "rabbit", label: "Кролик", eyebrow: "Ветклиника и груминг на Соколе · 24/7", title: "Лечим так, что *уши не вянут*", lede: "Врач по грызунам и кроликам каждый день, а не «по четвергам». Зубы, ЖКТ, стрижка когтей — быстро, тихо и без стресса для длинноухих.", bubble: "Морковку взяла с собой.", image: "/demo/vet/diary-03.webp", imageAlt: "Вислоухий кролик" },
 ]
 
 const DEFAULT_STATS: Hero035Stat[] = [
@@ -368,36 +303,11 @@ export function Hero035({
             <p data-part="bubble" key={`bubble-${pet.key}`} aria-live="polite">
               {pet.bubble}
             </p>
-            <div data-part="face" data-pet={pet.key} ref={faceRef} role="img" aria-label={`Морда: ${pet.label.toLowerCase()}`}>
-              <i data-part="ear" data-side="l" />
-              <i data-part="ear" data-side="r" />
-              <i data-part="head" />
-              <i data-part="muzzle" />
-              <i data-part="cheek" data-side="l" />
-              <i data-part="cheek" data-side="r" />
-              <i data-part="eye" data-side="l">
-                <i data-part="pupil" />
-                <i data-part="lid" />
-              </i>
-              <i data-part="eye" data-side="r">
-                <i data-part="pupil" />
-                <i data-part="lid" />
-              </i>
-              <i data-part="tongue" />
-              <i data-part="nose" />
-              <i data-part="mouth" />
-              <i data-part="teeth">
-                <i />
-                <i />
-              </i>
-              <i data-part="whiskers">
-                <i />
-                <i />
-                <i />
-                <i />
-                <i />
-                <i />
-              </i>
+            <div data-part="face" data-pet={pet.key} ref={faceRef} role="img" aria-label={pet.imageAlt ?? pet.label}>
+              {pets.map((item) => (
+                <img key={item.key} src={item.image} alt="" data-active={item.key === pet.key} loading={item.key === defaultPet ? "eager" : "lazy"} />
+              ))}
+              <i data-part="paw" aria-hidden="true" />
             </div>
           </div>
         </div>
