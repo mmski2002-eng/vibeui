@@ -196,7 +196,8 @@ export function Charity003({
     ...style,
   } as CSSProperties
 
-  let offset = 0
+  // Стартовые смещения сегментов: накопленная сумма долей до текущего.
+  const starts = current ? current.items.reduce<number[]>((acc, item) => [...acc, acc[acc.length - 1] + (total > 0 ? (item.value / total) * 100 : 0)], [0]) : []
 
   return (
     <>
@@ -229,8 +230,7 @@ export function Charity003({
                   <circle cx="50" cy="50" r="40" fill="none" stroke="var(--vibeui-charity-003-soft)" strokeWidth="14" />
                   {current.items.map((item, index) => {
                     const length = total > 0 ? (item.value / total) * 100 : 0
-                    const start = offset
-                    offset += length
+                    const start = starts[index]
                     return (
                       <circle
                         key={item.label}
