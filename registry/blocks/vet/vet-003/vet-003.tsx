@@ -162,7 +162,7 @@ export function Vet003({
     return [...map.values()].sort((a, b) => b.urgency - a.urgency || b.items.length - a.items.length)
   }, [symptoms, picked])
 
-  const top = groups[0]?.urgency ?? 0
+  const top: 0 | 1 | 2 | 3 = groups[0]?.urgency ?? 0
   const gaugeLevel = top === 0 ? 0 : (top - 1) / 2
   const toneVar = top === 3 ? "var(--vibeui-vet-003-bad)" : top === 2 ? "var(--vibeui-vet-003-warn)" : "var(--vibeui-vet-003-ok)"
 
