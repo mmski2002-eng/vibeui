@@ -16,4 +16,8 @@ export const PREVIEWS = {
     import("@/registry/blocks/downloads/download-005/download-005").then((module) => module.Download005),
   "download-006": () =>
     import("@/registry/blocks/downloads/download-006/download-006").then((module) => module.Download006),
+  "download-011": () =>
+    import("@/registry/blocks/downloads/download-011/download-011").then((module) => module.Download011),
+  "download-013": () =>
+    import("@/registry/blocks/downloads/download-013/download-013").then((module) => module.Download013),
 } satisfies PreviewLoaderMap

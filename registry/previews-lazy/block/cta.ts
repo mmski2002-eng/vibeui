@@ -84,4 +84,19 @@ export const PREVIEWS = {
   "cta-026": dynamic(() =>
     import("@/registry/blocks/cta/cta-026/cta-026").then((module) => module.Cta026),
   ),
+  "cta-030": dynamic(() =>
+    import("@/registry/blocks/cta/cta-030/cta-030").then((module) => module.Cta030),
+  ),
+  "cta-032": dynamic(() =>
+    import("@/registry/blocks/cta/cta-032/cta-032").then((module) => module.Cta032),
+  ),
+  "cta-034": dynamic(() =>
+    import("@/registry/blocks/cta/cta-034/cta-034").then((module) => module.Cta034),
+  ),
+  "cta-035": dynamic(() =>
+    import("@/registry/blocks/cta/cta-035/cta-035").then((module) => module.Cta035),
+  ),
+  "cta-037": dynamic(() =>
+    import("@/registry/blocks/cta/cta-037/cta-037").then((module) => module.Cta037),
+  ),
 } satisfies PreviewMap

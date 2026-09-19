@@ -52,4 +52,12 @@ export const PREVIEWS = {
     import("@/registry/blocks/pricing/pricing-024/pricing-024").then((module) => module.Pricing024),
   "pricing-025": () =>
     import("@/registry/blocks/pricing/pricing-025/pricing-025").then((module) => module.Pricing025),
+  "pricing-027": () =>
+    import("@/registry/blocks/pricing/pricing-027/pricing-027").then((module) => module.Pricing027),
+  "pricing-031": () =>
+    import("@/registry/blocks/pricing/pricing-031/pricing-031").then((module) => module.Pricing031),
+  "pricing-032": () =>
+    import("@/registry/blocks/pricing/pricing-032/pricing-032").then((module) => module.Pricing032),
+  "pricing-034": () =>
+    import("@/registry/blocks/pricing/pricing-034/pricing-034").then((module) => module.Pricing034),
 } satisfies PreviewLoaderMap

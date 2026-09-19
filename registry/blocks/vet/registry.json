@@ -1,0 +1,885 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "vet-001",
+      "type": "registry:block",
+      "title": "Экстренная кнопка «Срочно» с панелью «что делать сейчас»",
+      "description": "Закреплённая в углу пилюля с пульсом, телефоном и звонящей трубкой. По клику разворачивается в панель: крупный телефон, чек-лист первых действий с галочками, которые вычёркивают пункт, адрес и заметка. Esc закрывает. При fixed=false лежит в потоке — для каталога и превью.",
+      "categories": [
+        "vet"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "vet-001/vet-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/vet-001.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "vet",
+          "emergency",
+          "urgent",
+          "floating-button",
+          "fixed",
+          "phone",
+          "checklist",
+          "panel",
+          "clinic",
+          "sos"
+        ],
+        "preview": {
+          "props": {
+            "fixed": false
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Vet001",
+          "usage": "<Vet001\n  label=\"Срочно\"\n  phone=\"+7 495 120-24-24\"\n  phoneHref=\"tel:+74951202424\"\n  steps={[\"Не кормите и не поите\", \"Заверните в полотенце\", \"Скажите нам вес питомца\"]}\n/>",
+          "summary": "Плавающая кнопка экстренной помощи с раскрывающимся чек-листом первых действий.",
+          "preserve": [
+            "корень при fixed=true имеет нулевую высоту, позиционируется внутренний dock: position:fixed, ширина 22rem с max-width calc(100vw − 2rem)",
+            "пульс — ::before пилюли с keyframes scale+opacity, трубка качается keyframes ring; панель появляется с open из угла",
+            "чек-лист — настоящие checkbox внутри label, галочка рисуется stroke-dashoffset, текст зачёркивается через text-decoration-color"
+          ],
+          "adapt": [
+            "label, phone, phoneHref",
+            "title, lede, steps (список строк), note, address",
+            "fixed (true — в углу экрана, false — в потоке)",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Срочно",
+            "maxLength": 16
+          },
+          {
+            "prop": "phone",
+            "label": "Телефон",
+            "type": "text",
+            "default": "+7 495 120-24-24",
+            "maxLength": 20
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Emergency “Urgent” button with a “what to do now” panel",
+            "description": "A pill fixed in the corner with a pulse, a phone number and a ringing handset. On click it expands into a panel: a large phone link, a first-steps checklist whose ticks strike items through, an address and a note. Esc closes it. With fixed=false it sits in the flow — for the catalogue and previews.",
+            "ai": {
+              "summary": "Floating emergency button with an expanding first-steps checklist.",
+              "preserve": [
+                "with fixed=true the root has zero height and the inner dock is positioned: position:fixed, 22rem wide with max-width calc(100vw − 2rem)",
+                "the pulse is the pill's ::before with scale+opacity keyframes, the handset swings with ring keyframes; the panel opens from the corner",
+                "the checklist uses real checkboxes inside labels, the tick draws through stroke-dashoffset, text strikes through via text-decoration-color"
+              ],
+              "adapt": [
+                "label, phone, phoneHref",
+                "title, lede, steps (list of strings), note, address",
+                "fixed (true — screen corner, false — in flow)",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Vet001\n  label=\"Urgent\"\n  phone=\"+1 415 555-0142\"\n  phoneHref=\"tel:+14155550142\"\n  steps={[\"Don't feed or water\", \"Wrap in a towel\", \"Tell us the pet's weight\"]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Urgent"
+              },
+              "phone": {
+                "label": "Phone",
+                "default": "+1 415 555-0142"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Urgent",
+                "phone": "+1 415 555-0142",
+                "phoneHref": "tel:+14155550142",
+                "title": "What to do right now",
+                "lede": "Call us — we're already prepping the room. On the way:",
+                "steps": [
+                  "Don't feed or water if vomiting or injured",
+                  "Wrap in a towel, don't press the belly",
+                  "Poisoning — don't induce vomiting, bring the packaging",
+                  "Bleeding — firm bandage, no tourniquet",
+                  "Tell us how much the pet weighs"
+                ],
+                "note": "Duty vet around the clock, no appointment. At night use the courtyard entrance, button by the door.",
+                "address": "62 Leningradsky Ave, entrance from the park side",
+                "fixed": false
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "vet-002",
+      "type": "registry:block",
+      "title": "Карта питомца: SVG-схема тела с хотспотами услуг",
+      "description": "Интерактивная схема тела собаки из простых SVG-фигур: поверх — пульсирующие кнопки-хотспоты (уши, глаза, зубы, шерсть, живот, лапы, хвост). Клик по точке или по чипу в легенде — справа карточка услуги с ценой, временем и описанием, которая перерисовывается с подскоком. На узком схема сверху, карточка снизу.",
+      "categories": [
+        "vet"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "vet-002/vet-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/vet-002.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "vet",
+          "body-map",
+          "hotspots",
+          "svg",
+          "interactive",
+          "services",
+          "price",
+          "dog",
+          "anatomy",
+          "clinic"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Vet002",
+          "usage": "<Vet002\n  title=\"Ткните туда, где болит\"\n  spots={[\n    { key: \"teeth\", label: \"Зубы\", x: 90, y: 38, service: \"Чистка зубов\", price: \"от 6 900 ₽\", duration: \"≈ 1 час\", text: \"Под седацией, с полировкой.\" },\n    { key: \"ears\", label: \"Уши\", x: 73, y: 17, service: \"Чистка ушей\", price: \"900 ₽\", text: \"Осмотр и мазок.\" },\n  ]}\n/>",
+          "summary": "Схема тела питомца с кликабельными точками: часть тела → услуга и цена.",
+          "preserve": [
+            "хотспоты — button с position:absolute в процентах от контейнера aspect-ratio 600/420, кольцо-пульс ::before с задержкой по индексу",
+            "силуэт — svg с fill из --fur/--fur-dark (смесь акцента с фоном и чернилами), ошейник акцентом",
+            "карточка перемонтируется через key={spot.key} и играет keyframes pop; aria-pressed на активной точке"
+          ],
+          "adapt": [
+            "eyebrow, title, lede",
+            "spots: key, label, x, y (проценты), service, price, duration, text; defaultSpot",
+            "actionLabel, actionHref",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ткните туда, где болит",
+            "maxLength": 50
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Записаться",
+            "maxLength": 20
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Pet map: an SVG body scheme with service hotspots",
+            "description": "An interactive dog body scheme built from simple SVG shapes: on top, pulsing hotspot buttons (ears, eyes, teeth, coat, belly, paws, tail). Clicking a spot or a legend chip shows a service card on the right with price, duration and description that re-renders with a pop. On narrow the scheme sits above the card.",
+            "ai": {
+              "summary": "A pet body scheme with clickable spots: body part → service and price.",
+              "preserve": [
+                "hotspots are absolutely positioned buttons in percent of an aspect-ratio 600/420 container, the ::before pulse ring is delayed by index",
+                "the silhouette is an svg filled with --fur/--fur-dark (accent mixed with background and ink), the collar in accent",
+                "the card remounts through key={spot.key} and plays pop keyframes; aria-pressed on the active spot"
+              ],
+              "adapt": [
+                "eyebrow, title, lede",
+                "spots: key, label, x, y (percent), service, price, duration, text; defaultSpot",
+                "actionLabel, actionHref",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Vet002\n  title=\"Tap where it hurts\"\n  spots={[\n    { key: \"teeth\", label: \"Teeth\", x: 90, y: 38, service: \"Dental cleaning\", price: \"from $170\", duration: \"≈ 1 hour\", text: \"Under sedation, with polishing.\" },\n    { key: \"ears\", label: \"Ears\", x: 73, y: 17, service: \"Ear cleaning\", price: \"$22\", text: \"Exam and swab.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Tap where it hurts"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Book"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Pet map",
+                "title": "Tap where it hurts",
+                "lede": "A spot on the scheme is a service and a price. Can't find yours — message the front desk, we'll figure out who to see.",
+                "spots": [
+                  {
+                    "key": "ears",
+                    "label": "Ears",
+                    "x": 73,
+                    "y": 17,
+                    "service": "Ear cleaning and otoscope exam",
+                    "price": "$22",
+                    "duration": "15 minutes",
+                    "text": "Head shaking, scratching, a smell — we check the canal, take a swab, clean. Drops are chosen for what we find, not “just in case”."
+                  },
+                  {
+                    "key": "eyes",
+                    "label": "Eyes",
+                    "x": 81.5,
+                    "y": 26.5,
+                    "service": "Ophthalmologist visit",
+                    "price": "$45",
+                    "duration": "30 minutes",
+                    "text": "Watery, red, third eyelid showing — slit lamp exam, Schirmer test and fluorescein. No “try some drops”."
+                  },
+                  {
+                    "key": "teeth",
+                    "label": "Teeth",
+                    "x": 90,
+                    "y": 38,
+                    "service": "Ultrasonic dental cleaning",
+                    "price": "from $170",
+                    "duration": "≈ 1 hour",
+                    "text": "Under sedation, with polishing and x-rays. Bad breath isn't “the breed”, it's tartar. Gone in one visit."
+                  },
+                  {
+                    "key": "coat",
+                    "label": "Coat & skin",
+                    "x": 50,
+                    "y": 46,
+                    "service": "Dermatologist visit",
+                    "price": "$40",
+                    "duration": "30 minutes",
+                    "text": "Itching, bald patches, dandruff — scraping and Wood's lamp on the spot. If it's an allergy, we help find what exactly."
+                  },
+                  {
+                    "key": "belly",
+                    "label": "Belly",
+                    "x": 52,
+                    "y": 68,
+                    "service": "Abdominal ultrasound",
+                    "price": "$58",
+                    "duration": "25 minutes",
+                    "text": "Not eating, vomiting, sitting strangely — we look right away, no appointment for tomorrow. Report and images by messenger."
+                  },
+                  {
+                    "key": "paws",
+                    "label": "Paws & nails",
+                    "x": 67,
+                    "y": 90,
+                    "service": "Nail trim + paw pad check",
+                    "price": "$10",
+                    "duration": "10 minutes",
+                    "text": "Free while you wait for your visit. Limping — then the orthopaedist, x-ray the same day."
+                  },
+                  {
+                    "key": "tail",
+                    "label": "Tail",
+                    "x": 20,
+                    "y": 31,
+                    "service": "Surgeon visit",
+                    "price": "$38",
+                    "duration": "20 minutes",
+                    "text": "Caught in a door, won't lift it, “hanging” — exam, x-ray if needed. Tail fine — everything's fine."
+                  }
+                ],
+                "defaultSpot": "teeth",
+                "actionLabel": "Book"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "vet-003",
+      "type": "registry:block",
+      "title": "Симптом-чекер: чипы → к какому врачу и насколько срочно",
+      "description": "Чипы симптомов с цветной точкой срочности; отмеченные группируются по врачу на лету в карточки с полосой-шкалой (зелёный → янтарный → красный). Слева «градусник» с бегунком по самому тревожному симптому и вердикт: планово, сегодня или срочно; на красном уровне вместо записи — телефон. Не диагноз, а маршрут.",
+      "categories": [
+        "vet"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "vet-003/vet-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/vet-003.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "vet",
+          "symptom-checker",
+          "triage",
+          "urgency",
+          "chips",
+          "calculator",
+          "interactive",
+          "clinic",
+          "doctor",
+          "scale"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Vet003",
+          "usage": "<Vet003\n  title=\"Отметьте, что заметили\"\n  symptoms={[\n    { label: \"Не ест второй день\", doctor: \"Терапевт\", urgency: 2 },\n    { label: \"Тяжело дышит\", doctor: \"Дежурный врач\", urgency: 3 },\n    { label: \"Хромает\", doctor: \"Ортопед\", urgency: 1 },\n  ]}\n  phone=\"+7 495 120-24-24\"\n/>",
+          "summary": "Триаж симптомов: отметьте, что заметили, — блок скажет, к кому и насколько срочно.",
+          "preserve": [
+            "группировка — useMemo по symptoms и picked: Map по doctor, срочность — максимум, сортировка по срочности и числу симптомов",
+            "шкала — градиент ok→warn→bad, бегунок по --level (0, .5, 1) с transition left; полоса в карточке — width по urgency/3",
+            "уровень 3 показывает ссылку tel: красным, уровни 1–2 — кнопку записи; пустое состояние — пунктирная рамка"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, disclaimer, emptyText",
+            "symptoms: label, doctor, urgency (1 | 2 | 3); levels — подписи трёх уровней",
+            "phone, phoneHref, actionLabel, actionHref",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Отметьте, что заметили",
+            "maxLength": 50
+          },
+          {
+            "prop": "phone",
+            "label": "Телефон",
+            "type": "text",
+            "default": "+7 495 120-24-24",
+            "maxLength": 20
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Symptom checker: chips → which doctor and how urgent",
+            "description": "Symptom chips with a coloured urgency dot; selected ones are grouped by doctor on the fly into cards with a scale bar (green → amber → red). On the left a “thermometer” whose thumb follows the most alarming symptom and a verdict: routine, today or now; at the red level the phone replaces the booking button. Not a diagnosis — a route.",
+            "ai": {
+              "summary": "Symptom triage: tick what you noticed and the block tells you who to see and how urgently.",
+              "preserve": [
+                "grouping is a useMemo over symptoms and picked: a Map by doctor, urgency is the max, sorted by urgency and symptom count",
+                "the scale is an ok→warn→bad gradient, the thumb moves by --level (0, .5, 1) with a left transition; the card bar's width is urgency/3",
+                "level 3 shows a red tel: link, levels 1–2 a booking button; the empty state is a dashed frame"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, disclaimer, emptyText",
+                "symptoms: label, doctor, urgency (1 | 2 | 3); levels — the three level labels",
+                "phone, phoneHref, actionLabel, actionHref",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Vet003\n  title=\"Tick what you noticed\"\n  symptoms={[\n    { label: \"Not eating for two days\", doctor: \"Therapist\", urgency: 2 },\n    { label: \"Breathing hard\", doctor: \"Duty vet\", urgency: 3 },\n    { label: \"Limping\", doctor: \"Orthopaedist\", urgency: 1 },\n  ]}\n  phone=\"+1 415 555-0142\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Tick what you noticed"
+              },
+              "phone": {
+                "label": "Phone",
+                "default": "+1 415 555-0142"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Something's off?",
+                "title": "Tick what you noticed",
+                "lede": "We'll say which doctor and how urgently. Not a diagnosis — a route, so you don't have to guess at three in the morning.",
+                "symptoms": [
+                  {
+                    "label": "Not eating for two days",
+                    "doctor": "Therapist",
+                    "urgency": 2
+                  },
+                  {
+                    "label": "Vomiting more than twice",
+                    "doctor": "Therapist",
+                    "urgency": 2
+                  },
+                  {
+                    "label": "Breathing hard, blue tongue",
+                    "doctor": "Duty vet",
+                    "urgency": 3
+                  },
+                  {
+                    "label": "Can't pee",
+                    "doctor": "Duty vet",
+                    "urgency": 3
+                  },
+                  {
+                    "label": "Ate something wrong",
+                    "doctor": "Duty vet",
+                    "urgency": 3
+                  },
+                  {
+                    "label": "Limping",
+                    "doctor": "Orthopaedist",
+                    "urgency": 1
+                  },
+                  {
+                    "label": "Itching, bald patches",
+                    "doctor": "Dermatologist",
+                    "urgency": 1
+                  },
+                  {
+                    "label": "Bad breath",
+                    "doctor": "Dentist",
+                    "urgency": 1
+                  },
+                  {
+                    "label": "Shaking the head",
+                    "doctor": "Therapist",
+                    "urgency": 1
+                  },
+                  {
+                    "label": "Watery eyes",
+                    "doctor": "Ophthalmologist",
+                    "urgency": 1
+                  },
+                  {
+                    "label": "Blood in urine",
+                    "doctor": "Therapist",
+                    "urgency": 2
+                  },
+                  {
+                    "label": "Lethargic, hiding",
+                    "doctor": "Therapist",
+                    "urgency": 2
+                  },
+                  {
+                    "label": "Seizures",
+                    "doctor": "Duty vet",
+                    "urgency": 3
+                  },
+                  {
+                    "label": "Drinking a lot",
+                    "doctor": "Therapist",
+                    "urgency": 2
+                  },
+                  {
+                    "label": "Lump under the skin",
+                    "doctor": "Surgeon",
+                    "urgency": 1
+                  }
+                ],
+                "levels": [
+                  "routine, this week",
+                  "within a day",
+                  "urgent, right now"
+                ],
+                "phone": "+1 415 555-0142",
+                "phoneHref": "tel:+14155550142",
+                "actionLabel": "Book",
+                "disclaimer": "If in doubt — call. The duty vet will answer and tell you whether to come now. It's free.",
+                "emptyText": "Nothing ticked yet. Tap the symptoms above — the cards assemble themselves."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "vet-004",
+      "type": "registry:block",
+      "title": "Груминг: ползунок длины стрижки с CSS-питомцем и калькулятором",
+      "description": "Секция груминга: ползунок длины 3–40 мм меняет «шерсть» у CSS-собаки — два кольца из repeating-conic-gradient растут и опадают, уши удлиняются, а кучка шерсти на полу растёт, когда стрижёте короче. Размер S/M/L плитками и допуслуги чипами — цена и время считаются на лету. Подпись к длине меняется по порогам.",
+      "categories": [
+        "vet"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "vet-004/vet-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/vet-004.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "vet",
+          "grooming",
+          "slider",
+          "range",
+          "calculator",
+          "price",
+          "haircut",
+          "pet",
+          "css-illustration",
+          "interactive"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Vet004",
+          "usage": "<Vet004\n  title=\"Покрутите — и увидите, что получится\"\n  defaultLength={12}\n  sizes={[{ key: \"s\", label: \"S\", note: \"до 5 кг\", price: 2200 }, { key: \"m\", label: \"M\", note: \"5–15 кг\", price: 3200 }, { key: \"l\", label: \"L\", note: \"от 15 кг\", price: 4500 }]}\n  extras={[{ key: \"wash\", label: \"Мытьё и сушка\", price: 900 }, { key: \"nails\", label: \"Когти\", price: 350 }]}\n/>",
+          "summary": "Калькулятор стрижки с ползунком длины и живой CSS-иллюстрацией, которая стрижётся вместе с бегунком.",
+          "preserve": [
+            "шерсть — --len в cqi (1…10) ставится на stage из ratio, кольца fur считают размер calc(44cqi + len*2), пилот pile масштабируется обратно ratio",
+            "ползунок — input type=range с заливкой через --fill в linear-gradient, thumb стилизован для webkit и moz",
+            "цена — size.price + сумма выбранных extras, время 45 + длина/2 + 10 мин за допуслугу; число в tabular-nums"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, currency",
+            "minLength, maxLength, defaultLength; sizes: key, label, note, price; defaultSize; extras: key, label, price; marks: upTo, label",
+            "actionLabel, actionHref",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultLength",
+            "label": "Длина, мм",
+            "type": "number",
+            "default": 12,
+            "min": 3,
+            "max": 40
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Записать на стрижку",
+            "maxLength": 30
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Grooming: a haircut length slider with a CSS pet and a calculator",
+            "description": "A grooming section: a 3–40 mm length slider changes the “fur” of a CSS dog — two rings of repeating-conic-gradient grow and shrink, the ears get longer, and the pile of hair on the floor grows as you cut shorter. S/M/L size tiles and add-on chips — price and time are computed on the fly. The length caption changes by thresholds.",
+            "ai": {
+              "summary": "A haircut calculator with a length slider and a live CSS illustration that gets trimmed along with the thumb.",
+              "preserve": [
+                "fur: --len in cqi (1…10) is set on the stage from ratio, the fur rings size calc(44cqi + len*2), the pile scales inversely to ratio",
+                "the slider is an input type=range filled via --fill in a linear-gradient, thumb styled for webkit and moz",
+                "price = size.price + the sum of chosen extras, time 45 + length/2 + 10 min per add-on; numbers in tabular-nums"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, currency",
+                "minLength, maxLength, defaultLength; sizes: key, label, note, price; defaultSize; extras: key, label, price; marks: upTo, label",
+                "actionLabel, actionHref",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Vet004\n  title=\"Drag it — and see what you get\"\n  defaultLength={12}\n  currency=\"$\"\n  sizes={[{ key: \"s\", label: \"S\", note: \"up to 5 kg\", price: 55 }, { key: \"m\", label: \"M\", note: \"5–15 kg\", price: 80 }, { key: \"l\", label: \"L\", note: \"over 15 kg\", price: 110 }]}\n  extras={[{ key: \"wash\", label: \"Wash & dry\", price: 22 }, { key: \"nails\", label: \"Nails\", price: 9 }]}\n/>"
+            },
+            "controls": {
+              "defaultLength": {
+                "label": "Length, mm"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Book a groom"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Grooming",
+                "title": "Drag it — and see what you get",
+                "lede": "Haircut length, dog size and add-ons — the price is computed instantly. The groomer looks at the coat and tells you if the plan should change.",
+                "currency": "$",
+                "sizes": [
+                  {
+                    "key": "s",
+                    "label": "S",
+                    "note": "up to 5 kg",
+                    "price": 55
+                  },
+                  {
+                    "key": "m",
+                    "label": "M",
+                    "note": "5–15 kg",
+                    "price": 80
+                  },
+                  {
+                    "key": "l",
+                    "label": "L",
+                    "note": "over 15 kg",
+                    "price": 110
+                  }
+                ],
+                "extras": [
+                  {
+                    "key": "wash",
+                    "label": "Wash & dry",
+                    "price": 22
+                  },
+                  {
+                    "key": "nails",
+                    "label": "Nails",
+                    "price": 9
+                  },
+                  {
+                    "key": "ears",
+                    "label": "Ears",
+                    "price": 10
+                  },
+                  {
+                    "key": "teeth",
+                    "label": "Teeth brushing",
+                    "price": 12
+                  },
+                  {
+                    "key": "mats",
+                    "label": "Mats",
+                    "price": 20
+                  }
+                ],
+                "marks": [
+                  {
+                    "upTo": 5,
+                    "label": "clipper cut — summer and mats"
+                  },
+                  {
+                    "upTo": 12,
+                    "label": "short and tidy"
+                  },
+                  {
+                    "upTo": 25,
+                    "label": "styled, like in a magazine"
+                  },
+                  {
+                    "upTo": 99,
+                    "label": "just wash and trim"
+                  }
+                ],
+                "actionLabel": "Book a groom"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

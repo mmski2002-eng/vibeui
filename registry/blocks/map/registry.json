@@ -1870,6 +1870,192 @@
           }
         }
       }
+    },
+    {
+      "name": "map-011",
+      "type": "registry:block",
+      "title": "Карта и контакты автосервиса: svg-схема с маршрутом и меткой бокса",
+      "description": "Контакты автосервиса: слева адрес, «как найти», телефон, мессенджер, часы, парковка и две кнопки в навигаторы; справа стилизованная карта на svg — кварталы, дороги, река, точка старта («метро») и метка бокса с пульсирующими кольцами. Маршрут от старта до метки прорисовывается пунктиром через stroke-dashoffset и повторяется. Без API карт и без JS — свои ссылки в навигаторы подставляются пропсами.",
+      "categories": [
+        "map"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "map-011/map-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/map-011.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "map",
+          "contacts",
+          "auto",
+          "car service",
+          "detailing",
+          "address",
+          "route",
+          "svg",
+          "directions",
+          "hours",
+          "phone"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Map011",
+          "usage": "<Map011\n  title=\"Бокс на Обводном, ворота 42\"\n  address=\"наб. Обводного канала, 150, корп. 3\"\n  facts={[{ label: \"Телефон\", value: \"+7 (812) 420-42-42\", href: \"tel:+78124204242\" }]}\n  mapsHref=\"https://yandex.ru/maps/...\"\n/>",
+          "summary": "Контакты и схема проезда для автосервиса: svg-карта с маршрутом и пульсирующей меткой, кнопки в навигаторы.",
+          "preserve": [
+            "маршрут — path с pathLength=1, keyframes 5 с: dashoffset 1 → 0, пауза, затухание, снова",
+            "кольца — два circle с transform-box:fill-box, scale .4 → 2.6 с opacity, второе с задержкой 1,2 с",
+            "svg с preserveAspectRatio slice в контейнере aspect-ratio 3/2; подписи — html поверх в процентах от контейнера"
+          ],
+          "adapt": [
+            "eyebrow, title, address, howToFind",
+            "facts: label, value, href; mapsLabel, mapsHref, navigatorLabel, navigatorHref",
+            "pinLabel, fromLabel",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Бокс на Обводном, ворота 42",
+            "maxLength": 50
+          },
+          {
+            "prop": "pinLabel",
+            "label": "Метка",
+            "type": "text",
+            "default": "Гараж 42",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Car service map and contacts: an svg scheme with a route and a bay pin",
+            "description": "Car service contacts: address, “how to find us”, phone, messenger, hours, parking and two navigator buttons on the left; a stylized svg map on the right — blocks, roads, a river, a start point (“metro”) and the bay pin with pulsing rings. The route from the start to the pin draws itself via stroke-dashoffset and repeats. No map API and no JS — navigator links come in as props.",
+            "ai": {
+              "summary": "Contacts and directions for a car service: an svg map with a route and a pulsing pin, navigator buttons.",
+              "preserve": [
+                "the route is a path with pathLength=1, 5 s keyframes: dashoffset 1 → 0, hold, fade, again",
+                "the rings are two circles with transform-box:fill-box, scale .4 → 2.6 with opacity, the second delayed 1.2 s",
+                "the svg uses preserveAspectRatio slice in an aspect-ratio 3/2 container; labels are html on top in container percentages"
+              ],
+              "adapt": [
+                "eyebrow, title, address, howToFind",
+                "facts: label, value, href; mapsLabel, mapsHref, navigatorLabel, navigatorHref",
+                "pinLabel, fromLabel",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Map011\n  title=\"The bay on Harrison St, gate 42\"\n  address=\"150 Harrison St, building 3\"\n  facts={[{ label: \"Phone\", value: \"+1 (415) 420-42-42\", href: \"tel:+14154204242\" }]}\n  mapsHref=\"https://maps.google.com/...\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "The bay on Harrison St, gate 42"
+              },
+              "pinLabel": {
+                "label": "Pin",
+                "default": "Garage 42"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Where we are",
+                "title": "The bay on Harrison St, gate 42",
+                "address": "San Francisco, 150 Harrison St, building 3",
+                "howToFind": "Enter from Fremont St, second gate with the green sign. Call — we'll open the barrier.",
+                "facts": [
+                  {
+                    "label": "Phone",
+                    "value": "+1 (415) 420-42-42",
+                    "href": "tel:+14154204242"
+                  },
+                  {
+                    "label": "Messenger",
+                    "value": "@garage42_sf",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Hours",
+                    "value": "Mon–Sat 9:00–21:00, Sun closed"
+                  },
+                  {
+                    "label": "Parking",
+                    "value": "Our own, 6 spots at the gate"
+                  }
+                ],
+                "mapsLabel": "Open in Google Maps",
+                "navigatorLabel": "Route in Waze",
+                "pinLabel": "Garage 42",
+                "fromLabel": "Embarcadero station · 7 min"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

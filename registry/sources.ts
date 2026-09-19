@@ -30,6 +30,18 @@ import bakeryRegistry from "@/registry/blocks/bakery/registry.json"
 import opensourceRegistry from "@/registry/blocks/opensource/registry.json"
 import appRegistry from "@/registry/blocks/app/registry.json"
 import courseRegistry from "@/registry/blocks/course/registry.json"
+import autoRegistry from "@/registry/blocks/auto/registry.json"
+import vetRegistry from "@/registry/blocks/vet/registry.json"
+import flowersRegistry from "@/registry/blocks/flowers/registry.json"
+import renovationRegistry from "@/registry/blocks/renovation/registry.json"
+import deliveryRegistry from "@/registry/blocks/delivery/registry.json"
+import languageRegistry from "@/registry/blocks/language/registry.json"
+import fintechRegistry from "@/registry/blocks/fintech/registry.json"
+import marketRegistry from "@/registry/blocks/market/registry.json"
+import apiRegistry from "@/registry/blocks/api/registry.json"
+import gadgetRegistry from "@/registry/blocks/gadget/registry.json"
+import charityRegistry from "@/registry/blocks/charity/registry.json"
+import writerRegistry from "@/registry/blocks/writer/registry.json"
 import eventsRegistry from "@/registry/blocks/events/registry.json"
 import videoRegistry from "@/registry/blocks/video/registry.json"
 import podcastRegistry from "@/registry/blocks/podcast/registry.json"
@@ -281,6 +293,66 @@ export const SOURCES = [
     directory: "registry/blocks/course",
     kind: "block",
     items: courseRegistry.items,
+  },
+  {
+    directory: "registry/blocks/auto",
+    kind: "block",
+    items: autoRegistry.items,
+  },
+  {
+    directory: "registry/blocks/vet",
+    kind: "block",
+    items: vetRegistry.items,
+  },
+  {
+    directory: "registry/blocks/flowers",
+    kind: "block",
+    items: flowersRegistry.items,
+  },
+  {
+    directory: "registry/blocks/renovation",
+    kind: "block",
+    items: renovationRegistry.items,
+  },
+  {
+    directory: "registry/blocks/delivery",
+    kind: "block",
+    items: deliveryRegistry.items,
+  },
+  {
+    directory: "registry/blocks/language",
+    kind: "block",
+    items: languageRegistry.items,
+  },
+  {
+    directory: "registry/blocks/fintech",
+    kind: "block",
+    items: fintechRegistry.items,
+  },
+  {
+    directory: "registry/blocks/market",
+    kind: "block",
+    items: marketRegistry.items,
+  },
+  {
+    directory: "registry/blocks/api",
+    kind: "block",
+    items: apiRegistry.items,
+  },
+  {
+    directory: "registry/blocks/gadget",
+    kind: "block",
+    items: gadgetRegistry.items,
+  },
+  {
+    directory: "registry/blocks/charity",
+    kind: "block",
+    items: charityRegistry.items,
+  },
+  {
+    directory: "registry/blocks/writer",
+    kind: "block",
+    items: writerRegistry.items,
   },
   {
     directory: "registry/blocks/events",

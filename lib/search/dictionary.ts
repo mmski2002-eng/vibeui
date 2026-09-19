@@ -543,6 +543,66 @@ export const SYNONYMS: Synonym[] = [
     terms: ["bakery", "cafe", "coffee", "bread", "pastry", "croissant", "loaf", "barista", "oven", "shelf", "box", "preorder"],
   },
   {
+    say: ["автосервис", "детейлинг", "сто", "шиномонтаж", "автомойка", "машина", "автомобиль", "запись на ремонт"],
+    categories: ["auto"],
+    terms: ["auto", "car", "detailing", "garage", "service", "repair", "booking", "slots", "before-after"],
+  },
+  {
+    say: ["ветклиника", "ветеринар", "груминг", "питомец", "кот", "собака", "животные", "зоо"],
+    categories: ["vet"],
+    terms: ["vet", "veterinary", "pet", "grooming", "dog", "cat", "clinic", "symptoms", "emergency"],
+  },
+  {
+    say: ["цветы", "букет", "флорист", "цветочный", "доставка цветов", "конструктор букета"],
+    categories: ["flowers"],
+    terms: ["flowers", "bouquet", "florist", "floral", "builder", "delivery", "season", "subscription"],
+  },
+  {
+    say: ["ремонт", "ремонт квартир", "стройка", "бригада", "смета", "отделка", "прораб", "гант"],
+    categories: ["renovation"],
+    terms: ["renovation", "construction", "estimate", "calculator", "gantt", "blueprint", "before-after", "crew"],
+  },
+  {
+    say: ["доставка еды", "дарк китчен", "меню", "корзина", "заказ еды", "боул", "пицца", "курьер"],
+    categories: ["delivery"],
+    terms: ["delivery", "food", "menu", "cart", "kitchen", "courier", "tracker", "zone", "bowl"],
+  },
+  {
+    say: ["языковая школа", "английский", "испанский", "курсы языка", "репетитор", "уровень языка", "тест уровня"],
+    categories: ["language"],
+    terms: ["language", "school", "english", "spanish", "lessons", "level", "test", "schedule", "teachers"],
+  },
+  {
+    say: ["финтех", "банк", "банк для бизнеса", "расчётный счёт", "карта", "платежи", "необанк", "баланс"],
+    categories: ["fintech"],
+    terms: ["fintech", "bank", "banking", "card", "balance", "payments", "dashboard", "security", "account"],
+  },
+  {
+    say: ["маркетплейс", "шаблоны", "цифровые товары", "лицензия", "набор", "ассеты", "магазин шаблонов"],
+    categories: ["market"],
+    terms: ["marketplace", "templates", "digital", "assets", "license", "bundle", "shop", "authors"],
+  },
+  {
+    say: ["api", "апи", "dev tool", "инструмент разработчика", "геокодирование", "запросы", "sdk", "эндпоинт"],
+    categories: ["api"],
+    terms: ["api", "developer", "endpoint", "sandbox", "requests", "status", "uptime", "latency", "docs", "sdk"],
+  },
+  {
+    say: ["гаджет", "устройство", "лампа", "будильник", "хардвер", "предзаказ", "девайс", "умный дом"],
+    categories: ["gadget"],
+    terms: ["gadget", "hardware", "device", "lamp", "product", "preorder", "specs", "exploded"],
+  },
+  {
+    say: ["фонд", "благотворительность", "нко", "пожертвование", "помочь", "сбор", "волонтёр", "подопечные"],
+    categories: ["charity"],
+    terms: ["charity", "nonprofit", "donate", "donation", "fundraising", "volunteer", "foundation", "ngo"],
+  },
+  {
+    say: ["писатель", "автор", "книга", "эссе", "тексты", "читалка", "рассказы", "литература"],
+    categories: ["writer"],
+    terms: ["writer", "author", "book", "essay", "reading", "texts", "literature", "newsletter"],
+  },
+  {
     say: ["опенсорс", "open source", "библиотека", "документация", "песочница", "npm", "гитхаб"],
     categories: ["opensource"],
     terms: ["open source", "library", "docs", "playground", "sandbox", "github", "npm", "package", "developer", "sdk", "cli"],

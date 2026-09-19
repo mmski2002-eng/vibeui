@@ -1097,6 +1097,247 @@
           }
         }
       }
+    },
+    {
+      "name": "logocloud-014",
+      "type": "registry:block",
+      "title": "Интеграции бегущими строками и счётчики от текущего времени",
+      "description": "Две ленты стеклянных чипов с марками (1С, маркетплейсы, кассы, CRM) едут в разные стороны, тают маской по краям и останавливаются по наведению. Над ними заголовок и два счётчика, которые растут каждую секунду от начала суток — «компаний с нами» и «переводов сегодня». Время читается через useSyncExternalStore с серверным снимком null: на сервере вместо цифр тире, гидрация не расходится.",
+      "categories": [
+        "logos"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "logocloud-014/logocloud-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/logocloud-014.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "logos",
+          "logocloud",
+          "marquee",
+          "integrations",
+          "fintech",
+          "counters",
+          "live",
+          "stats",
+          "ticker",
+          "glass"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Logocloud014",
+          "usage": "<Logocloud014\n  title=\"Подключается к тому, чем вы уже пользуетесь\"\n  rows={[[{ name: \"1С:Бухгалтерия\", mark: \"1С\" }, { name: \"Ozon Seller\", mark: \"OZ\" }]]}\n  counters={[{ label: \"переводов за сегодня\", base: 0, perSecond: 3.4 }]}\n/>",
+          "summary": "Бегущие строки интеграций с чипами-марками и два живых счётчика, растущие от текущего времени.",
+          "preserve": [
+            "ряд — два одинаковых ul (второй aria-hidden), keyframes translateX(-50%) за --vibeui-logocloud-014-t секунд, нечётный ряд reverse, :hover на rows ставит animation-play-state:paused",
+            "счётчик = base + perSecond × секунд с начала суток, тик раз в секунду через общий setInterval в subscribe, серверный снимок null → «— — —»",
+            "при prefers-reduced-motion ленты становятся статичной сеткой без маски, дубль-лента скрыта"
+          ],
+          "adapt": [
+            "eyebrow, title",
+            "rows: name, mark",
+            "counters: label, base, perSecond, suffix; speed",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Подключается к тому, чем вы уже пользуетесь",
+            "maxLength": 64
+          },
+          {
+            "prop": "speed",
+            "label": "Секунд на круг",
+            "type": "number",
+            "default": 40,
+            "min": 10,
+            "max": 120
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Integrations as marquee rows with counters driven by the current time",
+            "description": "Two rows of glass chips with marks (1C, marketplaces, tills, CRM) run in opposite directions, fade at the edges with a mask and pause on hover. Above them a heading and two counters that grow every second from midnight — “companies with us” and “transfers today”. Time is read through useSyncExternalStore with a null server snapshot: dashes on the server instead of digits, so hydration never diverges.",
+            "ai": {
+              "summary": "Integration marquee rows with mark chips and two live counters growing from the current time.",
+              "preserve": [
+                "a row is two identical ul (the second aria-hidden), translateX(-50%) keyframes over --vibeui-logocloud-014-t seconds, odd rows reversed, :hover on rows sets animation-play-state:paused",
+                "counter = base + perSecond × seconds since midnight, ticking once a second through a shared setInterval in subscribe, the null server snapshot renders “— — —”",
+                "under prefers-reduced-motion the rows become a static wrapped grid without the mask and the duplicate lane is hidden"
+              ],
+              "adapt": [
+                "eyebrow, title",
+                "rows: name, mark",
+                "counters: label, base, perSecond, suffix; speed",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Logocloud014\n  title=\"Connects to what you already use\"\n  rows={[[{ name: \"1C Accounting\", mark: \"1C\" }, { name: \"Ozon Seller\", mark: \"OZ\" }]]}\n  counters={[{ label: \"transfers today\", base: 0, perSecond: 3.4 }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Connects to what you already use"
+              },
+              "speed": {
+                "label": "Seconds per loop"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Integrations",
+                "title": "Connects to what you already use",
+                "rows": [
+                  [
+                    {
+                      "name": "1C Accounting",
+                      "mark": "1C"
+                    },
+                    {
+                      "name": "Ozon Seller",
+                      "mark": "OZ"
+                    },
+                    {
+                      "name": "Wildberries",
+                      "mark": "WB"
+                    },
+                    {
+                      "name": "Yandex Market",
+                      "mark": "YM"
+                    },
+                    {
+                      "name": "MoySklad",
+                      "mark": "MS"
+                    },
+                    {
+                      "name": "Evotor",
+                      "mark": "EV"
+                    },
+                    {
+                      "name": "ATOL",
+                      "mark": "AT"
+                    },
+                    {
+                      "name": "Kontur Elba",
+                      "mark": "KE"
+                    }
+                  ],
+                  [
+                    {
+                      "name": "Bitrix24",
+                      "mark": "B24"
+                    },
+                    {
+                      "name": "amoCRM",
+                      "mark": "amo"
+                    },
+                    {
+                      "name": "Instant payments",
+                      "mark": "IP"
+                    },
+                    {
+                      "name": "Tinkoff Kassa",
+                      "mark": "TK"
+                    },
+                    {
+                      "name": "Modulbank API",
+                      "mark": "API"
+                    },
+                    {
+                      "name": "Telegram bot",
+                      "mark": "TG"
+                    },
+                    {
+                      "name": "Google Sheets",
+                      "mark": "GS"
+                    },
+                    {
+                      "name": "Honest Sign",
+                      "mark": "HS"
+                    }
+                  ]
+                ],
+                "counters": [
+                  {
+                    "label": "companies bank with Axis",
+                    "base": 48210,
+                    "perSecond": 0.0021
+                  },
+                  {
+                    "label": "transfers today",
+                    "base": 0,
+                    "perSecond": 3.4
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

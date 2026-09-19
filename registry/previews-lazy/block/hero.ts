@@ -105,4 +105,40 @@ export const PREVIEWS = {
   "hero-033": dynamic(() =>
     import("@/registry/blocks/hero/hero-033/hero-033").then((module) => module.Hero033),
   ),
+  "hero-034": dynamic(() =>
+    import("@/registry/blocks/hero/hero-034/hero-034").then((module) => module.Hero034),
+  ),
+  "hero-035": dynamic(() =>
+    import("@/registry/blocks/hero/hero-035/hero-035").then((module) => module.Hero035),
+  ),
+  "hero-036": dynamic(() =>
+    import("@/registry/blocks/hero/hero-036/hero-036").then((module) => module.Hero036),
+  ),
+  "hero-037": dynamic(() =>
+    import("@/registry/blocks/hero/hero-037/hero-037").then((module) => module.Hero037),
+  ),
+  "hero-038": dynamic(() =>
+    import("@/registry/blocks/hero/hero-038/hero-038").then((module) => module.Hero038),
+  ),
+  "hero-039": dynamic(() =>
+    import("@/registry/blocks/hero/hero-039/hero-039").then((module) => module.Hero039),
+  ),
+  "hero-040": dynamic(() =>
+    import("@/registry/blocks/hero/hero-040/hero-040").then((module) => module.Hero040),
+  ),
+  "hero-041": dynamic(() =>
+    import("@/registry/blocks/hero/hero-041/hero-041").then((module) => module.Hero041),
+  ),
+  "hero-042": dynamic(() =>
+    import("@/registry/blocks/hero/hero-042/hero-042").then((module) => module.Hero042),
+  ),
+  "hero-043": dynamic(() =>
+    import("@/registry/blocks/hero/hero-043/hero-043").then((module) => module.Hero043),
+  ),
+  "hero-044": dynamic(() =>
+    import("@/registry/blocks/hero/hero-044/hero-044").then((module) => module.Hero044),
+  ),
+  "hero-045": dynamic(() =>
+    import("@/registry/blocks/hero/hero-045/hero-045").then((module) => module.Hero045),
+  ),
 } satisfies PreviewMap

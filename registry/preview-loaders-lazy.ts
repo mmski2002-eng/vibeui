@@ -63,6 +63,30 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/block/app")).PREVIEWS
     case "block/course":
       return (await import("@/registry/previews-lazy/block/course")).PREVIEWS
+    case "block/auto":
+      return (await import("@/registry/previews-lazy/block/auto")).PREVIEWS
+    case "block/vet":
+      return (await import("@/registry/previews-lazy/block/vet")).PREVIEWS
+    case "block/flowers":
+      return (await import("@/registry/previews-lazy/block/flowers")).PREVIEWS
+    case "block/renovation":
+      return (await import("@/registry/previews-lazy/block/renovation")).PREVIEWS
+    case "block/delivery":
+      return (await import("@/registry/previews-lazy/block/delivery")).PREVIEWS
+    case "block/language":
+      return (await import("@/registry/previews-lazy/block/language")).PREVIEWS
+    case "block/fintech":
+      return (await import("@/registry/previews-lazy/block/fintech")).PREVIEWS
+    case "block/market":
+      return (await import("@/registry/previews-lazy/block/market")).PREVIEWS
+    case "block/api":
+      return (await import("@/registry/previews-lazy/block/api")).PREVIEWS
+    case "block/gadget":
+      return (await import("@/registry/previews-lazy/block/gadget")).PREVIEWS
+    case "block/charity":
+      return (await import("@/registry/previews-lazy/block/charity")).PREVIEWS
+    case "block/writer":
+      return (await import("@/registry/previews-lazy/block/writer")).PREVIEWS
     case "block/events":
       return (await import("@/registry/previews-lazy/block/events")).PREVIEWS
     case "block/video":

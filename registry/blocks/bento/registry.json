@@ -392,6 +392,1266 @@
           }
         }
       }
+    },
+    {
+      "name": "bento-008",
+      "type": "registry:block",
+      "title": "Бенто «как проходят занятия»: таймлайн урока, фото и живые плитки",
+      "description": "Семь плиток разного размера про формат занятий: большая с таймлайном урока из цветных отрезков, по которому бегает игла; высокая с фото и рукописной подписью-стикером; круг «70% говорите вы» на conic-gradient; шесть кружков-учеников, один поднимает руку; тетрадный лист, на котором домашка сама пишется (clip-path); чипы носителей; список «что остаётся после урока». Всё на CSS.",
+      "categories": [
+        "bento"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "bento-008/bento-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/bento-008.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "bento",
+          "school",
+          "language",
+          "education",
+          "lesson",
+          "timeline",
+          "features",
+          "grid",
+          "animation",
+          "handwritten"
+        ],
+        "preview": {
+          "props": {
+            "image": "/demo/language/lesson.webp"
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Bento008",
+          "usage": "<Bento008\n  title=\"Час, после которого хочется говорить\"\n  image=\"/photos/lesson.webp\"\n  segments={[{ label: \"разогрев\", minutes: 5 }, { label: \"разговор\", minutes: 25 }]}\n  speakShare={70}\n/>",
+          "summary": "Бенто для школы или курсов: как устроено занятие — таймлайн, доля разговора, размер группы, домашка, носители.",
+          "preserve": [
+            "таймлайн — flex с flex:minutes у отрезков, тон отрезка через --i в color-mix; игла — блок 100% ширины с keyframes translateX 0→100%",
+            "домашка пишется через clip-path inset(0 100% 0 0) → inset(0), в конце цикла гаснет; при reduce-motion clip-path снят",
+            "сетка: 1 колонка, от 40rem — 2 (урок и домашка на две), от 64rem — 4, урок 2×2, фото на два ряда"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, image, imageAlt, imageCaption",
+            "lessonTitle, lessonText, segments: label, minutes",
+            "groupTitle, groupText, group; speakShare, speakText; homeworkTitle, homework; nativeTitle, nativeText, natives; recordTitle, records",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Час, после которого хочется говорить",
+            "maxLength": 60
+          },
+          {
+            "prop": "speakShare",
+            "label": "Доля разговора, %",
+            "type": "number",
+            "default": 70,
+            "min": 10,
+            "max": 100
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "“How lessons work” bento: a lesson timeline, a photo and live tiles",
+            "description": "Seven tiles of different sizes about the lesson format: a big one with a lesson timeline of coloured segments and a running needle; a tall one with a photo and a handwritten sticker caption; a “70% is you speaking” ring on conic-gradient; six student circles, one raising a hand; a ruled sheet where the homework writes itself (clip-path); native-speaker chips; a list of “what stays after the lesson”. All CSS.",
+            "ai": {
+              "summary": "A bento for a school or courses: how a lesson works — a timeline, speaking share, group size, homework, native speakers.",
+              "preserve": [
+                "the timeline is a flex row with flex:minutes on segments, segment tone via --i in color-mix; the needle is a 100%-wide block with translateX 0→100% keyframes",
+                "the homework writes itself via clip-path inset(0 100% 0 0) → inset(0) and fades at the end of the loop; under reduce-motion the clip-path is removed",
+                "grid: 1 column, from 40rem — 2 (lesson and homework span two), from 64rem — 4, the lesson 2×2, the photo spans two rows"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, image, imageAlt, imageCaption",
+                "lessonTitle, lessonText, segments: label, minutes",
+                "groupTitle, groupText, group; speakShare, speakText; homeworkTitle, homework; nativeTitle, nativeText, natives; recordTitle, records",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Bento008\n  title=\"An hour after which you want to keep talking\"\n  image=\"/photos/lesson.webp\"\n  segments={[{ label: \"warm-up\", minutes: 5 }, { label: \"speaking\", minutes: 25 }]}\n  speakShare={70}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "An hour after which you want to keep talking"
+              },
+              "speakShare": {
+                "label": "Speaking share, %"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "how lessons work",
+                "title": "An hour after which you want to keep talking",
+                "lede": "No forty-minute lectures on the Present Perfect. The lesson is built so you speak more than the teacher — and leave with homework you actually want to do.",
+                "image": "/demo/language/lesson.webp",
+                "imageAlt": "A group lesson: the teacher and students on screen",
+                "imageCaption": "group B1, Thursday, 19:30",
+                "lessonTitle": "A lesson is 60 minutes on Zoom",
+                "lessonText": "Five parts, and the longest one is conversation. The teacher leads but doesn't solo.",
+                "segments": [
+                  {
+                    "label": "warm-up",
+                    "minutes": 5
+                  },
+                  {
+                    "label": "homework",
+                    "minutes": 10
+                  },
+                  {
+                    "label": "new topic",
+                    "minutes": 15
+                  },
+                  {
+                    "label": "speaking",
+                    "minutes": 25
+                  },
+                  {
+                    "label": "wrap-up",
+                    "minutes": 5
+                  }
+                ],
+                "groupTitle": "Up to six people",
+                "groupText": "Everyone speaks every lesson. Pairs rotate so you hear different voices.",
+                "group": [
+                  "MK",
+                  "AS",
+                  "DP",
+                  "OV",
+                  "IL",
+                  "EN"
+                ],
+                "speakShare": 70,
+                "speakText": "of lesson time is you speaking, not listening",
+                "homeworkTitle": "Homework in a notebook",
+                "homework": "Record a voice note: three things that annoy you in the morning. In English, 40 seconds.",
+                "nativeTitle": "A native speaker once a week",
+                "nativeText": "Every fourth lesson is led by a native speaker — you get used to real speed and accent.",
+                "natives": [
+                  "Manchester",
+                  "Valencia",
+                  "Bologna"
+                ],
+                "recordTitle": "After the lesson you keep",
+                "records": [
+                  "The lesson recording for a week",
+                  "Notes with new words",
+                  "A voice review of your homework"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bento-009",
+      "type": "registry:block",
+      "title": "Возможности банка bento-сеткой с микроанимацией в каждой плитке",
+      "description": "Шесть стеклянных плиток разного размера, в каждой своя CSS-микроанимация по виду: перевод бежит точкой по линии между двумя счетами и ставит галочку, налог растёт столбиками, валюты сменяются в кольце, выписка «пишется» строками, карты сотрудников раскрываются веером по наведению, поддержка печатает точками. Плитка подсвечивается сиянием сверху при наведении. Серверный компонент, без JS.",
+      "categories": [
+        "bento"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "bento-009/bento-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/bento-009.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "bento",
+          "features",
+          "fintech",
+          "bank",
+          "grid",
+          "animation",
+          "micro-interaction",
+          "glass",
+          "tiles"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Bento009",
+          "usage": "<Bento009\n  title=\"Всё, что делает бухгалтер по вторникам, — за секунды\"\n  items={[\n    { kind: \"transfer\", title: \"Переводы за секунды\", text: \"По номеру телефона или реквизитам.\", meta: \"0 ₽\", large: true },\n    { kind: \"tax\", title: \"Налоги считаем сами\", text: \"УСН копится с каждого поступления.\" },\n  ]}\n/>",
+          "summary": "Bento возможностей для финтеха: шесть плиток, в каждой живая CSS-микроанимация по виду.",
+          "preserve": [
+            "kind плитки задаёт фигуру: transfer — точка ::before на wire с container-type:inline-size и translateX(100cqw), tax — столбики scaleY с задержкой по --i, fx — символы валют по очереди, export — строки scaleX, cards — веер rotate по --i на :hover плитки, support — точки печати",
+            "сетка: 1 колонка, от 44rem две (large на две), от 64rem шесть колонок, каждая плитка span 2, large — span 4 и два ряда",
+            "сияние — ::before плитки с radial-gradient, blur и opacity 0 → .28 на :hover"
+          ],
+          "adapt": [
+            "eyebrow, title, lede",
+            "items: kind (transfer | tax | fx | export | cards | support), title, text, meta, large, labels (подписи внутри фигуры)",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Всё, что делает бухгалтер по вторникам, — за секунды",
+            "maxLength": 80
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Возможности",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Bank features in a bento grid with a micro-animation in every tile",
+            "description": "Six glass tiles of different sizes, each with its own CSS micro-animation by kind: a transfer runs as a dot along the line between two accounts and ticks a checkmark, tax grows in bars, currencies rotate in a ring, a statement “writes” itself in lines, employee cards fan out on hover, support types with dots. A tile glows from the top on hover. Server component, no JS.",
+            "ai": {
+              "summary": "A features bento for fintech: six tiles, each with a live CSS micro-animation by kind.",
+              "preserve": [
+                "the tile kind picks the figure: transfer — a ::before dot on the wire with container-type:inline-size and translateX(100cqw), tax — scaleY bars delayed by --i, fx — currency symbols in turn, export — scaleX lines, cards — a rotate fan by --i on tile :hover, support — typing dots",
+                "grid: 1 column, two from 44rem (large spans two), six columns from 64rem, every tile spans 2, large spans 4 and two rows",
+                "the glow is the tile's ::before with a radial-gradient, blur and opacity 0 → .28 on :hover"
+              ],
+              "adapt": [
+                "eyebrow, title, lede",
+                "items: kind (transfer | tax | fx | export | cards | support), title, text, meta, large, labels (captions inside the figure)",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Bento009\n  title=\"Everything your accountant does on Tuesdays — in seconds\"\n  items={[\n    { kind: \"transfer\", title: \"Transfers in seconds\", text: \"By phone number or bank details.\", meta: \"0 ₽\", large: true },\n    { kind: \"tax\", title: \"Taxes calculated for you\", text: \"Tax accrues from every incoming payment.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Everything your accountant does on Tuesdays — in seconds"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Features"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Features",
+                "title": "Everything your accountant does on Tuesdays — in seconds",
+                "lede": "Transfers, taxes, currency, statements and employee cards in one app, with no branch visits and no “a manager will call you back”.",
+                "items": [
+                  {
+                    "kind": "transfer",
+                    "title": "Instant transfers in seconds",
+                    "text": "To a supplier, an employee or yourself — by phone number or bank details. No fee, the money lands before you close the app.",
+                    "meta": "0 ₽ fee",
+                    "large": true,
+                    "labels": [
+                      "Your account",
+                      "Prim LLC",
+                      "48,900 ₽"
+                    ]
+                  },
+                  {
+                    "kind": "tax",
+                    "title": "Taxes calculated for you",
+                    "text": "Tax and contributions accrue from every incoming payment. We remind you a week ahead and pay in one tap.",
+                    "meta": "6% tax"
+                  },
+                  {
+                    "kind": "fx",
+                    "title": "Accounts in four currencies",
+                    "text": "Rubles, yuan, dollars, euros. Conversion at the exchange rate plus 0.3%.",
+                    "meta": "+ 0.3%"
+                  },
+                  {
+                    "kind": "export",
+                    "title": "Statements to 1C and Excel",
+                    "text": "Sync every 15 minutes, documents attach themselves to payments.",
+                    "meta": "1C"
+                  },
+                  {
+                    "kind": "cards",
+                    "title": "Employee cards",
+                    "text": "Virtual in a minute, plastic in a day. Limits and categories — in the app.",
+                    "meta": "up to 50 cards"
+                  },
+                  {
+                    "kind": "support",
+                    "title": "Support answers with humans",
+                    "text": "Average reply — 40 seconds, at night too. No “your call is very important to us”.",
+                    "meta": "24/7",
+                    "labels": [
+                      "A payment to China won't go through"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bento-010",
+      "type": "registry:block",
+      "title": "Bento для авторов: цифры докручиваются, календарь выплат, лента покупок",
+      "description": "Bento-раскладка «почему продавать здесь»: акцентная плитка 2×2 с огромной цифрой доли автора, плитка выплат с недельной полоской и пульсирующей пятницей, три плитки-счётчика (товары, авторы, загрузки), широкая плитка «купили только что» с бегущей строкой покупок и чёрная плитка-кнопка «стать автором». Все цифры докручиваются из нуля, когда секция входит в viewport.",
+      "categories": [
+        "bento"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "bento-010/bento-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/bento-010.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "bento",
+          "stats",
+          "counters",
+          "marketplace",
+          "authors",
+          "payout",
+          "marquee",
+          "ticker",
+          "grid",
+          "numbers"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Bento010",
+          "usage": "<Bento010\n  hero={{ value: 80, suffix: \" %\", label: \"от каждой продажи — автору\" }}\n  stats={[{ value: 4812, label: \"товаров\" }, { value: 2.1, decimals: 1, suffix: \" млн\", label: \"загрузок\" }]}\n  purchases={[{ who: \"Маша из Казани\", what: \"Атлас — UI-кит\", ago: \"только что\" }]}\n/>",
+          "summary": "Bento с докручивающимися цифрами для страницы «авторам»: доля, выплаты, счётчики, бегущая строка покупок.",
+          "preserve": [
+            "счётчики — одно состояние progress 0→1: IntersectionObserver (threshold .25) запускает rAF на 1.6 с с ease-out кубом, при reduce-motion сразу 1",
+            "бегущая строка — два одинаковых ul с translateX(-100%) за 32 с, второй aria-hidden; mask-image по краям, пауза по наведению",
+            "раскладка: 1 колонка → 2 от 40rem (hero и feed на две) → 4 от 64rem (hero 2×2, feed на три), grid-auto-flow:dense"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, heroText, payoutTitle, payoutText, payoutDay, purchasesLabel, ctaLabel, ctaHref",
+            "hero и stats: value, label, prefix, suffix, decimals",
+            "purchases: who, what, ago",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Загрузили один раз — продаётся годами",
+            "maxLength": 60
+          },
+          {
+            "prop": "ctaLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Стать автором",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Authors bento: counting numbers, a payout calendar, a purchases ticker",
+            "description": "A “why sell here” bento: an accent 2×2 tile with a huge author-share number, a payout tile with a week strip and a pulsing Friday, three counter tiles (products, authors, downloads), a wide “just bought” tile with a purchases ticker and a black “become an author” button tile. All numbers count up from zero when the section enters the viewport.",
+            "ai": {
+              "summary": "A bento with counting numbers for an “authors” page: share, payouts, counters, a purchases ticker.",
+              "preserve": [
+                "counters share one progress state 0→1: IntersectionObserver (threshold .25) starts a 1.6s rAF with cubic ease-out, 1 at once under reduce-motion",
+                "the ticker is two identical ul with translateX(-100%) over 32s, the second aria-hidden; mask-image at the edges, paused on hover",
+                "layout: 1 column → 2 from 40rem (hero and feed span two) → 4 from 64rem (hero 2×2, feed spans three), grid-auto-flow:dense"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, heroText, payoutTitle, payoutText, payoutDay, purchasesLabel, ctaLabel, ctaHref",
+                "hero and stats: value, label, prefix, suffix, decimals",
+                "purchases: who, what, ago",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Bento010\n  hero={{ value: 80, suffix: \"%\", label: \"of every sale goes to the author\" }}\n  stats={[{ value: 4812, label: \"products\" }, { value: 2.1, decimals: 1, suffix: \"M\", label: \"downloads\" }]}\n  purchases={[{ who: \"Masha from Kazan\", what: \"Atlas — UI kit\", ago: \"just now\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Upload once — sells for years"
+              },
+              "ctaLabel": {
+                "label": "Button",
+                "default": "Become an author"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "for authors",
+                "title": "Upload once — sells for years",
+                "lede": "We handle payments, licenses, taxes under an agency scheme and buyer support. You — only the product.",
+                "hero": {
+                  "value": 80,
+                  "suffix": "%",
+                  "label": "of every sale goes to the author"
+                },
+                "heroText": "No thresholds and no “first 100 sales at a different rate”. One rate for everyone, from the first dollar.",
+                "payoutTitle": "Payouts every Friday",
+                "payoutText": "To a card or a business account, no minimum.",
+                "purchasesLabel": "just bought",
+                "ctaLabel": "Become an author",
+                "stats": [
+                  {
+                    "value": 4812,
+                    "label": "products in the catalog"
+                  },
+                  {
+                    "value": 1240,
+                    "label": "authors get paid"
+                  },
+                  {
+                    "value": 2.1,
+                    "decimals": 1,
+                    "suffix": "M",
+                    "label": "downloads a year"
+                  }
+                ],
+                "purchases": [
+                  {
+                    "who": "Masha from Kazan",
+                    "what": "Atlas — UI kit",
+                    "ago": "just now"
+                  },
+                  {
+                    "who": "Format studio",
+                    "what": "Narva Grotesk · team",
+                    "ago": "1 min"
+                  },
+                  {
+                    "who": "Kirill from Tbilisi",
+                    "what": "Routine — second brain",
+                    "ago": "2 min"
+                  },
+                  {
+                    "who": "Olya from Novosibirsk",
+                    "what": "Edge — 480 icons",
+                    "ago": "4 min"
+                  },
+                  {
+                    "who": "Artem from Minsk",
+                    "what": "Dashboard Pro · commercial",
+                    "ago": "6 min"
+                  },
+                  {
+                    "who": "Dina from Almaty",
+                    "what": "Sprint — product tracker",
+                    "ago": "9 min"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bento-011",
+      "type": "registry:block",
+      "title": "Эндпоинты API bento-плитками с CSS-микродемо",
+      "description": "Секция возможностей API: шесть плиток разного размера, у каждой чип метода GET/POST, путь моноширинным и живое микродемо на чистом CSS — булавка падает на сетку (geocode), прицел и строки адреса (reverse), полилиния рисуется штрихом (route), подсказки печатаются под полем (suggest), тепловая сетка дышит (matrix), полосы пакетной загрузки заполняются (batch). Заголовок, текст и метрика p50 внизу. Без JS.",
+      "categories": [
+        "bento"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "bento-011/bento-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/bento-011.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "bento",
+          "features",
+          "api",
+          "endpoints",
+          "developer",
+          "grid",
+          "animation",
+          "css",
+          "dark",
+          "monospace"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Bento011",
+          "usage": "<Bento011\n  title=\"Шесть методов, один ключ\"\n  items={[\n    { method: \"GET\", path: \"/v2/geocode\", title: \"Прямое геокодирование\", text: \"Адрес → координаты дома.\", meta: \"p50 · 42 ms\", kind: \"geocode\", wide: true },\n    { method: \"POST\", path: \"/v2/route\", title: \"Маршруты\", text: \"Геометрия, расстояние, время.\", kind: \"route\" },\n  ]}\n/>",
+          "summary": "Возможности API как bento с анимированными плитками-эндпоинтами: метод, путь, микродемо.",
+          "preserve": [
+            "kind плитки выбирает микродемо в switch, все анимации — keyframes с бесконечным циклом",
+            "сетка: 1 колонка → 2 от 40rem → 3 от 60rem, плитка wide занимает две колонки",
+            "фон демо — сетка точек radial-gradient 16px, чип POST — янтарный, GET — акцент"
+          ],
+          "adapt": [
+            "eyebrow, title, lede",
+            "items: method, path, title, text, meta, kind (geocode | reverse | route | suggest | matrix | batch), wide",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Шесть методов, один ключ",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "API endpoints as bento tiles with CSS micro-demos",
+            "description": "An API features section: six tiles of different sizes, each with a GET/POST method chip, a monospace path and a live pure-CSS micro-demo — a pin drops onto a grid (geocode), a crosshair and address lines (reverse), a polyline draws itself (route), suggestions type under a field (suggest), a heat grid breathes (matrix), batch upload bars fill (batch). A title, text and a p50 metric below. No JS.",
+            "ai": {
+              "summary": "API capabilities as a bento of animated endpoint tiles: method, path, micro-demo.",
+              "preserve": [
+                "the tile kind picks the micro-demo in a switch, all animations are infinite keyframes",
+                "grid: 1 column → 2 from 40rem → 3 from 60rem, a wide tile spans two columns",
+                "the demo background is a 16px radial-gradient dot grid, the POST chip is amber, GET is the accent"
+              ],
+              "adapt": [
+                "eyebrow, title, lede",
+                "items: method, path, title, text, meta, kind (geocode | reverse | route | suggest | matrix | batch), wide",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Bento011\n  title=\"Six methods, one key\"\n  items={[\n    { method: \"GET\", path: \"/v2/geocode\", title: \"Forward geocoding\", text: \"Address → house coordinates.\", meta: \"p50 · 42 ms\", kind: \"geocode\", wide: true },\n    { method: \"POST\", path: \"/v2/route\", title: \"Routes\", text: \"Geometry, distance, time.\", kind: \"route\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Six methods, one key"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Endpoints",
+                "title": "Six methods, one key",
+                "lede": "Everything delivery, maps and logistics need. One response format, one auth, the same docs.",
+                "items": [
+                  {
+                    "method": "GET",
+                    "path": "/v2/geocode",
+                    "title": "Forward geocoding",
+                    "text": "An address string in any shape — typos, abbreviations, no postal code — becomes house coordinates and a normalized address.",
+                    "meta": "p50 · 42 ms",
+                    "kind": "geocode",
+                    "wide": true
+                  },
+                  {
+                    "method": "GET",
+                    "path": "/v2/reverse",
+                    "title": "Reverse geocoding",
+                    "text": "Coordinates → the nearest address, district, postal code and object type.",
+                    "meta": "p50 · 39 ms",
+                    "kind": "reverse"
+                  },
+                  {
+                    "method": "POST",
+                    "path": "/v2/route",
+                    "title": "Routes",
+                    "text": "Car, walking, bike: geometry, distance, time with traffic.",
+                    "meta": "p50 · 110 ms",
+                    "kind": "route"
+                  },
+                  {
+                    "method": "GET",
+                    "path": "/v2/suggest",
+                    "title": "Address suggestions",
+                    "text": "Autocomplete from the first letters for checkout and signup forms.",
+                    "meta": "p50 · 24 ms",
+                    "kind": "suggest"
+                  },
+                  {
+                    "method": "POST",
+                    "path": "/v2/matrix",
+                    "title": "Distance matrix",
+                    "text": "Up to 100 × 100 points per request — for logistics and picking the nearest warehouse.",
+                    "meta": "p50 · 180 ms",
+                    "kind": "matrix"
+                  },
+                  {
+                    "method": "POST",
+                    "path": "/v2/batch",
+                    "title": "Batch processing",
+                    "text": "Upload a file with a million addresses — get a geocoded CSV back.",
+                    "meta": "≈ 12 min per 1,000,000",
+                    "kind": "batch"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bento-012",
+      "type": "registry:block",
+      "title": "Возможности гаджета bento: эквалайзер, кольца датчиков, CSS-телефон",
+      "description": "Шесть плиток разного размера для железки: звук — эквалайзер из полосок с разными задержками, датчики — три кольца conic-gradient, которые заполняются через @property, приложение — телефон из CSS с расписанием и тумблером, который сам переключается, спектр — полоса 2700→6500 K с бегающим маркером, тишина — крупная цифра, протоколы — чипы. Раскладка 2×2, 1×3 и 2×1 на широком, одна колонка на узком.",
+      "categories": [
+        "bento"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "bento-012/bento-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/bento-012.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "bento",
+          "features",
+          "gadget",
+          "hardware",
+          "grid",
+          "equalizer",
+          "sensors",
+          "phone",
+          "css-animation",
+          "product"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Bento012",
+          "usage": "<Bento012\n  title=\"Не будильник. Маленькое солнце с характером\"\n  sensors={[{ label: \"CO₂, ppm\", value: \"640\", percent: 32 }]}\n  localChips={[\"Matter\", \"Thread\"]}\n/>",
+          "summary": "Bento возможностей железки: каждая плитка живёт своей CSS-анимацией — звук, датчики, приложение, спектр.",
+          "preserve": [
+            "эквалайзер — 14 полосок с -h и -d из массива, scaleY от bottom в keyframes alternate",
+            "кольца — conic-gradient по анимируемой @property -v с маской radial-gradient, значение в центре",
+            "на 66rem контейнера сетка 4 колонки × 3 ряда: sound 2×2, app в четвёртой колонке на 3 ряда, local 2×1"
+          ],
+          "adapt": [
+            "eyebrow, title, lede",
+            "soundTitle, soundText, soundChip, sensorsTitle, sensors: label, value, percent",
+            "appTitle, appText, alarms; spectrumTitle, spectrumText; silentTitle, silentValue, silentText; localTitle, localText, localChips",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Не будильник. Маленькое солнце с характером",
+            "maxLength": 60
+          },
+          {
+            "prop": "silentValue",
+            "label": "Крупная цифра",
+            "type": "text",
+            "default": "0 дБ",
+            "maxLength": 12
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Gadget features bento: an equalizer, sensor rings, a CSS phone",
+            "description": "Six tiles of different sizes for a hardware product: sound — an equalizer of bars with staggered delays, sensors — three conic-gradient rings that fill via @property, app — a CSS phone with a schedule and a toggle that flips on its own, spectrum — a 2700→6500 K strip with a running marker, silence — a big figure, protocols — chips. Layout 2×2, 1×3 and 2×1 on wide, one column on narrow.",
+            "ai": {
+              "summary": "A hardware features bento: every tile lives with its own CSS animation — sound, sensors, app, spectrum.",
+              "preserve": [
+                "the equalizer is 14 bars with -h and -d from an array, scaleY from the bottom in alternate keyframes",
+                "the rings are a conic-gradient over an animatable @property -v with a radial-gradient mask, the value in the centre",
+                "from a 66rem container the grid is 4 columns × 3 rows: sound 2×2, app in the fourth column over 3 rows, local 2×1"
+              ],
+              "adapt": [
+                "eyebrow, title, lede",
+                "soundTitle, soundText, soundChip, sensorsTitle, sensors: label, value, percent",
+                "appTitle, appText, alarms; spectrumTitle, spectrumText; silentTitle, silentValue, silentText; localTitle, localText, localChips",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Bento012\n  title=\"Not an alarm clock. A small sun with character\"\n  sensors={[{ label: \"CO₂, ppm\", value: \"640\", percent: 32 }]}\n  localChips={[\"Matter\", \"Thread\"]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Not an alarm clock. A small sun with character"
+              },
+              "silentValue": {
+                "label": "Big figure",
+                "default": "0 dB"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Features",
+                "title": "Not an alarm clock. A small sun with character",
+                "lede": "Ray wakes you with light and keeps sound in reserve. Between alarms it watches the air, lights the desk and listens to your phone — or does without it.",
+                "soundTitle": "Sound that doesn't startle",
+                "soundText": "A 5 W 360° speaker: birds, rain, a stream, white noise. Volume grows from zero — not a single harsh ring. Clap — and silence.",
+                "soundChip": "48 kHz · 5 W",
+                "sensorsTitle": "Knows what you breathe",
+                "sensors": [
+                  {
+                    "label": "CO₂, ppm",
+                    "value": "640",
+                    "percent": 32
+                  },
+                  {
+                    "label": "Humidity",
+                    "value": "42 %",
+                    "percent": 42
+                  },
+                  {
+                    "label": "Light, lx",
+                    "value": "320",
+                    "percent": 64
+                  }
+                ],
+                "appTitle": "An app — if you want one",
+                "appText": "Schedule, scenes, updates. Without the app Ray works in full: the wheel on the body and a clap.",
+                "alarms": [
+                  {
+                    "time": "06:00",
+                    "label": "Weekdays · 30 min sunrise",
+                    "on": true
+                  },
+                  {
+                    "time": "08:30",
+                    "label": "Saturday · birds",
+                    "on": true
+                  },
+                  {
+                    "time": "22:30",
+                    "label": "Sunset · 15 min"
+                  }
+                ],
+                "spectrumTitle": "The whole daylight spectrum",
+                "spectrumText": "From a 2700 K candle to a 6500 K noon. CRI 97 — colours on the desk look the same as by the window.",
+                "silentTitle": "Quieter than the room",
+                "silentValue": "0 dB",
+                "silentText": "No fan, no power-brick whine. At night — zero light: not a single indicator.",
+                "localTitle": "Works without the cloud",
+                "localText": "Alarms and scenes live in the lamp. Internet is only needed for updates and voice assistants.",
+                "localChips": [
+                  "Matter",
+                  "Thread",
+                  "Wi-Fi 6",
+                  "Bluetooth 5.3"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bento-014",
+      "type": "registry:block",
+      "title": "О себе как bento: портрет, докручивающиеся цифры, города и черновик",
+      "description": "Секция «о себе» на тонких линиях, как развороты книги: высокая плитка с портретом, биография с буквицей, три цифры, которые докручиваются при появлении на экране (IntersectionObserver + requestAnimationFrame), маршрут городов с годами, «сейчас пишу» с полосой готовности черновика, широкая плитка рабочего стола и плитка-факт курсивом. Без фото плитки становятся типографскими.",
+      "categories": [
+        "bento"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "bento-014/bento-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/bento-014.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "about",
+          "bento",
+          "writer",
+          "author",
+          "bio",
+          "counters",
+          "numbers",
+          "cities",
+          "timeline",
+          "portrait",
+          "grid",
+          "serif"
+        ],
+        "preview": {
+          "props": {
+            "portrait": "/demo/writer/portrait.webp",
+            "desk": "/demo/writer/desk.webp"
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Bento014",
+          "usage": "<Bento014\n  portrait=\"/photos/portrait.webp\"\n  numbers={[{ value: 142, label: \"эссе написано\" }]}\n  cities={[{ name: \"Петербург\", years: \"1991–2014\" }]}\n  nowPercent={62}\n/>",
+          "summary": "«О себе» для писателя, художника или консультанта: bento из фактов, цифр, городов и того, над чем идёт работа.",
+          "preserve": [
+            "сетка — [data-part=grid] с gap:1px и фоном-линией; до 44rem одна колонка, 44–64rem две с grid-auto-flow:dense, от 64rem четыре: портрет data-tall (2 строки), биография/цифры/факт data-span=2, стол data-wide",
+            "цифры — IntersectionObserver на корне (threshold .25) один раз запускает requestAnimationFrame с easing 1−(1−t)^4 за 1.8 с, число форматируется с пробелами",
+            "полоса черновика — i с transform:scaleX(--vibeui-bento-014-now), растёт при data-live"
+          ],
+          "adapt": [
+            "eyebrow, title, portrait, desk, deskNote",
+            "bio, numbers: value, label, suffix; cities: name, years; fact",
+            "nowTitle, nowNote, nowPercent",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Коротко, в цифрах и городах",
+            "maxLength": 50
+          },
+          {
+            "prop": "nowPercent",
+            "label": "Черновик готов, %",
+            "type": "number",
+            "default": 62,
+            "min": 0,
+            "max": 100
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "About as a bento: portrait, counting numbers, cities and a draft",
+            "description": "An “about” section on thin rules, like book spreads: a tall portrait tile, a biography with a drop cap, three numbers that count up when they enter the viewport (IntersectionObserver + requestAnimationFrame), a route of cities with years, “writing now” with a draft-progress bar, a wide desk tile and an italic fact tile. Without photos the tiles become typographic.",
+            "ai": {
+              "summary": "“About” for a writer, artist or consultant: a bento of facts, numbers, cities and what is being worked on.",
+              "preserve": [
+                "the grid is [data-part=grid] with gap:1px and a rule-coloured background; one column below 44rem, two with grid-auto-flow:dense at 44–64rem, four from 64rem: portrait data-tall (2 rows), bio/numbers/fact data-span=2, desk data-wide",
+                "numbers: an IntersectionObserver on the root (threshold .25) fires requestAnimationFrame once with easing 1−(1−t)^4 over 1.8 s, formatted with thin spaces",
+                "the draft bar is i with transform:scaleX(--vibeui-bento-014-now), grows on data-live"
+              ],
+              "adapt": [
+                "eyebrow, title, portrait, desk, deskNote",
+                "bio, numbers: value, label, suffix; cities: name, years; fact",
+                "nowTitle, nowNote, nowPercent",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Bento014\n  portrait=\"/photos/portrait.webp\"\n  numbers={[{ value: 142, label: \"essays written\" }]}\n  cities={[{ name: \"St Petersburg\", years: \"1991–2014\" }]}\n  nowPercent={62}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Briefly, in numbers and cities"
+              },
+              "nowPercent": {
+                "label": "Draft ready, %"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "portrait": "/demo/writer/portrait.webp",
+                "desk": "/demo/writer/desk.webp",
+                "eyebrow": "About",
+                "title": "Briefly, in numbers and cities",
+                "bio": [
+                  "Born in St Petersburg, in a house with a bay window that was later demolished. Studied philology, worked as an editor at three magazines, two of which closed — not because of me.",
+                  "Writing essays since 2019: first in letters to friends, then in a column, then into a book. I live wherever there is a balcony and a railway station half an hour away."
+                ],
+                "numbers": [
+                  {
+                    "value": 142,
+                    "label": "essays written"
+                  },
+                  {
+                    "value": 2,
+                    "label": "books published"
+                  },
+                  {
+                    "value": 18400,
+                    "label": "letter readers",
+                    "suffix": "+"
+                  }
+                ],
+                "cities": [
+                  {
+                    "name": "St Petersburg",
+                    "years": "1991–2014"
+                  },
+                  {
+                    "name": "Moscow",
+                    "years": "2014–2019"
+                  },
+                  {
+                    "name": "Tbilisi",
+                    "years": "2019–2021"
+                  },
+                  {
+                    "name": "Lisbon",
+                    "years": "2021–2024"
+                  },
+                  {
+                    "name": "St Petersburg",
+                    "years": "2024 — now"
+                  }
+                ],
+                "fact": "I write by hand and type it up in the evening. Half the text gets lost on the way — the best editing there is.",
+                "deskNote": "A desk by the window, a squared notebook, a 2B pencil and a cup that is never empty.",
+                "nowTitle": "Writing now: “Night Shift”",
+                "nowNote": "A book about people who stay awake while the city sleeps: bakers, dispatchers, nurses. The draft is",
+                "nowPercent": 62
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

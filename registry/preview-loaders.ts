@@ -63,6 +63,30 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/block/app")).PREVIEWS
     case "block/course":
       return (await import("@/registry/previews/block/course")).PREVIEWS
+    case "block/auto":
+      return (await import("@/registry/previews/block/auto")).PREVIEWS
+    case "block/vet":
+      return (await import("@/registry/previews/block/vet")).PREVIEWS
+    case "block/flowers":
+      return (await import("@/registry/previews/block/flowers")).PREVIEWS
+    case "block/renovation":
+      return (await import("@/registry/previews/block/renovation")).PREVIEWS
+    case "block/delivery":
+      return (await import("@/registry/previews/block/delivery")).PREVIEWS
+    case "block/language":
+      return (await import("@/registry/previews/block/language")).PREVIEWS
+    case "block/fintech":
+      return (await import("@/registry/previews/block/fintech")).PREVIEWS
+    case "block/market":
+      return (await import("@/registry/previews/block/market")).PREVIEWS
+    case "block/api":
+      return (await import("@/registry/previews/block/api")).PREVIEWS
+    case "block/gadget":
+      return (await import("@/registry/previews/block/gadget")).PREVIEWS
+    case "block/charity":
+      return (await import("@/registry/previews/block/charity")).PREVIEWS
+    case "block/writer":
+      return (await import("@/registry/previews/block/writer")).PREVIEWS
     case "block/events":
       return (await import("@/registry/previews/block/events")).PREVIEWS
     case "block/video":

@@ -5882,6 +5882,2038 @@
           ]
         }
       }
+    },
+    {
+      "name": "testimonials-026",
+      "type": "registry:block",
+      "title": "Отзывы автосервиса: счётчики, лента марок и два ряда бегущих карточек",
+      "description": "Отзывы для автосервиса или детейлинга: сверху ряд огромных счётчиков («машин за год», «лет», «рейтинг»), которые докручиваются, когда попадают в экран (IntersectionObserver + rAF, ease-out). Ниже наклонная акцентная лента с марками бежит бесконечно, под ней два ряда карточек-отзывов едут навстречу друг другу на дублированном контенте и останавливаются по наведению. Звёзды, имя, машина клиента.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-026/testimonials-026.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-026.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "testimonials",
+          "reviews",
+          "auto",
+          "car service",
+          "detailing",
+          "counters",
+          "stats",
+          "marquee",
+          "brands",
+          "ticker",
+          "animation"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Testimonials026",
+          "usage": "<Testimonials026\n  stats={[{ value: 1840, label: \"машин за год\" }, { value: 4.9, label: \"рейтинг\" }]}\n  brands={[\"Porsche\", \"BMW\", \"Audi\"]}\n  reviews={[{ name: \"Илья Р.\", car: \"Porsche Macan\", text: \"Через год вода скатывается сама.\", stars: 5 }]}\n/>",
+          "summary": "Отзывы для автосервиса: счётчики докручиваются в viewport, марки бегут лентой, отзывы едут в два ряда.",
+          "preserve": [
+            "счётчик — rAF от 0 до value за 1,6 с с ease-out кубом, запускается один раз по IntersectionObserver threshold 0.4; дробные значения с одним знаком",
+            "лента и ряды — контент продублирован, keyframes translateX(−50%), второй ряд animation-direction:reverse, hover ставит play-state paused",
+            "ряд обрезан mask-image по краям; при reduce-motion анимация выключена и ряд прокручивается пальцем"
+          ],
+          "adapt": [
+            "eyebrow, title, speed",
+            "stats: value, suffix, label; brands",
+            "reviews: name, car, text, stars",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Возвращаются не за скидкой, а за результатом",
+            "maxLength": 60
+          },
+          {
+            "prop": "speed",
+            "label": "Секунд на круг",
+            "type": "number",
+            "default": 70,
+            "min": 30,
+            "max": 120
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Car service reviews: counters, a brand ribbon and two running card rows",
+            "description": "Reviews for a car service or detailing studio: a row of huge counters on top (“cars a year”, “years”, “rating”) that count up when they enter the screen (IntersectionObserver + rAF, ease-out). Below, a tilted accent ribbon with brands runs endlessly, and under it two rows of review cards move toward each other on duplicated content and pause on hover. Stars, name, the client's car.",
+            "ai": {
+              "summary": "Reviews for a car service: counters count up in the viewport, brands run as a ribbon, reviews move in two rows.",
+              "preserve": [
+                "the counter is a rAF from 0 to value over 1.6 s with cubic ease-out, fired once by an IntersectionObserver at threshold 0.4; fractional values with one decimal",
+                "the ribbon and rows have duplicated content, keyframes translateX(−50%), the second row is animation-direction:reverse, hover sets play-state paused",
+                "a row is faded by mask-image at the edges; under reduce-motion the animation is off and the row scrolls by finger"
+              ],
+              "adapt": [
+                "eyebrow, title, speed",
+                "stats: value, suffix, label; brands",
+                "reviews: name, car, text, stars",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Testimonials026\n  stats={[{ value: 1840, label: \"cars a year\" }, { value: 4.9, label: \"rating\" }]}\n  brands={[\"Porsche\", \"BMW\", \"Audi\"]}\n  reviews={[{ name: \"Ilya R.\", car: \"Porsche Macan\", text: \"A year later water still beads off by itself.\", stars: 5 }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "They come back for the result, not the discount"
+              },
+              "speed": {
+                "label": "Seconds per loop"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Reviews",
+                "title": "They come back for the result, not the discount",
+                "stats": [
+                  {
+                    "value": 1840,
+                    "label": "cars last year"
+                  },
+                  {
+                    "value": 9,
+                    "label": "years in detailing"
+                  },
+                  {
+                    "value": 72,
+                    "suffix": "%",
+                    "label": "come back again"
+                  },
+                  {
+                    "value": 4.9,
+                    "label": "rating on maps"
+                  }
+                ],
+                "reviews": [
+                  {
+                    "name": "Ilya R.",
+                    "car": "Porsche Macan, 2022",
+                    "text": "Ceramic by Artem. A year later I wash every two weeks and water beads off by itself. Not a single hologram under the lamp.",
+                    "stars": 5
+                  },
+                  {
+                    "name": "Ksenia V.",
+                    "car": "Mini Cooper S",
+                    "text": "Came in with headlights like an old trolleybus. Two hours later — like from the showroom, plus film on top.",
+                    "stars": 5
+                  },
+                  {
+                    "name": "Dmitry K.",
+                    "car": "BMW X5, 2021",
+                    "text": "Front in film, no seams visible even on the hood. They sent photos of every stage, the quote didn't change.",
+                    "stars": 5
+                  },
+                  {
+                    "name": "Anna and Pavel",
+                    "car": "Volvo XC90",
+                    "text": "Deep clean after two kids and a dog. Dasha got everything out, including what we preferred not to think about.",
+                    "stars": 5
+                  },
+                  {
+                    "name": "Roman T.",
+                    "car": "Tesla Model 3",
+                    "text": "Correction + ceramic. Liked that they first showed the clear coat thickness and explained where not to go hard.",
+                    "stars": 5
+                  },
+                  {
+                    "name": "Egor M.",
+                    "car": "Lexus RX",
+                    "text": "Clean bright bay, no strangers touch the car. Picked it up on time, got a paper care sheet.",
+                    "stars": 4
+                  },
+                  {
+                    "name": "Marina S.",
+                    "car": "Audi Q5",
+                    "text": "Wheels coated with ceramic — brake dust now rinses off with a hose. Small thing, but nice.",
+                    "stars": 5
+                  },
+                  {
+                    "name": "Sergey L.",
+                    "car": "Land Rover Defender",
+                    "text": "Booked a Saturday slot through the site, confirmed in a minute. Not “we'll call back”, it actually works.",
+                    "stars": 5
+                  }
+                ]
+              }
+            },
+            "slots": {
+              "shape": "counters on top, a brand ribbon, two rows of cards: stars, text, name and car",
+              "items": [
+                {
+                  "role": "counter"
+                },
+                {
+                  "role": "brand in the ribbon"
+                },
+                {
+                  "role": "review text"
+                },
+                {
+                  "role": "name and car"
+                }
+              ]
+            }
+          }
+        },
+        "slots": {
+          "shape": "счётчики сверху, лента марок, два ряда карточек: звёзды, текст, имя и машина",
+          "density": "heavy",
+          "items": [
+            {
+              "role": "счётчик",
+              "type": "stat",
+              "count": "2–4"
+            },
+            {
+              "role": "марка в ленте",
+              "type": "text",
+              "count": "6–14"
+            },
+            {
+              "role": "текст отзыва",
+              "type": "quote",
+              "count": "4–10",
+              "required": true
+            },
+            {
+              "role": "имя и машина",
+              "type": "text",
+              "required": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "testimonials-027",
+      "type": "registry:block",
+      "title": "Отзывы как дневник питомца: полароиды с drag-scroll",
+      "description": "Горизонтальная лента отзывов-полароидов: фото, кличка и рукописная подпись (Caveat), дата и хозяин, скотч сверху и стикер с поворотом. Карточки повёрнуты вразнобой, по наведению выпрямляются и всплывают. Ленту можно тянуть мышью (pointer capture, снап отключается на время drag), на тач-экранах — нативный скролл со snap.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-027/testimonials-027.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-027.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "testimonials",
+          "reviews",
+          "polaroid",
+          "diary",
+          "drag-scroll",
+          "carousel",
+          "handwritten",
+          "vet",
+          "pet",
+          "sticker"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Testimonials027",
+          "usage": "<Testimonials027\n  title=\"Записи от хозяев\"\n  entries={[\n    { pet: \"Батон\", owner: \"Оля, хозяйка\", date: \"14 марта\", text: \"Кастрация. Вечером уже требовал ужин.\", photo: \"/demo/vet/diary-01.webp\", sticker: \"не боялся\" },\n    { pet: \"Фунтик\", owner: \"Дед Миша\", date: \"19 апреля\", text: \"Ночью перестал есть. УЗИ сделали сразу.\", sticker: \"24/7\" },\n  ]}\n/>",
+          "summary": "Отзывы в виде полароидов из дневника питомца, лента тянется мышью.",
+          "preserve": [
+            "drag — только для pointerType mouse: setPointerCapture на треке, scrollLeft = стартовый − сдвиг; data-dragging убирает scroll-snap и меняет курсор",
+            "поворот карточек — --r через nth-child(4n+1…4), hover снимает поворот и поднимает translateY(−8px) scale(1.02)",
+            "первая карточка выровнена с контентом через padding-inline max(1.25rem, calc((100% − 80rem) / 2 + 1.25rem))"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, hint",
+            "entries: pet, owner, date, text, photo, sticker",
+            "порядок карточек — порядок поворотов",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Записи от хозяев",
+            "maxLength": 40
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "тяните ленту",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Testimonials as a pet diary: polaroids with drag-scroll",
+            "description": "A horizontal strip of polaroid testimonials: photo, pet name and a handwritten caption (Caveat), date and owner, a strip of tape on top and a rotated sticker. Cards are tilted at random angles, straighten and lift on hover. The strip can be dragged with the mouse (pointer capture, snap disabled while dragging), touch screens get native scroll with snap.",
+            "ai": {
+              "summary": "Testimonials as polaroids from a pet diary, the strip drags with the mouse.",
+              "preserve": [
+                "drag only for pointerType mouse: setPointerCapture on the track, scrollLeft = start − delta; data-dragging removes scroll-snap and changes the cursor",
+                "card rotation is --r via nth-child(4n+1…4), hover removes the rotation and lifts translateY(−8px) scale(1.02)",
+                "the first card aligns with the content via padding-inline max(1.25rem, calc((100% − 80rem) / 2 + 1.25rem))"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, hint",
+                "entries: pet, owner, date, text, photo, sticker",
+                "card order is the rotation order",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Testimonials027\n  title=\"Notes from the owners\"\n  entries={[\n    { pet: \"Biscuit\", owner: \"Olya, owner\", date: \"14 March\", text: \"Neutered. By evening he was demanding dinner.\", photo: \"/demo/vet/diary-01.webp\", sticker: \"not scared\" },\n    { pet: \"Bun\", owner: \"Grandpa Misha\", date: \"19 April\", text: \"Stopped eating at night. Ultrasound done right away.\", sticker: \"24/7\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Notes from the owners"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "drag the strip"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Diary",
+                "title": "Notes from the owners",
+                "lede": "Reviews from maps and messenger — as they are, with names and dates. Owners send the photos themselves.",
+                "hint": "drag the strip",
+                "entries": [
+                  {
+                    "pet": "Biscuit",
+                    "owner": "Olya, owner",
+                    "date": "14 March",
+                    "text": "Neutered. In the morning I was scared, by evening he was demanding dinner. Didn't touch the stitches, no cone needed.",
+                    "photo": "/demo/vet/diary-01.webp",
+                    "sticker": "not scared"
+                  },
+                  {
+                    "pet": "Miss Plush",
+                    "owner": "Artem & Nastya",
+                    "date": "2 April",
+                    "text": "Lion cut. Groomer Lena showed before-and-after photos and asked if we were sure. We were. No regrets.",
+                    "photo": "/demo/vet/diary-02.webp",
+                    "sticker": "lion"
+                  },
+                  {
+                    "pet": "Bun",
+                    "owner": "Grandpa Misha",
+                    "date": "19 April",
+                    "text": "Stopped eating at night. We came at 2 a.m., ultrasound done right away. A day later he was eating hay as if nothing happened.",
+                    "photo": "/demo/vet/diary-03.webp",
+                    "sticker": "24/7"
+                  },
+                  {
+                    "pet": "Zosya",
+                    "owner": "Katya, owner",
+                    "date": "5 May",
+                    "text": "Teeth cleaned. No smell, eats crunchy food, kisses on the nose. The orthopaedist checked a paw too — for free.",
+                    "photo": "/demo/vet/diary-04.webp",
+                    "sticker": "5 / 5"
+                  },
+                  {
+                    "pet": "Muffin",
+                    "owner": "The Ivanovs",
+                    "date": "23 May",
+                    "text": "First vaccine. The vet gave the treat before the shot, not after — and the puppy never figured it out.",
+                    "sticker": "first time"
+                  },
+                  {
+                    "pet": "Marcel",
+                    "owner": "Ira, owner",
+                    "date": "8 June",
+                    "text": "The dermatologist found the allergy in one visit. Three years of scratching, one month of none.",
+                    "sticker": "found it"
+                  }
+                ]
+              }
+            },
+            "slots": {
+              "shape": "Testimonials as a pet diary: polaroids with a photo, pet name, handwritten caption, date and sticker",
+              "items": [
+                {
+                  "role": "pet name"
+                },
+                {
+                  "role": "entry text"
+                },
+                {
+                  "role": "owner"
+                },
+                {
+                  "role": "date"
+                },
+                {
+                  "role": "pet photo"
+                },
+                {
+                  "role": "sticker"
+                }
+              ]
+            }
+          }
+        },
+        "slots": {
+          "shape": "Отзывы как дневник питомца: полароиды с фото, кличкой, рукописной подписью, датой и стикером",
+          "density": "medium",
+          "items": [
+            {
+              "role": "кличка питомца",
+              "type": "text",
+              "count": "4–8",
+              "required": true
+            },
+            {
+              "role": "текст записи",
+              "type": "quote",
+              "required": true
+            },
+            {
+              "role": "хозяин",
+              "type": "text",
+              "required": true
+            },
+            {
+              "role": "дата",
+              "type": "text"
+            },
+            {
+              "role": "фото питомца",
+              "type": "image"
+            },
+            {
+              "role": "стикер",
+              "type": "text"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "testimonials-028",
+      "type": "registry:block",
+      "title": "Отзывы-открытки: рукописный текст, марка и штемпель",
+      "description": "Отзывы как почтовые открытки: слева рукописный текст (Caveat) с поводом, справа адресная сторона — марка с цветком, круглый штемпель с датой, линии «кому / куда / откуда» и подпись. Открытки лежат в горизонтальной ленте со scroll-snap, каждая чуть повёрнута в свою сторону, по наведению выравнивается и приподнимается. Серверный блок, без JS.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-028/testimonials-028.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-028.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "testimonials",
+          "reviews",
+          "postcard",
+          "handwritten",
+          "stamp",
+          "flowers",
+          "scroll snap",
+          "carousel",
+          "editorial"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Testimonials028",
+          "usage": "<Testimonials028\n  title=\"Что пишут нам в ответ\"\n  addressee=\"Мастерская «Стебель»\"\n  reviews={[{ text: \"Курьер приехал ровно к 11, мама три дня всем показывала открытку.\", name: \"Ксения\", place: \"Петроградская\", date: \"12 июня\", occasion: \"маме, 60 лет\" }]}\n/>",
+          "summary": "Отзывы, стилизованные под открытки — для цветов, кафе, отелей, всего, где уместно рукописное «спасибо».",
+          "preserve": [
+            "лента — overflow-x auto со scroll-snap-type x mandatory и scroll-padding по краям, карточки min(88%, 34rem), от 60rem — 36rem",
+            "наклон — --vibeui-testimonials-028-r по nth-child odd/even, на hover rotate(0) translateY(-6px)",
+            "адресная сторона — марка с dotted outline, штемпель absolute с rotate(-12deg), три линии с border-bottom и ellipsis"
+          ],
+          "adapt": [
+            "eyebrow, title, lede",
+            "addressee, address",
+            "reviews: text, name, place, date, occasion",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что пишут нам в ответ",
+            "maxLength": 40
+          },
+          {
+            "prop": "addressee",
+            "label": "Адресат",
+            "type": "text",
+            "default": "Мастерская «Стебель»",
+            "maxLength": 30
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Postcard testimonials: handwritten text, a stamp and a postmark",
+            "description": "Testimonials as postcards: handwritten text (Caveat) with the occasion on the left, the address side on the right — a flower stamp, a round postmark with the date, “to / where / from” lines and a signature. The postcards lie in a horizontal scroll-snap strip, each slightly rotated its own way, straightening and lifting on hover. Server-side, no JS.",
+            "ai": {
+              "summary": "Testimonials styled as postcards — for flowers, cafés, hotels, anything where a handwritten “thank you” fits.",
+              "preserve": [
+                "the strip is overflow-x auto with scroll-snap-type x mandatory and scroll-padding at the edges, cards min(88%, 34rem), from 60rem — 36rem",
+                "the tilt is --vibeui-testimonials-028-r by nth-child odd/even, on hover rotate(0) translateY(-6px)",
+                "the address side is a stamp with a dotted outline, an absolute postmark with rotate(-12deg), three lines with border-bottom and ellipsis"
+              ],
+              "adapt": [
+                "eyebrow, title, lede",
+                "addressee, address",
+                "reviews: text, name, place, date, occasion",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Testimonials028\n  title=\"What they write back\"\n  addressee=\"Stem workshop\"\n  reviews={[{ text: \"The courier came at 11 sharp, mum showed the card to everyone for three days.\", name: \"Ksenia\", place: \"Petrogradskaya\", date: \"12 June\", occasion: \"for mum, 60\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What they write back"
+              },
+              "addressee": {
+                "label": "Addressee",
+                "default": "Stem workshop"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Postcards",
+                "title": "What they write back",
+                "lede": "Every bouquet leaves with a card. Sometimes cards come back — here are a few.",
+                "addressee": "Stem workshop",
+                "address": "Pestelya 4, St Petersburg",
+                "reviews": [
+                  {
+                    "text": "Ordered “Morning at the dacha” for mum's birthday. The courier came at 11 sharp as promised, mum showed everyone the card with the florist's name for three days.",
+                    "name": "Ksenia",
+                    "place": "Petrogradskaya",
+                    "date": "12 June",
+                    "occasion": "for mum, 60"
+                  },
+                  {
+                    "text": "Built a bouquet of poppies and daisies in the builder in five minutes in a taxi. Delivered to the hour, it lasted eight days — I counted.",
+                    "name": "Anton",
+                    "place": "Vasilievsky",
+                    "date": "3 July",
+                    "occasion": "just because"
+                  },
+                  {
+                    "text": "Wedding bouquet and boutonnieres: Vera came herself in the morning, fixed the ribbons and left spare pins. Thank you for the calm.",
+                    "name": "Masha and Ilya",
+                    "place": "Pushkin",
+                    "date": "24 August",
+                    "occasion": "wedding"
+                  },
+                  {
+                    "text": "A subscription every two weeks for half a year now. Never repeated once, and they always write how to care. The best thing I buy myself.",
+                    "name": "Olga",
+                    "place": "Kolomna",
+                    "date": "9 September",
+                    "occasion": "subscription"
+                  }
+                ]
+              }
+            },
+            "slots": {
+              "shape": "postcards with a handwritten review and an address side: occasion, text, name, district, date",
+              "density": "medium",
+              "items": [
+                {
+                  "role": "review text",
+                  "type": "quote",
+                  "count": "3–6",
+                  "required": true
+                },
+                {
+                  "role": "name",
+                  "type": "text",
+                  "required": true
+                },
+                {
+                  "role": "occasion, district and date",
+                  "type": "text"
+                }
+              ]
+            }
+          }
+        },
+        "slots": {
+          "shape": "открытки с рукописным отзывом и адресной стороной: повод, текст, имя, район, дата",
+          "density": "medium",
+          "items": [
+            {
+              "role": "текст отзыва",
+              "type": "quote",
+              "count": "3–6",
+              "required": true
+            },
+            {
+              "role": "имя",
+              "type": "text",
+              "required": true
+            },
+            {
+              "role": "повод, район и дата",
+              "type": "text"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "testimonials-029",
+      "type": "registry:block",
+      "title": "Отзывы как акты приёмки со штампом «принято без замечаний»",
+      "description": "Отзывы подрядчика в виде актов приёмки: карточка-документ с двойной рамкой, номером акта, объектом и датой моно в шапке, цитатой заказчика в кавычках, звёздами, строкой подписи с рукописным именем (Caveat) и штампом «Принято без замечаний», который стоит под наклоном и «ставится» при появлении карточки в экране (animation-timeline: view() с фолбэком на keyframes). Если было замечание — блок «замечание: … устранено» и другой штамп с пунктирной рамкой.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-029/testimonials-029.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-029.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "testimonials",
+          "reviews",
+          "certificate",
+          "stamp",
+          "document",
+          "renovation",
+          "construction",
+          "contractor",
+          "signature",
+          "stars",
+          "scroll-driven"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Testimonials029",
+          "usage": "<Testimonials029\n  reviews={[\n    { number: \"0298\", object: \"Двушка на Ленинском, 62 м²\", date: \"14.08.2026\", text: \"Сдали на два дня раньше срока.\", name: \"Анна Р.\", stars: 5 },\n  ]}\n/>",
+          "summary": "Отзывы для сайта подрядчика: каждый — акт приёмки с номером, подписью и штампом, замечания не прячутся.",
+          "preserve": [
+            "штамп — абсолютно позиционирован в правом нижнем углу, повёрнут на −8°, keyframes scale 1.7→1 с overshoot; в @supports (animation-timeline: view()) — та же анимация по animation-range entry 20% entry 70%",
+            "подпись — i в шрифте Caveat над линией, максимум calc(100% - 10rem) ширины, чтобы не заезжать под штамп",
+            "review.remark переключает штамп на data-kind=remark (пунктир, без заливки) и показывает p[data-part=remark]"
+          ],
+          "adapt": [
+            "eyebrow, title, lede",
+            "stampLabel, remarkStampLabel, signLabel",
+            "reviews: number, object, date, text, name, stars, remark",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что пишут заказчики в день сдачи",
+            "maxLength": 50
+          },
+          {
+            "prop": "stampLabel",
+            "label": "Штамп",
+            "type": "text",
+            "default": "Принято без замечаний",
+            "maxLength": 28
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Reviews as acceptance certificates with an “accepted without remarks” stamp",
+            "description": "A contractor's reviews as acceptance certificates: a document card with a double frame, certificate number, project and date in mono in the header, the client's quote in guillemets, stars, a signature line with a handwritten name (Caveat) and an “Accepted without remarks” stamp that sits at an angle and gets “stamped” when the card enters the screen (animation-timeline: view() with a keyframe fallback). If there was a remark — a “remark: … resolved” block and a different dashed-frame stamp.",
+            "ai": {
+              "summary": "Reviews for a contractor site: each one an acceptance certificate with a number, a signature and a stamp, remarks not hidden.",
+              "preserve": [
+                "the stamp is absolutely positioned bottom-right, rotated −8°, a scale 1.7→1 keyframe with overshoot; under @supports (animation-timeline: view()) the same animation over animation-range entry 20% entry 70%",
+                "the signature is an i in Caveat above a line, at most calc(100% - 10rem) wide so it never runs under the stamp",
+                "review.remark switches the stamp to data-kind=remark (dashed, no fill) and shows p[data-part=remark]"
+              ],
+              "adapt": [
+                "eyebrow, title, lede",
+                "stampLabel, remarkStampLabel, signLabel",
+                "reviews: number, object, date, text, name, stars, remark",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Testimonials029\n  reviews={[\n    { number: \"0298\", object: \"Two-bed on Lenin Ave, 62 m²\", date: \"14.08.2026\", text: \"Handed over two days early.\", name: \"Anna R.\", stars: 5 },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What clients write on handover day"
+              },
+              "stampLabel": {
+                "label": "Stamp",
+                "default": "Accepted without remarks"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Acceptance certificates",
+                "title": "What clients write on handover day",
+                "lede": "Quotes from acceptance certificates over the last year. We don't hide remarks: if there were any, we write how we closed them.",
+                "stampLabel": "Accepted without remarks",
+                "remarkStampLabel": "Remark resolved",
+                "signLabel": "Client signature",
+                "reviews": [
+                  {
+                    "number": "0298",
+                    "object": "Two-bed on Lenin Ave, 62 m²",
+                    "date": "14.08.2026",
+                    "text": "Handed over two days early. Photos in the chat every evening, I never once drove over to check. They'd have relaid the bathroom tiles if I'd asked — no need.",
+                    "name": "Anna R.",
+                    "stars": 5
+                  },
+                  {
+                    "number": "0291",
+                    "object": "Three-bed in Skolkovo, 96 m²",
+                    "date": "02.07.2026",
+                    "text": "The designer from the bureau said it was the first crew to get hidden doors right the first time. The estimate didn't grow a cent even though we added sockets.",
+                    "name": "Kirill and Maria",
+                    "stars": 5
+                  },
+                  {
+                    "number": "0284",
+                    "object": "Studio on Taganka, 31 m²",
+                    "date": "19.05.2026",
+                    "text": "Cosmetic in four weeks as promised. Cleaned up after themselves — I moved tenants in the same day.",
+                    "name": "Oleg N.",
+                    "stars": 5,
+                    "remark": "a scratch on the windowsill — replaced in two days, before signing"
+                  },
+                  {
+                    "number": "0277",
+                    "object": "Four-bed in Khamovniki, 134 m²",
+                    "date": "28.03.2026",
+                    "text": "They got the layout change approved themselves, I only signed. Igor the foreman answers within the hour even on Sunday — that's a value in itself.",
+                    "name": "Dmitry V.",
+                    "stars": 5
+                  },
+                  {
+                    "number": "0269",
+                    "object": "Two-bed on Rechnoy, 54 m²",
+                    "date": "11.02.2026",
+                    "text": "My first renovation ever, I was afraid of everything. A contract with stage dates and a penalty calmed me better than any words. Everything matched to the day.",
+                    "name": "Polina S.",
+                    "stars": 5
+                  },
+                  {
+                    "number": "0260",
+                    "object": "One-bed in Lyublino, 38 m²",
+                    "date": "23.12.2025",
+                    "text": "Rewired from scratch, the consumer unit labelled by circuit. I'm an engineer myself, nothing to fault — and I tried.",
+                    "name": "Sergey K.",
+                    "stars": 4,
+                    "remark": "asked to work quietly before 10:00 — the schedule was shifted from day one"
+                  }
+                ]
+              }
+            },
+            "slots": {
+              "shape": "acceptance certificates: number, project, date, quote, stars, name, remark",
+              "items": [
+                {
+                  "role": "client quote"
+                },
+                {
+                  "role": "name"
+                },
+                {
+                  "role": "project and date"
+                },
+                {
+                  "role": "remark and how it was closed"
+                }
+              ]
+            }
+          }
+        },
+        "slots": {
+          "shape": "акты приёмки: номер, объект, дата, цитата, звёзды, имя, замечание",
+          "density": "medium",
+          "items": [
+            {
+              "role": "цитата заказчика",
+              "type": "quote",
+              "count": "3–6",
+              "required": true
+            },
+            {
+              "role": "имя",
+              "type": "text",
+              "required": true
+            },
+            {
+              "role": "объект и дата",
+              "type": "text"
+            },
+            {
+              "role": "замечание и как закрыли",
+              "type": "text"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "testimonials-031",
+      "type": "registry:block",
+      "title": "Отзывы учеников с уровнем «до → после» на шкале A1–C1",
+      "description": "Отзывы на тетрадных листах с полями: цитата, рукописная приписка, имя, язык и срок. Внизу каждого — шкала A1…C1, на которой пустой кружок «было» и залитый «стало», между ними полоска прогресса; полоска растёт по мере прокрутки (animation-timeline: view(), в старых браузерах заполнена сразу). Стикер «+2 уровня» считается из шкалы. Без JS.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-031/testimonials-031.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-031.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "testimonials",
+          "reviews",
+          "school",
+          "language",
+          "education",
+          "before-after",
+          "level",
+          "scale",
+          "scroll-driven",
+          "handwritten"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Testimonials031",
+          "usage": "<Testimonials031\n  title=\"Было → стало, в уровнях, а не в звёздочках\"\n  reviews={[{ name: \"Марина\", lang: \"английский\", months: 6, before: \"A2\", after: \"B2\", quote: \"Через полгода вела созвон с заказчиком из Дублина.\", note: \"сдала IELTS на 7.0\" }]}\n/>",
+          "summary": "Отзывы для школы или курса с измеримым результатом: уровень до и после на шкале, полоска растёт при прокрутке.",
+          "preserve": [
+            "позиция на шкале = indexOf(code) / (levels.length − 1) × 100%; заливка — left --from и width (--to − --from)",
+            "рост заливки — @supports (animation-timeline: view()) с animation-range entry 30% → 90%, кружок «стало» появляется scale 0→1",
+            "карточки чуть повёрнуты через --tilt по индексу, по hover выравниваются и приподнимаются"
+          ],
+          "adapt": [
+            "eyebrow, title, lede",
+            "levels — шкала по возрастанию",
+            "reviews: name, lang, months, before, after, quote, note",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Было → стало, в уровнях, а не в звёздочках",
+            "maxLength": 60
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Student reviews with a “before → after” level on an A1–C1 scale",
+            "description": "Reviews on ruled sheets with a margin: a quote, a handwritten note, name, language and duration. At the bottom of each an A1…C1 scale with an empty “before” circle and a filled “after” one, a progress bar between them; the bar grows as you scroll (animation-timeline: view(), filled at once in older browsers). A “+2 levels” sticker is computed from the scale. No JS.",
+            "ai": {
+              "summary": "Reviews for a school or course with a measurable result: the level before and after on a scale, the bar grows on scroll.",
+              "preserve": [
+                "the scale position = indexOf(code) / (levels.length − 1) × 100%; the fill uses left --from and width (--to − --from)",
+                "the fill growth is @supports (animation-timeline: view()) with animation-range entry 30% → 90%, the “after” circle scales 0→1",
+                "cards are slightly rotated via --tilt by index, on hover they straighten and lift"
+              ],
+              "adapt": [
+                "eyebrow, title, lede",
+                "levels — the scale in ascending order",
+                "reviews: name, lang, months, before, after, quote, note",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Testimonials031\n  title=\"Before → after, in levels, not in stars\"\n  reviews={[{ name: \"Marina\", lang: \"English\", months: 6, before: \"A2\", after: \"B2\", quote: \"Six months later I ran a call with a client from Dublin.\", note: \"got IELTS 7.0\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Before → after, in levels, not in stars"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "reviews",
+                "title": "Before → after, in levels, not in stars",
+                "lede": "The level before and after is by our test and an external exam where taken. Real names, with permission.",
+                "reviews": [
+                  {
+                    "name": "Marina",
+                    "lang": "English",
+                    "months": 6,
+                    "before": "A2",
+                    "after": "B2",
+                    "quote": "I came with “London is the capital”, six months later I ran a call with a client from Dublin and even got his joke about the weather.",
+                    "note": "got IELTS 7.0"
+                  },
+                  {
+                    "name": "Artem",
+                    "lang": "Spanish",
+                    "months": 3,
+                    "before": "A1",
+                    "after": "A2",
+                    "quote": "Learned it for a trip. In Seville I ordered tapas, argued with a taxi driver and didn't get lost in the metro. Diego said my accent is “terrible, pero encantador”.",
+                    "note": "the trip worked out"
+                  },
+                  {
+                    "name": "Ksenia",
+                    "lang": "Italian",
+                    "months": 9,
+                    "before": "A1",
+                    "after": "B1",
+                    "quote": "I quit apps three times. Here the group keeps you: miss a class and they ask where you were. Nine months in I read Ferrante with a dictionary, but I read.",
+                    "note": "moved to Milan"
+                  },
+                  {
+                    "name": "Oleg",
+                    "lang": "English",
+                    "months": 4,
+                    "before": "B1",
+                    "after": "B2",
+                    "quote": "I didn't need the language, I needed confidence at interviews. Emma drilled behavioural questions until I stopped saying “uhm”. Got the offer.",
+                    "note": "an offer in Amsterdam"
+                  },
+                  {
+                    "name": "Dasha",
+                    "lang": "Spanish",
+                    "months": 6,
+                    "before": "A2",
+                    "after": "B1",
+                    "quote": "I studied at 8:00 before work. Thought I wouldn't last. I did — because a group of seven people was waiting, not a bot."
+                  },
+                  {
+                    "name": "Igor",
+                    "lang": "English",
+                    "months": 12,
+                    "before": "A1",
+                    "after": "B1",
+                    "quote": "I'm 47, started from zero. Never felt ashamed once — that's probably the main thing. Now I text my son in Canada without a translator.",
+                    "note": "best year"
+                  }
+                ]
+              }
+            },
+            "slots": {
+              "shape": "student reviews with a before and after level: quote, note, name, language, duration, levels",
+              "items": [
+                {
+                  "role": "quote"
+                },
+                {
+                  "role": "name, language and duration"
+                },
+                {
+                  "role": "level before and after"
+                },
+                {
+                  "role": "handwritten note"
+                }
+              ]
+            }
+          }
+        },
+        "slots": {
+          "shape": "отзывы учеников с уровнем до и после: цитата, приписка, имя, язык, срок, уровни",
+          "density": "medium",
+          "items": [
+            {
+              "role": "цитата",
+              "type": "quote",
+              "count": "3–6",
+              "required": true
+            },
+            {
+              "role": "имя, язык и срок",
+              "type": "text",
+              "required": true
+            },
+            {
+              "role": "уровень до и после",
+              "type": "text",
+              "required": true
+            },
+            {
+              "role": "рукописная приписка",
+              "type": "text"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "testimonials-032",
+      "type": "registry:block",
+      "title": "Отзывы предпринимателей с метриками и появлением по прокрутке",
+      "description": "Стеклянные карточки отзывов: сверху метрика моноширинным с градиентом («−2 ч», «140 000 ₽») и подпись, цитата в кавычках, автор с инициалами в кружке, бизнес и город; одна карточка крупнее и на две колонки. Карточки въезжают снизу по прокрутке через animation-timeline: view() под @supports — без поддержки просто видны. Рядом с заголовком общий рейтинг со звёздами. Серверный компонент.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-032/testimonials-032.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-032.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "testimonials",
+          "reviews",
+          "fintech",
+          "bank",
+          "entrepreneurs",
+          "metrics",
+          "scroll-driven",
+          "glass",
+          "grid"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Testimonials032",
+          "usage": "<Testimonials032\n  title=\"Предприниматели считают лучше маркетологов\"\n  reviews={[{ quote: \"Выписка подтягивается сама.\", name: \"Ольга Мещерякова\", role: \"Кофейня «Корка», Москва\", metric: \"−2 ч\", metricLabel: \"каждую пятницу\", featured: true }]}\n/>",
+          "summary": "Отзывы для финтеха: карточки с метрикой цифрами, цитатой и автором, появляются по прокрутке.",
+          "preserve": [
+            "появление — @supports (animation-timeline: view()) даёт карточкам keyframes rise с animation-range entry 0% → entry 45%; вне поддержки правила нет, карточки видны",
+            "метрика — strong моноширинным с background-clip:text по градиенту accent → mint, подпись span капителью",
+            "сетка: 1 колонка, две от 44rem, три от 60rem; li с data-featured занимает две колонки, figure растянута на 100% высоты"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, rating, ratingNote",
+            "reviews: quote, name, role, metric, metricLabel, initials, featured",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Предприниматели считают лучше маркетологов",
+            "maxLength": 64
+          },
+          {
+            "prop": "rating",
+            "label": "Рейтинг",
+            "type": "text",
+            "default": "4,9",
+            "maxLength": 4
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Entrepreneur testimonials with metrics and a scroll-driven reveal",
+            "description": "Glass testimonial cards: a monospace gradient metric on top (“−2 h”, “140,000 ₽”) with a caption, a quoted line, the author with initials in a circle, business and city; one card is larger and spans two columns. Cards rise from below on scroll through animation-timeline: view() under @supports — without support they are simply visible. Next to the heading an overall rating with stars. Server component.",
+            "ai": {
+              "summary": "Fintech testimonials: cards with a numeric metric, a quote and the author, revealed on scroll.",
+              "preserve": [
+                "the reveal — @supports (animation-timeline: view()) gives cards the rise keyframes with animation-range entry 0% → entry 45%; without support there is no rule and cards are visible",
+                "the metric is a monospace strong with background-clip:text over an accent → mint gradient, the caption is a small-caps span",
+                "grid: 1 column, two from 44rem, three from 60rem; an li with data-featured spans two columns, the figure stretches to 100% height"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, rating, ratingNote",
+                "reviews: quote, name, role, metric, metricLabel, initials, featured",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Testimonials032\n  title=\"Entrepreneurs count better than marketers\"\n  reviews={[{ quote: \"The statement syncs itself.\", name: \"Olga Meshcheryakova\", role: \"Korka coffee shop, Moscow\", metric: \"−2 h\", metricLabel: \"every Friday\", featured: true }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Entrepreneurs count better than marketers"
+              },
+              "rating": {
+                "label": "Rating",
+                "default": "4.9"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Testimonials",
+                "title": "Entrepreneurs count better than marketers",
+                "lede": "We never ask for a review — people write when the savings become visible in numbers. A few, with the authors' permission.",
+                "rating": "4.9",
+                "ratingNote": "from 2,340 ratings in RuStore and App Store",
+                "reviews": [
+                  {
+                    "quote": "On Fridays I used to spend two hours moving payments between the bank and 1C. Now the statement syncs itself and the tax is already calculated by the time I remember it.",
+                    "name": "Olga Meshcheryakova",
+                    "role": "Korka coffee shop, Moscow",
+                    "metric": "−2 h",
+                    "metricLabel": "every Friday",
+                    "initials": "OM",
+                    "featured": true
+                  },
+                  {
+                    "quote": "Instant transfers to suppliers with no fee — at our turnover that is real money. We counted a year: 140 thousand stayed in the business.",
+                    "name": "Timur Gareev",
+                    "role": "Prim wholesale, Kazan",
+                    "metric": "140,000 ₽",
+                    "metricLabel": "saved in a year",
+                    "initials": "TG"
+                  },
+                  {
+                    "quote": "Payouts from Ozon and Wildberries land the same day, not “within three business days”. For us that is turnover, not convenience.",
+                    "name": "Marina Likhacheva",
+                    "role": "Sever clothing brand, Yekaterinburg",
+                    "metric": "same day",
+                    "metricLabel": "marketplace payouts",
+                    "initials": "ML"
+                  },
+                  {
+                    "quote": "Opened the account in a taxi on the way to a meeting. The courier brought the card the next day. That's it.",
+                    "name": "Ilya Sorokin",
+                    "role": "Sole trader, repairs, Tula",
+                    "metric": "10 min",
+                    "metricLabel": "to open an account",
+                    "initials": "IS"
+                  },
+                  {
+                    "quote": "Employee cards with category limits closed the eternal “what did eight thousand go to”. Now it's visible in the app, no receipts in the chat.",
+                    "name": "Daria Nemtsova",
+                    "role": "List design studio, Saint Petersburg",
+                    "metric": "12",
+                    "metricLabel": "employee cards",
+                    "initials": "DN"
+                  }
+                ]
+              }
+            },
+            "slots": {
+              "shape": "Testimonials: cards with a numeric metric, a quote and the author, one featured",
+              "items": [
+                {
+                  "role": "metric"
+                },
+                {
+                  "role": "quote"
+                },
+                {
+                  "role": "name"
+                },
+                {
+                  "role": "business and city"
+                },
+                {
+                  "role": "initials"
+                }
+              ]
+            }
+          }
+        },
+        "slots": {
+          "shape": "Отзывы: карточки с метрикой цифрами, цитатой и автором, одна крупная",
+          "density": "medium",
+          "items": [
+            {
+              "role": "метрика",
+              "type": "text"
+            },
+            {
+              "role": "цитата",
+              "type": "quote",
+              "required": true
+            },
+            {
+              "role": "имя",
+              "type": "text",
+              "required": true
+            },
+            {
+              "role": "бизнес и город",
+              "type": "text"
+            },
+            {
+              "role": "инициалы",
+              "type": "text"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "testimonials-034",
+      "type": "registry:block",
+      "title": "Отзывы разработчиков карточками-комментариями с чипами стека",
+      "description": "Отзывы для API или dev-tool: карточки как комментарии в трекере — квадратная монограмма из инициалов, ник моноширинным, имя и роль, цитата, чипы стека и строка-метрика с промптом «$». Сетка из трёх колонок на широком с чередованием вертикального смещения, по наведению карточка приподнимается и получает свечение акцента. Фон — сетка точек. Без JS.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-034/testimonials-034.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-034.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "testimonials",
+          "reviews",
+          "developers",
+          "api",
+          "dev tool",
+          "cards",
+          "monospace",
+          "stack",
+          "dark",
+          "grid"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Testimonials034",
+          "usage": "<Testimonials034\n  title=\"Что говорят те, кто уже подключил\"\n  reviews={[{ handle: \"@lena_builds\", name: \"Лена Гусева\", role: \"Tech lead\", text: \"Переехали за один спринт.\", stack: [\"Next.js\"], metric: \"−70 % звонков курьеров\" }]}\n/>",
+          "summary": "Отзывы разработчиков с ником, стеком и метрикой — как комментарии в трекере.",
+          "preserve": [
+            "монограмма считается из первых букв имени функцией initials, без картинок",
+            "сетка 1 → 2 от 44rem → 3 от 64rem, каждая вторая карточка смещена на 1.5rem вниз",
+            "метрика — p с ::before «$ », цитата — blockquote с акцентными кавычками в ::before/::after"
+          ],
+          "adapt": [
+            "eyebrow, title, lede",
+            "reviews: handle, name, role, text, stack[], metric",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что говорят те, кто уже подключил",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Developer testimonials as comment cards with stack chips",
+            "description": "Testimonials for an API or dev tool: cards styled like tracker comments — a square initials monogram, a monospace handle, name and role, a quote, stack chips and a metric line with a “$” prompt. A three-column grid on wide screens with alternating vertical offset, a card lifts and glows with the accent on hover. A dot-grid background. No JS.",
+            "ai": {
+              "summary": "Developer reviews with a handle, stack and a metric — like tracker comments.",
+              "preserve": [
+                "the monogram comes from the first letters of the name via initials, no images",
+                "grid 1 → 2 from 44rem → 3 from 64rem, every second card is offset 1.5rem down",
+                "the metric is a p with a “$ ” ::before, the quote is a blockquote with accent quotation marks in ::before/::after"
+              ],
+              "adapt": [
+                "eyebrow, title, lede",
+                "reviews: handle, name, role, text, stack[], metric",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Testimonials034\n  title=\"What people who already integrated say\"\n  reviews={[{ handle: \"@lena_builds\", name: \"Lena Guseva\", role: \"Tech lead\", text: \"Migrated in one sprint.\", stack: [\"Next.js\"], metric: \"−70 % courier calls\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What people who already integrated say"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Reviews",
+                "title": "What people who already integrated say",
+                "lede": "Unretouched: developers from delivery, logistics, taxi and e-commerce. The metrics are theirs, not ours.",
+                "reviews": [
+                  {
+                    "handle": "@lena_builds",
+                    "name": "Lena Guseva",
+                    "role": "Tech lead, food delivery",
+                    "text": "Moved off our home-grown geocoder in one sprint. House-level precision went up and couriers stopped calling “where is this”. The TypeScript SDK is typed down to the last field.",
+                    "stack": [
+                      "Next.js",
+                      "TypeScript"
+                    ],
+                    "metric": "−70 % courier calls"
+                  },
+                  {
+                    "handle": "@mzhukov",
+                    "name": "Maxim Zhukov",
+                    "role": "Backend, logistics",
+                    "text": "The 100 × 100 matrix answers faster than our database writes the result. Started a million-address batch in the evening — had the CSV by morning.",
+                    "stack": [
+                      "Go",
+                      "PostgreSQL"
+                    ],
+                    "metric": "1,000,000 addresses in 12 min"
+                  },
+                  {
+                    "handle": "@a.petrova",
+                    "name": "Anya Petrova",
+                    "role": "Frontend, e-commerce",
+                    "text": "Address suggestions in the checkout form took twenty lines. Customers finish the address three times less often by hand because it fills itself in.",
+                    "stack": [
+                      "React",
+                      "Vite"
+                    ],
+                    "metric": "+11 % completed orders"
+                  },
+                  {
+                    "handle": "@d_orlov",
+                    "name": "Dima Orlov",
+                    "role": "CTO, regional taxi",
+                    "text": "The Almaty region appeared right when we were expanding there — asked support, it was up a month later. Not a single outage in a year, the status board is honest.",
+                    "stack": [
+                      "Python",
+                      "FastAPI"
+                    ],
+                    "metric": "99.99 % over 12 months"
+                  },
+                  {
+                    "handle": "@katya.ops",
+                    "name": "Katya Melnik",
+                    "role": "DevOps",
+                    "text": "Limits, alerts and invoices in one dashboard. When sale traffic grew six-fold nothing fell over and nobody called — the bill just got bigger.",
+                    "stack": [
+                      "Kubernetes",
+                      "Grafana"
+                    ],
+                    "metric": "×6 traffic with no degradation"
+                  },
+                  {
+                    "handle": "@sergey_v",
+                    "name": "Sergey Volkov",
+                    "role": "Indie developer",
+                    "text": "Ten thousand free requests cover a pet project with room to spare. The key came in half a minute, no card asked. Docs have examples in four languages.",
+                    "stack": [
+                      "Node.js"
+                    ],
+                    "metric": "$0 for eight months now"
+                  }
+                ]
+              }
+            },
+            "slots": {
+              "shape": "developer comment cards: handle, role, quote, stack, metric",
+              "items": [
+                {
+                  "role": "handle and name"
+                },
+                {
+                  "role": "quote"
+                },
+                {
+                  "role": "stack and metric"
+                }
+              ]
+            }
+          }
+        },
+        "slots": {
+          "shape": "карточки-комментарии разработчиков: ник, роль, цитата, стек, метрика",
+          "density": "medium",
+          "items": [
+            {
+              "role": "ник и имя",
+              "type": "text",
+              "count": "3–6",
+              "required": true
+            },
+            {
+              "role": "цитата",
+              "type": "quote",
+              "required": true
+            },
+            {
+              "role": "стек и метрика",
+              "type": "text"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "testimonials-035",
+      "type": "registry:block",
+      "title": "Пресса и отзывы: три выноски и наклонная бегущая строка",
+      "description": "Отзывы для продуктового лендинга: сверху три цитаты-выноски крупным display-шрифтом с моно-подписью издания, ниже две бегущие строки карточек — верхняя влево, нижняя вправо, вся лента наклонена на два градуса и выходит за края секции. Лента зациклена дублированием списка, при наведении останавливается. Только CSS, без клиентского кода.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-035/testimonials-035.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-035.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "testimonials",
+          "reviews",
+          "press",
+          "quotes",
+          "marquee",
+          "ticker",
+          "gadget",
+          "hardware",
+          "product",
+          "social-proof"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Testimonials035",
+          "usage": "<Testimonials035\n  title=\"Что говорят те, кто уже проснулся\"\n  featured={[{ quote: \"Первый будильник, который хочется поставить на тумбочку.\", who: \"Кинжал\", role: \"обзор\" }]}\n  items={[{ quote: \"Сын встаёт сам.\", who: \"Марина\", role: \"Казань\" }]}\n/>",
+          "summary": "Пресса и отзывы железки: три цитаты-выноски и наклонная лента карточек в две стороны.",
+          "preserve": [
+            "лента — data-part=band с rotate(-2deg) и отрицательными полями, ряды width:max-content с keyframes translateX(-50%), второй ряд animation-direction:reverse",
+            "каждый ряд отрисован дважды, вторая копия aria-hidden — так цикл бесшовный",
+            "при reduce-motion лента не наклонена и не бежит, ряды переносятся flex-wrap"
+          ],
+          "adapt": [
+            "eyebrow, title",
+            "featured: quote, who, role (до трёх); items: quote, who, role",
+            "speed",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что говорят те, кто уже проснулся",
+            "maxLength": 60
+          },
+          {
+            "prop": "speed",
+            "label": "Секунд на проход",
+            "type": "number",
+            "default": 46,
+            "min": 15,
+            "max": 120
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Press and reviews: three pull quotes and a tilted marquee",
+            "description": "Reviews for a product landing: three pull quotes on top in a large display face with a mono publication caption, below two marquee rows of cards — the top one leftward, the bottom one rightward, the whole band tilted two degrees and bleeding past the section edges. The band loops by duplicating the list and pauses on hover. CSS only, no client code.",
+            "ai": {
+              "summary": "Hardware press and reviews: three pull quotes and a tilted two-way band of cards.",
+              "preserve": [
+                "the band is data-part=band with rotate(-2deg) and negative margins; rows are width:max-content with translateX(-50%) keyframes, the second row is animation-direction:reverse",
+                "each row is rendered twice, the second copy aria-hidden — that makes the loop seamless",
+                "under reduce-motion the band is neither tilted nor running, rows wrap with flex-wrap"
+              ],
+              "adapt": [
+                "eyebrow, title",
+                "featured: quote, who, role (up to three); items: quote, who, role",
+                "speed",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Testimonials035\n  title=\"What the early risers say\"\n  featured={[{ quote: \"The first alarm clock you want on the nightstand.\", who: \"The Verge\", role: \"review\" }]}\n  items={[{ quote: \"My son gets up on his own.\", who: \"Marina\", role: \"Kazan\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What the early risers say"
+              },
+              "speed": {
+                "label": "Seconds per pass",
+                "default": 46
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Press and first owners",
+                "title": "What the early risers say",
+                "featured": [
+                  {
+                    "quote": "The first alarm clock you want to put on the nightstand rather than hide under the pillow.",
+                    "who": "The Verge",
+                    "role": "review, February 2026"
+                  },
+                  {
+                    "quote": "The light really looks like a sunrise, not like an open fridge. After a week I stopped hearing the ring — I was up before it.",
+                    "who": "Wired",
+                    "role": "30-day test"
+                  },
+                  {
+                    "quote": "A CO₂ sensor in a lamp sounds like marketing until it shows 1,400 ppm in a closed bedroom.",
+                    "who": "Ars Technica",
+                    "role": "hardware teardown"
+                  }
+                ],
+                "items": [
+                  {
+                    "quote": "My six-year-old gets up by himself. Himself. No shouting.",
+                    "who": "Marina",
+                    "role": "Kazan · batch 1"
+                  },
+                  {
+                    "quote": "The speaker is louder than I expected: I hear the birds from the kitchen.",
+                    "who": "Artem",
+                    "role": "Moscow"
+                  },
+                  {
+                    "quote": "I asked the first version for cool white. They delivered.",
+                    "who": "Ilya",
+                    "role": "Yekaterinburg · batch 1"
+                  },
+                  {
+                    "quote": "A clap turns the light off. The cat learned it in a day.",
+                    "who": "Olga",
+                    "role": "Saint Petersburg"
+                  },
+                  {
+                    "quote": "Beautiful even switched off. Sits on the desk like an object.",
+                    "who": "Denis",
+                    "role": "Novosibirsk"
+                  },
+                  {
+                    "quote": "Works without the cloud. The router died — the alarm still went off.",
+                    "who": "Sergey",
+                    "role": "Tula"
+                  },
+                  {
+                    "quote": "It showed 28 % humidity in winter. I bought a humidifier — sleeping got easier.",
+                    "who": "Anna",
+                    "role": "Perm"
+                  },
+                  {
+                    "quote": "A 15-minute sunset puts me to sleep better than any podcast.",
+                    "who": "Kirill",
+                    "role": "Kaliningrad"
+                  }
+                ]
+              }
+            },
+            "slots": {
+              "shape": "Three pull-quotes on top and a marquee of short reviews below: quote, author, caption",
+              "items": [
+                {
+                  "role": "pull-quote"
+                },
+                {
+                  "role": "short review in the strip"
+                },
+                {
+                  "role": "name and city / outlet"
+                }
+              ]
+            }
+          }
+        },
+        "slots": {
+          "shape": "Три цитаты-выноски сверху и бегущая строка коротких отзывов снизу: цитата, автор, подпись",
+          "density": "medium",
+          "items": [
+            {
+              "role": "цитата-выноска",
+              "type": "quote",
+              "count": "1–3",
+              "required": true
+            },
+            {
+              "role": "короткий отзыв в ленте",
+              "type": "quote",
+              "count": "4–12",
+              "required": true
+            },
+            {
+              "role": "имя и город / издание",
+              "type": "text",
+              "required": true
+            }
+          ]
+        }
+      }
     }
   ]
 }

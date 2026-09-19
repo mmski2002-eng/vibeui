@@ -84,4 +84,37 @@ export const PREVIEWS = {
   "footer-032": dynamic(() =>
     import("@/registry/blocks/footer/footer-032/footer-032").then((module) => module.Footer032),
   ),
+  "footer-033": dynamic(() =>
+    import("@/registry/blocks/footer/footer-033/footer-033").then((module) => module.Footer033),
+  ),
+  "footer-034": dynamic(() =>
+    import("@/registry/blocks/footer/footer-034/footer-034").then((module) => module.Footer034),
+  ),
+  "footer-035": dynamic(() =>
+    import("@/registry/blocks/footer/footer-035/footer-035").then((module) => module.Footer035),
+  ),
+  "footer-036": dynamic(() =>
+    import("@/registry/blocks/footer/footer-036/footer-036").then((module) => module.Footer036),
+  ),
+  "footer-037": dynamic(() =>
+    import("@/registry/blocks/footer/footer-037/footer-037").then((module) => module.Footer037),
+  ),
+  "footer-038": dynamic(() =>
+    import("@/registry/blocks/footer/footer-038/footer-038").then((module) => module.Footer038),
+  ),
+  "footer-040": dynamic(() =>
+    import("@/registry/blocks/footer/footer-040/footer-040").then((module) => module.Footer040),
+  ),
+  "footer-041": dynamic(() =>
+    import("@/registry/blocks/footer/footer-041/footer-041").then((module) => module.Footer041),
+  ),
+  "footer-042": dynamic(() =>
+    import("@/registry/blocks/footer/footer-042/footer-042").then((module) => module.Footer042),
+  ),
+  "footer-043": dynamic(() =>
+    import("@/registry/blocks/footer/footer-043/footer-043").then((module) => module.Footer043),
+  ),
+  "footer-044": dynamic(() =>
+    import("@/registry/blocks/footer/footer-044/footer-044").then((module) => module.Footer044),
+  ),
 } satisfies PreviewMap

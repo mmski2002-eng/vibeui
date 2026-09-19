@@ -2875,6 +2875,425 @@
           }
         }
       }
+    },
+    {
+      "name": "event-025",
+      "type": "registry:block",
+      "title": "События фонда билетами с перфорацией и шкалой «нужны руки»",
+      "description": "Список событий как билеты: слева корешок с датой антиквой и днём недели, между корешком и телом перфорация — пунктир и полукруглые вырезы маской; справа название, описание, место, время, рукописная пометка на полях и шкала «записалось 7 из 12». По наведению билет приподнимается, корешок заливается акцентом. От 64rem — две колонки.",
+      "categories": [
+        "events"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "event-025/event-025.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/event-025.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "events",
+          "charity",
+          "tickets",
+          "schedule",
+          "volunteers",
+          "calendar",
+          "perforation",
+          "handwritten",
+          "nonprofit"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Event025",
+          "usage": "<Event025\n  title=\"Ближайшие выезды и встречи\"\n  events={[{ day: \"27\", month: \"сен\", weekday: \"суббота\", title: \"Осенний развоз\", place: \"Тверь\", time: \"9:00 – 18:00\", need: 12, joined: 7, note: \"нужны водители\", actionLabel: \"Поехать\" }]}\n/>",
+          "summary": "Афиша выездов как билеты: дата на корешке, перфорация, шкала «нужны руки», рукописная пометка.",
+          "preserve": [
+            "перфорация — mask из двух radial-gradient по границе корешка (6rem, от 48rem — 8rem), внутри корешка dashed border-right",
+            "шкала — width по joined/need через --w, при need 0 не рендерится; «мест нет», когда joined ≥ need",
+            "тело — grid с областями title/text/meta/hands/action, от 48rem кнопка справа, от 64rem снова столбиком в двух колонках"
+          ],
+          "adapt": [
+            "eyebrow, title, lede",
+            "events: day, month, weekday, title, text, place, time, note",
+            "events: need, joined, actionLabel, actionHref",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ближайшие выезды и встречи",
+            "maxLength": 60
+          },
+          {
+            "prop": "lede",
+            "label": "Подзаголовок",
+            "type": "text",
+            "default": "Каждую субботу мы куда-то едем. Билет бесплатный, дресс-код — удобная обувь.",
+            "maxLength": 120
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Foundation events as perforated tickets with a “hands needed” scale",
+            "description": "An event list as tickets: a stub on the left with the date in serif and the weekday, a perforation between stub and body — a dashed line and semicircular mask cut-outs; on the right the title, text, place, time, a handwritten margin note and a “7 of 12 signed up” scale. On hover the ticket lifts and the stub fills with the accent. Two columns from 64rem.",
+            "ai": {
+              "summary": "An outing schedule as tickets: date on the stub, perforation, a “hands needed” scale, a handwritten note.",
+              "preserve": [
+                "the perforation is a mask of two radial-gradients at the stub edge (6rem, 8rem from 48rem), a dashed border-right inside the stub",
+                "the scale width is joined/need via --w, not rendered when need is 0; “no seats” when joined ≥ need",
+                "the body is a grid with title/text/meta/hands/action areas, the button on the right from 48rem, stacked again in two columns from 64rem"
+              ],
+              "adapt": [
+                "eyebrow, title, lede",
+                "events: day, month, weekday, title, text, place, time, note",
+                "events: need, joined, actionLabel, actionHref",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Event025\n  title=\"Upcoming outings and meetings\"\n  events={[{ day: \"27\", month: \"Sep\", weekday: \"Saturday\", title: \"Autumn delivery run\", place: \"Tver\", time: \"9:00 – 18:00\", need: 12, joined: 7, note: \"drivers needed\", actionLabel: \"Join\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Upcoming outings and meetings"
+              },
+              "lede": {
+                "label": "Lede",
+                "default": "Every Saturday we go somewhere. The ticket is free, the dress code is comfortable shoes."
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Events",
+                "title": "Upcoming outings and meetings",
+                "lede": "Every Saturday we go somewhere. The ticket is free, the dress code is comfortable shoes.",
+                "events": [
+                  {
+                    "day": "27",
+                    "month": "Sep",
+                    "weekday": "Saturday",
+                    "title": "Autumn run: groceries and warm clothes",
+                    "text": "We meet at the warehouse on Korobkova 12, load up and drive to Rzhev and Kuvshinovo. Back by evening.",
+                    "place": "Tver, foundation warehouse",
+                    "time": "9:00 – 18:00",
+                    "need": 12,
+                    "joined": 7,
+                    "note": "drivers needed",
+                    "actionLabel": "Join",
+                    "actionHref": "#volunteer"
+                  },
+                  {
+                    "day": "4",
+                    "month": "Oct",
+                    "weekday": "Saturday",
+                    "title": "Sealing windows for winter",
+                    "text": "Six flats in Torzhok: weather strip, film, tea with the hosts. We provide tools.",
+                    "place": "Torzhok",
+                    "time": "10:00 – 16:00",
+                    "need": 8,
+                    "joined": 8,
+                    "note": "full, thank you!",
+                    "actionLabel": "Waiting list",
+                    "actionHref": "#volunteer"
+                  },
+                  {
+                    "day": "18",
+                    "month": "Oct",
+                    "weekday": "Saturday",
+                    "title": "Call day: 300 “how are you?”",
+                    "text": "We call everyone we care for, listen, write down what's needed. Can be done from home.",
+                    "place": "Online",
+                    "time": "11:00 – 15:00",
+                    "need": 20,
+                    "joined": 9,
+                    "note": "from home is fine",
+                    "actionLabel": "Sign up",
+                    "actionHref": "#volunteer"
+                  },
+                  {
+                    "day": "8",
+                    "month": "Nov",
+                    "weekday": "Saturday",
+                    "title": "Annual meeting and tea with the people we help",
+                    "text": "We tell what we did this year, show the numbers, introduce volunteers to the people they help.",
+                    "place": "Tver, Gorky library",
+                    "time": "14:00",
+                    "need": 0,
+                    "joined": 0,
+                    "note": "bring the family",
+                    "actionLabel": "Come",
+                    "actionHref": "#volunteer"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "event-026",
+      "type": "registry:block",
+      "title": "Встречи как лента дат от сегодня: «до ближайшей — N дней»",
+      "description": "Афиша встреч писателя: слева крупно «до ближайшей встречи — N дней» и её вид, справа список: число антиквой, месяц и день недели, вид встречи (презентация, чтения, эфир), название, место и время, ссылка «записаться». Ближайшая помечена пульсирующей точкой, прошедшие остаются вычеркнутыми внизу. Текущее время через useSyncExternalStore с серверным снимком null — без рассинхрона гидрации. Демо-даты через inDays никогда не устаревают.",
+      "categories": [
+        "events"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "event-026/event-026.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/event-026.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "events",
+          "schedule",
+          "dates",
+          "countdown",
+          "writer",
+          "book launch",
+          "readings",
+          "timeline",
+          "agenda",
+          "serif"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Event026",
+          "usage": "<Event026\n  events={[\n    { date: \"2026-10-03\", time: \"19:00\", kind: \"презентация\", title: \"Первая презентация книги\", place: \"Дом книги\", city: \"Петербург\", actionLabel: \"Записаться\", href: \"#rsvp\" },\n  ]}\n/>",
+          "summary": "Афиша для автора, лектора или клуба: лента дат от сегодняшнего дня, счётчик дней до ближайшей, прошедшие вычеркнуты.",
+          "preserve": [
+            "время — useSyncExternalStore(subscribe, getMinute, () => null): подписка на общий setInterval раз в минуту, снимок — номер минуты; до гидрации даты inDays и счётчик показывают «—» и «…»",
+            "события сортируются по дате в useMemo; upcoming — days ≥ 0, past — последние pastLimit прошедших; next — первое upcoming с известной датой",
+            "строка — li[data-part=row] с ::before-линией scaleY(0→1) на hover и у data-next; от 44rem третья колонка под ссылку, от 60rem левая часть sticky"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, countdownLabel, pastLimit",
+            "events: date (ISO) или inDays, time, kind, title, place, city, actionLabel, href",
+            "tone, accent, ink, background"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Где увидимся",
+            "maxLength": 40
+          },
+          {
+            "prop": "countdownLabel",
+            "label": "Подпись счётчика",
+            "type": "text",
+            "default": "до ближайшей встречи",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Meetings as a date feed from today: “N days to the next one”",
+            "description": "A writer's events poster: on the left, big — “N days to the next meeting” and its kind; on the right a list: a serif day number, month and weekday, the kind (launch, reading, live), title, place and time, a “sign up” link. The next one is marked with a pulsing dot, past ones stay struck through at the bottom. Current time via useSyncExternalStore with a null server snapshot — no hydration mismatch. Demo dates via inDays never go stale.",
+            "ai": {
+              "summary": "A poster for an author, lecturer or club: a date feed from today, a countdown to the next one, past ones struck through.",
+              "preserve": [
+                "time is useSyncExternalStore(subscribe, getMinute, () => null): a shared setInterval once a minute, the snapshot is the minute number; before hydration inDays dates and the countdown show “—” and “…”",
+                "events are sorted by date in useMemo; upcoming are days ≥ 0, past are the last pastLimit gone by; next is the first upcoming with a known date",
+                "a row is li[data-part=row] with a ::before line scaleY(0→1) on hover and on data-next; from 44rem a third column for the link, from 60rem the left part is sticky"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, countdownLabel, pastLimit",
+                "events: date (ISO) or inDays, time, kind, title, place, city, actionLabel, href",
+                "tone, accent, ink, background"
+              ],
+              "usage": "<Event026\n  events={[\n    { date: \"2026-10-03\", time: \"19:00\", kind: \"launch\", title: \"First launch of the book\", place: \"House of Books\", city: \"St Petersburg\", actionLabel: \"Sign up\", href: \"#rsvp\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Where we'll meet"
+              },
+              "countdownLabel": {
+                "label": "Countdown label",
+                "default": "to the next meeting"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Meetings",
+                "title": "Where we'll meet",
+                "lede": "Launches, readings and live talks. Come — I'll sign the book and read what isn't in print yet.",
+                "countdownLabel": "to the next meeting",
+                "events": [
+                  {
+                    "inDays": -9,
+                    "time": "19:30",
+                    "kind": "reading",
+                    "title": "“Balconies” and other texts — an evening at Podpisnie Izdaniya",
+                    "place": "Podpisnie Izdaniya",
+                    "city": "St Petersburg"
+                  },
+                  {
+                    "inDays": 6,
+                    "time": "19:00",
+                    "kind": "launch",
+                    "title": "Rooms We Never Lived In — the first launch of the book",
+                    "place": "House of Books, second-floor hall",
+                    "city": "St Petersburg",
+                    "actionLabel": "Sign up",
+                    "href": "#rsvp"
+                  },
+                  {
+                    "inDays": 14,
+                    "time": "20:00",
+                    "kind": "live",
+                    "title": "A talk about cities and memory on the Between the Lines podcast",
+                    "place": "Online, the link arrives by letter",
+                    "actionLabel": "Remind me",
+                    "href": "#letters"
+                  },
+                  {
+                    "inDays": 27,
+                    "time": "18:00",
+                    "kind": "reading",
+                    "title": "Reading new essays from Night Shift — drafts aloud",
+                    "place": "Nekrasov Library",
+                    "city": "Moscow",
+                    "actionLabel": "Sign up",
+                    "href": "#rsvp"
+                  },
+                  {
+                    "inDays": 41,
+                    "time": "17:00",
+                    "kind": "launch",
+                    "title": "The book in Tbilisi: a conversation in two languages",
+                    "place": "Auditoria bookshop",
+                    "city": "Tbilisi",
+                    "actionLabel": "Details",
+                    "href": "#rsvp"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

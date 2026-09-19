@@ -2988,6 +2988,385 @@
           }
         }
       }
+    },
+    {
+      "name": "contact-023",
+      "type": "registry:block",
+      "title": "Запись и контакты: форма с плавающими ярлыками и стилизованная карта",
+      "description": "Секция записи для клиники или салона: слева форма — имя, телефон, «кто у вас» селектом, когда удобно, что случилось — с ярлыками, которые уезжают вверх при вводе, и карточкой «записали» с прорисовкой галочки после отправки. Справа стилизованная SVG-карта из улиц и парка с прыгающим пином, адрес, метро, телефон и таблица часов. Форма — заглушка.",
+      "categories": [
+        "contact"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-023/contact-023.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-023.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "contact",
+          "booking",
+          "form",
+          "map",
+          "floating-label",
+          "appointment",
+          "vet",
+          "clinic",
+          "hours",
+          "address"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Contact023",
+          "usage": "<Contact023\n  title=\"Приходите, мы уже гладим стол\"\n  address=\"Ленинградский проспект, 62\"\n  metro=\"Сокол · 6 минут пешком\"\n  phone=\"+7 495 120-24-24\"\n  hours={[{ label: \"Приём\", value: \"9:00–21:00\" }, { label: \"Экстренно\", value: \"круглосуточно\" }]}\n/>",
+          "summary": "Запись на приём с плавающими ярлыками и живой SVG-картой рядом.",
+          "preserve": [
+            "ярлык — span после поля, уезжает через :not(:placeholder-shown) + span и :focus + span; placeholder прозрачный, чтобы приём работал",
+            "успех — done в стейте, svg-галочка рисуется stroke-dashoffset с задержкой после круга",
+            "карта — svg viewBox 400×300 с улицами из card/line, парк из --park; пин absolute 56%/46% с keyframes bounce и кольцом"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, actionLabel, doneTitle, doneText",
+            "address, metro, phone, phoneHref, hours: label, value, mapLabel, mapHref",
+            "petOptions — варианты селекта",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Приходите, мы уже гладим стол",
+            "maxLength": 50
+          },
+          {
+            "prop": "address",
+            "label": "Адрес",
+            "type": "text",
+            "default": "Ленинградский проспект, 62",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Booking and contacts: a floating-label form and a stylised map",
+            "description": "A booking section for a clinic or salon: on the left a form — name, phone, “who do you have” select, when it suits, what happened — with labels that float up on input and a “booked” card whose tick draws itself after submit. On the right a stylised SVG map of streets and a park with a bouncing pin, address, metro, phone and an hours table. The form is a stub.",
+            "ai": {
+              "summary": "Appointment booking with floating labels and a live SVG map next to it.",
+              "preserve": [
+                "the label is a span after the field, it floats via :not(:placeholder-shown) + span and :focus + span; the placeholder is transparent so the trick works",
+                "success is done in state, the svg tick draws via stroke-dashoffset with a delay after the circle",
+                "the map is an svg viewBox 400×300 with streets from card/line, the park from --park; the pin is absolute at 56%/46% with bounce keyframes and a ring"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, actionLabel, doneTitle, doneText",
+                "address, metro, phone, phoneHref, hours: label, value, mapLabel, mapHref",
+                "petOptions — the select options",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Contact023\n  title=\"Come over, we're warming the table\"\n  address=\"62 Leningradsky Avenue\"\n  metro=\"Sokol · 6 minutes on foot\"\n  phone=\"+1 415 555-0142\"\n  hours={[{ label: \"Visits\", value: \"9:00–21:00\" }, { label: \"Emergency\", value: \"around the clock\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Come over, we're warming the table"
+              },
+              "address": {
+                "label": "Address",
+                "default": "62 Leningradsky Avenue"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Booking",
+                "title": "Come over, we're warming the table",
+                "lede": "Leave a phone number — the front desk calls back within 15 minutes, picks a time and tells you what to bring.",
+                "address": "62 Leningradsky Avenue",
+                "metro": "Sokol · 6 minutes on foot, entrance from the park side",
+                "phone": "+1 415 555-0142",
+                "phoneHref": "tel:+14155550142",
+                "hours": [
+                  {
+                    "label": "Visits by appointment",
+                    "value": "9:00–21:00, every day"
+                  },
+                  {
+                    "label": "Emergency care",
+                    "value": "around the clock"
+                  },
+                  {
+                    "label": "Grooming",
+                    "value": "10:00–20:00, except Monday"
+                  },
+                  {
+                    "label": "Pharmacy & food",
+                    "value": "9:00–21:00"
+                  }
+                ],
+                "mapLabel": "Open in maps",
+                "petOptions": [
+                  "Cat",
+                  "Dog",
+                  "Rabbit or rodent",
+                  "Bird",
+                  "Someone else"
+                ],
+                "actionLabel": "Book",
+                "doneTitle": "Booked",
+                "doneText": "We'll call back within 15 minutes. If it's urgent — call us, the duty vet is in."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "contact-033",
+      "type": "registry:block",
+      "title": "Контакты для издателей: права со статусами и наклоняющаяся визитка агента",
+      "description": "Секция для издателей и редакций на сайте автора: слева список прав (перевод, фрагменты, аудио, экранизация) со статусами «свободны / проданы», прямая почта для интервью; справа визитка агента, которая наклоняется вслед за курсором (perspective + rotateX/Y через CSS-переменные, без ререндеров) и ловит блик, почта копируется в один клик с подтверждением «скопировано», ссылка на пресс-кит.",
+      "categories": [
+        "contact"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-033/contact-033.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-033.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "contact",
+          "publishers",
+          "rights",
+          "agent",
+          "writer",
+          "author",
+          "business card",
+          "tilt",
+          "copy",
+          "press kit",
+          "serif"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Contact033",
+          "usage": "<Contact033\n  rights={[{ name: \"Перевод\", status: \"свободны\" }, { name: \"Экранизация\", status: \"свободны\" }]}\n  agentName=\"Дарья Ланина\"\n  email=\"daria@polosa.agency\"\n/>",
+          "summary": "Контакты для деловых запросов: права и агент, визитка в 3D-наклоне, почта копируется одним нажатием.",
+          "preserve": [
+            "наклон — onPointerMove на [data-part=stage] пишет --vibeui-contact-033-rx/ry (±7°/±5°) и gx/gy для блика прямо в style карточки через ref; onPointerLeave снимает rx/ry, transition .5s",
+            "копирование — navigator.clipboard?.writeText(email) в обработчике, кнопка на 2 с получает data-done и меняет текст",
+            "статус права подсвечивается акцентом, если начинается со «свободны» (data-free)"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, rights: name, status",
+            "agentName, agentRole, agency, email, phone, authorEmail",
+            "pressKitLabel, pressKitHref",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Права, фрагменты, эфиры",
+            "maxLength": 40
+          },
+          {
+            "prop": "agentName",
+            "label": "Агент",
+            "type": "text",
+            "default": "Дарья Ланина",
+            "maxLength": 30
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Publisher contacts: rights with statuses and a tilting agent card",
+            "description": "A section for publishers and editors on an author's site: on the left a list of rights (translation, excerpts, audio, film) with “free / sold” statuses and a direct email for interviews; on the right the agent's business card that tilts after the cursor (perspective + rotateX/Y via CSS variables, no re-renders) and catches a glint, the email copies in one click with a “copied” confirmation, and a press-kit link.",
+            "ai": {
+              "summary": "Contacts for business enquiries: rights and an agent, a 3D-tilting card, email copied in one click.",
+              "preserve": [
+                "the tilt: onPointerMove on [data-part=stage] writes --vibeui-contact-033-rx/ry (±7°/±5°) and gx/gy for the glint straight into the card's style via ref; onPointerLeave removes rx/ry, .5s transition",
+                "copying is navigator.clipboard?.writeText(email) in the handler; the button gets data-done for 2 s and changes its text",
+                "a right's status is accent-coloured when it starts with “free” (data-free)"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, rights: name, status",
+                "agentName, agentRole, agency, email, phone, authorEmail",
+                "pressKitLabel, pressKitHref",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Contact033\n  rights={[{ name: \"Translation\", status: \"free\" }, { name: \"Film rights\", status: \"free\" }]}\n  agentName=\"Daria Lanina\"\n  email=\"daria@polosa.agency\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Rights, excerpts, interviews"
+              },
+              "agentName": {
+                "label": "Agent",
+                "default": "Daria Lanina"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "For publishers",
+                "title": "Rights, excerpts, interviews",
+                "lede": "Translations, excerpt publication and film rights go through the agent. Interviews and live talks — directly, I reply within a week.",
+                "rights": [
+                  {
+                    "name": "Translation",
+                    "status": "sold: Germany, Poland · free: the rest"
+                  },
+                  {
+                    "name": "Excerpts in magazines",
+                    "status": "free"
+                  },
+                  {
+                    "name": "Audiobook",
+                    "status": "out in November"
+                  },
+                  {
+                    "name": "Film rights",
+                    "status": "free"
+                  }
+                ],
+                "agentName": "Daria Lanina",
+                "agentRole": "literary agent",
+                "agency": "Polosa Agency",
+                "email": "daria@polosa.agency",
+                "phone": "+7 921 400-17-08",
+                "authorEmail": "vera@kholodova.ru",
+                "pressKitLabel": "Press kit: photos, bio, cover (zip, 14 MB)"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

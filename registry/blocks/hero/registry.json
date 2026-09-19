@@ -6172,6 +6172,2461 @@
           }
         }
       }
+    },
+    {
+      "name": "hero-034",
+      "type": "registry:block",
+      "title": "Хиро детейлинга: силуэт машины прорисовывается и подсвечивает услуги по зонам",
+      "description": "Первый экран автосервиса: строки заголовка въезжают из масок, магнитная кнопка тянется к курсору; справа силуэт купе из svg-контура прорисовывается через stroke-dashoffset. Зоны машины — капот, фары, диски, кузов, салон — по наведению или тапу заливаются акцентом, а под машиной крупно выводится услуга и цена. Чипы дублируют зоны для клавиатуры и телефона. Зерно — svg feTurbulence.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-034/hero-034.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-034.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "hero",
+          "auto",
+          "car service",
+          "detailing",
+          "svg",
+          "outline",
+          "draw",
+          "stroke-dashoffset",
+          "interactive",
+          "hotspots",
+          "magnetic",
+          "kinetic"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Hero034",
+          "usage": "<Hero034\n  title={[\"Машина\", \"как из\", \"салона\"]}\n  zones={[{ id: \"body\", label: \"Кузов\", service: \"Керамика 9H\", price: \"от 32 000 ₽\" }]}\n  primaryLabel=\"Рассчитать стоимость\"\n/>",
+          "summary": "Хиро для автосервиса: контур машины прорисовывается, зоны показывают услугу и цену.",
+          "preserve": [
+            "контур — path с pathLength=1, stroke-dasharray:1 → dashoffset 0 с задержками через --vibeui-hero-034-d",
+            "зоны — прозрачные фигуры поверх контура: hover ставит active, клик — pinned; readout берёт active ?? pinned",
+            "магнит пишет transform в ref напрямую по pointermove только для мыши, строки заголовка — overflow:hidden + translateY(110%)"
+          ],
+          "adapt": [
+            "eyebrow, title (массив строк), lede, hint",
+            "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+            "zones: id (hood | lights | wheels | body | glass), label, service, price, note",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "lede",
+            "label": "Подзаголовок",
+            "type": "text",
+            "default": "Керамика, антигравийная плёнка, полировка и химчистка в закрытом боксе с тёплым светом. Показываем результат до/после и говорим цену сразу.",
+            "maxLength": 200
+          },
+          {
+            "prop": "primaryLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Рассчитать стоимость",
+            "maxLength": 30
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Detailing hero: a car outline draws itself and lights up services by zone",
+            "description": "First screen for a car service: headline lines slide in from masks, a magnetic button pulls toward the cursor; on the right a coupe outline draws itself via stroke-dashoffset. The car zones — hood, headlights, wheels, body, cabin — fill with the accent on hover or tap, and a service with its price shows large under the car. Chips duplicate the zones for keyboard and phone. Grain is an svg feTurbulence.",
+            "ai": {
+              "summary": "Hero for a car service: the car outline draws itself, zones reveal a service and a price.",
+              "preserve": [
+                "the outline is a path with pathLength=1, stroke-dasharray:1 → dashoffset 0 with delays via --vibeui-hero-034-d",
+                "zones are transparent shapes over the outline: hover sets active, click sets pinned; the readout takes active ?? pinned",
+                "the magnet writes transform into the ref directly on pointermove for mouse only, headline lines are overflow:hidden + translateY(110%)"
+              ],
+              "adapt": [
+                "eyebrow, title (array of lines), lede, hint",
+                "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+                "zones: id (hood | lights | wheels | body | glass), label, service, price, note",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Hero034\n  title={[\"Showroom\", \"shine,\", \"again\"]}\n  zones={[{ id: \"body\", label: \"Body\", service: \"9H ceramic coating\", price: \"from $650\" }]}\n  primaryLabel=\"Get a quote\"\n/>"
+            },
+            "controls": {
+              "lede": {
+                "label": "Lede",
+                "default": "Ceramic, paint protection film, polish and deep cleaning in a closed bay with warm light. We show before/after and tell the price up front."
+              },
+              "primaryLabel": {
+                "label": "Button",
+                "default": "Get a quote"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Detailing studio · San Francisco",
+                "title": [
+                  "Showroom",
+                  "shine,",
+                  "again"
+                ],
+                "lede": "Ceramic, paint protection film, polish and deep cleaning in a closed bay with warm light. We show before/after and tell the price up front.",
+                "primaryLabel": "Get a quote",
+                "secondaryLabel": "See before / after",
+                "hint": "Hover the hood, lights, wheels, body or cabin — we'll show the service and its price",
+                "zones": [
+                  {
+                    "id": "body",
+                    "label": "Body",
+                    "service": "9H ceramic, three layers",
+                    "price": "from $650",
+                    "note": "Two days in the bay. Hydrophobic for 2–3 years, wash every two weeks."
+                  },
+                  {
+                    "id": "hood",
+                    "label": "Hood",
+                    "service": "Paint protection film, front",
+                    "price": "from $900",
+                    "note": "Hood, bumper, mirrors, pillars. XPEL film, 10-year warranty."
+                  },
+                  {
+                    "id": "lights",
+                    "label": "Lights",
+                    "service": "Headlight polish and film",
+                    "price": "from $140",
+                    "note": "Removes yellowing and haze, 200 µm film on top."
+                  },
+                  {
+                    "id": "wheels",
+                    "label": "Wheels",
+                    "service": "Wheel cleaning and ceramic",
+                    "price": "from $100",
+                    "note": "Wheels off, barrels cleaned, ceramic applied. Brake dust rinses off."
+                  },
+                  {
+                    "id": "glass",
+                    "label": "Cabin",
+                    "service": "Interior and leather deep clean",
+                    "price": "from $180",
+                    "note": "Seats, headliner, carpets, plastics. Leather — clean and condition."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-035",
+      "type": "registry:block",
+      "title": "Хиро ветклиники: CSS-морда следит за курсором, переключатель питомца",
+      "description": "Первый экран клиники или зоомагазина: справа морда питомца из CSS-фигур — зрачки следят за курсором по всему экрану, ухо дёргается по наведению, глаза моргают. Переключатель «кот / собака / кролик» меняет форму ушей, окрас, реплику в пузыре и заголовок слева, а в window летит CustomEvent, чтобы другие блоки переключились вслед. Внизу счётчики докручиваются в viewport.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-035/hero-035.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-035.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "hero",
+          "vet",
+          "pet",
+          "cat",
+          "dog",
+          "rabbit",
+          "cursor",
+          "eyes",
+          "switcher",
+          "counter",
+          "css-illustration",
+          "playful"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Hero035",
+          "usage": "<Hero035\n  defaultPet=\"dog\"\n  pets={[\n    { key: \"cat\", label: \"Кот\", eyebrow: \"Ветклиника\", title: \"Лечим так, что *кот не заметит*\", lede: \"Тихие кабинеты.\", bubble: \"Мя.\" },\n    { key: \"dog\", label: \"Собака\", eyebrow: \"Ветклиника\", title: \"Лечим так, что *хвост не перестаёт*\", lede: \"Отдельный вход.\", bubble: \"Гав.\" },\n  ]}\n  stats={[{ value: 12480, label: \"хвостов вылечили\" }]}\n/>",
+          "summary": "Хиро с игровой CSS-иллюстрацией: морда питомца реагирует на курсор, переключатель меняет питомца и тексты.",
+          "preserve": [
+            "зрачки — unitless --ex/--ey от −1 до 1, ставятся через ref на pointermove секции, без стейта и ререндеров",
+            "формы питомцев задаются [data-pet] на контейнере face: уши clip-path/border-radius, зрачки, нос, язык, зубы — всё через transition .55s",
+            "счётчики — IntersectionObserver ставит seen, useCountUp крутит progress через requestAnimationFrame с ease-out"
+          ],
+          "adapt": [
+            "pets: key (cat | dog | rabbit), label, eyebrow, title (*слово* — акцент), lede, bubble; defaultPet",
+            "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+            "stats: value, suffix, label; eventName",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "primaryLabel",
+            "label": "Главная кнопка",
+            "type": "text",
+            "default": "Записаться на приём",
+            "maxLength": 30
+          },
+          {
+            "prop": "secondaryLabel",
+            "label": "Вторая кнопка",
+            "type": "text",
+            "default": "Что болит?",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Vet clinic hero: a CSS pet face follows the cursor, pet switcher",
+            "description": "First screen for a clinic or pet shop: on the right a pet face built from CSS shapes — the pupils follow the cursor across the whole screen, an ear twitches on hover, the eyes blink. The “cat / dog / rabbit” switcher changes ear shape, fur colour, the speech bubble and the headline, and dispatches a window CustomEvent so other blocks can follow. Counters below count up in the viewport.",
+            "ai": {
+              "summary": "Hero with a playful CSS illustration: the pet face reacts to the cursor, the switcher changes the pet and the copy.",
+              "preserve": [
+                "the pupils are unitless --ex/--ey from −1 to 1, set through a ref on the section's pointermove, no state or re-renders",
+                "pet shapes come from [data-pet] on the face container: ear clip-path/border-radius, pupils, nose, tongue, teeth — all via a .55s transition",
+                "counters: IntersectionObserver sets seen, useCountUp drives progress through requestAnimationFrame with ease-out"
+              ],
+              "adapt": [
+                "pets: key (cat | dog | rabbit), label, eyebrow, title (*word* is the accent), lede, bubble; defaultPet",
+                "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+                "stats: value, suffix, label; eventName",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Hero035\n  defaultPet=\"dog\"\n  pets={[\n    { key: \"cat\", label: \"Cat\", eyebrow: \"Vet clinic\", title: \"Treated so gently *the cat won't notice*\", lede: \"Quiet rooms.\", bubble: \"Meow.\" },\n    { key: \"dog\", label: \"Dog\", eyebrow: \"Vet clinic\", title: \"Treated so well *the tail keeps wagging*\", lede: \"Separate entrance.\", bubble: \"Woof.\" },\n  ]}\n  stats={[{ value: 12480, label: \"tails treated\" }]}\n/>"
+            },
+            "controls": {
+              "primaryLabel": {
+                "label": "Primary button",
+                "default": "Book a visit"
+              },
+              "secondaryLabel": {
+                "label": "Secondary button",
+                "default": "What hurts?"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "pets": [
+                  {
+                    "key": "cat",
+                    "label": "Cat",
+                    "eyebrow": "Vet clinic & grooming in Sokol · 24/7",
+                    "title": "Treated so gently *the cat won't notice*",
+                    "lede": "Quiet rooms with no barking, appointments without a queue, and doctors who pet first and examine second. Vaccines, teeth, spaying — all in one place.",
+                    "bubble": "Meow. Nobody even held me."
+                  },
+                  {
+                    "key": "dog",
+                    "label": "Dog",
+                    "eyebrow": "Vet clinic & grooming in Sokol · 24/7",
+                    "title": "Treated so well *the tail keeps wagging*",
+                    "lede": "A separate entrance for dogs, scales right in the lobby and a treat after every shot. Orthopaedist, dentist, grooming — nobody strokes against the fur.",
+                    "bubble": "Woof. They have treats here."
+                  },
+                  {
+                    "key": "rabbit",
+                    "label": "Rabbit",
+                    "eyebrow": "Vet clinic & grooming in Sokol · 24/7",
+                    "title": "Treated so calmly *the ears stay up*",
+                    "lede": "An exotics vet every day, not just on Thursdays. Teeth, digestion, nail trims — fast, quiet and stress-free for the long-eared.",
+                    "bubble": "Brought my own carrot."
+                  }
+                ],
+                "primaryLabel": "Book a visit",
+                "secondaryLabel": "What hurts?",
+                "stats": [
+                  {
+                    "value": 12480,
+                    "label": "tails treated since 2017"
+                  },
+                  {
+                    "value": 4.9,
+                    "suffix": " / 5",
+                    "label": "average rating on maps"
+                  },
+                  {
+                    "value": 18,
+                    "label": "minutes — average wait for a visit"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-036",
+      "type": "registry:block",
+      "title": "Хиро с букетом из слоёв: собирается при загрузке, разъезжается на прокрутке",
+      "description": "Первый экран цветочной мастерской: справа букет из пяти SVG-слоёв — ваза, листья, стебли, задние и передние бутоны — по очереди встаёт в вазу при загрузке, а при прокрутке слои расходятся параллаксом по одной CSS-переменной. Слева заголовок въезжает строками сквозь маску, курсивное слово-акцент, две кнопки и три факта. Рукописная пометка со стрелкой у букета. Ни одной картинки — всё нарисовано кодом.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-036/hero-036.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-036.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "hero",
+          "flowers",
+          "florist",
+          "bouquet",
+          "svg",
+          "parallax",
+          "layers",
+          "botanical",
+          "serif",
+          "handwritten",
+          "scroll"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Hero036",
+          "usage": "<Hero036\n  title=\"Букеты,|которые собирают|как *письмо*\"\n  lede=\"Сезонные цветы с ферм, доставка к часу.\"\n  note=\"сегодня: пионы и мак\"\n  facts={[{ value: \"с 2014\", label: \"мастерская\" }]}\n/>",
+          "summary": "Хиро для цветочной мастерской: букет-иллюстрация собирается из слоёв и живёт на прокрутке, заголовок въезжает строками.",
+          "preserve": [
+            "слои — div[data-part=layer] с --vibeui-hero-036-d (глубина), transform считается из --vibeui-hero-036-y, которую эффект пишет из scroll через rAF",
+            "появление — keyframes rise на svg[data-part=sheet] с задержкой по --vibeui-hero-036-i, строки заголовка — translateY(110%) → 0 внутри overflow:hidden",
+            "title делится на строки по «|», *слово* становится курсивным em цветом акцента"
+          ],
+          "adapt": [
+            "eyebrow, title (строки через |, *акцент*), lede, note",
+            "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+            "facts: value, label",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Букеты,|которые собирают|как *письмо*",
+            "maxLength": 60
+          },
+          {
+            "prop": "note",
+            "label": "Пометка",
+            "type": "text",
+            "default": "сегодня: пионы, мак и ромашка",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hero with a layered bouquet: assembles on load, drifts apart on scroll",
+            "description": "First screen of a flower workshop: on the right a bouquet of five SVG layers — vase, leaves, stems, back and front blooms — rises into the vase one by one on load, and on scroll the layers drift apart with parallax driven by one CSS variable. On the left the headline slides in line by line through a mask, an italic accent word, two buttons and three facts. A handwritten note with an arrow next to the bouquet. No images — everything is drawn in code.",
+            "ai": {
+              "summary": "Hero for a flower workshop: an illustrated bouquet assembles from layers and lives on scroll, the headline slides in line by line.",
+              "preserve": [
+                "layers are div[data-part=layer] with --vibeui-hero-036-d (depth); transform derives from --vibeui-hero-036-y, written by the scroll effect via rAF",
+                "entrance is the rise keyframes on svg[data-part=sheet] delayed by --vibeui-hero-036-i, headline lines go translateY(110%) → 0 inside overflow:hidden",
+                "title splits into lines on “|”, *word* becomes an italic em in the accent colour"
+              ],
+              "adapt": [
+                "eyebrow, title (lines via |, *accent*), lede, note",
+                "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+                "facts: value, label",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Hero036\n  title=\"Bouquets|put together|like a *letter*\"\n  lede=\"Seasonal farm flowers, delivered to the hour.\"\n  note=\"today: peonies and poppies\"\n  facts={[{ value: \"since 2014\", label: \"the workshop\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Bouquets|put together|like a *letter*"
+              },
+              "note": {
+                "label": "Note",
+                "default": "today: peonies, poppies and daisies"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Flower workshop · St Petersburg",
+                "title": "Bouquets|put together|like a *letter*",
+                "lede": "No cellophane, no bows. Seasonal flowers from local and Dutch farms, arranged the same day, delivered to the hour.",
+                "primaryLabel": "Build a bouquet",
+                "secondaryLabel": "See ready ones",
+                "facts": [
+                  {
+                    "value": "since 2014",
+                    "label": "the workshop on Pestelya"
+                  },
+                  {
+                    "value": "from 2 h",
+                    "label": "city delivery"
+                  },
+                  {
+                    "value": "7+ days",
+                    "label": "in the vase"
+                  }
+                ],
+                "note": "today: peonies, poppies and daisies"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-037",
+      "type": "registry:block",
+      "title": "Хиро ремонта: план квартиры рисуется линиями, комнаты подсвечиваются с площадью",
+      "description": "Первый экран строительной бригады на миллиметровке: слева заголовок, у которого ключевое слово взято в размерную линию с подписью «± 1 мм», лид, две кнопки и факты моно. Справа svg-план квартиры — стены прорисовываются штрихом по загрузке, потом проявляются двери, окна и габаритные размеры. Комната под курсором или в фокусе заливается акцентом и показывает площадь, подпись под планом меняется. Внизу штамп чертежа: объект, стадия, масштаб, лист.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-037/hero-037.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-037.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "hero",
+          "renovation",
+          "construction",
+          "apartment",
+          "floor plan",
+          "blueprint",
+          "svg",
+          "draw",
+          "hover",
+          "dimension",
+          "contractor"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Hero037",
+          "usage": "<Hero037\n  title=\"Ремонт, в котором *всё ровно*\"\n  measure=\"± 1 мм\"\n  rooms={[{ name: \"Гостиная\", area: 24.6, x: 20, y: 140, w: 240, h: 260, note: \"два окна\" }]}\n/>",
+          "summary": "Хиро для сайта ремонта: план квартиры рисуется сам, комнаты отвечают на наведение площадью, заголовок с размерной линией.",
+          "preserve": [
+            "стены — rect с pathLength=1, stroke-dasharray:1 и keyframes stroke-dashoffset 1→0, задержка по индексу комнаты",
+            "слово в *звёздочках* в title оборачивается в span data-dim: ::before рисует скобку размерной линии, ::after — подпись measure",
+            "комната — g с tabIndex и role=button, активная пишется в state, подпись под планом живёт через aria-live"
+          ],
+          "adapt": [
+            "eyebrow, title (со *звёздочками* для размерной линии), measure, lede, facts",
+            "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+            "rooms: name, area, x, y, w, h, note; doors, windows, stamp, widthLabel, heightLabel",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ремонт, в котором *всё ровно*",
+            "maxLength": 60
+          },
+          {
+            "prop": "measure",
+            "label": "Подпись размера",
+            "type": "text",
+            "default": "± 1 мм",
+            "maxLength": 12
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Renovation hero: an apartment plan draws itself, rooms highlight with their area",
+            "description": "First screen for a construction crew on millimetre paper: on the left a headline whose key word sits inside a dimension line captioned “± 1 mm”, a lede, two buttons and mono facts. On the right an svg apartment plan — walls draw themselves stroke by stroke on load, then doors, windows and overall dimensions appear. The room under the cursor or in focus fills with the accent and shows its area, the caption under the plan changes. A title block at the bottom: object, stage, scale, sheet.",
+            "ai": {
+              "summary": "Hero for a renovation site: the floor plan draws itself, rooms answer hover with their area, the headline wears a dimension line.",
+              "preserve": [
+                "walls are rects with pathLength=1, stroke-dasharray:1 and a stroke-dashoffset 1→0 keyframe, delayed by room index",
+                "the *starred* word in title is wrapped in a span data-dim: ::before draws the dimension bracket, ::after the measure caption",
+                "a room is a g with tabIndex and role=button, the active one lives in state, the caption under the plan updates via aria-live"
+              ],
+              "adapt": [
+                "eyebrow, title (with *asterisks* for the dimension line), measure, lede, facts",
+                "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+                "rooms: name, area, x, y, w, h, note; doors, windows, stamp, widthLabel, heightLabel",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Hero037\n  title=\"Renovation where *everything is level*\"\n  measure=\"± 1 mm\"\n  rooms={[{ name: \"Living room\", area: 24.6, x: 20, y: 140, w: 240, h: 260, note: \"two windows\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Renovation where *everything is level*"
+              },
+              "measure": {
+                "label": "Dimension caption",
+                "default": "± 1 mm"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Turnkey apartment renovation · Boston",
+                "title": "Renovation where *everything is level*",
+                "measure": "± 1 mm",
+                "lede": "The estimate is fixed in the contract, the deadline in the calendar, the site in your phone. Delivered on time for 14 years straight.",
+                "primaryLabel": "Get an estimate",
+                "secondaryLabel": "See projects",
+                "facts": [
+                  "312 projects delivered",
+                  "0 days late",
+                  "the price never changes after signing"
+                ],
+                "rooms": [
+                  {
+                    "name": "Hallway",
+                    "area": 8.2,
+                    "x": 20,
+                    "y": 20,
+                    "w": 160,
+                    "h": 120,
+                    "note": "floor-to-ceiling wardrobe"
+                  },
+                  {
+                    "name": "Bathroom",
+                    "area": 5.4,
+                    "x": 180,
+                    "y": 20,
+                    "w": 100,
+                    "h": 120,
+                    "note": "60×120 tiles, heated floor"
+                  },
+                  {
+                    "name": "Kitchen",
+                    "area": 12.3,
+                    "x": 280,
+                    "y": 20,
+                    "w": 160,
+                    "h": 120,
+                    "note": "wet zone move approved"
+                  },
+                  {
+                    "name": "Living room",
+                    "area": 24.6,
+                    "x": 20,
+                    "y": 140,
+                    "w": 240,
+                    "h": 260,
+                    "note": "two windows, engineered oak"
+                  },
+                  {
+                    "name": "Bedroom",
+                    "area": 16.8,
+                    "x": 260,
+                    "y": 140,
+                    "w": 180,
+                    "h": 260,
+                    "note": "soundproofed party wall"
+                  },
+                  {
+                    "name": "Kids' room",
+                    "area": 13.1,
+                    "x": 440,
+                    "y": 20,
+                    "w": 180,
+                    "h": 200,
+                    "note": "cork floor, low sockets"
+                  },
+                  {
+                    "name": "Study",
+                    "area": 11.6,
+                    "x": 440,
+                    "y": 220,
+                    "w": 180,
+                    "h": 180,
+                    "note": "dedicated circuit for equipment"
+                  }
+                ],
+                "stamp": [
+                  [
+                    "Object",
+                    "3-bed apartment, 92.0 m²"
+                  ],
+                  [
+                    "Stage",
+                    "Working drawings"
+                  ],
+                  [
+                    "Scale",
+                    "1:100"
+                  ],
+                  [
+                    "Sheet",
+                    "1 of 12"
+                  ]
+                ],
+                "widthLabel": "12 400",
+                "heightLabel": "7 600"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-038",
+      "type": "registry:block",
+      "title": "Хиро доставки: живой таймер «привезём за 28:00», CSS-бургер и бегущая строка",
+      "description": "Первый экран доставки еды: заголовок с обратным отсчётом, который тикает по секунде и на нуле начинает заново; справа бургер из шести CSS-слоёв на акцентном круге — слои падают сверху по очереди при загрузке и потом «дышат», над ними поднимается пар; рядом фото блюда в капле со стикером «хит недели». Понизу бегущая строка блюд с наклоном, две кнопки и строка доверия.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-038/hero-038.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-038.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "hero",
+          "delivery",
+          "food",
+          "countdown",
+          "timer",
+          "burger",
+          "css-art",
+          "marquee",
+          "ticker",
+          "dark-kitchen",
+          "restaurant"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Hero038",
+          "usage": "<Hero038\n  title=\"Горячее привезём за\"\n  minutes={28}\n  image=\"/photos/tom-yum.webp\"\n  sticker=\"хит недели · том-ям 490 ₽\"\n  ticker={[\"Смэш-бургер\", \"Том-ям\", \"Поке\"]}\n/>",
+          "summary": "Хиро для доставки еды: обещание по времени тикает, бургер собирается из CSS-слоёв, блюда бегут строкой.",
+          "preserve": [
+            "таймер — useState(minutes × 60) и setInterval в useEffect; на сервере рендерится «28:00», на нуле цикл начинается заново",
+            "слои бургера — data-kind с --vibeui-hero-038-d: внешний div делает drop, внутренний i — breathe с задержкой calc(d + .9s)",
+            "бегущая строка дублирует список и едет translateX(-50%) за 28 с, при hover останавливается"
+          ],
+          "adapt": [
+            "eyebrow, title, minutes, lede, trust",
+            "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+            "image, imageAlt, sticker, ticker",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Горячее привезём за",
+            "maxLength": 40
+          },
+          {
+            "prop": "minutes",
+            "label": "Минут в таймере",
+            "type": "number",
+            "default": 28,
+            "min": 5,
+            "max": 90
+          },
+          {
+            "prop": "sticker",
+            "label": "Стикер",
+            "type": "text",
+            "default": "хит недели · том-ям 490 ₽",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Delivery hero: a live “delivered in 28:00” timer, a CSS burger and a marquee",
+            "description": "Food delivery first screen: a headline with a countdown that ticks every second and restarts at zero; on the right a burger made of six CSS layers on an accent disc — the layers drop in one by one on load and then “breathe”, steam rises above them; next to it a dish photo in a drop shape with a “hit of the week” sticker. A tilted marquee of dishes along the bottom, two buttons and a trust line.",
+            "ai": {
+              "summary": "Hero for food delivery: the time promise ticks, a burger assembles from CSS layers, dishes run in a marquee.",
+              "preserve": [
+                "the timer is useState(minutes × 60) plus setInterval in useEffect; the server renders “28:00”, at zero the loop restarts",
+                "burger layers are data-kind with --vibeui-hero-038-d: the outer div drops, the inner i breathes with a calc(d + .9s) delay",
+                "the marquee duplicates the list and moves translateX(-50%) over 28 s, pausing on hover"
+              ],
+              "adapt": [
+                "eyebrow, title, minutes, lede, trust",
+                "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+                "image, imageAlt, sticker, ticker",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Hero038\n  title=\"Hot food delivered in\"\n  minutes={28}\n  image=\"/photos/tom-yum.webp\"\n  sticker=\"hit of the week · tom yum $9\"\n  ticker={[\"Smash burger\", \"Tom yum\", \"Poke\"]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Hot food delivered in"
+              },
+              "minutes": {
+                "label": "Timer minutes"
+              },
+              "sticker": {
+                "label": "Sticker",
+                "default": "hit of the week · tom yum $9"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Dark kitchen · downtown only",
+                "title": "Hot food delivered in",
+                "minutes": 28,
+                "lede": "Our own kitchen, our own couriers, no middlemen. We cook after you pay and ride with a thermal bag — the burger arrives crispy, the tom yum arrives scalding.",
+                "primaryLabel": "Open the menu",
+                "secondaryLabel": "Build a bowl",
+                "trust": "4.8 out of 5 · 12,400 orders a month · free from $25",
+                "imageAlt": "Tom yum with shrimps in a black bowl",
+                "sticker": "hit of the week · tom yum $9",
+                "ticker": [
+                  "Smash burger",
+                  "Tom yum",
+                  "Salmon poke",
+                  "Pad thai",
+                  "Truffle fries",
+                  "Basque cheesecake",
+                  "Tonkotsu ramen",
+                  "Charcoal shawarma"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-039",
+      "type": "registry:block",
+      "title": "Хиро языковой школы: слово-перелистывание и живой диалог урока",
+      "description": "Первый экран на тетрадной клетке: в заголовке одно слово «переводится» по кругу — по-английски → по-испански → по-итальянски — перелистываясь вокруг оси X, под ним чернильная черта и чип языка. Справа тетрадный лист с полями и живым диалогом: точки «печатает», реплика набирается по буквам, под репликой преподавателя проявляется перевод, стикер с домашкой. Позади бледные рукописные Hello / Hola / Ciao.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-039/hero-039.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-039.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "hero",
+          "school",
+          "language",
+          "education",
+          "typing",
+          "flip",
+          "chat",
+          "dialogue",
+          "notebook",
+          "handwritten"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Hero039",
+          "usage": "<Hero039\n  titleStart=\"Через три месяца вы расскажете это\"\n  words={[{ word: \"по-английски\", lang: \"EN\" }, { word: \"по-испански\", lang: \"ES\" }]}\n  messages={[{ who: \"teacher\", text: \"How was your weekend?\", note: \"Как прошли выходные?\" }, { who: \"student\", text: \"Great, I went hiking.\" }]}\n/>",
+          "summary": "Хиро для языковой школы или курсов: слово в заголовке перелистывается на другой язык, рядом печатается диалог урока.",
+          "preserve": [
+            "слова лежат в одной grid-ячейке (grid-area 1/1), активное — data-state=in с keyframes rotateX, предыдущее — data-state=out; ширина резервируется по самому длинному",
+            "печать идёт из состояния { index, chars }: chars −1 — точки, потом по букве через setTimeout, после последней реплики пауза и цикл заново",
+            "лист диалога — background-image из линовки и коралловой вертикали полей, перфорация — ::before, поворот 1deg"
+          ],
+          "adapt": [
+            "eyebrow, titleStart, words: word, lang; titleEnd, lede, trust",
+            "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+            "chatTitle, teacherName, studentName, messages: who, text, note; sticker, interval",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "titleStart",
+            "label": "Начало заголовка",
+            "type": "text",
+            "default": "Через три месяца вы расскажете это",
+            "maxLength": 60
+          },
+          {
+            "prop": "trust",
+            "label": "Строка доверия",
+            "type": "text",
+            "default": "1 240 учеников за год · 4,9 на Яндексе",
+            "maxLength": 60
+          },
+          {
+            "prop": "interval",
+            "label": "Секунд на слово",
+            "type": "number",
+            "default": 2.8,
+            "min": 1,
+            "max": 8
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Language school hero: a flipping word and a live lesson dialogue",
+            "description": "A first screen on notebook grid paper: one word in the headline “translates” in a loop — in English → in Spanish → in Italian — flipping around the X axis, with an ink stroke and a language chip. On the right a ruled sheet with a margin and a live dialogue: typing dots, a line typed letter by letter, a translation appearing under the teacher's line, a homework sticker. Faint handwritten Hello / Hola / Ciao behind.",
+            "ai": {
+              "summary": "Hero for a language school or courses: a headline word flips into another language while a lesson dialogue types itself next to it.",
+              "preserve": [
+                "words share one grid cell (grid-area 1/1), the active one is data-state=in with rotateX keyframes, the previous one data-state=out; width is reserved by the longest",
+                "typing runs from { index, chars } state: chars −1 shows dots, then one letter per setTimeout, after the last line a pause and the loop restarts",
+                "the dialogue sheet is a background-image of ruled lines plus a coral margin, the perforation is a ::before, rotated 1deg"
+              ],
+              "adapt": [
+                "eyebrow, titleStart, words: word, lang; titleEnd, lede, trust",
+                "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+                "chatTitle, teacherName, studentName, messages: who, text, note; sticker, interval",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Hero039\n  titleStart=\"In three months you will tell this\"\n  words={[{ word: \"in English\", lang: \"EN\" }, { word: \"in Spanish\", lang: \"ES\" }]}\n  messages={[{ who: \"teacher\", text: \"How was your weekend?\", note: \"¿Qué tal el fin de semana?\" }, { who: \"student\", text: \"Great, I went hiking.\" }]}\n/>"
+            },
+            "controls": {
+              "titleStart": {
+                "label": "Title start",
+                "default": "In three months you will tell this"
+              },
+              "trust": {
+                "label": "Trust line",
+                "default": "1,240 students this year · 4.9 on Google"
+              },
+              "interval": {
+                "label": "Seconds per word"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Online school · since 2019",
+                "titleStart": "In three months you will tell this",
+                "words": [
+                  {
+                    "word": "in English",
+                    "lang": "EN"
+                  },
+                  {
+                    "word": "in Spanish",
+                    "lang": "ES"
+                  },
+                  {
+                    "word": "in Italian",
+                    "lang": "IT"
+                  }
+                ],
+                "lede": "English, Spanish and Italian in groups of up to six. Speaking from the first lesson, native teachers once a week, a notebook with homework — and not a single table of irregular verbs to memorise.",
+                "primaryLabel": "Take the level test",
+                "secondaryLabel": "Free trial lesson",
+                "trust": "1,240 students this year · 4.9 on Google",
+                "chatTitle": "Lesson 12 · Thursday 19:30",
+                "teacherName": "Emma",
+                "studentName": "Masha",
+                "messages": [
+                  {
+                    "who": "teacher",
+                    "text": "Hi Masha! How was your weekend?",
+                    "note": "Greeting and a warm-up question"
+                  },
+                  {
+                    "who": "student",
+                    "text": "It was great, I went to the mountains with friends."
+                  },
+                  {
+                    "who": "teacher",
+                    "text": "Nice! Did you go hiking or just relax?",
+                    "note": "Follow-up question in the past tense"
+                  },
+                  {
+                    "who": "student",
+                    "text": "We hiked for five hours. My legs still hurt."
+                  },
+                  {
+                    "who": "teacher",
+                    "text": "Ha! Then today we talk about the past — you already use it perfectly.",
+                    "note": "Today's topic: past simple"
+                  }
+                ],
+                "sticker": "homework: tell about your weekend"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-040",
+      "type": "registry:block",
+      "title": "Хиро необанка: 3D-карта за курсором и живые операции",
+      "description": "Первый экран банка для бизнеса: слева заголовок с одним градиентным словом, два действия и три факта; справа банковская карта в perspective, которая поворачивается за курсором, с бликом, который следует за ним, чипом, маскированным номером с кнопкой-глазом и лентой «живых» операций — они всплывают по одной. Без курсора карта медленно плывёт. Сзади сетка из тонких линий и два пятна сияния.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-040/hero-040.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-040.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "hero",
+          "fintech",
+          "bank",
+          "card",
+          "3d",
+          "tilt",
+          "perspective",
+          "transactions",
+          "live",
+          "aurora",
+          "glass",
+          "gradient"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Hero040",
+          "usage": "<Hero040\n  title=\"Счёт, который *работает* быстрее бухгалтера\"\n  cardHolder=\"ООО «Северный ветер»\"\n  transactions={[{ title: \"Ozon · выплата\", note: \"маркетплейс\", amount: \"+184 300 ₽\" }]}\n/>",
+          "summary": "Хиро для финтеха: 3D-карта поворачивается за курсором, номер маскируется, рядом всплывают живые операции.",
+          "preserve": [
+            "tilt пишется в CSS-переменные --rx/--ry/--gx/--gy на сцене через style.setProperty из onPointerMove, без setState; карта — rotateX/rotateY по ним, transition .12s при наведении и .7s при уходе",
+            "маска номера — все группы кроме последней заменяются на ••••, кнопка-глаз с aria-pressed переключает",
+            "лента операций — три последних по индексу head, интервал setInterval, новая помечена data-new и анимируется pop; на 60rem контейнера лента абсолютно в правом нижнем углу сцены"
+          ],
+          "adapt": [
+            "eyebrow, title (со *звёздочками* для градиента), lede, facts: value, label",
+            "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+            "cardBrand, cardKind, cardNumber, cardHolder, cardExpiry, transactions: title, note, amount, interval",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Счёт, который *работает* быстрее бухгалтера",
+            "maxLength": 80
+          },
+          {
+            "prop": "cardHolder",
+            "label": "Владелец карты",
+            "type": "text",
+            "default": "ООО «Северный ветер»",
+            "maxLength": 32
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Neobank hero: a 3D card following the cursor and live transactions",
+            "description": "First screen of a business bank: on the left a headline with one gradient word, two actions and three facts; on the right a bank card in perspective that tilts after the cursor, with a glare following it, a chip, a masked number with an eye button and a feed of “live” transactions popping up one by one. Without a cursor the card drifts slowly. Behind it a thin-line grid and two aurora blobs.",
+            "ai": {
+              "summary": "Fintech hero: a 3D card tilts after the cursor, the number is masked, live transactions pop up next to it.",
+              "preserve": [
+                "tilt is written to --rx/--ry/--gx/--gy CSS variables on the scene via style.setProperty from onPointerMove, no setState; the card uses rotateX/rotateY from them, .12s transition while hovering and .7s on leave",
+                "the number mask replaces every group but the last with ••••, the eye button with aria-pressed toggles it",
+                "the feed shows the three latest items by the head index on a setInterval, the newest is marked data-new and plays the pop animation; from a 60rem container the feed sits absolutely in the bottom-right of the scene"
+              ],
+              "adapt": [
+                "eyebrow, title (with *asterisks* for the gradient), lede, facts: value, label",
+                "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+                "cardBrand, cardKind, cardNumber, cardHolder, cardExpiry, transactions: title, note, amount, interval",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Hero040\n  title=\"An account that *works* faster than your accountant\"\n  cardHolder=\"Northwind LLC\"\n  transactions={[{ title: \"Ozon · payout\", note: \"marketplace\", amount: \"+184,300 ₽\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "An account that *works* faster than your accountant"
+              },
+              "cardHolder": {
+                "label": "Card holder",
+                "default": "Northwind LLC"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Bank for small business · licensed",
+                "title": "An account that *works* faster than your accountant",
+                "lede": "Open an account in 10 minutes without visiting a branch. Instant transfers with no fee, taxes calculated for you, employee cards in a day.",
+                "primaryLabel": "Open an account",
+                "secondaryLabel": "See pricing",
+                "facts": [
+                  {
+                    "value": "10 min",
+                    "label": "to open an account"
+                  },
+                  {
+                    "value": "0 ₽",
+                    "label": "for instant transfers"
+                  },
+                  {
+                    "value": "24/7",
+                    "label": "human support"
+                  }
+                ],
+                "cardBrand": "Axis",
+                "cardKind": "Business",
+                "cardHolder": "Northwind LLC",
+                "transactions": [
+                  {
+                    "title": "Ozon · payout",
+                    "note": "marketplace",
+                    "amount": "+184,300 ₽"
+                  },
+                  {
+                    "title": "Rent, 8 Pravdy St.",
+                    "note": "scheduled",
+                    "amount": "−62,000 ₽"
+                  },
+                  {
+                    "title": "Prim Logistics LLC",
+                    "note": "instant, 0 ₽ fee",
+                    "amount": "+48,900 ₽"
+                  },
+                  {
+                    "title": "Payroll · 6 people",
+                    "note": "payout project: Friday",
+                    "amount": "−318,500 ₽"
+                  },
+                  {
+                    "title": "Wildberries · payout",
+                    "note": "marketplace",
+                    "amount": "+96,120 ₽"
+                  },
+                  {
+                    "title": "Tax · advance",
+                    "note": "calculated for you",
+                    "amount": "−41,760 ₽"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-041",
+      "type": "registry:block",
+      "title": "Хиро с полкой обложек в 3D, которая по прокрутке разъезжается в сетку",
+      "description": "Sticky-сцена в два экрана: на старте восемь обложек товаров стоят полкой в перспективе — внахлёст, повёрнутые на 32°. Прогресс прокрутки пишется в CSS-переменную, и карточки разъезжаются в ровную сетку 4×2 (2×2 на узком), подписи с ценой проявляются. Строки заголовка въезжают из-под маски по очереди, под ними две кнопки и подсказка «листайте».",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-041/hero-041.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-041.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "hero",
+          "marketplace",
+          "shop",
+          "3d",
+          "scroll",
+          "sticky",
+          "perspective",
+          "grid",
+          "products",
+          "kinetic"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Hero041",
+          "usage": "<Hero041\n  lines={[\"Шаблоны и шрифты\", \"от тех, кто\", \"ими *живёт*\"]}\n  cards={[{ name: \"Атлас — UI-кит\", price: \"2 490 ₽\", image: \"/covers/atlas.webp\" }]}\n  primaryLabel=\"Смотреть каталог\"\n/>",
+          "summary": "Хиро магазина ассетов: 3D-полка обложек, которая по прокрутке выстраивается в сетку; заголовок строками через маску.",
+          "preserve": [
+            "прогресс --vibeui-hero-041-p считается в rAF из rect секции и пишется на корень через style.setProperty, без setState",
+            "позиции карточек — calc() из --i, --c, --r, --cols, --rows: старт (полка) и финиш (сетка) интерполируются одной переменной",
+            "карточки 5–8 скрыты до 48rem контейнера (2×2), от 48rem — 4×2; строки заголовка — overflow:hidden + translateY(112%) с задержкой по --i"
+          ],
+          "adapt": [
+            "eyebrow (со *звёздочками* для акцента), lines (строки заголовка, *слово* — акцент), lede, hint",
+            "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+            "cards: name, price, image, kind",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "lede",
+            "label": "Подзаголовок",
+            "type": "text",
+            "default": "Figma, Notion, иконки и шрифты от независимых авторов. Купил — скачал — в работе через минуту. 80 % цены уходит автору.",
+            "maxLength": 160
+          },
+          {
+            "prop": "primaryLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Смотреть каталог",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hero with a 3D shelf of covers that spreads into a grid on scroll",
+            "description": "A two-screen sticky scene: at the start eight product covers stand on a shelf in perspective — overlapping, turned by 32°. Scroll progress is written into a CSS variable and the cards spread into a neat 4×2 grid (2×2 on narrow), the price labels fade in. Headline lines rise from under a mask one by one, two buttons and a “scroll” hint below.",
+            "ai": {
+              "summary": "Hero for an asset store: a 3D shelf of covers that lines up into a grid on scroll; a headline in masked lines.",
+              "preserve": [
+                "the --vibeui-hero-041-p progress is computed in rAF from the section rect and written to the root via style.setProperty, no setState",
+                "card positions are calc() from --i, --c, --r, --cols, --rows: the start (shelf) and end (grid) are interpolated by one variable",
+                "cards 5–8 are hidden below a 48rem container (2×2), 4×2 from 48rem; headline lines are overflow:hidden + translateY(112%) delayed by --i"
+              ],
+              "adapt": [
+                "eyebrow (with *asterisks* for the accent), lines (headline lines, *word* is accented), lede, hint",
+                "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+                "cards: name, price, image, kind",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Hero041\n  lines={[\"Templates and fonts\", \"from people who\", \"*live* in them\"]}\n  cards={[{ name: \"Atlas — UI kit\", price: \"$29\", image: \"/covers/atlas.webp\" }]}\n  primaryLabel=\"Browse the catalog\"\n/>"
+            },
+            "controls": {
+              "lede": {
+                "label": "Lede",
+                "default": "Figma, Notion, icons and fonts from independent authors. Buy — download — in your project in a minute. 80% of the price goes to the author."
+              },
+              "primaryLabel": {
+                "label": "Button",
+                "default": "Browse the catalog"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "digital goods marketplace · *4,812* in the catalog",
+                "lines": [
+                  "Templates and fonts",
+                  "from people who",
+                  "*live* in them"
+                ],
+                "lede": "Figma, Notion, icons and fonts from independent authors. Buy — download — in your project in a minute. 80% of the price goes to the author.",
+                "primaryLabel": "Browse the catalog",
+                "secondaryLabel": "Sell on Layer",
+                "hint": "scroll — the shelf spreads out",
+                "cards": [
+                  {
+                    "name": "Atlas — UI kit",
+                    "price": "$29",
+                    "image": "/demo/market/cover-01.webp",
+                    "kind": "figma"
+                  },
+                  {
+                    "name": "Routine — second brain",
+                    "price": "$12",
+                    "image": "/demo/market/cover-02.webp",
+                    "kind": "notion"
+                  },
+                  {
+                    "name": "Edge — 480 icons",
+                    "price": "$18",
+                    "image": "/demo/market/cover-03.webp",
+                    "kind": "icons"
+                  },
+                  {
+                    "name": "Narva Grotesk",
+                    "price": "$45",
+                    "image": "/demo/market/cover-04.webp",
+                    "kind": "font"
+                  },
+                  {
+                    "name": "Dashboard Pro",
+                    "price": "$39",
+                    "image": "/demo/market/cover-05.webp",
+                    "kind": "figma"
+                  },
+                  {
+                    "name": "Sprint — product tracker",
+                    "price": "$15",
+                    "image": "/demo/market/cover-06.webp",
+                    "kind": "notion"
+                  },
+                  {
+                    "name": "Pixel 3D",
+                    "price": "$24",
+                    "image": "/demo/market/cover-07.webp",
+                    "kind": "icons"
+                  },
+                  {
+                    "name": "Moto Script",
+                    "price": "$28",
+                    "image": "/demo/market/cover-08.webp",
+                    "kind": "font"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-042",
+      "type": "registry:block",
+      "title": "Хиро API: запрос печатается, JSON-ответ приходит с задержкой «42 ms»",
+      "description": "Первый экран API-сервиса на сетке точек: слева заголовок с акцентным словом, кнопки и три метрики; справа окно терминала — вкладки curl / JS / Python / Go, запрос печатается по символам с подсветкой строк и флагов, после паузы построчно приходит JSON с подсветкой ключей и чисел и бейдж «200 OK · 42 ms». Смена вкладки перепечатывает пример, кнопка копирует код.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-042/hero-042.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-042.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "hero",
+          "api",
+          "developer",
+          "terminal",
+          "code",
+          "typing",
+          "json",
+          "curl",
+          "latency",
+          "dark",
+          "monospace"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Hero042",
+          "usage": "<Hero042\n  title=\"Адрес → координаты *за 42 ms*\"\n  samples={[{ label: \"curl\", code: [\"curl https://api.geokod.ru/v2/geocode?q=Тверская,7\"] }]}\n  response={[\"{\", \"  \\\"lat\\\": 55.759853\", \"}\"]}\n  latency={42}\n/>",
+          "summary": "Хиро для API: продукт показывает себя сам — запрос печатается, ответ приходит с бейджем латентности.",
+          "preserve": [
+            "печать — счётчик typed в setTimeout по символу (18 мс, пробел 40, перенос 140), сброс при смене вкладки",
+            "ответ появляется через 500 мс после последнего символа, строки JSON — с animation-delay по индексу",
+            "подсветка — два regex-токенайзера (код и JSON) в span с data-t, без библиотек"
+          ],
+          "adapt": [
+            "eyebrow, title (со *звёздочками* для акцента), lede, stats: value, label",
+            "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+            "samples: label, code[]; response[], statusLabel, latency",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Адрес → координаты *за 42 ms*",
+            "maxLength": 60
+          },
+          {
+            "prop": "latency",
+            "label": "Задержка, мс",
+            "type": "number",
+            "default": 42,
+            "min": 1,
+            "max": 999
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "API hero: the request types itself, the JSON response arrives with a “42 ms” badge",
+            "description": "An API service first screen on a dot grid: a headline with an accent word, buttons and three metrics on the left; a terminal window on the right — curl / JS / Python / Go tabs, the request types out character by character with string and flag highlighting, then after a pause the JSON arrives line by line with key and number highlighting and a “200 OK · 42 ms” badge. Switching a tab retypes the sample, a button copies the code.",
+            "ai": {
+              "summary": "Hero for an API: the product demos itself — the request types, the response lands with a latency badge.",
+              "preserve": [
+                "typing is a typed counter in setTimeout per character (18 ms, 40 for spaces, 140 for newlines), reset on tab change",
+                "the response appears 500 ms after the last character, JSON lines get animation-delay by index",
+                "highlighting is two regex tokenizers (code and JSON) into spans with data-t, no libraries"
+              ],
+              "adapt": [
+                "eyebrow, title (with *asterisks* for the accent), lede, stats: value, label",
+                "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+                "samples: label, code[]; response[], statusLabel, latency",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Hero042\n  title=\"Address → coordinates *in 42 ms*\"\n  samples={[{ label: \"curl\", code: [\"curl https://api.geokod.ru/v2/geocode?q=Tverskaya,7\"] }]}\n  response={[\"{\", \"  \\\"lat\\\": 55.759853\", \"}\"]}\n  latency={42}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Address → coordinates *in 42 ms*"
+              },
+              "latency": {
+                "label": "Latency, ms"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "geocoding api · v2.4",
+                "title": "Address → coordinates *in 42 ms*",
+                "lede": "Geocoding, reverse geocoding, routes and address suggestions across Russia and the CIS. One key, one request, a JSON answer. Free up to 10,000 requests a month.",
+                "primaryLabel": "Get a key",
+                "secondaryLabel": "Open docs",
+                "stats": [
+                  {
+                    "value": "99.99 %",
+                    "label": "uptime this year"
+                  },
+                  {
+                    "value": "42 ms",
+                    "label": "median response"
+                  },
+                  {
+                    "value": "$0",
+                    "label": "up to 10,000 requests"
+                  }
+                ],
+                "samples": [
+                  {
+                    "label": "curl",
+                    "code": [
+                      "curl https://api.geokod.ru/v2/geocode \\",
+                      "  -H \"Authorization: Bearer gk_live_7f3a…\" \\",
+                      "  -G --data-urlencode \"q=Moscow, Tverskaya, 7\""
+                    ]
+                  },
+                  {
+                    "label": "JS",
+                    "code": [
+                      "const res = await fetch(",
+                      "  \"https://api.geokod.ru/v2/geocode?q=Moscow, Tverskaya, 7\",",
+                      "  { headers: { Authorization: \"Bearer gk_live_7f3a…\" } }",
+                      ")",
+                      "const { results } = await res.json()"
+                    ]
+                  },
+                  {
+                    "label": "Python",
+                    "code": [
+                      "import requests",
+                      "",
+                      "r = requests.get(",
+                      "  \"https://api.geokod.ru/v2/geocode\",",
+                      "  params={\"q\": \"Moscow, Tverskaya, 7\"},",
+                      "  headers={\"Authorization\": \"Bearer gk_live_7f3a…\"},",
+                      ")",
+                      "print(r.json()[\"results\"][0])"
+                    ]
+                  },
+                  {
+                    "label": "Go",
+                    "code": [
+                      "req, _ := http.NewRequest(\"GET\",",
+                      "  \"https://api.geokod.ru/v2/geocode?q=Moscow, Tverskaya, 7\", nil)",
+                      "req.Header.Set(\"Authorization\", \"Bearer gk_live_7f3a…\")",
+                      "res, err := http.DefaultClient.Do(req)"
+                    ]
+                  }
+                ],
+                "response": [
+                  "{",
+                  "  \"query\": \"Moscow, Tverskaya, 7\",",
+                  "  \"results\": [{",
+                  "    \"lat\": 55.759853,",
+                  "    \"lon\": 37.610127,",
+                  "    \"precision\": \"house\",",
+                  "    \"address\": {",
+                  "      \"city\": \"Moscow\",",
+                  "      \"street\": \"Tverskaya street\",",
+                  "      \"house\": \"7\",",
+                  "      \"postal_code\": \"125009\"",
+                  "    }",
+                  "  }],",
+                  "  \"cached\": false,",
+                  "  \"took_ms\": 42",
+                  "}"
+                ],
+                "statusLabel": "200 OK",
+                "latency": 42
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-043",
+      "type": "registry:block",
+      "title": "Хиро гаджета: CSS-лампа, свет которой меняют ползунки",
+      "description": "Первый экран продуктового лендинга: лампа-цилиндр нарисована CSS — градиенты корпуса, светящийся диффузор, ореол и отсвет на столе. Два ползунка «температура 2700–6500 K» и «яркость» меняют свет по-настоящему через color-mix и переменные, а заголовок проявляется вместе со светом. Строки въезжают масками, колесо на корпусе поворачивается за температурой.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-043/hero-043.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-043.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "hero",
+          "gadget",
+          "hardware",
+          "product",
+          "lamp",
+          "light",
+          "slider",
+          "interactive",
+          "css-art",
+          "kinetic",
+          "preorder"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Hero043",
+          "usage": "<Hero043\n  title=\"Просыпайтесь от света, а не от звука\"\n  primaryLabel=\"Предзаказ — 14 900 ₽\"\n  facts={[\"1 200 лм\", \"CRI 97\"]}\n  defaultKelvin={2700}\n/>",
+          "summary": "Хиро для железки: объект нарисован CSS и реально светит, ползунки меняют цвет и яркость, заголовок проявляется со светом.",
+          "preserve": [
+            "цвет света — color-mix(in oklab, warm, cold k%) из переменной -k, яркость -b управляет opacity ореола, brightness диффузора и opacity заголовка",
+            "лампа собрана из абсолютных слоёв: halo, cast, foot, body, grill, dial, dome — порядок важен для перекрытий",
+            "строки копии — обёртки data-part=mask с overflow:hidden, дочерний элемент въезжает translateY(110%) с задержкой по -i"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, facts",
+            "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+            "minKelvin, maxKelvin, defaultKelvin, defaultBrightness",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Просыпайтесь от света, а не от звука",
+            "maxLength": 60
+          },
+          {
+            "prop": "defaultKelvin",
+            "label": "Температура, K",
+            "type": "number",
+            "default": 2700,
+            "min": 2700,
+            "max": 6500
+          },
+          {
+            "prop": "defaultBrightness",
+            "label": "Яркость, %",
+            "type": "number",
+            "default": 90,
+            "min": 5,
+            "max": 100
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Gadget hero: a CSS lamp whose light is driven by sliders",
+            "description": "First screen of a product landing: a cylinder lamp drawn in CSS — body gradients, a glowing diffuser, a halo and a cast on the desk. Two sliders, “temperature 2700–6500 K” and “brightness”, change the light for real through color-mix and variables, and the headline fades in with the light. Lines slide in through masks, the dial on the body turns with the temperature.",
+            "ai": {
+              "summary": "Hero for hardware: the object is drawn in CSS and really glows, sliders change colour and brightness, the headline appears with the light.",
+              "preserve": [
+                "the light colour is color-mix(in oklab, warm, cold k%) from the -k variable; brightness -b drives the halo opacity, diffuser brightness and headline opacity",
+                "the lamp is absolute layers: halo, cast, foot, body, grill, dial, dome — the order matters for overlaps",
+                "copy lines are data-part=mask wrappers with overflow:hidden; the child slides in from translateY(110%) with a delay by -i"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, facts",
+                "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+                "minKelvin, maxKelvin, defaultKelvin, defaultBrightness",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Hero043\n  title=\"Wake up to light, not to noise\"\n  primaryLabel=\"Preorder — $149\"\n  facts={[\"1,200 lm\", \"CRI 97\"]}\n  defaultKelvin={2700}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Wake up to light, not to noise"
+              },
+              "defaultKelvin": {
+                "label": "Temperature, K",
+                "default": 2700
+              },
+              "defaultBrightness": {
+                "label": "Brightness, %",
+                "default": 90
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Ray · smart sunrise lamp · batch 2",
+                "title": "Wake up to light, not to noise",
+                "lede": "Thirty minutes before the alarm Ray glows from embers to daylight white — like a real sunrise. Birdsong only kicks in if the light didn't work.",
+                "primaryLabel": "Preorder — $149",
+                "secondaryLabel": "Watch the sunrise",
+                "facts": [
+                  "1,200 lm",
+                  "CRI 97",
+                  "2700–6500 K",
+                  "5 W speaker",
+                  "CO₂ and light sensors"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-044",
+      "type": "registry:block",
+      "title": "Хиро сбора: счётчик суммы, прогресс с вехами и магнитная кнопка",
+      "description": "Первый экран благотворительного сбора: заголовок антиквой строками, которые выезжают из масок, курсивное слово акцентом; большой счётчик собранной суммы докручивается от нуля, когда блок попадает в viewport; прогресс-полоса с зазубринами-вехами («продукты», «лекарства», «ремонт») заполняется до собранного. Кнопка «Помочь» магнитная — тянется к курсору. Справа портрет в бумажной рамке со скотчем и рукописной подписью, поверх фона зерно бумаги.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-044/hero-044.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-044.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "hero",
+          "charity",
+          "fundraising",
+          "donation",
+          "counter",
+          "progress",
+          "milestones",
+          "magnetic",
+          "serif",
+          "handwritten",
+          "paper"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Hero044",
+          "usage": "<Hero044\n  title=\"Чтобы к Нине Петровне\\nпришли не только\\n*по праздникам*\"\n  raised={1284500}\n  goal={2000000}\n  milestones={[{ at: 500000, label: \"продукты\" }, { at: 1000000, label: \"лекарства\" }]}\n  image=\"/photos/nina.webp\"\n/>",
+          "summary": "Хиро сбора для фонда: сумма докручивается, прогресс заполняется до вех, кнопка магнитится к курсору.",
+          "preserve": [
+            "счётчик — requestAnimationFrame с ease-out после IntersectionObserver, при reduce-motion сразу конечное число",
+            "строки title разделены \\n, каждая в маске overflow:hidden с keyframes rise и задержкой по --i; *слово* — курсив акцентом",
+            "вехи — абсолютные треугольники на полосе по проценту от goal, data-done красит их акцентом; магнит — transform кнопки из onMouseMove обёртки"
+          ],
+          "adapt": [
+            "eyebrow, title (строки через \\n, *слово* — акцент), lede, caption, image, imageAlt",
+            "raised, goal, currency, daysLeft, donors, milestones: at, label",
+            "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Чтобы к Нине Петровне\nпришли не только\n*по праздникам*",
+            "maxLength": 90
+          },
+          {
+            "prop": "raised",
+            "label": "Собрано",
+            "type": "number",
+            "default": 1284500,
+            "min": 0,
+            "max": 2000000
+          },
+          {
+            "prop": "daysLeft",
+            "label": "Дней осталось",
+            "type": "number",
+            "default": 23,
+            "min": 0,
+            "max": 90
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Fundraising hero: an amount counter, a milestone progress bar and a magnetic button",
+            "description": "First screen of a charity fundraiser: a serif headline in lines that slide out of masks with an italic accent word; a big counter of the raised amount counts up from zero when the block enters the viewport; a progress bar with notch milestones (“groceries”, “medicine”, “repairs”) fills up to the raised sum. The “Donate” button is magnetic and pulls towards the cursor. On the right a portrait in a paper frame with tape and a handwritten caption, paper grain over the background.",
+            "ai": {
+              "summary": "Fundraising hero for a foundation: the amount counts up, progress fills to milestones, the button is drawn to the cursor.",
+              "preserve": [
+                "the counter is requestAnimationFrame with ease-out after IntersectionObserver, the final number at once under reduce-motion",
+                "title lines are split by \\n, each in an overflow:hidden mask with rise keyframes delayed by --i; *word* renders italic in the accent",
+                "milestones are absolute triangles on the bar at a percent of goal, data-done paints them in the accent; the magnet is the button transform from the wrapper's onMouseMove"
+              ],
+              "adapt": [
+                "eyebrow, title (lines via \\n, *word* is the accent), lede, caption, image, imageAlt",
+                "raised, goal, currency, daysLeft, donors, milestones: at, label",
+                "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Hero044\n  title=\"So that Nina gets visitors\\nnot only\\n*on holidays*\"\n  raised={1284500}\n  goal={2000000}\n  currency=\"$\"\n  milestones={[{ at: 500000, label: \"groceries\" }, { at: 1000000, label: \"medicine\" }]}\n  image=\"/photos/nina.webp\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "So that Nina gets visitors\nnot only\n*on holidays*"
+              },
+              "raised": {
+                "label": "Raised"
+              },
+              "daysLeft": {
+                "label": "Days left"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Fundraiser No. 14 · September",
+                "title": "So that Nina gets visitors\nnot only\n*on holidays*",
+                "lede": "In Tver and the region there are 312 lonely elderly people we visit every week: groceries, medicine, a leaking tap, a talk. This fundraiser is for the autumn.",
+                "currency": "$",
+                "milestones": [
+                  {
+                    "at": 500000,
+                    "label": "groceries"
+                  },
+                  {
+                    "at": 1000000,
+                    "label": "medicine"
+                  },
+                  {
+                    "at": 1500000,
+                    "label": "repairs"
+                  },
+                  {
+                    "at": 2000000,
+                    "label": "winter"
+                  }
+                ],
+                "primaryLabel": "Donate",
+                "secondaryLabel": "Where the money goes",
+                "caption": "Nina, 84. Rzhev, Lenina street"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-045",
+      "type": "registry:block",
+      "title": "Хиро писателя: имя из-под маски, цитата пером, солнце/луна",
+      "description": "Первый экран личного сайта: имя огромной антиквой, каждая строка въезжает из-под маски с задержкой; под ним «сегодняшняя строка» — цитата печатается буква за буквой с курсором-пером, которое покачивается, пока пишет, потом стирается и сменяется следующей. Переключатель «ночь / бумага» шлёт событие на весь сайт. Зерно feTurbulence поверх фона.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-045/hero-045.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-045.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "hero",
+          "writer",
+          "author",
+          "serif",
+          "typewriter",
+          "typing",
+          "quote",
+          "kinetic typography",
+          "mask",
+          "dark mode",
+          "day night"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Hero045",
+          "usage": "<Hero045\n  lines={[\"Вера\", \"Холодова\"]}\n  role=\"Эссеистка. Пишу о городах и памяти.\"\n  quotes={[\"Тишина — это не отсутствие звука, а место, где его слушают.\"]}\n/>",
+          "summary": "Хиро для писателя, поэта или колумниста: имя антиквой из-под маски, цитата, которую пишет перо, день/ночь.",
+          "preserve": [
+            "строки имени — span[data-part=mask]{overflow:hidden} со span[data-part=word] translateY(110%) → 0 по keyframes, задержка через --vibeui-hero-045-i",
+            "печать: фазы write → hold → erase в useEffect на setTimeout, пауза дольше после знаков препинания, курсор-перо получает data-writing",
+            "переключатель ставит data-mode и шлёт CustomEvent vibeui-writer:theme; цвета light-dark(), кроссфейд .6s"
+          ],
+          "adapt": [
+            "lines (строки имени), role",
+            "quoteLabel, quotes — цитаты по очереди",
+            "primaryLabel/Href, secondaryLabel/Href, defaultMode, showModeSwitch",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "role",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Эссеистка. Пишу о городах, памяти и домах, в которых мы не жили.",
+            "maxLength": 90
+          },
+          {
+            "prop": "quoteLabel",
+            "label": "Ярлык цитаты",
+            "type": "text",
+            "default": "Сегодняшняя строка",
+            "maxLength": 30
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Writer's hero: name rising from a mask, a quote written by a pen, sun/moon",
+            "description": "First screen of a personal site: the name in huge serif, each line rising from under a mask with a delay; below it “today's line” — a quote typed letter by letter with a pen cursor that wobbles while writing, then erases and moves to the next. The “night / paper” switch dispatches an event to the whole site. feTurbulence grain over the background.",
+            "ai": {
+              "summary": "Hero for a writer, poet or columnist: serif name rising from a mask, a quote written by a pen, day/night.",
+              "preserve": [
+                "name lines are span[data-part=mask]{overflow:hidden} with span[data-part=word] translateY(110%) → 0 via keyframes, delay via --vibeui-hero-045-i",
+                "typing: write → hold → erase phases in a setTimeout useEffect, a longer pause after punctuation, the pen cursor gets data-writing",
+                "the switch sets data-mode and dispatches the vibeui-writer:theme CustomEvent; colors are light-dark(), .6s crossfade"
+              ],
+              "adapt": [
+                "lines (name lines), role",
+                "quoteLabel, quotes — quotes in turn",
+                "primaryLabel/Href, secondaryLabel/Href, defaultMode, showModeSwitch",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Hero045\n  lines={[\"Vera\", \"Kholodova\"]}\n  role=\"Essayist. I write about cities and memory.\"\n  quotes={[\"Silence is not the absence of sound but the place where it is listened to.\"]}\n/>"
+            },
+            "controls": {
+              "role": {
+                "label": "Tagline",
+                "default": "Essayist. I write about cities, memory and the houses we never lived in."
+              },
+              "quoteLabel": {
+                "label": "Quote label",
+                "default": "Today's line"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "lines": [
+                  "Vera",
+                  "Kholodova"
+                ],
+                "role": "Essayist. I write about cities, memory and the houses we never lived in.",
+                "quoteLabel": "Today's line",
+                "quotes": [
+                  "Silence is not the absence of sound but the place where it is listened to.",
+                  "Every city I have lived in began with a railway station and ended with a kitchen.",
+                  "I write so as not to forget; I forget so there is something to write about."
+                ],
+                "primaryLabel": "Read the texts",
+                "secondaryLabel": "About the book"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

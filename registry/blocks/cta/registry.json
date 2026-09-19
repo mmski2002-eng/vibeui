@@ -4216,6 +4216,897 @@
           }
         }
       }
+    },
+    {
+      "name": "cta-030",
+      "type": "registry:block",
+      "title": "Заявка одним полем на сигнальной плите с выбором «звонок / мессенджер» и сметой из калькулятора",
+      "description": "Заявка «одно поле — одна кнопка» на плите в цвет акцента с полосами ограждения по краям: поле телефона, кнопка «Записаться на замер», переключатель «Позвоните / Telegram / WhatsApp» с обещанием канала под ним. Форма слушает CustomEvent от калькулятора сметы и прикрепляет смету чипом: номер, площадь, тип, цена, срок — с крестиком «открепить». После отправки плита показывает квадрат с галочкой, которые прорисовываются, номер заявки и обещание. Ничего не отправляет наружу.",
+      "categories": [
+        "cta"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-030/cta-030.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-030.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "cta",
+          "form",
+          "lead",
+          "phone",
+          "request",
+          "callback",
+          "messenger",
+          "renovation",
+          "construction",
+          "custom event",
+          "estimate",
+          "hazard"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Cta030",
+          "usage": "<Cta030\n  title=\"Замер бесплатный, смета — в тот же день\"\n  actionLabel=\"Записаться на замер\"\n  channels={[{ id: \"call\", label: \"Позвоните мне\", promise: \"Перезвоним за 15 минут\" }, { id: \"telegram\", label: \"Telegram\", promise: \"Напишем в Telegram\" }]}\n  eventName=\"vibeui-renovation:estimate\"\n/>",
+          "summary": "Финальная заявка для сайта подрядчика: телефон и способ связи, смета из калькулятора прикрепляется сама, успех с прорисованной галочкой.",
+          "preserve": [
+            "useEffect подписывается на window[eventName] и кладёт event.detail в estimate; чип рендерится из number, area, type, price, weeks, currency",
+            "полосы ограждения — ::before/::after плиты с repeating-linear-gradient −45° цветом on-accent, ширина .9rem",
+            "успех — rect и path с pathLength=1, stroke-dashoffset 1→0 keyframes, номер заявки считается из последних цифр телефона"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, placeholder, actionLabel, fine",
+            "channels: id, label, promise; defaultChannel",
+            "eventName, estimateLabel, doneTitle",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Замер бесплатный, смета — в тот же день",
+            "maxLength": 60
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Записаться на замер",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "One-field request on a hazard plate with a “call / messenger” switch and the calculator's estimate attached",
+            "description": "A “one field — one button” request on an accent-coloured plate with hazard stripes along the edges: a phone field, a “Book a survey” button, a “Call me / Telegram / WhatsApp” switch with the channel's promise beneath. The form listens for a CustomEvent from the estimate calculator and attaches the estimate as a chip: number, area, type, price, weeks — with a “detach” cross. After submitting, the plate shows a square and a check mark that draw themselves, the request number and the promise. Sends nothing anywhere.",
+            "ai": {
+              "summary": "A final request for a contractor site: phone and contact channel, the calculator's estimate attaches itself, success with a drawn check mark.",
+              "preserve": [
+                "useEffect subscribes to window[eventName] and stores event.detail in estimate; the chip renders from number, area, type, price, weeks, currency",
+                "hazard stripes are the plate's ::before/::after with a −45° repeating-linear-gradient in on-accent, .9rem wide",
+                "success is a rect and a path with pathLength=1 and stroke-dashoffset 1→0 keyframes, the request number derives from the phone's last digits"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, placeholder, actionLabel, fine",
+                "channels: id, label, promise; defaultChannel",
+                "eventName, estimateLabel, doneTitle",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Cta030\n  title=\"The survey is free, the estimate comes the same day\"\n  actionLabel=\"Book a survey\"\n  channels={[{ id: \"call\", label: \"Call me\", promise: \"We call back within 15 minutes\" }, { id: \"telegram\", label: \"Telegram\", promise: \"We message you on Telegram\" }]}\n  eventName=\"vibeui-renovation:estimate\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "The survey is free, the estimate comes the same day"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Book a survey"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Request",
+                "title": "The survey is free, the estimate comes the same day",
+                "lede": "We arrive with a laser measure and send the estimate with stage dates within two hours. A contract — only if the numbers suit you.",
+                "placeholder": "+1 ___ ___-____",
+                "actionLabel": "Book a survey",
+                "channels": [
+                  {
+                    "id": "call",
+                    "label": "Call me",
+                    "promise": "We call back within 15 minutes, 9:00–21:00"
+                  },
+                  {
+                    "id": "telegram",
+                    "label": "Telegram",
+                    "promise": "We message you on Telegram, no calls"
+                  },
+                  {
+                    "id": "whatsapp",
+                    "label": "WhatsApp",
+                    "promise": "We message you on WhatsApp, no calls"
+                  }
+                ],
+                "estimateLabel": "Estimate attached to the request",
+                "doneTitle": "Request received",
+                "fine": "No newsletters: one call or one message, to the point."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cta-032",
+      "type": "registry:block",
+      "title": "Пробный урок: форма на тетрадном листе с плавающими ярлыками",
+      "description": "Запись на пробное занятие: слева заголовок и три нумерованных факта о том, что будет на уроке, справа тетрадный лист с полями и перфорацией — два поля с плавающими ярлыками (ярлык уезжает вверх при фокусе и заполнении, снизу растёт акцентная линия), чипы языка, одна кнопка и мелкая подпись. После отправки — «записали!» с прорисовкой кружка и галочки. Форма ничего не отправляет наружу.",
+      "categories": [
+        "cta"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-032/cta-032.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-032.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "cta",
+          "form",
+          "school",
+          "language",
+          "education",
+          "trial",
+          "lead",
+          "floating-label",
+          "notebook",
+          "success"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Cta032",
+          "usage": "<Cta032\n  title=\"Приходите поговорить. Просто поговорить\"\n  languages={[\"Английский\", \"Испанский\", \"Итальянский\"]}\n  actionLabel=\"Записаться на пробный\"\n  doneTitle=\"записали!\"\n/>",
+          "summary": "Форма записи для школы или курсов: тетрадный лист, плавающие ярлыки, чипы языка, анимированное «записали».",
+          "preserve": [
+            "плавающий ярлык — label после input, поднимается по input:focus и input:not(:placeholder-shown); placeholder прозрачный",
+            "акцентная линия поля — ::after с scaleX 0→1 по :focus-within; кружок и галочка успеха — stroke-dasharray/dashoffset с задержкой 0.5 с",
+            "id полей из useId, submit только preventDefault + setDone — обработчик подключается в проекте"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, facts",
+            "languages, nameLabel, contactLabel, actionLabel, fine",
+            "doneTitle, doneText",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Приходите поговорить. Просто поговорить",
+            "maxLength": 60
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Записаться на пробный",
+            "maxLength": 30
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Trial lesson: a form on a ruled sheet with floating labels",
+            "description": "Trial lesson sign-up: on the left a headline and three numbered facts about the lesson, on the right a ruled sheet with a margin and perforation — two fields with floating labels (the label moves up on focus and when filled, an accent line grows beneath), language chips, one button and fine print. After submit — “booked!” with a circle and tick drawing themselves. The form sends nothing anywhere.",
+            "ai": {
+              "summary": "A sign-up form for a school or courses: a ruled sheet, floating labels, language chips, an animated “booked”.",
+              "preserve": [
+                "the floating label is a label after the input, raised on input:focus and input:not(:placeholder-shown); the placeholder is transparent",
+                "the field's accent line is an ::after with scaleX 0→1 on :focus-within; the success circle and tick use stroke-dasharray/dashoffset with a 0.5 s delay",
+                "field ids come from useId, submit is only preventDefault + setDone — the handler is wired in the project"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, facts",
+                "languages, nameLabel, contactLabel, actionLabel, fine",
+                "doneTitle, doneText",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Cta032\n  title=\"Come and talk. Just talk\"\n  languages={[\"English\", \"Spanish\", \"Italian\"]}\n  actionLabel=\"Book a trial\"\n  doneTitle=\"booked!\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Come and talk. Just talk"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Book a trial"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "first lesson — free",
+                "title": "Come and talk. Just talk",
+                "lede": "A trial lesson is not a test and not a sales pitch. Half an hour of conversation with a teacher to see whether the format and the group suit you.",
+                "facts": [
+                  "We'll talk for 30 minutes in the language — as much as we can",
+                  "We'll pin down your level better than a test and pick a group",
+                  "We'll tell you what to expect in a month and in three"
+                ],
+                "languages": [
+                  "English",
+                  "Spanish",
+                  "Italian"
+                ],
+                "nameLabel": "Your name",
+                "contactLabel": "Phone or Telegram",
+                "actionLabel": "Book a trial",
+                "fine": "We'll write within an hour during working hours. No calls without warning.",
+                "doneTitle": "booked!",
+                "doneText": "We'll write within an hour and offer two or three time slots. Check Telegram."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cta-034",
+      "type": "registry:block",
+      "title": "Подписка на дропы с таймером до следующего и контурным словом на фоне",
+      "description": "Призыв подписаться на еженедельные дропы: карточка-стекло с таймером дней, часов, минут и секунд до заданного дня недели и часа, заголовок, одно поле почты и кнопка, три моно-подписи. Фоном уплывает огромное контурное слово («ДРОП»). После отправки карточка меняется на галочку, которая прорисовывается по контуру. Форма — заглушка, ничего не отправляет.",
+      "categories": [
+        "cta"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-034/cta-034.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-034.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "cta",
+          "newsletter",
+          "subscribe",
+          "countdown",
+          "timer",
+          "drop",
+          "marketplace",
+          "form",
+          "outline",
+          "marquee"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Cta034",
+          "usage": "<Cta034\n  title=\"Новые товары — по четвергам в полдень\"\n  dropDay={4}\n  dropHour={12}\n  word=\"ДРОП\"\n  actionLabel=\"Получать дропы\"\n/>",
+          "summary": "Подписка на дропы: таймер до четверга 12:00, одно поле — одна кнопка, контурное слово бежит фоном.",
+          "preserve": [
+            "таймер — useSyncExternalStore с интервалом 1 с и серверным снимком null: на сервере «--», на клиенте цифры без расхождений гидрации",
+            "nextDrop считает ближайший dropDay (1 — понедельник) в dropHour по местному времени; если сегодня и час прошёл — через неделю",
+            "контурное слово — -webkit-text-stroke, два span по 40 с translateX(-100%); галочка — stroke-dashoffset, при reduce-motion сразу нарисована"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, word",
+            "dropDay, dropHour",
+            "placeholder, actionLabel, fine, doneTitle, doneText",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Новые товары — по четвергам в полдень",
+            "maxLength": 60
+          },
+          {
+            "prop": "word",
+            "label": "Слово на фоне",
+            "type": "text",
+            "default": "ДРОП",
+            "maxLength": 12
+          },
+          {
+            "prop": "dropDay",
+            "label": "День дропа (1–7)",
+            "type": "number",
+            "default": 4,
+            "min": 1,
+            "max": 7
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Drop subscription with a countdown and an outlined word in the background",
+            "description": "A call to subscribe to weekly drops: a glass card with a countdown of days, hours, minutes and seconds to a given weekday and hour, a heading, one email field and a button, three mono captions. A huge outlined word (“DROP”) drifts in the background. After submitting, the card turns into a check mark drawn along its outline. The form is a stub and sends nothing.",
+            "ai": {
+              "summary": "Drop subscription: a countdown to Thursday 12:00, one field — one button, an outlined word runs in the background.",
+              "preserve": [
+                "the timer is useSyncExternalStore with a 1s interval and a null server snapshot: “--” on the server, digits on the client without hydration mismatches",
+                "nextDrop finds the nearest dropDay (1 is Monday) at dropHour local time; if today and the hour has passed — a week later",
+                "the outlined word is -webkit-text-stroke, two spans over 40s with translateX(-100%); the check is stroke-dashoffset, drawn at once under reduce-motion"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, word",
+                "dropDay, dropHour",
+                "placeholder, actionLabel, fine, doneTitle, doneText",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Cta034\n  title=\"New products — Thursdays at noon\"\n  dropDay={4}\n  dropHour={12}\n  word=\"DROP\"\n  actionLabel=\"Get the drops\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "New products — Thursdays at noon"
+              },
+              "word": {
+                "label": "Background word",
+                "default": "DROP"
+              },
+              "dropDay": {
+                "label": "Drop day (1–7)"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "next drop in",
+                "title": "New products — Thursdays at noon",
+                "lede": "One email a week with the drop: 10–15 new products and one at 50% off for a day. Nothing else.",
+                "word": "DROP",
+                "placeholder": "Email",
+                "actionLabel": "Get the drops",
+                "fine": [
+                  "once a week",
+                  "unsubscribe in one email",
+                  "no spam"
+                ],
+                "doneTitle": "You're on the list",
+                "doneText": "The first email arrives on Thursday at 12:00 sharp."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cta-035",
+      "type": "registry:block",
+      "title": "Призыв «ключ за 30 секунд»: поле почты, ключ печатается по символам",
+      "description": "Финальный призыв для API: панель на сетке точек с дышащим свечением акцента и огромным контурным префиксом ключа на фоне, одно поле почты и кнопка. После отправки заголовок меняется на «Ключ готов», строка ключа печатается по символам моноширинным с курсором, затем прорисовывается галочка в кружке, появляется «скопировать» и «готово за 1,2 с — обещали 30». Форма ничего не отправляет — заглушка.",
+      "categories": [
+        "cta"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-035/cta-035.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-035.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "cta",
+          "api",
+          "api key",
+          "signup",
+          "email",
+          "form",
+          "typing",
+          "developer",
+          "dark",
+          "monospace"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Cta035",
+          "usage": "<Cta035\n  title=\"Ключ за 30 секунд\"\n  keyPrefix=\"gk_live_\"\n  actionLabel=\"Получить ключ\"\n  fine={[\"Без карты\", \"10 000 запросов бесплатно\"]}\n/>",
+          "summary": "Призыв для API: одно поле почты — и ключ печатается прямо на странице.",
+          "preserve": [
+            "ключ — 24 символа из abcdef0123456789, генерируется в обработчике submit (Math.random только там)",
+            "печать — счётчик typed в setTimeout по 45 мс; elapsed считается в эффекте после готовности из Date.now",
+            "галочка — circle и path с stroke-dasharray и keyframes draw, кнопка «скопировать» проявляется по data-ready"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, placeholder, actionLabel, fine[]",
+            "keyPrefix, doneTitle, doneText, docsLabel, docsHref",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ключ за 30 секунд",
+            "maxLength": 40
+          },
+          {
+            "prop": "keyPrefix",
+            "label": "Префикс ключа",
+            "type": "text",
+            "default": "gk_live_",
+            "maxLength": 16
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "“A key in 30 seconds” call to action: an email field, the key types itself",
+            "description": "A final call to action for an API: a dot-grid panel with a breathing accent glow and a huge outlined key prefix in the background, one email field and a button. After submit the title turns into “Key ready”, the key string types out in monospace with a cursor, then a circled check draws itself, “copy” appears along with “done in 1.2 s — we promised 30”. The form sends nothing — a stub.",
+            "ai": {
+              "summary": "Call to action for an API: one email field — and the key types right on the page.",
+              "preserve": [
+                "the key is 24 characters from abcdef0123456789, generated in the submit handler (Math.random only there)",
+                "typing is a typed counter in a 45 ms setTimeout; elapsed is computed in an effect after ready from Date.now",
+                "the check is a circle and path with stroke-dasharray and draw keyframes, the copy button fades in via data-ready"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, placeholder, actionLabel, fine[]",
+                "keyPrefix, doneTitle, doneText, docsLabel, docsHref",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Cta035\n  title=\"A key in 30 seconds\"\n  keyPrefix=\"gk_live_\"\n  actionLabel=\"Get a key\"\n  fine={[\"No card\", \"10,000 requests free\"]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "A key in 30 seconds"
+              },
+              "keyPrefix": {
+                "label": "Key prefix",
+                "default": "gk_live_"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "GET /v2/key",
+                "title": "A key in 30 seconds",
+                "lede": "An email — and the key is in the response. No card, no sales call, no “we'll get back to you”. Ten thousand requests a month free.",
+                "placeholder": "you@company.com",
+                "actionLabel": "Get a key",
+                "fine": [
+                  "No card",
+                  "10,000 requests free",
+                  "Revoke in one click"
+                ],
+                "doneTitle": "Key ready",
+                "doneText": "We also sent it by email. You can make the first request right now — the quota resets on the 1st.",
+                "docsLabel": "First request in docs"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cta-037",
+      "type": "registry:block",
+      "title": "Форма пожертвования: чипы сумм, «разово / ежемесячно» с ×12",
+      "description": "Форма пожертвования для фонда: слева фото в бумажной рамке с рукописной подписью, справа бланк — сегментный переключатель «разово / ежемесячно», чипы сумм и поле своей суммы. При ежемесячном платеже появляется плашка «×12»: годовая сумма докручивается, рядом рукописная пометка «это 12 визитов». Слушает событие vibeui-charity:amount из калькулятора и подставляет выбранную сумму. После отправки сердце с галочкой прорисовываются штрихом. Заглушка: наружу ничего не идёт.",
+      "categories": [
+        "cta"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-037/cta-037.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-037.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "cta",
+          "donation",
+          "charity",
+          "form",
+          "recurring",
+          "monthly",
+          "chips",
+          "nonprofit",
+          "handwritten",
+          "paper"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Cta037",
+          "usage": "<Cta037\n  title=\"Одна среда в месяц — это вы\"\n  amounts={[300, 500, 1000, 2000, 5000]}\n  defaultAmount={1000}\n  monthlyNote=\"за год — {year}. Это 12 визитов\"\n  image=\"/photos/hands.webp\"\n/>",
+          "summary": "Бланк пожертвования: сумма чипами или своя, «ежемесячно» показывает ×12 за год, сердце рисуется после отправки.",
+          "preserve": [
+            "переключатель — data-monthly двигает ::before на translateX(100%), кнопки с aria-pressed",
+            "годовая сумма — requestAnimationFrame 900 мс от value к value×12 при каждом изменении; при reduce-motion сразу",
+            "window.addEventListener(\"vibeui-charity:amount\") подставляет detail.amount и сбрасывает своё поле; submit только при value > 0"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, caption, image, imageAlt",
+            "amounts, defaultAmount, currency, onceLabel, monthlyLabel, monthlyNote ({year})",
+            "actionLabel, fine, doneTitle, doneText",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Одна среда в месяц — это вы",
+            "maxLength": 60
+          },
+          {
+            "prop": "defaultAmount",
+            "label": "Сумма по умолчанию",
+            "type": "number",
+            "default": 1000,
+            "min": 100,
+            "max": 50000
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Donation form: amount chips, “once / monthly” with ×12",
+            "description": "A donation form for a foundation: a photo in a paper frame with a handwritten caption on the left, a form on the right — a segmented “once / monthly” switch, amount chips and a custom amount field. With monthly on, a “×12” panel appears: the yearly total counts up next to a handwritten “that's 12 visits” note. Listens to the vibeui-charity:amount event from the calculator and fills in the chosen amount. After submit a heart and check mark draw themselves. A stub: nothing is sent.",
+            "ai": {
+              "summary": "A donation form: amount by chips or custom, “monthly” shows ×12 per year, a heart draws after submit.",
+              "preserve": [
+                "the switch moves its ::before with translateX(100%) via data-monthly, buttons carry aria-pressed",
+                "the yearly total is a 900 ms requestAnimationFrame from value to value×12 on every change; at once under reduce-motion",
+                "window.addEventListener(\"vibeui-charity:amount\") fills detail.amount and clears the custom field; submit only when value > 0"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, caption, image, imageAlt",
+                "amounts, defaultAmount, currency, onceLabel, monthlyLabel, monthlyNote ({year})",
+                "actionLabel, fine, doneTitle, doneText",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Cta037\n  title=\"One Wednesday a month — that's you\"\n  currency=\"$\"\n  amounts={[5, 10, 20, 40, 100]}\n  defaultAmount={20}\n  monthlyNote=\"per year — {year}. That's 12 visits\"\n  image=\"/photos/hands.webp\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "One Wednesday a month — that's you"
+              },
+              "defaultAmount": {
+                "label": "Default amount",
+                "default": 20
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Donate",
+                "title": "One Wednesday a month — that's you",
+                "lede": "A recurring gift is the most valuable: we can plan visits a year ahead instead of fundraiser to fundraiser. Cancel any time with one email.",
+                "currency": "$",
+                "amounts": [
+                  5,
+                  10,
+                  20,
+                  40,
+                  100
+                ],
+                "defaultAmount": 20,
+                "onceLabel": "Once",
+                "monthlyLabel": "Monthly",
+                "monthlyNote": "per year — {year}. That's 12 visits to one person",
+                "actionLabel": "Donate",
+                "fine": [
+                  "No fee for you",
+                  "Secure card payment",
+                  "Cancel with one email"
+                ],
+                "doneTitle": "Thank you. Truly.",
+                "doneText": "The receipt will arrive by email, and in a month — a letter about where the money went.",
+                "caption": "Viktor and Igor, delivery run in Torzhok"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

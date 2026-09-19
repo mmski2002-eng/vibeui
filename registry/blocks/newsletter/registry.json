@@ -1249,6 +1249,403 @@
           }
         }
       }
+    },
+    {
+      "name": "subscribe-011",
+      "type": "registry:block",
+      "title": "Цветы по подписке: частота и размер чипами, квитанция с расчётом",
+      "description": "Подписка на букеты: слева выбор частоты (каждую неделю, раз в две, раз в месяц — со скидкой) и размера букета радио-чипами, справа «квитанция» с зубчатым краем — цена за доставку с зачёркнутой обычной, доставок в месяц и сумма в месяц, цифры не прыгают. Внизу одно поле телефона и кнопка; после отправки квитанция сменяется благодарностью с прорисованной галочкой. Форма — заглушка.",
+      "categories": [
+        "newsletter"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "subscribe-011/subscribe-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/subscribe-011.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "subscribe",
+          "subscription",
+          "flowers",
+          "pricing",
+          "calculator",
+          "receipt",
+          "chips",
+          "form",
+          "recurring"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Subscribe011",
+          "usage": "<Subscribe011\n  title=\"Цветы по подписке — сезонные, без повторов\"\n  frequencies={[{ label: \"Каждую неделю\", perMonth: 4, discount: 20 }, { label: \"Раз в месяц\", perMonth: 1, discount: 5 }]}\n  sizes={[{ label: \"Средний\", price: 2900, stems: \"9–12 стеблей\" }]}\n/>",
+          "summary": "Подписка с выбором частоты и размера и живым расчётом — для цветов, кофе, еды, любой регулярной доставки.",
+          "preserve": [
+            "чипы — label[data-part=chip] с невидимым input type=radio, выбранный — data-on=true с заливкой цветом текста; фокус через :has(input:focus-visible)",
+            "цена за доставку = price × (100 − discount) / 100, округлённая до 10; сумма в месяц = perDelivery × perMonth, tabular-nums",
+            "зубчатый край — ::before с radial-gradient цвета фона поверх верхней кромки; после submit — done с галочкой stroke-dashoffset"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, perks, placeholder, actionLabel, doneTitle, doneText",
+            "frequencies: label, perMonth, discount; sizes: label, price, stems",
+            "defaultFrequency, defaultSize, currency",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Цветы по подписке — сезонные, без повторов",
+            "maxLength": 60
+          },
+          {
+            "prop": "defaultFrequency",
+            "label": "Частота по умолчанию",
+            "type": "number",
+            "default": 1,
+            "min": 0,
+            "max": 2
+          },
+          {
+            "prop": "defaultSize",
+            "label": "Размер по умолчанию",
+            "type": "number",
+            "default": 1,
+            "min": 0,
+            "max": 2
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Flowers by subscription: frequency and size chips, a receipt with the maths",
+            "description": "A bouquet subscription: on the left the frequency (weekly, fortnightly, monthly — with a discount) and the bouquet size as radio chips, on the right a “receipt” with a scalloped edge — price per delivery with the regular price struck through, deliveries per month and the monthly total, digits don't jump. Below, one phone field and a button; after submit the receipt turns into a thank-you with a self-drawing tick. The form is a stub.",
+            "ai": {
+              "summary": "A subscription with frequency and size choice and a live calculation — for flowers, coffee, food, any recurring delivery.",
+              "preserve": [
+                "chips are label[data-part=chip] with a hidden input type=radio, the chosen one is data-on=true filled with the text colour; focus via :has(input:focus-visible)",
+                "price per delivery = price × (100 − discount) / 100 rounded to 10; monthly = perDelivery × perMonth, tabular-nums",
+                "the scalloped edge is a ::before with a background-coloured radial-gradient over the top edge; after submit — done with a stroke-dashoffset tick"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, perks, placeholder, actionLabel, doneTitle, doneText",
+                "frequencies: label, perMonth, discount; sizes: label, price, stems",
+                "defaultFrequency, defaultSize, currency",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Subscribe011\n  title=\"Flowers by subscription — seasonal, never repeated\"\n  frequencies={[{ label: \"Every week\", perMonth: 4, discount: 20 }, { label: \"Once a month\", perMonth: 1, discount: 5 }]}\n  sizes={[{ label: \"Medium\", price: 34, stems: \"9–12 stems\" }]}\n  currency=\"$\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Flowers by subscription — seasonal, never repeated"
+              },
+              "defaultFrequency": {
+                "label": "Default frequency"
+              },
+              "defaultSize": {
+                "label": "Default size"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Subscription",
+                "title": "Flowers by subscription — seasonal, never repeated",
+                "lede": "The florist decides what blooms best this week. You decide how often it should happen.",
+                "frequencies": [
+                  {
+                    "label": "Every week",
+                    "perMonth": 4,
+                    "discount": 20
+                  },
+                  {
+                    "label": "Every two weeks",
+                    "perMonth": 2,
+                    "discount": 12
+                  },
+                  {
+                    "label": "Once a month",
+                    "perMonth": 1,
+                    "discount": 5
+                  }
+                ],
+                "sizes": [
+                  {
+                    "label": "Small",
+                    "price": 22,
+                    "stems": "5–7 stems"
+                  },
+                  {
+                    "label": "Medium",
+                    "price": 34,
+                    "stems": "9–12 stems"
+                  },
+                  {
+                    "label": "Large",
+                    "price": 52,
+                    "stems": "15–19 stems"
+                  }
+                ],
+                "currency": "$",
+                "perks": [
+                  "First delivery is on us",
+                  "Pause for a holiday in one click",
+                  "A care card in every bouquet",
+                  "Cancel any time, no questions"
+                ],
+                "placeholder": "Phone",
+                "actionLabel": "Subscribe",
+                "doneTitle": "Noted",
+                "doneText": "We'll call today to confirm the address and the day. The first bouquet is on us."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "subscribe-020",
+      "type": "registry:block",
+      "title": "Письма читателям: частота, одно поле и конверт прошлого письма",
+      "description": "Подписка на письма автора: выбор частоты «раз в неделю / раз в месяц» меняет обещание под тумблером, поле с плавающим ярлыком и одна кнопка; после отправки перо прорисовывает галочку и появляется «письмо уже в пути». Справа конверт прошлого письма: по наведению или нажатию клапан откидывается, сургуч исчезает и лист выезжает наружу с датой, темой и первыми абзацами. Форма — заглушка.",
+      "categories": [
+        "newsletter"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "subscribe-020/subscribe-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/subscribe-020.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "newsletter",
+          "subscribe",
+          "letters",
+          "email",
+          "writer",
+          "envelope",
+          "frequency",
+          "form",
+          "floating label",
+          "serif"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Subscribe020",
+          "usage": "<Subscribe020\n  title=\"Письма читателям\"\n  frequencies={[{ name: \"Раз в неделю\", promise: \"Каждое воскресенье, короткое.\" }, { name: \"Раз в месяц\", promise: \"Первого числа, длинное.\" }]}\n  letterSubject=\"Про окно, которое не мыли с весны\"\n/>",
+          "summary": "Подписка на письма для писателя, редакции или подкаста: выбор частоты, одно поле, конверт, который открывается.",
+          "preserve": [
+            "конверт — button[data-part=envelope] с perspective; слои: back, letter (z1), pocket (z2, clip-path треугольного кармана), flap (z3, rotateX 0 → −170deg от верхнего края), seal; на :hover и [aria-pressed=true] letter уезжает translateY(−46%), у scene padding-top под выезжающий лист",
+            "плавающий ярлык — input с placeholder=\" \" и label после него: :focus-visible + label и :not(:placeholder-shown) + label поднимают его",
+            "успех — svg с circle и path через stroke-dasharray/dashoffset, вторая линия с задержкой .6s; частота подставляется в текст «письмо уже в пути»"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, frequencies: name, promise",
+            "placeholder, actionLabel, fine, doneTitle, doneText",
+            "letterDate, letterSubject, letterText, letterHref, letterHrefLabel",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Письма читателям",
+            "maxLength": 40
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Получать письма",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Letters to readers: frequency, one field and an envelope with the last letter",
+            "description": "Subscription to an author's letters: a “weekly / monthly” frequency choice changes the promise under the toggle, a floating-label field and one button; after submit a pen draws a check and “the letter is on its way” appears. On the right an envelope with the last letter: on hover or click the flap folds back, the seal disappears and the sheet slides out with the date, subject and first paragraphs. The form is a stub.",
+            "ai": {
+              "summary": "A letter subscription for a writer, editorial team or podcast: a frequency choice, one field, an envelope that opens.",
+              "preserve": [
+                "the envelope is button[data-part=envelope] with perspective; layers: back, letter (z1), pocket (z2, a triangular clip-path pocket), flap (z3, rotateX 0 → −170deg from the top edge), seal; on :hover and [aria-pressed=true] the letter moves translateY(−46%), scene has padding-top for the emerging sheet",
+                "the floating label is an input with placeholder=\" \" and a label after it: :focus-visible + label and :not(:placeholder-shown) + label lift it",
+                "success is an svg circle and path via stroke-dasharray/dashoffset, the second line delayed .6s; the frequency is inserted into the “on its way” text"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, frequencies: name, promise",
+                "placeholder, actionLabel, fine, doneTitle, doneText",
+                "letterDate, letterSubject, letterText, letterHref, letterHrefLabel",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Subscribe020\n  title=\"Letters to readers\"\n  frequencies={[{ name: \"Weekly\", promise: \"Every Sunday, short.\" }, { name: \"Monthly\", promise: \"On the first, long.\" }]}\n  letterSubject=\"On a window unwashed since spring\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Letters to readers"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Get the letters"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Letters",
+                "title": "Letters to readers",
+                "lede": "I write letters more often than essays. They are shorter, warmer and unedited. Subscribe — and choose how often.",
+                "frequencies": [
+                  {
+                    "name": "Weekly",
+                    "promise": "Every Sunday, short: one thought, one book, one photo from the balcony."
+                  },
+                  {
+                    "name": "Monthly",
+                    "promise": "On the first, long: a whole new essay before it comes out anywhere else."
+                  }
+                ],
+                "placeholder": "Your email",
+                "actionLabel": "Get the letters",
+                "fine": "No ads and no “hot offers”. Unsubscribe with one link at the bottom of any letter.",
+                "doneTitle": "The letter is on its way",
+                "doneText": "The first one arrives at the next date — check “Promotions”, mail sometimes mistakes letters for newsletters.",
+                "letterDate": "7 September",
+                "letterSubject": "On a window unwashed since spring",
+                "letterText": [
+                  "I noticed I hadn't washed the window since April only when the city appeared on it: dust settled exactly along the silhouette of the houses opposite, like a negative.",
+                  "And I thought — that is how memory works. We do not keep events. We keep the dust that settled on them."
+                ],
+                "letterHrefLabel": "Letter archive →"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

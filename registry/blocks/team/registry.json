@@ -2952,6 +2952,1274 @@
           }
         }
       }
+    },
+    {
+      "name": "people-014",
+      "type": "registry:block",
+      "title": "Мастера автосервиса: карточки с фото и наклоном за курсором",
+      "description": "Команда автосервиса или детейлинга: карточки-«пропуска» с фото во весь рост, по наведению карточка наклоняется за курсором (perspective + rotateX/rotateY через CSS-переменные, пишутся прямо в стиль), поверх фото бежит блик. Снизу стеклянная плашка: имя, роль, теги-специализации, стаж и число машин крупными цифрами. Без фото — инициалы. На узком — одна колонка, наклон только для мыши.",
+      "categories": [
+        "team"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "people-014/people-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/people-014.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "team",
+          "people",
+          "auto",
+          "car service",
+          "detailing",
+          "masters",
+          "cards",
+          "tilt",
+          "3d",
+          "hover",
+          "photo"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "People014",
+          "usage": "<People014\n  members={[{ name: \"Артём Гущин\", role: \"Полировка и керамика\", photo: \"/photos/artem.webp\", years: \"11 лет\", cars: \"2 400\", skills: [\"Керамика\", \"Porsche\"] }]}\n/>",
+          "summary": "Мастера для автосервиса: карточки с фото, 3D-наклон за курсором, стаж и число машин.",
+          "preserve": [
+            "наклон — rotateX/rotateY из --vibeui-people-014-rx/ry, ±7°, ставятся на pointermove только при pointerType mouse, снимаются на pointerleave",
+            "блик — radial-gradient по --vibeui-people-014-gx/gy с mix-blend-mode:overlay, появляется по hover",
+            "сетка: 1 → 2 колонки от 40rem → 3 от 64rem контейнера; карточка aspect-ratio 3/4, текст на градиенте снизу"
+          ],
+          "adapt": [
+            "eyebrow, title, lede",
+            "members: name, role, photo, years, cars, skills",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Кто трогает вашу машину",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Car service masters: photo cards that tilt toward the cursor",
+            "description": "A car service or detailing team: “pass” cards with a full-height photo; on hover the card tilts toward the cursor (perspective + rotateX/rotateY via CSS variables written straight into the style), a glare runs over the photo. A glass plate at the bottom: name, role, specialty tags, years and number of cars in big digits. Initials when there is no photo. One column on narrow screens, tilt for mouse only.",
+            "ai": {
+              "summary": "Masters for a car service: photo cards, 3D tilt toward the cursor, years and car count.",
+              "preserve": [
+                "tilt is rotateX/rotateY from --vibeui-people-014-rx/ry, ±7°, set on pointermove only for pointerType mouse, removed on pointerleave",
+                "the glare is a radial-gradient at --vibeui-people-014-gx/gy with mix-blend-mode:overlay, shown on hover",
+                "grid: 1 → 2 columns from 40rem → 3 from a 64rem container; the card is aspect-ratio 3/4, text on a bottom gradient"
+              ],
+              "adapt": [
+                "eyebrow, title, lede",
+                "members: name, role, photo, years, cars, skills",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<People014\n  members={[{ name: \"Artem Gushchin\", role: \"Paint correction and ceramic\", photo: \"/photos/artem.webp\", years: \"11 yrs\", cars: \"2,400\", skills: [\"Ceramic\", \"Porsche\"] }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Who touches your car"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Masters",
+                "title": "Who touches your car",
+                "lede": "Three masters, each with their own specialty. No trainees on someone else's paint: the hard stuff is done by the one who has lived it.",
+                "members": [
+                  {
+                    "name": "Artem Gushchin",
+                    "role": "Founder, correction and ceramic",
+                    "photo": "/demo/auto/master-01.webp",
+                    "years": "11 yrs",
+                    "cars": "2,400",
+                    "skills": [
+                      "Ceramic",
+                      "Holograms",
+                      "Porsche"
+                    ]
+                  },
+                  {
+                    "name": "Marat Safin",
+                    "role": "Paint protection film",
+                    "photo": "/demo/auto/master-02.webp",
+                    "years": "8 yrs",
+                    "cars": "1,100",
+                    "skills": [
+                      "XPEL",
+                      "Seamless front",
+                      "Headlights"
+                    ]
+                  },
+                  {
+                    "name": "Dasha Orlova",
+                    "role": "Interior, leather, deep clean",
+                    "photo": "/demo/auto/master-03.webp",
+                    "years": "6 yrs",
+                    "cars": "1,800",
+                    "skills": [
+                      "Leather",
+                      "Alcantara",
+                      "Child seats"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "people-015",
+      "type": "registry:block",
+      "title": "Врачи с 3D-tilt и расписанием «кто сегодня принимает»",
+      "description": "Сетка врачей клиники: карточки наклоняются за курсором (perspective + rotateX/Y) с бликом, который ездит за указателем. Сверху чип «сегодня, среда — принимают: …», на карточках бейджи «сегодня» и недельная полоска дней приёма — день недели берётся на устройстве через useSyncExternalStore, на сервере нейтральное «расписание приёма». Фото или инициал на градиенте.",
+      "categories": [
+        "team"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "people-015/people-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/people-015.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "team",
+          "people",
+          "doctors",
+          "vet",
+          "clinic",
+          "schedule",
+          "today",
+          "3d-tilt",
+          "hover",
+          "weekday",
+          "staff"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "People015",
+          "usage": "<People015\n  title=\"Кто сегодня в клинике\"\n  doctors={[\n    { name: \"Марина Соколова\", role: \"Главный врач\", photo: \"/demo/vet/doctor-01.webp\", tags: [\"кошки\", \"УЗИ\"], days: [1, 2, 3, 4, 5], hours: \"9:00–17:00\" },\n    { name: \"Артём Гусев\", role: \"Хирург\", days: [1, 3, 5, 6], hours: \"11:00–21:00\" },\n  ]}\n/>",
+          "summary": "Команда врачей с живым расписанием на сегодня и 3D-наклоном карточек.",
+          "preserve": [
+            "tilt — --rx/--ry/--gx/--gy ставятся на currentTarget в pointermove без стейта, сброс в pointerleave; сетка с perspective 1200px",
+            "день недели — useSyncExternalStore(subscribe раз в минуту, getDay, () => null): при null нет бейджей и чип нейтральный",
+            "недельная полоска — дни 1…6,0 через (index+1)%7, data-on для дней приёма, data-today обводит текущий"
+          ],
+          "adapt": [
+            "eyebrow, title, lede",
+            "doctors: name, role, photo, tags, days (0 — вс … 6 — сб), hours, since",
+            "actionLabel, actionHref",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Кто сегодня в клинике",
+            "maxLength": 50
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Все 11 врачей",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Doctors with 3D tilt and a “who's in today” schedule",
+            "description": "A clinic staff grid: cards tilt after the cursor (perspective + rotateX/Y) with a glare that follows the pointer. A chip above reads “today, Wednesday — on duty: …”, cards get a “today” badge and a weekly strip of working days — the weekday comes from the device via useSyncExternalStore, the server renders a neutral “schedule”. Photo or an initial on a gradient.",
+            "ai": {
+              "summary": "A doctors team with a live today schedule and 3D-tilting cards.",
+              "preserve": [
+                "tilt: --rx/--ry/--gx/--gy are set on currentTarget in pointermove with no state, reset on pointerleave; the grid has perspective 1200px",
+                "the weekday is useSyncExternalStore(subscribe every minute, getDay, () => null): with null there are no badges and the chip is neutral",
+                "the weekly strip lists days 1…6,0 via (index+1)%7, data-on for working days, data-today outlines the current one"
+              ],
+              "adapt": [
+                "eyebrow, title, lede",
+                "doctors: name, role, photo, tags, days (0 — Sun … 6 — Sat), hours, since",
+                "actionLabel, actionHref",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<People015\n  title=\"Who's in the clinic today\"\n  doctors={[\n    { name: \"Marina Sokolova\", role: \"Head vet\", photo: \"/demo/vet/doctor-01.webp\", tags: [\"cats\", \"ultrasound\"], days: [1, 2, 3, 4, 5], hours: \"9:00–17:00\" },\n    { name: \"Artem Gusev\", role: \"Surgeon\", days: [1, 3, 5, 6], hours: \"11:00–21:00\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Who's in the clinic today"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "All 11 doctors"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Doctors",
+                "title": "Who's in the clinic today",
+                "lede": "Four vets, each with their own specialty. The schedule is live: see who you can get to today.",
+                "doctors": [
+                  {
+                    "name": "Marina Sokolova",
+                    "role": "Head vet, therapist",
+                    "photo": "/demo/vet/doctor-01.webp",
+                    "tags": [
+                      "cats",
+                      "ultrasound",
+                      "endocrinology"
+                    ],
+                    "days": [
+                      1,
+                      2,
+                      3,
+                      4,
+                      5
+                    ],
+                    "hours": "9:00–17:00",
+                    "since": "practising since 2009"
+                  },
+                  {
+                    "name": "Artem Gusev",
+                    "role": "Surgeon, orthopaedist",
+                    "photo": "/demo/vet/doctor-02.webp",
+                    "tags": [
+                      "surgery",
+                      "fractures",
+                      "laparoscopy"
+                    ],
+                    "days": [
+                      1,
+                      3,
+                      5,
+                      6
+                    ],
+                    "hours": "11:00–21:00",
+                    "since": "practising since 2013"
+                  },
+                  {
+                    "name": "Dasha Kim",
+                    "role": "Exotics vet",
+                    "photo": "/demo/vet/doctor-03.webp",
+                    "tags": [
+                      "rabbits",
+                      "rodents",
+                      "birds"
+                    ],
+                    "days": [
+                      0,
+                      2,
+                      4,
+                      6
+                    ],
+                    "hours": "10:00–19:00",
+                    "since": "practising since 2017"
+                  },
+                  {
+                    "name": "Ilya Romanov",
+                    "role": "Dentist, duty vet",
+                    "photo": "/demo/vet/doctor-04.webp",
+                    "tags": [
+                      "teeth",
+                      "night shifts",
+                      "ICU"
+                    ],
+                    "days": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6
+                    ],
+                    "hours": "21:00–9:00",
+                    "since": "practising since 2015"
+                  }
+                ],
+                "actionLabel": "All 11 doctors"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "people-017",
+      "type": "registry:block",
+      "title": "Бригада карточками-«штатным расписанием» с угловыми засечками",
+      "description": "Команда подрядчика как штатное расписание на чертеже: карточки с рамкой и угловыми засечками, порядковый номер, монограмма из инициалов (или фото) в квадрате, имя, должность, стаж и сдано объектов моно-цифрами, зона ответственности и бейдж «сейчас на объекте». По наведению засечки уголков разъезжаются наружу, карточка приподнимается, монограмма заливается акцентом. Без JS.",
+      "categories": [
+        "team"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "people-017/people-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/people-017.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "team",
+          "crew",
+          "people",
+          "staff",
+          "roster",
+          "renovation",
+          "construction",
+          "contractor",
+          "cards",
+          "monogram",
+          "hover"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "People017",
+          "usage": "<People017\n  people={[\n    { name: \"Игорь Савельев\", role: \"Прораб\", years: 14, objects: 312, text: \"График, приёмка, отчёт.\", now: \"на Полежаевской\" },\n  ]}\n/>",
+          "summary": "Секция «бригада» для стройки или сервиса: карточки с рамкой чертежа, стаж и объекты моно, бейдж «сейчас на объекте».",
+          "preserve": [
+            "четыре i[data-part=corner] с border на двух сторонах, nth-of-type задаёт угол, :hover сдвигает каждый на 4px наружу через transform",
+            "монограмма — первые буквы двух слов имени через initials(); с photo рендерится img object-fit:cover",
+            "карточка — grid 5rem + 1fr, mark занимает три строки, text и now растянуты на всю ширину; 2 колонки от 40rem, 3 — от 64rem"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, nowLabel",
+            "people: name, role, years, objects, text, now, photo",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Свои люди, а не «кто свободен»",
+            "maxLength": 50
+          },
+          {
+            "prop": "nowLabel",
+            "label": "Бейдж",
+            "type": "text",
+            "default": "сейчас",
+            "maxLength": 12
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Crew as “staff roster” cards with corner ticks",
+            "description": "A contractor's team as a staff roster on a drawing: cards with a frame and corner ticks, an index number, an initials monogram (or a photo) in a square, name, role, years and projects delivered in mono digits, area of responsibility and a “now on site” badge. On hover the corner ticks slide outward, the card lifts, the monogram fills with the accent. No JS.",
+            "ai": {
+              "summary": "A “crew” section for construction or a service: drawing-frame cards, years and projects in mono, a “now on site” badge.",
+              "preserve": [
+                "four i[data-part=corner] with borders on two sides, nth-of-type picks the corner, :hover moves each 4px outward via transform",
+                "the monogram is the first letters of two name words via initials(); with photo an img object-fit:cover renders instead",
+                "a card is a 5rem + 1fr grid, mark spans three rows, text and now stretch full width; 2 columns from 40rem, 3 from 64rem"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, nowLabel",
+                "people: name, role, years, objects, text, now, photo",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<People017\n  people={[\n    { name: \"Igor Savelyev\", role: \"Foreman\", years: 14, objects: 312, text: \"Schedule, acceptance, reports.\", now: \"on Polezhaevskaya\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Our own people, not “whoever is free”"
+              },
+              "nowLabel": {
+                "label": "Badge",
+                "default": "now"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Crew",
+                "title": "Our own people, not “whoever is free”",
+                "lede": "Six people who have worked together for over seven years. No subcontracting: the names on site are the names in the contract.",
+                "nowLabel": "now",
+                "people": [
+                  {
+                    "name": "Igor Savelyev",
+                    "role": "Foreman, crew lead",
+                    "years": 14,
+                    "objects": 312,
+                    "text": "Owns the schedule, acceptance of hidden works and the daily report. His phone is in the contract.",
+                    "now": "on Polezhaevskaya"
+                  },
+                  {
+                    "name": "Dmitry Klyuev",
+                    "role": "Electrician, 1000 V certified",
+                    "years": 11,
+                    "objects": 204,
+                    "text": "Consumer units, low-voltage, smart home. Every circuit labelled and on the drawing.",
+                    "now": "on Polezhaevskaya"
+                  },
+                  {
+                    "name": "Artem Gusev",
+                    "role": "Plumber",
+                    "years": 9,
+                    "objects": 176,
+                    "text": "Manifold plumbing, pressure tests with a certificate, heated floors."
+                  },
+                  {
+                    "name": "Marat Ibragimov",
+                    "role": "Tiler, floors",
+                    "years": 12,
+                    "objects": 158,
+                    "text": "Large format, mitred porcelain, engineered oak, herringbone parquet.",
+                    "now": "on Lenin Ave"
+                  },
+                  {
+                    "name": "Olga Terekhova",
+                    "role": "Painter",
+                    "years": 8,
+                    "objects": 120,
+                    "text": "Filler for paint without streaks under a raking light, butt-joined wallpaper, microcement."
+                  },
+                  {
+                    "name": "Rinat Valeev",
+                    "role": "Carpenter, fit-out",
+                    "years": 7,
+                    "objects": 96,
+                    "text": "Hidden doors, built-in furniture to the project, boxing and niches."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "people-019",
+      "type": "registry:block",
+      "title": "Преподаватели: полароиды с 3D-наклоном и «послушать акцент»",
+      "description": "Карточки преподавателей в виде полароидов: фото с бейджем города, имя, роль и стаж, рукописная заметка на полях. Карточка наклоняется за курсором (perspective + rotateX/rotateY через --rx/--ry) и ловит блик по --x/--y. Внизу кнопка «послушать акцент» с волновым индикатором из семи полосок, которые дышат на CSS, пока «играет», и затихают через несколько секунд. Звука нет — заглушка под свой обработчик.",
+      "categories": [
+        "team"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "people-019/people-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/people-019.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "team",
+          "people",
+          "teachers",
+          "school",
+          "language",
+          "tilt",
+          "3d",
+          "polaroid",
+          "audio",
+          "wave",
+          "hover"
+        ],
+        "preview": {
+          "props": {
+            "people": [
+              {
+                "name": "Emma Whitfield",
+                "role": "английский · носитель",
+                "from": "Манчестер",
+                "years": 9,
+                "note": "любимое слово — serendipity",
+                "accent": "манчестерский",
+                "image": "/demo/language/teacher-01.webp",
+                "imageAlt": "Эмма Уитфилд, преподаватель английского"
+              },
+              {
+                "name": "Diego Ferrer",
+                "role": "испанский · носитель",
+                "from": "Валенсия",
+                "years": 7,
+                "note": "любимое слово — sobremesa",
+                "accent": "валенсийский",
+                "image": "/demo/language/teacher-02.webp",
+                "imageAlt": "Диего Феррер, преподаватель испанского"
+              },
+              {
+                "name": "Giulia Rinaldi",
+                "role": "итальянский · носитель",
+                "from": "Болонья",
+                "years": 6,
+                "note": "любимое слово — abbiocco",
+                "accent": "болонский",
+                "image": "/demo/language/teacher-03.webp",
+                "imageAlt": "Джулия Ринальди, преподаватель итальянского"
+              },
+              {
+                "name": "Анна Северова",
+                "role": "английский · методист",
+                "from": "Петербург",
+                "years": 12,
+                "note": "любимое слово — petrichor",
+                "accent": "RP, почти BBC",
+                "image": "/demo/language/teacher-04.webp",
+                "imageAlt": "Анна Северова, методист школы"
+              }
+            ]
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "People019",
+          "usage": "<People019\n  title=\"Люди, с которыми не страшно ошибаться\"\n  people={[{ name: \"Emma Whitfield\", role: \"английский · носитель\", from: \"Манчестер\", years: 9, note: \"любимое слово — serendipity\", accent: \"манчестерский\", image: \"/photos/emma.webp\" }]}\n/>",
+          "summary": "Команда для школы или курсов: полароиды с 3D-tilt и бликом, кнопка «послушать акцент» с волной.",
+          "preserve": [
+            "наклон — onPointerMove пишет --rx/--ry/--x/--y прямо в style карточки, без setState; data-hover укорачивает transition до 0.12 с",
+            "волна — семь i с --i и keyframes scaleY с отрицательной задержкой; играет только при aria-pressed=true, таймер seconds сбрасывает playing",
+            "фото — aspect-ratio 4/5 с фоном-подложкой, если image пуст; бейдж города поверх"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, listenLabel, seconds",
+            "people: name, role, from, years, note, image, imageAlt, accent",
+            "tone — тема",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Люди, с которыми не страшно ошибаться",
+            "maxLength": 60
+          },
+          {
+            "prop": "seconds",
+            "label": "Секунд «играет»",
+            "type": "number",
+            "default": 4,
+            "min": 1,
+            "max": 20
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Teachers: polaroids with a 3D tilt and “hear the accent”",
+            "description": "Teacher cards as polaroids: a photo with a city badge, name, role and years, a handwritten note in the margin. The card tilts after the cursor (perspective + rotateX/rotateY via --rx/--ry) and catches a glare via --x/--y. At the bottom a “hear the accent” button with a seven-bar wave that breathes in CSS while “playing” and quiets down after a few seconds. No sound — a stub for your own handler.",
+            "ai": {
+              "summary": "A team section for a school or courses: polaroids with a 3D tilt and glare, a “hear the accent” button with a wave.",
+              "preserve": [
+                "the tilt is onPointerMove writing --rx/--ry/--x/--y straight into the card's style, no setState; data-hover shortens the transition to 0.12 s",
+                "the wave is seven i elements with --i and scaleY keyframes with a negative delay; it plays only at aria-pressed=true, a seconds timer resets playing",
+                "the photo is aspect-ratio 4/5 with a tinted backdrop when image is empty; the city badge sits on top"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, listenLabel, seconds",
+                "people: name, role, from, years, note, image, imageAlt, accent",
+                "tone — theme",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<People019\n  title=\"People you're not afraid to make mistakes with\"\n  people={[{ name: \"Emma Whitfield\", role: \"English · native\", from: \"Manchester\", years: 9, note: \"favourite word — serendipity\", accent: \"Mancunian\", image: \"/photos/emma.webp\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "People you're not afraid to make mistakes with"
+              },
+              "seconds": {
+                "label": "Seconds “playing”"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "teachers",
+                "title": "People you're not afraid to make mistakes with",
+                "lede": "Native speakers lead the conversation lessons, methodologists handle grammar. Everyone has their own accent: have a listen so the lesson doesn't surprise you.",
+                "listenLabel": "hear the accent",
+                "people": [
+                  {
+                    "name": "Emma Whitfield",
+                    "role": "English · native",
+                    "from": "Manchester",
+                    "years": 9,
+                    "note": "favourite word — serendipity",
+                    "accent": "Mancunian",
+                    "image": "/demo/language/teacher-01.webp",
+                    "imageAlt": "Emma Whitfield, English teacher"
+                  },
+                  {
+                    "name": "Diego Ferrer",
+                    "role": "Spanish · native",
+                    "from": "Valencia",
+                    "years": 7,
+                    "note": "favourite word — sobremesa",
+                    "accent": "Valencian",
+                    "image": "/demo/language/teacher-02.webp",
+                    "imageAlt": "Diego Ferrer, Spanish teacher"
+                  },
+                  {
+                    "name": "Giulia Rinaldi",
+                    "role": "Italian · native",
+                    "from": "Bologna",
+                    "years": 6,
+                    "note": "favourite word — abbiocco",
+                    "accent": "Bolognese",
+                    "image": "/demo/language/teacher-03.webp",
+                    "imageAlt": "Giulia Rinaldi, Italian teacher"
+                  },
+                  {
+                    "name": "Anna Severova",
+                    "role": "English · methodologist",
+                    "from": "Saint Petersburg",
+                    "years": 12,
+                    "note": "favourite word — petrichor",
+                    "accent": "RP, almost BBC",
+                    "image": "/demo/language/teacher-04.webp",
+                    "imageAlt": "Anna Severova, head of methodology"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "people-021",
+      "type": "registry:block",
+      "title": "Авторы лентой с drag-scroll и доходом, который тикает в реальном времени",
+      "description": "Лента авторов маркетплейса: карточки тянутся мышью (pointer capture, после сдвига клик по ссылке гасится) или прокручиваются пальцем. У каждого — инициалы на цветном круге, специальность, число товаров и доход текущего месяца, который пересчитывается раз в секунду от реального времени. Заголовок и кнопка «стать автором» сверху, подсказка «потяните ленту» снизу.",
+      "categories": [
+        "team"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "people-021/people-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/people-021.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "team",
+          "authors",
+          "creators",
+          "marketplace",
+          "drag",
+          "scroll",
+          "carousel",
+          "live",
+          "income",
+          "counter"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "People021",
+          "usage": "<People021\n  title=\"1 240 авторов зарабатывают прямо сейчас\"\n  authors={[{ name: \"Лена Заварзина\", role: \"UI-киты для Figma\", hue: 255, products: 14, baseIncome: 96400, perSecond: 0.11 }]}\n  joinLabel=\"Стать автором\"\n/>",
+          "summary": "Авторы площадки с живым доходом: лента с drag-scroll, цифра тикает от текущего времени, кнопка «стать автором».",
+          "preserve": [
+            "время — useSyncExternalStore с интервалом 1 с и серверным снимком null: на сервере и при гидрации выводится «— — —», цифры появляются после подписки",
+            "доход = baseIncome + секунд с начала месяца × perSecond; форматирование с пробелами между тысячами",
+            "drag: pointerdown берёт capture (кроме touch), move двигает scrollLeft, сдвиг > 4px ставит moved, onClickCapture гасит клик; scrollbar скрыт, touch-action:pan-y"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, incomeLabel, currency",
+            "authors: name, role, initials, hue, products, baseIncome, perSecond, href",
+            "joinLabel, joinHref",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "1 240 авторов зарабатывают на Слое прямо сейчас",
+            "maxLength": 70
+          },
+          {
+            "prop": "joinLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Стать автором",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Authors in a drag-scroll lane with income ticking in real time",
+            "description": "A marketplace authors lane: cards are dragged with the mouse (pointer capture, a link click is cancelled after a drag) or scrolled by touch. Each has initials on a coloured circle, a specialty, a product count and this month's income recalculated every second from real time. A heading and a “become an author” button on top, a “drag the lane” hint below.",
+            "ai": {
+              "summary": "Platform authors with live income: a drag-scroll lane, the number ticks from the current time, a “become an author” button.",
+              "preserve": [
+                "time is useSyncExternalStore with a 1s interval and a null server snapshot: the server and hydration render “— — —”, numbers appear after subscribing",
+                "income = baseIncome + seconds since month start × perSecond; formatted with thousands separators",
+                "drag: pointerdown takes capture (except touch), move shifts scrollLeft, a shift > 4px sets moved, onClickCapture cancels the click; scrollbar hidden, touch-action:pan-y"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, incomeLabel, currency",
+                "authors: name, role, initials, hue, products, baseIncome, perSecond, href",
+                "joinLabel, joinHref",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<People021\n  title=\"1,240 authors are earning right now\"\n  authors={[{ name: \"Lena Zavarzina\", role: \"UI kits for Figma\", hue: 255, products: 14, baseIncome: 1240, perSecond: 0.0015 }]}\n  joinLabel=\"Become an author\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "1,240 authors are earning on Layer right now"
+              },
+              "joinLabel": {
+                "label": "Button",
+                "default": "Become an author"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "authors",
+                "title": "1,240 authors are earning on Layer right now",
+                "lede": "Income is counted in real time: every purchase pays 80% to the author, payouts on Fridays. Drag the lane.",
+                "incomeLabel": "income this month",
+                "joinLabel": "Become an author",
+                "currency": "$",
+                "authors": [
+                  {
+                    "name": "Lena Zavarzina",
+                    "role": "UI kits and dashboards for Figma",
+                    "hue": 255,
+                    "products": 14,
+                    "baseIncome": 1240,
+                    "perSecond": 0.0015
+                  },
+                  {
+                    "name": "Timur Gareev",
+                    "role": "Fonts: grotesks and scripts",
+                    "hue": 30,
+                    "products": 6,
+                    "baseIncome": 1830,
+                    "perSecond": 0.001
+                  },
+                  {
+                    "name": "Setka studio",
+                    "role": "Icons and illustrations",
+                    "initials": "ST",
+                    "hue": 150,
+                    "products": 22,
+                    "baseIncome": 2710,
+                    "perSecond": 0.0024
+                  },
+                  {
+                    "name": "Anya Melnik",
+                    "role": "Notion for product teams",
+                    "hue": 320,
+                    "products": 9,
+                    "baseIncome": 760,
+                    "perSecond": 0.0007
+                  },
+                  {
+                    "name": "Igor Plotnikov",
+                    "role": "Notion: personal productivity",
+                    "hue": 200,
+                    "products": 11,
+                    "baseIncome": 940,
+                    "perSecond": 0.0012
+                  },
+                  {
+                    "name": "Marat Yusupov",
+                    "role": "3D icons and mockups",
+                    "hue": 85,
+                    "products": 5,
+                    "baseIncome": 405,
+                    "perSecond": 0.0005
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "people-024",
+      "type": "registry:block",
+      "title": "Команда полароидами с рукописными подписями",
+      "description": "Команда фонда или небольшой студии как полароиды на столе: фото в белой рамке с толстым низом, имя и цитата написаны от руки Caveat, роль — капителью акцентом, у каждой карточки своя ротация и кусок скотча сверху. По наведению карточка выравнивается и приподнимается, фото чуть увеличивается. Последняя карточка — «ещё N волонтёров» с кружками-инициалами и ссылкой.",
+      "categories": [
+        "team"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "people-024/people-024.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/people-024.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "team",
+          "people",
+          "polaroid",
+          "handwritten",
+          "charity",
+          "volunteers",
+          "photos",
+          "cards",
+          "nonprofit"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "People024",
+          "usage": "<People024\n  title=\"Нас мало, и мы все с именами\"\n  people={[{ name: \"Марина Соколова\", role: \"Директор фонда\", quote: \"«Начала с одной бабушки в своём подъезде.»\", image: \"/photos/marina.webp\" }]}\n  moreCount={40}\n/>",
+          "summary": "Команда как полароиды: рукописные имена, скотч, ротация, по наведению карточка выпрямляется; карточка «ещё N волонтёров».",
+          "preserve": [
+            "ротация задаётся --r по nth-child(4n+…), скотч — ::before с той же --r; hover сбрасывает в rotate(0) translateY(-8px)",
+            "фото — aspect-ratio 4/5 с градиентной подложкой, если image пуст, img — object-fit cover с scale по hover",
+            "карточка «ещё N» — ссылка с пунктирной рамкой и стопкой кружков-инициалов, последний — акцентом с «+»"
+          ],
+          "adapt": [
+            "eyebrow, title, lede",
+            "people: name, role, quote, image, imageAlt",
+            "moreCount, moreLabel, moreHref",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Нас мало, и мы все с именами",
+            "maxLength": 60
+          },
+          {
+            "prop": "moreCount",
+            "label": "Ещё волонтёров",
+            "type": "number",
+            "default": 40,
+            "min": 0,
+            "max": 999
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Team as polaroids with handwritten captions",
+            "description": "A foundation or small studio team as polaroids on a table: photos in a white frame with a thick bottom, the name and quote handwritten in Caveat, the role in accent small caps, every card with its own rotation and a strip of tape on top. On hover the card straightens and lifts, the photo zooms slightly. The last card is “N more volunteers” with initial circles and a link.",
+            "ai": {
+              "summary": "Team as polaroids: handwritten names, tape, rotation, cards straighten on hover; an “N more volunteers” card.",
+              "preserve": [
+                "rotation is --r by nth-child(4n+…), the tape is a ::before with the same --r; hover resets to rotate(0) translateY(-8px)",
+                "the photo is aspect-ratio 4/5 with a gradient backing when image is empty, img is object-fit cover with a hover scale",
+                "the “N more” card is a dashed-border link with a stack of initial circles, the last one in the accent with “+”"
+              ],
+              "adapt": [
+                "eyebrow, title, lede",
+                "people: name, role, quote, image, imageAlt",
+                "moreCount, moreLabel, moreHref",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<People024\n  title=\"There are few of us, and we all have names\"\n  people={[{ name: \"Marina Sokolova\", role: \"Director\", quote: \"“Started with one grandma in my own building.”\", image: \"/photos/marina.webp\" }]}\n  moreCount={40}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "There are few of us, and we all have names"
+              },
+              "moreCount": {
+                "label": "More volunteers"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Team",
+                "title": "There are few of us, and we all have names",
+                "lede": "Five on staff, forty volunteers, one old van. Everyone can be found in the report, everyone can be called.",
+                "people": [
+                  {
+                    "name": "Marina Sokolova",
+                    "role": "Director",
+                    "quote": "“Started with one grandma in my own building. That was 2018.”"
+                  },
+                  {
+                    "name": "Igor Lapin",
+                    "role": "Logistics and repairs",
+                    "quote": "“I know every road in the region and where taps are cheaper.”"
+                  },
+                  {
+                    "name": "Kate Ryabova",
+                    "role": "Senior social worker",
+                    "quote": "“My Wednesdays are Nina, tea and blood pressure.”"
+                  }
+                ],
+                "moreCount": 40,
+                "moreLabel": "volunteers we hug"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

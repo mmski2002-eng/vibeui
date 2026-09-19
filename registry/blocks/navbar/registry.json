@@ -5886,6 +5886,2238 @@
           }
         }
       }
+    },
+    {
+      "name": "navbar-034",
+      "type": "registry:block",
+      "title": "Шапка автосервиса с живым статусом бокса",
+      "description": "Липкая шапка автосервиса или детейлинга: лого-шеврон, зелёная пульсирующая точка со статусом «сейчас свободен подъёмник №2», разделы, телефон и кислотная кнопка «Записаться». При прокрутке — стекло с блюром и тонкая линия-лампа по низу. На узком статус уходит в бургер-меню.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-034/navbar-034.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-034.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "navbar",
+          "header",
+          "auto",
+          "car service",
+          "detailing",
+          "sticky",
+          "status",
+          "live",
+          "burger",
+          "phone"
+        ],
+        "preview": {
+          "props": {
+            "sticky": false
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Navbar034",
+          "usage": "<Navbar034\n  brand=\"Гараж 42\"\n  status=\"сейчас свободен подъёмник №2\"\n  links={[{ label: \"Услуги\", href: \"#services\" }, { label: \"Контакты\", href: \"#contacts\" }]}\n  phone=\"+7 (812) 420-42-42\"\n  actionLabel=\"Записаться\"\n/>",
+          "summary": "Шапка для автосервиса: живой статус бокса, телефон и «Записаться», стекло при прокрутке.",
+          "preserve": [
+            "точка статуса — ::after с keyframes scale+opacity, 1,8 с, без сдвига макета",
+            "линия по низу — ::after с градиентом, opacity растёт вместе с data-scrolled",
+            "статус виден от 40rem контейнера, телефон от 52rem, ссылки от 64rem; в бургере статус дублируется"
+          ],
+          "adapt": [
+            "brand, brandHref, status, links: label, href",
+            "phone, phoneHref, actionLabel, actionHref",
+            "sticky",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "Гараж 42",
+            "maxLength": 24
+          },
+          {
+            "prop": "status",
+            "label": "Статус",
+            "type": "text",
+            "default": "сейчас свободен подъёмник №2",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Car service navbar with a live bay status",
+            "description": "Sticky header for a car service or detailing studio: a chevron logo, a green pulsing dot with a “bay №2 is free now” status, sections, a phone number and an acid “Book” button. On scroll — blurred glass and a thin lamp line along the bottom. On narrow screens the status moves into the burger menu.",
+            "ai": {
+              "summary": "Header for a car service: a live bay status, a phone number and “Book”, glass on scroll.",
+              "preserve": [
+                "the status dot is an ::after with scale+opacity keyframes, 1.8 s, no layout shift",
+                "the bottom line is an ::after with a gradient whose opacity grows with data-scrolled",
+                "the status shows from a 40rem container, the phone from 52rem, links from 64rem; the burger repeats the status"
+              ],
+              "adapt": [
+                "brand, brandHref, status, links: label, href",
+                "phone, phoneHref, actionLabel, actionHref",
+                "sticky",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Navbar034\n  brand=\"Garage 42\"\n  status=\"bay №2 is free now\"\n  links={[{ label: \"Services\", href: \"#services\" }, { label: \"Contacts\", href: \"#contacts\" }]}\n  phone=\"+1 (415) 420-42-42\"\n  actionLabel=\"Book\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Garage 42"
+              },
+              "status": {
+                "label": "Status",
+                "default": "bay №2 is free now"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Garage 42",
+                "status": "bay №2 is free now",
+                "links": [
+                  {
+                    "label": "Services",
+                    "href": "#services"
+                  },
+                  {
+                    "label": "Before / after",
+                    "href": "#results"
+                  },
+                  {
+                    "label": "Team",
+                    "href": "#team"
+                  },
+                  {
+                    "label": "Reviews",
+                    "href": "#reviews"
+                  },
+                  {
+                    "label": "Contacts",
+                    "href": "#contacts"
+                  }
+                ],
+                "phone": "+1 (415) 420-42-42",
+                "actionLabel": "Book",
+                "sticky": false
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navbar-035",
+      "type": "registry:block",
+      "title": "Шапка ветклиники с живым статусом «открыто»",
+      "description": "Липкая шапка клиники или салона: лапа в лого виляет по наведению, чип часов сам считает по времени посетителя — «открыто до 21:00», «закроемся через 40 мин» или «откроемся в 9:00». Телефон, кнопка записи, бургер на узком, стекло при прокрутке.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-035/navbar-035.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-035.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "navbar",
+          "header",
+          "vet",
+          "clinic",
+          "hours",
+          "open-now",
+          "phone",
+          "sticky",
+          "burger",
+          "pet"
+        ],
+        "preview": {
+          "props": {
+            "sticky": false
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Navbar035",
+          "usage": "<Navbar035\n  brand=\"Лапа\"\n  caption=\"ветклиника · груминг\"\n  opensAt={9}\n  closesAt={21}\n  phone=\"+7 495 120-24-24\"\n  links={[{ label: \"Услуги\", href: \"#services\" }, { label: \"Врачи\", href: \"#doctors\" }]}\n/>",
+          "summary": "Шапка для клиники, салона или магазина с часами: статус «открыто / закрыто» считается на устройстве посетителя.",
+          "preserve": [
+            "статус часов — useSyncExternalStore с серверным снимком null, на сервере нейтральное «9:00–21:00», без гидрационных расхождений",
+            "лапа в лого — svg с keyframes wag по наведению на бренд, без сдвига макета",
+            "чип часов виден от 48rem контейнера, телефон от 36rem, ссылки от 60rem; в бургер-меню всё дублируется"
+          ],
+          "adapt": [
+            "brand, caption, brandHref, links: label, href",
+            "opensAt, closesAt (часы), phone, phoneHref",
+            "actionLabel, actionHref, sticky",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "Лапа",
+            "maxLength": 20
+          },
+          {
+            "prop": "closesAt",
+            "label": "Закрываемся в",
+            "type": "number",
+            "default": 21,
+            "min": 10,
+            "max": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Vet clinic navbar with a live “open now” status",
+            "description": "Sticky header for a clinic or salon: the paw in the logo wags on hover, the hours chip computes from the visitor's time — “open until 21:00”, “closing in 40 min” or “opens at 9:00”. Phone, booking button, burger on narrow, glass on scroll.",
+            "ai": {
+              "summary": "Header for a clinic, salon or shop with hours: the open / closed status is computed on the visitor's device.",
+              "preserve": [
+                "the hours status is useSyncExternalStore with a null server snapshot: neutral “9:00–21:00” on the server, no hydration mismatch",
+                "the paw in the logo is an svg with wag keyframes on brand hover, no layout shift",
+                "the hours chip shows from a 48rem container, phone from 36rem, links from 60rem; the burger menu duplicates everything"
+              ],
+              "adapt": [
+                "brand, caption, brandHref, links: label, href",
+                "opensAt, closesAt (hours), phone, phoneHref",
+                "actionLabel, actionHref, sticky",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Navbar035\n  brand=\"Paw\"\n  caption=\"vet clinic · grooming\"\n  opensAt={9}\n  closesAt={21}\n  phone=\"+1 415 555-0142\"\n  links={[{ label: \"Services\", href: \"#services\" }, { label: \"Doctors\", href: \"#doctors\" }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Paw"
+              },
+              "closesAt": {
+                "label": "Closes at"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Paw",
+                "caption": "vet clinic · grooming",
+                "links": [
+                  {
+                    "label": "Services",
+                    "href": "#services"
+                  },
+                  {
+                    "label": "Symptoms",
+                    "href": "#symptoms"
+                  },
+                  {
+                    "label": "Doctors",
+                    "href": "#doctors"
+                  },
+                  {
+                    "label": "Grooming",
+                    "href": "#grooming"
+                  },
+                  {
+                    "label": "Contacts",
+                    "href": "#contacts"
+                  }
+                ],
+                "phone": "+1 415 555-0142",
+                "phoneHref": "tel:+14155550142",
+                "actionLabel": "Book a visit",
+                "sticky": false
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navbar-036",
+      "type": "registry:block",
+      "title": "Шапка мастерской с логотипом-стеблем и рукописной пометкой",
+      "description": "Липкая шапка в духе ботанического журнала: курсивный антиква-логотип со стеблем, который прорисовывается при загрузке, разделы с подчёркиванием от левого края, рукописная пометка «открыты до 22:00» и кнопка с чернильной рамкой. При прокрутке — бумага с блюром и линейка снизу, на узком — бургер и крупное меню.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-036/navbar-036.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-036.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "navbar",
+          "header",
+          "flowers",
+          "florist",
+          "shop",
+          "sticky",
+          "serif",
+          "handwritten",
+          "burger"
+        ],
+        "preview": {
+          "props": {
+            "sticky": false
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Navbar036",
+          "usage": "<Navbar036\n  brand=\"Стебель\"\n  links={[{ label: \"Букеты\", href: \"#catalog\" }, { label: \"Доставка\", href: \"#delivery\" }]}\n  note=\"открыты до 22:00\"\n  actionLabel=\"Заказать букет\"\n/>",
+          "summary": "Шапка для цветочной мастерской или крафтовой лавки: стебель-логотип, рукописная пометка, чернильная кнопка.",
+          "preserve": [
+            "стебель в логотипе — три path с pathLength=100 и stroke-dashoffset, прорисовка с задержками .2/.7/.9 с",
+            "подчёркивание ссылок — ::after с scaleX от левого края, .3s cubic-bezier",
+            "пометка скрыта до 44rem контейнера, разделы — до 60rem, бургер и меню исчезают от 60rem"
+          ],
+          "adapt": [
+            "brand, brandHref, links: label, href",
+            "note — рукописная пометка",
+            "actionLabel, actionHref, sticky",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "Стебель",
+            "maxLength": 24
+          },
+          {
+            "prop": "note",
+            "label": "Пометка",
+            "type": "text",
+            "default": "открыты до 22:00",
+            "maxLength": 32
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Заказать букет",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Workshop navbar with a stem logo and a handwritten note",
+            "description": "Sticky header in a botanical-journal mood: an italic serif logo with a stem that draws itself on load, sections underlined from the left edge, a handwritten “open till 22:00” note and an ink-outlined button. On scroll — blurred paper and a rule along the bottom; on narrow screens a burger and a large menu.",
+            "ai": {
+              "summary": "Header for a flower workshop or a craft shop: a stem logo, a handwritten note, an ink-outlined button.",
+              "preserve": [
+                "the logo stem is three paths with pathLength=100 and stroke-dashoffset, drawn with .2/.7/.9s delays",
+                "link underline is an ::after scaling on X from the left edge, .3s cubic-bezier",
+                "the note is hidden below a 44rem container, sections below 60rem, burger and menu vanish from 60rem"
+              ],
+              "adapt": [
+                "brand, brandHref, links: label, href",
+                "note — the handwritten remark",
+                "actionLabel, actionHref, sticky",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Navbar036\n  brand=\"Stem\"\n  links={[{ label: \"Bouquets\", href: \"#catalog\" }, { label: \"Delivery\", href: \"#delivery\" }]}\n  note=\"open till 10 pm\"\n  actionLabel=\"Order a bouquet\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Stem"
+              },
+              "note": {
+                "label": "Note",
+                "default": "open till 10 pm"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Order a bouquet"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Stem",
+                "links": [
+                  {
+                    "label": "Bouquets",
+                    "href": "#catalog"
+                  },
+                  {
+                    "label": "Build your own",
+                    "href": "#builder"
+                  },
+                  {
+                    "label": "Delivery",
+                    "href": "#delivery"
+                  },
+                  {
+                    "label": "Season",
+                    "href": "#season"
+                  },
+                  {
+                    "label": "Workshop",
+                    "href": "#about"
+                  }
+                ],
+                "note": "open till 10 pm",
+                "actionLabel": "Order a bouquet",
+                "sticky": false
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navbar-037",
+      "type": "registry:block",
+      "title": "Шапка бригады с пузырьком уровня и рулеткой-прогрессом",
+      "description": "Липкая шапка ремонтной бригады в духе чертёжного штампа: в лого пузырёк уровня, который при загрузке съезжает в центр, подпись моно под брендом, разделы, телефон моно и жёлтая кнопка «Рассчитать смету». По низу рулетка с делениями — её заливка показывает прогресс прокрутки страницы. При прокрутке фон становится плотным с миллиметровой сеткой. Бургер на узком.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-037/navbar-037.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-037.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "navbar",
+          "header",
+          "renovation",
+          "construction",
+          "contractor",
+          "sticky",
+          "progress",
+          "tape measure",
+          "blueprint",
+          "phone"
+        ],
+        "preview": {
+          "props": {
+            "sticky": false
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Navbar037",
+          "usage": "<Navbar037\n  brand=\"Ровно\"\n  caption=\"ремонт квартир · с 2011\"\n  links={[{ label: \"Смета\", href: \"#calc\" }, { label: \"Объекты\", href: \"#works\" }]}\n  phone=\"+7 495 120-40-40\"\n  actionLabel=\"Рассчитать смету\"\n/>",
+          "summary": "Шапка для сайта ремонта или стройки: уровень в лого, телефон, жёлтая кнопка сметы, рулетка-прогресс по низу.",
+          "preserve": [
+            "пузырёк — keyframes translateX с cubic-bezier, один раз при загрузке, без сдвига макета",
+            "рулетка — полоса с repeating-linear-gradient делений, ::after заливается через scaleX от переменной --progress, которую пишет scroll-обработчик",
+            "ссылки скрыты до 60rem контейнера, телефон — до 40rem, кнопка видна всегда"
+          ],
+          "adapt": [
+            "brand, caption, brandHref, links: label, href",
+            "phone, phoneHref, actionLabel, actionHref",
+            "sticky",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "Ровно",
+            "maxLength": 24
+          },
+          {
+            "prop": "phone",
+            "label": "Телефон",
+            "type": "text",
+            "default": "+7 495 120-40-40",
+            "maxLength": 24
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Рассчитать смету",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Crew navbar with a spirit-level bubble and a tape-measure progress bar",
+            "description": "Sticky navbar for a renovation crew in the spirit of a drawing title block: a spirit-level bubble in the logo that slides to the centre on load, a mono caption under the brand, sections, a mono phone and a yellow “Get an estimate” button. Along the bottom a tape measure with ticks — its fill shows the page scroll progress. On scroll the background turns solid with a millimetre grid. Burger on narrow.",
+            "ai": {
+              "summary": "Header for a renovation or construction site: a level in the logo, a phone, a yellow estimate button, a tape-measure progress bar along the bottom.",
+              "preserve": [
+                "the bubble is a translateX keyframe with a cubic-bezier, once on load, no layout shift",
+                "the tape is a strip with repeating-linear-gradient ticks, its ::after fills via scaleX from a --progress variable written by the scroll handler",
+                "links are hidden below a 60rem container, the phone below 40rem, the button is always visible"
+              ],
+              "adapt": [
+                "brand, caption, brandHref, links: label, href",
+                "phone, phoneHref, actionLabel, actionHref",
+                "sticky",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Navbar037\n  brand=\"Level\"\n  caption=\"apartment renovation · since 2011\"\n  links={[{ label: \"Estimate\", href: \"#calc\" }, { label: \"Projects\", href: \"#works\" }]}\n  phone=\"+1 415 120-40-40\"\n  actionLabel=\"Get an estimate\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Level"
+              },
+              "phone": {
+                "label": "Phone",
+                "default": "+1 415 120-40-40"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Get an estimate"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Level",
+                "caption": "apartment renovation · since 2011",
+                "links": [
+                  {
+                    "label": "Estimate",
+                    "href": "#calc"
+                  },
+                  {
+                    "label": "Stages",
+                    "href": "#stages"
+                  },
+                  {
+                    "label": "Projects",
+                    "href": "#works"
+                  },
+                  {
+                    "label": "Site live",
+                    "href": "#online"
+                  },
+                  {
+                    "label": "Crew",
+                    "href": "#team"
+                  }
+                ],
+                "phone": "+1 415 120-40-40",
+                "actionLabel": "Get an estimate",
+                "sticky": false
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navbar-038",
+      "type": "registry:block",
+      "title": "Шапка доставки еды с адресом, временем и корзиной-счётчиком",
+      "description": "Липкая шапка сервиса доставки: лого с язычком пламени, чип «адрес · 28 мин» (подхватывает событие vibeui-cart:zone от карты зон), разделы и кнопка корзины с бейджем — счётчик приходит из события vibeui-cart:state и подпрыгивает при изменении. На узком — бургер и выпадающее меню, при прокрутке шапка уплотняется и подчёркивается акцентной линией.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-038/navbar-038.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-038.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "navbar",
+          "header",
+          "delivery",
+          "food",
+          "cart",
+          "counter",
+          "sticky",
+          "burger",
+          "address",
+          "eta",
+          "event"
+        ],
+        "preview": {
+          "props": {
+            "sticky": false
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Navbar038",
+          "usage": "<Navbar038\n  brand=\"Горячо\"\n  address=\"Тверская, 12\"\n  minutes={28}\n  links={[{ label: \"Меню\", href: \"#menu\" }, { label: \"Трекер\", href: \"#tracker\" }]}\n/>",
+          "summary": "Шапка для доставки еды: адрес и время, корзина со счётчиком из события, бургер на мобильном.",
+          "preserve": [
+            "счётчик корзины слушает window-событие vibeui-cart:state (detail.count) и ставит data-bump на 450 мс для анимации",
+            "чип адреса слушает vibeui-cart:zone (detail.label, detail.minutes) и подменяет address/minutes из пропсов",
+            "линия ::after масштабируется scaleX 0→1 при data-scrolled, высота ряда 4.25rem → 3.6rem"
+          ],
+          "adapt": [
+            "brand, brandHref, address, minutes",
+            "links: label, href; cartLabel, cartHref",
+            "sticky",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "Горячо",
+            "maxLength": 24
+          },
+          {
+            "prop": "address",
+            "label": "Адрес",
+            "type": "text",
+            "default": "Тверская, 12",
+            "maxLength": 32
+          },
+          {
+            "prop": "minutes",
+            "label": "Минут до двери",
+            "type": "number",
+            "default": 28,
+            "min": 10,
+            "max": 90
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Food delivery navbar with address, ETA and a cart counter",
+            "description": "Sticky header for a food delivery service: a logo with a flame, an “address · 28 min” chip (picks up the vibeui-cart:zone event from the zones map), sections and a cart button with a badge — the count arrives via vibeui-cart:state and bumps on every change. A burger and dropdown on narrow screens; on scroll the header tightens and gets an accent underline.",
+            "ai": {
+              "summary": "Header for food delivery: address and ETA, a cart with an event-driven counter, a burger on mobile.",
+              "preserve": [
+                "the cart counter listens to the vibeui-cart:state window event (detail.count) and sets data-bump for 450 ms to animate",
+                "the address chip listens to vibeui-cart:zone (detail.label, detail.minutes) and overrides the address/minutes props",
+                "the ::after line scales scaleX 0→1 on data-scrolled, row height 4.25rem → 3.6rem"
+              ],
+              "adapt": [
+                "brand, brandHref, address, minutes",
+                "links: label, href; cartLabel, cartHref",
+                "sticky",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Navbar038\n  brand=\"Hot\"\n  address=\"5th Avenue, 12\"\n  minutes={28}\n  links={[{ label: \"Menu\", href: \"#menu\" }, { label: \"Tracker\", href: \"#tracker\" }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Hot"
+              },
+              "address": {
+                "label": "Address",
+                "default": "5th Avenue, 12"
+              },
+              "minutes": {
+                "label": "Minutes to door"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Hot",
+                "address": "5th Avenue, 12",
+                "minutes": 28,
+                "links": [
+                  {
+                    "label": "Menu",
+                    "href": "#menu"
+                  },
+                  {
+                    "label": "Bowl builder",
+                    "href": "#builder"
+                  },
+                  {
+                    "label": "Delivery area",
+                    "href": "#zones"
+                  },
+                  {
+                    "label": "Tracker",
+                    "href": "#tracker"
+                  },
+                  {
+                    "label": "Reviews",
+                    "href": "#reviews"
+                  }
+                ],
+                "cartLabel": "Cart",
+                "sticky": false
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navbar-039",
+      "type": "registry:block",
+      "title": "Шапка языковой школы: лого с рукописной подписью и чипы языков",
+      "description": "Липкая шапка в духе тетради: лого с рукописной подписью и «чертой ручкой», которая прорисовывается, чипы языков EN · ES · IT, разделы с подчёркиванием от левого края и кнопка «Пробный урок». При прокрутке — полупрозрачная бумага с блюром и линовка снизу. На узком — бургер с меню на линованном фоне.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-039/navbar-039.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-039.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "navbar",
+          "header",
+          "school",
+          "language",
+          "education",
+          "sticky",
+          "handwritten",
+          "burger",
+          "cta"
+        ],
+        "preview": {
+          "props": {
+            "sticky": false
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Navbar039",
+          "usage": "<Navbar039\n  brand=\"Слово\"\n  caption=\"языковая школа\"\n  languages={[\"EN\", \"ES\", \"IT\"]}\n  links={[{ label: \"Расписание\", href: \"#schedule\" }, { label: \"Цены\", href: \"#pricing\" }]}\n  actionLabel=\"Пробный урок\"\n/>",
+          "summary": "Шапка для школы или курсов: рукописная подпись под лого, чипы языков, пробный урок, бургер на узком.",
+          "preserve": [
+            "черта под лого — svg-path с stroke-dasharray, keyframes ink прорисовывают её через 0.3 с",
+            "линовка при прокрутке — ::after с repeating-linear-gradient, opacity растёт вместе с data-scrolled",
+            "чипы языков видны от 40rem контейнера, разделы — от 60rem, бургер и меню скрываются на той же ширине"
+          ],
+          "adapt": [
+            "brand, caption, brandHref, links: label, href",
+            "languages — чипы языков",
+            "actionLabel, actionHref, sticky",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "Слово",
+            "maxLength": 24
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "языковая школа",
+            "maxLength": 30
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Пробный урок",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Language school navbar with a handwritten caption and language chips",
+            "description": "A sticky notebook-style header: a logo with a handwritten caption and a pen stroke that draws itself, EN · ES · IT language chips, sections with a left-growing underline and a “Trial lesson” button. On scroll — translucent paper with blur and ruled lines below. On narrow — a burger with a menu on a ruled background.",
+            "ai": {
+              "summary": "Header for a school or courses: a handwritten caption under the logo, language chips, a trial lesson button, a burger on narrow.",
+              "preserve": [
+                "the stroke under the logo is an svg path with stroke-dasharray, ink keyframes draw it after 0.3 s",
+                "the ruled lines on scroll are an ::after with a repeating-linear-gradient whose opacity grows with data-scrolled",
+                "language chips show from a 40rem container, sections from 60rem, the burger and menu hide at the same width"
+              ],
+              "adapt": [
+                "brand, caption, brandHref, links: label, href",
+                "languages — language chips",
+                "actionLabel, actionHref, sticky",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Navbar039\n  brand=\"Slovo\"\n  caption=\"language school\"\n  languages={[\"EN\", \"ES\", \"IT\"]}\n  links={[{ label: \"Schedule\", href: \"#schedule\" }, { label: \"Pricing\", href: \"#pricing\" }]}\n  actionLabel=\"Trial lesson\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Slovo"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": "language school"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Trial lesson"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Slovo",
+                "caption": "language school",
+                "languages": [
+                  "EN",
+                  "ES",
+                  "IT"
+                ],
+                "links": [
+                  {
+                    "label": "Level test",
+                    "href": "#test"
+                  },
+                  {
+                    "label": "How we teach",
+                    "href": "#how"
+                  },
+                  {
+                    "label": "Schedule",
+                    "href": "#schedule"
+                  },
+                  {
+                    "label": "Teachers",
+                    "href": "#teachers"
+                  },
+                  {
+                    "label": "Pricing",
+                    "href": "#pricing"
+                  }
+                ],
+                "actionLabel": "Trial lesson",
+                "sticky": false
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navbar-040",
+      "type": "registry:block",
+      "title": "Шапка необанка с лого-осью, «Войти» и «Открыть счёт»",
+      "description": "Липкая шапка финтех-сервиса: лого-«ось» — кольцо с диагональю, которая медленно качается, разделы с подчёркиванием от левого края, тихая ссылка «Войти» и кнопка «Открыть счёт». При прокрутке — стекло с блюром и тонкая зелёная линия-сияние по низу. На узком — бургер и выпадающее меню.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-040/navbar-040.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-040.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "navbar",
+          "header",
+          "fintech",
+          "bank",
+          "sticky",
+          "glass",
+          "login",
+          "cta",
+          "burger"
+        ],
+        "preview": {
+          "props": {
+            "sticky": false
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Navbar040",
+          "usage": "<Navbar040\n  brand=\"Ось\"\n  links={[{ label: \"Возможности\", href: \"#features\" }, { label: \"Тарифы\", href: \"#pricing\" }]}\n  actionLabel=\"Открыть счёт\"\n/>",
+          "summary": "Шапка для банка или финтех-сервиса: лого-ось, войти и открыть счёт, стекло при прокрутке, бургер на узком.",
+          "preserve": [
+            "лого — svg-кольцо с line, transform-origin в центре и keyframes axis ±12° за 6 секунд",
+            "линия-сияние — ::after с градиентом transparent → accent → mint → transparent, opacity растёт с data-scrolled",
+            "ссылки скрыты до 56rem контейнера, «Войти» — до 40rem, кнопка всегда видна; бургер и меню с aria-expanded / aria-controls"
+          ],
+          "adapt": [
+            "brand, brandHref, links: label, href",
+            "loginLabel, loginHref, actionLabel, actionHref",
+            "sticky",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "Ось",
+            "maxLength": 24
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Открыть счёт",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Neobank navbar with an axis logo, “Log in” and “Open an account”",
+            "description": "Sticky fintech header: an “axis” logo — a ring with a slowly swinging diagonal, sections with an underline growing from the left, a quiet “Log in” link and an “Open an account” button. On scroll — blurred glass and a thin green aurora line along the bottom. On narrow screens — a burger and a dropdown menu.",
+            "ai": {
+              "summary": "Header for a bank or fintech service: an axis logo, log in and open an account, glass on scroll, a burger on narrow screens.",
+              "preserve": [
+                "the logo is an svg ring with a line, transform-origin at the centre and axis keyframes ±12° over 6 seconds",
+                "the aurora line is an ::after with a transparent → accent → mint → transparent gradient whose opacity grows with data-scrolled",
+                "links are hidden below a 56rem container, “Log in” below 40rem, the button is always visible; burger and menu use aria-expanded / aria-controls"
+              ],
+              "adapt": [
+                "brand, brandHref, links: label, href",
+                "loginLabel, loginHref, actionLabel, actionHref",
+                "sticky",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Navbar040\n  brand=\"Axis\"\n  links={[{ label: \"Features\", href: \"#features\" }, { label: \"Pricing\", href: \"#pricing\" }]}\n  actionLabel=\"Open an account\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Axis"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Open an account"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Axis",
+                "links": [
+                  {
+                    "label": "Features",
+                    "href": "#features"
+                  },
+                  {
+                    "label": "Savings",
+                    "href": "#calc"
+                  },
+                  {
+                    "label": "Security",
+                    "href": "#security"
+                  },
+                  {
+                    "label": "Pricing",
+                    "href": "#pricing"
+                  },
+                  {
+                    "label": "App",
+                    "href": "#app"
+                  }
+                ],
+                "loginLabel": "Log in",
+                "actionLabel": "Open an account",
+                "sticky": false
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navbar-041",
+      "type": "registry:block",
+      "title": "Шапка маркетплейса с поиском и корзиной, которая слушает событие",
+      "description": "Липкая шапка магазина цифровых товаров: марка из двух «слоёв», поле поиска-заглушка с моно-подсказкой ⌘K, разделы, тихая ссылка «Продавать» и круглая корзина. Бейдж на корзине берёт число из CustomEvent конструктора набора и подпрыгивает при каждом изменении. При прокрутке — стекло и линия по низу, на узком — бургер с поиском внутри меню.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-041/navbar-041.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-041.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "navbar",
+          "header",
+          "marketplace",
+          "shop",
+          "search",
+          "cart",
+          "badge",
+          "event",
+          "sticky",
+          "burger"
+        ],
+        "preview": {
+          "props": {
+            "sticky": false
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Navbar041",
+          "usage": "<Navbar041\n  brand=\"Слой\"\n  links={[{ label: \"Каталог\", href: \"#catalog\" }, { label: \"Наборы\", href: \"#bundle\" }]}\n  sellLabel=\"Продавать\"\n  cartEvent=\"vibeui-market:bundle\"\n/>",
+          "summary": "Шапка маркетплейса ассетов: поиск, «продавать», корзина с бейджем, который ловит событие набора.",
+          "preserve": [
+            "бейдж корзины слушает window-событие cartEvent (detail.count) и перемонтируется через key=pulse, чтобы анимация pop срабатывала каждый раз",
+            "поле поиска в ряду появляется от 40rem контейнера, в бургер-меню оно всегда первое",
+            "ссылки и «Продавать» скрыты до 60rem, корзина видна всегда"
+          ],
+          "adapt": [
+            "brand, brandHref, links: label, href",
+            "searchPlaceholder, sellLabel, sellHref, cartLabel, cartHref",
+            "cartEvent, sticky",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "Слой",
+            "maxLength": 24
+          },
+          {
+            "prop": "sellLabel",
+            "label": "Ссылка",
+            "type": "text",
+            "default": "Продавать",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Marketplace navbar with search and a cart that listens to an event",
+            "description": "Sticky header for a digital-goods store: a two-layer mark, a stub search field with a mono ⌘K hint, sections, a quiet “Sell” link and a round cart. The cart badge takes its number from the bundle builder's CustomEvent and pops on every change. Glass and a bottom line on scroll, a burger with the search inside the menu on narrow screens.",
+            "ai": {
+              "summary": "Header for an asset marketplace: search, “sell”, a cart with a badge that catches the bundle event.",
+              "preserve": [
+                "the cart badge listens to the cartEvent window event (detail.count) and remounts via key=pulse so the pop animation fires every time",
+                "the search field in the row appears from a 40rem container, in the burger menu it's always first",
+                "links and “Sell” are hidden below 60rem, the cart is always visible"
+              ],
+              "adapt": [
+                "brand, brandHref, links: label, href",
+                "searchPlaceholder, sellLabel, sellHref, cartLabel, cartHref",
+                "cartEvent, sticky",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Navbar041\n  brand=\"Layer\"\n  links={[{ label: \"Catalog\", href: \"#catalog\" }, { label: \"Bundles\", href: \"#bundle\" }]}\n  sellLabel=\"Sell\"\n  cartEvent=\"vibeui-market:bundle\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Layer"
+              },
+              "sellLabel": {
+                "label": "Link",
+                "default": "Sell"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Layer",
+                "links": [
+                  {
+                    "label": "Catalog",
+                    "href": "#catalog"
+                  },
+                  {
+                    "label": "Bundles",
+                    "href": "#bundle"
+                  },
+                  {
+                    "label": "Licenses",
+                    "href": "#licenses"
+                  },
+                  {
+                    "label": "Authors",
+                    "href": "#authors"
+                  }
+                ],
+                "searchPlaceholder": "Template, icons, font…",
+                "sellLabel": "Sell",
+                "cartLabel": "Bundle",
+                "sticky": false
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navbar-042",
+      "type": "registry:block",
+      "title": "Шапка API-сервиса с лампочкой статуса и кнопкой «Получить ключ»",
+      "description": "Липкая шапка dev-tool: моноширинное лого с булавкой и чипом версии, лампочка статуса с пульсом («api · ok»), разделы, ссылка docs и кнопка «Получить ключ» в угловых скобках, которые раздвигаются по наведению. При прокрутке — стекло и тонкая рамка снизу. На узком — бургер и выпадающее меню.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-042/navbar-042.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-042.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "navbar",
+          "header",
+          "api",
+          "developer",
+          "docs",
+          "status",
+          "sticky",
+          "glass",
+          "monospace",
+          "burger"
+        ],
+        "preview": {
+          "props": {
+            "sticky": false
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Navbar042",
+          "usage": "<Navbar042\n  brand=\"geokod\"\n  version=\"v2.4\"\n  status=\"api · ok\"\n  links={[{ label: \"Цены\", href: \"#pricing\" }, { label: \"Статус\", href: \"#status\" }]}\n  actionLabel=\"Получить ключ\"\n/>",
+          "summary": "Шапка для API или dev-tool: лампочка статуса, версия, docs и «получить ключ».",
+          "preserve": [
+            "лампочка — span с ::after-кольцом и keyframes ping 2.2 с, цвет из accent",
+            "рамка и стекло появляются по data-scrolled, который ставит слушатель scroll",
+            "разделы видны от 60rem контейнера, статус и docs — от 40rem, кнопка всегда"
+          ],
+          "adapt": [
+            "brand, brandHref, version, status, statusHref",
+            "links: label, href; docsLabel, docsHref",
+            "actionLabel, actionHref, sticky",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "geokod",
+            "maxLength": 20
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Получить ключ",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "API service navbar with a status lamp and a “Get a key” button",
+            "description": "Sticky dev-tool header: a monospace logo with a pin and a version chip, a pulsing status lamp (“api · ok”), sections, a docs link and a “Get a key” button in angle brackets that spread on hover. On scroll — glass and a thin bottom border. A burger with a dropdown menu on narrow screens.",
+            "ai": {
+              "summary": "Header for an API or dev tool: a status lamp, version, docs and “get a key”.",
+              "preserve": [
+                "the lamp is a span with an ::after ring and 2.2 s ping keyframes, coloured by accent",
+                "the border and glass appear via data-scrolled set by a scroll listener",
+                "sections show from a 60rem container, status and docs from 40rem, the button always"
+              ],
+              "adapt": [
+                "brand, brandHref, version, status, statusHref",
+                "links: label, href; docsLabel, docsHref",
+                "actionLabel, actionHref, sticky",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Navbar042\n  brand=\"geokod\"\n  version=\"v2.4\"\n  status=\"api · ok\"\n  links={[{ label: \"Pricing\", href: \"#pricing\" }, { label: \"Status\", href: \"#status\" }]}\n  actionLabel=\"Get a key\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "geokod"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Get a key"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "geokod",
+                "version": "v2.4",
+                "status": "api · ok",
+                "links": [
+                  {
+                    "label": "Sandbox",
+                    "href": "#sandbox"
+                  },
+                  {
+                    "label": "Endpoints",
+                    "href": "#endpoints"
+                  },
+                  {
+                    "label": "Pricing",
+                    "href": "#pricing"
+                  },
+                  {
+                    "label": "Status",
+                    "href": "#status"
+                  },
+                  {
+                    "label": "Changelog",
+                    "href": "#changelog"
+                  }
+                ],
+                "docsLabel": "docs",
+                "actionLabel": "Get a key",
+                "sticky": false
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navbar-043",
+      "type": "registry:block",
+      "title": "Прозрачная шапка гаджета: стекло при прокрутке и кнопка предзаказа",
+      "description": "Шапка продуктового лендинга железки: прозрачная полоса поверх хиро, при прокрутке — стекло с блюром и тонкой линией. Словесный знак с дышащей точкой-светом, моно-подпись версии, разделы по центру, кнопка «Предзаказ» со стрелкой и бургер на узком экране.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-043/navbar-043.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-043.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "navbar",
+          "header",
+          "gadget",
+          "hardware",
+          "product",
+          "transparent",
+          "glass",
+          "sticky",
+          "preorder",
+          "burger"
+        ],
+        "preview": {
+          "props": {
+            "fixed": false
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Navbar043",
+          "usage": "<Navbar043\n  brand=\"Луч\"\n  caption=\"лампа-будильник · v2\"\n  links={[{ label: \"Рассвет\", href: \"#dawn\" }, { label: \"Предзаказ\", href: \"#preorder\" }]}\n  actionLabel=\"Предзаказ\"\n/>",
+          "summary": "Шапка для лендинга гаджета: прозрачная поверх хиро, стекло при прокрутке, «Предзаказ» и бургер.",
+          "preserve": [
+            "при fixed=true шапка position:fixed и прозрачна, стекло и линия включаются через data-scrolled после 24px прокрутки",
+            "точка в знаке — keyframes scale+opacity 3.2 с, свечение box-shadow цветом акцента",
+            "разделы видны от 60rem контейнера, подпись версии — от 40rem, бургер и меню скрыты от 60rem"
+          ],
+          "adapt": [
+            "brand, brandHref, caption",
+            "links: label, href; actionLabel, actionHref",
+            "fixed",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "Луч",
+            "maxLength": 20
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Предзаказ",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Transparent gadget navbar: glass on scroll and a preorder button",
+            "description": "Header for a hardware product landing: a transparent strip over the hero that turns into blurred glass with a thin line on scroll. A wordmark with a breathing light dot, a mono version caption, centred sections, a “Preorder” button with an arrow and a burger on narrow screens.",
+            "ai": {
+              "summary": "Header for a gadget landing: transparent over the hero, glass on scroll, “Preorder” and a burger.",
+              "preserve": [
+                "with fixed=true the header is position:fixed and transparent; glass and the line switch on via data-scrolled after 24px of scroll",
+                "the dot in the wordmark is a scale+opacity keyframe of 3.2 s with an accent-coloured box-shadow glow",
+                "sections show from a 60rem container, the version caption from 40rem, burger and menu hide from 60rem"
+              ],
+              "adapt": [
+                "brand, brandHref, caption",
+                "links: label, href; actionLabel, actionHref",
+                "fixed",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Navbar043\n  brand=\"Ray\"\n  caption=\"sunrise lamp · v2\"\n  links={[{ label: \"Sunrise\", href: \"#dawn\" }, { label: \"Preorder\", href: \"#preorder\" }]}\n  actionLabel=\"Preorder\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Ray"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Preorder"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Ray",
+                "caption": "sunrise lamp · v2",
+                "links": [
+                  {
+                    "label": "Sunrise",
+                    "href": "#dawn"
+                  },
+                  {
+                    "label": "Features",
+                    "href": "#features"
+                  },
+                  {
+                    "label": "Inside",
+                    "href": "#inside"
+                  },
+                  {
+                    "label": "Specs",
+                    "href": "#specs"
+                  },
+                  {
+                    "label": "FAQ",
+                    "href": "#faq"
+                  }
+                ],
+                "actionLabel": "Preorder",
+                "fixed": false
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navbar-044",
+      "type": "registry:block",
+      "title": "Шапка благотворительного фонда с рукописной пометкой и «Помочь»",
+      "description": "Липкая шапка фонда: бренд антиквой с домиком-иконкой, рядом рукописная пометка Caveat, разделы, кнопка «Помочь» акцентом с сердцем, которое бьётся по наведению. При прокрутке — полупрозрачная бумага с блюром и пунктирный «шов» по низу. На узком — бургер с выпадающим меню.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-044/navbar-044.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-044.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "navbar",
+          "header",
+          "charity",
+          "nonprofit",
+          "donate",
+          "sticky",
+          "handwritten",
+          "serif",
+          "burger"
+        ],
+        "preview": {
+          "props": {
+            "sticky": false
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Navbar044",
+          "usage": "<Navbar044\n  brand=\"Тёплый дом\"\n  note=\"фонд помощи пожилым\"\n  links={[{ label: \"Отчёты\", href: \"#report\" }, { label: \"Волонтёрам\", href: \"#volunteer\" }]}\n  actionLabel=\"Помочь\"\n/>",
+          "summary": "Шапка для НКО или фонда: антиква, рукописная пометка, «Помочь» с сердцем, бургер.",
+          "preserve": [
+            "сердце в кнопке — svg с keyframes beat по :hover, без сдвига макета",
+            "шов — ::after с border-bottom dashed, opacity растёт вместе с data-scrolled",
+            "пометка скрыта до 36rem контейнера, ссылки — до 60rem, кнопка «Помочь» видна всегда"
+          ],
+          "adapt": [
+            "brand, brandHref, note",
+            "links: label, href",
+            "actionLabel, actionHref, sticky",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "Тёплый дом",
+            "maxLength": 24
+          },
+          {
+            "prop": "note",
+            "label": "Пометка",
+            "type": "text",
+            "default": "фонд помощи пожилым",
+            "maxLength": 32
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Помочь",
+            "maxLength": 20
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Charity foundation navbar with a handwritten note and a “Donate” button",
+            "description": "Sticky foundation header: a serif brand with a house icon, a handwritten Caveat note next to it, sections, a “Donate” button in the accent colour with a heart that beats on hover. On scroll — translucent blurred paper and a dashed seam along the bottom. A burger menu on narrow screens.",
+            "ai": {
+              "summary": "Header for an NGO or foundation: serif, a handwritten note, “Donate” with a heart, a burger.",
+              "preserve": [
+                "the heart in the button is an svg with beat keyframes on :hover, no layout shift",
+                "the seam is an ::after with a dashed border-bottom whose opacity grows with data-scrolled",
+                "the note is hidden below a 36rem container, links below 60rem, the “Donate” button is always visible"
+              ],
+              "adapt": [
+                "brand, brandHref, note",
+                "links: label, href",
+                "actionLabel, actionHref, sticky",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Navbar044\n  brand=\"Warm Home\"\n  note=\"help for the elderly\"\n  links={[{ label: \"Reports\", href: \"#report\" }, { label: \"Volunteers\", href: \"#volunteer\" }]}\n  actionLabel=\"Donate\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Warm Home"
+              },
+              "note": {
+                "label": "Note",
+                "default": "help for the elderly"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Donate"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Warm Home",
+                "note": "help for the elderly",
+                "links": [
+                  {
+                    "label": "Who we help",
+                    "href": "#stories"
+                  },
+                  {
+                    "label": "Reports",
+                    "href": "#report"
+                  },
+                  {
+                    "label": "Volunteers",
+                    "href": "#volunteer"
+                  },
+                  {
+                    "label": "Events",
+                    "href": "#events"
+                  }
+                ],
+                "actionLabel": "Donate",
+                "sticky": false
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navbar-045",
+      "type": "registry:block",
+      "title": "Шапка писателя: имя антиквой, солнце/луна и линия прочитанного",
+      "description": "Липкая шапка личного сайта: имя антиквой с курсивной подписью, три раздела с подчёркиванием, которое дорисовывается, переключатель день/ночь (солнце и луна перекрёстно вращаются) и бургер. Переключатель шлёт событие vibeui-writer:theme на весь сайт. По низу — чернильная линия прогресса чтения страницы.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-045/navbar-045.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-045.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "navbar",
+          "header",
+          "writer",
+          "author",
+          "serif",
+          "dark mode",
+          "day night",
+          "theme switch",
+          "reading progress",
+          "sticky"
+        ],
+        "preview": {
+          "props": {
+            "sticky": false
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Navbar045",
+          "usage": "<Navbar045\n  brand=\"Вера Холодова\"\n  tagline=\"тексты и книга\"\n  links={[{ label: \"Тексты\", href: \"#texts\" }, { label: \"Книга\", href: \"#book\" }]}\n/>",
+          "summary": "Шапка для писателя, блога или журнала: тихая антиква, день/ночь на весь сайт, линия прочитанного.",
+          "preserve": [
+            "переключатель шлёт window.dispatchEvent(new CustomEvent(\"vibeui-writer:theme\", { detail: { mode } })) и сам слушает его — все блоки сайта синхронны",
+            "data-mode=\"day\"/\"night\" на корне ставит color-scheme через :where, цвета заданы light-dark() и кроссфейдятся за .6s",
+            "линия прочитанного — transform:scaleX(--vibeui-navbar-045-read) из scrollY / (scrollHeight − innerHeight)"
+          ],
+          "adapt": [
+            "brand, tagline, brandHref, links: label, href",
+            "defaultMode — с чего начинать: night или day",
+            "sticky",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Имя",
+            "type": "text",
+            "default": "Вера Холодова",
+            "maxLength": 28
+          },
+          {
+            "prop": "tagline",
+            "label": "Подпись",
+            "type": "text",
+            "default": "тексты и книга",
+            "maxLength": 28
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Writer's navbar: serif name, sun/moon and a reading-progress line",
+            "description": "Sticky header for a personal site: a serif name with an italic tagline, three sections with an underline that draws itself, a day/night switch (sun and moon cross-rotate) and a burger. The switch dispatches the vibeui-writer:theme event to the whole site. Along the bottom — an ink line showing how much of the page is read.",
+            "ai": {
+              "summary": "Header for a writer, blog or magazine: quiet serif, day/night for the whole site, a read-progress line.",
+              "preserve": [
+                "the switch dispatches window.dispatchEvent(new CustomEvent(\"vibeui-writer:theme\", { detail: { mode } })) and listens to it itself, so every block stays in sync",
+                "data-mode=\"day\"/\"night\" on the root sets color-scheme via :where; colors are light-dark() and crossfade over .6s",
+                "the read line is transform:scaleX(--vibeui-navbar-045-read) from scrollY / (scrollHeight − innerHeight)"
+              ],
+              "adapt": [
+                "brand, tagline, brandHref, links: label, href",
+                "defaultMode — where to start: night or day",
+                "sticky",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Navbar045\n  brand=\"Vera Kholodova\"\n  tagline=\"texts and the book\"\n  links={[{ label: \"Texts\", href: \"#texts\" }, { label: \"Book\", href: \"#book\" }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Name",
+                "default": "Vera Kholodova"
+              },
+              "tagline": {
+                "label": "Tagline",
+                "default": "texts and the book"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Vera Kholodova",
+                "tagline": "texts and the book",
+                "links": [
+                  {
+                    "label": "Texts",
+                    "href": "#texts"
+                  },
+                  {
+                    "label": "Book",
+                    "href": "#book"
+                  },
+                  {
+                    "label": "Letters",
+                    "href": "#letters"
+                  }
+                ],
+                "sticky": false
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

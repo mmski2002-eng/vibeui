@@ -849,6 +849,721 @@
           }
         }
       }
+    },
+    {
+      "name": "comparison-010",
+      "type": "registry:block",
+      "title": "Сравнение «мы против типичной бригады» со счётчиками и прорисовкой галочек",
+      "description": "Сравнение подрядчика с «бригадой по объявлению»: сверху три счётчика (объектов сдано, дней задержки, процент), которые докручиваются, когда секция входит в экран, ниже таблица критериев в две колонки. Галочки в нашей колонке прорисовываются штрихом строка за строкой, кресты в чужой проявляются приглушённо, текстовые ячейки — моно. Наша колонка выделена шапкой в цвет акцента. На узком колонка критерия сжимается, значки остаются.",
+      "categories": [
+        "comparison"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "comparison-010/comparison-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/comparison-010.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "comparison",
+          "table",
+          "versus",
+          "counters",
+          "stats",
+          "checkmarks",
+          "renovation",
+          "construction",
+          "contractor",
+          "trust",
+          "why us"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Comparison010",
+          "usage": "<Comparison010\n  usLabel=\"Ровно\"\n  themLabel=\"Типичная бригада\"\n  stats={[{ value: 312, label: \"объектов сдано\" }, { value: 0, label: \"дней задержки\" }]}\n  rows={[{ criterion: \"Цена фиксируется в договоре\", us: true, them: \"«примерно»\" }]}\n/>",
+          "summary": "Секция «почему мы» для подрядчика: счётчики докручиваются, таблица «мы vs они» с галочками, которые рисуются при появлении.",
+          "preserve": [
+            "IntersectionObserver с threshold 0.2 ставит data-in один раз; счётчики идут 1,4 с cubic ease-out в requestAnimationFrame",
+            "строка tbody — opacity/translateY с transition-delay = --i × 90ms; path галочки/креста с pathLength=1 и stroke-dashoffset 1→0 с той же задержкой + .25s",
+            "ячейка: true → галочка, false → крест, строка → моно-текст; th[data-col=us] залит акцентом, td[data-col=us] — акцент 10 %"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, fine",
+            "stats: value, label, suffix",
+            "usLabel, themLabel; rows: criterion, us, them (true | false | строка)",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Чем мы отличаемся от «бригады по объявлению»",
+            "maxLength": 70
+          },
+          {
+            "prop": "usLabel",
+            "label": "Наша колонка",
+            "type": "text",
+            "default": "Ровно",
+            "maxLength": 20
+          },
+          {
+            "prop": "themLabel",
+            "label": "Чужая колонка",
+            "type": "text",
+            "default": "Типичная бригада",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "“Us vs a typical crew” comparison with counters and check marks that draw themselves",
+            "description": "A contractor versus “a crew from the classifieds” comparison: three counters on top (projects delivered, days late, a percentage) that count up when the section enters the screen, below a two-column criteria table. Check marks in our column draw themselves row by row, crosses in the other column appear dimmed, text cells are mono. Our column is highlighted with an accent-coloured header. On narrow the criterion column shrinks, the icons stay.",
+            "ai": {
+              "summary": "A “why us” section for a contractor: counters count up, an “us vs them” table with check marks that draw on appearance.",
+              "preserve": [
+                "an IntersectionObserver with threshold 0.2 sets data-in once; counters run 1.4 s cubic ease-out in requestAnimationFrame",
+                "a tbody row is opacity/translateY with transition-delay = --i × 90ms; the check/cross path has pathLength=1 and stroke-dashoffset 1→0 with the same delay + .25s",
+                "a cell: true → check, false → cross, string → mono text; th[data-col=us] is filled with the accent, td[data-col=us] with 10 % accent"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, fine",
+                "stats: value, label, suffix",
+                "usLabel, themLabel; rows: criterion, us, them (true | false | string)",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Comparison010\n  usLabel=\"Level\"\n  themLabel=\"Typical crew\"\n  stats={[{ value: 312, label: \"projects delivered\" }, { value: 0, label: \"days late\" }]}\n  rows={[{ criterion: \"Price fixed in the contract\", us: true, them: \"“roughly”\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "How we differ from “a crew from the classifieds”"
+              },
+              "usLabel": {
+                "label": "Our column",
+                "default": "Level"
+              },
+              "themLabel": {
+                "label": "Their column",
+                "default": "Typical crew"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Why us",
+                "title": "How we differ from “a crew from the classifieds”",
+                "lede": "Not promises but contract clauses. Every row can be checked before signing.",
+                "usLabel": "Level",
+                "themLabel": "Typical crew",
+                "stats": [
+                  {
+                    "value": 312,
+                    "label": "projects delivered"
+                  },
+                  {
+                    "value": 0,
+                    "label": "days late in 14 years"
+                  },
+                  {
+                    "value": 100,
+                    "label": "estimates that never grew after signing",
+                    "suffix": "%"
+                  }
+                ],
+                "rows": [
+                  {
+                    "criterion": "Price fixed in the contract",
+                    "us": true,
+                    "them": "“roughly”"
+                  },
+                  {
+                    "criterion": "Deadline in a calendar with stage dates",
+                    "us": true,
+                    "them": false
+                  },
+                  {
+                    "criterion": "Penalty for delay — 0.5 % per day",
+                    "us": true,
+                    "them": false
+                  },
+                  {
+                    "criterion": "Daily photo report and a camera",
+                    "us": true,
+                    "them": "on request"
+                  },
+                  {
+                    "criterion": "Hidden works accepted with a certificate",
+                    "us": true,
+                    "them": false
+                  },
+                  {
+                    "criterion": "Site cleaned every evening",
+                    "us": true,
+                    "them": false
+                  },
+                  {
+                    "criterion": "Warranty",
+                    "us": "5 years",
+                    "them": "verbal"
+                  },
+                  {
+                    "criterion": "Payment by stages, no 50 % upfront",
+                    "us": true,
+                    "them": false
+                  }
+                ],
+                "fine": "Extract from the standard contract, 2026 edition. Full text on request before the survey."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "comparison-015",
+      "type": "registry:block",
+      "title": "Сравнение с конкурентами: строки раскрываются с примером ответа API",
+      "description": "Таблица-список критериев против трёх конкурентов: колонка «мы» подсвечена акцентом с точкой-лампочкой, каждая строка — кнопка, по клику раскрывается через grid-template-rows 0fr → 1fr и показывает пояснение и пример ответа моноширинным с подсветкой ключей и чисел. На узком экране видны только критерий и наше значение, конкуренты уезжают в раскрытие списком. Одна строка открыта по умолчанию.",
+      "categories": [
+        "comparison"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "comparison-015/comparison-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/comparison-015.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "comparison",
+          "competitors",
+          "table",
+          "api",
+          "accordion",
+          "expand",
+          "json",
+          "developer",
+          "pricing",
+          "dark"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Comparison015",
+          "usage": "<Comparison015\n  columns={[\"Геокод\", \"AddrPro\", \"MapOne\"]}\n  rows={[{ label: \"Медиана ответа\", values: [\"42 ms\", \"120 ms\", \"85 ms\"], detail: \"Замер из Москвы за 30 дней.\", sample: [\"\\\"took_ms\\\": 42\"] }]}\n/>",
+          "summary": "Сравнение продукта с конкурентами по критериям, каждая строка раскрывает пример ответа.",
+          "preserve": [
+            "раскрытие — [data-part=detail] с grid-template-rows 0fr/1fr и внутренним overflow:hidden, переход .4s cubic-bezier",
+            "колонки конкурентов скрыты до 56rem контейнера, число колонок в сетке — через --vibeui-comparison-015-n",
+            "пример ответа подсвечивается regex-токенайзером в span с data-t (k, s, n)"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, note",
+            "columns[] (первая — мы); rows: label, values[], detail, sample[]",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Честно против трёх других",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Competitor comparison: rows expand with an API response sample",
+            "description": "A list-table of criteria against three competitors: the “us” column highlighted with an accent lamp dot, every row is a button that expands via grid-template-rows 0fr → 1fr to reveal an explanation and a monospace response sample with key and number highlighting. On narrow screens only the criterion and our value show, competitors move into the expansion as a list. One row is open by default.",
+            "ai": {
+              "summary": "Product versus competitors by criteria, every row expands into a response sample.",
+              "preserve": [
+                "expansion is [data-part=detail] with grid-template-rows 0fr/1fr and an inner overflow:hidden, a .4s cubic-bezier transition",
+                "competitor columns are hidden below a 56rem container, the grid column count comes from --vibeui-comparison-015-n",
+                "the response sample is highlighted by a regex tokenizer into spans with data-t (k, s, n)"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, note",
+                "columns[] (first is us); rows: label, values[], detail, sample[]",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Comparison015\n  columns={[\"Geokod\", \"AddrPro\", \"MapOne\"]}\n  rows={[{ label: \"Median response\", values: [\"42 ms\", \"120 ms\", \"85 ms\"], detail: \"Measured from Moscow over 30 days.\", sample: [\"\\\"took_ms\\\": 42\"] }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Honestly against three others"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Comparison",
+                "title": "Honestly against three others",
+                "lede": "Numbers from public price lists and our measurements as of September 2026. Click a row — we show how it looks in the API response.",
+                "columns": [
+                  "Geokod",
+                  "AddrPro",
+                  "MapOne",
+                  "GeoCloud"
+                ],
+                "rows": [
+                  {
+                    "label": "House-level precision in Russia",
+                    "values": [
+                      "98.4 %",
+                      "96.1 %",
+                      "97.2 %",
+                      "88.0 %"
+                    ],
+                    "detail": "Measured on a control set of 50,000 delivery addresses in 85 regions: share of answers with house precision and an error under 30 metres.",
+                    "sample": [
+                      "\"precision\": \"house\",",
+                      "\"confidence\": 0.98,",
+                      "\"distance_m\": 4"
+                    ]
+                  },
+                  {
+                    "label": "Median response",
+                    "values": [
+                      "42 ms",
+                      "120 ms",
+                      "85 ms",
+                      "210 ms"
+                    ],
+                    "detail": "Measured from Moscow over the last 30 days, p50 on /geocode. A request goes to the nearest region automatically.",
+                    "sample": [
+                      "\"took_ms\": 42,",
+                      "\"region\": \"msk-1\",",
+                      "\"cached\": false"
+                    ]
+                  },
+                  {
+                    "label": "Price per 1,000 requests",
+                    "values": [
+                      "$0.005",
+                      "$0.015",
+                      "$0.011",
+                      "$0.055"
+                    ],
+                    "detail": "The first paid tier rate. Cheaper with volume: from a million — $0.003, from ten — $0.0015. Rounded in your favour.",
+                    "sample": [
+                      "\"billing\": {",
+                      "  \"tier\": \"1m\",",
+                      "  \"per_1000\": 0.005",
+                      "}"
+                    ]
+                  },
+                  {
+                    "label": "Free per month",
+                    "values": [
+                      "10,000",
+                      "1,000",
+                      "25,000*",
+                      "0"
+                    ],
+                    "detail": "Ten thousand requests a month with no card and no branding. The asterisk at a competitor — the free quota applies only with their map shown.",
+                    "sample": [
+                      "\"quota\": {",
+                      "  \"free\": 10000,",
+                      "  \"used\": 2,",
+                      "  \"resets_at\": \"2026-10-01\"",
+                      "}"
+                    ]
+                  },
+                  {
+                    "label": "Batch processing",
+                    "values": [
+                      "up to 1M",
+                      "no",
+                      "up to 100k",
+                      "no"
+                    ],
+                    "detail": "Upload a CSV — get a CSV. A million addresses in twelve minutes, the status is pollable or comes by webhook.",
+                    "sample": [
+                      "\"job\": \"btch_91ka\",",
+                      "\"rows\": 1000000,",
+                      "\"eta_s\": 720"
+                    ]
+                  },
+                  {
+                    "label": "SLA in the contract",
+                    "values": [
+                      "99.9 %",
+                      "—",
+                      "99.5 %",
+                      "99.9 %"
+                    ],
+                    "detail": "On all paid volumes. For every 0.1 % below we refund 10 % of the monthly bill, no tickets.",
+                    "sample": [
+                      "\"sla\": 0.999,",
+                      "\"credit_policy\": \"auto\""
+                    ]
+                  }
+                ],
+                "note": "* — the competitor's free quota applies only with their map and logo shown."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "comparison-016",
+      "type": "registry:block",
+      "title": "Сравнение с прошлой версией: полоски-отношения и метки «новое»",
+      "description": "Таблица «новая версия против старой» для железки: каждая строка — характеристика, значение новой версии моно с акцентной полоской и значение прошлой с приглушённой. Полоски вырастают при загрузке каскадом, функции, которых раньше не было, помечены чипом «новое», у колонки новой версии акцентный цвет в легенде. На узком строка складывается в карточку с подписями колонок.",
+      "categories": [
+        "comparison"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "comparison-016/comparison-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/comparison-016.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "comparison",
+          "versus",
+          "gadget",
+          "hardware",
+          "table",
+          "specs",
+          "bars",
+          "upgrade",
+          "generation",
+          "product"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Comparison016",
+          "usage": "<Comparison016\n  currentName=\"Луч 2\"\n  previousName=\"Луч 1\"\n  rows={[{ label: \"Яркость\", current: \"1 200 лм\", previous: \"800 лм\", currentBar: 100, previousBar: 66 }]}\n/>",
+          "summary": "Сравнение версий железки: две полоски в строке, чипы «новое», легенда с годами.",
+          "preserve": [
+            "полоска — i с transform: scaleX(-w) от left, keyframes grow с задержкой -i × 80ms + .2s",
+            "строка — grid 1.2fr 1fr 1fr от 52rem контейнера, до этого одна колонка и подписи small видны",
+            "строки появляются каскадом: keyframes in с задержкой -i × 60ms"
+          ],
+          "adapt": [
+            "eyebrow, title, lede",
+            "currentName, currentNote, previousName, previousNote",
+            "rows: label, current, previous, currentBar, previousBar, isNew",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что изменилось со времён первого Луча",
+            "maxLength": 60
+          },
+          {
+            "prop": "currentName",
+            "label": "Новая версия",
+            "type": "text",
+            "default": "Луч 2",
+            "maxLength": 20
+          },
+          {
+            "prop": "previousName",
+            "label": "Прошлая версия",
+            "type": "text",
+            "default": "Луч 1",
+            "maxLength": 20
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Comparison with the previous version: ratio bars and “new” badges",
+            "description": "A “new version vs old” table for hardware: each row is a spec, the new version's value in mono with an accent bar and the previous one with a muted bar. Bars grow on load in a cascade, features that didn't exist before get a “new” chip, the new version's column is accent-coloured in the legend. On narrow screens a row folds into a card with column captions.",
+            "ai": {
+              "summary": "A hardware version comparison: two bars per row, “new” chips, a legend with years.",
+              "preserve": [
+                "a bar is an i with transform: scaleX(-w) from the left, grow keyframes delayed by -i × 80ms + .2s",
+                "a row is a 1.2fr 1fr 1fr grid from a 52rem container; below that a single column with the small captions visible",
+                "rows appear in a cascade: in keyframes delayed by -i × 60ms"
+              ],
+              "adapt": [
+                "eyebrow, title, lede",
+                "currentName, currentNote, previousName, previousNote",
+                "rows: label, current, previous, currentBar, previousBar, isNew",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Comparison016\n  currentName=\"Ray 2\"\n  previousName=\"Ray 1\"\n  rows={[{ label: \"Brightness\", current: \"1,200 lm\", previous: \"800 lm\", currentBar: 100, previousBar: 66 }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What changed since the first Ray"
+              },
+              "currentName": {
+                "label": "New version",
+                "default": "Ray 2"
+              },
+              "previousName": {
+                "label": "Previous version",
+                "default": "Ray 1"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Comparison",
+                "title": "What changed since the first Ray",
+                "lede": "We went through 3,400 reviews of the first version. Everything people asked for is here. Everything they complained about is gone.",
+                "currentName": "Ray 2",
+                "currentNote": "2026 · batch 2",
+                "previousName": "Ray 1",
+                "previousNote": "2023 · discontinued",
+                "rows": [
+                  {
+                    "label": "Brightness",
+                    "current": "1,200 lm",
+                    "previous": "800 lm",
+                    "currentBar": 100,
+                    "previousBar": 66
+                  },
+                  {
+                    "label": "Colour temperature",
+                    "current": "2700–6500 K",
+                    "previous": "2700–4000 K",
+                    "currentBar": 100,
+                    "previousBar": 34
+                  },
+                  {
+                    "label": "Sunrise length",
+                    "current": "5–60 min",
+                    "previous": "30 min",
+                    "currentBar": 100,
+                    "previousBar": 50
+                  },
+                  {
+                    "label": "Speaker",
+                    "current": "5 W, 360°",
+                    "previous": "2 W",
+                    "currentBar": 100,
+                    "previousBar": 40
+                  },
+                  {
+                    "label": "Sensors",
+                    "current": "CO₂, humidity, light, temp",
+                    "previous": "light only",
+                    "currentBar": 100,
+                    "previousBar": 25
+                  },
+                  {
+                    "label": "Gesture control",
+                    "current": "clap, touch",
+                    "previous": "—",
+                    "currentBar": 100,
+                    "previousBar": 0,
+                    "isNew": true
+                  },
+                  {
+                    "label": "Matter / Thread",
+                    "current": "yes",
+                    "previous": "—",
+                    "currentBar": 100,
+                    "previousBar": 0,
+                    "isNew": true
+                  },
+                  {
+                    "label": "Noise",
+                    "current": "0 dB",
+                    "previous": "18 dB (fan)",
+                    "currentBar": 100,
+                    "previousBar": 30
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

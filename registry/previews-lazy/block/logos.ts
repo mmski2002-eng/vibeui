@@ -27,4 +27,7 @@ export const PREVIEWS = {
   "logocloud-007": dynamic(() =>
     import("@/registry/blocks/logos/logocloud-007/logocloud-007").then((module) => module.Logocloud007),
   ),
+  "logocloud-014": dynamic(() =>
+    import("@/registry/blocks/logos/logocloud-014/logocloud-014").then((module) => module.Logocloud014),
+  ),
 } satisfies PreviewMap

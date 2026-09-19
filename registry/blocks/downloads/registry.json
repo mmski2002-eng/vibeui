@@ -868,6 +868,359 @@
           }
         }
       }
+    },
+    {
+      "name": "download-011",
+      "type": "registry:block",
+      "title": "Промо приложения доставки: промокод, магазины, SMS-ссылка и QR-стикер",
+      "description": "Секция «скачай приложение» для доставки: контрастная карточка на фоне страницы, заголовок с акцентной скидкой (проценты подсвечиваются автоматически), промокод в пунктирной рамке с кнопкой «скопировать» (буфер обмена, подпись меняется на «скопировано»), кнопки App Store и Google Play, поле телефона «пришлём ссылку» с прорисованной галочкой после отправки. Справа QR-стикер со скотчем, нарисованный SVG-модулями из seed-строки (декоративный, не сканируется), за ним фото в блобе, который медленно морфит. Форма — заглушка.",
+      "categories": [
+        "downloads"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "download-011/download-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/download-011.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "download",
+          "app",
+          "mobile",
+          "promo",
+          "promo-code",
+          "qr",
+          "app-store",
+          "google-play",
+          "sms",
+          "delivery",
+          "food"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Download011",
+          "usage": "<Download011\n  title=\"−20 % на первый заказ в приложении\"\n  code=\"GORYACHO20\"\n  image=\"/photos/box.webp\"\n  appStoreHref=\"https://apps.apple.com/…\"\n  googlePlayHref=\"https://play.google.com/…\"\n/>",
+          "summary": "Промо мобильного приложения: скидка, промокод с копированием, магазины, SMS и QR-стикер.",
+          "preserve": [
+            "QR — modules(qrSeed): три finder-паттерна настоящие, остальные модули из LCG по FNV-хэшу seed, path с shape-rendering crispEdges",
+            "copy — navigator.clipboard.writeText в try/catch, copied держится 1.8 с; проценты в title ищутся регуляркой и оборачиваются в em",
+            "фото — img в блобе с keyframes morph (border-radius + rotate), QR-стикер повёрнут на −4° и выпрямляется по hover"
+          ],
+          "adapt": [
+            "eyebrow, title (проценты подсветятся), lede, code, qrLabel, qrSeed",
+            "appStoreLabel/Href, googlePlayLabel/Href, phonePlaceholder, smsLabel, doneText",
+            "image, imageAlt",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "−20 % на первый заказ в приложении",
+            "maxLength": 50
+          },
+          {
+            "prop": "code",
+            "label": "Промокод",
+            "type": "text",
+            "default": "GORYACHO20",
+            "maxLength": 16
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Delivery app promo: promo code, stores, SMS link and a QR sticker",
+            "description": "A “get the app” section for delivery: a contrasting card on the page background, a headline with an accent discount (percentages are highlighted automatically), a promo code in a dashed frame with a “copy” button (clipboard, label turns into “copied”), App Store and Google Play buttons, a phone field “send me the link” with a drawn tick after submit. On the right a QR sticker with tape, drawn as SVG modules from a seed string (decorative, not scannable), behind it a photo in a slowly morphing blob. The form is a stub.",
+            "ai": {
+              "summary": "Mobile app promo: a discount, a promo code with copy, stores, SMS and a QR sticker.",
+              "preserve": [
+                "QR is modules(qrSeed): the three finder patterns are real, the other modules come from an LCG seeded by an FNV hash, a path with shape-rendering crispEdges",
+                "copy uses navigator.clipboard.writeText in try/catch, copied stays for 1.8 s; percentages in title are found by regex and wrapped in em",
+                "the photo is an img in a blob with morph keyframes (border-radius + rotate), the QR sticker is rotated −4° and straightens on hover"
+              ],
+              "adapt": [
+                "eyebrow, title (percentages get highlighted), lede, code, qrLabel, qrSeed",
+                "appStoreLabel/Href, googlePlayLabel/Href, phonePlaceholder, smsLabel, doneText",
+                "image, imageAlt",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Download011\n  title=\"−20 % off your first in-app order\"\n  code=\"HOT20\"\n  image=\"/photos/box.webp\"\n  appStoreHref=\"https://apps.apple.com/…\"\n  googlePlayHref=\"https://play.google.com/…\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "−20 % off your first in-app order"
+              },
+              "code": {
+                "label": "Promo code",
+                "default": "HOT20"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "The app",
+                "title": "−20 % off your first in-app order",
+                "lede": "Courier tracking, your favourite order in one tap and promo codes every Friday. Installs in a minute.",
+                "code": "HOT20",
+                "qrLabel": "point your camera",
+                "appStoreLabel": "App Store",
+                "googlePlayLabel": "Google Play",
+                "phonePlaceholder": "+1 555 000-0000",
+                "smsLabel": "Send me the link",
+                "doneText": "The link is in your SMS",
+                "imageAlt": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "download-013",
+      "type": "registry:block",
+      "title": "Приложение: QR из SVG, бейджи магазинов и телефон из CSS",
+      "description": "Секция «скачать приложение» без единой картинки: слева заголовок, три текстовых бейджа магазинов (App Store, Google Play, RuStore) и рейтинг, в центре QR-код, нарисованный SVG детерминированно из строки-сида (искатели по углам, синхродорожки, псевдослучайные модули — декоративный узор) со сканирующей линией и уголками, справа телефон из CSS с мини-экраном баланса, столбиками и операциями. Серверный компонент.",
+      "categories": [
+        "downloads"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "download-013/download-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/download-013.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "download",
+          "app",
+          "qr",
+          "badges",
+          "app store",
+          "google play",
+          "rustore",
+          "phone",
+          "mockup",
+          "fintech",
+          "css"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Download013",
+          "usage": "<Download013\n  title=\"Банк, который помещается в карман\"\n  qrSeed=\"https://os.example/app\"\n  badges={[{ top: \"Скачать в\", store: \"App Store\", href: \"#appstore\" }, { top: \"Скачать из\", store: \"RuStore\", href: \"#rustore\" }]}\n/>",
+          "summary": "Секция приложения для финтеха: декоративный QR из SVG, бейджи магазинов и CSS-телефон с балансом.",
+          "preserve": [
+            "QR — path из модулей 25×25: три искателя 7×7, разделители, синхродорожки в 6-й строке и колонке, остальные модули из xorshift, засеянного FNV-хешем qrSeed; на сервере и клиенте узор одинаковый",
+            "сканирующая линия — ::after кода с translateY от -2.5rem до 11rem за 2.8s, при reduce-motion скрыта",
+            "телефон — aspect-ratio 9/18 с ::before-чёлкой, экран с сиянием, столбики scaleY по --vibeui-download-013-i; раскладка 1 → 2 (44rem) → 3 колонки (64rem)"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, qrSeed, qrCaption",
+            "badges: top, store, href; rating, ratingNote",
+            "phoneBrand, phoneBalance, phoneCaption",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Банк, который помещается в карман, а не в отделение",
+            "maxLength": 72
+          },
+          {
+            "prop": "phoneBalance",
+            "label": "Баланс на экране",
+            "type": "text",
+            "default": "1 284 650 ₽",
+            "maxLength": 16
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "App section: an SVG QR, store badges and a CSS phone",
+            "description": "A “download the app” section with not a single image: on the left a headline, three text store badges (App Store, Google Play, RuStore) and a rating, in the centre a QR code drawn in SVG deterministically from a seed string (finder patterns in the corners, timing tracks, pseudo-random modules — a decorative pattern) with a scanning line and corner marks, on the right a CSS phone with a mini balance screen, bars and operations. Server component.",
+            "ai": {
+              "summary": "An app section for fintech: a decorative SVG QR, store badges and a CSS phone with a balance.",
+              "preserve": [
+                "the QR is a path of 25×25 modules: three 7×7 finders, separators, timing tracks in row and column 6, the other modules from an xorshift seeded by an FNV hash of qrSeed; the pattern is identical on server and client",
+                "the scanning line is the code's ::after moving by translateY from -2.5rem to 11rem over 2.8s, hidden under reduce-motion",
+                "the phone is aspect-ratio 9/18 with a ::before notch, a glowing screen, scaleY bars by --vibeui-download-013-i; the layout goes 1 → 2 (44rem) → 3 columns (64rem)"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, qrSeed, qrCaption",
+                "badges: top, store, href; rating, ratingNote",
+                "phoneBrand, phoneBalance, phoneCaption",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Download013\n  title=\"A bank that fits in your pocket\"\n  qrSeed=\"https://axis.example/app\"\n  badges={[{ top: \"Download on the\", store: \"App Store\", href: \"#appstore\" }, { top: \"Get it on\", store: \"RuStore\", href: \"#rustore\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "A bank that fits in your pocket, not in a branch"
+              },
+              "phoneBalance": {
+                "label": "Screen balance",
+                "default": "1,284,650 ₽"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "App",
+                "title": "A bank that fits in your pocket, not in a branch",
+                "lede": "Account, payments, employee cards and taxes in one app. Point your camera at the code or open the store.",
+                "qrCaption": "point your camera — your store opens",
+                "badges": [
+                  {
+                    "top": "Download on the",
+                    "store": "App Store",
+                    "href": "#appstore"
+                  },
+                  {
+                    "top": "Get it on",
+                    "store": "Google Play",
+                    "href": "#googleplay"
+                  },
+                  {
+                    "top": "Get it from",
+                    "store": "RuStore",
+                    "href": "#rustore"
+                  }
+                ],
+                "rating": "4.9",
+                "ratingNote": "average rating across three stores",
+                "phoneBrand": "Axis",
+                "phoneBalance": "1,284,650 ₽",
+                "phoneCaption": "Main account"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

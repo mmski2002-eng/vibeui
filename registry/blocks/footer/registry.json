@@ -5273,6 +5273,2575 @@
           }
         }
       }
+    },
+    {
+      "name": "footer-033",
+      "type": "registry:block",
+      "title": "Подвал автосервиса с огромным контурным словом-маркой",
+      "description": "Подвал автосервиса: бренд с шевроном, слоган, колонки ссылок и контакты с телефоном, адресом и часами с зелёной точкой. Ниже шкала-рисочки, как на тюнинговом приборе, и огромное слово-марка контуром (text-stroke), которое по наведению заливается акцентом снизу вверх через background-clip. Юридическая строка и примечание о ценах. Без JS.",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-033/footer-033.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-033.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "footer",
+          "auto",
+          "car service",
+          "detailing",
+          "wordmark",
+          "outline",
+          "text-stroke",
+          "links",
+          "contacts",
+          "hours"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Footer033",
+          "usage": "<Footer033\n  wordmark=\"Гараж 42\"\n  columns={[{ title: \"Услуги\", links: [{ label: \"Керамика\", href: \"#services\" }] }]}\n  phone=\"+7 (812) 420-42-42\"\n  hours=\"Пн–Сб 9:00–21:00\"\n/>",
+          "summary": "Подвал для автосервиса: колонки, контакты, шкала и гигантское контурное слово, которое заливается по hover.",
+          "preserve": [
+            "слово-марка — -webkit-text-stroke + background-clip:text с градиентом 200% высоты, hover сдвигает background-position 0 100% → 0 0",
+            "размер марки clamp(2.6rem, 12cqi, 11rem) с white-space:nowrap — считается от ширины контейнера, не окна",
+            "шкала — repeating-linear-gradient рисок с mask-image по краям"
+          ],
+          "adapt": [
+            "wordmark, brand, tagline",
+            "columns: title, links: label, href",
+            "phone, phoneHref, address, hours, legal, note",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "wordmark",
+            "label": "Слово-марка",
+            "type": "text",
+            "default": "Гараж 42",
+            "maxLength": 16
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Car service footer with a huge outlined wordmark",
+            "description": "Car service footer: a chevron brand, tagline, link columns and contacts with phone, address and hours with a green dot. Below, a tick scale like on a tuning gauge and a huge outlined wordmark (text-stroke) that fills with the accent from the bottom up on hover via background-clip. A legal line and a price note. No JS.",
+            "ai": {
+              "summary": "Footer for a car service: columns, contacts, a tick scale and a giant outlined word that fills on hover.",
+              "preserve": [
+                "the wordmark is -webkit-text-stroke + background-clip:text with a 200%-tall gradient, hover shifts background-position 0 100% → 0 0",
+                "the wordmark size is clamp(2.6rem, 12cqi, 11rem) with white-space:nowrap — measured from the container width, not the viewport",
+                "the scale is a repeating-linear-gradient of ticks with a mask-image at the edges"
+              ],
+              "adapt": [
+                "wordmark, brand, tagline",
+                "columns: title, links: label, href",
+                "phone, phoneHref, address, hours, legal, note",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Footer033\n  wordmark=\"Garage 42\"\n  columns={[{ title: \"Services\", links: [{ label: \"Ceramic\", href: \"#services\" }] }]}\n  phone=\"+1 (415) 420-42-42\"\n  hours=\"Mon–Sat 9:00–21:00\"\n/>"
+            },
+            "controls": {
+              "wordmark": {
+                "label": "Wordmark",
+                "default": "Garage 42"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "wordmark": "Garage 42",
+                "brand": "Garage 42",
+                "tagline": "Detailing studio in a closed bay. Ceramic, film, correction, interior. San Francisco, since 2017.",
+                "columns": [
+                  {
+                    "title": "Services",
+                    "links": [
+                      {
+                        "label": "Ceramic",
+                        "href": "#services"
+                      },
+                      {
+                        "label": "PPF film",
+                        "href": "#services"
+                      },
+                      {
+                        "label": "Correction",
+                        "href": "#services"
+                      },
+                      {
+                        "label": "Interior",
+                        "href": "#services"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Studio",
+                    "links": [
+                      {
+                        "label": "Before / after",
+                        "href": "#results"
+                      },
+                      {
+                        "label": "How it goes",
+                        "href": "#process"
+                      },
+                      {
+                        "label": "Masters",
+                        "href": "#team"
+                      },
+                      {
+                        "label": "Reviews",
+                        "href": "#reviews"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Clients",
+                    "links": [
+                      {
+                        "label": "Book",
+                        "href": "#booking"
+                      },
+                      {
+                        "label": "Warranty",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Care sheet",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Gift card",
+                        "href": "#"
+                      }
+                    ]
+                  }
+                ],
+                "phone": "+1 (415) 420-42-42",
+                "address": "150 Harrison St, building 3",
+                "hours": "Mon–Sat 9:00–21:00",
+                "legal": "© 2026 Garage 42 LLC",
+                "note": "Prices on the site are a guide, the exact one is fixed after inspection."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footer-034",
+      "type": "registry:block",
+      "title": "Подвал ветклиники с дорожкой следов и лицензией",
+      "description": "Подвал клиники: по верху дорожка лапок, которые прошагивают слева направо по очереди и растворяются, потом заново. Бренд с лапой, телефон крупно, адрес и часы, три колонки ссылок, строка лицензии отдельной плашкой, соцсети чипами и правовые ссылки. Серверный компонент, без стейта.",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-034/footer-034.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-034.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "footer",
+          "vet",
+          "clinic",
+          "paw",
+          "trail",
+          "licence",
+          "hours",
+          "phone",
+          "columns",
+          "socials"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Footer034",
+          "usage": "<Footer034\n  brand=\"Лапа\"\n  phone=\"+7 495 120-24-24\"\n  address=\"Ленинградский проспект, 62 · м. Сокол\"\n  hours=\"Приём 9:00–21:00 · экстренно — круглосуточно\"\n  license=\"Лицензия № 77-ВД-004182\"\n/>",
+          "summary": "Подвал клиники: шагающие лапки, телефон, часы, колонки и лицензия.",
+          "preserve": [
+            "дорожка — 12 svg с --i и --tilt, keyframes step по opacity и scale, задержка index × .35s, чётные сдвинуты translate на .6rem",
+            "сетка на 60rem контейнера — бренд слева, колонки справа, лицензия и низ на всю ширину через grid-column 1/−1",
+            "при reduce-motion лапки стоят с opacity .6, чтобы дорожка не пропадала"
+          ],
+          "adapt": [
+            "brand, caption, phone, phoneHref, address, hours",
+            "columns: title, links: label, href; socials; legal",
+            "license, copyright",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "Лапа",
+            "maxLength": 20
+          },
+          {
+            "prop": "phone",
+            "label": "Телефон",
+            "type": "text",
+            "default": "+7 495 120-24-24",
+            "maxLength": 20
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Vet clinic footer with a paw trail and a licence line",
+            "description": "A clinic footer: a trail of paws along the top that step in from left to right one by one, fade and start again. Brand with a paw, a large phone number, address and hours, three link columns, a licence line in its own strip, social chips and legal links. A server component with no state.",
+            "ai": {
+              "summary": "A clinic footer: stepping paws, phone, hours, columns and a licence line.",
+              "preserve": [
+                "the trail is 12 svgs with --i and --tilt, step keyframes on opacity and scale, delay index × .35s, even ones shifted by a .6rem translate",
+                "on a 60rem container the grid puts the brand left, columns right, licence and bottom full-width via grid-column 1/−1",
+                "under reduce-motion the paws stay at opacity .6 so the trail doesn't vanish"
+              ],
+              "adapt": [
+                "brand, caption, phone, phoneHref, address, hours",
+                "columns: title, links: label, href; socials; legal",
+                "license, copyright",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Footer034\n  brand=\"Paw\"\n  phone=\"+1 415 555-0142\"\n  address=\"62 Leningradsky Avenue · Sokol\"\n  hours=\"Visits 9:00–21:00 · emergency around the clock\"\n  license=\"Licence No. 77-VD-004182\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Paw"
+              },
+              "phone": {
+                "label": "Phone",
+                "default": "+1 415 555-0142"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Paw",
+                "caption": "Vet clinic and grooming in Sokol. We treat cats, dogs, rabbits and anyone who fits in a carrier.",
+                "phone": "+1 415 555-0142",
+                "phoneHref": "tel:+14155550142",
+                "address": "62 Leningradsky Avenue · Sokol",
+                "hours": "Visits 9:00–21:00 · emergency around the clock",
+                "columns": [
+                  {
+                    "title": "Services",
+                    "links": [
+                      {
+                        "label": "Therapy",
+                        "href": "#services"
+                      },
+                      {
+                        "label": "Surgery",
+                        "href": "#services"
+                      },
+                      {
+                        "label": "Dentistry",
+                        "href": "#services"
+                      },
+                      {
+                        "label": "Grooming",
+                        "href": "#grooming"
+                      },
+                      {
+                        "label": "Exotics",
+                        "href": "#services"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Clinic",
+                    "links": [
+                      {
+                        "label": "Doctors",
+                        "href": "#doctors"
+                      },
+                      {
+                        "label": "Prices",
+                        "href": "#services"
+                      },
+                      {
+                        "label": "Reviews",
+                        "href": "#diary"
+                      },
+                      {
+                        "label": "Careers",
+                        "href": "#"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Help",
+                    "links": [
+                      {
+                        "label": "Symptom checker",
+                        "href": "#symptoms"
+                      },
+                      {
+                        "label": "What to bring",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Before surgery",
+                        "href": "#"
+                      },
+                      {
+                        "label": "FAQ",
+                        "href": "#"
+                      }
+                    ]
+                  }
+                ],
+                "socials": [
+                  {
+                    "label": "Telegram",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Instagram",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Maps",
+                    "href": "#"
+                  }
+                ],
+                "legal": [
+                  {
+                    "label": "Privacy",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Terms",
+                    "href": "#"
+                  }
+                ],
+                "license": "Veterinary licence No. 77-VD-004182 of 12.03.2019 · Paw LLC",
+                "copyright": "© 2017–2026 Paw"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footer-035",
+      "type": "registry:block",
+      "title": "Подвал с контактами, картой и огромным контурным именем",
+      "description": "Подвал-контакты мастерской: слева адрес, часы, телефон и почта в колонках с линейками, рукописная пометка «приходите нюхать»; справа карта-iframe в бумажной рамке с наклоном, булавкой и подписью, приглушённая фильтром под цвет страницы. Ниже имя во всю ширину контурной курсивной антиквой, которая заливается чернилами при наведении; в самом низу ссылки, соцсети и копирайт. Без JS.",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-035/footer-035.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-035.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "footer",
+          "contacts",
+          "map",
+          "address",
+          "hours",
+          "flowers",
+          "wordmark",
+          "outline",
+          "serif",
+          "iframe"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Footer035",
+          "usage": "<Footer035\n  brand=\"Стебель\"\n  tagline=\"Цветочная мастерская на Пестеля, 4\"\n  address=\"Санкт-Петербург, ул. Пестеля, 4\"\n  hours=\"ежедневно 9:00–22:00\"\n  phone=\"+7 812 407-24-14\"\n  mapSrc=\"https://yandex.ru/map-widget/v1/?ll=30.3460,59.9425&z=16\"\n/>",
+          "summary": "Подвал, который заодно и контакты: карта, часы, телефон и гигантское имя — для локального бизнеса с одним адресом.",
+          "preserve": [
+            "имя — p[data-part=word] с color:transparent и -webkit-text-stroke 1.5px, font-size clamp(4.5rem, 21cqi, 17rem), на hover color заливается за .6s",
+            "карта — figure с rotate(1deg), iframe aspect-ratio 4/3 и filter grayscale(.55) sepia(.18) contrast(.92), булавка absolute сверху справа",
+            "контакты — dl с колонками от 60rem, ссылки tel:/mailto: с border-bottom"
+          ],
+          "adapt": [
+            "brand, tagline, note, copyright",
+            "address, hours, phone, email, mapSrc, mapTitle",
+            "links: label, href; socials: label, href",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Имя",
+            "type": "text",
+            "default": "Стебель",
+            "maxLength": 16
+          },
+          {
+            "prop": "note",
+            "label": "Пометка",
+            "type": "text",
+            "default": "приходите просто понюхать — не обязательно покупать",
+            "maxLength": 60
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Footer with contacts, a map and a huge outlined wordmark",
+            "description": "A contacts footer for a workshop: address, hours, phone and email in ruled columns on the left with a handwritten “come and smell” note; on the right a map iframe in a tilted paper frame with a pin and a caption, muted by a filter to match the page. Below, the name across the full width in outlined italic serif that fills with ink on hover; at the very bottom links, socials and copyright. No JS.",
+            "ai": {
+              "summary": "A footer that doubles as contacts: map, hours, phone and a giant name — for a local business with one address.",
+              "preserve": [
+                "the name is p[data-part=word] with color:transparent and -webkit-text-stroke 1.5px, font-size clamp(4.5rem, 21cqi, 17rem), on hover the colour fills in over .6s",
+                "the map is a figure with rotate(1deg), an iframe with aspect-ratio 4/3 and filter grayscale(.55) sepia(.18) contrast(.92), the pin absolute at top right",
+                "contacts are a dl with columns from 60rem, tel:/mailto: links with a border-bottom"
+              ],
+              "adapt": [
+                "brand, tagline, note, copyright",
+                "address, hours, phone, email, mapSrc, mapTitle",
+                "links: label, href; socials: label, href",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Footer035\n  brand=\"Stem\"\n  tagline=\"Flower workshop at 4 Pestelya\"\n  address=\"4 Pestelya St, St Petersburg\"\n  hours=\"daily 9:00–22:00\"\n  phone=\"+7 812 407-24-14\"\n  mapSrc=\"https://www.openstreetmap.org/export/embed.html?bbox=30.34,59.94,30.35,59.945\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Name",
+                "default": "Stem"
+              },
+              "note": {
+                "label": "Note",
+                "default": "come and just smell — no need to buy"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Stem",
+                "tagline": "Flower workshop at 4 Pestelya",
+                "address": "4 Pestelya St, St Petersburg, street entrance",
+                "hours": "daily 9:00–22:00",
+                "phone": "+7 812 407-24-14",
+                "email": "hello@stem.flowers",
+                "note": "come and just smell — no need to buy",
+                "mapTitle": "Map: Stem workshop on Pestelya",
+                "links": [
+                  {
+                    "label": "Bouquets",
+                    "href": "#catalog"
+                  },
+                  {
+                    "label": "Builder",
+                    "href": "#builder"
+                  },
+                  {
+                    "label": "Delivery",
+                    "href": "#delivery"
+                  },
+                  {
+                    "label": "Subscription",
+                    "href": "#subscribe"
+                  },
+                  {
+                    "label": "Terms",
+                    "href": "#offer"
+                  }
+                ],
+                "socials": [
+                  {
+                    "label": "Telegram",
+                    "href": "https://t.me/"
+                  },
+                  {
+                    "label": "Instagram",
+                    "href": "https://instagram.com/"
+                  }
+                ],
+                "copyright": "© 2014–2026 Stem"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footer-036",
+      "type": "registry:block",
+      "title": "Подвал-штамп чертежа с ячейками реквизитов",
+      "description": "Подвал как основная надпись чертежа: лист с двойной рамкой, внутри крупный бренд с жёлтой чертой и подписью, сетка ячеек с подписями и значениями — телефон, почта, офис, часы, гарантия, штраф, лист и листов, — колонки разделов и документов, внизу реквизиты моно и копирайт. На узком ячейки в две колонки, от 64rem — бренд, ячейки и ссылки в один ряд. Без JS.",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-036/footer-036.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-036.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "footer",
+          "title block",
+          "blueprint",
+          "requisites",
+          "contacts",
+          "renovation",
+          "construction",
+          "contractor",
+          "grid",
+          "legal"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Footer036",
+          "usage": "<Footer036\n  brand=\"Ровно\"\n  caption=\"ремонт квартир · Москва · с 2011\"\n  cells={[{ label: \"Телефон\", value: \"+7 495 120-40-40\", href: \"tel:+74951204040\" }, { label: \"Часы\", value: \"пн–сб 9:00–21:00\" }]}\n  requisites=\"ООО «Ровно» · ИНН 7706412870\"\n/>",
+          "summary": "Подвал для сайта подрядчика или инженерной компании: штамп чертежа с контактами, часами, гарантией и реквизитами.",
+          "preserve": [
+            "sheet — рамка 2px + внутренняя 1px через padding .4rem; ячейки dl с border-right/bottom, лишние границы снимаются nth-child по числу колонок",
+            "бренд — b с ::after жёлтой чертой 2.4rem × .35rem, uppercase, tracking −.04em",
+            "от 64rem — grid-template-areas «brand cells links» / «bottom bottom bottom», bottom с border-top"
+          ],
+          "adapt": [
+            "brand, caption, cells: label, value, href",
+            "nav, legal: label, href",
+            "requisites, copyright",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "Ровно",
+            "maxLength": 24
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "ремонт квартир · Москва · с 2011",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Drawing title-block footer with requisite cells",
+            "description": "A footer as a drawing's title block: a sheet with a double frame, inside a large brand with a yellow rule and a caption, a grid of labelled cells — phone, mail, office, hours, warranty, penalty, sheet and sheets — section and document columns, mono requisites and a copyright at the bottom. Two cell columns on narrow, from 64rem brand, cells and links in one row. No JS.",
+            "ai": {
+              "summary": "A footer for a contractor or engineering company: a drawing title block with contacts, hours, warranty and requisites.",
+              "preserve": [
+                "the sheet is a 2px frame plus an inner 1px one via .4rem padding; cells are a dl with border-right/bottom, extra borders removed with nth-child by column count",
+                "the brand is a b with a yellow ::after rule 2.4rem × .35rem, uppercase, −.04em tracking",
+                "from 64rem grid-template-areas “brand cells links” / “bottom bottom bottom”, bottom with a border-top"
+              ],
+              "adapt": [
+                "brand, caption, cells: label, value, href",
+                "nav, legal: label, href",
+                "requisites, copyright",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Footer036\n  brand=\"Level\"\n  caption=\"apartment renovation · Boston · since 2011\"\n  cells={[{ label: \"Phone\", value: \"+1 415 120-40-40\", href: \"tel:+14151204040\" }, { label: \"Hours\", value: \"Mon–Sat 9:00–21:00\" }]}\n  requisites=\"Level LLC · Reg. 7706412870\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Level"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": "apartment renovation · Boston · since 2011"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Level",
+                "caption": "apartment renovation · Boston · since 2011",
+                "cells": [
+                  {
+                    "label": "Phone",
+                    "value": "+1 415 120-40-40",
+                    "href": "tel:+14151204040"
+                  },
+                  {
+                    "label": "Mail",
+                    "value": "estimate@level.build",
+                    "href": "mailto:estimate@level.build"
+                  },
+                  {
+                    "label": "Office",
+                    "value": "28 Polyanka St, bldg 2"
+                  },
+                  {
+                    "label": "Hours",
+                    "value": "Mon–Sat 9:00–21:00"
+                  },
+                  {
+                    "label": "Warranty",
+                    "value": "5 years by contract"
+                  },
+                  {
+                    "label": "Delay penalty",
+                    "value": "0.5 % per day"
+                  },
+                  {
+                    "label": "Sheet",
+                    "value": "1"
+                  },
+                  {
+                    "label": "Sheets",
+                    "value": "1"
+                  }
+                ],
+                "nav": [
+                  {
+                    "label": "Estimate",
+                    "href": "#calc"
+                  },
+                  {
+                    "label": "Stages",
+                    "href": "#stages"
+                  },
+                  {
+                    "label": "Projects",
+                    "href": "#works"
+                  },
+                  {
+                    "label": "Site live",
+                    "href": "#online"
+                  },
+                  {
+                    "label": "Crew",
+                    "href": "#team"
+                  },
+                  {
+                    "label": "Reviews",
+                    "href": "#reviews"
+                  }
+                ],
+                "legal": [
+                  {
+                    "label": "Contract (sample)",
+                    "href": "#contract"
+                  },
+                  {
+                    "label": "Privacy policy",
+                    "href": "#privacy"
+                  }
+                ],
+                "requisites": "Level LLC · Reg. 7706412870 · Licence 1157746318204 · Builders' association No. C-0412",
+                "copyright": "© 2011–2026 Level"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footer-037",
+      "type": "registry:block",
+      "title": "Подвал доставки с часами работы, телефоном и словом-контуром",
+      "description": "Подвал сервиса доставки: акцентная полоса сверху, лого с пламенем и подпись, чип часов работы с зелёной точкой, телефон крупно, три колонки ссылок и соцсети-чипы. Внизу огромное слово-контур на всю ширину — outline-текст с акцентной заливкой нижней трети, уходит за нижний край, — а под ним правовые ссылки и копирайт. Серверный компонент, без клиентского кода.",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-037/footer-037.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-037.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "footer",
+          "delivery",
+          "food",
+          "hours",
+          "phone",
+          "outline-text",
+          "giant",
+          "links",
+          "socials",
+          "legal"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Footer037",
+          "usage": "<Footer037\n  brand=\"Горячо\"\n  hours=\"Сегодня до 02:00 · без выходных\"\n  phone=\"+7 495 120-28-00\"\n  columns={[{ title: \"Меню\", links: [{ label: \"Бургеры\", href: \"#menu\" }] }]}\n/>",
+          "summary": "Подвал для доставки еды: часы, телефон, ссылки и огромное слово-контур с акцентной заливкой.",
+          "preserve": [
+            "giant — color:transparent с -webkit-text-stroke на p и background-clip:text на span с градиентом-заливкой нижних 38 %",
+            "font-size слова clamp(4rem,19cqi,17rem), overflow:hidden на footer и translateY(.14em) прячут нижний край",
+            "shell — grid, от 52rem две колонки 1.1fr/1.4fr, колонки ссылок 2 → 3"
+          ],
+          "adapt": [
+            "brand, caption, hours, phone, phoneHref, giant",
+            "columns: title, links: label, href; socials, legal",
+            "copyright",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "Горячо",
+            "maxLength": 24
+          },
+          {
+            "prop": "hours",
+            "label": "Часы работы",
+            "type": "text",
+            "default": "Сегодня до 02:00 · без выходных",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Delivery footer with opening hours, a phone and an outlined giant word",
+            "description": "Footer for a delivery service: an accent bar on top, a flame logo and caption, an opening-hours chip with a green dot, a large phone number, three link columns and social chips. At the bottom a huge outlined word across the full width — outline text with an accent fill on the lower third, sinking past the bottom edge — and legal links with a copyright under it. A server component, no client code.",
+            "ai": {
+              "summary": "Footer for food delivery: hours, phone, links and a giant outlined word with an accent fill.",
+              "preserve": [
+                "giant is color:transparent with -webkit-text-stroke on the p and background-clip:text on the span with a gradient filling the lower 38 %",
+                "the word's font-size is clamp(4rem,19cqi,17rem), overflow:hidden on the footer and translateY(.14em) hide the bottom edge",
+                "shell is a grid, two columns 1.1fr/1.4fr from 52rem, link columns 2 → 3"
+              ],
+              "adapt": [
+                "brand, caption, hours, phone, phoneHref, giant",
+                "columns: title, links: label, href; socials, legal",
+                "copyright",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Footer037\n  brand=\"Hot\"\n  hours=\"Open till 2:00 am · every day\"\n  phone=\"+1 555 120-2800\"\n  columns={[{ title: \"Menu\", links: [{ label: \"Burgers\", href: \"#menu\" }] }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Hot"
+              },
+              "hours": {
+                "label": "Hours",
+                "default": "Open till 2:00 am · every day"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Hot",
+                "caption": "A dark kitchen on Baker Street. We cook after payment and deliver with our own couriers in a thermal bag, no middlemen.",
+                "hours": "Open till 2:00 am · every day",
+                "phone": "+1 555 120-2800",
+                "columns": [
+                  {
+                    "title": "Menu",
+                    "links": [
+                      {
+                        "label": "Burgers",
+                        "href": "#menu"
+                      },
+                      {
+                        "label": "Asian",
+                        "href": "#menu"
+                      },
+                      {
+                        "label": "Bowl builder",
+                        "href": "#builder"
+                      },
+                      {
+                        "label": "Desserts",
+                        "href": "#menu"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Delivery",
+                    "links": [
+                      {
+                        "label": "Zones and times",
+                        "href": "#zones"
+                      },
+                      {
+                        "label": "Order tracker",
+                        "href": "#tracker"
+                      },
+                      {
+                        "label": "The app",
+                        "href": "#app"
+                      },
+                      {
+                        "label": "FAQ",
+                        "href": "#faq"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Company",
+                    "links": [
+                      {
+                        "label": "About the kitchen",
+                        "href": "#about"
+                      },
+                      {
+                        "label": "Courier jobs",
+                        "href": "#jobs"
+                      },
+                      {
+                        "label": "Partners",
+                        "href": "#partners"
+                      },
+                      {
+                        "label": "Press",
+                        "href": "#press"
+                      }
+                    ]
+                  }
+                ],
+                "socials": [
+                  {
+                    "label": "Telegram",
+                    "href": "#telegram"
+                  },
+                  {
+                    "label": "Instagram",
+                    "href": "#instagram"
+                  },
+                  {
+                    "label": "TikTok",
+                    "href": "#tiktok"
+                  }
+                ],
+                "legal": [
+                  {
+                    "label": "Terms",
+                    "href": "#offer"
+                  },
+                  {
+                    "label": "Privacy",
+                    "href": "#privacy"
+                  },
+                  {
+                    "label": "Ingredients and allergens",
+                    "href": "#allergens"
+                  }
+                ],
+                "copyright": "© 2026 Hot Kitchen LLC. Baker Street 20, London"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footer-038",
+      "type": "registry:block",
+      "title": "Подвал школы с линовкой, контактами и огромным словом-контуром",
+      "description": "Подвал языковой школы: сверху тетрадная линовка, лого с рукописной подписью и контакты с точками-маркерами, три колонки ссылок с рукописными заголовками, внизу копирайт, правовые ссылки и соцсети-чипы. По самому низу — огромное слово-контур (text-stroke) во всю ширину, при наведении заливается акцентом. Без JS.",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-038/footer-038.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-038.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "footer",
+          "school",
+          "language",
+          "education",
+          "contacts",
+          "columns",
+          "legal",
+          "socials",
+          "outline",
+          "handwritten"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Footer038",
+          "usage": "<Footer038\n  brand=\"Слово\"\n  caption=\"языковая онлайн-школа\"\n  bigWord=\"Слово\"\n  columns={[{ title: \"языки\", links: [{ label: \"Английский\", href: \"#schedule\" }] }]}\n/>",
+          "summary": "Подвал для школы или курсов: контакты, колонки, правовое и соцсети, огромное слово-контур внизу.",
+          "preserve": [
+            "линовка сверху — ::before высотой 1.2rem с repeating-linear-gradient в --rule",
+            "слово-контур — font-size clamp(4rem,19cqi,15rem), color transparent, -webkit-text-stroke 1.5px, margin-bottom −.35em, чтобы уходило под край",
+            "колонки: 2 до 44rem, 3 выше; от 60rem shell двухколоночный, bottom растянут на всю ширину"
+          ],
+          "adapt": [
+            "brand, caption, bigWord, copyright",
+            "contacts, socials, legal: label, href",
+            "columns: title, links: label, href",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "Слово",
+            "maxLength": 24
+          },
+          {
+            "prop": "bigWord",
+            "label": "Слово-контур",
+            "type": "text",
+            "default": "Слово",
+            "maxLength": 16
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "School footer with ruled lines, contacts and a giant outlined word",
+            "description": "A language school footer: ruled lines on top, a logo with a handwritten caption and contacts with dot markers, three link columns with handwritten headings, at the bottom the copyright, legal links and social chips. Along the very bottom a giant outlined word (text-stroke) full width that fills with the accent on hover. No JS.",
+            "ai": {
+              "summary": "A footer for a school or courses: contacts, columns, legal and socials, a giant outlined word at the bottom.",
+              "preserve": [
+                "the ruled lines on top are a 1.2rem ::before with a repeating-linear-gradient in --rule",
+                "the outlined word is font-size clamp(4rem,19cqi,15rem), transparent color, -webkit-text-stroke 1.5px, margin-bottom −.35em so it slips under the edge",
+                "columns: 2 below 44rem, 3 above; from 60rem the shell is two-column and bottom spans the full width"
+              ],
+              "adapt": [
+                "brand, caption, bigWord, copyright",
+                "contacts, socials, legal: label, href",
+                "columns: title, links: label, href",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Footer038\n  brand=\"Slovo\"\n  caption=\"online language school\"\n  bigWord=\"Slovo\"\n  columns={[{ title: \"languages\", links: [{ label: \"English\", href: \"#schedule\" }] }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Slovo"
+              },
+              "bigWord": {
+                "label": "Outlined word",
+                "default": "Slovo"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Slovo",
+                "caption": "online language school",
+                "bigWord": "Slovo",
+                "contacts": [
+                  {
+                    "label": "+44 20 7946 0958",
+                    "href": "tel:+442079460958"
+                  },
+                  {
+                    "label": "hello@slovo.school",
+                    "href": "mailto:hello@slovo.school"
+                  },
+                  {
+                    "label": "@slovo_school",
+                    "href": "#telegram"
+                  }
+                ],
+                "columns": [
+                  {
+                    "title": "languages",
+                    "links": [
+                      {
+                        "label": "English",
+                        "href": "#schedule"
+                      },
+                      {
+                        "label": "Spanish",
+                        "href": "#schedule"
+                      },
+                      {
+                        "label": "Italian",
+                        "href": "#schedule"
+                      },
+                      {
+                        "label": "Level test",
+                        "href": "#test"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "school",
+                    "links": [
+                      {
+                        "label": "How we teach",
+                        "href": "#how"
+                      },
+                      {
+                        "label": "Teachers",
+                        "href": "#teachers"
+                      },
+                      {
+                        "label": "Pricing",
+                        "href": "#pricing"
+                      },
+                      {
+                        "label": "Reviews",
+                        "href": "#reviews"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "help",
+                    "links": [
+                      {
+                        "label": "FAQ",
+                        "href": "#faq"
+                      },
+                      {
+                        "label": "Trial lesson",
+                        "href": "#trial"
+                      },
+                      {
+                        "label": "Rescheduling",
+                        "href": "#faq"
+                      },
+                      {
+                        "label": "Refunds",
+                        "href": "#legal"
+                      }
+                    ]
+                  }
+                ],
+                "socials": [
+                  {
+                    "label": "Telegram",
+                    "href": "#telegram"
+                  },
+                  {
+                    "label": "Instagram",
+                    "href": "#instagram"
+                  },
+                  {
+                    "label": "YouTube",
+                    "href": "#youtube"
+                  }
+                ],
+                "legal": [
+                  {
+                    "label": "Terms",
+                    "href": "#offer"
+                  },
+                  {
+                    "label": "Privacy",
+                    "href": "#privacy"
+                  },
+                  {
+                    "label": "Licence",
+                    "href": "#license"
+                  }
+                ],
+                "copyright": "© 2026 Slovo, Saint Petersburg"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footer-040",
+      "type": "registry:block",
+      "title": "Подвал с гигантским wordmark и колонками ссылок",
+      "description": "Подвал маркетплейса: сверху подпись бренда и три колонки ссылок с моно-заголовками, ссылки подчёркиваются линией слева направо. Ниже — wordmark во всю ширину, размером в 22 % контейнера с плотным трекингом и акцентным квадратом-«слоем» у последней буквы. Внизу моно-строка: копирайт, правовые ссылки, город и кнопка «наверх». Серверный компонент.",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-040/footer-040.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-040.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "footer",
+          "marketplace",
+          "wordmark",
+          "big-type",
+          "links",
+          "columns",
+          "mono",
+          "minimal"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Footer040",
+          "usage": "<Footer040\n  brand=\"Слой\"\n  caption=\"Маркетплейс дизайн-ассетов.\"\n  columns={[{ title: \"Каталог\", links: [{ label: \"Шаблоны Figma\", href: \"#catalog\" }] }]}\n  note=\"Санкт-Петербург\"\n/>",
+          "summary": "Подвал магазина ассетов: колонки ссылок и гигантский wordmark с акцентным квадратом.",
+          "preserve": [
+            "wordmark — font-size clamp(5rem,22cqi,17rem), line-height .78, letter-spacing −.07em, white-space:nowrap, корень с overflow:hidden",
+            "акцентный квадрат — <i> внутри [data-part=glyph] с position:relative, размеры в em от кегля wordmark",
+            "колонки: 2 → 3 от 48rem; от 64rem подпись слева 1.2fr и колонки справа 2fr"
+          ],
+          "adapt": [
+            "brand, caption, copyright, note",
+            "columns: title, links: label, href",
+            "legal: label, href; topLabel, topHref",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "Слой",
+            "maxLength": 16
+          },
+          {
+            "prop": "note",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Санкт-Петербург · v4.2",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Footer with a giant wordmark and link columns",
+            "description": "A marketplace footer: the brand caption and three link columns with mono headings on top, links underline left to right. Below — a full-width wordmark at 22% of the container with tight tracking and an accent “layer” square by the last letter. A mono bottom row: copyright, legal links, city and a “to top” button. A server component.",
+            "ai": {
+              "summary": "Footer for an asset store: link columns and a giant wordmark with an accent square.",
+              "preserve": [
+                "the wordmark is font-size clamp(5rem,22cqi,17rem), line-height .78, letter-spacing −.07em, white-space:nowrap, the root has overflow:hidden",
+                "the accent square is an <i> inside [data-part=glyph] with position:relative, sized in em from the wordmark size",
+                "columns: 2 → 3 from 48rem; from 64rem the caption on the left at 1.2fr and columns on the right at 2fr"
+              ],
+              "adapt": [
+                "brand, caption, copyright, note",
+                "columns: title, links: label, href",
+                "legal: label, href; topLabel, topHref",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Footer040\n  brand=\"Layer\"\n  caption=\"A design-asset marketplace.\"\n  columns={[{ title: \"Catalog\", links: [{ label: \"Figma templates\", href: \"#catalog\" }] }]}\n  note=\"Lisbon\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Layer"
+              },
+              "note": {
+                "label": "Note",
+                "default": "Lisbon · v4.2"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Layer",
+                "caption": "A design-asset marketplace: templates, icons, fonts from independent authors. 80% of the price goes to the author.",
+                "columns": [
+                  {
+                    "title": "Catalog",
+                    "links": [
+                      {
+                        "label": "Figma templates",
+                        "href": "#catalog"
+                      },
+                      {
+                        "label": "Notion templates",
+                        "href": "#catalog"
+                      },
+                      {
+                        "label": "Icons",
+                        "href": "#catalog"
+                      },
+                      {
+                        "label": "Fonts",
+                        "href": "#catalog"
+                      },
+                      {
+                        "label": "Bundles",
+                        "href": "#bundle"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Layer",
+                    "links": [
+                      {
+                        "label": "For authors",
+                        "href": "#for-authors"
+                      },
+                      {
+                        "label": "Licenses",
+                        "href": "#licenses"
+                      },
+                      {
+                        "label": "Drops",
+                        "href": "#drops"
+                      },
+                      {
+                        "label": "Blog",
+                        "href": "#blog"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Help",
+                    "links": [
+                      {
+                        "label": "Payments and refunds",
+                        "href": "#faq"
+                      },
+                      {
+                        "label": "How to download",
+                        "href": "#faq"
+                      },
+                      {
+                        "label": "Contact",
+                        "href": "#contact"
+                      }
+                    ]
+                  }
+                ],
+                "legal": [
+                  {
+                    "label": "Terms",
+                    "href": "#terms"
+                  },
+                  {
+                    "label": "Privacy",
+                    "href": "#privacy"
+                  },
+                  {
+                    "label": "Offer",
+                    "href": "#offer"
+                  }
+                ],
+                "copyright": "© 2026 Layer",
+                "note": "Lisbon · v4.2",
+                "topLabel": "To top"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footer-041",
+      "type": "registry:block",
+      "title": "Подвал API-сервиса с лампочкой статуса и строкой билда",
+      "description": "Подвал dev-tool: моно-лого с булавкой, подпись, чип статуса с пульсирующей лампочкой и ссылкой на статус-панель, три колонки ссылок с «//» перед заголовками, внизу чипы билда (версия · регион · дата), правовые ссылки и копирайт. Верхняя граница — линия с акцентным бликом посередине. На широком бренд слева, колонки справа. Без JS.",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-041/footer-041.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-041.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "footer",
+          "api",
+          "developer",
+          "status",
+          "links",
+          "build",
+          "monospace",
+          "dark",
+          "legal"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Footer041",
+          "usage": "<Footer041\n  brand=\"geokod\"\n  status=\"все системы работают\"\n  build={[\"v2.4.0\", \"msk-1\"]}\n  columns={[{ title: \"Продукт\", links: [{ label: \"Цены\", href: \"#pricing\" }] }]}\n/>",
+          "summary": "Подвал для API или dev-tool: статус с лампочкой, колонки ссылок, билд и версия.",
+          "preserve": [
+            "лампочка — i с ::after-кольцом и keyframes ping 2.2 с",
+            "колонки 2 → 3 от 44rem, от 60rem бренд и колонки в два столбца 1.2fr / 2fr, низ на всю ширину",
+            "линия сверху — ::before с linear-gradient line → accent → line"
+          ],
+          "adapt": [
+            "brand, caption, status, statusHref",
+            "columns: title, links: label, href; build[]",
+            "legal: label, href; copyright",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "geokod",
+            "maxLength": 20
+          },
+          {
+            "prop": "status",
+            "label": "Статус",
+            "type": "text",
+            "default": "все системы работают",
+            "maxLength": 32
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "API service footer with a status lamp and a build line",
+            "description": "A dev-tool footer: a monospace logo with a pin, a caption, a status chip with a pulsing lamp linking to the status board, three link columns with “//” before headings, build chips at the bottom (version · region · date), legal links and a copyright. The top border is a line with an accent glint in the middle. Brand on the left, columns on the right on wide screens. No JS.",
+            "ai": {
+              "summary": "Footer for an API or dev tool: a status lamp, link columns, build and version.",
+              "preserve": [
+                "the lamp is an i with an ::after ring and 2.2 s ping keyframes",
+                "columns 2 → 3 from 44rem, from 60rem brand and columns in two 1.2fr / 2fr tracks, the bottom full width",
+                "the top line is a ::before with a linear-gradient line → accent → line"
+              ],
+              "adapt": [
+                "brand, caption, status, statusHref",
+                "columns: title, links: label, href; build[]",
+                "legal: label, href; copyright",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Footer041\n  brand=\"geokod\"\n  status=\"all systems operational\"\n  build={[\"v2.4.0\", \"msk-1\"]}\n  columns={[{ title: \"Product\", links: [{ label: \"Pricing\", href: \"#pricing\" }] }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "geokod"
+              },
+              "status": {
+                "label": "Status",
+                "default": "all systems operational"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "geokod",
+                "caption": "Geocoding, routing and address suggestion API. Pay per request, the first 10,000 a month are free.",
+                "status": "all systems operational",
+                "columns": [
+                  {
+                    "title": "Product",
+                    "links": [
+                      {
+                        "label": "Endpoints",
+                        "href": "#endpoints"
+                      },
+                      {
+                        "label": "Pricing",
+                        "href": "#pricing"
+                      },
+                      {
+                        "label": "Status",
+                        "href": "#status"
+                      },
+                      {
+                        "label": "Changelog",
+                        "href": "#changelog"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Developers",
+                    "links": [
+                      {
+                        "label": "Documentation",
+                        "href": "#docs"
+                      },
+                      {
+                        "label": "SDK and examples",
+                        "href": "#sdk"
+                      },
+                      {
+                        "label": "Sandbox",
+                        "href": "#sandbox"
+                      },
+                      {
+                        "label": "Limits and errors",
+                        "href": "#limits"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Company",
+                    "links": [
+                      {
+                        "label": "About",
+                        "href": "#about"
+                      },
+                      {
+                        "label": "Support",
+                        "href": "#support"
+                      },
+                      {
+                        "label": "Contract and SLA",
+                        "href": "#sla"
+                      },
+                      {
+                        "label": "Telegram channel",
+                        "href": "#tg"
+                      }
+                    ]
+                  }
+                ],
+                "build": [
+                  "v2.4.0",
+                  "msk-1",
+                  "build 2026-09-19"
+                ],
+                "legal": [
+                  {
+                    "label": "Privacy",
+                    "href": "#privacy"
+                  },
+                  {
+                    "label": "Terms",
+                    "href": "#terms"
+                  },
+                  {
+                    "label": "Data processing",
+                    "href": "#dpa"
+                  }
+                ],
+                "copyright": "© 2026 Geokod"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footer-042",
+      "type": "registry:block",
+      "title": "Подвал гаджета с гигантским контурным знаком и статусом партии",
+      "description": "Подвал продуктового лендинга железки: чип статуса партии с точкой-светом, подпись о компании, три колонки ссылок, правовые ссылки и копирайт, а под ними гигантский контурный словесный знак на всю ширину (text-stroke, обрезан снизу), который при наведении заливается акцентом.",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-042/footer-042.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-042.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "footer",
+          "gadget",
+          "hardware",
+          "product",
+          "wordmark",
+          "outline",
+          "big-type",
+          "status",
+          "links",
+          "legal"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Footer042",
+          "usage": "<Footer042\n  brand=\"Луч\"\n  status=\"партия 2 · отгрузка в октябре\"\n  columns={[{ title: \"Продукт\", links: [{ label: \"Рассвет\", href: \"#dawn\" }] }]}\n/>",
+          "summary": "Подвал для лендинга железки: огромный контурный знак, статус партии, колонки ссылок.",
+          "preserve": [
+            "знак — color:transparent с -webkit-text-stroke, размер clamp(5rem, 26cqi, 22rem), отрицательный нижний margin -.28em и overflow:hidden корня обрезают его",
+            "точка статуса — keyframes opacity 2.4 с и свечение box-shadow цветом акцента",
+            "верх — grid 1.2fr 2fr от 56rem контейнера, колонки три от 56rem и две до"
+          ],
+          "adapt": [
+            "brand, caption, status",
+            "columns: title, links: label, href",
+            "legal, copyright",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Знак",
+            "type": "text",
+            "default": "Луч",
+            "maxLength": 12
+          },
+          {
+            "prop": "status",
+            "label": "Статус партии",
+            "type": "text",
+            "default": "партия 2 · отгрузка в октябре",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Gadget footer with a giant outlined wordmark and a batch status",
+            "description": "Footer for a hardware product landing: a batch status chip with a light dot, a company caption, three link columns, legal links and copyright, and beneath them a giant outlined wordmark across the full width (text-stroke, cropped at the bottom) that fills with the accent on hover.",
+            "ai": {
+              "summary": "Footer for a hardware landing: a huge outlined wordmark, a batch status, link columns.",
+              "preserve": [
+                "the wordmark is color:transparent with -webkit-text-stroke, size clamp(5rem, 26cqi, 22rem); a negative bottom margin of -.28em and the root's overflow:hidden crop it",
+                "the status dot is a 2.4 s opacity keyframe with an accent-coloured box-shadow glow",
+                "the top is a 1.2fr 2fr grid from a 56rem container; three columns from 56rem, two below"
+              ],
+              "adapt": [
+                "brand, caption, status",
+                "columns: title, links: label, href",
+                "legal, copyright",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Footer042\n  brand=\"Ray\"\n  status=\"batch 2 · ships in October\"\n  columns={[{ title: \"Product\", links: [{ label: \"Sunrise\", href: \"#dawn\" }] }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Wordmark",
+                "default": "Ray"
+              },
+              "status": {
+                "label": "Batch status",
+                "default": "batch 2 · ships in October"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Ray",
+                "caption": "A smart sunrise lamp. Built in small batches, firmware updated monthly.",
+                "status": "batch 2 · ships in October",
+                "columns": [
+                  {
+                    "title": "Product",
+                    "links": [
+                      {
+                        "label": "Sunrise",
+                        "href": "#dawn"
+                      },
+                      {
+                        "label": "Features",
+                        "href": "#features"
+                      },
+                      {
+                        "label": "Inside",
+                        "href": "#inside"
+                      },
+                      {
+                        "label": "Specs",
+                        "href": "#specs"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Buying",
+                    "links": [
+                      {
+                        "label": "Preorder",
+                        "href": "#preorder"
+                      },
+                      {
+                        "label": "Shipping and warranty",
+                        "href": "#faq"
+                      },
+                      {
+                        "label": "Where to see it",
+                        "href": "#stores"
+                      },
+                      {
+                        "label": "For business",
+                        "href": "#b2b"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Company",
+                    "links": [
+                      {
+                        "label": "About the lab",
+                        "href": "#about"
+                      },
+                      {
+                        "label": "Firmware",
+                        "href": "#firmware"
+                      },
+                      {
+                        "label": "Support",
+                        "href": "#support"
+                      },
+                      {
+                        "label": "Telegram",
+                        "href": "#tg"
+                      }
+                    ]
+                  }
+                ],
+                "legal": [
+                  {
+                    "label": "Terms",
+                    "href": "#offer"
+                  },
+                  {
+                    "label": "Privacy",
+                    "href": "#privacy"
+                  },
+                  {
+                    "label": "Warranty",
+                    "href": "#warranty"
+                  }
+                ],
+                "copyright": "© 2026 Ray Lab"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footer-043",
+      "type": "registry:block",
+      "title": "Подвал фонда с реквизитами, документами и рукописным «спасибо»",
+      "description": "Подвал благотворительного фонда: сверху пунктирный «шов», бренд антиквой с домиком и полным юридическим именем, рукописное «спасибо, что дочитали до реквизитов», соцсети чипами. Реквизиты (ИНН, ОГРН, счёт, банк) моноширинным шрифтом на плашках с user-select:all, документы с иконкой pdf, контакты. Внизу копирайт и правовые ссылки. Без хуков.",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-043/footer-043.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-043.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "footer",
+          "charity",
+          "nonprofit",
+          "requisites",
+          "documents",
+          "contacts",
+          "legal",
+          "handwritten",
+          "serif"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Footer043",
+          "usage": "<Footer043\n  brand=\"Тёплый дом\"\n  requisites={[{ label: \"ИНН\", value: \"6950214477\" }]}\n  documents={[{ label: \"Устав фонда\", href: \"/docs/charter.pdf\" }]}\n  contacts={[{ label: \"help@teplydom.org\", href: \"mailto:help@teplydom.org\" }]}\n/>",
+          "summary": "Подвал для НКО: реквизиты плашками, документы, контакты, соцсети и рукописное «спасибо».",
+          "preserve": [
+            "реквизиты — dl с плашками, dd моноширинный с word-break и user-select:all для копирования одним кликом",
+            "сетка 1 → 2 колонки от 44rem → 1.3fr 1fr 1fr 1fr от 64rem контейнера",
+            "«спасибо» — Caveat с rotate(-2deg) от левого края, шов — hr с dashed border-top"
+          ],
+          "adapt": [
+            "brand, legalName, thanks, copyright",
+            "requisites: label, value; documents, contacts, socials, legal: label, href",
+            "все href — на свои страницы и файлы",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "Тёплый дом",
+            "maxLength": 24
+          },
+          {
+            "prop": "thanks",
+            "label": "Рукописное",
+            "type": "text",
+            "default": "спасибо, что дочитали до реквизитов",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Foundation footer with requisites, documents and a handwritten “thank you”",
+            "description": "A charity foundation footer: a dashed seam on top, a serif brand with a house icon and the full legal name, a handwritten “thank you for reading down to the requisites”, social chips. Requisites (tax id, registration number, account, bank) in monospace on tiles with user-select:all, documents with a pdf icon, contacts. Copyright and legal links at the bottom. No hooks.",
+            "ai": {
+              "summary": "Footer for an NGO: requisites on tiles, documents, contacts, socials and a handwritten “thank you”.",
+              "preserve": [
+                "requisites are a dl with tiles, dd in monospace with word-break and user-select:all for one-click copying",
+                "the grid goes 1 → 2 columns from 44rem → 1.3fr 1fr 1fr 1fr from a 64rem container",
+                "the “thank you” is Caveat rotated −2deg from the left edge, the seam is an hr with a dashed border-top"
+              ],
+              "adapt": [
+                "brand, legalName, thanks, copyright",
+                "requisites: label, value; documents, contacts, socials, legal: label, href",
+                "all hrefs — to your pages and files",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Footer043\n  brand=\"Warm Home\"\n  requisites={[{ label: \"Tax ID\", value: \"6950214477\" }]}\n  documents={[{ label: \"Charter\", href: \"/docs/charter.pdf\" }]}\n  contacts={[{ label: \"help@warmhome.org\", href: \"mailto:help@warmhome.org\" }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Warm Home"
+              },
+              "thanks": {
+                "label": "Handwritten",
+                "default": "thank you for reading down to the requisites"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Warm Home",
+                "legalName": "Charitable foundation for the elderly “Warm Home”. Registered on 14.03.2018.",
+                "thanks": "thank you for reading down to the requisites",
+                "requisites": [
+                  {
+                    "label": "Tax ID",
+                    "value": "6950214477 / 695001001"
+                  },
+                  {
+                    "label": "Reg. number",
+                    "value": "1186952004312"
+                  },
+                  {
+                    "label": "Account",
+                    "value": "40703810563000001842"
+                  },
+                  {
+                    "label": "Bank",
+                    "value": "Tver branch, BIC 042809679"
+                  }
+                ],
+                "documents": [
+                  {
+                    "label": "Charter",
+                    "href": "#documents"
+                  },
+                  {
+                    "label": "Annual report 2025",
+                    "href": "#documents"
+                  },
+                  {
+                    "label": "Audit opinion",
+                    "href": "#documents"
+                  },
+                  {
+                    "label": "Public offer",
+                    "href": "#documents"
+                  },
+                  {
+                    "label": "Privacy policy",
+                    "href": "#documents"
+                  }
+                ],
+                "contacts": [
+                  {
+                    "label": "+7 (4822) 41-08-17",
+                    "href": "tel:+74822410817"
+                  },
+                  {
+                    "label": "help@warmhome.org",
+                    "href": "mailto:help@warmhome.org"
+                  },
+                  {
+                    "label": "Tver, Korobkova 12, warehouse 3",
+                    "href": "#map"
+                  },
+                  {
+                    "label": "Mon–Fri 10:00–19:00",
+                    "href": "#contacts"
+                  }
+                ],
+                "socials": [
+                  {
+                    "label": "Telegram",
+                    "href": "#"
+                  },
+                  {
+                    "label": "VK",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Dzen",
+                    "href": "#"
+                  }
+                ],
+                "legal": [
+                  {
+                    "label": "Unsubscribe",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Refund a payment",
+                    "href": "#"
+                  }
+                ],
+                "copyright": "© 2018–2026 Warm Home Foundation"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footer-044",
+      "type": "registry:block",
+      "title": "Подвал-колофон писателя с виньеткой и «наверх»",
+      "description": "Подвал как последняя страница книги: виньетка по центру, имя антиквой, курсивная строка о сайте, разделы и соцсети тонкими курсивными ссылками с подчёркиванием, которое дорисовывается, внизу копирайт, «наверх» со стрелкой, которая приподнимается при наведении, и колофон «чем набрано». Слушает событие vibeui-writer:theme и переходит в бумагу вместе с сайтом.",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-044/footer-044.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-044.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "footer",
+          "colophon",
+          "writer",
+          "author",
+          "serif",
+          "minimal",
+          "back to top",
+          "socials",
+          "dark mode",
+          "day night"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Footer044",
+          "usage": "<Footer044\n  brand=\"Вера Холодова\"\n  links={[{ label: \"Тексты\", href: \"#texts\" }, { label: \"Книга\", href: \"#book\" }]}\n  colophon=\"Набрано Cormorant Garamond и PT Serif.\"\n/>",
+          "summary": "Тихий подвал для писателя, журнала или блога: виньетка, имя, ссылки курсивом, колофон.",
+          "preserve": [
+            "все ссылки — курсив с ::after-подчёркиванием scaleX(0→1) от левого края, .35s cubic-bezier",
+            "нижняя строка — grid 1fr auto 1fr от 56rem: копирайт слева, «наверх» по центру, колофон справа; до — в столбик по центру",
+            "слушает vibeui-writer:theme и ставит data-mode; цвета light-dark(), кроссфейд .6s"
+          ],
+          "adapt": [
+            "brand, tagline, links: label, href",
+            "socials: label, href",
+            "colophon, copyright, topLabel, topHref",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Имя",
+            "type": "text",
+            "default": "Вера Холодова",
+            "maxLength": 28
+          },
+          {
+            "prop": "colophon",
+            "label": "Колофон",
+            "type": "text",
+            "default": "Набрано Cormorant Garamond и PT Serif. Никакой аналитики, только счётчик страниц.",
+            "maxLength": 100
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Writer's colophon footer with a fleuron and “to the top”",
+            "description": "A footer like the last page of a book: a centred fleuron, a serif name, an italic line about the site, sections and socials as thin italic links with an underline that draws itself; at the bottom the copyright, “to the top” with an arrow that lifts on hover, and a “set in” colophon. Listens to the vibeui-writer:theme event and turns to paper with the site.",
+            "ai": {
+              "summary": "A quiet footer for a writer, magazine or blog: a fleuron, a name, italic links, a colophon.",
+              "preserve": [
+                "every link is italic with a ::after underline scaleX(0→1) from the left edge, .35s cubic-bezier",
+                "the bottom row is a 1fr auto 1fr grid from 56rem: copyright left, “to the top” centre, colophon right; below — stacked and centred",
+                "listens to vibeui-writer:theme and sets data-mode; colors are light-dark(), .6s crossfade"
+              ],
+              "adapt": [
+                "brand, tagline, links: label, href",
+                "socials: label, href",
+                "colophon, copyright, topLabel, topHref",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Footer044\n  brand=\"Vera Kholodova\"\n  links={[{ label: \"Texts\", href: \"#texts\" }, { label: \"Book\", href: \"#book\" }]}\n  colophon=\"Set in Cormorant Garamond and PT Serif.\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Name",
+                "default": "Vera Kholodova"
+              },
+              "colophon": {
+                "label": "Colophon",
+                "default": "Set in Cormorant Garamond and PT Serif. No analytics, only a page counter."
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Vera Kholodova",
+                "tagline": "Texts, the book and letters to readers",
+                "links": [
+                  {
+                    "label": "Texts",
+                    "href": "#texts"
+                  },
+                  {
+                    "label": "Book",
+                    "href": "#book"
+                  },
+                  {
+                    "label": "Meetings",
+                    "href": "#events"
+                  },
+                  {
+                    "label": "Letters",
+                    "href": "#letters"
+                  },
+                  {
+                    "label": "Publishers",
+                    "href": "#publishers"
+                  }
+                ],
+                "socials": [
+                  {
+                    "label": "Telegram",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Podcast",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Bookshop",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Email",
+                    "href": "mailto:vera@kholodova.ru"
+                  }
+                ],
+                "colophon": "Set in Cormorant Garamond and PT Serif. No analytics, only a page counter.",
+                "copyright": "© 2026 Vera Kholodova. Texts may be quoted with a link.",
+                "topLabel": "To the top"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

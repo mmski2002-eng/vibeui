@@ -4823,6 +4823,959 @@
           }
         }
       }
+    },
+    {
+      "name": "pricing-027",
+      "type": "registry:block",
+      "title": "Прайс-тикеты с вкладками по виду питомца и внешним переключением",
+      "description": "Услуги и цены клиники: вкладки по виду питомца, под ними карточки-тикеты с перфорацией между названием и ценой, spotlight за курсором и стикер «чаще всего». Блок слушает CustomEvent из window — переключатель питомца в хиро переключает вкладку и здесь. Три колонки на широком, одна на узком.",
+      "categories": [
+        "pricing"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-027/pricing-027.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-027.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "pricing",
+          "price-list",
+          "services",
+          "vet",
+          "clinic",
+          "tabs",
+          "ticket",
+          "perforation",
+          "spotlight",
+          "custom-event"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Pricing027",
+          "usage": "<Pricing027\n  title=\"Без «уточняйте у администратора»\"\n  groups={[\n    { key: \"cat\", label: \"Кошки\", items: [{ name: \"Первичный приём\", note: \"Осмотр и план\", price: \"1 200 ₽\", popular: true }] },\n    { key: \"dog\", label: \"Собаки\", items: [{ name: \"Первичный приём\", note: \"Осмотр и план\", price: \"1 400 ₽\" }] },\n  ]}\n/>",
+          "summary": "Прайс услуг тикетами с вкладками, которые можно переключать снаружи через событие window.",
+          "preserve": [
+            "перфорация — data-part=tear с пунктиром и двумя полукругами ::before/::after цвета фона секции",
+            "spotlight — --x/--y ставятся на currentTarget в pointermove, ::before с radial-gradient и opacity по hover",
+            "внешнее переключение — addEventListener(eventName) в useEffect, setActive только если detail.pet есть среди groups"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, fine",
+            "groups: key, label, items: name, note, price, popular; defaultGroup",
+            "actionLabel, actionHref, eventName",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Без «уточняйте у администратора»",
+            "maxLength": 60
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Записаться",
+            "maxLength": 20
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Price tickets with pet-type tabs and external switching",
+            "description": "Clinic services and prices: tabs by pet type, below them ticket cards with a perforation between the name and the price, a spotlight following the cursor and a “most popular” sticker. The block listens to a window CustomEvent — the pet switcher in the hero switches the tab here too. Three columns on wide, one on narrow.",
+            "ai": {
+              "summary": "Service price list as tickets with tabs that other blocks can switch through a window event.",
+              "preserve": [
+                "the perforation is data-part=tear with a dashed line and two ::before/::after semicircles in the section background colour",
+                "the spotlight sets --x/--y on currentTarget in pointermove, ::before with a radial-gradient and hover opacity",
+                "external switching: addEventListener(eventName) in useEffect, setActive only when detail.pet exists among groups"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, fine",
+                "groups: key, label, items: name, note, price, popular; defaultGroup",
+                "actionLabel, actionHref, eventName",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Pricing027\n  title=\"No “ask the front desk”\"\n  groups={[\n    { key: \"cat\", label: \"Cats\", items: [{ name: \"First visit\", note: \"Exam and plan\", price: \"$45\", popular: true }] },\n    { key: \"dog\", label: \"Dogs\", items: [{ name: \"First visit\", note: \"Exam and plan\", price: \"$50\" }] },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "No “ask the front desk”"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Book"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Services & prices",
+                "title": "No “ask the front desk”",
+                "lede": "Prices are fixed and written down in advance. If something extra is needed during the visit, we ask first and do second.",
+                "groups": [
+                  {
+                    "key": "cat",
+                    "label": "Cats",
+                    "items": [
+                      {
+                        "name": "First visit with a therapist",
+                        "note": "Exam, treatment plan, answers to every “is this normal?”",
+                        "price": "$45",
+                        "popular": true
+                      },
+                      {
+                        "name": "Combined vaccine",
+                        "note": "Core shots plus rabies, passport filled in",
+                        "price": "$60"
+                      },
+                      {
+                        "name": "Cat spay",
+                        "note": "Laparoscopic, no stitches to remove, home the same day",
+                        "price": "$240",
+                        "popular": true
+                      },
+                      {
+                        "name": "Cat neuter",
+                        "note": "20 minutes under anaesthesia, demands dinner by evening",
+                        "price": "$110"
+                      },
+                      {
+                        "name": "Ultrasonic dental cleaning",
+                        "note": "Under sedation, with polishing",
+                        "price": "$170"
+                      },
+                      {
+                        "name": "Nail trim",
+                        "note": "Free while you wait for your visit",
+                        "price": "$10"
+                      }
+                    ]
+                  },
+                  {
+                    "key": "dog",
+                    "label": "Dogs",
+                    "items": [
+                      {
+                        "name": "First visit with a therapist",
+                        "note": "Exam, weigh-in, plan, treat afterwards",
+                        "price": "$50",
+                        "popular": true
+                      },
+                      {
+                        "name": "Combined vaccine",
+                        "note": "Core shots plus lepto and rabies",
+                        "price": "$65"
+                      },
+                      {
+                        "name": "Dog spay",
+                        "note": "Laparoscopic, up to 25 kg",
+                        "price": "$360"
+                      },
+                      {
+                        "name": "Orthopaedist visit",
+                        "note": "Limping, dysplasia, “jumps, but weirdly”",
+                        "price": "$55",
+                        "popular": true
+                      },
+                      {
+                        "name": "Ultrasonic dental cleaning",
+                        "note": "Under sedation, with polishing",
+                        "price": "$210"
+                      },
+                      {
+                        "name": "Microchipping",
+                        "note": "Chip plus registry entry, 5 minutes",
+                        "price": "$38"
+                      }
+                    ]
+                  },
+                  {
+                    "key": "rabbit",
+                    "label": "Rabbits & rodents",
+                    "items": [
+                      {
+                        "name": "Exotics vet visit",
+                        "note": "A rabbit and rodent vet — every day",
+                        "price": "$38",
+                        "popular": true
+                      },
+                      {
+                        "name": "Teeth trimming",
+                        "note": "Incisors, under light sedation",
+                        "price": "$70"
+                      },
+                      {
+                        "name": "Rabbit neuter",
+                        "note": "Inhalation anaesthesia, home in 3 hours",
+                        "price": "$150"
+                      },
+                      {
+                        "name": "RHD + myxomatosis vaccine",
+                        "note": "Every six months, passport filled in",
+                        "price": "$48"
+                      },
+                      {
+                        "name": "Nail trim",
+                        "note": "Five minutes and a carrot",
+                        "price": "$9"
+                      },
+                      {
+                        "name": "Abdominal ultrasound",
+                        "note": "“Hasn't eaten since yesterday” — this one, urgently",
+                        "price": "$58"
+                      }
+                    ]
+                  }
+                ],
+                "actionLabel": "Book",
+                "fine": "The full price list — 140 items — is available at the front desk and by messenger. Night visits from 22:00 to 8:00 cost 30 % more."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pricing-031",
+      "type": "registry:block",
+      "title": "Тарифы школы: формат, слайдер занятий в неделю и «мы vs приложение vs репетитор»",
+      "description": "Калькулятор стоимости занятий: сегментный переключатель «группа / пара / индивидуально» с ползущей подложкой, слайдер «занятий в неделю», справа квитанция с зубчатым краем — цена в месяц пересчитывается на лету, ниже цена за занятие, число занятий и что входит; стикер «выбирают 78%». Внизу таблица сравнения «мы vs приложение vs репетитор» с подсвеченной колонкой и отметками ✓ / ~ / ✕.",
+      "categories": [
+        "pricing"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-031/pricing-031.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-031.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "pricing",
+          "school",
+          "language",
+          "education",
+          "calculator",
+          "slider",
+          "switch",
+          "comparison",
+          "table",
+          "receipt"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Pricing031",
+          "usage": "<Pricing031\n  title=\"Платите за занятия, а не за «доступ к платформе»\"\n  formats={[{ key: \"group\", label: \"Группа\", perLesson: 990, size: \"до 6 человек\", features: [\"Носитель раз в неделю\"], sticker: \"выбирают 78%\" }]}\n  compareRows={[{ label: \"Носитель языка\", values: [\"yes\", \"no\", \"part\"] }]}\n/>",
+          "summary": "Тарифы для школы или курсов: формат и число занятий в неделю → цена в месяц, плюс сравнение с приложением и репетитором.",
+          "preserve": [
+            "сегменты — grid на --n колонок, подложка ::before шириной (100% − .6rem)/--n и translateX(--active × 100%), transition 0.4 с",
+            "цена = perLesson × perWeek × weeksPerMonth, tabular-nums; стикер с key=format.key перезапускает keyframes pop при смене формата",
+            "колонка «мы» — td/th с data-us: подсветка color-mix, рамка 2px по краям, скругления у первой и последней строки"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, currency, actionLabel, actionHref",
+            "formats: key, label, perLesson, size, features, sticker; minPerWeek, maxPerWeek, defaultPerWeek, weeksPerMonth",
+            "compareTitle, compareColumns, compareRows: label, values (yes | no | part | текст)",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Платите за занятия, а не за «доступ к платформе»",
+            "maxLength": 70
+          },
+          {
+            "prop": "defaultPerWeek",
+            "label": "Занятий в неделю",
+            "type": "number",
+            "default": 2,
+            "min": 1,
+            "max": 4
+          },
+          {
+            "prop": "currency",
+            "label": "Валюта",
+            "type": "text",
+            "default": "₽",
+            "maxLength": 4
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "School pricing: a format switch, a lessons-per-week slider and “us vs app vs tutor”",
+            "description": "A lesson cost calculator: a “group / pair / one-to-one” segmented switch with a sliding pad, a “lessons per week” slider, on the right a receipt with a serrated edge — the monthly price recomputes live, below the price per lesson, lesson count and what's included; a “chosen by 78%” sticker. At the bottom a comparison table “us vs app vs tutor” with a highlighted column and ✓ / ~ / ✕ marks.",
+            "ai": {
+              "summary": "Pricing for a school or courses: format and lessons per week → monthly price, plus a comparison with an app and a tutor.",
+              "preserve": [
+                "segments are a grid of --n columns, the pad is a ::before of (100% − .6rem)/--n width with translateX(--active × 100%) and a 0.4 s transition",
+                "price = perLesson × perWeek × weeksPerMonth, tabular-nums; the sticker keyed by format.key restarts the pop keyframes on a format change",
+                "the “us” column is td/th with data-us: a color-mix highlight, a 2px frame on the edges, rounded corners on the first and last rows"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, currency, actionLabel, actionHref",
+                "formats: key, label, perLesson, size, features, sticker; minPerWeek, maxPerWeek, defaultPerWeek, weeksPerMonth",
+                "compareTitle, compareColumns, compareRows: label, values (yes | no | part | text)",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Pricing031\n  title=\"Pay for lessons, not for “platform access”\"\n  currency=\"$\"\n  formats={[{ key: \"group\", label: \"Group\", perLesson: 12, size: \"up to 6 people\", features: [\"A native speaker once a week\"], sticker: \"chosen by 78%\" }]}\n  compareRows={[{ label: \"A native speaker\", values: [\"yes\", \"no\", \"part\"] }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Pay for lessons, not for “platform access”"
+              },
+              "defaultPerWeek": {
+                "label": "Lessons per week"
+              },
+              "currency": {
+                "label": "Currency",
+                "default": "$"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "pricing",
+                "title": "Pay for lessons, not for “platform access”",
+                "lede": "Pick a format and how many times a week you're ready to study — the price recalculates. The first lesson is free in any format.",
+                "currency": "$",
+                "actionLabel": "Book a trial lesson",
+                "formats": [
+                  {
+                    "key": "group",
+                    "label": "Group",
+                    "perLesson": 12,
+                    "size": "up to 6 people, 60 minutes",
+                    "features": [
+                      "A native speaker once a week",
+                      "Saturday speaking club",
+                      "Lesson recordings and notes",
+                      "Group chat with the teacher"
+                    ],
+                    "sticker": "chosen by 78%"
+                  },
+                  {
+                    "key": "pair",
+                    "label": "Pair",
+                    "perLesson": 20,
+                    "size": "you and one more, 60 minutes",
+                    "features": [
+                      "Your own schedule",
+                      "A native speaker once a week",
+                      "Saturday speaking club",
+                      "Lesson recordings and notes"
+                    ]
+                  },
+                  {
+                    "key": "solo",
+                    "label": "One-to-one",
+                    "perLesson": 30,
+                    "size": "just you, 60 minutes",
+                    "features": [
+                      "A programme for your goal",
+                      "Any time, reschedule 6 hours ahead",
+                      "A native speaker on request",
+                      "Lesson recordings and notes"
+                    ]
+                  }
+                ],
+                "compareTitle": "Us, an app or a tutor?",
+                "compareColumns": [
+                  "Slovo",
+                  "An app",
+                  "A tutor"
+                ],
+                "compareRows": [
+                  {
+                    "label": "Real conversation every lesson",
+                    "values": [
+                      "yes",
+                      "no",
+                      "yes"
+                    ]
+                  },
+                  {
+                    "label": "A native speaker",
+                    "values": [
+                      "yes",
+                      "no",
+                      "part"
+                    ]
+                  },
+                  {
+                    "label": "Homework checked by a human",
+                    "values": [
+                      "yes",
+                      "no",
+                      "yes"
+                    ]
+                  },
+                  {
+                    "label": "A group where mistakes are fine",
+                    "values": [
+                      "yes",
+                      "no",
+                      "no"
+                    ]
+                  },
+                  {
+                    "label": "A schedule that keeps you going",
+                    "values": [
+                      "yes",
+                      "part",
+                      "part"
+                    ]
+                  },
+                  {
+                    "label": "Per month at two lessons a week",
+                    "values": [
+                      "$96",
+                      "$12",
+                      "$240"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pricing-032",
+      "type": "registry:block",
+      "title": "Тарифы одной карточкой: переключатель планов и ползунок сотрудников",
+      "description": "Одна стеклянная карточка с аврора-рамкой вместо трёх колонок: сверху сегментный переключатель «старт / рост / масштаб» с подложкой, которая переезжает, под ним ползунок числа сотрудников; цена = абонентская плата + сотрудники сверх включённых, докручивается анимацией. Справа чип «бесплатно до N операций», список возможностей выбранного тарифа с каскадным появлением и кнопка.",
+      "categories": [
+        "pricing"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-032/pricing-032.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-032.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "pricing",
+          "plans",
+          "fintech",
+          "bank",
+          "switch",
+          "segmented",
+          "slider",
+          "employees",
+          "calculator",
+          "glass"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Pricing032",
+          "usage": "<Pricing032\n  title=\"Платите за размер бизнеса, а не за банк\"\n  plans={[\n    { name: \"Старт\", tagline: \"Для тех, кто только открылся.\", base: 0, included: 1, perEmployee: 0, freeOperations: 20, features: [\"Счёт за 10 минут\"], actionLabel: \"Открыть\" },\n    { name: \"Рост\", tagline: \"Для команды до 20 человек.\", base: 490, included: 3, perEmployee: 150, freeOperations: 200, features: [\"Карты сотрудникам\"], actionLabel: \"Выбрать\" },\n  ]}\n/>",
+          "summary": "Тарифы для банка одной карточкой: переключатель старт / рост / масштаб, ползунок сотрудников, цена пересчитывается на лету.",
+          "preserve": [
+            "переключатель — grid с --vibeui-pricing-032-n колонок, подложка ::before шириной (100% - .6rem) / n и translateX(i * 100%) с transition .4s; кнопки с aria-pressed",
+            "цена — total = base + max(0, employees - included) * perEmployee, докручивается 500 мс через requestAnimationFrame из ref; строка breakdown показывает слагаемые",
+            "details перемонтируется по key плана — пункты features въезжают каскадом по --vibeui-pricing-032-i; чип «бесплатно до N операций» при freeOperations 0 показывает «без лимита»"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, currency; подписи: seatsLabel, seatsUnit, perMonthLabel, includedLabel, freeLabel ({n}), unlimitedLabel",
+            "plans: name, tagline, base, included, perEmployee, freeOperations, features, actionLabel, actionHref",
+            "defaultPlan, minEmployees, maxEmployees, defaultEmployees",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Платите за размер бизнеса, а не за банк",
+            "maxLength": 64
+          },
+          {
+            "prop": "defaultEmployees",
+            "label": "Сотрудников по умолчанию",
+            "type": "number",
+            "default": 6,
+            "min": 1,
+            "max": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Pricing in one card: a plan switch and an employee slider",
+            "description": "One glass card with an aurora border instead of three columns: a “start / growth / scale” segmented switch with a sliding thumb on top, an employee-count slider below; the price = subscription + employees over the included ones, counting up with an animation. On the right a “free up to N operations” chip, the chosen plan's feature list with a cascading reveal and a button.",
+            "ai": {
+              "summary": "Bank pricing in a single card: a start / growth / scale switch, an employee slider, the price recalculates on the fly.",
+              "preserve": [
+                "the switch is a grid with --vibeui-pricing-032-n columns, the ::before thumb is (100% - .6rem) / n wide and moves by translateX(i * 100%) with a .4s transition; buttons use aria-pressed",
+                "price — total = base + max(0, employees - included) * perEmployee, counted up over 500 ms via requestAnimationFrame from a ref; the breakdown line shows the addends",
+                "details remounts by the plan key — feature items cascade in by --vibeui-pricing-032-i; the “free up to N operations” chip shows “unlimited” when freeOperations is 0"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, currency; labels: seatsLabel, seatsUnit, perMonthLabel, includedLabel, freeLabel ({n}), unlimitedLabel",
+                "plans: name, tagline, base, included, perEmployee, freeOperations, features, actionLabel, actionHref",
+                "defaultPlan, minEmployees, maxEmployees, defaultEmployees",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Pricing032\n  title=\"Pay for the size of your business, not for the bank\"\n  plans={[\n    { name: \"Start\", tagline: \"For those who just opened.\", base: 0, included: 1, perEmployee: 0, freeOperations: 20, features: [\"Account in 10 minutes\"], actionLabel: \"Open\" },\n    { name: \"Growth\", tagline: \"For a team of up to 20.\", base: 490, included: 3, perEmployee: 150, freeOperations: 200, features: [\"Employee cards\"], actionLabel: \"Choose\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Pay for the size of your business, not for the bank"
+              },
+              "defaultEmployees": {
+                "label": "Default employees"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Pricing",
+                "title": "Pay for the size of your business, not for the bank",
+                "lede": "Pick a plan and move the slider to your headcount — the price recalculates. The first operations of every month are free.",
+                "plans": [
+                  {
+                    "name": "Start",
+                    "tagline": "For sole traders and companies that just opened: account, card and taxes — free.",
+                    "base": 0,
+                    "included": 1,
+                    "perEmployee": 0,
+                    "freeOperations": 20,
+                    "features": [
+                      "Account and business card in 10 minutes",
+                      "Free up to 20 operations a month",
+                      "Instant transfers with no fee",
+                      "Taxes calculated for you"
+                    ],
+                    "actionLabel": "Open for free",
+                    "actionHref": "#open"
+                  },
+                  {
+                    "name": "Growth",
+                    "tagline": "For a team of up to 20: employee cards, 1C, marketplaces and human support.",
+                    "base": 490,
+                    "included": 3,
+                    "perEmployee": 150,
+                    "freeOperations": 200,
+                    "features": [
+                      "Everything in Start",
+                      "Free up to 200 operations a month",
+                      "Employee cards with limits",
+                      "Statements to 1C every 15 minutes",
+                      "Marketplace payouts same day"
+                    ],
+                    "actionLabel": "Choose Growth",
+                    "actionHref": "#open"
+                  },
+                  {
+                    "name": "Scale",
+                    "tagline": "For turnover from 10 M ₽: unlimited operations, currency accounts and a personal manager.",
+                    "base": 1990,
+                    "included": 10,
+                    "perEmployee": 90,
+                    "freeOperations": 0,
+                    "features": [
+                      "Everything in Growth",
+                      "Unlimited operations",
+                      "Accounts in yuan, dollars and euros",
+                      "Payroll project with no fee",
+                      "Personal manager in Telegram"
+                    ],
+                    "actionLabel": "Discuss terms",
+                    "actionHref": "#contact"
+                  }
+                ],
+                "seatsLabel": "Employees with cards",
+                "seatsUnit": "people",
+                "perMonthLabel": "a month",
+                "includedLabel": "included",
+                "freeLabel": "free up to {n} operations / month",
+                "unlimitedLabel": "unlimited operations"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pricing-034",
+      "type": "registry:block",
+      "title": "Калькулятор оплаты за запросы с логарифмическим ползунком и лестницей ступеней",
+      "description": "Цены для API с оплатой за запросы: ползунок от тысячи до ста миллионов запросов в месяц по логарифмической шкале, цена считается прогрессивно по ступеням (бесплатно до 10k, дальше дешевле с объёмом), итог крупно моноширинным, эффективная ставка за 1 000 и разбор по ступеням с суммами. Справа SVG-лестница ставок: активная ступень подсвечена, маркер с пунктиром едет за ползунком, площадь под пройденными ступенями заливается. Кнопки и подписи «без карты».",
+      "categories": [
+        "pricing"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-034/pricing-034.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-034.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "pricing",
+          "calculator",
+          "api",
+          "usage-based",
+          "pay as you go",
+          "slider",
+          "tiers",
+          "chart",
+          "developer",
+          "dark"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Pricing034",
+          "usage": "<Pricing034\n  title=\"Платите за запросы, не за место\"\n  tiers={[\n    { upTo: 10000, perThousand: 0, label: \"первые 10 000\" },\n    { upTo: 1000000, perThousand: 0.4, label: \"до 1 млн\" },\n    { upTo: Infinity, perThousand: 0.12, label: \"свыше\" },\n  ]}\n  defaultRequests={250000}\n/>",
+          "summary": "Цены за запросы: логарифмический ползунок, прогрессивные ступени и SVG-лестница ставок.",
+          "preserve": [
+            "ползунок 0–1000 маппится в 10^(logMin + v/1000·(logMax−logMin)) и округляется до двух значащих цифр",
+            "breakdown считает inTier и сумму по каждой ступени; последняя ступень — upTo: Infinity",
+            "лестница — path на ступень (data-on для пройденных), area — объединённый path, маркер и точка двигаются transform translateX"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, fine[]",
+            "tiers: upTo, perThousand, label; minRequests, maxRequests, defaultRequests, currency",
+            "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Платите за запросы, не за место",
+            "maxLength": 50
+          },
+          {
+            "prop": "defaultRequests",
+            "label": "Запросов по умолчанию",
+            "type": "number",
+            "default": 250000,
+            "min": 1000,
+            "max": 100000000
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Pay-per-request calculator with a logarithmic slider and a tier staircase",
+            "description": "Pricing for a pay-per-request API: a slider from a thousand to a hundred million requests a month on a log scale, the price computed progressively by tiers (free up to 10k, cheaper with volume), a big monospace total, the effective rate per 1,000 and a per-tier breakdown with sums. On the right an SVG staircase of rates: the active tier highlighted, a dashed marker following the slider, the area under the passed tiers filled. Buttons and “no card” notes.",
+            "ai": {
+              "summary": "Usage-based pricing: a log slider, progressive tiers and an SVG rate staircase.",
+              "preserve": [
+                "the slider 0–1000 maps to 10^(logMin + v/1000·(logMax−logMin)) rounded to two significant digits",
+                "breakdown computes inTier and the sum per tier; the last tier is upTo: Infinity",
+                "the staircase is one path per tier (data-on for passed ones), area is a merged path, the marker and dot move via transform translateX"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, fine[]",
+                "tiers: upTo, perThousand, label; minRequests, maxRequests, defaultRequests, currency",
+                "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Pricing034\n  title=\"Pay per request, not per seat\"\n  tiers={[\n    { upTo: 10000, perThousand: 0, label: \"first 10,000\" },\n    { upTo: 1000000, perThousand: 0.4, label: \"up to 1M\" },\n    { upTo: Infinity, perThousand: 0.12, label: \"above\" },\n  ]}\n  defaultRequests={250000}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Pay per request, not per seat"
+              },
+              "defaultRequests": {
+                "label": "Default requests"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Pricing",
+                "title": "Pay per request, not per seat",
+                "lede": "The first ten thousand requests a month are free — forever. Beyond that the price per thousand drops with volume. Drag the slider to your load.",
+                "tiers": [
+                  {
+                    "upTo": 10000,
+                    "perThousand": 0,
+                    "label": "first 10,000"
+                  },
+                  {
+                    "upTo": 1000000,
+                    "perThousand": 0.4,
+                    "label": "up to 1M"
+                  },
+                  {
+                    "upTo": 10000000,
+                    "perThousand": 0.25,
+                    "label": "up to 10M"
+                  },
+                  {
+                    "upTo": 1e+308,
+                    "perThousand": 0.12,
+                    "label": "above 10M"
+                  }
+                ],
+                "currency": "$",
+                "primaryLabel": "Start free",
+                "secondaryLabel": "Need a contract",
+                "fine": [
+                  "No card up to 10,000",
+                  "Invoice at month end",
+                  "Limits and alerts in the dashboard"
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

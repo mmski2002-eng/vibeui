@@ -337,6 +337,200 @@
           }
         }
       }
+    },
+    {
+      "name": "stats-012",
+      "type": "registry:block",
+      "title": "Панель приборов: дуги SVG и цифры, которые докручиваются в viewport",
+      "description": "Характеристики железки как приборная панель: тёмная плита со строкой статуса и четырьмя дуговыми индикаторами на 270° (SVG stroke-dasharray, заполнение через transition stroke-dashoffset). Крупные цифры внутри дуг докручиваются от нуля с ease-out, когда панель входит в viewport, под каждой — значение прошлой версии и дельта в процентах.",
+      "categories": [
+        "stats"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stats-012/stats-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stats-012.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "stats",
+          "specs",
+          "gadget",
+          "hardware",
+          "gauge",
+          "arc",
+          "counter",
+          "dashboard",
+          "svg",
+          "comparison",
+          "numbers"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Stats012",
+          "usage": "<Stats012\n  title=\"Цифры, которые видно с другого конца комнаты\"\n  gauges={[{ label: \"Яркость\", value: 1200, unit: \"лм\", max: 1500, previous: 800, previousLabel: \"Луч 1\" }]}\n/>",
+          "summary": "Характеристики как панель приборов: дуги заполняются, цифры докручиваются, дельта к прошлой версии.",
+          "preserve": [
+            "дуга — circle r=42 в viewBox 100 с dasharray ARC = 2π·42·0.75 и rotate(135deg), заполнение dashoffset = ARC × (1 − value/max)",
+            "докрутка — один IntersectionObserver (threshold .3) запускает requestAnimationFrame на 1.6 с с ease-out кубом, t умножается на value",
+            "панель — цвет fg как фон и bg как текст, чтобы плита контрастировала с секцией в любом тоне"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, status",
+            "gauges: label, value, unit, max, previous, previousLabel, decimals",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Цифры, которые видно с другого конца комнаты",
+            "maxLength": 60
+          },
+          {
+            "prop": "status",
+            "label": "Строка статуса",
+            "type": "text",
+            "default": "Луч 2 · прошивка 2.3.1 · все датчики в норме",
+            "maxLength": 60
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Instrument panel: SVG arcs and figures that count up in the viewport",
+            "description": "Hardware specs as an instrument panel: a dark slab with a status line and four 270° arc gauges (SVG stroke-dasharray, fill via a stroke-dashoffset transition). Big figures inside the arcs count up from zero with ease-out when the panel enters the viewport, and under each one sits the previous version's value and the delta in percent.",
+            "ai": {
+              "summary": "Specs as an instrument panel: arcs fill, figures count up, a delta to the previous version.",
+              "preserve": [
+                "the arc is a circle r=42 in a 100 viewBox with dasharray ARC = 2π·42·0.75 and rotate(135deg); the fill is dashoffset = ARC × (1 − value/max)",
+                "the count-up is one IntersectionObserver (threshold .3) that starts a 1.6 s requestAnimationFrame with cubic ease-out; t multiplies value",
+                "the panel uses fg as its background and bg as text so the slab contrasts with the section in any tone"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, status",
+                "gauges: label, value, unit, max, previous, previousLabel, decimals",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Stats012\n  title=\"Numbers you can read from across the room\"\n  gauges={[{ label: \"Brightness\", value: 1200, unit: \"lm\", max: 1500, previous: 800, previousLabel: \"Ray 1\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Numbers you can read from across the room"
+              },
+              "status": {
+                "label": "Status line",
+                "default": "Ray 2 · firmware 2.3.1 · all sensors nominal"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Specs",
+                "title": "Numbers you can read from across the room",
+                "lede": "Ray 2 versus Ray 1: half again as bright, twice as loud, four sensors instead of one. All measured, not promised.",
+                "status": "Ray 2 · firmware 2.3.1 · all sensors nominal",
+                "gauges": [
+                  {
+                    "label": "Brightness",
+                    "value": 1200,
+                    "unit": "lm",
+                    "max": 1500,
+                    "previous": 800,
+                    "previousLabel": "Ray 1"
+                  },
+                  {
+                    "label": "Colour accuracy",
+                    "value": 97,
+                    "unit": "CRI",
+                    "max": 100,
+                    "previous": 90,
+                    "previousLabel": "Ray 1"
+                  },
+                  {
+                    "label": "Speaker",
+                    "value": 5,
+                    "unit": "W",
+                    "max": 6,
+                    "previous": 2,
+                    "previousLabel": "Ray 1"
+                  },
+                  {
+                    "label": "Sensors",
+                    "value": 4,
+                    "unit": "pcs",
+                    "max": 4,
+                    "previous": 1,
+                    "previousLabel": "Ray 1"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

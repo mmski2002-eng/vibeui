@@ -1,0 +1,1235 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "delivery-001",
+      "type": "registry:block",
+      "title": "Меню с корзиной: карточки блюд, степперы и закреплённая полоса «до бесплатной доставки»",
+      "description": "Меню доставки с корзиной: фильтр-чипы по группам, карточки блюд с фото в вырезанных формах (круг, капля, блоб по очереди), бейджи «хит/острое», кнопка «+» раскрывается в степпер «− 2 +». Корзина — закреплённая полоса снизу (position:fixed), выезжает при первом добавлении: сумма, число блюд, прогресс «до бесплатной доставки осталось …» и кнопка оформления. Шлёт vibeui-cart:state, принимает vibeui-cart:add от конструктора и vibeui-cart:zone от карты зон, по оформлению шлёт vibeui-cart:checkout.",
+      "categories": [
+        "delivery"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "delivery-001/delivery-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/delivery-001.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "delivery",
+          "menu",
+          "cart",
+          "food",
+          "dishes",
+          "stepper",
+          "progress",
+          "free-delivery",
+          "fixed-bar",
+          "filter",
+          "ecommerce",
+          "event"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Delivery001",
+          "usage": "<Delivery001\n  title=\"Что готовим прямо сейчас\"\n  freeFrom={1500}\n  dishes={[\n    { id: \"smash\", name: \"Смэш-бургер\", price: 590, kind: \"Бургеры\", image: \"/photos/smash.webp\", badge: \"хит\" },\n    { id: \"tomyum\", name: \"Том-ям\", price: 490, kind: \"Азия\", image: \"/photos/tom-yum.webp\" },\n  ]}\n/>",
+          "summary": "Меню с корзиной для доставки еды: блюда, степперы и полоса снизу с прогрессом до бесплатной доставки.",
+          "preserve": [
+            "count и total считаются в useMemo из qty и extras; useEffect шлёт vibeui-cart:state при их изменении",
+            "полоса bar — position:fixed с transform translate(-50%, 100% + 1.5rem) → 0 при data-open, прогресс — scaleX(--fill)",
+            "слушатели vibeui-cart:add (id, name, price, qty) и vibeui-cart:zone (fee, minutes) ставятся один раз в useEffect"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, allLabel, addLabel, checkoutLabel",
+            "dishes: id, name, text, price, meta, kind, image, badge",
+            "freeFrom, deliveryFee, currency",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что готовим прямо сейчас",
+            "maxLength": 50
+          },
+          {
+            "prop": "freeFrom",
+            "label": "Бесплатно от",
+            "type": "number",
+            "default": 1500,
+            "min": 0,
+            "max": 10000
+          },
+          {
+            "prop": "deliveryFee",
+            "label": "Стоимость доставки",
+            "type": "number",
+            "default": 149,
+            "min": 0,
+            "max": 2000
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Menu with a cart: dish cards, steppers and a fixed “to free delivery” bar",
+            "description": "Delivery menu with a cart: group filter chips, dish cards with photos in cut-out shapes (circle, drop, blob in turn), “hit/spicy” badges, a “+” button that unfolds into a “− 2 +” stepper. The cart is a fixed bottom bar (position:fixed) that slides in on the first add: total, item count, a “… left to free delivery” progress and a checkout button. Emits vibeui-cart:state, accepts vibeui-cart:add from the builder and vibeui-cart:zone from the zones map, emits vibeui-cart:checkout on checkout.",
+            "ai": {
+              "summary": "Menu with a cart for food delivery: dishes, steppers and a bottom bar with progress to free delivery.",
+              "preserve": [
+                "count and total are computed in useMemo from qty and extras; a useEffect emits vibeui-cart:state when they change",
+                "the bar is position:fixed with transform translate(-50%, 100% + 1.5rem) → 0 on data-open, progress is scaleX(--fill)",
+                "listeners for vibeui-cart:add (id, name, price, qty) and vibeui-cart:zone (fee, minutes) are attached once in useEffect"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, allLabel, addLabel, checkoutLabel",
+                "dishes: id, name, text, price, meta, kind, image, badge",
+                "freeFrom, deliveryFee, currency",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Delivery001\n  title=\"Cooking right now\"\n  freeFrom={25}\n  currency=\"$\"\n  dishes={[\n    { id: \"smash\", name: \"Smash burger\", price: 9, kind: \"Burgers\", image: \"/photos/smash.webp\", badge: \"hit\" },\n    { id: \"tomyum\", name: \"Tom yum\", price: 8, kind: \"Asian\", image: \"/photos/tom-yum.webp\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Cooking right now"
+              },
+              "freeFrom": {
+                "label": "Free from",
+                "default": 25
+              },
+              "deliveryFee": {
+                "label": "Delivery fee",
+                "default": 3
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Menu",
+                "title": "Cooking right now",
+                "lede": "Eight dishes that leave the kitchen most often. Everything is cooked after payment, nothing is reheated.",
+                "freeFrom": 25,
+                "deliveryFee": 3,
+                "currency": "$",
+                "allLabel": "All",
+                "addLabel": "Add to cart",
+                "checkoutLabel": "Checkout",
+                "dishes": [
+                  {
+                    "id": "smash",
+                    "name": "Double smash burger",
+                    "text": "two patties, cheddar, caramelised onion, house sauce",
+                    "price": 9,
+                    "meta": "320 g · 780 kcal",
+                    "kind": "Burgers",
+                    "image": "/demo/delivery/dish-01.webp",
+                    "badge": "hit"
+                  },
+                  {
+                    "id": "chicken",
+                    "name": "Crispy chicken burger",
+                    "text": "fried thigh, slaw, jalapeños, ranch",
+                    "price": 8,
+                    "meta": "300 g · 690 kcal",
+                    "kind": "Burgers",
+                    "image": "/demo/delivery/dish-02.webp",
+                    "badge": "spicy"
+                  },
+                  {
+                    "id": "tomyum",
+                    "name": "Shrimp tom yum",
+                    "text": "coconut, lemongrass, mushrooms, rice on the side",
+                    "price": 8,
+                    "meta": "450 ml · 380 kcal",
+                    "kind": "Asian",
+                    "image": "/demo/delivery/dish-03.webp"
+                  },
+                  {
+                    "id": "poke",
+                    "name": "Salmon poke",
+                    "text": "rice, avocado, edamame, mango, ponzu",
+                    "price": 10,
+                    "meta": "380 g · 520 kcal",
+                    "kind": "Asian",
+                    "image": "/demo/delivery/dish-04.webp",
+                    "badge": "new"
+                  },
+                  {
+                    "id": "padthai",
+                    "name": "Chicken pad thai",
+                    "text": "rice noodles, peanuts, sprouts, lime",
+                    "price": 7,
+                    "meta": "400 g · 610 kcal",
+                    "kind": "Asian",
+                    "image": "/demo/delivery/dish-05.webp"
+                  },
+                  {
+                    "id": "fries",
+                    "name": "Truffle fries",
+                    "text": "parmesan, truffle oil, aioli",
+                    "price": 5,
+                    "meta": "220 g · 470 kcal",
+                    "kind": "Sides",
+                    "image": "/demo/delivery/dish-06.webp"
+                  },
+                  {
+                    "id": "wings",
+                    "name": "Glazed wings",
+                    "text": "8 pieces, kimchi mayo, sesame",
+                    "price": 7,
+                    "meta": "360 g · 720 kcal",
+                    "kind": "Sides",
+                    "image": "/demo/delivery/dish-07.webp",
+                    "badge": "spicy"
+                  },
+                  {
+                    "id": "cheesecake",
+                    "name": "Basque cheesecake",
+                    "text": "burnt top, vanilla, a spoon of cream",
+                    "price": 5,
+                    "meta": "150 g · 430 kcal",
+                    "kind": "Desserts",
+                    "image": "/demo/delivery/dish-08.webp"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "delivery-002",
+      "type": "registry:block",
+      "title": "Конструктор боула: слои падают в миску, калории и цена считаются",
+      "description": "Конструктор блюда для доставки: группы ингредиентов чипами с цветной точкой — основа и соус по одному, белок и добавки сколько угодно. Справа CSS-миска, в которую с отскоком падают цветные слои выбранных ингредиентов, каждый на своём месте; под ней калории, вес и цена пересчитываются на лету, а строка состава читается вслух. Кнопка «В корзину» шлёт vibeui-cart:add и на пару секунд зеленеет.",
+      "categories": [
+        "delivery"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "delivery-002/delivery-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/delivery-002.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "delivery",
+          "builder",
+          "configurator",
+          "bowl",
+          "poke",
+          "ingredients",
+          "calories",
+          "calculator",
+          "food",
+          "interactive",
+          "event"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Delivery002",
+          "usage": "<Delivery002\n  title=\"Собери свой боул\"\n  basePrice={290}\n  groups={[\n    { id: \"base\", title: \"Основа\", mode: \"single\", options: [{ id: \"rice\", name: \"Рис\", price: 0, kcal: 210, color: \"#f4efe2\" }] },\n    { id: \"protein\", title: \"Белок\", mode: \"multi\", options: [{ id: \"salmon\", name: \"Лосось\", price: 220, kcal: 180, color: \"#ff8a6b\" }] },\n  ]}\n/>",
+          "summary": "Конструктор боула или пиццы: выбираешь ингредиенты — миска наполняется, цена и калории считаются.",
+          "preserve": [
+            "picked — массив id в порядке выбора; single-группы заменяют свой вариант, multi — переключают",
+            "слои в миске: base и sauce — растянутые по stack с keyframes fill, остальные — по таблице SPOTS с keyframes drop (cubic-bezier с отскоком)",
+            "add шлёт vibeui-cart:add с detail { id: bowl-<ids>, name, price, qty: 1 } и ставит data-done на 2.2 с"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, addLabel, addedLabel",
+            "groups: id, title, mode (single | multi), options: id, name, price, kcal, color",
+            "basePrice, currency",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Собери свой боул",
+            "maxLength": 40
+          },
+          {
+            "prop": "basePrice",
+            "label": "Цена миски",
+            "type": "number",
+            "default": 290,
+            "min": 0,
+            "max": 5000
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Bowl builder: layers drop into a bowl, calories and price add up",
+            "description": "A dish builder for delivery: ingredient groups as chips with a colour dot — base and sauce pick one, protein and toppings pick any. On the right a CSS bowl into which coloured layers of the chosen ingredients drop with a bounce, each in its own spot; below it calories, weight and price recalculate live and the recipe line is read aloud. The “Add to cart” button emits vibeui-cart:add and turns green for a couple of seconds.",
+            "ai": {
+              "summary": "A bowl or pizza builder: pick ingredients — the bowl fills up, price and calories add up.",
+              "preserve": [
+                "picked is an array of ids in pick order; single groups replace their option, multi groups toggle",
+                "bowl layers: base and sauce stretch across the stack with fill keyframes, the rest use the SPOTS table with drop keyframes (bouncy cubic-bezier)",
+                "add emits vibeui-cart:add with detail { id: bowl-<ids>, name, price, qty: 1 } and sets data-done for 2.2 s"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, addLabel, addedLabel",
+                "groups: id, title, mode (single | multi), options: id, name, price, kcal, color",
+                "basePrice, currency",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Delivery002\n  title=\"Build your bowl\"\n  basePrice={5}\n  currency=\"$\"\n  groups={[\n    { id: \"base\", title: \"Base\", mode: \"single\", options: [{ id: \"rice\", name: \"Rice\", price: 0, kcal: 210, color: \"#f4efe2\" }] },\n    { id: \"protein\", title: \"Protein\", mode: \"multi\", options: [{ id: \"salmon\", name: \"Salmon\", price: 4, kcal: 180, color: \"#ff8a6b\" }] },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Build your bowl"
+              },
+              "basePrice": {
+                "label": "Base price",
+                "default": 5
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Builder",
+                "title": "Build your bowl",
+                "lede": "Base, protein, toppings, sauce. The bowl on the right fills as you pick, calories and price are honest and instant.",
+                "basePrice": 5,
+                "currency": "$",
+                "addLabel": "Add to cart",
+                "addedLabel": "Added to cart",
+                "groups": [
+                  {
+                    "id": "base",
+                    "title": "Base",
+                    "mode": "single",
+                    "options": [
+                      {
+                        "id": "rice",
+                        "name": "Rice",
+                        "price": 0,
+                        "kcal": 210,
+                        "color": "#f4efe2"
+                      },
+                      {
+                        "id": "quinoa",
+                        "name": "Quinoa",
+                        "price": 1,
+                        "kcal": 190,
+                        "color": "#d9c9a3"
+                      },
+                      {
+                        "id": "noodles",
+                        "name": "Soba noodles",
+                        "price": 1,
+                        "kcal": 240,
+                        "color": "#a88a6a"
+                      },
+                      {
+                        "id": "greens",
+                        "name": "Salad mix",
+                        "price": 0,
+                        "kcal": 40,
+                        "color": "#7cc95a"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "protein",
+                    "title": "Protein",
+                    "mode": "multi",
+                    "options": [
+                      {
+                        "id": "salmon",
+                        "name": "Salmon",
+                        "price": 4,
+                        "kcal": 180,
+                        "color": "#ff8a6b"
+                      },
+                      {
+                        "id": "chicken",
+                        "name": "Grilled chicken",
+                        "price": 3,
+                        "kcal": 165,
+                        "color": "#e6b380"
+                      },
+                      {
+                        "id": "shrimp",
+                        "name": "Shrimps",
+                        "price": 4,
+                        "kcal": 95,
+                        "color": "#ffb0a0"
+                      },
+                      {
+                        "id": "tofu",
+                        "name": "Tofu",
+                        "price": 2,
+                        "kcal": 120,
+                        "color": "#f0e6c8"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "toppings",
+                    "title": "Toppings",
+                    "mode": "multi",
+                    "options": [
+                      {
+                        "id": "avocado",
+                        "name": "Avocado",
+                        "price": 2,
+                        "kcal": 120,
+                        "color": "#9ad04c"
+                      },
+                      {
+                        "id": "edamame",
+                        "name": "Edamame",
+                        "price": 1,
+                        "kcal": 60,
+                        "color": "#5fb85a"
+                      },
+                      {
+                        "id": "mango",
+                        "name": "Mango",
+                        "price": 1,
+                        "kcal": 70,
+                        "color": "#ffc632"
+                      },
+                      {
+                        "id": "corn",
+                        "name": "Corn",
+                        "price": 1,
+                        "kcal": 55,
+                        "color": "#ffe066"
+                      },
+                      {
+                        "id": "egg",
+                        "name": "Onsen egg",
+                        "price": 1,
+                        "kcal": 75,
+                        "color": "#fff2c2"
+                      },
+                      {
+                        "id": "cucumber",
+                        "name": "Cucumber",
+                        "price": 1,
+                        "kcal": 10,
+                        "color": "#6fd08b"
+                      },
+                      {
+                        "id": "sesame",
+                        "name": "Sesame",
+                        "price": 0,
+                        "kcal": 30,
+                        "color": "#e8dcc0"
+                      },
+                      {
+                        "id": "chili",
+                        "name": "Chili",
+                        "price": 0,
+                        "kcal": 5,
+                        "color": "#ff3d2e"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "sauce",
+                    "title": "Sauce",
+                    "mode": "single",
+                    "options": [
+                      {
+                        "id": "teriyaki",
+                        "name": "Teriyaki",
+                        "price": 0,
+                        "kcal": 60,
+                        "color": "#7a3b1e"
+                      },
+                      {
+                        "id": "ponzu",
+                        "name": "Ponzu",
+                        "price": 0,
+                        "kcal": 25,
+                        "color": "#d6a34a"
+                      },
+                      {
+                        "id": "peanut",
+                        "name": "Peanut",
+                        "price": 0,
+                        "kcal": 110,
+                        "color": "#c98a4b"
+                      },
+                      {
+                        "id": "spicy",
+                        "name": "Spicy mayo",
+                        "price": 0,
+                        "kcal": 130,
+                        "color": "#ff8060"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "delivery-003",
+      "type": "registry:block",
+      "title": "Зона доставки: SVG-карта кварталов, клик по зоне или адрес → время и цена",
+      "description": "Секция «куда везём»: стилизованная карта — SVG-сетка кварталов с рекой и кухней в центре, от которой расходятся кольца-пульс. Кварталы раскрашены по трём зонам удаления, по наведению приподнимаются, клик выбирает зону; чипы частых адресов сверху делают то же. Справа ответ: минуты крупно, стоимость доставки, порог бесплатной доставки, название зоны. Выбор уходит событием vibeui-cart:zone.",
+      "categories": [
+        "delivery"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "delivery-003/delivery-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/delivery-003.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "delivery",
+          "map",
+          "zones",
+          "area",
+          "svg",
+          "city",
+          "address",
+          "eta",
+          "fee",
+          "interactive",
+          "event"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Delivery003",
+          "usage": "<Delivery003\n  title=\"Тапни свой квартал\"\n  zones={[\n    { id: \"near\", name: \"Центр\", minutes: 25, fee: 0, freeFrom: 0 },\n    { id: \"mid\", name: \"Внутри ТТК\", minutes: 35, fee: 149, freeFrom: 1500 },\n    { id: \"far\", name: \"До МКАД\", minutes: 50, fee: 249, freeFrom: 2500 },\n  ]}\n  addresses={[{ label: \"Тверская, 12\", zone: \"near\" }, { label: \"Сокол\", zone: \"mid\" }]}\n/>",
+          "summary": "Карта зон доставки на SVG-кварталах: клик или адрес показывают, за сколько и почём привезём.",
+          "preserve": [
+            "BLOCKS считаются один раз на уровне модуля: сетка 13×9, кварталы у реки (riverX) пропускаются, зона — по расстоянию от CENTER",
+            "rect кварталов — tabIndex 0, role button, Enter/Space вызывают choose; data-on подсвечивает всю выбранную зону",
+            "choose шлёт vibeui-cart:zone с detail { label, minutes, fee, freeFrom }; кольца-пульс — три circle с keyframes ring и задержками"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, kitchenLabel, currency",
+            "zones: id, name, minutes, fee, freeFrom (от ближней к дальней)",
+            "addresses: label, zone",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Тапни свой квартал",
+            "maxLength": 40
+          },
+          {
+            "prop": "kitchenLabel",
+            "label": "Подпись кухни",
+            "type": "text",
+            "default": "кухня",
+            "maxLength": 16
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Delivery area: an SVG map of blocks, click a zone or an address → time and price",
+            "description": "A “where we deliver” section: a stylised map — an SVG grid of city blocks with a river and the kitchen in the centre sending out pulse rings. Blocks are coloured by three distance zones, lift on hover, a click picks the zone; the frequent-address chips above do the same. On the right the answer: minutes in large type, delivery fee, free-delivery threshold, zone name. The choice is emitted as vibeui-cart:zone.",
+            "ai": {
+              "summary": "A delivery-area map of SVG blocks: a click or an address shows how fast and for how much we deliver.",
+              "preserve": [
+                "BLOCKS are computed once at module level: a 13×9 grid, blocks near the river (riverX) are skipped, zone by distance from CENTER",
+                "block rects have tabIndex 0, role button, Enter/Space call choose; data-on highlights the whole chosen zone",
+                "choose emits vibeui-cart:zone with detail { label, minutes, fee, freeFrom }; pulse rings are three circles with ring keyframes and delays"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, kitchenLabel, currency",
+                "zones: id, name, minutes, fee, freeFrom (nearest first)",
+                "addresses: label, zone",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Delivery003\n  title=\"Tap your block\"\n  currency=\"$\"\n  zones={[\n    { id: \"near\", name: \"Downtown\", minutes: 25, fee: 0, freeFrom: 0 },\n    { id: \"mid\", name: \"Inner ring\", minutes: 35, fee: 3, freeFrom: 25 },\n    { id: \"far\", name: \"City limits\", minutes: 50, fee: 5, freeFrom: 40 },\n  ]}\n  addresses={[{ label: \"5th Avenue, 12\", zone: \"near\" }, { label: \"Riverside\", zone: \"mid\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Tap your block"
+              },
+              "kitchenLabel": {
+                "label": "Kitchen label",
+                "default": "kitchen"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Where we deliver",
+                "title": "Tap your block",
+                "lede": "One kitchen, on Baker Street. The closer you are, the faster and cheaper it gets. Beyond the city limits — not yet.",
+                "kitchenLabel": "kitchen",
+                "currency": "$",
+                "zones": [
+                  {
+                    "id": "near",
+                    "name": "Downtown — up to 3 km",
+                    "minutes": 25,
+                    "fee": 0,
+                    "freeFrom": 0
+                  },
+                  {
+                    "id": "mid",
+                    "name": "Inner ring road",
+                    "minutes": 35,
+                    "fee": 3,
+                    "freeFrom": 25
+                  },
+                  {
+                    "id": "far",
+                    "name": "Up to the city limits",
+                    "minutes": 50,
+                    "fee": 5,
+                    "freeFrom": 40
+                  }
+                ],
+                "addresses": [
+                  {
+                    "label": "5th Avenue, 12",
+                    "zone": "near"
+                  },
+                  {
+                    "label": "Baker Street, 7",
+                    "zone": "near"
+                  },
+                  {
+                    "label": "Park Lane, 40",
+                    "zone": "mid"
+                  },
+                  {
+                    "label": "Riverside",
+                    "zone": "mid"
+                  },
+                  {
+                    "label": "Eastfield",
+                    "zone": "far"
+                  },
+                  {
+                    "label": "Westgate",
+                    "zone": "far"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "delivery-004",
+      "type": "registry:block",
+      "title": "Трекер заказа: статусы проигрываются, курьер едет по маршруту",
+      "description": "Демонстрация трекера доставки: слева четыре статуса — принят, готовим, курьер выехал, у двери — с вертикальной линией, которая заполняется, и временем у каждого; справа карточка-«телефон» с картой, пунктирным маршрутом от кухни до дома и курьером, который едет по кривой через CSS offset-path. Шаги проигрываются таймерами по кнопке «показать, как это выглядит», в конце всплывает сообщение от курьера. Слушает vibeui-cart:checkout и стартует сам.",
+      "categories": [
+        "delivery"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "delivery-004/delivery-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/delivery-004.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "delivery",
+          "tracker",
+          "order-status",
+          "timeline",
+          "courier",
+          "map",
+          "offset-path",
+          "motion-path",
+          "animation",
+          "demo",
+          "event"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Delivery004",
+          "usage": "<Delivery004\n  title=\"Видно каждую минуту\"\n  courierName=\"Артём\"\n  steps={[\n    { title: \"Заказ принят\", text: \"Повар видит заказ.\", time: \"12:41\", after: 300, progress: 0 },\n    { title: \"Готовим\", text: \"Ещё 9 минут.\", time: \"12:43\", after: 1800, progress: 0 },\n    { title: \"Курьер выехал\", text: \"2,3 км до вас.\", time: \"12:56\", after: 3600, progress: 100 },\n    { title: \"У двери\", text: \"Приятного аппетита.\", time: \"13:07\", after: 6600, progress: 100 },\n  ]}\n/>",
+          "summary": "Трекер заказа для доставки: статусы включаются по очереди, курьер едет по карте, в конце сообщение.",
+          "preserve": [
+            "run — счётчик запусков; useEffect на run ставит setTimeout на каждый steps[i].after и вызывает setStep(i), таймеры чистятся",
+            "курьер — g с offset-path:path(ROUTE), offset-distance из --vibeui-delivery-004-d (progress шага) с transition 2.6 с; trail — тот же path с pathLength 1 и stroke-dashoffset",
+            "слушатель vibeui-cart:checkout сбрасывает step в −1 и увеличивает run; data-state todo/now/done на шагах"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, playLabel, replayLabel, courierName",
+            "steps: title, text, time, after (мс), progress (0–100)",
+            "цвет курьера и маршрута — через accent",
+            "tone — тема",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Видно каждую минуту",
+            "maxLength": 40
+          },
+          {
+            "prop": "courierName",
+            "label": "Имя курьера",
+            "type": "text",
+            "default": "Артём",
+            "maxLength": 20
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Order tracker: statuses play out, the courier rides the route",
+            "description": "A delivery tracker demo: four statuses on the left — accepted, cooking, courier on the way, at the door — with a vertical line that fills up and a time for each; on the right a phone-like card with a map, a dashed route from the kitchen to the home and a courier riding the curve via CSS offset-path. Steps play out with timers on the “show how it looks” button, a courier message pops up at the end. Listens to vibeui-cart:checkout and starts on its own.",
+            "ai": {
+              "summary": "An order tracker for delivery: statuses light up in turn, the courier rides across the map, a message at the end.",
+              "preserve": [
+                "run is a launch counter; a useEffect on run sets a setTimeout for every steps[i].after calling setStep(i), timers are cleared",
+                "the courier is a g with offset-path:path(ROUTE), offset-distance from --vibeui-delivery-004-d (the step's progress) with a 2.6 s transition; trail is the same path with pathLength 1 and stroke-dashoffset",
+                "the vibeui-cart:checkout listener resets step to −1 and bumps run; data-state todo/now/done on steps"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, playLabel, replayLabel, courierName",
+                "steps: title, text, time, after (ms), progress (0–100)",
+                "courier and route colour via accent",
+                "tone — theme",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Delivery004\n  title=\"Every minute in sight\"\n  courierName=\"Artem\"\n  steps={[\n    { title: \"Order accepted\", text: \"The cook sees it.\", time: \"12:41\", after: 300, progress: 0 },\n    { title: \"Cooking\", text: \"9 more minutes.\", time: \"12:43\", after: 1800, progress: 0 },\n    { title: \"Courier on the way\", text: \"2.3 km to you.\", time: \"12:56\", after: 3600, progress: 100 },\n    { title: \"At the door\", text: \"Enjoy.\", time: \"13:07\", after: 6600, progress: 100 },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Every minute in sight"
+              },
+              "courierName": {
+                "label": "Courier name",
+                "default": "Artem"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Tracker",
+                "title": "Every minute in sight",
+                "lede": "After payment the order lives on one screen: who is cooking, when the courier left and where they are now. No “please wait, we'll contact you”.",
+                "playLabel": "Show how it looks",
+                "replayLabel": "Once more",
+                "courierName": "Artem",
+                "steps": [
+                  {
+                    "title": "Order accepted",
+                    "text": "Payment went through, the cook sees the order on the screen.",
+                    "time": "12:41",
+                    "after": 300,
+                    "progress": 0
+                  },
+                  {
+                    "title": "Cooking",
+                    "text": "Patties on the grill, fries in the oil. 9 more minutes.",
+                    "time": "12:43",
+                    "after": 1800,
+                    "progress": 0
+                  },
+                  {
+                    "title": "Courier on the way",
+                    "text": "Artem on a scooter, thermal bag, 2.3 km to you.",
+                    "time": "12:56",
+                    "after": 3600,
+                    "progress": 100
+                  },
+                  {
+                    "title": "At the door",
+                    "text": "The courier is here. Enjoy your meal.",
+                    "time": "13:07",
+                    "after": 6600,
+                    "progress": 100
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "delivery-005",
+      "type": "registry:block",
+      "title": "Отзывы-стикеры с эмодзи-реакциями и живым счётчиком заказов",
+      "description": "Отзывы для доставки еды в виде цветных стикеров с наклоном и полоской скотча: имя, район, рукописный текст, тег блюда в углу; внизу каждого — эмодзи-реакции, клик добавляет свою (одну на стикер) и подбрасывает эмодзи. Над сеткой счётчик «заказов сегодня»: растёт от текущего времени суток с пиками на обед и ужин, пересчитывается каждые 10 секунд через useSyncExternalStore, на сервере — прочерк.",
+      "categories": [
+        "delivery"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "delivery-005/delivery-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/delivery-005.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "delivery",
+          "reviews",
+          "testimonials",
+          "stickers",
+          "emoji",
+          "reactions",
+          "counter",
+          "live",
+          "social-proof",
+          "food",
+          "handwritten"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Delivery005",
+          "usage": "<Delivery005\n  title=\"Что пишут, пока жуют\"\n  ordersPerDay={1840}\n  reviews={[\n    { name: \"Катя\", meta: \"Бауманская\", text: \"Смэш приехал за 19 минут и был хрустящим.\", dish: \"смэш\", reactions: { \"🔥\": 48, \"😋\": 31, \"❤️\": 22 } },\n  ]}\n/>",
+          "summary": "Отзывы-стикеры с реакциями и счётчиком заказов, который растёт с самого утра.",
+          "preserve": [
+            "useOrdersToday — useSyncExternalStore с интервалом 10 с и серверным снимком null; доля дня плюс гауссовы пики обеда и ужина",
+            "Sticker держит counts и mine в useState: повторный клик снимает реакцию, другая заменяет; data-pop на 500 мс",
+            "цвет и наклон стикера — COLORS и TILTS по индексу, скотч — ::before с --vibeui-delivery-005-t"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, ordersLabel, ordersPerDay",
+            "reviews: name, meta, text, dish, reactions (эмодзи → число)",
+            "emojis — набор реакций",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что пишут, пока жуют",
+            "maxLength": 40
+          },
+          {
+            "prop": "ordersPerDay",
+            "label": "Заказов в сутки",
+            "type": "number",
+            "default": 1840,
+            "min": 10,
+            "max": 100000
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Sticker reviews with emoji reactions and a live orders counter",
+            "description": "Food delivery reviews as tilted coloured stickers with a strip of tape: name, district, handwritten text, a dish tag in the corner; under each one emoji reactions — a click adds yours (one per sticker) and tosses the emoji. Above the grid an “orders today” counter that grows with the time of day with lunch and dinner peaks, recomputed every 10 seconds via useSyncExternalStore, a dash on the server.",
+            "ai": {
+              "summary": "Sticker reviews with reactions and an orders counter that grows from the morning on.",
+              "preserve": [
+                "useOrdersToday is useSyncExternalStore with a 10 s interval and a null server snapshot; share of the day plus gaussian lunch and dinner peaks",
+                "Sticker keeps counts and mine in useState: a repeat click removes the reaction, another one replaces it; data-pop for 500 ms",
+                "sticker colour and tilt come from COLORS and TILTS by index, the tape is a ::before with --vibeui-delivery-005-t"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, ordersLabel, ordersPerDay",
+                "reviews: name, meta, text, dish, reactions (emoji → count)",
+                "emojis — the reaction set",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Delivery005\n  title=\"What they write while chewing\"\n  ordersPerDay={1840}\n  reviews={[\n    { name: \"Kate\", meta: \"Downtown\", text: \"The smash arrived in 19 minutes and was actually crispy.\", dish: \"smash\", reactions: { \"🔥\": 48, \"😋\": 31, \"❤️\": 22 } },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What they write while chewing"
+              },
+              "ordersPerDay": {
+                "label": "Orders per day"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Reviews",
+                "title": "What they write while chewing",
+                "lede": "The reactions are real — tap yours under every review. The orders counter has been growing since morning.",
+                "ordersLabel": "orders today",
+                "ordersPerDay": 1840,
+                "reviews": [
+                  {
+                    "name": "Kate",
+                    "meta": "Downtown · 14th order",
+                    "text": "The smash arrived in 19 minutes and was actually crispy. The house sauce is a separate love story, get a double.",
+                    "dish": "smash",
+                    "reactions": {
+                      "🔥": 48,
+                      "😋": 31,
+                      "❤️": 22
+                    }
+                  },
+                  {
+                    "name": "Ilya",
+                    "meta": "Riverside",
+                    "text": "Ordered tom yum at 1 a.m., the courier texted “coming up” instead of calling. Respect. The soup burns, as promised.",
+                    "dish": "tom yum",
+                    "reactions": {
+                      "🔥": 27,
+                      "😋": 12,
+                      "❤️": 9
+                    }
+                  },
+                  {
+                    "name": "Marina",
+                    "meta": "Park Lane · with a kid",
+                    "text": "The bowl builder is a lifesaver: no sauce for my son, spicy mayo for me, one box, two happy people.",
+                    "dish": "bowl",
+                    "reactions": {
+                      "❤️": 41,
+                      "😋": 18,
+                      "🔥": 7
+                    }
+                  },
+                  {
+                    "name": "Dima",
+                    "meta": "Eastfield",
+                    "text": "Far away, 50 minutes — but it came in 42 and still hot. We ate the wings in the hallway, couldn't wait.",
+                    "dish": "wings",
+                    "reactions": {
+                      "😋": 35,
+                      "🔥": 20,
+                      "❤️": 11
+                    }
+                  },
+                  {
+                    "name": "Anna & Sasha",
+                    "meta": "5th Avenue · Friday",
+                    "text": "The tracker is the best thing that ever happened to waiting for food. We watched the scooter on the map like a series.",
+                    "dish": "pad thai",
+                    "reactions": {
+                      "❤️": 29,
+                      "🔥": 15,
+                      "😋": 14
+                    }
+                  },
+                  {
+                    "name": "Gosha",
+                    "meta": "Westgate · 3rd order",
+                    "text": "The burnt-top cheesecake is the only reason I don't eat dessert anywhere else.",
+                    "dish": "cheesecake",
+                    "reactions": {
+                      "😋": 52,
+                      "❤️": 24,
+                      "🔥": 6
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

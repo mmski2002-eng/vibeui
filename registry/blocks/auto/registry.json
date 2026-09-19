@@ -1,0 +1,764 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "auto-001",
+      "type": "registry:block",
+      "title": "Калькулятор услуг детейлинга: чипы, класс авто, итог на лету",
+      "description": "Калькулятор автосервиса: сегментный селектор класса авто (компакт → внедорожник, множитель цены), карточки-чипы услуг с ценой и временем — по курсору по карточке бежит spotlight, отмеченные горят акцентной рамкой. Внизу липкая панель: итог и время в боксе пересчитываются на лету, кнопка «Записаться» отправляет выбор CustomEvent-ом в блок записи и ведёт на его якорь.",
+      "categories": [
+        "auto"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auto-001/auto-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auto-001.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "auto",
+          "car service",
+          "detailing",
+          "calculator",
+          "pricing",
+          "services",
+          "chips",
+          "spotlight",
+          "custom event",
+          "interactive"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Auto001",
+          "usage": "<Auto001\n  services={[{ name: \"Керамика 9H\", price: 32000, minutes: 720 }, { name: \"Химчистка\", price: 9000, minutes: 300 }]}\n  classes={[{ label: \"Компакт\", factor: 1 }, { label: \"Кроссовер\", factor: 1.3 }]}\n  actionHref=\"#booking\"\n/>",
+          "summary": "Калькулятор услуг для автосервиса: выбор услуг и класса авто, итог и время сразу, выбор уходит в запись.",
+          "preserve": [
+            "итог — useMemo от services, selected и factor: цена × множитель класса, округление до 100, время × 1,2 для больших классов",
+            "spotlight — ::before radial-gradient по --vibeui-auto-001-x/y, координаты пишутся в style карточки на pointermove",
+            "«Записаться» — window.dispatchEvent(new CustomEvent(eventName, { detail: { services, carClass, total, minutes } })) и переход по actionHref"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, currency",
+            "services: name, price, minutes, note; classes: label, hint, factor; defaultSelected",
+            "actionLabel, actionHref, eventName",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Соберите свой детейлинг",
+            "maxLength": 50
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Записаться",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Detailing service calculator: chips, car class, live total",
+            "description": "Car service calculator: a segmented car class selector (compact → SUV, price multiplier), service chip cards with price and time — a spotlight follows the cursor across a card, selected ones glow with an accent border. At the bottom a sticky bar: the total and bay time recalculate live, the “Book” button sends the selection as a CustomEvent to the booking block and links to its anchor.",
+            "ai": {
+              "summary": "Service calculator for a car service: pick services and a car class, total and time instantly, selection goes to booking.",
+              "preserve": [
+                "the total is a useMemo of services, selected and factor: price × class multiplier, rounded to 100, time × 1.2 for big classes",
+                "the spotlight is a ::before radial-gradient at --vibeui-auto-001-x/y, coordinates written into the card style on pointermove",
+                "“Book” does window.dispatchEvent(new CustomEvent(eventName, { detail: { services, carClass, total, minutes } })) and follows actionHref"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, currency",
+                "services: name, price, minutes, note; classes: label, hint, factor; defaultSelected",
+                "actionLabel, actionHref, eventName",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Auto001\n  services={[{ name: \"9H ceramic\", price: 650, minutes: 720 }, { name: \"Interior deep clean\", price: 180, minutes: 300 }]}\n  classes={[{ label: \"Compact\", factor: 1 }, { label: \"Crossover\", factor: 1.3 }]}\n  actionHref=\"#booking\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Build your detailing"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Book"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Calculator",
+                "title": "Build your detailing",
+                "lede": "Tick what you need, pick the car class — price and time calculate instantly. The total is fixed at booking, no “we'll see on site”.",
+                "currency": "$",
+                "services": [
+                  {
+                    "name": "Detailing wash",
+                    "price": 50,
+                    "minutes": 90,
+                    "note": "Two-bucket hand wash, clay, wax."
+                  },
+                  {
+                    "name": "Paint correction",
+                    "price": 360,
+                    "minutes": 480,
+                    "note": "Two stages: cut and finish."
+                  },
+                  {
+                    "name": "9H ceramic, 3 layers",
+                    "price": 650,
+                    "minutes": 720,
+                    "note": "Hydrophobic for 2–3 years."
+                  },
+                  {
+                    "name": "PPF on the front",
+                    "price": 900,
+                    "minutes": 960,
+                    "note": "Hood, bumper, mirrors, pillars."
+                  },
+                  {
+                    "name": "Interior deep clean",
+                    "price": 180,
+                    "minutes": 300,
+                    "note": "Seats, headliner, carpets, plastics."
+                  },
+                  {
+                    "name": "Headlights: polish + film",
+                    "price": 140,
+                    "minutes": 120,
+                    "note": "200 µm film on top."
+                  },
+                  {
+                    "name": "Ceramic on wheels",
+                    "price": 100,
+                    "minutes": 150,
+                    "note": "Off, cleaned, coated."
+                  },
+                  {
+                    "name": "Leather: clean and protect",
+                    "price": 130,
+                    "minutes": 180,
+                    "note": "Foam, brush, conditioner."
+                  }
+                ],
+                "classes": [
+                  {
+                    "label": "Compact",
+                    "hint": "Polo, Rio, Mini",
+                    "factor": 1
+                  },
+                  {
+                    "label": "Sedan",
+                    "hint": "Camry, 5 Series",
+                    "factor": 1.15
+                  },
+                  {
+                    "label": "Crossover",
+                    "hint": "RAV4, X3, Q5",
+                    "factor": 1.3
+                  },
+                  {
+                    "label": "SUV",
+                    "hint": "LC300, X7, G-Class",
+                    "factor": 1.5
+                  }
+                ],
+                "actionLabel": "Book"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auto-002",
+      "type": "registry:block",
+      "title": "До/после детейлинга: шторка с перетаскиванием и вкладки «фары / кузов / салон»",
+      "description": "Слайдер сравнения для автосервиса: «до» лежит под «после» и режется clip-path по положению ручки, ручка с двумя стрелками и вертикальная линия-лампа. Тянется пальцем и мышью через pointer capture, клавиатурой — через невидимый range. Сверху вкладки: каждая несёт свою пару фото, подпись «что сделали» и время работ, при смене шторка возвращается на середину.",
+      "categories": [
+        "auto"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auto-002/auto-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auto-002.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "auto",
+          "car service",
+          "detailing",
+          "before after",
+          "comparison",
+          "slider",
+          "drag",
+          "tabs",
+          "gallery",
+          "interactive"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Auto002",
+          "usage": "<Auto002\n  pairs={[{ label: \"Кузов\", before: \"/photos/before-body.webp\", after: \"/photos/after-body.webp\", work: \"Полировка и керамика.\", time: \"2 дня\" }]}\n/>",
+          "summary": "До/после для автосервиса: шторка сравнения с перетаскиванием, вкладки по зонам машины.",
+          "preserve": [
+            "положение шторки — state position (0–100) в --vibeui-auto-002-pos, «до» режется clip-path:inset(0 calc(100% - pos) 0 0)",
+            "перетаскивание — pointerdown ставит setPointerCapture и флаг в ref, pointermove двигает только при флаге; touch-action:pan-y",
+            "range лежит поверх с opacity:0 и pointer-events:none — только для клавиатуры, фокус подсвечивает контейнер через :has"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, beforeLabel, afterLabel",
+            "pairs: label, before, after, work, time",
+            "defaultPosition",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Потяните — и разница видна",
+            "maxLength": 50
+          },
+          {
+            "prop": "defaultPosition",
+            "label": "Шторка, %",
+            "type": "number",
+            "default": 50,
+            "min": 10,
+            "max": 90
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Detailing before/after: a draggable curtain with “lights / body / interior” tabs",
+            "description": "Comparison slider for a car service: “before” sits under “after” and is cut by clip-path at the handle position, a handle with two arrows and a vertical lamp line. Drags by finger and mouse via pointer capture, by keyboard via a hidden range. Tabs on top: each carries its own photo pair, a “what we did” caption and the time taken; switching resets the curtain to the middle.",
+            "ai": {
+              "summary": "Before/after for a car service: a draggable comparison curtain, tabs by car zone.",
+              "preserve": [
+                "the curtain position is a position state (0–100) in --vibeui-auto-002-pos, “before” is cut by clip-path:inset(0 calc(100% - pos) 0 0)",
+                "dragging: pointerdown sets setPointerCapture and a ref flag, pointermove moves only with the flag; touch-action:pan-y",
+                "the range sits on top with opacity:0 and pointer-events:none — keyboard only, focus highlights the container via :has"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, beforeLabel, afterLabel",
+                "pairs: label, before, after, work, time",
+                "defaultPosition",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Auto002\n  pairs={[{ label: \"Body\", before: \"/photos/before-body.webp\", after: \"/photos/after-body.webp\", work: \"Paint correction and ceramic.\", time: \"2 days\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Drag it — the difference is obvious"
+              },
+              "defaultPosition": {
+                "label": "Curtain, %"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Before / after",
+                "title": "Drag it — the difference is obvious",
+                "lede": "Three real cars from the bay. Drag the curtain with a finger, mouse or arrow keys.",
+                "beforeLabel": "before",
+                "afterLabel": "after",
+                "pairs": [
+                  {
+                    "label": "Lights",
+                    "before": "/demo/auto/before-lights.webp",
+                    "after": "/demo/auto/after-lights.webp",
+                    "work": "Removed yellowing and haze in three abrasive steps, 200 µm protective film on top.",
+                    "time": "2 hours"
+                  },
+                  {
+                    "label": "Body",
+                    "before": "/demo/auto/before-body.webp",
+                    "after": "/demo/auto/after-body.webp",
+                    "work": "Two-stage paint correction and 9H ceramic in three layers. Black is deep again, no holograms.",
+                    "time": "2 days"
+                  },
+                  {
+                    "label": "Interior",
+                    "before": "/demo/auto/before-interior.webp",
+                    "after": "/demo/auto/after-interior.webp",
+                    "work": "Headliner, seats and carpets deep cleaned, leather cleaned and conditioned. Smells like a new car.",
+                    "time": "5 hours"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auto-003",
+      "type": "registry:block",
+      "title": "Процесс автосервиса: таймлайн четырёх шагов с прогрессом по прокрутке",
+      "description": "Секция «как проходит» для автосервиса: слева липкая колонка с заголовком и большим номером текущего шага, справа шаги на вертикальной рельсе. Рельса заполняется акцентом по мере прокрутки (scaleY по CSS-переменной, считается от положения списка относительно окна), шаг, до которого дошла заливка, включается: номер горит, карточка выходит из тени. Длительность и результат шага — чипами.",
+      "categories": [
+        "auto"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auto-003/auto-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auto-003.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "auto",
+          "car service",
+          "detailing",
+          "process",
+          "steps",
+          "timeline",
+          "how it works",
+          "scroll",
+          "progress",
+          "sticky"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Auto003",
+          "usage": "<Auto003\n  title=\"Четыре шага от заезда до ключей\"\n  steps={[{ title: \"Осмотр под лампой\", text: \"Меряем лак, фиксируем цену.\", duration: \"20 минут\", result: \"смета\" }]}\n/>",
+          "summary": "Процесс для автосервиса: четыре шага на рельсе, заливка идёт по прокрутке, липкий номер шага.",
+          "preserve": [
+            "прогресс — (0,55·innerHeight − rect.top) / rect.height списка, пишется в --vibeui-auto-003-progress на корне через rAF-троттлинг",
+            "активный шаг — последний li, чей top выше той же линии; data-on ставится на все шаги до него",
+            "колонка слева липкая от 56rem контейнера, большой счётчик показывается только там"
+          ],
+          "adapt": [
+            "eyebrow, title, lede",
+            "steps: title, text, duration, result",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Четыре шага от заезда до ключей",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Car service process: a four-step timeline with scroll progress",
+            "description": "A “how it goes” section for a car service: a sticky left column with the title and a big number of the current step, steps on a vertical rail on the right. The rail fills with the accent as you scroll (scaleY via a CSS variable computed from the list position in the viewport); the step the fill has reached turns on: its number lights up, the card comes out of the shade. Duration and result of a step are chips.",
+            "ai": {
+              "summary": "Process for a car service: four steps on a rail, the fill follows the scroll, a sticky step number.",
+              "preserve": [
+                "progress is (0.55·innerHeight − rect.top) / rect.height of the list, written into --vibeui-auto-003-progress on the root with rAF throttling",
+                "the active step is the last li whose top is above that same line; data-on is set on all steps up to it",
+                "the left column is sticky from a 56rem container, the big counter shows only there"
+              ],
+              "adapt": [
+                "eyebrow, title, lede",
+                "steps: title, text, duration, result",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Auto003\n  title=\"Four steps from drop-off to keys\"\n  steps={[{ title: \"Inspection under the lamp\", text: \"We measure the clear coat and fix the price.\", duration: \"20 minutes\", result: \"a quote\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Four steps from drop-off to keys"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "How it goes",
+                "title": "Four steps from drop-off to keys",
+                "lede": "Nothing is “decided on site”: price and timing are known after the inspection, then only work and photos of every stage.",
+                "steps": [
+                  {
+                    "title": "Inspection under the lamp",
+                    "text": "You drive into the bay, the master checks the body under softboxes, measures the clear coat, shows the problem spots and fixes the price.",
+                    "duration": "20 minutes",
+                    "result": "quote in messenger"
+                  },
+                  {
+                    "title": "Wash and prep",
+                    "text": "Two-bucket wash, clay, degreasing. We remove what's in the way: badges, mud flaps, wheels if needed.",
+                    "duration": "1.5 hours",
+                    "result": "a clean base"
+                  },
+                  {
+                    "title": "Work in the bay",
+                    "text": "Correction, ceramic, film or deep clean — per the quote. The car sits in a closed bay at +22°, no dust and no strangers.",
+                    "duration": "4 hours to 3 days",
+                    "result": "photos of every stage"
+                  },
+                  {
+                    "title": "Handover and care sheet",
+                    "text": "We show the result under the same lamp as at inspection, hand over a care sheet and remind about the first wash in two weeks.",
+                    "duration": "20 minutes",
+                    "result": "warranty in the contract"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auto-004",
+      "type": "registry:block",
+      "title": "Запись в автосервис: сетка слотов на неделю и панель заказа",
+      "description": "Запись в бокс: сетка слотов день × время на неделю вперёд, считается от текущего дня через useSyncExternalStore — на сервере скелет, на клиенте появляются даты. Занятые слоты перечёркнуты (детерминированно от даты), прошедшие сегодня и выходные погашены, выбранный горит акцентом. Справа панель заказа: слушает CustomEvent из калькулятора и показывает услуги с суммой, поля имени и телефона, после отправки — прорисованная галочка. Форма — заглушка.",
+      "categories": [
+        "auto"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auto-004/auto-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auto-004.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "auto",
+          "car service",
+          "detailing",
+          "booking",
+          "appointment",
+          "schedule",
+          "slots",
+          "calendar",
+          "week",
+          "form",
+          "custom event"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Auto004",
+          "usage": "<Auto004\n  hours={[9, 11, 13, 15, 17, 19]}\n  days={7}\n  closedWeekdays={[0]}\n  eventName=\"vibeui-auto:book\"\n  actionLabel=\"Записаться\"\n/>",
+          "summary": "Запись в автосервис по слотам недели от сегодняшнего дня; заказ подтягивается из калькулятора.",
+          "preserve": [
+            "«сейчас» — useSyncExternalStore с подпиской на setInterval 60 с, снимок — строка год-месяц-день-час, серверный снимок null → слоты data-state=skeleton",
+            "занятость — (date·31 + month·7 + hour·13) % 7 ∈ {0, 3}: детерминирована, не мигает; closedWeekdays → closed, today и hour ≤ текущего → past",
+            "панель слушает window.addEventListener(eventName) в useEffect и кладёт detail в state; кнопка отправки disabled, пока слот не выбран"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, currency",
+            "hours, days, closedWeekdays, eventName",
+            "namePlaceholder, phonePlaceholder, actionLabel, doneTitle, doneText",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Выберите слот — подтвердим за минуту",
+            "maxLength": 60
+          },
+          {
+            "prop": "days",
+            "label": "Дней",
+            "type": "number",
+            "default": 7,
+            "min": 3,
+            "max": 10
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Car service booking: a week slot grid and an order panel",
+            "description": "Bay booking: a day × time slot grid for a week ahead, computed from today via useSyncExternalStore — a skeleton on the server, dates appear on the client. Busy slots are struck through (deterministic from the date), today's past hours and days off are dimmed, the picked one glows with the accent. On the right an order panel: it listens to a CustomEvent from the calculator and shows the services with the total, name and phone fields, a drawn checkmark after submit. The form is a stub.",
+            "ai": {
+              "summary": "Car service booking by week slots from today; the order arrives from the calculator.",
+              "preserve": [
+                "“now” is a useSyncExternalStore subscribed to a 60 s setInterval, the snapshot is a year-month-day-hour string, the server snapshot is null → slots get data-state=skeleton",
+                "busy is (date·31 + month·7 + hour·13) % 7 ∈ {0, 3}: deterministic, no flicker; closedWeekdays → closed, today with hour ≤ current → past",
+                "the panel listens via window.addEventListener(eventName) in useEffect and puts detail into state; the submit button is disabled until a slot is picked"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, currency",
+                "hours, days, closedWeekdays, eventName",
+                "namePlaceholder, phonePlaceholder, actionLabel, doneTitle, doneText",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Auto004\n  hours={[9, 11, 13, 15, 17, 19]}\n  days={7}\n  closedWeekdays={[0]}\n  eventName=\"vibeui-auto:book\"\n  actionLabel=\"Book\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Pick a slot — we confirm in a minute"
+              },
+              "days": {
+                "label": "Days"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Booking",
+                "title": "Pick a slot — we confirm in a minute",
+                "lede": "A week ahead across two lifts. Struck through is taken, grey is already gone. Tap a free time and leave your phone.",
+                "currency": "$",
+                "namePlaceholder": "Your name",
+                "phonePlaceholder": "+1 (___) ___-____",
+                "actionLabel": "Book",
+                "doneTitle": "The slot is yours",
+                "doneText": "The master will message you within a minute to confirm the time and ask about the car."
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

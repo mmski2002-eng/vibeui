@@ -627,6 +627,222 @@
           }
         }
       }
+    },
+    {
+      "name": "changelog-013",
+      "type": "registry:block",
+      "title": "Лента версий API с командой установки и живыми счётчиками запросов",
+      "description": "Changelog для API: слева записи на вертикальной линии — версия чипом моноширинным, дата, теги new / fix / breaking / perf и список изменений с «+»; справа липкая панель: команда установки SDK с вкладками npm / pip / go и кнопкой «скопировать», ниже два живых счётчика — запросов в секунду (дрожит вокруг базового) и за сегодня (растёт каждую секунду). Стартовые значения детерминированы, тикают в эффекте.",
+      "categories": [
+        "changelog"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "changelog-013/changelog-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/changelog-013.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "changelog",
+          "releases",
+          "versions",
+          "api",
+          "sdk",
+          "install",
+          "copy",
+          "counter",
+          "live",
+          "developer"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Changelog013",
+          "usage": "<Changelog013\n  entries={[{ version: \"v2.4.0\", date: \"12 сен 2026\", title: \"Подсказки с геопозицией\", tags: [\"new\"], items: [\"/suggest принимает lat/lon\"] }]}\n  installs={[{ label: \"npm\", command: \"npm i @geokod/sdk\" }]}\n  perSecond={1240}\n/>",
+          "summary": "История версий API с тегами, командой установки и тикающими счётчиками нагрузки.",
+          "preserve": [
+            "счётчики — setInterval 1 с в useEffect: rate = perSecond·(0.94 + random·0.12), today += rate",
+            "вкладки установки меняют команду, копирование — navigator.clipboard с fallback-тишиной и «готово» на 1,5 с",
+            "первая запись — акцентная точка со свечением, теги breaking — янтарные"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, allLabel, allHref",
+            "entries: version, date, title, tags[], items[]",
+            "installTitle, installs: label, command; perSecond, todayStart",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что изменилось",
+            "maxLength": 40
+          },
+          {
+            "prop": "perSecond",
+            "label": "Запросов в секунду",
+            "type": "number",
+            "default": 1240,
+            "min": 1,
+            "max": 1000000
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "API changelog feed with an install command and live request counters",
+            "description": "A changelog for an API: entries on a vertical line on the left — a monospace version chip, date, new / fix / breaking / perf tags and a change list with “+”; a sticky panel on the right: an SDK install command with npm / pip / go tabs and a copy button, and two live counters below — requests per second (jittering around a base) and today (growing every second). Start values are deterministic, ticking in an effect.",
+            "ai": {
+              "summary": "API version history with tags, an install command and ticking load counters.",
+              "preserve": [
+                "counters are a 1 s setInterval in useEffect: rate = perSecond·(0.94 + random·0.12), today += rate",
+                "install tabs swap the command, copying uses navigator.clipboard with a silent fallback and “done” for 1.5 s",
+                "the first entry has a glowing accent dot, breaking tags are amber"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, allLabel, allHref",
+                "entries: version, date, title, tags[], items[]",
+                "installTitle, installs: label, command; perSecond, todayStart",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Changelog013\n  entries={[{ version: \"v2.4.0\", date: \"Sep 12, 2026\", title: \"Geo-aware suggestions\", tags: [\"new\"], items: [\"/suggest accepts lat/lon\"] }]}\n  installs={[{ label: \"npm\", command: \"npm i @geokod/sdk\" }]}\n  perSecond={1240}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What changed"
+              },
+              "perSecond": {
+                "label": "Requests per second"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Changelog",
+                "title": "What changed",
+                "lede": "Every version with a date, tags and a list. Breaking changes are announced six months ahead and the old version stays up all that time.",
+                "entries": [
+                  {
+                    "version": "v2.4.0",
+                    "date": "Sep 12, 2026",
+                    "title": "Address suggestions ranked by location",
+                    "tags": [
+                      "new",
+                      "perf"
+                    ],
+                    "items": [
+                      "/suggest accepts lat/lon and ranks nearby addresses higher",
+                      "/suggest median dropped from 31 to 24 ms with a new index",
+                      "postal_code is now present in every /geocode response"
+                    ]
+                  },
+                  {
+                    "version": "v2.3.2",
+                    "date": "Aug 28, 2026",
+                    "title": "Reverse geocoding fixes",
+                    "tags": [
+                      "fix"
+                    ],
+                    "items": [
+                      "/reverse on region borders returned the neighbouring district — fixed",
+                      "Empty house in Kazan and Ufa responses"
+                    ]
+                  },
+                  {
+                    "version": "v2.3.0",
+                    "date": "Aug 4, 2026",
+                    "title": "Distance matrix up to 100 × 100",
+                    "tags": [
+                      "new"
+                    ],
+                    "items": [
+                      "/matrix computes up to 10,000 pairs per request",
+                      "car, walk, bike profiles; traffic on for car by default",
+                      "Webhooks for /batch: the status comes to you"
+                    ]
+                  },
+                  {
+                    "version": "v2.0.0",
+                    "date": "Jun 1, 2026",
+                    "title": "API version two",
+                    "tags": [
+                      "breaking"
+                    ],
+                    "items": [
+                      "/geocode response: results is an array, precision replaces kind",
+                      "Keys look like gk_live_… and gk_test_…; old ones work until December 1",
+                      "A single error format with a code field"
+                    ]
+                  }
+                ],
+                "allLabel": "All versions",
+                "installTitle": "Install the SDK"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

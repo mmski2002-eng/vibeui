@@ -8,4 +8,6 @@ export const PREVIEWS = {
     import("@/registry/blocks/stats/stats-001/stats-001").then((module) => module.Stats001),
   "stats-002": () =>
     import("@/registry/blocks/stats/stats-002/stats-002").then((module) => module.Stats002),
+  "stats-012": () =>
+    import("@/registry/blocks/stats/stats-012/stats-012").then((module) => module.Stats012),
 } satisfies PreviewLoaderMap

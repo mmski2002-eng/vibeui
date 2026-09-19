@@ -1,0 +1,728 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "language-001",
+      "type": "registry:block",
+      "title": "Тест уровня: пять вопросов-чипов и шкала A1–C1 с маркером",
+      "description": "Тест уровня языка на тетрадном листе: вопрос с пропуском, варианты — чипы, прогресс из сегментов сверху. Выбранный чип подсвечивается, через полсекунды лист перелистывается к следующему вопросу. В конце — уровень крупно, шкала A1…C1 с растущей заливкой и маркером, который доезжает до своей отметки, что человек уже может и «вам подойдёт группа …». Результат уходит событием vibeui-language:level.",
+      "categories": [
+        "language"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "language-001/language-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/language-001.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "language",
+          "school",
+          "test",
+          "quiz",
+          "level",
+          "cefr",
+          "a1",
+          "b2",
+          "progress",
+          "education",
+          "interactive"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Language001",
+          "usage": "<Language001\n  title=\"Узнайте свой уровень до первого урока\"\n  questions={[{ prompt: \"I ___ from Saint Petersburg.\", options: [\"am\", \"is\", \"are\"], answer: 0 }]}\n  levels={[{ code: \"A1\", label: \"Beginner\", can: \"Представиться и заказать кофе.\", group: \"A1 · вторник и четверг 19:30\" }]}\n/>",
+          "summary": "Тест уровня для языковой школы: чипы, прогресс, результат на шкале A1–C1 с анимированным маркером и подбором группы.",
+          "preserve": [
+            "переход к следующему вопросу — setTimeout 520 мс после выбора, карточка с key перезапускает keyframes page",
+            "маркер едет через runner шириной 100% и translateX(--x %), заливка — ::after с scaleX(--fill); оба стартуют с нуля через ready-таймер",
+            "уровень = round(score / total × (levels.length − 1)); после done диспатчится CustomEvent vibeui-language:level с { level }"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, resultTitle, retryLabel",
+            "questions: prompt (с ___), options, answer",
+            "levels: code, label, can, group; actionLabel, actionHref",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Узнайте свой уровень до первого урока",
+            "maxLength": 60
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка результата",
+            "type": "text",
+            "default": "Записаться в эту группу",
+            "maxLength": 30
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Level test: five chip questions and an A1–C1 scale with a marker",
+            "description": "A language level test on a ruled sheet: a fill-in-the-gap question, chip options, a segmented progress bar on top. The picked chip highlights, half a second later the sheet flips to the next question. At the end — the level in big type, an A1…C1 scale with a growing fill and a marker that slides to its mark, what the person can already do and “the right group for you is …”. The result is dispatched as a vibeui-language:level event.",
+            "ai": {
+              "summary": "A level test for a language school: chips, progress, the result on an A1–C1 scale with an animated marker and a matching group.",
+              "preserve": [
+                "moving to the next question is a 520 ms setTimeout after a pick, the keyed card restarts the page keyframes",
+                "the marker rides a 100%-wide runner with translateX(--x %), the fill is an ::after with scaleX(--fill); both start from zero via a ready timer",
+                "level = round(score / total × (levels.length − 1)); after done a CustomEvent vibeui-language:level with { level } is dispatched"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, resultTitle, retryLabel",
+                "questions: prompt (with ___), options, answer",
+                "levels: code, label, can, group; actionLabel, actionHref",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Language001\n  title=\"Find out your level before the first lesson\"\n  questions={[{ prompt: \"I ___ from Saint Petersburg.\", options: [\"am\", \"is\", \"are\"], answer: 0 }]}\n  levels={[{ code: \"A1\", label: \"Beginner\", can: \"Introduce yourself and order a coffee.\", group: \"A1 · Tuesday and Thursday 19:30\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Find out your level before the first lesson"
+              },
+              "actionLabel": {
+                "label": "Result button",
+                "default": "Join this group"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "two minutes, honestly",
+                "title": "Find out your level before the first lesson",
+                "lede": "Five grammar questions — and we'll show your level on the scale and a group where you'll be neither bored nor scared.",
+                "resultTitle": "Your level",
+                "actionLabel": "Join this group",
+                "retryLabel": "Try again",
+                "levels": [
+                  {
+                    "code": "A1",
+                    "label": "Beginner",
+                    "can": "Introduce yourself, order a coffee and ask the way — slowly, but you'll be understood.",
+                    "group": "A1 · “from scratch”, Tuesday and Thursday 19:30, starts 5 October"
+                  },
+                  {
+                    "code": "A2",
+                    "label": "Elementary",
+                    "can": "Talk about yourself and your job, understand a simple text, arrange a meeting.",
+                    "group": "A2 · “speaking start”, Monday and Wednesday 20:00, starts 28 September"
+                  },
+                  {
+                    "code": "B1",
+                    "label": "Intermediate",
+                    "can": "Keep up a conversation on any everyday topic, watch a series with subtitles.",
+                    "group": "B1 · “confident speaking”, Tuesday and Thursday 20:30, starts 5 October"
+                  },
+                  {
+                    "code": "B2",
+                    "label": "Upper-Intermediate",
+                    "can": "Argue, joke, negotiate and read books in the original.",
+                    "group": "B2 · “fluent”, Monday and Wednesday 19:00, starts 12 October"
+                  },
+                  {
+                    "code": "C1",
+                    "label": "Advanced",
+                    "can": "Understand accents, subtle humour and write so an editor can't tell you from a native.",
+                    "group": "C1 · “like a native”, Saturday 12:00, starts 10 October"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "language-002",
+      "type": "registry:block",
+      "title": "Расписание групп: неделя × время, фильтры и «ближайший старт через N дней»",
+      "description": "Расписание языковых групп сеткой: колонки — дни недели, строки — время, в ячейках карточки групп с языком, уровнем, преподавателем и свободными местами. Фильтры язык / уровень — чипы, при смене сетка перерисовывается. В шапке «ближайший старт через N дней» считается от текущей даты (useSyncExternalStore, на сервере заглушка). Слушает событие vibeui-language:level от теста уровня. На узком — список по дням.",
+      "categories": [
+        "language"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "language-002/language-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/language-002.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "language",
+          "school",
+          "schedule",
+          "timetable",
+          "groups",
+          "calendar",
+          "filter",
+          "education",
+          "countdown"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Language002",
+          "usage": "<Language002\n  title=\"Группы, которые стартуют этой осенью\"\n  languages={[{ code: \"en\", label: \"Английский\" }]}\n  levels={[\"A1\", \"A2\", \"B1\"]}\n  groups={[{ lang: \"en\", level: \"A1\", day: 2, time: \"19:30\", start: \"2026-10-05\", teacher: \"Анна\", seats: 3 }]}\n/>",
+          "summary": "Расписание групп для школы: сетка неделя × время, фильтры, ближайший старт от сегодняшней даты, подписка на тест уровня.",
+          "preserve": [
+            "время — useSyncExternalStore с модульным снимком минуты и серверным null: до гидрации в карточке «считаем…», потом «через N дней»",
+            "сетка — grid 3.2rem + 7 колонок от 60rem, строка — display:contents; на узком заголовки скрыты, пустые ячейки display:none, подпись «день · время» через ::before",
+            "фильтр уровня выставляется из window-события vibeui-language:level, если уровень есть в levels"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, days, actionLabel, actionHref",
+            "languages: code, label; levels",
+            "groups: lang, level, day (1–7), time, start (ISO), teacher, seats",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Группы, которые стартуют этой осенью",
+            "maxLength": 60
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Group schedule: week × time, filters and “next start in N days”",
+            "description": "A grid schedule of language groups: columns are weekdays, rows are times, cells hold group cards with language, level, teacher and free seats. Language / level filters are chips, the grid redraws on change. In the head “next start in N days” is computed from today's date (useSyncExternalStore, a placeholder on the server). Listens to the vibeui-language:level event from the level test. A list by day on narrow.",
+            "ai": {
+              "summary": "A group schedule for a school: a week × time grid, filters, the next start from today's date, subscribed to the level test.",
+              "preserve": [
+                "time comes from useSyncExternalStore with a module-level minute snapshot and a server null: “counting…” before hydration, then “in N days”",
+                "the grid is 3.2rem + 7 columns from 60rem, a row is display:contents; on narrow headers hide, empty cells are display:none, the “day · time” label is a ::before",
+                "the level filter is set from the window event vibeui-language:level when the level exists in levels"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, days, actionLabel, actionHref",
+                "languages: code, label; levels",
+                "groups: lang, level, day (1–7), time, start (ISO), teacher, seats",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Language002\n  title=\"Groups starting this autumn\"\n  languages={[{ code: \"en\", label: \"English\" }]}\n  levels={[\"A1\", \"A2\", \"B1\"]}\n  groups={[{ lang: \"en\", level: \"A1\", day: 2, time: \"19:30\", start: \"2026-10-05\", teacher: \"Anna\", seats: 3 }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Groups starting this autumn"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "schedule",
+                "title": "Groups starting this autumn",
+                "lede": "Pick a language and level — we'll show where there are seats. Lessons twice a week for an hour, mornings and evenings.",
+                "languages": [
+                  {
+                    "code": "en",
+                    "label": "English"
+                  },
+                  {
+                    "code": "es",
+                    "label": "Spanish"
+                  },
+                  {
+                    "code": "it",
+                    "label": "Italian"
+                  }
+                ],
+                "days": [
+                  "mon",
+                  "tue",
+                  "wed",
+                  "thu",
+                  "fri",
+                  "sat",
+                  "sun"
+                ],
+                "actionLabel": "Can't find your time? Write to us — we'll put a group together for you.",
+                "groups": [
+                  {
+                    "lang": "en",
+                    "level": "A1",
+                    "day": 2,
+                    "time": "19:30",
+                    "start": "2026-10-05",
+                    "teacher": "Anna",
+                    "seats": 3
+                  },
+                  {
+                    "lang": "en",
+                    "level": "A1",
+                    "day": 4,
+                    "time": "19:30",
+                    "start": "2026-10-05",
+                    "teacher": "Anna",
+                    "seats": 3
+                  },
+                  {
+                    "lang": "en",
+                    "level": "A2",
+                    "day": 1,
+                    "time": "20:00",
+                    "start": "2026-09-28",
+                    "teacher": "Emma",
+                    "seats": 1
+                  },
+                  {
+                    "lang": "en",
+                    "level": "A2",
+                    "day": 3,
+                    "time": "20:00",
+                    "start": "2026-09-28",
+                    "teacher": "Emma",
+                    "seats": 1
+                  },
+                  {
+                    "lang": "en",
+                    "level": "B1",
+                    "day": 2,
+                    "time": "20:00",
+                    "start": "2026-10-05",
+                    "teacher": "Emma",
+                    "seats": 4
+                  },
+                  {
+                    "lang": "en",
+                    "level": "B1",
+                    "day": 4,
+                    "time": "20:00",
+                    "start": "2026-10-05",
+                    "teacher": "Emma",
+                    "seats": 4
+                  },
+                  {
+                    "lang": "en",
+                    "level": "B2",
+                    "day": 1,
+                    "time": "19:30",
+                    "start": "2026-10-12",
+                    "teacher": "Anna",
+                    "seats": 2
+                  },
+                  {
+                    "lang": "en",
+                    "level": "B2",
+                    "day": 3,
+                    "time": "19:30",
+                    "start": "2026-10-12",
+                    "teacher": "Anna",
+                    "seats": 2
+                  },
+                  {
+                    "lang": "en",
+                    "level": "C1",
+                    "day": 6,
+                    "time": "12:00",
+                    "start": "2026-10-10",
+                    "teacher": "Emma",
+                    "seats": 0
+                  },
+                  {
+                    "lang": "es",
+                    "level": "A1",
+                    "day": 1,
+                    "time": "19:30",
+                    "start": "2026-10-05",
+                    "teacher": "Diego",
+                    "seats": 5
+                  },
+                  {
+                    "lang": "es",
+                    "level": "A1",
+                    "day": 3,
+                    "time": "19:30",
+                    "start": "2026-10-05",
+                    "teacher": "Diego",
+                    "seats": 5
+                  },
+                  {
+                    "lang": "es",
+                    "level": "A2",
+                    "day": 6,
+                    "time": "11:00",
+                    "start": "2026-10-17",
+                    "teacher": "Diego",
+                    "seats": 2
+                  },
+                  {
+                    "lang": "es",
+                    "level": "B1",
+                    "day": 2,
+                    "time": "08:00",
+                    "start": "2026-10-06",
+                    "teacher": "Diego",
+                    "seats": 3
+                  },
+                  {
+                    "lang": "es",
+                    "level": "B1",
+                    "day": 4,
+                    "time": "08:00",
+                    "start": "2026-10-06",
+                    "teacher": "Diego",
+                    "seats": 3
+                  },
+                  {
+                    "lang": "it",
+                    "level": "A1",
+                    "day": 2,
+                    "time": "20:00",
+                    "start": "2026-10-13",
+                    "teacher": "Giulia",
+                    "seats": 6
+                  },
+                  {
+                    "lang": "it",
+                    "level": "A1",
+                    "day": 4,
+                    "time": "20:00",
+                    "start": "2026-10-13",
+                    "teacher": "Giulia",
+                    "seats": 6
+                  },
+                  {
+                    "lang": "it",
+                    "level": "A2",
+                    "day": 7,
+                    "time": "12:00",
+                    "start": "2026-10-18",
+                    "teacher": "Giulia",
+                    "seats": 2
+                  },
+                  {
+                    "lang": "it",
+                    "level": "B1",
+                    "day": 5,
+                    "time": "19:30",
+                    "start": "2026-10-09",
+                    "teacher": "Giulia",
+                    "seats": 1
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "language-003",
+      "type": "registry:block",
+      "title": "Прогресс за три месяца: график словарного запаса с ползунком недель",
+      "description": "Интерактивный график словарного запаса на тетрадной линовке: кривая рисуется, когда блок попадает в экран (IntersectionObserver, pathLength + stroke-dashoffset), под ней проявляется заливка, вехи отмечены кружками. Ползунок недель двигает точку с подписью и вертикальную направляющую; слева пересчитываются счётчики слов, занятий и минут разговора и меняется рукописное «к неделе N вы уже можете…».",
+      "categories": [
+        "language"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "language-003/language-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/language-003.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "language",
+          "school",
+          "progress",
+          "chart",
+          "graph",
+          "svg",
+          "slider",
+          "vocabulary",
+          "education",
+          "interactive"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Language003",
+          "usage": "<Language003\n  title=\"Что будет через три месяца, если не бросить\"\n  words={[40, 110, 190, 270, 360, 440, 520, 610, 690, 780, 860, 950, 1050]}\n  milestones={[{ week: 4, can: \"заказать ужин и поспорить о счёте\" }]}\n  defaultWeek={6}\n/>",
+          "summary": "График прогресса для школы или курса: кривая рисуется при появлении, ползунок недель двигает точку и пересчитывает счётчики.",
+          "preserve": [
+            "кривая — path с pathLength=1, stroke-dasharray 1 и dashoffset 1→0 по data-visible на board; observer с threshold 0.35, отключается после первого срабатывания",
+            "точка и направляющая — g с CSS transform translate из координат geometry.points[week] и transition 0.45 с; геометрия в useMemo от words",
+            "ползунок — input range 0…weeks, заливка трека через --fill; счётчики: words[week], week × lessonsPerWeek, × speakingMinutes"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, wordsLabel, lessonsLabel, minutesLabel",
+            "words — массив по неделям; milestones: week, can",
+            "defaultWeek, lessonsPerWeek, speakingMinutes",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что будет через три месяца, если не бросить",
+            "maxLength": 60
+          },
+          {
+            "prop": "defaultWeek",
+            "label": "Неделя по умолчанию",
+            "type": "number",
+            "default": 6,
+            "min": 0,
+            "max": 12
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Three-month progress: a vocabulary chart with a week slider",
+            "description": "An interactive vocabulary chart on ruled paper: the curve draws when the block enters the viewport (IntersectionObserver, pathLength + stroke-dashoffset), a fill appears beneath, milestones are marked with circles. The week slider moves the labelled dot and a vertical guide; on the left the counters of words, lessons and speaking minutes recompute and the handwritten “by week N you can already…” changes.",
+            "ai": {
+              "summary": "A progress chart for a school or course: the curve draws on appear, the week slider moves the dot and recomputes the counters.",
+              "preserve": [
+                "the curve is a path with pathLength=1, stroke-dasharray 1 and dashoffset 1→0 on the board's data-visible; the observer uses threshold 0.35 and disconnects after the first hit",
+                "the dot and guide are g elements with a CSS translate transform from geometry.points[week] and a 0.45 s transition; geometry is a useMemo of words",
+                "the slider is an input range 0…weeks, the track fill via --fill; counters: words[week], week × lessonsPerWeek, × speakingMinutes"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, wordsLabel, lessonsLabel, minutesLabel",
+                "words — an array by week; milestones: week, can",
+                "defaultWeek, lessonsPerWeek, speakingMinutes",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Language003\n  title=\"What happens in three months if you don't quit\"\n  words={[40, 110, 190, 270, 360, 440, 520, 610, 690, 780, 860, 950, 1050]}\n  milestones={[{ week: 4, can: \"order dinner and argue about the bill\" }]}\n  defaultWeek={6}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What happens in three months if you don't quit"
+              },
+              "defaultWeek": {
+                "label": "Default week"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "progress",
+                "title": "What happens in three months if you don't quit",
+                "lede": "We count the words you actually use in speech, not the ones you've merely seen. Move the slider — we'll show what you'll be able to say by that week.",
+                "wordsLabel": "active words",
+                "lessonsLabel": "lessons",
+                "minutesLabel": "minutes of speaking",
+                "milestones": [
+                  {
+                    "week": 0,
+                    "can": "introduce yourself and say where you're from"
+                  },
+                  {
+                    "week": 2,
+                    "can": "tell how your weekend went without losing the thread"
+                  },
+                  {
+                    "week": 4,
+                    "can": "order dinner and argue about the bill"
+                  },
+                  {
+                    "week": 6,
+                    "can": "explain to a doctor what hurts and understand the answer"
+                  },
+                  {
+                    "week": 8,
+                    "can": "watch a series with subtitles in the language, not in Russian"
+                  },
+                  {
+                    "week": 10,
+                    "can": "keep up small talk with a colleague from London"
+                  },
+                  {
+                    "week": 12,
+                    "can": "run a call with a native speaker without panic"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

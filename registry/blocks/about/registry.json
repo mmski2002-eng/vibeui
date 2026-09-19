@@ -2490,6 +2490,211 @@
           }
         }
       }
+    },
+    {
+      "name": "about-017",
+      "type": "registry:block",
+      "title": "О мастерской: коллаж со скотчем, буквица и полароиды флористов",
+      "description": "Разворот «о мастерской» в духе ботанического журнала: слева большой снимок и второй поменьше, наклеенный поверх с наклоном, «скотчем» и рукописной подписью; справа история с буквицей и три факта. Ниже флористы — полароиды с рукописным именем и фразой от первого лица, на hover выравниваются. Всё появляется по мере прокрутки через animation-timeline: view() с фолбэком «видно сразу». Серверный, без JS.",
+      "categories": [
+        "about"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "about-017/about-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/about-017.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "about",
+          "story",
+          "team",
+          "collage",
+          "polaroid",
+          "drop cap",
+          "flowers",
+          "workshop",
+          "scroll-driven",
+          "editorial"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "About017",
+          "usage": "<About017\n  title=\"Двенадцать лет на Пестеля\"\n  paragraphs={[\"Стебель открылся в 2014-м в бывшей аптеке…\"]}\n  photos={[{ src: \"/photos/workshop.webp\", alt: \"Стол мастерской\", caption: \"стол №2\" }, { src: \"/photos/hands.webp\", alt: \"Руки подрезают стебли\" }]}\n  people={[{ name: \"Вера Лапина\", role: \"основатель\", image: \"/photos/vera.webp\", quote: \"Букет должен пахнуть садом.\" }]}\n/>",
+          "summary": "Секция «о нас» с коллажем, буквицей и командой-полароидами — для мастерских, студий, кафе и любого крафта.",
+          "preserve": [
+            "коллаж — figure[data-part=big] 88% ширины и figure[data-part=small] absolute справа снизу с rotate(3deg), скотч — i[data-part=tape] полупрозрачный акцент",
+            "буквица — p:first-child::first-letter float:left антиквой 4.2em цветом акцента",
+            "появление — @supports (animation-timeline: view()) с animation-range entry 0% → entry 45%, без поддержки блоки просто видны"
+          ],
+          "adapt": [
+            "eyebrow, title, paragraphs",
+            "photos: src, alt, caption (большой и маленький)",
+            "facts: value, label; peopleTitle, people: name, role, image, alt, quote",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Двенадцать лет на Пестеля",
+            "maxLength": 40
+          },
+          {
+            "prop": "peopleTitle",
+            "label": "Заголовок команды",
+            "type": "text",
+            "default": "Кто собирает",
+            "maxLength": 30
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "About the workshop: a taped collage, a drop cap and florist polaroids",
+            "description": "An “about the workshop” spread in a botanical-journal mood: a big photo on the left and a smaller one pasted over it with a tilt, “tape” and a handwritten caption; the story with a drop cap and three facts on the right. Below, the florists — polaroids with a handwritten name and a first-person line, straightening on hover. Everything reveals on scroll via animation-timeline: view() with a “visible at once” fallback. Server-side, no JS.",
+            "ai": {
+              "summary": "An “about us” section with a collage, a drop cap and a polaroid team — for workshops, studios, cafés and any craft.",
+              "preserve": [
+                "the collage is figure[data-part=big] at 88% width and figure[data-part=small] absolute bottom-right with rotate(3deg), the tape is i[data-part=tape], a translucent accent",
+                "the drop cap is p:first-child::first-letter float:left in the serif at 4.2em in the accent colour",
+                "the reveal is @supports (animation-timeline: view()) with animation-range entry 0% → entry 45%; without support the blocks are simply visible"
+              ],
+              "adapt": [
+                "eyebrow, title, paragraphs",
+                "photos: src, alt, caption (big and small)",
+                "facts: value, label; peopleTitle, people: name, role, image, alt, quote",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<About017\n  title=\"Twelve years on Pestelya\"\n  paragraphs={[\"Stem opened in 2014 in a former pharmacy…\"]}\n  photos={[{ src: \"/photos/workshop.webp\", alt: \"Workshop table\", caption: \"table no. 2\" }, { src: \"/photos/hands.webp\", alt: \"Hands trimming stems\" }]}\n  people={[{ name: \"Vera Lapina\", role: \"founder\", image: \"/photos/vera.webp\", quote: \"A bouquet should smell of a garden.\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Twelve years on Pestelya"
+              },
+              "peopleTitle": {
+                "label": "Team heading",
+                "default": "Who makes them"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "The workshop",
+                "title": "Twelve years on Pestelya",
+                "paragraphs": [
+                  "Stem opened in 2014 in a former pharmacy at Pestelya 4: the same tiled walls, the same oak counter and the same principle — no cellophane, no dyed roses and nothing that doesn't smell.",
+                  "Flowers arrive three times a week: from two farms outside the city in summer and from Holland in winter. We keep no stock: what's on the counter was cut yesterday, and we say honestly how long it will last.",
+                  "Five florists work here. Each one makes a bouquet from start to finish — and signs the card with their name."
+                ],
+                "photos": [
+                  {
+                    "src": "/demo/flowers/workshop-01.webp",
+                    "alt": "Workshop table: buckets of flowers, kraft paper, secateurs",
+                    "caption": "table no. 2, morning"
+                  },
+                  {
+                    "src": "/demo/flowers/workshop-02.webp",
+                    "alt": "A florist's hands trimming peony stems",
+                    "caption": "trimmed every two days"
+                  }
+                ],
+                "facts": [
+                  {
+                    "value": "2014",
+                    "label": "opened"
+                  },
+                  {
+                    "value": "3 / wk",
+                    "label": "farm deliveries"
+                  },
+                  {
+                    "value": "5",
+                    "label": "florists"
+                  }
+                ],
+                "peopleTitle": "Who makes them",
+                "people": [
+                  {
+                    "name": "Vera Lapina",
+                    "role": "founder, florist",
+                    "image": "/demo/flowers/florist-01.webp",
+                    "quote": "A bouquet should smell of a garden, not a shop."
+                  },
+                  {
+                    "name": "Grisha Olkhin",
+                    "role": "florist, sourcing",
+                    "image": "/demo/flowers/florist-02.webp",
+                    "quote": "I drive to the farm on Tuesdays and pick everything myself."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

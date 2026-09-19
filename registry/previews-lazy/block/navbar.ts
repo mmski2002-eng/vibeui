@@ -102,4 +102,40 @@ export const PREVIEWS = {
   "navbar-033": dynamic(() =>
     import("@/registry/blocks/navbar/navbar-033/navbar-033").then((module) => module.Navbar033),
   ),
+  "navbar-034": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-034/navbar-034").then((module) => module.Navbar034),
+  ),
+  "navbar-035": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-035/navbar-035").then((module) => module.Navbar035),
+  ),
+  "navbar-036": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-036/navbar-036").then((module) => module.Navbar036),
+  ),
+  "navbar-037": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-037/navbar-037").then((module) => module.Navbar037),
+  ),
+  "navbar-038": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-038/navbar-038").then((module) => module.Navbar038),
+  ),
+  "navbar-039": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-039/navbar-039").then((module) => module.Navbar039),
+  ),
+  "navbar-040": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-040/navbar-040").then((module) => module.Navbar040),
+  ),
+  "navbar-041": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-041/navbar-041").then((module) => module.Navbar041),
+  ),
+  "navbar-042": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-042/navbar-042").then((module) => module.Navbar042),
+  ),
+  "navbar-043": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-043/navbar-043").then((module) => module.Navbar043),
+  ),
+  "navbar-044": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-044/navbar-044").then((module) => module.Navbar044),
+  ),
+  "navbar-045": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-045/navbar-045").then((module) => module.Navbar045),
+  ),
 } satisfies PreviewMap
