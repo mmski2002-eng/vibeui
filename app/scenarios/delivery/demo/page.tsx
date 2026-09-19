@@ -51,7 +51,7 @@ export default function DeliveryDemo() {
       </style>
       <Navbar038 {...hot} />
       <div id="top">
-        <Hero038 {...hot} image={`${PHOTOS}/hero.webp`} />
+        <Hero038 {...hot} />
       </div>
       <div id="menu">
         <Delivery001 {...hot} />

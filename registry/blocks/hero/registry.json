@@ -6538,7 +6538,7 @@
                     "title": "Treated so gently *the cat won't notice*",
                     "lede": "Quiet rooms with no barking, appointments without a queue, and doctors who pet first and examine second. Vaccines, teeth, spaying — all in one place.",
                     "bubble": "Meow. Nobody even held me.",
-                    "image": "/demo/vet/diary-01.webp",
+                    "image": "/demo/vet/cat-face.png",
                     "imageAlt": "Ginger cat in a blanket"
                   },
                   {
@@ -6548,7 +6548,7 @@
                     "title": "Treated so well *the tail keeps wagging*",
                     "lede": "A separate entrance for dogs, scales right in the lobby and a treat after every shot. Orthopaedist, dentist, grooming — nobody strokes against the fur.",
                     "bubble": "Woof. They have treats here.",
-                    "image": "/demo/vet/diary-04.webp",
+                    "image": "/demo/vet/dog-face.png",
                     "imageAlt": "Corgi on a walk"
                   },
                   {
@@ -6558,7 +6558,7 @@
                     "title": "Treated so calmly *the ears stay up*",
                     "lede": "An exotics vet every day, not just on Thursdays. Teeth, digestion, nail trims — fast, quiet and stress-free for the long-eared.",
                     "bubble": "Brought my own carrot.",
-                    "image": "/demo/vet/diary-03.webp",
+                    "image": "/demo/vet/rabbit-face.png",
                     "imageAlt": "Lop-eared rabbit"
                   }
                 ],
@@ -7024,7 +7024,7 @@
       "name": "hero-038",
       "type": "registry:block",
       "title": "Хиро доставки: живой таймер «привезём за 28:00», CSS-бургер и бегущая строка",
-      "description": "Первый экран доставки еды: заголовок с обратным отсчётом, который тикает по секунде и на нуле начинает заново; справа фото блюда в круглой «тарелке» на акцентном круге — тарелка выезжает при загрузке и медленно «томится», над ней поднимается пар; рядом второе фото в капле со стикером «хит недели». Понизу бегущая строка блюд с наклоном, две кнопки и строка доверия.",
+      "description": "Первый экран доставки еды: заголовок с обратным отсчётом, который тикает по секунде и на нуле начинает заново; справа вырезка блюда (PNG без фона) на акцентном круге — блюдо выезжает при загрузке и медленно покачивается, над ней поднимается пар; рядом второе фото в капле со стикером «хит недели». Понизу бегущая строка блюд с наклоном, две кнопки и строка доверия.",
       "categories": [
         "hero"
       ],
@@ -7058,11 +7058,11 @@
         },
         "ai": {
           "export": "Hero038",
-          "usage": "<Hero038\n  title=\"Горячее привезём за\"\n  minutes={28}\n  image=\"/photos/tom-yum.webp\"\n  sideImage=\"/photos/burger.webp\"\n  sticker=\"хит недели · смэш-бургер 590 ₽\"\n  ticker={[\"Смэш-бургер\", \"Том-ям\", \"Поке\"]}\n/>",
+          "usage": "<Hero038\n  title=\"Горячее привезём за\"\n  minutes={28}\n  image=\"/photos/burger-cutout.png\"\n  sideImage=\"/photos/tom-yum.webp\"\n  sticker=\"хит недели · том-ям 490 ₽\"\n  ticker={[\"Смэш-бургер\", \"Том-ям\", \"Поке\"]}\n/>",
           "summary": "Хиро для доставки еды: обещание по времени тикает, бургер собирается из CSS-слоёв, блюда бегут строкой.",
           "preserve": [
             "таймер — useState(minutes × 60) и setInterval в useEffect; на сервере рендерится «28:00», на нуле цикл начинается заново",
-            "тарелка — круг с overflow:hidden, keyframes serve при загрузке и simmer (лёгкий зум и покачивание фото) по кругу; капля — второе фото с morph border-radius",
+            "блюдо — img с object-fit:contain и drop-shadow, keyframes serve при загрузке и simmer (покачивание) по кругу; капля — второе фото с morph border-radius",
             "бегущая строка дублирует список и едет translateX(-50%) за 28 с, при hover останавливается"
           ],
           "adapt": [
@@ -7095,7 +7095,7 @@
             "prop": "sticker",
             "label": "Стикер",
             "type": "text",
-            "default": "хит недели · смэш-бургер 590 ₽",
+            "default": "хит недели · том-ям 490 ₽",
             "maxLength": 40
           },
           {
@@ -7137,12 +7137,12 @@
         "i18n": {
           "en": {
             "title": "Delivery hero: a live “delivered in 28:00” timer, a CSS burger and a marquee",
-            "description": "Food delivery first screen: a headline with a countdown that ticks every second and restarts at zero; on the right a dish photo in a round “plate” on an accent disc — the plate slides in on load and slowly “simmers”, steam rises above it; next to it a second photo in a drop shape with a “hit of the week” sticker. A tilted marquee of dishes along the bottom, two buttons and a trust line.",
+            "description": "Food delivery first screen: a headline with a countdown that ticks every second and restarts at zero; on the right a dish cutout (transparent PNG) on an accent disc — the dish slides in on load and gently sways, steam rises above it; next to it a second photo in a drop shape with a “hit of the week” sticker. A tilted marquee of dishes along the bottom, two buttons and a trust line.",
             "ai": {
               "summary": "Hero for food delivery: the time promise ticks, a burger assembles from CSS layers, dishes run in a marquee.",
               "preserve": [
                 "the timer is useState(minutes × 60) plus setInterval in useEffect; the server renders “28:00”, at zero the loop restarts",
-                "the plate is a circle with overflow:hidden, serve keyframes on load and simmer (a slight zoom and sway of the photo) on loop; the drop is a second photo with a morphing border-radius",
+                "the dish is an img with object-fit:contain and a drop-shadow, serve keyframes on load and simmer (sway) on loop; the drop is a second photo with a morphing border-radius",
                 "the marquee duplicates the list and moves translateX(-50%) over 28 s, pausing on hover"
               ],
               "adapt": [
@@ -7154,7 +7154,7 @@
                 "ink — ink",
                 "background — background"
               ],
-              "usage": "<Hero038\n  title=\"Hot food delivered in\"\n  minutes={28}\n  image=\"/photos/tom-yum.webp\"\n  sideImage=\"/photos/burger.webp\"\n  sticker=\"hit of the week · smash burger $9\"\n  ticker={[\"Smash burger\", \"Tom yum\", \"Poke\"]}\n/>"
+              "usage": "<Hero038\n  title=\"Hot food delivered in\"\n  minutes={28}\n  image=\"/photos/burger-cutout.png\"\n  sideImage=\"/photos/tom-yum.webp\"\n  sticker=\"hit of the week · tom yum $7\"\n  ticker={[\"Smash burger\", \"Tom yum\", \"Poke\"]}\n/>"
             },
             "controls": {
               "title": {
@@ -7166,7 +7166,7 @@
               },
               "sticker": {
                 "label": "Sticker",
-                "default": "hit of the week · smash burger $9"
+                "default": "hit of the week · tom yum $7"
               },
               "tone": {
                 "label": "Theme"

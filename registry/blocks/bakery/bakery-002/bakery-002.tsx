@@ -132,7 +132,7 @@ container-type:inline-size;
 @keyframes vibeui-bakery-002-in{from{opacity:0;translate:0 1rem}to{opacity:1;translate:0 0}}
 @container (min-width: 56rem){[data-vibeui-block="bakery-002"] [data-part="grid"]{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:4rem}}
 [data-vibeui-block="bakery-002"] [data-part="photos"]{position:relative;width:min(100%,24rem);aspect-ratio:4/5}
-[data-vibeui-block="bakery-002"] [data-part="photos"] img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:1.4rem;opacity:0;transform:scale(.94) translateY(1rem);transition:opacity .6s var(--vibeui-bakery-002-ease),transform .7s cubic-bezier(.3,1.3,.4,1);box-shadow:0 30px 50px -30px rgb(0 0 0 / .45)}
+[data-vibeui-block="bakery-002"] [data-part="photos"] img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:50% 100%;filter:drop-shadow(0 30px 30px rgb(0 0 0 / .25));opacity:0;transform:scale(.94) translateY(1rem);transition:opacity .6s var(--vibeui-bakery-002-ease),transform .7s cubic-bezier(.3,1.3,.4,1)}
 [data-vibeui-block="bakery-002"] [data-part="photos"] img[data-active="true"]{opacity:1;transform:none}
 [data-vibeui-block="bakery-002"] [data-part="photos"][data-slosh="true"] img[data-active="true"]{animation:vibeui-bakery-002-sip .7s cubic-bezier(.3,1.3,.4,1)}
 @keyframes vibeui-bakery-002-sip{0%{transform:scale(.97) rotate(-1.5deg)}60%{transform:scale(1.02) rotate(1deg)}100%{transform:none}}
@@ -145,11 +145,11 @@ function spotlight(event: PointerEvent<HTMLElement>) {
 }
 
 const DEFAULT_DRINKS: Bakery002Drink[] = [
-  { name: "Латте", text: "много молока, кофе — намёком", price: "290 ₽", milk: 62, foam: 10, coffee: 20, volume: "350 мл", image: "/demo/bakery/coffee-flat.webp", imageAlt: "Латте в стеклянном стакане" },
-  { name: "Флэт уайт", text: "двойной шот, шёлковое молоко", price: "270 ₽", milk: 48, foam: 6, coffee: 36, volume: "220 мл", image: "/demo/bakery/coffee-flat.webp", imageAlt: "Флэт уайт" },
-  { name: "Капучино", text: "треть пены, классика", price: "250 ₽", milk: 34, foam: 28, coffee: 30, volume: "200 мл", image: "/demo/bakery/coffee-flat.webp", imageAlt: "Капучино" },
-  { name: "Американо", text: "эспрессо и горячая вода", price: "190 ₽", milk: 0, foam: 0, coffee: 70, volume: "250 мл", water: true, image: "/demo/bakery/coffee-espresso.webp", imageAlt: "Американо" },
-  { name: "Эспрессо", text: "двойной, 18 г в 36 г", price: "160 ₽", milk: 0, foam: 0, coffee: 30, volume: "60 мл", image: "/demo/bakery/coffee-espresso.webp", imageAlt: "Двойной эспрессо" },
+  { name: "Латте", text: "много молока, кофе — намёком", price: "290 ₽", milk: 62, foam: 10, coffee: 20, volume: "350 мл", image: "/demo/bakery/cup-latte.png", imageAlt: "Латте в стеклянном стакане" },
+  { name: "Флэт уайт", text: "двойной шот, шёлковое молоко", price: "270 ₽", milk: 48, foam: 6, coffee: 36, volume: "220 мл", image: "/demo/bakery/cup-latte.png", imageAlt: "Флэт уайт" },
+  { name: "Капучино", text: "треть пены, классика", price: "250 ₽", milk: 34, foam: 28, coffee: 30, volume: "200 мл", image: "/demo/bakery/cup-latte.png", imageAlt: "Капучино" },
+  { name: "Американо", text: "эспрессо и горячая вода", price: "190 ₽", milk: 0, foam: 0, coffee: 70, volume: "250 мл", water: true, image: "/demo/bakery/cup-espresso.png", imageAlt: "Американо" },
+  { name: "Эспрессо", text: "двойной, 18 г в 36 г", price: "160 ₽", milk: 0, foam: 0, coffee: 30, volume: "60 мл", image: "/demo/bakery/cup-espresso.png", imageAlt: "Двойной эспрессо" },
 ]
 
 /** Шкала крепости: ползунок переключает напитки, стакан наполняется слоями. */

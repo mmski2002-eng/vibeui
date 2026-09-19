@@ -33,9 +33,9 @@ export type Hero038Props = {
 }
 
 // Хиро дарк-китчена: заголовок с живым обратным отсчётом «привезём за
-// 28:00» (тикает по секунде, на нуле начинает заново), справа фото блюда в
-// круглой «тарелке» на томатном круге — тарелка выезжает при загрузке и
-// медленно «томится» (лёгкий зум и покачивание), над ней поднимается пар.
+// 28:00» (тикает по секунде, на нуле начинает заново), справа вырезка блюда
+// (PNG без фона) на томатном круге — блюдо выезжает при загрузке и
+// медленно покачивается, над ним поднимается пар.
 // Рядом второе фото в форме капли со стикером «хит недели». Понизу бегущая
 // строка блюд с наклоном, дублируется для бесшовного цикла.
 const FONTS = "https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Russo+One&family=Onest:wght@400;500;600;700&display=swap"
@@ -93,12 +93,11 @@ container-type:inline-size;
 [data-vibeui-block="hero-038"] [data-part="ticker"]:hover [data-part="track"]{animation-play-state:paused}
 [data-vibeui-block="hero-038"] [data-part="track"] span{display:inline-flex;align-items:center;gap:1.4rem;padding-right:1.4rem}
 [data-vibeui-block="hero-038"] [data-part="track"] span::after{content:"";width:.55em;height:.55em;border-radius:50%;background:var(--vibeui-hero-038-on-accent);opacity:.7}
-[data-vibeui-block="hero-038"] [data-part="dish"]{position:absolute;left:50%;top:50%;width:84%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;overflow:hidden;z-index:3;box-shadow:0 40px 80px -30px rgb(0 0 0 / .7),0 0 0 1px rgb(255 255 255 / .06) inset;animation:vibeui-hero-038-serve 1.1s cubic-bezier(.2,.8,.2,1) .25s both}
-[data-vibeui-block="hero-038"] [data-part="dish"] img{display:block;width:100%;height:100%;object-fit:cover;transform:scale(1.04);animation:vibeui-hero-038-simmer 7s ease-in-out infinite}
-[data-vibeui-block="hero-038"] [data-part="dish"]::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 30% 20%,rgb(255 255 255 / .14),transparent 45%),linear-gradient(to top,rgb(0 0 0 / .35),transparent 55%);pointer-events:none}
-[data-vibeui-block="hero-038"] [data-part="steam"]{z-index:4}
+[data-vibeui-block="hero-038"] [data-part="dish"]{position:absolute;left:50%;top:50%;width:92%;aspect-ratio:1;transform:translate(-50%,-50%);z-index:3;filter:drop-shadow(0 40px 40px rgb(0 0 0 / .55));animation:vibeui-hero-038-serve 1.1s cubic-bezier(.2,.8,.2,1) .25s both}
+[data-vibeui-block="hero-038"] [data-part="dish"] img{display:block;width:100%;height:100%;object-fit:contain;animation:vibeui-hero-038-simmer 7s ease-in-out infinite}
+[data-vibeui-block="hero-038"] [data-vibeui-block="hero-038"] [data-part="steam"]{z-index:4}
 @keyframes vibeui-hero-038-serve{from{transform:translate(-50%,-30%) scale(.7) rotate(-14deg);opacity:0}to{transform:translate(-50%,-50%) scale(1) rotate(0);opacity:1}}
-@keyframes vibeui-hero-038-simmer{0%,100%{transform:scale(1.04) rotate(0)}50%{transform:scale(1.09) rotate(2deg)}}
+@keyframes vibeui-hero-038-simmer{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-3%) rotate(1.5deg)}}
 @keyframes vibeui-hero-038-rise{from{transform:translateY(110%)}to{transform:translateY(0)}}
 @keyframes vibeui-hero-038-blink{50%{opacity:.2}}
 @keyframes vibeui-hero-038-pulse{to{box-shadow:0 0 0 .55rem transparent}}
@@ -124,11 +123,11 @@ export function Hero038({
   secondaryLabel = "Собрать боул",
   secondaryHref = "#builder",
   trust = "4,8 из 5 · 12 400 заказов в месяц · бесплатно от 1 500 ₽",
-  image = "/demo/delivery/hero.webp",
-  imageAlt = "Том-ям с креветками в чёрной миске",
-  sideImage = "/demo/delivery/dish-01.webp",
-  sideImageAlt = "Двойной смэш-бургер",
-  sticker = "хит недели · смэш-бургер 590 ₽",
+  image = "/demo/delivery/burger-cut.png",
+  imageAlt = "Двойной смэш-бургер в разрезе на сланцевой подставке",
+  sideImage = "/demo/delivery/dish-03.webp",
+  sideImageAlt = "Том-ям с креветками",
+  sticker = "хит недели · том-ям 490 ₽",
   ticker = ["Смэш-бургер", "Том-ям", "Поке с лососем", "Пад-тай", "Картошка с трюфелем", "Чизкейк «Сан-Себастьян»", "Рамен тонкоцу", "Шаурма на углях"],
   tone = "auto",
   accent,
