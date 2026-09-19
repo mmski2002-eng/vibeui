@@ -42,7 +42,7 @@ export type Subscribe007Props = {
 // строку «напишем в 08:25 — 36 часов, как положено». После отправки —
 // подтверждение и «добавить ещё».
 const FONTS =
-  "https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Golos+Text:wght@400;500;600&family=Caveat:wght@600&display=swap"
+  "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Golos+Text:wght@400;500;600&family=Caveat:wght@600&display=swap"
 
 const STYLES = `
 :where([data-vibeui-block="subscribe-007"]){
@@ -54,7 +54,7 @@ const STYLES = `
 --vibeui-subscribe-007-panel:color-mix(in oklab,var(--vibeui-subscribe-007-fg) 5%,var(--vibeui-subscribe-007-bg));
 --vibeui-subscribe-007-kraft:#c9a97e;
 --vibeui-subscribe-007-kraft-ink:#3b2a1c;
---vibeui-subscribe-007-display:"Unbounded",ui-sans-serif,system-ui,sans-serif;
+--vibeui-subscribe-007-display:"Playfair Display",ui-serif,Georgia,serif;
 --vibeui-subscribe-007-font:"Golos Text",ui-sans-serif,system-ui,sans-serif;
 --vibeui-subscribe-007-hand:"Caveat",cursive;
 container-type:inline-size;

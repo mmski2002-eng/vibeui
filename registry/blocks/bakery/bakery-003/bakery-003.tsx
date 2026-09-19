@@ -51,7 +51,7 @@ export type Bakery003Props = {
 // после отправки карточка показывает «спасибо». Состояние блок рассылает
 // событием `vibeui-box:state` — полка по нему подписывает кнопки.
 const FONTS =
-  "https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Golos+Text:wght@400;500;600&family=Caveat:wght@600&display=swap"
+  "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Golos+Text:wght@400;500;600&family=Caveat:wght@600&display=swap"
 
 const STYLES = `
 :where([data-vibeui-block="bakery-003"]){
@@ -63,7 +63,7 @@ const STYLES = `
 --vibeui-bakery-003-panel:color-mix(in oklab,var(--vibeui-bakery-003-fg) 5%,var(--vibeui-bakery-003-bg));
 --vibeui-bakery-003-line:color-mix(in oklab,var(--vibeui-bakery-003-fg) 12%,transparent);
 --vibeui-bakery-003-card:light-dark(#fff,color-mix(in oklab,var(--vibeui-bakery-003-bg) 88%,var(--vibeui-bakery-003-fg)));
---vibeui-bakery-003-display:"Unbounded",ui-sans-serif,system-ui,sans-serif;
+--vibeui-bakery-003-display:"Playfair Display",ui-serif,Georgia,serif;
 --vibeui-bakery-003-font:"Golos Text",ui-sans-serif,system-ui,sans-serif;
 --vibeui-bakery-003-hand:"Caveat",cursive;
 container-type:inline-size;

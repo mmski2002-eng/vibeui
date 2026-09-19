@@ -534,6 +534,14 @@ export const SCENARIOS: Scenario[] = [
         noteEn: "A countdown to the start, seats and an email form.",
       },
       {
+        item: "cta-018",
+        anchor: "",
+        role: "Липкая CTA",
+        roleEn: "Sticky CTA",
+        note: "Плавающая полоса с ценой и кнопкой: появляется после первого экрана, прячется у тарифов и формы.",
+        noteEn: "A floating price-and-button bar: appears after the first screen, hides near pricing and the form.",
+      },
+      {
         item: "footer-021",
         anchor: "footer",
         role: "Подвал",
@@ -1186,9 +1194,9 @@ export const SCENARIOS: Scenario[] = [
     label: "Кофейня-пекарня",
     en: "Café-bakery",
     summary:
-      "Сайт кофейни-пекарни, который живёт по часам печи: шапка с живым «открыто / откроемся через», первый экран с таймером печи и лентой партий, полка с перетаскиванием и остатками, шкала крепости кофе с наполняющимся стаканом, конструктор коробки к утру, scroll-история «36 часов до буханки» с ночью и утром, люди с записками, перфокарта со штампами, bento-галерея, отзывы на чеках, карта с очередью по часам, хлебный будильник и подвал с полосой дня. Светлая тема: молоко, корка и мак, Unbounded и Caveat.",
+      "Сайт кофейни-пекарни, который живёт по часам печи: шапка с живым «открыто / откроемся через», первый экран с таймером печи и лентой партий, полка с перетаскиванием и остатками, шкала крепости кофе с наполняющимся стаканом, конструктор коробки к утру, scroll-история «36 часов до буханки» с ночью и утром, люди с записками, перфокарта со штампами, bento-галерея, отзывы на чеках, карта с очередью по часам, хлебный будильник и подвал с полосой дня. Светлая тема: молоко, корка и мак, Playfair Display и Caveat.",
     summaryEn:
-      "A café-bakery site that lives by the oven clock: a header with a live “open / opens in”, a hero with an oven timer and a batch ribbon, a draggable shelf with stock, a coffee strength slider with a filling cup, a morning box builder, a “36 hours to a loaf” scroll story from night to morning, people with notes, a punch card with stamps, a bento gallery, receipt reviews, a map with an hourly queue, a bread alarm and a footer with a day bar. Light theme: milk, crust and poppy, Unbounded and Caveat.",
+      "A café-bakery site that lives by the oven clock: a header with a live “open / opens in”, a hero with an oven timer and a batch ribbon, a draggable shelf with stock, a coffee strength slider with a filling cup, a morning box builder, a “36 hours to a loaf” scroll story from night to morning, people with notes, a punch card with stamps, a bento gallery, receipt reviews, a map with an hourly queue, a bread alarm and a footer with a day bar. Light theme: milk, crust and poppy, Playfair Display and Caveat.",
     demo: "/scenarios/bakery/demo",
     source: "app/scenarios/bakery/demo/page.tsx",
     images: "docs/scenarios/bakery/IMAGES.md",
@@ -1196,7 +1204,7 @@ export const SCENARIOS: Scenario[] = [
       tone: "light",
       accent: "#e4572e",
       ink: "#1f1a17",
-      font: "Unbounded, Golos Text, Caveat",
+      font: "Playfair Display, Golos Text, Caveat",
     },
     sections: [
       { item: "navbar-028", anchor: "", role: "Шапка", roleEn: "Header", note: "Словомарка, разделы, живой чип «открыто · до 21:00» по часам посетителя, стекло при прокрутке.", noteEn: "Wordmark, sections, a live “open · until 21:00” chip on the visitor's clock, glass on scroll." },

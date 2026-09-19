@@ -40,7 +40,7 @@ export type Bakery001Props = {
 // (bakery-003) его ловит; обратно приходит `vibeui-box:state`, и кнопка
 // показывает «в коробке · 2 шт». Без блока коробки кнопка просто считает сама.
 const FONTS =
-  "https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Golos+Text:wght@400;500;600&family=Caveat:wght@600&display=swap"
+  "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Golos+Text:wght@400;500;600&family=Caveat:wght@600&display=swap"
 
 const STYLES = `
 :where([data-vibeui-block="bakery-001"]){
@@ -52,7 +52,7 @@ const STYLES = `
 --vibeui-bakery-001-panel:color-mix(in oklab,var(--vibeui-bakery-001-fg) 5%,var(--vibeui-bakery-001-bg));
 --vibeui-bakery-001-card:light-dark(#fff,color-mix(in oklab,var(--vibeui-bakery-001-bg) 88%,var(--vibeui-bakery-001-fg)));
 --vibeui-bakery-001-wood:light-dark(#c9ad86,#5a4632);
---vibeui-bakery-001-display:"Unbounded",ui-sans-serif,system-ui,sans-serif;
+--vibeui-bakery-001-display:"Playfair Display",ui-serif,Georgia,serif;
 --vibeui-bakery-001-font:"Golos Text",ui-sans-serif,system-ui,sans-serif;
 --vibeui-bakery-001-hand:"Caveat",cursive;
 container-type:inline-size;

@@ -39,7 +39,7 @@ export type Bakery005Props = {
 // перелётом и лёгким поворотом), последняя ячейка — рукописное «даром».
 // Рядом карточка подписки на хлеб: строки условий, цена, кнопка.
 const FONTS =
-  "https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Golos+Text:wght@400;500;600&family=Caveat:wght@600&display=swap"
+  "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Golos+Text:wght@400;500;600&family=Caveat:wght@600&display=swap"
 
 const STYLES = `
 :where([data-vibeui-block="bakery-005"]){
@@ -51,7 +51,7 @@ const STYLES = `
 --vibeui-bakery-005-panel:color-mix(in oklab,var(--vibeui-bakery-005-fg) 5%,var(--vibeui-bakery-005-bg));
 --vibeui-bakery-005-line:color-mix(in oklab,var(--vibeui-bakery-005-fg) 12%,transparent);
 --vibeui-bakery-005-card:light-dark(#fff,color-mix(in oklab,var(--vibeui-bakery-005-bg) 88%,var(--vibeui-bakery-005-fg)));
---vibeui-bakery-005-display:"Unbounded",ui-sans-serif,system-ui,sans-serif;
+--vibeui-bakery-005-display:"Playfair Display",ui-serif,Georgia,serif;
 --vibeui-bakery-005-font:"Golos Text",ui-sans-serif,system-ui,sans-serif;
 --vibeui-bakery-005-hand:"Caveat",cursive;
 container-type:inline-size;

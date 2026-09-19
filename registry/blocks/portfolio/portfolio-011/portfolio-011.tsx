@@ -27,7 +27,7 @@ export type Portfolio011Props = {
 // всплывает над соседями, фото наезжает, а снизу проявляется рукописная
 // подпись со временем. На устройствах без hover подписи видны всегда.
 const FONTS =
-  "https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Golos+Text:wght@400;500;600&family=Caveat:wght@600&display=swap"
+  "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Golos+Text:wght@400;500;600&family=Caveat:wght@600&display=swap"
 
 const STYLES = `
 :where([data-vibeui-block="portfolio-011"]){
@@ -36,7 +36,7 @@ const STYLES = `
 --vibeui-portfolio-011-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-portfolio-011-muted:color-mix(in oklab,var(--vibeui-portfolio-011-fg) 60%,var(--vibeui-portfolio-011-bg));
 --vibeui-portfolio-011-panel:color-mix(in oklab,var(--vibeui-portfolio-011-fg) 6%,var(--vibeui-portfolio-011-bg));
---vibeui-portfolio-011-display:"Unbounded",ui-sans-serif,system-ui,sans-serif;
+--vibeui-portfolio-011-display:"Playfair Display",ui-serif,Georgia,serif;
 --vibeui-portfolio-011-font:"Golos Text",ui-sans-serif,system-ui,sans-serif;
 --vibeui-portfolio-011-hand:"Caveat",cursive;
 container-type:inline-size;

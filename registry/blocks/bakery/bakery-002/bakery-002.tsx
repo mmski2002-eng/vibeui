@@ -41,7 +41,7 @@ export type Bakery002Props = {
 // три размытых пятна на CSS-анимации. Справа карточка: название, состав в
 // процентах, объём, цена и зерно недели.
 const FONTS =
-  "https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Golos+Text:wght@400;500;600&display=swap"
+  "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Golos+Text:wght@400;500;600&display=swap"
 
 const STYLES = `
 :where([data-vibeui-block="bakery-002"]){
@@ -55,7 +55,7 @@ const STYLES = `
 --vibeui-bakery-002-cup:#ffffff;
 --vibeui-bakery-002-coffee:#3b2216;
 --vibeui-bakery-002-milk:#e6d3bd;
---vibeui-bakery-002-display:"Unbounded",ui-sans-serif,system-ui,sans-serif;
+--vibeui-bakery-002-display:"Playfair Display",ui-serif,Georgia,serif;
 --vibeui-bakery-002-font:"Golos Text",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
 }

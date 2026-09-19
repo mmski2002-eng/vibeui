@@ -115,7 +115,7 @@ export function Ai002({
   const [phase, setPhase] = useState<"idle" | "busy" | "typing" | "done">("idle")
   const [count, setCount] = useState(0)
   const [copied, setCopied] = useState(false)
-  const tokens = result.flatMap((line) => (line.startsWith("# ") ? [line] : line.split(" ").map((word, index, all) => (index < all.length - 1 ? `${word} ` : `${word}\n`))))
+  const tokens = useMemo(() => result.flatMap((line) => (line.startsWith("# ") ? [line] : line.split(" ").map((word, index, all) => (index < all.length - 1 ? `${word} ` : `${word}\n`)))), [result])
 
   useEffect(() => {
     if (phase === "busy") {

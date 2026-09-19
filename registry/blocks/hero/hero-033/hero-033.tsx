@@ -124,7 +124,7 @@ export function Hero033({
   style,
 }: Hero033Props) {
   const [count, setCount] = useState(0)
-  const tokens = summary.flatMap((line) => (line.startsWith("# ") ? [line] : line.split(" ").map((word, index, all) => (index < all.length - 1 ? `${word} ` : `${word}\n`))))
+  const tokens = useMemo(() => summary.flatMap((line) => (line.startsWith("# ") ? [line] : line.split(" ").map((word, index, all) => (index < all.length - 1 ? `${word} ` : `${word}\n`)))), [summary])
 
   useEffect(() => {
     let i = 0

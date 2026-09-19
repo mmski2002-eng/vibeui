@@ -32,7 +32,7 @@ export type Bakery004Props = {
 // считается в rAF на scroll и пишется в CSS-переменные без ререндера; индекс
 // кадра — единственное состояние.
 const FONTS =
-  "https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Golos+Text:wght@400;500;600&display=swap"
+  "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Golos+Text:wght@400;500;600&display=swap"
 
 const STYLES = `
 :where([data-vibeui-block="bakery-004"]){
@@ -41,7 +41,7 @@ const STYLES = `
 --vibeui-bakery-004-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-bakery-004-night:#17130f;
 --vibeui-bakery-004-night-fg:#f6f1e8;
---vibeui-bakery-004-display:"Unbounded",ui-sans-serif,system-ui,sans-serif;
+--vibeui-bakery-004-display:"Playfair Display",ui-serif,Georgia,serif;
 --vibeui-bakery-004-font:"Golos Text",ui-sans-serif,system-ui,sans-serif;
 --vibeui-bakery-004-n:0;
 container-type:inline-size;

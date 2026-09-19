@@ -36,6 +36,11 @@ const { chromium } = await import(modulePath)
 // фитиль свечи (hero-027).
 const GATE_BUTTONS = '[data-part="seal"], [data-part="tear"], [data-part="candle"]'
 
+// Первые экраны, которые печатают текст по токенам: ждём последнюю строку,
+// иначе на постере пустая панель и один заголовок. Слова — отдельные span,
+// поэтому ждём последнее слово.
+const READY_TEXT = { saas: "ночью." }
+
 const browser = await chromium.launch({
   executablePath: process.env.PLAYWRIGHT_CHROMIUM,
 })
@@ -56,6 +61,9 @@ for (const slug of slugs) {
     // Заставка уходит с задержкой до ~5 с, потом первый экран отыгрывает
     // своё появление.
     await page.waitForTimeout(8000)
+  }
+  if (READY_TEXT[slug]) {
+    await page.getByText(READY_TEXT[slug], { exact: true }).first().waitFor({ timeout: 30000 })
   }
   const png = await page.screenshot({ type: "png" })
   const webp = await sharp(png).resize({ width: 960 }).webp({ quality: 80 }).toBuffer()

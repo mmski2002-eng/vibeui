@@ -70,6 +70,19 @@ container-type:inline-size;
 [data-vibeui-block="navbar-030"] a:focus-visible{outline:2px solid var(--vibeui-navbar-030-accent);outline-offset:2px}
 @container (min-width: 40rem){[data-vibeui-block="navbar-030"] [data-part="stars"] span{display:inline}}
 @container (min-width: 56rem){[data-vibeui-block="navbar-030"] [data-part="nav"]{display:flex}}
+[data-vibeui-block="navbar-030"] [data-part="burger"]{display:inline-flex;flex-direction:column;justify-content:center;gap:5px;flex-shrink:0;width:2.5rem;height:2.5rem;padding:0;border:1px solid var(--vibeui-navbar-030-line);border-radius:999px;background:transparent;color:inherit;cursor:pointer}
+[data-vibeui-block="navbar-030"] [data-part="burger"] i{display:block;width:1rem;height:2px;margin:0 auto;background:currentColor;border-radius:2px;transition:transform .25s,opacity .2s}
+[data-vibeui-block="navbar-030"] [data-part="burger"][aria-expanded="true"] i:nth-child(1){transform:translateY(7px) rotate(45deg)}
+[data-vibeui-block="navbar-030"] [data-part="burger"][aria-expanded="true"] i:nth-child(2){opacity:0}
+[data-vibeui-block="navbar-030"] [data-part="burger"][aria-expanded="true"] i:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+[data-vibeui-block="navbar-030"] [data-part="burger"]:focus-visible{outline:2px solid var(--vibeui-navbar-030-accent);outline-offset:2px}
+[data-vibeui-block="navbar-030"] [data-part="menu"]{display:grid;gap:.2rem;max-width:80rem;margin:0 auto;padding:.6rem 1.25rem 1.25rem;border-top:1px solid var(--vibeui-navbar-030-line);background:var(--vibeui-navbar-030-bg);animation:vibeui-navbar-030-menu .22s ease-out}
+[data-vibeui-block="navbar-030"] [data-part="menu"][hidden]{display:none}
+[data-vibeui-block="navbar-030"] [data-part="menu"] a{padding:.8rem .7rem;border-radius:.7rem;color:var(--vibeui-navbar-030-fg);text-decoration:none;font-weight:600;font-size:1.05rem}
+[data-vibeui-block="navbar-030"] [data-part="menu"] a:hover{background:color-mix(in oklab,var(--vibeui-navbar-030-fg) 6%,transparent)}
+[data-vibeui-block="navbar-030"] [data-part="menu"] a[data-cta]{margin-top:.4rem;text-align:center;background:var(--vibeui-navbar-030-accent);color:var(--vibeui-navbar-030-on-accent)}
+@keyframes vibeui-navbar-030-menu{from{opacity:0;transform:translateY(-6px)}}
+@container (min-width: 56rem){[data-vibeui-block="navbar-030"] [data-part="burger"],[data-vibeui-block="navbar-030"] [data-part="menu"]{display:none}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-030"] *{transition:none!important}}`
 
 /** Шапка open-source проекта с чипом звёзд GitHub. */
@@ -97,6 +110,7 @@ export function Navbar030({
   style,
 }: Navbar030Props) {
   const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const [count, setCount] = useState(0)
   const started = useRef(false)
 
@@ -161,7 +175,20 @@ export function Navbar030({
               </a>
             ) : null}
           </div>
+          <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-030-menu" aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"} onClick={() => setMenuOpen((value) => !value)}>
+            <i aria-hidden="true" />
+            <i aria-hidden="true" />
+            <i aria-hidden="true" />
+          </button>
         </div>
+        <nav data-part="menu" id="vibeui-navbar-030-menu" hidden={!menuOpen} aria-label="Меню" onClick={() => setMenuOpen(false)}>
+          {links.map((link) => (
+            <a key={link.href} href={link.href}>
+              {link.label}
+            </a>
+          ))}
+          {actionLabel ? <a data-cta="" href={actionHref}>{actionLabel}</a> : null}
+        </nav>
       </header>
     </>
   )

@@ -37,7 +37,7 @@ export type Footer027Props = {
 // с бегунком и подписями часов под ней. Сверху словомарка и три колонки
 // ссылок, внизу копирайт и рукописное «спасибо, что рано встали».
 const FONTS =
-  "https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Golos+Text:wght@400;500;600&family=Caveat:wght@600&display=swap"
+  "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Golos+Text:wght@400;500;600&family=Caveat:wght@600&display=swap"
 
 const STYLES = `
 :where([data-vibeui-block="footer-027"]){
@@ -46,7 +46,7 @@ const STYLES = `
 --vibeui-footer-027-accent:#f2f2f2;
 --vibeui-footer-027-warm:#f2c94c;
 --vibeui-footer-027-line:color-mix(in oklab,var(--vibeui-footer-027-fg) 10%,transparent);
---vibeui-footer-027-display:"Unbounded",ui-sans-serif,system-ui,sans-serif;
+--vibeui-footer-027-display:"Playfair Display",ui-serif,Georgia,serif;
 --vibeui-footer-027-font:"Golos Text",ui-sans-serif,system-ui,sans-serif;
 --vibeui-footer-027-hand:"Caveat",cursive;
 container-type:inline-size;

@@ -36,7 +36,7 @@ export type Testimonials023Props = {
 // допечатываются сверху вниз по одной — как из кассового принтера. Чеки
 // чуть повёрнуты вразнобой. Интерактив — только IntersectionObserver.
 const FONTS =
-  "https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Golos+Text:wght@400;500;600&family=Caveat:wght@600&display=swap"
+  "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Golos+Text:wght@400;500;600&family=Caveat:wght@600&display=swap"
 
 const TEETH = Array.from({ length: 40 }, (_, i) => `${(i * 2.5).toFixed(1)}% ${i % 2 === 0 ? "calc(100% - .5rem)" : "100%"}`).join(",")
 
@@ -49,7 +49,7 @@ const STYLES = `
 --vibeui-testimonials-023-panel:color-mix(in oklab,var(--vibeui-testimonials-023-fg) 5%,var(--vibeui-testimonials-023-bg));
 --vibeui-testimonials-023-paper:#ffffff;
 --vibeui-testimonials-023-ink:#2b2622;
---vibeui-testimonials-023-display:"Unbounded",ui-sans-serif,system-ui,sans-serif;
+--vibeui-testimonials-023-display:"Playfair Display",ui-serif,Georgia,serif;
 --vibeui-testimonials-023-font:"Golos Text",ui-sans-serif,system-ui,sans-serif;
 --vibeui-testimonials-023-hand:"Caveat",cursive;
 --vibeui-testimonials-023-mono:ui-monospace,"JetBrains Mono",Menlo,Consolas,monospace;

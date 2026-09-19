@@ -35,7 +35,7 @@ export type Navbar028Props = {
 // «мучной» кромкой. Часы посетителя серверу неизвестны, поэтому до гидрации
 // чип показывает «открыто» — разметка обязана совпасть.
 const FONTS =
-  "https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Golos+Text:wght@400;500;600&display=swap"
+  "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Golos+Text:wght@400;500;600&display=swap"
 
 const STYLES = `
 :where([data-vibeui-block="navbar-028"]){
@@ -48,7 +48,7 @@ const STYLES = `
 --vibeui-navbar-028-chip:light-dark(#fff,color-mix(in oklab,var(--vibeui-navbar-028-bg) 85%,var(--vibeui-navbar-028-fg)));
 --vibeui-navbar-028-open:#3fa35b;
 --vibeui-navbar-028-wait:#f2c94c;
---vibeui-navbar-028-display:"Unbounded",ui-sans-serif,system-ui,sans-serif;
+--vibeui-navbar-028-display:"Playfair Display",ui-serif,Georgia,serif;
 --vibeui-navbar-028-font:"Golos Text",ui-sans-serif,system-ui,sans-serif;
 container-type:inline-size;
 }
@@ -85,6 +85,19 @@ container-type:inline-size;
 [data-vibeui-block="navbar-028"] [data-part="right"]{gap:.75rem}
 }
 @container (min-width: 52rem){[data-vibeui-block="navbar-028"] [data-part="nav"]{display:flex}}
+[data-vibeui-block="navbar-028"] [data-part="burger"]{display:inline-flex;flex-direction:column;justify-content:center;gap:5px;flex-shrink:0;width:2.5rem;height:2.5rem;padding:0;border:1px solid var(--vibeui-navbar-028-line);border-radius:999px;background:transparent;color:inherit;cursor:pointer}
+[data-vibeui-block="navbar-028"] [data-part="burger"] i{display:block;width:1rem;height:2px;margin:0 auto;background:currentColor;border-radius:2px;transition:transform .25s,opacity .2s}
+[data-vibeui-block="navbar-028"] [data-part="burger"][aria-expanded="true"] i:nth-child(1){transform:translateY(7px) rotate(45deg)}
+[data-vibeui-block="navbar-028"] [data-part="burger"][aria-expanded="true"] i:nth-child(2){opacity:0}
+[data-vibeui-block="navbar-028"] [data-part="burger"][aria-expanded="true"] i:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+[data-vibeui-block="navbar-028"] [data-part="burger"]:focus-visible{outline:2px solid var(--vibeui-navbar-028-accent);outline-offset:2px}
+[data-vibeui-block="navbar-028"] [data-part="menu"]{display:grid;gap:.2rem;max-width:80rem;margin:0 auto;padding:.6rem 1.25rem 1.25rem;border-top:1px solid var(--vibeui-navbar-028-line);background:var(--vibeui-navbar-028-bg);animation:vibeui-navbar-028-menu .22s ease-out}
+[data-vibeui-block="navbar-028"] [data-part="menu"][hidden]{display:none}
+[data-vibeui-block="navbar-028"] [data-part="menu"] a{padding:.8rem .7rem;border-radius:.7rem;color:var(--vibeui-navbar-028-fg);text-decoration:none;font-weight:600;font-size:1.05rem}
+[data-vibeui-block="navbar-028"] [data-part="menu"] a:hover{background:color-mix(in oklab,var(--vibeui-navbar-028-fg) 6%,transparent)}
+[data-vibeui-block="navbar-028"] [data-part="menu"] a[data-cta]{margin-top:.4rem;text-align:center;background:var(--vibeui-navbar-028-accent);color:var(--vibeui-navbar-028-on-accent)}
+@keyframes vibeui-navbar-028-menu{from{opacity:0;transform:translateY(-6px)}}
+@container (min-width: 52rem){[data-vibeui-block="navbar-028"] [data-part="burger"],[data-vibeui-block="navbar-028"] [data-part="menu"]{display:none}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-028"] *{animation:none!important;transition:none!important}}`
 
 const listeners = new Set<() => void>()
@@ -146,6 +159,7 @@ export function Navbar028({
 }: Navbar028Props) {
   const minutes = useMinutes()
   const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -217,7 +231,20 @@ export function Navbar028({
               </a>
             ) : null}
           </div>
+          <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-028-menu" aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"} onClick={() => setMenuOpen((value) => !value)}>
+            <i aria-hidden="true" />
+            <i aria-hidden="true" />
+            <i aria-hidden="true" />
+          </button>
         </div>
+        <nav data-part="menu" id="vibeui-navbar-028-menu" hidden={!menuOpen} aria-label="Меню" onClick={() => setMenuOpen(false)}>
+          {links.map((link) => (
+            <a key={link.href} href={link.href}>
+              {link.label}
+            </a>
+          ))}
+          {actionLabel ? <a data-cta="" href={actionHref}>{actionLabel}</a> : null}
+        </nav>
       </header>
     </>
   )

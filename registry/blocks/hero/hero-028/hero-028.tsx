@@ -42,7 +42,7 @@ export type Hero028Props = {
 // партий дня: прошедшие с галочкой, текущая пульсирует, будущие серые. Всё
 // считается от часов посетителя раз в полминуты; ночью — «тесто на расстойке».
 const FONTS =
-  "https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Golos+Text:wght@400;500;600&family=Caveat:wght@600&display=swap"
+  "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Golos+Text:wght@400;500;600&family=Caveat:wght@600&display=swap"
 
 const STYLES = `
 :where([data-vibeui-block="hero-028"]){
@@ -54,7 +54,7 @@ const STYLES = `
 --vibeui-hero-028-soft:color-mix(in oklab,var(--vibeui-hero-028-fg) 6%,var(--vibeui-hero-028-bg));
 --vibeui-hero-028-card:light-dark(#fff,color-mix(in oklab,var(--vibeui-hero-028-bg) 88%,var(--vibeui-hero-028-fg)));
 --vibeui-hero-028-done:#3fa35b;
---vibeui-hero-028-display:"Unbounded",ui-sans-serif,system-ui,sans-serif;
+--vibeui-hero-028-display:"Playfair Display",ui-serif,Georgia,serif;
 --vibeui-hero-028-font:"Golos Text",ui-sans-serif,system-ui,sans-serif;
 --vibeui-hero-028-hand:"Caveat",cursive;
 container-type:inline-size;

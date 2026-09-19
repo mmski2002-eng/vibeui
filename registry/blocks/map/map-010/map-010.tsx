@@ -41,7 +41,7 @@ export type Map010Props = {
 // работы — текущий час подсвечен акцентом с рукописным «сейчас». Час берётся
 // у посетителя раз в полминуты; ночью — «закрыто, очереди нет».
 const FONTS =
-  "https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Golos+Text:wght@400;500;600&family=Caveat:wght@600&display=swap"
+  "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Golos+Text:wght@400;500;600&family=Caveat:wght@600&display=swap"
 
 const STYLES = `
 :where([data-vibeui-block="map-010"]){
@@ -52,7 +52,7 @@ const STYLES = `
 --vibeui-map-010-panel:color-mix(in oklab,var(--vibeui-map-010-fg) 6%,var(--vibeui-map-010-bg));
 --vibeui-map-010-line:color-mix(in oklab,var(--vibeui-map-010-fg) 12%,transparent);
 --vibeui-map-010-card:light-dark(#fff,color-mix(in oklab,var(--vibeui-map-010-bg) 88%,var(--vibeui-map-010-fg)));
---vibeui-map-010-display:"Unbounded",ui-sans-serif,system-ui,sans-serif;
+--vibeui-map-010-display:"Playfair Display",ui-serif,Georgia,serif;
 --vibeui-map-010-font:"Golos Text",ui-sans-serif,system-ui,sans-serif;
 --vibeui-map-010-hand:"Caveat",cursive;
 container-type:inline-size;
