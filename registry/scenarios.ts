@@ -30,10 +30,14 @@ export type ScenarioSection = {
   anchor?: string
 }
 
+export type ScenarioGroup = "local" | "product" | "content" | "events"
+
 export type Scenario = {
   slug: string
   label: string
   en: string
+  /** Сфера для фильтра на витрине: локальный бизнес, продукт, контент, события. */
+  group: ScenarioGroup
   /** Что это за сайт, одним предложением. */
   summary: string
   summaryEn: string
@@ -56,6 +60,7 @@ export type Scenario = {
 export const SCENARIOS: Scenario[] = [
   {
     slug: "photographer",
+    group: "local",
     label: "Портфолио фотографа",
     en: "Photographer portfolio",
     summary:
@@ -198,6 +203,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "restaurant",
+    group: "local",
     label: "Ресторан",
     en: "Restaurant",
     summary:
@@ -312,6 +318,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "realty",
+    group: "local",
     label: "Агентство недвижимости",
     en: "Real estate agency",
     summary:
@@ -428,6 +435,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "course",
+    group: "content",
     label: "Онлайн-курс",
     en: "Online course",
     summary:
@@ -553,6 +561,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "festival",
+    group: "events",
     label: "Городской фестиваль",
     en: "City festival",
     summary:
@@ -670,6 +679,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "tattoo",
+    group: "local",
     label: "Тату-студия",
     en: "Tattoo studio",
     summary:
@@ -797,6 +807,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "wedding",
+    group: "events",
     label: "Приглашение на свадьбу",
     en: "Wedding invitation",
     summary:
@@ -924,6 +935,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "wedding-cuba",
+    group: "events",
     label: "Свадьба на Кубе",
     en: "Wedding in Cuba",
     summary:
@@ -1055,6 +1067,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "wedding-winter",
+    group: "events",
     label: "Зимняя свадьба при свечах",
     en: "Winter wedding by candlelight",
     summary:
@@ -1191,6 +1204,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "bakery",
+    group: "local",
     label: "Кофейня-пекарня",
     en: "Café-bakery",
     summary:
@@ -1224,6 +1238,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "podcast",
+    group: "content",
     label: "Подкаст",
     en: "Podcast",
     summary:
@@ -1254,6 +1269,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "opensource",
+    group: "product",
     label: "Open-source проект",
     en: "Open-source project",
     summary:
@@ -1283,6 +1299,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "portfolio",
+    group: "content",
     label: "Портфолио разработчика / дизайнера",
     en: "Developer / designer portfolio",
     summary:
@@ -1311,6 +1328,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "app",
+    group: "product",
     label: "Мобильное приложение",
     en: "Mobile app",
     summary:
@@ -1340,6 +1358,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "saas",
+    group: "product",
     label: "AI-инструмент / SaaS",
     en: "AI tool / SaaS",
     summary:
@@ -1370,6 +1389,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "auto",
+    group: "local",
     label: "Автосервис и детейлинг",
     en: "Car service & detailing",
     summary:
@@ -1400,6 +1420,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "vet",
+    group: "local",
     label: "Ветклиника и груминг",
     en: "Vet clinic & grooming",
     summary:
@@ -1431,6 +1452,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "flowers",
+    group: "local",
     label: "Цветочная мастерская",
     en: "Flower studio",
     summary:
@@ -1462,6 +1484,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "renovation",
+    group: "local",
     label: "Ремонт квартир",
     en: "Apartment renovation",
     summary:
@@ -1493,6 +1516,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "delivery",
+    group: "local",
     label: "Доставка еды",
     en: "Food delivery",
     summary:
@@ -1523,6 +1547,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "language",
+    group: "content",
     label: "Языковая школа",
     en: "Language school",
     summary:
@@ -1555,6 +1580,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "fintech",
+    group: "product",
     label: "Финтех для бизнеса",
     en: "Business fintech",
     summary:
@@ -1587,6 +1613,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "market",
+    group: "product",
     label: "Маркетплейс шаблонов",
     en: "Template marketplace",
     summary:
@@ -1618,6 +1645,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "api",
+    group: "product",
     label: "API и dev-tool",
     en: "API & dev tool",
     summary:
@@ -1650,6 +1678,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "gadget",
+    group: "product",
     label: "Гаджет и хардвер",
     en: "Gadget & hardware",
     summary:
@@ -1681,6 +1710,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "charity",
+    group: "content",
     label: "Благотворительный фонд",
     en: "Charity foundation",
     summary:
@@ -1713,6 +1743,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     slug: "writer",
+    group: "content",
     label: "Писатель и тексты",
     en: "Writer & essays",
     summary:

@@ -134,6 +134,14 @@ type Dictionary = {
     empty: string
     /** «14 блоков» — с русским склонением. */
     blocksCount: (count: number) => string
+    /** Подписи фильтров на витрине. */
+    filters: {
+      all: string
+      groups: Record<"local" | "product" | "content" | "events", string>
+      tones: { light: string; dark: string }
+      /** «{n} из» — {n} подставляется на клиенте. */
+      shown: string
+    }
     openRecipe: string
     openInCatalog: string
     showInDemo: string
@@ -393,6 +401,12 @@ const RU: Dictionary = {
 
       return `${count} блоков`
     },
+    filters: {
+      all: "Все",
+      groups: { local: "Локальный бизнес", product: "Продукт и SaaS", content: "Контент и люди", events: "События" },
+      tones: { light: "Светлые", dark: "Тёмные" },
+      shown: "показано",
+    },
     openRecipe: "Из чего собрано",
     openInCatalog: "Открыть в каталоге",
     showInDemo: "Показать в демо",
@@ -618,6 +632,12 @@ const EN: Dictionary = {
       "Finished pages assembled from catalog blocks: see the demo, and in PRO — the exact composition, the page source and a link for your AI agent to build the same page in your project.",
     empty: "No scenarios yet.",
     blocksCount: (count) => `${count} block${count === 1 ? "" : "s"}`,
+    filters: {
+      all: "All",
+      groups: { local: "Local business", product: "Product & SaaS", content: "Content & people", events: "Events" },
+      tones: { light: "Light", dark: "Dark" },
+      shown: "shown",
+    },
     openRecipe: "What it is made of",
     openInCatalog: "Open in the catalog",
     showInDemo: "Show in the demo",
