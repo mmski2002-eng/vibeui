@@ -4419,6 +4419,196 @@
           }
         }
       }
+    },
+    {
+      "name": "pricing-024",
+      "type": "registry:block",
+      "title": "Тарифы приложения: бесплатно и премиум с таблицей",
+      "description": "Две карточки — «Бесплатно» и тёмный «Премиум» с плашкой «7 дней бесплатно», переключатель месяц/год со сдвигом цены и таблица функций под ними: галочки в акцентных кружках, прочерки и текстовые значения. Всё по центру, узкая колонка.",
+      "categories": [
+        "pricing"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-024/pricing-024.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-024.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "pricing",
+          "app",
+          "subscription",
+          "premium",
+          "free",
+          "trial",
+          "table",
+          "mobile"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Pricing024",
+          "usage": "<Pricing024\n  premiumMonthly=\"299 ₽\"\n  premiumYearly=\"1 990 ₽\"\n  trial=\"7 дней бесплатно\"\n  features={[{ label: \"Сон по фазам\", free: false, premium: true }, { label: \"Серии\", free: \"7 дней\", premium: \"без лимита\" }]}\n/>",
+          "summary": "Тарифы для мобильного приложения с бесплатной версией: две карточки и честная таблица, что где.",
+          "preserve": [
+            "переключатель — aria-pressed на двух кнопках; цена перерисовывается с key и keyframes сдвига",
+            "премиум-карточка инвертирована (fg на bg), плашка пробного периода — акцентом над углом",
+            "значения таблицы: true — галочка, false — прочерк, строка — как есть"
+          ],
+          "adapt": [
+            "freeName, freePrice, premiumName, premiumMonthly, premiumYearly",
+            "monthlyLabel, yearlyLabel, yearlyNote, trial, features: label, free, premium",
+            "freeAction, premiumAction, premiumHref, eyebrow, title, lede",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Бесплатно хватает. Премиум — если хочется больше",
+            "maxLength": 60
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "App pricing: free and premium with a table",
+            "description": "Two cards — “Free” and a dark “Premium” with a “7 days free” tag, a monthly/yearly switch with a price slide, and a feature table below: ticks in accent circles, dashes and text values. Centred in a narrow column.",
+            "ai": {
+              "summary": "Pricing for a mobile app with a free tier: two cards and an honest table of what's where.",
+              "preserve": [
+                "the switch is aria-pressed on two buttons; the price re-renders with a key and slide keyframes",
+                "the premium card is inverted (fg on bg), the trial tag sits in the accent above the corner",
+                "table values: true — a tick, false — a dash, a string — as is"
+              ],
+              "adapt": [
+                "freeName, freePrice, premiumName, premiumMonthly, premiumYearly",
+                "monthlyLabel, yearlyLabel, yearlyNote, trial, features: label, free, premium",
+                "freeAction, premiumAction, premiumHref, eyebrow, title, lede",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Pricing024\n  premiumMonthly=\"$4.99\"\n  premiumYearly=\"$29.99\"\n  trial=\"7 days free\"\n  features={[{ label: \"Sleep by phases\", free: false, premium: true }, { label: \"Streaks\", free: \"7 days\", premium: \"unlimited\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Free is enough. Premium if you want more"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Pricing",
+                "title": "Free is enough. Premium if you want more",
+                "lede": "Breathing and the alarm are free forever. Premium adds sleep phases, streaks and family access.",
+                "freeName": "Free",
+                "freePrice": "$0",
+                "premiumName": "Premium",
+                "premiumMonthly": "$4.99",
+                "premiumYearly": "$29.99",
+                "monthlyLabel": "monthly",
+                "yearlyLabel": "yearly",
+                "yearlyNote": "−45%",
+                "trial": "7 days free",
+                "freeAction": "Download",
+                "premiumAction": "Try 7 days",
+                "features": [
+                  {
+                    "label": "Breathing practices",
+                    "free": true,
+                    "premium": true
+                  },
+                  {
+                    "label": "Smart alarm",
+                    "free": true,
+                    "premium": true
+                  },
+                  {
+                    "label": "Sleep by phases",
+                    "free": false,
+                    "premium": true
+                  },
+                  {
+                    "label": "Streaks and reminders",
+                    "free": "7 days",
+                    "premium": "unlimited"
+                  },
+                  {
+                    "label": "Family access",
+                    "free": false,
+                    "premium": "up to 5"
+                  },
+                  {
+                    "label": "Data export",
+                    "free": false,
+                    "premium": true
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

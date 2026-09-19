@@ -4086,6 +4086,171 @@
           }
         }
       }
+    },
+    {
+      "name": "faq-023",
+      "type": "registry:block",
+      "title": "Вопросы аккордеоном с плюсом-крестиком",
+      "description": "Вопросы на мягких плитках: открыт один, плюс справа поворачивается в крестик и заливается акцентом, ответ раскрывается через grid-template-rows 0fr → 1fr. Открытая плитка обведена акцентом; кнопка с aria-expanded и aria-controls. Слева заголовок и «задать вопрос».",
+      "categories": [
+        "faq"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "faq-023/faq-023.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/faq-023.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "faq",
+          "accordion",
+          "questions",
+          "app",
+          "support",
+          "mobile",
+          "help"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Faq023",
+          "usage": "<Faq023\n  title=\"Спрашивают перед установкой\"\n  items={[\n    { question: \"Работает без интернета?\", answer: \"Да, полностью.\" },\n    { question: \"Можно отменить подписку?\", answer: \"В любой момент в настройках магазина.\" },\n  ]}\n/>",
+          "summary": "FAQ для приложения или сервиса: один открытый вопрос, плавное раскрытие, доступность из коробки.",
+          "preserve": [
+            "раскрытие — grid-template-rows с transition, состояние — индекс открытого",
+            "плюс — два псевдоэлемента, rotate(45deg) даёт крестик; заливка по aria-expanded",
+            "две колонки от 56rem: текст слева, список справа"
+          ],
+          "adapt": [
+            "items: question, answer",
+            "eyebrow, title, lede",
+            "contactLabel, contactHref",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Спрашивают перед установкой",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "FAQ accordion with a plus-to-cross toggle",
+            "description": "Questions on soft tiles: one open, the plus on the right rotates into a cross and fills with the accent, the answer expands via grid-template-rows 0fr → 1fr. The open tile has an accent ring; the button has aria-expanded and aria-controls. A headline and “ask a question” on the left.",
+            "ai": {
+              "summary": "An FAQ for an app or service: one open question, smooth expansion, accessibility out of the box.",
+              "preserve": [
+                "expansion is grid-template-rows with a transition, state is the open index",
+                "the plus is two pseudo-elements, rotate(45deg) makes a cross; fill on aria-expanded",
+                "two columns from 56rem: text left, list right"
+              ],
+              "adapt": [
+                "items: question, answer",
+                "eyebrow, title, lede",
+                "contactLabel, contactHref",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Faq023\n  title=\"Asked before installing\"\n  items={[\n    { question: \"Does it work offline?\", answer: \"Yes, fully.\" },\n    { question: \"Can I cancel?\", answer: \"Anytime in the store settings.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Asked before installing"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Questions",
+                "title": "Asked before installing",
+                "lede": "Briefly on privacy, money and watches. Didn't find an answer — write, we reply within a day.",
+                "contactLabel": "Ask a question",
+                "items": [
+                  {
+                    "question": "Does the app listen to me all night?",
+                    "answer": "Only via the microphone and only on the phone: audio isn't recorded or sent anywhere, the breathing rhythm is analysed. You can turn it off — then phases are estimated from movement."
+                  },
+                  {
+                    "question": "What happens after 7 days of premium?",
+                    "answer": "Nothing scary: premium features close, free ones stay forever. We remind you a day before the trial ends."
+                  },
+                  {
+                    "question": "Does it work offline?",
+                    "answer": "Yes, fully. Sync between devices happens when the network is back."
+                  },
+                  {
+                    "question": "Is there a watch version?",
+                    "answer": "For Apple Watch and Wear OS — the alarm and breathing on the wrist. A streak widget is in the next update."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

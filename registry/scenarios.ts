@@ -1301,6 +1301,35 @@ export const SCENARIOS: Scenario[] = [
       { item: "footer-030", anchor: "footer", role: "Подвал", roleEn: "Footer", note: "Имя, ссылки, год, кнопка «наверх» со стрелкой.", noteEn: "Name, links, year, a “to top” arrow button." },
     ],
   },
+  {
+    slug: "app",
+    label: "Мобильное приложение",
+    en: "Mobile app",
+    summary:
+      "Лендинг приложения для сна и дыхания в светлой лавандовой теме — без скриншотов: шапка с «дышащим» лого и рейтингом, первый экран с телефоном из CSS, на котором круг дышит в такт 4-7-8, возможности с липким телефоном, экраны которого меняются по прокрутке, «до / после» с ползунком сравнения графиков сна, отзывы из магазинов лентой, тарифы бесплатно / премиум с таблицей, вопросы аккордеоном, «скачать» с QR из CSS и подвал с бейджами. Manrope и IBM Plex Mono.",
+    summaryEn:
+      "A sleep-and-breathing app landing in a light lavender theme — with no screenshots: a header with a “breathing” logo and rating, a hero with a CSS phone whose circle breathes to 4-7-8, features with a sticky phone whose screens change on scroll, “before / after” with a sleep chart comparison slider, store reviews as a strip, free / premium pricing with a table, an FAQ accordion, a “download” CTA with a CSS QR and a footer with badges. Manrope and IBM Plex Mono.",
+    demo: "/scenarios/app/demo",
+    source: "app/scenarios/app/demo/page.tsx",
+    images: "docs/scenarios/app/IMAGES.md",
+    theme: {
+      tone: "light",
+      accent: "#7c5cff",
+      ink: "#1c1b2e",
+      font: "Manrope, IBM Plex Mono",
+    },
+    sections: [
+      { item: "navbar-032", anchor: "", role: "Шапка", roleEn: "Header", note: "Лого с пульсирующей точкой, разделы, чип рейтинга, кнопка «Скачать».", noteEn: "A logo with a pulsing dot, sections, a rating chip, a “Download” button." },
+      { item: "hero-032", anchor: "top", role: "Первый экран", roleEn: "First screen", note: "CSS-телефон с дышащим кругом 4-7-8, рейтинг звёздами, бейджи магазинов.", noteEn: "A CSS phone with a 4-7-8 breathing circle, star rating, store badges." },
+      { item: "app-001", anchor: "features", role: "Что внутри", roleEn: "Inside", note: "Список фич и липкий телефон, экран меняется по прокрутке.", noteEn: "A feature list and a sticky phone whose screen changes on scroll." },
+      { item: "app-002", anchor: "results", role: "Результат", roleEn: "Results", note: "Графики сна до и после, ползунок сравнения.", noteEn: "Sleep charts before and after, a comparison slider." },
+      { item: "testimonials-025", anchor: "reviews", role: "Отзывы", roleEn: "Reviews", note: "Карточки из App Store и Google Play лентой со snap, общий рейтинг.", noteEn: "App Store and Google Play cards in a snap strip, an overall rating." },
+      { item: "pricing-024", anchor: "pricing", role: "Тарифы", roleEn: "Pricing", note: "Бесплатно и премиум, месяц/год, «7 дней бесплатно», таблица функций.", noteEn: "Free and premium, monthly/yearly, “7 days free”, a feature table." },
+      { item: "faq-023", anchor: "faq", role: "Вопросы", roleEn: "FAQ", note: "Аккордеон с плюсом-крестиком, один открыт.", noteEn: "An accordion with a plus-to-cross toggle, one open." },
+      { item: "cta-025", anchor: "download", role: "Скачать", roleEn: "Download", note: "Тёмная карточка на фото, бейджи и QR-код из CSS.", noteEn: "A dark card over a photo, badges and a CSS QR code." },
+      { item: "footer-031", anchor: "footer", role: "Подвал", roleEn: "Footer", note: "Лого, ссылки, магазины, правовые пункты.", noteEn: "Logo, links, stores, legal items." },
+    ],
+  },
 ]
 
 // Опечатка в имени item'а здесь означала бы пустую карточку в рецепте,

@@ -1,0 +1,142 @@
+"use client"
+
+import { useEffect, useState, type CSSProperties } from "react"
+
+export type Navbar032Link = {
+  label: string
+  href: string
+}
+
+export type Navbar032Props = {
+  brand?: string
+  brandHref?: string
+  links?: readonly Navbar032Link[]
+  rating?: string
+  ratingNote?: string
+  actionLabel?: string
+  actionHref?: string
+  sticky?: boolean
+  tone?: "auto" | "light" | "dark"
+  accent?: string
+  ink?: string
+  background?: string
+  className?: string
+  style?: CSSProperties
+}
+
+// Шапка сайта приложения: лого с мягкой точкой-«дыханием» (медленно
+// пульсирует), разделы, чип рейтинга «4,9 ★ · App Store» и кнопка
+// «Скачать». Липкая, при прокрутке — стекло и тонкая линия.
+const FONTS = "https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap"
+
+const STYLES = `
+:where([data-vibeui-block="navbar-032"]){
+--vibeui-navbar-032-bg:light-dark(#ffffff,#1a1a1a);
+--vibeui-navbar-032-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-navbar-032-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-navbar-032-on-accent:oklch(from var(--vibeui-navbar-032-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
+--vibeui-navbar-032-muted:color-mix(in oklab,var(--vibeui-navbar-032-fg) 60%,var(--vibeui-navbar-032-bg));
+--vibeui-navbar-032-line:color-mix(in oklab,var(--vibeui-navbar-032-fg) 12%,transparent);
+--vibeui-navbar-032-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
+container-type:inline-size;
+}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="navbar-032"]{color-scheme:dark}
+:where([data-vibeui-block="navbar-032"][data-tone="light"]){color-scheme:light}
+:where([data-vibeui-block="navbar-032"][data-tone="dark"]){color-scheme:dark}
+[data-vibeui-block="navbar-032"]{box-sizing:border-box;position:relative;z-index:50;font-family:var(--vibeui-navbar-032-font);color:var(--vibeui-navbar-032-fg);font-size:.92rem;line-height:1.4;border-bottom:1px solid transparent;transition:border-color .3s,background .3s}
+[data-vibeui-block="navbar-032"][data-sticky="true"]{position:sticky;top:0}
+[data-vibeui-block="navbar-032"][data-scrolled="true"]{border-color:var(--vibeui-navbar-032-line);background:color-mix(in oklab,var(--vibeui-navbar-032-bg) 82%,transparent);backdrop-filter:blur(14px)}
+[data-vibeui-block="navbar-032"] *{box-sizing:border-box}
+[data-vibeui-block="navbar-032"] [data-part="row"]{display:flex;align-items:center;gap:.8rem;height:4rem;max-width:80rem;margin:0 auto;padding:0 1.25rem}
+[data-vibeui-block="navbar-032"] [data-part="brand"]{display:inline-flex;align-items:center;gap:.55rem;font-weight:800;font-size:1.15rem;letter-spacing:-.02em;text-decoration:none;color:inherit}
+[data-vibeui-block="navbar-032"] [data-part="brand"] i{width:.9rem;height:.9rem;border-radius:50%;background:var(--vibeui-navbar-032-accent);animation:vibeui-navbar-032-breath 4s ease-in-out infinite}
+[data-vibeui-block="navbar-032"] [data-part="nav"]{display:none;gap:1.2rem;margin-left:1rem}
+[data-vibeui-block="navbar-032"] [data-part="nav"] a{color:var(--vibeui-navbar-032-muted);text-decoration:none;font-weight:600;transition:color .2s}
+[data-vibeui-block="navbar-032"] [data-part="nav"] a:hover{color:var(--vibeui-navbar-032-fg)}
+[data-vibeui-block="navbar-032"] [data-part="right"]{margin-left:auto;display:flex;align-items:center;gap:.6rem}
+[data-vibeui-block="navbar-032"] [data-part="rating"]{display:none;align-items:center;gap:.35rem;font-size:.8rem;color:var(--vibeui-navbar-032-muted)}
+[data-vibeui-block="navbar-032"] [data-part="rating"] b{color:var(--vibeui-navbar-032-fg)}
+[data-vibeui-block="navbar-032"] [data-part="rating"] i{color:var(--vibeui-navbar-032-accent);font-style:normal}
+[data-vibeui-block="navbar-032"] [data-part="action"]{display:inline-flex;align-items:center;padding:.6rem 1.1rem;border-radius:999px;background:var(--vibeui-navbar-032-accent);color:var(--vibeui-navbar-032-on-accent);text-decoration:none;font-weight:700;font-size:.88rem;white-space:nowrap;transition:transform .18s,filter .2s}
+[data-vibeui-block="navbar-032"] [data-part="action"]:hover{transform:translateY(-1px);filter:brightness(1.05)}
+[data-vibeui-block="navbar-032"] a:focus-visible{outline:2px solid var(--vibeui-navbar-032-accent);outline-offset:2px}
+@keyframes vibeui-navbar-032-breath{0%,100%{transform:scale(.8);opacity:.8}50%{transform:scale(1.15);opacity:1}}
+@container (min-width: 40rem){[data-vibeui-block="navbar-032"] [data-part="rating"]{display:inline-flex}}
+@container (min-width: 56rem){[data-vibeui-block="navbar-032"] [data-part="nav"]{display:flex}}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-032"] *{animation:none!important;transition:none!important}}`
+
+/** Шапка сайта приложения с «дышащим» лого и чипом рейтинга. */
+export function Navbar032({
+  brand = "Тише",
+  brandHref = "#top",
+  links = [
+    { label: "Что внутри", href: "#features" },
+    { label: "Результат", href: "#results" },
+    { label: "Отзывы", href: "#reviews" },
+    { label: "Тарифы", href: "#pricing" },
+  ],
+  rating = "4,9",
+  ratingNote = "App Store",
+  actionLabel = "Скачать",
+  actionHref = "#download",
+  sticky = true,
+  tone = "auto",
+  accent,
+  ink,
+  background,
+  className,
+  style,
+}: Navbar032Props) {
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12)
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
+
+  const palette = {
+    ...(accent ? { "--vibeui-navbar-032-accent": accent } : null),
+    ...(ink ? { "--vibeui-navbar-032-fg": ink } : null),
+    ...(background ? { "--vibeui-navbar-032-bg": background } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <link rel="stylesheet" href={FONTS} precedence="medium" />
+      <style href="vibeui-navbar-032" precedence="medium">
+        {STYLES}
+      </style>
+      <header data-vibeui-block="navbar-032" data-tone={tone === "auto" ? undefined : tone} data-sticky={sticky} data-scrolled={scrolled} className={className} style={palette}>
+        <div data-part="row">
+          <a data-part="brand" href={brandHref}>
+            <i aria-hidden="true" />
+            {brand}
+          </a>
+          <nav data-part="nav" aria-label="Разделы">
+            {links.map((link) => (
+              <a key={link.href} href={link.href}>
+                {link.label}
+              </a>
+            ))}
+          </nav>
+          <div data-part="right">
+            {rating ? (
+              <span data-part="rating">
+                <i aria-hidden="true">★</i>
+                <b>{rating}</b>
+                {ratingNote ? <span>· {ratingNote}</span> : null}
+              </span>
+            ) : null}
+            {actionLabel ? (
+              <a data-part="action" href={actionHref}>
+                {actionLabel}
+              </a>
+            ) : null}
+          </div>
+        </div>
+      </header>
+    </>
+  )
+}

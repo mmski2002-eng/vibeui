@@ -4859,6 +4859,185 @@
           }
         }
       }
+    },
+    {
+      "name": "footer-031",
+      "type": "registry:block",
+      "title": "Подвал сайта приложения с бейджами магазинов",
+      "description": "Лого с точкой и подписью, ссылки по центру, два бейджа магазинов справа, ниже строка правовых ссылок и копирайт. Мягкая панель, всё в ряд на широком и стопкой на узком.",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-031/footer-031.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-031.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "footer",
+          "app",
+          "mobile",
+          "app store",
+          "google play",
+          "links",
+          "legal"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Footer031",
+          "usage": "<Footer031 brand=\"Тише\" caption=\"сделано, чтобы вы спали\" links={[{ label: \"Тарифы\", href: \"#pricing\" }]} copyright=\"© Тише, 2026\" />",
+          "summary": "Подвал для лендинга приложения: ссылки, магазины и правовые пункты в одном ряду.",
+          "preserve": [
+            "три колонки auto 1fr auto от 56rem",
+            "бейджи — тёмные плитки на цвете текста",
+            "правовые ссылки отдельной строкой под линией"
+          ],
+          "adapt": [
+            "brand, caption, links",
+            "appStoreLabel/Href, playLabel/Href",
+            "legal, copyright",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Имя",
+            "type": "text",
+            "default": "Тише",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "App site footer with store badges",
+            "description": "A dotted logo with a caption, centred links, two store badges on the right, then a legal links line and copyright. A soft panel, in a row on wide and stacked on narrow.",
+            "ai": {
+              "summary": "A footer for an app landing: links, stores and legal items in one row.",
+              "preserve": [
+                "three columns auto 1fr auto from 56rem",
+                "badges are dark tiles on the text colour",
+                "legal links on a separate line under a hairline"
+              ],
+              "adapt": [
+                "brand, caption, links",
+                "appStoreLabel/Href, playLabel/Href",
+                "legal, copyright",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Footer031 brand=\"Hush\" caption=\"made so you sleep\" links={[{ label: \"Pricing\", href: \"#pricing\" }]} copyright=\"© Hush, 2026\" />"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Hush"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Hush",
+                "caption": "made so you sleep",
+                "copyright": "© Hush, 2026",
+                "links": [
+                  {
+                    "label": "Inside",
+                    "href": "#features"
+                  },
+                  {
+                    "label": "Results",
+                    "href": "#results"
+                  },
+                  {
+                    "label": "Reviews",
+                    "href": "#reviews"
+                  },
+                  {
+                    "label": "Pricing",
+                    "href": "#pricing"
+                  },
+                  {
+                    "label": "FAQ",
+                    "href": "#faq"
+                  }
+                ],
+                "legal": [
+                  {
+                    "label": "Privacy",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Terms",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Support",
+                    "href": "#"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

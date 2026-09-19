@@ -3898,6 +3898,156 @@
           }
         }
       }
+    },
+    {
+      "name": "cta-025",
+      "type": "registry:block",
+      "title": "Скачать: бейджи магазинов и QR-код из CSS",
+      "description": "Тёмная карточка на фото с затемнением: слева заголовок и бейджи App Store / Google Play, справа QR-код, нарисованный CSS-сеткой 21×21 из детерминированного хеша строки (три угловых маркера настоящие, остальное — узор) с подписью «наведите камеру». Код декоративный — для боевого сайта замените на картинку.",
+      "categories": [
+        "cta"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-025/cta-025.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-025.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "cta",
+          "download",
+          "app",
+          "qr",
+          "app store",
+          "google play",
+          "mobile",
+          "call to action"
+        ],
+        "preview": {
+          "props": {
+            "image": "/demo/app/night.webp"
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Cta025",
+          "usage": "<Cta025 title=\"Сегодня вечером — первая практика\" image=\"/photos/night.webp\" seed=\"tishe.app\" appStoreHref=\"https://apps.apple.com/…\" playHref=\"https://play.google.com/…\" />",
+          "summary": "Финальный призыв скачать приложение с двумя бейджами и QR-кодом, который не нужно генерировать для витрины.",
+          "preserve": [
+            "сетка QR — 441 ячейка из хеша FNV-1a строки seed; угловые маркеры рисуются честно",
+            "карточка — тёмная с фото opacity .35 и градиентной тенью слева",
+            "бейджи — текстовые, две строки «Скачать в» / «App Store»"
+          ],
+          "adapt": [
+            "title, text, qrNote, seed",
+            "appStoreLabel/Href, playLabel/Href",
+            "image",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Сегодня вечером — первая практика",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Download: store badges and a CSS QR code",
+            "description": "A dark card over a darkened photo: a headline and App Store / Google Play badges on the left, on the right a QR code drawn as a 21×21 CSS grid from a deterministic string hash (three real finder patterns, the rest is a pattern) with a “point your camera” caption. Decorative — replace with a real image on a production site.",
+            "ai": {
+              "summary": "A closing download call to action with two badges and a QR code you don't need to generate for a showcase.",
+              "preserve": [
+                "the QR grid is 441 cells from an FNV-1a hash of the seed string; finder patterns are drawn properly",
+                "the card is dark with a photo at opacity .35 and a gradient shade from the left",
+                "badges are text, two lines “Download on” / “App Store”"
+              ],
+              "adapt": [
+                "title, text, qrNote, seed",
+                "appStoreLabel/Href, playLabel/Href",
+                "image",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Cta025 title=\"Tonight — your first practice\" image=\"/photos/night.webp\" seed=\"hush.app\" appStoreHref=\"https://apps.apple.com/…\" playHref=\"https://play.google.com/…\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Tonight — your first practice"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "image": "/demo/app/night.webp",
+                "title": "Tonight — your first practice",
+                "text": "Install in a minute, turn on breathing before bed. Tell us in the morning how you slept.",
+                "qrNote": "point your camera — the store opens"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

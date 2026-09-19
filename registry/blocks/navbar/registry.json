@@ -5544,6 +5544,171 @@
           }
         }
       }
+    },
+    {
+      "name": "navbar-032",
+      "type": "registry:block",
+      "title": "Шапка сайта приложения с «дышащим» лого",
+      "description": "Лого с точкой, которая медленно пульсирует, разделы, чип рейтинга «4,9 ★ · App Store» и кнопка «Скачать». Липкая, при прокрутке — стекло и тонкая линия. Чип и разделы появляются по ширине контейнера.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-032/navbar-032.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-032.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "navbar",
+          "header",
+          "app",
+          "mobile",
+          "rating",
+          "download",
+          "sticky"
+        ],
+        "preview": {
+          "aspect": "1280 / 64",
+          "props": {
+            "sticky": false
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Navbar032",
+          "usage": "<Navbar032 brand=\"Тише\" rating=\"4,9\" ratingNote=\"App Store\" links={[{ label: \"Что внутри\", href: \"#features\" }]} actionLabel=\"Скачать\" />",
+          "summary": "Шапка для лендинга мобильного приложения: рейтинг магазина и кнопка скачивания всегда под рукой.",
+          "preserve": [
+            "точка лого пульсирует keyframes 4 с — тот же ритм, что у дыхания на первом экране",
+            "стекло после 12px прокрутки, линия снизу",
+            "чип рейтинга и разделы — контейнерные запросы 40rem и 56rem"
+          ],
+          "adapt": [
+            "brand, brandHref, links",
+            "rating, ratingNote",
+            "actionLabel, actionHref, sticky",
+            "tone — тема",
+            "accent — акцент",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Имя",
+            "type": "text",
+            "default": "Тише",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "App site header with a “breathing” logo",
+            "description": "A logo with a slowly pulsing dot, sections, a “4.9 ★ · App Store” rating chip and a “Download” button. Sticky, with glass and a hairline on scroll. The chip and sections appear by container width.",
+            "ai": {
+              "summary": "A header for a mobile app landing: the store rating and the download button always at hand.",
+              "preserve": [
+                "the logo dot pulses on 4 s keyframes — the same rhythm as the hero breathing",
+                "glass after 12px of scroll, a bottom hairline",
+                "the rating chip and sections are container queries at 40rem and 56rem"
+              ],
+              "adapt": [
+                "brand, brandHref, links",
+                "rating, ratingNote",
+                "actionLabel, actionHref, sticky",
+                "tone — theme",
+                "accent — accent",
+                "background — background"
+              ],
+              "usage": "<Navbar032 brand=\"Hush\" rating=\"4.9\" ratingNote=\"App Store\" links={[{ label: \"Inside\", href: \"#features\" }]} actionLabel=\"Download\" />"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Hush"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "sticky": false,
+                "brand": "Hush",
+                "rating": "4.9",
+                "actionLabel": "Download",
+                "links": [
+                  {
+                    "label": "Inside",
+                    "href": "#features"
+                  },
+                  {
+                    "label": "Results",
+                    "href": "#results"
+                  },
+                  {
+                    "label": "Reviews",
+                    "href": "#reviews"
+                  },
+                  {
+                    "label": "Pricing",
+                    "href": "#pricing"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

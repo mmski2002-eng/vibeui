@@ -200,6 +200,12 @@ export const CATEGORIES = [
     group: "application",
   },
   {
+    slug: "app",
+    label: "Мобильное приложение",
+    en: "Mobile app",
+    group: "application",
+  },
+  {
     slug: "course",
     label: "Онлайн-курс",
     en: "Online course",

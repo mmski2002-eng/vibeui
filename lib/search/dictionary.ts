@@ -548,6 +548,11 @@ export const SYNONYMS: Synonym[] = [
     terms: ["open source", "library", "docs", "playground", "sandbox", "github", "npm", "package", "developer", "sdk", "cli"],
   },
   {
+    say: ["приложение", "мобильное приложение", "скачать приложение", "телефон", "экраны приложения", "app store"],
+    categories: ["app"],
+    terms: ["app", "mobile", "phone", "screens", "app store", "google play", "download", "ios", "android", "mockup"],
+  },
+  {
     say: [
       "онлайн-курс",
       "онлайн курс",

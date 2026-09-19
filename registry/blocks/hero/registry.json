@@ -5826,6 +5826,159 @@
           }
         }
       }
+    },
+    {
+      "name": "hero-032",
+      "type": "registry:block",
+      "title": "Первый экран приложения с CSS-телефоном и дышащим кругом",
+      "description": "Без единого скриншота: справа телефон, нарисованный CSS, на его экране круг дышит — расширяется на вдохе, замирает, сжимается на выдохе, подпись и счётчик секунд идут в такт (длительности пропсами). Слева заголовок, рейтинг звёздами, которые выпрыгивают по очереди, и бейджи магазинов текстом.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-032/hero-032.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-032.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "hero",
+          "app",
+          "mobile",
+          "phone",
+          "breathing",
+          "animation",
+          "app store",
+          "google play"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Hero032",
+          "usage": "<Hero032\n  title=\"Засыпайте за десять минут, а не за час\"\n  rating=\"4,9\"\n  ratingNote=\"12 тыс. оценок\"\n  screenTitle=\"Вечернее дыхание · 4-7-8\"\n  inhale={4}\n  hold={7}\n  exhale={8}\n/>",
+          "summary": "Первый экран для мобильного приложения, который показывает продукт живым CSS-макетом вместо картинки. Телефон и экран — часть блока.",
+          "preserve": [
+            "фаза и секунды — одно состояние, обновляется setInterval раз в секунду; масштаб круга и длительность перехода — переменные от фазы",
+            "телефон — aspect-ratio 9/19, рамка и «чёлка» на псевдоэлементе, экран с радиальным градиентом акцента",
+            "звёзды рейтинга выпрыгивают keyframes с задержкой по индексу"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, rating, ratingNote",
+            "appStoreLabel/Href, playLabel/Href",
+            "screenTitle, inhaleLabel, holdLabel, exhaleLabel, inhale, hold, exhale",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Засыпайте за десять минут, а не за час",
+            "maxLength": 60
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "App hero with a CSS phone and a breathing circle",
+            "description": "Not a single screenshot: a CSS-drawn phone on the right whose screen has a breathing circle — expanding on inhale, holding, shrinking on exhale, with a label and seconds counter in rhythm (durations as props). On the left a headline, stars that pop in one by one, and text store badges.",
+            "ai": {
+              "summary": "A hero for a mobile app that shows the product as a live CSS mockup instead of an image. The phone and screen are part of the block.",
+              "preserve": [
+                "phase and seconds are one state updated by a 1 s setInterval; the circle scale and transition duration are variables from the phase",
+                "the phone is aspect-ratio 9/19 with a frame and a pseudo-element notch, the screen has an accent radial gradient",
+                "rating stars pop in with keyframes delayed by index"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, rating, ratingNote",
+                "appStoreLabel/Href, playLabel/Href",
+                "screenTitle, inhaleLabel, holdLabel, exhaleLabel, inhale, hold, exhale",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Hero032\n  title=\"Fall asleep in ten minutes, not an hour\"\n  rating=\"4.9\"\n  ratingNote=\"12k ratings\"\n  screenTitle=\"Evening breathing · 4-7-8\"\n  inhale={4}\n  hold={7}\n  exhale={8}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Fall asleep in ten minutes, not an hour"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Sleep · breath · quiet",
+                "title": "Fall asleep in ten minutes, not an hour",
+                "lede": "Evening rituals, breathing practices and a smart alarm. No “meditation” subscription — only what helps you sleep.",
+                "rating": "4.9",
+                "ratingNote": "12k ratings",
+                "screenTitle": "Evening breathing · 4-7-8",
+                "inhaleLabel": "inhale",
+                "holdLabel": "hold",
+                "exhaleLabel": "exhale"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

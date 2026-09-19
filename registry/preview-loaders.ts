@@ -57,6 +57,8 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/block/bakery")).PREVIEWS
     case "block/opensource":
       return (await import("@/registry/previews/block/opensource")).PREVIEWS
+    case "block/app":
+      return (await import("@/registry/previews/block/app")).PREVIEWS
     case "block/course":
       return (await import("@/registry/previews/block/course")).PREVIEWS
     case "block/events":

@@ -5661,6 +5661,227 @@
           ]
         }
       }
+    },
+    {
+      "name": "testimonials-025",
+      "type": "registry:block",
+      "title": "Отзывы из магазинов лентой со scroll-snap",
+      "description": "Карточки отзывов с заголовком, звёздами, текстом, именем и бейджем магазина в горизонтальной ленте со scroll-snap — листаются пальцем и колесом, край следующей карточки виден. Сверху общий рейтинг крупно моноширинным. Фон — фото с затемнением. Без JS.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-025/testimonials-025.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-025.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "testimonials",
+          "reviews",
+          "app store",
+          "google play",
+          "carousel",
+          "scroll snap",
+          "mobile",
+          "rating"
+        ],
+        "preview": {
+          "props": {
+            "image": "/demo/app/evening.webp"
+          },
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Testimonials025",
+          "usage": "<Testimonials025\n  rating=\"4,9\"\n  ratingNote=\"12 412 оценок\"\n  image=\"/photos/evening.webp\"\n  reviews={[{ title: \"Первый раз уснула без телефона\", text: \"Дыхание 4-7-8 работает.\", name: \"Лена К.\", store: \"App Store\", stars: 5 }]}\n/>",
+          "summary": "Отзывы для приложения или сервиса в форме магазинных карточек: звёзды, магазин, дата — как в сторе.",
+          "preserve": [
+            "лента — overflow-x auto со scroll-snap-type mandatory и scroll-padding по отступу",
+            "карточка 22rem или 85% ширины на узком, чтобы край следующей был виден",
+            "звёзды — пять символов, лишние гасятся data-off"
+          ],
+          "adapt": [
+            "reviews: title, text, name, store, stars, date",
+            "rating, ratingNote, image",
+            "eyebrow, title, lede",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что пишут в магазинах",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Store reviews as a scroll-snap strip",
+            "description": "Review cards with a title, stars, text, name and store badge in a horizontal scroll-snap strip — swipeable by finger and wheel, the next card's edge visible. A big monospace overall rating on top. A darkened photo backdrop. No JS.",
+            "ai": {
+              "summary": "Reviews for an app or service as store-style cards: stars, store, date — like in the store.",
+              "preserve": [
+                "the strip is overflow-x auto with scroll-snap-type mandatory and scroll-padding matching the gutter",
+                "a card is 22rem or 85% width on narrow so the next card's edge shows",
+                "stars are five glyphs, extras dimmed via data-off"
+              ],
+              "adapt": [
+                "reviews: title, text, name, store, stars, date",
+                "rating, ratingNote, image",
+                "eyebrow, title, lede",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Testimonials025\n  rating=\"4.9\"\n  ratingNote=\"12,412 ratings\"\n  image=\"/photos/evening.webp\"\n  reviews={[{ title: \"First time I fell asleep without my phone\", text: \"4-7-8 breathing works.\", name: \"Lena K.\", store: \"App Store\", stars: 5 }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What people write in the stores"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "image": "/demo/app/evening.webp",
+                "eyebrow": "Reviews",
+                "title": "What people write in the stores",
+                "lede": "Unfiltered: the latest App Store and Google Play reviews as they are.",
+                "rating": "4.9",
+                "ratingNote": "12,412 ratings",
+                "reviews": [
+                  {
+                    "title": "First time I fell asleep without my phone",
+                    "text": "4-7-8 breathing works better than anything I've tried. The circle on screen is brilliantly simple.",
+                    "name": "Lena K.",
+                    "store": "App Store",
+                    "stars": 5,
+                    "date": "Sep 2026"
+                  },
+                  {
+                    "title": "The alarm doesn't annoy",
+                    "text": "Wakes me in a light phase — I get up without feeling dragged out of a well. Seriously.",
+                    "name": "Artem",
+                    "store": "Google Play",
+                    "stars": 5,
+                    "date": "Aug 2026"
+                  },
+                  {
+                    "title": "The streak motivates",
+                    "text": "Don't want to lose 18 days in a row — so I go to bed on time. Silly psychology, but it works.",
+                    "name": "Maria L.",
+                    "store": "App Store",
+                    "stars": 5,
+                    "date": "Aug 2026"
+                  },
+                  {
+                    "title": "Would love a widget",
+                    "text": "Love it all, but a home-screen streak widget is missing. Four stars in advance.",
+                    "name": "Dmitry",
+                    "store": "Google Play",
+                    "stars": 4,
+                    "date": "Jul 2026"
+                  }
+                ]
+              }
+            },
+            "slots": {
+              "shape": "store review cards: title, stars, text, name",
+              "items": [
+                {
+                  "role": "review title"
+                },
+                {
+                  "role": "text"
+                },
+                {
+                  "role": "name and store"
+                }
+              ]
+            }
+          }
+        },
+        "slots": {
+          "shape": "карточки отзывов из магазина: заголовок, звёзды, текст, имя",
+          "density": "medium",
+          "items": [
+            {
+              "role": "заголовок отзыва",
+              "type": "text",
+              "count": "3–6",
+              "required": true
+            },
+            {
+              "role": "текст",
+              "type": "quote",
+              "required": true
+            },
+            {
+              "role": "имя и магазин",
+              "type": "text"
+            }
+          ]
+        }
+      }
     }
   ]
 }

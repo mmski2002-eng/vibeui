@@ -1,0 +1,337 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "app-001",
+      "type": "registry:block",
+      "title": "Возможности с липким телефоном, экран меняется по прокрутке",
+      "description": "Слева список возможностей, справа CSS-телефон прилипает и по мере прокрутки его экран переключается на тот, что напротив активной фичи (IntersectionObserver по каждой). Четыре экрана нарисованы CSS: дышащий круг, график сна, будильник с окном лёгкой фазы, серия дней. На узком — подписи экранов под фичами.",
+      "categories": [
+        "app"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "app-001/app-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/app-001.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "app",
+          "features",
+          "mobile",
+          "sticky",
+          "phone",
+          "scroll",
+          "screens",
+          "product"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "App001",
+          "usage": "<App001\n  title=\"Четыре экрана перед сном\"\n  features={[\n    { title: \"Дыхание, которое ведёт\", text: \"Круг растёт и сжимается.\", screen: \"breath\", screenTitle: \"Вечернее дыхание\" },\n    { title: \"Сон по фазам\", text: \"Телефон слушает дыхание.\", screen: \"sleep\", screenTitle: \"Эта ночь\" },\n  ]}\n/>",
+          "summary": "Рассказ о функциях приложения без скриншотов: телефон из CSS показывает нужный экран, пока человек читает про него.",
+          "preserve": [
+            "активная фича — IntersectionObserver с rootMargin -40% сверху и снизу: побеждает та, что в середине окна",
+            "экраны лежат друг на друге и переключаются opacity/transform по data-on",
+            "телефон показывается только от 60rem, ниже — подпись «экран · …» под каждой фичей"
+          ],
+          "adapt": [
+            "features: title, text, screen (breath | sleep | alarm | stats), screenTitle",
+            "eyebrow, title",
+            "порядок — порядок массива",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Четыре экрана, которые вы откроете перед сном",
+            "maxLength": 60
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Features with a sticky phone whose screen changes on scroll",
+            "description": "A feature list on the left, a CSS phone on the right that sticks and switches its screen to the one facing the active feature on scroll (an IntersectionObserver per feature). Four screens drawn in CSS: a breathing circle, a sleep chart, an alarm with a light-phase window, a day streak. On narrow widths — screen captions under the features.",
+            "ai": {
+              "summary": "A features story for an app without screenshots: a CSS phone shows the matching screen while the person reads about it.",
+              "preserve": [
+                "the active feature is an IntersectionObserver with -40% rootMargin top and bottom: the one in the middle wins",
+                "screens are stacked and switched by opacity/transform via data-on",
+                "the phone shows from 60rem only; below that a “screen · …” caption under each feature"
+              ],
+              "adapt": [
+                "features: title, text, screen (breath | sleep | alarm | stats), screenTitle",
+                "eyebrow, title",
+                "order is array order",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<App001\n  title=\"Four screens before bed\"\n  features={[\n    { title: \"Breathing that leads\", text: \"The circle grows and shrinks.\", screen: \"breath\", screenTitle: \"Evening breathing\" },\n    { title: \"Sleep by phases\", text: \"The phone listens to your breath.\", screen: \"sleep\", screenTitle: \"Tonight\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Four screens you'll open before bed"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Inside",
+                "title": "Four screens you'll open before bed",
+                "features": [
+                  {
+                    "title": "Breathing that leads",
+                    "text": "The circle grows and shrinks, you just follow. Three practices: 4-7-8, box, “evening”.",
+                    "screen": "breath",
+                    "screenTitle": "Evening breathing"
+                  },
+                  {
+                    "title": "Sleep by phases, not hours",
+                    "text": "The phone listens to breathing by the pillow and draws the night: deep, light, awakenings.",
+                    "screen": "sleep",
+                    "screenTitle": "Tonight · 7 h 42 min"
+                  },
+                  {
+                    "title": "An alarm in the light phase",
+                    "text": "A 30-minute window: we wake you when sleep is already shallow — no grogginess.",
+                    "screen": "alarm",
+                    "screenTitle": "Alarm"
+                  },
+                  {
+                    "title": "A streak instead of charts",
+                    "text": "One screen: how many days in a row you went to bed on time. Days, not percentages.",
+                    "screen": "stats",
+                    "screenTitle": "September"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "app-002",
+      "type": "registry:block",
+      "title": "«До / после» с ползунком сравнения графиков",
+      "description": "Два графика сна за неделю лежат друг на друге, верхний обрезан clip-path по положению ползунка, который тянут мышью или пальцем (настоящий <input type=range> поверх). Слева карточки «до» и «после» со средним и временем засыпания, их прозрачность следует за ползунком.",
+      "categories": [
+        "app"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "app-002/app-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/app-002.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "app",
+          "before after",
+          "comparison",
+          "slider",
+          "chart",
+          "results",
+          "interactive",
+          "mobile"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "App002",
+          "usage": "<App002\n  before={[5.4, 6.1, 5.8, 6.4, 5.2, 7.0, 6.6]}\n  after={[7.1, 7.4, 7.2, 7.6, 7.0, 8.1, 7.8]}\n  beforeNote=\"засыпали за 48 мин\"\n  afterNote=\"засыпают за 12 мин\"\n/>",
+          "summary": "Доказательство результата для приложения, курса, сервиса: сравнение до и после, которое человек двигает сам.",
+          "preserve": [
+            "положение ползунка — доля в состоянии, пишется в переменную; верхний график обрезан clip-path inset слева",
+            "поверх лежит прозрачный input type=range — доступность и перетаскивание пальцем бесплатно",
+            "карточки заметок меняют прозрачность от той же переменной"
+          ],
+          "adapt": [
+            "before, after — семь чисел; days",
+            "beforeLabel, afterLabel, beforeNote, afterNote",
+            "eyebrow, title, lede",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Неделя до и неделя после",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "“Before / after” with a chart comparison slider",
+            "description": "Two weekly sleep charts stacked, the top one clipped by clip-path at the slider position, dragged with a mouse or finger (a real <input type=range> on top). “Before” and “after” cards on the left with the average and time to fall asleep, their opacity following the slider.",
+            "ai": {
+              "summary": "Proof of results for an app, course or service: a before/after comparison the person moves themselves.",
+              "preserve": [
+                "the slider position is a fraction in state written to a variable; the top chart is clipped with clip-path inset from the left",
+                "a transparent input type=range on top — accessibility and touch dragging for free",
+                "the note cards change opacity from the same variable"
+              ],
+              "adapt": [
+                "before, after — seven numbers; days",
+                "beforeLabel, afterLabel, beforeNote, afterNote",
+                "eyebrow, title, lede",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<App002\n  before={[5.4, 6.1, 5.8, 6.4, 5.2, 7.0, 6.6]}\n  after={[7.1, 7.4, 7.2, 7.6, 7.0, 8.1, 7.8]}\n  beforeNote=\"fell asleep in 48 min\"\n  afterNote=\"fall asleep in 12 min\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "A week before and a week after"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Results",
+                "title": "A week before and a week after",
+                "lede": "Data from eight hundred users in the first month. Drag the slider — see the difference by day.",
+                "beforeLabel": "before",
+                "afterLabel": "after",
+                "days": [
+                  "mo",
+                  "tu",
+                  "we",
+                  "th",
+                  "fr",
+                  "sa",
+                  "su"
+                ],
+                "beforeNote": "fell asleep in 48 min",
+                "afterNote": "fall asleep in 12 min"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
