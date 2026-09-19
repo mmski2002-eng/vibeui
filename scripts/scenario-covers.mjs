@@ -34,7 +34,7 @@ const { chromium } = await import(modulePath)
 
 // Кнопки заставок: печать конверта (hero-025), корешок билета (hero-026),
 // фитиль свечи (hero-027).
-const GATE_BUTTONS = '[data-part="seal"], [data-part="tear"], [data-part="candle"]'
+const GATE_BUTTONS = '[data-vibeui-block="hero-025"] [data-part="seal"], [data-vibeui-block="hero-026"] [data-part="tear"], [data-vibeui-block="hero-027"] [data-part="candle"]'
 
 // Первые экраны, которые печатают текст по токенам: ждём последнюю строку,
 // иначе на постере пустая панель и один заголовок. Слова — отдельные span,
