@@ -217,7 +217,7 @@
       "name": "flowers-002",
       "type": "registry:block",
       "title": "Конструктор букета: стебли растут в вазе, цена и срок считаются",
-      "description": "Конструктор букета: справа цветы-чипы с кнопками «+/−», слева ваза, в которой каждый добавленный стебель вырастает из горлышка (SVG, keyframe от горлышка), а веер стеблей плавно перестраивается при изменении состава. Цена с бумагой, срок сборки и рукописное «этот букет живёт N дней» (по самому недолгому цветку) считаются на лету. «Заказать» отправляет состав через CustomEvent и прокручивает к форме.",
+      "description": "Конструктор букета: справа цветы-чипы с кнопками «+/−», слева ваза, в которой каждый добавленный стебель вырастает из горлышка (фото (PNG без фона; без фото — SVG), keyframe от горлышка), а веер стеблей плавно перестраивается при изменении состава. Цена с бумагой, срок сборки и рукописное «этот букет живёт N дней» (по самому недолгому цветку) считаются на лету. «Заказать» отправляет состав через CustomEvent и прокручивает к форме.",
       "categories": [
         "flowers"
       ],
@@ -250,15 +250,17 @@
         },
         "ai": {
           "export": "Flowers002",
-          "usage": "<Flowers002\n  title=\"Букет по вашему рецепту\"\n  flowers={[\n    { name: \"Пион\", price: 390, days: 6, color: \"#e9a3b6\", kind: \"peony\", initial: 3 },\n    { name: \"Мак\", price: 190, days: 4, color: \"#c2361d\", kind: \"poppy\" },\n  ]}\n  wrapPrice={300}\n  formHref=\"#delivery\"\n/>",
+          "usage": "<Flowers002\n  vaseImage=\"/photos/vase.png\"\n  title=\"Букет по вашему рецепту\"\n  flowers={[\n    { name: \"Пион\", price: 390, days: 6, color: \"#e9a3b6\", kind: \"peony\", image: \"/photos/stem-peony.png\", initial: 3 },\n    { name: \"Мак\", price: 190, days: 4, color: \"#c2361d\", kind: \"poppy\" },\n  ]}\n  wrapPrice={300}\n  formHref=\"#delivery\"\n/>",
           "summary": "Конструктор с визуальным результатом и расчётом: стебли встают в вазу, цена и срок жизни пересчитываются, состав уходит в форму событием.",
           "preserve": [
+            "с фото: img[data-part=photo] вращается от нижней точки (transform-origin 50% 100%) на --a и масштабируется на --lift, ваза [data-part=jar] стоит спереди с z-index",
             "каждый стебель — g[data-part=stem] с --vibeui-flowers-002-a (угол) и --vibeui-flowers-002-l (длина): rotate и stroke-dasharray в transition .6s, появление — keyframes grow от горлышка (transform-origin 160px 272px)",
             "срок жизни — минимум days среди выбранных цветов; время сборки: ≤6 стеблей — 40 мин, ≤14 — 1,5 ч, дальше — 3 ч",
             "кнопка заказа шлёт window CustomEvent(eventName) с detail {items, stems, price, days} и делает scrollIntoView к formHref"
           ],
           "adapt": [
             "eyebrow, title, lede, orderLabel",
+            "vaseImage — фото пустой вазы",
             "flowers: name, price, days, color, kind (peony | poppy | daisy | leaf | spike), initial",
             "wrapPrice, wrapLabel, maxStems, currency, formHref, eventName",
             "tone — тема",
@@ -330,16 +332,18 @@
         "i18n": {
           "en": {
             "title": "Bouquet builder: stems grow in the vase, price and lifetime are computed",
-            "description": "A bouquet builder: flower chips with “+/−” buttons on the right, a vase on the left where every added stem grows out of the neck (SVG, keyframe from the neck) and the fan of stems smoothly rearranges when the composition changes. Price with wrapping, assembly time and a handwritten “this bouquet lives N days” (by the shortest-lived flower) are computed live. “Order” sends the composition via a CustomEvent and scrolls to the form.",
+            "description": "A bouquet builder: flower chips with “+/−” buttons on the right, a vase on the left where every added stem grows out of the neck (photo (transparent PNG; SVG without photos), keyframe from the neck) and the fan of stems smoothly rearranges when the composition changes. Price with wrapping, assembly time and a handwritten “this bouquet lives N days” (by the shortest-lived flower) are computed live. “Order” sends the composition via a CustomEvent and scrolls to the form.",
             "ai": {
               "summary": "A builder with a visual result and a calculation: stems stand in the vase, price and lifetime recompute, the composition goes to the form via an event.",
               "preserve": [
+                "with photos: img[data-part=photo] rotates from its bottom point (transform-origin 50% 100%) by --a and scales by --lift, the [data-part=jar] vase stands in front with z-index",
                 "each stem is g[data-part=stem] with --vibeui-flowers-002-a (angle) and --vibeui-flowers-002-l (length): rotate and stroke-dasharray transition .6s, entrance is the grow keyframes from the neck (transform-origin 160px 272px)",
                 "lifetime is the minimum days among chosen flowers; assembly time: ≤6 stems — 40 min, ≤14 — 1.5 h, more — 3 h",
                 "the order button dispatches a window CustomEvent(eventName) with detail {items, stems, price, days} and scrollIntoView to formHref"
               ],
               "adapt": [
                 "eyebrow, title, lede, orderLabel",
+                "vaseImage — the empty vase photo",
                 "flowers: name, price, days, color, kind (peony | poppy | daisy | leaf | spike), initial",
                 "wrapPrice, wrapLabel, maxStems, currency, formHref, eventName",
                 "tone — theme",
@@ -347,7 +351,7 @@
                 "ink — ink",
                 "background — background"
               ],
-              "usage": "<Flowers002\n  title=\"A bouquet to your recipe\"\n  flowers={[\n    { name: \"Peony\", price: 4.5, days: 6, color: \"#e9a3b6\", kind: \"peony\", initial: 3 },\n    { name: \"Poppy\", price: 2.2, days: 4, color: \"#c2361d\", kind: \"poppy\" },\n  ]}\n  wrapPrice={3}\n  currency=\"$\"\n  formHref=\"#delivery\"\n/>"
+              "usage": "<Flowers002\n  vaseImage=\"/photos/vase.png\"\n  title=\"A bouquet to your recipe\"\n  flowers={[\n    { name: \"Peony\", price: 4.5, days: 6, color: \"#e9a3b6\", kind: \"peony\", image: \"/photos/stem-peony.png\", initial: 3 },\n    { name: \"Poppy\", price: 2.2, days: 4, color: \"#c2361d\", kind: \"poppy\" },\n  ]}\n  wrapPrice={3}\n  currency=\"$\"\n  formHref=\"#delivery\"\n/>"
             },
             "controls": {
               "title": {
@@ -385,7 +389,8 @@
                     "days": 6,
                     "color": "#e9a3b6",
                     "kind": "peony",
-                    "initial": 3
+                    "initial": 3,
+                    "image": "/demo/flowers/stem-peony.png"
                   },
                   {
                     "name": "Poppy",
@@ -393,7 +398,8 @@
                     "days": 4,
                     "color": "#c2361d",
                     "kind": "poppy",
-                    "initial": 2
+                    "initial": 2,
+                    "image": "/demo/flowers/stem-poppy.png"
                   },
                   {
                     "name": "Daisy",
@@ -407,7 +413,8 @@
                     "price": 3,
                     "days": 7,
                     "color": "#f0b04c",
-                    "kind": "peony"
+                    "kind": "peony",
+                    "image": "/demo/flowers/stem-ranunculus.png"
                   },
                   {
                     "name": "Lavender",
@@ -415,14 +422,16 @@
                     "days": 10,
                     "color": "#8b7bb5",
                     "kind": "spike",
-                    "initial": 2
+                    "initial": 2,
+                    "image": "/demo/flowers/stem-lavender.png"
                   },
                   {
                     "name": "Eucalyptus",
                     "price": 1.8,
                     "days": 14,
                     "color": "#7f9a7a",
-                    "kind": "leaf"
+                    "kind": "leaf",
+                    "image": "/demo/flowers/stem-eucalyptus.png"
                   }
                 ],
                 "wrapPrice": 3.5,

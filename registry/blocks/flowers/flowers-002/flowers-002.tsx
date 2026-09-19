@@ -13,6 +13,8 @@ export type Flowers002Flower = {
   kind?: "peony" | "poppy" | "daisy" | "leaf" | "spike"
   /** Сколько стеблей положить по умолчанию. */
   initial?: number
+  /** Фото стебля во всю высоту (PNG без фона, срез внизу). Есть у всех цветов — букет из фото. */
+  image?: string
 }
 
 export type Flowers002Props = {
@@ -24,6 +26,8 @@ export type Flowers002Props = {
   wrapPrice?: number
   wrapLabel?: string
   maxStems?: number
+  /** Фото пустой вазы (PNG без фона), стоит перед стеблями. */
+  vaseImage?: string
   currency?: string
   orderLabel?: string
   /** Куда прокрутить после «заказать» — якорь формы. */
@@ -38,13 +42,14 @@ export type Flowers002Props = {
   style?: CSSProperties
 }
 
-// Конструктор букета: слева ваза, справа цветы-чипы с кнопками «+/−».
-// Каждый добавленный стебель вырастает из горлышка вазы (SVG, keyframe
-// от горлышка), стебли раскладываются веером и плавно перестраиваются,
-// когда состав меняется (rotate и stroke-dasharray через transition).
-// Цена, срок сборки и «этот букет живёт N дней» считаются на лету — букет
-// живёт столько, сколько его самый недолгий цветок. Кнопка «заказать»
-// отправляет состав в форму через CustomEvent и прокручивает к ней.
+// Конструктор букета: слева ваза, справа цветы-чипы с кнопками «+ / −».
+// Каждый добавленный стебель — фото (PNG без фона) — вырастает из
+// горлышка вазы, стебли раскладываются веером и плавно перестраиваются,
+// когда состав меняется (rotate через transition), ваза-фото стоит
+// спереди. Без фото — SVG-стебли и рисованная ваза. Цена, срок сборки и
+// «этот букет живёт N дней» считаются на лету: букет живёт столько,
+// сколько его самый недолгий цветок. Кнопка «заказать» отправляет состав
+// в форму через CustomEvent и прокручивает к ней.
 const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Golos+Text:wght@400;500;600&family=Caveat:wght@500;600&display=swap"
 
 const STYLES = `
@@ -103,6 +108,10 @@ container-type:inline-size;
 [data-vibeui-block="flowers-002"] [data-part="order"]:disabled{opacity:.45;cursor:default;transform:none;box-shadow:none}
 [data-vibeui-block="flowers-002"] [data-part="wrap"]{margin:0;font-size:.8rem;opacity:.7}
 [data-vibeui-block="flowers-002"] button:focus-visible{outline:2px solid var(--vibeui-flowers-002-accent);outline-offset:3px}
+[data-vibeui-block="flowers-002"] [data-part="bunch"]{position:relative;width:100%;max-width:26rem;margin:0 auto;aspect-ratio:8/9;container-type:size}
+[data-vibeui-block="flowers-002"] [data-part="photo"]{position:absolute;left:50%;bottom:14cqh;width:26cqw;height:78cqh;margin-left:-13cqw;object-fit:contain;object-position:50% 100%;transform-origin:50% 100%;transform:rotate(var(--vibeui-flowers-002-a)) scale(calc(1 - var(--vibeui-flowers-002-lift) / 100));transition:transform .6s cubic-bezier(.2,.7,.2,1);animation:vibeui-flowers-002-sprout .7s cubic-bezier(.2,.7,.2,1);filter:drop-shadow(0 6px 6px rgb(0 0 0 / .18))}
+[data-vibeui-block="flowers-002"] [data-part="jar"]{position:absolute;left:50%;bottom:0;width:44cqw;height:44cqh;margin-left:-22cqw;object-fit:contain;object-position:50% 100%;z-index:20;filter:drop-shadow(0 14px 14px rgb(0 0 0 / .18))}
+@keyframes vibeui-flowers-002-sprout{from{opacity:0;transform:rotate(var(--vibeui-flowers-002-a)) scale(.3)}to{opacity:1;transform:rotate(var(--vibeui-flowers-002-a)) scale(calc(1 - var(--vibeui-flowers-002-lift) / 100))}}
 @keyframes vibeui-flowers-002-grow{from{opacity:0;transform:rotate(var(--vibeui-flowers-002-a)) scale(.2)}to{opacity:1;transform:rotate(var(--vibeui-flowers-002-a)) scale(1)}}
 @container (min-width: 40rem){[data-vibeui-block="flowers-002"] [data-part="chips"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @container (min-width: 60rem){[data-vibeui-block="flowers-002"] [data-part="grid"]{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:3rem}[data-vibeui-block="flowers-002"] [data-part="stage"]{position:sticky;top:5.5rem;padding:1.5rem}[data-vibeui-block="flowers-002"] [data-part="chips"]{grid-template-columns:1fr}}
@@ -110,12 +119,12 @@ container-type:inline-size;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="flowers-002"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_FLOWERS: Flowers002Flower[] = [
-  { name: "Пион", price: 390, days: 6, color: "#e9a3b6", kind: "peony", initial: 3 },
-  { name: "Мак", price: 190, days: 4, color: "#c2361d", kind: "poppy", initial: 2 },
-  { name: "Ромашка", price: 120, days: 8, color: "#fbf6ea", kind: "daisy" },
-  { name: "Ранункулюс", price: 260, days: 7, color: "#f0b04c", kind: "peony" },
-  { name: "Лаванда", price: 140, days: 10, color: "#8b7bb5", kind: "spike", initial: 2 },
-  { name: "Эвкалипт", price: 160, days: 14, color: "#7f9a7a", kind: "leaf" },
+  { name: "Пион", price: 390, days: 6, color: "#e9a3b6", kind: "peony", initial: 3, image: "/demo/flowers/stem-peony.png" },
+  { name: "Мак", price: 190, days: 4, color: "#c2361d", kind: "poppy", initial: 2, image: "/demo/flowers/stem-poppy.png" },
+  { name: "Ромашка", price: 120, days: 8, color: "#fbf6ea", kind: "daisy", image: "/demo/flowers/stem-chamomile.png" },
+  { name: "Ранункулюс", price: 260, days: 7, color: "#f0b04c", kind: "peony", image: "/demo/flowers/stem-ranunculus.png" },
+  { name: "Лаванда", price: 140, days: 10, color: "#8b7bb5", kind: "spike", initial: 2, image: "/demo/flowers/stem-lavender.png" },
+  { name: "Эвкалипт", price: 160, days: 14, color: "#7f9a7a", kind: "leaf", image: "/demo/flowers/stem-eucalyptus.png" },
 ]
 
 function formatMoney(value: number, currency: string) {
@@ -196,6 +205,7 @@ export function Flowers002({
   wrapPrice = 300,
   wrapLabel = "бумага, лента и открытка",
   maxStems = 24,
+  vaseImage = "/demo/flowers/vase.png",
   currency = "₽",
   orderLabel = "Заказать этот букет",
   formHref = "#delivery",
@@ -211,6 +221,7 @@ export function Flowers002({
 
   const stems = useMemo(() => flowers.flatMap((flower, flowerIndex) => Array.from({ length: counts[flower.name] ?? 0 }, (_, index) => ({ flower, flowerIndex, key: `${flower.name}-${index}` }))), [flowers, counts])
   const total = stems.length
+  const photos = Boolean(vaseImage) && flowers.every((flower) => flower.image)
   const chosen = flowers.filter((flower) => (counts[flower.name] ?? 0) > 0)
   const price = chosen.reduce((sum, flower) => sum + flower.price * (counts[flower.name] ?? 0), 0) + (total > 0 ? wrapPrice : 0)
   const life = chosen.length ? Math.min(...chosen.map((flower) => flower.days)) : 0
@@ -261,6 +272,16 @@ export function Flowers002({
           </div>
           <div data-part="grid">
             <div data-part="stage">
+              {photos ? (
+                <div data-part="bunch" aria-hidden="true">
+                  {stems.map((stem, index) => {
+                    const angle = total === 1 ? 0 : -26 + (52 * (index + 0.5)) / total
+                    const lift = (index % 3) * 5 + ((index * 7) % 11)
+                    return <img key={stem.key} data-part="photo" src={stem.flower.image} alt="" style={{ ["--vibeui-flowers-002-a" as string]: `${angle.toFixed(1)}deg`, ["--vibeui-flowers-002-lift" as string]: `${lift}%`, zIndex: 10 + (index % 5) }} />
+                  })}
+                  <img data-part="jar" src={vaseImage} alt="" />
+                </div>
+              ) : (
               <svg data-part="vase" viewBox="0 0 320 360" aria-hidden="true">
                 {stems.map((stem, index) => {
                   const angle = total === 1 ? 0 : -52 + (104 * (index + 0.5)) / total
@@ -281,6 +302,7 @@ export function Flowers002({
                 <path data-part="glass" d="M124 268h72c0 18 18 32 18 54 0 18-10 26-20 28h-68c-10-2-20-10-20-28 0-22 18-36 18-54Z" />
                 <path d="M136 284c14 5 34 5 48 0" fill="none" stroke="var(--vibeui-flowers-002-fg)" strokeWidth={1.2} opacity={0.5} />
               </svg>
+              )}
               {total === 0 ? <p data-part="empty">ваза пуста — добавьте пару стеблей →</p> : null}
               {life > 0 ? (
                 <p data-part="life" aria-live="polite">
