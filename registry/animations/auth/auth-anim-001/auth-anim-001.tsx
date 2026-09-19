@@ -1,3 +1,5 @@
+"use client"
+
 import type { ComponentProps, CSSProperties } from "react"
 
 export type AuthAnim001Props = Omit<ComponentProps<"section">, "children"> & {
