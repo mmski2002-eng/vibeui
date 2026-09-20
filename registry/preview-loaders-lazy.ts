@@ -115,52 +115,18 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/component/toast")).PREVIEWS
     case "component/tree":
       return (await import("@/registry/previews-lazy/component/tree")).PREVIEWS
-    case "animation/cta":
-      return (await import("@/registry/previews-lazy/animation/cta")).PREVIEWS
-    case "animation/dashboard":
-      return (await import("@/registry/previews-lazy/animation/dashboard")).PREVIEWS
-    case "animation/auth":
-      return (await import("@/registry/previews-lazy/animation/auth")).PREVIEWS
-    case "animation/avatar":
-      return (await import("@/registry/previews-lazy/animation/avatar")).PREVIEWS
-    case "animation/button":
-      return (await import("@/registry/previews-lazy/animation/button")).PREVIEWS
-    case "animation/code-block":
-      return (await import("@/registry/previews-lazy/animation/code-block")).PREVIEWS
-    case "animation/chat":
-      return (await import("@/registry/previews-lazy/animation/chat")).PREVIEWS
-    case "animation/devices":
-      return (await import("@/registry/previews-lazy/animation/devices")).PREVIEWS
-    case "animation/media":
-      return (await import("@/registry/previews-lazy/animation/media")).PREVIEWS
-    case "animation/metrics":
-      return (await import("@/registry/previews-lazy/animation/metrics")).PREVIEWS
-    case "animation/notifications":
-      return (await import("@/registry/previews-lazy/animation/notifications")).PREVIEWS
-    case "animation/payments":
-      return (await import("@/registry/previews-lazy/animation/payments")).PREVIEWS
-    case "animation/security":
-      return (await import("@/registry/previews-lazy/animation/security")).PREVIEWS
-    case "animation/status":
-      return (await import("@/registry/previews-lazy/animation/status")).PREVIEWS
-    case "animation/checklist":
-      return (await import("@/registry/previews-lazy/animation/checklist")).PREVIEWS
-    case "animation/process":
-      return (await import("@/registry/previews-lazy/animation/process")).PREVIEWS
     case "animation/stacks":
       return (await import("@/registry/previews-lazy/animation/stacks")).PREVIEWS
     case "animation/cursor":
       return (await import("@/registry/previews-lazy/animation/cursor")).PREVIEWS
     case "animation/sketch":
       return (await import("@/registry/previews-lazy/animation/sketch")).PREVIEWS
-    case "animation/cards":
-      return (await import("@/registry/previews-lazy/animation/cards")).PREVIEWS
-    case "animation/folio":
-      return (await import("@/registry/previews-lazy/animation/folio")).PREVIEWS
-    case "animation/text":
-      return (await import("@/registry/previews-lazy/animation/text")).PREVIEWS
     case "animation/background":
       return (await import("@/registry/previews-lazy/animation/background")).PREVIEWS
+    case "animation/interface":
+      return (await import("@/registry/previews-lazy/animation/interface")).PREVIEWS
+    case "animation/promo":
+      return (await import("@/registry/previews-lazy/animation/promo")).PREVIEWS
     default:
       return null
   }

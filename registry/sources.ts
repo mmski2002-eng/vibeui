@@ -56,29 +56,12 @@ import tabsRegistry from "@/registry/components/tabs/registry.json"
 import navigationRegistry from "@/registry/components/navigation/registry.json"
 import toastRegistry from "@/registry/components/toast/registry.json"
 import treeRegistry from "@/registry/components/tree/registry.json"
-import ctaAnimationRegistry from "@/registry/animations/cta/registry.json"
-import dashboardRegistry from "@/registry/animations/dashboard/registry.json"
-import authAnimationRegistry from "@/registry/animations/auth/registry.json"
-import avatarAnimationRegistry from "@/registry/animations/avatar/registry.json"
-import buttonAnimationRegistry from "@/registry/animations/button/registry.json"
-import codeBlockAnimationRegistry from "@/registry/animations/code-block/registry.json"
-import chatRegistry from "@/registry/animations/chat/registry.json"
-import devicesRegistry from "@/registry/animations/devices/registry.json"
-import mediaRegistry from "@/registry/animations/media/registry.json"
-import metricsRegistry from "@/registry/animations/metrics/registry.json"
-import notificationsRegistry from "@/registry/animations/notifications/registry.json"
-import paymentsRegistry from "@/registry/animations/payments/registry.json"
-import securityRegistry from "@/registry/animations/security/registry.json"
-import statusRegistry from "@/registry/animations/status/registry.json"
-import checklistRegistry from "@/registry/animations/checklist/registry.json"
-import processRegistry from "@/registry/animations/process/registry.json"
 import stacksRegistry from "@/registry/animations/stacks/registry.json"
 import cursorRegistry from "@/registry/animations/cursor/registry.json"
 import sketchRegistry from "@/registry/animations/sketch/registry.json"
-import cardsRegistry from "@/registry/animations/cards/registry.json"
-import folioRegistry from "@/registry/animations/folio/registry.json"
-import textRegistry from "@/registry/animations/text/registry.json"
 import backgroundAnimationRegistry from "@/registry/animations/background/registry.json"
+import interfaceRegistry from "@/registry/animations/interface/registry.json"
+import promoRegistry from "@/registry/animations/promo/registry.json"
 
 /**
  * Реестры, попадающие на сайт. Это и есть файловая база каталога: другого
@@ -356,86 +339,6 @@ export const SOURCES = [
     items: treeRegistry.items,
   },
   {
-    directory: "registry/animations/cta",
-    kind: "animation",
-    items: ctaAnimationRegistry.items,
-  },
-  {
-    directory: "registry/animations/dashboard",
-    kind: "animation",
-    items: dashboardRegistry.items,
-  },
-  {
-    directory: "registry/animations/auth",
-    kind: "animation",
-    items: authAnimationRegistry.items,
-  },
-  {
-    directory: "registry/animations/avatar",
-    kind: "animation",
-    items: avatarAnimationRegistry.items,
-  },
-  {
-    directory: "registry/animations/button",
-    kind: "animation",
-    items: buttonAnimationRegistry.items,
-  },
-  {
-    directory: "registry/animations/code-block",
-    kind: "animation",
-    items: codeBlockAnimationRegistry.items,
-  },
-  {
-    directory: "registry/animations/chat",
-    kind: "animation",
-    items: chatRegistry.items,
-  },
-  {
-    directory: "registry/animations/devices",
-    kind: "animation",
-    items: devicesRegistry.items,
-  },
-  {
-    directory: "registry/animations/media",
-    kind: "animation",
-    items: mediaRegistry.items,
-  },
-  {
-    directory: "registry/animations/metrics",
-    kind: "animation",
-    items: metricsRegistry.items,
-  },
-  {
-    directory: "registry/animations/notifications",
-    kind: "animation",
-    items: notificationsRegistry.items,
-  },
-  {
-    directory: "registry/animations/payments",
-    kind: "animation",
-    items: paymentsRegistry.items,
-  },
-  {
-    directory: "registry/animations/security",
-    kind: "animation",
-    items: securityRegistry.items,
-  },
-  {
-    directory: "registry/animations/status",
-    kind: "animation",
-    items: statusRegistry.items,
-  },
-  {
-    directory: "registry/animations/checklist",
-    kind: "animation",
-    items: checklistRegistry.items,
-  },
-  {
-    directory: "registry/animations/process",
-    kind: "animation",
-    items: processRegistry.items,
-  },
-  {
     directory: "registry/animations/stacks",
     kind: "animation",
     items: stacksRegistry.items,
@@ -451,24 +354,19 @@ export const SOURCES = [
     items: sketchRegistry.items,
   },
   {
-    directory: "registry/animations/cards",
-    kind: "animation",
-    items: cardsRegistry.items,
-  },
-  {
-    directory: "registry/animations/folio",
-    kind: "animation",
-    items: folioRegistry.items,
-  },
-  {
-    directory: "registry/animations/text",
-    kind: "animation",
-    items: textRegistry.items,
-  },
-  {
     directory: "registry/animations/background",
     kind: "animation",
     items: backgroundAnimationRegistry.items,
+  },
+  {
+    directory: "registry/animations/interface",
+    kind: "animation",
+    items: interfaceRegistry.items,
+  },
+  {
+    directory: "registry/animations/promo",
+    kind: "animation",
+    items: promoRegistry.items,
   },
 ] as const satisfies readonly {
   directory: string

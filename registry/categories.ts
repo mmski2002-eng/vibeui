@@ -80,12 +80,6 @@ export const CATEGORIES = [
     group: "application",
   },
   {
-    slug: "dashboard",
-    label: "Панель показателей",
-    en: "Dashboard",
-    group: "data",
-  },
-  {
     slug: "commerce",
     label: "Магазин",
     en: "Commerce",
@@ -391,22 +385,10 @@ export const CATEGORIES = [
     group: "application",
   },
   {
-    slug: "chat",
-    label: "Чат",
-    en: "Chat",
-    group: "application",
-  },
-  {
     slug: "connections",
     label: "Связи",
     en: "Connections",
     group: "data",
-  },
-  {
-    slug: "devices",
-    label: "Устройства",
-    en: "Devices",
-    group: "application",
   },
   {
     slug: "email",
@@ -445,52 +427,10 @@ export const CATEGORIES = [
     group: "application",
   },
   {
-    slug: "media",
-    label: "Медиаплеер",
-    en: "Media",
-    group: "application",
-  },
-  {
-    slug: "metrics",
-    label: "Метрики",
-    en: "Metrics",
-    group: "data",
-  },
-  {
-    slug: "notifications",
-    label: "Уведомления",
-    en: "Notifications",
-    group: "application",
-  },
-  {
-    slug: "payments",
-    label: "Платежи",
-    en: "Payments",
-    group: "commerce",
-  },
-  {
     slug: "search",
     label: "Поиск",
     en: "Search",
     group: "navigation",
-  },
-  {
-    slug: "security",
-    label: "Безопасность",
-    en: "Security",
-    group: "application",
-  },
-  {
-    slug: "status",
-    label: "Статус сервиса",
-    en: "Status",
-    group: "data",
-  },
-  {
-    slug: "checklist",
-    label: "Чек-лист",
-    en: "Checklist",
-    group: "application",
   },
   {
     slug: "blog-post",
@@ -520,12 +460,6 @@ export const CATEGORIES = [
     slug: "newsletter",
     label: "Рассылка и лист ожидания",
     en: "Newsletter",
-    group: "marketing",
-  },
-  {
-    slug: "process",
-    label: "Этапы процесса",
-    en: "Process",
     group: "marketing",
   },
   {
@@ -565,28 +499,6 @@ export const CATEGORIES = [
     group: "marketing",
   },
   {
-    slug: "cards",
-    label: "Карточки",
-    en: "Cards",
-    group: "marketing",
-  },
-  {
-    slug: "folio",
-    label: "Портфолио",
-    en: "Portfolio",
-    group: "marketing",
-    // Рабочий стол и подобные сцены живут во всю ширину: в половинном
-    // кадре не видно ни окон, ни таскбара.
-    wide: true,
-  },
-  {
-    slug: "text",
-    label: "Текстовая анимация",
-    en: "Text animation",
-    group: "marketing",
-    wide: true,
-  },
-  {
     slug: "background",
     label: "Фон",
     en: "Background",
@@ -602,6 +514,21 @@ export const CATEGORIES = [
     group: "marketing",
     // Раскладка — композиция во всю ширину: bento, стопки, ленты. В половине
     // кадра её геометрия не читается.
+    wide: true,
+  },
+  {
+    slug: "interface",
+    label: "Интерфейс",
+    en: "Interface",
+    group: "application",
+  },
+  {
+    slug: "promo",
+    label: "Промо-сцены",
+    en: "Promo scenes",
+    group: "marketing",
+    // Текстовые сцены и портфолио живут во всю ширину: в половинном кадре
+    // крупная типографика читается как мелкий текст.
     wide: true,
   },
 ] as const satisfies readonly {
@@ -654,7 +581,7 @@ export const POPULAR_CATEGORIES: Record<ItemKind, readonly CategorySlug[]> = {
     "avatar",
     "toast",
   ],
-  animation: ["background", "text", "cursor", "stacks", "button", "avatar"],
+  animation: ["background", "promo", "cursor", "stacks", "interface"],
   template: [],
 }
 

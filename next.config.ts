@@ -83,6 +83,27 @@ const MERGED_CATEGORIES: Record<string, Record<string, string>> = {
     collapsible: "accordion",
     range: "slider",
   },
+  animations: {
+    button: "interface",
+    avatar: "interface",
+    "code-block": "interface",
+    chat: "interface",
+    notifications: "interface",
+    checklist: "interface",
+    status: "interface",
+    media: "interface",
+    devices: "interface",
+    auth: "interface",
+    security: "interface",
+    payments: "interface",
+    metrics: "interface",
+    dashboard: "interface",
+    text: "promo",
+    cards: "promo",
+    folio: "promo",
+    cta: "promo",
+    process: "promo",
+  },
 }
 
 const nextConfig: NextConfig = {

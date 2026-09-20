@@ -257,7 +257,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["дашборд", "панель показателей", "админка", "админ панель"],
-    categories: ["dashboard", "metrics"],
+    categories: ["interface"],
     terms: ["dashboard"],
   },
   {
@@ -282,7 +282,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["уведомление", "тост", "снекбар", "всплывающее сообщение"],
-    categories: ["toast", "notifications", "alert"],
+    categories: ["toast", "interface", "alert"],
     terms: ["toast", "alert"],
   },
   {
@@ -347,7 +347,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["цифры", "показатели", "метрики", "статистика"],
-    categories: ["about", "metrics"],
+    categories: ["about", "interface"],
     terms: ["stats"],
   },
   {
@@ -357,7 +357,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["этапы", "как это работает", "шаги", "пошагово"],
-    categories: ["process", "stepper"],
+    categories: ["promo", "stepper"],
     terms: ["steps"],
   },
   {
@@ -392,7 +392,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["оплата", "платежи", "чекаут", "оформление заказа", "карта оплаты"],
-    categories: ["payments", "special-input"],
+    categories: ["interface", "special-input"],
     terms: ["payments", "checkout"],
   },
   {
@@ -412,7 +412,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["видео", "плеер", "проигрыватель"],
-    categories: ["about", "media"],
+    categories: ["about", "interface"],
     terms: ["video"],
   },
   {
@@ -432,7 +432,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["чекбокс", "галочка", "флажок"],
-    categories: ["checkbox", "checklist"],
+    categories: ["checkbox", "interface"],
     terms: ["checkbox"],
   },
   {
@@ -447,7 +447,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["чат", "переписка", "мессенджер", "сообщения"],
-    categories: ["chat", "comments"],
+    categories: ["interface", "comments"],
     terms: ["chat"],
   },
   {
@@ -633,7 +633,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["приложение", "скачать приложение", "сторы"],
-    categories: ["cta", "devices"],
+    categories: ["cta", "interface"],
     terms: ["downloads", "app"],
   },
   {
@@ -652,12 +652,12 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["безопасность", "приватность", "защита данных"],
-    categories: ["security", "errors"],
+    categories: ["interface", "errors"],
     terms: ["security"],
   },
   {
     say: ["ии", "искусственный интеллект", "ассистент", "чат бот", "нейросеть", "saas", "песочница"],
-    categories: ["ai", "chat"],
+    categories: ["ai", "interface"],
     terms: ["ai", "saas", "sandbox", "assistant"],
   },
   {
@@ -667,7 +667,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["подкаст", "аудио", "выпуски"],
-    categories: ["industry", "media"],
+    categories: ["industry", "interface"],
     terms: ["podcast"],
   },
   {
@@ -703,7 +703,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["технические работы", "заглушка сайта", "скоро вернёмся"],
-    categories: ["maintenance", "status"],
+    categories: ["maintenance", "interface"],
     terms: ["maintenance"],
   },
   {
@@ -716,7 +716,7 @@ export const SYNONYMS: Synonym[] = [
       "надпись меняется",
       "заголовок с эффектом",
     ],
-    categories: ["text"],
+    categories: ["promo"],
     terms: ["text", "typography", "highlight", "letters", "reveal"],
   },
   {
@@ -730,7 +730,7 @@ export const SYNONYMS: Synonym[] = [
       "личный сайт",
       "операционная система",
     ],
-    categories: ["folio"],
+    categories: ["promo"],
     terms: [
       "portfolio",
       "desktop",
@@ -776,7 +776,7 @@ export const SYNONYMS: Synonym[] = [
       "3d карточка",
       "объёмная карточка",
     ],
-    categories: ["cards"],
+    categories: ["promo"],
     terms: ["flip", "flip card", "3d card", "two-sided", "backface", "rotate", "reveal"],
   },
   {
