@@ -22,6 +22,8 @@ type Favorites = {
   pinned: Set<string> | null
   /** Сколько раз item добавили в избранное все пользователи. */
   counts: Record<string, number>
+  /** Счётчики на момент открытия страницы — для сортировки, см. `pinned`. */
+  pinnedCounts: Record<string, number> | null
   toggle: (itemName: string) => void
 }
 
@@ -29,6 +31,7 @@ const FavoritesContext = createContext<Favorites>({
   items: null,
   pinned: null,
   counts: {},
+  pinnedCounts: null,
   toggle: () => {},
 })
 
@@ -42,6 +45,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<Set<string> | null>(null)
   const [pinned, setPinned] = useState<Set<string> | null>(null)
   const [counts, setCounts] = useState<Record<string, number>>({})
+  const [pinnedCounts, setPinnedCounts] = useState<Record<string, number> | null>(null)
 
   useEffect(() => {
     let cancelled = false
@@ -55,12 +59,14 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
           setItems(new Set(data.items))
           setPinned(new Set(data.items))
           setCounts(data.counts ?? {})
+          setPinnedCounts(data.counts ?? {})
         }
       })
       .catch(() => {
         if (!cancelled) {
           setItems(new Set())
           setPinned(new Set())
+          setPinnedCounts({})
         }
       })
 
@@ -94,7 +100,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
   )
 
   return (
-    <FavoritesContext.Provider value={{ items, pinned, counts, toggle }}>
+    <FavoritesContext.Provider value={{ items, pinned, counts, pinnedCounts, toggle }}>
       {children}
     </FavoritesContext.Provider>
   )

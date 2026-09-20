@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import { ArrowUpRight } from "lucide-react"
 
 import { useFavorites } from "@/components/catalog/favorites-provider"
@@ -65,14 +65,9 @@ export function ScenariosGrid({
 }) {
   const [group, setGroup] = useState<ScenarioGroup | "all">("all")
   const [tone, setTone] = useState<"light" | "dark" | "all">("all")
-  const { items: favorites, counts, toggle } = useFavorites()
-  const [order, setOrder] = useState<Record<string, number> | null>(null)
+  const { items: favorites, counts, pinnedCounts: order, toggle } = useFavorites()
   const signedIn = Boolean(useSession().data)
   const router = useRouter()
-
-  useEffect(() => {
-    if (order === null && favorites !== null) setOrder(counts)
-  }, [order, favorites, counts])
 
   const visible = useMemo(() => {
     const filtered = cards.filter(
