@@ -1,8 +1,21 @@
-import { notFound } from "next/navigation"
+import { AdminSummary } from "@/components/pages/admin/summary"
+import type { Period } from "@/lib/admin-stats"
 
-export const metadata = { robots: { index: false, follow: false } }
+export const metadata = {
+  title: "Сводка",
+  robots: { index: false, follow: false },
+}
 
-/** Админка существует только в русской ветке: это внутренний инструмент. */
-export default function Page() {
-  notFound()
+function parsePeriod(value: string | undefined): Period {
+  return value === "7" ? 7 : value === "90" ? 90 : 30
+}
+
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ period?: string }>
+}) {
+  const { period } = await searchParams
+
+  return <AdminSummary period={parsePeriod(period)} />
 }

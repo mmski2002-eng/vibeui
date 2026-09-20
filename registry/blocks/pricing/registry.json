@@ -5776,6 +5776,1570 @@
           }
         }
       }
+    },
+    {
+      "name": "comparison-001",
+      "type": "registry:block",
+      "title": "Таблица «мы против них»",
+      "description": "Сравнительная таблица возможностей: строки функций и две колонки галочек, наша колонка выделена брендовым фоном. Самодостаточна: один файл, без зависимостей.",
+      "categories": [
+        "pricing"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "comparison-001/comparison-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/comparison-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-comparison-001-*. Серверный компонент. Настоящая table с thead/tbody и scope у заголовков. Галочка нарисована бордюрами без иконочного шрифта, отсутствие — приглушённое тире с aria-label. Наша колонка выделена брендовым фоном шапки и лёгкой заливкой ячеек.",
+      "meta": {
+        "tags": [
+          "comparison",
+          "table",
+          "features",
+          "versus",
+          "marketing"
+        ],
+        "preview": {
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Comparison001",
+          "usage": "<Comparison001\n  usLabel=\"VibeUI\"\n  themLabel=\"Обычная\"\n  rows={[{ feature: \"Ноль зависимостей\", us: true, them: false }]}\n/>",
+          "summary": "Сравнительная таблица «мы против них»: строки возможностей и две колонки с галочками, наша выделена брендовым фоном. Галочки нарисованы бордюрами, отсутствие — тире с aria-label. Настоящая table с scope у заголовков. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-comparison-001-* и не подменять её токенами вашей темы",
+            "семантику table/thead/tbody и scope у заголовков — это таблица, а не сетка div-ов",
+            "галочку из бордюров и aria-label у ячеек да/нет — доступность без иконочного шрифта",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "usLabel и themLabel — подписи двух колонок",
+            "массив rows — возможность и два булевых значения",
+            "акцент через проп accent — фон нашей колонки и галочки"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Наша колонка — вторая (us): выделение фоном привязано к ней, поменяйте местами при другом порядке.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Почему VibeUI, а не обычная библиотека",
+            "maxLength": 52
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Сравнение",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "description": "A feature comparison table: feature rows and two check columns, our column highlighted with a brand background. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A us-versus-them comparison table: feature rows and two check columns, ours highlighted with a brand background. Checks are drawn with borders, absence is a dash with an aria-label. A real table with scope on headers. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-comparison-001-* palette — do not swap it for your theme tokens",
+                "the table/thead/tbody semantics and scope on headers — it's a table, not a grid of divs",
+                "the border-drawn check and aria-label on yes/no cells — accessibility without an icon font",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow and title — the section's eyebrow and heading",
+                "usLabel and themLabel — the two column labels",
+                "the rows array — feature and two boolean values",
+                "the accent via the accent prop — our column background and checks"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "Our column is the second (us): the background highlight is tied to it, swap if the order differs.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Comparison001\n  usLabel=\"VibeUI\"\n  themLabel=\"Typical\"\n  rows={[{ feature: \"Zero dependencies\", us: true, them: false }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Why VibeUI over a typical library"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Comparison"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Us-vs-Them Table",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-comparison-001-* variables. A server component. A real table with thead/tbody and scope on headers. The check is drawn with borders, absence is a dimmed dash with an aria-label. Our column is highlighted with a brand header background and a light cell fill."
+          }
+        }
+      }
+    },
+    {
+      "name": "comparison-002",
+      "type": "registry:block",
+      "title": "Три подхода",
+      "description": "Сравнение тремя колонками-подходами: свой способ выделен брендовой рамкой и стоит по центру, соседи приглушены. Самодостаточна: один файл, без зависимостей.",
+      "categories": [
+        "pricing"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "comparison-002/comparison-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/comparison-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-comparison-002-*. Серверный компонент. Три колонки целых подходов вместо таблицы галочек: выделенная колонка (data-highlight) получает брендовую рамку, остальные приглушены opacity. Число колонок считает container query.",
+      "meta": {
+        "tags": [
+          "comparison",
+          "approaches",
+          "columns",
+          "versus",
+          "marketing"
+        ],
+        "preview": {
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Comparison002",
+          "usage": "<Comparison002\n  plans={[{ name: \"VibeUI\", tagline: \"Тот же файл\", points: [\"Ноль зависимостей\"], highlight: true }]}\n/>",
+          "summary": "Сравнение тремя колонками-подходами: название способа, строчка сути и список пунктов. Выделенная колонка получает брендовую рамку, соседи приглушены. Формат «три пути, один правильный» без таблицы галочек. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-comparison-002-* и не подменять её токенами вашей темы",
+            "выделение своей колонки через data-highlight и приглушение соседей — это фокус выбора",
+            "container-запрос на число колонок: на узком экране колонки в столбец",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "массив plans — название, суть, пункты и флаг highlight каждого подхода",
+            "акцент через проп accent — рамка выделенной колонки и маркеры",
+            "background — подложка компонента; пусто означает «без подложки»"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Выделенной становится колонка с highlight:true; без флага все колонки равны по весу.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Три пути собрать интерфейс",
+            "maxLength": 48
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Сравнение подходов",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "description": "A comparison of three whole approaches: your way is highlighted with a brand border and sits in the middle, the neighbours dimmed. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A three-column comparison of whole approaches: the approach name, a tagline and a list of points. The highlighted column gets a brand border, the neighbours are dimmed. A three-paths, one-right format without a check table. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-comparison-002-* palette — do not swap it for your theme tokens",
+                "highlighting your column via data-highlight and dimming the neighbours — that's the choice focus",
+                "the container query on column count: columns stack when narrow",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow and title — the section's eyebrow and heading",
+                "the plans array — name, tagline, points and highlight flag of each approach",
+                "the accent via the accent prop — the highlighted column border and markers",
+                "background — the component's backdrop; empty means no backdrop"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "The column with highlight:true becomes the highlighted one; without the flag all columns are equal weight.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Comparison002\n  plans={[{ name: \"VibeUI\", tagline: \"Same file\", points: [\"Zero dependencies\"], highlight: true }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Three ways to build a UI"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Approach comparison"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Three Approaches",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-comparison-002-* variables. A server component. Three columns of whole approaches instead of a check table: the highlighted column (data-highlight) gets a brand border, the rest are dimmed with opacity. Column count is driven by a container query."
+          }
+        }
+      }
+    },
+    {
+      "name": "comparison-003",
+      "type": "registry:block",
+      "title": "Было и стало",
+      "description": "Сравнение «было — стало» парами строк: прошлое приглушено, будущее набрано акцентом. Самодостаточен: один файл, без зависимостей.",
+      "categories": [
+        "pricing"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "comparison-003/comparison-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/comparison-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-comparison-003-*. Серверный компонент. Каждая пара — одна карточка: слева состояние «было», справа «стало». На широком экране подписи сторон уходят в шапку и из строк убираются, на узком возвращаются внутрь пары — пара складывается в столбик, и связка иначе теряется. Отступы и число колонок считает container query.",
+      "meta": {
+        "tags": [
+          "comparison",
+          "before-after",
+          "transformation",
+          "marketing",
+          "service"
+        ],
+        "preview": {
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Comparison003",
+          "usage": "<Comparison003\n  title=\"Было и стало\"\n  rows={[{ before: \"Считали в таблице\", after: \"Считает система\" }]}\n/>",
+          "summary": "Сравнение «было — стало» парами строк. Прошлое приглушено и помечено прочерком, будущее набрано акцентом со стрелкой. Формат для услуги и продукта, где сравнивают не функции с конкурентом, а жизнь клиента до и после. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-comparison-003-* и не подменять её токенами вашей темы",
+            "парность строк: «было» и «стало» обязаны оставаться в одной карточке, иначе на телефоне человек прочитает подряд четыре проблемы без единого решения",
+            "приглушение левой стороны и акцент в правой — на этом держится смысл сравнения",
+            "container-запрос: подписи сторон в шапке на широком экране и внутри пары на узком",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "beforeLabel и afterLabel — подписи сторон",
+            "массив rows — сами пары «было / стало»",
+            "note — примечание под списком; пустая строка убирает его",
+            "акцент через проп accent и подложку через background"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Пар должно быть три-пять: одна не читается как сравнение, десяток превращается в прайс-лист.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Было и стало",
+            "maxLength": 48
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Что меняется",
+            "maxLength": 24
+          },
+          {
+            "prop": "beforeLabel",
+            "label": "Левая подпись",
+            "type": "text",
+            "default": "Было",
+            "maxLength": 16
+          },
+          {
+            "prop": "afterLabel",
+            "label": "Правая подпись",
+            "type": "text",
+            "default": "Стало",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "beforeLabel",
+          "afterLabel"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Before and after",
+            "description": "A before-and-after comparison in paired rows: the past is dimmed, the future is set in the accent colour. Self-contained — one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-comparison-003-* variables. A server component. Each pair is one card: the before state on the left, the after state on the right. On a wide screen the side captions move into the head and leave the rows; on a narrow one they come back inside the pair, because the pair stacks and the link would otherwise be lost. Padding and column count are driven by a container query.",
+            "ai": {
+              "summary": "A before-and-after comparison in paired rows. The past is dimmed and marked with a dash, the future is set in the accent colour with an arrow. A format for a service or a product where you compare the client's life, not features against a competitor. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-comparison-003-* palette — do not swap it for your theme tokens",
+                "the pairing of rows: before and after must stay in one card, otherwise on a phone people read four problems in a row without a single solution",
+                "the dimmed left side and the accented right one — the meaning of the comparison rests on that",
+                "the container query: side captions in the head on a wide screen and inside the pair on a narrow one",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow and title — the section's eyebrow and heading",
+                "beforeLabel and afterLabel — the side captions",
+                "the rows array — the before/after pairs themselves",
+                "note — a footnote under the list; an empty string removes it",
+                "the accent via the accent prop and the backdrop via background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "Use three to five pairs: one does not read as a comparison, a dozen turns into a price list.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Comparison003\n  title=\"Before and after\"\n  rows={[{ before: \"Counted in a spreadsheet\", after: \"The system counts\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Before and after"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "What changes"
+              },
+              "beforeLabel": {
+                "label": "Left caption",
+                "default": "Before"
+              },
+              "afterLabel": {
+                "label": "Right caption",
+                "default": "After"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "comparison-004",
+      "type": "registry:block",
+      "title": "Матрица возможностей",
+      "description": "Таблица сравнения редакций: строки сгруппированы по разделам, выбранная колонка подсвечена, первая колонка держится при прокрутке вбок. Самодостаточен: один файл, без зависимостей.",
+      "categories": [
+        "pricing"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "comparison-004/comparison-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/comparison-004.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-comparison-004-*. Серверный компонент. Настоящая семантическая таблица: caption, scope у заголовков, строки-разделы через colgroup. Значение ячейки — строка или булево; булево рисуется галочкой и прочерком с текстовой подписью для скринридера. Первая колонка и шапка липкие, таблица прокручивается вбок внутри своего контейнера и не растягивает страницу.",
+      "meta": {
+        "tags": [
+          "comparison",
+          "table",
+          "matrix",
+          "pricing",
+          "features",
+          "plans"
+        ],
+        "preview": {
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Comparison004",
+          "usage": "<Comparison004\n  columns={[{ name: \"Старт\" }, { name: \"Команда\", highlight: true }]}\n  groups={[{ title: \"Каталог\", rows: [{ label: \"Блоки\", values: [\"Все\", \"Все\"] }] }]}\n/>",
+          "summary": "Матрица возможностей: строки сгруппированы по разделам, колонок три и больше. Значение ячейки — строка или галочка. Выбранная колонка подсвечена, первая колонка и шапка липкие, таблица прокручивается вбок внутри своего контейнера. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-comparison-004-* и не подменять её токенами вашей темы",
+            "семантику таблицы: caption, scope=\"row\"/\"col\", строки-разделы — на ней держится доступность",
+            "липкую первую колонку: при прокрутке вбок без неё значения теряют строку, к которой относятся",
+            "текстовые подписи у галочки и прочерка: символ без aria-label скринридером не читается",
+            "прокрутку внутри контейнера, а не растягивание страницы таблицей",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "массив columns — редакции: название, подпись и флаг highlight",
+            "массив groups — разделы и строки; значение ячейки строкой или true/false",
+            "акцент через проп accent и подложку через background"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Длина values каждой строки должна совпадать с числом колонок: недостающая ячейка покажет прочерк.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что входит в каждый план",
+            "maxLength": 48
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Сравнение редакций",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Feature matrix",
+            "description": "An edition comparison table: rows grouped into sections, the chosen column tinted, the first column pinned while scrolling sideways. Self-contained — one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-comparison-004-* variables. A server component. A real semantic table: a caption, scope on the headers, section rows via colgroup. A cell value is a string or a boolean; booleans render as a check and a dash with a text label for screen readers. The first column and the head are sticky, and the table scrolls sideways inside its own container instead of stretching the page.",
+            "ai": {
+              "summary": "A feature matrix: rows grouped into sections, three or more columns. A cell value is a string or a check mark. The chosen column is tinted, the first column and the head are sticky, and the table scrolls sideways inside its own container. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-comparison-004-* palette — do not swap it for your theme tokens",
+                "the table semantics: caption, scope=\"row\"/\"col\", section rows — accessibility rests on them",
+                "the sticky first column: while scrolling sideways the values lose the row they belong to without it",
+                "the text labels on the check and the dash: a bare glyph is not read by a screen reader",
+                "scrolling inside the container instead of letting the table stretch the page",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow and title — the section's eyebrow and heading",
+                "the columns array — the editions: name, note and the highlight flag",
+                "the groups array — sections and rows; a cell value is a string or true/false",
+                "the accent via the accent prop and the backdrop via background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "The length of every row's values must match the column count: a missing cell renders a dash.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Comparison004\n  columns={[{ name: \"Start\" }, { name: \"Team\", highlight: true }]}\n  groups={[{ title: \"Catalog\", rows: [{ label: \"Blocks\", values: [\"All\", \"All\"] }] }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What each plan includes"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Plan comparison"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "comparison-005",
+      "type": "registry:block",
+      "title": "Разбор возражений",
+      "description": "Сравнение парами «обычно говорят — как на самом деле»: возражение и ответ в одной карточке. Самодостаточен: один файл, без зависимостей.",
+      "categories": [
+        "pricing"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "comparison-005/comparison-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/comparison-005.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-comparison-005-*. Серверный компонент. Таблицы нет намеренно: сравниваются утверждения, а не характеристики, поэтому каждая пара читается сама по себе и в любом порядке. Кавычки у возражения нарисованы псевдоэлементами на самом тексте, а не на абзаце — в абзаце ещё подпись стороны. Галочка ответа тоже рисуется CSS, без иконочного шрифта и SVG.",
+      "meta": {
+        "tags": [
+          "comparison",
+          "objections",
+          "faq",
+          "marketing",
+          "pairs"
+        ],
+        "preview": {
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Comparison005",
+          "usage": "<Comparison005\n  pairs={[{ claim: \"Дорого\", answer: \"Считайте не цену, а часы разработки\" }]}\n/>",
+          "summary": "Разбор возражений парами: сверху привычное мнение в кавычках, под ним ответ с галочкой. Каждая пара — отдельная карточка, поэтому порядок свободный, а возражение и ответ не разъезжаются. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-comparison-005-* и не подменять её токенами вашей темы",
+            "карточку пары: возражение и ответ обязаны оставаться вместе при любой ширине",
+            "подписи сторон над репликами — без них пара читается как два несвязанных абзаца",
+            "галочку и кавычки на псевдоэлементах: блок не тянет иконочный шрифт и не зависит от SVG",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow, title и lead — надзаголовок, заголовок и вводный абзац",
+            "claimLabel и answerLabel — подписи сторон",
+            "массив pairs — сами возражения и ответы",
+            "акцент через проп accent и подложку через background"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Возражения пишите словами клиента, а не пересказом: узнаваемая фраза и делает блок убедительным.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "«А зачем это, если…»",
+            "maxLength": 48
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Частые сомнения",
+            "maxLength": 24
+          },
+          {
+            "prop": "lead",
+            "label": "Вводный абзац",
+            "type": "text",
+            "default": "Четыре возражения, которые слышим чаще всего, и что на них отвечаем.",
+            "maxLength": 140
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "lead",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Objections answered",
+            "description": "A paired comparison of what people say and how it really is: the objection and the answer live in one card. Self-contained — one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-comparison-005-* variables. A server component. There is deliberately no table: statements are being compared, not specs, so each pair reads on its own and in any order. The quotation marks on the objection are pseudo-elements on the text itself rather than the paragraph — the paragraph also holds the side caption. The answer's check mark is drawn in CSS too, with no icon font and no SVG.",
+            "ai": {
+              "summary": "Objections answered in pairs: the common belief in quotes on top, the answer with a check mark below it. Each pair is its own card, so the order is free and the objection never gets separated from the answer. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-comparison-005-* palette — do not swap it for your theme tokens",
+                "the pair card: the objection and the answer must stay together at any width",
+                "the side captions above the lines — without them a pair reads as two unrelated paragraphs",
+                "the check mark and quotes as pseudo-elements: the block pulls no icon font and depends on no SVG",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow, title and lead — the eyebrow, the heading and the intro paragraph",
+                "claimLabel and answerLabel — the side captions",
+                "the pairs array — the objections and the answers themselves",
+                "the accent via the accent prop and the backdrop via background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "Write objections in the client's own words, not a paraphrase: the recognisable phrase is what makes the block convincing.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Comparison005\n  pairs={[{ claim: \"Too expensive\", answer: \"Count the dev hours, not the price\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "But why, if..."
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Common doubts"
+              },
+              "lead": {
+                "label": "Intro",
+                "default": "The four objections we hear most often, and what we answer."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "comparison-006",
+      "type": "registry:block",
+      "title": "Сравнение размера бандла растущими полосами",
+      "description": "Горизонтальные полосы размера пакетов, честно пропорциональные максимуму, растут при появлении в кадре с задержкой по строке, числа считают вверх синхронно; наш пакет — акцентом и меткой «это мы». Сноска про метод измерения.",
+      "categories": [
+        "pricing"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "comparison-006/comparison-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/comparison-006.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "comparison",
+          "bundle size",
+          "chart",
+          "bars",
+          "open source",
+          "benchmark",
+          "performance",
+          "developer"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Comparison006",
+          "usage": "<Comparison006\n  unit=\"КБ\"\n  metric=\"gzip, минимальный импорт\"\n  rows={[\n    { name: \"tabl\", value: 4.1, self: true },\n    { name: \"react-table\", value: 15.6 },\n    { name: \"ag-grid\", value: 238 },\n  ]}\n/>",
+          "summary": "Сравнение по одной метрике для библиотеки, сервиса, тарифа: полосы и числа оживают при прокрутке.",
+          "preserve": [
+            "ширина полосы = value / max через переменную; рост — scaleX от 0 с transition и задержкой по индексу",
+            "числа считают вверх rAF с ease-out; дробные — с одним знаком",
+            "старт по IntersectionObserver один раз, rootMargin -15%"
+          ],
+          "adapt": [
+            "rows: name, value, note, self",
+            "unit, metric, footnote",
+            "eyebrow, title, lede",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Меньше — значит быстрее",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Bundle size comparison with growing bars",
+            "description": "Horizontal package-size bars honestly proportional to the maximum, growing as they enter the viewport with a per-row delay, numbers counting up in sync; our package in the accent with an “it's us” tag. A footnote on the measurement method.",
+            "ai": {
+              "summary": "A one-metric comparison for a library, service or plan: bars and numbers come alive on scroll.",
+              "preserve": [
+                "bar width = value / max via a variable; growth is scaleX from 0 with a transition and per-index delay",
+                "numbers count up in rAF with ease-out; decimals with one digit",
+                "starts once via IntersectionObserver, rootMargin -15%"
+              ],
+              "adapt": [
+                "rows: name, value, note, self",
+                "unit, metric, footnote",
+                "eyebrow, title, lede",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Comparison006\n  unit=\"KB\"\n  metric=\"gzip, minimal import\"\n  rows={[\n    { name: \"tabl\", value: 4.1, self: true },\n    { name: \"react-table\", value: 15.6 },\n    { name: \"ag-grid\", value: 238 },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Smaller means faster"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "// comparison",
+                "title": "Smaller means faster",
+                "lede": "Gzipped size of headless tables for React. Data from bundlephobia on the 2.4 release day.",
+                "unit": "KB",
+                "metric": "gzip, minimal import",
+                "footnote": "Measured with `import { useTable }` and no styles. The full tabl feature set is 6.8 KB."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "comparison-010",
+      "type": "registry:block",
+      "title": "Сравнение «мы против типичной бригады» со счётчиками и прорисовкой галочек",
+      "description": "Сравнение подрядчика с «бригадой по объявлению»: сверху три счётчика (объектов сдано, дней задержки, процент), которые докручиваются, когда секция входит в экран, ниже таблица критериев в две колонки. Галочки в нашей колонке прорисовываются штрихом строка за строкой, кресты в чужой проявляются приглушённо, текстовые ячейки — моно. Наша колонка выделена шапкой в цвет акцента. На узком колонка критерия сжимается, значки остаются.",
+      "categories": [
+        "pricing"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "comparison-010/comparison-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/comparison-010.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "comparison",
+          "table",
+          "versus",
+          "counters",
+          "stats",
+          "checkmarks",
+          "renovation",
+          "construction",
+          "contractor",
+          "trust",
+          "why us"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Comparison010",
+          "usage": "<Comparison010\n  usLabel=\"Ровно\"\n  themLabel=\"Типичная бригада\"\n  stats={[{ value: 312, label: \"объектов сдано\" }, { value: 0, label: \"дней задержки\" }]}\n  rows={[{ criterion: \"Цена фиксируется в договоре\", us: true, them: \"«примерно»\" }]}\n/>",
+          "summary": "Секция «почему мы» для подрядчика: счётчики докручиваются, таблица «мы vs они» с галочками, которые рисуются при появлении.",
+          "preserve": [
+            "IntersectionObserver с threshold 0.2 ставит data-in один раз; счётчики идут 1,4 с cubic ease-out в requestAnimationFrame",
+            "строка tbody — opacity/translateY с transition-delay = --i × 90ms; path галочки/креста с pathLength=1 и stroke-dashoffset 1→0 с той же задержкой + .25s",
+            "ячейка: true → галочка, false → крест, строка → моно-текст; th[data-col=us] залит акцентом, td[data-col=us] — акцент 10 %"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, fine",
+            "stats: value, label, suffix",
+            "usLabel, themLabel; rows: criterion, us, them (true | false | строка)",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Чем мы отличаемся от «бригады по объявлению»",
+            "maxLength": 70
+          },
+          {
+            "prop": "usLabel",
+            "label": "Наша колонка",
+            "type": "text",
+            "default": "Ровно",
+            "maxLength": 20
+          },
+          {
+            "prop": "themLabel",
+            "label": "Чужая колонка",
+            "type": "text",
+            "default": "Типичная бригада",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "“Us vs a typical crew” comparison with counters and check marks that draw themselves",
+            "description": "A contractor versus “a crew from the classifieds” comparison: three counters on top (projects delivered, days late, a percentage) that count up when the section enters the screen, below a two-column criteria table. Check marks in our column draw themselves row by row, crosses in the other column appear dimmed, text cells are mono. Our column is highlighted with an accent-coloured header. On narrow the criterion column shrinks, the icons stay.",
+            "ai": {
+              "summary": "A “why us” section for a contractor: counters count up, an “us vs them” table with check marks that draw on appearance.",
+              "preserve": [
+                "an IntersectionObserver with threshold 0.2 sets data-in once; counters run 1.4 s cubic ease-out in requestAnimationFrame",
+                "a tbody row is opacity/translateY with transition-delay = --i × 90ms; the check/cross path has pathLength=1 and stroke-dashoffset 1→0 with the same delay + .25s",
+                "a cell: true → check, false → cross, string → mono text; th[data-col=us] is filled with the accent, td[data-col=us] with 10 % accent"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, fine",
+                "stats: value, label, suffix",
+                "usLabel, themLabel; rows: criterion, us, them (true | false | string)",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Comparison010\n  usLabel=\"Level\"\n  themLabel=\"Typical crew\"\n  stats={[{ value: 312, label: \"projects delivered\" }, { value: 0, label: \"days late\" }]}\n  rows={[{ criterion: \"Price fixed in the contract\", us: true, them: \"“roughly”\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "How we differ from “a crew from the classifieds”"
+              },
+              "usLabel": {
+                "label": "Our column",
+                "default": "Level"
+              },
+              "themLabel": {
+                "label": "Their column",
+                "default": "Typical crew"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Why us",
+                "title": "How we differ from “a crew from the classifieds”",
+                "lede": "Not promises but contract clauses. Every row can be checked before signing.",
+                "usLabel": "Level",
+                "themLabel": "Typical crew",
+                "stats": [
+                  {
+                    "value": 312,
+                    "label": "projects delivered"
+                  },
+                  {
+                    "value": 0,
+                    "label": "days late in 14 years"
+                  },
+                  {
+                    "value": 100,
+                    "label": "estimates that never grew after signing",
+                    "suffix": "%"
+                  }
+                ],
+                "rows": [
+                  {
+                    "criterion": "Price fixed in the contract",
+                    "us": true,
+                    "them": "“roughly”"
+                  },
+                  {
+                    "criterion": "Deadline in a calendar with stage dates",
+                    "us": true,
+                    "them": false
+                  },
+                  {
+                    "criterion": "Penalty for delay — 0.5 % per day",
+                    "us": true,
+                    "them": false
+                  },
+                  {
+                    "criterion": "Daily photo report and a camera",
+                    "us": true,
+                    "them": "on request"
+                  },
+                  {
+                    "criterion": "Hidden works accepted with a certificate",
+                    "us": true,
+                    "them": false
+                  },
+                  {
+                    "criterion": "Site cleaned every evening",
+                    "us": true,
+                    "them": false
+                  },
+                  {
+                    "criterion": "Warranty",
+                    "us": "5 years",
+                    "them": "verbal"
+                  },
+                  {
+                    "criterion": "Payment by stages, no 50 % upfront",
+                    "us": true,
+                    "them": false
+                  }
+                ],
+                "fine": "Extract from the standard contract, 2026 edition. Full text on request before the survey."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "comparison-015",
+      "type": "registry:block",
+      "title": "Сравнение с конкурентами: строки раскрываются с примером ответа API",
+      "description": "Таблица-список критериев против трёх конкурентов: колонка «мы» подсвечена акцентом с точкой-лампочкой, каждая строка — кнопка, по клику раскрывается через grid-template-rows 0fr → 1fr и показывает пояснение и пример ответа моноширинным с подсветкой ключей и чисел. На узком экране видны только критерий и наше значение, конкуренты уезжают в раскрытие списком. Одна строка открыта по умолчанию.",
+      "categories": [
+        "pricing"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "comparison-015/comparison-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/comparison-015.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "comparison",
+          "competitors",
+          "table",
+          "api",
+          "accordion",
+          "expand",
+          "json",
+          "developer",
+          "pricing",
+          "dark"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Comparison015",
+          "usage": "<Comparison015\n  columns={[\"Геокод\", \"AddrPro\", \"MapOne\"]}\n  rows={[{ label: \"Медиана ответа\", values: [\"42 ms\", \"120 ms\", \"85 ms\"], detail: \"Замер из Москвы за 30 дней.\", sample: [\"\\\"took_ms\\\": 42\"] }]}\n/>",
+          "summary": "Сравнение продукта с конкурентами по критериям, каждая строка раскрывает пример ответа.",
+          "preserve": [
+            "раскрытие — [data-part=detail] с grid-template-rows 0fr/1fr и внутренним overflow:hidden, переход .4s cubic-bezier",
+            "колонки конкурентов скрыты до 56rem контейнера, число колонок в сетке — через --vibeui-comparison-015-n",
+            "пример ответа подсвечивается regex-токенайзером в span с data-t (k, s, n)"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, note",
+            "columns[] (первая — мы); rows: label, values[], detail, sample[]",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Честно против трёх других",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Competitor comparison: rows expand with an API response sample",
+            "description": "A list-table of criteria against three competitors: the “us” column highlighted with an accent lamp dot, every row is a button that expands via grid-template-rows 0fr → 1fr to reveal an explanation and a monospace response sample with key and number highlighting. On narrow screens only the criterion and our value show, competitors move into the expansion as a list. One row is open by default.",
+            "ai": {
+              "summary": "Product versus competitors by criteria, every row expands into a response sample.",
+              "preserve": [
+                "expansion is [data-part=detail] with grid-template-rows 0fr/1fr and an inner overflow:hidden, a .4s cubic-bezier transition",
+                "competitor columns are hidden below a 56rem container, the grid column count comes from --vibeui-comparison-015-n",
+                "the response sample is highlighted by a regex tokenizer into spans with data-t (k, s, n)"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, note",
+                "columns[] (first is us); rows: label, values[], detail, sample[]",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Comparison015\n  columns={[\"Geokod\", \"AddrPro\", \"MapOne\"]}\n  rows={[{ label: \"Median response\", values: [\"42 ms\", \"120 ms\", \"85 ms\"], detail: \"Measured from Moscow over 30 days.\", sample: [\"\\\"took_ms\\\": 42\"] }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Honestly against three others"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Comparison",
+                "title": "Honestly against three others",
+                "lede": "Numbers from public price lists and our measurements as of September 2026. Click a row — we show how it looks in the API response.",
+                "columns": [
+                  "Geokod",
+                  "AddrPro",
+                  "MapOne",
+                  "GeoCloud"
+                ],
+                "rows": [
+                  {
+                    "label": "House-level precision in Russia",
+                    "values": [
+                      "98.4 %",
+                      "96.1 %",
+                      "97.2 %",
+                      "88.0 %"
+                    ],
+                    "detail": "Measured on a control set of 50,000 delivery addresses in 85 regions: share of answers with house precision and an error under 30 metres.",
+                    "sample": [
+                      "\"precision\": \"house\",",
+                      "\"confidence\": 0.98,",
+                      "\"distance_m\": 4"
+                    ]
+                  },
+                  {
+                    "label": "Median response",
+                    "values": [
+                      "42 ms",
+                      "120 ms",
+                      "85 ms",
+                      "210 ms"
+                    ],
+                    "detail": "Measured from Moscow over the last 30 days, p50 on /geocode. A request goes to the nearest region automatically.",
+                    "sample": [
+                      "\"took_ms\": 42,",
+                      "\"region\": \"msk-1\",",
+                      "\"cached\": false"
+                    ]
+                  },
+                  {
+                    "label": "Price per 1,000 requests",
+                    "values": [
+                      "$0.005",
+                      "$0.015",
+                      "$0.011",
+                      "$0.055"
+                    ],
+                    "detail": "The first paid tier rate. Cheaper with volume: from a million — $0.003, from ten — $0.0015. Rounded in your favour.",
+                    "sample": [
+                      "\"billing\": {",
+                      "  \"tier\": \"1m\",",
+                      "  \"per_1000\": 0.005",
+                      "}"
+                    ]
+                  },
+                  {
+                    "label": "Free per month",
+                    "values": [
+                      "10,000",
+                      "1,000",
+                      "25,000*",
+                      "0"
+                    ],
+                    "detail": "Ten thousand requests a month with no card and no branding. The asterisk at a competitor — the free quota applies only with their map shown.",
+                    "sample": [
+                      "\"quota\": {",
+                      "  \"free\": 10000,",
+                      "  \"used\": 2,",
+                      "  \"resets_at\": \"2026-10-01\"",
+                      "}"
+                    ]
+                  },
+                  {
+                    "label": "Batch processing",
+                    "values": [
+                      "up to 1M",
+                      "no",
+                      "up to 100k",
+                      "no"
+                    ],
+                    "detail": "Upload a CSV — get a CSV. A million addresses in twelve minutes, the status is pollable or comes by webhook.",
+                    "sample": [
+                      "\"job\": \"btch_91ka\",",
+                      "\"rows\": 1000000,",
+                      "\"eta_s\": 720"
+                    ]
+                  },
+                  {
+                    "label": "SLA in the contract",
+                    "values": [
+                      "99.9 %",
+                      "—",
+                      "99.5 %",
+                      "99.9 %"
+                    ],
+                    "detail": "On all paid volumes. For every 0.1 % below we refund 10 % of the monthly bill, no tickets.",
+                    "sample": [
+                      "\"sla\": 0.999,",
+                      "\"credit_policy\": \"auto\""
+                    ]
+                  }
+                ],
+                "note": "* — the competitor's free quota applies only with their map and logo shown."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "comparison-016",
+      "type": "registry:block",
+      "title": "Сравнение с прошлой версией: полоски-отношения и метки «новое»",
+      "description": "Таблица «новая версия против старой» для железки: каждая строка — характеристика, значение новой версии моно с акцентной полоской и значение прошлой с приглушённой. Полоски вырастают при загрузке каскадом, функции, которых раньше не было, помечены чипом «новое», у колонки новой версии акцентный цвет в легенде. На узком строка складывается в карточку с подписями колонок.",
+      "categories": [
+        "pricing"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "comparison-016/comparison-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/comparison-016.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "comparison",
+          "versus",
+          "gadget",
+          "hardware",
+          "table",
+          "specs",
+          "bars",
+          "upgrade",
+          "generation",
+          "product"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Comparison016",
+          "usage": "<Comparison016\n  currentName=\"Луч 2\"\n  previousName=\"Луч 1\"\n  rows={[{ label: \"Яркость\", current: \"1 200 лм\", previous: \"800 лм\", currentBar: 100, previousBar: 66 }]}\n/>",
+          "summary": "Сравнение версий железки: две полоски в строке, чипы «новое», легенда с годами.",
+          "preserve": [
+            "полоска — i с transform: scaleX(-w) от left, keyframes grow с задержкой -i × 80ms + .2s",
+            "строка — grid 1.2fr 1fr 1fr от 52rem контейнера, до этого одна колонка и подписи small видны",
+            "строки появляются каскадом: keyframes in с задержкой -i × 60ms"
+          ],
+          "adapt": [
+            "eyebrow, title, lede",
+            "currentName, currentNote, previousName, previousNote",
+            "rows: label, current, previous, currentBar, previousBar, isNew",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что изменилось со времён первого Луча",
+            "maxLength": 60
+          },
+          {
+            "prop": "currentName",
+            "label": "Новая версия",
+            "type": "text",
+            "default": "Луч 2",
+            "maxLength": 20
+          },
+          {
+            "prop": "previousName",
+            "label": "Прошлая версия",
+            "type": "text",
+            "default": "Луч 1",
+            "maxLength": 20
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Comparison with the previous version: ratio bars and “new” badges",
+            "description": "A “new version vs old” table for hardware: each row is a spec, the new version's value in mono with an accent bar and the previous one with a muted bar. Bars grow on load in a cascade, features that didn't exist before get a “new” chip, the new version's column is accent-coloured in the legend. On narrow screens a row folds into a card with column captions.",
+            "ai": {
+              "summary": "A hardware version comparison: two bars per row, “new” chips, a legend with years.",
+              "preserve": [
+                "a bar is an i with transform: scaleX(-w) from the left, grow keyframes delayed by -i × 80ms + .2s",
+                "a row is a 1.2fr 1fr 1fr grid from a 52rem container; below that a single column with the small captions visible",
+                "rows appear in a cascade: in keyframes delayed by -i × 60ms"
+              ],
+              "adapt": [
+                "eyebrow, title, lede",
+                "currentName, currentNote, previousName, previousNote",
+                "rows: label, current, previous, currentBar, previousBar, isNew",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Comparison016\n  currentName=\"Ray 2\"\n  previousName=\"Ray 1\"\n  rows={[{ label: \"Brightness\", current: \"1,200 lm\", previous: \"800 lm\", currentBar: 100, previousBar: 66 }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What changed since the first Ray"
+              },
+              "currentName": {
+                "label": "New version",
+                "default": "Ray 2"
+              },
+              "previousName": {
+                "label": "Previous version",
+                "default": "Ray 1"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Comparison",
+                "title": "What changed since the first Ray",
+                "lede": "We went through 3,400 reviews of the first version. Everything people asked for is here. Everything they complained about is gone.",
+                "currentName": "Ray 2",
+                "currentNote": "2026 · batch 2",
+                "previousName": "Ray 1",
+                "previousNote": "2023 · discontinued",
+                "rows": [
+                  {
+                    "label": "Brightness",
+                    "current": "1,200 lm",
+                    "previous": "800 lm",
+                    "currentBar": 100,
+                    "previousBar": 66
+                  },
+                  {
+                    "label": "Colour temperature",
+                    "current": "2700–6500 K",
+                    "previous": "2700–4000 K",
+                    "currentBar": 100,
+                    "previousBar": 34
+                  },
+                  {
+                    "label": "Sunrise length",
+                    "current": "5–60 min",
+                    "previous": "30 min",
+                    "currentBar": 100,
+                    "previousBar": 50
+                  },
+                  {
+                    "label": "Speaker",
+                    "current": "5 W, 360°",
+                    "previous": "2 W",
+                    "currentBar": 100,
+                    "previousBar": 40
+                  },
+                  {
+                    "label": "Sensors",
+                    "current": "CO₂, humidity, light, temp",
+                    "previous": "light only",
+                    "currentBar": 100,
+                    "previousBar": 25
+                  },
+                  {
+                    "label": "Gesture control",
+                    "current": "clap, touch",
+                    "previous": "—",
+                    "currentBar": 100,
+                    "previousBar": 0,
+                    "isNew": true
+                  },
+                  {
+                    "label": "Matter / Thread",
+                    "current": "yes",
+                    "previous": "—",
+                    "currentBar": 100,
+                    "previousBar": 0,
+                    "isNew": true
+                  },
+                  {
+                    "label": "Noise",
+                    "current": "0 dB",
+                    "previous": "18 dB (fan)",
+                    "currentBar": 100,
+                    "previousBar": 30
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

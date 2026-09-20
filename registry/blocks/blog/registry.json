@@ -2721,6 +2721,849 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "changelog-001",
+      "type": "registry:block",
+      "title": "Лента версий",
+      "description": "История изменений хронологической осью: релизы от нового к старому, у каждого номер версии, дата, тег типа и список правок. Самодостаточна: один файл, без зависимостей.",
+      "categories": [
+        "blog"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "changelog-001/changelog-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/changelog-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-changelog-001-*. Серверный компонент. Вертикальная ось — border-left у каждой строки, точки на оси — псевдоэлементы с брендовой заливкой; у последней строки линия обнулена, чтобы ось не свисала. Разметка: ol/li, версия в моношрифте.",
+      "meta": {
+        "tags": [
+          "changelog",
+          "timeline",
+          "releases",
+          "versions",
+          "marketing"
+        ],
+        "preview": {
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Changelog001",
+          "usage": "<Changelog001\n  title=\"Что нового\"\n  entries={[{ version: \"v2.4.0\", date: \"6 сентября\", tag: \"Новое\", title: \"Каталог вырос\", points: [\"Новые разделы\"] }]}\n/>",
+          "summary": "Лента версий хронологической осью: надзаголовок, заголовок и релизы от нового к старому. У каждого — номер версии в моношрифте, тег типа, дата и маркированный список изменений. Ось задаёт чтение сверху вниз. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-changelog-001-* и не подменять её токенами вашей темы",
+            "вертикальную ось на border-left с псевдоэлементами-точками: это приём, отличающий ленту от набора карточек",
+            "обнуление линии у последней строки — иначе ось свисает под последним релизом",
+            "моноширинный номер версии: он читается как техническая метка, а не как заголовок",
+            "порядок от нового к старому — свежий релиз первым",
+            "container-запросы на отступы: в узкой колонке блок обязан складываться сам",
+            "блок <style> внутри компонента",
+            "light-dark() в палитре: компонент следует color-scheme окружения, а не носит свою тёмную тему",
+            "прозрачную подложку по умолчанию — блок ложится на фон страницы"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "массив entries — версия, дата, тег, заголовок и пункты каждого релиза",
+            "акцент через проп accent — цвет надзаголовка, точек оси, тегов и маркеров",
+            "внешние отступы через className: секция занимает всю ширину родителя",
+            "background — подложка компонента; пусто означает «без подложки»"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Даты и номера версий — обычный текст, форматируйте их на своей стороне.",
+            "Не убирайте ось: без неё релизы читаются как разрозненные карточки, а не как история.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что нового в каталоге",
+            "maxLength": 48
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "История изменений",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "description": "A changelog on a chronological axis: releases newest-first, each with a version number, date, type tag and a list of edits. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A version feed on a chronological axis: eyebrow, title and releases newest-first. Each carries a monospace version number, a type tag, a date and a bulleted list of changes. The axis drives top-to-bottom reading. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-changelog-001-* palette — do not swap it for your theme tokens",
+                "the vertical axis via border-left with pseudo-element dots: this is the trick separating a feed from a set of cards",
+                "clearing the line on the last row — otherwise the axis dangles below the final release",
+                "the monospace version number: it reads as a technical label, not a heading",
+                "newest-first order — the latest release comes first",
+                "the container queries on padding: the block must fold itself in a narrow column",
+                "the <style> block inside the component",
+                "light-dark() in the palette: the component follows the surrounding color-scheme rather than shipping its own dark theme",
+                "the transparent background by default — the block sits on the page background"
+              ],
+              "adapt": [
+                "eyebrow and title — the section's eyebrow and heading",
+                "the entries array — version, date, tag, title and points of each release",
+                "the accent via the accent prop — colour of the eyebrow, axis dots, tags and markers",
+                "outer spacing through className: the section spans its parent's width",
+                "background — the component's backdrop; empty means no backdrop"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html.",
+                "Dates and version numbers are plain text — format them on your side.",
+                "Do not drop the axis: without it the releases read as scattered cards, not a history.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Changelog001\n  title=\"What's new\"\n  entries={[{ version: \"v2.4.0\", date: \"Sep 6\", tag: \"New\", title: \"Catalog grew\", points: [\"New sections\"] }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What's new in the catalog"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Changelog"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Version Timeline",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-changelog-001-* variables. A server component. The vertical axis is a border-left on each row, the axis dots are pseudo-elements with a brand fill; the last row's line is cleared so the axis does not dangle. Markup: ol/li, version in a monospace font."
+          }
+        }
+      }
+    },
+    {
+      "name": "changelog-002",
+      "type": "registry:block",
+      "title": "Хайлайт релиза",
+      "description": "Анонс одной версии: крупный номер, дата, резюме и разбивка изменений по типам — Добавлено, Изменено, Исправлено. Самодостаточна: один файл, без зависимостей.",
+      "categories": [
+        "blog"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "changelog-002/changelog-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/changelog-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-changelog-002-*. Серверный компонент. Формат для свежего релиза наверху страницы: одна версия крупно, резюме и список изменений, где тип каждого пункта подписан тегом фиксированной ширины слева. Сетка grid-template-columns:auto 1fr держит теги в столбец.",
+      "meta": {
+        "tags": [
+          "changelog",
+          "release",
+          "announcement",
+          "versions",
+          "marketing"
+        ],
+        "preview": {
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Changelog002",
+          "usage": "<Changelog002\n  version=\"v2.4.0\"\n  title=\"Крупное обновление\"\n  changes={[{ tag: \"Добавлено\", text: \"Новые блоки\" }]}\n/>",
+          "summary": "Хайлайт одного релиза: крупный номер версии с датой, короткое резюме и список изменений, разбитый по типам. Тег типа стоит слева фиксированной колонкой, текст изменения — справа. Формат «свежий релиз наверху», не лента истории. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-changelog-002-* и не подменять её токенами вашей темы",
+            "крупный номер версии брендовым акцентом — это смысловой центр блока",
+            "сетку grid-template-columns:auto 1fr у строки изменения: теги обязаны стоять ровным столбцом",
+            "фиксированную минимальную ширину тега — иначе колонка тегов рвётся по длине слова",
+            "разделительную линию перед списком изменений",
+            "container-запросы на отступы",
+            "блок <style> внутри компонента",
+            "light-dark() в палитре: компонент следует color-scheme окружения",
+            "прозрачную подложку по умолчанию"
+          ],
+          "adapt": [
+            "version и date — номер и дату релиза",
+            "title и summary — заголовок и резюме версии",
+            "массив changes — тег типа и текст каждого изменения",
+            "акцент через проп accent — цвет номера версии и тегов",
+            "background — подложка компонента; пусто означает «без подложки»"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Теги типов — обычный текст: подписи вроде «Добавлено» задаются вами и не ограничены набором.",
+            "Блок показывает одну версию: для истории нескольких релизов используйте ленту (changelog-001).",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Каталог блоков и фирменная палитра",
+            "maxLength": 52
+          },
+          {
+            "prop": "version",
+            "label": "Версия",
+            "type": "text",
+            "default": "v2.4.0",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "version",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "description": "A single-release announcement: large version number, date, summary and changes grouped by type — Added, Changed, Fixed. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A single-release highlight: a large version number with date, a short summary and a list of changes grouped by type. The type tag sits in a fixed left column, the change text on the right. A newest-release-on-top format, not a history feed. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-changelog-002-* palette — do not swap it for your theme tokens",
+                "the large version number in the brand accent — it's the semantic centre of the block",
+                "the grid-template-columns:auto 1fr on each change row: tags must line up in a column",
+                "the fixed minimum tag width — otherwise the tag column breaks by word length",
+                "the divider line before the change list",
+                "the container queries on padding",
+                "the <style> block inside the component",
+                "light-dark() in the palette: the component follows the surrounding color-scheme",
+                "the transparent background by default"
+              ],
+              "adapt": [
+                "version and date — the release number and date",
+                "title and summary — the version's heading and summary",
+                "the changes array — the type tag and text of each change",
+                "the accent via the accent prop — colour of the version number and tags",
+                "background — the component's backdrop; empty means no backdrop"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "Type tags are plain text: labels like Added are yours and not limited to a fixed set.",
+                "The block shows one version: for a history of several releases use the feed (changelog-001).",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Changelog002\n  version=\"v2.4.0\"\n  title=\"Major update\"\n  changes={[{ tag: \"Added\", text: \"New blocks\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Block catalog and brand palette"
+              },
+              "version": {
+                "label": "Version",
+                "default": "v2.4.0"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Release Highlight",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-changelog-002-* variables. A server component. A format for a fresh release at the top of the page: one version large, a summary and a change list where each item's type is labelled by a fixed-width tag on the left. The grid-template-columns:auto 1fr keeps tags in a column."
+          }
+        }
+      }
+    },
+    {
+      "name": "changelog-003",
+      "type": "registry:block",
+      "title": "Лента с фильтром",
+      "description": "История изменений с фильтром по типу: чипы «Все, Новое, Исправления» прячут ненужные записи. Самодостаточна: один файл, без зависимостей.",
+      "categories": [
+        "blog"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "changelog-003/changelog-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/changelog-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-changelog-003-*. Клиентский компонент: чипы фильтруют список по типу записи через состояние активного чипа и атрибут hidden на строках. Чипы объявлены через aria-pressed, набор типов выводится из данных, поэтому лишних чипов не появляется.",
+      "meta": {
+        "tags": [
+          "changelog",
+          "filter",
+          "releases",
+          "versions",
+          "marketing"
+        ],
+        "preview": {
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Changelog003",
+          "usage": "<Changelog003\n  title=\"Все обновления\"\n  entries={[{ version: \"v2.4.0\", date: \"6 сен\", type: \"Новое\", text: \"Новые блоки\" }]}\n/>",
+          "summary": "Лента изменений с клиентским фильтром по типу: чипы «Все» плюс по чипу на каждый тип из данных прячут неподходящие записи через атрибут hidden. Активный чип объявлен через aria-pressed. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-changelog-003-* и не подменять её токенами вашей темы",
+            "вывод набора чипов из данных: лишний тип не появится, отсутствующий не потеряется",
+            "aria-pressed на чипах — состояние фильтра объявлено, а не показано только цветом",
+            "фильтрацию через hidden на строках, а не удаление из DOM: список стабилен",
+            "чип «Все» первым — сброс фильтра",
+            "container-запросы на отступы",
+            "блок <style> внутри компонента",
+            "light-dark() в палитре: компонент следует color-scheme окружения",
+            "прозрачную подложку по умолчанию"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "массив entries — версия, дата, тип и текст каждой записи",
+            "акцент через проп accent — цвет активного чипа, тегов и надзаголовка",
+            "background — подложка компонента; пусто означает «без подложки»",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Типы записей — обычный текст: набор чипов формируется из уникальных значений entries[].type.",
+            "Активный чип «Все» соответствует отсутствию фильтра, а не типу с названием «Все».",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Все обновления каталога",
+            "maxLength": 48
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "История изменений",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "description": "A changelog with a type filter: chips — All, New, Fixes — hide the entries you don't want. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A changelog with a client-side type filter: an All chip plus one chip per type derived from the data hide non-matching entries via the hidden attribute. The active chip is announced through aria-pressed. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-changelog-003-* palette — do not swap it for your theme tokens",
+                "deriving the chip set from the data: no stray type appears, no present one is lost",
+                "aria-pressed on the chips — the filter state is announced, not shown by colour alone",
+                "filtering via hidden on rows rather than removing them from the DOM: the list stays stable",
+                "the All chip first — it resets the filter",
+                "the container queries on padding",
+                "the <style> block inside the component",
+                "light-dark() in the palette: the component follows the surrounding color-scheme",
+                "the transparent background by default"
+              ],
+              "adapt": [
+                "eyebrow and title — the section's eyebrow and heading",
+                "the entries array — version, date, type and text of each entry",
+                "the accent via the accent prop — colour of the active chip, tags and eyebrow",
+                "background — the component's backdrop; empty means no backdrop",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "Entry types are plain text: the chip set is built from the unique entries[].type values.",
+                "The active All chip means no filter, not a type literally named All.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Changelog003\n  title=\"All updates\"\n  entries={[{ version: \"v2.4.0\", date: \"Sep 6\", type: \"New\", text: \"New blocks\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "All catalog updates"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Changelog"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Filtered Changelog",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-changelog-003-* variables. A client component: chips filter the list by entry type via the active-chip state and the hidden attribute on rows. Chips are announced through aria-pressed, and the type set is derived from the data, so no stray chips appear."
+          }
+        }
+      }
+    },
+    {
+      "name": "changelog-004",
+      "type": "registry:block",
+      "title": "История версий с раскрытием и метками breaking",
+      "description": "Вертикальная линия с точками — у последнего релиза пульс; версия моноширинным тегом, дата, чипы «latest» и «breaking», заголовок. Первый релиз раскрыт, остальные раскрываются по клику (grid-template-rows, aria-expanded); пункты с «!» — ломающие, с красной меткой.",
+      "categories": [
+        "blog"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "changelog-004/changelog-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/changelog-004.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "changelog",
+          "releases",
+          "versions",
+          "timeline",
+          "open source",
+          "accordion",
+          "semver",
+          "developer"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Changelog004",
+          "usage": "<Changelog004\n  releases={[\n    { version: \"2.4.1\", date: \"18 сен 2026\", title: \"Виртуализация с переменной высотой\", items: [\"строки разной высоты\", \"scrollTo(rowIndex)\"] },\n    { version: \"2.0.0\", date: \"1 июн 2026\", title: \"Headless по-настоящему\", breaking: true, items: [\"!удалён <Table>\", \"4,1 КБ вместо 11\"] },\n  ]}\n/>",
+          "summary": "Changelog для библиотеки, приложения, API: аккордеон релизов с честными метками ломающих изменений.",
+          "preserve": [
+            "раскрытие — grid-template-rows 0fr → 1fr, состояние — индекс открытого релиза, кнопка с aria-expanded",
+            "точка последнего релиза пульсирует keyframes box-shadow",
+            "пункт с префиксом «!» получает data-breaking и красную метку"
+          ],
+          "adapt": [
+            "releases: version, date, title, items, breaking",
+            "breakingLabel, latestLabel, allLabel, allHref",
+            "eyebrow, title, lede",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что менялось",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Version history with expansion and breaking tags",
+            "description": "A vertical line with dots — the latest release pulses; a monospace version tag, date, “latest” and “breaking” chips, a title. The first release is open, others expand on click (grid-template-rows, aria-expanded); items starting with “!” are breaking, with a red marker.",
+            "ai": {
+              "summary": "A changelog for a library, app or API: a release accordion with honest breaking-change markers.",
+              "preserve": [
+                "expansion is grid-template-rows 0fr → 1fr, state is the open release index, a button with aria-expanded",
+                "the latest release dot pulses with box-shadow keyframes",
+                "an item prefixed with “!” gets data-breaking and a red marker"
+              ],
+              "adapt": [
+                "releases: version, date, title, items, breaking",
+                "breakingLabel, latestLabel, allLabel, allHref",
+                "eyebrow, title, lede",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Changelog004\n  releases={[\n    { version: \"2.4.1\", date: \"Sep 18, 2026\", title: \"Variable-height virtualisation\", items: [\"rows of different heights\", \"scrollTo(rowIndex)\"] },\n    { version: \"2.0.0\", date: \"Jun 1, 2026\", title: \"Truly headless\", breaking: true, items: [\"!removed <Table>\", \"4.1 KB instead of 11\"] },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What changed"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "// changelog",
+                "title": "What changed",
+                "lede": "Semantic versions, breaking changes marked. The full list is in CHANGELOG.md.",
+                "allLabel": "Full changelog →",
+                "releases": [
+                  {
+                    "version": "2.4.1",
+                    "date": "Sep 18, 2026",
+                    "title": "Variable-height virtualisation",
+                    "items": [
+                      "rows of different heights without measuring ahead — ResizeObserver as they appear",
+                      "`table.scrollTo(rowIndex)` for programmatic scrolling",
+                      "fixed jitter on fast trackpad scrolling"
+                    ]
+                  },
+                  {
+                    "version": "2.4.0",
+                    "date": "Sep 2, 2026",
+                    "title": "Grouping with totals",
+                    "items": [
+                      "`groupBy` accepts a function, not just a key",
+                      "`sum`, `avg`, `count` aggregates in the group row",
+                      "`onGroupToggle` events with state"
+                    ]
+                  },
+                  {
+                    "version": "2.3.0",
+                    "date": "Aug 12, 2026",
+                    "title": "Function columns and types",
+                    "items": [
+                      "a column can be a function of the row — the type is inferred",
+                      "`ColumnDef<T>` exported for external definitions",
+                      "types docs rewritten"
+                    ]
+                  },
+                  {
+                    "version": "2.0.0",
+                    "date": "Jun 1, 2026",
+                    "title": "Truly headless",
+                    "breaking": true,
+                    "items": [
+                      "!removed the styled `<Table>` component — only the `useTable` hook",
+                      "!`onSort` now receives `{ by, dir }` instead of two arguments",
+                      "bundle size 4.1 KB instead of 11",
+                      "React 19 and Server Components"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "changelog-013",
+      "type": "registry:block",
+      "title": "Лента версий API с командой установки и живыми счётчиками запросов",
+      "description": "Changelog для API: слева записи на вертикальной линии — версия чипом моноширинным, дата, теги new / fix / breaking / perf и список изменений с «+»; справа липкая панель: команда установки SDK с вкладками npm / pip / go и кнопкой «скопировать», ниже два живых счётчика — запросов в секунду (дрожит вокруг базового) и за сегодня (растёт каждую секунду). Стартовые значения детерминированы, тикают в эффекте.",
+      "categories": [
+        "blog"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "changelog-013/changelog-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/changelog-013.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "changelog",
+          "releases",
+          "versions",
+          "api",
+          "sdk",
+          "install",
+          "copy",
+          "counter",
+          "live",
+          "developer"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Changelog013",
+          "usage": "<Changelog013\n  entries={[{ version: \"v2.4.0\", date: \"12 сен 2026\", title: \"Подсказки с геопозицией\", tags: [\"new\"], items: [\"/suggest принимает lat/lon\"] }]}\n  installs={[{ label: \"npm\", command: \"npm i @geokod/sdk\" }]}\n  perSecond={1240}\n/>",
+          "summary": "История версий API с тегами, командой установки и тикающими счётчиками нагрузки.",
+          "preserve": [
+            "счётчики — setInterval 1 с в useEffect: rate = perSecond·(0.94 + random·0.12), today += rate",
+            "вкладки установки меняют команду, копирование — navigator.clipboard с fallback-тишиной и «готово» на 1,5 с",
+            "первая запись — акцентная точка со свечением, теги breaking — янтарные"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, allLabel, allHref",
+            "entries: version, date, title, tags[], items[]",
+            "installTitle, installs: label, command; perSecond, todayStart",
+            "tone — тема",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что изменилось",
+            "maxLength": 40
+          },
+          {
+            "prop": "perSecond",
+            "label": "Запросов в секунду",
+            "type": "number",
+            "default": 1240,
+            "min": 1,
+            "max": 1000000
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "API changelog feed with an install command and live request counters",
+            "description": "A changelog for an API: entries on a vertical line on the left — a monospace version chip, date, new / fix / breaking / perf tags and a change list with “+”; a sticky panel on the right: an SDK install command with npm / pip / go tabs and a copy button, and two live counters below — requests per second (jittering around a base) and today (growing every second). Start values are deterministic, ticking in an effect.",
+            "ai": {
+              "summary": "API version history with tags, an install command and ticking load counters.",
+              "preserve": [
+                "counters are a 1 s setInterval in useEffect: rate = perSecond·(0.94 + random·0.12), today += rate",
+                "install tabs swap the command, copying uses navigator.clipboard with a silent fallback and “done” for 1.5 s",
+                "the first entry has a glowing accent dot, breaking tags are amber"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, allLabel, allHref",
+                "entries: version, date, title, tags[], items[]",
+                "installTitle, installs: label, command; perSecond, todayStart",
+                "tone — theme",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Changelog013\n  entries={[{ version: \"v2.4.0\", date: \"Sep 12, 2026\", title: \"Geo-aware suggestions\", tags: [\"new\"], items: [\"/suggest accepts lat/lon\"] }]}\n  installs={[{ label: \"npm\", command: \"npm i @geokod/sdk\" }]}\n  perSecond={1240}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What changed"
+              },
+              "perSecond": {
+                "label": "Requests per second"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Changelog",
+                "title": "What changed",
+                "lede": "Every version with a date, tags and a list. Breaking changes are announced six months ahead and the old version stays up all that time.",
+                "entries": [
+                  {
+                    "version": "v2.4.0",
+                    "date": "Sep 12, 2026",
+                    "title": "Address suggestions ranked by location",
+                    "tags": [
+                      "new",
+                      "perf"
+                    ],
+                    "items": [
+                      "/suggest accepts lat/lon and ranks nearby addresses higher",
+                      "/suggest median dropped from 31 to 24 ms with a new index",
+                      "postal_code is now present in every /geocode response"
+                    ]
+                  },
+                  {
+                    "version": "v2.3.2",
+                    "date": "Aug 28, 2026",
+                    "title": "Reverse geocoding fixes",
+                    "tags": [
+                      "fix"
+                    ],
+                    "items": [
+                      "/reverse on region borders returned the neighbouring district — fixed",
+                      "Empty house in Kazan and Ufa responses"
+                    ]
+                  },
+                  {
+                    "version": "v2.3.0",
+                    "date": "Aug 4, 2026",
+                    "title": "Distance matrix up to 100 × 100",
+                    "tags": [
+                      "new"
+                    ],
+                    "items": [
+                      "/matrix computes up to 10,000 pairs per request",
+                      "car, walk, bike profiles; traffic on for car by default",
+                      "Webhooks for /batch: the status comes to you"
+                    ]
+                  },
+                  {
+                    "version": "v2.0.0",
+                    "date": "Jun 1, 2026",
+                    "title": "API version two",
+                    "tags": [
+                      "breaking"
+                    ],
+                    "items": [
+                      "/geocode response: results is an array, precision replaces kind",
+                      "Keys look like gk_live_… and gk_test_…; old ones work until December 1",
+                      "A single error format with a code field"
+                    ]
+                  }
+                ],
+                "allLabel": "All versions",
+                "installTitle": "Install the SDK"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
