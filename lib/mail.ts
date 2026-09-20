@@ -48,7 +48,40 @@ const transport = host
     })
   : null
 
-export async function sendMail({ to, subject, text, html }: Letter) {
+/**
+ * Отдельный транспорт для vibeui.club — через Resend. У .club свой домен с
+ * DKIM/SPF (настроен в Resend), поэтому письма доходят до Gmail, а не в спам,
+ * как со свежего локального Postfix. vibeui.ru остаётся на своём Postfix.
+ */
+const resendKey = process.env.RESEND_API_KEY
+const resendTransport = resendKey
+  ? nodemailer.createTransport({
+      host: "smtp.resend.com",
+      port: 465,
+      secure: true,
+      auth: { user: "resend", pass: resendKey },
+    })
+  : null
+
+const CLUB_FROM = process.env.RESEND_FROM ?? "VibeUI <noreply@vibeui.club>"
+
+export async function sendMail({
+  to,
+  subject,
+  text,
+  html,
+  resend,
+}: Letter & {
+  /** Слать через Resend от имени vibeui.club (письма для .club-аудитории). */
+  resend?: boolean
+}) {
+  // .club — через Resend, если он настроен: свой домен и доставляемость.
+  if (resend && resendTransport) {
+    await resendTransport.sendMail({ from: CLUB_FROM, to, subject, text, html })
+
+    return
+  }
+
   if (!transport) {
     console.info(`[mail] ${to} — ${subject}\n${text}`)
 

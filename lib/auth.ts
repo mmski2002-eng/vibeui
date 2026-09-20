@@ -95,6 +95,13 @@ function hostAwareUrl(url: string, request?: Request): string {
   }
 }
 
+/** Пришёл ли запрос с vibeui.club — тогда письмо шлём через Resend. */
+function isClubRequest(request?: Request): boolean {
+  const host = request?.headers.get("host")?.split(":")[0].toLowerCase()
+
+  return host === "vibeui.club" || host === "www.vibeui.club"
+}
+
 /** Следующее имя по умолчанию: Viber000001, Viber000002, … */
 async function viberName() {
   const [row] = await db.execute<{ n: string }>(
@@ -133,6 +140,7 @@ export const auth = betterAuth({
       await sendMail({
         to: user.email,
         subject: copy.subject,
+        resend: isClubRequest(request),
         ...letterWithLink({
           locale,
           heading: copy.heading,
@@ -159,6 +167,7 @@ export const auth = betterAuth({
       await sendMail({
         to: user.email,
         subject: copy.subject,
+        resend: isClubRequest(request),
         ...letterWithLink({
           locale,
           heading: copy.heading,
