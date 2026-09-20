@@ -10,7 +10,7 @@ import { Navbar024 } from "@/registry/blocks/navbar/navbar-024/navbar-024"
 import { Portfolio007 } from "@/registry/blocks/portfolio/portfolio-007/portfolio-007"
 import { Pricing022 } from "@/registry/blocks/pricing/pricing-022/pricing-022"
 import { Process001 } from "@/registry/animations/process/process-001/process-001"
-import { Stats001 } from "@/registry/blocks/stats/stats-001/stats-001"
+import { Stats001 } from "@/registry/blocks/about/stats-001/stats-001"
 import { People009 } from "@/registry/blocks/team/people-009/people-009"
 import { Testimonials019 } from "@/registry/blocks/testimonials/testimonials-019/testimonials-019"
 

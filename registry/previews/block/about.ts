@@ -34,4 +34,16 @@ export const PREVIEWS = {
     import("@/registry/blocks/about/about-014/about-014").then((module) => module.About014),
   "about-017": () =>
     import("@/registry/blocks/about/about-017/about-017").then((module) => module.About017),
+  "stats-001": () =>
+    import("@/registry/blocks/about/stats-001/stats-001").then((module) => module.Stats001),
+  "stats-002": () =>
+    import("@/registry/blocks/about/stats-002/stats-002").then((module) => module.Stats002),
+  "stats-012": () =>
+    import("@/registry/blocks/about/stats-012/stats-012").then((module) => module.Stats012),
+  "video-001": () =>
+    import("@/registry/blocks/about/video-001/video-001").then((module) => module.Video001),
+  "video-002": () =>
+    import("@/registry/blocks/about/video-002/video-002").then((module) => module.Video002),
+  "video-003": () =>
+    import("@/registry/blocks/about/video-003/video-003").then((module) => module.Video003),
 } satisfies PreviewLoaderMap

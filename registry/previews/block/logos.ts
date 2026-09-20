@@ -20,4 +20,10 @@ export const PREVIEWS = {
     import("@/registry/blocks/logos/logocloud-007/logocloud-007").then((module) => module.Logocloud007),
   "logocloud-014": () =>
     import("@/registry/blocks/logos/logocloud-014/logocloud-014").then((module) => module.Logocloud014),
+  "pres-001": () =>
+    import("@/registry/blocks/logos/pres-001/pres-001").then((module) => module.Pres001),
+  "pres-002": () =>
+    import("@/registry/blocks/logos/pres-002/pres-002").then((module) => module.Pres002),
+  "pres-003": () =>
+    import("@/registry/blocks/logos/pres-003/pres-003").then((module) => module.Pres003),
 } satisfies PreviewLoaderMap

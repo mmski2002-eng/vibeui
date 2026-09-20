@@ -24,4 +24,13 @@ export const PREVIEWS = {
   "errorpage-006": dynamic(() =>
     import("@/registry/blocks/errors/errorpage-006/errorpage-006").then((module) => module.Errorpage006),
   ),
+  "consent-001": dynamic(() =>
+    import("@/registry/blocks/errors/consent-001/consent-001").then((module) => module.Consent001),
+  ),
+  "consent-002": dynamic(() =>
+    import("@/registry/blocks/errors/consent-002/consent-002").then((module) => module.Consent002),
+  ),
+  "consent-003": dynamic(() =>
+    import("@/registry/blocks/errors/consent-003/consent-003").then((module) => module.Consent003),
+  ),
 } satisfies PreviewMap

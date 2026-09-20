@@ -2,14 +2,14 @@ import type { CSSProperties } from "react"
 
 import { Navbar029 } from "@/registry/blocks/navbar/navbar-029/navbar-029"
 import { Hero029 } from "@/registry/blocks/hero/hero-029/hero-029"
-import { Podcast004 } from "@/registry/blocks/podcast/podcast-004/podcast-004"
-import { Podcast005 } from "@/registry/blocks/podcast/podcast-005/podcast-005"
+import { Podcast004 } from "@/registry/blocks/industry/podcast-004/podcast-004"
+import { Podcast005 } from "@/registry/blocks/industry/podcast-005/podcast-005"
 import { People013 } from "@/registry/blocks/team/people-013/people-013"
-import { Podcast006 } from "@/registry/blocks/podcast/podcast-006/podcast-006"
+import { Podcast006 } from "@/registry/blocks/industry/podcast-006/podcast-006"
 import { Pricing023 } from "@/registry/blocks/pricing/pricing-023/pricing-023"
 import { Subscribe008 } from "@/registry/blocks/newsletter/subscribe-008/subscribe-008"
 import { Footer028 } from "@/registry/blocks/footer/footer-028/footer-028"
-import { Podcast007 } from "@/registry/blocks/podcast/podcast-007/podcast-007"
+import { Podcast007 } from "@/registry/blocks/industry/podcast-007/podcast-007"
 
 import { Atmosphere } from "./atmosphere"
 

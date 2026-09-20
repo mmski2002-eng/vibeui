@@ -28,4 +28,16 @@ export const PREVIEWS = {
     import("@/registry/blocks/portfolio/portfolio-011/portfolio-011").then((module) => module.Portfolio011),
   "portfolio-012": () =>
     import("@/registry/blocks/portfolio/portfolio-012/portfolio-012").then((module) => module.Portfolio012),
+  "case-001": () =>
+    import("@/registry/blocks/portfolio/case-001/case-001").then((module) => module.Case001),
+  "case-002": () =>
+    import("@/registry/blocks/portfolio/case-002/case-002").then((module) => module.Case002),
+  "case-003": () =>
+    import("@/registry/blocks/portfolio/case-003/case-003").then((module) => module.Case003),
+  "case-004": () =>
+    import("@/registry/blocks/portfolio/case-004/case-004").then((module) => module.Case004),
+  "case-005": () =>
+    import("@/registry/blocks/portfolio/case-005/case-005").then((module) => module.Case005),
+  "case-006": () =>
+    import("@/registry/blocks/portfolio/case-006/case-006").then((module) => module.Case006),
 } satisfies PreviewLoaderMap

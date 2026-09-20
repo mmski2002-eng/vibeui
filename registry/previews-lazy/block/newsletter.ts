@@ -36,4 +36,13 @@ export const PREVIEWS = {
   "subscribe-020": dynamic(() =>
     import("@/registry/blocks/newsletter/subscribe-020/subscribe-020").then((module) => module.Subscribe020),
   ),
+  "waitlist-001": dynamic(() =>
+    import("@/registry/blocks/newsletter/waitlist-001/waitlist-001").then((module) => module.Waitlist001),
+  ),
+  "waitlist-002": dynamic(() =>
+    import("@/registry/blocks/newsletter/waitlist-002/waitlist-002").then((module) => module.Waitlist002),
+  ),
+  "waitlist-003": dynamic(() =>
+    import("@/registry/blocks/newsletter/waitlist-003/waitlist-003").then((module) => module.Waitlist003),
+  ),
 } satisfies PreviewMap

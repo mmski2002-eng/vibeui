@@ -35,76 +35,20 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/block/map")).PREVIEWS
     case "block/errors":
       return (await import("@/registry/previews-lazy/block/errors")).PREVIEWS
+    case "block/industry":
+      return (await import("@/registry/previews-lazy/block/industry")).PREVIEWS
     case "block/about":
       return (await import("@/registry/previews-lazy/block/about")).PREVIEWS
-    case "block/cases":
-      return (await import("@/registry/previews-lazy/block/cases")).PREVIEWS
-    case "block/changelog":
-      return (await import("@/registry/previews-lazy/block/changelog")).PREVIEWS
-    case "block/comparison":
-      return (await import("@/registry/previews-lazy/block/comparison")).PREVIEWS
-    case "block/waitlist":
-      return (await import("@/registry/previews-lazy/block/waitlist")).PREVIEWS
-    case "block/consent":
-      return (await import("@/registry/previews-lazy/block/consent")).PREVIEWS
-    case "block/downloads":
-      return (await import("@/registry/previews-lazy/block/downloads")).PREVIEWS
     case "block/portfolio":
       return (await import("@/registry/previews-lazy/block/portfolio")).PREVIEWS
-    case "block/realty":
-      return (await import("@/registry/previews-lazy/block/realty")).PREVIEWS
-    case "block/restaurant":
-      return (await import("@/registry/previews-lazy/block/restaurant")).PREVIEWS
-    case "block/bakery":
-      return (await import("@/registry/previews-lazy/block/bakery")).PREVIEWS
-    case "block/opensource":
-      return (await import("@/registry/previews-lazy/block/opensource")).PREVIEWS
-    case "block/app":
-      return (await import("@/registry/previews-lazy/block/app")).PREVIEWS
-    case "block/course":
-      return (await import("@/registry/previews-lazy/block/course")).PREVIEWS
-    case "block/auto":
-      return (await import("@/registry/previews-lazy/block/auto")).PREVIEWS
-    case "block/vet":
-      return (await import("@/registry/previews-lazy/block/vet")).PREVIEWS
-    case "block/flowers":
-      return (await import("@/registry/previews-lazy/block/flowers")).PREVIEWS
-    case "block/renovation":
-      return (await import("@/registry/previews-lazy/block/renovation")).PREVIEWS
-    case "block/delivery":
-      return (await import("@/registry/previews-lazy/block/delivery")).PREVIEWS
-    case "block/language":
-      return (await import("@/registry/previews-lazy/block/language")).PREVIEWS
-    case "block/fintech":
-      return (await import("@/registry/previews-lazy/block/fintech")).PREVIEWS
-    case "block/market":
-      return (await import("@/registry/previews-lazy/block/market")).PREVIEWS
-    case "block/gadget":
-      return (await import("@/registry/previews-lazy/block/gadget")).PREVIEWS
-    case "block/charity":
-      return (await import("@/registry/previews-lazy/block/charity")).PREVIEWS
-    case "block/writer":
-      return (await import("@/registry/previews-lazy/block/writer")).PREVIEWS
     case "block/events":
       return (await import("@/registry/previews-lazy/block/events")).PREVIEWS
-    case "block/video":
-      return (await import("@/registry/previews-lazy/block/video")).PREVIEWS
-    case "block/podcast":
-      return (await import("@/registry/previews-lazy/block/podcast")).PREVIEWS
-    case "block/press":
-      return (await import("@/registry/previews-lazy/block/press")).PREVIEWS
     case "block/data-grid":
       return (await import("@/registry/previews-lazy/block/data-grid")).PREVIEWS
-    case "block/api":
-      return (await import("@/registry/previews-lazy/block/api")).PREVIEWS
-    case "block/bento":
-      return (await import("@/registry/previews-lazy/block/bento")).PREVIEWS
     case "block/logos":
       return (await import("@/registry/previews-lazy/block/logos")).PREVIEWS
     case "block/newsletter":
       return (await import("@/registry/previews-lazy/block/newsletter")).PREVIEWS
-    case "block/stats":
-      return (await import("@/registry/previews-lazy/block/stats")).PREVIEWS
     case "block/team":
       return (await import("@/registry/previews-lazy/block/team")).PREVIEWS
     case "block/background":

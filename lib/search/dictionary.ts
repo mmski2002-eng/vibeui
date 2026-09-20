@@ -347,12 +347,12 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["цифры", "показатели", "метрики", "статистика"],
-    categories: ["stats", "metrics"],
+    categories: ["about", "metrics"],
     terms: ["stats"],
   },
   {
     say: ["таймлайн", "лента событий", "хронология", "история"],
-    categories: ["timeline", "changelog", "activity"],
+    categories: ["timeline", "blog", "activity"],
     terms: ["timeline"],
   },
   {
@@ -397,7 +397,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["сравнение", "таблица сравнения", "чем отличается"],
-    categories: ["comparison"],
+    categories: ["pricing"],
     terms: ["comparison"],
   },
   {
@@ -407,12 +407,12 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["лист ожидания", "ранний доступ", "запись в очередь"],
-    categories: ["waitlist"],
+    categories: ["newsletter"],
     terms: ["waitlist"],
   },
   {
     say: ["видео", "плеер", "проигрыватель"],
-    categories: ["video", "media"],
+    categories: ["about", "media"],
     terms: ["video"],
   },
   {
@@ -467,7 +467,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["куки", "согласие", "cookie баннер"],
-    categories: ["consent", "banner"],
+    categories: ["errors", "banner"],
     terms: ["consent", "cookie"],
   },
   {
@@ -492,7 +492,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["портфолио", "работы", "кейсы", "проекты", "тату", "татуировки", "эскизы"],
-    categories: ["portfolio", "cases"],
+    categories: ["portfolio"],
     terms: ["portfolio", "cases"],
   },
   {
@@ -511,7 +511,7 @@ export const SYNONYMS: Synonym[] = [
       "снять квартиру",
       "купить квартиру",
     ],
-    categories: ["realty"],
+    categories: ["industry"],
     terms: ["real estate", "realty", "property", "listing", "mortgage", "apartment"],
   },
   {
@@ -534,82 +534,82 @@ export const SYNONYMS: Synonym[] = [
       "гастробар",
       "винная карта",
     ],
-    categories: ["restaurant"],
+    categories: ["industry"],
     terms: ["restaurant", "cafe", "bar", "bistro", "menu", "dish", "chef", "reservation", "booking", "table", "wine", "food"],
   },
   {
     say: ["пекарня", "кофейня", "хлеб", "выпечка", "булочная", "кофе", "круассан"],
-    categories: ["bakery"],
+    categories: ["industry"],
     terms: ["bakery", "cafe", "coffee", "bread", "pastry", "croissant", "loaf", "barista", "oven", "shelf", "box", "preorder"],
   },
   {
     say: ["автосервис", "детейлинг", "сто", "шиномонтаж", "автомойка", "машина", "автомобиль", "запись на ремонт"],
-    categories: ["auto"],
+    categories: ["industry"],
     terms: ["auto", "car", "detailing", "garage", "service", "repair", "booking", "slots", "before-after"],
   },
   {
     say: ["ветклиника", "ветеринар", "груминг", "питомец", "кот", "собака", "животные", "зоо"],
-    categories: ["vet"],
+    categories: ["industry"],
     terms: ["vet", "veterinary", "pet", "grooming", "dog", "cat", "clinic", "symptoms", "emergency"],
   },
   {
     say: ["цветы", "букет", "флорист", "цветочный", "доставка цветов", "конструктор букета"],
-    categories: ["flowers"],
+    categories: ["industry"],
     terms: ["flowers", "bouquet", "florist", "floral", "builder", "delivery", "season", "subscription"],
   },
   {
     say: ["ремонт", "ремонт квартир", "стройка", "бригада", "смета", "отделка", "прораб", "гант"],
-    categories: ["renovation"],
+    categories: ["industry"],
     terms: ["renovation", "construction", "estimate", "calculator", "gantt", "blueprint", "before-after", "crew"],
   },
   {
     say: ["доставка еды", "дарк китчен", "меню", "корзина", "заказ еды", "боул", "пицца", "курьер"],
-    categories: ["delivery"],
+    categories: ["industry"],
     terms: ["delivery", "food", "menu", "cart", "kitchen", "courier", "tracker", "zone", "bowl"],
   },
   {
     say: ["языковая школа", "английский", "испанский", "курсы языка", "репетитор", "уровень языка", "тест уровня"],
-    categories: ["language"],
+    categories: ["industry"],
     terms: ["language", "school", "english", "spanish", "lessons", "level", "test", "schedule", "teachers"],
   },
   {
     say: ["финтех", "банк", "банк для бизнеса", "расчётный счёт", "карта", "платежи", "необанк", "баланс"],
-    categories: ["fintech"],
+    categories: ["industry"],
     terms: ["fintech", "bank", "banking", "card", "balance", "payments", "dashboard", "security", "account"],
   },
   {
     say: ["маркетплейс", "шаблоны", "цифровые товары", "лицензия", "набор", "ассеты", "магазин шаблонов"],
-    categories: ["market"],
+    categories: ["industry"],
     terms: ["marketplace", "templates", "digital", "assets", "license", "bundle", "shop", "authors"],
   },
   {
     say: ["api", "апи", "dev tool", "инструмент разработчика", "геокодирование", "запросы", "sdk", "эндпоинт"],
-    categories: ["api"],
+    categories: ["industry"],
     terms: ["api", "developer", "endpoint", "sandbox", "requests", "status", "uptime", "latency", "docs", "sdk"],
   },
   {
     say: ["гаджет", "устройство", "лампа", "будильник", "хардвер", "предзаказ", "девайс", "умный дом"],
-    categories: ["gadget"],
+    categories: ["industry"],
     terms: ["gadget", "hardware", "device", "lamp", "product", "preorder", "specs", "exploded"],
   },
   {
     say: ["фонд", "благотворительность", "нко", "пожертвование", "помочь", "сбор", "волонтёр", "подопечные"],
-    categories: ["charity"],
+    categories: ["industry"],
     terms: ["charity", "nonprofit", "donate", "donation", "fundraising", "volunteer", "foundation", "ngo"],
   },
   {
     say: ["писатель", "автор", "книга", "эссе", "тексты", "читалка", "рассказы", "литература"],
-    categories: ["writer"],
+    categories: ["industry"],
     terms: ["writer", "author", "book", "essay", "reading", "texts", "literature", "newsletter"],
   },
   {
     say: ["опенсорс", "open source", "библиотека", "документация", "песочница", "npm", "гитхаб"],
-    categories: ["opensource"],
+    categories: ["industry"],
     terms: ["open source", "library", "docs", "playground", "sandbox", "github", "npm", "package", "developer", "sdk", "cli"],
   },
   {
     say: ["приложение", "мобильное приложение", "скачать приложение", "телефон", "экраны приложения", "app store"],
-    categories: ["app"],
+    categories: ["industry"],
     terms: ["app", "mobile", "phone", "screens", "app store", "google play", "download", "ios", "android", "mockup"],
   },
   {
@@ -628,12 +628,12 @@ export const SYNONYMS: Synonym[] = [
       "лендинг курса",
       "edtech",
     ],
-    categories: ["course"],
+    categories: ["industry"],
     terms: ["course", "online course", "education", "edtech", "curriculum", "syllabus", "lessons", "students", "graduates", "learning"],
   },
   {
     say: ["приложение", "скачать приложение", "сторы"],
-    categories: ["downloads", "devices"],
+    categories: ["cta", "devices"],
     terms: ["downloads", "app"],
   },
   {
@@ -652,7 +652,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["безопасность", "приватность", "защита данных"],
-    categories: ["security", "consent"],
+    categories: ["security", "errors"],
     terms: ["security"],
   },
   {
@@ -667,12 +667,12 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["подкаст", "аудио", "выпуски"],
-    categories: ["podcast", "media"],
+    categories: ["industry", "media"],
     terms: ["podcast"],
   },
   {
     say: ["пресс кит", "для прессы", "медиа материалы"],
-    categories: ["press", "branding"],
+    categories: ["logos", "branding"],
     terms: ["press"],
   },
   {
@@ -882,12 +882,12 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["игра", "игры", "игровой сайт", "гейминг", "game", "games", "gaming"],
-    categories: ["card", "rating", "comparison"],
+    categories: ["card", "rating", "pricing"],
     terms: ["card", "rating", "comparison"],
   },
   {
     say: ["фильм", "фильмы", "кино", "сериал", "сериалы", "movie", "movies"],
-    categories: ["video", "carousel", "card"],
+    categories: ["about", "carousel", "card"],
     terms: ["video", "card"],
   },
   {
@@ -1067,5 +1067,5 @@ export function expandQuery(raw: string): ExpandedQuery {
   // «переключатель» из хвоста запроса оказался бы главным словом.
   groups.sort((first, second) => first.at - second.at)
 
-  return { groups, categories: [...categories] }
+  return { groups, categories: [] }
 }

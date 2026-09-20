@@ -2,14 +2,14 @@ import type { CSSProperties } from "react"
 
 import { Navbar029, type Navbar029Props } from "@/registry/blocks/navbar/navbar-029/navbar-029"
 import { Hero029, type Hero029Props } from "@/registry/blocks/hero/hero-029/hero-029"
-import { Podcast004, type Podcast004Props } from "@/registry/blocks/podcast/podcast-004/podcast-004"
-import { Podcast005, type Podcast005Props } from "@/registry/blocks/podcast/podcast-005/podcast-005"
+import { Podcast004, type Podcast004Props } from "@/registry/blocks/industry/podcast-004/podcast-004"
+import { Podcast005, type Podcast005Props } from "@/registry/blocks/industry/podcast-005/podcast-005"
 import { People013, type People013Props } from "@/registry/blocks/team/people-013/people-013"
-import { Podcast006, type Podcast006Props } from "@/registry/blocks/podcast/podcast-006/podcast-006"
+import { Podcast006, type Podcast006Props } from "@/registry/blocks/industry/podcast-006/podcast-006"
 import { Pricing023, type Pricing023Props } from "@/registry/blocks/pricing/pricing-023/pricing-023"
 import { Subscribe008, type Subscribe008Props } from "@/registry/blocks/newsletter/subscribe-008/subscribe-008"
 import { Footer028, type Footer028Props } from "@/registry/blocks/footer/footer-028/footer-028"
-import { Podcast007, type Podcast007Props } from "@/registry/blocks/podcast/podcast-007/podcast-007"
+import { Podcast007, type Podcast007Props } from "@/registry/blocks/industry/podcast-007/podcast-007"
 import { Atmosphere } from "@/app/scenarios/podcast/demo/atmosphere"
 
 /**

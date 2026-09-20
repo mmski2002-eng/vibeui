@@ -16,41 +16,13 @@ import blogRegistry from "@/registry/blocks/blog/registry.json"
 import contactRegistry from "@/registry/blocks/contact/registry.json"
 import mapRegistry from "@/registry/blocks/map/registry.json"
 import errorsRegistry from "@/registry/blocks/errors/registry.json"
+import industryRegistry from "@/registry/blocks/industry/registry.json"
 import aboutRegistry from "@/registry/blocks/about/registry.json"
-import casesRegistry from "@/registry/blocks/cases/registry.json"
-import changelogRegistry from "@/registry/blocks/changelog/registry.json"
-import comparisonRegistry from "@/registry/blocks/comparison/registry.json"
-import waitlistRegistry from "@/registry/blocks/waitlist/registry.json"
-import consentRegistry from "@/registry/blocks/consent/registry.json"
-import downloadsRegistry from "@/registry/blocks/downloads/registry.json"
 import portfolioRegistry from "@/registry/blocks/portfolio/registry.json"
-import realtyRegistry from "@/registry/blocks/realty/registry.json"
-import restaurantRegistry from "@/registry/blocks/restaurant/registry.json"
-import bakeryRegistry from "@/registry/blocks/bakery/registry.json"
-import opensourceRegistry from "@/registry/blocks/opensource/registry.json"
-import appRegistry from "@/registry/blocks/app/registry.json"
-import courseRegistry from "@/registry/blocks/course/registry.json"
-import autoRegistry from "@/registry/blocks/auto/registry.json"
-import vetRegistry from "@/registry/blocks/vet/registry.json"
-import flowersRegistry from "@/registry/blocks/flowers/registry.json"
-import renovationRegistry from "@/registry/blocks/renovation/registry.json"
-import deliveryRegistry from "@/registry/blocks/delivery/registry.json"
-import languageRegistry from "@/registry/blocks/language/registry.json"
-import fintechRegistry from "@/registry/blocks/fintech/registry.json"
-import marketRegistry from "@/registry/blocks/market/registry.json"
-import gadgetRegistry from "@/registry/blocks/gadget/registry.json"
-import charityRegistry from "@/registry/blocks/charity/registry.json"
-import writerRegistry from "@/registry/blocks/writer/registry.json"
 import eventsRegistry from "@/registry/blocks/events/registry.json"
-import videoRegistry from "@/registry/blocks/video/registry.json"
-import podcastRegistry from "@/registry/blocks/podcast/registry.json"
-import pressRegistry from "@/registry/blocks/press/registry.json"
 import dataGridRegistry from "@/registry/blocks/data-grid/registry.json"
-import apiRegistry from "@/registry/blocks/api/registry.json"
-import bentoRegistry from "@/registry/blocks/bento/registry.json"
 import logosRegistry from "@/registry/blocks/logos/registry.json"
 import newsletterRegistry from "@/registry/blocks/newsletter/registry.json"
-import statsRegistry from "@/registry/blocks/stats/registry.json"
 import teamRegistry from "@/registry/blocks/team/registry.json"
 import backgroundRegistry from "@/registry/blocks/background/registry.json"
 import layoutRegistry from "@/registry/blocks/layout/registry.json"
@@ -225,39 +197,14 @@ export const SOURCES = [
     items: errorsRegistry.items,
   },
   {
+    directory: "registry/blocks/industry",
+    kind: "block",
+    items: industryRegistry.items,
+  },
+  {
     directory: "registry/blocks/about",
     kind: "block",
     items: aboutRegistry.items,
-  },
-  {
-    directory: "registry/blocks/cases",
-    kind: "block",
-    items: casesRegistry.items,
-  },
-  {
-    directory: "registry/blocks/changelog",
-    kind: "block",
-    items: changelogRegistry.items,
-  },
-  {
-    directory: "registry/blocks/comparison",
-    kind: "block",
-    items: comparisonRegistry.items,
-  },
-  {
-    directory: "registry/blocks/waitlist",
-    kind: "block",
-    items: waitlistRegistry.items,
-  },
-  {
-    directory: "registry/blocks/consent",
-    kind: "block",
-    items: consentRegistry.items,
-  },
-  {
-    directory: "registry/blocks/downloads",
-    kind: "block",
-    items: downloadsRegistry.items,
   },
   {
     directory: "registry/blocks/portfolio",
@@ -265,124 +212,14 @@ export const SOURCES = [
     items: portfolioRegistry.items,
   },
   {
-    directory: "registry/blocks/realty",
-    kind: "block",
-    items: realtyRegistry.items,
-  },
-  {
-    directory: "registry/blocks/restaurant",
-    kind: "block",
-    items: restaurantRegistry.items,
-  },
-  {
-    directory: "registry/blocks/bakery",
-    kind: "block",
-    items: bakeryRegistry.items,
-  },
-  {
-    directory: "registry/blocks/opensource",
-    kind: "block",
-    items: opensourceRegistry.items,
-  },
-  {
-    directory: "registry/blocks/app",
-    kind: "block",
-    items: appRegistry.items,
-  },
-  {
-    directory: "registry/blocks/course",
-    kind: "block",
-    items: courseRegistry.items,
-  },
-  {
-    directory: "registry/blocks/auto",
-    kind: "block",
-    items: autoRegistry.items,
-  },
-  {
-    directory: "registry/blocks/vet",
-    kind: "block",
-    items: vetRegistry.items,
-  },
-  {
-    directory: "registry/blocks/flowers",
-    kind: "block",
-    items: flowersRegistry.items,
-  },
-  {
-    directory: "registry/blocks/renovation",
-    kind: "block",
-    items: renovationRegistry.items,
-  },
-  {
-    directory: "registry/blocks/delivery",
-    kind: "block",
-    items: deliveryRegistry.items,
-  },
-  {
-    directory: "registry/blocks/language",
-    kind: "block",
-    items: languageRegistry.items,
-  },
-  {
-    directory: "registry/blocks/fintech",
-    kind: "block",
-    items: fintechRegistry.items,
-  },
-  {
-    directory: "registry/blocks/market",
-    kind: "block",
-    items: marketRegistry.items,
-  },
-  {
-    directory: "registry/blocks/gadget",
-    kind: "block",
-    items: gadgetRegistry.items,
-  },
-  {
-    directory: "registry/blocks/charity",
-    kind: "block",
-    items: charityRegistry.items,
-  },
-  {
-    directory: "registry/blocks/writer",
-    kind: "block",
-    items: writerRegistry.items,
-  },
-  {
     directory: "registry/blocks/events",
     kind: "block",
     items: eventsRegistry.items,
   },
   {
-    directory: "registry/blocks/video",
-    kind: "block",
-    items: videoRegistry.items,
-  },
-  {
-    directory: "registry/blocks/podcast",
-    kind: "block",
-    items: podcastRegistry.items,
-  },
-  {
-    directory: "registry/blocks/press",
-    kind: "block",
-    items: pressRegistry.items,
-  },
-  {
     directory: "registry/blocks/data-grid",
     kind: "block",
     items: dataGridRegistry.items,
-  },
-  {
-    directory: "registry/blocks/api",
-    kind: "block",
-    items: apiRegistry.items,
-  },
-  {
-    directory: "registry/blocks/bento",
-    kind: "block",
-    items: bentoRegistry.items,
   },
   {
     directory: "registry/blocks/logos",
@@ -393,11 +230,6 @@ export const SOURCES = [
     directory: "registry/blocks/newsletter",
     kind: "block",
     items: newsletterRegistry.items,
-  },
-  {
-    directory: "registry/blocks/stats",
-    kind: "block",
-    items: statsRegistry.items,
   },
   {
     directory: "registry/blocks/team",
