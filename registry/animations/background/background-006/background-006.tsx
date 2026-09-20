@@ -30,9 +30,11 @@ export type Background006Props = {
 // покачиваются. Ветер — общий сдвиг плюс медленное дыхание. Цикл rAF стоит
 // в скрытой вкладке и когда слой не в кадре; prefers-reduced-motion
 // оставляет один статичный кадр редких снежинок.
+// Без fixed слой — обычный блок, занимающий родителя целиком: absolute без
+// позиционированного предка растягивался на всю страницу и накрывал сайт.
 const STYLES = `
-[data-vibeui-block="background-006"]{position:absolute;inset:0;display:block;pointer-events:none;overflow:hidden;background:var(--vibeui-background-006-backdrop,transparent)}
-[data-vibeui-block="background-006"][data-fixed="true"]{position:fixed}
+[data-vibeui-block="background-006"]{position:relative;display:block;width:100%;height:100%;min-height:24rem;pointer-events:none;overflow:hidden;background:var(--vibeui-background-006-backdrop,transparent)}
+[data-vibeui-block="background-006"][data-fixed="true"]{position:fixed;inset:0;height:auto;min-height:0}
 [data-vibeui-block="background-006"] canvas{display:block;width:100%;height:100%}`
 
 type Flake = {
@@ -146,18 +148,6 @@ export function Background006({
       return off
     }
 
-    const resize = () => {
-      const rect = canvas.getBoundingClientRect()
-      const ratio = Math.min(window.devicePixelRatio || 1, 2)
-      width = Math.max(1, Math.round(rect.width))
-      height = Math.max(1, Math.round(rect.height))
-      canvas.width = Math.round(width * ratio)
-      canvas.height = Math.round(height * ratio)
-      context.setTransform(ratio, 0, 0, ratio, 0, 0)
-      flakes = seed(width, height, reduced ? settings.current.density * 0.25 : settings.current.density)
-      if (reduced) draw(0)
-    }
-
     const draw = (delta: number) => {
       const { wind: gust, speed: pace, color: ink, shape: form } = settings.current
       context.clearRect(0, 0, width, height)
@@ -206,6 +196,18 @@ export function Background006({
         }
       }
       context.globalAlpha = 1
+    }
+
+    const resize = () => {
+      const rect = canvas.getBoundingClientRect()
+      const ratio = Math.min(window.devicePixelRatio || 1, 2)
+      width = Math.max(1, Math.round(rect.width))
+      height = Math.max(1, Math.round(rect.height))
+      canvas.width = Math.round(width * ratio)
+      canvas.height = Math.round(height * ratio)
+      context.setTransform(ratio, 0, 0, ratio, 0, 0)
+      flakes = seed(width, height, reduced ? settings.current.density * 0.25 : settings.current.density)
+      if (reduced) draw(0)
     }
 
     const tick = (now: number) => {

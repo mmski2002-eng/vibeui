@@ -49,6 +49,7 @@ export function CatalogCard({
         )}
         full={
           localized.meta?.preview?.width === "full" ||
+          localized.meta?.preview?.width === "section" ||
           localized.meta?.preview?.width === "natural"
         }
         natural={localized.meta?.preview?.width === "natural"}

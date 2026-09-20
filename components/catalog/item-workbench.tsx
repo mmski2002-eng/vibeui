@@ -209,7 +209,13 @@ function Workbench({
                   item.meta?.preview?.width === "full" ||
                   item.meta?.preview?.width === "natural"
                 }
-                natural={item.meta?.preview?.width === "natural"}
+                // «section» — фон или курсор на весь экран: центрированный
+                // кадр без ширины схлопывает его в ноль, а кап full в 30rem
+                // ему мал — рисуется во всё поле, как natural.
+                natural={
+                  item.meta?.preview?.width === "natural" ||
+                  item.meta?.preview?.width === "section"
+                }
                 controls={controls}
                 values={values}
                 previewProps={item.meta?.preview?.props}
