@@ -22,6 +22,7 @@ export function LikeButton({
   onClick,
   className,
   pinned,
+  tone,
 }: {
   active: boolean
   count: number
@@ -31,6 +32,9 @@ export function LikeButton({
   /** Признак для CSS витрины: отмеченные на момент загрузки карточки
    *  поднимаются в начало сетки. */
   pinned?: boolean
+  /** Тема кадра под кнопкой: на светлом превью стекло тёмное, иначе
+   *  белая пилюля сливается с фоном. Без значения — светлое стекло. */
+  tone?: "light" | "dark"
 }) {
   // Анимации только после клика: уже отмеченные сердца при загрузке
   // страницы прыгать не должны.
@@ -62,6 +66,7 @@ export function LikeButton({
       title={label}
       data-active={active ? "true" : undefined}
       data-favourite={pinned ? "true" : undefined}
+      data-tone={tone}
       data-pressed={pressed ? "true" : undefined}
       className={cn("like-glass", className)}
     >

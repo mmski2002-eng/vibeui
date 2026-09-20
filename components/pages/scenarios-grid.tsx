@@ -144,6 +144,7 @@ export function ScenariosGrid({
                   count={likes}
                   label={text.favourite}
                   onClick={() => onFavourite(card.slug)}
+                  tone={card.tone}
                   className="absolute top-2 right-2 z-20"
                 />
                 <Link
