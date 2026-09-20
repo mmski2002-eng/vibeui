@@ -115,18 +115,18 @@ export function ScenarioTour({
               <span className="text-shell-muted ml-2 font-mono text-xs">{row.name}</span>
             </h3>
             {row.note ? <p className="text-shell-muted text-sm text-pretty">{row.note}</p> : null}
-            <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
+            <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
               <button
                 type="button"
                 onClick={() => show(row)}
-                className="text-shell-fg hover:text-shell-accent inline-flex items-center gap-1 font-medium transition-colors"
+                className="bg-shell-fg text-shell hover:bg-shell-accent hover:text-shell-accent-fg focus-visible:ring-shell-ring inline-flex h-8 items-center gap-1.5 rounded-md px-3 font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none"
               >
                 <Eye className="size-3.5" aria-hidden="true" />
                 {labels.show}
               </button>
               <Link
                 href={row.path}
-                className="text-shell-muted hover:text-shell-fg inline-flex items-center gap-1 transition-colors"
+                className="border-shell-border text-shell-fg hover:border-shell-border-strong hover:bg-shell-panel focus-visible:ring-shell-ring inline-flex h-8 items-center gap-1.5 rounded-md border px-3 font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none"
               >
                 {labels.openInCatalog}
                 <ArrowUpRight className="size-3.5" aria-hidden="true" />

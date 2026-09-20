@@ -2,11 +2,12 @@
 
 import dynamic from "next/dynamic"
 import Link from "next/link"
-import { CircleAlert, Heart, Moon, RotateCcw, Sun } from "lucide-react"
+import { CircleAlert, Moon, RotateCcw, Sun } from "lucide-react"
 
 import { useRouter } from "next/navigation"
 
 import { useFavorites } from "@/components/catalog/favorites-provider"
+import { LikeButton } from "@/components/catalog/like-button"
 import { useSession } from "@/lib/auth-client"
 import { useEffect, useId, useRef, useState, type ReactNode } from "react"
 
@@ -192,11 +193,14 @@ export function CardInteractive({
   const [reportAt, setReportAt] = useState({ top: 0, left: 0 })
   const [reportText, setReportText] = useState("")
   const [reportSent, setReportSent] = useState(false)
-  const { items: favorites, pinned, toggle: toggleFavourite } = useFavorites()
+  const {
+    items: favorites,
+    pinned,
+    counts: favouriteCounts,
+    toggle: toggleFavourite,
+  } = useFavorites()
   const favourite = favorites?.has(name) ?? false
-  // «Поп» только после клика: уже отмеченные карточки при загрузке страницы
-  // прыгать не должны.
-  const [favouritePopped, setFavouritePopped] = useState(false)
+  const favouriteCount = favouriteCounts[name] ?? 0
   const signedIn = Boolean(useSession().data)
   const router = useRouter()
 
@@ -532,8 +536,10 @@ export function CardInteractive({
             {/* Сердце отмечается сразу, а запись в базу идёт следом: ждать
                 ответа сервера ради переключения иконки незачем. Анониму
                 кнопка предлагает завести аккаунт — хранить отметку негде. */}
-            <button
-              type="button"
+            <LikeButton
+              active={favourite}
+              count={favouriteCount}
+              label={t.card.favourite}
               onClick={() => {
                 if (!signedIn) {
                   router.push(localePath(locale, "/signup"))
@@ -541,23 +547,11 @@ export function CardInteractive({
                   return
                 }
 
-                setFavouritePopped(!favourite)
                 toggleFavourite(name)
               }}
-              aria-pressed={favourite}
-              // Признак читает CSS витрины: отмеченные карточки поднимаются
-              // в начало сетки.
-              data-favourite={pinned?.has(name) ? "true" : undefined}
-              title={t.card.favourite}
-              className={`${TOGGLE} active:scale-90 ${favourite ? "text-shell-fg border-shell-border-strong" : ""}`}
-            >
-              <Heart
-                className={`size-3.5 ${favourite && favouritePopped ? "fav-pop" : ""}`}
-                fill={favourite ? "currentColor" : "none"}
-                aria-hidden="true"
-              />
-              <span className="sr-only">{t.card.favourite}</span>
-            </button>
+              pinned={pinned?.has(name)}
+              className="h-7 min-w-7 px-2"
+            />
 
             <button
               ref={reportButtonRef}

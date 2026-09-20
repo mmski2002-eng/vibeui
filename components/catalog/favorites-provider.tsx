@@ -20,12 +20,15 @@ type Favorites = {
    * из-под курсора в момент нажатия.
    */
   pinned: Set<string> | null
+  /** Сколько раз item добавили в избранное все пользователи. */
+  counts: Record<string, number>
   toggle: (itemName: string) => void
 }
 
 const FavoritesContext = createContext<Favorites>({
   items: null,
   pinned: null,
+  counts: {},
   toggle: () => {},
 })
 
@@ -38,16 +41,20 @@ const FavoritesContext = createContext<Favorites>({
 export function FavoritesProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<Set<string> | null>(null)
   const [pinned, setPinned] = useState<Set<string> | null>(null)
+  const [counts, setCounts] = useState<Record<string, number>>({})
 
   useEffect(() => {
     let cancelled = false
 
     fetch("/api/favorites")
-      .then((response) => (response.ok ? response.json() : { items: [] }))
-      .then((data: { items: string[] }) => {
+      .then((response) =>
+        response.ok ? response.json() : { items: [], counts: {} },
+      )
+      .then((data: { items: string[]; counts?: Record<string, number> }) => {
         if (!cancelled) {
           setItems(new Set(data.items))
           setPinned(new Set(data.items))
+          setCounts(data.counts ?? {})
         }
       })
       .catch(() => {
@@ -62,26 +69,32 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  const toggle = useCallback((itemName: string) => {
-    // Сердце закрашивается сразу, запись идёт следом: ждать ответа сервера
-    // ради переключения иконки незачем.
-    setItems((current) => {
-      const next = new Set(current ?? [])
+  const toggle = useCallback(
+    (itemName: string) => {
+      // Сердце закрашивается сразу, запись идёт следом: ждать ответа сервера
+      // ради переключения иконки незачем.
+      const removing = items?.has(itemName) ?? false
+      const next = new Set(items ?? [])
 
-      if (next.has(itemName)) {
+      if (removing) {
         next.delete(itemName)
       } else {
         next.add(itemName)
       }
 
-      return next
-    })
+      setItems(next)
+      setCounts((totals) => ({
+        ...totals,
+        [itemName]: Math.max(0, (totals[itemName] ?? 0) + (removing ? -1 : 1)),
+      }))
 
-    void toggleFavorite(itemName)
-  }, [])
+      void toggleFavorite(itemName)
+    },
+    [items],
+  )
 
   return (
-    <FavoritesContext.Provider value={{ items, pinned, toggle }}>
+    <FavoritesContext.Provider value={{ items, pinned, counts, toggle }}>
       {children}
     </FavoritesContext.Provider>
   )

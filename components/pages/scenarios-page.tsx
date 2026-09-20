@@ -52,7 +52,11 @@ export function ScenariosPage({ locale }: { locale: Locale }) {
         {cards.length === 0 ? (
           <p className="text-shell-muted text-sm">{t.empty}</p>
         ) : (
-          <ScenariosGrid cards={cards} text={{ ...t.filters, openDemo: t.openDemo }} />
+          <ScenariosGrid
+            cards={cards}
+            locale={locale}
+            text={{ ...t.filters, openDemo: t.openDemo, favourite: getDictionary(locale).card.favourite }}
+          />
         )}
       </main>
     </CatalogShell>

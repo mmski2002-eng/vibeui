@@ -1399,6 +1399,161 @@
   animation: fav-pop 260ms var(--ease-out) both;
 }
 
+/* Сердце с числом: в слое components, чтобы утилиты позиционирования и
+   размера у вызывающего побеждали. */
+@layer components {
+  /* Сердце на стекле: стоит поверх превью, поэтому подложка размывает кадр
+     под собой, а не закрашивает его. Нажатие — прыжок сердца, искры и цифра
+     барабаном. */
+  .like-glass {
+    --like-fg: var(--shell-fg);
+    position: relative;
+    display: inline-flex;
+    height: 2rem;
+    min-width: 2rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    padding-inline: 0.55rem;
+    border-radius: 999px;
+    border: 1px solid rgb(255 255 255 / 0.45);
+    background:
+      linear-gradient(135deg, rgb(255 255 255 / 0.55), rgb(255 255 255 / 0.2));
+    color: var(--like-fg);
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+    box-shadow:
+      0 6px 18px rgb(0 0 0 / 0.18),
+      inset 0 1px 0 rgb(255 255 255 / 0.6);
+    backdrop-filter: blur(12px) saturate(1.6);
+    transition:
+      transform 160ms var(--ease-out),
+      box-shadow 200ms var(--ease-out),
+      background 200ms var(--ease-out),
+      border-color 200ms var(--ease-out);
+  }
+
+  .like-glass:hover {
+    transform: translateY(-1px) scale(1.04);
+    box-shadow:
+      0 10px 24px rgb(0 0 0 / 0.22),
+      inset 0 1px 0 rgb(255 255 255 / 0.7);
+  }
+
+  .like-glass:active {
+    transform: scale(0.88);
+  }
+
+  .like-glass:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--shell-ring),
+      0 6px 18px rgb(0 0 0 / 0.18);
+  }
+
+  .like-glass[data-active="true"] {
+    --like-fg: var(--shell-accent);
+    border-color: color-mix(in srgb, var(--shell-accent) 55%, white);
+    background:
+      linear-gradient(135deg, rgb(255 255 255 / 0.7), color-mix(in srgb, var(--shell-accent) 22%, transparent));
+    box-shadow:
+      0 6px 20px color-mix(in srgb, var(--shell-accent) 35%, transparent),
+      inset 0 1px 0 rgb(255 255 255 / 0.7);
+  }
+
+  .like-heart {
+    position: relative;
+    display: inline-flex;
+    color: var(--like-fg);
+  }
+
+  .like-glass[data-pressed="true"] .like-heart > svg {
+    animation: like-pop 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  @keyframes like-pop {
+    0% {
+      transform: scale(0.6);
+    }
+    45% {
+      transform: scale(1.5);
+    }
+    70% {
+      transform: scale(0.92);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .like-spark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    margin: -2px;
+    border-radius: 999px;
+    background: var(--shell-accent);
+    transform: rotate(var(--like-angle)) translateY(0);
+    animation: like-burst 560ms var(--ease-out) both;
+    pointer-events: none;
+  }
+
+  @keyframes like-burst {
+    0% {
+      opacity: 1;
+      transform: rotate(var(--like-angle)) translateY(-4px) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: rotate(var(--like-angle)) translateY(-18px) scale(0.2);
+    }
+  }
+
+  .like-count {
+    display: inline-grid;
+    min-width: 1ch;
+    overflow: hidden;
+  }
+
+  .like-count > span {
+    display: block;
+  }
+
+  .like-roll-up {
+    animation: like-roll-up 320ms var(--ease-out) both;
+  }
+
+  .like-roll-down {
+    animation: like-roll-down 320ms var(--ease-out) both;
+  }
+
+  @keyframes like-roll-up {
+    0% {
+      opacity: 0;
+      transform: translateY(110%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes like-roll-down {
+    0% {
+      opacity: 0;
+      transform: translateY(-110%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
 /* Тарифы: подложка переключателя периода переезжает, а не перекрашивается. */
 .period-pill {
   transition: left var(--motion-base, 220ms) var(--ease-out);
@@ -1507,6 +1662,10 @@
   .acc-skeleton,
   .preview-skeleton,
   .fav-pop,
+  .like-spark,
+  .like-roll-up,
+  .like-roll-down,
+  .like-glass[data-pressed="true"] .like-heart > svg,
   .copy-flash,
   .copy-check,
   .copy-label,

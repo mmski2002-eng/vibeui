@@ -1,10 +1,15 @@
 "use client"
 
 import Link from "next/link"
-import { useMemo, useState } from "react"
+import { useRouter } from "next/navigation"
+import { useEffect, useMemo, useState } from "react"
 import { ArrowUpRight } from "lucide-react"
 
+import { useFavorites } from "@/components/catalog/favorites-provider"
+import { LikeButton } from "@/components/catalog/like-button"
 import { LiveCover } from "@/components/catalog/live-cover"
+import { useSession } from "@/lib/auth-client"
+import { localePath, type Locale } from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 import type { ScenarioGroup } from "@/registry/scenarios"
 
@@ -27,6 +32,12 @@ export type ScenarioGridText = {
   groups: Record<ScenarioGroup, string>
   tones: { light: string; dark: string }
   openDemo: string
+  favourite: string
+}
+
+/** Ключ сценария в таблице избранного: та же таблица, что у items каталога. */
+export function scenarioFavoriteName(slug: string) {
+  return `scenario:${slug}`
 }
 
 const GROUP_ORDER: ScenarioGroup[] = ["local", "product", "content", "events"]
@@ -38,20 +49,52 @@ const GROUP_ORDER: ScenarioGroup[] = ["local", "product", "content", "events"]
  * нейтральный segmented control справа: два разных языка, чтобы группы не
  * сливались в один ряд одинаковых чипов, а оранжевый остался бейджам NEW.
  * Карточка целиком ведёт на рецепт, демо — иконкой в углу постера.
+ *
+ * Порядок — по числу добавлений в избранное всеми пользователями, при
+ * равенстве новые выше. Считается по снимку на момент загрузки: иначе
+ * карточка уезжала бы из-под курсора в момент нажатия на сердце.
  */
-export function ScenariosGrid({ cards, text }: { cards: ScenarioCard[]; text: ScenarioGridText }) {
+export function ScenariosGrid({
+  cards,
+  text,
+  locale,
+}: {
+  cards: ScenarioCard[]
+  text: ScenarioGridText
+  locale: Locale
+}) {
   const [group, setGroup] = useState<ScenarioGroup | "all">("all")
   const [tone, setTone] = useState<"light" | "dark" | "all">("all")
+  const { items: favorites, counts, toggle } = useFavorites()
+  const [order, setOrder] = useState<Record<string, number> | null>(null)
+  const signedIn = Boolean(useSession().data)
+  const router = useRouter()
 
-  const visible = useMemo(
-    () => cards.filter((card) => (group === "all" || card.group === group) && (tone === "all" || card.tone === tone)),
-    [cards, group, tone],
-  )
+  useEffect(() => {
+    if (order === null && favorites !== null) setOrder(counts)
+  }, [order, favorites, counts])
+
+  const visible = useMemo(() => {
+    const filtered = cards.filter(
+      (card) => (group === "all" || card.group === group) && (tone === "all" || card.tone === tone),
+    )
+    if (!order) return filtered
+    const likes = (card: ScenarioCard) => order[scenarioFavoriteName(card.slug)] ?? 0
+    return [...filtered].sort((a, b) => likes(b) - likes(a))
+  }, [cards, group, tone, order])
+
+  function onFavourite(slug: string) {
+    if (!signedIn) {
+      router.push(localePath(locale, "/signup"))
+      return
+    }
+    toggle(scenarioFavoriteName(slug))
+  }
 
   const groupCounts = useMemo(() => {
-    const counts = { all: cards.length } as Record<ScenarioGroup | "all", number>
-    for (const key of GROUP_ORDER) counts[key] = cards.filter((card) => card.group === key).length
-    return counts
+    const totals = { all: cards.length } as Record<ScenarioGroup | "all", number>
+    for (const key of GROUP_ORDER) totals[key] = cards.filter((card) => card.group === key).length
+    return totals
   }, [cards])
 
   return (
@@ -92,17 +135,28 @@ export function ScenariosGrid({ cards, text }: { cards: ScenarioCard[]; text: Sc
       </div>
 
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {visible.map((card) => (
+        {visible.map((card) => {
+          const favName = scenarioFavoriteName(card.slug)
+          const favourite = favorites?.has(favName) ?? false
+          const likes = counts[favName] ?? 0
+          return (
           <li key={card.slug}>
             <article className="border-shell-border bg-shell-panel acc-lift group relative flex h-full flex-col overflow-hidden rounded-xl border">
               <div className="relative">
                 <LiveCover src={card.demo} title={card.label} poster={card.poster} />
+                <LikeButton
+                  active={favourite}
+                  count={likes}
+                  label={text.favourite}
+                  onClick={() => onFavourite(card.slug)}
+                  className="absolute top-2 right-2 z-20"
+                />
                 <Link
                   href={card.demo}
                   target="_blank"
                   rel="noopener"
                   aria-label={`${text.openDemo}: ${card.label}`}
-                  className="bg-shell-panel/90 text-shell-fg hover:bg-shell-accent hover:text-shell-accent-fg absolute top-2 right-2 z-20 inline-flex size-8 items-center justify-center rounded-full opacity-0 shadow-sm backdrop-blur transition-opacity group-hover:opacity-100 focus-visible:opacity-100"
+                  className="bg-shell-panel/90 text-shell-fg hover:bg-shell-accent hover:text-shell-accent-fg absolute top-2 right-12 z-20 inline-flex size-8 items-center justify-center rounded-full opacity-0 shadow-sm backdrop-blur transition-opacity group-hover:opacity-100 focus-visible:opacity-100"
                 >
                   <ArrowUpRight className="size-4" aria-hidden="true" />
                 </Link>
@@ -128,7 +182,8 @@ export function ScenariosGrid({ cards, text }: { cards: ScenarioCard[]; text: Sc
               </div>
             </article>
           </li>
-        ))}
+          )
+        })}
       </ul>
     </>
   )

@@ -13,6 +13,7 @@ import { PageHeader } from "@/components/account/ui/page-header"
 import { db } from "@/lib/db"
 import { favorite } from "@/lib/db/schema"
 import { localePath, type Locale } from "@/lib/i18n"
+import { getScenario, scenarioText } from "@/lib/scenario"
 import { requireUser } from "@/lib/session"
 import { getItemDocUrl } from "@/lib/site"
 import { KINDS } from "@/registry/categories"
@@ -21,6 +22,8 @@ import { getCatalogItem, getItemKind, itemBasePath } from "@/registry/index"
 /** Подпись типа: «Компоненты» → «Компонент» в единственном числе не нужен —
  *  фильтр читается как ярлык группы, а не как счётчик. */
 function kindLabel(kind: string, locale: Locale) {
+  if (kind === "scenario") return locale === "en" ? "Scenarios" : "Сценарии"
+
   const found = KINDS.find((entry) => entry.slug === kind)
 
   if (!found) return kind
@@ -61,6 +64,29 @@ export async function AccountFavorites({
     .orderBy(desc(favorite.createdAt))
 
   const all: FavoriteRow[] = rows.map((row) => {
+    const addedAt = row.createdAt.toLocaleDateString(
+      locale === "en" ? "en-GB" : "ru-RU",
+      { day: "numeric", month: "short" },
+    )
+
+    // Сценарии лежат в той же таблице под префиксом: у них своя страница
+    // и нет ссылки для агента.
+    const scenario = row.itemName.startsWith("scenario:")
+      ? getScenario(row.itemName.slice("scenario:".length))
+      : undefined
+
+    if (scenario) {
+      return {
+        name: row.itemName,
+        title: scenarioText(scenario, locale).label,
+        kind: "scenario",
+        kindLabel: kindLabel("scenario", locale),
+        href: localePath(locale, `/scenarios/${scenario.slug}`),
+        docUrl: null,
+        addedAt,
+      }
+    }
+
     const item = getCatalogItem(row.itemName)
     const itemKind = getItemKind(row.itemName) ?? "component"
 
@@ -71,10 +97,7 @@ export async function AccountFavorites({
       kindLabel: kindLabel(itemKind, locale),
       href: `${itemBasePath(itemKind)}/${row.itemName}`,
       docUrl: getItemDocUrl(row.itemName),
-      addedAt: row.createdAt.toLocaleDateString(
-        locale === "en" ? "en-GB" : "ru-RU",
-        { day: "numeric", month: "short" },
-      ),
+      addedAt,
     }
   })
 
