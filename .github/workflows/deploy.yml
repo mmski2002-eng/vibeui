@@ -98,3 +98,15 @@ jobs:
           curl -fsS https://vibeui.ru/en/scenarios | grep -q '/en/scenarios/bakery/demo'
           curl -fsS https://vibeui.ru/robots.txt | grep -q "Sitemap: https://vibeui.ru/sitemap.xml"
           curl -fsS https://vibeui.ru/sitemap.xml | grep -q "<loc>https://vibeui.ru/components</loc>"
+
+      # vibeui.club — отдельный инстанс на латвийском VPS (не РФ: NOWPayments
+      # доступен, латенси для англоязычных ниже). Тот же собранный релиз, свой
+      # сервер/БД/env. Ключ тот же (DEPLOY_SSH_KEY добавлен и на Латвию).
+      # Шаг идёт после релиза .ru — если Латвия недоступна, прод .ru уже цел.
+      - name: Залить .club на латвийский VPS
+        run: |
+          ssh-keyscan -H "$CLUB_HOST" >> ~/.ssh/known_hosts
+          scp release.tar.gz "root@$CLUB_HOST:/tmp/vibeui-club-release.tar.gz"
+          ssh "root@$CLUB_HOST" 'bash -s' < scripts/deploy-remote-club.sh
+        env:
+          CLUB_HOST: 216.173.70.241
