@@ -38,7 +38,6 @@ import deliveryRegistry from "@/registry/blocks/delivery/registry.json"
 import languageRegistry from "@/registry/blocks/language/registry.json"
 import fintechRegistry from "@/registry/blocks/fintech/registry.json"
 import marketRegistry from "@/registry/blocks/market/registry.json"
-import apiRegistry from "@/registry/blocks/api/registry.json"
 import gadgetRegistry from "@/registry/blocks/gadget/registry.json"
 import charityRegistry from "@/registry/blocks/charity/registry.json"
 import writerRegistry from "@/registry/blocks/writer/registry.json"
@@ -47,6 +46,7 @@ import videoRegistry from "@/registry/blocks/video/registry.json"
 import podcastRegistry from "@/registry/blocks/podcast/registry.json"
 import pressRegistry from "@/registry/blocks/press/registry.json"
 import dataGridRegistry from "@/registry/blocks/data-grid/registry.json"
+import apiRegistry from "@/registry/blocks/api/registry.json"
 import bentoRegistry from "@/registry/blocks/bento/registry.json"
 import logosRegistry from "@/registry/blocks/logos/registry.json"
 import newsletterRegistry from "@/registry/blocks/newsletter/registry.json"
@@ -335,11 +335,6 @@ export const SOURCES = [
     items: marketRegistry.items,
   },
   {
-    directory: "registry/blocks/api",
-    kind: "block",
-    items: apiRegistry.items,
-  },
-  {
     directory: "registry/blocks/gadget",
     kind: "block",
     items: gadgetRegistry.items,
@@ -378,6 +373,11 @@ export const SOURCES = [
     directory: "registry/blocks/data-grid",
     kind: "block",
     items: dataGridRegistry.items,
+  },
+  {
+    directory: "registry/blocks/api",
+    kind: "block",
+    items: apiRegistry.items,
   },
   {
     directory: "registry/blocks/bento",

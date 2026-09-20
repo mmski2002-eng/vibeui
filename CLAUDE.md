@@ -143,7 +143,34 @@ lib/scenario.ts                  резолв сценария и промпт �
 registry/scenarios.ts            сценарии: задача → упорядоченные секции
 components.json                  конфиг shadcn CLI
 public/r/                        сгенерированные registry JSON
+
+proxy.ts                         Next 16 middleware (НЕ middleware.ts!): гейтинг
+                                 кабинета, выбор языка; на vibeui.club → /en
+i18n: язык по пути — русский в корне, английский под /en (app/en/* — полное
+      параллельное дерево тонких обёрток с locale="en"); домен решает дефолт
+      (proxy.ts): vibeui.ru → ru, vibeui.club → en. Один процесс, оба домена.
+
+# аккаунты, подписка, оплата (Phase 5)
+lib/auth.ts                      Better Auth (email+пароль); trustedOrigins и
+                                 ссылки писем host-aware (vibeui.ru + vibeui.club)
+lib/session.ts                   сессия/requireUser
+lib/db/schema.ts                 Drizzle: user/session/subscription/payment/…
+lib/payment-actions.ts           startCheckout (ЮKassa, .ru) + startCryptoCheckout
+                                 (NOWPayments, .club)
+lib/payment-apply.ts             продление подписки (grantDays/nextPeriodEnd)
+lib/yookassa.ts                  ЮKassa (рубли, только vibeui.ru)
+lib/nowpayments.ts               NOWPayments (крипта USD, только vibeui.club):
+                                 инвойс + проверка подписи IPN
+lib/plans.ts                     тарифы; PLANS (₽) и PLAN_USD ($ для .club)
+app/api/payments/webhook/route.ts            вебхук ЮKassa
+app/api/payments/nowpayments/webhook/route.ts вебхук NOWPayments (крипта)
+app/account/**                   личный кабинет и админка
 ```
+
+Платёж выбирается по хосту: `.ru` → ЮKassa (₽), `.club` → NOWPayments (крипта,
+USD). Витрина/каталог общие; различаются локаль (proxy.ts) и метод оплаты
+(pricing-page.tsx по `host`). Полная схема мультидомена — ниже, раздел
+«Мультидомен и оплата».
 
 Граница: `components/ui/` — primitives сайта; `registry/blocks/` — то, что
 скачивает пользователь. Не смешивать.

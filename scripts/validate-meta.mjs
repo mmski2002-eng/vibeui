@@ -640,6 +640,57 @@ for (const [directory, options] of [
   }
 }
 
+// Сценарии: каждый блок реестра, который импортит демо-страница, обязан быть в
+// sections сценария. Иначе бриф «Копировать сценарий для ИИ» даёт install-команды
+// не на все блоки, встроенный исходник импортит недостающий — и собранный у
+// пользователя сайт не компилируется. sections ведутся руками отдельно от
+// импортов демо, поэтому дрейф ничем не ловился (см. course × cta-018).
+{
+  const scenariosSource = readFileSync(
+    path.join(process.cwd(), "registry/scenarios.ts"),
+    "utf8",
+  )
+  const slugs = [...scenariosSource.matchAll(/^ {4}slug: "([a-z0-9-]+)",/gm)]
+
+  for (let index = 0; index < slugs.length; index += 1) {
+    const slug = slugs[index][1]
+    const start = slugs[index].index
+    const end =
+      index + 1 < slugs.length ? slugs[index + 1].index : scenariosSource.length
+    const block = scenariosSource.slice(start, end)
+    const sections = new Set(
+      [...block.matchAll(/\bitem: "([\w-]+)"/g)].map((match) => match[1]),
+    )
+    const sourceMatch = block.match(/\bsource: "([^"]+)"/)
+
+    if (!sourceMatch) continue
+
+    const sourcePath = path.join(process.cwd(), sourceMatch[1])
+
+    if (!existsSync(sourcePath)) {
+      errors.push(`сценарий "${slug}": исходник ${sourceMatch[1]} не найден`)
+      continue
+    }
+
+    const pageSource = readFileSync(sourcePath, "utf8")
+    const imported = new Set(
+      [
+        ...pageSource.matchAll(
+          /@\/registry\/(?:blocks|components|animations)\/[\w-]+\/([\w-]+)\/\1"/g,
+        ),
+      ].map((match) => match[1]),
+    )
+
+    for (const name of imported) {
+      if (!sections.has(name)) {
+        errors.push(
+          `сценарий "${slug}": демо-страница импортит "${name}", но его нет в sections — бриф не поставит этот блок, собранный сайт не соберётся`,
+        )
+      }
+    }
+  }
+}
+
 for (const warning of warnings) {
   console.warn(`warning  ${warning}`)
 }

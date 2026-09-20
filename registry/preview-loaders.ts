@@ -79,8 +79,6 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/block/fintech")).PREVIEWS
     case "block/market":
       return (await import("@/registry/previews/block/market")).PREVIEWS
-    case "block/api":
-      return (await import("@/registry/previews/block/api")).PREVIEWS
     case "block/gadget":
       return (await import("@/registry/previews/block/gadget")).PREVIEWS
     case "block/charity":
@@ -97,6 +95,8 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/block/press")).PREVIEWS
     case "block/data-grid":
       return (await import("@/registry/previews/block/data-grid")).PREVIEWS
+    case "block/api":
+      return (await import("@/registry/previews/block/api")).PREVIEWS
     case "block/bento":
       return (await import("@/registry/previews/block/bento")).PREVIEWS
     case "block/logos":
