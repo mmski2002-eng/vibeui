@@ -48,4 +48,31 @@ export const PREVIEWS = {
   "accordion-014": dynamic(() =>
     import("@/registry/components/accordion/accordion-014/accordion-014").then((module) => module.Accordion014),
   ),
+  "collapsible-001": dynamic(() =>
+    import("@/registry/components/accordion/collapsible-001/collapsible-001").then((module) => module.Collapsible001),
+  ),
+  "collapsible-002": dynamic(() =>
+    import("@/registry/components/accordion/collapsible-002/collapsible-002").then((module) => module.Collapsible002),
+  ),
+  "collapsible-003": dynamic(() =>
+    import("@/registry/components/accordion/collapsible-003/collapsible-003").then((module) => module.Collapsible003),
+  ),
+  "collapsible-004": dynamic(() =>
+    import("@/registry/components/accordion/collapsible-004/collapsible-004").then((module) => module.Collapsible004),
+  ),
+  "collapsible-005": dynamic(() =>
+    import("@/registry/components/accordion/collapsible-005/collapsible-005").then((module) => module.Collapsible005),
+  ),
+  "collapsible-006": dynamic(() =>
+    import("@/registry/components/accordion/collapsible-006/collapsible-006").then((module) => module.Collapsible006),
+  ),
+  "collapsible-008": dynamic(() =>
+    import("@/registry/components/accordion/collapsible-008/collapsible-008").then((module) => module.Collapsible008),
+  ),
+  "collapsible-009": dynamic(() =>
+    import("@/registry/components/accordion/collapsible-009/collapsible-009").then((module) => module.Collapsible009),
+  ),
+  "collapsible-010": dynamic(() =>
+    import("@/registry/components/accordion/collapsible-010/collapsible-010").then((module) => module.Collapsible010),
+  ),
 } satisfies PreviewMap

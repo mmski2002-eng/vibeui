@@ -54,4 +54,16 @@ export const PREVIEWS = {
     import("@/registry/components/badge/badge-024/badge-024").then((module) => module.Badge024),
   "badge-025": () =>
     import("@/registry/components/badge/badge-025/badge-025").then((module) => module.Badge025),
+  "kbd-001": () =>
+    import("@/registry/components/badge/kbd-001/kbd-001").then((module) => module.Kbd001),
+  "kbd-002": () =>
+    import("@/registry/components/badge/kbd-002/kbd-002").then((module) => module.Kbd002),
+  "kbd-003": () =>
+    import("@/registry/components/badge/kbd-003/kbd-003").then((module) => module.Kbd003),
+  "kbd-004": () =>
+    import("@/registry/components/badge/kbd-004/kbd-004").then((module) => module.Kbd004),
+  "kbd-005": () =>
+    import("@/registry/components/badge/kbd-005/kbd-005").then((module) => module.Kbd005),
+  "kbd-006": () =>
+    import("@/registry/components/badge/kbd-006/kbd-006").then((module) => module.Kbd006),
 } satisfies PreviewLoaderMap

@@ -42,4 +42,25 @@ export const PREVIEWS = {
   "slider-012": dynamic(() =>
     import("@/registry/components/slider/slider-012/slider-012").then((module) => module.Slider012),
   ),
+  "range-001": dynamic(() =>
+    import("@/registry/components/slider/range-001/range-001").then((module) => module.Range001),
+  ),
+  "range-002": dynamic(() =>
+    import("@/registry/components/slider/range-002/range-002").then((module) => module.Range002),
+  ),
+  "range-003": dynamic(() =>
+    import("@/registry/components/slider/range-003/range-003").then((module) => module.Range003),
+  ),
+  "range-004": dynamic(() =>
+    import("@/registry/components/slider/range-004/range-004").then((module) => module.Range004),
+  ),
+  "range-005": dynamic(() =>
+    import("@/registry/components/slider/range-005/range-005").then((module) => module.Range005),
+  ),
+  "range-006": dynamic(() =>
+    import("@/registry/components/slider/range-006/range-006").then((module) => module.Range006),
+  ),
+  "range-007": dynamic(() =>
+    import("@/registry/components/slider/range-007/range-007").then((module) => module.Range007),
+  ),
 } satisfies PreviewMap

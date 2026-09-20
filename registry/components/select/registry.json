@@ -6047,6 +6047,1123 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "nativeselect-001",
+      "type": "registry:component",
+      "title": "Нативный список",
+      "description": "Нативный select с подписью и собственной стрелкой: оболочка наша, а выпадающий список рисует операционная система.",
+      "categories": [
+        "select"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "nativeselect-001/nativeselect-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/nativeselect-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-nativeselect-001-*. Серверный: из хуков только useId. appearance:none снимает штатную стрелку платформы, вместо неё рисуется своя из двух граней квадрата; стрелка помечена pointer-events:none, поэтому вся площадь поля остаётся целью самого select. Правый отступ поля рассчитан под стрелку: без него длинный пункт заезжает под неё. Подсветка стрелки при фокусе сделана через :has(select:focus-visible) на обёртке. Список остаётся системным — на телефоне это привычное колесо, которое не ломается при масштабировании страницы и не требует ни строчки JS.",
+      "meta": {
+        "tags": [
+          "select",
+          "native",
+          "form",
+          "mobile"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Nativeselect001",
+          "usage": "<Nativeselect001\n  label=\"Часовой пояс\"\n  hint=\"По нему считаются напоминания и отчёты.\"\n  options={[\"Москва, UTC+3\", \"Новосибирск, UTC+7\"]}\n/>",
+          "summary": "Нативный select в собственной оболочке: подпись, пояснение, своя стрелка, системный выпадающий список. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-nativeselect-001-* и не подменять её токенами вашей темы",
+            "нативный <select>: на телефоне система открывает привычное колесо, которое не уезжает при масштабе и работает без JS",
+            "pointer-events:none у стрелки — иначе клик по ней не открывает список",
+            "правый отступ поля под стрелку: без него длинный пункт заезжает под неё",
+            "связь пояснения с полем через aria-describedby — иначе строка видна, но не читается вслух",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "имя поля через label, пояснение через hint и список через options",
+            "цвет фокуса через accent",
+            "высоту и скругление поля через переменные палитры",
+            "форму стрелки: она нарисована двумя гранями и меняется одним правилом",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Внутренность раскрытого списка не стилизуется: браузер рисует её сам — это плата за предсказуемость на телефоне.",
+            "Берите вместо этого combobox, только когда нужен поиск по списку, свои иконки в пунктах или больше нескольких десятков вариантов.",
+            "options здесь и значение, и подпись: если ключ отличается от текста, отдавайте объекты и разделяйте value.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Часовой пояс",
+            "maxLength": 40
+          },
+          {
+            "prop": "hint",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "По нему считаются напоминания и отчёты.",
+            "maxLength": 90
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A native select with a label and a custom arrow: the shell is ours, the drop-down list is drawn by the operating system.",
+            "ai": {
+              "summary": "A native select in a custom shell: label, hint, own arrow, system drop-down. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-nativeselect-001-* palette — do not swap it for your theme tokens",
+                "the native <select>: on a phone the system opens the familiar wheel, which never drifts on zoom and needs no JS",
+                "pointer-events:none on the arrow — otherwise clicking it fails to open the list",
+                "the right padding reserved for the arrow: without it a long option slides underneath",
+                "the aria-describedby link for the hint — otherwise the line is visible but never spoken",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the field name through label, the explanation through hint and the choices through options",
+                "the focus color through accent",
+                "the field height and rounding through the palette variables",
+                "the arrow shape: it is drawn with two borders and changes in one rule",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The inside of the open list cannot be styled: the browser draws it — that is the price of predictability on phones.",
+                "Reach for a combobox instead only when you need search inside the list, custom icons per option, or more than a few dozen choices.",
+                "options here are both value and caption: if the key differs from the text, pass objects and split out value.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Nativeselect001\n  label=\"Time zone\"\n  hint=\"Reminders and reports are counted in it.\"\n  options={[\"Lisbon, UTC+0\", \"Berlin, UTC+1\"]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Time zone"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "Reminders and reports are counted in it."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Native Basic",
+            "preview": {
+              "props": {
+                "label": "Time zone",
+                "hint": "Reminders and reports are counted in it.",
+                "options": [
+                  "Lisbon, UTC+0",
+                  "Berlin, UTC+1",
+                  "Dubai, UTC+4",
+                  "Singapore, UTC+8"
+                ]
+              }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, palette in the local --vibeui-nativeselect-001-* variables. Server component: the only hook is useId. appearance:none removes the platform's own arrow, and a custom one is drawn instead from two borders of a square; the arrow is marked pointer-events:none, so the whole area of the field stays a target for the select itself. The right padding of the field is measured for the arrow: without it a long option slides underneath. The arrow lights up on focus through :has(select:focus-visible) on the wrapper. The list stays a system one — on a phone that is the familiar wheel, which does not break when the page is zoomed and needs no line of JS."
+          }
+        },
+        "cardControls": [
+          "label",
+          "hint",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "nativeselect-002",
+      "type": "registry:component",
+      "title": "Список с группами",
+      "description": "Нативный select с разделами на <optgroup>: одинаковые названия перестают путаться, потому что система сама подписывает группы.",
+      "categories": [
+        "select"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "nativeselect-002/nativeselect-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/nativeselect-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-nativeselect-002-*. Серверный: из хуков только useId. Разделы объявлены штатным <optgroup label>: браузер сам рисует заголовки некликабельными, а экранный диктор произносит название раздела перед пунктом — в самодельном списке то же самое приходится собирать из role=\"group\" и aria-labelledby. Начертание заголовков — единственное, на что можно влиять внутри раскрытого списка, поэтому optgroup получает font-weight и цвет, а option возвращает обычный вес. Стрелка нарисована двумя гранями и не ловит клики.",
+      "meta": {
+        "tags": [
+          "select",
+          "optgroup",
+          "native",
+          "grouping"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Nativeselect002",
+          "usage": "<Nativeselect002\n  label=\"Куда отгружаем\"\n  hint=\"Внутри разделов адреса отсортированы по загрузке.\"\n  groups={[{ label: \"Склады\", options: [\"Основной, Химки\"] }]}\n/>",
+          "summary": "Нативный select с разделами: заголовки групп рисует и произносит сама система. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-nativeselect-002-* и не подменять её токенами вашей темы",
+            "штатный <optgroup>: он бесплатно даёт некликабельный заголовок и озвучку раздела перед пунктом",
+            "атрибут label у optgroup — без него раздел существует только визуально",
+            "возврат обычного начертания у option: иначе пункты наследуют жирность заголовка",
+            "нативный список целиком: на телефоне система показывает разделы привычным образом, самодельное меню этого не умеет",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "имя поля через label, пояснение через hint и состав разделов через groups",
+            "цвет фокуса через accent",
+            "начертание и цвет заголовков разделов",
+            "порядок разделов: он ровно такой, как в массиве",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Вложенные разделы невозможны: <optgroup> не вкладывается в <optgroup>, это ограничение HTML.",
+            "Если разделов больше пяти, а пунктов — под сотню, возьмите combobox с поиском: прокручивать системное колесо мучительно.",
+            "Некоторые мобильные оболочки показывают заголовок раздела тем же кеглем, что и пункты, — не полагайтесь на визуальную разницу.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Куда отгружаем",
+            "maxLength": 40
+          },
+          {
+            "prop": "hint",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Внутри разделов адреса отсортированы по загрузке.",
+            "maxLength": 90
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A native select with sections on <optgroup>: identical names stop being confusing because the system labels the groups itself.",
+            "ai": {
+              "summary": "A native select with sections: the system draws and announces the group headings. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-nativeselect-002-* palette — do not swap it for your theme tokens",
+                "the built-in <optgroup>: it gives a non-clickable heading and a spoken section name for free",
+                "the label attribute on optgroup — without it the section exists only visually",
+                "resetting option back to normal weight: otherwise the choices inherit the heading's boldness",
+                "the native list as a whole: on a phone the system shows sections the familiar way, a hand-built menu cannot",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the field name through label, the explanation through hint and the sections through groups",
+                "the focus color through accent",
+                "the weight and color of the section headings",
+                "the section order: it is exactly the array order",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Nested sections are impossible: an <optgroup> cannot contain another one, that is an HTML limit.",
+                "With more than five sections and close to a hundred options, take a combobox with search: scrolling a system wheel is painful.",
+                "Some mobile shells render the section heading at the same size as options — do not rely on the visual difference.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Nativeselect002\n  label=\"Ship to\"\n  hint=\"Inside each section addresses are sorted by load.\"\n  groups={[{ label: \"Warehouses\", options: [\"Main, north\"] }]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Ship to"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "Inside each section addresses are sorted by load."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Grouped Options",
+            "preview": {
+              "props": {
+                "label": "Ship to",
+                "hint": "Inside each section addresses are sorted by load.",
+                "groups": [
+                  {
+                    "label": "Warehouses",
+                    "options": [
+                      "Main, Newark",
+                      "Backup, Trenton"
+                    ]
+                  },
+                  {
+                    "label": "Offices",
+                    "options": [
+                      "Head office, Fifth Ave",
+                      "Branch, Austin"
+                    ]
+                  },
+                  {
+                    "label": "Partners",
+                    "options": [
+                      "Pickup point East",
+                      "Delta terminal"
+                    ]
+                  }
+                ]
+              }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, palette in the local --vibeui-nativeselect-002-* variables. Server component: the only hook is useId. Sections are declared with the built-in <optgroup label>: the browser draws the headings non-clickable on its own, and a screen reader speaks the section name before the option — in a hand-built list the same thing has to be assembled from role=\"group\" and aria-labelledby. The typeface of the headings is the only thing you can influence inside an open list, so optgroup gets a font-weight and a color, while option is returned to normal weight. The arrow is drawn with two borders and does not catch clicks."
+          }
+        },
+        "cardControls": [
+          "label",
+          "hint",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "nativeselect-003",
+      "type": "registry:component",
+      "title": "Обязательный выбор с подсказкой",
+      "description": "Нативный select с заглушкой вместо отсутствующего placeholder: пустой пункт скрыт из списка, а незаполненное поле видно по цвету.",
+      "categories": [
+        "select"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "nativeselect-003/nativeselect-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/nativeselect-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-nativeselect-003-*. Серверный: из хуков только useId. У select нет атрибута placeholder, поэтому первый пункт всегда выглядит выбранным — здесь роль заглушки играет <option value=\"\" disabled hidden>: она показана в закрытом поле, но недоступна в раскрытом списке. Выбор задаётся через defaultValue=\"\" на самом select, а не атрибутом selected у option: React иначе предупреждает. Пока выбрана заглушка, поле не проходит required, и правило select:required:invalid красит текст приглушённым — состояние «не выбрано» видно без скрипта. Звёздочка помечена aria-hidden, её смысл несёт визуально скрытый текст.",
+      "meta": {
+        "tags": [
+          "select",
+          "placeholder",
+          "required",
+          "validation"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Nativeselect003",
+          "usage": "<Nativeselect003\n  label=\"Причина возврата\"\n  placeholder=\"Выберите причину\"\n  options={[\"Не подошёл размер\", \"Товар с браком\"]}\n/>",
+          "summary": "Нативный select с заглушкой и обязательным выбором: пустое состояние видно по цвету через :required:invalid. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-nativeselect-003-* и не подменять её токенами вашей темы",
+            "заглушку как <option value=\"\" disabled hidden>: пустое value включает required, disabled и hidden убирают её из списка",
+            "defaultValue=\"\" на самом select вместо атрибута selected у option — иначе React ругается на неуправляемое поле",
+            "правило select:required:invalid: на нём держится приглушённый цвет незаполненного поля без единого класса",
+            "визуально скрытую расшифровку звёздочки — иначе озвучка говорит «звёздочка» вместо «обязательное поле»",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "имя поля через label, текст заглушки через placeholder и варианты через options",
+            "цвет фокуса через accent",
+            "цвет заглушки через переменную --vibeui-nativeselect-003-muted",
+            "текст звёздочки и её расшифровку для озвучки через requiredText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Атрибут hidden у option в старом Safari игнорируется: заглушка останется в списке, но disabled не даст её выбрать.",
+            "Заглушка — не подпись: подпись обязана остаться над полем, иначе после выбора никто не помнит, о чём поле.",
+            "Если вариантов десятки и нужен поиск, это случай для combobox, а не для нативного списка.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Причина возврата",
+            "maxLength": 40
+          },
+          {
+            "prop": "placeholder",
+            "label": "Заглушка",
+            "type": "text",
+            "default": "Выберите причину",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A native select with a stand-in for the missing placeholder: the empty option is hidden from the list and an unfilled field shows in muted color.",
+            "ai": {
+              "summary": "A native select with a placeholder stand-in and a required choice: the empty state shows through :required:invalid. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-nativeselect-003-* palette — do not swap it for your theme tokens",
+                "the stand-in as <option value=\"\" disabled hidden>: the empty value arms required, disabled and hidden take it out of the list",
+                "defaultValue=\"\" on the select itself instead of a selected attribute on the option — React complains otherwise",
+                "the select:required:invalid rule: the muted color of an unfilled field rests on it, with no class at all",
+                "the visually hidden expansion of the asterisk — otherwise speech says \"asterisk\" instead of \"required field\"",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the field name through label, the stand-in text through placeholder and the choices through options",
+                "the focus color through accent",
+                "the stand-in color through the --vibeui-nativeselect-003-muted variable",
+                "the asterisk glyph and its spoken expansion through requiredText",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Older Safari ignores hidden on an option: the stand-in stays in the list, though disabled still blocks picking it.",
+                "A placeholder is not a label: the label has to stay above the field, or nobody remembers what was asked once a value is picked.",
+                "If there are dozens of options and search is needed, that is a combobox case, not a native list.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Nativeselect003\n  label=\"Return reason\"\n  placeholder=\"Choose a reason\"\n  options={[\"Wrong size\", \"Arrived damaged\"]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Return reason"
+              },
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Choose a reason"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Placeholder Required",
+            "preview": {
+              "props": {
+                "label": "Return reason",
+                "placeholder": "Choose a reason",
+                "requiredText": ", required field",
+                "options": [
+                  "Wrong size",
+                  "Not what was ordered",
+                  "Arrived damaged",
+                  "Changed my mind"
+                ]
+              }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, palette in the local --vibeui-nativeselect-003-* variables. Server component: the only hook is useId. A select has no placeholder attribute, so the first option always looks selected — here the stand-in role is played by <option value=\"\" disabled hidden>: it shows in the collapsed field but is unavailable in the open list. The choice is set through defaultValue=\"\" on the select itself rather than a selected attribute on the option: React warns otherwise. While the stand-in is selected the field does not pass required, and the select:required:invalid rule paints the text muted — the \"nothing chosen\" state is visible without a script. The asterisk is marked aria-hidden, its meaning is carried by visually hidden text."
+          }
+        },
+        "cardControls": [
+          "label",
+          "placeholder",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "nativeselect-004",
+      "type": "registry:component",
+      "title": "Список с множественным выбором",
+      "description": "Множественный нативный select с заранее раскрытым списком и подсказкой о клавишах: без объяснения про Ctrl такой выбор не работает.",
+      "categories": [
+        "select"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "nativeselect-004/nativeselect-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/nativeselect-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-nativeselect-004-*. Серверный: из хуков только useId, состояние держит сам select с атрибутом multiple. Список раскрыт заранее атрибутом size (проп rows): закрытое множественное поле показывает лишь первую строку и врёт про количество выбранного. Под полем стоит строка с <kbd>, прямо называющая клавиши, — иначе про Ctrl и Shift никто не догадывается. appearance:none здесь не нужен: у раскрытого списка нет стрелки, поэтому рамка и скругление задаются напрямую. Выбранные пункты подсвечиваются правилом option:checked, но глубина стилизации зависит от платформы.",
+      "meta": {
+        "tags": [
+          "select",
+          "multiple",
+          "native",
+          "keyboard"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Nativeselect004",
+          "usage": "<Nativeselect004\n  label=\"Языки интерфейса\"\n  hint=\"Несколько — с зажатой клавишей, подряд — с Shift.\"\n  rows={5}\n/>",
+          "summary": "Множественный нативный select: список раскрыт, клавиши выбора названы прямо под ним. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-nativeselect-004-* и не подменять её токенами вашей темы",
+            "атрибут size: закрытое множественное поле показывает одну строку и скрывает, сколько выбрано",
+            "подсказку про клавиши: про Ctrl и Shift не догадывается почти никто, и выбор превращается в одиночный",
+            "разметку <kbd> для клавиш — она же несёт смысл при чтении вслух",
+            "нативное поле целиком: на телефоне система открывает свой список с отметками, самодельное меню туда не помещается",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "имя поля через label, подсказку про клавиши через hint, варианты через options и высоту списка через rows",
+            "цвет выделения через accent",
+            "подсветку выбранного пункта через option:checked",
+            "начальный выбор через defaultSelected",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Множественный select — самый неудачный из нативных элементов: если вариантов больше семи, честнее список чекбоксов.",
+            "Одно неверное движение мышью сбрасывает весь выбор — предупредите об этом или сохраняйте выбор до отправки.",
+            "option:checked стилизуется не везде: на части платформ подсветку рисует система, и цвет останется её.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Несколько — с зажатой клавишей, подряд — с Shift.",
+            "maxLength": 90
+          },
+          {
+            "prop": "rows",
+            "label": "Видимых строк",
+            "type": "number",
+            "default": 5,
+            "min": 3,
+            "max": 10
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A multiple native select with the list already open and a note about the keys: without an explanation of Ctrl this control does not work.",
+            "ai": {
+              "summary": "A multiple native select: the list stays open and the selection keys are named right below it. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-nativeselect-004-* palette — do not swap it for your theme tokens",
+                "the size attribute: a collapsed multiple field shows one row and hides how much is selected",
+                "the note about the keys: almost nobody guesses Ctrl and Shift, and the choice silently becomes single",
+                "the <kbd> markup for keys — it carries the meaning when read aloud too",
+                "the native field as a whole: on a phone the system opens its own checkable list, a hand-built menu does not fit there",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the field name through label, the key note through hint, the choices through options and the list height through rows",
+                "the selection color through accent",
+                "the highlight of a chosen row through option:checked",
+                "the initial selection through defaultSelected",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "A multiple select is the weakest native control: past seven options a list of checkboxes is more honest.",
+                "One stray mouse click wipes the whole selection — warn about it or persist the choice until submit.",
+                "option:checked is not styleable everywhere: on some platforms the system paints the highlight and keeps its own color.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Nativeselect004\n  label=\"Interface languages\"\n  hint=\"Several with the modifier held, a range with Shift.\"\n  rows={5}\n/>"
+            },
+            "controls": {
+              "hint": {
+                "label": "Hint",
+                "default": "Several with the modifier held, a range with Shift."
+              },
+              "rows": {
+                "label": "Visible rows",
+                "default": 5
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Multiple List",
+            "preview": {
+              "props": {
+                "label": "Interface languages",
+                "hint": "Several with the modifier held, a range with Shift.",
+                "options": [
+                  "English",
+                  "Русский",
+                  "Deutsch",
+                  "Français",
+                  "Español",
+                  "Português"
+                ]
+              }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, palette in the local --vibeui-nativeselect-004-* variables. Server component: the only hook is useId, the state is held by the select itself through the multiple attribute. The list is opened up front by the size attribute (the rows prop): a collapsed multiple field shows only the first row and lies about how much is selected. Below the field there is a line with <kbd> naming the keys outright — otherwise nobody guesses about Ctrl and Shift. appearance:none is not needed here: an open list has no arrow, so the border and the rounding are set directly. Chosen options are highlighted by the option:checked rule, but how far the styling reaches depends on the platform."
+          }
+        },
+        "cardControls": [
+          "hint",
+          "rows",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "nativeselect-005",
+      "type": "registry:component",
+      "title": "Фильтр в строке",
+      "description": "Компактные нативные select'ы в строке фильтров: без рамки, шириной по выбранному тексту, с подписями слева в той же строке.",
+      "categories": [
+        "select"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "nativeselect-005/nativeselect-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/nativeselect-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-nativeselect-005-*. Серверный: из хуков только useId, идентификаторы двух полей выводятся из одного корня. В строке фильтров поле не должно выглядеть полем формы: рамка прозрачная и проявляется на наведении и фокусе, ширина select оставлена auto — браузер берёт её по самому длинному пункту, поэтому строка не растягивается. Подпись стоит слева от поля и остаётся настоящим <label> с htmlFor: связь с полем важнее компактности. Строка переносится (flex-wrap), поэтому на узком экране пары «подпись — поле» встают друг под друга.",
+      "meta": {
+        "tags": [
+          "select",
+          "filter",
+          "compact",
+          "toolbar"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Nativeselect005",
+          "usage": "<Nativeselect005\n  label=\"Сортировка\"\n  options={[\"по дате\", \"по имени\"]}\n  secondLabel=\"Показывать\"\n  secondOptions={[\"все\", \"только мои\"]}\n/>",
+          "summary": "Строка фильтров из двух нативных select'ов: тихая рамка, ширина по тексту, подписи слева. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-nativeselect-005-* и не подменять её токенами вашей темы",
+            "настоящие <label> с htmlFor: подпись рядом с полем — не украшение, она увеличивает цель нажатия и читается вслух",
+            "width:auto у select — фиксированная ширина в строке фильтров либо режет текст, либо оставляет пустоту",
+            "видимую обводку фокуса: у поля без рамки фокус иначе неразличим совсем",
+            "flex-wrap у строки: на узком экране пары обязаны переноситься, а не сжиматься в кашу",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "подписи через label и secondLabel, наборы значений через options и secondOptions",
+            "цвет фокуса через accent",
+            "плотность строки через её padding и gap",
+            "количество пар: раскладка flex и держит третью",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Высота 1.75rem мала для пальца: если строка фильтров живёт и на телефоне, поднимите её до 2.75rem.",
+            "Тихая рамка требует внятного фокуса — не убирайте outline ради красоты, иначе с клавиатуры фильтр не найти.",
+            "Фильтр обычно применяется сразу по change: не забудьте объявить это или добавить кнопку применения.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Первая подпись",
+            "type": "text",
+            "default": "Сортировка",
+            "maxLength": 24
+          },
+          {
+            "prop": "secondLabel",
+            "label": "Вторая подпись",
+            "type": "text",
+            "default": "Показывать",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Compact native selects in a filter row: no resting border, width driven by the chosen text, labels sitting to the left on the same line.",
+            "ai": {
+              "summary": "A filter row of two native selects: quiet border, width by content, labels on the left. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-nativeselect-005-* palette — do not swap it for your theme tokens",
+                "real <label> elements with htmlFor: a caption beside the field is not decoration, it enlarges the target and is read aloud",
+                "width:auto on the selects — a fixed width in a filter row either clips text or leaves a hole",
+                "the visible focus ring: on a borderless field focus is otherwise indistinguishable",
+                "flex-wrap on the row: on a narrow screen the pairs must wrap instead of squeezing into mush",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the captions through label and secondLabel, the value sets through options and secondOptions",
+                "the focus color through accent",
+                "the row density through its padding and gap",
+                "the number of pairs: the flex layout takes a third one",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "A height of 1.75rem is small for a finger: raise it to 2.75rem if the filter row lives on phones too.",
+                "A quiet border demands a loud focus — do not drop the outline for looks, or the filter is unreachable by keyboard.",
+                "Filters usually apply on change: say so, or add an explicit apply button.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Nativeselect005\n  label=\"Sort\"\n  options={[\"by date\", \"by name\"]}\n  secondLabel=\"Show\"\n  secondOptions={[\"all\", \"mine only\"]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "First caption",
+                "default": "Sort"
+              },
+              "secondLabel": {
+                "label": "Second caption",
+                "default": "Show"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Filter Inline",
+            "preview": {
+              "props": {
+                "label": "Sort",
+                "options": [
+                  "by date",
+                  "by name",
+                  "by size"
+                ],
+                "secondLabel": "Show",
+                "secondOptions": [
+                  "all",
+                  "mine only",
+                  "archived"
+                ]
+              }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, palette in the local --vibeui-nativeselect-005-* variables. Server component: the only hook is useId, the identifiers of the two fields are derived from a single root. In a filter row a field must not look like a form field: the border is transparent and appears on hover and focus, and the width of the select is left auto — the browser takes it from the longest option, so the row does not stretch. The caption sits to the left of the field and stays a real <label> with htmlFor: the link to the field matters more than compactness. The row wraps (flex-wrap), so on a narrow screen the caption-field pairs stack one under another."
+          }
+        },
+        "cardControls": [
+          "label",
+          "secondLabel",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "nativeselect-006",
+      "type": "registry:component",
+      "title": "Список с ошибкой",
+      "description": "Нативный select с постоянным сообщением об ошибке вместо всплывающей подсказки браузера, которая исчезает через пару секунд.",
+      "categories": [
+        "select"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "nativeselect-006/nativeselect-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/nativeselect-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-nativeselect-006-*. Серверный: из хуков только useId. Единственный источник состояния — aria-invalid на поле: от него красятся рамка, стрелка (через :has() на корне), подпись и обводка фокуса, отдельного класса «error» нет и состояния не расходятся. Сообщение остаётся в разметке постоянно и связано с полем через aria-describedby — в отличие от штатной подсказки браузера, которая показывается один раз и пропадает. Цвет незаполненного поля даёт правило select:not(:invalid), а заглушка сделана option с пустым value.",
+      "meta": {
+        "tags": [
+          "select",
+          "error",
+          "validation",
+          "a11y"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Nativeselect006",
+          "usage": "<Nativeselect006\n  label=\"Способ оплаты\"\n  error=\"Выберите способ оплаты — без него заказ не оформить.\"\n  options={[\"Картой онлайн\", \"Наличными курьеру\"]}\n/>",
+          "summary": "Нативный select в состоянии ошибки: рамка, стрелка, подпись и текст красятся от одного aria-invalid. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-nativeselect-006-* и не подменять её токенами вашей темы",
+            "aria-invalid как единственный источник состояния: параллельный CSS-класс рано или поздно разойдётся с ним",
+            "постоянное сообщение в разметке — всплывающая подсказка браузера исчезает и не читается повторно",
+            "связь сообщения и поля через aria-describedby: иначе ошибку видно, но не слышно",
+            "полосу слева у текста ошибки: она держит взгляд у поля, а не в общем списке проблем формы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "имя поля через label, текст ошибки через error и варианты через options",
+            "цвет обычного фокуса через accent",
+            "цвет ошибки через переменную --vibeui-nativeselect-006-error",
+            "текст заглушки через placeholder",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Ошибка отрисована сразу: если она появляется после отправки, добавьте role=\"alert\" на сообщение, иначе диктор промолчит.",
+            "Снимая aria-invalid, уберите и aria-describedby, иначе поле продолжит ссылаться на пустое сообщение.",
+            "Текст обязан говорить, что сделать: «Поле обязательно» не помогает, «Выберите способ оплаты» помогает.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Способ оплаты",
+            "maxLength": 40
+          },
+          {
+            "prop": "error",
+            "label": "Текст ошибки",
+            "type": "text",
+            "default": "Выберите способ оплаты — без него заказ не оформить.",
+            "maxLength": 120
+          },
+          {
+            "prop": "placeholder",
+            "label": "Заглушка",
+            "type": "text",
+            "default": "Не выбрано",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A native select with a permanent error message instead of the browser's own bubble, which disappears after a couple of seconds.",
+            "ai": {
+              "summary": "A native select in its error state: border, arrow, label and text are painted from a single aria-invalid. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-nativeselect-006-* palette — do not swap it for your theme tokens",
+                "aria-invalid as the single source of state: a parallel CSS class will drift out of sync sooner or later",
+                "the message kept in the markup — the browser's own bubble vanishes and cannot be re-read",
+                "the aria-describedby link between message and field: otherwise the error is seen but never heard",
+                "the rule beside the error text: it keeps the eye at the field instead of a global problem list",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the field name through label, the message through error and the choices through options",
+                "the normal focus color through accent",
+                "the error color through the --vibeui-nativeselect-006-error variable",
+                "the stand-in text through placeholder",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The error is rendered up front: if it appears after submission, add role=\"alert\" to the message or the screen reader stays silent.",
+                "When you drop aria-invalid, drop aria-describedby too, or the field keeps pointing at an empty message.",
+                "The text has to say what to do: \"This field is required\" does not help, \"Choose a payment method\" does.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Nativeselect006\n  label=\"Payment method\"\n  error=\"Choose a payment method — the order cannot be placed without it.\"\n  options={[\"Card online\", \"Cash on delivery\"]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Payment method"
+              },
+              "error": {
+                "label": "Error text",
+                "default": "Choose a payment method — the order cannot be placed without it."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Not selected"
+              }
+            },
+            "title": "Invalid Select",
+            "preview": {
+              "props": {
+                "label": "Payment method",
+                "error": "Choose a payment method — the order cannot be placed without it.",
+                "placeholder": "Not selected",
+                "options": [
+                  "Card online",
+                  "Cash on delivery",
+                  "Invoice for a company"
+                ]
+              }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, palette in the local --vibeui-nativeselect-006-* variables. Server component: the only hook is useId. The single source of state is aria-invalid on the field: the border, the arrow (through :has() on the root), the label and the focus ring are painted from it, there is no separate \"error\" class and the states cannot drift apart. The message stays in the markup permanently and is linked to the field through aria-describedby — unlike the browser's own bubble, which shows once and disappears. The color of an unfilled field comes from the select:not(:invalid) rule, and the stand-in is an option with an empty value."
+          }
+        },
+        "cardControls": [
+          "label",
+          "error",
+          "placeholder",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "nativeselect-007",
+      "type": "registry:component",
+      "title": "Шкала размеров",
+      "description": "Нативный select с размерной шкалой sm / md / lg: три ступени описаны одним набором правил и четырьмя переменными геометрии.",
+      "categories": [
+        "select"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "nativeselect-007/nativeselect-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/nativeselect-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-nativeselect-007-*. Серверный: из хуков только useId. Размер выражен атрибутом data-size на корне, который переопределяет четыре переменные: высоту, кегль, отступ и сторону стрелки. Правила поля написаны один раз и читают эти переменные, поэтому новая ступень — это четыре строки, а не копия компонента. Правый отступ поля посчитан формулой из отступа и стороны стрелки, поэтому текст не заезжает под стрелку ни на одной ступени, а сама стрелка центрируется сдвигом на половину своей стороны.",
+      "meta": {
+        "tags": [
+          "select",
+          "sizes",
+          "scale",
+          "tokens"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Nativeselect007",
+          "usage": "<Nativeselect007\n  label=\"Размер упаковки\"\n  size=\"lg\"\n  options={[\"Конверт\", \"Коробка S\", \"Паллета\"]}\n/>",
+          "summary": "Нативный select трёх размеров: геометрия задана переменными, ступень выбирается атрибутом data-size. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-nativeselect-007-* и не подменять её токенами вашей темы",
+            "четыре переменные геометрии вместо трёх наборов правил: копии ступеней расходятся при первой же правке",
+            "формулу правого отступа из отступа и стороны стрелки — иначе на крупной ступени текст заезжает под стрелку",
+            "центровку стрелки сдвигом на половину её стороны: фиксированное значение ломается при смене размера",
+            "высоту ступени md не ниже 2.5rem: это нижняя граница удобного попадания пальцем",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "ступень через size, имя поля через label и варианты через options",
+            "цвет фокуса через accent",
+            "значения ступеней в переменных высоты, кегля, отступа и стрелки",
+            "число ступеней: добавить xl — это ещё один блок data-size",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Ступень sm ниже 2rem — для мыши, а не для пальца: на телефоне держите md или крупнее.",
+            "Кегль ниже 16px в iOS Safari заставляет страницу приближаться при фокусе: для мобильных форм это довод в пользу lg.",
+            "Размер поля не должен зависеть от важности — только от плотности экрана, иначе форма выглядит случайной.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "default": "md",
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Размер упаковки",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A native select with an sm / md / lg size scale: three steps described by one set of rules and four geometry variables.",
+            "ai": {
+              "summary": "A native select in three sizes: geometry lives in variables and the step is chosen by a data-size attribute. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-nativeselect-007-* palette — do not swap it for your theme tokens",
+                "the four geometry variables instead of three rule sets: duplicated steps drift apart on the first edit",
+                "the right-padding formula built from the padding and the arrow side — otherwise text slides under the arrow on the large step",
+                "centering the arrow by half its own side: a fixed offset breaks as soon as the size changes",
+                "the md height at no less than 2.5rem: that is the floor for comfortable finger targets",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the step through size, the field name through label and the choices through options",
+                "the focus color through accent",
+                "the step values in the height, text, padding and arrow variables",
+                "the number of steps: adding xl is one more data-size block",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The sm step below 2rem is for a mouse, not a finger: keep md or larger on phones.",
+                "Text under 16px makes iOS Safari zoom the page on focus: for mobile forms that argues for lg.",
+                "Field size should follow screen density, not importance, or the form looks arbitrary.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Nativeselect007\n  label=\"Package size\"\n  size=\"lg\"\n  options={[\"Envelope\", \"Box S\", \"Pallet\"]}\n/>"
+            },
+            "controls": {
+              "size": {
+                "label": "Size"
+              },
+              "label": {
+                "label": "Label",
+                "default": "Package size"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Size Scale",
+            "preview": {
+              "props": {
+                "label": "Package size",
+                "options": [
+                  "Envelope",
+                  "Box S",
+                  "Box M",
+                  "Pallet"
+                ]
+              }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, palette in the local --vibeui-nativeselect-007-* variables. Server component: the only hook is useId. The size is expressed by a data-size attribute on the root, which overrides four variables: the height, the type size, the padding and the side of the arrow. The rules of the field are written once and read those variables, so a new step is four lines rather than a copy of the component. The right padding of the field is computed by a formula from the padding and the arrow side, so the text does not slide under the arrow on any step, and the arrow itself is centered by an offset of half its own side."
+          }
+        },
+        "cardControls": [
+          "size",
+          "label",
+          "accent",
+          "background"
+        ]
+      }
     }
   ]
 }

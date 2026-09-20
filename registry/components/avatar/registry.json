@@ -5582,6 +5582,3577 @@
           }
         }
       }
+    },
+    {
+      "name": "icontile-001",
+      "type": "registry:component",
+      "title": "Плитка с иконкой",
+      "description": "Плитка под иконку: постоянный размер и место, а фон со знаком считаются от одного оттенка, а не подбираются вручную.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "icontile-001/icontile-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/icontile-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-icontile-001-*. Серверный: хуков нет. Тон задаётся парой переменных оттенка и насыщенности, а цвета фона и знака выводятся из них функцией oklch — поэтому новый тон добавляется одной строкой. Без подписи плитка скрыта от скринридера как декоративная.",
+      "meta": {
+        "tags": [
+          "icon",
+          "tile",
+          "tone",
+          "list"
+        ],
+        "preview": {
+          "states": [
+            {
+              "tone": "neutral"
+            },
+            {
+              "tone": "accent"
+            },
+            {
+              "tone": "success"
+            },
+            {
+              "tone": "danger"
+            }
+          ],
+          "width": "auto"
+        },
+        "ai": {
+          "export": "Icontile001",
+          "usage": "<Icontile001 glyph=\"◆\" tone=\"success\" size=\"md\" label=\"Готово\" />",
+          "summary": "Подложка под иконку: пять тонов, три размера, круг или квадрат. Фон и знак выводятся из одного оттенка. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-icontile-001-* и не подменять её токенами вашей темы",
+            "вывод фона и знака из общего оттенка: пара цветов не подбирается руками",
+            "постоянный размер плитки — иначе список пунктов прыгает на разной ширине иконок",
+            "скрытие от скринридера без подписи: декоративная плитка не должна читаться",
+            "кегль знака в долях от размера плитки, а не фиксированным числом",
+            "flex:none — плитка не должна сжиматься в узкой строке",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "заливку плитки как содержимое, а не подложку: цветной квадрат и есть сам компонент, прозрачным он не бывает"
+          ],
+          "adapt": [
+            "glyph — символ или своя иконка",
+            "tone, size и shape",
+            "label для смысловой плитки",
+            "радиус скругления"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Смысл несёт подпись рядом: цветом одним состояние не передать.",
+            "Символ по умолчанию — заглушка; ставьте свою иконку тем же размером.",
+            "Пять тонов — предел: больше цветов перестают различаться в списке.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "accent",
+            "options": [
+              "neutral",
+              "accent",
+              "success",
+              "warning",
+              "danger"
+            ]
+          },
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "default": "md",
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
+          },
+          {
+            "prop": "shape",
+            "label": "Форма",
+            "type": "select",
+            "default": "square",
+            "options": [
+              "square",
+              "circle"
+            ]
+          },
+          {
+            "prop": "glyph",
+            "label": "Знак",
+            "type": "text",
+            "default": "◆",
+            "maxLength": 2
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An icon tile: a fixed size and slot, with the background and glyph derived from one hue instead of hand-picked.",
+            "ai": {
+              "summary": "A pad behind an icon: five tones, three sizes, square or circle. Background and glyph derive from one hue. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-icontile-001-* palette — do not swap it for your theme tokens",
+                "deriving background and glyph from a shared hue: the pair is not hand-picked",
+                "the fixed tile size — otherwise a list jumps with every icon's width",
+                "hiding it from screen readers without a label: a decorative tile must not read",
+                "the glyph size as a fraction of the tile, not a fixed number",
+                "flex:none — the tile must not shrink in a narrow row",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the tile fill as content rather than a panel: the coloured square is the component itself, it never goes transparent"
+              ],
+              "adapt": [
+                "glyph — a symbol or your own icon",
+                "tone, size and shape",
+                "label for a meaningful tile",
+                "the corner radius"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The meaning lives in the adjacent text: colour alone carries no state.",
+                "The default glyph is a placeholder; drop in your icon at the same size.",
+                "Five tones is the ceiling: more colours stop being distinguishable in a list.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Icontile001 glyph=\"◆\" tone=\"success\" size=\"md\" label=\"Done\" />"
+            },
+            "controls": {
+              "tone": {
+                "label": "Tone"
+              },
+              "size": {
+                "label": "Size"
+              },
+              "shape": {
+                "label": "Shape"
+              },
+              "glyph": {
+                "label": "Glyph",
+                "default": "◆"
+              }
+            },
+            "title": "Icon Tile",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-icontile-001-*. Server component: no hooks. The tone is set by a pair of hue and chroma variables, and the background and glyph colours are derived from them by the oklch function — so a new tone is added in one line. Without a label the tile is hidden from screen readers as decorative."
+          }
+        },
+        "cardControls": [
+          "tone",
+          "size",
+          "shape",
+          "glyph"
+        ]
+      }
+    },
+    {
+      "name": "icontile-002",
+      "type": "registry:component",
+      "title": "Градиентная плитка",
+      "description": "Градиентная плитка под иконку, где вся пара цветов считается от одного угла оттенка: рассогласовать градиент случайным подбором нельзя.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "icontile-002/icontile-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/icontile-002.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Оба края градиента выведены из переменной --vibeui-icontile-002-hue: второй берётся сдвигом на 32° по тому же кругу oklch, поэтому пара всегда согласована, а перекрасить плитку можно одним числом. Внутренняя светлая рамка сделана inset-тенью, а не border: border съедал бы размер плитки и сбивал сетку иконок. Размер задаётся data-size и одной переменной, от которой считаются радиус и кегль знака. Плитка декоративна: без label она получает aria-hidden, с label — role=img и доступное имя.",
+      "meta": {
+        "tags": [
+          "icontile",
+          "gradient",
+          "icon",
+          "hue"
+        ],
+        "preview": {
+          "states": [
+            {
+              "hue": 262
+            },
+            {
+              "hue": 150
+            },
+            {
+              "hue": 25
+            }
+          ],
+          "width": "auto"
+        },
+        "ai": {
+          "export": "Icontile002",
+          "usage": "<Icontile002 glyph=\"◆\" hue={262} size=\"md\" label=\"Проекты\" />",
+          "summary": "Градиентная плитка под иконку: оба края градиента считаются от hue, размер — от одной переменной. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-icontile-002-* и не подменять её токенами вашей темы",
+            "вывод второго края градиента из hue: разведённые вручную цвета рассогласуются в первом же ряду плиток",
+            "inset-тень вместо border — border меняет размер плитки и сбивает сетку иконок",
+            "кегль знака как долю размера: иначе на sm знак упирается в края, а на lg теряется",
+            "aria-hidden без label: декоративная плитка не должна объявляться скринридером",
+            "светлый знак поверх градиента: тёмный на насыщенном фоне теряет контраст",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "насыщенный градиент как есть: обе его точки читаются и на светлом, и на тёмном фоне, второй набор цветов ему не нужен"
+          ],
+          "adapt": [
+            "знак внутри плитки через glyph",
+            "цвет плитки через hue: одно число двигает весь градиент",
+            "размер через size: sm, md или lg",
+            "радиус через переменную --vibeui-icontile-002-radius",
+            "size — размер плитки: sm, md или lg"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Знак — символ, а не svg: для иконочного набора подставьте свой элемент внутрь.",
+            "oklch и calc в цветах требуют актуального браузера; в старых плитка останется без фона.",
+            "Слишком длинный glyph выйдет за края: плитка рассчитана на один-два символа.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "default": "md",
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
+          },
+          {
+            "prop": "hue",
+            "label": "Оттенок",
+            "type": "number",
+            "default": 262,
+            "min": 0,
+            "max": 360
+          },
+          {
+            "prop": "glyph",
+            "label": "Знак",
+            "type": "text",
+            "default": "◆",
+            "maxLength": 2
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A gradient icon tile whose whole colour pair is derived from a single hue angle: you cannot knock the gradient out of tune by picking colours by hand.",
+            "ai": {
+              "summary": "A gradient icon tile: both gradient stops are derived from hue and the size comes from one variable. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-icontile-002-* palette — do not swap it for your theme tokens",
+                "deriving the second gradient stop from hue: hand-picked colours fall out of tune in the first row of tiles",
+                "the inset shadow instead of a border — a border changes the tile size and breaks the icon grid",
+                "the glyph size as a fraction of the tile: otherwise it hits the edges at sm and gets lost at lg",
+                "aria-hidden without a label: a decorative tile must not be announced by a screen reader",
+                "the light glyph over the gradient: a dark one loses contrast on a saturated fill",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the saturated gradient as it is: both stops read on light and on dark, it needs no second set of colours"
+              ],
+              "adapt": [
+                "the glyph inside the tile through glyph",
+                "the tile colour through hue: one number moves the whole gradient",
+                "the size through size: sm, md or lg",
+                "the radius through the --vibeui-icontile-002-radius variable",
+                "size — the tile size: sm, md or lg"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The glyph is a character, not an svg: drop your own element inside for an icon set.",
+                "oklch and calc in colours need a current browser; older ones leave the tile without a fill.",
+                "An over-long glyph spills outside: the tile is sized for one or two characters.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Icontile002 glyph=\"◆\" hue={262} size=\"md\" label=\"Projects\" />"
+            },
+            "controls": {
+              "size": {
+                "label": "Size"
+              },
+              "hue": {
+                "label": "Hue"
+              },
+              "glyph": {
+                "label": "Glyph",
+                "default": "◆"
+              }
+            },
+            "title": "Gradient Icon Tile",
+            "docs": "Server component, no hooks. Both ends of the gradient are derived from the --vibeui-icontile-002-hue variable: the second is taken by shifting 32° around the same oklch wheel, so the pair is always in tune and the tile can be recoloured with a single number. The inner light border is made with an inset shadow rather than a border: a border would eat into the tile size and knock the icon grid out of alignment. The size is set by data-size and one variable, from which the radius and the glyph size are computed. The tile is decorative: without a label it gets aria-hidden, with a label it gets role=img and an accessible name."
+          }
+        },
+        "cardControls": [
+          "size",
+          "hue",
+          "glyph"
+        ]
+      }
+    },
+    {
+      "name": "icontile-003",
+      "type": "registry:component",
+      "title": "Плитка формы состояния",
+      "description": "Статусная плитка, где смысл несёт форма: круг, треугольник, восьмиугольник и ромб различимы при дальтонизме и в чёрно-белой печати.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "icontile-003/icontile-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/icontile-003.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Форма статуса вырезана clip-path из одной квадратной плитки, поэтому размер и положение в строке общие для всех статусов, и список не пляшет по высоте. Цвет считается от переменной --vibeui-icontile-003-hue, которую переключает атрибут data-status: цвет усиливает форму, но не остаётся единственным носителем смысла — это требование доступности, а не украшение. Знак внутри плитки помечен aria-hidden, значение проговаривает текстовая подпись. Компонент несёт свою белую подложку в форме пилюли: подпись тёмная.",
+      "meta": {
+        "tags": [
+          "icontile",
+          "status",
+          "shape",
+          "accessibility"
+        ],
+        "ai": {
+          "export": "Icontile003",
+          "usage": "<Icontile003 status=\"warning\" label=\"Требует внимания\" />",
+          "summary": "Статусная плитка: форма кодирует смысл, цвет только усиливает её, подпись рядом несёт значение текстом. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-icontile-003-* и не подменять её токенами вашей темы",
+            "форму как носитель смысла: цвет один не работает при дальтонизме и в печати",
+            "clip-path из общего квадрата — иначе статусы получают разную высоту и строка пляшет",
+            "текстовую подпись рядом: значок без слов оставляет статус на угадывание",
+            "aria-hidden на знаке внутри плитки, чтобы «✓» не читалось вслух отдельным словом",
+            "собственную светлую подложку: подпись тёмная и на тёмном фоне каталога пропадает",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "значение через status: success, warning, danger, info или pending",
+            "текст подписи и её длину",
+            "оттенки статусов через переменную --vibeui-icontile-003-hue",
+            "размер плитки через переменную --vibeui-icontile-003-size",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Треугольник теряет часть площади под знак: кегль в нём уменьшен намеренно.",
+            "Пять статусов — предел различимых форм; шестая начнёт путаться с существующими.",
+            "clip-path режет и фон, и тень: внешнюю тень на такую плитку не повесить.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "status",
+            "label": "Статус",
+            "type": "select",
+            "default": "success",
+            "options": [
+              "success",
+              "warning",
+              "danger",
+              "info",
+              "pending"
+            ]
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Проверка пройдена",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A status tile where the shape carries the meaning: circle, triangle, octagon and diamond stay distinguishable under colour blindness and in black-and-white print.",
+            "ai": {
+              "summary": "A status tile: the shape encodes the meaning, colour only reinforces it, and the caption states the value in words. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-icontile-003-* palette — do not swap it for your theme tokens",
+                "the shape as the carrier of meaning: colour alone fails under colour blindness and in print",
+                "the clip-path cut from a shared square — otherwise statuses get different heights and the row wobbles",
+                "the text caption beside it: a glyph without words leaves the status to guesswork",
+                "aria-hidden on the glyph inside the tile so \"✓\" is not read out as a separate word",
+                "the component's own light surface: the caption is dark and vanishes on a dark catalog background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the value through status: success, warning, danger, info or pending",
+                "the caption text and its length",
+                "the status hues through the --vibeui-icontile-003-hue variable",
+                "the tile size through the --vibeui-icontile-003-size variable",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The triangle loses part of its area for the glyph: its font size is deliberately smaller.",
+                "Five statuses is the limit of distinguishable shapes; a sixth starts to blur into the others.",
+                "clip-path cuts the fill and the shadow alike: an outer shadow cannot be attached to this tile.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Icontile003 status=\"warning\" label=\"Needs attention\" />"
+            },
+            "controls": {
+              "status": {
+                "label": "Status"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "label": {
+                "label": "Caption",
+                "default": "Check passed"
+              }
+            },
+            "title": "Status Shape Tile",
+            "preview": {
+              "props": {
+                "label": "Check passed"
+              }
+            },
+            "docs": "Server component, no hooks. The status shape is cut with clip-path out of a single square tile, so the size and the position in the row are the same for every status and the list does not wobble in height. The colour is computed from the --vibeui-icontile-003-hue variable, which the data-status attribute switches: colour reinforces the shape but does not remain the only carrier of meaning — that is an accessibility requirement, not decoration. The glyph inside the tile is marked aria-hidden, and the value is spoken by the text caption. The component carries its own white surface in a pill shape: the caption is dark."
+          }
+        },
+        "cardControls": [
+          "status",
+          "background",
+          "label"
+        ],
+        "preview": {
+          "width": "auto"
+        }
+      }
+    },
+    {
+      "name": "icontile-004",
+      "type": "registry:component",
+      "title": "Шкала размеров плитки",
+      "description": "Размерная шкала плитки одним экспонатом: три ступени считаются от общего шага, а радиус и кегль знака берутся долей размера.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "icontile-004/icontile-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/icontile-004.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Ступени sm, md и lg объявлены как кратные переменной --vibeui-icontile-004-step, поэтому шкала правится одним числом, а не тремя. Радиус и кегль знака вычисляются от размера ступени в calc, из-за чего пропорции плитки на всех ступенях одинаковые — это и есть смысл шкалы. Форма переключается на корне через data-shape и действует сразу на весь ряд. Каждая ступень подписана именем и значением в пикселях, поэтому размер выбирают глазами и не изобретают четвёртый. Подложка светлая: подписи ступеней тёмные.",
+      "meta": {
+        "tags": [
+          "icontile",
+          "scale",
+          "sizes",
+          "design-system"
+        ],
+        "preview": {
+          "states": [
+            {
+              "shape": "square"
+            },
+            {
+              "shape": "circle"
+            }
+          ],
+          "width": "auto"
+        },
+        "ai": {
+          "export": "Icontile004",
+          "usage": "<Icontile004 glyph=\"◆\" shape=\"squircle\" />",
+          "summary": "Ряд плиток трёх размеров: ступени кратны общему шагу, пропорции у всех одинаковые. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-icontile-004-* и не подменять её токенами вашей темы",
+            "ступени как кратные общего шага: разрозненные числа разъезжаются при первой правке",
+            "радиус и кегль как доли размера — иначе маленькая плитка выглядит толще большой",
+            "подписи ступеней: шкала без имён превращается в три случайных квадрата",
+            "выравнивание ряда по нижнему краю, чтобы подписи стояли на одной линии",
+            "собственную светлую подложку: подписи ступеней тёмные и на тёмном фоне пропадают",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "знак внутри плиток через glyph",
+            "форму всего ряда через shape: square, circle или squircle",
+            "шаг шкалы через переменную --vibeui-icontile-004-step",
+            "оттенок плиток через переменную --vibeui-icontile-004-hue",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Ступеней ровно три: четвёртая почти всегда означает, что шкала не продумана.",
+            "Подписи в пикселях верны для корневого кегля 16px; при другом их надо пересчитать.",
+            "Ряд не переносится: на очень узкой ширине уменьшайте шаг, а не добавляйте перенос.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "shape",
+            "label": "Форма",
+            "type": "select",
+            "default": "square",
+            "options": [
+              "square",
+              "circle",
+              "squircle"
+            ]
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "glyph",
+            "label": "Знак",
+            "type": "text",
+            "default": "◆",
+            "maxLength": 2
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A tile size scale as a single exhibit: three steps derived from a shared unit, with radius and glyph size taken as fractions of the size.",
+            "ai": {
+              "summary": "A row of tiles in three sizes: the steps are multiples of a shared unit and every step keeps the same proportions. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-icontile-004-* palette — do not swap it for your theme tokens",
+                "the steps as multiples of a shared unit: loose numbers drift apart at the first edit",
+                "radius and glyph size as fractions of the size — otherwise the small tile looks chunkier than the large one",
+                "the step captions: a scale without names is just three random squares",
+                "the bottom alignment of the row so the captions sit on one line",
+                "the component's own light surface: the step captions are dark and vanish on a dark background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the glyph inside the tiles through glyph",
+                "the shape of the whole row through shape: square, circle or squircle",
+                "the scale unit through the --vibeui-icontile-004-step variable",
+                "the tile hue through the --vibeui-icontile-004-hue variable",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "There are exactly three steps: a fourth almost always means the scale was not thought through.",
+                "The pixel captions assume a 16px root size; recalculate them for anything else.",
+                "The row does not wrap: on very narrow widths shrink the unit rather than allowing a wrap.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Icontile004 glyph=\"◆\" shape=\"squircle\" />"
+            },
+            "controls": {
+              "shape": {
+                "label": "Shape"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "glyph": {
+                "label": "Glyph",
+                "default": "◆"
+              }
+            },
+            "title": "Tile Size Scale",
+            "docs": "Server component, no hooks. The sm, md and lg steps are declared as multiples of the --vibeui-icontile-004-step variable, so the scale is edited with one number instead of three. The radius and the glyph size are computed from the step size in calc, which is why the tile keeps the same proportions at every step — that is the whole point of a scale. The shape is switched on the root through data-shape and applies to the entire row at once. Every step is captioned with its name and its value in pixels, so the size is chosen by eye and nobody invents a fourth. The surface is light: the step captions are dark."
+          }
+        },
+        "cardControls": [
+          "shape",
+          "background",
+          "glyph"
+        ]
+      }
+    },
+    {
+      "name": "icontile-005",
+      "type": "registry:component",
+      "title": "Плитка со счётчиком",
+      "description": "Плитка со счётчиком в углу: бейдж отделён от плитки кольцом цвета подложки, а число обрезано порогом «99+», чтобы угол не разъезжался.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "icontile-005/icontile-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/icontile-005.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Бейдж позиционирован absolute относительно плитки и вырезан из неё кольцом box-shadow цвета подложки — отступом такого разделения не добиться, бейдж отъезжает от угла. Порог задаётся пропом max: всё, что больше, показывается как «99+», иначе трёхзначное число растягивает бейдж. Нулевой счётчик прячет бейдж целиком: пустой кружок сообщает «непрочитанных нет» хуже, чем его отсутствие. У бейджа есть aria-label, поэтому «12» читается как «12 непрочитанных». Подложка светлая, подпись тёмная.",
+      "meta": {
+        "tags": [
+          "icontile",
+          "badge",
+          "counter",
+          "notification"
+        ],
+        "preview": {
+          "states": [
+            {
+              "count": 0
+            },
+            {
+              "count": 12
+            },
+            {
+              "count": 120
+            }
+          ],
+          "width": "auto"
+        },
+        "ai": {
+          "export": "Icontile005",
+          "usage": "<Icontile005 glyph=\"✉\" count={12} label=\"Входящие\" max={99} />",
+          "summary": "Плитка со счётчиком: бейдж в углу с кольцом подложки, порогом «99+» и доступной подписью. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-icontile-005-* и не подменять её токенами вашей темы",
+            "кольцо бейджа цветом подложки: отступом бейдж отъезжает от угла и теряет связь с плиткой",
+            "порог «99+» — трёхзначное число растягивает бейдж и ломает угол плитки",
+            "скрытие бейджа при нуле: пустой кружок хуже отсутствия бейджа",
+            "aria-label на бейдже, чтобы «12» читалось как «12 непрочитанных», а не как число",
+            "собственную светлую подложку: подпись тёмная и на тёмном фоне каталога исчезает",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "число в бейдже через count",
+            "порог обрезки через max",
+            "знак плитки через glyph и текст подписи",
+            "цвет бейджа через переменную --vibeui-icontile-005-badge",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "countText — доступная подпись бейджа: {count} подставляется числом",
+            "max — порог, после которого счётчик печатается как «99+»"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Кольцо бейджа обязано совпадать с реальным фоном: на цветной панели поменяйте --vibeui-icontile-005-surface.",
+            "Счётчик не живой: обновление числа — задача родителя, компонент состояния не держит.",
+            "Отрицательные значения не обрабатываются: приводите их к нулю на стороне данных.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "count",
+            "label": "Счётчик",
+            "type": "number",
+            "default": 12,
+            "min": 0,
+            "max": 999
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "max",
+            "label": "Порог",
+            "type": "number",
+            "default": 99,
+            "min": 1,
+            "max": 999
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Входящие",
+            "maxLength": 20
+          },
+          {
+            "prop": "countText",
+            "label": "Подпись счётчика",
+            "type": "text",
+            "default": "{count} непрочитанных",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A tile with a corner counter: the badge is cut out of the tile by a ring in the surface colour, and the number is capped at \"99+\" so the corner never sprawls.",
+            "ai": {
+              "summary": "A counter tile: a corner badge with a surface-coloured ring, a \"99+\" cap and an accessible label. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-icontile-005-* palette — do not swap it for your theme tokens",
+                "the badge ring in the surface colour: with a plain gap the badge drifts off the corner",
+                "the \"99+\" cap — a three-digit number stretches the badge and breaks the tile corner",
+                "hiding the badge at zero: an empty circle is worse than no badge at all",
+                "the aria-label on the badge so \"12\" is read as \"12 unread\" rather than a bare number",
+                "the component's own light surface: the caption is dark and disappears on a dark catalog background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the number in the badge through count",
+                "the cap threshold through max",
+                "the tile glyph through glyph and the caption text",
+                "the badge colour through the --vibeui-icontile-005-badge variable",
+                "background — the component background; empty means no background, taking the page colour",
+                "countText — the accessible badge caption: {count} is replaced by the number",
+                "max — the threshold past which the counter prints as “99+”"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The badge ring must match the real background: change --vibeui-icontile-005-surface on a coloured panel.",
+                "The counter is not live: updating the number is the parent's job, the component holds no state.",
+                "Negative values are not handled: clamp them to zero on the data side.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Icontile005 glyph=\"✉\" count={12} label=\"Inbox\" max={99} />"
+            },
+            "controls": {
+              "count": {
+                "label": "Counter"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "max": {
+                "label": "Threshold"
+              },
+              "label": {
+                "label": "Caption",
+                "default": "Inbox"
+              },
+              "countText": {
+                "label": "Counter caption",
+                "default": "{count} unread"
+              }
+            },
+            "title": "Counter Badge Tile",
+            "preview": {
+              "props": {
+                "label": "Inbox",
+                "countText": "{count} unread"
+              }
+            },
+            "docs": "Server component, no hooks. The badge is positioned absolute against the tile and cut out of it by a box-shadow ring in the surface colour — such separation cannot be achieved with a gap, the badge drifts away from the corner. The threshold is set by the max prop: anything larger is shown as \"99+\", otherwise a three-digit number stretches the badge. A zero count hides the badge entirely: an empty circle says \"nothing unread\" worse than its absence does. The badge has an aria-label, so \"12\" reads as \"12 unread\". The surface is light and the caption dark."
+          }
+        },
+        "cardControls": [
+          "count",
+          "background",
+          "max",
+          "label",
+          "countText"
+        ]
+      }
+    },
+    {
+      "name": "icontile-006",
+      "type": "registry:component",
+      "title": "Нажимаемая плитка",
+      "description": "Плитка-кнопка с честным нажатым состоянием: включённость объявлена через aria-pressed и показана утопленной тенью, а не одним цветом.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "icontile-006/icontile-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/icontile-006.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент: держит состояние в useState, поэтому в файле есть «use client». Состояние объявлено атрибутом aria-pressed, а не классом — без него скринридер сообщит просто «кнопка» и не скажет, включено ли. Визуально нажатие показано двумя признаками сразу: заливка меняется и плитка утоплена inset-тенью со сдвигом на пиксель, поэтому включённость видна и в чёрно-белом режиме. Доступное имя берётся из label, знак помечен aria-hidden. Заливка в покое светлая, так что кнопка читается на тёмной подложке каталога.",
+      "meta": {
+        "tags": [
+          "icontile",
+          "toggle",
+          "button",
+          "pressed"
+        ],
+        "preview": {
+          "states": [
+            {
+              "defaultPressed": false
+            },
+            {
+              "defaultPressed": true
+            }
+          ],
+          "width": "full"
+        },
+        "ai": {
+          "export": "Icontile006",
+          "usage": "<Icontile006 glyph=\"★\" label=\"В избранное\" defaultPressed />",
+          "summary": "Плитка-переключатель: aria-pressed для состояния, утопленная тень для видимости нажатия. Ноль зависимостей, один файл, состояние в useState.",
+          "preserve": [
+            "локальную палитру --vibeui-icontile-006-* и не подменять её токенами вашей темы",
+            "aria-pressed вместо класса: без него скринридер не скажет, включено состояние или нет",
+            "два признака нажатия сразу — цвет и утопленную тень: цвет один не работает в чёрно-белом режиме",
+            "aria-label на кнопке: плитка со знаком без имени бесполезна для скринридера",
+            "видимую обводку фокуса — плитку часто ставят в ряд и переключают с клавиатуры",
+            "светлую заливку в покое: тёмная кнопка на тёмном фоне каталога пропадает",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "заливку кнопки как её собственный вид, а не подложку: плитка-переключатель не бывает прозрачной"
+          ],
+          "adapt": [
+            "знак кнопки через glyph и её имя через label",
+            "начальное состояние через defaultPressed",
+            "оттенок нажатого состояния через переменную --vibeui-icontile-006-hue",
+            "размер через переменную --vibeui-icontile-006-size",
+            "hue — угол оттенка: красит ховер, нажатое состояние и кольцо фокуса",
+            "defaultPressed — состояние переключателя при первом рендере"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Состояние внутреннее: для управляемого варианта поднимите его в родителя и уберите useState.",
+            "Кнопка-переключатель не заменяет чекбокс в форме — она ничего не отправляет.",
+            "Сдвиг на пиксель при нажатии отключается в prefers-reduced-motion вместе с переходом.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "hue",
+            "label": "Оттенок",
+            "type": "number",
+            "default": 262,
+            "min": 0,
+            "max": 360
+          },
+          {
+            "prop": "defaultPressed",
+            "label": "Нажата",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "label",
+            "label": "Имя кнопки",
+            "type": "text",
+            "default": "В избранное",
+            "maxLength": 24
+          },
+          {
+            "prop": "glyph",
+            "label": "Знак",
+            "type": "text",
+            "default": "★",
+            "maxLength": 2
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A tile button with an honest pressed state: the toggle is declared through aria-pressed and shown by a sunken shadow, not by colour alone.",
+            "ai": {
+              "summary": "A toggle tile: aria-pressed for the state and a sunken shadow so the press is visible. Zero dependencies, one file, state in useState.",
+              "preserve": [
+                "the local --vibeui-icontile-006-* palette — do not swap it for your theme tokens",
+                "aria-pressed instead of a class: without it a screen reader cannot say whether the state is on",
+                "both press cues at once — colour and the sunken shadow: colour alone fails in monochrome",
+                "the aria-label on the button: a glyph tile without a name is useless to a screen reader",
+                "the visible focus ring — these tiles usually sit in a row and get toggled from the keyboard",
+                "the light idle fill: a dark button disappears on a dark catalog background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the button fill as its own look rather than a panel: a toggle tile is never transparent"
+              ],
+              "adapt": [
+                "the button glyph through glyph and its name through label",
+                "the initial state through defaultPressed",
+                "the pressed hue through the --vibeui-icontile-006-hue variable",
+                "the size through the --vibeui-icontile-006-size variable",
+                "hue — the hue angle: it colours hover, the pressed state and the focus ring",
+                "defaultPressed — the toggle state on first render"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The state is internal: lift it into the parent and drop useState for a controlled variant.",
+                "A toggle button does not replace a form checkbox — it submits nothing.",
+                "The one-pixel press shift is disabled together with the transition under prefers-reduced-motion.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Icontile006 glyph=\"★\" label=\"Add to favourites\" defaultPressed />"
+            },
+            "controls": {
+              "hue": {
+                "label": "Hue"
+              },
+              "defaultPressed": {
+                "label": "Pressed"
+              },
+              "label": {
+                "label": "Button name",
+                "default": "Add to favourites"
+              },
+              "glyph": {
+                "label": "Glyph",
+                "default": "★"
+              }
+            },
+            "title": "Pressed Tile Button",
+            "preview": {
+              "props": {
+                "label": "Add to favourites"
+              }
+            },
+            "docs": "Client component: it holds state in useState, so the file carries \"use client\". The state is declared through the aria-pressed attribute rather than a class — without it a screen reader announces merely \"button\" and does not say whether it is on. Visually the press is shown by two cues at once: the fill changes and the tile is sunken with an inset shadow offset by a pixel, so the on state is visible in monochrome too. The accessible name comes from label, and the glyph is marked aria-hidden. The idle fill is light, so the button reads on the dark catalog surface."
+          }
+        },
+        "cardControls": [
+          "hue",
+          "defaultPressed",
+          "label",
+          "glyph"
+        ]
+      }
+    },
+    {
+      "name": "icontile-007",
+      "type": "registry:component",
+      "title": "Плитка с подписью",
+      "description": "Плитка с подписью и описанием в одну строку: описание обрезается многоточием и прячется на узком контейнере, чтобы список не наползал сам на себя.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "icontile-007/icontile-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/icontile-007.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Заголовок и описание — блочные строки с white-space:nowrap и text-overflow:ellipsis, поэтому длинный текст обрезается многоточием, а не переносится и не растягивает высоту строки. Контейнер объявлен через container-type:inline-size, и на ширине контейнера меньше 220px описание скрывается полностью через @container — остаётся только заголовок рядом с плиткой. Иконка внутри плитки — инлайновый svg с aria-hidden, три варианта на выбор через icon.",
+      "meta": {
+        "tags": [
+          "icontile",
+          "caption",
+          "row",
+          "list"
+        ],
+        "ai": {
+          "export": "Icontile007",
+          "usage": "<Icontile007 icon=\"bolt\" title=\"Автозапуск\" description=\"Задача стартует сразу после сохранения\" tone=\"success\" />",
+          "summary": "Плитка с подписью и описанием в одну строку: иконка слева, заголовок и однострочное описание с многоточием справа. На узком контейнере описание скрывается. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-icontile-007-* и не подменять её токенами вашей темы",
+            "однострочное описание с многоточием: перенос делает список неровным по высоте",
+            "скрытие описания на узком контейнере через @container, а не через JS",
+            "aria-hidden на декоративной иконке: смысл несёт текст рядом",
+            "flex:none у плитки-иконки, чтобы она не сжималась при длинном заголовке",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "icon — spark, bolt или shield",
+            "title и description — тексты плитки",
+            "tone — оттенок плитки-иконки",
+            "порог @container, при котором прячется описание",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "icon",
+            "label": "Иконка",
+            "type": "select",
+            "default": "spark",
+            "options": [
+              "spark",
+              "bolt",
+              "shield"
+            ]
+          },
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "accent",
+            "options": [
+              "neutral",
+              "accent",
+              "success",
+              "warning",
+              "danger"
+            ]
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "title",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Быстрый старт",
+            "maxLength": 30
+          },
+          {
+            "prop": "description",
+            "label": "Описание",
+            "type": "text",
+            "default": "Установите пакет и подключите провайдер темы за одну команду",
+            "maxLength": 80
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A tile with a caption and description on a single row: the description truncates with an ellipsis and hides entirely on a narrow container so the row never wraps into itself.",
+            "ai": {
+              "summary": "A tile with a caption and description on one row: an icon on the left, a title and a single-line, ellipsis-truncated description on the right. The description hides on a narrow container. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-icontile-007-* palette — do not swap it for your theme tokens",
+                "the single-line, ellipsis-truncated description: wrapping makes the list uneven in height",
+                "hiding the description on a narrow container through @container, not through JS",
+                "aria-hidden on the decorative icon: the adjacent text carries the meaning",
+                "flex:none on the icon tile so it does not shrink under a long title",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "icon — spark, bolt or shield",
+                "title and description — the tile's texts",
+                "tone — the icon tile's hue",
+                "the @container threshold at which the description hides",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "usage": "<Icontile007 icon=\"bolt\" title=\"Auto-start\" description=\"The task begins right after saving\" tone=\"success\" />",
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch."
+              ]
+            },
+            "controls": {
+              "icon": {
+                "label": "Icon"
+              },
+              "tone": {
+                "label": "Tone"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "title": {
+                "label": "Title",
+                "default": "Quick start"
+              },
+              "description": {
+                "label": "Description",
+                "default": "Install the package and wire up the theme provider in one command"
+              }
+            },
+            "title": "Inline Caption Tile",
+            "preview": {
+              "props": {
+                "title": "Quick start",
+                "description": "Install the package and wire up the theme provider in one command"
+              }
+            },
+            "docs": "Server component, no hooks. The title and the description are block lines with white-space:nowrap and text-overflow:ellipsis, so long text is truncated with an ellipsis rather than wrapping and stretching the row height. The container is declared through container-type:inline-size, and below a container width of 220px the description is hidden entirely through @container — only the title beside the tile remains. The icon inside the tile is an inline svg with aria-hidden, with three variants to choose from through icon."
+          }
+        },
+        "cardControls": [
+          "icon",
+          "tone",
+          "background",
+          "title",
+          "description"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "icontile-008",
+      "type": "registry:component",
+      "title": "Сетка плиток категорий",
+      "description": "Сетка плиток-категорий с ховером: число колонок считается от ширины контейнера, а наведение поднимает плитку тенью и сдвигом, а не одним цветом.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "icontile-008/icontile-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/icontile-008.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Каждая плитка — кнопка type=\"button\", поэтому ряд фокусируется и листается с клавиатуры без дополнительного JS. Корневой блок только объявляет container-type:inline-size, а сама сетка живёт на вложенном data-part=\"grid\": число колонок переключается через @container, нацеленный на этот вложенный узел (2 → 3 → 4), а не через медиазапрос окна и не на сам контейнер — иначе запрос молча не сработает. Наведение показано сразу двумя признаками — тенью и сдвигом вверх, а не одним цветом, и оба отключаются в prefers-reduced-motion. Оттенок плитки-иконки берётся из inline custom property --vibeui-icontile-008-item-hue, выставленной на кнопке под конкретную категорию из items.",
+      "meta": {
+        "tags": [
+          "icontile",
+          "grid",
+          "category",
+          "hover"
+        ],
+        "ai": {
+          "export": "Icontile008",
+          "usage": "<Icontile008 items={[{ label: \"Дизайн\", icon: \"design\", count: 12 }]} />",
+          "summary": "Сетка плиток-категорий: число колонок считается от ширины контейнера, ховер поднимает плитку тенью и сдвигом, у каждой категории свой оттенок иконки. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-icontile-008-* и не подменять её токенами вашей темы",
+            "число колонок от @container, а не от медиазапроса окна",
+            "два признака ховера сразу — тень и сдвиг: один цвет не работает в чёрно-белом режиме",
+            "видимую обводку фокуса на кнопке-плитке: список часто листают с клавиатуры",
+            "свой оттенок иконки на каждую категорию через инлайн-переменную --vibeui-icontile-008-item-hue",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "items — список категорий: label, icon и необязательный count",
+            "набор доступных icon: code, design, chart, rocket, shield, spark",
+            "оттенок каждой категории через ICON_HUE внутри файла",
+            "число колонок через пороги @container",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "countText — подпись счётчика категории: {count} подставляется числом"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку."
+          ]
+        },
+        "i18n": {
+          "en": {
+            "description": "A grid of category tiles with hover: the column count is derived from the container's own width, and hovering lifts the tile with a shadow and a shift, not colour alone.",
+            "ai": {
+              "summary": "A grid of category tiles: the column count is derived from the container width, hover lifts the tile with a shadow and a shift, and every category keeps its own icon hue. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-icontile-008-* palette — do not swap it for your theme tokens",
+                "the column count driven by @container, not a window media query",
+                "both hover cues at once — shadow and lift: colour alone fails in monochrome",
+                "the visible focus ring on the tile button: this row is often browsed from the keyboard",
+                "each category's own icon hue through the inline --vibeui-icontile-008-item-hue variable",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "items — the category list: label, icon and an optional count",
+                "the available icon set: code, design, chart, rocket, shield, spark",
+                "each category's hue through ICON_HUE inside the file",
+                "the column count through the @container thresholds",
+                "background — the component background; empty means no background, taking the page colour",
+                "countText — the category counter caption: {count} is replaced by the number"
+              ],
+              "usage": "<Icontile008 items={[{ label: \"Design\", icon: \"design\", count: 12 }]} />",
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch."
+              ]
+            },
+            "title": "Category Tile Grid",
+            "controls": {
+              "background": {
+                "label": "Background"
+              },
+              "countText": {
+                "label": "Counter caption",
+                "default": "{count} components"
+              }
+            },
+            "preview": {
+              "props": {
+                "countText": "{count} components",
+                "items": [
+                  {
+                    "label": "Engineering",
+                    "icon": "code",
+                    "count": 24
+                  },
+                  {
+                    "label": "Design",
+                    "icon": "design",
+                    "count": 12
+                  },
+                  {
+                    "label": "Analytics",
+                    "icon": "chart",
+                    "count": 8
+                  },
+                  {
+                    "label": "Product",
+                    "icon": "rocket",
+                    "count": 5
+                  },
+                  {
+                    "label": "Security",
+                    "icon": "shield",
+                    "count": 3
+                  },
+                  {
+                    "label": "Ideas",
+                    "icon": "spark",
+                    "count": 17
+                  }
+                ]
+              }
+            },
+            "docs": "Server component, no hooks. Every tile is a type=\"button\" button, so the row takes focus and is traversed from the keyboard without extra JS. The root block only declares container-type:inline-size, while the grid itself lives on a nested data-part=\"grid\": the column count is switched through an @container aimed at that nested node (2 → 3 → 4) rather than through a window media query and not on the container itself — otherwise the query would silently fail. Hover is shown by two cues at once — a shadow and an upward shift, not by colour alone — and both are turned off under prefers-reduced-motion. The icon tile's hue comes from the inline custom property --vibeui-icontile-008-item-hue, set on the button for the particular category from items."
+          }
+        },
+        "controls": [
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "countText",
+            "label": "Подпись счётчика",
+            "type": "text",
+            "default": "{count} компонентов",
+            "maxLength": 40
+          }
+        ],
+        "cardControls": [
+          "background",
+          "countText"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "icontile-009",
+      "type": "registry:component",
+      "title": "Плитка-squircle с тенью",
+      "description": "Плитка со скруглением-«сквиркл» и мягкой окрашенной тенью: угол круче обычного квадрата, а тень подобрана в тон плитке, а не серая.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "icontile-009/icontile-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/icontile-009.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Радиус скругления считается как 0.44 от размера плитки — круче обычного квадрата (0.28 в соседних item'ах), из-за чего форма читается как сквиркл, а не просто скруглённый квадрат. Тень двухслойная: дальний мягкий слой и ближний плотный, оба окрашены в тот же оттенок --vibeui-icontile-009-hue, что и фон плитки, поэтому смена tone красит плитку и тень согласованно одной переменной. Плитка декоративна: без label она скрыта от скринридера, с label — получает role=img и доступное имя.",
+      "meta": {
+        "tags": [
+          "icontile",
+          "squircle",
+          "shadow",
+          "icon"
+        ],
+        "preview": {
+          "states": [
+            {
+              "tone": "neutral"
+            },
+            {
+              "tone": "accent"
+            },
+            {
+              "tone": "success"
+            },
+            {
+              "tone": "danger"
+            }
+          ],
+          "width": "auto"
+        },
+        "ai": {
+          "export": "Icontile009",
+          "usage": "<Icontile009 icon=\"shield\" tone=\"success\" size=\"lg\" label=\"Защита данных\" />",
+          "summary": "Плитка-сквиркл: угол скруглён круче обычного квадрата, а тень окрашена в тот же оттенок, что и плитка. Три размера, пять тонов. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-icontile-009-* и не подменять её токенами вашей темы",
+            "формулу сквиркла — радиус 0.44 от размера плитки, а не фиксированное число",
+            "окрашенную тень вместо серой: серая тень под цветной плиткой читается как грязь",
+            "двухслойную тень — дальний мягкий слой и ближний плотный, а не одну размытую",
+            "aria-hidden без label: декоративная плитка не должна объявляться скринридером",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "заливку плитки как содержимое, а не подложку: цветной квадрат и есть сам компонент, прозрачным он не бывает"
+          ],
+          "adapt": [
+            "icon — spark, bolt или shield",
+            "tone и size плитки",
+            "label для смысловой плитки",
+            "прозрачность тени через --vibeui-icontile-009-shadow-alpha"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "icon",
+            "label": "Иконка",
+            "type": "select",
+            "default": "spark",
+            "options": [
+              "spark",
+              "bolt",
+              "shield"
+            ]
+          },
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "accent",
+            "options": [
+              "neutral",
+              "accent",
+              "success",
+              "warning",
+              "danger"
+            ]
+          },
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "default": "md",
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A squircle-rounded tile with a soft, colour-matched shadow: the corner is steeper than a regular square, and the shadow is tinted to the tile instead of grey.",
+            "ai": {
+              "summary": "A squircle tile: the corner is rounded steeper than a regular square, and the shadow is tinted to the same hue as the tile. Three sizes, five tones. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-icontile-009-* palette — do not swap it for your theme tokens",
+                "the squircle formula — a radius of 0.44 of the tile size, not a fixed number",
+                "the tinted shadow instead of grey: a grey shadow under a coloured tile reads as dirt",
+                "the two-layer shadow — a soft far layer and a tighter near one, not a single blur",
+                "aria-hidden without a label: a decorative tile must not be announced by a screen reader",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the tile fill as content rather than a panel: the coloured square is the component itself, it never goes transparent"
+              ],
+              "adapt": [
+                "icon — spark, bolt or shield",
+                "tone and size of the tile",
+                "label for a meaningful tile",
+                "the shadow opacity through --vibeui-icontile-009-shadow-alpha"
+              ],
+              "usage": "<Icontile009 icon=\"shield\" tone=\"success\" size=\"lg\" label=\"Data protection\" />",
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch."
+              ]
+            },
+            "controls": {
+              "icon": {
+                "label": "Icon"
+              },
+              "tone": {
+                "label": "Tone"
+              },
+              "size": {
+                "label": "Size"
+              }
+            },
+            "title": "Squircle Shadow Tile",
+            "docs": "Server component, no hooks. The corner radius is computed as 0.44 of the tile size — steeper than an ordinary square (0.28 in the neighbouring items), which is why the shape reads as a squircle rather than merely a rounded square. The shadow has two layers: a soft far one and a tighter near one, both tinted to the same --vibeui-icontile-009-hue as the tile background, so changing tone recolours the tile and the shadow consistently through one variable. The tile is decorative: without a label it is hidden from screen readers, with a label it gets role=img and an accessible name."
+          }
+        },
+        "cardControls": [
+          "icon",
+          "tone",
+          "size"
+        ]
+      }
+    },
+    {
+      "name": "icontile-010",
+      "type": "registry:component",
+      "title": "Плитка с круговым прогрессом",
+      "description": "Плитка с прогрессом по кругу: длина обхода кольца считается от радиуса один раз, а состояние объявлено через role=\"progressbar\".",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "icontile-010/icontile-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/icontile-010.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Длина обхода кольца вычисляется один раз из фиксированного радиуса (2πr), а не подбирается на глаз, поэтому число в центре и заполнение кольца никогда не расходятся. Кольцо повёрнуто CSS-трансформом всего svg на -90deg, чтобы заполнение начиналось сверху, — координаты самих окружностей не пересчитываются. Значение объявлено доступно: role=\"progressbar\" с aria-valuenow/aria-valuemin/aria-valuemax и aria-label из label, поэтому цвет кольца — иллюстрация, а не единственный носитель состояния. Value обрезается диапазоном 0–100 внутри компонента.",
+      "meta": {
+        "tags": [
+          "icontile",
+          "progress",
+          "circle",
+          "status"
+        ],
+        "ai": {
+          "export": "Icontile010",
+          "usage": "<Icontile010 value={64} label=\"Загрузка профиля\" tone=\"accent\" size=\"md\" />",
+          "summary": "Плитка с прогрессом по кругу: кольцо, процент в центре и подпись снизу. Длина обхода посчитана от радиуса один раз, состояние объявлено role=\"progressbar\". Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-icontile-010-* и не подменять её токенами вашей темы",
+            "role=\"progressbar\" с aria-valuenow/min/max: цвет кольца не заменяет доступное состояние",
+            "вычисление длины обхода от фиксированного радиуса, а не подобранное число",
+            "поворот кольца CSS-трансформом всего svg, а не пересчётом координат окружности",
+            "ограничение value диапазоном 0–100 через clamp в компоненте",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "отсутствие собственной подложки: кольцо и подпись лежат прямо на фоне страницы"
+          ],
+          "adapt": [
+            "value — процент заполнения от 0 до 100",
+            "label — подпись под кольцом и доступное имя прогресса",
+            "tone и size кольца",
+            "цвет заливки кольца через --vibeui-icontile-010-hue"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "value",
+            "label": "Значение",
+            "type": "number",
+            "default": 72,
+            "min": 0,
+            "max": 100
+          },
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "accent",
+            "options": [
+              "neutral",
+              "accent",
+              "success",
+              "warning",
+              "danger"
+            ]
+          },
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "default": "md",
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Профиль заполнен",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A tile with circular progress: the ring's stroke length is computed from the radius once, and the state is declared through role=\"progressbar\".",
+            "ai": {
+              "summary": "A circular progress tile: a ring, a percentage in the centre and a caption below. The stroke length is computed from the radius once, and the state is declared through role=\"progressbar\". Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-icontile-010-* palette — do not swap it for your theme tokens",
+                "role=\"progressbar\" with aria-valuenow/min/max: the ring colour does not replace the accessible state",
+                "computing the stroke length from the fixed radius rather than a guessed number",
+                "rotating the ring with a CSS transform on the whole svg, not recomputed circle coordinates",
+                "clamping value to the 0-100 range inside the component",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the absence of a panel of its own: the ring and the caption sit straight on the page background"
+              ],
+              "adapt": [
+                "value — the fill percentage from 0 to 100",
+                "label — the caption below the ring and the progress's accessible name",
+                "tone and size of the ring",
+                "the ring's fill colour through --vibeui-icontile-010-hue"
+              ],
+              "usage": "<Icontile010 value={64} label=\"Profile completion\" tone=\"accent\" size=\"md\" />",
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch."
+              ]
+            },
+            "controls": {
+              "value": {
+                "label": "Value"
+              },
+              "tone": {
+                "label": "Tone"
+              },
+              "size": {
+                "label": "Size"
+              },
+              "label": {
+                "label": "Caption",
+                "default": "Profile completeness"
+              }
+            },
+            "title": "Circular Progress Tile",
+            "preview": {
+              "props": {
+                "label": "Profile completeness"
+              }
+            },
+            "docs": "Server component, no hooks. The ring circumference is computed once from the fixed radius (2πr) rather than guessed by eye, so the number in the centre and the ring fill never disagree. The ring is rotated with a CSS transform on the whole svg by -90deg so that the fill starts from the top — the coordinates of the circles themselves are not recomputed. The value is declared accessibly: role=\"progressbar\" with aria-valuenow/aria-valuemin/aria-valuemax and an aria-label from label, so the ring colour is an illustration rather than the only carrier of state. Value is clamped to the 0-100 range inside the component."
+          }
+        },
+        "cardControls": [
+          "value",
+          "tone",
+          "size",
+          "label"
+        ],
+        "preview": {
+          "width": "auto"
+        }
+      }
+    },
+    {
+      "name": "icontile-011",
+      "type": "registry:component",
+      "title": "Плитка статуса интеграции",
+      "description": "Плитка интеграции: монограмма сервиса вместо чужого логотипа, название и статус подключения, продублированный точкой и текстом.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "icontile-011/icontile-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/icontile-011.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Логотип сервиса — не библиотека чужих svg-брендов, а монограмма из первых букв name, посчитанная функцией getInitials в рантейме, поэтому плитка работает с любым названием без набора иконок. Статус подключения объявлен дважды: цветом точки data-part=\"dot\" и текстом рядом из таблицы STATUS_LABEL — цвет один не читается при нарушении цветовосприятия. На узком контейнере статус скрывается через @container, монограмма и название остаются всегда.",
+      "meta": {
+        "tags": [
+          "icontile",
+          "integration",
+          "status",
+          "connection"
+        ],
+        "ai": {
+          "export": "Icontile011",
+          "usage": "<Icontile011 name=\"Notion\" status=\"connected\" tone=\"accent\" />",
+          "summary": "Плитка интеграции: монограмма сервиса слева, название и статус подключения с точкой и текстом справа. Три статуса: connected, pending, disconnected. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-icontile-011-* и не подменять её токенами вашей темы",
+            "монограмму вместо чужого логотипа: реальные бренд-иконки компонент не поставляет",
+            "статус дважды — цветом точки и текстом STATUS_LABEL: цвет один не работает в чёрно-белом режиме",
+            "aria-hidden на монограмме и точке: смысл несёт текст названия и статуса рядом",
+            "скрытие статуса на узком контейнере через @container, а не через JS",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "name — название сервиса, из него считается монограмма",
+            "status — connected, pending или disconnected",
+            "tone — оттенок плитки-монограммы",
+            "текст STATUS_LABEL под свой продукт",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "statusText — подписи статусов: компонент несёт русские, проект подставляет свои"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "status",
+            "label": "Статус",
+            "type": "select",
+            "default": "connected",
+            "options": [
+              "connected",
+              "pending",
+              "disconnected"
+            ]
+          },
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "accent",
+            "options": [
+              "neutral",
+              "accent",
+              "success",
+              "warning",
+              "danger"
+            ]
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "name",
+            "label": "Сервис",
+            "type": "text",
+            "default": "Notion",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An integration tile: a monogram in place of a foreign logo, the service name, and the connection status doubled as a dot and text.",
+            "ai": {
+              "summary": "An integration tile: a service monogram on the left, the name and connection status with a dot and text on the right. Three statuses: connected, pending, disconnected. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-icontile-011-* palette — do not swap it for your theme tokens",
+                "the monogram instead of a foreign logo: the component ships no real brand icons",
+                "the status doubled — dot colour and the STATUS_LABEL text: colour alone fails in monochrome",
+                "aria-hidden on the monogram and the dot: the adjacent name and status text carry the meaning",
+                "hiding the status on a narrow container through @container, not through JS",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "name — the service name the monogram is derived from",
+                "status — connected, pending or disconnected",
+                "tone — the monogram tile's hue",
+                "the STATUS_LABEL text for your product",
+                "background — the component background; empty means no background, taking the page colour",
+                "statusText — the status captions: the component ships Russian ones, the project supplies its own"
+              ],
+              "usage": "<Icontile011 name=\"Notion\" status=\"connected\" tone=\"accent\" />",
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch."
+              ]
+            },
+            "controls": {
+              "status": {
+                "label": "Status"
+              },
+              "tone": {
+                "label": "Tone"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "name": {
+                "label": "Service",
+                "default": "Notion"
+              }
+            },
+            "title": "Integration Status Tile",
+            "preview": {
+              "props": {
+                "statusText": {
+                  "connected": "Connected",
+                  "pending": "Awaiting confirmation",
+                  "disconnected": "Disconnected"
+                }
+              }
+            },
+            "docs": "Server component, no hooks. The service logo is not a library of other people's svg brands but a monogram from the first letters of name, computed by the getInitials function at runtime, so the tile works with any name without an icon set. The connection status is declared twice: by the colour of the data-part=\"dot\" dot and by the text beside it from the STATUS_LABEL table — colour alone does not read under a colour vision deficiency. On a narrow container the status is hidden through @container, while the monogram and the name always remain."
+          }
+        },
+        "cardControls": [
+          "status",
+          "tone",
+          "background",
+          "name"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "icontile-012",
+      "type": "registry:component",
+      "title": "Плитка типа файла",
+      "description": "Плитка типа файла: расширение и цвет переключаются одним атрибутом, форма файла с загнутым уголком нарисована одним svg-путём.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "icontile-012/icontile-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/icontile-012.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Форма файла с загнутым уголком — один инлайновый svg-путь FileIcon, помеченный aria-hidden; сокращение расширения печатается поверх него текстом в data-part=\"ext\". Цвет плитки переключается атрибутом data-extension на пяти правилах CSS (pdf, doc, xls, img, zip), поэтому добавление шестого типа не требует нового компонента. Имя файла и его размер идут отдельной колонкой текста, размер скрывается на узком контейнере через @container.",
+      "meta": {
+        "tags": [
+          "icontile",
+          "file",
+          "extension",
+          "type"
+        ],
+        "ai": {
+          "export": "Icontile012",
+          "usage": "<Icontile012 extension=\"pdf\" name=\"Отчёт-Q3.pdf\" fileSize=\"2.4 МБ\" />",
+          "summary": "Плитка типа файла: форма файла с загнутым уголком, сокращение расширения поверх неё, имя файла и размер справа. Пять типов: pdf, doc, xls, img, zip. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-icontile-012-* и не подменять её токенами вашей темы",
+            "переключение цвета через data-extension: пять типов остаются согласованной палитрой",
+            "aria-hidden на декоративном svg файла: тип файла и так назван текстом расширения и именем",
+            "однострочные имя и размер с обрезкой многоточием, а не переносом",
+            "скрытие размера на узком контейнере через @container, а не через JS",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "extension — pdf, doc, xls, img или zip",
+            "name — имя файла с расширением в тексте",
+            "fileSize — текст размера файла",
+            "цвета типов через правила data-extension в STYLES",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "extension",
+            "label": "Тип файла",
+            "type": "select",
+            "default": "pdf",
+            "options": [
+              "pdf",
+              "doc",
+              "xls",
+              "img",
+              "zip"
+            ]
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "name",
+            "label": "Имя файла",
+            "type": "text",
+            "default": "Отчёт-Q3.pdf",
+            "maxLength": 30
+          },
+          {
+            "prop": "fileSize",
+            "label": "Размер файла",
+            "type": "text",
+            "default": "2.4 МБ",
+            "maxLength": 12
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A file type tile: the extension and its colour switch on a single attribute, and the folded-corner file shape is drawn with one svg path.",
+            "ai": {
+              "summary": "A file type tile: a folded-corner file shape, the extension abbreviation printed over it, and the file name and size on the right. Five types: pdf, doc, xls, img, zip. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-icontile-012-* palette — do not swap it for your theme tokens",
+                "switching colour through data-extension: the five types stay a consistent palette",
+                "aria-hidden on the decorative file svg: the extension text and file name already name the type",
+                "the single-line name and size truncated with an ellipsis, not wrapped",
+                "hiding the size on a narrow container through @container, not through JS",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "extension — pdf, doc, xls, img or zip",
+                "name — the file name including its extension in the text",
+                "fileSize — the file size text",
+                "the type colours through the data-extension rules in STYLES",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "usage": "<Icontile012 extension=\"pdf\" name=\"Q3-report.pdf\" fileSize=\"2.4 MB\" />",
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch."
+              ]
+            },
+            "controls": {
+              "extension": {
+                "label": "File type"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "name": {
+                "label": "File name",
+                "default": "Report-Q3.pdf"
+              },
+              "fileSize": {
+                "label": "File size",
+                "default": "2.4 MB"
+              }
+            },
+            "title": "File Type Tile",
+            "preview": {
+              "props": {
+                "name": "Report-Q3.pdf",
+                "fileSize": "2.4 MB"
+              }
+            },
+            "docs": "Server component, no hooks. The file shape with a folded corner is a single inline svg path, FileIcon, marked aria-hidden; the extension abbreviation is printed over it as text in data-part=\"ext\". The tile colour is switched by the data-extension attribute across five CSS rules (pdf, doc, xls, img, zip), so adding a sixth type does not require a new component. The file name and its size run as a separate column of text, and the size is hidden on a narrow container through @container."
+          }
+        },
+        "cardControls": [
+          "extension",
+          "background",
+          "name",
+          "fileSize"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "icontile-013",
+      "type": "registry:component",
+      "title": "Плитка достижения",
+      "description": "Плитка достижения: иконка в круге и лента с подписью под ней. Подходит странице тарифов, курса или профиля. Меняются иконка, подпись и цвет.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "icontile-013/icontile-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/icontile-013.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Лента под кругом — два одинаковых элемента data-part=\"tail\" с общим clip-path-хвостом, правый отражён transform:scaleX(-1), поэтому оба хвоста гарантированно симметричны при любой ширине и tier, а не подгоняются раздельно числами. Круг и лента окрашены от одной переменной --vibeui-icontile-013-hue, которую переключает tier (bronze, silver, gold), — металл достижения нигде не подобран вручную отдельным цветом. Круг лежит поверх ленты через z-index, подпись — текст под ним, на узком контейнере скрывается через @container. Палитра переведена на light-dark(): подпись следует color-scheme страницы, а собственной подложки у плитки нет — она появляется только вместе с пропом background, и тогда ветка темы считается по светлоте заданного цвета.",
+      "meta": {
+        "tags": [
+          "icontile",
+          "achievement",
+          "badge",
+          "ribbon"
+        ],
+        "ai": {
+          "export": "Icontile013",
+          "usage": "<Icontile013 icon=\"trophy\" label=\"Первая интеграция\" tier=\"gold\" />",
+          "summary": "Плитка достижения: иконка в круге, симметричная лента из двух зеркальных хвостов под ним, подпись снизу. Три тира: bronze, silver, gold. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-icontile-013-* и не подменять её токенами вашей темы",
+            "зеркальное отражение правого хвоста ленты transform:scaleX(-1), а не второй нарисованный вручную clip-path",
+            "вывод цвета круга и ленты из общего --vibeui-icontile-013-hue, переключаемого tier",
+            "z-index круга поверх ленты: иначе хвосты перекрывают нижнюю часть иконки",
+            "aria-hidden на ленте и иконке: значение достижения несёт текстовая подпись",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "скрытую подпись ступени: металл различается только оттенком, и без слова ступень не прочитают ни дальтоник, ни скринридер"
+          ],
+          "adapt": [
+            "icon — trophy, star или medal",
+            "label — подпись достижения",
+            "tier — bronze, silver или gold",
+            "tierText — названия ступеней в скрытой подписи: bronze, silver, gold",
+            "размер круга через переменную --vibeui-icontile-013-size",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Цвет круга и ленты выводится из оттенка tier и читается в обеих темах, поэтому в light-dark() он не переводится."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "icon",
+            "label": "Иконка",
+            "type": "select",
+            "default": "trophy",
+            "options": [
+              "trophy",
+              "star",
+              "medal"
+            ]
+          },
+          {
+            "prop": "tier",
+            "label": "Тир",
+            "type": "select",
+            "default": "gold",
+            "options": [
+              "bronze",
+              "silver",
+              "gold"
+            ]
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An achievement tile: an icon in a circle and a ribbon with a caption below. Suits a pricing, course or profile page. Change the icon, the caption and the colour.",
+            "ai": {
+              "summary": "An achievement tile: an icon in a circle, a symmetric ribbon of two mirrored tails below it, and a caption underneath. Three tiers: bronze, silver, gold. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-icontile-013-* palette — do not swap it for your theme tokens",
+                "mirroring the right ribbon tail with transform:scaleX(-1) instead of a second hand-drawn clip-path",
+                "deriving the circle and ribbon colour from the shared --vibeui-icontile-013-hue switched by tier",
+                "the circle's z-index above the ribbon: otherwise the tails overlap the icon's lower half",
+                "aria-hidden on the ribbon and icon: the text caption carries the achievement's meaning",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the visually hidden tier caption: the metal differs by hue alone, and without the word neither a colour-blind reader nor a screen reader gets the tier"
+              ],
+              "adapt": [
+                "icon — trophy, star or medal",
+                "label — the achievement caption",
+                "tier — bronze, silver or gold",
+                "tierText — the tier names in the visually hidden caption: bronze, silver, gold",
+                "the circle size through the --vibeui-icontile-013-size variable",
+                "background — the component's surface; empty means no surface, taking the page colour"
+              ],
+              "usage": "<Icontile013 icon=\"trophy\" label=\"First integration\" tier=\"gold\" />",
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The circle and ribbon colour is derived from the tier hue and reads in both themes, so it is not moved to light-dark()."
+              ]
+            },
+            "controls": {
+              "icon": {
+                "label": "Icon"
+              },
+              "tier": {
+                "label": "Tier"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Achievement Ribbon Tile",
+            "preview": {
+              "props": {
+                "label": "First integration",
+                "tierText": {
+                  "bronze": "bronze",
+                  "silver": "silver",
+                  "gold": "gold"
+                }
+              }
+            },
+            "docs": "Server component, no hooks. The ribbon under the circle is two identical data-part=\"tail\" elements with a shared clip-path tail, the right one mirrored with transform:scaleX(-1), so both tails are guaranteed symmetric at any width and tier rather than being fitted separately by numbers. The circle and the ribbon are coloured from a single --vibeui-icontile-013-hue variable, which tier switches (bronze, silver, gold) — the metal of the achievement is nowhere picked by hand as a separate colour. The circle sits above the ribbon through z-index, and the caption is text below it, hidden on a narrow container through @container. The palette has been moved to light-dark(): the caption follows the page color-scheme, and the tile has no surface of its own — one appears only together with the background prop, and then the theme branch is computed from the lightness of the given colour."
+          }
+        },
+        "cardControls": [
+          "icon",
+          "tier",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
+      }
+    },
+    {
+      "name": "icontile-014",
+      "type": "registry:component",
+      "title": "Плитка с уведомлением",
+      "description": "Плитка уведомлений с бейджем-счётчиком и честным состоянием «выключено»: при отключении бейдж прячется, а колокольчик перечёркивается.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "icontile-014/icontile-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/icontile-014.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Бейдж-счётчик показывается только когда count больше нуля и disabled ложно — выключенный источник не может присылать уведомления, поэтому оба состояния взаимоисключающие, а не два независимых свитча. При disabled колокольчик получает перечёркивающую линию OffIcon поверх себя и плитка теряет цвет, а под подписью появляется текстовая строка состояния из data-part=\"state\" — обесцвечивания одного недостаточно для чёрно-белого режима. Число в бейдже обрезается порогом max так же, как в icontile-005. Палитра переведена на light-dark(): в тёмной ветке граница светлее фона, а не темнее. Подложки у плитки по умолчанию нет — она задаётся пропом background, и тогда ветка темы считается по светлоте заданного цвета. Тексты состояния и подпись бейджа вынесены в пропы stateText и countLabel, русские значения остаются значениями по умолчанию.",
+      "meta": {
+        "tags": [
+          "icontile",
+          "notification",
+          "badge",
+          "disabled"
+        ],
+        "ai": {
+          "export": "Icontile014",
+          "usage": "<Icontile014 label=\"Комментарии\" count={5} disabled={false} tone=\"accent\" />",
+          "summary": "Плитка уведомлений: бейдж-счётчик в углу и текстовая строка состояния снизу. При disabled бейдж прячется и колокольчик перечёркивается. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-icontile-014-* и не подменять её токенами вашей темы",
+            "взаимоисключение бейджа и disabled: выключенный источник не показывает счётчик уведомлений",
+            "перечёркнутый колокольчик и обесцвеченную плитку одновременно — цвет один не читается в чёрно-белом режиме",
+            "текстовую строку состояния под подписью, а не только aria-disabled на корне",
+            "aria-label на бейдже, чтобы число читалось как «N новых уведомлений», а не как голая цифра",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "label — подпись источника уведомлений",
+            "count и max — число бейджа и порог обрезки",
+            "disabled — состояние «выключено»",
+            "tone — оттенок плитки во включённом состоянии",
+            "stateText — строка состояния под подписью: ключи on и off",
+            "countLabel — подпись бейджа для скринридера; {count} подставляется числом",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Подписи по умолчанию русские: установленный файл не меняет язык проекта сам по себе, локализация делается через stateText и countLabel."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "count",
+            "label": "Счётчик",
+            "type": "number",
+            "default": 5,
+            "min": 0,
+            "max": 999
+          },
+          {
+            "prop": "disabled",
+            "label": "Выключено",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "accent",
+            "options": [
+              "neutral",
+              "accent",
+              "success",
+              "warning",
+              "danger"
+            ]
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A notification tile with a counter badge and an honest disabled state: turning it off hides the badge and puts a slash through the bell.",
+            "ai": {
+              "summary": "A notification tile: a corner counter badge and a text status line below the caption. When disabled the badge hides and the bell gets a slash through it. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-icontile-014-* palette — do not swap it for your theme tokens",
+                "the mutual exclusion of the badge and disabled: a disabled source shows no notification count",
+                "the slashed bell together with the desaturated tile — colour alone fails in monochrome",
+                "the text status line below the caption, not just aria-disabled on the root",
+                "the aria-label on the badge so the number reads as \"N new notifications\" rather than a bare digit",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "label — the notification source's caption",
+                "count and max — the badge number and its cap",
+                "disabled — the off state",
+                "tone — the tile's hue while enabled",
+                "stateText — the status line under the caption: keys on and off",
+                "countLabel — the badge label for screen readers; {count} is replaced with the number",
+                "background — the component's surface; empty means no surface, taking the page colour"
+              ],
+              "usage": "<Icontile014 label=\"Comments\" count={5} disabled={false} tone=\"accent\" />",
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The default captions are Russian: an installed file does not change the project's language by itself — localise it through stateText and countLabel."
+              ]
+            },
+            "controls": {
+              "count": {
+                "label": "Counter"
+              },
+              "disabled": {
+                "label": "Disabled"
+              },
+              "tone": {
+                "label": "Tone"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Notification Badge Tile",
+            "preview": {
+              "props": {
+                "label": "Comments",
+                "stateText": {
+                  "on": "Notifications on",
+                  "off": "Notifications off"
+                },
+                "countLabel": "{count} new notifications"
+              }
+            },
+            "docs": "Server component, no hooks. The counter badge is shown only when count is greater than zero and disabled is false — a switched-off source cannot send notifications, so the two states are mutually exclusive rather than two independent switches. When disabled, the bell gets the OffIcon slash line over it and the tile loses its colour, while a text state line from data-part=\"state\" appears under the caption — desaturation alone is not enough for monochrome. The number in the badge is capped by the max threshold in the same way as in icontile-005. The palette has been moved to light-dark(): in the dark branch the border is lighter than the background rather than darker. The tile has no surface by default — it is set by the background prop, and then the theme branch is computed from the lightness of the given colour. The state texts and the badge label are exposed through the stateText and countLabel props, with the Russian values remaining the defaults."
+          }
+        },
+        "cardControls": [
+          "count",
+          "disabled",
+          "tone",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "icontile-015",
+      "type": "registry:component",
+      "title": "Плитка способа оплаты",
+      "description": "Плитка выбора способа оплаты: карта, кошелёк и счёт как настоящий radiogroup со стрелочной навигацией и явной двойной отметкой выбранного варианта.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "icontile-015/icontile-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/icontile-015.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент: держит выбранный способ в useState и различает управляемый/неуправляемый режим через сравнение method с undefined, поэтому в файле есть «use client». Группа собрана как настоящий role=\"radiogroup\" с role=\"radio\" на каждой плитке: фокус табом входит в группу один раз, дальше по вариантам водят стрелки через roving tabindex (tabIndex 0 у выбранного, -1 у остальных) — это нативное поведение <input type=\"radio\">, реализованное вручную. Выбранный вариант отмечен сразу двумя признаками — рамкой и галочкой в углу, — потому что один цвет заливки не читается при нарушении цветовосприятия. На узком контейнере плитки складываются в один столбец и разворачиваются в строку. Палитра переведена на light-dark(): в тёмной ветке граница плитки светлее её фона. Названия и пояснения способов вынесены в пропы methodTitle и methodHint с русскими значениями по умолчанию, а подложка группы задаётся пропом background и по умолчанию отсутствует.",
+      "meta": {
+        "tags": [
+          "icontile",
+          "payment",
+          "radiogroup",
+          "selection"
+        ],
+        "ai": {
+          "export": "Icontile015",
+          "usage": "<Icontile015 label=\"Способ оплаты\" defaultMethod=\"card\" />",
+          "summary": "Плитка выбора способа оплаты: карта, кошелёк и счёт как настоящий radiogroup со стрелочной навигацией и двойной отметкой выбора — рамкой и галочкой. Один файл, ноль зависимостей, состояние в useState.",
+          "preserve": [
+            "локальную палитру --vibeui-icontile-015-* и не подменять её токенами вашей темы",
+            "role=\"radiogroup\" с настоящими role=\"radio\" на плитках и roving tabindex — фокус входит в группу один раз, дальше водят стрелки",
+            "обработку ArrowLeft/ArrowRight/ArrowUp/ArrowDown в handleKeyDown: без неё группа перестаёт быть клавиатурно-доступной",
+            "двойную отметку выбранного варианта — рамку и галочку: цвет один не читается при нарушении цветовосприятия",
+            "видимую обводку фокуса на каждой плитке-варианте",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "label — подпись группы",
+            "defaultMethod — способ по умолчанию для неуправляемого режима",
+            "method и onMethodChange — для управляемого выбора из родителя",
+            "methodTitle и methodHint — названия и пояснения способов оплаты по ключам card, wallet, invoice",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "defaultMethod читается только при монтировании: чтобы менять выбор снаружи, передавайте method вместе с onMethodChange."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись группы",
+            "type": "text",
+            "default": "Способ оплаты",
+            "maxLength": 40
+          },
+          {
+            "prop": "defaultMethod",
+            "label": "Способ по умолчанию",
+            "type": "select",
+            "default": "card",
+            "options": [
+              "card",
+              "wallet",
+              "invoice"
+            ]
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A payment method tile: card, wallet and invoice as a true radiogroup with arrow-key navigation and an explicit double cue for the selected option.",
+            "ai": {
+              "summary": "A payment method tile: card, wallet and invoice as a real radiogroup with arrow-key navigation and a double cue for the selection — a border and a checkmark. One file, zero dependencies, state in useState.",
+              "preserve": [
+                "the local --vibeui-icontile-015-* palette — do not swap it for your theme tokens",
+                "role=\"radiogroup\" with real role=\"radio\" tiles and roving tabindex — focus enters the group once, then arrows take over",
+                "the ArrowLeft/ArrowRight/ArrowUp/ArrowDown handling in handleKeyDown: without it the group stops being keyboard-accessible",
+                "the double cue on the selected option — border and checkmark: colour alone fails under colour blindness",
+                "the visible focus ring on every option tile",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "label — the group's caption",
+                "defaultMethod — the default method for the uncontrolled mode",
+                "method and onMethodChange — for a controlled selection from the parent",
+                "methodTitle and methodHint — the method names and hints keyed by card, wallet, invoice",
+                "background — the component's surface; empty means no surface, taking the page colour"
+              ],
+              "usage": "<Icontile015 label=\"Payment method\" defaultMethod=\"card\" />",
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "defaultMethod is read on mount only: to drive the selection from outside, pass method together with onMethodChange."
+              ]
+            },
+            "controls": {
+              "label": {
+                "label": "Group caption",
+                "default": "Payment method"
+              },
+              "defaultMethod": {
+                "label": "Default method"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Payment Method Tile",
+            "preview": {
+              "props": {
+                "label": "Payment method",
+                "methodTitle": {
+                  "card": "Card",
+                  "wallet": "Wallet",
+                  "invoice": "Invoice"
+                },
+                "methodHint": {
+                  "card": "Visa, Mastercard, Amex",
+                  "wallet": "Account balance",
+                  "invoice": "For companies"
+                }
+              }
+            },
+            "docs": "Client component: it holds the selected method in useState and tells the controlled mode from the uncontrolled one by comparing method with undefined, so the file carries \"use client\". The group is built as a real role=\"radiogroup\" with role=\"radio\" on every tile: Tab enters the group once, and from there the arrows walk the options through a roving tabindex (tabIndex 0 on the selected one, -1 on the rest) — this is the native behaviour of <input type=\"radio\">, implemented by hand. The selected option is marked by two cues at once — a border and a checkmark in the corner — because the fill colour alone does not read under a colour vision deficiency. On a narrow container the tiles fold into a single column and unfold back into a row. The palette has been moved to light-dark(): in the dark branch the tile border is lighter than its background. The method names and hints are exposed through the methodTitle and methodHint props with Russian defaults, and the group's surface is set by the background prop and is absent by default."
+          }
+        },
+        "cardControls": [
+          "label",
+          "defaultMethod",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "icontile-016",
+      "type": "registry:component",
+      "title": "Плитка с горячей клавишей",
+      "description": "Плитка-действие с горячей клавишей в углу: сочетание показано плашкой и продублировано атрибутом aria-keyshortcuts на самой кнопке.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "icontile-016/icontile-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/icontile-016.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет: плитка — обычная семантическая <button type=\"button\">, поэтому фокус и активация с клавиатуры работают без единой строки JS. Сочетание клавиш продублировано дважды — визуальной плашкой из отдельных <kbd> в углу и атрибутом aria-keyshortcuts на самой кнопке; плашка целиком помечена aria-hidden, потому что скринридер уже объявляет сочетание из атрибута, и повторное побуквенное чтение символов вроде «Ctrl» было бы шумом поверх названия действия. Иконка переключается через icon (search, add, command), цвет плитки-иконки — через tone по общей для категории формуле «фон и знак от одного оттенка». Описание скрывается на узком контейнере через @container, заголовок остаётся всегда. Палитра переведена на light-dark(): в тёмной ветке граница и клавиши светлее фона, а не темнее. Подложки у кнопки по умолчанию нет — она задаётся пропом background, и тогда ветка темы считается по светлоте заданного цвета.",
+      "meta": {
+        "tags": [
+          "icontile",
+          "action",
+          "hotkey",
+          "shortcut"
+        ],
+        "ai": {
+          "export": "Icontile016",
+          "usage": "<Icontile016 label=\"Быстрый поиск\" hotkey={[\"Ctrl\", \"K\"]} hotkeyAriaLabel=\"Meta+K\" icon=\"search\" />",
+          "summary": "Плитка-действие с горячей клавишей в углу: иконка, заголовок, описание и плашка сочетания клавиш, продублированная атрибутом aria-keyshortcuts. Три иконки, пять тонов. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-icontile-016-* и не подменять её токенами вашей темы",
+            "aria-keyshortcuts на кнопке рядом с визуальной плашкой: скринридер не должен читать символы вроде «Ctrl» по буквам",
+            "aria-hidden на всей плашке сочетания: она дублирует aria-keyshortcuts, а не несёт отдельный смысл",
+            "семантическую кнопку type=\"button\" вместо div с onClick — иначе плитка выпадает из клавиатурной табуляции",
+            "скрытие описания на узком контейнере через @container, а не через JS",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "label и description — тексты плитки",
+            "hotkey — массив символов для визуальной плашки",
+            "hotkeyAriaLabel — то же сочетание в формате aria-keyshortcuts (например, \"Meta+K\")",
+            "icon — search, add или command",
+            "tone — оттенок плитки-иконки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "hotkey — только визуальная плашка; для скринридера сочетание задаётся отдельно в hotkeyAriaLabel в формате Meta+K."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Быстрый поиск",
+            "maxLength": 30
+          },
+          {
+            "prop": "description",
+            "label": "Описание",
+            "type": "text",
+            "default": "Найти команду или файл",
+            "maxLength": 40
+          },
+          {
+            "prop": "icon",
+            "label": "Иконка",
+            "type": "select",
+            "default": "search",
+            "options": [
+              "search",
+              "add",
+              "command"
+            ]
+          },
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "accent",
+            "options": [
+              "neutral",
+              "accent",
+              "success",
+              "warning",
+              "danger"
+            ]
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An action tile with a hotkey badge in the corner: the combo shows as a pill and is duplicated through the button's aria-keyshortcuts attribute.",
+            "ai": {
+              "summary": "An action tile with a corner hotkey badge: an icon, a title, a description and a shortcut pill duplicated via aria-keyshortcuts. Three icons, five tones. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-icontile-016-* palette — do not swap it for your theme tokens",
+                "aria-keyshortcuts on the button next to the visual pill: a screen reader must not spell out characters like \"Ctrl\"",
+                "aria-hidden on the whole shortcut pill: it duplicates aria-keyshortcuts rather than carrying its own meaning",
+                "the semantic type=\"button\" element instead of a div with onClick — otherwise the tile drops out of keyboard tabbing",
+                "hiding the description on a narrow container through @container, not through JS",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "label and description — the tile's texts",
+                "hotkey — the character array for the visual pill",
+                "hotkeyAriaLabel — the same combo in aria-keyshortcuts format (e.g. \"Meta+K\")",
+                "icon — search, add or command",
+                "tone — the icon tile's hue",
+                "background — the component's surface; empty means no surface, taking the page colour"
+              ],
+              "usage": "<Icontile016 label=\"Quick search\" hotkey={[\"Ctrl\", \"K\"]} hotkeyAriaLabel=\"Meta+K\" icon=\"search\" />",
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "hotkey is the visual pill only; the combo is announced to screen readers from hotkeyAriaLabel in the Meta+K format."
+              ]
+            },
+            "controls": {
+              "label": {
+                "label": "Title",
+                "default": "Quick search"
+              },
+              "icon": {
+                "label": "Icon"
+              },
+              "tone": {
+                "label": "Tone"
+              },
+              "description": {
+                "label": "Description",
+                "default": "Find a command or a file"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Action Hotkey Tile",
+            "preview": {
+              "props": {
+                "label": "Quick search",
+                "description": "Find a command or a file",
+                "hotkey": [
+                  "Ctrl",
+                  "K"
+                ],
+                "hotkeyAriaLabel": "Meta+K"
+              }
+            },
+            "docs": "Server component, no hooks: the tile is an ordinary semantic <button type=\"button\">, so focus and keyboard activation work without a single line of JS. The keyboard shortcut is duplicated twice — as a visual pill of separate <kbd> elements in the corner and as the aria-keyshortcuts attribute on the button itself; the pill as a whole is marked aria-hidden, because a screen reader already announces the combination from the attribute, and reading characters such as \"Ctrl\" out letter by letter again would be noise on top of the action name. The icon is switched through icon (search, add, command), and the icon tile's colour through tone by the category-wide \"background and glyph from one hue\" formula. The description is hidden on a narrow container through @container, while the title always remains. The palette has been moved to light-dark(): in the dark branch the border and the keys are lighter than the background rather than darker. The button has no surface by default — it is set by the background prop, and then the theme branch is computed from the lightness of the given colour."
+          }
+        },
+        "cardControls": [
+          "label",
+          "description",
+          "icon",
+          "tone",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "icontile-017",
+      "type": "registry:component",
+      "title": "Плитка папки с вложениями",
+      "description": "Плитка папки: значок, название, число вложений со склонением по правилам русского языка и дата последнего изменения в одной строке.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "icontile-017/icontile-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/icontile-017.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Число вложений склоняется по стандартным правилам русского языка: функция pluralForm выбирает форму (1 файл, 3 файла, 12 файлов), а сам текст берётся из шаблонов countText с подстановкой {count}, а не выводится статичным словом — иначе плитка с любым count, кроме единицы на «1», звучала бы неграмотно. Строка метаданных собрана из трёх частей — счётчика, декоративной точки-разделителя и даты: на узком контейнере дата и точка скрываются через @container первыми, счётчик вложений остаётся всегда, потому что он важнее конкретной даты для беглого просмотра списка. itemCount обрезается снизу нулём внутри компонента. Цвет плитки-иконки берётся по общей для категории формуле «фон и знак от одного оттенка», переключаемой tone. Палитра переведена на light-dark(): в тёмной ветке граница светлее фона, а не темнее. Подложки у плитки по умолчанию нет — она задаётся пропом background, и тогда ветка темы считается по светлоте заданного цвета.",
+      "meta": {
+        "tags": [
+          "icontile",
+          "folder",
+          "file",
+          "date"
+        ],
+        "ai": {
+          "export": "Icontile017",
+          "usage": "<Icontile017 name=\"Дизайн-макеты\" itemCount={12} modifiedLabel=\"Изменено 3 дня назад\" tone=\"accent\" />",
+          "summary": "Плитка папки: иконка, название, число вложений с русским склонением и дата изменения в одной строке. На узком контейнере дата уходит первой, счётчик остаётся. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-icontile-017-* и не подменять её токенами вашей темы",
+            "выбор формы числительного функцией pluralForm и шаблоны countText — статичное слово «файлов» неграмотно для count=1 или count=3",
+            "порядок скрытия на узком контейнере: дата и разделитель уходят первыми через @container, счётчик вложений остаётся всегда",
+            "clamp itemCount неотрицательным числом внутри компонента",
+            "flex:none у плитки-иконки — иначе она сжимается при длинном названии папки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "name — название папки",
+            "itemCount — число вложений, склоняется автоматически",
+            "modifiedLabel — готовая строка даты изменения",
+            "tone — оттенок плитки-иконки",
+            "countText — шаблоны счётчика по формам числа one, few, many; {count} подставляется числом",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Для языков без русской тройки форм достаточно заполнить в countText ключи one и many — few подхватит значение many."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "name",
+            "label": "Название",
+            "type": "text",
+            "default": "Дизайн-макеты",
+            "maxLength": 30
+          },
+          {
+            "prop": "itemCount",
+            "label": "Число вложений",
+            "type": "number",
+            "default": 12,
+            "min": 0,
+            "max": 9999
+          },
+          {
+            "prop": "modifiedLabel",
+            "label": "Дата изменения",
+            "type": "text",
+            "default": "Изменено 3 дня назад",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "accent",
+            "options": [
+              "neutral",
+              "accent",
+              "success",
+              "warning",
+              "danger"
+            ]
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A folder tile: an icon, a name, an attachment count with Russian pluralisation and the last-modified date on one line.",
+            "ai": {
+              "summary": "A folder tile: an icon, a name, an attachment count with Russian plural rules and the modified date on one line. On a narrow container the date leaves first, the count always stays. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-icontile-017-* palette — do not swap it for your theme tokens",
+                "picking the plural form with pluralForm and the countText templates — a static word is grammatically wrong for count=1 or count=3 in Russian",
+                "the narrow-container hiding order: the date and separator leave first through @container, the attachment count always stays",
+                "clamping itemCount to a non-negative number inside the component",
+                "flex:none on the icon tile — otherwise it shrinks under a long folder name",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "name — the folder name",
+                "itemCount — the attachment count, pluralised automatically",
+                "modifiedLabel — the ready-made modified-date string",
+                "tone — the icon tile's hue",
+                "countText — the counter templates for the one, few and many forms; {count} is replaced with the number",
+                "background — the component's surface; empty means no surface, taking the page colour"
+              ],
+              "usage": "<Icontile017 name=\"Design mockups\" itemCount={12} modifiedLabel=\"Modified 3 days ago\" tone=\"accent\" />",
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "For languages without the Russian three-form split, filling in the one and many keys of countText is enough — few falls back to many."
+              ]
+            },
+            "controls": {
+              "name": {
+                "label": "Name",
+                "default": "Design mockups"
+              },
+              "itemCount": {
+                "label": "Attachments"
+              },
+              "tone": {
+                "label": "Tone"
+              },
+              "modifiedLabel": {
+                "label": "Modified",
+                "default": "Modified 3 days ago"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Folder Attachments Tile",
+            "preview": {
+              "props": {
+                "name": "Design mockups",
+                "modifiedLabel": "Modified 3 days ago",
+                "countText": {
+                  "one": "{count} file",
+                  "few": "{count} files",
+                  "many": "{count} files"
+                }
+              }
+            },
+            "docs": "Server component, no hooks. The attachment count is inflected by the standard rules of Russian: the pluralForm function picks the form (1 файл, 3 файла, 12 файлов), and the text itself comes from the countText templates with {count} substituted rather than being printed as a static word — otherwise a tile with any count other than one would sound ungrammatical on \"1\". The metadata line is assembled from three parts — the counter, a decorative dot separator and the date: on a narrow container the date and the dot are the first to be hidden through @container, while the attachment count always remains, because for skimming a list it matters more than the exact date. itemCount is clamped from below at zero inside the component. The icon tile's colour follows the category-wide \"background and glyph from one hue\" formula, switched by tone. The palette has been moved to light-dark(): in the dark branch the border is lighter than the background rather than darker. The tile has no surface by default — it is set by the background prop, and then the theme branch is computed from the lightness of the given colour."
+          }
+        },
+        "cardControls": [
+          "name",
+          "itemCount",
+          "modifiedLabel",
+          "tone",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "iconstack-001",
+      "type": "registry:component",
+      "title": "Стопка аватаров",
+      "description": "Стопка аватаров участников с остатком «+N». Подходит карточке проекта или задачи. Меняются фото, порядок и предел показа.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "iconstack-001/iconstack-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/iconstack-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-iconstack-001-*. Серверный: хуков нет. Порядок наложения задан flex-direction: row-reverse, поэтому левый кружок лежит поверх правого без z-index на каждом элементе. Оттенок кружка считается хешем FNV-1a от имени.",
+      "meta": {
+        "tags": [
+          "avatar",
+          "stack",
+          "team",
+          "overlap"
+        ],
+        "ai": {
+          "export": "Iconstack001",
+          "usage": "<Iconstack001 names={[\"Анна Реброва\", \"Илья Мохов\"]} max={4} />",
+          "summary": "Стопка аватаров с перекрытием, счётчиком «+N» и подписью группы. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-iconstack-001-* и не подменять её токенами вашей темы",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "обратный флекс вместо z-index на каждом кружке",
+            "свёртку остатка в «+N»: десять кружков подряд не читаются",
+            "хеш FNV-1a для оттенка — сумма кодов красит целый алфавит одинаково",
+            "кольцо фона вокруг кружка: без него стопка сливается в пятно",
+            "подпись с числом участников: кружки скрыты от скринридера",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "массив names и предел max",
+            "label — подпись группы",
+            "size — sm, md или lg",
+            "величину перекрытия",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Кружки декоративны: имена должны быть доступны в подписи или рядом.",
+            "Инициалы берутся из первых двух слов: для одного слова останется одна буква.",
+            "Больше пяти кружков не показывайте — дальше «+N» честнее.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "max",
+            "label": "Показывать",
+            "type": "number",
+            "default": 4,
+            "min": 1,
+            "max": 6
+          },
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "default": "md",
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "работают над проектом",
+            "maxLength": 30
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Avatar Stack",
+            "description": "A stack of member avatars with a \"+N\" remainder. Suits a project or task card. Change the photos, the order and how many are shown.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-iconstack-001-* variables. Server component: no hooks. The stacking order is set by flex-direction: row-reverse, so the left circle lands above the right one without a z-index on every element. The circle hue is computed as an FNV-1a hash of the name.",
+            "ai": {
+              "summary": "An overlapping avatar stack with a \"+N\" counter and a group caption. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-iconstack-001-* palette — do not swap it for your theme tokens",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the reversed flex row instead of a z-index on every circle",
+                "collapsing the remainder into \"+N\": ten circles in a row do not read",
+                "the FNV-1a hash for the hue — summing code points paints a whole alphabet alike",
+                "the ring around each circle: without it the stack becomes one blob",
+                "the caption with the member count: the circles are hidden from screen readers",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the names array and the max cap",
+                "label — the group caption",
+                "size — sm, md or lg",
+                "the overlap amount",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The circles are decorative: the names must be reachable in the caption or nearby.",
+                "Initials come from the first two words: a single-word name yields one letter.",
+                "Do not show more than five circles — past that \"+N\" is more honest.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Iconstack001 names={[\"Anna Rebrova\", \"Ilya Mokhov\"]} max={4} />"
+            },
+            "controls": {
+              "max": {
+                "label": "Show"
+              },
+              "size": {
+                "label": "Size"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "label": {
+                "label": "Caption",
+                "default": "working on the project"
+              }
+            },
+            "preview": {
+              "props": {
+                "names": [
+                  "Anna Rebrova",
+                  "Ilya Mokhov",
+                  "Kim Son",
+                  "Pyotr Gai",
+                  "Maria Loza",
+                  "Oleg Din"
+                ],
+                "label": "working on the project",
+                "avatarImage": "/demo/avatars/irina-256.webp"
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "max",
+          "size",
+          "label",
+          "background"
+        ],
+        "preview": {
+          "width": "auto",
+          "props": {
+            "avatarImage": "/demo/avatars/irina-256.webp"
+          }
+        }
+      }
+    },
+    {
+      "name": "iconstack-002",
+      "type": "registry:component",
+      "title": "Строка технологий",
+      "description": "Стопка технологий с подписью: перекрытые квадратные плитки читаются слева направо, а список названий под ними расшифровывает монограммы словами.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "iconstack-002/iconstack-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/iconstack-002.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Перекрытие сделано обратным флексом (row-reverse и отрицательный margin-right), поэтому левая плитка ложится поверх правой без z-index на каждом элементе. Плитки — скруглённые квадраты, а не круги: продуктовые логотипы почти всегда квадратные, круг их обрезает. Оттенок каждой плитки выводится из имени FNV-хешем, поэтому набор технологий раскрашивается стабильно и без ручного словаря. Величина перекрытия вынесена в проп overlap и подставляется переменной в пикселях. Стопка декоративна и помечена aria-hidden, смысл несёт строка названий.",
+      "meta": {
+        "tags": [
+          "iconstack",
+          "stack",
+          "tech",
+          "overlap"
+        ],
+        "ai": {
+          "export": "Iconstack002",
+          "usage": "<Iconstack002\n  items={[\"React\", \"Next.js\", \"TypeScript\"]}\n  caption=\"Стек проекта\"\n  overlap={10}\n/>",
+          "summary": "Стопка технологий: перекрытые плитки с монограммами и подпись со списком названий. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-iconstack-002-* и не подменять её токенами вашей темы",
+            "обратный флекс вместо z-index: порядок чтения слева направо задаётся раскладкой, а не слоями",
+            "квадратные плитки: круг обрезает продуктовые логотипы по углам",
+            "обводку плитки цветом подложки — без неё соседние плитки сливаются в пятно",
+            "строку названий: монограммы «RE» и «NE» без расшифровки не читаются",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "подпись под стопкой через caption",
+            "величину перекрытия через overlap в пикселях",
+            "состав стопки через items",
+            "размер плиток через переменную --vibeui-iconstack-002-size",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Монограмма берёт две первые буквы: «Next.js» и «Nest» дадут одинаковое «NE».",
+            "Больше шести плиток превращают стопку в полосу — обрежьте список заранее.",
+            "Перекрытие больше половины размера прячет монограммы соседей.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Стек проекта",
+            "maxLength": 30
+          },
+          {
+            "prop": "overlap",
+            "label": "Перекрытие",
+            "type": "number",
+            "default": 10,
+            "min": 0,
+            "max": 20
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Tech Stack Row",
+            "description": "A tech stack row with a caption: overlapping square tiles read left to right, and the list of names underneath spells the monograms out in words.",
+            "docs": "A server component, no hooks. The overlap is built with a reversed flex row (row-reverse and a negative margin-right), so the left tile lands above the right one without a z-index on every element. The tiles are rounded squares rather than circles: product logos are almost always square, and a circle clips them. Each tile hue is derived from the name with an FNV hash, so a set of technologies is coloured consistently and without a hand-written dictionary. The overlap amount is exposed through the overlap prop and substituted into a variable in pixels. The stack is decorative and marked aria-hidden; the meaning is carried by the row of names.",
+            "ai": {
+              "summary": "A tech stack row: overlapping monogram tiles plus a caption listing the names. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-iconstack-002-* palette — do not swap it for your theme tokens",
+                "the reversed flex instead of z-index: the left-to-right reading order comes from layout, not layers",
+                "the square tiles: a circle clips product logos at the corners",
+                "the tile ring in the surface colour — without it neighbouring tiles merge into a blob",
+                "the row of names: monograms like \"RE\" and \"NE\" are unreadable on their own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the caption under the stack through caption",
+                "the overlap amount through overlap in pixels",
+                "the stack contents through items",
+                "the tile size through the --vibeui-iconstack-002-size variable",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The monogram takes the first two letters: \"Next.js\" and \"Nest\" both yield \"NE\".",
+                "More than six tiles turn the stack into a stripe — trim the list beforehand.",
+                "An overlap larger than half the tile hides the neighbours' monograms.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Iconstack002\n  items={[\"React\", \"Next.js\", \"TypeScript\"]}\n  caption=\"Project stack\"\n  overlap={10}\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Project stack"
+              },
+              "overlap": {
+                "label": "Overlap",
+                "default": 10
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "items": [
+                  "React",
+                  "Next.js",
+                  "TypeScript",
+                  "Tailwind"
+                ],
+                "caption": "Project stack"
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "caption",
+          "overlap",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
+      }
+    },
+    {
+      "name": "iconstack-003",
+      "type": "registry:component",
+      "title": "Раскрывающийся счётчик стопки",
+      "description": "Стопка со счётчиком «+N», который не тупик, а вход в полный список: раскрытие сделано на details, поэтому имена доступны без строчки клиентского кода.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "iconstack-003/iconstack-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/iconstack-003.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет: раскрытие держит нативный details, состояние живёт в DOM. Стопка и счётчик лежат внутри summary, у которого убран стандартный маркер (list-style:none и ::-webkit-details-marker) и добавлена видимая обводка фокуса — summary фокусируется по табу, и без обводки цель нажатия невидима. Счётчик поставлен слева от стопки: справа он читается как ещё один участник. Перекрытие собрано обратным флексом, оттенок кружка выводится из имени FNV-хешем. Подложки по умолчанию нет: карточка лежит на фоне страницы, а палитра построена на light-dark() и следует color-scheme окружения.",
+      "meta": {
+        "tags": [
+          "iconstack",
+          "details",
+          "overflow",
+          "avatars"
+        ],
+        "ai": {
+          "export": "Iconstack003",
+          "usage": "<Iconstack003\n  names={[\"Анна Реброва\", \"Илья Мохов\", \"Ким Сон\", \"Пётр Гай\", \"Мария Лоза\"]}\n  max={4}\n  label=\"участников\"\n/>",
+          "summary": "Стопка со счётчиком «+N», раскрывающая полный список участников на нативном details. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-iconstack-003-* и не подменять её токенами вашей темы",
+            "details вместо состояния в JS: раскрытие работает до гидрации и без клиентского кода",
+            "видимую обводку фокуса на summary — иначе цель нажатия невидима с клавиатуры",
+            "счётчик слева от стопки: справа он читается как ещё один участник",
+            "снятый маркер details, который иначе рисуется треугольником поверх раскладки",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "число видимых кружков через max",
+            "подпись группы и состав через names",
+            "размер кружков через переменную --vibeui-iconstack-003-size",
+            "величину перекрытия через переменную --vibeui-iconstack-003-overlap",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "details не анимируется по высоте без allow-discrete: резкое раскрытие здесь намеренное.",
+            "Внутри summary нельзя ставить интерактивные элементы — вложенная кнопка перехватит нажатие.",
+            "Список имён не виртуализован: сотня участников раскроется одним длинным столбцом.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "max",
+            "label": "Видимых кружков",
+            "type": "number",
+            "default": 4,
+            "min": 1,
+            "max": 8
+          },
+          {
+            "prop": "label",
+            "label": "Подпись группы",
+            "type": "text",
+            "default": "участников",
+            "maxLength": 20
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Expandable Stack Count",
+            "description": "A stack whose \"+N\" counter is an entrance rather than a dead end: the disclosure runs on details, so the names are available without a line of client code.",
+            "docs": "A server component, no hooks: the disclosure is held by native details, the state lives in the DOM. The stack and the counter sit inside summary, whose default marker is removed (list-style: none and ::-webkit-details-marker) and which gets a visible focus ring — summary is focusable by tab, and without the ring the tap target is invisible. The counter is placed to the left of the stack: on the right it reads as one more member. The overlap is built with a reversed flex row, and the circle hue is derived from the name with an FNV hash. There is no surface by default: the card sits on the page background, and the palette is built on light-dark() and follows the surrounding color-scheme.",
+            "ai": {
+              "summary": "A stack with a \"+N\" counter that expands into the full member list using native details. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-iconstack-003-* palette — do not swap it for your theme tokens",
+                "details instead of JS state: the disclosure works before hydration and without client code",
+                "the visible focus ring on summary — otherwise the tap target is invisible from the keyboard",
+                "the counter to the left of the stack: on the right it reads as one more member",
+                "the removed details marker, which otherwise draws a triangle over the layout",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the number of visible circles through max",
+                "the group caption and the roster through names",
+                "the circle size through the --vibeui-iconstack-003-size variable",
+                "the overlap through the --vibeui-iconstack-003-overlap variable",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "details cannot animate its height without allow-discrete: the abrupt opening here is deliberate.",
+                "Interactive elements do not belong inside summary — a nested button steals the click.",
+                "The name list is not virtualised: a hundred members expand into one long column.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Iconstack003\n  names={[\"Anna Rebrova\", \"Ilya Mokhov\", \"Kim Son\", \"Pyotr Gai\", \"Maria Loza\"]}\n  max={4}\n  label=\"members\"\n/>"
+            },
+            "controls": {
+              "max": {
+                "label": "Visible circles",
+                "default": 4
+              },
+              "label": {
+                "label": "Group caption",
+                "default": "members"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "names": [
+                  "Anna Rebrova",
+                  "Ilya Mokhov",
+                  "Kim Son",
+                  "Pyotr Gai",
+                  "Maria Loza",
+                  "Oleg Din",
+                  "Nata Kir"
+                ],
+                "label": "members",
+                "avatarImage": "/demo/avatars/petr-256.webp"
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "max",
+          "label",
+          "background"
+        ],
+        "preview": {
+          "width": "auto",
+          "props": {
+            "avatarImage": "/demo/avatars/petr-256.webp"
+          }
+        }
+      }
+    },
+    {
+      "name": "iconstack-004",
+      "type": "registry:component",
+      "title": "Вертикальная стопка аватаров",
+      "description": "Вертикальная стопка участников для узкой колонки: она растёт вниз и занимает ширину одного кружка, а не ломает сайдбар горизонтальным рядом.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "iconstack-004/iconstack-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/iconstack-004.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Перекрытие собрано column-reverse и отрицательным margin-bottom, поэтому верхний кружок ложится поверх нижнего без z-index, а первое имя списка остаётся первым сверху — порядок чтения совпадает с порядком данных. Размер и величина перекрытия связаны одной парой переменных и переключаются атрибутом data-size, так что sm, md и lg сохраняют одинаковую плотность. Кружки декоративны и помечены aria-hidden: смысл несёт подпись с числом. Подложки по умолчанию нет: колонка лежит на фоне страницы, а палитра построена на light-dark() и следует color-scheme окружения.",
+      "meta": {
+        "tags": [
+          "iconstack",
+          "vertical",
+          "sidebar",
+          "avatars"
+        ],
+        "preview": {
+          "states": [
+            {
+              "size": "sm"
+            },
+            {
+              "size": "md"
+            },
+            {
+              "size": "lg"
+            }
+          ],
+          "width": "auto"
+        },
+        "ai": {
+          "export": "Iconstack004",
+          "usage": "<Iconstack004\n  names={[\"Анна Реброва\", \"Илья Мохов\", \"Ким Сон\"]}\n  size=\"md\"\n  label=\"на смене\"\n/>",
+          "summary": "Вертикальная стопка участников: перекрытие через column-reverse, подпись с числом под стопкой. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-iconstack-004-* и не подменять её токенами вашей темы",
+            "column-reverse вместо z-index: верхний кружок ложится поверх нижнего сам",
+            "связку размера и перекрытия одной парой переменных — иначе на lg стопка распадается",
+            "aria-hidden на кружках: инициалы вслух не значат ничего, значение несёт подпись",
+            "подпись с числом: стопка из трёх кружков не сообщает, сколько людей в группе",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "размер кружков через size: sm, md или lg",
+            "подпись под стопкой через label",
+            "состав группы через names",
+            "величину перекрытия через переменную --vibeui-iconstack-004-overlap",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Вертикальная стопка длиннее горизонтальной по высоте: больше шести кружков ломают колонку.",
+            "Инициалы берутся из двух первых слов имени: односложные ники дадут одну букву.",
+            "Оттенок выводится хешем имени — переименование участника меняет цвет кружка.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "default": "md",
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "на смене",
+            "maxLength": 20
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Vertical Avatar Stack",
+            "description": "A vertical member stack for a narrow column: it grows downwards and takes the width of a single circle instead of breaking the sidebar with a horizontal row.",
+            "docs": "A server component, no hooks. The overlap is built with column-reverse and a negative margin-bottom, so the upper circle lands above the lower one without a z-index, and the first name in the list stays first from the top — the reading order matches the data order. The size and the overlap amount are tied to one pair of variables and switched by the data-size attribute, so sm, md and lg keep the same density. The circles are decorative and marked aria-hidden: the meaning is carried by the counted caption. There is no surface by default: the column sits on the page background, and the palette is built on light-dark() and follows the surrounding color-scheme.",
+            "ai": {
+              "summary": "A vertical member stack: overlap through column-reverse and a counted caption below. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-iconstack-004-* palette — do not swap it for your theme tokens",
+                "column-reverse instead of z-index: the upper circle lands above the lower one on its own",
+                "tying size and overlap to one pair of variables — otherwise the stack falls apart at lg",
+                "aria-hidden on the circles: initials mean nothing aloud, the caption carries the meaning",
+                "the counted caption: three circles do not tell how many people are in the group",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the circle size through size: sm, md or lg",
+                "the caption under the stack through label",
+                "the group roster through names",
+                "the overlap through the --vibeui-iconstack-004-overlap variable",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "A vertical stack is taller than a horizontal one: more than six circles break the column.",
+                "Initials come from the first two words of the name: single-word handles yield one letter.",
+                "The hue is derived from a hash of the name — renaming a member changes the circle colour.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Iconstack004\n  names={[\"Anna Rebrova\", \"Ilya Mokhov\", \"Kim Son\"]}\n  size=\"md\"\n  label=\"on shift\"\n/>"
+            },
+            "controls": {
+              "size": {
+                "label": "Size",
+                "default": "md"
+              },
+              "label": {
+                "label": "Caption",
+                "default": "on shift"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "names": [
+                  "Anna Rebrova",
+                  "Ilya Mokhov",
+                  "Kim Son",
+                  "Pyotr Gai"
+                ],
+                "label": "on shift"
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "size",
+          "label",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "iconstack-005",
+      "type": "registry:component",
+      "title": "Стопка с кольцом подложки",
+      "description": "Стопка с обводкой под цвет подложки: одна и та же группа показана на светлой и тёмной полосе, поэтому видно, что обводка — это фон, а не белая рамка.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "iconstack-005/iconstack-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/iconstack-005.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Цвет обводки вынесен в переменную --vibeui-iconstack-005-ring и задаётся полосой, а не кружком: тёмная полоса переопределяет её своим фоном, светлая берёт значение из пропа ring и красит им же собственную заливку. Из-за этого обводка физически не может разойтись с подложкой. Обе полосы показаны одновременно, чтобы разница читалась без переключения темы. Перекрытие собрано обратным флексом, оттенок кружка выводится из имени хешем. Внешней подложки по умолчанию нет: корпус следует color-scheme окружения через light-dark(), а обе полосы намеренно держат фиксированные тона — на этом и держится демонстрация.",
+      "meta": {
+        "tags": [
+          "iconstack",
+          "ring",
+          "surface",
+          "contrast"
+        ],
+        "ai": {
+          "export": "Iconstack005",
+          "usage": "<Iconstack005\n  names={[\"Анна Реброва\", \"Илья Мохов\", \"Ким Сон\"]}\n  ring=\"#ffffff\"\n  label=\"обводка равна цвету подложки\"\n/>",
+          "summary": "Стопка с обводкой цвета подложки: светлая и тёмная полосы рядом доказывают, что обводка равна фону. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-iconstack-005-* и не подменять её токенами вашей темы",
+            "обводку как переменную полосы: заданная на кружке, она рано или поздно разойдётся с фоном",
+            "обе полосы рядом — без сравнения приём выглядит просто белой рамкой",
+            "толщину обводки в 2px: тоньше она пропадает, толще превращается в кольцо",
+            "aria-hidden на кружках: инициалы вслух ничего не сообщают",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "фиксированные тона обеих полос: светлая остаётся светлой, а тёмная тёмной в любой теме — без этого сравнение теряет смысл"
+          ],
+          "adapt": [
+            "цвет обводки и заливки светлой полосы через ring",
+            "подпись тёмной полосы через label",
+            "состав группы через names",
+            "цвет тёмной полосы через переменную --vibeui-iconstack-005-dark",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подпись светлой полосы через lightLabel"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Обводка обязана совпадать с настоящим фоном: на картинке или градиенте приём не работает.",
+            "Обе полосы рендерят одну и ту же группу — это демонстрация, в бою нужна одна.",
+            "Значение ring передаётся как есть: подойдёт любой валидный CSS-цвет, не только #rrggbb.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "ring",
+            "label": "Цвет обводки",
+            "type": "color",
+            "default": "#ffffff"
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "обводка равна цвету подложки",
+            "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "lightLabel",
+            "label": "Подпись светлой полосы",
+            "type": "text",
+            "default": "На светлой панели",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Surface Ring Stack",
+            "description": "A stack whose ring matches the surface: the same group is shown on a light and a dark strip, making it obvious that the ring is the background, not a white border.",
+            "docs": "A server component, no hooks. The ring colour is exposed through the --vibeui-iconstack-005-ring variable and set on the strip rather than on the circle: the dark strip overrides it with its own background, while the light strip takes the value from the ring prop and paints its own fill with it. Because of that the ring physically cannot drift away from the surface. Both strips are shown at once so that the difference reads without switching the theme. The overlap is built with a reversed flex row, and the circle hue is derived from the name with a hash. There is no outer surface by default: the body follows the surrounding color-scheme through light-dark(), while both strips deliberately keep fixed tones — that is what the demonstration rests on.",
+            "ai": {
+              "summary": "A stack with a surface-coloured ring: light and dark strips side by side prove the ring equals the background. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-iconstack-005-* palette — do not swap it for your theme tokens",
+                "the ring as a strip variable: set on the circle it eventually drifts away from the background",
+                "both strips side by side — without the comparison the trick just looks like a white border",
+                "the 2px ring width: thinner it disappears, thicker it turns into a halo",
+                "aria-hidden on the circles: initials say nothing out loud",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the fixed tones of both strips: the light one stays light and the dark one dark in any theme — without that the comparison loses its point"
+              ],
+              "adapt": [
+                "the ring and light strip fill through ring",
+                "the dark strip caption through label",
+                "the group roster through names",
+                "the dark strip colour through the --vibeui-iconstack-005-dark variable",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the light strip caption through lightLabel"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The ring must match the real background: over an image or a gradient the trick fails.",
+                "Both strips render the same group — this is a demonstration, production needs one.",
+                "The ring value is passed through as is: any valid CSS colour works, not only #rrggbb.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Iconstack005\n  names={[\"Anna Rebrova\", \"Ilya Mokhov\", \"Kim Son\"]}\n  ring=\"#ffffff\"\n  label=\"the ring equals the surface\"\n/>"
+            },
+            "controls": {
+              "ring": {
+                "label": "Ring colour",
+                "default": "#ffffff"
+              },
+              "label": {
+                "label": "Caption",
+                "default": "the ring equals the surface"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "lightLabel": {
+                "label": "Light strip caption",
+                "default": "On the light panel"
+              }
+            },
+            "preview": {
+              "props": {
+                "names": [
+                  "Anna Rebrova",
+                  "Ilya Mokhov",
+                  "Kim Son",
+                  "Pyotr Gai"
+                ],
+                "label": "the ring equals the surface",
+                "lightLabel": "On the light panel"
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "ring",
+          "label",
+          "background",
+          "lightLabel"
+        ],
+        "preview": {
+          "width": "auto"
+        }
+      }
+    },
+    {
+      "name": "iconstack-006",
+      "type": "registry:component",
+      "title": "Стопка интеграций",
+      "description": "Стопка логотипов интеграций с подписью «и ещё N сервисов»: квадратные значки вместо аватаров и предложение вместо голого счётчика.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "iconstack-006/iconstack-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/iconstack-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-iconstack-006-*. Серверный: хуков нет. Плитки — скруглённые квадраты с тенью, а не кружки: так стопка читается как значки приложений, а не как группа людей. Остаток сверх max не сворачивается в голое «+N», а договаривается в предложение под стопкой: сначала видимые названия, потом «и ещё N сервисов» с верным русским склонением числа.",
+      "meta": {
+        "tags": [
+          "icon-stack",
+          "integrations",
+          "logos",
+          "overlap"
+        ],
+        "ai": {
+          "export": "Iconstack006",
+          "usage": "<Iconstack006 services={[\"Slack\", \"Notion\", \"Figma\", \"Zoom\"]} max={3} />",
+          "summary": "Стопка логотипов интеграций: квадратные значки внахлёст и подпись, называющая видимые сервисы и сколько ещё подключено. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-iconstack-006-* и не подменять её токенами вашей темы",
+            "скруглённые квадратные плитки вместо кружков: значок сервиса читается как иконка приложения, а не аватар",
+            "обратный флекс вместо z-index на каждой плитке",
+            "предложение под стопкой вместо голого счётчика «+N»: сначала видимые названия, потом «и ещё N сервисов»",
+            "склонение слова «сервис» по числу: 1 сервис, 2 сервиса, 5 сервисов",
+            "стопку, скрытую от скринридера через aria-hidden: подпись уже называет все сервисы текстом",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "массив services — список интеграций",
+            "max — сколько логотипов показывать в стопке",
+            "title — заголовок карточки",
+            "инициалы на плитках — берутся из первых двух букв имени сервиса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "restTemplate — хвост подписи: {count} подставляет число скрытых сервисов, {word} — форму слова",
+            "serviceWords — формы слова «сервис» для одного, двух-четырёх и пяти и больше"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Хеш имени сервиса определяет оттенок плитки: разные сервисы с похожим написанием могут получить близкие оттенки.",
+            "Плитки — это инициалы, а не настоящие логотипы: для брендированных значков подставьте свои SVG вместо текста.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Подключённые интеграции",
+            "maxLength": 32
+          },
+          {
+            "prop": "max",
+            "label": "Показывать",
+            "type": "number",
+            "default": 4,
+            "min": 1,
+            "max": 6
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Integration Stack",
+            "description": "An integration logo stack with an \"and N more services\" caption: square badges instead of avatars, and a sentence instead of a bare counter.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-iconstack-006-* variables. Server component: no hooks. The tiles are rounded squares with a shadow rather than circles: that way the stack reads as app icons rather than a group of people. The remainder past max is not collapsed into a bare \"+N\" but spelled out in a sentence under the stack: the visible names first, then \"and N more services\" with the correct Russian plural agreement.",
+            "ai": {
+              "summary": "An integration logo stack: overlapping square badges and a caption naming the visible services plus how many more are connected. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-iconstack-006-* palette — do not swap it for your theme tokens",
+                "rounded square tiles instead of circles: a service badge reads as an app icon, not an avatar",
+                "the reversed flex row instead of z-index on every tile",
+                "the sentence under the stack instead of a bare \"+N\" counter: visible names first, then \"and N more services\"",
+                "the Russian plural agreement for \"service\": 1 сервис, 2 сервиса, 5 сервисов",
+                "the stack hidden from screen readers with aria-hidden: the caption already names every service as text",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the services array — the list of integrations",
+                "max — how many logos the stack shows",
+                "title — the card heading",
+                "the tile initials — taken from the first two letters of the service name",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "restTemplate — the caption tail: {count} takes the hidden service count, {word} the word form",
+                "serviceWords — the word forms for one, two-to-four, and five or more"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The service name hash picks the tile hue: different services with similar spelling can land on close hues.",
+                "Tiles are initials, not real logos: swap in your own SVGs for branded badges.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Iconstack006 services={[\"Slack\", \"Notion\", \"Figma\", \"Zoom\"]} max={3} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Connected integrations"
+              },
+              "max": {
+                "label": "Show"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Connected integrations",
+                "restTemplate": " and {count} {word} more.",
+                "serviceWords": [
+                  "service",
+                  "services",
+                  "services"
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "max",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
     }
   ]
 }

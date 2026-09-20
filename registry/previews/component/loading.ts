@@ -1,0 +1,71 @@
+// Сгенерировано `npm run indexes` из registry/**/registry.json.
+// Не править руками: правки затрёт следующая сборка.
+
+import type { PreviewLoaderMap } from "@/registry/preview-types"
+
+export const PREVIEWS = {
+  "spinner-001": () =>
+    import("@/registry/components/loading/spinner-001/spinner-001").then((module) => module.Spinner001),
+  "spinner-002": () =>
+    import("@/registry/components/loading/spinner-002/spinner-002").then((module) => module.Spinner002),
+  "spinner-003": () =>
+    import("@/registry/components/loading/spinner-003/spinner-003").then((module) => module.Spinner003),
+  "spinner-004": () =>
+    import("@/registry/components/loading/spinner-004/spinner-004").then((module) => module.Spinner004),
+  "spinner-005": () =>
+    import("@/registry/components/loading/spinner-005/spinner-005").then((module) => module.Spinner005),
+  "spinner-006": () =>
+    import("@/registry/components/loading/spinner-006/spinner-006").then((module) => module.Spinner006),
+  "spinner-007": () =>
+    import("@/registry/components/loading/spinner-007/spinner-007").then((module) => module.Spinner007),
+  "spinner-008": () =>
+    import("@/registry/components/loading/spinner-008/spinner-008").then((module) => module.Spinner008),
+  "spinner-009": () =>
+    import("@/registry/components/loading/spinner-009/spinner-009").then((module) => module.Spinner009),
+  "spinner-010": () =>
+    import("@/registry/components/loading/spinner-010/spinner-010").then((module) => module.Spinner010),
+  "spinner-011": () =>
+    import("@/registry/components/loading/spinner-011/spinner-011").then((module) => module.Spinner011),
+  "spinner-012": () =>
+    import("@/registry/components/loading/spinner-012/spinner-012").then((module) => module.Spinner012),
+  "spinner-013": () =>
+    import("@/registry/components/loading/spinner-013/spinner-013").then((module) => module.Spinner013),
+  "skeleton-001": () =>
+    import("@/registry/components/loading/skeleton-001/skeleton-001").then((module) => module.Skeleton001),
+  "skeleton-002": () =>
+    import("@/registry/components/loading/skeleton-002/skeleton-002").then((module) => module.Skeleton002),
+  "skeleton-003": () =>
+    import("@/registry/components/loading/skeleton-003/skeleton-003").then((module) => module.Skeleton003),
+  "skeleton-004": () =>
+    import("@/registry/components/loading/skeleton-004/skeleton-004").then((module) => module.Skeleton004),
+  "skeleton-005": () =>
+    import("@/registry/components/loading/skeleton-005/skeleton-005").then((module) => module.Skeleton005),
+  "skeleton-006": () =>
+    import("@/registry/components/loading/skeleton-006/skeleton-006").then((module) => module.Skeleton006),
+  "skeleton-007": () =>
+    import("@/registry/components/loading/skeleton-007/skeleton-007").then((module) => module.Skeleton007),
+  "skeleton-008": () =>
+    import("@/registry/components/loading/skeleton-008/skeleton-008").then((module) => module.Skeleton008),
+  "skeleton-009": () =>
+    import("@/registry/components/loading/skeleton-009/skeleton-009").then((module) => module.Skeleton009),
+  "skeleton-010": () =>
+    import("@/registry/components/loading/skeleton-010/skeleton-010").then((module) => module.Skeleton010),
+  "progress-001": () =>
+    import("@/registry/components/loading/progress-001/progress-001").then((module) => module.Progress001),
+  "progress-002": () =>
+    import("@/registry/components/loading/progress-002/progress-002").then((module) => module.Progress002),
+  "progress-003": () =>
+    import("@/registry/components/loading/progress-003/progress-003").then((module) => module.Progress003),
+  "progress-004": () =>
+    import("@/registry/components/loading/progress-004/progress-004").then((module) => module.Progress004),
+  "progress-005": () =>
+    import("@/registry/components/loading/progress-005/progress-005").then((module) => module.Progress005),
+  "progress-006": () =>
+    import("@/registry/components/loading/progress-006/progress-006").then((module) => module.Progress006),
+  "progress-007": () =>
+    import("@/registry/components/loading/progress-007/progress-007").then((module) => module.Progress007),
+  "progress-008": () =>
+    import("@/registry/components/loading/progress-008/progress-008").then((module) => module.Progress008),
+  "progress-009": () =>
+    import("@/registry/components/loading/progress-009/progress-009").then((module) => module.Progress009),
+} satisfies PreviewLoaderMap

@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Нативный аккордеон",
       "description": "Аккордеон на нативных details и summary: раскрытие без единой строки JS, ни рамок, ни плашки — список живёт прямо на фоне страницы.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-001-*. Раскрытие держат нативные <details>/<summary>, поэтому состояние работает до гидратации и не требует React. Взаимное исключение включается атрибутом name у details. Тема берётся из color-scheme окружения через light-dark(): фона у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней. Значок выбирается пропом marker и рисуется самим компонентом в боксе постоянного размера, поэтому текст начинается на одном месте при любой фигуре и картинка одинакова во всех браузерах. Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "faq", "details", "no-js"],
+        "tags": [
+          "accordion",
+          "faq",
+          "details",
+          "no-js"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -81,14 +88,24 @@
             "label": "Значок",
             "type": "select",
             "default": "chevron",
-            "options": ["chevron", "triangle", "square", "plus", "none"]
+            "options": [
+              "chevron",
+              "triangle",
+              "square",
+              "plus",
+              "none"
+            ]
           },
           {
             "prop": "divider",
             "label": "Разделители",
             "type": "select",
             "default": "line",
-            "options": ["line", "dashed", "none"]
+            "options": [
+              "line",
+              "dashed",
+              "none"
+            ]
           },
           {
             "prop": "defaultOpen",
@@ -203,7 +220,9 @@
       "type": "registry:component",
       "title": "Аккордеон-карточки",
       "description": "Аккордеон из отдельных карточек: у каждого раздела своя рамка, а открытый отделяется от остальных подъёмом, кольцом или одной рамкой — на выбор.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -215,7 +234,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-002-*. Раскрытие держат нативные <details>/<summary>, поэтому состояние работает до гидратации и не требует React. Разделы независимы: атрибута name здесь нет намеренно — в списке карточек взаимное закрытие читается как поломка. Заливки у карточек по умолчанию нет: они лежат на фоне страницы и держатся одной рамкой. Тема берётся из color-scheme окружения через light-dark(), и тёмная ветка не инверсия светлой: тень наружу на тёмном не видна, поэтому подъём там набирается свечением. Значок выбирается пропом marker и живёт в круглой лунке постоянного размера, поэтому смена фигуры не двигает заголовок. Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "faq", "card", "no-js"],
+        "tags": [
+          "accordion",
+          "faq",
+          "card",
+          "no-js"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -276,14 +300,24 @@
             "label": "Значок",
             "type": "select",
             "default": "chevron",
-            "options": ["chevron", "triangle", "square", "plus", "none"]
+            "options": [
+              "chevron",
+              "triangle",
+              "square",
+              "plus",
+              "none"
+            ]
           },
           {
             "prop": "elevation",
             "label": "Открытая карточка",
             "type": "select",
             "default": "lift",
-            "options": ["lift", "ring", "flat"]
+            "options": [
+              "lift",
+              "ring",
+              "flat"
+            ]
           },
           {
             "prop": "background",
@@ -396,7 +430,9 @@
       "type": "registry:component",
       "title": "Аккордеон с подсветкой",
       "description": "Открытый вопрос лежит под пигментом find-in-page, слева стоит каретка: дизайн про то, что нативный details раскрывается поиском по странице.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -408,7 +444,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-003-*. Раскрытие держат нативные <details>/<summary>, поэтому браузер сам открывает раздел, когда находит внутри текст поиском по странице, — ради этого свойства компонент и сделан. Открытый вопрос красится пигментом find-in-page, буквы под ним переводятся в тёмный, как это делает сам браузер; в тёмной теме пигмент не гасится. Подсветка лежит на одном узле с текстом (box-decoration-break: clone), поэтому переносы строк её не разрывают. Хрома нет вовсе: ни рамок, ни скруглений, ни фона строк — работают типографика и вертикальный ритм. Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "faq", "details", "find-in-page"],
+        "tags": [
+          "accordion",
+          "faq",
+          "details",
+          "find-in-page"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -476,7 +517,10 @@
             "label": "Каретка",
             "type": "select",
             "default": "bar",
-            "options": ["bar", "none"]
+            "options": [
+              "bar",
+              "none"
+            ]
           },
           {
             "prop": "accent",
@@ -590,7 +634,9 @@
       "type": "registry:component",
       "title": "Плотный аккордеон",
       "description": "Плотный аккордеон со значением в правой колонке: срок, объём или цена. Такой список читают по правому краю, вообще не раскрывая разделы.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -602,7 +648,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-004-*. Раскрытие держат нативные <details>/<summary>, поэтому состояние работает до гидратации и не требует React. Заливки у списка нет: он держится рамкой и лежит на фоне страницы, а подсветка строк — открытой и чётных при zebra — сделана полупрозрачной, поэтому работает на любом фоне. Тема берётся из color-scheme окружения через light-dark(). Значения правой колонки набраны табличными цифрами и стоят в столбик. Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "list", "dense", "no-js"],
+        "tags": [
+          "accordion",
+          "list",
+          "dense",
+          "no-js"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -648,7 +699,13 @@
             "label": "Значок",
             "type": "select",
             "default": "chevron",
-            "options": ["chevron", "triangle", "square", "plus", "none"]
+            "options": [
+              "chevron",
+              "triangle",
+              "square",
+              "plus",
+              "none"
+            ]
           },
           {
             "prop": "zebra",
@@ -774,7 +831,9 @@
       "type": "registry:component",
       "title": "Аккордеон с состояниями",
       "description": "Аккордеон, у разделов которого есть состояния: требующий внимания отмечен полосой и подписью, недоступный не раскрывается и сам объясняет причину.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -786,7 +845,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-005-*. Недоступный раздел — не <details>, а статичный блок: раскрывать в нём нечего, и притворяться раскрывающимся он не должен. Раскрываемые разделы держат нативные <details>/<summary>. Заливки у карточек нет: они держатся рамкой и лежат на фоне страницы, а подсветка состояний сделана полупрозрачной и работает на любом фоне. Цвет внимания задаётся одним пропом warn: цвет подписи выводится из него же через color-mix, поэтому вторая настройка не нужна. Тема берётся из color-scheme окружения через light-dark(). Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "status", "state", "no-js"],
+        "tags": [
+          "accordion",
+          "status",
+          "state",
+          "no-js"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -834,14 +898,24 @@
             "label": "Значок",
             "type": "select",
             "default": "chevron",
-            "options": ["chevron", "triangle", "square", "plus", "none"]
+            "options": [
+              "chevron",
+              "triangle",
+              "square",
+              "plus",
+              "none"
+            ]
           },
           {
             "prop": "stripe",
             "label": "Отметка внимания",
             "type": "select",
             "default": "bar",
-            "options": ["bar", "ring", "none"]
+            "options": [
+              "bar",
+              "ring",
+              "none"
+            ]
           },
           {
             "prop": "warn",
@@ -951,7 +1025,13 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-accordion-005-*. A locked section is not a <details> but a static block: there is nothing in it to disclose, and it must not pretend to be disclosable. The disclosable sections are held by native <details>/<summary>. The cards have no fill: they are held by their border over the page background, and the state highlights are translucent and work on any background. The attention colour is set by a single warn prop: the label colour is derived from it through color-mix, so a second setting is not needed. The theme comes from the surrounding color-scheme through light-dark(). Padding and type size are computed from the component's own width through @container."
           }
         },
-        "cardControls": ["marker", "stripe", "warn", "defaultOpen", "accent"]
+        "cardControls": [
+          "marker",
+          "stripe",
+          "warn",
+          "defaultOpen",
+          "accent"
+        ]
       }
     },
     {
@@ -959,7 +1039,9 @@
       "type": "registry:component",
       "title": "Аккордеон-чеклист",
       "description": "Аккордеон-чеклист онбординга: нумерованные шаги, галочки у выполненных и прогресс, который считается из самих шагов. Раскрыт первый невыполненный.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -971,7 +1053,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-006-*. Прогресс считается из самих шагов и не задаётся отдельным числом — разойтись со списком он не может. Раскрытие держат нативные <details>/<summary>. Заливки у чеклиста нет: он держится рамкой и лежит на фоне страницы, тема берётся из color-scheme окружения через light-dark(). Шапку можно свести к счётчику или убрать целиком пропом progress. Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "checklist", "onboarding", "progress"],
+        "tags": [
+          "accordion",
+          "checklist",
+          "onboarding",
+          "progress"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -1026,7 +1113,11 @@
             "label": "Шапка",
             "type": "select",
             "default": "bar",
-            "options": ["bar", "count", "none"]
+            "options": [
+              "bar",
+              "count",
+              "none"
+            ]
           },
           {
             "prop": "background",
@@ -1154,7 +1245,9 @@
       "type": "registry:component",
       "title": "Аккордеон с метками",
       "description": "Аккордеон с плитками-метками и счётчиками: в списке из десяти разделов взгляд цепляется за плитку, а не перечитывает заголовки.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1166,7 +1259,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-007-*. Плитка-метка — текст в квадрате, а не иконка из библиотеки: набор разделов у всех разный, а зависимость осталась бы навсегда. Раскрытие держат нативные <details>/<summary>. Заливки у списка нет: он держится рамкой и лежит на фоне страницы, тема берётся из color-scheme окружения через light-dark(). Значок раскрытия рисуется в боксе постоянного размера, поэтому счётчик справа не съезжает при смене фигуры. Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "icons", "badges", "settings"],
+        "tags": [
+          "accordion",
+          "icons",
+          "badges",
+          "settings"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -1237,7 +1335,13 @@
             "label": "Значок",
             "type": "select",
             "default": "chevron",
-            "options": ["chevron", "triangle", "square", "plus", "none"]
+            "options": [
+              "chevron",
+              "triangle",
+              "square",
+              "plus",
+              "none"
+            ]
           },
           {
             "prop": "badge",
@@ -1366,7 +1470,9 @@
       "type": "registry:component",
       "title": "Двухуровневый аккордеон",
       "description": "Двухуровневый аккордеон для справки: главы и статьи внутри них. Вложенность показана линией от заголовка главы, а не отступом.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1378,7 +1484,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-008-*. Оба уровня — нативные <details>, поэтому поиск по странице раскрывает сразу и главу, и статью внутри неё. Вложенность показана линией от заголовка главы, а не отступом: отступ на третьем уровне съел бы ширину строки. Заливки нет, тема берётся из color-scheme окружения через light-dark(). Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "nested", "docs", "help"],
+        "tags": [
+          "accordion",
+          "nested",
+          "docs",
+          "help"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -1424,14 +1535,23 @@
             "label": "Значок",
             "type": "select",
             "default": "chevron",
-            "options": ["chevron", "triangle", "square", "plus", "none"]
+            "options": [
+              "chevron",
+              "triangle",
+              "square",
+              "plus",
+              "none"
+            ]
           },
           {
             "prop": "guide",
             "label": "Линия вложенности",
             "type": "select",
             "default": "line",
-            "options": ["line", "none"]
+            "options": [
+              "line",
+              "none"
+            ]
           },
           {
             "prop": "background",
@@ -1573,7 +1693,9 @@
       "type": "registry:component",
       "title": "Аккордеон-лента событий",
       "description": "Аккордеон-лента событий: слева линия с точками, справа раскрывающиеся записи. Так читают историю изменений — сначала по датам, потом вглубь одной записи.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1585,7 +1707,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-009-*. Раскрытие держат нативные <details>/<summary>. Линия ленты обрывается на точке последней записи, а не уходит в пустоту. Заливки нет, тема берётся из color-scheme окружения через light-dark(); полой точке нужна заливка цветом страницы, и по умолчанию это системный Canvas, который сам следует color-scheme. Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "timeline", "changelog", "history"],
+        "tags": [
+          "accordion",
+          "timeline",
+          "changelog",
+          "history"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -1656,14 +1783,22 @@
             "label": "Точка",
             "type": "select",
             "default": "dot",
-            "options": ["dot", "ring", "none"]
+            "options": [
+              "dot",
+              "ring",
+              "none"
+            ]
           },
           {
             "prop": "rail",
             "label": "Линия",
             "type": "select",
             "default": "solid",
-            "options": ["solid", "dashed", "none"]
+            "options": [
+              "solid",
+              "dashed",
+              "none"
+            ]
           },
           {
             "prop": "background",
@@ -1786,7 +1921,9 @@
       "type": "registry:component",
       "title": "Аккордеон в две колонки",
       "description": "Аккордеон в две колонки: на широкой раскладке вопрос остаётся слева, а ответ раскрывается справа — глаз не теряет вопрос под длинным текстом.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1798,7 +1935,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-010-*. Раскрытие держат нативные <details>/<summary>. Две колонки включает @container по ширине самого блока, а не окна: в узкой колонке он сам складывается в обычный список, где бы ни стоял. Фона нет, тема берётся из color-scheme окружения через light-dark(). Отступы и кегль считаются от собственной ширины.",
       "meta": {
-        "tags": ["accordion", "faq", "two column", "wide"],
+        "tags": [
+          "accordion",
+          "faq",
+          "two column",
+          "wide"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -1858,7 +2000,13 @@
             "label": "Значок",
             "type": "select",
             "default": "chevron",
-            "options": ["chevron", "triangle", "square", "plus", "none"]
+            "options": [
+              "chevron",
+              "triangle",
+              "square",
+              "plus",
+              "none"
+            ]
           },
           {
             "prop": "numbered",
@@ -1976,7 +2124,9 @@
       "type": "registry:component",
       "title": "Тёмный аккордеон",
       "description": "Тёмный аккордеон для тёмных секций: собственная тёмная палитра, а не инверсия светлой. Открытый раздел светится изнутри — тени на тёмном фоне не работают.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1988,7 +2138,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-011-*. В отличие от остальных аккордеонов семейства он не следует color-scheme окружения: у него собственная тёмная палитра, и она не меняется. Светлый аккордеон на тёмной секции выглядит вырезанной наклейкой, поэтому здесь тёмный вариант, а не инверсия готового. Открытый раздел подсвечивается изнутри — тени на тёмном фоне не работают, и чем именно подсвечивать, решает проп glow. Раскрытие держат нативные <details>/<summary>, взаимное исключение — атрибут name. Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "dark", "faq", "no-js"],
+        "tags": [
+          "accordion",
+          "dark",
+          "faq",
+          "no-js"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -2049,14 +2204,24 @@
             "label": "Значок",
             "type": "select",
             "default": "chevron",
-            "options": ["chevron", "triangle", "square", "plus", "none"]
+            "options": [
+              "chevron",
+              "triangle",
+              "square",
+              "plus",
+              "none"
+            ]
           },
           {
             "prop": "glow",
             "label": "Подсветка",
             "type": "select",
             "default": "edge",
-            "options": ["edge", "ring", "none"]
+            "options": [
+              "edge",
+              "ring",
+              "none"
+            ]
           },
           {
             "prop": "accent",
@@ -2155,7 +2320,13 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-accordion-011-*. Unlike the rest of the family, it does not follow the surrounding color-scheme: it carries a dark palette of its own and that palette does not change. A light accordion on a dark section looks like a sticker cut out and pasted on, so this is a dark variant rather than an inversion of a finished one. The open section is lit from within — shadows do not work on a dark ground, and what exactly does the lighting is decided by the glow prop. Native <details>/<summary> hold the disclosure, and the name attribute holds the exclusivity. Padding and type size are computed from the component's own width through @container."
           }
         },
-        "cardControls": ["marker", "glow", "accent", "defaultOpen", "exclusive"]
+        "cardControls": [
+          "marker",
+          "glow",
+          "accent",
+          "defaultOpen",
+          "exclusive"
+        ]
       }
     },
     {
@@ -2163,7 +2334,9 @@
       "type": "registry:component",
       "title": "Аккордеон-диафрагма",
       "description": "Компонент — один кусок материала, и раскрытие пробивает в нём окно: ответ лежит в утопленном колодце, а маркер слева — уменьшенная модель этого выреза.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2175,7 +2348,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-012-*. Раскрытие держат нативные <details>/<summary>, поэтому клавиатура, поиск по странице и состояние до гидратации работают без JS. Акцентного цвета у компонента нет: состояния различаются контрастом материала и света, поэтому обводка фокуса берёт цвет текста и уходит внутрь плашки. Тёмная ветка не инверсия светлой — на светлом вырез впускает свет и колодец светлее плашки, на тёмном колодец темнее, а кромку ловит блик сверху. Цвет материала задаётся пропом slab, а подсветка строки и линия между разделами выводятся из него смешиванием. Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "faq", "details", "material"],
+        "tags": [
+          "accordion",
+          "faq",
+          "details",
+          "material"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -2235,7 +2413,10 @@
             "label": "Вырез",
             "type": "select",
             "default": "sunken",
-            "options": ["sunken", "flat"]
+            "options": [
+              "sunken",
+              "flat"
+            ]
           },
           {
             "prop": "slab",
@@ -2258,7 +2439,12 @@
             "max": 5
           }
         ],
-        "cardControls": ["well", "slab", "exclusive", "defaultOpen"],
+        "cardControls": [
+          "well",
+          "slab",
+          "exclusive",
+          "defaultOpen"
+        ],
         "i18n": {
           "en": {
             "title": "Aperture Accordion",
@@ -2338,7 +2524,9 @@
       "type": "registry:component",
       "title": "Аккордеон-клавиатура",
       "description": "Раздел здесь — клавиша, и нажатой остаётся ровно одна: открытая уходит вниз, теряет нижнюю грань и садится в бед, а рамкой работает сам бед между клавишами.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2350,7 +2538,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-013-*. Взаимное исключение держит атрибут name у details, и дизайн показывает именно его: нажатой остаётся одна клавиша. Ход задаётся пропом travel и живёт в переменной --vibeui-accordion-013-travel, от неё считаются и смещение, и нижняя грань, и внутренняя тень. Грань нарисована тенью, а не border: border прибавил бы строке высоту, и ход превратился бы в прыжок. Кольцо фокуса охватывает всю клавишу через :has(summary:focus-visible). Тёмная ветка переворачивает физику: тень под клавишей заменяется провалом темнее беда, а индикатор набирает свечение. Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "faq", "details", "tactile"],
+        "tags": [
+          "accordion",
+          "faq",
+          "details",
+          "tactile"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -2531,7 +2724,9 @@
       "type": "registry:component",
       "title": "Аккордеон с постоянными ссылками",
       "description": "Аккордеон, где у каждого вопроса свой адрес: ссылка в закрытый раздел раскрывает его сама, без единой строки JS — ответ можно процитировать и прислать.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2543,7 +2738,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-014-*. Id вопроса стоит не на details, а на абзаце ответа внутри него: когда ссылка ведёт на этот id, браузер видит закрытого предка и сам раскрывает раздел, прокручивая к цели — это часть встроенного алгоритма перехода по фрагменту, JS не участвует. Кнопка-ссылка стоит рядом с summary, а не внутри него, поэтому клик по ней не спорит со штатным переключением раздела кликом по заголовку. Раздел с текущей целью адреса получает слабую заливку через селектор :has(:target). Взаимное исключение, как и в accordion-001, держит атрибут name у details. Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "faq", "deep-link", "no-js"],
+        "tags": [
+          "accordion",
+          "faq",
+          "deep-link",
+          "no-js"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -2603,7 +2803,10 @@
             "label": "Значок",
             "type": "select",
             "default": "chevron",
-            "options": ["chevron", "none"]
+            "options": [
+              "chevron",
+              "none"
+            ]
           },
           {
             "prop": "defaultOpen",
@@ -2711,6 +2914,1411 @@
           "defaultOpen",
           "accent",
           "exclusive",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "collapsible-001",
+      "type": "registry:component",
+      "title": "Нативное раскрытие",
+      "description": "Базовая свёртка на нативном details: состояние живёт в разметке, клиентского кода нет, раскрытие работает до гидратации.",
+      "categories": [
+        "accordion"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "collapsible-001/collapsible-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/collapsible-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-001-*. Серверный: хуков нет, корень блока — сам элемент details. Системный маркер снят через list-style:none и ::-webkit-details-marker, вместо него нарисован значок из двух граней квадрата, поворот привязан к селектору [open]. Подсказка справа прижата margin-left:auto, поэтому при её отсутствии значок берёт auto на себя через :only-child.",
+      "meta": {
+        "tags": [
+          "collapsible",
+          "details",
+          "no-js",
+          "disclosure"
+        ],
+        "preview": {
+          "props": {
+            "open": true
+          },
+          "width": "full"
+        },
+        "ai": {
+          "export": "Collapsible001",
+          "usage": "<Collapsible001 title=\"Как устанавливается компонент\" hint=\"30 секунд\" />",
+          "summary": "Свёртка на нативных details и summary: заголовок с подсказкой, поворачивающийся значок и текст под чертой. Клиентского JS нет, состояние хранит разметка. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-collapsible-001-* и не подменять её токенами вашей темы",
+            "нативные details/summary: замена на кнопку с useState отнимает поиск по странице и работу до гидратации",
+            "скрытие системного маркера вместе со своим значком — иначе стрелок будет две",
+            "поворот значка через селектор [open], а не подмену символа: так состояние остаётся в CSS",
+            "outline focus-visible у summary с отрицательным offset: заголовок перебирают с клавиатуры",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "заголовок через проп title",
+            "подсказку справа через проп hint",
+            "текст раскрытия через проп text",
+            "акцент через проп accent и ширину блока",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Анимации раскрытия здесь нет намеренно: нативный details меняет высоту скачком, плавность требует другой механики.",
+            "Атрибут open передаётся напрямую в details: он и есть состояние, отдельный стейт заводить не нужно.",
+            "Внутри summary не должно быть интерактивных элементов: клик по ним всё равно переключит свёртку.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Как устанавливается компонент",
+            "maxLength": 40
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "30 секунд",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A basic disclosure on a native details element: the state lives in the markup, there is no client code, and it works before hydration.",
+            "ai": {
+              "summary": "A disclosure on native details and summary: a heading with a hint, a rotating marker and body text under a rule. No client JS, the markup holds the state. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-collapsible-001-* palette — do not swap it for your theme tokens",
+                "native details/summary: a button with useState loses find-in-page and pre-hydration behaviour",
+                "hiding the system marker along with drawing your own — otherwise there are two arrows",
+                "rotating the marker via the [open] selector instead of swapping glyphs: the state stays in CSS",
+                "the focus-visible outline on summary with a negative offset: headings get tabbed through",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the heading through the title prop",
+                "the trailing hint through the hint prop",
+                "the body copy through the text prop",
+                "the accent through the accent prop and the block width",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "There is deliberately no open animation: native details snaps, smooth height needs different machinery.",
+                "The open attribute goes straight to details: it is the state, no separate React state is needed.",
+                "Do not put interactive elements inside summary: clicking them still toggles the disclosure.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Collapsible001 title=\"How the component is installed\" hint=\"30 seconds\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "How the component is installed"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "30 seconds"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Native Disclosure",
+            "preview": {
+              "props": {
+                "title": "How the component is installed",
+                "hint": "30 seconds",
+                "text": "Copy the command from the card and run it in the project root — the file lands in components/vibeui and works straight away: it has no external dependencies."
+              }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-001-*. It is a server component: there are no hooks, and the root of the block is the details element itself. The system marker is removed through list-style:none and ::-webkit-details-marker, and in its place a glyph built from two edges of a square is drawn, with the rotation tied to the [open] selector. The trailing hint is pushed right by margin-left:auto, so when there is no hint the glyph takes the auto for itself through :only-child."
+          }
+        },
+        "cardControls": [
+          "title",
+          "hint",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "collapsible-002",
+      "type": "registry:component",
+      "title": "Анимация высоты",
+      "description": "Свёртка с плавной анимацией высоты: обёртка-грид едет от 0fr к 1fr, поэтому высота содержимого не нужна заранее.",
+      "categories": [
+        "accordion"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "collapsible-002/collapsible-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/collapsible-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-002-*. Клиентский: \"use client\" ради useState и aria-expanded. Анимация высоты сделана гридом: обёртка [data-part=\"wrap\"] переключает grid-template-rows с 0fr на 1fr, внутренний слой держит overflow:hidden и min-height:0 — без него строка грида не сжимается ниже содержимого. Скрытая часть помечена атрибутом inert, поэтому в свёрнутом виде её содержимое выпадает из табуляции.",
+      "meta": {
+        "tags": [
+          "collapsible",
+          "animation",
+          "grid",
+          "disclosure"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Collapsible002",
+          "usage": "<Collapsible002 title=\"Что входит в поставку\" defaultOpen />",
+          "summary": "Свёртка с честной анимацией высоты на grid-template-rows 0fr→1fr: конечная высота считается браузером, знать её заранее не нужно. Кнопка несёт aria-expanded и aria-controls. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-collapsible-002-* и не подменять её токенами вашей темы",
+            "приём 0fr→1fr: height:auto не анимируется, а max-height даёт рывок в конце",
+            "overflow:hidden и min-height:0 на внутреннем слое — без них строка грида не сожмётся",
+            "атрибут inert на свёрнутой части: иначе Tab уводит фокус в невидимое содержимое",
+            "связку aria-expanded и aria-controls на кнопке — по ней скринридер понимает состояние",
+            "правило prefers-reduced-motion: анимация высоты особенно неприятна при вестибулярных нарушениях",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "заголовок через проп title",
+            "текст раскрытия через проп text",
+            "стартовое состояние через проп defaultOpen",
+            "длительность перехода и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Содержимое остаётся в DOM и в свёрнутом виде: тяжёлые списки лучше монтировать по требованию.",
+            "Внутренние отступы кладите на сам текст, а не на слой с overflow: иначе они не сожмутся вместе с высотой.",
+            "Поддержка анимации grid-template-rows появилась не во всех старых браузерах: там свёртка просто переключится скачком.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что входит в поставку",
+            "maxLength": 40
+          },
+          {
+            "prop": "defaultOpen",
+            "label": "Открыт сразу",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A disclosure with a real height animation: a grid wrapper travels from 0fr to 1fr, so the content height never has to be known upfront.",
+            "ai": {
+              "summary": "A disclosure with an honest height animation on grid-template-rows 0fr→1fr: the browser computes the final height for you. The trigger carries aria-expanded and aria-controls. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-collapsible-002-* palette — do not swap it for your theme tokens",
+                "the 0fr→1fr trick: height:auto does not animate and max-height snaps at the end",
+                "overflow:hidden and min-height:0 on the inner layer — without them the grid row will not shrink",
+                "the inert attribute on the collapsed part: otherwise Tab moves focus into invisible content",
+                "the aria-expanded plus aria-controls pairing on the trigger — that is how the state is announced",
+                "the prefers-reduced-motion rule: height animation is the worst offender for vestibular disorders",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the heading through the title prop",
+                "the body copy through the text prop",
+                "the initial state through the defaultOpen prop",
+                "the transition duration and the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The content stays in the DOM while collapsed: mount heavy lists on demand instead.",
+                "Put padding on the text itself, not on the overflow layer, or it will not collapse with the height.",
+                "Animating grid-template-rows is unsupported in older browsers: there the disclosure simply snaps.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Collapsible002 title=\"What you get\" defaultOpen />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "What you get"
+              },
+              "defaultOpen": {
+                "label": "Open by default"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Animated Height",
+            "preview": {
+              "props": {
+                "title": "What you get",
+                "text": "One .tsx file with every style inside, no npm dependencies and no calls into your project theme. The palette is declared in local variables, so the component looks the same in any environment."
+              }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-002-*. It is a client component: \"use client\" for useState and aria-expanded. The height animation is done with grid: the [data-part=\"wrap\"] wrapper switches grid-template-rows from 0fr to 1fr, and the inner layer keeps overflow:hidden and min-height:0 — without it the grid row will not shrink below its content. The collapsed part is marked with the inert attribute, so while collapsed its content drops out of the tab order."
+          }
+        },
+        "cardControls": [
+          "title",
+          "defaultOpen",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "collapsible-003",
+      "type": "registry:component",
+      "title": "Читать дальше",
+      "description": "Свёртка длинного текста: обрез по числу строк, градиент вместо резкой границы и кнопка «Показать ещё».",
+      "categories": [
+        "accordion"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "collapsible-003/collapsible-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/collapsible-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-003-*. Клиентский: \"use client\" ради useState. Обрез сделан связкой display:-webkit-box, -webkit-box-orient:vertical и -webkit-line-clamp, где число строк приходит переменной --vibeui-collapsible-003-lines из пропса lines — поэтому граница всегда совпадает с базовой линией строки. Градиент лежит в ::after контейнера обреза и уходит в ту же переменную фона, что и вся карточка. Кнопка связана с абзацем через aria-controls и несёт aria-expanded.",
+      "meta": {
+        "tags": [
+          "collapsible",
+          "read-more",
+          "line-clamp",
+          "text"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Collapsible003",
+          "usage": "<Collapsible003 title=\"Почему компонент отдаётся одним файлом\" lines={4} />",
+          "summary": "Обрезка длинного текста по числу строк с растворяющимся градиентом и кнопкой «Показать ещё». Число строк задаётся пропсом и уезжает в CSS-переменную. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-collapsible-003-* и не подменять её токенами вашей темы",
+            "обрез по line-clamp, а не по фиксированной высоте: при другом кегле пиксели врут",
+            "градиент, уходящий в переменную фона блока — иначе на другой подложке появится полоса",
+            "aria-expanded и aria-controls на кнопке: без них связь кнопки и текста не читается",
+            "полный текст в DOM даже в свёрнутом виде — так работают поиск по странице и копирование",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "заголовок через проп title",
+            "текст через проп text",
+            "число видимых строк через проп lines",
+            "акцент через проп accent и высоту градиента",
+            "подписи кнопки через пропы moreText и lessText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Компонент не проверяет, влезает ли текст: для короткого текста кнопку лучше скрывать снаружи по длине строки.",
+            "line-clamp работает только вместе с display:-webkit-box — обычный блок обрежется без многоточия.",
+            "Градиент рисуется поверх текста и не кликается благодаря pointer-events:none, не убирайте это правило.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "lines",
+            "label": "Строк видно",
+            "type": "number",
+            "default": 4,
+            "min": 2,
+            "max": 12
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Почему компонент отдаётся одним файлом",
+            "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A long-text disclosure: the clamp counts lines rather than pixels, a gradient replaces the hard cut, and a Show more button expands it.",
+            "ai": {
+              "summary": "Long text clamped by line count with a dissolving gradient and a Show more button. The line count is a prop that travels into a CSS variable. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-collapsible-003-* palette — do not swap it for your theme tokens",
+                "the line-clamp rather than a fixed height: pixels lie as soon as the type size changes",
+                "the gradient ending in the block's own background variable — on another surface it would show a band",
+                "aria-expanded and aria-controls on the button: without them the link to the text is invisible",
+                "the full text staying in the DOM while collapsed — that keeps find-in-page and copying working",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the heading through the title prop",
+                "the copy through the text prop",
+                "the number of visible lines through the lines prop",
+                "the accent through the accent prop and the gradient height",
+                "the button captions through the moreText and lessText props",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The component does not measure whether the text overflows: hide the button from outside for short copy.",
+                "line-clamp only works together with display:-webkit-box — a plain block clips without the ellipsis.",
+                "The gradient sits above the text and stays click-through thanks to pointer-events:none; keep that rule.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Collapsible003 title=\"Why the component ships as one file\" lines={4} />"
+            },
+            "controls": {
+              "lines": {
+                "label": "Visible lines"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "Why the component ships as one file"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Read More",
+            "preview": {
+              "props": {
+                "title": "Why the component ships as one file",
+                "text": "VibeUI hands over the whole component: markup, styles and palette in a single file. Nothing is pulled from the project theme, so after installing, the block looks exactly as it did in the catalog preview — the same typography, the same spacing, the same behaviour as it narrows. Edits happen right in the file: it is yours, nobody will update it from the registry, and it will not clash with your design tokens.",
+                "moreText": "Show more",
+                "lessText": "Collapse"
+              }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-003-*. It is a client component: \"use client\" for useState. The clamp is made by the pairing of display:-webkit-box, -webkit-box-orient:vertical and -webkit-line-clamp, where the number of lines arrives through the --vibeui-collapsible-003-lines variable from the lines prop — that is why the boundary always lands on a line baseline. The gradient lives in the ::after of the clamp container and ends in the same background variable as the whole card. The button is linked to the paragraph through aria-controls and carries aria-expanded."
+          }
+        },
+        "cardControls": [
+          "lines",
+          "title",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "collapsible-004",
+      "type": "registry:component",
+      "title": "Свёрнутый лог",
+      "description": "Свёрнутый вывод сборки: итог по строкам и ошибкам виден в заголовке, а сам лог разворачивается только при разборе.",
+      "categories": [
+        "accordion"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "collapsible-004/collapsible-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/collapsible-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-004-*. Серверный: хуков нет, корень — details. Количество ошибок считается из массива lines по полю level и попадает в summary, поэтому разворачивать блок ради подсчёта не нужно. Номера строк рисует счётчик CSS через counter-reset и li::before: в разметке их нет, и копия лога остаётся чистой. Поверхность тёмная, лог моноширинный, уровни различаются цветом строки.",
+      "meta": {
+        "tags": [
+          "collapsible",
+          "log",
+          "details",
+          "counter"
+        ],
+        "preview": {
+          "props": {
+            "open": true
+          },
+          "width": "full"
+        },
+        "ai": {
+          "export": "Collapsible004",
+          "usage": "<Collapsible004 title=\"Вывод сборки\" lines={[{ text: \"build failed\", level: \"error\" }]} />",
+          "summary": "Свёрнутый лог сборки: счётчик строк и ошибок прямо в заголовке, нумерация строк на CSS-счётчике, уровни различаются цветом. Клиентского JS нет. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-collapsible-004-* и не подменять её токенами вашей темы",
+            "подсчёт ошибок в summary: свёрнутый лог иначе скрывает главное — упало или нет",
+            "нумерацию через CSS-счётчик, а не текстом в разметке: копия лога остаётся чистой",
+            "моноширинный шрифт лога — колонки и отступы в выводе значимы",
+            "рамку блока: тёмная панель на тёмной витрине без неё сливается с фоном",
+            "ограничение высоты с прокруткой: длинный лог не должен растягивать страницу",
+            "тёмную поверхность лога как дизайн-решение: это терминальная панель, и она остаётся тёмной при любой теме страницы"
+          ],
+          "adapt": [
+            "заголовок через проп title",
+            "массив lines и уровни строк",
+            "максимальную высоту прокрутки",
+            "акцент через проп accent",
+            "подписи счётчиков через пропы linesText и errorsText с плейсхолдером {count}"
+          ],
+          "notes": [
+            "Подсветки синтаксиса нет: она стоит библиотеки, а вывод сборки в ней не нуждается.",
+            "Уровень строки задаётся полем level; неизвестное значение отрисуется как обычная строка.",
+            "Для живого лога добавьте прокрутку к последней строке снаружи: компонент не следит за обновлениями.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Вывод сборки",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A collapsed build log: the line and error tally sits in the header, and the log itself expands only when something needs triage.",
+            "ai": {
+              "summary": "A collapsed build log: line and error counts right in the header, line numbers from a CSS counter, levels told apart by colour. No client JS. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-collapsible-004-* palette — do not swap it for your theme tokens",
+                "the error tally in summary: otherwise a collapsed log hides the only thing that matters",
+                "numbering through a CSS counter rather than markup: a copied log stays clean",
+                "the monospaced face — columns and indentation carry meaning in build output",
+                "the block border: a dark panel merges into a dark showcase without it",
+                "the capped height with scrolling: a long log must not stretch the page",
+                "the dark log surface as a design decision: this is a terminal panel and it stays dark under any page theme"
+              ],
+              "adapt": [
+                "the heading through the title prop",
+                "the lines array and their levels",
+                "the maximum scroll height",
+                "the accent through the accent prop",
+                "the tally captions through the linesText and errorsText props with the {count} placeholder"
+              ],
+              "notes": [
+                "There is no syntax highlighting: it costs a library and build output does not need it.",
+                "The row level comes from the level field; an unknown value renders as an ordinary line.",
+                "For a live log, scroll to the last line from outside: the component does not watch for updates.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Collapsible004 title=\"Build output\" lines={[{ text: \"build failed\", level: \"error\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Build output"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "title": "Collapsed Log",
+            "preview": {
+              "props": {
+                "title": "Build output",
+                "lines": [
+                  {
+                    "text": "▲ Next.js 16.0.1 — compiling registry"
+                  },
+                  {
+                    "text": "indexes: 39 registries, 463 items"
+                  },
+                  {
+                    "text": "meta: checked, no errors"
+                  },
+                  {
+                    "text": "warn  collapsible-004: preview wider than the card",
+                    "level": "warn"
+                  },
+                  {
+                    "text": "registry:build → public/r (463 files)"
+                  },
+                  {
+                    "text": "error  route /r/[name] returned no JSON",
+                    "level": "error"
+                  },
+                  {
+                    "text": "build failed in 12.4s"
+                  }
+                ],
+                "linesText": "{count} lines",
+                "errorsText": "{count} errors"
+              }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-004-*. It is a server component: there are no hooks, and the root is details. The number of errors is computed from the lines array by its level field and lands in summary, so the block does not have to be expanded just to count them. The line numbers are drawn by a CSS counter through counter-reset and li::before: they are not in the markup, and a copy of the log stays clean. The surface is dark, the log is monospaced, and the levels are told apart by line colour."
+          }
+        },
+        "cardControls": [
+          "title",
+          "accent"
+        ]
+      }
+    },
+    {
+      "name": "collapsible-005",
+      "type": "registry:component",
+      "title": "Взаимоисключающие шаги",
+      "description": "Группа свёрток, где открыт ровно один шаг: взаимное исключение держит атрибут name у details, без React-состояния.",
+      "categories": [
+        "accordion"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "collapsible-005/collapsible-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/collapsible-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-005-*. Серверный: хуков нет. Общий атрибут name на всех details превращает их в радиогруппу — открытым остаётся только один, и состояние не дублируется в React. Номер шага рисует CSS-счётчик на summary::before, поэтому перестановка массива steps сразу меняет нумерацию. Открытый шаг подсвечивается заливкой кружка через селектор details[open].",
+      "meta": {
+        "tags": [
+          "collapsible",
+          "steps",
+          "exclusive",
+          "no-js"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Collapsible005",
+          "usage": "<Collapsible005 steps={[{ label: \"Подключить реестр\", text: \"Добавьте адрес в components.json\", open: true }]} />",
+          "summary": "Группа свёрток с одной открытой за раз: исключение обеспечивает атрибут name у details, нумерация шагов — CSS-счётчик. Клиентского JS нет. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-collapsible-005-* и не подменять её токенами вашей темы",
+            "общий атрибут name у details — это и есть взаимное исключение, отдельный стейт не нужен",
+            "CSS-счётчик для номеров: при перестановке массива нумерация не разъедется",
+            "подсветку открытого шага через details[open], а не через класс из JS",
+            "отступ текста под номером: колонка задаёт направление чтения сверху вниз",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив steps и стартовый шаг через флаг open",
+            "имя радиогруппы через проп groupName",
+            "акцент через проп accent",
+            "ширину блока и скругления",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Имя группы обязано быть уникальным на странице: два блока с одинаковым groupName начнут закрывать друг друга.",
+            "Все шаги можно закрыть щелчком по открытому — это поведение радиогруппы details, а не ошибка.",
+            "Анимации при переключении нет: браузер закрывает предыдущий details мгновенно.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "groupName",
+            "label": "Имя группы",
+            "type": "text",
+            "default": "vibeui-collapsible-005",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A group of disclosures where exactly one step stays open: mutual exclusion comes from the details name attribute, with no React state.",
+            "ai": {
+              "summary": "A group of disclosures with one open at a time: exclusion comes from the details name attribute, step numbers from a CSS counter. No client JS. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-collapsible-005-* palette — do not swap it for your theme tokens",
+                "the shared name attribute on details — that is the mutual exclusion, no separate state needed",
+                "the CSS counter for numbering: reordering the array cannot desynchronise it",
+                "highlighting the open step via details[open] rather than a class pushed from JS",
+                "the text indent under the number: the column sets the top-down reading direction",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the steps array and the initial step through its open flag",
+                "the radio group name through the groupName prop",
+                "the accent through the accent prop",
+                "the block width and corner radii",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The group name must be unique on the page: two blocks sharing groupName will close each other.",
+                "Every step can end up closed by clicking the open one — that is details radio behaviour, not a bug.",
+                "There is no switch animation: the browser closes the previous details instantly.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Collapsible005 steps={[{ label: \"Connect the registry\", text: \"Add the URL to components.json\", open: true }]} />"
+            },
+            "controls": {
+              "groupName": {
+                "label": "Group name",
+                "default": "vibeui-collapsible-005"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Exclusive Steps",
+            "preview": {
+              "props": {
+                "steps": [
+                  {
+                    "label": "Connect the registry",
+                    "text": "Add the registry URL to components.json — after that the CLI resolves components by their short name.",
+                    "open": true
+                  },
+                  {
+                    "label": "Install the component",
+                    "text": "The command drops a single file into components/vibeui and touches nothing else: it has no dependencies."
+                  },
+                  {
+                    "label": "Plug in your own data",
+                    "text": "The props are described in metadata: swap the texts and arrays, leave the markup and the palette alone."
+                  }
+                ]
+              }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-005-*. It is a server component: there are no hooks. A shared name attribute on all the details turns them into a radio group — only one stays open, and the state is not duplicated in React. The step number is drawn by a CSS counter on summary::before, so reordering the steps array changes the numbering right away. The open step is highlighted by the circle fill through the details[open] selector."
+          }
+        },
+        "cardControls": [
+          "groupName",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "collapsible-006",
+      "type": "registry:component",
+      "title": "Счётчик скрытого",
+      "description": "Свёртка со счётчиком скрытого: первые участники видны в заголовке, остальные прячутся за кружком «+N».",
+      "categories": [
+        "accordion"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "collapsible-006/collapsible-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/collapsible-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-006-*. Серверный: хуков нет, корень — details. Массив people делится пропсом visible на видимую и скрытую части, размер скрытой части и есть подпись кружка «+N». Стек аватаров собран отрицательным margin-left и рамкой цвета фона, инициалы вычисляются из имени, поэтому картинки не нужны. Кружок счётчика в раскрытом состоянии меняет цвет через селектор [open].",
+      "meta": {
+        "tags": [
+          "collapsible",
+          "avatars",
+          "counter",
+          "details"
+        ],
+        "preview": {
+          "props": {
+            "open": true
+          },
+          "width": "full"
+        },
+        "ai": {
+          "export": "Collapsible006",
+          "usage": "<Collapsible006 title=\"Участники проекта\" people={[\"Анна Ким\", \"Борис Радов\"]} visible={3} />",
+          "summary": "Свёртка, у которой в заголовке видно, сколько элементов скрыто: стек инициалов и кружок «+N», внутри — полный список остальных. Клиентского JS нет. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-collapsible-006-* и не подменять её токенами вашей темы",
+            "счётчик скрытых в заголовке: без числа непонятно, стоит ли разворачивать",
+            "инициалы вместо картинок — компонент обязан работать без загрузки аватаров",
+            "рамку кружка цветом фона: она и создаёт эффект наложения в стеке",
+            "aria-label у кружка «+N»: сам по себе он читается как бессмысленное число",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "заголовок через проп title",
+            "список people",
+            "сколько имён остаётся на виду через проп visible",
+            "акцент через проп accent и размер кружков",
+            "подпись кружка «+N» через проп restLabel с плейсхолдером {count}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Внутри показываются только скрытые участники: видимые уже есть в заголовке, дублировать их не нужно.",
+            "При visible больше длины списка кружок «+N» и раскрытие исчезают — это штатное поведение.",
+            "Инициалы берутся из первых двух слов имени: для одного слова получится одна буква.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "visible",
+            "label": "Видно имён",
+            "type": "number",
+            "default": 3,
+            "min": 0,
+            "max": 8
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Участники проекта",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A disclosure with a hidden-item count: the first people show in the header, the rest hide behind a +N circle.",
+            "ai": {
+              "summary": "A disclosure that shows how much is hidden right in the header: a stack of initials plus a +N circle, with the full remainder inside. No client JS. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-collapsible-006-* palette — do not swap it for your theme tokens",
+                "the hidden count in the header: without a number there is no reason to expand",
+                "initials instead of pictures — the component must work without loading avatars",
+                "the background-coloured ring on each circle: it is what creates the overlap",
+                "the aria-label on the +N circle: on its own it reads as a meaningless number",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the heading through the title prop",
+                "the people list",
+                "how many names stay visible through the visible prop",
+                "the accent through the accent prop and the circle size",
+                "the +N circle label through the restLabel prop with the {count} placeholder",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Only hidden people are listed inside: the visible ones are already in the header.",
+                "When visible exceeds the list length the +N circle and the expansion disappear — that is intended.",
+                "Initials come from the first two words of the name: a single word yields one letter.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Collapsible006 title=\"Project members\" people={[\"Anna Kim\", \"Boris Radov\"]} visible={3} />"
+            },
+            "controls": {
+              "visible": {
+                "label": "Visible names"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "Project members"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Hidden Count",
+            "preview": {
+              "props": {
+                "title": "Project members",
+                "people": [
+                  "Anna Kim",
+                  "Boris Radov",
+                  "Vera Ilyina",
+                  "Gleb Mostovoy",
+                  "Dina Salikh",
+                  "Egor Panin",
+                  "Zhanna Tur",
+                  "Zakhar Lemeshev"
+                ],
+                "restLabel": "{count} more members"
+              }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-006-*. It is a server component: there are no hooks, and the root is details. The people array is split by the visible prop into a shown and a hidden part, and the size of the hidden part is exactly the «+N» circle label. The avatar stack is assembled with a negative margin-left and a background-coloured ring, and the initials are computed from the name, so no pictures are needed. In the expanded state the counter circle changes colour through the [open] selector."
+          }
+        },
+        "cardControls": [
+          "visible",
+          "title",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "collapsible-008",
+      "type": "registry:component",
+      "title": "Изменённые настройки",
+      "description": "Свёртка настроек с признаком «изменено»: число отличий от значений по умолчанию видно в заголовке до раскрытия.",
+      "categories": [
+        "accordion"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "collapsible-008/collapsible-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/collapsible-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-008-*. Серверный: хуков нет, корень — details. Количество изменённых параметров считается из массива settings по флагу changed и выводится плашкой в summary; при нуле плашка меняет текст и приглушается через атрибут data-clean. Строки собраны на dl/dt/dd — это описания значений, а не таблица; изменённая строка получает точку в dt::before, подложку и жирное моноширинное значение.",
+      "meta": {
+        "tags": [
+          "collapsible",
+          "settings",
+          "diff",
+          "details"
+        ],
+        "preview": {
+          "props": {
+            "open": true
+          },
+          "width": "full"
+        },
+        "ai": {
+          "export": "Collapsible008",
+          "usage": "<Collapsible008 title=\"Параметры сборки\" settings={[{ label: \"Формат\", value: \"standalone\", changed: true }]} />",
+          "summary": "Свёрнутая группа настроек, которая честно сообщает, сколько значений отличается от умолчаний: счётчик в заголовке, точка и жирное значение в строках. Клиентского JS нет. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-collapsible-008-* и не подменять её токенами вашей темы",
+            "счётчик изменений в заголовке: свёрнутый блок иначе скрывает сам факт правки",
+            "разметку dl/dt/dd — это пары «параметр — значение», а не таблица",
+            "двойной признак изменения (точка и насыщенность значения): цвет один не читается при дальтонизме",
+            "моноширинный шрифт значений: их сравнивают посимвольно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "заголовок через проп title",
+            "массив settings и флаги changed",
+            "подписи плашки через пропы defaultText и changedText с плейсхолдером {count}",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Компонент не сравнивает значения сам: флаг changed приходит снаружи, сравнение с умолчаниями за вами.",
+            "Кнопки «сбросить» здесь нет намеренно: это действие, а блок остаётся представлением.",
+            "Длинное значение не переносится — при длинных строках задайте перенос или сократите текст.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Параметры сборки",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A settings disclosure with a changed marker: the number of values differing from the defaults is visible before you expand it.",
+            "ai": {
+              "summary": "A collapsed settings group that states how many values differ from the defaults: a counter in the header, a dot and a bolder value in the rows. No client JS. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-collapsible-008-* palette — do not swap it for your theme tokens",
+                "the change counter in the header: a collapsed block otherwise hides that anything was edited",
+                "the dl/dt/dd markup — these are name/value pairs, not a table",
+                "the double change cue (a dot plus a stronger value): colour alone fails for colour blindness",
+                "the monospaced values: they get compared character by character",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the heading through the title prop",
+                "the settings array and its changed flags",
+                "the badge captions through the defaultText and changedText props with the {count} placeholder",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The component does not diff anything itself: the changed flag comes from outside.",
+                "There is deliberately no reset button: that is an action, and this block stays a view.",
+                "Long values do not wrap — add wrapping or shorten the text if your values are long.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Collapsible008 title=\"Build options\" settings={[{ label: \"Format\", value: \"standalone\", changed: true }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Build options"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Changed Settings",
+            "preview": {
+              "props": {
+                "title": "Build options",
+                "settings": [
+                  {
+                    "label": "Build format",
+                    "value": "standalone",
+                    "changed": true
+                  },
+                  {
+                    "label": "Registry cache",
+                    "value": "1 hour"
+                  },
+                  {
+                    "label": "Preview theme",
+                    "value": "auto"
+                  },
+                  {
+                    "label": "Warning threshold",
+                    "value": "12",
+                    "changed": true
+                  },
+                  {
+                    "label": "Telemetry",
+                    "value": "off"
+                  }
+                ],
+                "defaultText": "defaults",
+                "changedText": "{count} changed"
+              }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-008-*. It is a server component: there are no hooks, and the root is details. The number of changed parameters is computed from the settings array by the changed flag and shown as a badge in summary; at zero the badge changes its text and is muted through the data-clean attribute. The rows are built on dl/dt/dd — these are descriptions of values, not a table; a changed row gets a dot in dt::before, a fill and a bold monospaced value."
+          }
+        },
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "collapsible-009",
+      "type": "registry:component",
+      "title": "Состояние в разметке",
+      "description": "История версий, где раскрытый раздел объявлен атрибутом open прямо в разметке: сервер отдаёт нужный раздел уже открытым.",
+      "categories": [
+        "accordion"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "collapsible-009/collapsible-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/collapsible-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-009-*. Серверный: хуков нет, флаг open каждого релиза уходит прямо в атрибут details. Это не «начальное значение стейта», а само состояние: до гидратации ничего не мигает, печать и поиск по странице видят содержимое. Подпись переключателя меняется без React — в разметке лежат два узла data-when, а показывает нужный селектор details[open].",
+      "meta": {
+        "tags": [
+          "collapsible",
+          "changelog",
+          "ssr",
+          "no-js"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Collapsible009",
+          "usage": "<Collapsible009 releases={[{ version: \"0.6.0\", date: \"12 августа\", text: \"Реестр отдаёт исходник\", open: true }]} />",
+          "summary": "Список изменений на details, где стартовое состояние живёт в разметке: раскрытый раздел приходит с сервера, подпись переключателя меняется чистым CSS. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-collapsible-009-* и не подменять её токенами вашей темы",
+            "атрибут open как состояние: перенос его в useState вернёт мигание до гидратации",
+            "смену подписи через селектор details[open] и узлы data-when — React для этого не нужен",
+            "моноширинный номер версии: версии сравнивают посимвольно",
+            "видимый фокус у summary: разделы перебирают с клавиатуры",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "заголовок через проп title",
+            "массив releases и флаги open",
+            "формат даты и подписи переключателя через пропы expandText и collapseText",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Состояние не сохраняется между переходами: для запоминания нужен внешний слой, но тогда пропадёт работа до гидратации.",
+            "Открытыми можно оставить сразу несколько разделов — взаимного исключения здесь нет намеренно.",
+            "Обе подписи переключателя лежат в DOM: скринридер может прочитать скрытую, если убрать display:none.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "История версий",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A changelog where the expanded section is declared with the open attribute in the markup, so the server ships it already open.",
+            "ai": {
+              "summary": "A changelog on details where the initial state lives in markup: the open section arrives from the server and the toggle caption swaps in pure CSS. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-collapsible-009-* palette — do not swap it for your theme tokens",
+                "the open attribute as the state: moving it into useState brings back the pre-hydration flash",
+                "the caption swap through details[open] and the data-when nodes — React is not needed for that",
+                "the monospaced version number: versions get compared character by character",
+                "the visible focus ring on summary: sections get tabbed through",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the heading through the title prop",
+                "the releases array and its open flags",
+                "the date format and the toggle captions through the expandText and collapseText props",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "State does not persist across navigations: persisting it needs an outer layer, which costs pre-hydration behaviour.",
+                "Several sections may stay open at once — there is deliberately no mutual exclusion here.",
+                "Both toggle captions live in the DOM: a screen reader could read the hidden one if display:none is removed.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Collapsible009 releases={[{ version: \"0.6.0\", date: \"12 August\", text: \"The registry serves sources\", open: true }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Release history"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Markup State",
+            "preview": {
+              "props": {
+                "title": "Release history",
+                "releases": [
+                  {
+                    "version": "0.6.0",
+                    "date": "12 August",
+                    "text": "The registry serves the component source at /f/<name>.tsx — the agent now takes the file byte for byte.",
+                    "open": true
+                  },
+                  {
+                    "version": "0.5.2",
+                    "date": "29 July",
+                    "text": "The catalog filters by tags, and cards size themselves from their own container."
+                  },
+                  {
+                    "version": "0.5.0",
+                    "date": "14 July",
+                    "text": "The Copy for AI instruction is assembled from metadata instead of being written by hand for every component."
+                  }
+                ],
+                "expandText": "expand",
+                "collapseText": "collapse"
+              }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-009-*. It is a server component: there are no hooks, and the open flag of each release goes straight into the details attribute. This is not an «initial state value» but the state itself: nothing flashes before hydration, and printing and find-in-page see the content. The toggle caption changes without React — two data-when nodes sit in the markup and the details[open] selector shows the right one."
+          }
+        },
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "collapsible-010",
+      "type": "registry:component",
+      "title": "Липкие заголовки",
+      "description": "Свёртки внутри карточки с прокруткой: заголовок раздела липнет к верху и не уезжает, пока не придёт следующий.",
+      "categories": [
+        "accordion"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "collapsible-010/collapsible-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/collapsible-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-010-*. Серверный: хуков нет. Прокрутка ограничена контейнером [data-part=\"scroll\"] с max-height и overscroll-behavior:contain, а summary внутри него получает position:sticky и top:0 — прилипание работает только потому, что скролл-контейнер свой, а не окно. Общее число элементов считается из массива sections и выводится в шапке карточки.",
+      "meta": {
+        "tags": [
+          "collapsible",
+          "sticky",
+          "scroll",
+          "sections"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Collapsible010",
+          "usage": "<Collapsible010 title=\"Библиотека\" sections={[{ label: \"Ввод\", items: [\"Поле ввода\"], open: true }]} />",
+          "summary": "Карточка с ограниченной высотой, внутри которой несколько свёрток, а заголовок раскрытого раздела липнет к верху прокрутки. Клиентского JS нет. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-collapsible-010-* и не подменять её токенами вашей темы",
+            "собственный скролл-контейнер: без него position:sticky прилипает к окну, а не к карточке",
+            "непрозрачный фон у summary — иначе строки списка просвечивают сквозь липкий заголовок",
+            "overscroll-behavior:contain: прокрутка карточки не должна утягивать за собой страницу",
+            "z-index у липкого заголовка: без него он окажется под содержимым",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "заголовок через проп title",
+            "массив sections и флаги open",
+            "максимальную высоту прокрутки",
+            "акцент через проп accent",
+            "подпись счётчика через проп totalText с плейсхолдером {count}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Липкий заголовок требует, чтобы у карточки была ограниченная высота: без max-height прилипать не к чему.",
+            "Если раскрыть все разделы, липких заголовков станет несколько — они сменяют друг друга по мере прокрутки, это нормально.",
+            "Элементы списка здесь не интерактивны: добавьте ссылки или кнопки под свою модель навигации.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Библиотека",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Disclosures inside a scrolling card: the section heading sticks to the top and stays there until the next one pushes it away.",
+            "ai": {
+              "summary": "A height-capped card holding several disclosures where the open section's heading sticks to the top of the scroll area. No client JS. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-collapsible-010-* palette — do not swap it for your theme tokens",
+                "the card's own scroll container: without it position:sticky pins to the window instead",
+                "the opaque background on summary — otherwise list rows show through the sticky heading",
+                "overscroll-behavior:contain: scrolling the card must not drag the page along",
+                "the z-index on the sticky heading: without it the content covers it",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the heading through the title prop",
+                "the sections array and its open flags",
+                "the maximum scroll height",
+                "the accent through the accent prop",
+                "the total caption through the totalText prop with the {count} placeholder",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "A sticky heading needs the card to have a capped height: with no max-height there is nothing to stick to.",
+                "Open every section and several headings become sticky — they replace each other while scrolling, which is expected.",
+                "List items are not interactive here: add links or buttons to match your navigation model.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Collapsible010 title=\"Library\" sections={[{ label: \"Inputs\", items: [\"Text field\"], open: true }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Library"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Sticky Sections",
+            "preview": {
+              "props": {
+                "title": "Library",
+                "sections": [
+                  {
+                    "label": "Inputs",
+                    "items": [
+                      "Text field",
+                      "Autocomplete",
+                      "Combobox",
+                      "Switch"
+                    ],
+                    "open": true
+                  },
+                  {
+                    "label": "Display",
+                    "items": [
+                      "Skeleton",
+                      "Timeline",
+                      "File tree",
+                      "Code block"
+                    ],
+                    "open": true
+                  },
+                  {
+                    "label": "Navigation",
+                    "items": [
+                      "Tabs",
+                      "Breadcrumbs",
+                      "Command palette",
+                      "Pagination"
+                    ]
+                  }
+                ],
+                "totalText": "{count} components"
+              }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-010-*. It is a server component: there are no hooks. Scrolling is confined to the [data-part=\"scroll\"] container with max-height and overscroll-behavior:contain, while the summary inside it gets position:sticky and top:0 — the pinning works only because the scroll container is its own rather than the window. The total number of items is computed from the sections array and printed in the card header."
+          }
+        },
+        "cardControls": [
+          "title",
+          "accent",
           "background"
         ]
       }

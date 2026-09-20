@@ -231,4 +231,49 @@ export const PREVIEWS = {
   "button-076": dynamic(() =>
     import("@/registry/components/button/button-076/button-076").then((module) => module.Button076),
   ),
+  "toggle-001": dynamic(() =>
+    import("@/registry/components/button/toggle-001/toggle-001").then((module) => module.Toggle001),
+  ),
+  "toggle-002": dynamic(() =>
+    import("@/registry/components/button/toggle-002/toggle-002").then((module) => module.Toggle002),
+  ),
+  "toggle-003": dynamic(() =>
+    import("@/registry/components/button/toggle-003/toggle-003").then((module) => module.Toggle003),
+  ),
+  "toggle-004": dynamic(() =>
+    import("@/registry/components/button/toggle-004/toggle-004").then((module) => module.Toggle004),
+  ),
+  "toggle-005": dynamic(() =>
+    import("@/registry/components/button/toggle-005/toggle-005").then((module) => module.Toggle005),
+  ),
+  "toggle-006": dynamic(() =>
+    import("@/registry/components/button/toggle-006/toggle-006").then((module) => module.Toggle006),
+  ),
+  "toggle-007": dynamic(() =>
+    import("@/registry/components/button/toggle-007/toggle-007").then((module) => module.Toggle007),
+  ),
+  "toggle-008": dynamic(() =>
+    import("@/registry/components/button/toggle-008/toggle-008").then((module) => module.Toggle008),
+  ),
+  "toggle-009": dynamic(() =>
+    import("@/registry/components/button/toggle-009/toggle-009").then((module) => module.Toggle009),
+  ),
+  "toggle-010": dynamic(() =>
+    import("@/registry/components/button/toggle-010/toggle-010").then((module) => module.Toggle010),
+  ),
+  "toggle-011": dynamic(() =>
+    import("@/registry/components/button/toggle-011/toggle-011").then((module) => module.Toggle011),
+  ),
+  "toggle-012": dynamic(() =>
+    import("@/registry/components/button/toggle-012/toggle-012").then((module) => module.Toggle012),
+  ),
+  "toggle-013": dynamic(() =>
+    import("@/registry/components/button/toggle-013/toggle-013").then((module) => module.Toggle013),
+  ),
+  "toggle-014": dynamic(() =>
+    import("@/registry/components/button/toggle-014/toggle-014").then((module) => module.Toggle014),
+  ),
+  "toggle-015": dynamic(() =>
+    import("@/registry/components/button/toggle-015/toggle-015").then((module) => module.Toggle015),
+  ),
 } satisfies PreviewMap

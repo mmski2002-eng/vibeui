@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Плашка состояния",
       "description": "Плашка статуса, в которой цвет несёт только точка. В таблице из двадцати строк статусы остаются заметными, но не превращают её в светофор.",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-badge-001-*. Пять тонов переключаются data-атрибутом и меняют только переменную точки — фон и рамка остаются нейтральными во всех состояниях. Это inline-элемент: он встаёт в строку рядом с текстом и в ячейку таблицы.",
       "meta": {
-        "tags": ["badge", "status", "label", "table"],
+        "tags": [
+          "badge",
+          "status",
+          "label",
+          "table"
+        ],
         "preview": {
           "states": [
             {
@@ -75,14 +82,23 @@
             "label": "Тон",
             "type": "select",
             "default": "success",
-            "options": ["neutral", "success", "warning", "danger", "info"]
+            "options": [
+              "neutral",
+              "success",
+              "warning",
+              "danger",
+              "info"
+            ]
           },
           {
             "prop": "size",
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": ["sm", "md"]
+            "options": [
+              "sm",
+              "md"
+            ]
           },
           {
             "prop": "dot",
@@ -155,7 +171,13 @@
             }
           }
         },
-        "cardControls": ["children", "tone", "size", "dot", "background"]
+        "cardControls": [
+          "children",
+          "tone",
+          "size",
+          "dot",
+          "background"
+        ]
       }
     },
     {
@@ -163,7 +185,9 @@
       "type": "registry:component",
       "title": "Плашка с заливкой",
       "description": "Залитая плашка для одного акцента на экране: фон и текст считаются из одного оттенка, поэтому контраст держится в любом тоне.",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -175,7 +199,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-badge-002-*. Серверный: хуков нет. Тон — это две переменные, оттенок и насыщенность; светлота фона и текста выводится из них в oklch, поэтому новый тон добавляется одной строкой и контраст не приходится подбирать вручную. Тон переключается атрибутом data-tone.",
       "meta": {
-        "tags": ["badge", "tone", "status", "color"],
+        "tags": [
+          "badge",
+          "tone",
+          "status",
+          "color"
+        ],
         "preview": {
           "states": [
             {
@@ -231,14 +260,23 @@
             "label": "Тон",
             "type": "select",
             "default": "success",
-            "options": ["neutral", "success", "warning", "danger", "info"]
+            "options": [
+              "neutral",
+              "success",
+              "warning",
+              "danger",
+              "info"
+            ]
           },
           {
             "prop": "size",
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": ["sm", "md"]
+            "options": [
+              "sm",
+              "md"
+            ]
           }
         ],
         "i18n": {
@@ -292,7 +330,11 @@
             }
           }
         },
-        "cardControls": ["children", "tone", "size"]
+        "cardControls": [
+          "children",
+          "tone",
+          "size"
+        ]
       }
     },
     {
@@ -300,7 +342,9 @@
       "type": "registry:component",
       "title": "Плашка со счётчиком",
       "description": "Счётчик, который не растягивает соседей: минимальная ширина в высоту плашки, табличные цифры и порог «99+».",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -312,7 +356,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-badge-003-*. Серверный: хуков нет. Ширина задана min-width в высоту плашки, поэтому однозначное число даёт круг, а не узкую полоску. Цифры табличные. Настоящее значение уходит в aria-label, видимый текст помечен aria-hidden: «99+» вслух бесполезно. Нулевое значение приглушается атрибутом data-zero.",
       "meta": {
-        "tags": ["badge", "counter", "notification", "numbers"],
+        "tags": [
+          "badge",
+          "counter",
+          "notification",
+          "numbers"
+        ],
         "preview": {
           "states": [
             {
@@ -377,7 +426,11 @@
             "label": "Тон",
             "type": "select",
             "default": "danger",
-            "options": ["neutral", "accent", "danger"]
+            "options": [
+              "neutral",
+              "accent",
+              "danger"
+            ]
           },
           {
             "prop": "background",
@@ -439,7 +492,12 @@
             }
           }
         },
-        "cardControls": ["value", "max", "tone", "background"]
+        "cardControls": [
+          "value",
+          "max",
+          "tone",
+          "background"
+        ]
       }
     },
     {
@@ -447,7 +505,9 @@
       "type": "registry:component",
       "title": "Точка-маркер",
       "description": "Точка-маркер поверх чужого элемента: обёртка садит её в угол, обводка вырезает кружок под ней, смысл идёт текстом.",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -459,7 +519,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-badge-004-*. Серверный: хуков нет. Это обёртка: внутрь кладут кнопку или иконку, точка позиционируется абсолютно в угол и вырезает под собой кружок через box-shadow цветом подложки. Смысл маркера уходит скрытой строкой с role=\"status\". Без детей рисуется демонстрационная кнопка с колокольчиком.",
       "meta": {
-        "tags": ["badge", "dot", "notification", "wrapper"],
+        "tags": [
+          "badge",
+          "dot",
+          "notification",
+          "wrapper"
+        ],
         "preview": {
           "states": [
             {
@@ -516,14 +581,21 @@
             "label": "Тон",
             "type": "select",
             "default": "danger",
-            "options": ["accent", "danger", "success"]
+            "options": [
+              "accent",
+              "danger",
+              "success"
+            ]
           },
           {
             "prop": "placement",
             "label": "Угол",
             "type": "select",
             "default": "top-right",
-            "options": ["top-right", "top-left"]
+            "options": [
+              "top-right",
+              "top-left"
+            ]
           },
           {
             "prop": "show",
@@ -596,7 +668,13 @@
             }
           }
         },
-        "cardControls": ["label", "tone", "placement", "show", "background"]
+        "cardControls": [
+          "label",
+          "tone",
+          "placement",
+          "show",
+          "background"
+        ]
       }
     },
     {
@@ -604,7 +682,9 @@
       "type": "registry:component",
       "title": "Удаляемый чип",
       "description": "Снимаемая плашка фильтра: крестик — настоящая кнопка с именем, а на месте снятой остаётся «Вернуть».",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -616,7 +696,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-badge-005-*. Клиентский: \"use client\", состояние снятия на useState. Крестик — <button> с aria-label, включающим название фильтра. Сам крестик нарисован двумя полосками: типографский символ × в шрифтах сидит неровно. После снятия на месте плашки остаётся пунктирная кнопка возврата.",
       "meta": {
-        "tags": ["badge", "chip", "filter", "removable"],
+        "tags": [
+          "badge",
+          "chip",
+          "filter",
+          "removable"
+        ],
         "preview": {
           "states": [
             {
@@ -670,7 +755,10 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": ["sm", "md"]
+            "options": [
+              "sm",
+              "md"
+            ]
           },
           {
             "prop": "background",
@@ -733,7 +821,11 @@
             }
           }
         },
-        "cardControls": ["label", "size", "background"]
+        "cardControls": [
+          "label",
+          "size",
+          "background"
+        ]
       }
     },
     {
@@ -741,7 +833,9 @@
       "type": "registry:component",
       "title": "Плашка этапа",
       "description": "Стадия документа со знаком-формой: круг, полукруг, заливка и перечёркнутый — читается и без цвета.",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -753,7 +847,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-badge-006-*. Серверный: хуков нет. Стадия переключается атрибутом data-stage: у каждой свой знак — пустой круг, наполовину залитый градиентом, залитый и перечёркнутый псевдоэлементом. Цвет только усиливает форму. Подпись берётся из таблицы стадий и переопределяется пропом label.",
       "meta": {
-        "tags": ["badge", "stage", "workflow", "a11y"],
+        "tags": [
+          "badge",
+          "stage",
+          "workflow",
+          "a11y"
+        ],
         "preview": {
           "states": [
             {
@@ -806,7 +905,12 @@
             "label": "Стадия",
             "type": "select",
             "default": "review",
-            "options": ["draft", "review", "live", "archived"]
+            "options": [
+              "draft",
+              "review",
+              "live",
+              "archived"
+            ]
           },
           {
             "prop": "label",
@@ -880,7 +984,11 @@
             }
           }
         },
-        "cardControls": ["stage", "label", "background"]
+        "cardControls": [
+          "stage",
+          "label",
+          "background"
+        ]
       }
     },
     {
@@ -888,7 +996,9 @@
       "type": "registry:component",
       "title": "Плашка динамики",
       "description": "Изменение показателя со стрелкой: что считать ростом, решает вызывающий код — у оттока рост это плохо.",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -900,7 +1010,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-badge-007-*. Серверный: хуков нет. Направление считается из знака значения, а окраска — из совпадения направления с пропом goodDirection. Стрелка нарисована двумя бордюрами и поворачивается трансформацией; при нулевом изменении превращается в горизонтальную черту. Цифры табличные, знак минус — типографский.",
       "meta": {
-        "tags": ["badge", "trend", "metrics", "dashboard"],
+        "tags": [
+          "badge",
+          "trend",
+          "metrics",
+          "dashboard"
+        ],
         "preview": {
           "states": [
             {
@@ -959,7 +1074,10 @@
             "label": "Хорошо, когда",
             "type": "select",
             "default": "up",
-            "options": ["up", "down"]
+            "options": [
+              "up",
+              "down"
+            ]
           },
           {
             "prop": "period",
@@ -1036,7 +1154,12 @@
             }
           }
         },
-        "cardControls": ["value", "goodDirection", "period", "background"]
+        "cardControls": [
+          "value",
+          "goodDirection",
+          "period",
+          "background"
+        ]
       }
     },
     {
@@ -1044,7 +1167,9 @@
       "type": "registry:component",
       "title": "Плашка версии",
       "description": "Номер версии с каналом: цифры моноширинным шрифтом, канал подписан словом — бету и альфу путать нельзя.",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1056,7 +1181,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-badge-008-*. Серверный: хуков нет. Плашка состоит из двух частей: версия моноширинным шрифтом и канал заглавными, отделённый бордюром. Цвет канала выводится через color-mix из одной переменной. У стабильного канала вторая часть не рисуется вовсе — подписывать «stable» нечего.",
       "meta": {
-        "tags": ["badge", "version", "release", "mono"],
+        "tags": [
+          "badge",
+          "version",
+          "release",
+          "mono"
+        ],
         "preview": {
           "states": [
             {
@@ -1112,7 +1242,11 @@
             "label": "Канал",
             "type": "select",
             "default": "beta",
-            "options": ["stable", "beta", "alpha"]
+            "options": [
+              "stable",
+              "beta",
+              "alpha"
+            ]
           },
           {
             "prop": "background",
@@ -1167,7 +1301,11 @@
             "title": "Version Badge"
           }
         },
-        "cardControls": ["version", "channel", "background"]
+        "cardControls": [
+          "version",
+          "channel",
+          "background"
+        ]
       }
     },
     {
@@ -1175,7 +1313,9 @@
       "type": "registry:component",
       "title": "Строка тегов",
       "description": "Ряд меток в одну строку: хвост сворачивается в счётчик, а полный список уходит скринридеру и в подсказку.",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1187,7 +1327,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-badge-009-*. Серверный: хуков нет. Ряд не переносится: плашки режутся многоточием, а скрытые сворачиваются в «+N» с полным списком в title. Группа объявлена role=\"group\" с aria-label из всех меток, сами плашки помечены aria-hidden — иначе скринридер прочитает их дважды.",
       "meta": {
-        "tags": ["badge", "tags", "overflow", "table"],
+        "tags": [
+          "badge",
+          "tags",
+          "overflow",
+          "table"
+        ],
         "ai": {
           "export": "Badge009",
           "usage": "<Badge009 items={[\"дизайн\", \"каталог\", \"срочно\"]} visible={3} />",
@@ -1298,7 +1443,11 @@
             }
           }
         },
-        "cardControls": ["visible", "label", "background"],
+        "cardControls": [
+          "visible",
+          "label",
+          "background"
+        ],
         "preview": {
           "width": "full"
         }
@@ -1309,7 +1458,9 @@
       "type": "registry:component",
       "title": "Плашка приоритета",
       "description": "Приоритет штрихами: степень читается формой полосок в чёрно-белой печати и при дальтонизме.",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1321,7 +1472,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-badge-010-*. Серверный: хуков нет. Полоски растут по высоте, число залитых считается как total − level + 1, поэтому первый уровень самый заметный. Уровень окрашивается через data-level, но цвет только усиливает форму. Полное значение уходит в aria-label, полоски и подпись помечены aria-hidden.",
       "meta": {
-        "tags": ["badge", "priority", "a11y", "issue"],
+        "tags": [
+          "badge",
+          "priority",
+          "a11y",
+          "issue"
+        ],
         "preview": {
           "states": [
             {
@@ -1461,7 +1617,12 @@
             }
           }
         },
-        "cardControls": ["level", "label", "total", "background"]
+        "cardControls": [
+          "level",
+          "label",
+          "total",
+          "background"
+        ]
       }
     },
     {
@@ -1469,7 +1630,9 @@
       "type": "registry:component",
       "title": "Чипы фильтров",
       "description": "Плашки-фильтры кнопками: состояние в aria-pressed, а у выбранной ещё и галочка — не только цвет.",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1481,7 +1644,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-badge-011-*. Клиентский: \"use client\". Каждая плашка — <button> с aria-pressed, а не ссылка: адрес не меняется, состояние переключается на месте. Выбранное состояние стилизуется селектором по aria-pressed, поэтому разметка и доступность не расходятся. Цвета выбранной плашки считаются из акцента через color-mix.",
       "meta": {
-        "tags": ["badge", "filter", "toggle", "a11y"],
+        "tags": [
+          "badge",
+          "filter",
+          "toggle",
+          "a11y"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1569,13 +1737,24 @@
             "title": "Filter Chips",
             "preview": {
               "props": {
-                "options": ["All", "Open", "Mine", "Urgent", "Archived"],
-                "defaultValue": ["Open"]
+                "options": [
+                  "All",
+                  "Open",
+                  "Mine",
+                  "Urgent",
+                  "Archived"
+                ],
+                "defaultValue": [
+                  "Open"
+                ]
               }
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1583,7 +1762,9 @@
       "type": "registry:component",
       "title": "Плашка «в работе»",
       "description": "Плашка процесса: кольцо крутится, но текст обязателен — один спиннер не отвечает, что происходит и стоит ли ждать.",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1595,7 +1776,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-badge-012-*. Серверный: хуков нет. Кольцо собрано из бордюра с окрашенной верхней гранью и вращается keyframes. Плашка объявлена role=\"status\" с aria-live=\"polite\": появление процесса должно быть слышно. В prefers-reduced-motion кольцо превращается в залитую точку — состояние остаётся видимым, движение уходит.",
       "meta": {
-        "tags": ["badge", "loading", "status", "progress"],
+        "tags": [
+          "badge",
+          "loading",
+          "status",
+          "progress"
+        ],
         "ai": {
           "export": "Badge012",
           "usage": "<Badge012 label=\"Отправляем\" hint=\"осталось ~20 с\" />",
@@ -1710,7 +1896,12 @@
             }
           }
         },
-        "cardControls": ["label", "hint", "accent", "background"],
+        "cardControls": [
+          "label",
+          "hint",
+          "accent",
+          "background"
+        ],
         "preview": {
           "width": "auto"
         }
@@ -1721,7 +1912,9 @@
       "type": "registry:component",
       "title": "Плашка с иконкой",
       "description": "Плашка со знаком слева: иконка задана в em, поэтому едет вместе с подписью и не сплющивается, когда текст длинный.",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1733,7 +1926,12 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-013-*. Серверный: хуков нет. Знаки — inline SVG из карты ICONS, размер width/height в 1em и flex:none, оптический сдвиг margin-top:-0.0625em ставит знак на середину строчной высоты. Тон переключается атрибутом data-tone, который меняет только --hue и --chroma: фон, текст, рамка и цвет знака считаются из них в oklch, поэтому новый тон добавляется одной строкой. Иконка помечена aria-hidden — смысл несёт подпись, дублировать его нечем.",
       "meta": {
-        "tags": ["badge", "icon", "status", "label"],
+        "tags": [
+          "badge",
+          "icon",
+          "status",
+          "label"
+        ],
         "preview": {
           "states": [
             {
@@ -1781,14 +1979,24 @@
             "label": "Знак",
             "type": "select",
             "default": "check",
-            "options": ["check", "clock", "alert", "spark"]
+            "options": [
+              "check",
+              "clock",
+              "alert",
+              "spark"
+            ]
           },
           {
             "prop": "tone",
             "label": "Тон",
             "type": "select",
             "default": "positive",
-            "options": ["neutral", "positive", "warning", "accent"]
+            "options": [
+              "neutral",
+              "positive",
+              "warning",
+              "accent"
+            ]
           },
           {
             "prop": "children",
@@ -1857,7 +2065,12 @@
             }
           }
         },
-        "cardControls": ["icon", "tone", "children", "background"]
+        "cardControls": [
+          "icon",
+          "tone",
+          "children",
+          "background"
+        ]
       }
     },
     {
@@ -1865,7 +2078,9 @@
       "type": "registry:component",
       "title": "Контурная плашка",
       "description": "Плашка на обводке: рамка, текст и подложка считаются из одного оттенка, а пунктир отделяет черновик от опубликованного.",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1877,7 +2092,12 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-014-*. Серверный: хуков нет. Всё оформление выводится из одного числа: проп hue кладётся в --vibeui-badge-014-hue инлайновым стилем, а рамка, текст и подложка собираются функцией oklch с этим оттенком — палитру не нужно вести таблицей. Подложка намеренно не прозрачная, но своя в каждой ветке light-dark(): контур обязан лежать на тоне, а не на случайном фоне страницы, и в тёмной теме она темнее рамки. Флаг dashed переводит рамку в пунктир и приглушает тон, поэтому черновик отличается от финального формой линии, а не только цветом.",
       "meta": {
-        "tags": ["badge", "outline", "hue", "draft"],
+        "tags": [
+          "badge",
+          "outline",
+          "hue",
+          "draft"
+        ],
         "preview": {
           "states": [
             {
@@ -2001,7 +2221,12 @@
             }
           }
         },
-        "cardControls": ["hue", "children", "dashed", "background"]
+        "cardControls": [
+          "hue",
+          "children",
+          "dashed",
+          "background"
+        ]
       }
     },
     {
@@ -2009,7 +2234,9 @@
       "type": "registry:component",
       "title": "Шкала размеров",
       "description": "Плашка с размерной шкалой: sm, md и lg меняют один шаг сетки, а высота, кегль, отступы, радиус и точка считаются от него.",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2021,7 +2248,12 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-015-*. Серверный: хуков нет. Атрибут data-size задаёт единственное число --vibeui-badge-015-unit, остальное собрано через calc от него: высота — шесть шагов, кегль — три, горизонтальный отступ — 2.4, радиус — три, точка и зазор — 1.6. Поэтому маленькая плашка не выглядит уменьшенной копией: пропорции остаются теми же, а не подбираются на глаз для каждого размера. Хвостовой счётчик отделён вертикальной линией на всю высоту (align-self:stretch), чтобы разделитель не приходилось подгонять под кегль.",
       "meta": {
-        "tags": ["badge", "size", "scale", "tokens"],
+        "tags": [
+          "badge",
+          "size",
+          "scale",
+          "tokens"
+        ],
         "preview": {
           "states": [
             {
@@ -2070,7 +2302,11 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": ["sm", "md", "lg"]
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
           },
           {
             "prop": "count",
@@ -2157,7 +2393,13 @@
             }
           }
         },
-        "cardControls": ["size", "count", "children", "accent", "background"]
+        "cardControls": [
+          "size",
+          "count",
+          "children",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2165,7 +2407,9 @@
       "type": "registry:component",
       "title": "Плашка-ссылка",
       "description": "Плашка-ссылка: внешний адрес компонент распознаёт сам, ставит target и rel и дописывает в доступное имя, что откроется новая вкладка.",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2177,7 +2421,12 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-016-*. Серверный: хуков нет. Корень — настоящий тег a, поэтому нажатие средней кнопкой, «открыть в новой вкладке» и предпросмотр адреса в строке состояния работают сами. Внешняя ссылка определяется по схеме http(s) в href: у неё меняется знак (стрелка наружу вместо стрелки вправо), добавляются target=_blank и rel=noreferrer noopener, а в доступное имя уходит скрытая подпись hint — иконку скринридер не читает. Стрелка сдвигается при наведении на один пиксель: движение отключено правилом prefers-reduced-motion.",
       "meta": {
-        "tags": ["badge", "link", "external", "a11y"],
+        "tags": [
+          "badge",
+          "link",
+          "external",
+          "a11y"
+        ],
         "ai": {
           "export": "Badge016",
           "usage": "<Badge016\n  href=\"https://example.com/changelog\"\n  hint=\"откроется в новой вкладке\"\n>\n  Список изменений\n</Badge016>",
@@ -2303,7 +2552,13 @@
             }
           }
         },
-        "cardControls": ["href", "children", "hint", "accent", "background"],
+        "cardControls": [
+          "href",
+          "children",
+          "hint",
+          "accent",
+          "background"
+        ],
         "preview": {
           "width": "auto"
         }
@@ -2314,7 +2569,9 @@
       "type": "registry:component",
       "title": "Пульс новинки",
       "description": "Метка «новое» с расходящейся волной: анимируется отдельный слой, поэтому при выключенной анимации точка остаётся на месте.",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2326,7 +2583,12 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-017-*. Серверный: хуков нет. Маяк собран из двух слоёв — неподвижного ядра и колец, которые расходятся анимацией vibeui-badge-017-ripple; каждое кольцо получает свою задержку через инлайновую переменную --vibeui-badge-017-delay, поэтому волны идут одна за другой, а не мигают вместе. Правило prefers-reduced-motion не просто гасит анимацию, а убирает кольца совсем: застывшее раскрытое кольцо вокруг точки читалось бы как сломанная вёрстка. Тон переключается data-tone и меняет только --hue и --chroma.",
       "meta": {
-        "tags": ["badge", "new", "pulse", "attention"],
+        "tags": [
+          "badge",
+          "new",
+          "pulse",
+          "attention"
+        ],
         "preview": {
           "states": [
             {
@@ -2374,7 +2636,11 @@
             "label": "Тон",
             "type": "select",
             "default": "accent",
-            "options": ["accent", "positive", "danger"]
+            "options": [
+              "accent",
+              "positive",
+              "danger"
+            ]
           },
           {
             "prop": "waves",
@@ -2451,7 +2717,12 @@
             }
           }
         },
-        "cardControls": ["tone", "waves", "children", "background"]
+        "cardControls": [
+          "tone",
+          "waves",
+          "children",
+          "background"
+        ]
       }
     },
     {
@@ -2459,7 +2730,9 @@
       "type": "registry:component",
       "title": "Плашка в углу",
       "description": "Слот, который вешает плашку в угол чужого элемента: обёртка не добавляет отступов, а плашка не перехватывает нажатие.",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2471,7 +2744,12 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-018-*. Серверный: хуков нет. Обёртка — inline-flex без отступов, поэтому она сжимается по хосту и не меняет раскладку строки. Плашка абсолютная, угол выбирается атрибутом data-position: он задаёт пару top/right и transform со сдвигом на --vibeui-badge-018-offset, так что вылет считается от собственных габаритов плашки, а не подбирается пикселями под каждый размер хоста. Кольцо box-shadow цвета подложки отделяет плашку от хоста без выреза в нём. pointer-events:none снимает с плашки перехват нажатия: под слотом обычно кнопка, и клик обязан доходить до неё. Значение продублировано скрытой подписью, а сама плашка помечена aria-hidden.",
       "meta": {
-        "tags": ["badge", "slot", "overlay", "counter"],
+        "tags": [
+          "badge",
+          "slot",
+          "overlay",
+          "counter"
+        ],
         "preview": {
           "states": [
             {
@@ -2531,7 +2809,12 @@
             "label": "Угол",
             "type": "select",
             "default": "top-right",
-            "options": ["top-right", "top-left", "bottom-right", "bottom-left"]
+            "options": [
+              "top-right",
+              "top-left",
+              "bottom-right",
+              "bottom-left"
+            ]
           },
           {
             "prop": "label",
@@ -2629,7 +2912,9 @@
       "type": "registry:component",
       "title": "Плашка тарифа",
       "description": "Метка тарифа, в которой старшинство плана читается количеством ромбов, а не насыщенностью цвета — в том числе в чёрно-белом счёте.",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2641,7 +2926,12 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-019-*. Серверный: хуков нет. Карта LEVELS переводит план в число знаков, и ромбы рисуются массивом: free — ноль, pro — один, business — два. Ромб сделан clip-path из квадрата, поэтому не требует ни SVG, ни шрифта. Атрибут data-plan меняет палитру и заливку: у pro — светлый золотой градиент, у business — тёмный. Форма знака отличает уровни там, где цвет теряется: на распечатке счёта или на скриншоте в поддержке.",
       "meta": {
-        "tags": ["badge", "plan", "pricing", "tier"],
+        "tags": [
+          "badge",
+          "plan",
+          "pricing",
+          "tier"
+        ],
         "preview": {
           "states": [
             {
@@ -2693,7 +2983,11 @@
             "label": "Тариф",
             "type": "select",
             "default": "pro",
-            "options": ["free", "pro", "business"]
+            "options": [
+              "free",
+              "pro",
+              "business"
+            ]
           },
           {
             "prop": "label",
@@ -2751,7 +3045,10 @@
             }
           }
         },
-        "cardControls": ["plan", "label"]
+        "cardControls": [
+          "plan",
+          "label"
+        ]
       }
     },
     {
@@ -2759,7 +3056,9 @@
       "type": "registry:component",
       "title": "Плашка срока",
       "description": "Плашка срока, у которой вместе с тоном меняется формулировка: «ещё 21 день», «истекает через 3 дня», «истекает сегодня», «просрочено».",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2771,7 +3070,12 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-020-*. Серверный: хуков нет. Состояние выводится из числа дней и порога warnAt и попадает в data-state, который меняет только --hue и --chroma — четыре тона держатся на двух переменных. Главное здесь не цвет: для каждого состояния своя фраза, поэтому срок понятен в чёрно-белом списке и вслух в скринридере. Число склоняется через Intl.PluralRules: правила языка берутся из locale, а формы слова — из пропа dayForms, поэтому «11 дней» верно и без зашитых в код исключений. Часы — inline SVG под aria-hidden.",
       "meta": {
-        "tags": ["badge", "expiry", "deadline", "threshold"],
+        "tags": [
+          "badge",
+          "expiry",
+          "deadline",
+          "threshold"
+        ],
         "preview": {
           "states": [
             {
@@ -2909,7 +3213,12 @@
             }
           }
         },
-        "cardControls": ["days", "warnAt", "locale", "background"]
+        "cardControls": [
+          "days",
+          "warnAt",
+          "locale",
+          "background"
+        ]
       }
     },
     {
@@ -2917,7 +3226,9 @@
       "type": "registry:component",
       "title": "Плашка окружения",
       "description": "Метка окружения, где смысл несёт силуэт: боевое — скошенный ярлык, предпродакшен — пилюля, разработка — пунктирный прямоугольник.",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2929,7 +3240,12 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-021-*. Серверный: хуков нет. Атрибут data-env меняет не только цвета, но и форму: у prod clip-path срезает углы и рамка убирается (обводку всё равно срезало бы вместе с углом), у stage радиус уходит в пилюлю, у dev рамка становится пунктирной. Шрифт моноширинный и в верхнем регистре с разрядкой: метка окружения читается как техническая, а не как статус записи. На скриншоте в баг-репорте цвет теряется первым, а силуэт остаётся — перепутанное окружение стоит дороже любой другой ошибки метки.",
       "meta": {
-        "tags": ["badge", "environment", "shape", "devops"],
+        "tags": [
+          "badge",
+          "environment",
+          "shape",
+          "devops"
+        ],
         "preview": {
           "states": [
             {
@@ -2979,7 +3295,11 @@
             "label": "Окружение",
             "type": "select",
             "default": "prod",
-            "options": ["prod", "stage", "dev"]
+            "options": [
+              "prod",
+              "stage",
+              "dev"
+            ]
           },
           {
             "prop": "label",
@@ -3035,7 +3355,10 @@
             }
           }
         },
-        "cardControls": ["env", "label"]
+        "cardControls": [
+          "env",
+          "label"
+        ]
       }
     },
     {
@@ -3043,7 +3366,9 @@
       "type": "registry:component",
       "title": "Составной счётчик",
       "description": "Счётчик из двух половин: слева новые с порогом «9+», справа общее число — пара отвечает на вопрос «двенадцать из скольких».",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3055,7 +3380,12 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-022-*. Серверный: хуков нет. Пилюля разделена на две зоны с общим overflow:hidden, граница между ними — левая рамка правой половины, поэтому разделитель не требует отдельного узла. Обе половины набраны табличными цифрами и имеют одинаковый минимум ширины: при пересчёте плашка не меняет габарит и не дёргает соседей. Порог применяется только к левому числу — «9+ из 48» осмысленно, а «9+ из 9+» нет. Когда новых ноль, левая половина гаснет, но остаётся: исчезающая зона меняла бы ширину. Числа помечены aria-hidden, вся плашка объявляется одной фразой из шаблона labelText через aria-label.",
       "meta": {
-        "tags": ["badge", "counter", "unread", "threshold"],
+        "tags": [
+          "badge",
+          "counter",
+          "unread",
+          "threshold"
+        ],
         "ai": {
           "export": "Badge022",
           "usage": "<Badge022 unread={12} total={48} max={9} />",
@@ -3207,7 +3537,9 @@
       "type": "registry:component",
       "title": "Плашка с обрезкой",
       "description": "Плашка для текста непредсказуемой длины: обрезка с конца отдана CSS, обрезка по середине — коду, а полный текст остаётся доступен.",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3219,7 +3551,12 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-023-*. Серверный: хуков нет. Ширина задаётся в ch и кладётся в --vibeui-badge-023-width инлайновым стилем. Режим end работает штатным text-overflow:ellipsis, причём многоточие живёт на внутреннем узле: у flex-контейнера text-overflow не срабатывает и строка просто отрезалась бы без знака. Режим middle CSS не умеет вовсе, поэтому строку режет функция shorten — голова и хвост считаются от лимита, между ними многоточие; у имени ветки и у пути к файлу значимы оба края. Полный текст уходит в title и в скрытую подпись, а обрезанный вариант помечается aria-hidden.",
       "meta": {
-        "tags": ["badge", "truncate", "overflow", "monospace"],
+        "tags": [
+          "badge",
+          "truncate",
+          "overflow",
+          "monospace"
+        ],
         "preview": {
           "states": [
             {
@@ -3272,7 +3609,10 @@
             "label": "Обрезка",
             "type": "select",
             "default": "middle",
-            "options": ["end", "middle"]
+            "options": [
+              "end",
+              "middle"
+            ]
           },
           {
             "prop": "children",
@@ -3341,7 +3681,12 @@
             }
           }
         },
-        "cardControls": ["width", "truncate", "children", "background"]
+        "cardControls": [
+          "width",
+          "truncate",
+          "children",
+          "background"
+        ]
       }
     },
     {
@@ -3349,7 +3694,9 @@
       "type": "registry:component",
       "title": "Группа с переполнением",
       "description": "Группа плашек, хвост которой сворачивается в «+4» и раскрывается по нажатию — на нативном details, без единой строки клиентского кода.",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3361,7 +3708,12 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-024-*. Серверный: раскрытие держит нативная пара details/summary, поэтому ни useState, ни обработчика, ни директивы use client здесь нет. Сам details объявлен flex-контейнером: summary и раскрытый хвост становятся его элементами и встают в тот же ряд, а не блоком под ним. Маркер треугольника убран (list-style:none плюс правило для WebKit), подпись «+4» подменяется на «Свернуть» селектором [open]. Клавиатура, фокус и объявление состояния «раскрыто/свёрнуто» достаются от браузера бесплатно.",
       "meta": {
-        "tags": ["badge", "group", "overflow", "details"],
+        "tags": [
+          "badge",
+          "group",
+          "overflow",
+          "details"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3517,7 +3869,9 @@
       "type": "registry:component",
       "title": "Плашка «ключ — значение»",
       "description": "Плашка «ключ: значение» для служебных данных: ключ не выделяется мышью, значение выделяется целиком одним щелчком.",
-      "categories": ["badge"],
+      "categories": [
+        "badge"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3529,7 +3883,12 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-025-*. Серверный: хуков нет. Две зоны в одной рамке с общим overflow:hidden: тёмный ключ и светлое значение, граница между ними — смена фона, а не линия. Ключ помечен user-select:none, значение — user-select:all, поэтому щелчок по хешу выделяет ровно хеш, и в буфер не уезжает слово «commit» вместе с ним. Значение набрано моноширинным шрифтом и обрезается многоточием, полное — в title. Обе зоны под aria-hidden, вся плашка объявляется одной фразой через aria-label. Палитра на light-dark(): в тёмном контексте зоны меняют светлоту, а рамка становится светлее фона. Тон ключа переопределяется пропом accent, заливка значения — background.",
       "meta": {
-        "tags": ["badge", "key-value", "metadata", "copy"],
+        "tags": [
+          "badge",
+          "key-value",
+          "metadata",
+          "copy"
+        ],
         "ai": {
           "export": "Badge025",
           "usage": "<Badge025 label=\"commit\" value=\"a1f9c02\" accent=\"\" />",
@@ -3644,10 +4003,1006 @@
             }
           }
         },
-        "cardControls": ["label", "value", "accent", "background"],
+        "cardControls": [
+          "label",
+          "value",
+          "accent",
+          "background"
+        ],
         "preview": {
           "width": "full"
         }
+      }
+    },
+    {
+      "name": "kbd-001",
+      "type": "registry:component",
+      "title": "Список сочетаний",
+      "description": "Список горячих клавиш: клавиши набраны тегом kbd, а плюс между ними стоит в разметке, чтобы сочетание читалось вслух.",
+      "categories": [
+        "badge"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kbd-001/kbd-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kbd-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kbd-001-*. Серверный: хуков нет. Клавиши выводятся тегом kbd с утолщённой нижней гранью — так они читаются как физические. Разделитель между клавишами лежит в разметке, поэтому скринридер произносит «command плюс K», а не две отдельные клавиши. Тема приходит из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней, а плашка включается пропом background.",
+      "meta": {
+        "tags": [
+          "kbd",
+          "shortcuts",
+          "help",
+          "keyboard"
+        ],
+        "ai": {
+          "export": "Kbd001",
+          "usage": "<Kbd001 rows={[{ action: \"Поиск\", keys: [\"Mod\", \"K\"] }]} />",
+          "summary": "Список сочетаний клавиш: действие слева, клавиши справа тегом kbd, плюс между ними в разметке. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-kbd-001-* и не подменять её токенами вашей темы",
+            "тег kbd: это его прямое назначение, и скринридер объявит клавиши как ввод",
+            "плюс в разметке, а не в CSS — иначе сочетание читается как две клавиши",
+            "утолщённую нижнюю грань: клавиша выглядит нажимаемой",
+            "минимальную ширину клавиши, чтобы «K» и «Esc» стояли ровным столбцом",
+            "действие слева, клавиши справа — так список сканируют",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив rows с действиями и клавишами",
+            "title — заголовок списка",
+            "цвет и радиус клавиш",
+            "ширину блока",
+            "mod — знак модификатора вместо клавиши «Mod»: ⌘ на macOS, Ctrl на Windows и Linux",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Символы клавиш зависят от системы: на Windows вместо Ctrl должен стоять Ctrl.",
+            "Компонент ничего не слушает: сами сочетания вешает вызывающий код.",
+            "Список не место для всех клавиш подряд: показывайте те, что экономят время.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Горячие клавиши",
+            "maxLength": 30
+          },
+          {
+            "prop": "mod",
+            "label": "Модификатор",
+            "type": "select",
+            "default": "Ctrl",
+            "options": [
+              "Ctrl",
+              "Ctrl"
+            ]
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A shortcut list: keys marked up with kbd and the plus sign in the markup, so a combination reads aloud as one.",
+            "ai": {
+              "summary": "A list of shortcuts: the action on the left, the keys on the right as kbd elements with the plus in the markup. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-kbd-001-* palette — do not swap it for your theme tokens",
+                "the kbd element: that is its purpose, and screen readers announce keys as input",
+                "the plus in the markup rather than CSS — otherwise a combination reads as two keys",
+                "the thicker bottom border: the key looks pressable",
+                "the minimum key width so \"K\" and \"Esc\" line up",
+                "the action left, keys right — that is how the list gets scanned",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the rows array of actions and keys",
+                "title — the list heading",
+                "the key colour and radius",
+                "the block width",
+                "mod — the modifier glyph substituted for the \"Mod\" key: ⌘ on macOS, Ctrl on Windows and Linux",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Key glyphs depend on the platform: Windows needs Ctrl where macOS shows ⌘.",
+                "The component listens to nothing: the caller binds the shortcuts.",
+                "This is not a place for every key: show the ones that save time.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kbd001 rows={[{ action: \"Search\", keys: [\"Mod\", \"K\"] }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Keyboard shortcuts"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "mod": {
+                "label": "Modifier"
+              }
+            },
+            "title": "Shortcut List",
+            "preview": {
+              "props": {
+                "title": "Keyboard shortcuts",
+                "rows": [
+                  {
+                    "action": "Open search",
+                    "keys": [
+                      "Mod",
+                      "K"
+                    ]
+                  },
+                  {
+                    "action": "Copy for AI",
+                    "keys": [
+                      "Mod",
+                      "Shift",
+                      "C"
+                    ]
+                  },
+                  {
+                    "action": "Next component",
+                    "keys": [
+                      "J"
+                    ]
+                  },
+                  {
+                    "action": "Close the dialog",
+                    "keys": [
+                      "Esc"
+                    ]
+                  }
+                ]
+              }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-kbd-001-* variables. Server-side: there are no hooks. The keys are rendered with the kbd tag with a thickened bottom edge — that is what makes them read as physical. The separator between keys sits in the markup, so a screen reader says \"command plus K\" rather than two separate keys. The theme comes from the surrounding color-scheme through light-dark(): the component has no background by default, it sits directly on the page background and darkens with it, and a panel is switched on by the background prop."
+          }
+        },
+        "cardControls": [
+          "title",
+          "mod",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "kbd-002",
+      "type": "registry:component",
+      "title": "Разделитель аккорда",
+      "description": "Сочетание клавиш с явным разделителем: «Ctrl + K» и «Ctrl затем K» — разные действия, и слово между клавишами избавляет пользователя от угадывания.",
+      "categories": [
+        "badge"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kbd-002/kbd-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kbd-002.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Клавиши набраны тегом kbd — это его прямое назначение, скринридер объявит их как ввод. Разделитель лежит в разметке отдельным узлом, а не рисуется псевдоэлементом: содержимое ::before не попадает в поток чтения, и вслух сочетание превратилось бы в две несвязанные клавиши. Вариант разделителя переключается атрибутом data-separator, набор вариантов вынесен в объект: plus для одновременного нажатия, then для последовательного, arrow для перехода. Тема приходит из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней, а плашка включается пропом background.",
+      "meta": {
+        "tags": [
+          "kbd",
+          "shortcut",
+          "chord",
+          "keyboard"
+        ],
+        "preview": {
+          "states": [
+            {
+              "separator": "plus"
+            },
+            {
+              "separator": "then"
+            }
+          ],
+          "width": "auto"
+        },
+        "ai": {
+          "export": "Kbd002",
+          "usage": "<Kbd002 keys={[\"Mod\", \"Shift\", \"P\"]} separator=\"plus\" caption=\"Палитра команд\" />",
+          "summary": "Сочетание клавиш с разделителем в разметке: plus, затем или стрелка. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-kbd-002-* и не подменять её токенами вашей темы",
+            "тег kbd для клавиш: скринридер объявит их как ввод, а не как обычный текст",
+            "разделитель в разметке — псевдоэлемент не читается вслух и рвёт смысл сочетания",
+            "различие plus и then: одновременное и последовательное нажатие — разные действия",
+            "нижнюю грань клавиши в 2px: она даёт объём клавиши без теней и градиентов",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "вид разделителя через separator: plus, then или arrow",
+            "подписи разделителей через separatorText",
+            "подпись действия через caption",
+            "состав сочетания через keys",
+            "радиус клавиш через переменные --vibeui-kbd-002-*",
+            "mod — знак модификатора вместо клавиши «Mod»: ⌘ на macOS, Ctrl на Windows и Linux",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Символы Ctrl и Shift есть не во всех шрифтах: на Windows часть систем покажет квадрат.",
+            "Сочетание длиннее четырёх клавиш переносится — проверьте на узкой ширине.",
+            "Подпись «затем» русская по умолчанию: для другого языка передайте separatorText.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "separator",
+            "label": "Разделитель",
+            "type": "select",
+            "default": "plus",
+            "options": [
+              "plus",
+              "then",
+              "arrow"
+            ]
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Палитра команд",
+            "maxLength": 30
+          },
+          {
+            "prop": "mod",
+            "label": "Модификатор",
+            "type": "select",
+            "default": "Ctrl",
+            "options": [
+              "Ctrl",
+              "Ctrl"
+            ]
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A key chord with an explicit separator: \"Ctrl + K\" and \"Ctrl then K\" are different actions, and the word between the keys removes the guesswork.",
+            "ai": {
+              "summary": "A key chord with the separator in markup: plus, then, or an arrow. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-kbd-002-* palette — do not swap it for your theme tokens",
+                "the kbd tag for keys: a screen reader announces them as input rather than plain text",
+                "the separator in markup — a pseudo-element is not read aloud and breaks the chord's meaning",
+                "the difference between plus and then: simultaneous and sequential presses are different actions",
+                "the 2px bottom edge of the key: it gives the key depth without shadows or gradients",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the separator style through separator: plus, then or arrow",
+                "the separator wording through separatorText",
+                "the action caption through caption",
+                "the chord contents through keys",
+                "the key radius through the --vibeui-kbd-002-* variables",
+                "mod — the modifier glyph substituted for the \"Mod\" key: ⌘ on macOS, Ctrl on Windows and Linux",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The Ctrl and Shift glyphs are missing from some fonts: certain Windows setups show a box.",
+                "A chord longer than four keys wraps — check it on narrow widths.",
+                "The \"then\" wording is Russian by default: pass separatorText for another locale.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kbd002 keys={[\"Mod\", \"Shift\", \"P\"]} separator=\"plus\" caption=\"Command palette\" />"
+            },
+            "controls": {
+              "separator": {
+                "label": "Separator",
+                "default": "plus"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": "Command palette"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "mod": {
+                "label": "Modifier"
+              }
+            },
+            "title": "Key Chord Separator",
+            "preview": {
+              "props": {
+                "caption": "Command palette",
+                "separatorText": {
+                  "plus": "+",
+                  "then": "then",
+                  "arrow": "→"
+                }
+              }
+            },
+            "docs": "A server component, there are no hooks. The keys are set with the kbd tag — that is its purpose, and a screen reader announces them as input. The separator sits in the markup as a node of its own rather than being drawn with a pseudo-element: the content of ::before does not enter the reading flow, and aloud the chord would turn into two unrelated keys. The separator variant is switched by the data-separator attribute, and the set of variants is kept in an object: plus for a simultaneous press, then for a sequential one, arrow for a transition. The theme comes from the surrounding color-scheme through light-dark(): the component has no background by default, it sits directly on the page background and darkens with it, and a panel is switched on by the background prop."
+          }
+        },
+        "cardControls": [
+          "separator",
+          "caption",
+          "mod",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "kbd-003",
+      "type": "registry:component",
+      "title": "Клавиша внутри текста",
+      "description": "Клавиша внутри строки текста, которая не рвёт интерлиньяж: высота задана в em, вертикальные отступы нулевые, объём даёт горизонтальный паддинг.",
+      "categories": [
+        "badge"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kbd-003/kbd-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kbd-003.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Обычная kbd с вертикальным паддингом делает свою строку выше соседних, и абзац «разъезжается». Здесь высота клавиши выражена в em и вписана в строку, вертикальные отступы нулевые, а точная посадка на базовую линию сделана сдвигом на 0.05em — не изменением line-height абзаца, которое поехало бы на весь текст. Кегль клавиши задан долей от текста (0.85em), поэтому она масштабируется вместе с абзацем. Сочетание обёрнуто в nowrap, чтобы «Ctrl + K» не разорвался переносом. Тема приходит из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней, а плашка включается пропом background.",
+      "meta": {
+        "tags": [
+          "kbd",
+          "inline",
+          "typography",
+          "text"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Kbd003",
+          "usage": "<Kbd003\n  before=\"Нажмите\"\n  keys={[\"Mod\", \"K\"]}\n  after=\"чтобы открыть поиск.\"\n/>",
+          "summary": "Клавиша внутри абзаца: высота в em, нулевые вертикальные отступы, сдвиг на базовую линию. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-kbd-003-* и не подменять её токенами вашей темы",
+            "нулевые вертикальные отступы клавиши: с ними строка становится выше соседних",
+            "высоту и кегль в em — клавиша обязана масштабироваться вместе с абзацем",
+            "сдвиг на 0.05em вместо правки line-height: правка line-height поедет на весь текст",
+            "nowrap на сочетании, иначе «Ctrl + K» разрывается переносом строки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "текст до клавиши через before",
+            "текст после клавиши через after",
+            "состав сочетания через keys",
+            "ширину абзаца через max-width",
+            "mod — знак модификатора вместо клавиши «Mod»: ⌘ на macOS, Ctrl на Windows и Linux",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Клавиша занимает 1.5em высоты: при интерлиньяже меньше 1.5 строки начнут задевать друг друга.",
+            "Внутри одного абзаца допустимо одно-два сочетания — дальше текст превращается в список.",
+            "Сдвиг на базовую линию подобран для системного шрифта; при своём шрифте проверьте посадку.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "before",
+            "label": "Текст до",
+            "type": "text",
+            "default": "Нажмите",
+            "maxLength": 20
+          },
+          {
+            "prop": "after",
+            "label": "Текст после",
+            "type": "text",
+            "default": "чтобы открыть поиск по каталогу — строка ввода появится поверх страницы.",
+            "maxLength": 90
+          },
+          {
+            "prop": "mod",
+            "label": "Модификатор",
+            "type": "select",
+            "default": "Ctrl",
+            "options": [
+              "Ctrl",
+              "Ctrl"
+            ]
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A key inside a line of text that does not break the leading: the height is set in em, vertical padding is zero and the bulk comes from horizontal padding.",
+            "ai": {
+              "summary": "A key inside a paragraph: em-based height, zero vertical padding and a nudge onto the baseline. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-kbd-003-* palette — do not swap it for your theme tokens",
+                "the zero vertical padding on the key: with it the line grows taller than its neighbours",
+                "the em-based height and size — the key must scale together with the paragraph",
+                "the 0.05em nudge instead of editing line-height: a line-height change affects the whole text",
+                "nowrap on the chord, otherwise \"Ctrl + K\" is split across lines",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the text before the key through before",
+                "the text after the key through after",
+                "the chord contents through keys",
+                "the paragraph width through max-width",
+                "mod — the modifier glyph substituted for the \"Mod\" key: ⌘ on macOS, Ctrl on Windows and Linux",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The key takes 1.5em of height: with leading below 1.5 the lines start touching.",
+                "One or two chords per paragraph is the limit — beyond that the text becomes a list.",
+                "The baseline nudge is tuned for the system font; verify it with your own typeface.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kbd003\n  before=\"Press\"\n  keys={[\"Mod\", \"K\"]}\n  after=\"to open the catalog search.\"\n/>"
+            },
+            "controls": {
+              "before": {
+                "label": "Text before",
+                "default": "Press"
+              },
+              "after": {
+                "label": "Text after",
+                "default": "to open the catalog search — the input appears above the page."
+              },
+              "background": {
+                "label": "Background"
+              },
+              "mod": {
+                "label": "Modifier"
+              }
+            },
+            "title": "Inline Text Key",
+            "preview": {
+              "props": {
+                "before": "Press",
+                "keys": [
+                  "Mod",
+                  "K"
+                ],
+                "after": "to open the catalog search — the input appears above the page."
+              }
+            },
+            "docs": "A server component, there are no hooks. An ordinary kbd with vertical padding makes its line taller than its neighbours, and the paragraph comes apart. Here the key height is expressed in em and fitted into the line, the vertical padding is zero, and the exact seating on the baseline is done with a 0.05em nudge — not by changing the paragraph's line-height, which would shift the whole text. The key's type size is set as a fraction of the text (0.85em), so it scales together with the paragraph. The chord is wrapped in nowrap so that \"Ctrl + K\" is not split across lines. The theme comes from the surrounding color-scheme through light-dark(): the component has no background by default, it sits directly on the page background and darkens with it, and a panel is switched on by the background prop."
+          }
+        },
+        "cardControls": [
+          "before",
+          "after",
+          "mod",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "kbd-004",
+      "type": "registry:component",
+      "title": "Полоса подсказок",
+      "description": "Ряд подсказок горячих клавиш для нижней служебной полосы: пары «клавиша — действие» не переносятся, потому что разорванная подсказка бесполезна.",
+      "categories": [
+        "badge"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kbd-004/kbd-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kbd-004.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Полоса читается боковым зрением, поэтому подсказки разделены только промежутком: рамка вокруг каждой пары превращает служебную строку в панель кнопок. Каждая пара помечена white-space:nowrap, так что при нехватке ширины полоса переносит подсказки целиком, а не рвёт «↵ выбрать» пополам. Выравнивание переключается атрибутом data-align (start, center, between), плотность — data-size. Клавиши набраны тегом kbd. Тема приходит из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней, а плашка включается пропом background.",
+      "meta": {
+        "tags": [
+          "kbd",
+          "hints",
+          "footer",
+          "shortcuts"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Kbd004",
+          "usage": "<Kbd004\n  hints={[{ keys: [\"↑\", \"↓\"], action: \"перемещение\" }, { keys: [\"↵\"], action: \"выбрать\" }]}\n  align=\"between\"\n  size=\"sm\"\n/>",
+          "summary": "Служебная полоса подсказок: пары «клавиша — действие» в одну линию, перенос только целыми парами. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-kbd-004-* и не подменять её токенами вашей темы",
+            "nowrap на паре: разорванная подсказка «↵ выбрать» перестаёт что-либо значить",
+            "отсутствие рамок вокруг пар — с ними служебная полоса читается как панель кнопок",
+            "тег kbd для клавиш: скринридер объявит их как ввод, а не как символы",
+            "мелкий кегль полосы: она читается боковым зрением и не должна спорить с содержимым",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "выравнивание полосы через align: start, center или between",
+            "плотность через size: sm или md",
+            "состав подсказок через hints",
+            "ширину полосы через max-width",
+            "mod — знак модификатора вместо клавиши «Mod»: ⌘ на macOS, Ctrl на Windows и Linux",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Больше пяти подсказок в полосе никто не читает — оставьте главные.",
+            "Выравнивание between на узкой ширине даёт большие дыры: проверьте на телефоне.",
+            "Полоса не интерактивна: если подсказку надо нажимать, ставьте настоящие кнопки.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "align",
+            "label": "Выравнивание",
+            "type": "select",
+            "default": "start",
+            "options": [
+              "start",
+              "center",
+              "between"
+            ]
+          },
+          {
+            "prop": "size",
+            "label": "Плотность",
+            "type": "select",
+            "default": "sm",
+            "options": [
+              "sm",
+              "md"
+            ]
+          },
+          {
+            "prop": "mod",
+            "label": "Модификатор",
+            "type": "select",
+            "default": "Ctrl",
+            "options": [
+              "Ctrl",
+              "Ctrl"
+            ]
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A row of shortcut hints for a bottom status bar: the key-action pairs never break across lines, because a split hint is useless.",
+            "ai": {
+              "summary": "A status bar of hints: key-action pairs on one line, wrapping only as whole pairs. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-kbd-004-* palette — do not swap it for your theme tokens",
+                "nowrap on the pair: a split hint like \"↵ select\" stops meaning anything",
+                "the absence of borders around pairs — with them the status bar reads as a button panel",
+                "the kbd tag for keys: a screen reader announces them as input, not as symbols",
+                "the small type size: the bar is read peripherally and must not compete with the content",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the bar alignment through align: start, center or between",
+                "the density through size: sm or md",
+                "the hint set through hints",
+                "the bar width through max-width",
+                "mod — the modifier glyph substituted for the \"Mod\" key: ⌘ on macOS, Ctrl on Windows and Linux",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Nobody reads more than five hints in a bar — keep the important ones.",
+                "The between alignment leaves large gaps on narrow widths: check it on a phone.",
+                "The bar is not interactive: use real buttons if a hint has to be clickable.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kbd004\n  hints={[{ keys: [\"↑\", \"↓\"], action: \"navigate\" }, { keys: [\"↵\"], action: \"select\" }]}\n  align=\"between\"\n  size=\"sm\"\n/>"
+            },
+            "controls": {
+              "align": {
+                "label": "Alignment",
+                "default": "start"
+              },
+              "size": {
+                "label": "Density",
+                "default": "sm"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "mod": {
+                "label": "Modifier"
+              }
+            },
+            "title": "Shortcut Hint Bar",
+            "preview": {
+              "props": {
+                "hints": [
+                  {
+                    "keys": [
+                      "↑",
+                      "↓"
+                    ],
+                    "action": "navigate"
+                  },
+                  {
+                    "keys": [
+                      "↵"
+                    ],
+                    "action": "select"
+                  },
+                  {
+                    "keys": [
+                      "Mod",
+                      "K"
+                    ],
+                    "action": "search"
+                  },
+                  {
+                    "keys": [
+                      "Esc"
+                    ],
+                    "action": "close"
+                  }
+                ]
+              }
+            },
+            "docs": "A server component, there are no hooks. The bar is read peripherally, so the hints are separated by a gap alone: a border around each pair turns a utility line into a button panel. Every pair is marked white-space:nowrap, so when width runs short the bar wraps whole hints rather than tearing \"↵ select\" in half. The alignment is switched by the data-align attribute (start, center, between), the density by data-size. The keys are set with the kbd tag. The theme comes from the surrounding color-scheme through light-dark(): the component has no background by default, it sits directly on the page background and darkens with it, and a panel is switched on by the background prop."
+          }
+        },
+        "cardControls": [
+          "align",
+          "size",
+          "mod",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "kbd-005",
+      "type": "registry:component",
+      "title": "Клавиши по платформе",
+      "description": "Платформозависимое сочетание: на macOS модификатор пишется знаком ⌘, на Windows и Linux — словом Ctrl, потому что подсказка с чужим знаком читается как ошибка.",
+      "categories": [
+        "badge"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kbd-005/kbd-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kbd-005.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент: систему он узнаёт только после гидрации, поэтому в файле есть «use client». Сервер не знает системы клиента, и попытка угадать её при рендере даёт рассинхрон разметки — до определения показывается вариант с Ctrl, понятный на любой системе, в отличие от Ctrl+. Проп platform позволяет отключить автоопределение и зафиксировать вариант для документации. Ширина клавиши модификатора увеличена для Ctrl атрибутом data-system: знак шире буквы, и без правки ряд клавиш выглядит неровным. Тема приходит из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней, а плашка включается пропом background.",
+      "meta": {
+        "tags": [
+          "kbd",
+          "platform",
+          "shortcut",
+          "macos"
+        ],
+        "preview": {
+          "states": [
+            {
+              "platform": "mac"
+            },
+            {
+              "platform": "windows"
+            }
+          ],
+          "width": "auto"
+        },
+        "ai": {
+          "export": "Kbd005",
+          "usage": "<Kbd005 platform=\"auto\" action=\"Открыть поиск\" letter=\"K\" />",
+          "summary": "Сочетание, которое подстраивается под систему: ⌘ на macOS, Ctrl на остальных. Ноль зависимостей, один файл, определение системы после гидрации.",
+          "preserve": [
+            "локальную палитру --vibeui-kbd-005-* и не подменять её токенами вашей темы",
+            "определение системы после гидрации: угаданное при рендере значение рассинхронизирует разметку",
+            "Ctrl как стартовый вариант — он понятен на любой системе, в отличие от Ctrl",
+            "подпись системы под действием: без неё пользователь не понимает, почему знак другой",
+            "тег kbd для клавиш: скринридер объявит их как ввод, а не как текст",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "режим определения через platform: auto, mac или windows",
+            "название действия через action",
+            "названия систем через systemText",
+            "букву сочетания через letter",
+            "ширину клавиш через переменные --vibeui-kbd-005-*",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Определение идёт по userAgent: он подделывается, и на редких системах даст мимо.",
+            "До гидрации показан вариант Windows — на macOS знак сменится после загрузки скрипта.",
+            "На Linux принят тот же Ctrl, что и на Windows: отдельной ветки для него нет.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "platform",
+            "label": "Платформа",
+            "type": "select",
+            "default": "auto",
+            "options": [
+              "auto",
+              "mac",
+              "windows"
+            ]
+          },
+          {
+            "prop": "action",
+            "label": "Действие",
+            "type": "text",
+            "default": "Открыть поиск",
+            "maxLength": 24
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A platform-aware chord: macOS writes the modifier as ⌘, Windows and Linux write it as Ctrl, because a hint with the wrong glyph reads as a mistake.",
+            "ai": {
+              "summary": "A chord that adapts to the system: ⌘ on macOS, Ctrl elsewhere. Zero dependencies, one file, detection after hydration.",
+              "preserve": [
+                "the local --vibeui-kbd-005-* palette — do not swap it for your theme tokens",
+                "detecting the system after hydration: a value guessed at render time desynchronises the markup",
+                "Ctrl as the starting variant — it is understood on any system, unlike Ctrl",
+                "the system caption under the action: without it users cannot tell why the glyph changed",
+                "the kbd tag for keys: a screen reader announces them as input rather than text",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the detection mode through platform: auto, mac or windows",
+                "the action name through action",
+                "the system names through systemText",
+                "the chord letter through letter",
+                "the key widths through the --vibeui-kbd-005-* variables",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Detection reads the userAgent: it can be spoofed and will miss on rare systems.",
+                "Before hydration the Windows variant is shown — on macOS the glyph swaps once the script loads.",
+                "Linux uses the same Ctrl as Windows: there is no separate branch for it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kbd005 platform=\"auto\" action=\"Open search\" letter=\"K\" />"
+            },
+            "controls": {
+              "platform": {
+                "label": "Platform",
+                "default": "auto"
+              },
+              "action": {
+                "label": "Action",
+                "default": "Open search"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Platform Aware Keys",
+            "preview": {
+              "props": {
+                "action": "Open search",
+                "systemText": {
+                  "mac": "macOS",
+                  "windows": "Windows and Linux"
+                }
+              }
+            },
+            "docs": "A client component: it learns the system only after hydration, so the file carries \"use client\". The server does not know the client's system, and guessing it at render time desynchronises the markup — until detection finishes, the Ctrl variant is shown, which is understood on any system, unlike Ctrl+. The platform prop turns automatic detection off and pins a variant for documentation. The width of the modifier key is increased for Ctrl by the data-system attribute: the glyph is wider than a letter, and without the correction the row of keys looks uneven. The theme comes from the surrounding color-scheme through light-dark(): the component has no background by default, it sits directly on the page background and darkens with it, and a panel is switched on by the background prop."
+          }
+        },
+        "cardControls": [
+          "platform",
+          "action",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "kbd-006",
+      "type": "registry:component",
+      "title": "Клавиши с длинной подписью",
+      "description": "Ряд клавиш с длинными подписями: «Backspace» и «Page Down» не влезают в квадрат, поэтому у ряда два честных режима ширины вместо одного компромисса.",
+      "categories": [
+        "badge"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kbd-006/kbd-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kbd-006.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Режим auto даёт клавише ширину по содержимому при общей минимальной — ряд выглядит как настоящая клавиатура с разными клавишами. Режим even переводит ряд на grid с repeat(auto-fit, minmax(4.5rem, 1fr)), и все клавиши получают равные колонки: это нужно, когда ряд должен читаться строем, например в легенде. Высота и кегль в обоих режимах общие, поэтому переключение не меняет ритм строки. Подписи помечены nowrap, чтобы «Page Down» не разорвался. Тема приходит из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней, а плашка включается пропом background.",
+      "meta": {
+        "tags": [
+          "kbd",
+          "keyboard",
+          "layout",
+          "labels"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Kbd006",
+          "usage": "<Kbd006\n  keys={[\"Shift\", \"Backspace\", \"Page Down\", \"Space\"]}\n  width=\"even\"\n  caption=\"Клавиши редактора\"\n/>",
+          "summary": "Ряд клавиш с длинными подписями: ширина по содержимому или равными колонками на grid. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-kbd-006-* и не подменять её токенами вашей темы",
+            "общую высоту клавиш в обоих режимах: разная высота ломает ритм ряда",
+            "nowrap на подписи — разорванное «Page Down» перестаёт читаться как одна клавиша",
+            "минимальную ширину клавиши: узкая «K» рядом с «Backspace» выглядит выпавшей",
+            "тег kbd для клавиш, чтобы скринридер объявил их как ввод",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "режим ширины через width: auto или even",
+            "подпись под рядом через caption",
+            "состав ряда через keys",
+            "высоту клавиш через переменную --vibeui-kbd-006-height",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "В режиме even очень длинная подпись обрезается многоточием, а не растягивает колонку.",
+            "Минимум колонки 4.5rem подобран под «Backspace»; для более длинных слов увеличьте его.",
+            "Ряд не имитирует раскладку клавиатуры — это перечисление клавиш, а не карта.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "width",
+            "label": "Ширина клавиш",
+            "type": "select",
+            "default": "auto",
+            "options": [
+              "auto",
+              "even"
+            ]
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Клавиши редактора текста",
+            "maxLength": 30
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A row of keys with long labels: \"Backspace\" and \"Page Down\" never fit a square, so the row offers two honest width modes instead of one compromise.",
+            "ai": {
+              "summary": "A row of long-label keys: width by content, or equal grid columns. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-kbd-006-* palette — do not swap it for your theme tokens",
+                "the shared key height in both modes: differing heights break the rhythm of the row",
+                "nowrap on the label — a split \"Page Down\" stops reading as one key",
+                "the minimum key width: a narrow \"K\" beside \"Backspace\" looks dropped out of the row",
+                "the kbd tag for keys so a screen reader announces them as input",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the width mode through width: auto or even",
+                "the caption under the row through caption",
+                "the row contents through keys",
+                "the key height through the --vibeui-kbd-006-height variable",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "In even mode a very long label is truncated with an ellipsis instead of stretching the column.",
+                "The 4.5rem column minimum is tuned for \"Backspace\"; raise it for longer words.",
+                "The row does not imitate a keyboard layout — it is a list of keys, not a map.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kbd006\n  keys={[\"Shift\", \"Backspace\", \"Page Down\", \"Space\"]}\n  width=\"even\"\n  caption=\"Editor keys\"\n/>"
+            },
+            "controls": {
+              "width": {
+                "label": "Key width",
+                "default": "auto"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": "Editor keys"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Wide Label Keys",
+            "preview": {
+              "props": {
+                "keys": [
+                  "Shift",
+                  "Backspace",
+                  "Page Down",
+                  "Space",
+                  "↵"
+                ],
+                "caption": "Text editor keys"
+              }
+            },
+            "docs": "A server component, there are no hooks. The auto mode gives a key its width by content with a shared minimum — the row looks like a real keyboard with keys of different sizes. The even mode puts the row on a grid with repeat(auto-fit, minmax(4.5rem, 1fr)), and all keys get equal columns: that is needed when the row has to read as a formation, in a legend for instance. The height and the type size are shared in both modes, so switching does not change the rhythm of the line. The labels are marked nowrap so that \"Page Down\" is not split. The theme comes from the surrounding color-scheme through light-dark(): the component has no background by default, it sits directly on the page background and darkens with it, and a panel is switched on by the background prop."
+          }
+        },
+        "cardControls": [
+          "width",
+          "caption",
+          "background"
+        ]
       }
     }
   ]

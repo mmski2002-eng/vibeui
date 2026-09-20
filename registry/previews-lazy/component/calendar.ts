@@ -96,4 +96,58 @@ export const PREVIEWS = {
   "calendar-030": dynamic(() =>
     import("@/registry/components/calendar/calendar-030/calendar-030").then((module) => module.Calendar030),
   ),
+  "date-001": dynamic(() =>
+    import("@/registry/components/calendar/date-001/date-001").then((module) => module.Date001),
+  ),
+  "date-002": dynamic(() =>
+    import("@/registry/components/calendar/date-002/date-002").then((module) => module.Date002),
+  ),
+  "date-003": dynamic(() =>
+    import("@/registry/components/calendar/date-003/date-003").then((module) => module.Date003),
+  ),
+  "date-004": dynamic(() =>
+    import("@/registry/components/calendar/date-004/date-004").then((module) => module.Date004),
+  ),
+  "date-005": dynamic(() =>
+    import("@/registry/components/calendar/date-005/date-005").then((module) => module.Date005),
+  ),
+  "date-006": dynamic(() =>
+    import("@/registry/components/calendar/date-006/date-006").then((module) => module.Date006),
+  ),
+  "date-007": dynamic(() =>
+    import("@/registry/components/calendar/date-007/date-007").then((module) => module.Date007),
+  ),
+  "date-008": dynamic(() =>
+    import("@/registry/components/calendar/date-008/date-008").then((module) => module.Date008),
+  ),
+  "date-009": dynamic(() =>
+    import("@/registry/components/calendar/date-009/date-009").then((module) => module.Date009),
+  ),
+  "date-010": dynamic(() =>
+    import("@/registry/components/calendar/date-010/date-010").then((module) => module.Date010),
+  ),
+  "date-011": dynamic(() =>
+    import("@/registry/components/calendar/date-011/date-011").then((module) => module.Date011),
+  ),
+  "date-012": dynamic(() =>
+    import("@/registry/components/calendar/date-012/date-012").then((module) => module.Date012),
+  ),
+  "date-013": dynamic(() =>
+    import("@/registry/components/calendar/date-013/date-013").then((module) => module.Date013),
+  ),
+  "eventcalendar-001": dynamic(() =>
+    import("@/registry/components/calendar/eventcalendar-001/eventcalendar-001").then((module) => module.Eventcalendar001),
+  ),
+  "eventcalendar-002": dynamic(() =>
+    import("@/registry/components/calendar/eventcalendar-002/eventcalendar-002").then((module) => module.Eventcalendar002),
+  ),
+  "eventcalendar-003": dynamic(() =>
+    import("@/registry/components/calendar/eventcalendar-003/eventcalendar-003").then((module) => module.Eventcalendar003),
+  ),
+  "eventcalendar-004": dynamic(() =>
+    import("@/registry/components/calendar/eventcalendar-004/eventcalendar-004").then((module) => module.Eventcalendar004),
+  ),
+  "eventcalendar-005": dynamic(() =>
+    import("@/registry/components/calendar/eventcalendar-005/eventcalendar-005").then((module) => module.Eventcalendar005),
+  ),
 } satisfies PreviewMap

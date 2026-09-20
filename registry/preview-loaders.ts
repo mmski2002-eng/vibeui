@@ -59,20 +59,10 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/component/accordion")).PREVIEWS
     case "component/alert":
       return (await import("@/registry/previews/component/alert")).PREVIEWS
-    case "component/alert-dialog":
-      return (await import("@/registry/previews/component/alert-dialog")).PREVIEWS
-    case "component/aspect-ratio":
-      return (await import("@/registry/previews/component/aspect-ratio")).PREVIEWS
-    case "component/autocomplete":
-      return (await import("@/registry/previews/component/autocomplete")).PREVIEWS
     case "component/avatar":
       return (await import("@/registry/previews/component/avatar")).PREVIEWS
     case "component/badge":
       return (await import("@/registry/previews/component/badge")).PREVIEWS
-    case "component/banner":
-      return (await import("@/registry/previews/component/banner")).PREVIEWS
-    case "component/breadcrumb":
-      return (await import("@/registry/previews/component/breadcrumb")).PREVIEWS
     case "component/button":
       return (await import("@/registry/previews/component/button")).PREVIEWS
     case "component/button-group":
@@ -83,118 +73,46 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/component/card")).PREVIEWS
     case "component/carousel":
       return (await import("@/registry/previews/component/carousel")).PREVIEWS
-    case "component/cascader":
-      return (await import("@/registry/previews/component/cascader")).PREVIEWS
     case "component/chart":
       return (await import("@/registry/previews/component/chart")).PREVIEWS
     case "component/checkbox":
       return (await import("@/registry/previews/component/checkbox")).PREVIEWS
     case "component/code-block":
       return (await import("@/registry/previews/component/code-block")).PREVIEWS
-    case "component/collapsible":
-      return (await import("@/registry/previews/component/collapsible")).PREVIEWS
     case "component/combobox":
       return (await import("@/registry/previews/component/combobox")).PREVIEWS
     case "component/command":
       return (await import("@/registry/previews/component/command")).PREVIEWS
-    case "component/context-menu":
-      return (await import("@/registry/previews/component/context-menu")).PREVIEWS
-    case "component/currency-input":
-      return (await import("@/registry/previews/component/currency-input")).PREVIEWS
-    case "component/date-selector":
-      return (await import("@/registry/previews/component/date-selector")).PREVIEWS
     case "component/dialog":
       return (await import("@/registry/previews/component/dialog")).PREVIEWS
-    case "component/drawer":
-      return (await import("@/registry/previews/component/drawer")).PREVIEWS
     case "component/dropdown-menu":
       return (await import("@/registry/previews/component/dropdown-menu")).PREVIEWS
     case "component/empty":
       return (await import("@/registry/previews/component/empty")).PREVIEWS
-    case "component/event-calendar":
-      return (await import("@/registry/previews/component/event-calendar")).PREVIEWS
-    case "component/field":
-      return (await import("@/registry/previews/component/field")).PREVIEWS
-    case "component/file-upload":
-      return (await import("@/registry/previews/component/file-upload")).PREVIEWS
-    case "component/filters":
-      return (await import("@/registry/previews/component/filters")).PREVIEWS
-    case "component/hover-card":
-      return (await import("@/registry/previews/component/hover-card")).PREVIEWS
-    case "component/icon-stack":
-      return (await import("@/registry/previews/component/icon-stack")).PREVIEWS
-    case "component/icon-tile":
-      return (await import("@/registry/previews/component/icon-tile")).PREVIEWS
+    case "component/loading":
+      return (await import("@/registry/previews/component/loading")).PREVIEWS
     case "component/input":
       return (await import("@/registry/previews/component/input")).PREVIEWS
-    case "component/input-group":
-      return (await import("@/registry/previews/component/input-group")).PREVIEWS
-    case "component/input-otp":
-      return (await import("@/registry/previews/component/input-otp")).PREVIEWS
-    case "component/item":
-      return (await import("@/registry/previews/component/item")).PREVIEWS
-    case "component/kbd":
-      return (await import("@/registry/previews/component/kbd")).PREVIEWS
-    case "component/label":
-      return (await import("@/registry/previews/component/label")).PREVIEWS
+    case "component/special-input":
+      return (await import("@/registry/previews/component/special-input")).PREVIEWS
     case "component/mockup":
       return (await import("@/registry/previews/component/mockup")).PREVIEWS
-    case "component/native-select":
-      return (await import("@/registry/previews/component/native-select")).PREVIEWS
-    case "component/navigation-menu":
-      return (await import("@/registry/previews/component/navigation-menu")).PREVIEWS
-    case "component/number-field":
-      return (await import("@/registry/previews/component/number-field")).PREVIEWS
-    case "component/pagination":
-      return (await import("@/registry/previews/component/pagination")).PREVIEWS
-    case "component/phone-input":
-      return (await import("@/registry/previews/component/phone-input")).PREVIEWS
     case "component/popover":
       return (await import("@/registry/previews/component/popover")).PREVIEWS
-    case "component/progress":
-      return (await import("@/registry/previews/component/progress")).PREVIEWS
-    case "component/radio-group":
-      return (await import("@/registry/previews/component/radio-group")).PREVIEWS
-    case "component/range":
-      return (await import("@/registry/previews/component/range")).PREVIEWS
-    case "component/rating":
-      return (await import("@/registry/previews/component/rating")).PREVIEWS
-    case "component/scrollspy":
-      return (await import("@/registry/previews/component/scrollspy")).PREVIEWS
     case "component/select":
       return (await import("@/registry/previews/component/select")).PREVIEWS
-    case "component/separator":
-      return (await import("@/registry/previews/component/separator")).PREVIEWS
-    case "component/skeleton":
-      return (await import("@/registry/previews/component/skeleton")).PREVIEWS
     case "component/slider":
       return (await import("@/registry/previews/component/slider")).PREVIEWS
-    case "component/sortable":
-      return (await import("@/registry/previews/component/sortable")).PREVIEWS
-    case "component/sparkline":
-      return (await import("@/registry/previews/component/sparkline")).PREVIEWS
-    case "component/spinner":
-      return (await import("@/registry/previews/component/spinner")).PREVIEWS
     case "component/stepper":
       return (await import("@/registry/previews/component/stepper")).PREVIEWS
-    case "component/switch":
-      return (await import("@/registry/previews/component/switch")).PREVIEWS
     case "component/table":
       return (await import("@/registry/previews/component/table")).PREVIEWS
     case "component/tabs":
       return (await import("@/registry/previews/component/tabs")).PREVIEWS
-    case "component/tags-input":
-      return (await import("@/registry/previews/component/tags-input")).PREVIEWS
-    case "component/timeline":
-      return (await import("@/registry/previews/component/timeline")).PREVIEWS
+    case "component/navigation":
+      return (await import("@/registry/previews/component/navigation")).PREVIEWS
     case "component/toast":
       return (await import("@/registry/previews/component/toast")).PREVIEWS
-    case "component/toggle":
-      return (await import("@/registry/previews/component/toggle")).PREVIEWS
-    case "component/toggle-group":
-      return (await import("@/registry/previews/component/toggle-group")).PREVIEWS
-    case "component/tooltip":
-      return (await import("@/registry/previews/component/tooltip")).PREVIEWS
     case "component/tree":
       return (await import("@/registry/previews/component/tree")).PREVIEWS
     case "animation/cta":

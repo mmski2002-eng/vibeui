@@ -224,7 +224,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["шапка", "хедер", "верхнее меню", "навигация сверху"],
-    categories: ["navbar", "navigation-menu"],
+    categories: ["navbar", "navigation"],
     terms: ["navbar", "header"],
   },
   {
@@ -252,7 +252,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["график", "диаграмма", "чарт", "визуализация данных"],
-    categories: ["chart", "sparkline"],
+    categories: ["chart"],
     terms: ["chart"],
   },
   {
@@ -262,22 +262,22 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["поле ввода", "инпут", "текстовое поле"],
-    categories: ["input", "field", "input-group", "textarea"],
+    categories: ["input", "textarea"],
     terms: ["input"],
   },
   {
     say: ["выпадающий список", "селект", "список выбора"],
-    categories: ["select", "native-select", "combobox"],
+    categories: ["select", "combobox"],
     terms: ["select"],
   },
   {
     say: ["выпадающее меню", "меню действий", "контекстное меню"],
-    categories: ["dropdown-menu", "context-menu"],
+    categories: ["dropdown-menu"],
     terms: ["dropdown", "menu"],
   },
   {
     say: ["модалка", "модальное окно", "попап", "всплывающее окно", "диалог"],
-    categories: ["dialog", "alert-dialog", "drawer", "popover"],
+    categories: ["dialog", "popover"],
     terms: ["dialog", "modal"],
   },
   {
@@ -292,12 +292,12 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["пагинация", "постраничная навигация", "страницы списка"],
-    categories: ["pagination"],
+    categories: ["navigation"],
     terms: ["pagination"],
   },
   {
     say: ["хлебные крошки", "путь по разделам"],
-    categories: ["breadcrumb"],
+    categories: ["navigation"],
     terms: ["breadcrumb"],
   },
   {
@@ -307,22 +307,22 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["ползунок", "слайдер значения", "регулятор"],
-    categories: ["slider", "range"],
+    categories: ["slider"],
     terms: ["slider"],
   },
   {
     say: ["поиск", "строка поиска", "поле поиска"],
-    categories: ["search", "command", "autocomplete"],
+    categories: ["search", "command", "combobox"],
     terms: ["search"],
   },
   {
     say: ["календарь", "выбор даты", "датапикер", "дата"],
-    categories: ["calendar", "date-selector", "event-calendar"],
+    categories: ["calendar"],
     terms: ["calendar", "date"],
   },
   {
     say: ["загрузка файлов", "дропзона", "прикрепить файл", "аплоад"],
-    categories: ["file-upload", "files"],
+    categories: ["special-input", "files"],
     terms: ["upload"],
   },
   {
@@ -352,7 +352,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["таймлайн", "лента событий", "хронология", "история"],
-    categories: ["timeline", "blog", "activity"],
+    categories: ["stepper", "blog", "activity"],
     terms: ["timeline"],
   },
   {
@@ -377,12 +377,12 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["скелетон", "заглушка загрузки"],
-    categories: ["skeleton"],
+    categories: ["loading"],
     terms: ["skeleton"],
   },
   {
     say: ["спиннер", "лоадер", "индикатор ожидания"],
-    categories: ["spinner", "progress"],
+    categories: ["loading"],
     terms: ["spinner", "loading"],
   },
   {
@@ -392,7 +392,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["оплата", "платежи", "чекаут", "оформление заказа", "карта оплаты"],
-    categories: ["payments", "currency-input"],
+    categories: ["payments", "special-input"],
     terms: ["payments", "checkout"],
   },
   {
@@ -417,17 +417,17 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["аккордеон", "раскрывающийся список", "сворачиваемый блок"],
-    categories: ["accordion", "collapsible"],
+    categories: ["accordion"],
     terms: ["accordion"],
   },
   {
     say: ["подсказка", "тултип", "поясняющая надпись"],
-    categories: ["tooltip", "hover-card"],
+    categories: ["popover"],
     terms: ["tooltip"],
   },
   {
     say: ["тумблер", "переключатель", "свитч"],
-    categories: ["switch", "toggle", "toggle-group", "radio-group"],
+    categories: ["checkbox", "button", "button-group"],
     terms: ["switch", "toggle"],
   },
   {
@@ -437,12 +437,12 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["прогресс", "полоса загрузки", "индикатор выполнения"],
-    categories: ["progress"],
+    categories: ["loading"],
     terms: ["progress"],
   },
   {
     say: ["рейтинг", "звёзды", "оценка"],
-    categories: ["rating"],
+    categories: ["special-input"],
     terms: ["rating"],
   },
   {
@@ -467,7 +467,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["куки", "согласие", "cookie баннер"],
-    categories: ["errors", "banner"],
+    categories: ["errors", "alert"],
     terms: ["consent", "cookie"],
   },
   {
@@ -477,12 +477,12 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["плашка", "бейдж", "метка", "лейбл"],
-    categories: ["badge", "label"],
+    categories: ["badge", "input"],
     terms: ["badge"],
   },
   {
     say: ["карточка", "карточки", "плитка"],
-    categories: ["card", "stacks", "icon-tile"],
+    categories: ["card", "stacks", "avatar"],
     terms: ["card"],
   },
   {
@@ -662,7 +662,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["события", "мероприятия", "афиша", "фестиваль", "программа", "расписание", "площадки"],
-    categories: ["events", "event-calendar"],
+    categories: ["events", "calendar"],
     terms: ["events", "festival", "programme", "schedule", "venues", "lineup"],
   },
   {
@@ -677,17 +677,17 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["фильтры", "отбор", "уточнение выдачи"],
-    categories: ["filters"],
+    categories: ["table"],
     terms: ["filters"],
   },
   {
     say: ["ввод кода", "смс код", "одноразовый код", "otp"],
-    categories: ["input-otp"],
+    categories: ["special-input"],
     terms: ["otp"],
   },
   {
     say: ["телефон", "номер телефона"],
-    categories: ["phone-input"],
+    categories: ["special-input"],
     terms: ["phone"],
   },
   {
@@ -882,7 +882,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["игра", "игры", "игровой сайт", "гейминг", "game", "games", "gaming"],
-    categories: ["card", "rating", "pricing"],
+    categories: ["card", "special-input", "pricing"],
     terms: ["card", "rating", "comparison"],
   },
   {
@@ -897,7 +897,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["коллекция", "энциклопедия", "справочник", "collection"],
-    categories: ["card", "filters", "pagination"],
+    categories: ["card", "table", "navigation"],
     terms: ["card", "filters"],
   },
 ]

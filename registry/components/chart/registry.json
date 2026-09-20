@@ -5794,6 +5794,848 @@
           "width": "full"
         }
       }
+    },
+    {
+      "name": "sparkline-001",
+      "type": "registry:component",
+      "title": "Спарклайн показателя",
+      "description": "Мини-график размером со строку: число отвечает «сколько», кривая — «куда идёт». Цвет считается из знака изменения, поэтому падение нельзя покрасить в зелёный.",
+      "categories": [
+        "chart"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sparkline-001/sparkline-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sparkline-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sparkline-001-*. Кривая — SVG-путь, посчитанный из массива значений на сервере: клиентского JS нет. Направление выводится из пропа delta и попадает в data-trend, от которого зависят и цвет линии, и поворот стрелки: цвет нельзя задать вручную вразрез со знаком. Компонент inline-flex, поэтому встаёт в ячейку таблицы и в строку карточки.",
+      "meta": {
+        "tags": [
+          "sparkline",
+          "metric",
+          "kpi",
+          "trend"
+        ],
+        "ai": {
+          "export": "Sparkline001",
+          "usage": "<Sparkline001\n  label=\"Установок за месяц\"\n  value=\"1 284\"\n  delta={12.4}\n  values={[12, 15, 13, 19, 24, 31, 41]}\n/>",
+          "summary": "Показатель со встроенным мини-графиком: подпись, крупное значение, кривая за период и изменение со стрелкой. Направление выводится из знака delta и красит и линию, и стрелку — рассинхронизировать цвет и смысл нельзя. Компонент inline, поэтому помещается в ячейку таблицы. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-sparkline-001-* и не подменять её токенами вашей темы (text-green-500, --chart-1 и подобными)",
+            "вывод цвета из знака delta через data-trend: цвет, заданный отдельно от значения, рано или поздно соврёт",
+            "порог «без изменений» в полпроцента: колебание в 0,1 % не должно окрашиваться как рост",
+            "число рядом с кривой: спарклайн отвечает на «куда идёт», а не на «сколько» — без числа он бесполезен",
+            "vector-effect:non-scaling-stroke и preserveAspectRatio=\"none\" — иначе при растяжении линия становится неровной",
+            "aria-label у svg со значением и изменением",
+            "inline-flex у корня: показатель обязан вставать в строку, а не разрывать её",
+            "блок <style> внутри компонента — в нём вся палитра и геометрия",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "values — ряд значений для кривой",
+            "label и value — подпись и текущее значение; value это строка, поэтому формат остаётся за вами",
+            "delta и unit — изменение за период и его единица",
+            "акцент через проп accent, если нужен один цвет вместо зелёного и красного",
+            "внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "ariaTemplate — подпись для скринридера: {label}, {value}, {delta} и {unit} подставляются"
+          ],
+          "notes": [
+            "accent красит только рост. Падение остаётся красным, ровный тренд — приглушённым: цвет здесь несёт смысл, и бренд-переменная не должна его стирать.",
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "У кривой нет осей и подписей: это намеренно. Спарклайн показывает форму, а не значения точек.",
+            "Не используйте его как единственный график на дашборде — за формой не видно масштаба.",
+            "value — строка, а не число: форматирование остаётся за вызывающим кодом, компонент не угадывает разряды и валюту.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Установок за месяц",
+            "maxLength": 40
+          },
+          {
+            "prop": "value",
+            "label": "Значение",
+            "type": "text",
+            "default": "1 284",
+            "maxLength": 16
+          },
+          {
+            "prop": "delta",
+            "label": "Изменение",
+            "type": "number",
+            "default": 12.4,
+            "min": -99,
+            "max": 99
+          },
+          {
+            "prop": "unit",
+            "label": "Единица",
+            "type": "text",
+            "default": "%",
+            "maxLength": 6
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A line-sized chart: the number says how much, the curve says where it is going. The colour is derived from the sign of the change, so a decline cannot be painted green.",
+            "ai": {
+              "summary": "A metric with an inline sparkline: label, large value, the period's curve and the change with an arrow. The direction is derived from the sign of delta and colours both line and arrow — colour and meaning cannot drift apart. The component is inline, so it fits a table cell. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-sparkline-001-* palette — do not swap it for your theme tokens (text-green-500, --chart-1 and the like)",
+                "deriving the colour from the sign of delta through data-trend: a colour set independently of the value eventually lies",
+                "the half-percent flat threshold: a 0.1 % wobble must not be coloured as growth",
+                "the number beside the curve: a sparkline answers \"where is it going\", not \"how much\" — without the number it is useless",
+                "vector-effect:non-scaling-stroke and preserveAspectRatio=\"none\" — otherwise stretching makes the stroke uneven",
+                "the aria-label on the svg carrying the value and the change",
+                "inline-flex on the root: the metric has to sit in a line rather than break it",
+                "the <style> block inside the component — it holds the palette and the geometry",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "values — the series behind the curve",
+                "label and value — the caption and the current figure; value is a string, so the format stays yours",
+                "delta and unit — the change over the period and its unit",
+                "the accent through the accent prop when one colour is wanted instead of green and red",
+                "outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour",
+                "ariaTemplate — the screen-reader caption: {label}, {value}, {delta} and {unit} are substituted"
+              ],
+              "notes": [
+                "accent recolours growth only. A fall stays red and a flat trend stays muted: colour carries meaning here, and a brand variable must not erase it.",
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The curve has no axes or labels, deliberately. A sparkline shows shape, not point values.",
+                "Do not make it the only chart on a dashboard — shape hides scale.",
+                "value is a string rather than a number: formatting belongs to the caller, the component does not guess digit grouping or currency.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sparkline001\n  label=\"Installs this month\"\n  value=\"1,284\"\n  delta={12.4}\n  values={[12, 15, 13, 19, 24, 31, 41]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Installs this month"
+              },
+              "value": {
+                "label": "Value",
+                "default": "1,284"
+              },
+              "delta": {
+                "label": "Change"
+              },
+              "unit": {
+                "label": "Unit",
+                "default": "%"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Metric Sparkline",
+            "preview": {
+              "props": {
+                "label": "Installs this month",
+                "value": "1,284",
+                "unit": "%",
+                "ariaTemplate": "{label}: {value}, change {delta}{unit}"
+              }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-sparkline-001-* variables. The curve is an SVG path computed from the values array on the server: there is no client JS. The direction is derived from the delta prop and lands in data-trend, which drives both the line colour and the rotation of the arrow: the colour cannot be set by hand against the sign. The component is inline-flex, so it fits into a table cell and into a line of a card."
+          }
+        },
+        "cardControls": [
+          "label",
+          "value",
+          "delta",
+          "unit",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
+      }
+    },
+    {
+      "name": "sparkline-002",
+      "type": "registry:component",
+      "title": "Таблица со спарклайнами",
+      "description": "Таблица метрик, где динамика живёт прямо в строке: данные здесь уже текст, поэтому таблица и есть текстовая альтернатива кривым.",
+      "categories": [
+        "chart"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sparkline-002/sparkline-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sparkline-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sparkline-002-*. Серверный: хуков нет. Корень — настоящая таблица, поэтому текстовая альтернатива графикам не нужна отдельно: кривые помечены aria-hidden. Путь спарклайна считается из массива значений в системе 100×24 с preserveAspectRatio=\"none\", а толщина линии держится vector-effect: non-scaling-stroke. Направление выводится из знака delta с порогом в полпроцента и попадает в data-trend на строке, от которого зависят и цвет кривой, и цвет изменения.",
+      "meta": {
+        "tags": [
+          "sparkline",
+          "table",
+          "metrics",
+          "trend"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Sparkline002",
+          "usage": "<Sparkline002\n  caption=\"Ключевые метрики\"\n  period=\"за последние 7 дней\"\n  rows={[{ label: \"Визиты\", value: \"48 210\", delta: 8.4, values: [31, 34, 41, 48] }]}\n/>",
+          "summary": "Таблица метрик со спарклайном в каждой строке: подпись, значение, кривая за период и изменение со знаком. Направление выводится из знака delta и красит и кривую, и число, а сама таблица служит текстовой альтернативой графикам. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-sparkline-002-* и не подменять её токенами вашей темы (text-green-500, --chart-1 и подобными)",
+            "таблицу как корень компонента: данные обязаны быть доступны текстом, и здесь это получается само",
+            "aria-hidden на кривых: строка таблицы уже прочитана, картинка добавит только шум",
+            "вывод цвета из знака delta через data-trend на строке: цвет, заданный отдельно от значения, рано или поздно соврёт",
+            "порог «без изменений» в полпроцента: колебание в 0,1 % не должно окрашиваться как рост",
+            "vector-effect: non-scaling-stroke и preserveAspectRatio=\"none\" — иначе в узкой колонке кривая становится ниткой",
+            "табличные цифры в колонках значения и изменения: числа обязаны стоять ровным столбцом",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив rows: подпись, значение, delta и ряд values для кривой",
+            "caption — заголовок таблицы",
+            "period — пояснение периода под заголовком",
+            "акцент через проп accent — цвет роста, если зелёный не подходит бренду",
+            "набор колонок и их порядок",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "headings — заголовки колонок словарём: metric, value, trend, change",
+            "note — пояснение под заголовком; {period} подставляется"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "value — строка, а не число: форматирование остаётся за вызывающим кодом, компонент не угадывает разряды и валюту.",
+            "У кривой нет осей: она показывает форму, а точные числа берут из соседних колонок.",
+            "Меньше двух значений в values дают точку вместо линии — такие строки лучше отфильтровать.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Заголовок таблицы",
+            "type": "text",
+            "default": "Ключевые метрики",
+            "maxLength": 40
+          },
+          {
+            "prop": "period",
+            "label": "Период",
+            "type": "text",
+            "default": "за последние 7 дней",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A metrics table where the trend lives inside the row: the data is already text, so the table itself is the text alternative to the curves.",
+            "ai": {
+              "summary": "A metrics table with a sparkline in every row: label, value, the period curve and the signed change. The direction is derived from the sign of delta and colours both the curve and the number, while the table itself serves as the text alternative to the charts. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-sparkline-002-* palette — do not swap it for your theme tokens (text-green-500, --chart-1 and the like)",
+                "the table as the component root: the data must be available as text, and here it comes for free",
+                "aria-hidden on the curves: the row has already been read, the picture would only add noise",
+                "deriving the colour from the sign of delta through data-trend on the row: a colour set independently of the value eventually lies",
+                "the half-percent flat threshold: a 0.1 % wobble must not be coloured as growth",
+                "vector-effect: non-scaling-stroke and preserveAspectRatio=\"none\" — otherwise the curve becomes a thread in a narrow column",
+                "tabular numerals in the value and change columns: the numbers must line up in a column",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the rows array: label, value, delta and the values series behind the curve",
+                "caption — the table heading",
+                "period — the period note under the heading",
+                "the accent through the accent prop — the growth colour when green does not suit the brand",
+                "the set of columns and their order",
+                "background — the component background; empty means no background, taking the page colour",
+                "headings — the column headings as a dictionary: metric, value, trend, change",
+                "note — the line under the heading; {period} is substituted"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "value is a string rather than a number: formatting belongs to the caller, the component does not guess digit grouping or currency.",
+                "The curve has no axes: it shows shape, and the exact numbers come from the neighbouring columns.",
+                "Fewer than two entries in values render a dot instead of a line — filter such rows out.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sparkline002\n  caption=\"Key metrics\"\n  period=\"over the last 7 days\"\n  rows={[{ label: \"Visits\", value: \"48,210\", delta: 8.4, values: [31, 34, 41, 48] }]}\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Table heading",
+                "default": "Key metrics"
+              },
+              "period": {
+                "label": "Period",
+                "default": "over the last 7 days"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Metric Table",
+            "preview": {
+              "props": {
+                "caption": "Key metrics",
+                "period": "over the last 7 days",
+                "note": "Trend {period}, change against the previous period",
+                "headings": {
+                  "metric": "Metric",
+                  "value": "Value",
+                  "trend": "Trend",
+                  "change": "Change"
+                },
+                "rows": [
+                  {
+                    "label": "Visits",
+                    "value": "48,210",
+                    "delta": 8.4,
+                    "values": [
+                      31,
+                      34,
+                      33,
+                      38,
+                      41,
+                      44,
+                      48
+                    ]
+                  },
+                  {
+                    "label": "Sign-ups",
+                    "value": "1,284",
+                    "delta": 12.1,
+                    "values": [
+                      8,
+                      9,
+                      11,
+                      10,
+                      12,
+                      12,
+                      14
+                    ]
+                  },
+                  {
+                    "label": "Bounce rate",
+                    "value": "37.2%",
+                    "delta": -3.6,
+                    "values": [
+                      44,
+                      43,
+                      41,
+                      42,
+                      39,
+                      38,
+                      37
+                    ]
+                  },
+                  {
+                    "label": "Average order",
+                    "value": "$32.40",
+                    "delta": 0.2,
+                    "values": [
+                      29,
+                      30,
+                      29,
+                      30,
+                      29,
+                      30,
+                      29
+                    ]
+                  }
+                ]
+              }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-sparkline-002-* variables. Server-side: there are no hooks. The root is a real table, so the charts need no separate text alternative: the curves are marked aria-hidden. The sparkline path is computed from the values array in a 100×24 coordinate system with preserveAspectRatio=\"none\", and the stroke width is held by vector-effect: non-scaling-stroke. The direction is derived from the sign of delta with a half-percent threshold and lands in data-trend on the row, which drives both the curve colour and the colour of the change."
+          }
+        },
+        "cardControls": [
+          "caption",
+          "period",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "sparkline-003",
+      "type": "registry:component",
+      "title": "Спарклайн столбиками",
+      "description": "Мини-график столбиками для дискретных отсчётов: столбик показывает, что между значениями ничего нет, а самый высокий выделен цветом и подписан.",
+      "categories": [
+        "chart"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sparkline-003/sparkline-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sparkline-003.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-sparkline-003-*. Серверный, без SVG: столбики выстроены гридом по числу отсчётов, ширина делится поровну и не зависит от длины ряда. Высота столбика — доля от максимума через собственную переменную --share, с нижней границей в 2px: нулевой отсчёт обязан остаться видимым, иначе пропуск в ряду читается как сбой данных, а не как ноль. Максимум выделен цветом акцента и подписан в подвале — у ряда без осей это единственная опора в масштабе. Весь ряд помечен role=img с подписью, собранной из шаблона.",
+      "meta": {
+        "tags": [
+          "sparkline",
+          "bars",
+          "metric",
+          "compact"
+        ],
+        "ai": {
+          "export": "Sparkline003",
+          "usage": "<Sparkline003\n  label=\"Заказы в день\"\n  value=\"13\"\n  values={[4, 7, 5, 9, 6, 11]}\n/>",
+          "summary": "Спарклайн столбиками: дискретные отсчёты, выделенный и подписанный максимум. Один файл, ноль зависимостей, без SVG.",
+          "preserve": [
+            "локальную палитру --vibeui-sparkline-003-*: компонент обязан выглядеть одинаково в любом проекте",
+            "столбики вместо линии: линия соединяет то, между чем ничего нет, и врёт о непрерывности",
+            "нижнюю границу высоты в 2px — иначе нулевой отсчёт исчезает и читается как пропуск данных",
+            "выделенный максимум с подписью: без осей это единственная опора в масштабе",
+            "role=img с подписью на ряде: сами столбики для диктора — пустые элементы"
+          ],
+          "adapt": [
+            "ряд через values, подписи через label и value",
+            "подписи краёв периода через fromLabel и toLabel",
+            "подпись для диктора через ariaTemplate с плейсхолдерами {label}, {value}, {max} и {count}",
+            "цвет столбиков через accent, обычных — через переменную --vibeui-sparkline-003-bar",
+            "подложку компонента через background; пусто означает фон страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Разумный ряд — от семи до тридцати отсчётов: дальше столбик становится тоньше зазора.",
+            "Значения ожидаются неотрицательными: столбики считаются от нуля, а не от минимума ряда.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Заказы в день",
+            "maxLength": 24
+          },
+          {
+            "prop": "value",
+            "label": "Значение",
+            "type": "text",
+            "default": "13",
+            "maxLength": 12
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Bar Sparkline",
+            "description": "A micro chart in bars for discrete counts: a bar says there is nothing between the values, and the tallest one is coloured and labelled.",
+            "docs": "One file, zero dependencies, the --vibeui-sparkline-003-* palette. A server component with no SVG: the bars are a grid sized by the number of counts, so the width splits evenly regardless of series length. A bar's height is a share of the maximum through its own --share variable, with a 2px floor: a zero count has to stay visible, otherwise a gap in the row reads as broken data rather than as zero. The maximum is picked out in the accent colour and printed in the footer — without axes that is the only anchor in the scale. The whole row is role=img with a label built from a template.",
+            "ai": {
+              "summary": "A bar sparkline: discrete counts with the maximum picked out and labelled. One file, zero dependencies, no SVG.",
+              "preserve": [
+                "the local --vibeui-sparkline-003-* palette: the component must look the same in any project",
+                "bars instead of a line: a line joins things with nothing in between and lies about continuity",
+                "the 2px height floor — without it a zero count disappears and reads as missing data",
+                "the highlighted maximum with its label: without axes it is the only anchor in the scale",
+                "role=img with a label on the row: to a screen reader the bars themselves are empty elements"
+              ],
+              "adapt": [
+                "the series through values, the captions through label and value",
+                "the period edges through fromLabel and toLabel",
+                "the screen-reader label through ariaTemplate with {label}, {value}, {max} and {count}",
+                "the bar colour through accent, the ordinary bars through --vibeui-sparkline-003-bar",
+                "the component surface through background; empty means the page background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Seven to thirty counts is the sane range: past that a bar grows thinner than the gap.",
+                "Values are expected non-negative: bars are measured from zero, not from the series minimum.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sparkline003\n  label=\"Orders per day\"\n  value=\"13\"\n  values={[4, 7, 5, 9, 6, 11]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Orders per day"
+              },
+              "value": {
+                "label": "Value",
+                "default": "13"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Orders per day",
+                "value": "13",
+                "fromLabel": "Jul 1",
+                "toLabel": "Jul 12",
+                "ariaTemplate": "{label}: {value}. Counts: {count}, the largest is {max}."
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "label",
+          "value",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
+      }
+    },
+    {
+      "name": "sparkline-004",
+      "type": "registry:component",
+      "title": "Ряд исходов",
+      "description": "Ряд успехов и провалов: столбик вверх — получилось, вниз — нет. Высоту столбики не несут намеренно, вопрос к такому ряду один — как часто и где подряд.",
+      "categories": [
+        "chart"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sparkline-004/sparkline-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sparkline-004.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-sparkline-004-*. Серверный, без SVG. Ряд собран гридом из двух строк одинаковой высоты: успех занимает верхнюю, провал — нижнюю, поэтому никаких сдвигов считать не нужно. Колонка у каждой отметки задана явно — при заданном ряде автоматическое размещение расставило бы столбики не по порядку исходов. Нулевая линия проходит посередине и держит ряд. Ничья рисуется короткой чёрточкой на самой линии: пропуск выглядел бы как отсутствие данных, а это другой смысл. Prop называется outcomes, а не results: так зовётся устаревший HTML-атрибут, и типы React сузили бы его до числа.",
+      "meta": {
+        "tags": [
+          "sparkline",
+          "win-loss",
+          "status",
+          "compact"
+        ],
+        "ai": {
+          "export": "Sparkline004",
+          "usage": "<Sparkline004\n  label=\"Ночные сборки\"\n  outcomes={[1, 1, -1, 1, 0, 1]}\n/>",
+          "summary": "Ряд исходов: столбик вверх — успех, вниз — провал, чёрточка на линии — ничья. Один файл, ноль зависимостей, без SVG.",
+          "preserve": [
+            "локальную палитру --vibeui-sparkline-004-*: компонент обязан выглядеть одинаково в любом проекте",
+            "одинаковую высоту столбиков: разница в высоте читалась бы как «сильнее получилось», а у исхода такого смысла нет",
+            "нулевую линию посередине — без неё ряд превращается в набор чёрточек без опоры",
+            "чёрточку на месте ничьей: пропуск в ряду выглядит как отсутствие данных, а это другой смысл",
+            "явную колонку у каждой отметки — иначе автоматическое размещение перепутает порядок исходов"
+          ],
+          "adapt": [
+            "ряд через outcomes: 1 — успех, −1 — провал, 0 — ничья",
+            "подпись через label и строку свода через summaryTemplate с {wins}, {losses} и {total}",
+            "подпись для диктора через ariaTemplate с теми же плейсхолдерами",
+            "цвет успеха через accent, цвет провала — через переменную --vibeui-sparkline-004-loss",
+            "подложку компонента через background; пусто означает фон страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Prop назван outcomes, а не results: results — устаревший HTML-атрибут, и типы React сузили бы его до числа.",
+            "Разумный ряд — от десяти до сорока исходов: он читается как полоса, а не как отдельные значения.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Ночные сборки",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет успеха",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Win-Loss Row",
+            "description": "A row of wins and losses: a bar up means it worked, down means it did not. The bars carry no height on purpose — the only question here is how often, and where in a streak.",
+            "docs": "One file, zero dependencies, the --vibeui-sparkline-004-* palette. A server component with no SVG. The row is a grid of two equal rows: a win takes the upper one, a loss the lower, so no offsets have to be computed. Each mark's column is set explicitly — with the row fixed, auto-placement would order the bars wrongly. A zero line runs through the middle and holds the row together. A draw is a short dash on that line: a gap would read as missing data, which means something else. The prop is called outcomes rather than results: results is a legacy HTML attribute and React's types would narrow it to a number.",
+            "ai": {
+              "summary": "A win-loss row: a bar up for a win, down for a loss, a dash on the line for a draw. One file, zero dependencies, no SVG.",
+              "preserve": [
+                "the local --vibeui-sparkline-004-* palette: the component must look the same in any project",
+                "the equal bar heights: a difference in height would read as \"it worked harder\", which an outcome cannot mean",
+                "the zero line through the middle — without it the row is just dashes with no anchor",
+                "the dash for a draw: a gap in the row reads as missing data, which means something else",
+                "the explicit column on every mark — otherwise auto-placement scrambles the order of outcomes"
+              ],
+              "adapt": [
+                "the row through outcomes: 1 for a win, −1 for a loss, 0 for a draw",
+                "the caption through label and the summary through summaryTemplate with {wins}, {losses} and {total}",
+                "the screen-reader label through ariaTemplate with the same placeholders",
+                "the win colour through accent, the loss colour through --vibeui-sparkline-004-loss",
+                "the component surface through background; empty means the page background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The prop is outcomes rather than results: results is a legacy HTML attribute and React's types would narrow it to a number.",
+                "Ten to forty outcomes is the sane range: it reads as a band rather than as separate values.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sparkline004\n  label=\"Nightly builds\"\n  outcomes={[1, 1, -1, 1, 0, 1]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Nightly builds"
+              },
+              "accent": {
+                "label": "Win colour"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Nightly builds",
+                "summaryTemplate": "{wins} green, {losses} failed of {total}",
+                "ariaTemplate": "{label}: {wins} green and {losses} failed of {total}."
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "label",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
+      }
+    },
+    {
+      "name": "sparkline-005",
+      "type": "registry:component",
+      "title": "Спарклайн с зоной нормы",
+      "description": "Мини-график на фоне полосы нормы: сам ряд отвечает «росло или падало», а полоса — на главный вопрос «было ли плохо», и выходы за неё отмечены точками.",
+      "categories": [
+        "chart"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sparkline-005/sparkline-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sparkline-005.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-sparkline-005-*. Серверный. Границы нормы приходят в тех же единицах, что и данные, и масштаб строится по объединению ряда с полосой — иначе полоса уехала бы за кадр, как только весь ряд окажется выше или ниже неё. Полоса нормы залита слабым акцентом, её края помечены пунктиром. Точки выхода за норму крупнее последней точки ряда и своего цвета: их ищут глазами в первую очередь. SVG помечен role=img с подписью из шаблона, а число выходов продублировано текстом в подвале.",
+      "meta": {
+        "tags": [
+          "sparkline",
+          "threshold",
+          "monitoring",
+          "compact"
+        ],
+        "ai": {
+          "export": "Sparkline005",
+          "usage": "<Sparkline005\n  label=\"Время ответа, мс\"\n  value=\"131\"\n  low={100}\n  high={160}\n  values={[120, 210, 156, 131]}\n/>",
+          "summary": "Спарклайн с зоной нормы: полоса допустимых значений на фоне и отмеченные выходы за неё. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-sparkline-005-*: компонент обязан выглядеть одинаково в любом проекте",
+            "масштаб по объединению ряда и полосы — иначе полоса нормы уедет за кадр",
+            "отметки выходов за норму: без них полоса остаётся украшением, а не ответом",
+            "число выходов текстом в подвале: по одним точкам его не сосчитать, а диктору они недоступны",
+            "role=img с подписью на графике: сам SVG для диктора — пустой элемент"
+          ],
+          "adapt": [
+            "ряд через values, подписи через label и value",
+            "границы нормы через low и high — в тех же единицах, что и данные",
+            "подписи подвала через bandTemplate с {low} и {high} и breachTemplate с {count}",
+            "цвет линии через accent, цвет выходов — через переменную --vibeui-sparkline-005-breach",
+            "подложку компонента через background; пусто означает фон страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Пустая строка в breachTemplate убирает счётчик выходов, сами отметки остаются.",
+            "Норма односторонней не бывает: чтобы задать только верхний предел, поставьте low ниже минимума ряда.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Время ответа, мс",
+            "maxLength": 24
+          },
+          {
+            "prop": "low",
+            "label": "Нижняя граница",
+            "type": "number",
+            "default": 100,
+            "min": 0,
+            "max": 400
+          },
+          {
+            "prop": "high",
+            "label": "Верхняя граница",
+            "type": "number",
+            "default": 160,
+            "min": 0,
+            "max": 400
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Sparkline with Normal Band",
+            "description": "A micro chart over a band of normal values: the series answers \"up or down\", the band answers the real question — \"was it bad\" — and the breaches are marked as dots.",
+            "docs": "One file, zero dependencies, the --vibeui-sparkline-005-* palette. A server component. The band limits arrive in the same units as the data, and the scale spans the union of series and band — otherwise the band would leave the frame as soon as the whole series sits above or below it. The band is filled with a faint accent and its edges are dashed. Breach dots are larger than the trailing dot and carry their own colour: they are what the eye looks for first. The SVG is role=img with a templated label, and the breach count is repeated as text in the footer.",
+            "ai": {
+              "summary": "A sparkline with a normal band: the acceptable range behind the series and the breaches marked. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-sparkline-005-* palette: the component must look the same in any project",
+                "the scale spanning both series and band — otherwise the band leaves the frame",
+                "the breach markers: without them the band is decoration rather than an answer",
+                "the breach count as text in the footer: the dots cannot be counted at a glance and are invisible to a screen reader",
+                "role=img with a label on the chart: to a screen reader the SVG itself is an empty element"
+              ],
+              "adapt": [
+                "the series through values, the captions through label and value",
+                "the band limits through low and high — in the same units as the data",
+                "the footer captions through bandTemplate with {low} and {high} and breachTemplate with {count}",
+                "the line colour through accent, the breach colour through --vibeui-sparkline-005-breach",
+                "the component surface through background; empty means the page background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "An empty breachTemplate removes the counter while the markers stay.",
+                "The band is always two-sided: for an upper limit only, set low below the series minimum.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sparkline005\n  label=\"Response time, ms\"\n  value=\"131\"\n  low={100}\n  high={160}\n  values={[120, 210, 156, 131]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Response time, ms"
+              },
+              "low": {
+                "label": "Lower limit"
+              },
+              "high": {
+                "label": "Upper limit"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Response time, ms",
+                "value": "131",
+                "bandTemplate": "normal {low}–{high}",
+                "breachTemplate": "breaches: {count}",
+                "ariaTemplate": "{label}: {value}. Normal from {low} to {high}, breaches: {count}."
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "label",
+          "low",
+          "high",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
+      }
     }
   ]
 }

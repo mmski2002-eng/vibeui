@@ -54,4 +54,43 @@ export const PREVIEWS = {
   "stepper-016": dynamic(() =>
     import("@/registry/components/stepper/stepper-016/stepper-016").then((module) => module.Stepper016),
   ),
+  "timeline-001": dynamic(() =>
+    import("@/registry/components/stepper/timeline-001/timeline-001").then((module) => module.Timeline001),
+  ),
+  "timeline-002": dynamic(() =>
+    import("@/registry/components/stepper/timeline-002/timeline-002").then((module) => module.Timeline002),
+  ),
+  "timeline-003": dynamic(() =>
+    import("@/registry/components/stepper/timeline-003/timeline-003").then((module) => module.Timeline003),
+  ),
+  "timeline-004": dynamic(() =>
+    import("@/registry/components/stepper/timeline-004/timeline-004").then((module) => module.Timeline004),
+  ),
+  "timeline-005": dynamic(() =>
+    import("@/registry/components/stepper/timeline-005/timeline-005").then((module) => module.Timeline005),
+  ),
+  "timeline-006": dynamic(() =>
+    import("@/registry/components/stepper/timeline-006/timeline-006").then((module) => module.Timeline006),
+  ),
+  "timeline-007": dynamic(() =>
+    import("@/registry/components/stepper/timeline-007/timeline-007").then((module) => module.Timeline007),
+  ),
+  "timeline-008": dynamic(() =>
+    import("@/registry/components/stepper/timeline-008/timeline-008").then((module) => module.Timeline008),
+  ),
+  "timeline-009": dynamic(() =>
+    import("@/registry/components/stepper/timeline-009/timeline-009").then((module) => module.Timeline009),
+  ),
+  "timeline-010": dynamic(() =>
+    import("@/registry/components/stepper/timeline-010/timeline-010").then((module) => module.Timeline010),
+  ),
+  "timeline-011": dynamic(() =>
+    import("@/registry/components/stepper/timeline-011/timeline-011").then((module) => module.Timeline011),
+  ),
+  "timeline-012": dynamic(() =>
+    import("@/registry/components/stepper/timeline-012/timeline-012").then((module) => module.Timeline012),
+  ),
+  "timeline-013": dynamic(() =>
+    import("@/registry/components/stepper/timeline-013/timeline-013").then((module) => module.Timeline013),
+  ),
 } satisfies PreviewMap

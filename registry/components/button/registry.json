@@ -11904,6 +11904,2566 @@
           "accent"
         ]
       }
+    },
+    {
+      "name": "toggle-001",
+      "type": "registry:component",
+      "title": "Переключатель жирного",
+      "description": "Кнопка начертания над образцом текста: нажатие меняет образец сразу, поэтому видно, что toggle — это действие над объектом, а не настройка формы.",
+      "categories": [
+        "button"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toggle-001/toggle-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toggle-001.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, собственная палитра --vibeui-toggle-001-*. Клиентский: состояние держит useState. Кнопка объявляет состояние через aria-pressed, а не через checked: toggle — мгновенное действие над видом или объектом (сделать выделение жирным), switch — настройка, которая включает режим, checkbox — поле формы, которое уедет на сервер при отправке. Вид нажатой кнопки выбирается селектором button[aria-pressed=\"true\"], поэтому разметка и стиль не могут разойтись. Образец текста лежит рядом и получает font-weight через data-bold на корне — эффект виден в тот же миг.",
+      "meta": {
+        "tags": [
+          "toggle",
+          "aria-pressed",
+          "formatting",
+          "editor"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toggle001",
+          "usage": "<Toggle001\n  text=\"Черновик письма клиенту\"\n  label=\"Полужирный\"\n  defaultPressed={false}\n/>",
+          "summary": "Кнопка-тумблер начертания с образцом текста рядом: aria-pressed задаёт и состояние, и вид, образец меняется мгновенно. Один файл, ноль зависимостей, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-toggle-001-* и не подменять её токенами вашей темы",
+            "aria-pressed как единственный источник состояния: без него кнопка звучит как обычное действие",
+            "выбор вида через button[aria-pressed=\"true\"], иначе цвет и разметка разъедутся",
+            "мгновенное применение к образцу: toggle не копит изменения до кнопки «Сохранить»",
+            "видимую обводку фокуса: кнопкой пользуются с клавиатуры чаще, чем кажется",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "образец текста через text",
+            "имя кнопки через label — оно же уходит в aria-label и title",
+            "начальное состояние через defaultPressed",
+            "цвет нажатого состояния через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Не заменяйте aria-pressed на checkbox: галочка в форме означает выбор, а не действие над текстом.",
+            "Не меняйте подпись кнопки при нажатии — скринридер прочитает новое имя вместе со старым состоянием.",
+            "Для настройки, которая включает режим на будущее, нужен switch, а не этот компонент.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "text",
+            "label": "Образец",
+            "type": "text",
+            "default": "Черновик письма клиенту",
+            "maxLength": 60
+          },
+          {
+            "prop": "label",
+            "label": "Имя кнопки",
+            "type": "text",
+            "default": "Полужирный",
+            "maxLength": 24
+          },
+          {
+            "prop": "defaultPressed",
+            "label": "Нажата",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A bold toggle above a text sample: pressing it restyles the sample at once, so it reads as an action on an object rather than a form setting.",
+            "docs": "One file, zero dependencies, its own --vibeui-toggle-001-* palette. Client-side: the state is held by useState. The button declares its state through aria-pressed rather than checked: a toggle is an immediate action on a view or an object (make the selection bold), a switch is a setting that turns a mode on, and a checkbox is a form field that travels to the server on submit. The pressed look is picked by the selector button[aria-pressed=\"true\"], so the markup and the style cannot drift apart. The sample text sits beside it and receives font-weight through data-bold on the root — the effect is visible the same instant.",
+            "ai": {
+              "summary": "A bold toggle button with the sample text next to it: aria-pressed drives both the state and the look, and the sample changes instantly. One file, zero dependencies, client component.",
+              "preserve": [
+                "the local --vibeui-toggle-001-* palette — do not swap it for your theme tokens",
+                "aria-pressed as the only source of state: without it the button sounds like a plain action",
+                "styling through button[aria-pressed=\"true\"], otherwise the look and the markup drift apart",
+                "the instant effect on the sample: a toggle does not queue changes until a Save button",
+                "the visible focus ring: this button is used from the keyboard more often than it seems",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the sample text through text",
+                "the button name through label — it also becomes aria-label and title",
+                "the initial state through defaultPressed",
+                "the pressed colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Do not replace aria-pressed with a checkbox: a form checkbox means a choice, not an action on text.",
+                "Do not change the caption on press — a screen reader reads the new name together with the old state.",
+                "For a setting that turns on a mode for later, use a switch instead of this component.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toggle001\n  text=\"Draft letter to the client\"\n  label=\"Bold\"\n  defaultPressed={false}\n/>"
+            },
+            "controls": {
+              "text": {
+                "label": "Sample",
+                "default": "Draft letter to the client"
+              },
+              "label": {
+                "label": "Button name",
+                "default": "Bold"
+              },
+              "defaultPressed": {
+                "label": "Pressed"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Bold Toggle",
+            "preview": {
+              "props": {
+                "text": "Draft letter to the client",
+                "label": "Bold"
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "text",
+          "label",
+          "defaultPressed",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "toggle-002",
+      "type": "registry:component",
+      "title": "Закрепление",
+      "description": "Toggle с иконкой и постоянной подписью: подпись остаётся именем действия, а результат объявляет живая строка под кнопкой.",
+      "categories": [
+        "button"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toggle-002/toggle-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toggle-002.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-002-*. Клиентский: useState. Подпись кнопки не меняется при нажатии — меняется только aria-pressed и живая строка role=\"status\" под ней. Это осознанное решение: подпись — имя кнопки, и если её переписать на «Открепить», скринридер прочитает новое имя вместе с состоянием и получится «Открепить, нажато». Нажатое состояние показано тремя признаками сразу — заливкой значка (fill:currentColor у path), фоном и словом в строке, — потому что один цвет не читается при дальтонизме. В отличие от switch, действие применяется мгновенно и к конкретному объекту.",
+      "meta": {
+        "tags": [
+          "toggle",
+          "aria-pressed",
+          "pin",
+          "icon"
+        ],
+        "ai": {
+          "export": "Toggle002",
+          "usage": "<Toggle002\n  label=\"Закрепить\"\n  onLabel=\"Закреплено вверху списка\"\n  defaultPressed\n/>",
+          "summary": "Toggle с иконкой и неизменной подписью: состояние объявляет aria-pressed, результат — строка role=\"status\". Один файл, ноль зависимостей, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-toggle-002-* и не подменять её токенами вашей темы",
+            "неизменную подпись кнопки: имя элемента не должно меняться вместе с состоянием",
+            "строку role=\"status\" под кнопкой — она проговаривает результат, которого не видно в имени",
+            "три признака нажатия разом (заливка значка, фон, текст): один цвет не различают все",
+            "aria-pressed вместо checked: закрепление применяется сразу, а не при отправке формы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "имя кнопки через label",
+            "текст результата через onLabel",
+            "начальное состояние через defaultPressed",
+            "цвет нажатого состояния через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "строку выключенного состояния через offLabel"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Не превращайте кнопку в switch: switch — настройка на будущее, а закрепление меняет объект сейчас.",
+            "Строка результата озвучивается при каждом переключении — не пишите в неё длинный текст.",
+            "Иконка декоративная (aria-hidden): смысл несут подпись и aria-pressed.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Закрепить",
+            "maxLength": 24
+          },
+          {
+            "prop": "onLabel",
+            "label": "Результат",
+            "type": "text",
+            "default": "Закреплено вверху списка",
+            "maxLength": 40
+          },
+          {
+            "prop": "offLabel",
+            "label": "Строка выключенного",
+            "type": "text",
+            "default": "Не закреплено",
+            "maxLength": 40
+          },
+          {
+            "prop": "defaultPressed",
+            "label": "Нажата",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A toggle with an icon and a stable caption: the caption stays the name of the action, and the result is announced by a live line under the button.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-002-* palette. Client-side: useState. The button caption does not change when pressed — only aria-pressed and the live role=\"status\" line under it change. That is a deliberate decision: the caption is the button's name, and if it were rewritten to \"Unpin\", a screen reader would read the new name together with the state and produce \"Unpin, pressed\". The pressed state is shown by three cues at once — the filled icon (fill:currentColor on the path), the background and the word in the line — because one colour is not read by everyone. Unlike a switch, the action applies instantly and to a specific object.",
+            "ai": {
+              "summary": "A toggle with an icon and an unchanging caption: aria-pressed declares the state, a role=\"status\" line reports the result. One file, zero dependencies, client component.",
+              "preserve": [
+                "the local --vibeui-toggle-002-* palette — do not swap it for your theme tokens",
+                "the unchanging caption: an element's name must not change along with its state",
+                "the role=\"status\" line under the button — it speaks the result the name cannot carry",
+                "three simultaneous cues for the pressed state (filled icon, background, text): one colour is not read by everyone",
+                "aria-pressed instead of checked: pinning applies at once, not on form submit",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the button name through label",
+                "the result text through onLabel",
+                "the initial state through defaultPressed",
+                "the pressed colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the released-state line through offLabel"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Do not turn the button into a switch: a switch is a setting for later, pinning changes the object now.",
+                "The result line is announced on every change — keep it short.",
+                "The icon is decorative (aria-hidden): meaning is carried by the caption and aria-pressed.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toggle002\n  label=\"Pin\"\n  onLabel=\"Pinned to the top of the list\"\n  defaultPressed\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Pin"
+              },
+              "onLabel": {
+                "label": "Result",
+                "default": "Pinned to the top of the list"
+              },
+              "offLabel": {
+                "label": "Released state",
+                "default": "Not pinned"
+              },
+              "defaultPressed": {
+                "label": "Pressed"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Pin Toggle",
+            "preview": {
+              "props": {
+                "label": "Pin",
+                "onLabel": "Pinned to the top of the list",
+                "offLabel": "Not pinned"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        },
+        "cardControls": [
+          "label",
+          "onLabel",
+          "offLabel",
+          "defaultPressed",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "toggle-003",
+      "type": "registry:component",
+      "title": "Звезда избранного",
+      "description": "Кнопка избранного со счётчиком: звезда заливается, число рядом меняется в тот же миг, а сам счётчик вынесен из имени кнопки.",
+      "categories": [
+        "button"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toggle-003/toggle-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toggle-003.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-003-*. Клиентский: useState. Счётчик лежит вне кнопки в span с role=\"status\": внутри он приклеился бы к имени и скринридер читал бы «В избранное 128, нажато». Отметка показана двумя признаками — заливкой звезды через fill:currentColor и цветом рамки, — а короткая анимация появления привязана к [aria-pressed=\"true\"] и отключается по prefers-reduced-motion. Это toggle, а не checkbox: избранное меняется сразу и относится к объекту, а не к полю формы.",
+      "meta": {
+        "tags": [
+          "toggle",
+          "favorite",
+          "counter",
+          "aria-pressed"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toggle003",
+          "usage": "<Toggle003\n  title=\"Годовой отчёт по продажам\"\n  count={128}\n  label=\"В избранное\"\n/>",
+          "summary": "Строка объекта с кнопкой избранного: звезда заливается, счётчик обновляется рядом и не попадает в имя кнопки. Один файл, ноль зависимостей, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-toggle-003-* и не подменять её токенами вашей темы",
+            "счётчик вне кнопки: внутри он становится частью имени и мешает его слушать",
+            "заливку звезды вдобавок к цвету — одним оттенком состояние показывать нельзя",
+            "aria-label кнопки: значок без подписи не имеет имени вовсе",
+            "правило prefers-reduced-motion: всплеск звезды обязан отключаться",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "заголовок объекта через title",
+            "базовое число через count",
+            "имя кнопки через label",
+            "цвет отметки через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "строку счётчика через countText: {count} подставляется числом",
+            "начальное состояние через defaultPressed"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Счётчик считается от count и текущего состояния — на сервере храните исходное число, а не показанное.",
+            "role=\"status\" озвучивает изменение числа: в списке из сотни строк это может быть шумно.",
+            "Не заменяйте кнопку чекбоксом: избранное — действие над объектом, а не поле формы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Годовой отчёт по продажам",
+            "maxLength": 40
+          },
+          {
+            "prop": "count",
+            "label": "Счётчик",
+            "type": "number",
+            "default": 128,
+            "min": 0,
+            "max": 9999
+          },
+          {
+            "prop": "label",
+            "label": "Имя кнопки",
+            "type": "text",
+            "default": "В избранное",
+            "maxLength": 24
+          },
+          {
+            "prop": "countText",
+            "label": "Строка счётчика",
+            "type": "text",
+            "default": "{count} в избранном",
+            "maxLength": 40
+          },
+          {
+            "prop": "defaultPressed",
+            "label": "Нажата",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A favourite button with a counter: the star fills in, the number next to it updates instantly, and the counter itself stays out of the button's name.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-003-* palette. Client-side: useState. The counter sits outside the button in a span with role=\"status\": inside it would stick to the name and a screen reader would read \"Add to favourites 128, pressed\". The mark is shown by two cues — the star's fill through fill:currentColor and the border colour — and the short appearance animation is bound to [aria-pressed=\"true\"] and switched off by prefers-reduced-motion. This is a toggle, not a checkbox: the favourite changes at once and belongs to the object, not to a form field.",
+            "ai": {
+              "summary": "An object row with a favourite button: the star fills in, the counter updates beside it and never becomes part of the button name. One file, zero dependencies, client component.",
+              "preserve": [
+                "the local --vibeui-toggle-003-* palette — do not swap it for your theme tokens",
+                "the counter outside the button: inside it becomes part of the name and clutters it",
+                "the filled star on top of the colour change — one hue alone cannot carry state",
+                "the button's aria-label: an icon without a caption has no name at all",
+                "the prefers-reduced-motion rule: the star's pop must be switchable off",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the object heading through title",
+                "the base number through count",
+                "the button name through label",
+                "the mark colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the counter line through countText: {count} is replaced with the number",
+                "the initial state through defaultPressed"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The counter is derived from count and the current state — store the original number on the server, not the displayed one.",
+                "role=\"status\" announces the number change: in a list of a hundred rows that can be noisy.",
+                "Do not replace the button with a checkbox: a favourite is an action on an object, not a form field.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toggle003\n  title=\"Annual sales report\"\n  count={128}\n  label=\"Add to favourites\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Annual sales report"
+              },
+              "count": {
+                "label": "Counter"
+              },
+              "label": {
+                "label": "Button name",
+                "default": "Add to favorites"
+              },
+              "countText": {
+                "label": "Counter line",
+                "default": "{count} in favorites"
+              },
+              "defaultPressed": {
+                "label": "Pressed"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Favorite Star",
+            "preview": {
+              "props": {
+                "title": "Annual sales report",
+                "label": "Add to favorites",
+                "countText": "{count} in favorites"
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "count",
+          "label",
+          "countText",
+          "defaultPressed",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "toggle-004",
+      "type": "registry:component",
+      "title": "Сетка поверх",
+      "description": "Toggle «показать сетку»: кнопка связана с холстом через aria-controls, а сетка включается отдельным слоем поверх макета и ничего в нём не двигает.",
+      "categories": [
+        "button"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toggle-004/toggle-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toggle-004.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-004-*. Клиентский: useState и useId. Кнопка объявляет aria-controls на холст — так связь «кнопка → область» есть не только в голове автора. Сетка нарисована двумя linear-gradient на отдельном слое с pointer-events:none и включается прозрачностью, поэтому макет под ней не перерисовывается и не дёргается. Шаг клетки приходит пропом step и уезжает в CSS-переменную --vibeui-toggle-004-step инлайном — это динамическое значение, классом его не выразить. Toggle, а не switch: вид меняется здесь и сейчас.",
+      "meta": {
+        "tags": [
+          "toggle",
+          "grid",
+          "aria-controls",
+          "canvas"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toggle004",
+          "usage": "<Toggle004\n  label=\"Показать сетку\"\n  step={20}\n  defaultPressed\n/>",
+          "summary": "Кнопка-тумблер, включающая сетку поверх макета: связь с областью объявлена через aria-controls, шаг клетки задаётся пропом. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-toggle-004-* и не подменять её токенами вашей темы",
+            "aria-controls на холст: иначе связь кнопки с областью существует только визуально",
+            "сетку отдельным слоем с pointer-events:none — иначе она перехватит нажатия по макету",
+            "включение прозрачностью, а не пересборкой макета: содержимое не должно дёргаться",
+            "aria-hidden на слое сетки: для скринридера это декорация",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "подпись кнопки через label",
+            "шаг сетки через step",
+            "начальное состояние через defaultPressed",
+            "цвет линий и кнопки через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подпись над холстом через caption и строку под ним через note: {step} подставляется числом"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "step задаётся в пикселях: слишком мелкий шаг превращает сетку в серую заливку.",
+            "Слой сетки не печатается поверх содержимого корректно — для печати его лучше выключать.",
+            "Это вид, а не настройка: если сетка должна пережить перезагрузку, состояние храните снаружи.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Показать сетку",
+            "maxLength": 24
+          },
+          {
+            "prop": "step",
+            "label": "Шаг сетки",
+            "type": "number",
+            "default": 20,
+            "min": 8,
+            "max": 48
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись холста",
+            "type": "text",
+            "default": "Макет карточки",
+            "maxLength": 32
+          },
+          {
+            "prop": "note",
+            "label": "Строка под холстом",
+            "type": "text",
+            "default": "Шаг сетки — {step} px.",
+            "maxLength": 40
+          },
+          {
+            "prop": "defaultPressed",
+            "label": "Нажата",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A \"show grid\" toggle: the button is tied to the canvas through aria-controls, and the grid switches on as a separate layer above the layout without moving anything.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-004-* palette. Client-side: useState and useId. The button declares aria-controls on the canvas — that way the button-to-region link exists somewhere other than the author's head. The grid is drawn with two linear-gradients on a separate layer with pointer-events:none and is switched on by opacity, so the layout beneath it is not repainted and does not jump. The cell step arrives in the step prop and goes out into the CSS variable --vibeui-toggle-004-step inline — it is a dynamic value and cannot be expressed by a class. A toggle, not a switch: the view changes here and now.",
+            "ai": {
+              "summary": "A toggle button that turns on a grid over the layout: the link to the region is declared with aria-controls and the cell step comes from a prop. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-toggle-004-* palette — do not swap it for your theme tokens",
+                "aria-controls on the canvas: otherwise the link between button and region exists only visually",
+                "the grid as a separate layer with pointer-events:none — otherwise it swallows clicks on the layout",
+                "switching by opacity rather than rebuilding the layout: content must not jump",
+                "aria-hidden on the grid layer: for a screen reader it is decoration",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the button caption through label",
+                "the grid step through step",
+                "the initial state through defaultPressed",
+                "the line and button colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the caption above the canvas through caption and the line below it through note: {step} is replaced with the number"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "step is in pixels: too small a step turns the grid into a grey wash.",
+                "The grid layer does not print well over content — switch it off for printing.",
+                "This is a view, not a setting: if the grid must survive a reload, keep the state outside.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toggle004\n  label=\"Show grid\"\n  step={20}\n  defaultPressed\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Show grid"
+              },
+              "step": {
+                "label": "Grid step"
+              },
+              "caption": {
+                "label": "Canvas caption",
+                "default": "Card layout"
+              },
+              "note": {
+                "label": "Line under the canvas",
+                "default": "Grid step — {step} px."
+              },
+              "defaultPressed": {
+                "label": "Pressed"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Grid Overlay",
+            "preview": {
+              "props": {
+                "label": "Show grid",
+                "caption": "Card layout",
+                "note": "Grid step — {step} px."
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "label",
+          "step",
+          "caption",
+          "note",
+          "defaultPressed",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "toggle-005",
+      "type": "registry:component",
+      "title": "Отключение звука",
+      "description": "Кнопка отключения звука с двумя значками состояния: оба лежат в разметке, показывается тот, что совпал с aria-pressed.",
+      "categories": [
+        "button"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toggle-005/toggle-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toggle-005.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-005-*. Клиентский: useState. Приём: два <svg> всегда в разметке, а видимость выбирается селекторами button[aria-pressed=\"false\"] [data-part=\"sound\"] и button[aria-pressed=\"true\"] [data-part=\"silent\"] — значок не может разойтись с состоянием, потому что источник у них один атрибут. Имя кнопки остаётся постоянным, состояние проговаривает строка role=\"status\". Полоса громкости гаснет через data-muted на корне: состояние обязано читаться не только по значку. Это toggle: звук выключается сразу, а не после подтверждения.",
+      "meta": {
+        "tags": [
+          "toggle",
+          "mute",
+          "icon-state",
+          "audio"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toggle005",
+          "usage": "<Toggle005\n  label=\"Без звука\"\n  volume={64}\n  defaultPressed={false}\n/>",
+          "summary": "Кнопка «без звука» с двумя значками состояния и приглушённой полосой громкости; значок выбирается тем же aria-pressed. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-toggle-005-* и не подменять её токенами вашей темы",
+            "выбор значка селектором по aria-pressed: так картинка не может соврать о состоянии",
+            "постоянное имя кнопки: меняется состояние, а не название элемента",
+            "строку role=\"status\": она объявляет состояние словами, а не значком",
+            "приглушение полосы громкости — второй признак выключенного звука помимо значка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "имя кнопки через label",
+            "уровень громкости через volume",
+            "начальное состояние через defaultPressed",
+            "цвет полосы и фокуса через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи состояния через stateText и строки громкости через valueText: {volume} подставляется числом"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Оба значка всегда в DOM — это цена того, что переключение не зависит от JS-ветвления.",
+            "volume не сбрасывается в ноль при выключении звука: уровень запоминается, как в плеерах.",
+            "Не заменяйте кнопку на switch: звук глушат мгновенно, а не настраивают на будущее.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Имя кнопки",
+            "type": "text",
+            "default": "Без звука",
+            "maxLength": 24
+          },
+          {
+            "prop": "volume",
+            "label": "Громкость",
+            "type": "number",
+            "default": 64,
+            "min": 0,
+            "max": 100
+          },
+          {
+            "prop": "defaultPressed",
+            "label": "Нажата",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A mute button with two state icons: both live in the markup and the one matching aria-pressed is shown.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-005-* palette. Client-side: useState. The technique: two <svg>s are always in the markup, and visibility is picked by the selectors button[aria-pressed=\"false\"] [data-part=\"sound\"] and button[aria-pressed=\"true\"] [data-part=\"silent\"] — the icon cannot drift from the state, because both come from a single attribute. The button's name stays constant, the state is spoken by the role=\"status\" line. The volume bar dims through data-muted on the root: the state has to read from more than the icon. This is a toggle: the sound goes off at once, not after a confirmation.",
+            "ai": {
+              "summary": "A mute button with two state icons and a dimmed volume bar; the icon is selected by the same aria-pressed. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-toggle-005-* palette — do not swap it for your theme tokens",
+                "picking the icon by an aria-pressed selector: the picture then cannot lie about the state",
+                "the constant button name: the state changes, not the element's name",
+                "the role=\"status\" line: it states the condition in words, not by an icon",
+                "the dimmed volume bar — a second cue for muted sound beyond the icon",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the button name through label",
+                "the volume level through volume",
+                "the initial state through defaultPressed",
+                "the bar and focus colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the state captions through stateText and the volume lines through valueText: {volume} is replaced with the number"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Both icons always sit in the DOM — that is the price of switching without JS branching.",
+                "volume is not reset to zero on mute: the level is remembered, as in media players.",
+                "Do not replace the button with a switch: sound is muted instantly, not configured for later.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toggle005\n  label=\"Mute\"\n  volume={64}\n  defaultPressed={false}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Button name",
+                "default": "Mute"
+              },
+              "volume": {
+                "label": "Volume"
+              },
+              "defaultPressed": {
+                "label": "Pressed"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Mute Toggle",
+            "preview": {
+              "props": {
+                "label": "Mute",
+                "stateText": {
+                  "on": "Sound off",
+                  "off": "Sound on"
+                },
+                "valueText": {
+                  "on": "Volume kept at {volume}%",
+                  "off": "Volume {volume}%"
+                }
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "label",
+          "volume",
+          "defaultPressed",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "toggle-006",
+      "type": "registry:component",
+      "title": "Переключатель с сохранением",
+      "description": "Toggle с запросом на сервер: пока идёт сохранение, кнопка помечена aria-busy и держит старое состояние, поэтому она не обещает того, чего ещё не произошло.",
+      "categories": [
+        "button"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toggle-006/toggle-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toggle-006.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-006-*. Клиентский: useState, useRef и useEffect для отмены таймера при размонтировании (setTimeout здесь заменяет запрос). Состояние переключается только после ответа: до этого стоит aria-busy=\"true\", значок меняется на волчок, а aria-pressed остаётся прежним. Ширина кнопки зафиксирована min-width, иначе она прыгает при каждой смене значка. Строка role=\"status\" называет исход словами. В отличие от checkbox в форме, здесь нет кнопки «Сохранить» — сохранение и есть само переключение.",
+      "meta": {
+        "tags": [
+          "toggle",
+          "loading",
+          "aria-busy",
+          "async"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toggle006",
+          "usage": "<Toggle006\n  label=\"Опубликовано\"\n  delay={1200}\n  defaultPressed={false}\n/>",
+          "summary": "Toggle, за которым стоит запрос: во время сохранения кнопка помечена aria-busy, состояние меняется только после ответа. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-toggle-006-* и не подменять её токенами вашей темы",
+            "aria-busy на время запроса: без него ожидание существует только как картинка",
+            "неизменное aria-pressed до ответа — иначе кнопка обещает несохранённое",
+            "зафиксированную ширину кнопки: смена значка не должна двигать соседей",
+            "строку role=\"status\" с исходом: значок не объясняет, что именно сохранилось",
+            "очистку таймера при размонтировании, иначе состояние меняется у мёртвого компонента",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "подпись кнопки через label",
+            "длительность запроса через delay — в реальном коде замените таймер на fetch",
+            "начальное состояние через defaultPressed",
+            "цвет подтверждения через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "строки состояния через statusText по ключам busy, savedOn, savedOff и idle"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "setTimeout здесь имитирует сеть: подставьте свой запрос и обработайте ошибку — сейчас её нет.",
+            "Повторное нажатие во время запроса игнорируется: очередь переключений не копится.",
+            "Оптимистичное переключение (сначала вид, потом запрос) — другой сценарий, ему нужен откат.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Опубликовано",
+            "maxLength": 24
+          },
+          {
+            "prop": "delay",
+            "label": "Задержка, мс",
+            "type": "number",
+            "default": 1200,
+            "min": 200,
+            "max": 4000
+          },
+          {
+            "prop": "defaultPressed",
+            "label": "Нажата",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A toggle backed by a request: while saving, the button is marked aria-busy and keeps its old state, so it never promises what has not happened yet.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-006-* palette. Client-side: useState, useRef and useEffect to clear the timer on unmount (setTimeout stands in for a request here). The state flips only after the response: until then aria-busy=\"true\" is set, the icon changes to a spinner and aria-pressed stays as it was. The button width is fixed with min-width, otherwise it jumps every time the icon changes. The role=\"status\" line names the outcome in words. Unlike a checkbox in a form, there is no Save button here — the toggling is the saving.",
+            "ai": {
+              "summary": "A toggle backed by a request: during saving the button is marked aria-busy and the state flips only after the response. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-toggle-006-* palette — do not swap it for your theme tokens",
+                "aria-busy for the duration of the request: without it the wait exists only as a picture",
+                "the unchanged aria-pressed until the response — otherwise the button promises unsaved state",
+                "the fixed button width: swapping the icon must not push its neighbours",
+                "the role=\"status\" line with the outcome: an icon does not explain what was saved",
+                "clearing the timer on unmount, otherwise state changes on a dead component",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the button caption through label",
+                "the request duration through delay — replace the timer with fetch in real code",
+                "the initial state through defaultPressed",
+                "the confirmation colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the status lines through statusText, keyed busy, savedOn, savedOff and idle"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "setTimeout imitates the network here: plug in your request and handle the error — there is none yet.",
+                "A second press during the request is ignored: toggles do not queue up.",
+                "Optimistic switching (view first, request second) is a different scenario and needs a rollback.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toggle006\n  label=\"Published\"\n  delay={1200}\n  defaultPressed={false}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Published"
+              },
+              "delay": {
+                "label": "Delay, ms"
+              },
+              "defaultPressed": {
+                "label": "Pressed"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Saving Toggle",
+            "preview": {
+              "props": {
+                "label": "Published",
+                "statusText": {
+                  "busy": "Saving…",
+                  "savedOn": "Saved: the page is visible to everyone",
+                  "savedOff": "Saved: the page is unpublished",
+                  "idle": "The change goes to the server right away"
+                }
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "label",
+          "delay",
+          "defaultPressed",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "toggle-007",
+      "type": "registry:component",
+      "title": "Масштаб текста",
+      "description": "Toggle размерной шкалы: одно нажатие меняет множитель, от которого считаются все размеры образца, поэтому крупный режим не ломает пропорции.",
+      "categories": [
+        "button"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toggle-007/toggle-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toggle-007.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-007-*. Клиентский: useState. Вся типографика образца считается через calc() от одной переменной --vibeui-toggle-007-scale, которая приезжает инлайном как множитель (1 или scale/100): заголовок, абзац и отступы растут вместе, а не превращаются в лесенку. На самой кнопке нарисована шкала — две «A» разного кегля, — поэтому смысл читается без подписи; доступное имя даёт aria-label. Toggle, а не switch: масштаб применяется к видимому образцу мгновенно.",
+      "meta": {
+        "tags": [
+          "toggle",
+          "scale",
+          "typography",
+          "accessibility"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toggle007",
+          "usage": "<Toggle007\n  label=\"Крупный текст\"\n  scale={125}\n  defaultPressed={false}\n/>",
+          "summary": "Кнопка размерной шкалы: один множитель увеличивает образец целиком — текст и отступы вместе. Один файл, ноль зависимостей, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-toggle-007-* и не подменять её токенами вашей темы",
+            "единый множитель в calc(): раздельные размеры расходятся и ломают ритм",
+            "рост отступов вместе с кеглем — иначе крупный текст слипается",
+            "aria-label на кнопке: две буквы «A» не дают имени элементу",
+            "видимую строку с текущим масштабом — состояние должно читаться словами",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "имя кнопки через label",
+            "величину увеличения через scale",
+            "текст образца через text",
+            "начальное состояние через defaultPressed",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "заголовок образца через heading и строку масштаба через valueText: {scale} подставляется числом",
+            "цвет нажатого состояния через accent"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Множитель действует только внутри компонента: общесистемный масштаб так не делают.",
+            "scale выше 175% на узком экране начинает рвать строки — проверяйте на телефоне.",
+            "Настройку «крупный текст» для всего приложения лучше делать switch'ом, а не этой кнопкой.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Имя кнопки",
+            "type": "text",
+            "default": "Крупный текст",
+            "maxLength": 24
+          },
+          {
+            "prop": "scale",
+            "label": "Масштаб, %",
+            "type": "number",
+            "default": 125,
+            "min": 105,
+            "max": 200
+          },
+          {
+            "prop": "text",
+            "label": "Текст образца",
+            "type": "text",
+            "default": "Размер меняется одним множителем, поэтому заголовок, абзац и отступы растут вместе.",
+            "maxLength": 120
+          },
+          {
+            "prop": "defaultPressed",
+            "label": "Нажата",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A text scale toggle: one press changes the multiplier every sample size is derived from, so the large mode does not break proportions.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-007-* palette. Client-side: useState. The sample's whole typography is computed with calc() from a single variable --vibeui-toggle-007-scale, which arrives inline as a multiplier (1 or scale/100): the heading, the paragraph and the spacing grow together instead of turning into a staircase. A scale is drawn on the button itself — two \"A\"s at different sizes — so the meaning reads without a caption; the accessible name comes from aria-label. A toggle, not a switch: the scale applies to the visible sample instantly.",
+            "ai": {
+              "summary": "A size-scale button: a single multiplier enlarges the whole sample — type and spacing together. One file, zero dependencies, client component.",
+              "preserve": [
+                "the local --vibeui-toggle-007-* palette — do not swap it for your theme tokens",
+                "the single multiplier in calc(): separate sizes drift apart and break the rhythm",
+                "spacing growing with the type size — otherwise large text sticks together",
+                "the aria-label on the button: two letter \"A\"s give the element no name",
+                "the visible line with the current scale — the state must read in words",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the button name through label",
+                "the amount of enlargement through scale",
+                "the sample copy through text",
+                "the initial state through defaultPressed",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the sample heading through heading and the scale line through valueText: {scale} is replaced with the number",
+                "the pressed colour through accent"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The multiplier only affects this component: a system-wide zoom is not built this way.",
+                "A scale above 175% starts breaking lines on narrow screens — check it on a phone.",
+                "An app-wide \"large text\" setting is better served by a switch than by this button.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toggle007\n  label=\"Large text\"\n  scale={125}\n  defaultPressed={false}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Button name",
+                "default": "Large text"
+              },
+              "scale": {
+                "label": "Scale, %"
+              },
+              "text": {
+                "label": "Sample text",
+                "default": "The size changes through a single multiplier, so the heading, the paragraph and the spacing grow together."
+              },
+              "defaultPressed": {
+                "label": "Pressed"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Text Scale",
+            "preview": {
+              "props": {
+                "label": "Large text",
+                "heading": "Type scale",
+                "valueText": "Scale {scale}%",
+                "text": "The size changes through a single multiplier, so the heading, the paragraph and the spacing grow together."
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "label",
+          "scale",
+          "text",
+          "defaultPressed",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "toggle-008",
+      "type": "registry:component",
+      "title": "Переключатель с подсказкой",
+      "description": "Toggle с подсказкой о текущем состоянии: она привязана через aria-describedby и всплывает и по наведению, и по фокусу, а подпись кнопки не меняется.",
+      "categories": [
+        "button"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toggle-008/toggle-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toggle-008.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-008-*. Клиентский: useState и useId для связи aria-describedby. Подсказка — обычный элемент разметки с role=\"tooltip\", спрятанный видимостью и прозрачностью; показывается правилами button:hover + [data-part=\"tip\"] и button:focus-visible + [data-part=\"tip\"], поэтому доступна и мыши, и клавиатуре. Атрибут title тут не подошёл бы: браузер не показывает его по фокусу. Подпись кнопки постоянна, состояние несут aria-pressed и текст подсказки; сверху у панели есть запас на всплывающий слой.",
+      "meta": {
+        "tags": [
+          "toggle",
+          "tooltip",
+          "aria-describedby",
+          "hint"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toggle008",
+          "usage": "<Toggle008\n  label=\"Не беспокоить\"\n  onHint=\"Сейчас уведомления скрыты до утра\"\n  offHint=\"Сейчас уведомления приходят как обычно\"\n/>",
+          "summary": "Toggle с подсказкой о текущем состоянии: она в разметке, привязана aria-describedby и всплывает по наведению и по фокусу. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-toggle-008-* и не подменять её токенами вашей темы",
+            "aria-describedby на подсказку: без него текст видит только курсор",
+            "показ подсказки и по :hover, и по :focus-visible — клавиатура не должна остаться без неё",
+            "постоянную подпись кнопки: имя элемента не меняется вместе с состоянием",
+            "запас сверху у панели: подсказка всплывает над кнопкой и не должна обрезаться",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "подпись кнопки через label",
+            "текст подсказки в нажатом состоянии через onHint",
+            "текст подсказки в отжатом состоянии через offHint",
+            "начальное состояние через defaultPressed",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подсказку отпущенного состояния через offHint и пояснение под кнопкой через note",
+            "цвет нажатого состояния через accent"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Подсказка живёт внутри потока панели: в тесной шапке ей может не хватить места сверху.",
+            "Не переносите текст в title — браузер не покажет его при переходе табом.",
+            "Подсказка описывает состояние, а не команду: «Нажмите, чтобы…» ломает соответствие имени и роли.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Не беспокоить",
+            "maxLength": 24
+          },
+          {
+            "prop": "onHint",
+            "label": "Подсказка включённого",
+            "type": "text",
+            "default": "Сейчас уведомления скрыты до утра",
+            "maxLength": 60
+          },
+          {
+            "prop": "offHint",
+            "label": "Подсказка отпущенного",
+            "type": "text",
+            "default": "Сейчас уведомления приходят как обычно",
+            "maxLength": 60
+          },
+          {
+            "prop": "note",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Подсказка объясняет состояние, а подпись кнопки не меняется.",
+            "maxLength": 80
+          },
+          {
+            "prop": "defaultPressed",
+            "label": "Нажата",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A toggle with a hint about the current state: it is tied in with aria-describedby, appears on hover and on focus, and the button caption never changes.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-008-* palette. Client-side: useState and useId for the aria-describedby link. The hint is an ordinary markup element with role=\"tooltip\", hidden by visibility and opacity; it is shown by the rules button:hover + [data-part=\"tip\"] and button:focus-visible + [data-part=\"tip\"], so it is available to the mouse and to the keyboard alike. The title attribute would not do here: the browser does not show it on focus. The button caption is constant, the state is carried by aria-pressed and the hint text; the panel has spare room at the top for the floating layer.",
+            "ai": {
+              "summary": "A toggle with a hint about its current state: the hint lives in the markup, is tied in with aria-describedby and appears on hover and on focus. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-toggle-008-* palette — do not swap it for your theme tokens",
+                "aria-describedby on the hint: without it only the cursor ever sees the text",
+                "showing the hint on both :hover and :focus-visible — the keyboard must not lose it",
+                "the constant button caption: an element's name does not change with its state",
+                "the panel's top padding: the hint floats above the button and must not be clipped",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the button caption through label",
+                "the pressed-state hint through onHint",
+                "the released-state hint through offHint",
+                "the initial state through defaultPressed",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the released-state hint through offHint and the line under the button through note",
+                "the pressed colour through accent"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The hint lives inside the panel's flow: in a tight header it may lack room above.",
+                "Do not move the text into title — the browser will not show it when tabbing.",
+                "The hint describes the state, not a command: \"Press to…\" breaks the match between name and role.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toggle008\n  label=\"Do not disturb\"\n  onHint=\"Notifications are hidden until morning\"\n  offHint=\"Notifications arrive as usual\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Do not disturb"
+              },
+              "onHint": {
+                "label": "Pressed hint",
+                "default": "Notifications are hidden until morning"
+              },
+              "offHint": {
+                "label": "Released hint",
+                "default": "Notifications are arriving as usual"
+              },
+              "note": {
+                "label": "Note",
+                "default": "The hint explains the state; the button caption stays put."
+              },
+              "defaultPressed": {
+                "label": "Pressed"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Hinted Toggle",
+            "preview": {
+              "props": {
+                "label": "Do not disturb",
+                "onHint": "Notifications are hidden until morning",
+                "offHint": "Notifications are arriving as usual",
+                "note": "The hint explains the state; the button caption stays put."
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "label",
+          "onHint",
+          "offHint",
+          "note",
+          "defaultPressed",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "toggle-009",
+      "type": "registry:component",
+      "title": "Сердце избранного",
+      "description": "Круглая кнопка сердца с числовым бейджем поверх угла: бейдж вынесен из кнопки абсолютным позиционированием и объявляет счёт отдельной живой цифрой.",
+      "categories": [
+        "button"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toggle-009/toggle-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toggle-009.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-009-*. Клиентский: useState. Кнопка сердца несёт aria-pressed, а числовой бейдж лежит рядом абсолютным позиционированием поверх её угла, как счётчик у иконки корзины: он не часть текста кнопки, поэтому скринридер не склеивает число с именем и состоянием в одно announcement. Смена числа объявлена через role=\"status\" на самом бейдже. Заливка сердца выбирается селектором button[aria-pressed=\"true\"] svg path — вид и состояние не могут разойтись.",
+      "meta": {
+        "tags": [
+          "toggle",
+          "aria-pressed",
+          "favorite",
+          "badge"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toggle009",
+          "usage": "<Toggle009\n  label=\"В избранное\"\n  count={27}\n  defaultPressed={false}\n/>",
+          "summary": "Кнопка избранного с сердцем и числовым бейджем поверх угла: бейдж вынесен из кнопки и объявляет счёт отдельно. Один файл, ноль зависимостей, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-toggle-009-* и не подменять её токенами вашей темы",
+            "бейдж вне текста кнопки: внутри он склеился бы с именем и состоянием в одно announcement",
+            "role=\"status\" на бейдже — число объявляется отдельно, а не только меняется на экране",
+            "выбор заливки сердца через button[aria-pressed=\"true\"], иначе цвет и состояние разъедутся",
+            "видимую обводку фокуса: кнопкой пользуются с клавиатуры чаще, чем кажется",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "подпись кнопки через label",
+            "стартовое значение счётчика через count",
+            "начальное состояние через defaultPressed",
+            "цвет заливки и бейджа через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Счётчик увеличивается на 1 при нажатии и уменьшается обратно при снятии — замените на реальные данные.",
+            "Не переносите число внутрь текста кнопки: скринридер прочитает его вместе со старым состоянием.",
+            "Для настройки на будущее, а не мгновенного действия, нужен switch, а не эта кнопка.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Имя кнопки",
+            "type": "text",
+            "default": "В избранное",
+            "maxLength": 24
+          },
+          {
+            "prop": "count",
+            "label": "Счётчик",
+            "type": "number",
+            "default": 27,
+            "min": 0,
+            "max": 9999
+          },
+          {
+            "prop": "defaultPressed",
+            "label": "Нажата",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A round heart button with a numeric badge over its corner: the badge sits outside the button through absolute positioning and announces the count as its own live number.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-009-* palette. Client-side: useState. The heart button carries aria-pressed, and the numeric badge lies beside it, absolutely positioned over its corner like a counter on a cart icon: it is not part of the button's text, so a screen reader does not glue the number to the name and the state into a single announcement. The change of the number is announced through role=\"status\" on the badge itself. The heart's fill is picked by the selector button[aria-pressed=\"true\"] svg path — the look and the state cannot drift apart.",
+            "ai": {
+              "summary": "A favorite button with a heart and a numeric badge over its corner: the badge sits outside the button and announces the count on its own. One file, zero dependencies, client component.",
+              "preserve": [
+                "the local --vibeui-toggle-009-* palette — do not swap it for your theme tokens",
+                "the badge outside the button text: inside it would merge with the name and state into one announcement",
+                "role=\"status\" on the badge — the number is announced on its own, not only changed visually",
+                "picking the heart fill through button[aria-pressed=\"true\"], otherwise the colour and the state drift apart",
+                "the visible focus ring: this button is used from the keyboard more often than it seems",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the button name through label",
+                "the starting count through count",
+                "the initial state through defaultPressed",
+                "the fill and badge colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The count goes up by 1 on press and back down on release — replace it with real data.",
+                "Do not move the number inside the button text: a screen reader would read it together with the old state.",
+                "For a setting meant for later, not an instant action, use a switch instead of this button.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toggle009\n  label=\"Add to favorites\"\n  count={27}\n  defaultPressed={false}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Button name",
+                "default": "Add to favorites"
+              },
+              "count": {
+                "label": "Count"
+              },
+              "defaultPressed": {
+                "label": "Pressed"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Heart Favorite",
+            "preview": {
+              "props": {
+                "label": "Add to favorites"
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "label",
+          "count",
+          "defaultPressed",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "toggle-010",
+      "type": "registry:component",
+      "title": "Эквалайзер и тишина",
+      "description": "Кнопка звука с тремя столбиками эквалайзера вместо значка-волны: они анимированы вразнобой, только пока звук включён, а рядом всегда видна подпись состояния.",
+      "categories": [
+        "button"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toggle-010/toggle-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toggle-010.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-010-*. Клиентский: useState. Внутри кнопки три span-столбика: пока звук включён (aria-pressed=\"false\"), они анимируются волной вразнобой через animation-delay, а при выключении застывают на одной низкой высоте — тишина видна без чтения текста. Рядом постоянная, а не всплывающая подпись состояния помечена role=\"status\", вторая строка — статичная подпись плеера. aria-label кнопки описывает следующее действие, потому что видимого текста внутри неё нет.",
+      "meta": {
+        "tags": [
+          "toggle",
+          "sound",
+          "equalizer",
+          "aria-pressed"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toggle010",
+          "usage": "<Toggle010\n  label=\"Звук в плеере\"\n  defaultPressed={false}\n/>",
+          "summary": "Кнопка звука со столбиками эквалайзера вместо значка-волны и постоянной подписью состояния рядом. Один файл, ноль зависимостей, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-toggle-010-* и не подменять её токенами вашей темы",
+            "разную задержку анимации у трёх столбиков — одинаковая превращает волну в мигание",
+            "остановку столбиков на выключенном звуке: движение здесь и есть признак звучания",
+            "подпись состояния как часть разметки, а не всплывающую подсказку — её видно сразу",
+            "aria-label с описанием следующего действия: видимого текста внутри кнопки нет",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "подпись плеера через label",
+            "начальное состояние через defaultPressed",
+            "цвет столбиков через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи состояния через stateText и имена кнопки через actionText по ключам on и off"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Три столбика всегда в DOM — переключение не зависит от JS-ветвления между значками.",
+            "Не убирайте вторую строку с подписью плеера: столбики без неё не называют источник звука.",
+            "Не заменяйте кнопку на switch: звук глушится мгновенно, а не настраивается на будущее.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись плеера",
+            "type": "text",
+            "default": "Звук в плеере",
+            "maxLength": 32
+          },
+          {
+            "prop": "defaultPressed",
+            "label": "Нажата",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A sound button with three equalizer bars instead of a wave icon: they animate out of sync only while sound is on, and a state caption stays visible next to it.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-010-* palette. Client-side: useState. Inside the button are three span bars: while the sound is on (aria-pressed=\"false\") they animate as an uneven wave through animation-delay, and when it is turned off they freeze at one low height — the silence is visible without reading any text. Beside it a permanent, not floating, state caption is marked with role=\"status\", and the second line is the player's static caption. The button's aria-label describes the next action, because there is no visible text inside it.",
+            "ai": {
+              "summary": "A sound button with equalizer bars instead of a wave icon and a permanent state caption next to it. One file, zero dependencies, client component.",
+              "preserve": [
+                "the local --vibeui-toggle-010-* palette — do not swap it for your theme tokens",
+                "the staggered animation delay on the three bars — matching delays turn the wave into a blink",
+                "freezing the bars when sound is muted: motion here is the very sign of sound",
+                "the state caption as markup, not a hover tooltip — it is visible right away",
+                "the aria-label describing the next action: there is no visible text inside the button",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the player caption through label",
+                "the initial state through defaultPressed",
+                "the bar colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the state captions through stateText and the button names through actionText, keyed on and off"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The three bars always sit in the DOM — switching does not depend on branching between icons.",
+                "Do not drop the second line with the player caption: bars alone do not name the sound source.",
+                "Do not replace the button with a switch: sound is muted instantly, not configured for later.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toggle010\n  label=\"Player sound\"\n  defaultPressed={false}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Player caption",
+                "default": "Player sound"
+              },
+              "defaultPressed": {
+                "label": "Pressed"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Equalizer Mute",
+            "preview": {
+              "props": {
+                "label": "Player sound",
+                "stateText": {
+                  "on": "Sound off",
+                  "off": "Sound on"
+                },
+                "actionText": {
+                  "on": "Turn the sound on",
+                  "off": "Turn the sound off"
+                }
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "label",
+          "defaultPressed",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "toggle-011",
+      "type": "registry:component",
+      "title": "Переключатель темы",
+      "description": "Кнопка темы с солнцем и луной: оба значка лежат в разметке одновременно и меняются прозрачностью с поворотом, а не display, поэтому смена темы выглядит плавной.",
+      "categories": [
+        "button"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toggle-011/toggle-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toggle-011.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-011-*. Клиентский: useState. Солнце и луна — два всегда смонтированных svg с абсолютным позиционированием: у активного opacity:1 и transform:rotate(0), у неактивного — приглушённые прозрачность и поворот. Оба свойства анимируются transition, поэтому смена темы выглядит плавным кроссфейдом, а не мгновенным щелчком display:none. Панель и карточка-образец меняют фон и цвет тем же атрибутом data-theme на корне, чтобы эффект был виден не только на кнопке.",
+      "meta": {
+        "tags": [
+          "toggle",
+          "theme",
+          "dark-mode",
+          "transition"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toggle011",
+          "usage": "<Toggle011\n  label=\"Тёмная тема\"\n  sample=\"Так будет выглядеть карточка контента.\"\n  defaultPressed={false}\n/>",
+          "summary": "Кнопка темы с солнцем и луной, которые кроссфейдят и поворачиваются вместо мгновенной смены значка; карточка-образец плавно перекрашивается следом. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-toggle-011-* и не подменять её токенами вашей темы",
+            "оба значка всегда в разметке — переключение через opacity и transform, а не display:none",
+            "transition на opacity, transform, background-color и color — иначе смена темы дёргается",
+            "aria-pressed как источник и состояния, и вида: они не могут разойтись",
+            "карточку-образец, меняющую фон вместе с кнопкой: эффект должен быть виден не только на значке",
+            "видимую обводку фокуса на кнопке: ею пользуются с клавиатуры",
+            "две собственные палитры карточки, светлую и тёмную: они и есть демонстрация переключателя, поэтому фиксированные цвета здесь намеренны и light-dark() не применяется"
+          ],
+          "adapt": [
+            "подпись кнопки через label",
+            "текст образца через sample",
+            "начальное состояние через defaultPressed",
+            "цвет солнца через accentLight и цвет луны через accentDark",
+            "цвета значка через accentLight и accentDark",
+            "подписи темы через stateText по ключам dark и light"
+          ],
+          "notes": [
+            "Компонент показывает тему сам и намеренно не следует color-scheme страницы: переключатель обязан показывать обе темы рядом, поэтому подложка карточки задана явно и пропа background у него нет.",
+            "Компонент не трогает тему сайта — он показывает переключение локально, в пределах своей карточки.",
+            "Для настоящего переключения темы приложения свяжите onChange с вашим провайдером темы.",
+            "Это switch по смыслу — режим на будущее, а не мгновенное действие; role оставлен button ради простоты кнопки-иконки.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись кнопки",
+            "type": "text",
+            "default": "Тёмная тема",
+            "maxLength": 24
+          },
+          {
+            "prop": "sample",
+            "label": "Текст образца",
+            "type": "text",
+            "default": "Так будет выглядеть карточка контента.",
+            "maxLength": 80
+          },
+          {
+            "prop": "defaultPressed",
+            "label": "Нажата",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accentLight",
+            "label": "Акцент светлой",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "accentDark",
+            "label": "Акцент тёмной",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A theme button with a sun and a moon: both icons live in the markup at once and swap through opacity and rotation instead of display, so the theme change reads as smooth.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-011-* palette. Client-side: useState. The sun and the moon are two always-mounted svgs with absolute positioning: the active one has opacity:1 and transform:rotate(0), the inactive one a muted opacity and a rotation. Both properties are animated with transition, so the theme change looks like a smooth cross-fade rather than an instant display:none snap. The panel and the sample card change their background and colour through the same data-theme attribute on the root, so the effect is visible beyond the button.",
+            "ai": {
+              "summary": "A theme button with a sun and a moon that cross-fade and rotate instead of snapping between icons; a sample card recolours smoothly alongside it. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-toggle-011-* palette — do not swap it for your theme tokens",
+                "both icons always in the markup — switching through opacity and transform, not display:none",
+                "the transition on opacity, transform, background-color and color — otherwise the theme change jumps",
+                "aria-pressed as the source of both state and look: they cannot drift apart",
+                "the sample card recolouring together with the button: the effect must be visible beyond the icon",
+                "the visible focus ring on the button: it is used from the keyboard",
+                "the card's own light and dark palettes: they are the demonstration itself, so the fixed colours here are deliberate and light-dark() is not used"
+              ],
+              "adapt": [
+                "the button caption through label",
+                "the sample text through sample",
+                "the initial state through defaultPressed",
+                "the sun colour through accentLight and the moon colour through accentDark",
+                "the icon colours through accentLight and accentDark",
+                "the theme captions through stateText, keyed dark and light"
+              ],
+              "notes": [
+                "The component demonstrates the theme itself and deliberately does not follow the page color-scheme: the switch has to show both themes side by side, so the card surface is set explicitly and there is no background prop.",
+                "The component does not touch the site theme — it demonstrates the switch locally, inside its own card.",
+                "For a real app theme switch, wire onChange to your theme provider.",
+                "This is a switch by meaning — a mode for later, not an instant action; role stays button for a simple icon control.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toggle011\n  label=\"Dark theme\"\n  sample=\"This is how a content card will look.\"\n  defaultPressed={false}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Button caption",
+                "default": "Dark theme"
+              },
+              "sample": {
+                "label": "Sample text",
+                "default": "This is how a content card will look."
+              },
+              "defaultPressed": {
+                "label": "Pressed"
+              },
+              "accentLight": {
+                "label": "Light accent"
+              },
+              "accentDark": {
+                "label": "Dark accent"
+              }
+            },
+            "title": "Theme Switcher",
+            "preview": {
+              "props": {
+                "label": "Dark theme",
+                "sample": "This is how a content card will look.",
+                "stateText": {
+                  "dark": "Dark theme",
+                  "light": "Light theme"
+                }
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "label",
+          "sample",
+          "defaultPressed",
+          "accentLight",
+          "accentDark"
+        ]
+      }
+    },
+    {
+      "name": "toggle-012",
+      "type": "registry:component",
+      "title": "Подписка на уведомления",
+      "description": "Переключатель подписки на уведомления: это role=\"switch\", а не aria-pressed, потому что подписка — настройка на будущее, и запрос держит старое состояние до ответа.",
+      "categories": [
+        "button"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toggle-012/toggle-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toggle-012.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-012-*. Клиентский: useState, useRef и useEffect для отмены таймера при размонтировании (setTimeout заменяет запрос к серверу). Переключатель объявлен role=\"switch\" и aria-checked, а не aria-pressed: подписка на уведомления — настройка режима на будущее, а не мгновенное действие над объектом. До ответа сервера состояние не меняется, кнопка помечена aria-busy, а бегунок показывает спиннер вместо смещения. Строка role=\"status\" рядом называет исход словами.",
+      "meta": {
+        "tags": [
+          "toggle",
+          "switch",
+          "aria-busy",
+          "notifications"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toggle012",
+          "usage": "<Toggle012\n  label=\"Уведомления о новых комментариях\"\n  delay={1000}\n  defaultPressed={false}\n/>",
+          "summary": "Переключатель подписки на уведомления с role=\"switch\": запрос держит старое состояние и aria-busy до ответа, бегунок на время запроса показывает спиннер. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-toggle-012-* и не подменять её токенами вашей темы",
+            "role=\"switch\" и aria-checked вместо aria-pressed: подписка — настройка на будущее, а не действие здесь и сейчас",
+            "aria-busy на время запроса и неизменное aria-checked до ответа — иначе переключатель обещает несохранённое",
+            "спиннер в бегунке вместо смещения ползунка — иначе кажется, что запрос уже завершился",
+            "строку role=\"status\" с исходом: значок колокольчика не объясняет, что именно сохранилось",
+            "очистку таймера при размонтировании, иначе состояние меняется у мёртвого компонента",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "подпись переключателя через label",
+            "длительность запроса через delay — в реальном коде замените таймер на fetch",
+            "начальное состояние через defaultPressed",
+            "цвет включённого состояния через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "строки состояния через statusText по ключам busy, confirmedOn, confirmedOff, on и off"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "setTimeout здесь имитирует сеть: подставьте свой запрос и обработайте ошибку — сейчас её нет.",
+            "Повторное нажатие во время запроса игнорируется: переключения не копятся в очередь.",
+            "Не заменяйте переключатель на кнопку с aria-pressed: подписка — это режим, а не разовое действие.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Уведомления о новых комментариях",
+            "maxLength": 60
+          },
+          {
+            "prop": "delay",
+            "label": "Задержка, мс",
+            "type": "number",
+            "default": 1000,
+            "min": 200,
+            "max": 4000
+          },
+          {
+            "prop": "defaultPressed",
+            "label": "Нажата",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A notification subscription switch: it uses role=\"switch\" rather than aria-pressed, because subscribing is a setting for later, and the request keeps the old state until it answers.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-012-* palette. Client-side: useState, useRef and useEffect to clear the timer on unmount (setTimeout stands in for a server request). The switch is declared role=\"switch\" with aria-checked rather than aria-pressed: subscribing to notifications is a mode set for later, not an immediate action on an object. Until the server answers the state does not change, the button is marked aria-busy, and the thumb shows a spinner instead of sliding. The role=\"status\" line beside it names the outcome in words.",
+            "ai": {
+              "summary": "A notification subscription switch (role=\"switch\"): a request keeps the old state and aria-busy until it answers, and the thumb shows a spinner while waiting. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-toggle-012-* palette — do not swap it for your theme tokens",
+                "role=\"switch\" and aria-checked instead of aria-pressed: subscribing is a setting for later, not an action right now",
+                "aria-busy during the request and unchanged aria-checked until the response — otherwise the switch promises unsaved state",
+                "a spinner in the thumb instead of sliding it — otherwise the request looks already finished",
+                "the role=\"status\" line with the outcome: the bell icon does not explain what was actually saved",
+                "clearing the timer on unmount, otherwise state changes on a dead component",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the switch caption through label",
+                "the request duration through delay — replace the timer with fetch in real code",
+                "the initial state through defaultPressed",
+                "the on-state colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the status lines through statusText, keyed busy, confirmedOn, confirmedOff, on and off"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "setTimeout imitates the network here: plug in your request and handle the error — there is none yet.",
+                "A second press during the request is ignored: toggles do not queue up.",
+                "Do not replace the switch with an aria-pressed button: subscribing is a mode, not a one-off action.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toggle012\n  label=\"New comment notifications\"\n  delay={1000}\n  defaultPressed={false}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "New comment notifications"
+              },
+              "delay": {
+                "label": "Delay, ms"
+              },
+              "defaultPressed": {
+                "label": "Pressed"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Notify Subscribe",
+            "preview": {
+              "props": {
+                "label": "New comment notifications",
+                "statusText": {
+                  "busy": "Saving…",
+                  "confirmedOn": "Subscribed",
+                  "confirmedOff": "Unsubscribed",
+                  "on": "You are subscribed",
+                  "off": "You are not subscribed"
+                }
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "label",
+          "delay",
+          "defaultPressed",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "toggle-013",
+      "type": "registry:component",
+      "title": "Показ пароля",
+      "description": "Поле пароля с кнопкой видимости внутри поля: aria-controls связывает кнопку с input, а живая строка снаружи объявляет исход тем, кто не видит текст на экране.",
+      "categories": [
+        "button"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toggle-013/toggle-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toggle-013.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-013-*. Клиентский: useState и useId для связи label, input и aria-controls. Кнопка глаза стоит внутри одной рамки с полем, а не отдельно от него, и переключает type у input между password и text. aria-pressed отражает видимость, а aria-label и видимый текст кнопки называют следующее действие («Показать» → «Скрыть»), потому что это мгновенное действие над полем, а не постоянное имя элемента. Строка role=\"status\" снаружи повторяет исход словами для скринридера. Палитра переведена на light-dark(): компонент следует color-scheme окружения. Подложка поля по умолчанию прозрачна, проп background задаёт её явно.",
+      "meta": {
+        "tags": [
+          "toggle",
+          "password",
+          "aria-controls",
+          "form"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toggle013",
+          "usage": "<Toggle013\n  fieldLabel=\"Пароль\"\n  defaultValue=\"SuperSecret123\"\n  defaultPressed={false}\n/>",
+          "summary": "Поле пароля с кнопкой видимости внутри рамки: aria-controls связывает кнопку с input, type переключается между password и text. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-toggle-013-* и не подменять её токенами вашей темы",
+            "aria-controls на input: без него связь кнопки с полем существует только визуально",
+            "смену type между password и text, а не CSS-маскировку символов — это меняет реальный ввод браузера",
+            "aria-label с описанием следующего действия: имя кнопки — это команда, а не постоянный ярлык",
+            "строку role=\"status\" снаружи поля — она озвучивает исход тем, кто не видит текст",
+            "видимую рамку фокуса на всей строке поля: у неё есть :focus-within для клавиатуры",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "подпись поля через fieldLabel",
+            "начальное значение поля через defaultValue",
+            "начальную видимость через defaultPressed",
+            "цвет рамки при фокусе через accent",
+            "подписи кнопки через buttonText, имена действия для скринридера через actionText, строку исхода через statusText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "defaultValue делает поле неконтролируемым: значение хранит сам input, а не React-состояние.",
+            "Не подменяйте type на CSS: скрытие точками через шрифт не защищает поле так, как type=\"password\".",
+            "Не превращайте кнопку в checkbox: видимость — разовое действие, а не поле формы, которое уедет на сервер.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "fieldLabel",
+            "label": "Подпись поля",
+            "type": "text",
+            "default": "Пароль",
+            "maxLength": 24
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Значение поля",
+            "type": "text",
+            "default": "SuperSecret123",
+            "maxLength": 40
+          },
+          {
+            "prop": "defaultPressed",
+            "label": "Пароль виден",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A password field with a visibility button inside the field frame: aria-controls ties the button to the input, and a live line outside states the outcome for those who cannot see the text.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-013-* palette. Client-side: useState and useId for the link between label, input and aria-controls. The eye button stands inside the same frame as the field rather than apart from it, and switches the input's type between password and text. aria-pressed reflects the visibility, while the aria-label and the button's visible text name the next action (\"Show\" → \"Hide\"), because this is an immediate action on the field, not a permanent name for the element. The role=\"status\" line outside repeats the outcome in words for a screen reader. The palette is on light-dark(): the component follows the surrounding color-scheme. The field background is transparent by default, and the background prop sets it explicitly.",
+            "ai": {
+              "summary": "A password field with a visibility button inside its frame: aria-controls ties the button to the input, and its type switches between password and text. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-toggle-013-* palette — do not swap it for your theme tokens",
+                "aria-controls on the input: without it the link between button and field exists only visually",
+                "switching the type between password and text, not a CSS mask over the characters — this changes real browser input",
+                "the aria-label describing the next action: the button name is a command, not a fixed tag",
+                "the role=\"status\" line outside the field — it speaks the outcome to those who cannot see the text",
+                "the visible focus ring on the whole field row: it has :focus-within for the keyboard",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the field caption through fieldLabel",
+                "the initial field value through defaultValue",
+                "the initial visibility through defaultPressed",
+                "the focus ring colour through accent",
+                "the button captions through buttonText, the screen-reader action names through actionText and the outcome line through statusText",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "defaultValue makes the field uncontrolled: the input itself holds the value, not React state.",
+                "Do not fake the type with CSS: masking with a dotted font does not protect the field like type=\"password\" does.",
+                "Do not turn the button into a checkbox: visibility is a one-off action, not a form field bound for the server.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toggle013\n  fieldLabel=\"Password\"\n  defaultValue=\"SuperSecret123\"\n  defaultPressed={false}\n/>"
+            },
+            "controls": {
+              "fieldLabel": {
+                "label": "Field caption",
+                "default": "Password"
+              },
+              "defaultValue": {
+                "label": "Field value",
+                "default": "SuperSecret123"
+              },
+              "defaultPressed": {
+                "label": "Password visible"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Password Reveal",
+            "preview": {
+              "props": {
+                "fieldLabel": "Password",
+                "defaultValue": "SuperSecret123",
+                "buttonText": {
+                  "show": "Show",
+                  "hide": "Hide"
+                },
+                "actionText": {
+                  "show": "Show password",
+                  "hide": "Hide password"
+                },
+                "statusText": {
+                  "visible": "Password is visible",
+                  "hidden": "Password is hidden"
+                }
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "fieldLabel",
+          "defaultValue",
+          "defaultPressed",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "toggle-014",
+      "type": "registry:component",
+      "title": "Поворот булавки",
+      "description": "Строка списка с кнопкой булавки: значок поворачивается на 45° вместо смены цвета, а фон всей строки подсвечивается через data-pinned на корне.",
+      "categories": [
+        "button"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toggle-014/toggle-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toggle-014.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-014-*. Клиентский: useState. Значок булавки поворачивается на 45deg через transform в правиле button[aria-pressed=\"true\"] svg — поворот читается и без восприятия цвета, в отличие от одной лишь заливки. Фон и рамка всей строки меняются через data-pinned на корне, поэтому закреплённый пункт заметен даже боковым зрением, а не только по кнопке. Вторая строка текста замещается статусом «Закреплено вверху списка» через role=\"status\". Палитра переведена на light-dark(): компонент следует color-scheme окружения. Подложка строки по умолчанию прозрачна, проп background задаёт её явно.",
+      "meta": {
+        "tags": [
+          "toggle",
+          "pin",
+          "rotate",
+          "aria-pressed"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toggle014",
+          "usage": "<Toggle014\n  title=\"Ежемесячный отчёт по расходам\"\n  note=\"Обновлён вчера\"\n  defaultPressed={false}\n/>",
+          "summary": "Строка списка с кнопкой булавки: значок поворачивается на 45°, фон строки подсвечивается через data-pinned. Один файл, ноль зависимостей, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-toggle-014-* и не подменять её токенами вашей темы",
+            "поворот значка как основной признак состояния — он читается без восприятия цвета",
+            "подсветку фона всей строки через data-pinned, а не только цвет кнопки",
+            "aria-pressed как источник и состояния, и вида: они не могут разойтись",
+            "замену второй строки на статус закрепления через role=\"status\"",
+            "видимую обводку фокуса на кнопке: ею пользуются с клавиатуры",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "заголовок строки через title",
+            "текст заметки в обычном состоянии через note",
+            "начальное состояние через defaultPressed",
+            "цвет закреплённого состояния через accent",
+            "текст заметки в закреплённом состоянии через pinnedNote",
+            "имена действия кнопки через actionText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Поворот — это toggle, мгновенное действие над строкой, а не настройка, которая копится до кнопки «Сохранить».",
+            "Не убирайте подсветку фона: людям со слабым цветовосприятием одного поворота может не хватить.",
+            "Не меняйте aria-label кнопки на статичный — «Закрепить» и «Открепить» обязаны отражать следующее действие.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ежемесячный отчёт по расходам",
+            "maxLength": 60
+          },
+          {
+            "prop": "note",
+            "label": "Заметка",
+            "type": "text",
+            "default": "Обновлён вчера",
+            "maxLength": 40
+          },
+          {
+            "prop": "pinnedNote",
+            "label": "Заметка закрепления",
+            "type": "text",
+            "default": "Закреплено вверху списка",
+            "maxLength": 40
+          },
+          {
+            "prop": "defaultPressed",
+            "label": "Закреплено",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A list row with a pin button: the icon rotates 45° instead of changing colour, and the whole row's background lights up through data-pinned on the root.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-014-* palette. Client-side: useState. The pin icon rotates 45deg through transform in the rule button[aria-pressed=\"true\"] svg — a rotation reads without perceiving colour, unlike a fill alone. The background and the border of the whole row change through data-pinned on the root, so a pinned item is noticeable even in peripheral vision, not only by the button. The second line of text is replaced by the status \"Pinned to the top of the list\" through role=\"status\". The palette is on light-dark(): the component follows the surrounding color-scheme. The row background is transparent by default, and the background prop sets it explicitly.",
+            "ai": {
+              "summary": "A list row with a pin button: the icon rotates 45°, and the row background lights up through data-pinned. One file, zero dependencies, client component.",
+              "preserve": [
+                "the local --vibeui-toggle-014-* palette — do not swap it for your theme tokens",
+                "the icon rotation as the primary state cue — it reads without perceiving colour",
+                "the whole row's background highlight through data-pinned, not just the button colour",
+                "aria-pressed as the source of both state and look: they cannot drift apart",
+                "swapping the second line for a pinned status through role=\"status\"",
+                "the visible focus ring on the button: it is used from the keyboard",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the row title through title",
+                "the note text in the default state through note",
+                "the initial state through defaultPressed",
+                "the pinned colour through accent",
+                "the note text in the pinned state through pinnedNote",
+                "the button action names through actionText",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The rotation is a toggle, an instant action on the row, not a setting queued behind a Save button.",
+                "Do not drop the background highlight: rotation alone may not be enough for low colour perception.",
+                "Do not make the button's aria-label static — \"Pin\" and \"Unpin\" must describe the next action.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toggle014\n  title=\"Monthly expense report\"\n  note=\"Updated yesterday\"\n  defaultPressed={false}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Monthly expense report"
+              },
+              "note": {
+                "label": "Note",
+                "default": "Updated yesterday"
+              },
+              "pinnedNote": {
+                "label": "Pinned note",
+                "default": "Pinned to the top of the list"
+              },
+              "defaultPressed": {
+                "label": "Pinned"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Pin Rotate",
+            "preview": {
+              "props": {
+                "title": "Monthly expense report",
+                "note": "Updated yesterday",
+                "pinnedNote": "Pinned to the top of the list",
+                "actionText": {
+                  "pin": "Pin",
+                  "unpin": "Unpin"
+                }
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "note",
+          "pinnedNote",
+          "defaultPressed",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "toggle-015",
+      "type": "registry:component",
+      "title": "Кнопка-закладка",
+      "description": "Сохранение в закладки, где подтверждением работает сама иконка: ленточка заливается акцентом и падает на место пружиной, а подпись меняется на «Сохранено».",
+      "categories": [
+        "button"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toggle-015/toggle-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toggle-015.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-toggle-015-*. Клиентский: \"use client\" ради состояния нажатия. Состояние объявлено через aria-pressed на <button>, а не спрятанным checkbox: закладка — действие над объектом, а не поле формы, и уезжать вместе с формой ей незачем. Заливка иконки идёт переходом fill и stroke, а падение — одноразовыми ключевыми кадрами с пружинной кривой linear(): старт выше и мельче, промах вниз и крупнее, возврат на место. Селектор анимации цепляется за [aria-pressed=\"true\"], так что доступность и вид описаны одним и тем же атрибутом. Тема — light-dark() плюс правило :where(.dark,[data-theme=\"dark\"]) … {color-scheme:dark}.",
+      "meta": {
+        "tags": [
+          "toggle",
+          "bookmark",
+          "save",
+          "spring",
+          "pressed"
+        ],
+        "ai": {
+          "export": "Toggle015",
+          "usage": "<Toggle015\n  defaultPressed\n  onPressedChange={(pressed) => save(pressed)}\n/>",
+          "summary": "Кнопка-закладка: по нажатию ленточка заливается акцентом и на пружине падает на место, подпись переключается с «Сохранить» на «Сохранено». Состояние объявлено через aria-pressed, обратный вызов отдаёт его наружу. Ноль зависимостей, один файл, собственная палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-toggle-015-* — не подменять её токенами вашей темы",
+            "aria-pressed на кнопке: он же селектор анимации, поэтому вид и доступность не разъезжаются",
+            "пружинную кривую linear() и порядок кадров: выше и мельче, промах вниз и крупнее, возврат на место",
+            "заливку ленточки акцентом одновременно с падением: нажатие должно читаться как результат, а не как заготовка",
+            "смену подписи: анимацию не увидит тот, у кого включён prefers-reduced-motion",
+            "<button> вместо спрятанного checkbox — закладка это действие над объектом, а не поле формы",
+            "light-dark() в палитре: компонент обязан слушаться color-scheme окружения, а не нести свою тёмную тему"
+          ],
+          "adapt": [
+            "тексты label и pressedLabel под свой словарь",
+            "defaultPressed — стартовое состояние закладки",
+            "onPressedChange — сюда вешают сохранение на сервер",
+            "accent — цвет заливки ленточки и подписи в нажатом состоянии",
+            "background — подложка кнопки; пусто оставляет фон страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, в проекте должен быть объявлен color-scheme: light dark на html — иначе light-dark() всегда возвращает светлую ветку.",
+            "Состояние живёт внутри кнопки. Для управляемого варианта поднимите его наверх и перерисовывайте компонент по key или замените useState своим пропом.",
+            "Падение проигрывается и при монтировании с defaultPressed: это одноразовые ключевые кадры, а не переход между состояниями.",
+            "Кнопка ничего не сохраняет сама: запрос вешайте на onPressedChange и откатывайте состояние при ошибке.",
+            "Не выносите CSS-переменные в globals.css: компонент должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Сохранить",
+            "maxLength": 20
+          },
+          {
+            "prop": "pressedLabel",
+            "label": "Подпись нажатой",
+            "type": "text",
+            "default": "Сохранено",
+            "maxLength": 20
+          },
+          {
+            "prop": "defaultPressed",
+            "label": "Сохранено",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Bookmark Toggle",
+            "description": "A save-to-bookmarks button where the icon is the confirmation: the ribbon fills with the accent, drops into place on a spring, and the caption switches to Saved.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-toggle-015-* variables. Client-side: \"use client\" for the pressed state. The state is declared with aria-pressed on a <button> rather than a hidden checkbox: a bookmark is an action on an object, not a form field, and has no business travelling with a form. The icon fill is a transition on fill and stroke, while the drop is a one-shot keyframe animation on a linear() spring curve: it starts higher and smaller, overshoots down and larger, then settles. The animation selector hangs off [aria-pressed=\"true\"], so accessibility and appearance are described by the same attribute. The theme comes from light-dark() plus the :where(.dark,[data-theme=\"dark\"]) … {color-scheme:dark} rule.",
+            "ai": {
+              "summary": "A bookmark button: on press the ribbon fills with the accent and drops into place on a spring while the caption switches from Save to Saved. The state is declared with aria-pressed and a callback hands it back out. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-toggle-015-* palette — do not swap it for your theme tokens",
+                "aria-pressed on the button: it is also the animation selector, so appearance and accessibility cannot drift apart",
+                "the linear() spring curve and the order of the keyframes: higher and smaller, overshoot down and larger, settle",
+                "filling the ribbon at the same moment it drops: the press has to read as a result, not as a run-up",
+                "the caption change: whoever has prefers-reduced-motion on will never see the animation",
+                "the <button> instead of a hidden checkbox — a bookmark is an action on an object, not a form field",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the label and pressedLabel copy to fit your wording",
+                "defaultPressed — the starting state of the bookmark",
+                "onPressedChange — this is where the save request goes",
+                "accent — the colour of the filled ribbon and of the caption when pressed",
+                "background — the button surface; empty keeps the page background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The state lives inside the button. For a controlled variant, lift it up and remount the component by key, or replace useState with your own prop.",
+                "The drop also plays on mount when defaultPressed is set: these are one-shot keyframes, not a transition between states.",
+                "The button saves nothing by itself: hang the request on onPressedChange and roll the state back on failure.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toggle015\n  defaultPressed\n  onPressedChange={(pressed) => save(pressed)}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Save"
+              },
+              "pressedLabel": {
+                "label": "Pressed caption",
+                "default": "Saved"
+              },
+              "defaultPressed": {
+                "label": "Saved"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Save",
+                "pressedLabel": "Saved",
+                "defaultPressed": true
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "label",
+          "pressedLabel",
+          "defaultPressed",
+          "accent"
+        ],
+        "preview": {
+          "width": "auto",
+          "props": {
+            "defaultPressed": true
+          }
+        }
+      }
     }
   ]
 }

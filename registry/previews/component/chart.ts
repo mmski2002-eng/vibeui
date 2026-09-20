@@ -62,4 +62,14 @@ export const PREVIEWS = {
     import("@/registry/components/chart/chart-028/chart-028").then((module) => module.Chart028),
   "chart-029": () =>
     import("@/registry/components/chart/chart-029/chart-029").then((module) => module.Chart029),
+  "sparkline-001": () =>
+    import("@/registry/components/chart/sparkline-001/sparkline-001").then((module) => module.Sparkline001),
+  "sparkline-002": () =>
+    import("@/registry/components/chart/sparkline-002/sparkline-002").then((module) => module.Sparkline002),
+  "sparkline-003": () =>
+    import("@/registry/components/chart/sparkline-003/sparkline-003").then((module) => module.Sparkline003),
+  "sparkline-004": () =>
+    import("@/registry/components/chart/sparkline-004/sparkline-004").then((module) => module.Sparkline004),
+  "sparkline-005": () =>
+    import("@/registry/components/chart/sparkline-005/sparkline-005").then((module) => module.Sparkline005),
 } satisfies PreviewLoaderMap

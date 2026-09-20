@@ -2781,6 +2781,2333 @@
           }
         }
       }
+    },
+    {
+      "name": "timeline-001",
+      "type": "registry:component",
+      "title": "Лента событий",
+      "description": "Лента событий: линия нарисована бордюром самого события, поэтому тянется от точки к точке и не торчит за последним.",
+      "categories": [
+        "stepper"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "timeline-001/timeline-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/timeline-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-timeline-001-*. Серверный: хуков нет. Линия — левый бордюр элемента списка, у последнего он прозрачный. Состояние задаётся data-state: пройденное — заливка точки, текущее — кольцо, будущее — пустая точка и приглушённый текст.",
+      "meta": {
+        "tags": [
+          "timeline",
+          "events",
+          "status",
+          "delivery"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Timeline001",
+          "usage": "<Timeline001 events={[{ time: \"Сегодня\", title: \"В пути\", state: \"current\" }]} />",
+          "summary": "Лента событий со временем, заголовком и пояснением: линия между точками, разные формы для пройденного, текущего и будущего. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-timeline-001-* и не подменять её токенами вашей темы",
+            "линию бордюром события: отдельный столбик всегда торчит за последней точкой",
+            "разные формы точек: заливка, кольцо и пустая — состояние не только цветом",
+            "приглушённый текст будущих шагов",
+            "порядок сверху вниз по времени",
+            "время отдельной строкой над заголовком — его сканируют первым",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "время в <time dateTime>, а не голой строкой"
+          ],
+          "adapt": [
+            "массив events и их состояния",
+            "акцент через проп accent",
+            "цвет пройденного шага через проп done",
+            "ширину блока",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Сортировку компонент не делает: события выводятся в порядке массива.",
+            "Текущее событие должно быть одно: два кольца читаются как ошибка данных.",
+            "Для длинной истории добавьте свёртку — двадцать точек подряд не читаются.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "done",
+            "label": "Пройденный шаг",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Event Timeline",
+            "description": "An event timeline: the line is the event's own border, so it runs dot to dot and never juts past the last one.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-timeline-001-* variables. Server component: no hooks. The line is the list item's left border, transparent on the last one. The state is set with data-state: done is a filled dot, current is a ring, upcoming is a hollow dot and muted text.",
+            "ai": {
+              "summary": "An event timeline with time, title and note: a line between dots and distinct shapes for done, current and upcoming. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-timeline-001-* palette — do not swap it for your theme tokens",
+                "the line as the event's border: a separate column always overshoots the last dot",
+                "distinct dot shapes: filled, ringed and hollow — state is not colour alone",
+                "the muted text on upcoming steps",
+                "chronological order top to bottom",
+                "the time on its own line above the title — it gets scanned first",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the time inside <time dateTime> rather than a bare string"
+              ],
+              "adapt": [
+                "the events array and their states",
+                "the accent through the accent prop",
+                "the completed-step colour through the done prop",
+                "the block width",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The component does not sort: events render in array order.",
+                "There should be one current event: two rings read as broken data.",
+                "For long histories add collapsing — twenty dots in a row do not read.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Timeline001 events={[{ time: \"Today\", title: \"In transit\", state: \"current\" }]} />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "done": {
+                "label": "Completed step"
+              },
+              "background": {
+                "label": "Surface"
+              }
+            },
+            "preview": {
+              "props": {
+                "events": [
+                  {
+                    "time": "12 March, 10:20",
+                    "title": "Order packed",
+                    "text": "The courier picked the parcel up from the warehouse",
+                    "state": "done",
+                    "dateTime": "2026-03-12T10:20"
+                  },
+                  {
+                    "time": "13 March, 08:40",
+                    "title": "In transit",
+                    "text": "The shipment reached the sorting centre",
+                    "state": "done",
+                    "dateTime": "2026-03-13T08:40"
+                  },
+                  {
+                    "time": "Today",
+                    "title": "Out for delivery",
+                    "text": "The courier will arrive between 10:00 and 14:00",
+                    "state": "current",
+                    "dateTime": "2026-03-14"
+                  },
+                  {
+                    "time": "Tomorrow",
+                    "title": "Handover",
+                    "state": "todo",
+                    "dateTime": "2026-03-15"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "accent",
+          "done",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "timeline-002",
+      "type": "registry:component",
+      "title": "Лента активности",
+      "description": "Лента активности: кружок с инициалами красится оттенком, посчитанным из имени, а время стоит отдельным столбцом с табличными цифрами.",
+      "categories": [
+        "stepper"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "timeline-002/timeline-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/timeline-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-002-*. Серверный: хуков нет. Оттенок аватара считается из имени функцией на FNV-хеше, поэтому один человек всегда получает один и тот же кружок и опознаётся в ленте как повторяющееся пятно цвета. Линия ленты нарисована псевдоэлементом строки, а не отдельным столбиком: она обрывается на последнем аватаре и не свисает под списком. Время вынесено в третью колонку grid с font-variant-numeric:tabular-nums — в ленте из двадцати строк цифры обязаны стоять по одной вертикали. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.",
+      "meta": {
+        "tags": [
+          "timeline",
+          "feed",
+          "activity",
+          "avatar"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "entries": [
+              {
+                "author": "Аня Петрова",
+                "action": "оставила комментарий в",
+                "target": "Главная страница",
+                "time": "2 мин",
+                "dateTime": "2026-03-14T14:20",
+                "image": "/demo/avatars/dina-256.webp"
+              },
+              {
+                "author": "Марк Иванов",
+                "action": "закрыл задачу",
+                "target": "Экспорт в CSV",
+                "time": "18 мин",
+                "dateTime": "2026-03-14T14:04",
+                "image": "/demo/avatars/ilya-256.webp"
+              },
+              {
+                "author": "Аня Петрова",
+                "action": "загрузила 6 файлов",
+                "time": "1 ч",
+                "dateTime": "2026-03-14T13:22",
+                "image": "/demo/avatars/anna-256.webp"
+              },
+              {
+                "author": "Лиза Ким",
+                "action": "пригласила в проект",
+                "target": "Олег С.",
+                "time": "3 ч",
+                "dateTime": "2026-03-14T11:15",
+                "image": "/demo/avatars/mark-256.webp"
+              }
+            ]
+          }
+        },
+        "ai": {
+          "export": "Timeline002",
+          "usage": "<Timeline002\n  title=\"Активность\"\n  entries={[\n    { author: \"Аня Петрова\", action: \"оставила комментарий в\", target: \"Главная страница\", time: \"2 мин\" },\n    { author: \"Марк Иванов\", action: \"закрыл задачу\", target: \"Экспорт в CSV\", time: \"18 мин\" },\n  ]}\n/>",
+          "summary": "Лента активности: аватар с инициалами и оттенком из имени, действие и время в отдельном столбце. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-timeline-002-* и не подменять её токенами вашей темы",
+            "расчёт оттенка из имени: он даёт человеку постоянный цвет, случайный цвет ломает узнавание",
+            "линию из псевдоэлемента строки — отдельный столбик свисает под последним событием",
+            "время отдельной колонкой с табличными цифрами: иначе строки перестают выравниваться",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "цветовую метку на объекте правки, а не на глаголе: в потоке одинаковых фраз глаз ищет объект",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "время в <time dateTime>, а не голой строкой"
+          ],
+          "adapt": [
+            "заголовок ленты через title",
+            "события через entries: автор, действие, объект и время",
+            "цвет акцента через accent",
+            "ширину ленты через max-width корневого элемента",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Инициалы берутся из первых двух слов имени: односложные ники дадут одну букву.",
+            "Оттенков всего двенадцать, поэтому в длинной ленте цвета неизбежно повторятся.",
+            "Время — это строка, а не дата: форматирование остаётся на стороне приложения.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Активность",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Activity Feed",
+            "description": "An activity feed: the initials circle is tinted with a hue derived from the name, and the time sits in its own column with tabular numerals.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-timeline-002-* variables. Server component: no hooks. The avatar hue is computed from the name by a function built on an FNV hash, so one person always gets the same circle and is recognised in the feed as a recurring patch of colour. The feed line is drawn by the row's pseudo-element rather than a separate column: it stops at the last avatar and does not dangle below the list. The time is moved into the grid's third column with font-variant-numeric: tabular-nums — in a feed of twenty rows the digits have to stand on one vertical. The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, it sits on the page background and darkens along with it.",
+            "ai": {
+              "summary": "An activity feed: an avatar with initials tinted by a hue derived from the name, the action, and the time in its own column. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-timeline-002-* palette — do not swap it for your theme tokens",
+                "the hue derived from the name: it gives a person a stable colour, a random one breaks recognition",
+                "the line drawn by the row's pseudo-element — a separate column dangles below the last event",
+                "the time in its own column with tabular numerals: otherwise the rows stop lining up",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the colour accent on the edited object rather than on the verb: the eye looks for the object",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the time inside <time dateTime> rather than a bare string"
+              ],
+              "adapt": [
+                "the feed heading through title",
+                "the events through entries: author, action, target and time",
+                "the accent colour through accent",
+                "the feed width through the root element's max-width",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Initials come from the first two words of the name: single-word handles give one letter.",
+                "There are only twelve hues, so in a long feed colours will inevitably repeat.",
+                "Time is a string, not a date: formatting stays on the application side.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Timeline002\n  title=\"Activity\"\n  entries={[\n    { author: \"Anna Petrova\", action: \"commented on\", target: \"Home page\", time: \"2 min\" },\n    { author: \"Mark Ivanov\", action: \"closed the task\", target: \"CSV export\", time: \"18 min\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Activity"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              },
+              "background": {
+                "label": "Surface"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Activity",
+                "entries": [
+                  {
+                    "author": "Anna Petrova",
+                    "action": "commented on",
+                    "target": "Home page",
+                    "time": "2 min",
+                    "dateTime": "2026-03-14T14:20",
+                    "image": "/demo/avatars/dina-256.webp"
+                  },
+                  {
+                    "author": "Mark Ivanov",
+                    "action": "closed the task",
+                    "target": "CSV export",
+                    "time": "18 min",
+                    "dateTime": "2026-03-14T14:04",
+                    "image": "/demo/avatars/ilya-256.webp"
+                  },
+                  {
+                    "author": "Anna Petrova",
+                    "action": "uploaded 6 files",
+                    "time": "1 h",
+                    "dateTime": "2026-03-14T13:22",
+                    "image": "/demo/avatars/anna-256.webp"
+                  },
+                  {
+                    "author": "Lisa Kim",
+                    "action": "invited to the project",
+                    "target": "Oleg S.",
+                    "time": "3 h",
+                    "dateTime": "2026-03-14T11:15",
+                    "image": "/demo/avatars/mark-256.webp"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "timeline-003",
+      "type": "registry:component",
+      "title": "Статус заказа",
+      "description": "Статус заказа, где будущее нарисовано иначе прошлого: пройденные шаги с галочкой и сплошной линией, будущие — пустым кружком и пунктиром.",
+      "categories": [
+        "stepper"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "timeline-003/timeline-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/timeline-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-003-*. Серверный: хуков нет. Состояние шага передаётся тремя способами сразу — формой метки (галочка, кольцо, пустой кружок), стилем линии (сплошная против пунктирной) и плашкой у текущего шага. Галочка нарисована двумя бордюрами псевдоэлемента, поэтому иконочный шрифт не нужен. Текущий шаг вынесен на подложку из color-mix и помечен словом «сейчас»: его читают первым и часто единственным. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.",
+      "meta": {
+        "tags": [
+          "timeline",
+          "order",
+          "status",
+          "steps"
+        ],
+        "ai": {
+          "export": "Timeline003",
+          "usage": "<Timeline003\n  orderLabel=\"Заказ № 4471\"\n  eta=\"Доставим 14 марта\"\n  steps={[\n    { title: \"Оплачен\", note: \"12 марта, 10:02\", state: \"done\" },\n    { title: \"Едет в ваш город\", note: \"Прибудет 14 марта\", state: \"current\" },\n    { title: \"Получен\", state: \"todo\" },\n  ]}\n/>",
+          "summary": "Статус заказа: галочки на пройденном, пунктир на будущем, плашка и метка «сейчас» на текущем шаге. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-timeline-003-* и не подменять её токенами вашей темы",
+            "пунктир на будущем отрезке: «ещё не случилось» обязано читаться формой линии, а не оттенком",
+            "галочку из бордюров псевдоэлемента — она не тянет за собой иконочный шрифт",
+            "плашку текущего шага: её читают первой, когда весь список читать некогда",
+            "слово «сейчас» рядом с текущим шагом — цвет один состояние не передаёт",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "дату шага в <time dateTime>, а не голой строкой"
+          ],
+          "adapt": [
+            "номер заказа через orderLabel и срок через eta",
+            "шаги через steps: заголовок, пояснение и состояние done/current/todo",
+            "цвет акцента через accent",
+            "ширину карточки через max-width корневого элемента",
+            "метку текущего шага через nowLabel",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Компонент не считает состояния сам: пометить шаг как current обязано приложение.",
+            "Двух шагов current быть не должно — плашка перестанет означать «вы здесь».",
+            "Пояснение note не обязательно, но без него будущие шаги выглядят одинаково.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "eta",
+            "label": "Срок",
+            "type": "text",
+            "default": "Доставим 14 марта",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "nowLabel",
+            "label": "Метка «сейчас»",
+            "type": "text",
+            "default": "сейчас",
+            "maxLength": 16
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Order Status",
+            "description": "An order status where the future is drawn differently from the past: completed steps carry a check mark and a solid line, upcoming ones an empty circle and a dashed line.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-timeline-003-* variables. Server component: no hooks. The step state is conveyed three ways at once — the marker shape (a check mark, a ring, a hollow circle), the line style (solid versus dashed) and the chip on the current step. The check mark is drawn with two borders of a pseudo-element, so no icon font is needed. The current step is placed on a color-mix panel and tagged with the word \"now\": it is read first and often alone. The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, it sits on the page background and darkens along with it.",
+            "ai": {
+              "summary": "An order status: check marks on what is done, a dashed line ahead, and a highlighted \"now\" chip on the current step. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-timeline-003-* palette — do not swap it for your theme tokens",
+                "the dashed line ahead: \"not yet\" must be readable from the line's shape, not its shade",
+                "the check mark built from pseudo-element borders — it drags in no icon font",
+                "the current step's panel: it is read first when there is no time for the whole list",
+                "the \"now\" chip beside the current step — colour alone does not convey state",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the step date inside <time dateTime> rather than a bare string"
+              ],
+              "adapt": [
+                "the order number through orderLabel and the estimate through eta",
+                "the steps through steps: title, note and state done/current/todo",
+                "the accent colour through accent",
+                "the card width through the root element's max-width",
+                "the current-step chip through nowLabel",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The component does not compute state: marking a step as current is the app's job.",
+                "There must not be two current steps — the panel would stop meaning \"you are here\".",
+                "The note is optional, but without it the future steps all look the same.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Timeline003\n  orderLabel=\"Order #4471\"\n  eta=\"Arrives March 14\"\n  steps={[\n    { title: \"Paid\", note: \"March 12, 10:02\", state: \"done\" },\n    { title: \"On the way\", note: \"Arrives March 14\", state: \"current\" },\n    { title: \"Delivered\", state: \"todo\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "eta": {
+                "label": "Estimate",
+                "default": "Arrives March 14"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              },
+              "nowLabel": {
+                "label": "\"Now\" chip",
+                "default": "now"
+              },
+              "background": {
+                "label": "Surface"
+              }
+            },
+            "preview": {
+              "props": {
+                "orderLabel": "Order #4471",
+                "eta": "Arrives March 14",
+                "nowLabel": "now",
+                "steps": [
+                  {
+                    "title": "Paid",
+                    "note": "March 12, 10:02",
+                    "state": "done",
+                    "dateTime": "2026-03-12T10:02"
+                  },
+                  {
+                    "title": "Packed at the warehouse",
+                    "note": "March 12, 18:40",
+                    "state": "done",
+                    "dateTime": "2026-03-12T18:40"
+                  },
+                  {
+                    "title": "On the way to your city",
+                    "note": "Arrives March 14",
+                    "state": "current"
+                  },
+                  {
+                    "title": "At the pickup point",
+                    "state": "todo"
+                  },
+                  {
+                    "title": "Collected",
+                    "state": "todo"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "eta",
+          "accent",
+          "nowLabel",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "timeline-004",
+      "type": "registry:component",
+      "title": "Вехи проекта",
+      "description": "Хронология проекта, где вехи не равны рядовым записям: веха рисуется ромбом и жирной датой, а на широком блоке даты уезжают в отдельный столбец.",
+      "categories": [
+        "stepper"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "timeline-004/timeline-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/timeline-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-004-*. Серверный: хуков нет. Раскладка считается от собственной ширины блока через container-type:inline-size, а правила @container лежат на внутреннем [data-part=\"shell\"] и потомках — контейнерный запрос не действует на сам контейнер. Узкий блок даёт один столбец с датой над заголовком, широкий — grid из трёх колонок, где даты выстраиваются по правому краю и список читается как календарь. Веха отличается формой метки (повёрнутый на 45° квадрат), а не только цветом. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.",
+      "meta": {
+        "tags": [
+          "timeline",
+          "milestones",
+          "project",
+          "dates"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Timeline004",
+          "usage": "<Timeline004\n  title=\"Хронология проекта\"\n  points={[\n    { date: \"14 января\", title: \"Старт проекта\", text: \"Согласован объём первой версии\", milestone: true },\n    { date: \"02 февраля\", title: \"Прототип интерфейса\" },\n  ]}\n/>",
+          "summary": "Хронология по датам: вехи помечены ромбом, на широком блоке дата занимает свой столбец. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-timeline-004-* и не подменять её токенами вашей темы",
+            "ромб у вехи: важное обязано отличаться формой, а не только цветом метки",
+            "раскладку от собственной ширины блока — от ширины окна миниатюра каталога соврёт",
+            "правила @container на внутреннем shell: контейнерный запрос не действует на сам контейнер",
+            "выравнивание дат по правому краю в широкой раскладке: так они читаются столбцом",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "дату в <time dateTime>, а не голой строкой"
+          ],
+          "adapt": [
+            "заголовок через title",
+            "записи через points: дата, заголовок, пояснение и признак milestone",
+            "цвет акцента через accent",
+            "порог перехода к широкой раскладке в правиле @container",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Даты — строки: сортировать и форматировать их обязано приложение.",
+            "Если пометить вехами всё, различие исчезнет — их должно быть меньше трети.",
+            "В широкой раскладке колонка даты фиксирована по ширине: длинная дата перенесётся.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Хронология проекта",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Project Milestones",
+            "description": "A project timeline where milestones are not equal to ordinary entries: a milestone gets a diamond and a bold date, and on a wide block the dates move into their own column.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-timeline-004-* variables. Server component: no hooks. The layout is computed from the block's own width through container-type: inline-size, and the @container rules sit on the inner [data-part=\"shell\"] and its descendants — a container query does not apply to the container itself. A narrow block gives one column with the date above the title, a wide one gives a three-column grid where the dates line up on the right edge and the list reads as a calendar. A milestone differs by marker shape (a square rotated by 45°), not by colour alone. The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, it sits on the page background and darkens along with it.",
+            "ai": {
+              "summary": "A dated timeline: milestones are marked with a diamond, and on a wide block the date takes its own column. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-timeline-004-* palette — do not swap it for your theme tokens",
+                "the diamond on a milestone: what matters must differ in shape, not only in colour",
+                "the layout driven by the block's own width — window width would make the catalogue tile lie",
+                "the @container rules on the inner shell: a container query never applies to the container itself",
+                "the right-aligned dates in the wide layout: that is what makes them read as a column",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the date inside <time dateTime> rather than a bare string"
+              ],
+              "adapt": [
+                "the heading through title",
+                "the entries through points: date, title, note and the milestone flag",
+                "the accent colour through accent",
+                "the breakpoint of the wide layout in the @container rule",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Dates are strings: sorting and formatting them is the application's job.",
+                "If everything is a milestone the distinction disappears — keep them under a third.",
+                "In the wide layout the date column has a fixed width: a long date will wrap.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Timeline004\n  title=\"Project timeline\"\n  points={[\n    { date: \"January 14\", title: \"Kick-off\", text: \"Scope of the first release agreed\", milestone: true },\n    { date: \"February 2\", title: \"Interface prototype\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Project timeline"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              },
+              "background": {
+                "label": "Surface"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Project timeline",
+                "points": [
+                  {
+                    "date": "January 14",
+                    "title": "Kick-off",
+                    "text": "Team assembled, scope of the first release agreed",
+                    "milestone": true,
+                    "dateTime": "2026-01-14"
+                  },
+                  {
+                    "date": "February 2",
+                    "title": "Interface prototype",
+                    "dateTime": "2026-02-02"
+                  },
+                  {
+                    "date": "February 27",
+                    "title": "Internal release",
+                    "text": "A build for the team: catalogue and search only",
+                    "milestone": true,
+                    "dateTime": "2026-02-27"
+                  },
+                  {
+                    "date": "March 11",
+                    "title": "Fixes after user testing",
+                    "dateTime": "2026-03-11"
+                  },
+                  {
+                    "date": "April 5",
+                    "title": "Public launch",
+                    "text": "Open sign-up and the first paid plan",
+                    "milestone": true,
+                    "dateTime": "2026-04-05"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "timeline-005",
+      "type": "registry:component",
+      "title": "Версии документа",
+      "description": "История правок документа: автор, комментарий и двухцветная полоска, длина частей которой пропорциональна добавленным и удалённым строкам.",
+      "categories": [
+        "stepper"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "timeline-005/timeline-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/timeline-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-005-*. Серверный: хуков нет. Доля добавленного считается на рендере и передаётся в CSS одной переменной --vibeui-timeline-005-share, которой задаётся ширина зелёной части полоски; красная часть занимает остаток через flex:1. Числа +N и −N стоят рядом текстом: полоска без подписи — украшение, а не данные. Номер версии оформлен как отдельная плашка в первой колонке grid, текущая версия помечена цветом рамки и словом «текущая». Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.",
+      "meta": {
+        "tags": [
+          "timeline",
+          "history",
+          "diff",
+          "versions"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Timeline005",
+          "usage": "<Timeline005\n  title=\"История документа\"\n  revisions={[\n    { version: \"v12\", author: \"Марк Иванов\", note: \"Переписан раздел про тарифы\", time: \"сегодня, 14:20\", added: 64, removed: 12, current: true },\n    { version: \"v11\", author: \"Аня Петрова\", note: \"Правки после проверки\", time: \"вчера, 18:05\", added: 18, removed: 44 },\n  ]}\n/>",
+          "summary": "Лента правок документа: версия, автор, комментарий и объём изменения полоской плюс числами. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-timeline-005-* и не подменять её токенами вашей темы",
+            "числа +N и −N рядом с полоской: полоска без подписи не данные, а украшение",
+            "долю добавленного в переменной --vibeui-timeline-005-share: ширина считается на рендере, а не на клиенте",
+            "плашку номера версии в первой колонке — по ней ищут нужную правку глазами",
+            "метку «текущая» у активной версии: рамка одного цвета мало кому заметна",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "время правки в <time dateTime>, а не голой строкой"
+          ],
+          "adapt": [
+            "заголовок через title",
+            "правки через revisions: версия, автор, комментарий, время и числа added/removed",
+            "цвет акцента через accent",
+            "ширину карточки через max-width корневого элемента",
+            "метку активной версии через currentLabel",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Полоска показывает пропорцию внутри одной правки, а не масштаб относительно других.",
+            "Правка без изменений (added и removed по нулю) даст пустую полоску — скрывайте её.",
+            "Помечать current стоит ровно одну версию, иначе метка теряет смысл.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "История документа",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "currentLabel",
+            "label": "Метка версии",
+            "type": "text",
+            "default": "текущая",
+            "maxLength": 16
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Doc Revisions",
+            "description": "A document revision history: author, comment and a two-colour bar whose parts are proportional to the added and removed lines.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-timeline-005-* variables. Server component: no hooks. The added share is computed at render and passed to CSS in the single --vibeui-timeline-005-share variable, which sets the width of the green part of the bar; the red part takes the remainder through flex: 1. The +N and −N numbers stand beside it as text: a bar without a label is decoration, not data. The version number is laid out as a separate chip in the grid's first column, and the current version is marked by the border colour and the word \"current\". The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, it sits on the page background and darkens along with it.",
+            "ai": {
+              "summary": "A document revision feed: version, author, comment and the size of the change as a bar plus numbers. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-timeline-005-* palette — do not swap it for your theme tokens",
+                "the +N and −N numbers beside the bar: an unlabelled bar is decoration, not data",
+                "the added share in --vibeui-timeline-005-share: the width is computed at render, not on the client",
+                "the version chip in the first column — it is what people scan for the right revision",
+                "the \"current\" tag on the active version: a differently coloured border alone goes unnoticed",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the revision time inside <time dateTime> rather than a bare string"
+              ],
+              "adapt": [
+                "the heading through title",
+                "the revisions through revisions: version, author, comment, time and the added/removed counts",
+                "the accent colour through accent",
+                "the card width through the root element's max-width",
+                "the active-version tag through currentLabel",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The bar shows the proportion inside one revision, not the scale relative to others.",
+                "A revision with no changes (added and removed both zero) yields an empty bar — hide it.",
+                "Exactly one version should be marked current, otherwise the tag loses its meaning.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Timeline005\n  title=\"Document history\"\n  revisions={[\n    { version: \"v12\", author: \"Mark Ivanov\", note: \"Pricing section rewritten\", time: \"today, 14:20\", added: 64, removed: 12, current: true },\n    { version: \"v11\", author: \"Anna Petrova\", note: \"Edits after review\", time: \"yesterday, 18:05\", added: 18, removed: 44 },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Document history"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              },
+              "currentLabel": {
+                "label": "Version tag",
+                "default": "current"
+              },
+              "background": {
+                "label": "Surface"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Document history",
+                "currentLabel": "current",
+                "revisions": [
+                  {
+                    "version": "v12",
+                    "author": "Mark Ivanov",
+                    "note": "Pricing section rewritten",
+                    "time": "today, 14:20",
+                    "added": 64,
+                    "removed": 12,
+                    "current": true,
+                    "dateTime": "2026-03-14T14:20"
+                  },
+                  {
+                    "version": "v11",
+                    "author": "Anna Petrova",
+                    "note": "Edits after the legal review",
+                    "time": "yesterday, 18:05",
+                    "added": 18,
+                    "removed": 44,
+                    "dateTime": "2026-03-13T18:05"
+                  },
+                  {
+                    "version": "v10",
+                    "author": "Lisa Kim",
+                    "note": "Contract examples added",
+                    "time": "March 11",
+                    "added": 132,
+                    "removed": 3,
+                    "dateTime": "2026-03-11"
+                  },
+                  {
+                    "version": "v9",
+                    "author": "Mark Ivanov",
+                    "note": "First complete draft",
+                    "time": "March 6",
+                    "added": 210,
+                    "removed": 0,
+                    "dateTime": "2026-03-06"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "accent",
+          "currentLabel",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "timeline-006",
+      "type": "registry:component",
+      "title": "События по типам",
+      "description": "Лента событий, где тип узнаётся по значку: встроенный SVG в плитке, которая красится оттенком своего типа, плюс подпись типа для скринридера.",
+      "categories": [
+        "stepper"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "timeline-006/timeline-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/timeline-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-006-*. Серверный: хуков нет. Цвет плитки задан одной переменной --vibeui-timeline-006-hue, которая переопределяется правилом на строке по атрибуту data-kind: четыре типа стоят четырьмя строчками CSS вместо четырёх наборов правил. Иконки — инлайновые пути SVG в объекте KIND_PATH, поэтому иконочная библиотека не нужна. Название типа продублировано текстом, скрытым через clip-path: цвет и форма вслух не читаются. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.",
+      "meta": {
+        "tags": [
+          "timeline",
+          "events",
+          "icons",
+          "types"
+        ],
+        "ai": {
+          "export": "Timeline006",
+          "usage": "<Timeline006\n  title=\"События\"\n  events={[\n    { kind: \"release\", title: \"Выпущена версия 2.4\", text: \"Каталог, поиск и экспорт\", time: \"10:40\" },\n    { kind: \"alert\", title: \"Ответ сервера замедлился\", time: \"09:12\" },\n  ]}\n/>",
+          "summary": "Лента событий со значками типов: оттенок плитки задан одной переменной, тип продублирован подписью для скринридера. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-timeline-006-* и не подменять её токенами вашей темы",
+            "скрытую подпись типа: цвет плитки и форма значка скринридеру недоступны",
+            "оттенок типа одной переменной --vibeui-timeline-006-hue — иначе четыре типа превращаются в четыре набора правил",
+            "инлайновый SVG вместо иконочной библиотеки: у item'а не должно быть зависимостей",
+            "линию из псевдоэлемента строки — отдельный столбик свисает под последним событием",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "время в <time dateTime>, а не голой строкой"
+          ],
+          "adapt": [
+            "заголовок через title",
+            "события через events: тип, заголовок, пояснение и время",
+            "набор типов: добавьте строку в KIND_PATH, KIND_LABEL и правило с оттенком; подписи переопределяются пропом kindText",
+            "оттенки типов в правилах li[data-kind=...]",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Типов должно быть немного: восемь оттенков плиток уже не различаются с одного взгляда.",
+            "Новый тип требует трёх правок сразу — путь, подпись и оттенок, иначе плитка станет серой.",
+            "Значок повторяет смысл заголовка, а не заменяет его: заголовок обязан быть понятным без иконки.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "События",
+            "maxLength": 24
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Typed Events",
+            "description": "An event feed where the type is recognised by its glyph: an inline SVG in a tile tinted with the type's hue, plus a type label for screen readers.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-timeline-006-* variables. Server component: no hooks. The tile colour is set by the single --vibeui-timeline-006-hue variable, which is overridden by a rule on the row keyed to the data-kind attribute: four types cost four lines of CSS instead of four rule sets. The icons are inline SVG paths in the KIND_PATH object, so no icon library is needed. The type name is duplicated as text hidden with clip-path: colour and shape are not read aloud. The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, it sits on the page background and darkens along with it.",
+            "ai": {
+              "summary": "An event feed with type icons: the tile hue comes from a single variable and the type is echoed in a screen-reader label. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-timeline-006-* palette — do not swap it for your theme tokens",
+                "the hidden type label: neither the tile colour nor the glyph reaches a screen reader",
+                "the type hue in the single --vibeui-timeline-006-hue variable — otherwise four types become four rule sets",
+                "the inline SVG instead of an icon library: an item must have no dependencies",
+                "the line drawn by the row's pseudo-element — a separate column dangles below the last event",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the time inside <time dateTime> rather than a bare string"
+              ],
+              "adapt": [
+                "the heading through title",
+                "the events through events: kind, title, note and time",
+                "the set of types: add a line to KIND_PATH, KIND_LABEL and a hue rule; the labels are overridden through the kindText prop",
+                "the type hues in the li[data-kind=...] rules",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Keep the type list short: eight tile hues are no longer distinguishable at a glance.",
+                "A new type needs three edits at once — path, label and hue, otherwise the tile turns grey.",
+                "The glyph echoes the title, it does not replace it: the title must work without the icon.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Timeline006\n  title=\"Events\"\n  events={[\n    { kind: \"release\", title: \"Version 2.4 shipped\", text: \"Catalogue, search and export\", time: \"10:40\" },\n    { kind: \"alert\", title: \"Server response slowed down\", time: \"09:12\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Events"
+              },
+              "background": {
+                "label": "Surface"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Events",
+                "kindText": {
+                  "comment": "Comment",
+                  "upload": "Upload",
+                  "alert": "Warning",
+                  "release": "Release"
+                },
+                "events": [
+                  {
+                    "kind": "release",
+                    "title": "Version 2.4 shipped",
+                    "text": "Catalogue, search and single-file export",
+                    "time": "10:40",
+                    "dateTime": "2026-03-14T10:40"
+                  },
+                  {
+                    "kind": "alert",
+                    "title": "Server response slowed down",
+                    "text": "Average latency rose to 780 ms",
+                    "time": "09:12",
+                    "dateTime": "2026-03-14T09:12"
+                  },
+                  {
+                    "kind": "upload",
+                    "title": "12 mockups uploaded",
+                    "time": "yesterday",
+                    "dateTime": "2026-03-13T16:30"
+                  },
+                  {
+                    "kind": "comment",
+                    "title": "Anna left a comment",
+                    "text": "“The button on the second screen needs a different name”",
+                    "time": "yesterday",
+                    "dateTime": "2026-03-13T11:05"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "timeline-007",
+      "type": "registry:component",
+      "title": "Полоса этапов",
+      "description": "Горизонтальная лента этапов: соединитель красится пройденным состоянием, а на узкой ширине лента не ломается в столбец, а прокручивается со scroll-snap.",
+      "categories": [
+        "stepper"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "timeline-007/timeline-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/timeline-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-007-*. Серверный: хуков нет. Соединитель — псевдоэлемент каждого этапа, растянутый от центра узла до центра следующего через left:calc(50% + 1rem) и right:calc(-50% + 1rem); он красится состоянием своего этапа и убирается у последнего. Узкая ширина не переворачивает ленту в столбец: горизонтальный путь, свёрнутый в вертикальный, врёт про порядок, поэтому список прокручивается с scroll-snap-type:x proximity. Текущий узел помечен кольцом box-shadow и aria-current=\"step\". Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.",
+      "meta": {
+        "tags": [
+          "timeline",
+          "steps",
+          "horizontal",
+          "progress"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Timeline007",
+          "usage": "<Timeline007\n  title=\"Этапы сделки\"\n  stages={[\n    { title: \"Заявка\", date: \"3 марта\", state: \"done\" },\n    { title: \"Договор\", date: \"сегодня\", state: \"current\" },\n    { title: \"Сдача\", date: \"апрель\", state: \"todo\" },\n  ]}\n/>",
+          "summary": "Горизонтальная лента этапов с нумерованными узлами: соединитель показывает пройденное, узкий блок прокручивается. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-timeline-007-* и не подменять её токенами вашей темы",
+            "горизонтальную ось на любой ширине: свёрнутый в столбец путь перестаёт читаться как путь",
+            "соединитель из псевдоэлемента этапа — он красится состоянием и исчезает у последнего узла",
+            "прокрутку со scroll-snap вместо переноса: этапы обязаны оставаться в одном ряду",
+            "кольцо и aria-current=\"step\" у текущего узла: состояние передаётся не только цветом",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "дату этапа в <time dateTime>, а не голой строкой"
+          ],
+          "adapt": [
+            "заголовок через title",
+            "этапы через stages: заголовок, дата и состояние done/current/todo",
+            "цвет акцента через accent",
+            "минимальную ширину этапа в правиле flex:1 0 7rem",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Больше шести этапов в ряду читаются плохо даже с прокруткой: делите на два ряда по смыслу.",
+            "Подписи этапов короткие: длинная фраза переносится и рвёт вертикальный ритм узлов.",
+            "Номер узла — порядковый и не связан с данными: нумерацию из props компонент не принимает.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Этапы сделки",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Stage Rail",
+            "description": "A horizontal stage rail: the connector takes the colour of a completed stage, and on narrow widths the rail scrolls with scroll-snap instead of folding into a column.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-timeline-007-* variables. Server component: no hooks. The connector is each stage's pseudo-element, stretched from the centre of the node to the centre of the next one through left: calc(50% + 1rem) and right: calc(-50% + 1rem); it is coloured by its own stage's state and removed on the last one. A narrow width does not flip the rail into a column: a horizontal path folded into a vertical one lies about the order, so the list scrolls with scroll-snap-type: x proximity. The current node is marked with a box-shadow ring and aria-current=\"step\". The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, it sits on the page background and darkens along with it.",
+            "ai": {
+              "summary": "A horizontal stage rail with numbered nodes: the connector shows what is done and a narrow block scrolls. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-timeline-007-* palette — do not swap it for your theme tokens",
+                "the horizontal axis at every width: a path folded into a column stops reading as a path",
+                "the connector built from the stage's pseudo-element — it takes the state colour and vanishes at the last node",
+                "the scroll-snap scrolling instead of wrapping: the stages must stay in one row",
+                "the ring and aria-current=\"step\" on the current node: state is not conveyed by colour alone",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the stage date inside <time dateTime> rather than a bare string"
+              ],
+              "adapt": [
+                "the heading through title",
+                "the stages through stages: title, date and state done/current/todo",
+                "the accent colour through accent",
+                "the minimum stage width in the flex:1 0 7rem rule",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "More than six stages in a row read badly even with scrolling: split them by meaning.",
+                "Stage captions are short: a long phrase wraps and breaks the vertical rhythm of the nodes.",
+                "The node number is positional and unrelated to the data: numbering cannot be passed in props.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Timeline007\n  title=\"Deal stages\"\n  stages={[\n    { title: \"Request\", date: \"March 3\", state: \"done\" },\n    { title: \"Contract\", date: \"today\", state: \"current\" },\n    { title: \"Handover\", date: \"April\", state: \"todo\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Deal stages"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              },
+              "background": {
+                "label": "Surface"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Deal stages",
+                "stages": [
+                  {
+                    "title": "Request",
+                    "date": "March 3",
+                    "state": "done",
+                    "dateTime": "2026-03-03"
+                  },
+                  {
+                    "title": "Estimate",
+                    "date": "March 6",
+                    "state": "done",
+                    "dateTime": "2026-03-06"
+                  },
+                  {
+                    "title": "Contract",
+                    "date": "today",
+                    "state": "current",
+                    "dateTime": "2026-03-14"
+                  },
+                  {
+                    "title": "Works",
+                    "date": "from March 20",
+                    "state": "todo",
+                    "dateTime": "2026-03-20"
+                  },
+                  {
+                    "title": "Handover",
+                    "date": "April",
+                    "state": "todo",
+                    "dateTime": "2026-04"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "timeline-008",
+      "type": "registry:component",
+      "title": "Группы по дням",
+      "description": "Лента, разрезанная по дням: заголовок дня липнет к верху своей группы, поэтому в любой момент видно, какой день читаешь.",
+      "categories": [
+        "stepper"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "timeline-008/timeline-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/timeline-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-008-*. Серверный: хуков нет. Дата — position:sticky внутри своей группы, а не внутри всей ленты: следующая дата выталкивает предыдущую, поэтому подпись всегда относится к тому, что под ней. Липкая дата несёт непрозрачный фон — иначе строки ленты просвечивают сквозь неё. Область прокрутки ограничена max-height, получает tabIndex и aria-label, чтобы прокручиваться с клавиатуры. Точка каждой записи позиционирована абсолютно и выпадает из grid-потока строки. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней, а фон липкой даты держит отдельный токен --vibeui-timeline-008-sticky.",
+      "meta": {
+        "tags": [
+          "timeline",
+          "sticky",
+          "groups",
+          "feed"
+        ],
+        "ai": {
+          "export": "Timeline008",
+          "usage": "<Timeline008\n  title=\"Лента заявки\"\n  days={[\n    { date: \"Сегодня\", entries: [{ time: \"14:20\", title: \"Счёт оплачен\", text: \"Чек отправлен на почту\" }] },\n    { date: \"Вчера\", entries: [{ time: \"09:30\", title: \"Создана заявка\" }] },\n  ]}\n/>",
+          "summary": "Лента событий с группировкой по дням и липкими датами внутри прокручиваемой области. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-timeline-008-* и не подменять её токенами вашей темы",
+            "sticky на заголовке внутри группы, а не над всей лентой: иначе подпись врёт про день под ней",
+            "непрозрачный фон липкой даты в отдельном токене --vibeui-timeline-008-sticky — сквозь прозрачную просвечивают строки ленты",
+            "tabIndex и aria-label на области прокрутки: без них лента не листается с клавиатуры",
+            "ограничение высоты области: без него sticky нечему прилипать",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "дату дня и время записи в <time dateTime>, а не голой строкой"
+          ],
+          "adapt": [
+            "заголовок через title",
+            "дни и записи через days: дата, время, заголовок и пояснение",
+            "цвет акцента через accent",
+            "высоту области прокрутки в правиле max-height",
+            "подпись области прокрутки через feedLabelText; {title} подставляется заголовком",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Группировать записи по дням обязано приложение: компонент рисует то, что получил.",
+            "Если снять ограничение высоты, липкие даты перестанут работать — прилипать будет не к чему.",
+            "Даты — строки: «Сегодня» и «Вчера» приложение подставляет само.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Лента заявки",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "feedLabelText",
+            "label": "Подпись ленты",
+            "type": "text",
+            "default": "{title}: события по дням",
+            "maxLength": 48
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Day Groups",
+            "description": "A feed cut into days: the day header sticks to the top of its own group, so it is always clear which day you are reading.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-timeline-008-* variables. Server component: no hooks. The date is position: sticky inside its own group rather than inside the whole feed: the next date pushes the previous one out, so the label always refers to what is below it. The sticky date carries an opaque background — otherwise the feed rows show through it. The scroll area is capped with max-height and gets tabIndex and aria-label so that it can be scrolled from the keyboard. Each entry's dot is positioned absolutely and drops out of the row's grid flow. The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, it sits on the page background and darkens along with it, while the sticky date's background is held by a separate token, --vibeui-timeline-008-sticky.",
+            "ai": {
+              "summary": "An event feed grouped by day with sticky date headers inside a scrollable area. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-timeline-008-* palette — do not swap it for your theme tokens",
+                "the sticky header inside its group rather than above the whole feed: otherwise the label lies about the day below it",
+                "the opaque sticky-date background in its own --vibeui-timeline-008-sticky token — rows show through a transparent one",
+                "the tabIndex and aria-label on the scroll area: without them the feed cannot be scrolled by keyboard",
+                "the height cap on the area: without it there is nothing for sticky to stick to",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the day date and entry time inside <time dateTime> rather than a bare string"
+              ],
+              "adapt": [
+                "the heading through title",
+                "the days and entries through days: date, time, title and note",
+                "the accent colour through accent",
+                "the height of the scroll area in the max-height rule",
+                "the scroll-area label through feedLabelText; {title} is filled with the heading",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Grouping entries by day is the application's job: the component draws what it receives.",
+                "Remove the height cap and the sticky dates stop working — there is nothing to stick to.",
+                "Dates are strings: \"Today\" and \"Yesterday\" are substituted by the application.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Timeline008\n  title=\"Request feed\"\n  days={[\n    { date: \"Today\", entries: [{ time: \"14:20\", title: \"Invoice paid\", text: \"Receipt sent by e-mail\" }] },\n    { date: \"Yesterday\", entries: [{ time: \"09:30\", title: \"Request created\" }] },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Request feed"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              },
+              "feedLabelText": {
+                "label": "Feed label",
+                "default": "{title}: events by day"
+              },
+              "background": {
+                "label": "Surface"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Request feed",
+                "feedLabelText": "{title}: events by day",
+                "days": [
+                  {
+                    "date": "Today",
+                    "entries": [
+                      {
+                        "time": "14:20",
+                        "title": "Invoice paid",
+                        "text": "The payment went through, the receipt was e-mailed",
+                        "dateTime": "2026-03-14T14:20"
+                      },
+                      {
+                        "time": "11:05",
+                        "title": "Request taken into work",
+                        "dateTime": "2026-03-14T11:05"
+                      }
+                    ],
+                    "dateTime": "2026-03-14"
+                  },
+                  {
+                    "date": "Yesterday",
+                    "entries": [
+                      {
+                        "time": "19:42",
+                        "title": "Engineer comment added",
+                        "dateTime": "2026-03-13T19:42"
+                      },
+                      {
+                        "time": "16:10",
+                        "title": "Contractor assigned",
+                        "text": "Crew #3, morning visit",
+                        "dateTime": "2026-03-13T16:10"
+                      },
+                      {
+                        "time": "09:30",
+                        "title": "Request created",
+                        "dateTime": "2026-03-13T09:30"
+                      }
+                    ],
+                    "dateTime": "2026-03-13"
+                  },
+                  {
+                    "date": "March 12",
+                    "entries": [
+                      {
+                        "time": "18:00",
+                        "title": "Call to the client",
+                        "dateTime": "2026-03-12T18:00"
+                      },
+                      {
+                        "time": "10:15",
+                        "title": "Initial inspection",
+                        "dateTime": "2026-03-12T10:15"
+                      }
+                    ],
+                    "dateTime": "2026-03-12"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "accent",
+          "feedLabelText",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "timeline-009",
+      "type": "registry:component",
+      "title": "Отслеживание доставки",
+      "description": "Маршрут доставки: список этапов со временем и отдельный маркер, который показывает текущее положение посылки между двумя пунктами.",
+      "categories": [
+        "stepper"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "timeline-009/timeline-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/timeline-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-009-*. Серверный: хуков нет. Маркер положения — отдельный элемент поверх ленты стопов: его top задаётся процентной переменной --vibeui-timeline-009-progress, посчитанной на рендере из доли done- и current-стопов, поэтому он может стоять между двумя пунктами, а не только на одном из них. Состояние стопа передаётся и формой точки (заливка/кольцо/пустая), и скрытым словом для скринридера. Время каждого стопа — <time dateTime>, а не голая строка. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.",
+      "meta": {
+        "tags": [
+          "timeline",
+          "delivery",
+          "tracking",
+          "eta"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Timeline009",
+          "usage": "<Timeline009\n  orderLabel=\"Заказ № 4471\"\n  positionNote=\"Посылка в пути, прибудет вечером\"\n  stops={[\n    { time: \"12 марта\", dateTime: \"2026-03-12\", title: \"Оплачен\", state: \"done\" },\n    { time: \"13 марта\", dateTime: \"2026-03-13\", title: \"В пути\", state: \"current\" },\n  ]}\n/>",
+          "summary": "Маршрут доставки: список стопов со временем плюс отдельный маркер текущего положения, который умеет стоять между двумя пунктами. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-timeline-009-* и не подменять её токенами вашей темы",
+            "маркер положения отдельным элементом от списка стопов: он передаёт процесс между пунктами, а не только сами пункты",
+            "процентную переменную --vibeui-timeline-009-progress, посчитанную на рендере: маркер не должен прыгать по клику",
+            "разные формы точек стопов (заливка, кольцо, пустая) и скрытое текстовое состояние для скринридера",
+            "время в <time dateTime>, а не голой строкой",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "номер заказа через orderLabel",
+            "текст о положении через positionNote",
+            "стопы через stops: время, dateTime, заголовок, адрес и состояние done/current/todo",
+            "цвет акцента через accent",
+            "подписи состояний для скринридера через stateText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Маркер считает позицию по количеству стопов, а не по расстоянию: для очень разных по длине участков поправьте routeProgress.",
+            "Компонент не считает состояния сам: пометить стоп как current обязано приложение.",
+            "Текущий стоп должен быть один — иначе положение маркера станет непредсказуемым.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "orderLabel",
+            "label": "Заказ",
+            "type": "text",
+            "default": "Заказ № 4471",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Delivery Track",
+            "description": "A delivery route: a list of timed stops plus a separate marker that shows the parcel's current position between two stops.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-timeline-009-* variables. Server component: no hooks. The position marker is a separate element over the stop rail: its top is set by the percentage variable --vibeui-timeline-009-progress, computed at render from the share of done and current stops, so it can stand between two stops rather than only on one of them. The stop state is conveyed both by the dot shape (filled / ring / hollow) and by a hidden word for the screen reader. Each stop's time is a <time dateTime>, not a bare string. The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, it sits on the page background and darkens along with it.",
+            "ai": {
+              "summary": "A delivery route: timed stops plus a separate current-position marker that can sit between two stops. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-timeline-009-* palette — do not swap it for your theme tokens",
+                "the position marker as an element separate from the stop list: it conveys progress between stops, not just the stops themselves",
+                "the percentage variable --vibeui-timeline-009-progress computed at render — the marker should not jump on click",
+                "the distinct stop-dot shapes (filled, ringed, hollow) plus the hidden state text for screen readers",
+                "time inside <time dateTime> rather than a bare string",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the order number through orderLabel",
+                "the position text through positionNote",
+                "the stops through stops: time, dateTime, title, address and the done/current/todo state",
+                "the accent colour through accent",
+                "the screen-reader state labels through stateText",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The marker counts position by stop count, not distance: for very uneven legs adjust routeProgress.",
+                "The component does not compute state: marking a stop as current is the app's job.",
+                "There should be one current stop — otherwise the marker's position becomes unpredictable.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Timeline009\n  orderLabel=\"Order #4471\"\n  positionNote=\"Parcel is on the way, arriving tonight\"\n  stops={[\n    { time: \"March 12\", dateTime: \"2026-03-12\", title: \"Paid\", state: \"done\" },\n    { time: \"March 13\", dateTime: \"2026-03-13\", title: \"In transit\", state: \"current\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "orderLabel": {
+                "label": "Order",
+                "default": "Order #4471"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              },
+              "background": {
+                "label": "Surface"
+              }
+            },
+            "preview": {
+              "props": {
+                "orderLabel": "Order #4471",
+                "positionNote": "The parcel is on the way, expected at the pickup point tonight.",
+                "stateText": {
+                  "done": "Completed.",
+                  "current": "Now.",
+                  "todo": "Upcoming."
+                },
+                "stops": [
+                  {
+                    "time": "12 March, 10:02",
+                    "dateTime": "2026-03-12T10:02",
+                    "title": "Paid",
+                    "state": "done"
+                  },
+                  {
+                    "time": "12 March, 18:40",
+                    "dateTime": "2026-03-12T18:40",
+                    "title": "Packed at the warehouse",
+                    "state": "done"
+                  },
+                  {
+                    "time": "13 March, 09:15",
+                    "dateTime": "2026-03-13T09:15",
+                    "title": "In transit",
+                    "address": "Sorting centre, Tver",
+                    "state": "current"
+                  },
+                  {
+                    "time": "13 March, evening",
+                    "dateTime": "2026-03-13T20:00",
+                    "title": "At the pickup point",
+                    "state": "todo"
+                  },
+                  {
+                    "time": "14 March",
+                    "dateTime": "2026-03-14",
+                    "title": "Collected",
+                    "state": "todo"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "orderLabel",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "timeline-010",
+      "type": "registry:component",
+      "title": "История правок",
+      "description": "История правок документа: тип правки — видимая цветная плашка со словом, а не значок или скрытая подпись, плюс автор и время каждой записи.",
+      "categories": [
+        "stepper"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "timeline-010/timeline-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/timeline-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-010-*. Серверный: хуков нет. Тип правки — видимая текстовая плашка, цвет которой задан одной переменной --vibeui-timeline-010-hue, переопределяемой правилом по data-kind: четыре типа стоят четырьмя строчками CSS вместо четырёх наборов правил. В отличие от истории с диффом строк, здесь важен не объём правки, а её характер — правка текста, комментарий, права доступа или вложение. Время — <time dateTime>. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.",
+      "meta": {
+        "tags": [
+          "timeline",
+          "document",
+          "revisions",
+          "author"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Timeline010",
+          "usage": "<Timeline010\n  title=\"Правки документа\"\n  entries={[\n    { time: \"сегодня, 14:20\", dateTime: \"2026-03-14T14:20\", author: \"Марк Иванов\", kind: \"edit\", note: \"Переписан раздел про тарифы\" },\n    { time: \"вчера, 18:05\", dateTime: \"2026-03-13T18:05\", author: \"Аня Петрова\", kind: \"comment\", note: \"«Проверьте цифры»\" },\n  ]}\n/>",
+          "summary": "История правок документа с видимой плашкой типа правки, автором и временем каждой записи. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-timeline-010-* и не подменять её токенами вашей темы",
+            "видимую плашку типа правки: значок или скрытая подпись не передают тип с одного взгляда",
+            "оттенок типа одной переменной --vibeui-timeline-010-hue — иначе четыре типа превращаются в четыре набора правил",
+            "время в <time dateTime>, а не голой строкой",
+            "порядок записей сверху вниз по времени",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "заголовок через title",
+            "записи через entries: время, dateTime, автор, тип kind и комментарий note",
+            "набор типов: добавьте строку в KIND_LABEL и правило с оттенком; подписи переопределяются пропом kindText",
+            "оттенки типов в правилах li[data-kind=...]",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Компонент не сортирует записи: порядок — как в массиве entries.",
+            "Новый тип требует двух правок сразу — подписи и оттенка, иначе плашка станет серой.",
+            "Типов должно быть немного: восемь оттенков плашек уже не различаются с одного взгляда.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Правки документа",
+            "maxLength": 28
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Edit Trail",
+            "description": "A document revision history where the edit type is a visible coloured pill with a word, not an icon or a hidden label, plus the author and time of each entry.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-timeline-010-* variables. Server component: no hooks. The edit type is a visible text pill whose colour is set by the single --vibeui-timeline-010-hue variable, overridden by a rule keyed to data-kind: four types cost four lines of CSS instead of four rule sets. Unlike a history with a line diff, what matters here is not the size of the edit but its nature — a text edit, a comment, access rights or an attachment. The time is a <time dateTime>. The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, it sits on the page background and darkens along with it.",
+            "ai": {
+              "summary": "A document revision history with a visible edit-type pill, author and time on each entry. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-timeline-010-* palette — do not swap it for your theme tokens",
+                "the visible edit-type pill: an icon or a hidden label do not convey the type at a glance",
+                "the type hue in the single --vibeui-timeline-010-hue variable — otherwise four types become four rule sets",
+                "time inside <time dateTime> rather than a bare string",
+                "chronological order top to bottom",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the heading through title",
+                "the entries through entries: time, dateTime, author, the kind type and the note",
+                "the set of types: add a line to KIND_LABEL and a hue rule; the labels are overridden through the kindText prop",
+                "the type hues in the li[data-kind=...] rules",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The component does not sort entries: order follows the entries array.",
+                "A new type needs two edits at once — label and hue, otherwise the pill turns grey.",
+                "Keep the type list short: eight pill hues are no longer distinguishable at a glance.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Timeline010\n  title=\"Document edits\"\n  entries={[\n    { time: \"today, 14:20\", dateTime: \"2026-03-14T14:20\", author: \"Mark Ivanov\", kind: \"edit\", note: \"Pricing section rewritten\" },\n    { time: \"yesterday, 18:05\", dateTime: \"2026-03-13T18:05\", author: \"Anna Petrova\", kind: \"comment\", note: \"\\\"Check the numbers\\\"\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Document edits"
+              },
+              "background": {
+                "label": "Surface"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Document edits",
+                "kindText": {
+                  "edit": "Text edit",
+                  "comment": "Comment",
+                  "permission": "Permissions",
+                  "attachment": "Attachment"
+                },
+                "entries": [
+                  {
+                    "time": "today, 14:20",
+                    "dateTime": "2026-03-14T14:20",
+                    "author": "Mark Ivanov",
+                    "kind": "edit",
+                    "note": "Pricing section rewritten"
+                  },
+                  {
+                    "time": "today, 11:05",
+                    "dateTime": "2026-03-14T11:05",
+                    "author": "Lisa Kim",
+                    "kind": "permission",
+                    "note": "Access opened for the sales team"
+                  },
+                  {
+                    "time": "yesterday, 18:05",
+                    "dateTime": "2026-03-13T18:05",
+                    "author": "Anna Petrova",
+                    "kind": "comment",
+                    "note": "“Check the numbers in the third paragraph”"
+                  },
+                  {
+                    "time": "yesterday, 09:40",
+                    "dateTime": "2026-03-13T09:40",
+                    "author": "Mark Ivanov",
+                    "kind": "attachment",
+                    "note": "Added the file price-list.pdf"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "timeline-011",
+      "type": "registry:component",
+      "title": "Лента вех",
+      "description": "Горизонтальная лента вех вокруг общего ствола: чётные карточки стоят сверху, нечётные снизу, поэтому в ряду умещается вдвое больше вех.",
+      "categories": [
+        "stepper"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "timeline-011/timeline-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/timeline-011.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-011-*. Серверный: хуков нет. Ствол — один сплошной элемент под всеми вехами (псевдоэлемент списка), а не бордюр каждой из них. Узел вехи стоит в средней grid-строке li (grid-template-rows:1fr auto 1fr), поэтому остаётся ровно на стволе независимо от длины текста карточки — карточка растёт в соседнюю 1fr-строку: вверх у нечётных вех, вниз у чётных. На узкой ширине лента не ломается в столбец, а прокручивается по горизонтали. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней, а разрыв ствола вокруг узла держит отдельный токен --vibeui-timeline-011-surface.",
+      "meta": {
+        "tags": [
+          "timeline",
+          "milestones",
+          "horizontal",
+          "project"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Timeline011",
+          "usage": "<Timeline011\n  title=\"Вехи проекта\"\n  points={[\n    { date: \"14 января\", dateTime: \"2026-01-14\", title: \"Старт проекта\", text: \"Команда собрана\" },\n    { date: \"02 февраля\", dateTime: \"2026-02-02\", title: \"Прототип\" },\n  ]}\n/>",
+          "summary": "Горизонтальная лента вех вокруг ствола: чётные карточки сверху, нечётные снизу, узел всегда точно на стволе. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-timeline-011-* и не подменять её токенами вашей темы",
+            "чередование карточек сверху и снизу от ствола — оно вдвое сокращает длину ленты",
+            "grid-строку 1fr auto 1fr на li: узел остаётся на стволе независимо от длины текста карточки",
+            "горизонтальную прокрутку вместо переноса в столбец на узкой ширине",
+            "дату в <time dateTime>, а не голой строкой",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "заголовок через title",
+            "вехи через points: date, dateTime, title и необязательный text",
+            "цвет акцента через accent",
+            "минимальную ширину вехи в правиле flex:0 0 11rem",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Компонент не выбирает сторону вехи сам: чётность считается по позиции в массиве points.",
+            "Больше восьми вех в ряду читаются плохо даже с прокруткой.",
+            "Подписи вех короткие: длинный текст растягивает высоту ленты.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Вехи проекта",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Milestone Ribbon",
+            "description": "A horizontal milestone ribbon around a shared trunk: even cards sit above it, odd ones below, so twice as many milestones fit in one row.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-timeline-011-* variables. Server component: no hooks. The trunk is one solid element under all the milestones (the list's pseudo-element) rather than a border on each of them. The milestone node sits in the middle grid row of the li (grid-template-rows: 1fr auto 1fr), so it stays exactly on the trunk regardless of the card's text length — the card grows into the neighbouring 1fr row: upward on odd milestones, downward on even ones. At a narrow width the ribbon does not break into a column but scrolls horizontally. The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, it sits on the page background and darkens along with it, while the trunk's gap around the node is held by a separate token, --vibeui-timeline-011-surface.",
+            "ai": {
+              "summary": "A horizontal milestone ribbon around a trunk line: even cards above, odd ones below, with the node always exactly on the trunk. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-timeline-011-* palette — do not swap it for your theme tokens",
+                "the alternating cards above and below the trunk — it halves the ribbon's length",
+                "the 1fr auto 1fr grid rows on li: the node stays on the trunk regardless of the card's text length",
+                "horizontal scrolling instead of wrapping into a column on narrow widths",
+                "the date inside <time dateTime> rather than a bare string",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the heading through title",
+                "the milestones through points: date, dateTime, title and the optional text",
+                "the accent colour through accent",
+                "the minimum milestone width in the flex:0 0 11rem rule",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The component does not choose a milestone's side itself: parity is taken from its position in the points array.",
+                "More than eight milestones in a row read badly even with scrolling.",
+                "Keep milestone captions short: long text stretches the ribbon's height.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Timeline011\n  title=\"Project milestones\"\n  points={[\n    { date: \"January 14\", dateTime: \"2026-01-14\", title: \"Kick-off\", text: \"Team assembled\" },\n    { date: \"February 2\", dateTime: \"2026-02-02\", title: \"Prototype\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Project milestones"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              },
+              "background": {
+                "label": "Surface"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Project milestones",
+                "points": [
+                  {
+                    "date": "January 14",
+                    "dateTime": "2026-01-14",
+                    "title": "Kick-off",
+                    "text": "Team assembled, scope agreed"
+                  },
+                  {
+                    "date": "February 2",
+                    "dateTime": "2026-02-02",
+                    "title": "Prototype",
+                    "text": "First clickable build"
+                  },
+                  {
+                    "date": "February 27",
+                    "dateTime": "2026-02-27",
+                    "title": "Internal release",
+                    "text": "Catalogue and search for the team"
+                  },
+                  {
+                    "date": "March 20",
+                    "dateTime": "2026-03-20",
+                    "title": "User testing",
+                    "text": "Five interviews, a list of fixes"
+                  },
+                  {
+                    "date": "April 5",
+                    "dateTime": "2026-04-05",
+                    "title": "Public launch",
+                    "text": "Open sign-up"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "timeline-012",
+      "type": "registry:component",
+      "title": "Сводка за день",
+      "description": "Активность, сгруппированная по дням («Сегодня», «Вчера»), без прокрутки и sticky-заголовков: заголовок дня несёт счётчик записей.",
+      "categories": [
+        "stepper"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "timeline-012/timeline-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/timeline-012.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-012-*. Серверный: хуков нет. В отличие от ленты со sticky-датами, здесь заголовок дня — обычный поток: лента растёт вместе со страницей, а не прокручивается в своей области. Заголовок несёт счётчик entries.length рядом с подписью дня, поэтому объём дня виден без подсчёта строк. Каждый день — вложенный <ol> внутри <li> внешнего списка дней: последовательность сохраняется на обоих уровнях. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.",
+      "meta": {
+        "tags": [
+          "timeline",
+          "activity",
+          "groups",
+          "daily"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "avatarImage": "/demo/avatars/artem-256.webp"
+          }
+        },
+        "ai": {
+          "export": "Timeline012",
+          "usage": "<Timeline012\n  title=\"Активность по дням\"\n  days={[\n    { label: \"Сегодня\", dateTime: \"2026-03-14\", entries: [{ time: \"14:20\", dateTime: \"2026-03-14T14:20\", author: \"Марк Иванов\", action: \"закрыл задачу\" }] },\n    { label: \"Вчера\", dateTime: \"2026-03-13\", entries: [{ time: \"10:30\", dateTime: \"2026-03-13T10:30\", author: \"Аня Петрова\", action: \"создала задачу\" }] },\n  ]}\n/>",
+          "summary": "Активность, сгруппированная по дням, с обычным (не sticky) заголовком и счётчиком записей в каждой группе. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-timeline-012-* и не подменять её токенами вашей темы",
+            "счётчик записей рядом с подписью дня: объём дня обязан быть виден без подсчёта строк",
+            "обычный поток вместо sticky-заголовка: лента растёт вместе со страницей",
+            "вложенный <ol> записей внутри <li> дня — последовательность на обоих уровнях",
+            "время и дату в <time dateTime>, а не голой строкой",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "заголовок через title",
+            "дни и записи через days: label, dateTime, entries с time/dateTime/author/action",
+            "цвет акцента через accent",
+            "инициал аватара — берётся из имени функцией initial",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Группировать записи по дням обязано приложение: компонент рисует то, что получил.",
+            "Подписи «Сегодня» и «Вчера» — обычные строки, приложение подставляет их само.",
+            "Счётчик считает entries.length буквально: скрытые или свёрнутые записи в него не входят.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Активность по дням",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Daily Digest",
+            "description": "Activity grouped by day (\"Today\", \"Yesterday\"), without scrolling or sticky headers: the day heading carries an entry count.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-timeline-012-* variables. Server component: no hooks. Unlike the feed with sticky dates, here the day heading is in normal flow: the feed grows with the page instead of scrolling inside its own area. The heading carries the entries.length counter beside the day label, so a day's volume is visible without counting rows. Each day is a nested <ol> inside the <li> of the outer list of days: the sequence holds at both levels. The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, it sits on the page background and darkens along with it.",
+            "ai": {
+              "summary": "Activity grouped by day with a normal-flow (non-sticky) heading and an entry count on each group. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-timeline-012-* palette — do not swap it for your theme tokens",
+                "the entry count beside the day label: a day's volume must be visible without counting rows",
+                "normal document flow instead of a sticky header: the feed grows with the page",
+                "the nested <ol> of entries inside the day's <li> — sequence holds at both levels",
+                "time and date inside <time dateTime> rather than a bare string",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the heading through title",
+                "the days and entries through days: label, dateTime, entries with time/dateTime/author/action",
+                "the accent colour through accent",
+                "the avatar initial — derived from the name by the initial function",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Grouping entries by day is the application's job: the component draws what it receives.",
+                "\"Today\" and \"Yesterday\" are plain strings the application substitutes itself.",
+                "The counter reads entries.length literally: hidden or collapsed entries are not excluded from it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Timeline012\n  title=\"Daily activity\"\n  days={[\n    { label: \"Today\", dateTime: \"2026-03-14\", entries: [{ time: \"14:20\", dateTime: \"2026-03-14T14:20\", author: \"Mark Ivanov\", action: \"closed the task\" }] },\n    { label: \"Yesterday\", dateTime: \"2026-03-13\", entries: [{ time: \"10:30\", dateTime: \"2026-03-13T10:30\", author: \"Anna Petrova\", action: \"created a task\" }] },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Daily activity"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              },
+              "background": {
+                "label": "Surface"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Daily activity",
+                "days": [
+                  {
+                    "label": "Today",
+                    "dateTime": "2026-03-14",
+                    "entries": [
+                      {
+                        "time": "14:20",
+                        "dateTime": "2026-03-14T14:20",
+                        "author": "Mark Ivanov",
+                        "action": "closed the task “CSV export”"
+                      },
+                      {
+                        "time": "11:05",
+                        "dateTime": "2026-03-14T11:05",
+                        "author": "Anna Petrova",
+                        "action": "commented on the home page"
+                      },
+                      {
+                        "time": "09:40",
+                        "dateTime": "2026-03-14T09:40",
+                        "author": "Lisa Kim",
+                        "action": "uploaded 6 files"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Yesterday",
+                    "dateTime": "2026-03-13",
+                    "entries": [
+                      {
+                        "time": "18:12",
+                        "dateTime": "2026-03-13T18:12",
+                        "author": "Mark Ivanov",
+                        "action": "invited Oleg S. to the project"
+                      },
+                      {
+                        "time": "10:30",
+                        "dateTime": "2026-03-13T10:30",
+                        "author": "Anna Petrova",
+                        "action": "created the task “Update the price list”"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "March 12",
+                    "dateTime": "2026-03-12",
+                    "entries": [
+                      {
+                        "time": "16:45",
+                        "dateTime": "2026-03-12T16:45",
+                        "author": "Lisa Kim",
+                        "action": "changed the access permissions"
+                      }
+                    ]
+                  }
+                ],
+                "avatarImage": "/demo/avatars/artem-256.webp"
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "timeline-013",
+      "type": "registry:component",
+      "title": "Двусторонние вехи",
+      "description": "Вертикальная лента вех по обе стороны от общего ствола: нечётные слева, чётные справа. На узкой ширине обе стороны сходятся в один столбец у левого края, без горизонтальной прокрутки.",
+      "categories": [
+        "stepper"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "timeline-013/timeline-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/timeline-013.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-013-*. Серверный: хуков нет. Ствол — псевдоэлемент списка (ol::before), а не бордюр каждой вехи. На узком контейнере li — grid из двух колонок (узел, карточка), все карточки у правого края ствола. От 30rem ширины контейнера ствол уходит в центр, li переключается на три колонки, и карточки расходятся по чётности: nth-child(odd) — влево от ствола с выравниванием текста по правому краю, nth-child(even) — вправо с выравниванием по левому. Переключение — на container-type самого блока, а не на медиа-запросе видового окна, поэтому раскладка следует ширине родителя.",
+      "meta": {
+        "tags": [
+          "timeline",
+          "milestones",
+          "history",
+          "vertical"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Timeline013",
+          "usage": "<Timeline013\n  title=\"История компании\"\n  points={[\n    { date: \"Март 2019\", dateTime: \"2019-03\", title: \"Основание компании\", text: \"Три человека и первый клиент\" },\n    { date: \"Октябрь 2020\", dateTime: \"2020-10\", title: \"Первый офис\" },\n  ]}\n/>",
+          "summary": "Вертикальная лента вех по обе стороны от общего ствола: нечётные слева, чётные справа. На узкой ширине обе стороны сходятся в один столбец. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-timeline-013-* и не подменять её токенами вашей темы",
+            "чередование сторон по чётности позиции в points — вехи не выбирают сторону сами",
+            "container-type на корне и переключение раскладки по ширине контейнера, а не видового окна",
+            "ствол ровно на середине узкого столбца и ровно по центру широкой раскладки",
+            "дату в <time dateTime>, а не голой строкой",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя лишнюю плашку"
+          ],
+          "adapt": [
+            "заголовок через title",
+            "вехи через points: date, dateTime, title и необязательный text",
+            "цвет акцента через accent",
+            "порог переключения на две стороны в контейнерном запросе (min-width: 30rem)",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Сторона вехи не настраивается по отдельности: чётность считается по позиции в массиве points.",
+            "Больше семи-восьми вех делает ствол слишком длинным для одного экрана.",
+            "Подписи вех короткие: длинный текст растягивает карточку и сдвигает соседние узлы по стволу.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "История компании",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Two-Sided Milestones",
+            "description": "A vertical milestone ribbon on both sides of a shared trunk: odd entries on the left, even ones on the right. At a narrow width both sides collapse into one column against the left edge, with no horizontal scrolling.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-timeline-013-* variables. Server component: no hooks. The trunk is the list's pseudo-element (ol::before), not a border on each milestone. In a narrow container, li is a two-column grid (node, card), and every card sits by the right edge of the trunk. From a 30rem container width the trunk moves to the centre, li switches to three columns, and cards split by parity: nth-child(odd) goes left of the trunk with right-aligned text, nth-child(even) goes right with left-aligned text. The switch runs on the block's own container-type rather than a viewport media query, so the layout follows the parent's width.",
+            "ai": {
+              "summary": "A vertical milestone ribbon on both sides of a shared trunk: odd entries on the left, even ones on the right. At a narrow width both sides collapse into one column. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-timeline-013-* palette; do not swap it for your theme tokens",
+                "the side alternating by the position parity in points; milestones do not pick their own side",
+                "container-type on the root and switching the layout by container width, not the viewport",
+                "the trunk centred exactly on the narrow single column and exactly in the middle of the two-sided layout",
+                "the date inside <time dateTime> rather than a bare string",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default; the component sits on the page background instead of laying an extra panel under itself"
+              ],
+              "adapt": [
+                "the heading through title",
+                "the milestones through points: date, dateTime, title and the optional text",
+                "the accent colour through accent",
+                "the two-sided switch threshold in the container query (min-width: 30rem)",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html; otherwise light-dark() always returns the light branch.",
+                "A milestone side is not configurable on its own: parity is taken from its position in the points array.",
+                "More than seven or eight milestones makes the trunk too long for one screen.",
+                "Keep milestone captions short: long text stretches the card and shifts the neighbouring trunk nodes.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Timeline013\n  title=\"Company history\"\n  points={[\n    { date: \"March 2019\", dateTime: \"2019-03\", title: \"Company founded\", text: \"Three people and one client\" },\n    { date: \"October 2020\", dateTime: \"2020-10\", title: \"First office\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Company history"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              },
+              "background": {
+                "label": "Surface"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Company history",
+                "points": [
+                  {
+                    "date": "March 2019",
+                    "dateTime": "2019-03",
+                    "title": "Company founded",
+                    "text": "Three people and one client"
+                  },
+                  {
+                    "date": "October 2020",
+                    "dateTime": "2020-10",
+                    "title": "First office",
+                    "text": "Moved out of a coworking space"
+                  },
+                  {
+                    "date": "May 2022",
+                    "dateTime": "2022-05",
+                    "title": "New market entry",
+                    "text": "Office opened in Almaty"
+                  },
+                  {
+                    "date": "January 2024",
+                    "dateTime": "2024-01",
+                    "title": "Hundredth hire",
+                    "text": "Engineering headcount tripled"
+                  },
+                  {
+                    "date": "February 2026",
+                    "dateTime": "2026-02",
+                    "title": "International launch",
+                    "text": "Product available in six countries"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
