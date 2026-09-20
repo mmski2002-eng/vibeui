@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, type CSSProperties } from "react"
+import { useEffect, useRef, useState, type CSSProperties } from "react"
 
 export type Hero045Props = {
   /** Строки имени: каждая въезжает отдельно. */
@@ -19,6 +19,13 @@ export type Hero045Props = {
   defaultMode?: "day" | "night"
   /** Показывать ли переключатель день/ночь. */
   showModeSwitch?: boolean
+  /** Фоновое видео ночи (mp4, тихое и медленное); без него фон — просто цвет. */
+  video?: string
+  /** Фоновое видео дня: подменяет ночное при переключении темы. */
+  videoDay?: string
+  /** Постеры к видео: показываются до загрузки и при prefers-reduced-motion. */
+  poster?: string
+  posterDay?: string
   /** Строка над именем и подписи переключателя темы. */
   topLine?: string
   paperLabel?: string
@@ -32,7 +39,7 @@ export type Hero045Props = {
 }
 
 // Первый экран писателя: имя огромной антиквой, каждая строка въезжает
-// из-под маски (overflow:hidden + translateY) с задержкой; под ним
+// из-под маски (clip-path снизу + translateY) с задержкой; справа
 // «сегодняшняя строка» — цитата печатается буква за буквой, за ней идёт
 // курсор-перо, которое чуть покачивается, пока пишет; дописав, ждёт,
 // стирает и берёт следующую. Справа сверху солнце/луна: клик шлёт
@@ -56,8 +63,12 @@ container-type:inline-size;
 :where([data-vibeui-block="hero-045"][data-tone="dark"]){color-scheme:dark}
 :where([data-vibeui-block="hero-045"][data-mode="day"]){color-scheme:light}
 :where([data-vibeui-block="hero-045"][data-mode="night"]){color-scheme:dark}
-[data-vibeui-block="hero-045"]{box-sizing:border-box;position:relative;overflow:hidden;padding:clamp(3rem,8cqi,6rem) 0 clamp(3rem,6cqi,5rem);background:var(--vibeui-hero-045-bg);color:var(--vibeui-hero-045-fg);font-family:var(--vibeui-hero-045-font);font-size:1.125rem;line-height:1.7;transition:background-color .6s,color .6s}
+[data-vibeui-block="hero-045"]{box-sizing:border-box;position:relative;overflow:hidden;padding:clamp(2.5rem,6cqi,4rem) 0 clamp(3rem,6cqi,5rem);background:var(--vibeui-hero-045-bg);color:var(--vibeui-hero-045-fg);font-family:var(--vibeui-hero-045-font);font-size:1.125rem;line-height:1.7;transition:background-color .6s,color .6s}
 [data-vibeui-block="hero-045"] *{box-sizing:border-box}
+[data-vibeui-block="hero-045"] [data-part="film"]{position:absolute;inset:0;pointer-events:none;background:var(--vibeui-hero-045-poster,none) center/cover no-repeat}
+[data-vibeui-block="hero-045"] [data-part="clip"]{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s}
+[data-vibeui-block="hero-045"] [data-part="clip"][data-on="true"]{opacity:1}
+[data-vibeui-block="hero-045"] [data-part="veil"]{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,color-mix(in oklab,var(--vibeui-hero-045-bg) 30%,transparent),color-mix(in oklab,var(--vibeui-hero-045-bg) 30%,transparent) 55%,var(--vibeui-hero-045-bg)),linear-gradient(100deg,var(--vibeui-hero-045-bg) 12%,color-mix(in oklab,var(--vibeui-hero-045-bg) 72%,transparent) 55%,color-mix(in oklab,var(--vibeui-hero-045-bg) 35%,transparent));transition:background .6s}
 [data-vibeui-block="hero-045"] [data-part="grain"]{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.07;mix-blend-mode:overlay}
 [data-vibeui-block="hero-045"] [data-part="shell"]{position:relative;max-width:74rem;margin:0 auto;padding:0 1.25rem;display:grid;gap:2.5rem}
 [data-vibeui-block="hero-045"] [data-part="top"]{display:flex;align-items:center;justify-content:space-between;gap:1rem;font-size:.72rem;font-style:italic;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-hero-045-muted)}
@@ -68,11 +79,11 @@ container-type:inline-size;
 [data-vibeui-block="hero-045"] [data-part="orb"] [data-icon="sun"]{opacity:0;transform:rotate(-90deg) scale(.4)}
 [data-vibeui-block="hero-045"] [data-part="mode"][aria-checked="true"] [data-icon="sun"]{opacity:1;transform:rotate(0) scale(1)}
 [data-vibeui-block="hero-045"] [data-part="mode"][aria-checked="true"] [data-icon="moon"]{opacity:0;transform:rotate(90deg) scale(.4)}
-[data-vibeui-block="hero-045"] [data-part="name"]{margin:0;font-family:var(--vibeui-hero-045-display);font-weight:400;font-size:clamp(3.4rem,15cqi,11rem);line-height:.92;letter-spacing:-.02em}
-[data-vibeui-block="hero-045"] [data-part="mask"]{display:block;overflow:hidden;padding-bottom:.06em;margin-bottom:-.06em}
+[data-vibeui-block="hero-045"] [data-part="name"]{margin:0;font-family:var(--vibeui-hero-045-display);font-weight:400;font-size:clamp(3.6rem,16cqi,12rem);line-height:.92;letter-spacing:-.02em}
+[data-vibeui-block="hero-045"] [data-part="mask"]{display:block;clip-path:inset(-.2em -50% 0 -.2em);padding-bottom:.06em;margin-bottom:-.06em}
 [data-vibeui-block="hero-045"] [data-part="word"]{display:block;transform:translateY(110%);animation:vibeui-hero-045-rise 1.1s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--vibeui-hero-045-i) * .16s + .1s)}
 [data-vibeui-block="hero-045"] [data-part="mask"]:nth-child(2n) [data-part="word"]{font-style:italic;padding-left:.18em}
-[data-vibeui-block="hero-045"] [data-part="role"]{margin:1.4rem 0 0;font-size:1.05rem;font-style:italic;color:var(--vibeui-hero-045-muted);opacity:0;animation:vibeui-hero-045-fade 1s ease-out .8s forwards}
+[data-vibeui-block="hero-045"] [data-part="role"]{margin:1.5rem 0 0;max-width:34rem;font-size:1.05rem;font-style:italic;color:var(--vibeui-hero-045-muted);opacity:0;animation:vibeui-hero-045-fade 1s ease-out .8s forwards}
 [data-vibeui-block="hero-045"] [data-part="today"]{display:grid;gap:.7rem;max-width:36rem;padding-top:1.6rem;border-top:1px solid var(--vibeui-hero-045-line);opacity:0;animation:vibeui-hero-045-fade 1s ease-out 1.1s forwards}
 [data-vibeui-block="hero-045"] [data-part="label"]{margin:0;font-size:.72rem;font-style:italic;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-hero-045-accent)}
 [data-vibeui-block="hero-045"] [data-part="quote"]{margin:0;min-height:3.4em;font-family:var(--vibeui-hero-045-display);font-size:clamp(1.5rem,3cqi,2.1rem);line-height:1.35;font-weight:400}
@@ -89,8 +100,8 @@ container-type:inline-size;
 @keyframes vibeui-hero-045-fade{to{opacity:1}}
 @keyframes vibeui-hero-045-blink{50%{opacity:0}}
 @keyframes vibeui-hero-045-scribble{from{transform:rotate(-8deg) translateY(0)}to{transform:rotate(6deg) translateY(-.06em)}}
-@container (min-width: 56rem){[data-vibeui-block="hero-045"] [data-part="shell"]{gap:3.5rem}[data-vibeui-block="hero-045"] [data-part="bottom"]{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:3rem;align-items:end}[data-vibeui-block="hero-045"] [data-part="actions"]{justify-content:flex-end}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="hero-045"] *{animation:none!important;transition:none!important}[data-vibeui-block="hero-045"] [data-part="word"]{transform:none}[data-vibeui-block="hero-045"] [data-part="role"],[data-vibeui-block="hero-045"] [data-part="today"],[data-vibeui-block="hero-045"] [data-part="actions"]{opacity:1}}`
+@container (min-width: 56rem){[data-vibeui-block="hero-045"] [data-part="shell"]{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);column-gap:3rem;row-gap:3rem}[data-vibeui-block="hero-045"] [data-part="top"],[data-vibeui-block="hero-045"] [data-part="actions"]{grid-column:1/-1}[data-vibeui-block="hero-045"] [data-part="bottom"]{display:contents}[data-vibeui-block="hero-045"] [data-part="today"]{align-self:end;margin-bottom:.5rem}[data-vibeui-block="hero-045"] [data-part="actions"]{margin-top:-.5rem}}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="hero-045"] *{animation:none!important;transition:none!important}[data-vibeui-block="hero-045"] [data-part="clip"]{display:none}[data-vibeui-block="hero-045"] [data-part="word"]{transform:none}[data-vibeui-block="hero-045"] [data-part="role"],[data-vibeui-block="hero-045"] [data-part="today"],[data-vibeui-block="hero-045"] [data-part="actions"]{opacity:1}}`
 
 /** Хиро писателя: имя из-под маски, цитата пером, солнце/луна на весь сайт. */
 export function Hero045({
@@ -108,6 +119,10 @@ export function Hero045({
   secondaryHref = "#book",
   defaultMode = "night",
   showModeSwitch = true,
+  video,
+  videoDay,
+  poster,
+  posterDay,
   topLine = "Личный сайт · тексты · книга",
   paperLabel = "Бумага",
   nightLabel = "Ночь",
@@ -119,6 +134,7 @@ export function Hero045({
   style,
 }: Hero045Props) {
   const [mode, setMode] = useState<"day" | "night" | null>(null)
+  const filmRef = useRef<HTMLDivElement>(null)
   const [index, setIndex] = useState(0)
   const [count, setCount] = useState(0)
   const [phase, setPhase] = useState<"write" | "hold" | "erase">("write")
@@ -133,6 +149,16 @@ export function Hero045({
     window.addEventListener("vibeui-writer:theme", onTheme)
     return () => window.removeEventListener("vibeui-writer:theme", onTheme)
   }, [])
+
+  // Крутится только видимый клип; при reduced-motion оба стоят — виден постер.
+  useEffect(() => {
+    if (!filmRef.current) return
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    filmRef.current.querySelectorAll<HTMLVideoElement>("video").forEach((clip) => {
+      if (!still && clip.dataset.on === "true") clip.play().catch(() => {})
+      else clip.pause()
+    })
+  }, [current, video, videoDay])
 
   useEffect(() => {
     if (!quote) return
@@ -169,6 +195,7 @@ export function Hero045({
     ...(accent ? { "--vibeui-hero-045-accent": accent } : null),
     ...(ink ? { "--vibeui-hero-045-fg": ink } : null),
     ...(background ? { "--vibeui-hero-045-bg": background } : null),
+    ...(poster ? { "--vibeui-hero-045-poster": `url("${current === "day" && posterDay ? posterDay : poster}")` } : null),
     ...style,
   } as CSSProperties
 
@@ -179,6 +206,13 @@ export function Hero045({
         {STYLES}
       </style>
       <section data-vibeui-block="hero-045" data-tone={tone === "auto" ? undefined : tone} data-mode={mode ?? undefined} className={className} style={palette}>
+        {video ? (
+          <div ref={filmRef} data-part="film" aria-hidden="true">
+            <video data-part="clip" data-on={current === "night" || !videoDay} src={video} poster={poster} muted loop playsInline preload="metadata" />
+            {videoDay ? <video data-part="clip" data-on={current === "day"} src={videoDay} poster={posterDay ?? poster} muted loop playsInline preload="metadata" /> : null}
+            <div data-part="veil" />
+          </div>
+        ) : null}
         <svg data-part="grain" aria-hidden="true">
           <filter id="vibeui-hero-045-noise">
             <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch" />

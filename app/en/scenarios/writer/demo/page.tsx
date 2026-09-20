@@ -18,7 +18,7 @@ import { Footer044, type Footer044Props } from "@/registry/blocks/footer/footer-
  * props.
  *
  * A reader-site. Warm graphite at night and paper by day: the switch in
- * the header and on the first screen sends the `vibeui-writer:theme`
+ * the header sends the `vibeui-writer:theme`
  * event, every block listens and changes its color-scheme, and colours
  * are set via light-dark(), so the whole site crossfades at once. A 3D
  * book, an archive with a preview at the cursor, reading with a bookmark
@@ -44,6 +44,16 @@ const reader = {
   ink: "light-dark(#1f1c19,#ece5d8)",
   background: "light-dark(#f4efe6,#17161a)",
 } as const
+
+const raised = { ...reader, background: "light-dark(#ece5d8,#1e1c21)" } as const
+
+// Starts as paper on the night site; the block flips the theme event itself.
+const inverted = { ...reader, tone: "light", invert: true } as const
+
+// Ink line between neighbours of the same tone: a grey that reads on both grounds.
+function InkLine() {
+  return <hr aria-hidden className="mx-auto h-px w-[calc(100%-2.5rem)] max-w-[71.5rem] border-0 bg-[#8a8378]/35" />
+}
 
 const PHOTOS = "/demo/writer"
 
@@ -305,32 +315,34 @@ export default function WriterDemoEn() {
       </style>
       <Navbar045 {...reader} {...navbar} />
       <div id="top">
-        <Hero045 {...reader} {...hero} />
+        <Hero045 {...reader} {...hero} showModeSwitch={false} video="/demo/writer/hero-night.mp4" videoDay="/demo/writer/hero-day.mp4" poster="/demo/writer/hero-night.webp" posterDay="/demo/writer/hero-day.webp" />
       </div>
       <div id="book">
-        <Writer001 {...reader} {...book} cover={`${PHOTOS}/cover.webp`} />
+        <Writer001 {...raised} {...book} cover={`${PHOTOS}/cover.webp`} />
       </div>
       <div id="texts">
         <Writer002 {...reader} {...archive} />
       </div>
       <div id="read">
-        <Writer003 {...reader} {...reading} />
+        <Writer003 {...inverted} {...reading} />
       </div>
       <div id="about">
         <Bento014 {...reader} {...about} portrait={`${PHOTOS}/portrait.webp`} desk={`${PHOTOS}/desk.webp`} />
       </div>
+      <InkLine />
       <div id="readers">
         <Writer004 {...reader} {...readers} />
       </div>
       <div id="events">
-        <Event026 {...reader} {...events} />
+        <Event026 {...raised} {...events} />
       </div>
       <div id="letters">
-        <Subscribe020 {...reader} {...letters} />
+        <Subscribe020 {...inverted} {...letters} />
       </div>
       <div id="publishers">
         <Contact033 {...reader} {...publishers} />
       </div>
+      <InkLine />
       <Footer044 {...reader} {...footer} />
     </div>
   )

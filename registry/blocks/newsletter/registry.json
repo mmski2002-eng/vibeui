@@ -1514,6 +1514,7 @@
             "placeholder, actionLabel, fine, doneTitle, doneText",
             "letterDate, letterSubject, letterText, letterHref, letterHrefLabel",
             "tone — тема",
+            "invert — идти против темы сайта: ночью бумага, днём графит",
             "accent — акцент",
             "ink — текст",
             "background — фон"
@@ -1586,6 +1587,7 @@
                 "placeholder, actionLabel, fine, doneTitle, doneText",
                 "letterDate, letterSubject, letterText, letterHref, letterHrefLabel",
                 "tone — theme",
+                "invert — go against the site theme: paper at night, graphite by day",
                 "accent — accent",
                 "ink — ink",
                 "background — background"

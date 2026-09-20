@@ -66,10 +66,14 @@ container-type:inline-size;
 :where([data-vibeui-block="writer-002"][data-tone="dark"]){color-scheme:dark}
 :where([data-vibeui-block="writer-002"][data-mode="day"]){color-scheme:light}
 :where([data-vibeui-block="writer-002"][data-mode="night"]){color-scheme:dark}
-[data-vibeui-block="writer-002"]{box-sizing:border-box;padding:clamp(4rem,8cqi,7rem) 0;background:var(--vibeui-writer-002-bg);color:var(--vibeui-writer-002-fg);font-family:var(--vibeui-writer-002-font);font-size:1.125rem;line-height:1.7;transition:background-color .6s,color .6s}
+[data-vibeui-block="writer-002"]{box-sizing:border-box;padding:4rem 0;background:var(--vibeui-writer-002-bg);color:var(--vibeui-writer-002-fg);font-family:var(--vibeui-writer-002-font);font-size:1.125rem;line-height:1.7;transition:background-color .6s,color .6s}
+@supports (animation-timeline:view()){[data-vibeui-block="writer-002"] [data-part="shell"]{animation:vibeui-writer-002-reveal linear both;animation-timeline:view();animation-range:entry 0% entry 35%}}
+@keyframes vibeui-writer-002-reveal{from{opacity:0;transform:translateY(1.5rem)}}
 [data-vibeui-block="writer-002"] *{box-sizing:border-box}
 [data-vibeui-block="writer-002"] [data-part="shell"]{max-width:74rem;margin:0 auto;padding:0 1.25rem}
-[data-vibeui-block="writer-002"] [data-part="head"]{display:grid;gap:1.2rem;margin-bottom:2.5rem}
+@container (min-width:48rem){[data-vibeui-block="writer-002"] [data-part="shell"]{padding-block:2rem}}
+@container (min-width:72rem){[data-vibeui-block="writer-002"] [data-part="shell"]{padding-block:3rem}}
+[data-vibeui-block="writer-002"] [data-part="head"]{display:grid;gap:1.2rem;margin-bottom:3rem}
 [data-vibeui-block="writer-002"] [data-part="eyebrow"]{margin:0 0 .8rem;font-size:.72rem;font-style:italic;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-writer-002-accent)}
 [data-vibeui-block="writer-002"] [data-part="title"]{margin:0;font-family:var(--vibeui-writer-002-display);font-weight:400;font-size:clamp(2.4rem,6cqi,4.4rem);line-height:1;letter-spacing:-.02em}
 [data-vibeui-block="writer-002"] [data-part="lede"]{margin:1rem 0 0;max-width:34rem;color:var(--vibeui-writer-002-muted)}

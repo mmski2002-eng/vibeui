@@ -78,11 +78,13 @@ container-type:inline-size;
 :where([data-vibeui-block="bento-014"][data-tone="dark"]){color-scheme:dark}
 :where([data-vibeui-block="bento-014"][data-mode="day"]){color-scheme:light}
 :where([data-vibeui-block="bento-014"][data-mode="night"]){color-scheme:dark}
-[data-vibeui-block="bento-014"]{box-sizing:border-box;padding:clamp(4rem,8cqi,7rem) 0;background:var(--vibeui-bento-014-bg);color:var(--vibeui-bento-014-fg);font-family:var(--vibeui-bento-014-font);font-size:1.05rem;line-height:1.65;transition:background-color .6s,color .6s}
+[data-vibeui-block="bento-014"]{box-sizing:border-box;padding:4rem 0;background:var(--vibeui-bento-014-bg);color:var(--vibeui-bento-014-fg);font-family:var(--vibeui-bento-014-font);font-size:1.05rem;line-height:1.65;transition:background-color .6s,color .6s}
 [data-vibeui-block="bento-014"] *{box-sizing:border-box}
 [data-vibeui-block="bento-014"] [data-part="shell"]{max-width:74rem;margin:0 auto;padding:0 1.25rem}
+@container (min-width:48rem){[data-vibeui-block="bento-014"] [data-part="shell"]{padding-block:2rem}}
+@container (min-width:72rem){[data-vibeui-block="bento-014"] [data-part="shell"]{padding-block:4rem}}
 [data-vibeui-block="bento-014"] [data-part="eyebrow"]{margin:0 0 .8rem;font-size:.72rem;font-style:italic;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-bento-014-accent)}
-[data-vibeui-block="bento-014"] [data-part="title"]{margin:0 0 2.5rem;font-family:var(--vibeui-bento-014-display);font-weight:400;font-size:clamp(2.4rem,6cqi,4.4rem);line-height:1;letter-spacing:-.02em}
+[data-vibeui-block="bento-014"] [data-part="title"]{margin:0 0 3rem;font-family:var(--vibeui-bento-014-display);font-weight:400;font-size:clamp(2.4rem,6cqi,4.4rem);line-height:1;letter-spacing:-.02em}
 [data-vibeui-block="bento-014"] [data-part="grid"]{display:grid;gap:1px;background:var(--vibeui-bento-014-line);border:1px solid var(--vibeui-bento-014-line);transition:background-color .6s,border-color .6s}
 [data-vibeui-block="bento-014"] [data-part="tile"]{position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:1.2rem;min-height:12rem;padding:1.6rem;background:var(--vibeui-bento-014-bg);overflow:hidden;transition:background-color .6s}
 [data-vibeui-block="bento-014"] [data-part="tile"][data-photo]{padding:0;min-height:20rem}
@@ -94,7 +96,7 @@ container-type:inline-size;
 [data-vibeui-block="bento-014"] [data-part="bio"] p{margin:0}
 [data-vibeui-block="bento-014"] [data-part="bio"] p:first-child::first-letter{float:left;font-family:var(--vibeui-bento-014-display);font-size:3.4em;line-height:.8;padding:.08em .14em 0 0;color:var(--vibeui-bento-014-accent)}
 [data-vibeui-block="bento-014"] [data-part="numbers"]{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="bento-014"] [data-part="numbers"] b{display:block;font-family:var(--vibeui-bento-014-display);font-weight:400;font-size:clamp(2.6rem,5cqi,4rem);line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+[data-vibeui-block="bento-014"] [data-part="numbers"] b{display:block;font-family:var(--vibeui-bento-014-display);font-weight:400;font-size:clamp(2rem,3.6cqi,3.25rem);line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
 [data-vibeui-block="bento-014"] [data-part="numbers"] b span{color:var(--vibeui-bento-014-accent)}
 [data-vibeui-block="bento-014"] [data-part="numbers"] small{display:block;margin-top:.4rem;font-size:.8rem;font-style:italic;color:var(--vibeui-bento-014-muted)}
 [data-vibeui-block="bento-014"] [data-part="cities"]{margin:0;padding:0;list-style:none;display:grid}
@@ -122,7 +124,7 @@ const DEFAULT_NUMBERS: Bento014Number[] = [
 ]
 
 function formatNumber(value: number) {
-  return String(Math.round(value)).replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+  return String(Math.round(value)).replace(/\B(?=(\d{3})+(?!\d))/g, " ")
 }
 
 /** «О себе» как bento: портрет, докручивающиеся цифры, города, факт и черновик. */

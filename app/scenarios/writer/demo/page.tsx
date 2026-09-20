@@ -14,9 +14,12 @@ import { Footer044 } from "@/registry/blocks/footer/footer-044/footer-044"
 
 /**
  * Сценарий «Личный сайт писателя»: сайт-читалка. Тёплый графит ночью и
- * бумага днём — переключатель в шапке и на первом экране шлёт событие
- * `vibeui-writer:theme`, каждый блок слушает его и меняет color-scheme,
- * а цвета заданы через light-dark(), поэтому весь сайт кроссфейдится разом.
+ * бумага днём — переключатель в шапке шлёт событие `vibeui-writer:theme`,
+ * каждый блок слушает его и меняет color-scheme, а цвета заданы через
+ * light-dark(), поэтому весь сайт кроссфейдится разом.
+ * Ритм секций — три тона: базовый, приподнятый (книга, встречи) и
+ * перевёрнутый (чтение, письма: ночью — бумага, днём — графит); между
+ * соседями одного тона — чернильная линия.
  * Книга в 3D, архив с превью у курсора, чтение с закладкой и сносками.
  */
 export const metadata = {
@@ -40,6 +43,16 @@ const reader = {
   background: "light-dark(#f4efe6,#17161a)",
 } as const
 
+const raised = { ...reader, background: "light-dark(#ece5d8,#1e1c21)" } as const
+
+// Стартует бумагой на ночном сайте; событие темы блок переворачивает сам.
+const inverted = { ...reader, tone: "light", invert: true } as const
+
+// Чернильная линия между секциями одного тона: серый, читаемый на обеих подложках.
+function InkLine() {
+  return <hr aria-hidden className="mx-auto h-px w-[calc(100%-2.5rem)] max-w-[71.5rem] border-0 bg-[#8a8378]/35" />
+}
+
 export default function WriterDemo() {
   return (
     <div style={page} className="min-h-dvh">
@@ -48,32 +61,34 @@ export default function WriterDemo() {
       </style>
       <Navbar045 {...reader} />
       <div id="top">
-        <Hero045 {...reader} />
+        <Hero045 {...reader} showModeSwitch={false} video="/demo/writer/hero-night.mp4" videoDay="/demo/writer/hero-day.mp4" poster="/demo/writer/hero-night.webp" posterDay="/demo/writer/hero-day.webp" />
       </div>
       <div id="book">
-        <Writer001 {...reader} cover="/demo/writer/cover.webp" />
+        <Writer001 {...raised} cover="/demo/writer/cover.webp" />
       </div>
       <div id="texts">
         <Writer002 {...reader} />
       </div>
       <div id="read">
-        <Writer003 {...reader} />
+        <Writer003 {...inverted} />
       </div>
       <div id="about">
         <Bento014 {...reader} portrait="/demo/writer/portrait.webp" desk="/demo/writer/desk.webp" />
       </div>
+      <InkLine />
       <div id="readers">
         <Writer004 {...reader} />
       </div>
       <div id="events">
-        <Event026 {...reader} />
+        <Event026 {...raised} />
       </div>
       <div id="letters">
-        <Subscribe020 {...reader} />
+        <Subscribe020 {...inverted} />
       </div>
       <div id="publishers">
         <Contact033 {...reader} />
       </div>
+      <InkLine />
       <Footer044 {...reader} />
     </div>
   )

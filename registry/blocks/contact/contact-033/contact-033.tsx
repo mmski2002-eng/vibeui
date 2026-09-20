@@ -62,11 +62,15 @@ container-type:inline-size;
 :where([data-vibeui-block="contact-033"][data-tone="dark"]){color-scheme:dark}
 :where([data-vibeui-block="contact-033"][data-mode="day"]){color-scheme:light}
 :where([data-vibeui-block="contact-033"][data-mode="night"]){color-scheme:dark}
-[data-vibeui-block="contact-033"]{box-sizing:border-box;padding:clamp(4rem,8cqi,7rem) 0;background:var(--vibeui-contact-033-bg);color:var(--vibeui-contact-033-fg);font-family:var(--vibeui-contact-033-font);font-size:1.05rem;line-height:1.65;transition:background-color .6s,color .6s}
+[data-vibeui-block="contact-033"]{box-sizing:border-box;padding:4rem 0;background:var(--vibeui-contact-033-bg);color:var(--vibeui-contact-033-fg);font-family:var(--vibeui-contact-033-font);font-size:1.05rem;line-height:1.65;transition:background-color .6s,color .6s}
+@supports (animation-timeline:view()){[data-vibeui-block="contact-033"] [data-part="shell"]{animation:vibeui-contact-033-reveal linear both;animation-timeline:view();animation-range:entry 0% entry 35%}}
+@keyframes vibeui-contact-033-reveal{from{opacity:0;transform:translateY(1.5rem)}}
 [data-vibeui-block="contact-033"] *{box-sizing:border-box}
 [data-vibeui-block="contact-033"] [data-part="shell"]{max-width:74rem;margin:0 auto;padding:0 1.25rem;display:grid;gap:3rem;align-items:center}
+@container (min-width:48rem){[data-vibeui-block="contact-033"] [data-part="shell"]{padding-block:2rem}}
+@container (min-width:72rem){[data-vibeui-block="contact-033"] [data-part="shell"]{padding-block:3rem}}
 [data-vibeui-block="contact-033"] [data-part="eyebrow"]{margin:0 0 .8rem;font-size:.72rem;font-style:italic;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-contact-033-accent)}
-[data-vibeui-block="contact-033"] [data-part="title"]{margin:0;font-family:var(--vibeui-contact-033-display);font-weight:400;font-size:clamp(2.4rem,6cqi,4.4rem);line-height:1;letter-spacing:-.02em}
+[data-vibeui-block="contact-033"] [data-part="title"]{margin:0;font-family:var(--vibeui-contact-033-display);font-weight:400;font-size:clamp(2rem,4.5cqi,3.25rem);line-height:1.05;letter-spacing:-.02em}
 [data-vibeui-block="contact-033"] [data-part="lede"]{margin:1rem 0 0;max-width:32rem;color:var(--vibeui-contact-033-muted)}
 [data-vibeui-block="contact-033"] [data-part="rights"]{margin:2rem 0 0;padding:0;list-style:none;border-top:1px solid var(--vibeui-contact-033-line)}
 [data-vibeui-block="contact-033"] [data-part="rights"] li{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:.2rem 1.5rem;padding:.9rem 0;border-bottom:1px solid var(--vibeui-contact-033-line)}

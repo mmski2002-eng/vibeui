@@ -21,6 +21,8 @@ export type Writer003Props = {
   /** aria номера сноски. */
   noteLabel?: string
   tone?: "auto" | "light" | "dark"
+  /** Идти против сайта: ночью — бумага, днём — графит. Событие темы уважается, но переворачивается. */
+  invert?: boolean
   accent?: string
   ink?: string
   background?: string
@@ -54,9 +56,11 @@ container-type:inline-size;
 :where([data-vibeui-block="writer-003"][data-tone="dark"]){color-scheme:dark}
 :where([data-vibeui-block="writer-003"][data-mode="day"]){color-scheme:light}
 :where([data-vibeui-block="writer-003"][data-mode="night"]){color-scheme:dark}
-[data-vibeui-block="writer-003"]{box-sizing:border-box;padding:clamp(4rem,8cqi,7rem) 0;background:var(--vibeui-writer-003-bg);color:var(--vibeui-writer-003-fg);font-family:var(--vibeui-writer-003-font);font-size:1.125rem;line-height:1.7;transition:background-color .6s,color .6s}
+[data-vibeui-block="writer-003"]{box-sizing:border-box;padding:4rem 0;background:var(--vibeui-writer-003-bg);color:var(--vibeui-writer-003-fg);font-family:var(--vibeui-writer-003-font);font-size:1.125rem;line-height:1.7;transition:background-color .6s,color .6s}
 [data-vibeui-block="writer-003"] *{box-sizing:border-box}
 [data-vibeui-block="writer-003"] [data-part="shell"]{max-width:74rem;margin:0 auto;padding:0 1.25rem;display:grid;gap:2rem}
+@container (min-width:48rem){[data-vibeui-block="writer-003"] [data-part="shell"]{padding-block:2rem}}
+@container (min-width:72rem){[data-vibeui-block="writer-003"] [data-part="shell"]{padding-block:3rem}}
 [data-vibeui-block="writer-003"] [data-part="mark"]{display:flex;align-items:center;gap:1rem;font-size:.72rem;font-style:italic;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-writer-003-muted)}
 [data-vibeui-block="writer-003"] [data-part="track"]{position:relative;flex:1;height:2px;background:var(--vibeui-writer-003-line);overflow:hidden}
 [data-vibeui-block="writer-003"] [data-part="ribbon"]{position:absolute;inset:0;background:var(--vibeui-writer-003-accent);transform:scaleX(var(--vibeui-writer-003-p,0));transform-origin:left;transition:transform .15s linear}
@@ -132,6 +136,7 @@ export function Writer003({
   actionHref = "#texts",
   noteLabel = "Сноска {n}",
   tone = "auto",
+  invert = false,
   accent,
   ink,
   background,
@@ -204,7 +209,7 @@ export function Writer003({
       <style href="vibeui-writer-003" precedence="medium">
         {STYLES}
       </style>
-      <section ref={rootRef} data-vibeui-block="writer-003" data-tone={tone === "auto" ? undefined : tone} data-mode={mode ?? undefined} className={className} style={palette}>
+      <section ref={rootRef} data-vibeui-block="writer-003" data-tone={tone === "auto" ? undefined : tone} data-mode={mode ? (invert ? (mode === "day" ? "night" : "day") : mode) : undefined} className={className} style={palette}>
         <div data-part="shell">
           <div data-part="mark" aria-hidden="true">
             <span>{progressLabel}</span>

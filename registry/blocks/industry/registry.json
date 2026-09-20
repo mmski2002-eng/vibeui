@@ -9110,6 +9110,7 @@
             "paragraphs с разметкой ==фраза== и [n], notes — тексты сносок по номерам",
             "progressLabel, actionLabel, actionHref",
             "tone — тема",
+            "invert — идти против темы сайта: ночью бумага, днём графит",
             "accent — акцент",
             "ink — текст",
             "background — фон"
@@ -9182,6 +9183,7 @@
                 "paragraphs with ==phrase== and [n] markup, notes — footnote texts by number",
                 "progressLabel, actionLabel, actionHref",
                 "tone — theme",
+                "invert — go against the site theme: paper at night, graphite by day",
                 "accent — accent",
                 "ink — ink",
                 "background — background"

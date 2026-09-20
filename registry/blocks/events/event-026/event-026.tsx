@@ -67,11 +67,15 @@ container-type:inline-size;
 :where([data-vibeui-block="event-026"][data-tone="dark"]){color-scheme:dark}
 :where([data-vibeui-block="event-026"][data-mode="day"]){color-scheme:light}
 :where([data-vibeui-block="event-026"][data-mode="night"]){color-scheme:dark}
-[data-vibeui-block="event-026"]{box-sizing:border-box;padding:clamp(4rem,8cqi,7rem) 0;background:var(--vibeui-event-026-bg);color:var(--vibeui-event-026-fg);font-family:var(--vibeui-event-026-font);font-size:1.05rem;line-height:1.6;transition:background-color .6s,color .6s}
+[data-vibeui-block="event-026"]{box-sizing:border-box;padding:4rem 0;background:var(--vibeui-event-026-bg);color:var(--vibeui-event-026-fg);font-family:var(--vibeui-event-026-font);font-size:1.05rem;line-height:1.6;transition:background-color .6s,color .6s}
+@supports (animation-timeline:view()){[data-vibeui-block="event-026"] [data-part="shell"]{animation:vibeui-event-026-reveal linear both;animation-timeline:view();animation-range:entry 0% entry 35%}}
+@keyframes vibeui-event-026-reveal{from{opacity:0;transform:translateY(1.5rem)}}
 [data-vibeui-block="event-026"] *{box-sizing:border-box}
 [data-vibeui-block="event-026"] [data-part="shell"]{max-width:74rem;margin:0 auto;padding:0 1.25rem;display:grid;gap:2.5rem}
+@container (min-width:48rem){[data-vibeui-block="event-026"] [data-part="shell"]{padding-block:2rem}}
+@container (min-width:72rem){[data-vibeui-block="event-026"] [data-part="shell"]{padding-block:3rem}}
 [data-vibeui-block="event-026"] [data-part="eyebrow"]{margin:0 0 .8rem;font-size:.72rem;font-style:italic;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-event-026-accent)}
-[data-vibeui-block="event-026"] [data-part="title"]{margin:0;font-family:var(--vibeui-event-026-display);font-weight:400;font-size:clamp(2.4rem,6cqi,4.4rem);line-height:1;letter-spacing:-.02em}
+[data-vibeui-block="event-026"] [data-part="title"]{margin:0;font-family:var(--vibeui-event-026-display);font-weight:400;font-size:clamp(2rem,4.5cqi,3.25rem);line-height:1.05;letter-spacing:-.02em}
 [data-vibeui-block="event-026"] [data-part="lede"]{margin:1rem 0 0;max-width:28rem;color:var(--vibeui-event-026-muted)}
 [data-vibeui-block="event-026"] [data-part="countdown"]{margin:2rem 0 0;padding:1.4rem 0 0;border-top:1px solid var(--vibeui-event-026-line)}
 [data-vibeui-block="event-026"] [data-part="countdown"] small{display:block;font-size:.72rem;font-style:italic;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-event-026-muted)}
