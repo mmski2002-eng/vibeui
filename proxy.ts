@@ -5,6 +5,37 @@ import { PATH_HEADER } from "@/lib/session.shared"
 
 const LOCALE_COOKIE = "vibeui-locale"
 
+/**
+ * Разделы с английским вариантом под /en. На vibeui.club (только английский)
+ * любой из них в корне уводим в /en. /c, /f, /r, /s, /i, /preview — общие, у
+ * них /en-варианта нет, их не трогаем (их и matcher не ловит).
+ */
+const LOCALIZABLE = new Set([
+  "components",
+  "blocks",
+  "animations",
+  "scenarios",
+  "search",
+  "pricing",
+  "account",
+  "signin",
+  "signup",
+  "reset",
+  "report",
+  "start",
+  "verify",
+  "legal",
+])
+
+function isAccountPath(pathname: string) {
+  return (
+    pathname === "/account" ||
+    pathname.startsWith("/account/") ||
+    pathname === "/en/account" ||
+    pathname.startsWith("/en/account/")
+  )
+}
+
 // Краулерам язык не подбираем: у страниц есть hreflang и sitemap, а увод
 // бота с русской главной на английскую путает индексацию обеих.
 const CRAWLER =
@@ -60,17 +91,27 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL(`/i/${ref}`, request.url))
   }
 
-  if (pathname === "/") {
-    // vibeui.club — англоязычный домен: его главная всегда ведёт в /en-ветку,
-    // независимо от языка браузера и куки. Дальше язык несут /en-ссылки.
-    // Для vibeui.ru и прочих хостов — прежнее поведение по Accept-Language.
-    if (isClubHost(request)) {
-      const redirect = NextResponse.redirect(new URL("/en", request.url))
+  const club = isClubHost(request)
+
+  // vibeui.club — только английская версия. Любой локализуемый раздел в корне
+  // (не под /en) уводим в /en-ветку: домен целиком английский, переключателя
+  // языка нет. Для vibeui.ru и прочих хостов этот блок не срабатывает.
+  if (club && !pathname.startsWith("/en")) {
+    const segment = pathname.split("/")[1] ?? ""
+
+    if (pathname === "/" || LOCALIZABLE.has(segment)) {
+      const url = request.nextUrl.clone()
+      url.pathname = pathname === "/" ? "/en" : `/en${pathname}`
+
+      const redirect = NextResponse.redirect(url)
       redirect.headers.set("Vary", "Accept-Language, Cookie")
 
       return redirect
     }
+  }
 
+  // Язык главной по Accept-Language — только не на club (там всё английское).
+  if (pathname === "/" && !club) {
     const chosen = request.cookies.get(LOCALE_COOKIE)?.value
 
     if (chosen === "en" || (!chosen && !isCrawler(request) && prefersEnglish(request.headers.get("accept-language")))) {
@@ -90,25 +131,31 @@ export function proxy(request: NextRequest) {
     return response
   }
 
-  // Префикс обязателен: он задан в конфигурации Better Auth, а по умолчанию
-  // здесь ищется кука с чужим именем — и вошедшего разворачивало на вход.
-  if (getSessionCookie(request, { cookiePrefix: "vibeui" })) {
-    // Адрес нужен серверным страницам: сессия могла умереть в базе, и тогда
-    // человека всё равно развернёт на вход — с сохранённым «куда он шёл».
-    const passthrough = new Headers(request.headers)
-    passthrough.set(PATH_HEADER, pathname + request.nextUrl.search)
+  // Гейтинг кабинета — только для /account и /en/account. Остальные страницы
+  // (каталог, тарифы, legal) публичны: matcher теперь шире, поэтому проверку
+  // сессии держим строго на кабинете, иначе аноним не открыл бы витрину.
+  if (isAccountPath(pathname)) {
+    // Префикс обязателен: он задан в конфигурации Better Auth, а по умолчанию
+    // здесь ищется кука с чужим именем — и вошедшего разворачивало на вход.
+    if (getSessionCookie(request, { cookiePrefix: "vibeui" })) {
+      // Адрес нужен серверным страницам: сессия могла умереть в базе, и тогда
+      // человека всё равно развернёт на вход — с сохранённым «куда он шёл».
+      const passthrough = new Headers(request.headers)
+      passthrough.set(PATH_HEADER, pathname + request.nextUrl.search)
 
-    return NextResponse.next({ request: { headers: passthrough } })
+      return NextResponse.next({ request: { headers: passthrough } })
+    }
+
+    // Английский кабинет разворачивает на английский вход.
+    const english = pathname.startsWith("/en/")
+    const signin = new URL(english ? "/en/signin" : "/signin", request.url)
+
+    signin.searchParams.set("next", pathname + request.nextUrl.search)
+
+    return NextResponse.redirect(signin)
   }
 
-  // Английский кабинет разворачивает на английский вход: иначе человек с
-  // /en/account попадал на русскую форму и терял язык на весь сценарий.
-  const english = pathname.startsWith("/en/")
-  const signin = new URL(english ? "/en/signin" : "/signin", request.url)
-
-  signin.searchParams.set("next", pathname + request.nextUrl.search)
-
-  return NextResponse.redirect(signin)
+  return NextResponse.next()
 }
 
 function isCrawler(request: NextRequest) {
@@ -123,5 +170,10 @@ function isClubHost(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/account/:path*", "/en/account/:path*", "/"],
+  // Ловим все страницы, кроме ассетов, api и раздач исходников (r/f/c/s/i/
+  // preview). На vibeui.club нужно переписывать в /en любой раздел, а не
+  // только главную; гейтинг кабинета внутри ограничен isAccountPath.
+  matcher: [
+    "/((?!_next|api|r/|f/|c/|s/|i/|preview/|.*\\.[^/]+$).*)",
+  ],
 }

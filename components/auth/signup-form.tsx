@@ -112,6 +112,13 @@ export function SignUpForm({ locale }: { locale: Locale }) {
           type="checkbox"
           name="consent"
           required
+          // Нативная подсказка `required` рендерится браузером на его языке —
+          // на английской версии всплывало русское «Установите флажок».
+          // Задаём свой текст под локаль страницы и снимаем его при отметке.
+          onInvalid={(event) =>
+            event.currentTarget.setCustomValidity(t.consentRequired)
+          }
+          onChange={(event) => event.currentTarget.setCustomValidity("")}
           className="accent-shell-accent mt-0.5 size-4 shrink-0"
         />
         <span className="text-shell-muted leading-relaxed">

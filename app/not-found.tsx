@@ -1,4 +1,4 @@
-import { cookies } from "next/headers"
+import { cookies, headers } from "next/headers"
 
 import { CatalogShell } from "@/components/catalog/catalog-shell"
 import { localePath, type Locale } from "@/lib/i18n"
@@ -49,8 +49,13 @@ export const metadata = {
  * ненайденного адреса маршрута нет, и вычислить локаль по нему нельзя.
  */
 export default async function NotFound() {
-  const store = await cookies()
-  const locale: Locale = store.get("vibeui-locale")?.value === "en" ? "en" : "ru"
+  const [store, headerList] = await Promise.all([cookies(), headers()])
+  // vibeui.club — только английский, поэтому и 404 там английская, независимо
+  // от куки языка. На остальных хостах — по выбору из переключателя.
+  const host = (headerList.get("host") ?? "").split(":")[0].toLowerCase()
+  const club = host === "vibeui.club" || host === "www.vibeui.club"
+  const locale: Locale =
+    club || store.get("vibeui-locale")?.value === "en" ? "en" : "ru"
   const t = TEXTS[locale]
 
   return (
